@@ -78,38 +78,43 @@ export async function GET(request: NextRequest) {
         return null;
       }),
       db.collection('system_config').findOne({ _id: 'storage_stats' } as object),
-      db
-        .collection('books')
-        .aggregate([
-          {
-            $group: {
-              _id: null,
-              total: { $sum: 1 },
-              visible: {
-                $sum: {
-                  $cond: [
-                    {
-                      $and: [
-                        { $ne: ['$hidden', true] },
-                        { $ne: ['$visible', false] },
-                      ],
-                    },
-                    1,
-                    0,
-                  ],
+      // All index-backed — a naive full $group scans 1.8 GB of book docs and
+      // exceeds the lambda's 45s socket timeout under pipeline load.
+      // Requires indexes: hidden_1, is_fully_translated_1, a visible-leading
+      // index, and pages_sums_covered (all present as of 2026-07-05).
+      (async () => {
+        const books = db.collection('books');
+        const [total, notVisible, fully_translated, sums] = await Promise.all([
+          books.estimatedDocumentCount(),
+          books.countDocuments({ $or: [{ hidden: true }, { visible: false }] }),
+          books.countDocuments({ is_fully_translated: true }),
+          books
+            .aggregate(
+              [
+                { $project: { _id: 0, pages_count: 1, pages_ocr: 1, pages_translated: 1 } },
+                {
+                  $group: {
+                    _id: null,
+                    pages_total: { $sum: { $ifNull: ['$pages_count', 0] } },
+                    pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+                    pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+                  },
                 },
-              },
-              fully_translated: {
-                $sum: { $cond: [{ $eq: ['$is_fully_translated', true] }, 1, 0] },
-              },
-              pages_total: { $sum: { $ifNull: ['$pages_count', 0] } },
-              pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-              pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-            },
-          },
-        ])
-        .toArray()
-        .then((r) => r[0] as Record<string, number> | undefined),
+              ],
+              { hint: 'pages_sums_covered' },
+            )
+            .toArray()
+            .then((r) => r[0] as Record<string, number> | undefined),
+        ]);
+        return {
+          total,
+          visible: total - notVisible,
+          fully_translated,
+          pages_total: sums?.pages_total ?? 0,
+          pages_ocr: sums?.pages_ocr ?? 0,
+          pages_translated: sums?.pages_translated ?? 0,
+        };
+      })(),
       Promise.all(
         ['pages', 'chapter_texts', 'books'].map(async (c) => {
           const s = await db.command({ collStats: c });
