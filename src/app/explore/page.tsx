@@ -20,126 +20,126 @@ export const metadata: Metadata = {
 };
 
 async function fetchExploreStats() {
-  try {
-    const db = await getReadDb();
+  const db = await getReadDb();
 
-    // Use estimatedDocumentCount (instant, uses collection metadata) and
-    // separate indexed counts for the filtered stats. A single $facet used to
-    // bundle these, but $facet sub-pipelines can't use indexes — at ~1M
-    // entities that was a full collection scan that blew the 25s budget.
-    // Each count below is answered by its own partial index
-    // (wikidata_{birth,death}_date_partial, wikidata_coordinates_partial,
-    // wikidata_id_partial) plus type_1 for the distribution.
-    const [
-      totalEntities,
-      totalBooks,
-      typeDistribution,
-      withDates,
-      withCoordinates,
-      withWikidata,
-      heatmapData,
-    ] = await Promise.all([
-      db.collection('entities').estimatedDocumentCount(),
-      db.collection('books').estimatedDocumentCount(),
-      db.collection('entities').aggregate([
-        { $group: { _id: '$type', count: { $sum: 1 } } },
-      ], { maxTimeMS: 25000 }).toArray(),
-      db.collection('entities').countDocuments({
-        $or: [
-          { wikidata_birth_date: { $exists: true, $ne: null } },
-          { wikidata_death_date: { $exists: true, $ne: null } },
-        ],
-      }, { maxTimeMS: 25000 }),
-      db.collection('entities').countDocuments(
-        { wikidata_coordinates: { $exists: true, $ne: null } },
-        { maxTimeMS: 25000 },
-      ),
-      db.collection('entities').countDocuments(
-        { wikidata_id: { $exists: true, $ne: null } },
-        { maxTimeMS: 25000 },
-      ),
+  // Use estimatedDocumentCount (instant, uses collection metadata) and
+  // index-only queries for everything else — the entities collection is ~1M
+  // docs / ~1.9GB, so anything that touches documents (a $facet, a $group
+  // over the collection, or a count whose $exists predicate forces a FETCH)
+  // blows its time budget. Two shapes keep these index-only:
+  //  - bare `{ $ne: null }` (missing counts as null, so it needs no $exists)
+  //    is answered entirely from the wikidata_* partial-index bounds
+  //    (~300ms vs 7-17s measured with the $exists form);
+  //  - distinct('type') + one COUNT_SCAN per type instead of a $group.
+  const entityTypes = ((await db
+    .collection('entities')
+    .distinct('type', {}, { maxTimeMS: 25000 })) as (string | null)[])
+    .filter((t): t is string => t != null);
 
-      // Books by century — fast aggregation on books collection
-      db.collection('books').aggregate([
-        { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
-        {
-          $group: {
-            _id: {
-              $add: [
-                { $floor: { $divide: [{ $subtract: ['$year', 1] }, 100] } },
-                1,
-              ],
-            },
-            count: { $sum: 1 },
+  const [
+    totalEntities,
+    totalBooks,
+    typeCounts,
+    withDates,
+    withCoordinates,
+    withWikidata,
+    heatmapData,
+  ] = await Promise.all([
+    db.collection('entities').estimatedDocumentCount(),
+    db.collection('books').estimatedDocumentCount(),
+    Promise.all(entityTypes.map(async (t) => ({
+      type: t,
+      count: await db.collection('entities').countDocuments({ type: t }, { maxTimeMS: 25000 }),
+    }))),
+    db.collection('entities').countDocuments({
+      $or: [
+        { wikidata_birth_date: { $ne: null } },
+        { wikidata_death_date: { $ne: null } },
+      ],
+    }, { maxTimeMS: 25000 }),
+    db.collection('entities').countDocuments(
+      { wikidata_coordinates: { $ne: null } },
+      { maxTimeMS: 25000 },
+    ),
+    db.collection('entities').countDocuments(
+      { wikidata_id: { $ne: null } },
+      { maxTimeMS: 25000 },
+    ),
+
+    // Books by century — fast aggregation on books collection
+    db.collection('books').aggregate([
+      { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
+      {
+        $group: {
+          _id: {
+            $add: [
+              { $floor: { $divide: [{ $subtract: ['$year', 1] }, 100] } },
+              1,
+            ],
           },
+          count: { $sum: 1 },
         },
-        { $sort: { _id: 1 } },
-      ], { maxTimeMS: 15000 }).toArray(),
-    ]);
+      },
+      { $sort: { _id: 1 } },
+    ], { maxTimeMS: 15000 }).toArray(),
+  ]);
 
-    const heatmap = heatmapData.map((row) => ({
-      century: row._id as number,
-      type: 'book' as string,
-      count: row.count as number,
-    }));
+  const heatmap = heatmapData.map((row) => ({
+    century: row._id as number,
+    type: 'book' as string,
+    count: row.count as number,
+  }));
 
-    const types: Record<string, number> = {};
-    for (const row of typeDistribution) {
-      types[row._id as string] = row.count as number;
-    }
-
-    const dataSources = {
-      entities: {
-        label: 'Entity Index',
-        description: 'Extracted from AI-generated book indexes (people, places, concepts)',
-        count: totalEntities,
-      },
-      wikidata: {
-        label: 'Wikidata Alignment',
-        description: 'Entities linked to Wikidata via Wikipedia URLs and name matching',
-        count: withWikidata,
-        coverage: totalEntities > 0 ? +(withWikidata / totalEntities * 100).toFixed(1) : 0,
-      },
-      dates: {
-        label: 'Biographical Dates',
-        description: 'Birth/death years from Wikidata claims P569/P570',
-        count: withDates,
-      },
-      coordinates: {
-        label: 'Geographic Coordinates',
-        description: 'Lat/lon from Wikidata claim P625 (places) and P19 (birthplaces)',
-        count: withCoordinates,
-      },
-      books: {
-        label: 'Source Books',
-        description: 'Digitized historical texts from 13 partner libraries',
-        count: totalBooks,
-      },
-    };
-
-    return {
-      totals: {
-        entities: totalEntities,
-        with_dates: withDates,
-        with_coordinates: withCoordinates,
-        with_wikidata: withWikidata,
-        books: totalBooks,
-      },
-      type_distribution: types,
-      heatmap,
-      top_entities_by_era: [],
-      data_sources: dataSources,
-    };
-  } catch (err) {
-    console.error('Explore data fetch failed:', err);
-    return {
-      totals: { entities: 0, with_dates: 0, with_coordinates: 0, with_wikidata: 0, books: 0 },
-      type_distribution: {},
-      heatmap: [],
-      top_entities_by_era: [],
-      data_sources: {},
-    };
+  const types: Record<string, number> = {};
+  for (const row of typeCounts) {
+    types[row.type] = row.count;
   }
+
+  const dataSources = {
+    entities: {
+      label: 'Entity Index',
+      description: 'Extracted from AI-generated book indexes (people, places, concepts)',
+      count: totalEntities,
+    },
+    wikidata: {
+      label: 'Wikidata Alignment',
+      description: 'Entities linked to Wikidata via Wikipedia URLs and name matching',
+      count: withWikidata,
+      coverage: totalEntities > 0 ? +(withWikidata / totalEntities * 100).toFixed(1) : 0,
+    },
+    dates: {
+      label: 'Biographical Dates',
+      description: 'Birth/death years from Wikidata claims P569/P570',
+      count: withDates,
+    },
+    coordinates: {
+      label: 'Geographic Coordinates',
+      description: 'Lat/lon from Wikidata claim P625 (places) and P19 (birthplaces)',
+      count: withCoordinates,
+    },
+    books: {
+      label: 'Source Books',
+      description: 'Digitized historical texts from 13 partner libraries',
+      count: totalBooks,
+    },
+  };
+
+  // No try/catch: a thrown error during ISR revalidation keeps serving the
+  // last good page; catching it here would cache zeroed stats for the full
+  // 24h revalidate window (which is exactly what happened on 2026-07-04).
+  return {
+    totals: {
+      entities: totalEntities,
+      with_dates: withDates,
+      with_coordinates: withCoordinates,
+      with_wikidata: withWikidata,
+      books: totalBooks,
+    },
+    type_distribution: types,
+    heatmap,
+    top_entities_by_era: [],
+    data_sources: dataSources,
+  };
 }
 
 export default async function ExplorePage() {
