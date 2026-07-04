@@ -9,7 +9,9 @@ import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -78,17 +80,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   // Fall back to old cluster slug
-  let match;
-  try {
-    const db = await getReadDb();
-    const allClusters = await db.collection('books').aggregate([
-      { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
-      { $group: { _id: '$taxonomy.cluster' } },
-    ]).toArray();
-    match = allClusters.find((c) => topicSlug(c._id) === slug);
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const db = await getReadDb();
+  const allClusters = await db.collection('books').aggregate([
+    { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
+    { $group: { _id: '$taxonomy.cluster' } },
+  ]).toArray();
+  const match = allClusters.find((c) => topicSlug(c._id) === slug);
   if (!match) return {
     title: 'Topic Not Found - Source Library',
     robots: { index: false, follow: true },

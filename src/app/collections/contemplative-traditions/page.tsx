@@ -5,7 +5,9 @@ import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getReadDb } from '@/lib/mongodb';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the "Temporarily Unavailable" / empty-list render below).
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'The Contemplative Traditions - Source Library',
@@ -100,40 +102,37 @@ interface TraditionCollection {
 
 /* ── Data fetching ── */
 
+// No try/catch: letting a fetch failure throw here keeps ISR serving the
+// last good page instead of permanently caching an empty tradition list.
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
-  try {
-    const db = await Promise.race([
-      getReadDb(),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
-    ]);
+  const db = await Promise.race([
+    getReadDb(),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
+  ]);
 
-    const traditions = await db
-      .collection('collections')
-      .find({ parent: 'contemplative-traditions' })
-      .sort({ order: 1 })
-      .toArray();
+  const traditions = await db
+    .collection('collections')
+    .find({ parent: 'contemplative-traditions' })
+    .sort({ order: 1 })
+    .toArray();
 
-    const parent = await db.collection('collections').findOne({ slug: 'contemplative-traditions' });
-    const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
+  const parent = await db.collection('collections').findOne({ slug: 'contemplative-traditions' });
+  const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
 
-    return {
-      traditions: traditions.map(t => ({
-        slug: t.slug,
-        name: t.name,
-        subtitle: t.subtitle || '',
-        description: t.description || '',
-        book_count: t.book_count || 0,
-        order: t.order || 99,
-        color: t.color,
-        languages: t.languages || [],
-        sample_books: t.sample_books || [],
-      })) as TraditionCollection[],
-      totalBooks,
-    };
-  } catch (e) {
-    console.warn('[Contemplative Traditions portal] Failed to load:', (e as Error).message);
-    return { traditions: [], totalBooks: 0 };
-  }
+  return {
+    traditions: traditions.map(t => ({
+      slug: t.slug,
+      name: t.name,
+      subtitle: t.subtitle || '',
+      description: t.description || '',
+      book_count: t.book_count || 0,
+      order: t.order || 99,
+      color: t.color,
+      languages: t.languages || [],
+      sample_books: t.sample_books || [],
+    })) as TraditionCollection[],
+    totalBooks,
+  };
 }
 
 /* ── Components ── */
@@ -212,23 +211,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
 /* ── Page ── */
 
 export default async function ContemplativeTraditionsPage() {
-  let data: { traditions: TraditionCollection[]; totalBooks: number };
-  try {
-    data = await getTraditions();
-  } catch (err) {
-    console.error('[Contemplative Traditions portal] Failed to load:', err instanceof Error ? err.message : err);
-    return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="text-center max-w-md px-6">
-          <h1 className="text-2xl font-display text-stone-900 mb-3">Temporarily Unavailable</h1>
-          <p className="text-stone-600 mb-6">Please try again in a moment.</p>
-          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
-        </div>
-      </div>
-    );
-  }
-
-  const { traditions, totalBooks } = data;
+  const { traditions, totalBooks } = await getTraditions();
   const traditionsWithBooks = traditions.filter(t => t.book_count > 0);
 
   const allLanguages = [

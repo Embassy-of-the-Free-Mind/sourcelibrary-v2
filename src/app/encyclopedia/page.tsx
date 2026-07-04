@@ -7,7 +7,8 @@ import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
 import { unstable_cache } from 'next/cache';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever.
+export const revalidate = 3600;
 export const maxDuration = 30;
 
 const TYPE_ICONS = {
@@ -37,118 +38,111 @@ interface SearchParams {
   page?: string;
 }
 
+// No outer try/catch: letting a fetch failure throw here keeps ISR serving
+// the last good page instead of permanently caching an all-empty results
+// page. (The inner letter-count try/catch below is a narrow, non-fatal
+// degradation of a secondary stat — that's fine to keep.)
 async function getEntitiesRaw(searchParams: SearchParams) {
+  const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
+  const minBooks = parseInt(searchParams.min_books || '2') || 2;
+  const query = searchParams.q?.trim() || null;
+  const letter = searchParams.letter?.trim().toUpperCase() || null;
+  const sortMode = searchParams.sort || 'relevance';
+  const page = Math.max(1, parseInt(searchParams.page || '1') || 1);
+  const offset = (page - 1) * PER_PAGE;
+
+  // Build Supabase query for entities
+  let baseQuery = supabase
+    .from('entities')
+    .select('id, name, type, book_count, total_mentions, description, wikidata_birth_date, wikidata_death_date', { count: 'exact' })
+    .gte('book_count', minBooks);
+
+  if (type) baseQuery = baseQuery.eq('type', type);
+  if (query) baseQuery = baseQuery.ilike('name', `%${query}%`);
+  if (letter && !query) baseQuery = baseQuery.ilike('name', `${letter}%`);
+
+  if (sortMode === 'alpha') {
+    baseQuery = baseQuery.order('name', { ascending: true });
+  } else {
+    baseQuery = baseQuery.order('book_count', { ascending: false }).order('total_mentions', { ascending: false });
+  }
+
+  baseQuery = baseQuery.range(offset, offset + PER_PAGE - 1);
+
+  // Stats query: count by type (with same filters except type)
+  let statsQuery = supabase
+    .from('entities')
+    .select('type', { count: 'exact' })
+    .gte('book_count', minBooks);
+  if (query) statsQuery = statsQuery.ilike('name', `%${query}%`);
+  if (letter && !query) statsQuery = statsQuery.ilike('name', `${letter}%`);
+
+  // Run queries in parallel
+  const [entitiesResult, personCount, placeCount, conceptCount] = await Promise.all([
+    baseQuery,
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person')
+      .then(r => r.count || 0),
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place')
+      .then(r => r.count || 0),
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept')
+      .then(r => r.count || 0),
+  ]);
+
+  const entities = entitiesResult.data || [];
+  const total = entitiesResult.count || 0;
+
+  // Letter distribution: use a single RPC call or lightweight query
+  // Instead of paginating all names, use SQL to count by first letter
+  const letterMap: Record<string, number> = {};
   try {
-    const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
-    const minBooks = parseInt(searchParams.min_books || '2') || 2;
-    const query = searchParams.q?.trim() || null;
-    const letter = searchParams.letter?.trim().toUpperCase() || null;
-    const sortMode = searchParams.sort || 'relevance';
-    const page = Math.max(1, parseInt(searchParams.page || '1') || 1);
-    const offset = (page - 1) * PER_PAGE;
-
-    // Build Supabase query for entities
-    let baseQuery = supabase
+    // Build a raw SQL approach via Supabase RPC, falling back to sampling
+    // For performance, just fetch first 5000 names (covers most cases)
+    let letterQuery = supabase
       .from('entities')
-      .select('id, name, type, book_count, total_mentions, description, wikidata_birth_date, wikidata_death_date', { count: 'exact' })
-      .gte('book_count', minBooks);
+      .select('name')
+      .gte('book_count', minBooks)
+      .order('name', { ascending: true })
+      .limit(5000);
+    if (type) letterQuery = letterQuery.eq('type', type);
+    if (query) letterQuery = letterQuery.ilike('name', `%${query}%`);
 
-    if (type) baseQuery = baseQuery.eq('type', type);
-    if (query) baseQuery = baseQuery.ilike('name', `%${query}%`);
-    if (letter && !query) baseQuery = baseQuery.ilike('name', `${letter}%`);
-
-    if (sortMode === 'alpha') {
-      baseQuery = baseQuery.order('name', { ascending: true });
-    } else {
-      baseQuery = baseQuery.order('book_count', { ascending: false }).order('total_mentions', { ascending: false });
-    }
-
-    baseQuery = baseQuery.range(offset, offset + PER_PAGE - 1);
-
-    // Stats query: count by type (with same filters except type)
-    let statsQuery = supabase
-      .from('entities')
-      .select('type', { count: 'exact' })
-      .gte('book_count', minBooks);
-    if (query) statsQuery = statsQuery.ilike('name', `%${query}%`);
-    if (letter && !query) statsQuery = statsQuery.ilike('name', `${letter}%`);
-
-    // Run queries in parallel
-    const [entitiesResult, personCount, placeCount, conceptCount] = await Promise.all([
-      baseQuery,
-      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person')
-        .then(r => r.count || 0),
-      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place')
-        .then(r => r.count || 0),
-      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept')
-        .then(r => r.count || 0),
-    ]);
-
-    const entities = entitiesResult.data || [];
-    const total = entitiesResult.count || 0;
-
-    // Letter distribution: use a single RPC call or lightweight query
-    // Instead of paginating all names, use SQL to count by first letter
-    const letterMap: Record<string, number> = {};
-    try {
-      // Build a raw SQL approach via Supabase RPC, falling back to sampling
-      // For performance, just fetch first 5000 names (covers most cases)
-      let letterQuery = supabase
-        .from('entities')
-        .select('name')
-        .gte('book_count', minBooks)
-        .order('name', { ascending: true })
-        .limit(5000);
-      if (type) letterQuery = letterQuery.eq('type', type);
-      if (query) letterQuery = letterQuery.ilike('name', `%${query}%`);
-
-      const { data: letterData } = await letterQuery;
-      if (letterData) {
-        for (const row of letterData) {
-          const firstLetter = (row.name as string)?.[0]?.toUpperCase();
-          if (firstLetter && /[A-Z]/.test(firstLetter)) {
-            letterMap[firstLetter] = (letterMap[firstLetter] || 0) + 1;
-          }
+    const { data: letterData } = await letterQuery;
+    if (letterData) {
+      for (const row of letterData) {
+        const firstLetter = (row.name as string)?.[0]?.toUpperCase();
+        if (firstLetter && /[A-Z]/.test(firstLetter)) {
+          letterMap[firstLetter] = (letterMap[firstLetter] || 0) + 1;
         }
       }
-    } catch {
-      // If letter counting fails, the page still renders — just without letter counts
     }
-
-    return {
-      entities: entities.map(e => ({
-        _id: e.id as string,
-        name: e.name as string,
-        type: e.type as 'person' | 'place' | 'concept',
-        book_count: (e.book_count || 0) as number,
-        total_mentions: (e.total_mentions || 0) as number,
-        description: (e.description || null) as string | null,
-        wikidata_birth_date: (e.wikidata_birth_date || undefined) as string | undefined,
-        wikidata_death_date: (e.wikidata_death_date || undefined) as string | undefined,
-        books: [] as Array<{ book_id: string; book_title: string }>,
-      })),
-      total,
-      page,
-      totalPages: Math.ceil(total / PER_PAGE),
-      stats: {
-        total: (personCount as number) + (placeCount as number) + (conceptCount as number),
-        people: personCount as number,
-        places: placeCount as number,
-        concepts: conceptCount as number,
-      },
-      letterMap,
-    };
-  } catch (err) {
-    console.error('Encyclopedia data fetch failed:', err);
-    return {
-      entities: [],
-      total: 0,
-      page: 1,
-      totalPages: 0,
-      stats: { total: 0, people: 0, places: 0, concepts: 0 },
-      letterMap: {},
-    };
+  } catch {
+    // If letter counting fails, the page still renders — just without letter counts.
+    // (Narrow, non-fatal degradation of a secondary stat — not the dangerous pattern.)
   }
+
+  return {
+    entities: entities.map(e => ({
+      _id: e.id as string,
+      name: e.name as string,
+      type: e.type as 'person' | 'place' | 'concept',
+      book_count: (e.book_count || 0) as number,
+      total_mentions: (e.total_mentions || 0) as number,
+      description: (e.description || null) as string | null,
+      wikidata_birth_date: (e.wikidata_birth_date || undefined) as string | undefined,
+      wikidata_death_date: (e.wikidata_death_date || undefined) as string | undefined,
+      books: [] as Array<{ book_id: string; book_title: string }>,
+    })),
+    total,
+    page,
+    totalPages: Math.ceil(total / PER_PAGE),
+    stats: {
+      total: (personCount as number) + (placeCount as number) + (conceptCount as number),
+      people: personCount as number,
+      places: placeCount as number,
+      concepts: conceptCount as number,
+    },
+    letterMap,
+  };
 }
 
 // Cache encyclopedia queries so Supabase fetch() calls don't make the page dynamic
@@ -157,7 +151,7 @@ async function getEntities(params: SearchParams) {
   const cached = unstable_cache(
     () => getEntitiesRaw(params),
     ['encyclopedia', cacheKey],
-    { revalidate: false },
+    { revalidate: 3600 },
   );
   return cached();
 }

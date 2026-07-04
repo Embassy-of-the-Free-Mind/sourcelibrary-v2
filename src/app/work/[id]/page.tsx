@@ -6,7 +6,9 @@ import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
@@ -57,12 +59,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // arrives percent-encoded, so decode before matching against Mongo — otherwise
   // the query silently finds 0 editions and 404s. Same pattern as /author/[name].
   const id = decodeURIComponent(rawId);
-  let editions: Awaited<ReturnType<typeof getWorkEditions>>;
-  try {
-    editions = await getWorkEditions(id);
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const editions = await getWorkEditions(id);
   if (editions.length === 0) return { title: 'Work Not Found', robots: { index: false, follow: true } };
 
   const title = workTitleFromEditions(editions as { work_title?: string | null }[], id);

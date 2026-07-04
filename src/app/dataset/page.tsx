@@ -4,7 +4,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { getReadDb } from '@/lib/mongodb';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever.
+export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
@@ -23,68 +24,59 @@ function formatNumber(n: number): string {
   return n.toLocaleString('en-US');
 }
 
+// No try/catch: a thrown error during ISR revalidation keeps serving the
+// last good page, while catching it here would render (and cache) stale
+// snapshot numbers as if they were live for the full revalidate window.
+// Cold failures land on src/app/error.tsx.
 async function fetchDatasetStats() {
   const db = await getReadDb();
 
-  try {
-    const books = db.collection('books');
-    const visible = { visible: true };
-    const maxTimeMS = 45000;
+  const books = db.collection('books');
+  const visible = { visible: true };
+  const maxTimeMS = 45000;
 
-    const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([
-      books.countDocuments(visible, { maxTimeMS }),
-      books
-        .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
-          { $match: visible },
-          {
-            $group: {
-              _id: null,
-              pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-              ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-              translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-            },
+  const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([
+    books.countDocuments(visible, { maxTimeMS }),
+    books
+      .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
+        { $match: visible },
+        {
+          $group: {
+            _id: null,
+            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
-        ], { maxTimeMS })
-        .toArray(),
-      books
-        .aggregate<{ _id: string; count: number; translated: number }>([
-          { $match: { ...visible, language: { $exists: true, $ne: 'Unknown' } } },
-          {
-            $group: {
-              _id: '$language',
-              count: { $sum: 1 },
-              translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-            },
+        },
+      ], { maxTimeMS })
+      .toArray(),
+    books
+      .aggregate<{ _id: string; count: number; translated: number }>([
+        { $match: { ...visible, language: { $exists: true, $ne: 'Unknown' } } },
+        {
+          $group: {
+            _id: '$language',
+            count: { $sum: 1 },
+            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
-          { $sort: { count: -1 } },
-        ], { maxTimeMS })
-        .toArray(),
-    ]);
+        },
+        { $sort: { count: -1 } },
+      ], { maxTimeMS })
+      .toArray(),
+  ]);
 
-    const totals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
-    return {
-      totalBooks,
-      totalPages: totals.pages,
-      pagesOcr: totals.ocr,
-      pagesTranslated: totals.translated,
-      languages: languagesAgg.map((l) => ({
-        language: l._id,
-        books: l.count,
-        pagesTranslated: l.translated,
-      })),
-    };
-  } catch {
-    // Fallback to dashboard snapshot on timeout
-    const snap = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId });
-    const d = snap?.data as Record<string, Record<string, number>> | undefined;
-    return {
-      totalBooks: d?.canon?.total_books ?? 5000,
-      totalPages: d?.coverage?.ocr_pages ?? 1000000,
-      pagesOcr: d?.coverage?.ocr_pages ?? 900000,
-      pagesTranslated: d?.coverage?.translated_pages ?? 800000,
-      languages: [],
-    };
-  }
+  const totals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
+  return {
+    totalBooks,
+    totalPages: totals.pages,
+    pagesOcr: totals.ocr,
+    pagesTranslated: totals.translated,
+    languages: languagesAgg.map((l) => ({
+      language: l._id,
+      books: l.count,
+      pagesTranslated: l.translated,
+    })),
+  };
 }
 
 export default async function DatasetPage() {
