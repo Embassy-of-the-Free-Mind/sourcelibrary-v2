@@ -90,15 +90,19 @@ async function catalogResolve(w) {
   const hits = tk.length ? cands.filter(c => { const ct = clean(c.title); return tk.some(t => ct.includes(t)); }) : cands;
   return hits.slice(0, 6).map(c => ({ src: 'iiif', id: c.manifest_url, title: c.title, year: c.year, ref: c.manifest_url }));
 }
+// Race a promise against a timeout so one stalled call (Gemini / import fetch) can't
+// freeze a whole concurrent batch. On timeout the promise rejects and the caller's
+// catch handles it (verify -> no-match, importWork -> retry, processWork -> back to pending).
+const withTimeout = (p, ms, tag) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(tag || 'timeout')), ms))]);
 async function verify(w, cands) {
   const prompt = `Which candidate (if any) is THE SAME WORK as the target (same text, any edition; a different work by the same author is NOT a match)?\nTARGET: author="${w.author}" title="${w.title}" year=${w.year || '?'}\n${cands.map((c, i) => `${i}: title="${(c.title || '').slice(0, 80)}" year=${c.year || '?'}`).join('\n')}\nReply ONLY JSON: {"match":<index or -1>,"confidence":"high"|"medium"|"low"}`;
-  try { const r = await ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0, maxOutputTokens: 60 } }); const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
+  try { const r = await withTimeout(ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0, maxOutputTokens: 60 } }), 30000, 'verify'); const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
 }
 async function importWork(w, hit) {
   const colls = w.category === 'witch-trials' ? ['witchcraft'] : ['astrology', 'natural-philosophy'];
   const ep = hit.src === 'ia' ? '/api/import/ia' : '/api/import/iiif';
   const body = hit.src === 'ia' ? { ia_identifier: hit.ref, title: w.title, author: w.author, collections: colls } : { manifest_url: hit.ref, title: w.title, author: w.author, collections: colls };
-  const r = await fetch(BASE + ep, { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CRON_SECRET, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const r = await fetch(BASE + ep, { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CRON_SECRET, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(60000) });
   const j = await r.json(); return (r.ok && (j.success || j.bookId)) ? j.bookId : null;
 }
 
@@ -134,7 +138,7 @@ for (let i = 0; i < BATCH; i++) {
   const doc = r?.value ?? r; if (!doc) break; claimed.push(doc);
 }
 for (let i = 0; i < claimed.length; i += CONCURRENCY) {
-  const res = await Promise.all(claimed.slice(i, i + CONCURRENCY).map(w => processWork(w).catch(() => { queue.updateOne({ sn: w.sn }, { $set: { status: 'pending' } }); return 'error'; })));
+  const res = await Promise.all(claimed.slice(i, i + CONCURRENCY).map(w => withTimeout(processWork(w), 180000, 'work').catch(() => { queue.updateOne({ sn: w.sn }, { $set: { status: 'pending' } }); return 'error'; })));
   for (const s of res) if (tally[s] !== undefined) tally[s]++;
 }
 
