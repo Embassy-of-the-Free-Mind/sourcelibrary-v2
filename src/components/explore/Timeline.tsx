@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
 export interface TimelineEntity {
   name: string;
@@ -24,41 +23,103 @@ interface TimelineProps {
   };
 }
 
+// Distinct from every tradition hue so switching color modes never reuses a
+// color with a different meaning.
 const TYPE_COLORS: Record<string, string> = {
-  person: '#9e4a3a',
-  concept: '#7c5db5',
+  person: '#4338ca',
+  concept: '#b45309',
 };
 
+// European (the majority class, ~80% of entities) is deliberately the warm
+// NEUTRAL so the vivid hues go to the minority traditions — at overview zoom
+// the cross-cultural figures pop out of the European field instead of the
+// whole canvas reading purple. The 7 vivid hues pass the dataviz validator
+// (lightness band, chroma floor, CVD ΔE ≥ 12 on adjacent pairs, 3:1 contrast
+// on the cream surface); keep legend order in sync with this object's order.
 const TRADITION_COLORS: Record<string, { color: string; label: string }> = {
-  european:     { color: '#7c5db5', label: 'European' },
-  classical:    { color: '#c9a86c', label: 'Classical Greek' },
-  islamic:      { color: '#4a9e7a', label: 'Islamic' },
-  jewish:       { color: '#5b9e8e', label: 'Jewish' },
-  indian:       { color: '#d97706', label: 'Indian' },
-  east_asian:   { color: '#dc4444', label: 'East Asian' },
-  near_eastern: { color: '#9e4a3a', label: 'Near Eastern' },
-  indigenous:   { color: '#8b9a7d', label: 'Indigenous' },
-  other:        { color: '#999', label: 'Other' },
+  european:     { color: '#8b8178', label: 'European' },
+  classical:    { color: '#a16207', label: 'Classical Greek' },
+  islamic:      { color: '#15803d', label: 'Islamic' },
+  indian:       { color: '#c2410c', label: 'Indian' },
+  jewish:       { color: '#2563eb', label: 'Jewish' },
+  east_asian:   { color: '#dc2626', label: 'East Asian' },
+  near_eastern: { color: '#0891b2', label: 'Near Eastern' },
+  indigenous:   { color: '#7c3aed', label: 'Indigenous' },
+  other:        { color: '#a8a29e', label: 'Other' },
 };
 
-const BAR_HEIGHT = 14;
-const BAR_GAP = 2;
-const LANE_HEIGHT = BAR_HEIGHT + BAR_GAP;
+// Featured tier: label above a thin bar, both inside one lane.
+const F_LABEL_SIZE = 11.5;
+const F_BAR_HEIGHT = 7;
+const F_LANE_HEIGHT = 26;
+const F_LABEL_CHAR_PX = 6.4; // ≈ average glyph width at 11.5px sans
+const F_LABEL_PAD_PX = 14;   // breathing room after each label
+const FEATURED_CAP = 120;    // max labeled figures per viewport
+
+// Context tier: thin unlabeled strips.
+const C_BAR_HEIGHT = 4;
+const C_LANE_HEIGHT = 7;
+const C_MAX_LANES = 40;
+
 const HISTOGRAM_HEIGHT = 80;
 const HEADER_HEIGHT = 30;
+const ERA_HEIGHT = 20;
 const MIN_BAR_WIDTH_PX = 3;
 
-/** Parse year from date strings like "1572", "0384", "1707-05-23" */
-function parseYear(dateStr: string | null | undefined): number | null {
-  if (!dateStr) return null;
-  const y = parseInt(dateStr.slice(0, 4), 10);
-  return isNaN(y) || y <= 0 ? null : y;
-}
+const ERAS: { start: number; end: number; label: string }[] = [
+  { start: -3000, end: 500,  label: 'Antiquity' },
+  { start: 500,   end: 1000, label: 'Early Middle Ages' },
+  { start: 1000,  end: 1300, label: 'High Middle Ages' },
+  { start: 1300,  end: 1450, label: 'Late Middle Ages' },
+  { start: 1450,  end: 1600, label: 'Renaissance' },
+  { start: 1600,  end: 1800, label: 'Early Modern' },
+  { start: 1800,  end: 2030, label: 'Modern' },
+];
 
 /** Format year for display — shows BCE for negative years */
 function formatYear(y: number): string {
   if (y < 0) return `${Math.abs(y)} BCE`;
   return String(y);
+}
+
+/**
+ * Collapse obvious duplicate entities — the index extraction yields variants
+ * like "Cicero" / "Marcus Tullius Cicero" or "Basil Valentine" / "Basilius
+ * Valentinus" as separate rows. Deliberately conservative: only merge when the
+ * lifespan years are IDENTICAL and the names contain each other or share a
+ * 5-character prefix; the best-attested variant survives. Real fix is the
+ * canonical-entities layer (#2979) — this just keeps the timeline presentable.
+ */
+function dedupeEntities(list: TimelineEntity[]): TimelineEntity[] {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+  const byYears = new Map<string, TimelineEntity[]>();
+  const out: TimelineEntity[] = [];
+
+  for (const e of list) {
+    if (e.birth_year === null) { out.push(e); continue; }
+    const key = `${e.birth_year}|${e.death_year ?? ''}`;
+    const group = byYears.get(key);
+    if (group) group.push(e);
+    else byYears.set(key, [e]);
+  }
+
+  for (const group of byYears.values()) {
+    if (group.length === 1) { out.push(group[0]); continue; }
+    const sorted = [...group].sort((a, b) => b.book_count - a.book_count);
+    const kept: { entity: TimelineEntity; name: string }[] = [];
+    for (const e of sorted) {
+      const n = norm(e.name);
+      const dup = kept.some(({ name }) => {
+        const [shorter, longer] = n.length <= name.length ? [n, name] : [name, n];
+        return (shorter.length >= 4 && longer.includes(shorter)) ||
+          (n.length >= 5 && name.length >= 5 && n.slice(0, 5) === name.slice(0, 5));
+      });
+      if (!dup) kept.push({ entity: e, name: n });
+    }
+    out.push(...kept.map((k) => k.entity));
+  }
+
+  return out;
 }
 
 interface Lane {
@@ -71,55 +132,79 @@ interface PackedEntity {
   endYear: number;
   lane: number;
   estimated: boolean; // death year was estimated
+  labelWidthPx: number;
+}
+
+function lifespanOf(e: TimelineEntity): { startYear: number; endYear: number; estimated: boolean } {
+  const startYear = e.birth_year!;
+  const endYear = e.death_year ?? startYear + 70;
+  return { startYear, endYear, estimated: e.death_year === null };
+}
+
+function labelTextOf(e: TimelineEntity, withDates: boolean): string {
+  if (!withDates || e.birth_year === null) return e.name;
+  const b = formatYear(e.birth_year);
+  const d = e.death_year !== null ? formatYear(e.death_year) : '';
+  return d ? `${e.name} ${b}–${d}` : `${e.name} b. ${b}`;
 }
 
 /**
- * Swim-lane packing: assign each entity to the first lane
- * where its start doesn't overlap the previous bar's end.
+ * First-fit lane packing. When `labeled`, the horizontal footprint of an item
+ * is max(bar, its label) so labels can never collide — the single biggest
+ * readability lever on a dense timeline.
  */
 function packEntities(
   entities: TimelineEntity[],
-  yearToX: (y: number) => number,
-  pxPerYear: number
-): PackedEntity[] {
-  // Filter to entities with at least a birth year, sort by birth
-  const withDates = entities
+  pxPerYear: number,
+  opts: { labeled: boolean; withDates: boolean; maxLanes?: number }
+): { packed: PackedEntity[]; hidden: number } {
+  const items = entities
     .filter((e) => e.birth_year !== null)
     .map((e) => {
-      const startYear = e.birth_year!;
-      let endYear = e.death_year ?? startYear + 70;
-      const estimated = e.death_year === null;
-      // Ensure minimum visual width
+      const { startYear, estimated } = lifespanOf(e);
+      let { endYear } = lifespanOf(e);
       const minYearSpan = MIN_BAR_WIDTH_PX / pxPerYear;
       if (endYear - startYear < minYearSpan) {
         endYear = startYear + minYearSpan;
       }
-      return { entity: e, startYear, endYear, estimated, lane: 0 };
+      const labelWidthPx = opts.labeled
+        ? labelTextOf(e, opts.withDates).length * F_LABEL_CHAR_PX + F_LABEL_PAD_PX
+        : 0;
+      return { entity: e, startYear, endYear, estimated, lane: 0, labelWidthPx };
     })
     .sort((a, b) => a.startYear - b.startYear);
 
   const lanes: Lane[] = [];
-  // Minimum gap in pixels between bars in the same lane
-  const gapPx = 2;
-  const gapYears = gapPx / pxPerYear;
+  const gapYears = 2 / pxPerYear;
+  const packed: PackedEntity[] = [];
+  let hidden = 0;
 
-  for (const item of withDates) {
+  for (const item of items) {
+    const footprintEnd = Math.max(
+      item.endYear,
+      item.startYear + item.labelWidthPx / pxPerYear
+    );
     let assigned = false;
     for (let i = 0; i < lanes.length; i++) {
       if (item.startYear >= lanes[i].endYear + gapYears) {
         item.lane = i;
-        lanes[i].endYear = item.endYear;
+        lanes[i].endYear = footprintEnd;
         assigned = true;
         break;
       }
     }
     if (!assigned) {
+      if (opts.maxLanes && lanes.length >= opts.maxLanes) {
+        hidden++;
+        continue;
+      }
       item.lane = lanes.length;
-      lanes.push({ endYear: item.endYear });
+      lanes.push({ endYear: footprintEnd });
     }
+    packed.push(item);
   }
 
-  return withDates;
+  return { packed, hidden };
 }
 
 function DensityHistogram({
@@ -188,7 +273,7 @@ function DensityHistogram({
                 x={x + barW / 2}
                 y={HISTOGRAM_HEIGHT - 1}
                 textAnchor="middle"
-                fontSize={9}
+                fontSize={10}
                 fill="var(--text-muted)"
                 fontFamily="var(--font-sans)"
               >
@@ -199,10 +284,64 @@ function DensityHistogram({
         );
       })}
 
-      {/* Label */}
       <text x={4} y={12} fontSize={10} fill="var(--text-muted)" fontFamily="var(--font-sans)">
-        entities per century
+        figures per century — click to zoom
       </text>
+    </g>
+  );
+}
+
+function EraRibbon({
+  viewStart,
+  viewEnd,
+  yearToX,
+  y,
+  width,
+  onEraClick,
+}: {
+  viewStart: number;
+  viewEnd: number;
+  yearToX: (y: number) => number;
+  y: number;
+  width: number;
+  onEraClick: (start: number, end: number) => void;
+}) {
+  return (
+    <g>
+      {ERAS.map((era, i) => {
+        const x = Math.max(yearToX(era.start), 0);
+        const x2 = Math.min(yearToX(era.end), width);
+        const w = x2 - x;
+        if (w <= 0) return null;
+        const labelFits = w > era.label.length * 6 + 12;
+        return (
+          <g key={era.label} style={{ cursor: 'pointer' }} onClick={() => onEraClick(era.start, era.end)}>
+            <rect
+              x={x}
+              y={y}
+              width={w}
+              height={ERA_HEIGHT}
+              fill={i % 2 === 0 ? 'var(--bg-warm)' : 'transparent'}
+              opacity={0.6}
+            />
+            {labelFits && (
+              <text
+                x={x + w / 2}
+                y={y + ERA_HEIGHT - 6}
+                textAnchor="middle"
+                fontSize={10}
+                letterSpacing={0.6}
+                fill="var(--text-muted)"
+                fontFamily="var(--font-sans)"
+                style={{ textTransform: 'uppercase' }}
+              >
+                {era.label}
+              </text>
+            )}
+          </g>
+        );
+      })}
+      <line x1={0} x2={width} y1={y + ERA_HEIGHT} y2={y + ERA_HEIGHT} stroke="var(--border-light)" strokeWidth={1} />
     </g>
   );
 }
@@ -241,9 +380,9 @@ function TimelineAxis({
             <line x1={x} x2={x} y1={y} y2={y + 6} stroke="var(--border-medium)" strokeWidth={1} />
             <text
               x={x}
-              y={y + 18}
+              y={y + 19}
               textAnchor="middle"
-              fontSize={10}
+              fontSize={11}
               fill="var(--text-muted)"
               fontFamily="var(--font-sans)"
             >
@@ -266,9 +405,14 @@ export default function Timeline({ entities, stats }: TimelineProps) {
   const [viewEnd, setViewEnd] = useState(1750);
 
   // Filters
-  const [minBooks, setMinBooks] = useState(2);
+  const [minBooks, setMinBooks] = useState(3);
   const [colorMode, setColorMode] = useState<'type' | 'books' | 'tradition'>('tradition');
   const [showTypes, setShowTypes] = useState(new Set(['person', 'concept']));
+
+  // Search
+  const [query, setQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [highlightName, setHighlightName] = useState<string | null>(null);
 
   // Tooltip
   const [tooltip, setTooltip] = useState<{
@@ -302,7 +446,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
   }, []);
 
   // Entities already have numeric birth_year/death_year from the server
-  const parsed = entities;
+  const parsed = useMemo(() => dedupeEntities(entities), [entities]);
 
   // Apply filters
   const filtered = useMemo(() => {
@@ -321,17 +465,51 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     [viewStart, pxPerYear]
   );
 
-  // Pack into swim lanes
-  const packed = useMemo(
-    () => packEntities(filtered, yearToX, pxPerYear),
-    [filtered, yearToX, pxPerYear]
+  // Room for "Name 1433–99" labels once a century spans a decent width
+  const labelsWithDates = pxPerYear > 3;
+
+  // Two tiers: the most-attested figures in the current viewport get labeled
+  // bars; everyone else renders as thin context strips below. Importance
+  // (book_count) decides who is featured — not everyone can shout at once.
+  const { featured, context } = useMemo(() => {
+    const inView = filtered.filter((e) => {
+      const { startYear, endYear } = lifespanOf(e);
+      return startYear < viewEnd && endYear > viewStart;
+    });
+    const sorted = [...inView].sort((a, b) => b.book_count - a.book_count);
+    const featuredSet = new Set<TimelineEntity>(sorted.slice(0, FEATURED_CAP));
+    // A searched-for figure is always featured
+    if (highlightName) {
+      const hit = inView.find((e) => e.name === highlightName);
+      if (hit) featuredSet.add(hit);
+    }
+    return {
+      featured: inView.filter((e) => featuredSet.has(e)),
+      context: inView.filter((e) => !featuredSet.has(e)),
+    };
+  }, [filtered, viewStart, viewEnd, highlightName]);
+
+  const featuredPack = useMemo(
+    () => packEntities(featured, pxPerYear, { labeled: true, withDates: labelsWithDates }),
+    [featured, pxPerYear, labelsWithDates]
+  );
+  const contextPack = useMemo(
+    () => packEntities(context, pxPerYear, { labeled: false, withDates: false, maxLanes: C_MAX_LANES }),
+    [context, pxPerYear]
   );
 
-  const maxLane = packed.length > 0 ? Math.max(...packed.map((p) => p.lane)) + 1 : 1;
-  const barsHeight = maxLane * LANE_HEIGHT + 20;
+  const featuredLanes = featuredPack.packed.length > 0
+    ? Math.max(...featuredPack.packed.map((p) => p.lane)) + 1 : 0;
+  const contextLanes = contextPack.packed.length > 0
+    ? Math.max(...contextPack.packed.map((p) => p.lane)) + 1 : 0;
+
   const axisY = HISTOGRAM_HEIGHT + HEADER_HEIGHT;
-  const barsY = axisY + 24;
-  const svgHeight = barsY + barsHeight + 20;
+  const eraY = axisY + 24;
+  const barsY = eraY + ERA_HEIGHT + 10;
+  const featuredHeight = featuredLanes * F_LANE_HEIGHT;
+  const dividerY = barsY + featuredHeight + 6;
+  const contextY = dividerY + (context.length > 0 ? 22 : 0);
+  const svgHeight = contextY + contextLanes * C_LANE_HEIGHT + 24;
 
   // Max book count for gradient coloring
   const maxBookCount = useMemo(
@@ -353,6 +531,26 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     const b = Math.round(125 + t * (58 - 125));
     return `rgb(${r},${g},${b})`;
   }
+
+  // Search: rank name matches by attestation, fly to the pick
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (q.length < 2) return [];
+    return parsed
+      .filter((e) => e.birth_year !== null && e.name.toLowerCase().includes(q))
+      .sort((a, b) => b.book_count - a.book_count)
+      .slice(0, 8);
+  }, [parsed, query]);
+
+  const flyTo = useCallback((e: TimelineEntity) => {
+    const { startYear, endYear } = lifespanOf(e);
+    const pad = Math.max(60, Math.round((endYear - startYear) * 1.5));
+    setViewStart(startYear - pad);
+    setViewEnd(endYear + pad);
+    setHighlightName(e.name);
+    setQuery('');
+    setSearchOpen(false);
+  }, []);
 
   // Wheel: Ctrl/Cmd+wheel = zoom, horizontal gestures = pan, plain vertical = scroll
   const handleWheel = useCallback(
@@ -496,6 +694,32 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     setViewEnd(end);
   }, []);
 
+  const handleEraClick = useCallback((start: number, end: number) => {
+    setViewStart(start);
+    setViewEnd(end);
+  }, []);
+
+  const openEntity = useCallback((e: TimelineEntity) => {
+    if (dragRef.current?.moved || touchRef.current?.moved || didScrollRef.current) return;
+    window.open(`/encyclopedia/${encodeURIComponent(e.name)}`, '_blank');
+  }, []);
+
+  const hoverHandlers = useCallback((p: PackedEntity) => ({
+    onMouseEnter: (e: React.MouseEvent<SVGRectElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const container = containerRef.current?.getBoundingClientRect();
+      if (container) {
+        setTooltip({
+          entity: p.entity,
+          x: rect.left - container.left + rect.width / 2,
+          y: rect.top - container.top - 8,
+        });
+      }
+    },
+    onMouseLeave: () => setTooltip(null),
+    onClick: () => openEntity(p.entity),
+  }), [openEntity]);
+
   return (
     <div className="flex flex-col h-[calc(100vh-64px)]" style={{ background: 'var(--bg-cream)' }}>
       {/* Controls */}
@@ -516,6 +740,45 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         </Link>
 
         <span className="w-px h-5" style={{ background: 'var(--border-light)' }} />
+
+        {/* Search */}
+        <div className="relative">
+          <input
+            type="search"
+            value={query}
+            placeholder="Find a figure…"
+            onChange={(e) => { setQuery(e.target.value); setSearchOpen(true); }}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchResults.length > 0) flyTo(searchResults[0]);
+              if (e.key === 'Escape') { setQuery(''); setSearchOpen(false); }
+            }}
+            className="rounded px-2 py-1 text-sm w-44"
+            style={{ border: '1px solid var(--border-light)', color: 'var(--text-secondary)', background: 'white' }}
+          />
+          {searchOpen && searchResults.length > 0 && (
+            <div
+              className="absolute z-20 mt-1 w-72 rounded-lg shadow-lg overflow-hidden"
+              style={{ background: 'white', border: '1px solid var(--border-light)' }}
+            >
+              {searchResults.map((e) => (
+                <button
+                  key={`${e.name}-${e.birth_year}`}
+                  className="w-full text-left px-3 py-1.5 text-sm hover:bg-stone-100 flex items-baseline gap-2"
+                  onMouseDown={(ev) => { ev.preventDefault(); flyTo(e); }}
+                >
+                  <span style={{ color: 'var(--text-primary)' }}>{e.name}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    {e.birth_year !== null ? formatYear(e.birth_year) : ''} · {e.book_count} books
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <span className="w-px h-5 mx-1" style={{ background: 'var(--border-light)' }} />
 
         {(['person', 'concept'] as const).map((type) => {
           const active = showTypes.has(type);
@@ -579,9 +842,9 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         <span className="w-px h-5 mx-1 hidden sm:block" style={{ background: 'var(--border-light)' }} />
 
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-          {filtered.length.toLocaleString('en-US')} / {parsed.length.toLocaleString('en-US')} entities
+          {featured.length} named of {(featured.length + context.length).toLocaleString('en-US')} in view
           &nbsp;&middot;&nbsp;
-          {viewStart}–{viewEnd}
+          {formatYear(viewStart)}–{formatYear(viewEnd)}
         </span>
 
         <div className="ml-auto flex gap-1 flex-wrap">
@@ -715,65 +978,120 @@ export default function Timeline({ entities, stats }: TimelineProps) {
           {/* Axis */}
           <TimelineAxis viewStart={viewStart} viewEnd={viewEnd} yearToX={yearToX} y={axisY} />
 
-          {/* Lifespan bars */}
+          {/* Named eras */}
+          <EraRibbon
+            viewStart={viewStart}
+            viewEnd={viewEnd}
+            yearToX={yearToX}
+            y={eraY}
+            width={svgWidth}
+            onEraClick={handleEraClick}
+          />
+
+          {/* Featured tier: label above a thin lifespan bar */}
           <g transform={`translate(0, ${barsY})`}>
-            {packed.map((p, i) => {
+            {featuredPack.packed.map((p) => {
               const x = yearToX(p.startYear);
               const x2 = yearToX(p.endYear);
               const w = Math.max(x2 - x, MIN_BAR_WIDTH_PX);
-              const y = p.lane * LANE_HEIGHT;
+              const laneY = p.lane * F_LANE_HEIGHT;
               const color = getBarColor(p.entity);
+              const isHighlight = p.entity.name === highlightName;
 
-              // Only render visible bars
+              if (x + Math.max(w, p.labelWidthPx) < 0 || x > svgWidth) return null;
+
+              // Slide the label to the viewport edge only while the visible
+              // part of the bar can still hold it — otherwise labels from
+              // off-screen bars pile up at x=0 and overlap their lane-mates.
+              const labelX = x < 2 && x2 - 2 > p.labelWidthPx ? 2 : x;
+
+              return (
+                <g key={`${p.entity.name}-${p.startYear}-${p.lane}`}>
+                  {isHighlight && (
+                    <rect
+                      x={x - 4}
+                      y={laneY - 2}
+                      width={Math.max(w, p.labelWidthPx) + 8}
+                      height={F_LANE_HEIGHT}
+                      fill="var(--accent-rust)"
+                      opacity={0.12}
+                      rx={4}
+                    />
+                  )}
+                  <text
+                    x={labelX}
+                    y={laneY + F_LABEL_SIZE}
+                    fontSize={F_LABEL_SIZE}
+                    fill="var(--text-primary)"
+                    fontFamily="var(--font-sans)"
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    {p.entity.name}
+                    {labelsWithDates && p.entity.birth_year !== null && (
+                      <tspan fill="var(--text-muted)" dx={5} fontSize={10}>
+                        {formatYear(p.entity.birth_year)}
+                        {p.entity.death_year !== null ? `–${formatYear(p.entity.death_year)}` : ''}
+                      </tspan>
+                    )}
+                  </text>
+                  <rect
+                    x={x}
+                    y={laneY + F_LABEL_SIZE + 4}
+                    width={w}
+                    height={F_BAR_HEIGHT}
+                    fill={color}
+                    opacity={p.estimated ? 0.45 : 0.9}
+                    rx={2}
+                  />
+                  {/* Full-lane hit target so hover/click never needs pixel aim */}
+                  <rect
+                    x={x}
+                    y={laneY}
+                    width={Math.max(w, p.labelWidthPx)}
+                    height={F_LANE_HEIGHT}
+                    fill="transparent"
+                    style={{ cursor: 'pointer' }}
+                    {...hoverHandlers(p)}
+                  />
+                </g>
+              );
+            })}
+          </g>
+
+          {/* Divider between tiers */}
+          {context.length > 0 && (
+            <g transform={`translate(0, ${dividerY})`}>
+              <line x1={0} x2={svgWidth} y1={0} y2={0} stroke="var(--border-light)" strokeWidth={1} />
+              <text x={4} y={14} fontSize={10} fill="var(--text-muted)" fontFamily="var(--font-sans)">
+                {context.length.toLocaleString('en-US')} more figures in this range — zoom in or raise Min books to name them
+                {contextPack.hidden > 0 && ` (${contextPack.hidden.toLocaleString('en-US')} beyond lane limit)`}
+              </text>
+            </g>
+          )}
+
+          {/* Context tier: thin unlabeled strips, hover for identity */}
+          <g transform={`translate(0, ${contextY})`}>
+            {contextPack.packed.map((p) => {
+              const x = yearToX(p.startYear);
+              const x2 = yearToX(p.endYear);
+              const w = Math.max(x2 - x, MIN_BAR_WIDTH_PX);
+              const laneY = p.lane * C_LANE_HEIGHT;
+
               if (x + w < 0 || x > svgWidth) return null;
 
               return (
-                <g key={i}>
-                  <rect
-                    x={x}
-                    y={y}
-                    width={w}
-                    height={BAR_HEIGHT}
-                    fill={color}
-                    opacity={0.8}
-                    rx={1.5}
-                    style={{ cursor: 'pointer' }}
-                    strokeDasharray={p.estimated ? '3 2' : undefined}
-                    stroke={p.estimated ? color : undefined}
-                    strokeWidth={p.estimated ? 0.5 : undefined}
-                    onMouseEnter={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const container = containerRef.current?.getBoundingClientRect();
-                      if (container) {
-                        setTooltip({
-                          entity: p.entity,
-                          x: rect.left - container.left + rect.width / 2,
-                          y: rect.top - container.top - 8,
-                        });
-                      }
-                    }}
-                    onMouseLeave={() => setTooltip(null)}
-                    onClick={() => {
-                      if (dragRef.current?.moved || touchRef.current?.moved || didScrollRef.current) return;
-                      window.open(`/encyclopedia/${encodeURIComponent(p.entity.name)}`, '_blank');
-                    }}
-                  />
-                  {/* Show name if bar is wide enough */}
-                  {w > 60 && (
-                    <text
-                      x={x + 4}
-                      y={y + BAR_HEIGHT - 3}
-                      fontSize={10}
-                      fill="white"
-                      fontFamily="var(--font-sans)"
-                      style={{ pointerEvents: 'none' }}
-                    >
-                      {p.entity.name.length > w / 6
-                        ? p.entity.name.slice(0, Math.floor(w / 6)) + '...'
-                        : p.entity.name}
-                    </text>
-                  )}
-                </g>
+                <rect
+                  key={`${p.entity.name}-${p.startYear}-${p.lane}`}
+                  x={x}
+                  y={laneY}
+                  width={w}
+                  height={C_BAR_HEIGHT}
+                  fill={getBarColor(p.entity)}
+                  opacity={0.45}
+                  rx={1}
+                  style={{ cursor: 'pointer' }}
+                  {...hoverHandlers(p)}
+                />
               );
             })}
           </g>
@@ -817,10 +1135,10 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         )}
 
         {/* Empty state */}
-        {filtered.length === 0 && (
+        {featured.length === 0 && context.length === 0 && (
           <div className="absolute inset-0 flex items-center justify-center">
             <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              No entities match the current filters
+              No figures match the current filters
             </p>
           </div>
         )}
