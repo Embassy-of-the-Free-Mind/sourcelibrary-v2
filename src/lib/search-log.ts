@@ -6,7 +6,7 @@
  * and /api/search/semantic directly — browser users, scrapers, partner sites.
  *
  * Indexes (created lazily, idempotent):
- *   - { ts: 1 } TTL 90 days
+ *   - { ts: 1 } plain (NO TTL — retention is manual per #2976 decision 2026-07-05)
  *   - { route: 1, ts: -1 }
  *   - { ip_hash: 1, ts: -1 }
  *
@@ -30,12 +30,17 @@ async function ensureIndexes() {
     const db = await getDb();
     const col = db.collection(COLLECTION);
     await Promise.all([
-      col.createIndex({ ts: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 90 }),
+      // Plain index — deliberately NO expireAfterSeconds (#2976, 2026-07-05).
+      // Pruning is manual via scripts/maintenance/prune-telemetry.mjs.
+      col.createIndex({ ts: 1 }),
       col.createIndex({ route: 1, ts: -1 }),
       col.createIndex({ ip_hash: 1, ts: -1 }),
     ]);
-  } catch {
-    indexesEnsured = false;
+  } catch (e) {
+    // Code 85 (IndexOptionsConflict): a legacy TTL index may still exist on
+    // the same key (search_queries.ts_1 is TTL in prod until a human swaps it
+    // — see #2976). Treat as ensured so we don't retry on every write.
+    if ((e as { code?: number } | null)?.code !== 85) indexesEnsured = false;
   }
 }
 

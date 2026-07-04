@@ -2,7 +2,8 @@
  * Append-only usage log for the public-API gate. One doc per gated call.
  *
  * Indexes (created lazily on first write — idempotent, MongoDB no-ops if present):
- *   - { ts: 1 } TTL 90 days for raw events
+ *   - { ts: 1 } plain (NO TTL — retention is manual per #2976 decision 2026-07-05;
+ *     prune with scripts/maintenance/prune-telemetry.mjs on explicit request only)
  *   - { user_id: 1, ts: -1 } for "what did this user do" views
  *   - { api_key_id: 1, ts: -1 } for "what is this key being used for"
  *   - { route: 1, ts: -1 } for hot-route analysis
@@ -27,14 +28,21 @@ async function ensureIndexes() {
     const db = await getDb();
     const col = db.collection(COLLECTION);
     await Promise.all([
-      col.createIndex({ ts: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 90 }),
+      // Plain index — deliberately NO expireAfterSeconds. Automated retention
+      // was removed per #2976 (decision 2026-07-05); pruning is manual via
+      // scripts/maintenance/prune-telemetry.mjs. Do not re-add a TTL here.
+      col.createIndex({ ts: 1 }),
       col.createIndex({ user_id: 1, ts: -1 }),
       col.createIndex({ api_key_id: 1, ts: -1 }),
       col.createIndex({ ip_hash: 1, ts: -1 }),
       col.createIndex({ route: 1, ts: -1 }),
     ]);
-  } catch {
-    indexesEnsured = false;
+  } catch (e) {
+    // Code 85 (IndexOptionsConflict): the legacy TTL index still exists on the
+    // same key until the post-deploy swap (#2976 runbook,
+    // scripts/maintenance/swap-ttl-to-plain-indexes.mjs) runs. Treat as ensured
+    // so we don't re-attempt createIndex on every single write in the interim.
+    if ((e as { code?: number } | null)?.code !== 85) indexesEnsured = false;
   }
 }
 

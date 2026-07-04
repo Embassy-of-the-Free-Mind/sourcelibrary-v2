@@ -297,6 +297,7 @@ async function main() {
     results.forEach((r, i) => { r._id = insertResult.insertedIds[i]; });
 
     // Ensure TTL index exists (auto-delete after 30 days)
+    // Deliberate heartbeat retention, kept per #2976 decision 2026-07-05.
     await checksCol.createIndex(
       { checked_at: 1 },
       { expireAfterSeconds: 30 * 24 * 3600, background: true }
