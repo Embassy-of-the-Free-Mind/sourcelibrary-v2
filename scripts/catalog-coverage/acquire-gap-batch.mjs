@@ -117,11 +117,14 @@ async function processWork(w) {
     const have = await books.findOne({ $and: [{ $or: [{ author: new RegExp(surname, 'i') }, { title: new RegExp(surname, 'i') }] }, { title: new RegExp(tk.join('|'), 'i') }] }, { projection: { _id: 1 } });
     if (have) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'held', done_at: new Date() } }); return 'held'; }
   }
-  let cands = await iaResolve(w);
-  if (!cands.length) cands = await eraraResolve(w);
-  if (!cands.length) cands = await catalogResolve(w);
+  // Combine candidates from ALL sources — don't stop at the first non-empty one. IA search
+  // usually returns weak candidates that already failed verify, which would starve the
+  // higher-precision German-library catalog (catalogResolve) of a chance. Gather IA + catalog
+  // (+ e-rara), then let verify() pick the true match from the union.
+  const [ia, cat, er] = await Promise.all([iaResolve(w), catalogResolve(w), eraraResolve(w)]);
+  const cands = [...ia, ...cat, ...er];
   if (!cands.length) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-source', done_at: new Date() } }); return 'no-source'; }
-  const v = await verify(w, cands.slice(0, 6));
+  const v = await verify(w, cands.slice(0, 9));
   if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', done_at: new Date() } }); return 'no-match'; }
   if (DRY) return 'acquired';
   const bookId = await importWork(w, v);
