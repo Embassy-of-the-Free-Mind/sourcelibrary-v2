@@ -6,6 +6,7 @@ Source Library is a digital library of historical primary sources — alchemy, H
 When making product decisions, lead with: who reads this, what experience are they having, and does this serve the goal of putting primary sources into people's hands. Technical choices flow from that. The CRITICAL sections below are scar tissue from real incidents — read them, but don't mistake them for the point of the project.
 
 ## Development Workflow — CRITICAL
+- **Never combine `export const revalidate = false` + a fallible fetch (Mongo/Supabase/fetch) + a `try/catch` that renders a fallback.** One bad render caches that fallback (an "unavailable" message, or zeroed/empty stats) permanently, until the next deploy — this is how `/explore/timeline` froze (#2973) and how `/explore/map` froze before it. If a static page's data can fail, let the error **throw** (ISR then serves the last good page on revalidation failure — `src/app/error.tsx` handles cold failures) and give the page a real numeric `revalidate` window instead of `false`. Audited and fixed across the app in #2974; don't reintroduce the pattern on a new page.
 - **Feature branches off `main`.** One branch per feature/task: `feat/ai-search`, `fix/cover-thumbnails`, etc. No long-running dev branches.
 - **Create a branch via worktree:** Use `EnterWorktree` at session start — it creates an isolated checkout with its own branch. Do NOT `git checkout -b` in the main directory (see Multi-Session Awareness above).
 - **PR when done:** `gh pr create --base main`. Keep PRs focused (5-15 commits). Small PRs merge fast.

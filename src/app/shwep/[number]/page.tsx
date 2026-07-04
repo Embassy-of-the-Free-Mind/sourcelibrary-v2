@@ -6,7 +6,9 @@ import remarkGfm from 'remark-gfm';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
 import type { MatchedBook } from '../shwep-data';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 
 interface Props {
   params: Promise<{ number: string }>;
@@ -14,12 +16,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { number } = await params;
-  let ep;
-  try {
-    ep = await getEpisodeData(parseInt(number));
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const ep = await getEpisodeData(parseInt(number));
   if (!ep) return { title: 'Episode Not Found - SHWEP Reading Room', robots: { index: false, follow: true } };
   return {
     title: `${ep.title} - SHWEP Reading Room`,

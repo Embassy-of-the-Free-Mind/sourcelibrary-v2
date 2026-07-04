@@ -4,7 +4,9 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a zeroed-out fallback forever
+// (e.g. if the aggregation below times out) until the next deploy.
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'AI-Discovered Topic Clusters | Source Library',
@@ -73,11 +75,12 @@ async function fetchTopics(): Promise<{ topics: TopicSummary[]; totalBooks: numb
     { $sort: { count: -1 as const } },
   ];
 
+  // No .catch() here: letting a timeout throw keeps ISR serving the last good
+  // page instead of permanently caching a "0 books, 0 topics" render.
   const results = await db
     .collection('books')
     .aggregate(pipeline, { allowDiskUse: true, maxTimeMS: 30000 })
-    .toArray()
-    .catch(() => [] as Record<string, unknown>[]);
+    .toArray();
 
   let totalBooks = 0;
   const topics: TopicSummary[] = results.map((r) => {

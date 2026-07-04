@@ -3,7 +3,8 @@ import { getShwepIndexData } from './shwep-data';
 import ShwepClient from './ShwepClient';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever.
+export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
@@ -17,18 +18,12 @@ export const metadata: Metadata = {
   },
 };
 
+// No try/catch: a thrown error during ISR revalidation keeps serving the
+// last good page, while catching it here would render (and cache) an
+// all-zero episode index for the full revalidate window. Cold failures land
+// on src/app/error.tsx.
 export default async function ShwepPage() {
-  let data;
-  try {
-    data = await getShwepIndexData();
-  } catch (err) {
-    console.error('SHWEP data fetch failed:', err);
-    data = {
-      periods: [],
-      galleryImages: [],
-      stats: { totalEpisodes: 0, episodesWithBooks: 0, totalMatches: 0, totalBooksInCollection: 0 },
-    };
-  }
+  const data = await getShwepIndexData();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">

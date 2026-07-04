@@ -7,7 +7,9 @@ import { getReadDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the "Temporarily Unavailable" / empty-list render below).
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',
@@ -36,8 +38,12 @@ interface TraditionCollection {
   hero_image: string | null;
 }
 
+// No outer try/catch: letting a fetch failure throw here keeps ISR serving
+// the last good page instead of permanently caching an empty tradition list.
+// (Per-tradition enrichment below still uses Promise.allSettled + narrow
+// .catch()s so one slow tradition doesn't sink the whole list — that's
+// graceful degradation of a secondary stat, not the dangerous pattern.)
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
-  try {
   const db = await Promise.race([
     getReadDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
@@ -111,10 +117,6 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
   const totalBooks = enriched.reduce((sum, t) => sum + t.book_count, 0);
 
   return { traditions: enriched, totalBooks };
-  } catch (e) {
-    console.warn('[Sacred Texts portal] Failed to load:', (e as Error).message);
-    return { traditions: [], totalBooks: 0 };
-  }
 }
 
 function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
@@ -153,23 +155,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
 }
 
 export default async function SacredTextsPortal() {
-  let data: { traditions: TraditionCollection[]; totalBooks: number };
-  try {
-    data = await getTraditions();
-  } catch (err) {
-    console.error('[Sacred Texts portal] Failed to load:', err instanceof Error ? err.message : err);
-    return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-center max-w-md px-6">
-          <h1 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h1>
-          <p className="text-secondary mb-6">Please try again in a moment.</p>
-          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
-        </div>
-      </div>
-    );
-  }
-
-  const { traditions, totalBooks } = data;
+  const { traditions, totalBooks } = await getTraditions();
   const traditionsWithBooks = traditions
     .filter(t => t.book_count > 0)
     .sort((a, b) => b.scripture_count - a.scripture_count || b.book_count - a.book_count);

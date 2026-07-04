@@ -6,7 +6,9 @@ import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 export const dynamicParams = true;
 
 interface PageProps {
@@ -88,12 +90,9 @@ async function getArtist(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  let data: Awaited<ReturnType<typeof getArtist>>;
-  try {
-    data = await getArtist(slug);
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const data = await getArtist(slug);
   if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   return {
     title: `${data.name} — Source Library Visual Art`,

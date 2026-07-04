@@ -6,7 +6,9 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import { isHiddenBook } from '@/lib/book-access';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 export const dynamicParams = true;
 
 interface PageProps {
@@ -108,12 +110,9 @@ async function getArtwork(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  let data: Awaited<ReturnType<typeof getArtwork>>;
-  try {
-    data = await getArtwork(slug);
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const data = await getArtwork(slug);
   if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   const { artwork } = data;
   return {

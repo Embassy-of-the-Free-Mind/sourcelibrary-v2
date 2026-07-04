@@ -6,7 +6,8 @@ import { CenturyChart } from './DataCharts';
 
 // ISR: rebuild every 10 minutes. The page reads from a pre-computed snapshot
 // so rendering is fast — no heavy Atlas aggregations at request time.
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever.
+export const revalidate = 600;
 export const maxDuration = 15;
 
 export const metadata: Metadata = {
@@ -154,12 +155,11 @@ export default async function DataPage({
 }) {
   const params = await searchParams;
   const showAdmin = params.admin === 'true';
-  let data: LibraryData;
-  try {
-    data = await fetchLibraryData();
-  } catch {
-    data = EMPTY_DATA;
-  }
+  // No try/catch: a thrown error during ISR revalidation keeps serving the
+  // last good page, while catching it here would render (and cache) an
+  // all-zero stats page for the full revalidate window. Cold failures land
+  // on src/app/error.tsx.
+  const data = await fetchLibraryData();
 
   const uniqueLanguages = data.languages.length;
   const earliestCentury = data.centuries[0]?.label ?? '';

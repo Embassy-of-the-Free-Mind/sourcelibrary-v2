@@ -7,7 +7,9 @@ import ConversationView from '@/components/research/ConversationView';
 import type { CuratorSession, BookRef } from '@/lib/api-client/types/research';
 import Link from 'next/link';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad-render fallback forever
+// (e.g. the noindex metadata below) until the next deploy.
+export const revalidate = 21600;
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -15,16 +17,13 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  let session;
-  try {
-    const db = await getReadDb();
-    session = await db.collection('curator_sessions').findOne(
-      { id },
-      { projection: { title: 1, themes: 1, date: 1 } }
-    );
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // No try/catch: letting a fetch failure throw here keeps ISR serving the
+  // last good page instead of permanently caching noindex fallback metadata.
+  const db = await getReadDb();
+  const session = await db.collection('curator_sessions').findOne(
+    { id },
+    { projection: { title: 1, themes: 1, date: 1 } }
+  );
 
   if (!session) return { title: 'Session Not Found' };
 
