@@ -3,6 +3,22 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
+// No maxDuration was previously set (defaulted to the plan default). The
+// mode=timeline $group over the full 2.45M-doc catalog_coverage collection
+// measured >120s uncapped, so an explicit, tight budget is needed here —
+// the query-time guard below (TIMELINE_QUERY_TIMEOUT_MS) is what actually
+// stops the aggregation; this just bounds the function itself.
+export const maxDuration = 15;
+
+// Kept well below maxDuration so Mongo aborts the aggregation and we can
+// return a clean 503 before Vercel force-kills the function (at which point
+// the aggregation would keep running server-side on Atlas).
+const TIMELINE_QUERY_TIMEOUT_MS = 10_000;
+
+function isMongoTimeout(err: unknown): boolean {
+  const e = err as { codeName?: string; code?: number } | null;
+  return e?.codeName === 'MaxTimeMSExpired' || e?.code === 50;
+}
 
 /**
  * Catalog Coverage API — query the unified USTC coverage database.
@@ -38,8 +54,17 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: `Unknown mode: ${mode}` }, { status: 400 });
     }
   } catch (err) {
+    if (isMongoTimeout(err)) {
+      return NextResponse.json(
+        { error: 'Catalog coverage data is temporarily unavailable — the database is under load. Try again shortly.' },
+        { status: 503, headers: { 'Cache-Control': 'no-store' } },
+      );
+    }
     console.error('Catalog coverage API error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } },
+    );
   }
 }
 
@@ -169,7 +194,7 @@ async function handleTimeline(db: any, params: URLSearchParams) {
       }
     },
     { $sort: { _id: 1 } },
-  ]).toArray();
+  ], { maxTimeMS: TIMELINE_QUERY_TIMEOUT_MS }).toArray();
 
   return NextResponse.json({
     language: language || 'all',
@@ -182,6 +207,14 @@ async function handleTimeline(db: any, params: URLSearchParams) {
       pct_translated: d.editions > 0 ? +(d.with_translation / d.editions * 100).toFixed(1) : 0,
       in_source_library: d.in_source_library,
     })),
+  }, {
+    // Full-collection $group over 2.45M docs — cache the result at the edge
+    // so repeat traffic doesn't re-trigger the scan. Only set on success;
+    // the 503 timeout path above is explicitly no-store.
+    headers: {
+      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'CDN-Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+    },
   });
 }
 
