@@ -99,7 +99,11 @@ async function verify(w, cands) {
   try { const r = await withTimeout(ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0, maxOutputTokens: 60 } }), 30000, 'verify'); const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
 }
 async function importWork(w, hit) {
-  const colls = w.category === 'witch-trials' ? ['witchcraft'] : ['astrology', 'natural-philosophy'];
+  // Collections by seed category. Unknown categories (e.g. broad Greek classics) get NO
+  // collection — imported hidden and curated later — rather than being forced into
+  // astrology/natural-philosophy where they don't belong.
+  const COLL_MAP = { 'witch-trials': ['witchcraft'], 'mission': ['astrology', 'natural-philosophy'] };
+  const colls = COLL_MAP[w.category] || [];
   const ep = hit.src === 'ia' ? '/api/import/ia' : '/api/import/iiif';
   // Pass the USTC language (authoritative) — the IIIF import otherwise stores 'Unknown',
   // which keeps genuine Latin acquisitions out of the Latin filter / held count.
