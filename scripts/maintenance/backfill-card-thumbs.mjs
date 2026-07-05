@@ -52,6 +52,14 @@ async function putR2(key, body) {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+// Some stored URLs carry a literal newline from a past run where R2_PUBLIC_URL
+// had a trailing \n (see lesson_env_newline_phantom_sync_success). Strip all
+// whitespace so the fetch + key derivation see a clean URL. Empty → null.
+function cleanUrl(url) {
+  const u = (url || '').replace(/\s+/g, '').trim();
+  return u || null;
+}
+
 // Turn an extracted/thumb URL into the R2 object key for its `-card.jpg` sibling.
 // gallery URLs look like `${R2_PUBLIC_URL}/gallery/{book}/{page}-{idx}[-thumb].jpg?v=...`
 function cardKeyFrom(url) {
@@ -100,9 +108,11 @@ async function main() {
 
   const startTime = Date.now();
   const { done, failed, errors } = await processPool(items, CONCURRENCY, async (g) => {
-    const key = cardKeyFrom(g.extracted_url);
-    if (!key) throw new Error(`unmappable url: ${g.extracted_url?.slice(0, 60)}`);
-    const src = await fetchBuffer(g.extracted_url);
+    const srcUrl = cleanUrl(g.extracted_url);
+    if (!srcUrl) throw new Error('empty extracted_url (no crop to downscale)');
+    const key = cardKeyFrom(srcUrl);
+    if (!key) throw new Error(`unmappable url: ${srcUrl.slice(0, 60)}`);
+    const src = await fetchBuffer(srcUrl);
     const card = await sharp(src).resize(600, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 72 }).toBuffer();
     const cardUrl = (await putR2(key, card)) + `?v=${startTime}`;
 
