@@ -33,40 +33,39 @@ const BATCH_KEYS = [
 ].filter(Boolean);
 const UNIQUE_KEYS = [...new Set(BATCH_KEYS)];
 
-// English modernization prompt (simplified — real one fetched from DB)
-const ENGLISH_MODERNIZATION_PROMPT = `You are a specialist in Early Modern English literature. Modernize the following Early Modern English text into clear, readable Modern English.
-
-Rules:
-- Update archaic spelling, grammar, and vocabulary to modern equivalents
-- Preserve the author's meaning, tone, and style as closely as possible
-- Keep proper nouns unchanged
-- Maintain paragraph structure
-- Do not add commentary or notes — output only the modernized text`;
+// Prompts are loaded from the DB `prompts` collection (single source of truth,
+// same as pipeline-orchestrator / translate-worker). The returned promptRef is
+// stamped onto batch_jobs so batch-collector writes true provenance
+// (prompt_id/hash/name/version) onto each page.
+const _promptCache = new Map();
 
 async function getTranslationPrompt(db, language) {
   const isEnglish = language?.toLowerCase() === 'english';
+  const type = isEnglish ? 'english_modernization' : 'translation';
 
-  if (isEnglish) {
-    return { text: ENGLISH_MODERNIZATION_PROMPT, isEnglish: true };
+  let prompt = _promptCache.get(type);
+  if (!prompt) {
+    prompt = await db.collection('prompts').findOne(
+      { type, is_default: true },
+      { sort: { version: -1 } }
+    );
+    if (!prompt?.content) throw new Error(`No default ${type} prompt found in DB`);
+    _promptCache.set(type, prompt);
   }
 
-  // Fetch from prompts collection
-  const prompt = await db.collection('prompts').findOne({
-    type: 'translation',
-    is_default: true,
-  });
+  const filled = prompt.content
+    .replace(/\{source_language\}/g, language || 'the original language')
+    .replace(/\{target_language\}/g, 'English');
 
-  if (prompt?.text) {
-    const filled = prompt.text
-      .replace(/\{sourceLanguage\}/g, language || 'the original language')
-      .replace(/\{targetLanguage\}/g, 'English');
-    return { text: filled, isEnglish: false };
-  }
-
-  // Fallback
   return {
-    text: `Translate the following ${language || ''} text into English. Preserve the original meaning and scholarly tone. Output only the translation.`,
-    isEnglish: false,
+    text: filled,
+    isEnglish,
+    promptRef: {
+      id: prompt._id?.toString(),
+      name: prompt.name,
+      version: String(prompt.version ?? 1),
+      content_hash: prompt.content_hash,
+    },
   };
 }
 
@@ -236,7 +235,10 @@ async function main() {
           source_language: language,
           target_language: 'English',
           force: true,
-          prompt_version: 'v5.2026-02',
+          prompt_version: promptInfo.promptRef.version,
+          prompt_id: promptInfo.promptRef.id,
+          prompt_hash: promptInfo.promptRef.content_hash,
+          prompt_name: promptInfo.promptRef.name,
           page_ids: batchRequests.map(r => r.key),
           page_count: batchRequests.length,
           status: job.state,
