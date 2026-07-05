@@ -87,6 +87,8 @@ async function fetchTimelineDataCanonical() {
           wikidata_birth_date: 1,
           wikidata_death_date: 1,
           languages: 1,
+          tradition: 1,
+          occupation_groups: 1,
         },
         maxTimeMS: 15000,
       },
@@ -152,7 +154,12 @@ async function fetchTimelineDataCanonical() {
         book_count: (e.book_count as number) || 0,
         total_mentions: (e.total_mentions as number) || 0,
         description: (e.description as string) || undefined,
-        tradition: traditionFromLanguages(e.languages as Record<string, number> | undefined),
+        // Entity-level tradition (who they were) wins over the book-language
+        // rollup (which languages our copies are in) — fixes Plato-in-Latin
+        // rendering as 'european'. Null/absent → same fallback as before.
+        tradition: (e.tradition as string | null)
+          || traditionFromLanguages(e.languages as Record<string, number> | undefined),
+        occupations: (e.occupation_groups as string[] | undefined) ?? [],
       };
     })
     .filter(Boolean) as {
@@ -164,6 +171,7 @@ async function fetchTimelineDataCanonical() {
     total_mentions: number;
     description?: string;
     tradition: string;
+    occupations: string[];
   }[];
 
   return {
