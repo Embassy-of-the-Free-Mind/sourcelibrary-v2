@@ -12,6 +12,8 @@ export interface TimelineEntity {
   total_mentions: number;
   description?: string;
   tradition?: string;
+  /** Coarse occupation-group keys (canonical read path only; absent on legacy). */
+  occupations?: string[];
 }
 
 interface TimelineProps {
@@ -38,7 +40,7 @@ const TYPE_COLORS: Record<string, string> = {
 // on the cream surface); keep legend order in sync with this object's order.
 const TRADITION_COLORS: Record<string, { color: string; label: string }> = {
   european:     { color: '#8b8178', label: 'European' },
-  classical:    { color: '#a16207', label: 'Classical Greek' },
+  classical:    { color: '#a16207', label: 'Classical' },
   islamic:      { color: '#15803d', label: 'Islamic' },
   indian:       { color: '#c2410c', label: 'Indian' },
   jewish:       { color: '#2563eb', label: 'Jewish' },
@@ -60,6 +62,20 @@ const FEATURED_CAP = 120;    // max labeled figures per viewport
 const C_BAR_HEIGHT = 4;
 const C_LANE_HEIGHT = 7;
 const C_MAX_LANES = 40;
+
+// Display labels for occupation-group keys emitted by the canonical build
+// (scripts/lib/wikidata-tradition-occupation.mjs). Key order = display order.
+const OCCUPATION_LABELS: Record<string, string> = {
+  philosopher: 'Philosophers',
+  theologian: 'Theologians & clergy',
+  mystic: 'Mystics & alchemists',
+  physician: 'Physicians',
+  scientist: 'Scientists & mathematicians',
+  writer: 'Writers & poets',
+  scholar: 'Scholars & historians',
+  ruler: 'Rulers & statesmen',
+  artist: 'Artists & printers',
+};
 
 const HISTOGRAM_HEIGHT = 80;
 const HEADER_HEIGHT = 30;
@@ -406,6 +422,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
 
   // Filters
   const [minBooks, setMinBooks] = useState(3);
+  const [occupation, setOccupation] = useState('all');
   const [colorMode, setColorMode] = useState<'type' | 'books' | 'tradition'>('tradition');
   const [showTypes, setShowTypes] = useState(new Set(['person', 'concept']));
 
@@ -449,14 +466,23 @@ export default function Timeline({ entities, stats }: TimelineProps) {
   const parsed = useMemo(() => dedupeEntities(entities), [entities]);
 
   // Apply filters
+  // Occupation groups present in the data (empty on the legacy read path,
+  // which hides the control entirely).
+  const occupationOptions = useMemo(() => {
+    const present = new Set<string>();
+    for (const e of parsed) for (const o of e.occupations || []) present.add(o);
+    return Object.keys(OCCUPATION_LABELS).filter((k) => present.has(k));
+  }, [parsed]);
+
   const filtered = useMemo(() => {
     return parsed.filter((e) => {
       if (!showTypes.has(e.type)) return false;
       if (e.book_count < minBooks) return false;
       if (e.birth_year === null) return false;
+      if (occupation !== 'all' && !(e.occupations || []).includes(occupation)) return false;
       return true;
     });
-  }, [parsed, showTypes, minBooks]);
+  }, [parsed, showTypes, minBooks, occupation]);
 
   const svgWidth = containerWidth;
   const pxPerYear = svgWidth / (viewEnd - viewStart);
@@ -822,6 +848,26 @@ export default function Timeline({ entities, stats }: TimelineProps) {
             ))}
           </select>
         </label>
+
+        {occupationOptions.length > 0 && (
+          <>
+            <span className="w-px h-5 mx-1" style={{ background: 'var(--border-light)' }} />
+            <label className="flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
+              Category
+              <select
+                value={occupation}
+                onChange={(e) => setOccupation(e.target.value)}
+                className="rounded px-1.5 py-0.5 text-sm"
+                style={{ border: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}
+              >
+                <option value="all">All</option>
+                {occupationOptions.map((k) => (
+                  <option key={k} value={k}>{OCCUPATION_LABELS[k]}</option>
+                ))}
+              </select>
+            </label>
+          </>
+        )}
 
         <span className="w-px h-5 mx-1" style={{ background: 'var(--border-light)' }} />
 

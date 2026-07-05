@@ -44,6 +44,7 @@
  *   45 3 * * * ... flock -n /tmp/sl-canonical-entities.lock ... --apply
  */
 import { MongoClient } from 'mongodb';
+import { traditionFromClaims, occupationGroupsFor } from '../lib/wikidata-tradition-occupation.mjs';
 
 const APPLY = process.argv.includes('--apply');
 /** --skip-stats: build/swap the collection but do NOT touch system_config
@@ -147,6 +148,13 @@ for (let i = 0; i < bookIdArr.length; i += 5000) {
 }
 console.log(`book language map: ${langByBook.size}/${allBookIds.size} referenced book ids resolved (${yearByBook.size} with year)`);
 
+// ── 4b. wikidata_claims join (durable cache written by fetch-wikidata-claims.mjs;
+// #2979 occupation/tradition slice). Missing docs are fine — fields stay null/[]
+// and the timeline falls back to the book-language tradition rollup.
+const claimsById = new Map();
+for await (const c of db.collection('wikidata_claims').find({})) claimsById.set(c._id, c);
+console.log(`wikidata_claims: ${claimsById.size} QIDs cached`);
+
 // ── 5. Assemble one doc per canonical entity.
 const typeRank = { person: 3, place: 2, concept: 1 };
 const docs = [];
@@ -182,6 +190,20 @@ for (const [key, members] of groups) {
 
   const pick = (field) => members.map(m => m[field]).find(v => v != null) ?? null;
   const wikidataId = primary.wikidata_id || null;
+
+  // Entity-level tradition + occupations from the wikidata_claims cache.
+  // Tradition here reflects who the person WAS (religion → native language),
+  // not which languages our copies of them happen to be in — Plato via Latin
+  // translations stays 'classical'. Readers fall back to `languages` when null.
+  const claims = wikidataId ? claimsById.get(wikidataId) : null;
+  const occupationLabels = (claims?.occupations || []).map(o => o.label).filter(Boolean);
+  const tradition = claims
+    ? traditionFromClaims({
+        religions: claims.religions || [],
+        nativeLanguages: claims.native_languages || [],
+        citizenships: claims.citizenships || [],
+      })
+    : null;
   const authorSlug = type === 'person'
     ? (wikidataId && slugByQid.get(wikidataId))
       || members.map(m => slugByEntityId.get(String(m._id))).find(Boolean)
@@ -213,6 +235,10 @@ for (const [key, members] of groups) {
     total_mentions: [...mentionsByBook.values()].reduce((s, n) => s + n, 0),
     book_ids: rankedBooks.slice(0, BOOK_IDS_CAP).map(([id]) => id),
     languages,                             // { la: 12, de: 3, ... } — timeline tradition rollup
+    // Entity-level presentation data from wikidata_claims (#2979 slice):
+    tradition,                             // site tradition key or null (fallback: languages rollup)
+    occupations: occupationLabels.slice(0, 10),      // raw P106 English labels
+    occupation_groups: occupationGroupsFor(occupationLabels),  // coarse timeline-lens buckets
     // [min, max] publication year (>0) across ALL mentioning books (not capped
     // by BOOK_IDS_CAP) — the map's century fallback (#2979 read-path PR 1).
     book_year_range: minYear !== Infinity ? [minYear, maxYear] : null,
@@ -232,6 +258,9 @@ const merged = docs.filter(d => d.entity_ids.length > 1).length;
 console.log(`\ncanonical entities: ${docs.length} (from ${rows.length} rows; ${merged} QIDs merged >1 row)`);
 console.log(`  by type: ${JSON.stringify(byType)}`);
 console.log(`  with dates: ${withDates}  with coordinates: ${withCoords}  persons linked to authors: ${withAuthor}`);
+const withTradition = docs.filter(d => d.tradition).length;
+const withOccupations = docs.filter(d => d.occupation_groups.length > 0).length;
+console.log(`  with entity-level tradition: ${withTradition}  with occupation groups: ${withOccupations}`);
 
 // ── 6. Whole-collection stats for the /explore hub (replaces its 1M-row counts).
 const statTypes = await ents.aggregate(

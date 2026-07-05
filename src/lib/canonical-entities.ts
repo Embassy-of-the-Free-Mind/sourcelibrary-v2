@@ -72,6 +72,17 @@ export interface CanonicalEntityDoc {
    * before 2026-07-05 lack the field, so readers must guard on presence).
    */
   book_year_range: [number, number] | null;
+  /**
+   * Entity-level tradition (who the person WAS: religion → native language,
+   * from the durable `wikidata_claims` cache) — or null, in which case readers
+   * fall back to the `languages` book rollup. Docs built before 2026-07-05
+   * lack these three fields; guard on presence.
+   */
+  tradition: string | null;
+  /** Raw P106 occupation labels (English, capped at 10). */
+  occupations: string[];
+  /** Coarse occupation buckets for the timeline lens (see scripts/lib/wikidata-tradition-occupation.mjs). */
+  occupation_groups: string[];
   /** Provenance: `entities._id`s merged into this doc. */
   entity_ids: string[];
   source: 'build-canonical-entities';
