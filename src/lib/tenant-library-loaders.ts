@@ -422,6 +422,13 @@ export async function fetchTenantBphDigitizedMap(tenantId: string): Promise<Reco
         tenantId,
         'image_source.provider': 'bph',
         'dublin_core.dc_identifier': { $exists: true },
+        // Only map catalogue entries to a *readable* book. Hidden books
+        // (`visible: false`) 404 at the reader's visibility gate, so a "Read"
+        // link built from them is dead — the catalogue then reads as broken.
+        // Match the reader gate exactly (only `visible === false` is blocked;
+        // null/missing stays public) and require digitised pages.
+        visible: { $ne: false },
+        pages_count: { $gt: 0 },
       },
       { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 4_000 }
     ).toArray();
@@ -570,6 +577,10 @@ export async function fetchTenantCatalogDigitizedMap(
         tenantId,
         'image_source.provider': providerKey,
         'image_source.identifier': { $exists: true },
+        // Readable-only, same as fetchTenantBphDigitizedMap: a catalogue "Read"
+        // link to a hidden book (`visible: false`) dead-ends at the reader gate.
+        visible: { $ne: false },
+        pages_count: { $gt: 0 },
       },
       { projection: { id: 1, slug: 1, 'image_source.identifier': 1 }, maxTimeMS: 4_000 }
     ).toArray();
