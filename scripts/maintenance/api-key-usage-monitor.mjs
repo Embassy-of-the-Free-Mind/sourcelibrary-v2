@@ -31,7 +31,15 @@ const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db('bookstore');
 
-const keys = await db.collection('api_keys').find({}).project({ key_hash: 0 }).toArray();
+// The `api_keys` collection is SHARED by two unrelated systems: dataset keys
+// (generateApiKey — carry `key_hash`/`tier`/`rate_limit`, validated on /text)
+// and collection-editor keys (editor-auth.ts — carry plaintext `key`/`role`/
+// `scopes`/`active`, no tier). Only dataset keys are relevant here; scope to
+// `key_hash` so editor keys aren't misreported as tier-less "malformed" rows.
+const keys = await db.collection('api_keys')
+  .find({ key_hash: { $exists: true } })
+  .project({ key_hash: 0 })
+  .toArray();
 const kmap = new Map(keys.map((k) => [String(k._id), k]));
 
 // All-time per-key content traffic.
