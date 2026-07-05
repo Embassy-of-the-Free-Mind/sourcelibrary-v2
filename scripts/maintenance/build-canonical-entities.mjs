@@ -94,7 +94,8 @@ for (const field of SLIVER_FIELDS) {
   // one indexed pass per partial index (a single $or can't use them all)
   const cursor = ents.aggregate(
     [{ $match: { [field]: { $exists: true, $ne: null } } }, shapeStage],
-    { maxTimeMS: 300000, allowDiskUse: true },
+    // offline nightly builder — cache-cold sliver scans have blown a 5-min cap (#2979); 15 min is fine here
+    { maxTimeMS: 900000, allowDiskUse: true },
   );
   for await (const doc of cursor) rowsById.set(String(doc._id), doc);
 }
@@ -136,7 +137,7 @@ const bookIdArr = [...allBookIds];
 for (let i = 0; i < bookIdArr.length; i += 5000) {
   const docs = await db.collection('books').find(
     { id: { $in: bookIdArr.slice(i, i + 5000) } },
-    { projection: { _id: 0, id: 1, language: 1, year: 1 }, maxTimeMS: 120000 },
+    { projection: { _id: 0, id: 1, language: 1, year: 1 }, maxTimeMS: 600000 },
   ).toArray();
   for (const d of docs) {
     if (d.language) langByBook.set(d.id, d.language);
@@ -235,7 +236,7 @@ console.log(`  with dates: ${withDates}  with coordinates: ${withCoords}  person
 // ── 6. Whole-collection stats for the /explore hub (replaces its 1M-row counts).
 const statTypes = await ents.aggregate(
   [{ $group: { _id: '$type', n: { $sum: 1 } } }],
-  { maxTimeMS: 300000, allowDiskUse: true },
+  { maxTimeMS: 900000, allowDiskUse: true },
 ).toArray();
 const entityStats = {
   total: statTypes.reduce((s, t) => s + t.n, 0),
