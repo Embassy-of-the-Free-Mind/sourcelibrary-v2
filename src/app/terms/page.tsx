@@ -190,7 +190,7 @@ export default function TermsPage() {
           </h2>
           <p className="text-secondary mb-4">
             Automated access to Source Library is governed by our{' '}
-            <a href="https://sourcelibrary.org/robots.txt" className="text-accent-rust hover:underline">robots.txt</a>{' '}
+            <a href="/robots.txt" className="text-accent-rust hover:underline">robots.txt</a>{' '}
             file, which constitutes a binding directive under these terms. Crawlers that
             access pages or resources disallowed by robots.txt are accessing the service
             without authorization.
