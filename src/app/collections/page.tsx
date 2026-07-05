@@ -91,7 +91,10 @@ const CURATED_PATHWAYS = [
   'women-of-the-secret-tradition',
   'alchemical-emblem',
   'ficinos-florence',
-  'dance-of-death',
+  // 'dance-of-death' removed: no collection doc with this slug exists, so
+  // fetchCuratedPathways silently dropped it (one fewer card than intended).
+  // 47 books are tagged with it — if a real Dance of Death collection is
+  // created later, re-add the slug here. See issue #3008.
   'bestiary-tradition',
   'ancient-egyptian',
   'art-of-memory',
