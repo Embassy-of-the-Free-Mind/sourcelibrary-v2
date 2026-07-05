@@ -27,7 +27,13 @@ interface CensusResult {
   catalog_matches: CatalogMatch[];
 }
 
-export default function CensusSearch() {
+export default function CensusSearch({
+  editionCount,
+  catalogCount: catalogTotal,
+}: {
+  editionCount?: number;
+  catalogCount?: number;
+}) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<CensusResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -70,19 +76,21 @@ export default function CensusSearch() {
               onChange={e => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search by author or title... e.g. Ficino, Paracelsus, De Vita"
-              className="w-full pl-10 pr-4 py-3 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500"
+              className="w-full pl-10 pr-4 py-3 border border-stone-300 rounded-sm text-sm bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500"
             />
           </div>
           <button
             onClick={search}
             disabled={loading || query.trim().length < 2}
-            className="px-5 py-3 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 disabled:opacity-40 transition-colors"
+            className="px-5 py-3 bg-stone-900 text-white rounded-sm text-sm font-medium hover:bg-stone-800 disabled:opacity-40 transition-colors"
           >
             {loading ? 'Searching...' : 'Search'}
           </button>
         </div>
         <p className="text-xs text-stone-400 mt-2">
-          Searches 1.57 million editions from the Universal Short Title Catalogue and 13,800+ known English translations.
+          Searches {editionCount ? `${(editionCount / 1_000_000).toFixed(2)} million` : 'over 1.5 million'} editions
+          from the Universal Short Title Catalogue and{' '}
+          {catalogTotal ? catalogTotal.toLocaleString('en-US') : 'tens of thousands of'} known English translations.
         </p>
       </div>
 
@@ -146,7 +154,7 @@ function ResultCard({ result }: { result: CensusResult }) {
   const isTranslated = result.translation_status === 'translated';
 
   return (
-    <div className={`border rounded-lg p-3 ${isTranslated ? 'border-emerald-200 bg-emerald-50/30' : 'border-stone-200 bg-white'}`}>
+    <div className={`border rounded-sm p-3 ${isTranslated ? 'border-emerald-200 bg-emerald-50/30' : 'border-stone-200 bg-white'}`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="text-sm font-medium text-primary truncate">{result.title}</div>
@@ -165,12 +173,10 @@ function ResultCard({ result }: { result: CensusResult }) {
           )}
           {result.in_source_library && (
             <a
-              href={`https://sourcelibrary.org/search?q=${encodeURIComponent(result.author?.split(',')[0] || result.title)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[10px] px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors flex items-center gap-0.5"
+              href={`/search?q=${encodeURIComponent(result.author?.split(',')[0] || result.title)}`}
+              className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors flex items-center gap-0.5"
             >
-              In SL <ExternalLink className="w-2.5 h-2.5" />
+              In Source Library <ExternalLink className="w-2.5 h-2.5" />
             </a>
           )}
           {result.has_iiif_scan && (
