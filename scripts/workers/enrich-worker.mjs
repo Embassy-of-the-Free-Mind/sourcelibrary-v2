@@ -1748,8 +1748,20 @@ Guidelines:
   if (RUN_PHASE_7_6) {
     console.log('\n=== Phase 7.6: Collection Assignment ===');
 
-    // Load collection definitions from DB
-    let collections = await db.collection('collections').find({}).toArray();
+    // Load collection definitions from DB. Exclude retired collections —
+    // merged docs (merged_into set) and slugs in the redirect map (e.g. the
+    // retired `philosophy` umbrella). Offering them as assignment targets
+    // silently re-tags books with slugs the #3002 merges already cleaned.
+    let retiredSlugs = [];
+    try {
+      const { readFileSync } = await import('fs');
+      retiredSlugs = Object.keys(JSON.parse(
+        readFileSync(new URL('../../src/lib/collection-redirects.json', import.meta.url), 'utf8')
+      ));
+    } catch { /* map absent on an old checkout — merged_into filter still applies */ }
+    let collections = await db.collection('collections')
+      .find({ merged_into: { $exists: false }, slug: { $nin: retiredSlugs } })
+      .toArray();
     if (collections.length === 0) {
       console.log('  No collections in DB — skipping phase 7.6');
     } else {

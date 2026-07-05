@@ -30,10 +30,9 @@ const COLLECTIONS = [
   { slug: 'poetry', name: 'Poetry', desc: 'Lyric, epic, didactic, and occasional verse across traditions' },
   { slug: 'drama', name: 'Drama', desc: 'Tragedy, comedy, morality plays, theatrical texts' },
   { slug: 'prose-fiction', name: 'Prose Fiction', desc: 'Romances, novels, satire, utopias, picaresque, early fiction' },
-  { slug: 'philosophy', name: 'Philosophy', desc: 'Ethics, metaphysics, logic, epistemology — broader than classical or Renaissance subsets' },
   { slug: 'geography-exploration', name: 'Geography & Exploration', desc: 'Travel accounts, cosmography, cartography, voyages of discovery' },
   { slug: 'agriculture', name: 'Agriculture', desc: 'Farming, husbandry, viticulture, estate management, georgic literature' },
-  { slug: 'science-mathematics', name: 'Science & Mathematics', desc: 'Arithmetic, geometry, astronomy, optics, mechanics, natural science' },
+  { slug: 'mathematics', name: 'Mathematics & Sacred Number', desc: 'Arithmetic, geometry, astronomy, optics, mechanics, natural science' },
   { slug: 'music-harmony', name: 'Music, Harmony & Resonance', desc: 'Music theory, Pythagorean harmonics, acoustic science' },
   { slug: 'herbalism', name: 'Herbalism & Botany', desc: 'Herbals, materia medica, botanical illustration, plant taxonomy' },
   { slug: 'leonardo-da-vinci', name: 'Leonardo da Vinci', desc: 'Manuscripts, codices, treatises by Leonardo da Vinci' },
@@ -42,7 +41,7 @@ const COLLECTIONS = [
 
 const TRADITIONS = [
   'christianity', 'judaism', 'islam', 'buddhism', 'hinduism', 'daoism',
-  'zoroastrianism', 'hermetica-sacred', 'manichaeism', 'mandaeanism',
+  'zoroastrianism', 'gnostic-texts', 'manichaeism', 'mandaeanism',
   'jainism', 'confucianism', 'ancient-egyptian', 'orphism-mysteries',
   'norse-germanic', 'shinto', 'sikhism', 'indigenous-traditions',
   'druze', 'bahai', 'sumerian-mesopotamian', 'ancient-greek-religion',

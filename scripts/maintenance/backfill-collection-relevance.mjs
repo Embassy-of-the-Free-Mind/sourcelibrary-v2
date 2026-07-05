@@ -84,7 +84,7 @@ const COLLECTIONS = [
 
 const TRADITIONS = [
   'christianity', 'judaism', 'islam', 'buddhism', 'hinduism', 'daoism',
-  'zoroastrianism', 'hermetica-sacred', 'manichaeism', 'mandaeanism',
+  'zoroastrianism', 'gnostic-texts', 'manichaeism', 'mandaeanism',
   'jainism', 'confucianism', 'ancient-egyptian', 'orphism-mysteries',
   'norse-germanic', 'shinto', 'sikhism', 'indigenous-traditions',
   'druze', 'bahai', 'sumerian-mesopotamian', 'ancient-greek-religion',

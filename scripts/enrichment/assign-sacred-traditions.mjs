@@ -201,26 +201,7 @@ const TRADITIONS = [
       /\bbundahishn/i, /\bdenkard/i,
     ],
   },
-  {
-    slug: 'hermetica-sacred',
-    name: 'Hermetica & Gnostic Texts',
-    subtitle: 'Ancient Wisdom Revealed',
-    description: 'The Corpus Hermeticum, the Asclepius, and the Gnostic scriptures recovered at Nag Hammadi. Texts attributed to Hermes Trismegistus that Renaissance thinkers like Ficino treated as sacred revelation — the prisca theologia, an ancient theology believed to predate Moses.',
-    order: 8,
-    exactCategories: [
-      'gnostic', 'gnosticism', 'nag-hammadi', 'corpus-hermeticum',
-    ],
-    patterns: [
-      'gnostic', 'nag-hammadi', 'corpus-hermetic',
-    ],
-    titlePatterns: [
-      /\bcorpus hermeticum/i, /\basclepius\b/i, /\bpoimandres/i, /\bpimander/i,
-      /\bnag hammadi/i, /\bgnostic/i,
-      /\bpistis sophia/i, /\bhermes trismegist/i,
-      /\btrismegist/i,
-    ],
-    // Only primary scripture, not the broader Hermetic commentary tradition
-  },
+  // 'hermetica-sacred' retired 2026-07-05 (#3002): merged into hermetica + gnostic-texts.
   {
     slug: 'mandaeanism',
     name: 'Mandaeanism',

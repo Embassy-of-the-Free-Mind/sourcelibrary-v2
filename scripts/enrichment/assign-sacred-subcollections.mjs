@@ -24,7 +24,8 @@ const TRADITIONS = [
   { slug: 'confucianism', hint: 'Analects, Mencius, Four Books, Five Classics, Xunzi, neo-Confucian texts' },
   { slug: 'zoroastrianism', hint: 'Avesta, Gathas, Zend-Avesta, Bundahishn, Pahlavi texts, Zoroastrian liturgy' },
   { slug: 'manichaeism', hint: 'Mani, Manichaean texts, anti-Manichaean writings, Kephalaia, Manichaean psalms' },
-  { slug: 'hermetica-sacred', hint: 'Corpus Hermeticum, Asclepius, Nag Hammadi, Gnostic gospels, Valentinian texts. Only truly sacred/scriptural Hermetic texts' },
+  // 'hermetica-sacred' retired 2026-07-05 (#3002) — sacred/Gnostic Hermetic texts now route to gnostic-texts.
+  { slug: 'gnostic-texts', hint: 'Nag Hammadi, Gnostic gospels, Valentinian texts, Corpus Hermeticum and Asclepius as scripture' },
   { slug: 'orphism-mysteries', hint: 'Orphic hymns, Eleusinian mysteries, Dionysian rites, mystery religion initiation texts' },
   { slug: 'ancient-greek-religion', hint: 'Hesiod Theogony, Homeric Hymns, Greek temple practices, Greek religious ritual (NOT philosophy)' },
   { slug: 'ancient-egyptian', hint: 'Book of the Dead, Pyramid Texts, Coffin Texts, Egyptian funerary literature, Egyptian religious ritual' },
