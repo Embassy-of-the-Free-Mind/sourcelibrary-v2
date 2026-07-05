@@ -3716,7 +3716,13 @@ Rules:
       const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
       const promoteCandidates = await db.collection('books_warehouse')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          // promoted_to filter is CRITICAL: promotion marks the warehouse copy
+          // promoted_to:'live' but never changes pipeline_auto.status, so
+          // without it every promoted book stays a candidate forever and the
+          // same top-50 get re-promoted every cycle — each pass $set the STALE
+          // warehouse doc over the live one, silently reverting live edits
+          // (caught 2026-07-05: a #3002 collection re-tag kept undoing itself).
+          { $match: { 'pipeline_auto.status': 'archive_complete', promoted_to: { $ne: 'live' } } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -3745,15 +3751,26 @@ Rules:
             if (!book) continue;
 
             // Check if book already exists in live (can have different _id)
-            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1, slug: 1 } });
+            const existingLive = await db.collection('books').findOne(
+              { id: candidate.id },
+              { projection: { _id: 1, slug: 1, collections: 1, visible: 1, hidden: 1 } }
+            );
             if (existingLive) {
               // Update in place, preserving live _id and live slug.
               // The live slug may have been disambiguated on first promotion
               // (e.g. `foo-2`), while warehouse still holds the original `foo`.
               // Overwriting would re-trigger E11000 against the record that
               // owns `foo` in live.
+              // Also preserve live-side curation: collections tags and the
+              // visible/hidden pair are edited on the LIVE doc (merges,
+              // enrich assignment, curators) — the warehouse copy is a stale
+              // snapshot and must not roll them back.
               const { _id, ...bookWithoutId } = book;
               if (existingLive.slug) delete bookWithoutId.slug;
+              if (existingLive.collections !== undefined) delete bookWithoutId.collections;
+              if (existingLive.visible !== undefined) delete bookWithoutId.visible;
+              if (existingLive.hidden !== undefined) delete bookWithoutId.hidden;
+              bookWithoutId.updated_at = new Date();
               await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
             } else {
               // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
