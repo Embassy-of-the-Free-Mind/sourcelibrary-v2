@@ -10,7 +10,11 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/maintenance/backfill-card-thumbs.mjs [--dry-run] [--limit=N] [--book-id=ID] [--concurrency=8]
+ *   node scripts/maintenance/backfill-card-thumbs.mjs [--dry-run] [--limit=N] [--book-id=ID] [--concurrency=8] [--featured]
+ *
+ * --featured: scope to the high-visibility card surfaces only — visible books,
+ * top-ranked plates (book_rank <= 4). Covers collection-grid leads, the homepage
+ * strip, and lead gallery cards (~16K) without paying for the deep-scroll tail.
  */
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
@@ -20,6 +24,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = Number((process.argv.find(a => a.startsWith('--limit=')) || '').split('=')[1]) || 0;
 const BOOK_ID = (process.argv.find(a => a.startsWith('--book-id=')) || '').split('=')[1] || null;
 const CONCURRENCY = Number((process.argv.find(a => a.startsWith('--concurrency=')) || '').split('=')[1]) || 8;
+const FEATURED = process.argv.includes('--featured');
 
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
@@ -83,6 +88,7 @@ async function main() {
     $or: [{ card_url: { $exists: false } }, { card_url: null }],
   };
   if (BOOK_ID) filter.book_id = BOOK_ID;
+  if (FEATURED) { filter.book_visible = true; filter.book_rank = { $lte: 4 }; }
 
   const total = await galleryCol.countDocuments(filter);
   console.log(`gallery_images needing a card variant: ${total}${LIMIT ? ` (processing ${LIMIT})` : ''}`);
@@ -100,13 +106,19 @@ async function main() {
     const card = await sharp(src).resize(600, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 72 }).toBuffer();
     const cardUrl = (await putR2(key, card)) + `?v=${startTime}`;
 
+    // gallery_images is the render-facing view + the idempotency key, so write
+    // it first and let it govern success. (The frontend derives -card.jpg from
+    // the thumb URL, so the R2 file above is what actually renders; these fields
+    // are bookkeeping.)
     await galleryCol.updateOne({ id: g.id }, { $set: { card_url: cardUrl, updated_at: new Date() } });
-    // Mirror onto the source-of-truth detected_images entry.
+    // Mirror onto the source-of-truth detected_images entry. Non-fatal: some
+    // pages carry a null detected_images[idx] slot ($set can't descend into
+    // null), and the R2 file + gallery_images row already cover rendering.
     if (g.page_id != null && g.detection_index != null) {
       await pagesCol.updateOne(
         { id: g.page_id },
         { $set: { [`detected_images.${g.detection_index}.card_url`]: cardUrl } },
-      );
+      ).catch(() => {});
     }
   });
 
