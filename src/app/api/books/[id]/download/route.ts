@@ -13,9 +13,15 @@ import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
+import { getPageImageUrl } from '@/lib/page-image-url';
+import { Readable } from 'stream';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+// Image-heavy formats (facsimile/images EPUBs, images-zip) fetch + recompress
+// one image per page; give the function room beyond the default window.
+export const maxDuration = 300;
 
 // Index entry structure (from book index collection)
 interface ConceptEntry {
@@ -834,6 +840,40 @@ async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
   }
 }
 
+// Resolve a page's export image via the canonical resolver (R2 display variant
+// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
+// fetch, and on split-from-spread pages it is the wrong image entirely).
+// Falls back to the legacy field priority this route used historically.
+function pageExportImageUrl(page: Page): string | null {
+  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
+  const resolved = getPageImageUrl(page, 'display') || legacy;
+  if (!resolved) return null;
+  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
+}
+
+// Prefetch page images with BOUNDED concurrency, preserving page order.
+// Serial fetching made a ~126-page book take >100s of response silence, so
+// Cloudflare cut the connection (HTTP 524) and readers saved the CF error
+// page as a corrupt .zip/.epub (footer feedback, 2026-07-02). Unbounded
+// Promise.all is the opposite failure: hundreds of concurrent image fetches.
+async function fetchPageImagesOrdered(
+  validPages: Page[],
+  concurrency = 8,
+): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
+  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
+  let next = 0;
+  async function worker() {
+    while (next < validPages.length) {
+      const i = next++;
+      const page = validPages[i];
+      const url = pageExportImageUrl(page);
+      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
+  return results;
+}
+
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -844,7 +884,7 @@ async function generateFacsimileEpubDownload(
   const bookId = `urn:uuid:${book.id}`;
 
   // Collect pages with photo and translation
-  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+  const validPages = pages.filter(p => p.translation?.data && pageExportImageUrl(p));
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1016,14 +1056,10 @@ p:first-of-type { text-indent: 0; }
     `, 'Title Page', 'page-right');
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch and compress all images first (async)
+    // Fetch and compress all images first — bounded concurrency (the previous
+    // unbounded Promise.all opened one fetch per page simultaneously).
     console.log(`Fetching ${validPages.length} images for facsimile EPUB...`);
-    const imagePromises = validPages.map(async (page) => {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      return { page, imageBuffer };
-    });
-    const pageImages = await Promise.all(imagePromises);
+    const pageImages = await fetchPageImagesOrdered(validPages);
 
     // Add images and content pages
     for (const { page, imageBuffer } of pageImages) {
@@ -1101,33 +1137,42 @@ p:first-of-type { text-indent: 0; }
 }
 
 // Generate ZIP of all page images
-async function generateImagesZip(
-  book: Book,
-  pages: Page[]
-): Promise<Buffer> {
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+// Returns a live archiver stream so the response starts flowing immediately.
+// Buffering the whole zip meant zero bytes for the full build time; big books
+// crossed Cloudflare's ~100s origin window and died with a 524.
+function generateImagesZipStream(book: Book, pages: Page[]): archiver.Archiver {
+  const validPages = pages.filter(p => pageExportImageUrl(p));
+  const archive = archiver('zip', { zlib: { level: 6 } });
 
-  return new Promise(async (resolve, reject) => {
-    const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 6 } });
+  (async () => {
+    console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);
+    // Sliding window: ~8 fetches in flight, appended strictly in page order.
+    const inFlight: (Promise<Buffer | null> | undefined)[] = new Array(validPages.length);
+    let started = 0;
+    const startNext = () => {
+      if (started >= validPages.length) return;
+      const i = started++;
+      const url = pageExportImageUrl(validPages[i]);
+      inFlight[i] = url ? fetchAndCompressImage(url) : Promise.resolve(null);
+    };
+    for (let k = 0; k < Math.min(8, validPages.length); k++) startNext();
 
-    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
-    archive.on('end', () => resolve(Buffer.concat(chunks)));
-    archive.on('error', reject);
-
-    // Fetch and add each image
-    console.log(`Fetching ${validPages.length} images for ZIP...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
+    for (let i = 0; i < validPages.length; i++) {
+      const imageBuffer = await inFlight[i];
+      inFlight[i] = undefined;
+      startNext();
       if (imageBuffer) {
-        const paddedNum = String(page.page_number).padStart(4, '0');
+        const paddedNum = String(validPages[i].page_number).padStart(4, '0');
         archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
       }
     }
-
-    archive.finalize();
+    await archive.finalize();
+  })().catch(err => {
+    console.error('images-zip stream failed:', err);
+    archive.destroy(err instanceof Error ? err : new Error(String(err)));
   });
+
+  return archive;
 }
 
 // Generate images-only EPUB (no translation, just the processed page images)
@@ -1139,7 +1184,7 @@ async function generateImagesOnlyEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+  const validPages = pages.filter(p => pageExportImageUrl(p));
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1252,12 +1297,11 @@ body { background: #1a1a1a; display: flex; align-items: center; justify-content:
 </html>`;
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch images and create pages
+    // Fetch images (bounded concurrency — the serial loop here took >100s on
+    // a ~126-page book and Cloudflare 524'd the response) and create pages
     console.log(`Fetching ${validPages.length} images for images-only EPUB...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-
+    const pageImages = await fetchPageImagesOrdered(validPages);
+    for (const { page, imageBuffer } of pageImages) {
       if (imageBuffer) {
         archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
       }
@@ -2430,11 +2474,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const zipBuffer = await generateImagesZip(
+      const archive = generateImagesZipStream(
         book as unknown as Book,
         pages as unknown as Page[]
       );
-      return new Response(new Uint8Array(zipBuffer), {
+      return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,

@@ -107,6 +107,19 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         handlePurchase();
         return;
       }
+      // Any other failure (500, gateway 504/524, …) must NOT be saved as the
+      // file: blobbing an error body handed users a .zip/.epub containing an
+      // HTML error page — "downloaded but won't open" (footer feedback,
+      // 2026-07-02).
+      if (!response.ok) {
+        setDownloading(null);
+        toast.error(
+          response.status === 504 || response.status === 524
+            ? 'This book is taking too long to package — please try again, or pick a lighter format.'
+            : 'Download failed. Please try again.'
+        );
+        return;
+      }
 
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');
