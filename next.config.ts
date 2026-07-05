@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { withBotId } from 'botid/next/config';
+import collectionRedirects from './src/lib/collection-redirects.json';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -262,6 +263,16 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Merged/retired collection slugs → successors (issue #3002). True HTTP
+      // 308s at the routing layer — the page-level permanentRedirect in
+      // /collections/[id] only yields a streamed meta-refresh because the
+      // shell has already started streaming. Path-relative destinations keep
+      // the request host (tenant-subdomain safe).
+      ...Object.entries(collectionRedirects as Record<string, string>).map(([from, to]) => ({
+        source: `/collections/${from}`,
+        destination: `/collections/${to}`,
+        permanent: true,
+      })),
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',

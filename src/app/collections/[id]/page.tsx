@@ -7,7 +7,8 @@ import { headers } from 'next/headers';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
+import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import IndexCatalogBrowser from '@/components/collections/IndexCatalogBrowser';
@@ -43,6 +44,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
+  const redirectTarget = (collectionRedirects as Record<string, string>)[id];
+  if (redirectTarget) permanentRedirect(`/collections/${redirectTarget}`);
   try {
     const db = await Promise.race([
       getReadDb(),
@@ -696,6 +699,13 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
 
 export default async function CollectionDetailPage({ params, provider }: Props & { provider?: string }) {
   const { id } = await params;
+
+  // Merged/retired collection slugs 308 to their successor — the old URLs are
+  // public and indexed (see issue #3002; map maintained alongside
+  // scripts/maintenance/reorganize-collections.mjs).
+  const redirectTarget = (collectionRedirects as Record<string, string>)[id];
+  if (redirectTarget) permanentRedirect(`/collections/${redirectTarget}`);
+
   const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(await headers());
 
   let data;
