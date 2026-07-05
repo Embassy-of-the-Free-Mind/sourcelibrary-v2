@@ -166,7 +166,7 @@ const SUB_COLLECTIONS = [
   "enlightenment-political-philosophy","experimental-philosophy",
   "faculty-psychology-de-anima","falsafa","florentine-neoplatonism","freemasonry",
   "galenic-classical-medicine","geography-exploration","german-speculative-mysticism",
-  "papyri-magical","hermetic-revival","hermetica-sacred","hinduism","papyri-historical",
+  "papyri-magical","hermetic-revival","gnostic-texts","hinduism","papyri-historical",
   "horoscopic-western-astrology","humanist-scholarship","illuminati-radical-orders",
   "indian-mathematics-astronomy","indian-natural-philosophy","indigenous-traditions",
   "islam","islamic-medicine-science","islamic-occult-sciences","jainism",
