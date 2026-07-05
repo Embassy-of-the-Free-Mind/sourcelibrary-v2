@@ -55,14 +55,14 @@ async function fetchWings(): Promise<Wing[]> {
     type: { $ne: 'curated' },
     collection_type: { $ne: 'visual_art' },
     visible: true,
-  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
+  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, hero_image: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
   // Get all subcollections with their first featured image
   const subs = await db.collection('collections').find({
     parent: { $exists: true },
   }).project({
     slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, parent: 1, visible: 1, type: 1,
-    featured_images: { $slice: 1 }, _id: 0,
+    hero_image: 1, featured_images: { $slice: 1 }, _id: 0,
   }).toArray();
 
   const tenantIds = [...new Set([
@@ -91,7 +91,7 @@ async function fetchWings(): Promise<Wing[]> {
         artwork_count: sub.artwork_count || 0,
         visible: sub.visible !== false,
         type: sub.type,
-        image: coverOverride(sub.slug) || pickImage(sub.featured_images),
+        image: coverOverride(sub.slug) || sub.hero_image || pickImage(sub.featured_images),
       });
     }
   }
@@ -107,7 +107,7 @@ async function fetchWings(): Promise<Wing[]> {
     name: w.name,
     book_count: w.book_count || 0,
     artwork_count: w.artwork_count || 0,
-    image: coverOverride(w.slug) || pickImage(w.featured_images),
+    image: coverOverride(w.slug) || w.hero_image || pickImage(w.featured_images),
     children: childMap.get(w.slug) || [],
   }));
 }
