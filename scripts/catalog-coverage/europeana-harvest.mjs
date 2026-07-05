@@ -31,6 +31,9 @@
  *   --max=N                     Cap harvested entries (default 1000).
  *   --collections=a,b           collections[] to tag imported books with.
  *   --lang=<label>              default language label for imports (default 'Latin').
+ *   --min-year=YYYY             only records issued on/after this year (Europeana YEAR facet).
+ *   --max-year=YYYY             only records issued on/before this year — use ~1800 to keep
+ *                               PRIMARY early-modern sources and exclude 19th-c. secondary studies.
  *   --no-dedupe                 skip the holdings dedupe pass (faster preview).
  */
 
@@ -47,6 +50,8 @@ const OUT = arg('out');
 const MAX = parseInt(arg('max', '1000'));
 const COLLECTIONS = (arg('collections', '') || '').split(',').map(s => s.trim()).filter(Boolean);
 const LANG = arg('lang', 'Latin');
+const MIN_YEAR = arg('min-year');
+const MAX_YEAR = arg('max-year');
 const DEDUPE = !args.includes('--no-dedupe');
 if (!QUERY || !OUT) { console.error('--query and --out are required'); process.exit(1); }
 
@@ -57,6 +62,7 @@ const first = a => Array.isArray(a) ? a[0] : a;
 async function search(cursor) {
   const p = new URLSearchParams({ wskey: KEY, query: QUERY, rows: '100', profile: 'rich', cursor });
   p.append('qf', 'TYPE:TEXT');
+  if (MIN_YEAR || MAX_YEAR) p.append('qf', `YEAR:[${MIN_YEAR || '*'} TO ${MAX_YEAR || '*'}]`);
   const r = await fetch('https://api.europeana.eu/record/v2/search.json?' + p, { signal: AbortSignal.timeout(30000) });
   if (!r.ok) throw new Error('europeana ' + r.status);
   return r.json();
