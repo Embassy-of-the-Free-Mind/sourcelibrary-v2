@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
+import { getSiteStats } from '@/lib/site-stats';
 import Link from 'next/link';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
@@ -231,7 +232,11 @@ function fmt(n: number): string {
 // ── Page ──────────────────────────────────────────────────────────────
 
 export default async function ProgressPage() {
-  const [data, live] = await Promise.all([getCoverageData(), getLiveStats()]);
+  const [data, live, siteStats] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats()]);
+  // One FT number site-wide (#3015): the get_sl_progress RPC re-derives the raw
+  // is_first_translation flag, which drifts above the verified public count.
+  // Always show the canonical homepage_stats figure instead.
+  if (live) live.first_translations = siteStats.firstTranslationCount;
 
   if (!data) {
     return (

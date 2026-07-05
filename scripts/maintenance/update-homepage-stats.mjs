@@ -67,7 +67,16 @@ const ftBooks = await books.find({ ...translatedFilter, is_first_translation: tr
 const firstTranslatedWorks = countFirstTranslatedWorks(ftBooks, { mode: 'verified' });
 const firstTranslatedWorksProvisional = countFirstTranslatedWorks(ftBooks, { mode: 'provisional' });
 
-const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
+// Corpus-census ledger coverage (#2933, surfaced on /census): how many books
+// have a documented grounded prior-translation search in the append-only
+// first_translation_attempts ledger. Keep in sync with prewarm-browse.mjs.
+const attempts = db.collection('first_translation_attempts');
+const census_ledger = {
+  attempts: await attempts.estimatedDocumentCount(),
+  booksSearched: (await attempts.distinct('book_id', { 'queries.0': { $exists: true } })).length,
+};
+
+const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, census_ledger, updatedAt: new Date() };
 
 await db.collection('system_config').updateOne(
   { _id: 'homepage_stats' },

@@ -97,7 +97,13 @@ if (process.env.MONGODB_URI) {
       .project({ _id: 0, contents_works: 1 }).toArray();
     const firstTranslatedWorks = countFirstTranslatedWorks(ftBooks, { mode: 'verified' });
     const firstTranslatedWorksProvisional = countFirstTranslatedWorks(ftBooks, { mode: 'provisional' });
-    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, updatedAt: new Date() };
+    // Corpus-census ledger coverage (#2933, surfaced on /census) — see update-homepage-stats.mjs. Keep in sync.
+    const attempts = db.collection('first_translation_attempts');
+    const census_ledger = {
+      attempts: await attempts.estimatedDocumentCount(),
+      booksSearched: (await attempts.distinct('book_id', { 'queries.0': { $exists: true } })).length,
+    };
+    const stats = { totalBooks, translatedToEnglish, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, census_ledger, updatedAt: new Date() };
     await db.collection('system_config').updateOne(
       { _id: 'homepage_stats' },
       { $set: stats },
