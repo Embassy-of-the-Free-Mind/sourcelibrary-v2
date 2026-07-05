@@ -247,7 +247,16 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
   try {
     const db = await getReadDb();
     const book = await db.collection('books').findOne(
-      { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': ubn },
+      {
+        'image_source.provider': 'bph',
+        'dublin_core.dc_identifier': ubn,
+        // Only surface a readable book. A hidden book (`visible: false`) 404s at
+        // the reader's visibility gate, so the "Read in Source Library" link
+        // built below would dead-end. When the mapped book isn't readable, fall
+        // through to null and the entry renders as a catalogue-only record.
+        visible: { $ne: false },
+        pages_count: { $gt: 0 },
+      },
       {
         projection: {
           id: 1, slug: 1, title: 1, display_title: 1, english_title: 1,
