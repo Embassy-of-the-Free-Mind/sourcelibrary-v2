@@ -17,6 +17,7 @@
 import type { ApiIdentity } from '@/lib/api-auth';
 import type { NextRequest } from 'next/server';
 import { getPagesServedLast24h } from '@/lib/api-usage';
+import { DATASET_TIERS, type DatasetTier } from '@/lib/dataset/types';
 
 export interface BudgetCheck {
   allowed: boolean;
@@ -38,9 +39,31 @@ export interface BudgetCheck {
 const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 500);
 const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 1000);
 
-function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetCheck['tier'] } {
-  if (identity.kind === 'apikey' || identity.kind === 'bot') {
+/**
+ * Map a caller identity to its daily /text page limit. Exported for unit tests
+ * that pin the business-model invariant (free Explorer keys are capped; paid
+ * tiers are not). `Number.POSITIVE_INFINITY` means uncapped.
+ */
+export function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetCheck['tier'] } {
+  // Verified bots (Googlebot etc.) stay unlimited — SEO indexing must never wall.
+  if (identity.kind === 'bot') {
     return { limit: Number.POSITIVE_INFINITY, tier: 'apikey' };
+  }
+  // API keys honour their TIER's published daily page cap on /text — not a blanket
+  // pass. Paid tiers (language/domain/full/enterprise) carry pagesPerDay: 0 =
+  // unlimited, so they're unaffected. The free Explorer tier keeps its published
+  // 100 pages/day here too; without this a free key was an uncapped bulk-extraction
+  // token (the /text budget treated every valid key as unlimited), letting explorer
+  // keys pull ~2M pages for free — exactly the bulk use the paid tiers exist to price.
+  // An unknown/absent tier is treated as Explorer (the safe floor), never unlimited.
+  if (identity.kind === 'apikey') {
+    const cfg = identity.apiKeyTier
+      ? DATASET_TIERS[identity.apiKeyTier as DatasetTier]
+      : undefined;
+    const perDay = (cfg ? cfg.pagesPerDay : DATASET_TIERS.explorer.pagesPerDay);
+    return perDay > 0
+      ? { limit: perDay, tier: 'apikey' }
+      : { limit: Number.POSITIVE_INFINITY, tier: 'apikey' };
   }
   if (identity.kind === 'session') {
     return { limit: SESSION_DAILY_PAGES, tier: 'session' };
@@ -68,7 +91,9 @@ export async function checkPageBudget(input: {
 
 /** Friendly 429 body explaining what to do next. */
 export function bulkBudgetExceededBody(check: BudgetCheck) {
-  const next = check.tier === 'session'
+  const next = check.tier === 'apikey'
+    ? `Your free Explorer key is capped at ${check.limit} pages/day on /text. Upgrade for uncapped access — see https://sourcelibrary.org/licensing — or bulk-export at https://sourcelibrary.org/api/dataset/v1/pages.`
+    : check.tier === 'session'
     ? 'Generate a free API key at https://sourcelibrary.org/developers (no daily cap on /text).'
     : 'Sign in (free) at https://sourcelibrary.org/auth/signin for a higher limit, or grab an API key at https://sourcelibrary.org/developers.';
   return {
@@ -78,6 +103,7 @@ export function bulkBudgetExceededBody(check: BudgetCheck) {
     tier: check.tier,
     next_steps: {
       get_api_key: 'https://sourcelibrary.org/developers',
+      upgrade: 'https://sourcelibrary.org/licensing',
       sign_in: 'https://sourcelibrary.org/auth/signin',
       bulk_export: 'https://sourcelibrary.org/api/dataset/v1/pages',
     },

@@ -337,12 +337,19 @@ export const GET = withApiAuth(async (
           last_page_served: budgetMaxPage,
           used_24h: budget.used,
           limit_24h: budget.limit,
-          note: `Served up to p.${budgetMaxPage}; the rest of this range is beyond your remaining daily page budget (${budget.used}/${budget.limit} used in 24h). Retrying immediately will be rate-limited — sign in or use an API key for a higher limit, or bulk-export instead.`,
-          next_steps: {
-            sign_in: 'https://sourcelibrary.org/auth/signin',
-            get_api_key: 'https://sourcelibrary.org/developers',
-            bulk_export: 'https://sourcelibrary.org/api/dataset/v1/pages',
-          },
+          note: budget.tier === 'apikey'
+            ? `Served up to p.${budgetMaxPage}; the rest of this range is beyond your Explorer key's daily page budget (${budget.used}/${budget.limit} used in 24h). Upgrade for uncapped /text access (https://sourcelibrary.org/licensing) or bulk-export instead.`
+            : `Served up to p.${budgetMaxPage}; the rest of this range is beyond your remaining daily page budget (${budget.used}/${budget.limit} used in 24h). Retrying immediately will be rate-limited — sign in or use an API key for a higher limit, or bulk-export instead.`,
+          next_steps: budget.tier === 'apikey'
+            ? {
+                upgrade: 'https://sourcelibrary.org/licensing',
+                bulk_export: 'https://sourcelibrary.org/api/dataset/v1/pages',
+              }
+            : {
+                sign_in: 'https://sourcelibrary.org/auth/signin',
+                get_api_key: 'https://sourcelibrary.org/developers',
+                bulk_export: 'https://sourcelibrary.org/api/dataset/v1/pages',
+              },
         },
       } : {}),
       pages: pagesWithContent.map(p => {
