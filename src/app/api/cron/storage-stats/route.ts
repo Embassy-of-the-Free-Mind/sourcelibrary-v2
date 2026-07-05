@@ -40,14 +40,18 @@ interface TextSeed {
 async function fetchR2Analytics(): Promise<
   { bucket: string; bytes: number; objects: number }[]
 > {
+  // .trim(): several Vercel env vars were added with trailing newlines,
+  // which breaks the GraphQL string / auth header (see issue tracker).
+  const accountId = process.env.R2_ACCOUNT_ID?.trim();
+  const token = process.env.CF_ANALYTICS_TOKEN?.trim();
   const since = new Date(Date.now() - 3 * 86400e3).toISOString();
-  const query = `query { viewer { accounts(filter: {accountTag: "${process.env.R2_ACCOUNT_ID}"}) {
+  const query = `query { viewer { accounts(filter: {accountTag: "${accountId}"}) {
     r2StorageAdaptiveGroups(limit: 100, filter: {datetime_geq: "${since}"}) {
       max { payloadSize objectCount } dimensions { bucketName } } } } }`;
   const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${process.env.CF_ANALYTICS_TOKEN}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ query }),
