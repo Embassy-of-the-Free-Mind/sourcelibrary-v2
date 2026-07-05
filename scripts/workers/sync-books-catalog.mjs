@@ -18,9 +18,15 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 
+// Locally-sourced .env.production.local values can carry a literal "\n"
+// suffix (vercel env pull escaping — same footgun as the R2 vars, #3000).
+// A polluted SUPABASE_URL makes every upsert a phantom success: this script
+// reported "31,236 synced" on 2026-07-05 while writing nothing.
+const cleanEnv = (v) => (v || '').replace(/\\n/g, '').trim();
+
 const MONGODB_URI = process.env.MONGODB_URI;
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL = cleanEnv(process.env.SUPABASE_URL) || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_SERVICE_KEY = cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 if (!MONGODB_URI || !SUPABASE_SERVICE_KEY) {
   console.error('Missing MONGODB_URI or SUPABASE_SERVICE_ROLE_KEY');
@@ -211,7 +217,7 @@ for await (const book of cursor) {
       .from('books_catalog')
       .upsert(batch, { onConflict: 'id' });
     if (error) {
-      console.error(`Batch error: ${error.message}`);
+      console.error(`Batch error: ${error.message || JSON.stringify(error)}`);
       errors += batch.length;
     } else {
       synced += batch.length;
@@ -225,7 +231,7 @@ if (batch.length > 0) {
     .from('books_catalog')
     .upsert(batch, { onConflict: 'id' });
   if (error) {
-    console.error(`Batch error: ${error.message}`);
+    console.error(`Batch error: ${error.message || JSON.stringify(error)}`);
     errors += batch.length;
   } else {
     synced += batch.length;
