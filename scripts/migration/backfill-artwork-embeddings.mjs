@@ -148,8 +148,8 @@ async function main() {
           INSERT INTO artwork_embeddings (book_id, title, display_title, author, summary_text,
             subjects, figures, symbols, iconclass, technique, material, style, period, culture,
             genre, ulan_artist, collections, embedding, resource_type, thumbnail_url, updated_at,
-            embedding_model)
-          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,now(),$21)
+            embedding_model, visible)
+          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,now(),$21,true)
           ON CONFLICT (book_id) DO UPDATE SET
             summary_text=EXCLUDED.summary_text, embedding=EXCLUDED.embedding,
             subjects=EXCLUDED.subjects, figures=EXCLUDED.figures, symbols=EXCLUDED.symbols,
@@ -157,7 +157,7 @@ async function main() {
             style=EXCLUDED.style, period=EXCLUDED.period, culture=EXCLUDED.culture,
             genre=EXCLUDED.genre, ulan_artist=EXCLUDED.ulan_artist, collections=EXCLUDED.collections,
             display_title=EXCLUDED.display_title, thumbnail_url=EXCLUDED.thumbnail_url,
-            embedding_model=EXCLUDED.embedding_model, updated_at=now()
+            embedding_model=EXCLUDED.embedding_model, visible=true, updated_at=now()
         `, [
           art.id, art.title, art.display_title || art.title, art.author, texts[idx],
           e.figures_depicted || [], e.figures_depicted || [], e.symbols || [],

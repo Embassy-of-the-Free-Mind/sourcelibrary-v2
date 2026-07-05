@@ -59,6 +59,7 @@ BEGIN
     (1 - (ae.embedding <=> query_embedding))::float AS similarity
   FROM artwork_embeddings ae
   WHERE (1 - (ae.embedding <=> query_embedding)) > match_threshold
+    AND ae.visible IS NOT FALSE
     AND (filter_genre IS NULL OR ae.genre = filter_genre)
     AND (filter_period IS NULL OR ae.period = filter_period)
     AND (filter_culture IS NULL OR ae.culture = filter_culture)

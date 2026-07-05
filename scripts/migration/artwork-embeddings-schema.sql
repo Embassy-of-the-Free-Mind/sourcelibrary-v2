@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS artwork_embeddings (
   -- 2000 dims, so the only way to index a 3072-dim Gemini embedding is via
   -- halfvec (supported up to 4000 dims). See scripts/migration/artwork-embeddings-halfvec.mjs.
   embedding halfvec(3072), resource_type TEXT, thumbnail_url TEXT,
+  -- Mirrors books.visible in Mongo. Hidden artworks are excluded by the RPC
+  -- (`visible IS NOT FALSE`). Kept in sync by add-artwork-visible-filter.mjs
+  -- and stamped on insert by backfill-artwork-embeddings.mjs.
+  visible BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now(), updated_at TIMESTAMPTZ DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS artwork_embeddings_embedding_idx ON artwork_embeddings USING hnsw (embedding halfvec_cosine_ops) WITH (m = 16, ef_construction = 64);
@@ -14,6 +18,7 @@ CREATE INDEX IF NOT EXISTS artwork_embeddings_collections_idx ON artwork_embeddi
 CREATE INDEX IF NOT EXISTS artwork_embeddings_genre_idx ON artwork_embeddings (genre);
 CREATE INDEX IF NOT EXISTS artwork_embeddings_period_idx ON artwork_embeddings (period);
 CREATE INDEX IF NOT EXISTS artwork_embeddings_culture_idx ON artwork_embeddings (culture);
+CREATE INDEX IF NOT EXISTS artwork_embeddings_visible_idx ON artwork_embeddings (visible);
 
 CREATE OR REPLACE FUNCTION match_artworks_semantic(
   query_embedding halfvec, match_threshold float DEFAULT 0.5, match_count int DEFAULT 20,
@@ -32,6 +37,7 @@ BEGIN
     1 - (ae.embedding <=> query_embedding) AS similarity
   FROM artwork_embeddings ae
   WHERE 1 - (ae.embedding <=> query_embedding) > match_threshold
+    AND ae.visible IS NOT FALSE
     AND (filter_genre IS NULL OR ae.genre = filter_genre)
     AND (filter_period IS NULL OR ae.period = filter_period)
     AND (filter_culture IS NULL OR ae.culture = filter_culture)
