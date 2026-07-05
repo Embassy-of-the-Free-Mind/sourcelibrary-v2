@@ -1,0 +1,104 @@
+#!/usr/bin/env node
+/**
+ * api-key-usage-monitor.mjs — usage across ALL dataset API keys.
+ *
+ * Two independent usage signals exist and they measure different things:
+ *   1. api_usage            — every gated content-API call (/text, /quote, …),
+ *                             tagged with api_key_id + pages_served. THE real
+ *                             per-key traffic log (millions of docs).
+ *   2. dataset_access_log   — only the bulk dump route /api/dataset/v1/pages.
+ * `api_keys.last_used_at` is bumped on every key validation (both paths), so it
+ * shows liveness but not volume.
+ *
+ * NOTE on the business-model hole this surfaces: /text treats ANY valid key as
+ * the unlimited "apikey" tier (src/lib/api-budget.ts pickLimit), so a *free*
+ * explorer key is never page-capped on /text. Heavy explorer-tier extraction
+ * flagged below is exactly the bulk use the paid tiers are meant to price.
+ *
+ * Usage: node scripts/maintenance/api-key-usage-monitor.mjs [--days 7] [--json]
+ */
+import { MongoClient } from 'mongodb';
+
+const argv = process.argv.slice(2);
+const days = Number(argv[argv.indexOf('--days') + 1]) || 7;
+const asJson = argv.includes('--json');
+const since = new Date(Date.now() - days * 24 * 3600 * 1000);
+
+// Explorer keys pulling more than this many pages ever = bulk extraction worth a look.
+const BULK_PAGE_FLAG = 50000;
+
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+const db = client.db('bookstore');
+
+const keys = await db.collection('api_keys').find({}).project({ key_hash: 0 }).toArray();
+const kmap = new Map(keys.map((k) => [String(k._id), k]));
+
+// All-time per-key content traffic.
+const perKey = await db.collection('api_usage').aggregate([
+  { $match: { api_key_id: { $ne: null } } },
+  { $group: {
+      _id: '$api_key_id',
+      calls: { $sum: 1 },
+      pages: { $sum: '$pages_served' },
+      last: { $max: '$ts' },
+      blocked: { $sum: { $cond: ['$blocked', 1, 0] } },
+  } },
+  { $sort: { pages: -1 } },
+]).toArray();
+
+// Windowed per-key traffic (last N days).
+const perKeyWin = await db.collection('api_usage').aggregate([
+  { $match: { api_key_id: { $ne: null }, ts: { $gte: since } } },
+  { $group: { _id: '$api_key_id', calls: { $sum: 1 }, pages: { $sum: '$pages_served' } } },
+]).toArray();
+const winMap = new Map(perKeyWin.map((r) => [String(r._id), r]));
+
+const rows = perKey.map((r) => {
+  const k = kmap.get(String(r._id)) || {};
+  const w = winMap.get(String(r._id)) || { calls: 0, pages: 0 };
+  const bulk = (k.tier === 'explorer') && r.pages >= BULK_PAGE_FLAG;
+  return {
+    name: k.name || '?', tier: k.tier || '?', status: k.status || '?',
+    user_id: k.user_id, key_prefix: k.key_prefix,
+    all_calls: r.calls, all_pages: r.pages, blocked: r.blocked,
+    [`calls_${days}d`]: w.calls, [`pages_${days}d`]: w.pages,
+    last_used: r.last?.toISOString() || null, bulk_flag: bulk,
+  };
+});
+
+// Global context.
+const byKind = await db.collection('api_usage').aggregate([
+  { $match: { ts: { $gte: since } } },
+  { $group: { _id: '$identity_kind', calls: { $sum: 1 }, pages: { $sum: '$pages_served' } } },
+  { $sort: { calls: -1 } },
+]).toArray();
+
+if (asJson) {
+  console.log(JSON.stringify({ days, generated: new Date().toISOString(), rows, byKind }, null, 2));
+} else {
+  console.log(`\nAPI KEY USAGE — ${keys.length} keys total, window = last ${days}d\n`);
+  console.log('  key                              tier       all-time pages   all-time calls   ' + `${days}d pages   last used`);
+  for (const r of rows) {
+    const flag = r.bulk_flag ? '  ⚠ BULK' : '';
+    console.log(
+      '  ' + (r.name.slice(0, 30)).padEnd(32) +
+      r.tier.padEnd(11) +
+      String(r.all_pages).padStart(14) +
+      String(r.all_calls).padStart(17) +
+      String(r[`pages_${days}d`]).padStart(12) +
+      '   ' + (r.last_used?.slice(0, 16) || '-') + flag
+    );
+  }
+  const idle = keys.length - rows.length;
+  console.log(`\n  (${idle} keys have never made a gated content-API call)`);
+  console.log(`\n  Traffic by identity, last ${days}d:`);
+  for (const r of byKind) console.log(`    ${r._id.padEnd(9)} ${String(r.calls).padStart(10)} calls  ${String(r.pages).padStart(9)} pages`);
+  const flagged = rows.filter((r) => r.bulk_flag);
+  if (flagged.length) {
+    console.log(`\n  ⚠ ${flagged.length} explorer key(s) over ${BULK_PAGE_FLAG.toLocaleString()} pages — free-tier bulk extraction (uncapped on /text):`);
+    for (const r of flagged) console.log(`    ${r.name} — ${r.all_pages.toLocaleString()} pages (${r.user_id})`);
+  }
+}
+
+await client.close();
