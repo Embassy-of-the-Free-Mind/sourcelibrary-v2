@@ -89,7 +89,9 @@ async function main() {
       mdz++;
       const manifest_url = `https://api.digitale-sammlungen.de/iiif/presentation/v2/${bsb}/manifest`;
       const title = first(it.title) || 'Unknown';
-      const author = first(it.dcCreator) || first(it.edmAgentLabel) || 'Unknown';
+      // Europeana dcCreator is often a GND/VIAF URI, not a name — skip URIs so slugs/metadata stay clean.
+      const nameLike = v => { const s = String(v || ''); return (s && !/^https?:\/\//.test(s) && s.length < 120) ? s : null; };
+      const author = nameLike(first(it.dcCreator)) || nameLike(first(it.edmAgentLabel)) || nameLike(first(it.dcContributor)) || 'Unknown';
       const year = (String(first(it.year) || '').match(/\d{4}/) || [])[0] || null;
       // holdings dedupe: same manifest, or same bsb id, or close title+author
       if (DEDUPE) {
