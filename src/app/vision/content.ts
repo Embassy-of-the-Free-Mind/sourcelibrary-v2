@@ -65,7 +65,7 @@ export const visionContent: VisionContent = {
     en: 'Magic does not so much work wonders as serve nature while she works them.',
     la: 'Non tam facit miranda quam facienti naturæ sedula famulatur.',
     source: 'Giovanni Pico della Mirandola, *Oration on the Dignity of Man* (1496)',
-    url: 'https://sourcelibrary.org/q/Bek54SCHDUKr4EJMnM4',
+    url: '/q/Bek54SCHDUKr4EJMnM4',
     linkLabel: 'read it at the source',
   },
   bodyBeforeImage1: [
