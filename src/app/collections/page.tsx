@@ -41,6 +41,7 @@ interface CollectionDoc {
   type?: 'category' | 'curated';
   published?: boolean;
   featured_images?: FeaturedImage[];
+  hero_image?: string;
   languages: { lang: string; count: number }[];
   children_count?: number;
   collection_type?: string;
@@ -172,13 +173,14 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
  *  thumbnails, then extracted, then the raw page, across all featured images.
  *  The card renders these with a fallback chain so a single dead/slow source
  *  doesn't leave a broken thumbnail. */
-function cardImageCandidates(images: FeaturedImage[] | undefined, override?: string): string[] {
+function cardImageCandidates(images: FeaturedImage[] | undefined, override?: string, heroImage?: string): string[] {
   const urls: string[] = [];
   const add = (u: string | undefined | null) => {
     const s = sanitizeThumbnail(u);
     if (s && !urls.includes(s)) urls.push(s);
   };
-  add(override); // curated cover wins over stored featured_images
+  add(override); // curated cover wins over everything
+  add(heroImage); // curated hero_image (set per-collection in Mongo) beats auto featured_images
   if (!images?.length) return urls;
   for (const img of images) {
     if (typeof img === 'string') { add(img); continue; }
@@ -197,7 +199,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
       className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
-        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug), col.hero_image)}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         priority={priority}
@@ -225,7 +227,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
       className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
-        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug))}
+        candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug), col.hero_image)}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         priority={priority}
