@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BookMarked, ExternalLink, BookOpen, Pencil, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -11,6 +10,7 @@ import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
 import { AISection } from '@/components/embed/AISection';
+import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
 // Catalogue entry routing
@@ -367,7 +367,17 @@ export default async function CatalogEntryPage({ params }: Props) {
     fetchSlBook(ubn),
     auth(),
   ]);
-  if (!work) notFound();
+  // The catalogue must never dead-end. If there's no catalogue row for this
+  // reference (mis-typed UBN, re-catalogued, or an incomplete link), render a
+  // graceful in-catalogue landing with a "New search" link — not a hard 404.
+  if (!work) {
+    return (
+      <CatalogueUnavailable
+        heading="Catalogue entry unavailable"
+        detail={`We couldn't find a catalogue record for reference “${ubn}”. It may have been re-catalogued, or the reference may be incomplete. Try a new search.`}
+      />
+    );
+  }
 
   const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
   const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
