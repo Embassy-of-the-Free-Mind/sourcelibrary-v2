@@ -454,8 +454,14 @@ export default function TranslationEditor({
   // Label for the translation panel/toggle. Reflects the language actually being
   // shown (the reader's EN/ES toggle overlays page.translation with translation_es
   // and sets language:'Spanish'), so the UI never says "English" over Spanish text.
+  // On English-language books both panels would otherwise be labeled "English" —
+  // the OCR panel holds the diplomatic transcription (long ſ and all) and the
+  // "translation" is the modernization, so label them Original Text / Modernized.
+  const isEnglishBook = (book.language || '').toLowerCase() === 'english';
   const translationLang = (page.translation?.language || '').toLowerCase();
-  const translationLangLabel = (translationLang.startsWith('es') || translationLang.includes('span')) ? 'Español' : 'English';
+  const translationLangLabel = (translationLang.startsWith('es') || translationLang.includes('span'))
+    ? 'Español'
+    : isEnglishBook ? 'Modernized' : 'English';
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   // Save state for the inline page editor. The previous design auto-saved on
   // blur with no UI feedback — editors (Paul Dijstelberge, May 2026) reported
@@ -538,17 +544,22 @@ export default function TranslationEditor({
 
   // Page Assistant state
 
-  // English-source books need no translation — the OCR (the original English text) IS
-  // the reading view. Show OCR by default and hide the redundant "English" translation
-  // panel/toggle, so an English book presents one reading column, not two identical ones.
-  const isEnglishSource = (book.language || '').trim().toLowerCase() === 'english';
+  // English-source books, MODERN print (>=1820, the MinerU lane): the OCR is already
+  // readable English, so it IS the reading view and the redundant English→English
+  // translation panel/toggle stays hidden (#2561). ARCHAIC English (pre-1820: long ſ,
+  // obsolete spelling) is the tradeoff #2561 flagged for a conscious call — there the
+  // modernization in translation.data is the readable text, so those books read like
+  // translated books: modernized panel by default, transcription toggleable as
+  // "Original Text". Unknown year falls to the modern-print behavior.
+  const bookYear = parseInt(String(book.published ?? ''), 10);
+  const englishOcrIsReadingView = isEnglishBook && !(bookYear < 1820);
 
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden;
-  // for English-source books, image + OCR visible, translation hidden)
+  // for modern-print English books, image + OCR visible, translation hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
-  const [showOcrPanel, setShowOcrPanel] = useState(isEnglishSource);
-  const [showTranslationPanel, setShowTranslationPanel] = useState(!isEnglishSource);
+  const [showOcrPanel, setShowOcrPanel] = useState(englishOcrIsReadingView);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(!englishOcrIsReadingView);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
@@ -1174,7 +1185,7 @@ export default function TranslationEditor({
                   <span className="hidden sm:inline">Deutsch</span>
                 </button>
               )}
-              {!isEnglishSource && (
+              {!englishOcrIsReadingView && (
                 <button
                   onClick={() => setShowTranslationPanel(!showTranslationPanel)}
                   className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1534,7 +1545,7 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {paired ? 'Greek · Berthelot' : ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
+                        {paired ? 'Greek · Berthelot' : ocrText ? (isEnglishBook ? 'Original Text' : (book.language || 'Original')) : 'Step 1: Transcribe'}
                       </span>
                       {paired ? (
                         paired.badges.map((b) => (
@@ -1714,8 +1725,8 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Translation Panel — suppressed for English-source books (OCR is the reading view) */}
-              {showTranslationPanel && !isEnglishSource && (
+              {/* Translation Panel — suppressed for modern-print English books (OCR is the reading view) */}
+              {showTranslationPanel && !englishOcrIsReadingView && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-section="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
