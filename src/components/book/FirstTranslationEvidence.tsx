@@ -33,6 +33,12 @@ import {
   type LegacyDisposition,
 } from '@/lib/first-translation/types';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
+import type { PriorTranslationCredit } from '@/lib/types/book';
+import {
+  hasPublishablePriorTranslation,
+  priorLinkLabel,
+  priorTranslationSentence,
+} from '@/lib/prior-translation';
 
 interface LegacyPrior {
   english_title?: string;
@@ -47,6 +53,7 @@ interface EvidenceBook {
   language?: string;
   is_first_translation?: boolean;
   pages_translated?: number | null;
+  prior_translation?: PriorTranslationCredit;
   first_translation?: {
     verdict?: FirstTranslationVerdict;
     evidence_strength?: string;
@@ -103,6 +110,43 @@ function PriorList({ priors }: { priors: NormalizedPrior[] }) {
           )}
         </p>
       ))}
+    </div>
+  );
+}
+
+/**
+ * The verified prior-translation credit (issue #3026) — the un-extractive move.
+ *
+ * Shown, quietly and always-visible, ONLY when the prior human edition resolved
+ * to a real bibliographic record with a live link. Courtesy framing, not a
+ * storefront: name the translator, and point the reader to where the scholar's
+ * edition can be read or found. The link is a hard requirement — a credit with
+ * no reachable destination doesn't ship, so `hasPublishablePriorTranslation`
+ * has already guaranteed `url` before we render.
+ */
+function PriorTranslationCreditLine({
+  prior,
+  showExternalLinks,
+}: {
+  prior: PriorTranslationCredit;
+  showExternalLinks: boolean;
+}) {
+  return (
+    <div className="mt-3 text-xs text-stone-400 leading-relaxed">
+      <span className="italic text-stone-300">{priorTranslationSentence(prior)}</span>
+      {showExternalLinks && (
+        <>
+          {' '}
+          <a
+            href={prior.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent-gold hover:text-accent-gold/80 whitespace-nowrap"
+          >
+            {priorLinkLabel(prior)} &rarr;
+          </a>
+        </>
+      )}
     </div>
   );
 }
@@ -253,7 +297,22 @@ export default async function FirstTranslationEvidence({
   const isFirst = !!verdict && FIRST_FAMILY.has(verdict) && published;
   const isExisting = verdict === 'not_first';
 
-  if (!isFirst && !isExisting) return null;
+  // A verified, publishable prior-translation credit (#3026). Populated only on
+  // non-first books whose prior edition resolved to a real record with a link.
+  // It's the honest headline for a not_first book, so it shows even when the
+  // verdict resolution is thin — but never on a book we badge as a first.
+  const publishablePrior = !isFirst && hasPublishablePriorTranslation(book)
+    ? book.prior_translation
+    : null;
+
+  if (!isFirst && !isExisting && !publishablePrior) return null;
+
+  // A verified credit is self-contained (no attempt-log read needed) and
+  // supersedes the unverified "Existing translations" panel — render the quiet,
+  // always-visible courtesy line with its link and stop.
+  if (publishablePrior) {
+    return <PriorTranslationCreditLine prior={publishablePrior} showExternalLinks={showExternalLinks} />;
+  }
 
   // Always read the accumulated evidence pile. Since the #2802 backfill lifted
   // legacy disposition evidence into the attempt log (13k+ books), most claims —
