@@ -48,6 +48,46 @@ async function getTenantMembershipRole(
 }
 
 /**
+ * Resolve a *platform-level* (tenant-agnostic) superadmin grant at request time.
+ *
+ * Role is normally baked into the NextAuth JWT at sign-in by the `jwt` callback
+ * in `src/lib/auth.ts`, which grants `superadmin` from `PLATFORM_ADMIN_EMAILS`
+ * or a `memberships` doc with `{ tenantId: null, role: 'superadmin' }`. But the
+ * JWT is only refreshed on sign-in / session update, so a user whose grant was
+ * added *after* their token was minted stays at `role: reader` on global admin
+ * routes (which carry no `x-tenant-id`, so `getTenantMembershipRole` can't help
+ * — it requires a tenantId). That produced spurious 403s in the cover picker
+ * (#3048). Re-resolving the platform grant here mirrors the sign-in callback so
+ * an active superadmin works without having to sign out and back in.
+ *
+ * Fail-closed: returns false on any lookup error.
+ */
+async function isPlatformSuperadmin(email: string | null | undefined): Promise<boolean> {
+  if (!email) return false;
+  const normalized = email.toLowerCase();
+
+  const adminEmails = (process.env.PLATFORM_ADMIN_EMAILS || '')
+    .split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
+  if (adminEmails.includes(normalized)) return true;
+
+  try {
+    const db = await getDb();
+    const record = await db.collection('memberships').findOne(
+      {
+        email: normalized,
+        tenantId: null,
+        role: 'superadmin',
+        status: { $in: ['active', 'pending'] },
+      },
+      { projection: { _id: 1 } }
+    );
+    return Boolean(record);
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Get the current session in API routes or server components
  */
 export async function getSession(): Promise<Session | null> {
@@ -214,6 +254,17 @@ export function withAuth(
     let effectiveRole = normalizeRole((session.user as any).role);
     if (membershipRole && (ROLE_LEVEL[membershipRole] ?? 0) > (ROLE_LEVEL[effectiveRole] ?? 0)) {
       effectiveRole = membershipRole;
+    }
+
+    // Re-resolve platform-level superadmin at request time. The JWT role is
+    // baked at sign-in, so a grant added afterwards otherwise 403s until the
+    // user re-authenticates (#3048). Only consult the DB when the JWT role is
+    // insufficient, so the common path stays a pure token check.
+    if (
+      (ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole] &&
+      (await isPlatformSuperadmin(session.user.email))
+    ) {
+      effectiveRole = 'superadmin';
     }
 
     if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
