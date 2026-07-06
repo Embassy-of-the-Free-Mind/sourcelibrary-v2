@@ -13,7 +13,7 @@ import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import IconclassFilter from '@/components/gallery/IconclassFilter';
-import { formatAuthor } from '@/lib/utils';
+import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
@@ -775,6 +775,7 @@ function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { ite
 function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScope }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string; collectionScope?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
+  const [cardFailed, setCardFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const reservedAspect = item.aspect && item.aspect > 0 ? item.aspect : 0.75;
 
@@ -782,8 +783,12 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
   // not the gallery image viewer.
   const isArtwork = item.source === 'artwork';
   const cropUrl = !isArtwork && item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
-  // Prefer thumbnail for grid cards — extracted images are ~2MB vs ~38KB thumbnails
-  const blobUrl = item.thumbnailUrl || item.extractedUrl;
+  // Prefer the 600px gallery `-card.jpg` for grid cards (sharp on retina; #2401),
+  // falling back to the 300px thumb if its card variant isn't backfilled yet.
+  // Extracted images (~2MB) are the last resort. Artwork thumbs are already
+  // 600px, so toGalleryCardUrl returns null for them and blobUrl stays the thumb.
+  const cardUrl = !cardFailed ? toGalleryCardUrl(item.thumbnailUrl) : null;
+  const blobUrl = cardUrl || item.thumbnailUrl || item.extractedUrl;
 
   const displayUrl = useCropFallback
     ? (cropUrl || toThumbnailUrl(item.imageUrl))
@@ -818,7 +823,9 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
               }
             }}
             onError={() => {
-              if (!useCropFallback && cropUrl) setUseCropFallback(true);
+              // Card variant missing (not yet backfilled) → retry with the thumb.
+              if (cardUrl) setCardFailed(true);
+              else if (!useCropFallback && cropUrl) setUseCropFallback(true);
               else setImageError(true);
             }}
           />

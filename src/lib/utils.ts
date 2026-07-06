@@ -149,6 +149,28 @@ export function isArchiveFailed(photo: string | undefined | null): boolean {
 }
 
 /**
+ * Gallery crops are materialized on R2 at deterministic sibling paths:
+ *   gallery/{book}/{page}-{idx}-thumb.jpg  (300px)
+ *   gallery/{book}/{page}-{idx}-card.jpg   (600px — #2401)
+ *   gallery/{book}/{page}-{idx}.jpg        (full extracted crop, ~2MB)
+ *
+ * The 300px thumb is too small for the 324–443px card slots in gallery /
+ * collection grids, so it blurs at ≥2× DPR. Derive the 600px `-card.jpg`
+ * sibling by convention so cards can prefer it with no API/type change; callers
+ * keep the original thumb as an onError fallback for crops whose card variant
+ * hasn't been backfilled yet (scripts/maintenance/backfill-card-thumbs.mjs).
+ *
+ * Returns null when the url isn't a gallery `-thumb.jpg` (artwork thumbs are
+ * already 600px; IIIF/other URLs have no card sibling) so we never point at a
+ * variant that can't exist.
+ */
+export function toGalleryCardUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (!/\/gallery\/.*-thumb\.jpg(\?|$)/.test(url)) return null;
+  return url.replace('-thumb.jpg', '-card.jpg');
+}
+
+/**
  * Get the best available image URL for a page.
  *
  * Priority: cropped_photo > archived_photo > photo_original > photo

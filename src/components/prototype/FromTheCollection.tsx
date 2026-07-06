@@ -1,6 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { bookUrl, galleryImageUrl } from '@/lib/slugify';
+import { toGalleryCardUrl } from '@/lib/utils';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 
 interface ShowcaseItem {
   // Gallery image fields
@@ -52,12 +53,13 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
                 {/* Image */}
                 <Link href={imageHref}>
                   <div className="relative aspect-[3/4] bg-cream rounded-lg overflow-hidden border border-border-light group-hover:shadow-lg transition-all">
-                    <Image
-                      src={item.thumbnail_url || item.extracted_url || ''}
+                    <CollectionCardImage
+                      candidates={[
+                        toGalleryCardUrl(item.thumbnail_url),
+                        item.thumbnail_url,
+                        item.extracted_url,
+                      ].filter((u): u is string => !!u)}
                       alt={item.museum_description || 'Gallery image'}
-                      fill
-                      quality={85}
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                     {item.type && (

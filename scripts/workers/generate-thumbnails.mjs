@@ -129,11 +129,18 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
     pipeline = pipeline.rotate(rotation);
   }
 
-  // Generate full-size + thumbnail
+  // Generate full-size + thumbnail + card variant.
+  //   -thumb.jpg (300px) — dense/low-priority contexts
+  //   -card.jpg  (600px) — grid card slots (324–443px CSS → ~650–880px @2x
+  //                        DPR); 300px can't fill those sharply (#2401)
   const extractedBuffer = await pipeline.jpeg({ quality: 85, progressive: true }).toBuffer();
   const thumbnailBuffer = await sharp(extractedBuffer)
     .resize(300, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: 70 })
+    .toBuffer();
+  const cardBuffer = await sharp(extractedBuffer)
+    .resize(600, null, { fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 72 })
     .toBuffer();
 
   // Compute dhash on the cropped image — same buffer the dedup logic will
@@ -142,15 +149,17 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
 
   // Upload to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
-  const [extractedBlob, thumbnailBlob] = await Promise.all([
+  const [extractedBlob, thumbnailBlob, cardBlob] = await Promise.all([
     storagePut(`${blobPrefix}.jpg`, extractedBuffer, 'image/jpeg'),
     storagePut(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, 'image/jpeg'),
+    storagePut(`${blobPrefix}-card.jpg`, cardBuffer, 'image/jpeg'),
   ]);
 
   const cacheBust = `?v=${Date.now()}`;
   return {
     extractedUrl: extractedBlob.url + cacheBust,
     thumbnailUrl: thumbnailBlob.url + cacheBust,
+    cardUrl: cardBlob.url + cacheBust,
     dhash,
   };
 }
@@ -322,6 +331,7 @@ async function main() {
         $set: {
           [`detected_images.${detectionIndex}.extracted_url`]: urls.extractedUrl,
           [`detected_images.${detectionIndex}.thumbnail_url`]: urls.thumbnailUrl,
+          [`detected_images.${detectionIndex}.card_url`]: urls.cardUrl,
           [`detected_images.${detectionIndex}.dhash`]: urls.dhash,
         },
       }
@@ -335,6 +345,7 @@ async function main() {
         $set: {
           extracted_url: urls.extractedUrl,
           thumbnail_url: urls.thumbnailUrl,
+          card_url: urls.cardUrl,
           dhash: urls.dhash,
           updated_at: new Date(),
         },

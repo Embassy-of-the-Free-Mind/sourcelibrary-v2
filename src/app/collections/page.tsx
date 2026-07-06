@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride } from '@/lib/collections-utils';
+import { toGalleryCardUrl } from '@/lib/utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
@@ -187,6 +188,9 @@ function cardImageCandidates(images: FeaturedImage[] | undefined, override?: str
   if (!images?.length) return urls;
   for (const img of images) {
     if (typeof img === 'string') { add(img); continue; }
+    // Prefer the 600px gallery `-card.jpg` (sharp on retina); fall back to the
+    // 300px thumb for crops whose card variant isn't backfilled yet (#2401).
+    add(toGalleryCardUrl(img.thumbnail_url));
     add(img.thumbnail_url);
     add(img.extracted_url);
     add(img.image_url);

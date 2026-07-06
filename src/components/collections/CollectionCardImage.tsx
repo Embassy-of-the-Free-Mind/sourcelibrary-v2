@@ -33,6 +33,10 @@ export default function CollectionCardImage({
       alt={alt}
       fill
       sizes={sizes}
+      // Serve the sized R2 variant directly — the metered /_next/image optimizer
+      // under-picks small srcset candidates (135px into a 324px slot) and blurs
+      // the cards (#2401, CLAUDE.md). The candidate chain is pre-sized on R2.
+      unoptimized
       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       priority={priority}
       loading={priority ? 'eager' : 'lazy'}
