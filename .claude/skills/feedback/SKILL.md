@@ -49,6 +49,22 @@ Propose a disposition per item: `already-fixed (link PR/page)` · `real, route i
 - **feature-request** → issue or note; ack the submitter.
 - **praise** → mark addressed; reply with thanks if email present (many are Spanish — reply in kind).
 
+**When you file a GitHub issue from a feedback item, LINK it back** so the loop
+closes itself. Put a marker line anywhere in the issue body:
+
+```
+Feedback-ID: <mongo _id>            # e.g. Feedback-ID: 6a473930a5f38bf2d79673bf
+```
+
+One issue can carry several ids (comma/space separated, or repeat the line).
+Then when that issue **closes** (a merged `Fixes #N` PR closes it automatically),
+`feedback-reconcile-issues.mjs` (Step 5) marks the linked feedback `addressed`
+with a link to the issue — no manual re-triage. **Only `Fixes #N` an issue when
+the PR resolves the WHOLE issue.** Partial fixes → reference it (`Refs #N`) and
+leave it open, or split the issue, or the reconciler will prematurely resolve
+feedback that isn't actually done (this bit us on #3051 — artwork half shipped,
+thumbnail half didn't, and `Fixes #3051` closed the lot).
+
 ## Step 4 — resolve
 
 **Anonymous / no-email items (the bulk):** mark directly — no email is sent.
@@ -65,6 +81,26 @@ reply email fires. Script-marking sets state but does NOT email — the script
 warns when a marked id has an email. **Sending an email is outward-facing and
 unsendable: draft it, show Derek, and only resolve-with-reply on his explicit
 approval.** Per-item, not blanket.
+
+## Step 5 — reconcile issue-linked feedback (stops the re-triage churn)
+
+The main backlog source is feedback that was **fixed but never marked** — often
+via an issue+PR in another session. Rather than re-verify by hand every time (a
+naive keyword→PR-title matcher is useless — measured 99/104 open items falsely
+"matched" on common words), close the loop off explicit `Feedback-ID:` links
+(Step 3):
+
+```bash
+node scripts/analytics/feedback-reconcile-issues.mjs            # dry-run
+node scripts/analytics/feedback-reconcile-issues.mjs --apply    # mark linked feedback for CLOSED issues
+node scripts/analytics/feedback-reconcile-issues.mjs --state all # also list open-issue links (informational)
+```
+
+It scans `user-feedback` issues, reads their `Feedback-ID:` markers, and marks
+the linked feedback `addressed` **only when the issue is closed** (idempotent —
+skips already-addressed rows; writes Mongo state only, never emails; warns on
+rows with an email so a human can send the reply). Run it at the top of every
+triage pass so resolved items drop off before you look at the queue.
 
 ## Guardrails
 - **Never blanket-resolve.** Mark by explicit `_id` list, after classifying. A wrong "addressed" can fire a wrong email.
