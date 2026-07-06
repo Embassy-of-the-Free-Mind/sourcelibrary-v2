@@ -2016,7 +2016,7 @@ For each significant illustration return:
     "style": "Northern European Renaissance",
     "technique": "woodcut"
   },
-  "museum_description": "A compelling allegorical scene depicting... This exemplifies early modern alchemical imagery..."
+  "museum_description": "A robed figure holds a serpent that bites its own tail while standing over a lit furnace. The ouroboros and the athanor identify the scene as one of alchemical transmutation."
 }
 
 GALLERY QUALITY (0.0-1.0):
@@ -2025,7 +2025,7 @@ GALLERY QUALITY (0.0-1.0):
 - 0.6-0.8: Good illustrations without people
 - 0.4-0.6: Musical scores, alchemical symbols
 
-MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
+MUSEUM DESCRIPTION: Write 2-3 plain sentences for a museum label: first what the viewer sees, then what it depicts or means. Name concrete things. Do NOT use promotional or filler language. Avoid the words "serves as", "stands as", "a testament to", "renowned", "profound", "delve", "intricate", "vibrant", "compelling", "exemplifies", "masterful", and the construction "not only X but also Y". State what is shown, not how significant it is.
 
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 
