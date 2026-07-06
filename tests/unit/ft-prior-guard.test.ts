@@ -307,6 +307,63 @@ describe('Erasmus Paraphrases (id=69b2ffe2e5d6d64d8e1979e7) — all guards pass 
   });
 });
 
+// ── Case 7: single volume of a set vs whole opera → VOLUME guard (#3044) ─────
+
+describe('Opera Omnia single-volume vs whole (#3044) — volume guard', () => {
+  /**
+   * The #2885(b) alignment gold measured Tier-0 acted-on link precision at 72.7%,
+   * and all 6 false merges shared one signature: a single numbered volume of a
+   * collected-works set matched (and would auto-demote) against a whole-corpus
+   * catalog row. A single volume is not the same work as the whole container →
+   * these must route to needs_review, never demote.
+   */
+  it('Augustine "Opera Omnia Vol. 1" vs cited whole "Opera omnia" fires VOLUME', () => {
+    const book: BookInput = { title: 'Opera Omnia Vol. 1', author: 'Augustine', language: 'Latin' };
+    const prior: CitedPriorInput = {
+      english_title: 'The Complete Works of Saint Augustine',
+      translator: 'Various',
+      completeness: 'complete',
+    };
+    const result = evaluatePrior(book, prior);
+    expectGuardFired(result, 'VOLUME');
+  });
+
+  it('Pico "Opera Omnia (vol. 2)" vs cited whole "Opera omnia (1557-1573)" fires VOLUME', () => {
+    const book: BookInput = { title: 'Opera Omnia (vol. 2)', author: 'Pico della Mirandola', language: 'Latin' };
+    const prior: CitedPriorInput = {
+      english_title: 'Opera omnia (1557-1573)',
+      completeness: 'complete',
+    };
+    const result = evaluatePrior(book, prior);
+    expectGuardFired(result, 'VOLUME');
+  });
+
+  it('different numbered volumes (book Vol. 1 vs prior Vol. 2) fires VOLUME', () => {
+    const book: BookInput = { title: 'Collected Works, Vol. 1', author: 'Someone', language: 'Latin' };
+    const prior: CitedPriorInput = { english_title: 'Collected Works, Volume II', completeness: 'complete' };
+    const result = evaluatePrior(book, prior);
+    expectGuardFired(result, 'VOLUME');
+  });
+
+  it('same volume on both sides (Vol. 2 ↔ vol II) does NOT fire VOLUME', () => {
+    const book: BookInput = { title: 'The Works, Vol. 2', author: 'Someone', language: 'Latin' };
+    const prior: CitedPriorInput = { english_title: 'The Works, vol. II', completeness: 'complete' };
+    const result = evaluatePrior(book, prior);
+    expect(result.failedGuards).not.toContain('VOLUME');
+  });
+
+  it('no volume markers on either side does NOT fire VOLUME (Erasmus case)', () => {
+    const book: BookInput = { title: 'Paraphrases on the New Testament', author: 'Erasmus', language: 'Latin' };
+    const prior: CitedPriorInput = {
+      english_title: 'Paraphrases of Erasmus on the New Testament',
+      translator: 'Nicholas Udall (editor)',
+      completeness: 'complete',
+    };
+    const result = evaluatePrior(book, prior);
+    expect(result.failedGuards).not.toContain('VOLUME');
+  });
+});
+
 // ── Edge cases ────────────────────────────────────────────────────────────────
 
 describe('Edge cases', () => {

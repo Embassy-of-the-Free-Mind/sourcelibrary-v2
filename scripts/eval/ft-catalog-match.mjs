@@ -47,6 +47,9 @@
  *       does NOT defeat a Greek→En first)      only defeat Latin-source books
  *   (d) person-disambiguated, not a namesake  (NAMESAKE guard) — surname match
  *                                             alone is low-confidence
+ *   (e) not a single-volume-vs-whole match    (VOLUME guard, #3044) — a numbered
+ *                                             volume of a set is not the same work
+ *                                             as the whole "Opera omnia" container
  * Anything failing a guard → "needs_review", never an auto-demote candidate.
  *
  * Usage:
@@ -125,6 +128,63 @@ function bookTitleCoverage(bookTitle, priorTitle) {
   if (bookToks.length === 0) return 0;
   const found = bookToks.filter((t) => priorToks.has(t));
   return found.length / bookToks.length;
+}
+
+// ── Volume / part enumeration (mirrors scripts/iiif-discovery/dedupe-candidates.mjs
+//    and src/lib/ft-prior-guard.ts checkVolume) ──────────────────────────────────
+// A single numbered volume/part of a set is NOT the same work as the whole
+// container. "Opera Omnia Vol. 1" ⇔ catalog "Opera omnia" (whole) was the shared
+// signature of all 6 false merges in the #2885(b) alignment gold (#3044). Extract
+// an explicit enumeration so the guard can reject one-vs-whole and vol-1-vs-vol-2.
+
+// Tibetan pecha volumes are labelled by the consonant order (ka, kha, ga …), so a
+// letter token after a volume marker is a real enumeration too.
+const TIBETAN_VOLUME_LETTERS = [
+  'ka', 'kha', 'ga', 'nga', 'ca', 'cha', 'ja', 'nya', 'ta', 'tha', 'da', 'na',
+  'pa', 'pha', 'ba', 'ma', 'tsa', 'tsha', 'dza', 'wa', 'zha', 'za', 'ya', 'ra',
+  'la', 'sha', 'sa', 'ha', 'a',
+];
+const VOLUME_RE_WESTERN = new RegExp(
+  '\\b(?:vol(?:ume|umen|s)?|tom(?:e|us|o|i)?|band|bd|teil|th(?:eil)?|part(?:e|s)?|pt|pars|deel|abteilung|fasc(?:icule|iculus)?)\\b\\.?\\s*'
+  + `([0-9]+|[ivxlcdm]+|${TIBETAN_VOLUME_LETTERS.join('|')})\\b`,
+  'i',
+);
+const VOLUME_RE_CJK = /第?([0-9〇一二三四五六七八九十百千]+)\s*[卷冊册巻号輯辑編编集]/;
+const ROMAN = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+function romanToInt(s) {
+  let n = 0;
+  for (let i = 0; i < s.length; i++) {
+    const v = ROMAN[s[i]], next = ROMAN[s[i + 1]] || 0;
+    n += v < next ? -v : v;
+  }
+  return n;
+}
+const CJK_DIGITS = { '〇': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 };
+function cjkNumeral(s) {
+  if (/^[0-9]+$/.test(s)) return parseInt(s, 10);
+  let total = 0, current = 0;
+  for (const ch of s) {
+    if (ch in CJK_DIGITS) current = CJK_DIGITS[ch];
+    else if (ch === '十') { total += (current || 1) * 10; current = 0; }
+    else if (ch === '百') { total += (current || 1) * 100; current = 0; }
+    else if (ch === '千') { total += (current || 1) * 1000; current = 0; }
+  }
+  return total + current;
+}
+
+/** Extract a normalized volume/part key from a title, or null if none. */
+function volumeKey(title) {
+  if (!title) return null;
+  const w = title.toLowerCase().match(VOLUME_RE_WESTERN);
+  if (w) {
+    const raw = w[1];
+    if (/^[0-9]+$/.test(raw)) return `w${parseInt(raw, 10)}`;
+    if (/^[ivxlcdm]+$/.test(raw)) return `w${romanToInt(raw)}`;
+    return `t${raw}`; // Tibetan volume letter
+  }
+  const c = title.match(VOLUME_RE_CJK);
+  if (c) return `c${cjkNumeral(c[1])}`;
+  return null;
 }
 
 // Generic / collective "authors" whose surname is a meaningless join key — a
@@ -245,6 +305,27 @@ function guardSourceLang(book, row) {
   return { pass: false, reason: `source-language mismatch: book=${bookIso} ("${book.language}") vs catalog=${catIso}` };
 }
 
+/**
+ * (e) Volume/container guard (#3044). Pass = the pair is NOT a single-volume-
+ * vs-whole (or different-volume) mismatch. Fires when exactly one side carries
+ * an explicit volume/part enumeration (a single volume of a set matched against
+ * the whole opera, or vice-versa), or when both carry enumerations that differ.
+ * A single numbered volume of a collected-works set is not the same work as the
+ * whole container — auto-demoting on such a match was the shared signature of
+ * all 6 false merges in the #2885(b) alignment gold.
+ */
+function guardVolume(book, row) {
+  const bookVol = volumeKey(book.title);
+  const priorVol = volumeKey(row.english_title || '') || volumeKey(row.canonical_work || '');
+  if (!bookVol && !priorVol) return { pass: true, reason: 'no volume/part enumeration on either side' };
+  if (bookVol && priorVol) {
+    if (bookVol === priorVol) return { pass: true, reason: `same volume enumeration (${bookVol})` };
+    return { pass: false, reason: `different volume enumerations: book=${bookVol} vs catalog=${priorVol}` };
+  }
+  if (bookVol) return { pass: false, reason: `book is a single volume/part (${bookVol}) but the catalog prior is the whole work/container` };
+  return { pass: false, reason: `catalog prior is a single volume/part (${priorVol}) but the book is the whole work/container` };
+}
+
 /** (d) Namesake / person-disambiguation guard. Pass = strong author signal. */
 function guardNamesake(book, row, authorJaccard) {
   // A bare surname collision is the classic namesake trap. Require either a
@@ -329,14 +410,16 @@ export function matchBookToCatalog(book, bySurname) {
     const gComp = guardComplete(row);
     const gLang = guardSourceLang(book, row);
     const gName = guardNamesake(book, row, aJac);
+    const gVol = guardVolume(book, row);
 
     const guards = {
       ANTHOLOGY: gAnth,
       COMPLETENESS: gComp,
       SOURCE_LANG: gLang,
       NAMESAKE: gName,
+      VOLUME: gVol,
     };
-    const allPass = gAnth.pass && gComp.pass && gLang.pass && gName.pass;
+    const allPass = gAnth.pass && gComp.pass && gLang.pass && gName.pass && gVol.pass;
     const failed = Object.entries(guards).filter(([, g]) => !g.pass).map(([k]) => k);
 
     matches.push({
@@ -358,6 +441,7 @@ export function matchBookToCatalog(book, bySurname) {
         COMPLETENESS: gComp,
         SOURCE_LANG: gLang,
         NAMESAKE: gName,
+        VOLUME: gVol,
       },
       all_guards_pass: allPass,
       failed_guards: failed,
@@ -368,8 +452,8 @@ export function matchBookToCatalog(book, bySurname) {
 
   // Best match = most guards passed, then highest combined signal.
   matches.sort((a, b) => {
-    const ap = 4 - a.failed_guards.length;
-    const bp = 4 - b.failed_guards.length;
+    const ap = 5 - a.failed_guards.length;
+    const bp = 5 - b.failed_guards.length;
     if (ap !== bp) return bp - ap;
     return (b.author_overlap + b.title_coverage) - (a.author_overlap + a.title_coverage);
   });
@@ -666,7 +750,8 @@ function renderMarkdown(summary, demote, review) {
 export {
   normalise, sigTokens, tokenOverlap, bookTitleCoverage,
   isGenericAuthor, extractSurname, bookSourceIso,
-  guardAnthology, guardComplete, guardSourceLang, guardNamesake,
+  guardAnthology, guardComplete, guardSourceLang, guardNamesake, guardVolume,
+  volumeKey,
   authorOverlap, titleSignal,
   MIN_TITLE_COVERAGE, MIN_AUTHOR_JACCARD_FOR_MATCH,
 };
