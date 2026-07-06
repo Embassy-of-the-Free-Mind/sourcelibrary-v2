@@ -125,7 +125,49 @@ interface CuratedHighlight {
 
 /** Auto-link book titles found in description text to their book pages.
  *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
+// Inline markdown links [anchor](/path) authored in a collection description.
+// Only INTERNAL hrefs (starting with "/") are honored — this both matches the
+// intended use (deep links to /book/<id>/page/<pageId>) and blocks javascript:
+// or off-site hrefs from admin-authored prose. Everything outside a markdown
+// link is still run through the book-title / author auto-linker.
+const MD_LINK_RE = /\[([^\]\n]+)\]\((\/[^)\s]+)\)/g;
+
 function linkBookTitles(
+  text: string,
+  allBooks: BookItem[],
+  explicitMentions?: { text: string; book_id: string }[],
+  tenantSlug?: string | null,
+  authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
+): React.ReactNode {
+  MD_LINK_RE.lastIndex = 0;
+  if (!MD_LINK_RE.test(text)) {
+    return autoLinkPlain(text, allBooks, explicitMentions, tenantSlug, authorLinks);
+  }
+  MD_LINK_RE.lastIndex = 0;
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let k = 0;
+  while ((m = MD_LINK_RE.exec(text)) !== null) {
+    if (m.index > last) {
+      out.push(autoLinkPlain(text.slice(last, m.index), allBooks, explicitMentions, tenantSlug, authorLinks));
+    }
+    const anchor = m[1];
+    const href = m[2];
+    out.push(
+      <Link key={`md-${k++}-${m.index}`} href={href} className="text-accent-rust hover:underline italic">
+        {anchor}
+      </Link>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) {
+    out.push(autoLinkPlain(text.slice(last), allBooks, explicitMentions, tenantSlug, authorLinks));
+  }
+  return <>{out}</>;
+}
+
+function autoLinkPlain(
   text: string,
   allBooks: BookItem[],
   explicitMentions?: { text: string; book_id: string }[],
