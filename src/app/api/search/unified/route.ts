@@ -7,6 +7,7 @@ import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
+import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -226,6 +227,9 @@ export async function GET(request: NextRequest) {
       // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
       withTimeout(
         semanticArtworkSearch(matchQuery, 4)
+          // Drop hidden artworks — these RPC rows are returned to the client
+          // directly (title/thumbnail), not re-resolved against Mongo below.
+          .then(raw => filterVisibleArtworks(db, raw))
           .then(artworks => ({
             results: artworks.map(a => ({
               book_id: a.book_id,

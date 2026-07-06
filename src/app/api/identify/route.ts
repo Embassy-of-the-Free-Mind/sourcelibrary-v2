@@ -598,8 +598,11 @@ Return JSON only:
       }
     }
 
-    // Merge semantic artwork results (found via identification metadata)
-    const semanticArtworks = await semanticArtworkPromise;
+    // Merge semantic artwork results (found via identification metadata).
+    // Drop any that are hidden in Mongo — the RPC rows are consumed directly
+    // here (thumbnail/title/id), so guard against a stale visible column.
+    const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
+    const semanticArtworks = await filterVisibleArtworks(db, await semanticArtworkPromise);
     for (const sa of semanticArtworks) {
       if (existingMatchIds.has(sa.book_id)) continue;
       const semanticScore = Math.round(sa.similarity * 30); // Scale similarity to 0-30

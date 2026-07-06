@@ -668,7 +668,9 @@ async function executeTool(
       const collection = args.collection as string | undefined;
 
       const { semanticArtworkSearch } = await import('@/lib/semantic-search');
-      const artworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
+      const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
+      const rawArtworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
+      const artworks = await filterVisibleArtworks(await getDb(), rawArtworks);
 
       let context = '';
       if (artworks.length > 0) {
