@@ -7,8 +7,10 @@
  * 1. SELF_MATCH     — the cited prior IS the book's own catalog record
  * 2. ANTHOLOGY      — the cited prior is an anthology/collected-works, not a
  *                     translation of this specific work
- * 3. PARTIAL        — the cited prior is partial/excerpts (doesn't defeat "first complete")
- * 4. LOW_CONFIDENCE — source-language mismatch or namesake heuristics (low confidence only)
+ * 3. VOLUME         — the book is a single numbered volume/part of a set and the
+ *                     cited prior is the whole container (or a different volume)
+ * 4. PARTIAL        — the cited prior is partial/excerpts (doesn't defeat "first complete")
+ * 5. LOW_CONFIDENCE — source-language mismatch or namesake heuristics (low confidence only)
  *
  * Guards see only the *cited evidence* — passing all guards does NOT prove
  * the book IS a first translation, only that the cited evidence doesn't justify
@@ -40,6 +42,7 @@ export interface CitedPriorInput {
 export type GuardId =
   | 'SELF_MATCH'
   | 'ANTHOLOGY'
+  | 'VOLUME'
   | 'PARTIAL'
   | 'LOW_CONFIDENCE';
 
@@ -268,7 +271,87 @@ function checkAnthology(
   };
 }
 
-// ── Guard 3: Partial completeness ─────────────────────────────────────────────
+// ── Guard 3: Volume / container mismatch (#3044) ──────────────────────────────
+
+/**
+ * A single numbered volume/part of a collected-works set is NOT the same work as
+ * the whole container. "Opera Omnia Vol. 1" ⇔ a cited whole "Opera omnia" was the
+ * shared signature of all 6 false merges in the #2885(b) alignment gold. Extract
+ * an explicit volume/part enumeration so the guard can reject one-vs-whole and
+ * vol-1-vs-vol-2. Mirrors volumeKey() in scripts/eval/ft-catalog-match.mjs and
+ * scripts/iiif-discovery/dedupe-candidates.mjs.
+ */
+// Tibetan pecha volumes are labelled by the consonant order (ka, kha, ga …).
+const TIBETAN_VOLUME_LETTERS = [
+  'ka', 'kha', 'ga', 'nga', 'ca', 'cha', 'ja', 'nya', 'ta', 'tha', 'da', 'na',
+  'pa', 'pha', 'ba', 'ma', 'tsa', 'tsha', 'dza', 'wa', 'zha', 'za', 'ya', 'ra',
+  'la', 'sha', 'sa', 'ha', 'a',
+];
+const VOLUME_RE_WESTERN = new RegExp(
+  '\\b(?:vol(?:ume|umen|s)?|tom(?:e|us|o|i)?|band|bd|teil|th(?:eil)?|part(?:e|s)?|pt|pars|deel|abteilung|fasc(?:icule|iculus)?)\\b\\.?\\s*'
+  + `([0-9]+|[ivxlcdm]+|${TIBETAN_VOLUME_LETTERS.join('|')})\\b`,
+  'i',
+);
+const VOLUME_RE_CJK = /第?([0-9〇一二三四五六七八九十百千]+)\s*[卷冊册巻号輯辑編编集]/;
+const ROMAN: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+function romanToInt(s: string): number {
+  let n = 0;
+  for (let i = 0; i < s.length; i++) {
+    const v = ROMAN[s[i]] ?? 0, next = ROMAN[s[i + 1]] ?? 0;
+    n += v < next ? -v : v;
+  }
+  return n;
+}
+const CJK_DIGITS: Record<string, number> = { '〇': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 };
+function cjkNumeral(s: string): number {
+  if (/^[0-9]+$/.test(s)) return parseInt(s, 10);
+  let total = 0, current = 0;
+  for (const ch of s) {
+    if (ch in CJK_DIGITS) current = CJK_DIGITS[ch];
+    else if (ch === '十') { total += (current || 1) * 10; current = 0; }
+    else if (ch === '百') { total += (current || 1) * 100; current = 0; }
+    else if (ch === '千') { total += (current || 1) * 1000; current = 0; }
+  }
+  return total + current;
+}
+
+/** Extract a normalized volume/part key from a title, or null if none. */
+function volumeKey(title: string | undefined): string | null {
+  if (!title) return null;
+  const w = title.toLowerCase().match(VOLUME_RE_WESTERN);
+  if (w) {
+    const raw = w[1];
+    if (/^[0-9]+$/.test(raw)) return `w${parseInt(raw, 10)}`;
+    if (/^[ivxlcdm]+$/.test(raw)) return `w${romanToInt(raw)}`;
+    return `t${raw}`; // Tibetan volume letter
+  }
+  const c = title.match(VOLUME_RE_CJK);
+  if (c) return `c${cjkNumeral(c[1])}`;
+  return null;
+}
+
+/**
+ * Fires when exactly one side carries an explicit volume/part enumeration (a
+ * single volume matched against the whole container, or vice-versa), or when
+ * both sides carry enumerations that differ. A single numbered volume of a set
+ * is not the same work as the whole "Opera omnia".
+ */
+function checkVolume(
+  book: BookInput,
+  prior: CitedPriorInput,
+): { fired: boolean; reason: string } {
+  const bookVol = volumeKey(book.title);
+  const priorVol = volumeKey(prior.english_title) || volumeKey(prior.series);
+  if (!bookVol && !priorVol) return { fired: false, reason: 'no volume/part enumeration on either side' };
+  if (bookVol && priorVol) {
+    if (bookVol === priorVol) return { fired: false, reason: `same volume enumeration (${bookVol})` };
+    return { fired: true, reason: `different volume enumerations: book=${bookVol} vs cited prior=${priorVol}` };
+  }
+  if (bookVol) return { fired: true, reason: `book is a single volume/part (${bookVol}) but the cited prior is the whole work/container` };
+  return { fired: true, reason: `cited prior is a single volume/part (${priorVol}) but the book is the whole work/container` };
+}
+
+// ── Guard 4: Partial completeness ─────────────────────────────────────────────
 
 /**
  * Fires when the cited prior is explicitly partial, excerpts, or an annotated
@@ -301,7 +384,7 @@ function checkPartial(
   return { fired: false, reason: `completeness=${completeness ?? 'not set'}` };
 }
 
-// ── Guard 4: Low-confidence heuristics ───────────────────────────────────────
+// ── Guard 5: Low-confidence heuristics ───────────────────────────────────────
 
 /**
  * Heuristic guard (low confidence): fires when there are weak signals that the
@@ -351,12 +434,14 @@ export function evaluatePrior(
 ): GuardResult {
   const selfMatch = checkSelfMatch(book, citedPrior);
   const anthology = checkAnthology(book, citedPrior);
+  const volume = checkVolume(book, citedPrior);
   const partial = checkPartial(book, citedPrior);
   const lowConf = checkLowConfidence(book, citedPrior);
 
   const detail: GuardResult['detail'] = {
     SELF_MATCH: { fired: selfMatch.fired, reason: selfMatch.reason },
     ANTHOLOGY:  { fired: anthology.fired, reason: anthology.reason },
+    VOLUME:     { fired: volume.fired, reason: volume.reason },
     PARTIAL:    { fired: partial.fired, reason: partial.reason },
     LOW_CONFIDENCE: { fired: lowConf.fired, reason: lowConf.reason },
   };
@@ -365,6 +450,7 @@ export function evaluatePrior(
   const definitiveGuards: GuardId[] = [];
   if (selfMatch.fired) definitiveGuards.push('SELF_MATCH');
   if (anthology.fired) definitiveGuards.push('ANTHOLOGY');
+  if (volume.fired) definitiveGuards.push('VOLUME');
   if (partial.fired) definitiveGuards.push('PARTIAL');
 
   // Heuristic guard (low confidence)
