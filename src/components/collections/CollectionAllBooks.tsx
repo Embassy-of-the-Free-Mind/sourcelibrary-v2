@@ -106,7 +106,11 @@ export default function CollectionAllBooks({
 }: CollectionAllBooksProps) {
   const isArt = collectionType === 'visual_art';
   const itemLabel = isArt ? 'works' : 'books';
-  const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
+  // Art collections always lead with the image grid — the pictures ARE the
+  // point. The list default (below) is a readability aid for long *book*
+  // catalogues only; on a visual-art collection it renders as a text list and
+  // reads as "a catalogue, not pictures" (user feedback on ficinos-florence).
+  const sizeDefault: ViewMode = isArt ? 'grid' : (total > 200 ? 'list' : 'grid');
 
   const [expanded, setExpanded] = useState(false);
   const [allBooks, setAllBooks] = useState<BookItem[]>([]);
