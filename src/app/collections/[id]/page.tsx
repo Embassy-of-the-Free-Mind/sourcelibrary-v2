@@ -83,6 +83,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // ---------- Helpers ----------
 
+/** Flatten inline markdown links `[text](/href)` to their anchor text.
+ *  The rendered page body parses these into <Link>s, but plain-text consumers
+ *  (schema.org JSON-LD `description`) must not carry raw markdown syntax. */
+function stripMarkdownLinks(text: string | null | undefined): string {
+  return (text || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+}
+
 interface BookItem {
   id: string;
   slug?: string;
@@ -889,7 +896,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       <CollectionSchema
         slug={id}
         name={collection.name}
-        description={collection.expanded_description || collection.description}
+        description={stripMarkdownLinks(collection.expanded_description || collection.description)}
         bookCount={total}
         parentCollection={parentCollection}
         books={books.map(b => ({
