@@ -1,0 +1,2724 @@
+{
+  "summary": {
+    "built": "2026-07-06",
+    "issue": "#2885(b) — Tier-0 alignment-gold",
+    "seed": 42,
+    "purpose": "Measure Tier-0 link precision, work_id co-cluster homogeneity, and split (recall) rate. Each item is a same-work y/n pair judgment. MEASURE-ONLY — no flips, no DB writes.",
+    "eligible_books": 14741,
+    "catalog_rows": 23836,
+    "n": 130,
+    "by_kind": {
+      "link": 50,
+      "cocluster": 50,
+      "split": 30
+    },
+    "link_census": {
+      "demote_candidate": 22,
+      "needs_review_total": 406,
+      "needs_review_sampled": 28
+    },
+    "note": "UNPRIMED: the judge sees only left/right metadata. It must NOT be shown matcher_tier, guards, stratum, or work_id (those live in ft-alignment-scoringkey-<date>.json)."
+  },
+  "manifest": [
+    {
+      "pair_id": "link_97eda17d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e8b25c2ff2a8dc09e7773b",
+        "title": "道德經 (Dào Dé Jīng)",
+        "author": "Laozi",
+        "language": "Chinese",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Tâo Teh King (Texts of Taoism, Part I)",
+        "canonical_work": "Tao Te Ching Dao De Jing Daodejing Tao Teh King",
+        "author": "Laozi",
+        "translator": "James Legge",
+        "pub_year": 1891,
+        "source_language": "zh",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_e36a2402",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "694b3b5b58a47807cc735dce",
+        "title": "De revolutionibus orbium coelestium, libri VI",
+        "author": "Copernicus, Nicolaus, 1473-1543",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Complete works (2:) On the revolutions",
+        "canonical_work": "De Revolutionibus Orbium Coelestium",
+        "author": "Nicolaus Copernicus",
+        "translator": "Rosen, Edward",
+        "pub_year": 1978,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_4b0136bc",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "694f49d3f9b1ecc07965e424",
+        "title": "De revolutionibus orbium coelestium libri VI",
+        "author": "Copernicus, Nicolaus (1473-1543)",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Complete works (2:) On the revolutions",
+        "canonical_work": "De Revolutionibus Orbium Coelestium",
+        "author": "Nicolaus Copernicus",
+        "translator": "Rosen, Edward",
+        "pub_year": 1978,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_d0038c29",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "606a74d7-2ac1-420b-924d-de761439fb3f",
+        "title": "De Revolutionibus Orbium Coelestium",
+        "author": "Nicolaus Copernicus",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Complete works (2:) On the revolutions",
+        "canonical_work": "De Revolutionibus Orbium Coelestium",
+        "author": "Nicolaus Copernicus",
+        "translator": "Rosen, Edward",
+        "pub_year": 1978,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_992107d8",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "adad5f6d-4f68-4009-9406-d0e083cf0acc",
+        "title": "Opera Omnia",
+        "author": "Giovanni Pico della Mirandola",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia (1557-1573)",
+        "canonical_work": null,
+        "author": "Giovanni Pico della Mirandola",
+        "translator": null,
+        "pub_year": 1969,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_8999a06a",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6952861eab34727b1f04c3df",
+        "title": "Omnia Opera",
+        "author": "Giovanni Pico della Mirandola",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia (1557-1573)",
+        "canonical_work": null,
+        "author": "Giovanni Pico della Mirandola",
+        "translator": null,
+        "pub_year": 1969,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_3729cd1d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69905e392fd6a039938a17f1",
+        "title": "Decem Tractatus Astronomiae (Liber Astronomiae)",
+        "author": "Guido Bonatti",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Book of Astronomy (Liber Astronomiae, complete)",
+        "canonical_work": "The Book of Astronomy (Liber Astronomiae, complete)",
+        "author": "Guido Bonatti",
+        "translator": "Benjamin Dykes",
+        "pub_year": 2007,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_80a6a705",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6991e19d339ebc850994a2c3",
+        "title": "De Officio Hominis et Civis",
+        "author": "Samuel von Pufendorf",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The whole duty of man according to the law of nature",
+        "canonical_work": "De officio hominis et civis iuxta legem naturalem",
+        "author": "Samuel von Pufendorf",
+        "translator": "Tooke, Andrew",
+        "pub_year": 2003,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_b1f9c202",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69aea83e1cbf28a363a4f302",
+        "title": "Omnia Opera",
+        "author": "Giovanni Pico della Mirandola",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia (1557-1573)",
+        "canonical_work": null,
+        "author": "Giovanni Pico della Mirandola",
+        "translator": null,
+        "pub_year": 1969,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_cab5a55d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b2ff405545150b61b4738c",
+        "title": "Opera Omnia Vol. 1",
+        "author": "Augustine of Hippo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia",
+        "canonical_work": null,
+        "author": "Augustine of Hippo",
+        "translator": null,
+        "pub_year": 1835,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_7943d74c",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b2ff4b5545150b61b475b4",
+        "title": "Opera Omnia Vol. 2",
+        "author": "Augustine of Hippo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia",
+        "canonical_work": null,
+        "author": "Augustine of Hippo",
+        "translator": null,
+        "pub_year": 1835,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_b2c23b11",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b2ff5f5545150b61b47b54",
+        "title": "Opera Omnia Vol. 4",
+        "author": "Augustine of Hippo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia",
+        "canonical_work": null,
+        "author": "Augustine of Hippo",
+        "translator": null,
+        "pub_year": 1835,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_c296aef8",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b2ff6a5545150b61b48140",
+        "title": "Opera Omnia Vol. 5",
+        "author": "Augustine of Hippo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia",
+        "canonical_work": null,
+        "author": "Augustine of Hippo",
+        "translator": null,
+        "pub_year": 1835,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_ac9b017f",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b4cc2bd2bf9b45ea4783e4",
+        "title": "Opera Omnia (vol. 2)",
+        "author": "Giovanni Pico della Mirandola",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia (1557-1573)",
+        "canonical_work": null,
+        "author": "Giovanni Pico della Mirandola",
+        "translator": null,
+        "pub_year": 1969,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_de7fa4a3",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69b2ff525545150b61b4795c",
+        "title": "Opera Omnia Vol. 3",
+        "author": "Augustine of Hippo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Opera omnia",
+        "canonical_work": null,
+        "author": "Augustine of Hippo",
+        "translator": null,
+        "pub_year": 1835,
+        "source_language": "la",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_f2bdd96d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6955831757e3b773024f76ae",
+        "title": "Abhidharmakosa with Bhashya",
+        "author": "Vasubandhu",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Abhidharmakośabhāṣyam (4 vols)",
+        "canonical_work": "Abhidharmakosa Bhashya Abhidharmakosabhasyam",
+        "author": "Vasubandhu",
+        "translator": "Leo M. Pruden (from Louis de La Vallée Poussin)",
+        "pub_year": 1988,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_e2ecbda0",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "699258c28812793469fdd6be",
+        "title": "Brahma Sutra Bhashya",
+        "author": "Adi Shankaracharya",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Vedânta-Sûtras with the Commentary by Śaṅkarâkârya",
+        "canonical_work": "Brahma Sutra Bhashya Vedanta Sutras Brahmasutra",
+        "author": "Shankaracharya",
+        "translator": "George Thibaut",
+        "pub_year": 1890,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_4df3383f",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69de0b15534b281fb134e880",
+        "title": "The Kama Sutra of Vatsyayana",
+        "author": "Vatsyayana",
+        "language": "Sanskrit",
+        "original_language": "sa"
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Kama Sutra of Vatsyayana",
+        "canonical_work": "Kama Sutra Kamasutra",
+        "author": "Vatsyayana",
+        "translator": "Richard Burton & F. F. Arbuthnot",
+        "pub_year": 1883,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_30470e47",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e7491a85f786e884a4d6f9",
+        "title": "श्रीमद्वाल्मीकिरामायण (Rāmāyaṇa)",
+        "author": "Vālmīki",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Rámáyan of Válmíki (complete, 5 vols)",
+        "canonical_work": "Ramayana Ramayan",
+        "author": "Valmiki",
+        "translator": "Ralph T. H. Griffith",
+        "pub_year": 1874,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_1c549ae7",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e8b27f2ff2a8dc09e77ed7",
+        "title": "श्रीमद्भगवद्गीता (Bhagavad Gita, 1492 MS)",
+        "author": "Vyasa",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Bhagavadgîtâ, with the Sanatsujâtîya and the Anugîtâ",
+        "canonical_work": "Bhagavad Gita Bhagavadgita Srimad Bhagavad Gita",
+        "author": "Vyasa",
+        "translator": "Kâshinâth Trimbak Telang",
+        "pub_year": 1882,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_c51a2558",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e8b2852ff2a8dc09e77f6d",
+        "title": "योगसूत्र (Yoga Sūtra)",
+        "author": "Patanjali",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Yoga-System of Patañjali",
+        "canonical_work": "Yoga Sutra Yogasutra Yoga Sutras of Patanjali",
+        "author": "Patanjali",
+        "translator": "James Haughton Woods",
+        "pub_year": 1914,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_04bd69c1",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69ea3e63300d991d0f1d3186",
+        "title": "अर्थशास्त्र (Arthaśāstra)",
+        "author": "Kautilya",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Kautilya's Arthaśāstra",
+        "canonical_work": "Arthashastra Arthasastra Kautilya",
+        "author": "Kautilya",
+        "translator": "R. Shamasastry",
+        "pub_year": 1915,
+        "source_language": "sa",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_1e384d34",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "699050d07d19f3f2aac1e6e4",
+        "title": "De Umbris Idearum",
+        "author": "Giordano Bruno",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "On the Shadows of Ideas",
+        "canonical_work": "Giordano Bruno: De Umbris Idearum (1582 First Edition)",
+        "author": "Giordano Bruno",
+        "translator": "Scott Gosnell",
+        "pub_year": 2017,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_f83f8dbb",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6956952b8c9559f6c2db06a3",
+        "title": "Meditations (Latin and Greek Bilingual)",
+        "author": "Marcus Aurelius Antoninus",
+        "language": "Greek/Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Marcus Aurelius Antoninus his Meditations concerning himselfe",
+        "canonical_work": "Meditations (Latin and Greek Bilingual)",
+        "author": "Marcus Aurelius Antoninus",
+        "translator": "Meric Casaubon",
+        "pub_year": 1634,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_7138368f",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "699066472ec9f7db57179ee2",
+        "title": "Aurora Consurgens",
+        "author": "Pseudo-Thomas Aquinas",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Aurora Consurgens: A Document Attributed to Thomas Aquinas on the Problem of Opposites in Alchemy",
+        "canonical_work": "Zürich, Zentralbibliothek, Ms. Rh. 172",
+        "author": "Pseudo-Thomas Aquinas",
+        "translator": "Marie-Louise von Franz",
+        "pub_year": 1966,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_8f87debf",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69af21f8285bd73604373b80",
+        "title": "Ausonius",
+        "author": "Ausonius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Ausonius: Volume I. Books 1–17",
+        "canonical_work": "Ausonius: Volume I. Books 1–17",
+        "author": "Ausonius",
+        "translator": null,
+        "pub_year": "",
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_81ecc30f",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69907011245959b9547d672b",
+        "title": "De Occulta Philosophia Liber Quartus",
+        "author": "Pseudo-Agrippa (Heinrich Cornelius Agrippa, attributed)",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Three Books of Occult Philosophy",
+        "canonical_work": "De occulta philosophia (complete edition)",
+        "author": "Heinrich Cornelius Agrippa",
+        "translator": "J.F. (edited by Willis F. Whitehead)",
+        "pub_year": 1897,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_eae79c7f",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69ac7ee520878c5c9ba51e75",
+        "title": "Instauratio Magna",
+        "author": "Bacon, Francis",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Instauratio magna, part III : Historia naturalis et experimentalis : Historia ventorum and historia vitae &amp; mortis",
+        "canonical_work": "Instauratio Magna",
+        "author": "Francis Bacon",
+        "translator": "Rees, Graham; Wakely, Maria",
+        "pub_year": 2007,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_8a9280cd",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69dbc9901040d1d5e20a4508",
+        "title": "De oratore",
+        "author": "Cicero, Marcus Tullius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Cicero : on the ideal orator",
+        "canonical_work": "De Oratore - On the Ideal Orator",
+        "author": "Cicero",
+        "translator": "May, James M.; Wisse, Jakob",
+        "pub_year": 2001,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_c30e9fe3",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e80631fdad300064d9e531",
+        "title": "Περὶ ὕλης ἰατρικῆς (De Materia Medica), Vol. 1",
+        "author": "Dioscorides",
+        "language": "Greek",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Greek Herbal of Dioscorides, Illustrated by a Byzantine Artist, Englished by John Goodyer A.D. 1655",
+        "canonical_work": "De materia medica (Greek manuscript Grec 2179)",
+        "author": "Dioscorides",
+        "translator": "John Goodyer (edited by Robert T. Gunther)",
+        "pub_year": 1934,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_ffb42abb",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6974b648457dd8909910b9fb",
+        "title": "De arte cabalistica",
+        "author": "Reuchlin, Johann",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "On the Art of the Kabbalah",
+        "canonical_work": "De Arte Cabalistica (in Galatino, 1550)",
+        "author": "Johann Reuchlin",
+        "translator": "Martin Goodman and Sarah Goodman",
+        "pub_year": 1993,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_ade7af74",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6991bd6d70254d38471e5686",
+        "title": "Apocalypse Explained, Vol. 1",
+        "author": "Emanuel Swedenborg",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Apocalypse explained : according to the spiritual sense in which the arcana there predicted but heretofore concealed are revealed : a posthumous work",
+        "canonical_work": "Apocalypse Explained",
+        "author": "Emanuel Swedenborg",
+        "translator": "Ager, John Curtis",
+        "pub_year": 1995,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_cf3ccf26",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e80536fdad300064d9cb77",
+        "title": "De Re Coquinaria",
+        "author": "Apicius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Roman cookery of Apicius : a treasury of gourmet recipes &amp; herbal cookery",
+        "canonical_work": "De Re Coquinaria (The Roman Cookery Book)",
+        "author": "Apicius",
+        "translator": "Edwards, John",
+        "pub_year": 1984,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_8b04bde9",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+        "title": "De Humani Corporis Fabrica",
+        "author": "Andreas Vesalius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "On the fabric of the human body",
+        "canonical_work": "De humani corporis fabrica libri septem",
+        "author": "Vesalius, Andreas",
+        "translator": "Carman, John B.; Richardson, William Frank",
+        "pub_year": 1996,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_6166faab",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6953e47a77f38f6761bee83e",
+        "title": "Dialogue Concerning Two Chief World Systems - German",
+        "author": "Galileo Galilei; Emil Strauss",
+        "language": "Italian-German",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Telescopes, tides, and tactics: a Galilean dialogue about the Starry messenger and systems of the world",
+        "canonical_work": "Dialogue Concerning the Two Chief World Systems",
+        "author": "Galilei, Galileo",
+        "translator": null,
+        "pub_year": 1983,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_03e133e0",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6991ed1e8bec46532eb4a21c",
+        "title": "Apologia pro Galileo",
+        "author": "Tommaso Campanella",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "A defense of Galileo, the mathematician from Florence: which is an inquiry as to whether the philosophical view advocated by Galileo is in agreement with, or is opposed to, the Sacred Scriptures",
+        "canonical_work": "Apologia pro Galileo",
+        "author": "Campanella, Tommaso",
+        "translator": "Blackwell, Richard J.",
+        "pub_year": 1994,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_20642e4e",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "699388ed1075be7d3205541a",
+        "title": "Homer, Iliad and Odyssey",
+        "author": "Homer",
+        "language": "Greek",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Iliad (Chapman's Homer)",
+        "canonical_work": null,
+        "author": "Homer",
+        "translator": "George Chapman",
+        "pub_year": "1611",
+        "source_language": "Greek",
+        "completeness": "complete"
+      }
+    },
+    {
+      "pair_id": "link_d1f3c344",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "697a7087367f907242581fe3",
+        "title": "Disputatio cabalistica de anima",
+        "author": "Israel ben Moses",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Disputatio cabalistica de anima (Excerpts)",
+        "canonical_work": "Disputatio cabalistica de anima",
+        "author": "Israel ben Moses",
+        "translator": "Wouter J. Hanegraaff",
+        "pub_year": 2017,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_b33d7e9d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69591171ecb01322b30691d6",
+        "title": "Hortus Indicus Malabaricus Vol. 2",
+        "author": "Hendrik van Rheede",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Hortus Malabaricus Vol. 2",
+        "canonical_work": "Hortus Indicus Malabaricus Vol. 2",
+        "author": "Hendrik van Rheede",
+        "translator": "K. S. Manilal",
+        "pub_year": 2003,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_a81b1b07",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69942ea1d607f8e57e4b9af3",
+        "title": "Libri duo adversus Procli rationes de mundi aeternitate",
+        "author": "John Philoponus",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Against Proclus On the Eternity of the World 1-5",
+        "canonical_work": "Libri duo adversus Procli rationes de mundi aeternitate",
+        "author": "John Philoponus",
+        "translator": "Michael Share",
+        "pub_year": 2005,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_86152ea0",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6978ee3a598a6361bba7fbaf",
+        "title": "Chimia sive traditio summae perfectionis. Medulla alchimiae",
+        "author": "Geber",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Summa Perfectionis of Pseudo-Geber: A Critical Edition, Translation, and Study",
+        "canonical_work": "Chimia sive traditio summae perfectionis. Medulla alchimiae",
+        "author": "Geber",
+        "translator": "William R. Newman",
+        "pub_year": 1991,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_eeec4f31",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69906b02e0c258ddff203ac5",
+        "title": "De Masticatione Mortuorum in Tumulis, oder von dem Kauen und Schmatzen der Todten",
+        "author": "Michael Ranft",
+        "language": "Latin-German",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "On the Chewing of the Dead in their Graves",
+        "canonical_work": "De Masticatione Mortuorum in Tumulis, oder von dem Kauen und Schmatzen der Todten",
+        "author": "Michael Ranft",
+        "translator": "Michael J. Smith",
+        "pub_year": 2009,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_ea4f1070",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "698255f145774ed8d6329888",
+        "title": "De natura et gratia. De spiritu et litera",
+        "author": "Augustinus, Aurelius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Answer to the Pelagians, I (includes On Nature and Grace and On the Spirit and the Letter)",
+        "canonical_work": "De natura et gratia. De spiritu et litera",
+        "author": "Augustinus",
+        "translator": "Roland J. Teske, S.J.",
+        "pub_year": 1999,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_3884dd55",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "699200a2768b426600239dc3",
+        "title": "Liber Chronicarum (Nuremberg Chronicle)",
+        "author": "Hartmann Schedel / Anton Koberger",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Making of the Nuremberg Chronicle",
+        "canonical_work": "Liber Chronicarum (Nuremberg Chronicle)",
+        "author": "Hartmann Schedel / Anton Koberger",
+        "translator": "Adrian Wilson and Joyce Lancaster Wilson",
+        "pub_year": 1976,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_c4ee68bc",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69942c9bb2f6748db4abdd64",
+        "title": "Divinarum Institutionum adversus Gentes libri VII (1478 incunabulum)",
+        "author": "Lactantius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Lactantius: The Divine Institutes",
+        "canonical_work": "Divinarum Institutionum adversus Gentes libri VII (1478 incunabulum)",
+        "author": "Lactantius",
+        "translator": "Sister Mary Francis McDonald, O.P.",
+        "pub_year": 1964,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_2604f295",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69e8b110839ca3f47ec56f80",
+        "title": "Liber Abaci (Scritti di Leonardo Pisano)",
+        "author": "Fibonacci",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Fibonacci's Liber abaci : a translation into modern English of Leonardo Pisano's Book of calculation.",
+        "canonical_work": "Liber abaci (Book of Calculation)",
+        "author": "Leonardo Fibonacci",
+        "translator": "Sigler, L. E.",
+        "pub_year": 2002,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_ffa4369d",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6953c67c77f38f6761bd9970",
+        "title": "Physica - Hildegard von Bingen",
+        "author": "Hildegard of Bingen",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Letters of Hildegard of Bingen, Volume III",
+        "canonical_work": null,
+        "author": "Hildegard of Bingen",
+        "translator": "Joseph L. Baird, Jr.",
+        "pub_year": 2014,
+        "source_language": "la",
+        "completeness": "partial"
+      }
+    },
+    {
+      "pair_id": "link_1d689b54",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "69ac8955e5cfec73a7bd939d",
+        "title": "De spiritu et litera liber unus",
+        "author": "Aurelius Augustinus",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Answer to the Pelagians, I (includes On Nature and Grace and On the Spirit and the Letter)",
+        "canonical_work": "De natura et gratia. De spiritu et litera",
+        "author": "Augustinus",
+        "translator": "Roland J. Teske, S.J.",
+        "pub_year": 1999,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_efab79d0",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6976e865caea4bb6304d1aac",
+        "title": "Basilica chymica. De signaturis",
+        "author": "Crollius, Oswaldus",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "Basilica Chymica & Praxis Chymiatrica, or Royal and Practical Chymistry",
+        "canonical_work": "Basilica chymica",
+        "author": "Crollius",
+        "translator": "John Hartmann (and others)",
+        "pub_year": 1670,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "link_b56fa1ca",
+      "kind": "link",
+      "left": {
+        "type": "book",
+        "id": "6970e35e9b09d309d780a260",
+        "title": "De alchemia. Traditio summae perfectionis. Liber investigationis",
+        "author": "Geber",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "catalog_row",
+        "english_title": "The Summa Perfectionis of Pseudo-Geber: A Critical Edition, Translation, and Study",
+        "canonical_work": "Chimia sive traditio summae perfectionis. Medulla alchimiae",
+        "author": "Geber",
+        "translator": "William R. Newman",
+        "pub_year": 1991,
+        "source_language": "la",
+        "completeness": "unknown"
+      }
+    },
+    {
+      "pair_id": "cocluster_e8bff2f6",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b2f439f9f1ad2b3b151af5",
+        "title": "Eusebii Pamphili Evangelicae praeparationis libri XV",
+        "author": "Eusebius (printed by Robert Estienne)",
+        "language": "Greek",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "697b0799a12a626fbfe93ae4",
+        "title": "[Greek] Evangelicae praeparationis",
+        "author": "Eusebius Caesariensis",
+        "language": "Greek",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_551ba1c2",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "697a30558bd1fb4875964410",
+        "title": "[Cyrillisch]: Crata repoa of inleiding in de oude geheime gemeenschap van de Egytische priesters",
+        "author": "[Köppen, Karl Friedrich]",
+        "language": "Russian",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "697a3055f077efe5c8fd6a2c",
+        "title": "Crata repoa. Oder Einweihungen in der alten geheimen Gesellschaft der Egyptischen Priester",
+        "author": "[Köppen, Karl Friedrich]",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_5aa899f5",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69af0deb067c0c26ee26dceb",
+        "title": "De Re Anatomica Libri XV",
+        "author": "Realdo Colombo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69af0de9acdbcba89ba1d68a",
+        "title": "De Re Anatomica Libri XV (1562 ed.)",
+        "author": "Realdo Colombo",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_824fe175",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69af201c89ab4ba83f42c996",
+        "title": "Conicorum Libri Quattuor (Commandino 1566)",
+        "author": "Apollonius of Perga; Federico Commandino",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69aff3334fe9cb3694093d6e",
+        "title": "Apollonii Conica: Methodo Nova Illustrata (1675)",
+        "author": "Apollonius of Perga",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_8f769685",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b51dd4261c58d63664afa2",
+        "title": "Experimentum Chymicum novum",
+        "author": "Becher, Johann Joachim",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "book",
+        "id": "69b51ed8cf111105c42a4e6f",
+        "title": "Joh. Joachimi Becheri, ... Experimentum Chymicum Novum : quo artificialis & instantanea metallorum generatio & transmutatio ad oculum demonstratur ; loco supplementi in Physicam suam subterraneam et responsi ad D. Rlfincii Schedas de non entitate mercurii corporum ...",
+        "author": "Becher, Johann Joachim",
+        "language": "Latin",
+        "original_language": "Latin"
+      }
+    },
+    {
+      "pair_id": "cocluster_1bfab7a4",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6909f42ecf28baa1b4cb0dc3",
+        "title": "Erzählungen zum Vergnügen und zur Seelenbildung",
+        "author": "Eckartshausen, Karl von",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c7f9496c6f3cc53c84261b",
+        "title": "Erzählungen zum Vergnügen und zur Seelenbildung",
+        "author": "Eckartshausen, Karl von",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_0bf99f6d",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69c89ea66c6f3cc53c85da9f",
+        "title": "Die Macht der Kinder in der letzten Zeit",
+        "author": "Petersen, Johann Wilhelm",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6909e609cf28baa1b4cb0705",
+        "title": "Die Macht der Kinder in der letzten Zeit",
+        "author": "Petersen, Johann Wilhelm",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_f2c06841",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbcce30f8c5edf20f4f6ca",
+        "title": "Prognosticon 1497 [German] Practica",
+        "author": "Virdung, Johannes",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbcce20f8c5edf20f4f6ad",
+        "title": "Prognosticon 1497 [Latin]",
+        "author": "Virdung, Johannes",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_e64d037c",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b51e0c768235dc6598b8b8",
+        "title": "Mercvrii Trismegisti Liber De Potestate Et Sapientia Dei",
+        "author": "Hermes, Trismegistus, ca. 2./4. Jh.",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "book",
+        "id": "69aeb620b6cf480123443359",
+        "title": "Hermetica: The Ancient Greek and Latin Writings Attributed to Hermes Trismegistus, Volume II",
+        "author": "Scott, Walter",
+        "language": "Greek",
+        "original_language": "Greek"
+      }
+    },
+    {
+      "pair_id": "cocluster_c3088d57",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbc9351040d1d5e20a141f",
+        "title": "Orationes Philippicae. Comm: Franciscus Mataratius. Ed: Franciscus Mataratius",
+        "author": "Cicero, Marcus Tullius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbc9321040d1d5e20a12c7",
+        "title": "Orationes Philippicae",
+        "author": "Cicero, Marcus Tullius",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_0d536909",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6953ce7c77f38f6761be46ba",
+        "title": "Seneca Moral Essays Vol. 1 (Providence, Constancy, Anger, Clemency)",
+        "author": "Seneca",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6953ce7b77f38f6761be43fe",
+        "title": "Seneca Epistulae Morales Vol. 3 (Letters 93-124)",
+        "author": "Seneca",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_5be5a130",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "699379b2b0a84a5763965b43",
+        "title": "Aeschyli Tragoediae (Alt. Critical Edition)",
+        "author": "Aeschylus",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "699376ccb0a84a576396195e",
+        "title": "Aeschyli Tragoediae",
+        "author": "Aeschylus",
+        "language": "Greek",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_010fa1d6",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69905df32fd6a039938a03ad",
+        "title": "Daemoniaci cum Locis Infestis et Terriculamentis Nocturnis",
+        "author": "Petrus Thyraeus",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69905df12fd6a039938a02c6",
+        "title": "Daemoniaci",
+        "author": "Petrus Thyraeus",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_c7aa7dad",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69804b901fb2ba7cf1d43a1c",
+        "title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften",
+        "author": "Meiners, Christoph",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c4ec33a3a4a7c546ee611f",
+        "title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften",
+        "author": "Meiners, Christoph",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_62842828",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b69a89080b19f98fcfeb4c",
+        "title": "Universae Geometriae mixtaeque Mathematicae Synopsis, et bini refractionum demonstratarum tractatus",
+        "author": "Mersenne, Marin",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69af0da8be5fc7f363545d1a",
+        "title": "Universae Geometriae Synopsis",
+        "author": "Marin Mersenne",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_f70c8c02",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69906d4964d44bd0a0ef5314",
+        "title": "Tithi Nirnaya",
+        "author": "Unknown",
+        "language": "Sanskrit",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69906d4564d44bd0a0ef52ef",
+        "title": "Nirnayoddhara Tithi Nirnaya",
+        "author": "Unknown",
+        "language": "Sanskrit",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_7f96066a",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69af428aed0692ab5c226760",
+        "title": "S. Thasci Caecili Cypriani Opera Omnia (CSEL)",
+        "author": "Cyprian",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69af2366b5227118e60e5143",
+        "title": "Cyprian, Opera Omnia (Hartel, CSEL 3.1)",
+        "author": "Cyprian",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_ec8d2012",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69ac853d960d5ad0b4731e00",
+        "title": "Septimana philosophica",
+        "author": "Michael Maier",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69b51dbbcf111105c428ec05",
+        "title": "Septimana Philosophica : qua aenigmata aureola de omni naturae genere a Salomone Israëlitarum sapientissimo rege, & Arabiae regina Saba, nec non Hyramo, Tyri principe, sibi invicem in modum colloquii proponuntur & enodantur ; ubi paßim novae, at verae, cum ratione & experientia convenientes, rerum naturalium causae exponuntur & demonstrantur ...",
+        "author": "Maier, Michael",
+        "language": "Latin",
+        "original_language": "Latin"
+      }
+    },
+    {
+      "pair_id": "cocluster_376a65a3",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b43d53ee0300187dbd1c3a",
+        "title": "Orphei Carmina",
+        "author": "Orpheus",
+        "language": "Greek",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69938dd2d5a98fd66f42f05b",
+        "title": "Orphica (Hermann Critical Edition)",
+        "author": "Orpheus (ed. Gottfried Hermann)",
+        "language": "Greek",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_a98d11ed",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "699438326879ff0184cb7e24",
+        "title": "Collection des anciens alchimistes grecs, Vol. 1",
+        "author": "Marcellin Berthelot",
+        "language": "French",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69a979e9daf647306a736c91",
+        "title": "Collection des Anciens Alchimistes Grecs, vol. 3",
+        "author": "Marcellin Berthelot",
+        "language": "French",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_2ffdb3cb",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69e782edd93c1f6007505658",
+        "title": "rTsa rgyud rdo rje gzhon nu",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e77a8f0fc6fc955e360958",
+        "title": "rTsa rgyud rdo rje gzhon nu",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_bc2d96d4",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6952d0c777f38f6761bc59f6",
+        "title": "Arcana arcanissima",
+        "author": "Maier, Michael",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c889796c6f3cc53c85a445",
+        "title": "Secretioris naturae secretorum scrutinium chymicum",
+        "author": "Maier, Michael",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_833cb228",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6992c9f58cc847bfb99df8f9",
+        "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 7",
+        "author": "Chen Shiduo",
+        "language": "Chinese",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6992c9eb8cc847bfb99df822",
+        "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 1",
+        "author": "Chen Shiduo (陳士鐸)",
+        "language": "Chinese",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_b59d0625",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b267fd2195606b88d9a15b",
+        "title": "Martialis Epigrammata",
+        "author": "Martial",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69b2210c08069e96e842e56f",
+        "title": "Martial, Epigrammata (Aldine Press)",
+        "author": "Martial",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_a1e51bb1",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69ef3dbc72c1376fdf2b0c0c",
+        "title": "Aesthetica, Pars Altera (Vol. 2)",
+        "author": "Alexander Gottlieb Baumgarten",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69ef3d9872c1376fdf2b07a0",
+        "title": "Aesthetica",
+        "author": "Alexander Gottlieb Baumgarten",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_7c92dbd1",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a08549615c643eb1af53295",
+        "title": "Libri tre delle cose de Turchi. Nel primo si descriue il uiaggio da Venetia à Costantinopoli, con gli nomi de luoghi antichi & moderni nel secondo la Porta, cioe la corte de Soltan Soleymano, signor de Turchi nel terzo il modo del reggere il stato & imperio suo",
+        "author": "Benedetto Ramberti",
+        "language": "Italian",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a08546a15c643eb1af52b34",
+        "title": "Libri tre delle cose de Turchi. Nel primo si descriue il uiaggio da Venetia à Costantinopoli, con gli nomi de luoghi antichi & moderni nel secondo la Porta, cioe la corte de Soltan Soleymano, signor de Turchi nel terzo il modo del reggere il stato & imperio suo",
+        "author": "Benedetto Ramberti",
+        "language": "Italian",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_fb840a79",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbc87f1040d1d5e209a0f8",
+        "title": "Speculum peccatorum de contemptu mundi",
+        "author": "Bernardinus Senensis",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbc8811040d1d5e209a10c",
+        "title": "Speculum peccatorum de contemptu mundi",
+        "author": "Bernardinus Senensis",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_8dbdfa09",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a08559c15c643eb1af56708",
+        "title": "Logoi toutōni tōn rhL·torōn. Aischinou. Lysiou. Alkidamantos. ... Orationes horum rhetorum. Aeschinis. Lysiae. Alcidamantis. .. Isokratous logoi. Alkidamantos, Kata sophistōn. Gorgiou, HelenL·s enkōmion. Aristeidou PanathL·naikos. Tou autou RomL·s enkōmion. Isocratis Orationes. Alcidamantis Contra dicendi magistros. Go",
+        "author": "Isocrates",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69b221c908069e96e843135b",
+        "title": "Isocrates, Orationes, with Alcidamas, Gorgias, and Aristides (Aldine Editio Princeps)",
+        "author": "Isocrates",
+        "language": "Greek",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_f50a580f",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69a5ea03d507939f0352c8df",
+        "title": "Le jeu des échecs moralisés",
+        "author": "Jacques de Cessoles (trans. Jean de Vignay)",
+        "language": "Middle French",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69a5ee3cbfd8cafd91e43719",
+        "title": "Das Schachzabelspiel (Cessolis, German)",
+        "author": "Jacobus de Cessolis",
+        "language": "German",
+        "original_language": "German"
+      }
+    },
+    {
+      "pair_id": "cocluster_ab4f9ae1",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b65cf7b3f4fc0441515dbf",
+        "title": "Theatrum instrumentorum et machinarum Iacobi Bessoni Delphinatis ...",
+        "author": "Besson, Jacques",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69a5b973486a857b0587cbf2",
+        "title": "Theatrum instrumentorum et machinarum",
+        "author": "Jacques Besson",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_901ee871",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6992cabad4d545ae73fee83d",
+        "title": "五行大義 (Wuxing Dayi: Great Meaning of the Five Elements) Vol 1",
+        "author": "Xiao Ji",
+        "language": "Chinese",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6992cabbd4d545ae73fee88b",
+        "title": "五行大義 (Wuxing Dayi: Great Meaning of the Five Elements) Vol 2",
+        "author": "Xiao Ji",
+        "language": "Chinese",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_d008814d",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a08565d15c643eb1af58c52",
+        "title": "Bartholomaei Fumi Vilaurensis Placentini ... Summa quae Aurea armilia inscribitur, continens breuiter, et strictim quaecunque in iure canonico, & apud theologos circa animarum curam diffuse dispersimque tractantur",
+        "author": "Bartolomeo Fumo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a08533215c643eb1af4f14e",
+        "title": "Bartholomaei Fumi Vilaurensis Placentini ... Summa quae Aurea armilia inscribitur, continens breuiter, et strictim quaecunque in iure canonico, & apud theologos circa animarum curam diffuse dispersimque tractantur",
+        "author": "Bartolomeo Fumo",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_b9aece16",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b63f741c1c21a3738708c8",
+        "title": "Andreae Vesalii Bruxellensis, scholae medicorum Patavinae professoris, De humani corporis fabrica libri septem",
+        "author": "Vesalius, Andreas",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+        "title": "De Humani Corporis Fabrica",
+        "author": "Andreas Vesalius",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_d401dd35",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbcba41040d1d5e20b9c16",
+        "title": "Speculum vitae humanae",
+        "author": "Rodericus Zamorensis",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbcba61040d1d5e20b9d22",
+        "title": "Speculum vitae humanae",
+        "author": "Rodericus Zamorensis",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_d1a67f80",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69908a7093003de39c965796",
+        "title": "Haut-Senegal-Niger, Vol. 3",
+        "author": "Maurice Delafosse",
+        "language": "French",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69908a6b93003de39c96540f",
+        "title": "Haut-Senegal-Niger, Vol. 1",
+        "author": "Maurice Delafosse",
+        "language": "French",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_a8a0820b",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbca981040d1d5e20ad021",
+        "title": "Quaestiones super libros De anima Aristotelis",
+        "author": "Johannes de Janduno",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbca991040d1d5e20ad0e7",
+        "title": "Quaestiones super libros De anima Aristotelis",
+        "author": "Johannes de Janduno",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_fc9314e8",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69c812c46c6f3cc53c847c97",
+        "title": "Het leeven van Hai Ebn Yokdan",
+        "author": "Ibn Tufail, Abu Bakr",
+        "language": "Dutch",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c827306c6f3cc53c84bf6c",
+        "title": "Der Naturmensch oder Geschichte des Hai Ebn Joktan",
+        "author": "Ibn Tufail, Abu Bakr",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_7ed05137",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b52c5fa2d71b015aa97e16",
+        "title": "Cabala, Spiegel der Kunst und Natur in Alchymia",
+        "author": "Stephan Michelspacher",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c857136c6f3cc53c853f8b",
+        "title": "Cabala, Spiegel der Kunst und Natur: in Alchymia",
+        "author": "[Michelspacher, Stephan]",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_0812e34f",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69af0eb4067c0c26ee26ec6b",
+        "title": "Дневник писателя за 1877 г.",
+        "author": "Фёдор Достоевский",
+        "language": "Russian",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69af0eaf067c0c26ee26eb11",
+        "title": "Дневник писателя за 1876 г.",
+        "author": "Фёдор Достоевский",
+        "language": "Russian",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_e777f352",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69af46e0d6be7ec9cc32379a",
+        "title": "Historiarum adversum Paganos Libri VII (Zangemeister 1889)",
+        "author": "Paulus Orosius",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69af2331d510291a0ec78a9e",
+        "title": "Orosius, Adversus Paganos Historiarum Libri Septem (Zangemeister, CSEL)",
+        "author": "Orosius",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_4cec556d",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b51ec8768235dc65998aac",
+        "title": "Dissertatio Inauguralis Medica, De Abstinentia Medici Ab Aegrotis Famam Et Vitam Nonnunquam Conservante : = Wie sich die Medici bißweilen mit Nutzen der Francken enthalten",
+        "author": "Alberti, Michael, 1682-1757; Stegmann, Johann Josua",
+        "language": "German",
+        "original_language": "German"
+      },
+      "right": {
+        "type": "book",
+        "id": "69b51ec847b06ecd581967ba",
+        "title": "Dissertatio Inauguralis Medica, De Abstinentia A Medicis Et Medicamentis, Morbos Mortemque Interdum Avertente : = Wie sich die Menschen bißweilen mit Nutzen der Aertzte und Artzeneyen enthalten",
+        "author": "Alberti, Michael, 1682-1757; Zeys, Johann Christoph, -1766",
+        "language": "German",
+        "original_language": "German"
+      }
+    },
+    {
+      "pair_id": "cocluster_f62c64c8",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69e9c962625ec74a14473399",
+        "title": "De Orbe Novo Decades (Editio Princeps)",
+        "author": "Peter Martyr d'Anghiera",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e9c969625ec74a14473450",
+        "title": "De Orbe Novo Decades Octo",
+        "author": "Peter Martyr d'Anghiera",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_0bc0d69c",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69b51e1c261c58d63664fb4c",
+        "title": "Tractatvs De Magis, Veneficis Et Lamiis, Deqve His Recte Cognoscendis Et puniendis : Propter Varias Et Controversas De Hac quaestione hominum sententias, utilissimus, & cunctis ad Rerumpublicarum gubernacula sedentibus maxime necessarius ; publice in Academia Rostochiana olim praelectus, & in tres libros distributus. [1]",
+        "author": "Gödelmann, Johann Georg",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "book",
+        "id": "69905d8d2fd6a0399389fe6d",
+        "title": "Tractatus de Magis, Veneficis et Lamiis",
+        "author": "Johann Georg Godelmann",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_70984beb",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "695910f9ecb01322b3068858",
+        "title": "Historia General y Natural de las Indias Vol. 2",
+        "author": "Gonzalo Fernandez de Oviedo",
+        "language": "Spanish",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "695910f5ecb01322b306854d",
+        "title": "Historia General y Natural de las Indias Vol. 1",
+        "author": "Gonzalo Fernandez de Oviedo",
+        "language": "Spanish",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_d5b9935c",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69dbcaae1040d1d5e20ae0b0",
+        "title": "Liber de exemplis ac similitudinibus rerum",
+        "author": "Johannes de Sancto Geminiano",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbcaac1040d1d5e20ade01",
+        "title": "Liber de exemplis ac similitudinibus rerum. Ed: Sebastian Brant",
+        "author": "Johannes de Sancto Geminiano",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_f40b04f3",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69a5b9f0d76b98f272fcfa68",
+        "title": "Beschreibung allerfürnemisten mineralischen Ertzt",
+        "author": "Lazarus Ercker",
+        "language": "German",
+        "original_language": "German"
+      },
+      "right": {
+        "type": "book",
+        "id": "69a5b975486a857b0587cc99",
+        "title": "Beschreibung allerfürnemisten mineralischen Ertzt unnd Berckwercksarten",
+        "author": "Lazarus Ercker",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_4c31ad44",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a09ea7e3ca4edcd1ef01fdc",
+        "title": "周元公集·卷五~卷九 (Collected Works of Zhou Dunyi, juan 5-9) — Siku Quanshu",
+        "author": "（宋）周惇頣 (Zhou Dunyi)",
+        "language": "Chinese",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a09ea573ca4edcd1ef01f1c",
+        "title": "周元公集·卷一~卷四 (Collected Works of Zhou Dunyi, juan 1-4) — Siku Quanshu",
+        "author": "（宋）周惇頣 (Zhou Dunyi)",
+        "language": "Chinese",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_ef545b3b",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a0b25a7620b66ad8f2343c4",
+        "title": "Die Infusionsthierchen als vollkommene Organismen (Atlas)",
+        "author": "Christian Gottfried Ehrenberg",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a0b25a2620b66ad8f23432d",
+        "title": "Die Infusionsthierchen als vollkommene Organismen (Text)",
+        "author": "Christian Gottfried Ehrenberg",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_50430d11",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "69c581e48e452b634cbc3698",
+        "title": "Der unterwiesene Anfänger in der Chymie hermetisches Sendschreiben",
+        "author": "Marsciano, Francesco Onofrio di",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c8993a6c6f3cc53c85cd3f",
+        "title": "Tyro-chymicus instructus epistola hermetica",
+        "author": "Marsciano, Francesco Onofrio di",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "cocluster_7fbb40e8",
+      "kind": "cocluster",
+      "left": {
+        "type": "book",
+        "id": "6a0857f315c643eb1af5d25e",
+        "title": "Iunioris Ludouici Pariseti Regiensis Pausithea ad P. Syluerium",
+        "author": "Lodovico Parisetti",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a08582615c643eb1af5db76",
+        "title": "Iunioris Ludouici Pariseti Regiensis Pausithea ad P. Syluerium",
+        "author": "Lodovico Parisetti",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_b7c5851d",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a0ac2baccff0aaf8df94f9b",
+        "title": "Beati Raymundi Lulli Doctoris Illuminati et Martyris Operum Tomus Tertius (Salzinger ed., Mainz)",
+        "author": "Llull, Ramon; Salzinger, Ivo (ed.)",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a0abea9c66676dd37277ca9",
+        "title": "Beati Raymundi Lulli Doctoris Illuminati et Martyris Operum Tomus Quartus (Salzinger ed., Mainz)",
+        "author": "Llull, Ramon; Salzinger, Ivo (ed.)",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_0980c135",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69aff08b57adc49dbfc42491",
+        "title": "Letter from Lugal-nesaĝe to a king radiant as the moon",
+        "author": "Anonymous Sumerian",
+        "language": "Sumerian",
+        "original_language": "Sumerian"
+      },
+      "right": {
+        "type": "book",
+        "id": "69aff08c57adc49dbfc42498",
+        "title": "Letter from Lugal-nesaĝe to a king radiant as the sun",
+        "author": "Anonymous Sumerian",
+        "language": "Sumerian",
+        "original_language": "Sumerian"
+      }
+    },
+    {
+      "pair_id": "split_a3066bec",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "699ef9f4b0a976d32fd37465",
+        "title": "De signatura rerum: das ist, Bezeichnung aller dingen",
+        "author": "Boehme, Jacob",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "699ef9f3b0a976d32fd37463",
+        "title": "De signatura rerum oder von der Geburt und Bezeichnung aller Wesen",
+        "author": "Boehme, Jacob",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_924a6fdb",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69c271bdb82ba5d5beda2ee2",
+        "title": "Grades Mystiques. Apprentif, Compagnon, Maître",
+        "author": "Unknown",
+        "language": "French",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c271b2b82ba5d5beda2ec6",
+        "title": "Ecossais, Apprentif, Compagnon, Maître",
+        "author": "Unknown",
+        "language": "French",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_db3086cb",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69b4194dddff1f043992a186",
+        "title": "Copies of Letters — Carl Joseph von Campagne (PH455D)",
+        "author": "Carl Joseph von Campagne",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69b41950ddff1f043992a1c6",
+        "title": "Copy of a Letter — Carl Joseph von Campagne (PH455C)",
+        "author": "Carl Joseph von Campagne",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_4b60fbbb",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69a027816a20ac4e1fc40514",
+        "title": "Téléscope de Zoroastre, ou clef de la grande cabale divinatoire des mages",
+        "author": "[Nerciat, Andrea de?]",
+        "language": "French",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6909d4a7cf28baa1b4cb01a5",
+        "title": "Téléscope de Zoroastre, ou clef de la grande cabale divinatoire des mages",
+        "author": "[Nerciat, Andrea de?]",
+        "language": "French",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_29572342",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6954346f1479a63c11089855",
+        "title": "Kritik der praktischen Vernunft (German)",
+        "author": "Immanuel Kant",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6954347b1479a63c11089b35",
+        "title": "Kritik der Urteilskraft (German)",
+        "author": "Immanuel Kant",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_1d0b1325",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "697d9c9c72d515cb07bb384e",
+        "title": "Hermetischer Rosenkrantz",
+        "author": "anonymous",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "697d9c99f2b56306a9ec9616",
+        "title": "Hermetischer Rosenkrantz",
+        "author": "Anonymous",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_85ca1dd6",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e77ab80fc6fc955e36198c",
+        "title": "sNying thig gi lo rgyus chen mo",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e76183cc48e59ad74f01a8",
+        "title": "Lo rgyus chen mo",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_be49b3bd",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a0854b249638a50931c05f5",
+        "title": "M.Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quinctum fratrem, cum correctionibus Pauli Manutii",
+        "author": "Manuzio, Paolo",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a06c9d6c749b698e5b2753d",
+        "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quinctum fratrem, cum correctionibus Pauli Manutij.",
+        "author": "Manuzio, Paolo",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_09bae1af",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a08548815c643eb1af53026",
+        "title": "Rhetoricorum ad C. Herennium libri 4. Incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De Claris oratoribus, liber 1. Orator ad Brutum, Topica ad Trebatium, Oratoriae partitiones, Initium libri de optimo genere oratorum. Corrigente Paulo Manutio, Aldi filio Orator Ciceronis ad M.",
+        "author": "Marcus Tullius Cicero",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a08568915c643eb1af5946a",
+        "title": "Rhetoricorum ad C. Herennium libri 4. incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De claris oratoribus, liber 1. Orator ad Brutum, Topica ad Trebatium, Oratoriæ partitiones, Initium libri de optimo genere oratorum. Corrigente Paulo Manutio, Aldi filio Orator Ciceronis ad M.",
+        "author": "Marcus Tullius Cicero",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_320100a8",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e77a9b0fc6fc955e360c62",
+        "title": "Klong gsal gsang ba snying bcud sogs",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e787bf4a6785cfd60cd369",
+        "title": "klong gsal gsal yang gsang snying bcud",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_8bcf7976",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e7929680b52390feb1649a",
+        "title": "Rdzogs pa chen po klong chen snying thig rig ’dzin ’dus pa’i cha lag",
+        "author": "Ogyen Choling Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e7889b4a6785cfd60d13cf",
+        "title": "gsang snags chen po rje su 'dzin pa'i mdo",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_8775571c",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e7891a4a6785cfd60d2b7e",
+        "title": "Klong chen snying gi thig le’i mkha’ ’gro bde chen rgyal mo’i sgrub gzhung gi ’grel ba rgyud don snang ba",
+        "author": "Ogyen Choling Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e78a5d4a6785cfd60d331e",
+        "title": "theg pa chen po mdo sde'i rgyan ces bya ba'i mchan 'grel",
+        "author": "Ogyen Choling Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_914215ee",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e7ab385f1a22ab19a94da7",
+        "title": "Thadrak Kanjur Phal chen Nga",
+        "author": "Thadrak Temple",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e7ab365f1a22ab19a94b87",
+        "title": "Thadrak Kanjur Phal chen Ga",
+        "author": "Thadrak Temple",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_f3e2bbb8",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e787e04a6785cfd60cdf64",
+        "title": "本草綱目圖 (Bencao Gangmu Illustrations), Vol. 1",
+        "author": "Li Shizhen",
+        "language": "Chinese",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e787fd4a6785cfd60ce50d",
+        "title": "本草綱目 (Běncǎo Gāngmù), Vol. 1",
+        "author": "Li Shizhen (李時珍)",
+        "language": "Chinese",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_e1028ed4",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a1008eef717292950967088",
+        "title": "Bibliothèque des philosophes chimiques / Tome second.",
+        "author": "Maugin de Richebourg, Jean (16??-17??)",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a1008e8f717292950966e31",
+        "title": "Bibliothèque des philosophes chimiques / Tome premier.",
+        "author": "Maugin de Richenbourg, Jean (16??-17??)",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_7b7b92c5",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69b525d129577f283b57bec4",
+        "title": "Alle de voornaamste gesigten van de wydberoemde steeden Alkmaar, Delft en Dordregt, geleegen in de Provintie van Holland :, vertoont in seeven-en-sestig afbeeldingen /, Naar het leeven geteekent, door Abraham Rademaker ; en in het kooper gebragt door Leonardus Schenk.",
+        "author": "Rademaker, A",
+        "language": "Dutch",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69b525d16be6046083032d64",
+        "title": "Rhynlands fraaiste gezichten; vertoonende alle deszelfs lustplaatzen, heerenhuizen en dorpen ... /, Vertoont in honderd afbeeldingen, naar 't leeven getekend, en in 't ligt gebragt door Abraham Rademaker. ; Met een gedicht ..",
+        "author": "Rademaker, A",
+        "language": "Dutch",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_056dfaed",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a14e1342f45ee330c27450a",
+        "title": "Tshamdrak rNying rgyud Ma",
+        "author": "Tshamdrak Monastery",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a14e12f2f45ee330c273fac",
+        "title": "Tshamdrak rNying rgyud Pa",
+        "author": "Tshamdrak Monastery",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_4f26b4c7",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69dbcc1e1040d1d5e20bd3ee",
+        "title": "Super primo libro Sententiarum Petri Lombardi. Ed: Cornelius Sambucus",
+        "author": "Thomas Aquinas",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69dbcc200f8c5edf20f46057",
+        "title": "Super secundo libro Sententiarum Petri Lombardi. Ed: Cornelius Sambucus",
+        "author": "Thomas Aquinas",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_666b1eaf",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e77a930fc6fc955e360a71",
+        "title": "O rgyan pad ma 'byung gnas kyi skyes rabs rnam thar",
+        "author": "Gangtey Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e788a44a6785cfd60d15ed",
+        "title": "o rgyan padma 'byung gnas kyi 'khrungs rabs rnam thar rgyas pa",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_47cdc5ab",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6a08549015c643eb1af5308d",
+        "title": "In hoc volumine haec continentur. Rhetoricorum ad C. Herennium lib. 4 M.T. Ciceronis de inuentione lib. 2. Eiusdem de oratore ad Quintum fratrem lib. 3. Eiusdem de claris oratoribus, qui dicitur Brutus lib. 1. Eiusdem Orator ad Brutum lib. 1. Eiusdem Topica ad Trebatium lib. 1. Eiusdem oratoriae partitiones lib. 1. Eiusdem de op",
+        "author": "Marcus Tullius Cicero",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "6a0852db15c643eb1af4e5de",
+        "title": "In hoc volumine haec continentur. Rhetoricorum ad C. Herennium lib. 4. M.T. Ciceronis de inuentione lib. 2. Eiusdem de oratore ad Quintum fratrem lib. 3. Eiusdem de claris oratoribus, qui dicitur Brutus lib. 1. Eiusdem Orator ad Brutum lib.1. Eiusdem Topica ad Trebatium lib.1. Eiusdem oratoriae partitiones lib.1. Eiusdem de opti",
+        "author": "Marcus Tullius Cicero",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_e346d9b8",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6993891ece15387065946843",
+        "title": "Aristophanes, Plutus, Clouds, and Frogs",
+        "author": "Aristophanes",
+        "language": "Greek",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69938a8ee07f979c72ac6590",
+        "title": "Aristophanes, Plutus and Clouds (with Scholia)",
+        "author": "Aristophanes",
+        "language": "Greek",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_2e987dbd",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e787e04a6785cfd60cdf9b",
+        "title": "thugs rje chen po mun sel sgron me'i lo rgyus dang zhal gdams sogs",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e787944a6785cfd60cc471",
+        "title": "klong chen pa'i man ngag mdzod dang mtshan dpe chen mo",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_47fa999f",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69e789094a6785cfd60d2676",
+        "title": "Kun mkhyen chos kyi rgyal po gter chen dri med ’od zer gyi rnam par thar pa cung zad spros pa ngo mtshar skal bzang mchog gi dga’ ston",
+        "author": "Ogyen Choling Collection",
+        "language": "Tibetan",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69e7882e4a6785cfd60cfb07",
+        "title": "rdzogs chen khrid lam bzang ye shes snying po",
+        "author": "Drametse Monastery Collection",
+        "language": "Tibetan",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_ef76bd27",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69b51de2261c58d63664c611",
+        "title": "Vom hylealischen, das ist, pri-materialischen catholischen oder allgemeinen natürlichen Chaos, der naturgemässen Alchymiae und Alchymisten wiederholete, verneuerte und wolvermehrete naturgemäß-alchymisch- und rechtlehrende philosophische Confessio oder Bekandtniß Henrici Khunrath : deme beygef. ist e. treuhertzige Wahrnungs-Vermahnung an alle wahre Alchymisten, sich vor d. betrüger. Arg-Chymisten zu hüten",
+        "author": "Khunrath, Heinrich",
+        "language": "German",
+        "original_language": "German"
+      },
+      "right": {
+        "type": "book",
+        "id": "69b51d69261c58d63664a5a4",
+        "title": "Von Hylealischen, Das ist Pri-Materialischen Catholischen oder Algemeinem Natürlichen Chaos Der Naturgemessen Alchymiae und Alchymisten; Wiederholete, vernewerte und wolvermehrete Naturgemeß-Alchymisch und Rechtlehrende Philosophische Confessio oder Bekentnus; Henrici Khunrath Lips: Göttlicher Weisheit Liehabers, und beyder Artzney Doctor : Confessio",
+        "author": "Khunrath, Heinrich",
+        "language": "German",
+        "original_language": "German"
+      }
+    },
+    {
+      "pair_id": "split_6254aa0f",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "6984e8498a2f054f912420d1",
+        "title": "Philaletha illustratus",
+        "author": "Faust, Johannes Michael",
+        "language": "Latin",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c4ec33a3a4a7c546ee610b",
+        "title": "Philaletha illustratus",
+        "author": "Faust, Johannes Michael",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_ec88a9ed",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69b51cd098963ba069532757",
+        "title": "Verae Alchemiae Artisqve Metallicae, Citra Aenigmata, Doctrina, Certvsqve Modus : scriptis tum nouis tum ueteribus nunc primum & fideliter maiori ex parte editis, comprehensus ...",
+        "author": "Grataroli, Guglielmo",
+        "language": "Latin",
+        "original_language": "Latin"
+      },
+      "right": {
+        "type": "book",
+        "id": "69bd9d056120d54bd0372a3a",
+        "title": "Verae alchemiae artisque metallicae, citra aenigmata, doctrina certusque modus, scriptis tum novis tum veteribus nunc primum & fideliter maiori ex parte editis, comprehensus quorum elenchum a praefatione reperies",
+        "author": "Grataroli, Guglielmo",
+        "language": "Latin",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_75e5fdf3",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69c263e5b82ba5d5beda0895",
+        "title": "Clerikalische Ritualien des Freimaurer-Ordens nach den ächten Gebräuchen der alten Logen von Schotland, Frankreich und Italien",
+        "author": "Unknown",
+        "language": "German",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69c1b925b82ba5d5bed961be",
+        "title": "IVe Erlaueterung. Erklärung über die drei Tapis des Ordens der Brüder und Ritter Freimaurer, nach der alten  und ächten Uebergabe nebst Erklärung über die Zahlen. Chiffers",
+        "author": "Unknown",
+        "language": "German",
+        "original_language": null
+      }
+    },
+    {
+      "pair_id": "split_263fc9c3",
+      "kind": "split",
+      "left": {
+        "type": "book",
+        "id": "69920b6ee0a548a13d8827e9",
+        "title": "Astuatsashunch: Armenian Bible, Old Testament (Zohrab)",
+        "author": "Hovhannes Zohrab (ed.)",
+        "language": "Armenian",
+        "original_language": null
+      },
+      "right": {
+        "type": "book",
+        "id": "69a5eae5d507939f0352d3c8",
+        "title": "Astuatsashunchʻ Matean Hin ew Nor Ktakaranatsʻ (Armenian Bible, Zohrapean)",
+        "author": "Yovhannēs Zōhrapean (ed.)",
+        "language": "Armenian",
+        "original_language": null
+      }
+    }
+  ]
+}

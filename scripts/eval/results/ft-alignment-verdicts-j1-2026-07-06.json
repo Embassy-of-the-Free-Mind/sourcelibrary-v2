@@ -1,0 +1,375 @@
+[
+  {
+    "pair_id": "link_97eda17d",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Laozi's Tao Te Ching; B is Legge's complete 1891 English translation from Chinese, A is the Chinese original.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_e36a2402",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are De revolutionibus by Copernicus; B is Rosen's 1978 English translation of the same Latin text (canonical_work + source_language=la confirm).",
+    "sources": []
+  },
+  {
+    "pair_id": "link_4b0136bc",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Copernicus's De revolutionibus; B is Rosen's 1978 English translation (source la) of the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_d0038c29",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are De Revolutionibus by Copernicus; B is Rosen's 1978 complete English translation of the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_992107d8",
+    "same": true,
+    "basis": "web",
+    "reason": "B is a 1969 Latin facsimile reprint (Olms) of Basel 1557-1573 Opera Omnia, source la; same Latin collected-works container as A. NOTE: B is NOT an English translation (catalog-quality issue, not an alignment error).",
+    "sources": [
+      "https://search.worldcat.org/oclc/254719"
+    ]
+  },
+  {
+    "pair_id": "link_8999a06a",
+    "same": true,
+    "basis": "web",
+    "reason": "Both are Pico's Opera omnia; B (1969, la, no translator) is the Olms Latin facsimile reprint of Basel 1557-1573, not an English translation.",
+    "sources": [
+      "https://search.worldcat.org/oclc/254719"
+    ]
+  },
+  {
+    "pair_id": "link_3729cd1d",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Bonatti's Liber Astronomiae; B is Dykes's complete 2007 English translation of the Latin original A.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_80a6a705",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Pufendorf's De officio hominis et civis; B is Tooke's English translation of A's Latin original.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_b1f9c202",
+    "same": true,
+    "basis": "web",
+    "reason": "B is the 1969 Olms Latin facsimile reprint of Pico's Basel 1557-73 Opera Omnia (not an English translation); same collected-works corpus as A's Latin 'Omnia Opera'.",
+    "sources": [
+      "https://search.worldcat.org/oclc/254719"
+    ]
+  },
+  {
+    "pair_id": "link_cab5a55d",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is Vol.1 of a multi-volume set; B is the entire Opera Omnia container. A single volume/part != the whole collected-works container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_7943d74c",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is Vol.2 of a multi-volume Opera Omnia set; B is the complete collected-works corpus. A numbered volume differs from the whole container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_b2c23b11",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is Vol.4 (one part) of the multi-volume Opera Omnia set; B is the complete collected-works container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_c296aef8",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is Vol.5 of Augustine's Opera Omnia (one volume); B is the complete Opera Omnia container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_ac9b017f",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is vol.2 of the multi-volume Opera Omnia set; B is the complete Opera omnia (1557-1573). One volume of a set does not equal the whole container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_de7fa4a3",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is Vol.3 of Augustine's multi-volume Opera Omnia; B is the whole collected-works container.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_f2bdd96d",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Vasubandhu's Abhidharmakosabhasya; A is the Sanskrit original, B is Pruden's English translation. (4 vols) is translation packaging, not a part.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_e2ecbda0",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Shankara's Bhashya on the Brahma Sutras; B is Thibaut's 1890 English translation of the same Sanskrit original.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_4df3383f",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same text: Sanskrit original (A) and 1883 Burton/Arbuthnot English translation (B) of Vatsyayana's Kama Sutra.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_30470e47",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Valmiki's Ramayana; A is the Sanskrit original, B is Griffith's complete English translation. '5 vols' is packaging.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_1c549ae7",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are the Bhagavad Gita (Vyasa); B is Telang's SBE vol.8 complete translation of the Gita; the two extra texts don't change that B contains the full work = A.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_c51a2558",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Patanjali's Yoga Sutra; B is Woods' 1914 English translation of the same Sanskrit text.",
+    "sources": []
+  },
+  {
+    "pair_id": "link_04bd69c1",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Kautilya's Arthaśāstra; A is the Sanskrit original, B is Shamasastry's 1915 English translation of the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_056dfaed",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Same Tshamdrak Monastery rNying rgyud set, but volume letters differ (Ma vs Pa) = distinct volumes/sections, so different underlying works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_0980c135",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Sumerian letter-collection catalogues 'sun' and 'moon' addressee variants as distinct compositions; the moon/sun difference marks two separate letters, not one work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_09bae1af",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical titles differing only in capitalization; same author (Cicero), same language (Latin), same Aldine edition corrected by Paulo Manutio.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_1d0b1325",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title 'Hermetischer Rosenkrantz', same anonymous author, same German language; same underlying work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_263fc9c3",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Both Zohrab/Zohrapean Armenian Bible editions, but A is Old Testament only while B is 'Hin ew Nor' (Old and New Testaments); partial vs full Bible differ in scope.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_29572342",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Two distinct Kant Critiques: Critique of Practical Reason (1788) vs Critique of Judgment (1790) — different works by the same author.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_2e987dbd",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A: Avalokiteshvara (thugs rje chen po) 'Lamp Dispelling Darkness' history+oral instructions. B: Longchenpa's Treasury of Pith Instructions. Distinct titles/subjects; shared name is holding collection.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_320100a8",
+    "same": true,
+    "basis": "web",
+    "reason": "Both name the Longsal (klong gsal) gsang-ba snying-bcud secret heart-essence terma; A adds 'sogs' (etc.), B has orthographic variant 'gsal yang gsang'. Same core title, two monastery copies.",
+    "sources": [
+      "https://www.lotsawahouse.org/tibetan-masters/longsal-nyingpo/",
+      "https://treasuryoflives.org/biographies/view/klong-gsal-snying-po/2992"
+    ]
+  },
+  {
+    "pair_id": "split_47cdc5ab",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical Cicero rhetorical-works collection (Ad Herennium, De inventione, De oratore); titles differ only by punctuation/spacing per prompt. Same author, language.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_47fa999f",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is a rnam thar (biography) of Longchenpa (Drime Ozer); B is rDzogs chen khrid lam bzang, a Dzogchen instruction manual. Different genres and works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_4b60fbbb",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; both describe the same French work Telescope de Zoroastre.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_4f26b4c7",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Commentary on Book 1 of Lombard's Sentences vs Book 2 = distinct parts of Aquinas's multi-part Scriptum super Sententiis; different underlying works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_6254aa0f",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; same underlying work regardless of edition.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_666b1eaf",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both titles are the same Tibetan phrase: rnam thar of the birth-lives (skyes rabs / 'khrungs rabs, synonyms) of O rgyan Padma 'byung gnas (Padmasambhava). B adds 'rgyas pa' (extensive)=recension diff, which we ignore.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_75e5fdf3",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is a general collection of clerical Masonic rituals per Scottish/French/Italian lodges; B is a specific 'IVe Erlaeuterung' on the three tapis plus numbers/ciphers. Different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_7b7b92c5",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different Rademaker topographical series: A=Alkmaar/Delft/Dordrecht (67 plates); B=Rhineland estates/villages (100 plates). Distinct works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_85ca1dd6",
+    "same": true,
+    "basis": "metadata",
+    "reason": "'Lo rgyus chen mo' (Great Chronicle) is the abbreviated title of the Snying thig transmission history; the qualifier 'sNying thig gi' just names the tradition. Same Nyingma/Dzogchen collection supports same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_8775571c",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A: commentary on Longchen Nyingtik Khandro Dechen Gyalmo sadhana. B: annotated Mahayanasutralamkara (theg pa chen po mdo sde'i rgyan). Different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_8bcf7976",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Distinct titles: A is a Longchen Nyingtik Rigdzin Dupa ancillary text (cha lag); B is a Secret Mantra sutra (mdo). Different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_914215ee",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Both are volumes of the Thadrak Kanjur Phal chen (Avatamsaka) section, but 'Nga' and 'Ga' are distinct Tibetan volume letters. Different volume of a set = different work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_924a6fdb",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different degree sets: A covers three craft degrees (Grades Mystiques); B adds the Ecossais/Scottish degree. Distinct ritual compilations, only craft-degree names shared.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_a3066bec",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Jacob Boehme's De signatura rerum (1622); differing German subtitles are variant renderings of the same single work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_b7c5851d",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different numbered volumes of the same set: Tomus Tertius (vol.3) vs Tomus Quartus (vol.4) of Salzinger's Lull Opera. Different volume/part = different work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_be49b3bd",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same Cicero letters (ad Atticum/Brutum/Quintum) with Paolo Manuzio's corrections, same author/language; differ only by Manutii/Manutij spelling and punctuation.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_db3086cb",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different shelfmarks (PH455D 'Copies of Letters' plural vs PH455C 'Copy of a Letter' singular) indicate distinct letter documents; different letters are different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_e1028ed4",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Same set (Bibliotheque des philosophes chimiques) but Tome second vs Tome premier are different volumes = different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_e346d9b8",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different selections of plays: A=Plutus/Clouds/Frogs; B=Plutus/Clouds with Scholia. A different play selection is a different work.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_ec88a9ed",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author, language, and title; differences are only case, u/v orthography, and truncation of one identical compilation.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_ef76bd27",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same Khunrath work: 'Vom/Von Hylealischen Chaos ... Philosophische Confessio', identical author and text; differ only by spelling and edition.",
+    "sources": []
+  },
+  {
+    "pair_id": "split_f3e2bbb8",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is the illustrations/plates volume (本草綱目圖); B is the main pharmacopoeia text (本草綱目). The 圖 marks a distinct illustrated companion, a different work from the main text.",
+    "sources": []
+  }
+]

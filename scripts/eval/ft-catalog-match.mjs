@@ -279,6 +279,120 @@ function titleSignal(book, row) {
   return Math.max(cTitle, cWork);
 }
 
+// ── Reusable matcher (extracted for #2885 alignment-gold harness) ───────────────
+// buildCatalogIndex + matchBookToCatalog are the SAME guarded matching logic
+// main() runs — extracted verbatim so the alignment-gold draw can score the
+// production Tier-0 links without re-implementing (a simplified re-implementation
+// is exactly the "sampler-strawman" that produced fake false-merges, #2880 R2).
+
+/** Index catalog rows by normalised author surname for cheap candidate lookup. */
+export function buildCatalogIndex(catRows) {
+  const bySurname = new Map();
+  for (const row of catRows) {
+    const sn = row.author_surname ? normalise(row.author_surname) : extractSurname(row.canonical_author || row.author);
+    if (!sn || sn.length < 3) continue;
+    if (!bySurname.has(sn)) bySurname.set(sn, []);
+    bySurname.get(sn).push(row);
+  }
+  return bySurname;
+}
+
+/**
+ * Match ONE book against the catalog index. Returns the per-book result object
+ * ({ book_id, tier, match_count, best_match, matches, … }) or null when the book
+ * is ineligible or produces no title-signal match. Pure — no DB, no I/O.
+ */
+export function matchBookToCatalog(book, bySurname) {
+  if (!book.id || !book.author || !book.title) return null;
+  if (isGenericAuthor(book.author)) return null; // generic-author surname = noise
+  const sn = extractSurname(book.author);
+  if (!sn || sn.length < 3) return null;
+  const candidates = bySurname.get(sn);
+  if (!candidates || candidates.length === 0) return null;
+
+  // Score every same-surname candidate; keep those clearing match thresholds.
+  const matches = [];
+  for (const row of candidates) {
+    const aJac = authorOverlap(book, row);
+    const tCov = titleSignal(book, row);
+    if (tCov < MIN_TITLE_COVERAGE) continue; // need title signal
+    if (aJac < MIN_AUTHOR_JACCARD_FOR_MATCH) {
+      // surname matched but the rest of the name doesn't — keep ONLY if a
+      // strong forename corroboration exists; otherwise drop as too loose.
+      const bookAuthTokens = sigTokens(book.author || '');
+      const catAuthNorm = normalise([row.canonical_author, row.author].filter(Boolean).join(' '));
+      const corrob = bookAuthTokens.filter((t) => catAuthNorm.includes(t));
+      if (corrob.length < 2) continue;
+    }
+
+    const gAnth = guardAnthology(book, row);
+    const gComp = guardComplete(row);
+    const gLang = guardSourceLang(book, row);
+    const gName = guardNamesake(book, row, aJac);
+
+    const guards = {
+      ANTHOLOGY: gAnth,
+      COMPLETENESS: gComp,
+      SOURCE_LANG: gLang,
+      NAMESAKE: gName,
+    };
+    const allPass = gAnth.pass && gComp.pass && gLang.pass && gName.pass;
+    const failed = Object.entries(guards).filter(([, g]) => !g.pass).map(([k]) => k);
+
+    matches.push({
+      catalog_id: String(row._id),
+      source: row.source || null,
+      catalog_author: row.canonical_author || row.author || null,
+      english_title: row.english_title || null,
+      canonical_work: row.canonical_work || null,
+      translator: row.translator || null,
+      pub_year: row.pub_year_int ?? row.pub_year ?? null,
+      publisher: row.publisher || null,
+      completeness: row.completeness ?? null,
+      source_language: row.source_language || null,
+      url: row.url || row.source_url || null,
+      author_overlap: Number(aJac.toFixed(3)),
+      title_coverage: Number(tCov.toFixed(3)),
+      guards: {
+        ANTHOLOGY: gAnth,
+        COMPLETENESS: gComp,
+        SOURCE_LANG: gLang,
+        NAMESAKE: gName,
+      },
+      all_guards_pass: allPass,
+      failed_guards: failed,
+    });
+  }
+
+  if (matches.length === 0) return null;
+
+  // Best match = most guards passed, then highest combined signal.
+  matches.sort((a, b) => {
+    const ap = 4 - a.failed_guards.length;
+    const bp = 4 - b.failed_guards.length;
+    if (ap !== bp) return bp - ap;
+    return (b.author_overlap + b.title_coverage) - (a.author_overlap + a.title_coverage);
+  });
+
+  const best = matches[0];
+  const tier = best.all_guards_pass ? 'demote_candidate' : 'needs_review';
+
+  return {
+    book_id: book.id,
+    author: book.author,
+    title: book.title,
+    language: book.language,
+    original_language: book.original_language ?? null,
+    work_id: book.work_id ?? null,
+    book_source_iso: bookSourceIso(book),
+    tier,
+    match_count: matches.length,
+    best_match: best,
+    // include up to 3 supporting matches for the report (dedupe by catalog_id)
+    matches: matches.slice(0, 3),
+  };
+}
+
 async function main() {
   await withMongo(async (db) => {
     // In --audit mode, drop the `is_first_translation` constraint: we want to
@@ -329,13 +443,7 @@ async function main() {
     console.log(`Loaded ${catRows.length} catalog rows.`);
 
     // Index catalog rows by author surname for cheap candidate lookup.
-    const bySurname = new Map();
-    for (const row of catRows) {
-      const sn = row.author_surname ? normalise(row.author_surname) : extractSurname(row.canonical_author || row.author);
-      if (!sn || sn.length < 3) continue;
-      if (!bySurname.has(sn)) bySurname.set(sn, []);
-      bySurname.get(sn).push(row);
-    }
+    const bySurname = buildCatalogIndex(catRows);
     console.log(`Indexed ${bySurname.size} distinct catalog surnames.`);
 
     const results = [];
@@ -343,94 +451,8 @@ async function main() {
 
     for (const book of books) {
       scanned++;
-      if (!book.id || !book.author || !book.title) continue;
-      if (isGenericAuthor(book.author)) continue; // generic-author surname = noise
-      const sn = extractSurname(book.author);
-      if (!sn || sn.length < 3) continue;
-      const candidates = bySurname.get(sn);
-      if (!candidates || candidates.length === 0) continue;
-
-      // Score every same-surname candidate; keep those clearing match thresholds.
-      const matches = [];
-      for (const row of candidates) {
-        const aJac = authorOverlap(book, row);
-        const tCov = titleSignal(book, row);
-        if (tCov < MIN_TITLE_COVERAGE) continue; // need title signal
-        if (aJac < MIN_AUTHOR_JACCARD_FOR_MATCH) {
-          // surname matched but the rest of the name doesn't — keep ONLY if a
-          // strong forename corroboration exists; otherwise drop as too loose.
-          const bookAuthTokens = sigTokens(book.author || '');
-          const catAuthNorm = normalise([row.canonical_author, row.author].filter(Boolean).join(' '));
-          const corrob = bookAuthTokens.filter((t) => catAuthNorm.includes(t));
-          if (corrob.length < 2) continue;
-        }
-
-        const gAnth = guardAnthology(book, row);
-        const gComp = guardComplete(row);
-        const gLang = guardSourceLang(book, row);
-        const gName = guardNamesake(book, row, aJac);
-
-        const guards = {
-          ANTHOLOGY: gAnth,
-          COMPLETENESS: gComp,
-          SOURCE_LANG: gLang,
-          NAMESAKE: gName,
-        };
-        const allPass = gAnth.pass && gComp.pass && gLang.pass && gName.pass;
-        const failed = Object.entries(guards).filter(([, g]) => !g.pass).map(([k]) => k);
-
-        matches.push({
-          catalog_id: String(row._id),
-          source: row.source || null,
-          catalog_author: row.canonical_author || row.author || null,
-          english_title: row.english_title || null,
-          canonical_work: row.canonical_work || null,
-          translator: row.translator || null,
-          pub_year: row.pub_year_int ?? row.pub_year ?? null,
-          publisher: row.publisher || null,
-          completeness: row.completeness ?? null,
-          source_language: row.source_language || null,
-          url: row.url || row.source_url || null,
-          author_overlap: Number(aJac.toFixed(3)),
-          title_coverage: Number(tCov.toFixed(3)),
-          guards: {
-            ANTHOLOGY: gAnth,
-            COMPLETENESS: gComp,
-            SOURCE_LANG: gLang,
-            NAMESAKE: gName,
-          },
-          all_guards_pass: allPass,
-          failed_guards: failed,
-        });
-      }
-
-      if (matches.length === 0) continue;
-
-      // Best match = most guards passed, then highest combined signal.
-      matches.sort((a, b) => {
-        const ap = 4 - a.failed_guards.length;
-        const bp = 4 - b.failed_guards.length;
-        if (ap !== bp) return bp - ap;
-        return (b.author_overlap + b.title_coverage) - (a.author_overlap + a.title_coverage);
-      });
-
-      const best = matches[0];
-      const tier = best.all_guards_pass ? 'demote_candidate' : 'needs_review';
-
-      results.push({
-        book_id: book.id,
-        author: book.author,
-        title: book.title,
-        language: book.language,
-        original_language: book.original_language ?? null,
-        work_id: book.work_id ?? null,
-        book_source_iso: bookSourceIso(book),
-        tier,
-        match_count: matches.length,
-        best_match: best,
-        // include up to 3 supporting matches for the report (dedupe by catalog_id)
-        matches: matches.slice(0, 3),
-      });
+      const r = matchBookToCatalog(book, bySurname);
+      if (r) results.push(r);
     }
 
     // ── Summaries ────────────────────────────────────────────────────────────
@@ -638,7 +660,20 @@ function renderMarkdown(summary, demote, review) {
   return L.join('\n');
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Re-export the pure matching helpers so the #2885 alignment-gold draw can reuse
+// the exact normalisation/guard logic (never a re-implementation). Importing this
+// module must NOT trigger a catalog scan, so main() only runs when invoked directly.
+export {
+  normalise, sigTokens, tokenOverlap, bookTitleCoverage,
+  isGenericAuthor, extractSurname, bookSourceIso,
+  guardAnthology, guardComplete, guardSourceLang, guardNamesake,
+  authorOverlap, titleSignal,
+  MIN_TITLE_COVERAGE, MIN_AUTHOR_JACCARD_FOR_MATCH,
+};
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
