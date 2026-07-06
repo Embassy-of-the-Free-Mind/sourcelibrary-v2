@@ -1,0 +1,2551 @@
+{
+  "link_97eda17d": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (zh)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "sacred_books_east",
+    "catalog_id": "6a4390f74b412c757bd5e922",
+    "book_id": "69e8b25c2ff2a8dc09e7773b",
+    "book_source_iso": "zh"
+  },
+  "link_e36a2402": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "keyword \"complete works\" but coverage=1.00 — likely this work"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 0.5,
+    "title_coverage": 1,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7a77a90a8493179575",
+    "book_id": "694b3b5b58a47807cc735dce",
+    "book_source_iso": "la"
+  },
+  "link_4b0136bc": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "keyword \"complete works\" but coverage=1.00 — likely this work"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 0.5,
+    "title_coverage": 1,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7a77a90a8493179575",
+    "book_id": "694f49d3f9b1ecc07965e424",
+    "book_source_iso": "la"
+  },
+  "link_d0038c29": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "keyword \"complete works\" but coverage=1.00 — likely this work"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7a77a90a8493179575",
+    "book_id": "606a74d7-2ac1-420b-924d-de761439fb3f",
+    "book_source_iso": "la"
+  },
+  "link_992107d8": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7f77a90a849317c9b8",
+    "book_id": "adad5f6d-4f68-4009-9406-d0e083cf0acc",
+    "book_source_iso": "la"
+  },
+  "link_8999a06a": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7f77a90a849317c9b8",
+    "book_id": "6952861eab34727b1f04c3df",
+    "book_source_iso": "la"
+  },
+  "link_3729cd1d": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 0.667,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7c77a90a849317a650",
+    "book_id": "69905e392fd6a039938a17f1",
+    "book_source_iso": "la"
+  },
+  "link_80a6a705": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.67"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 0.667,
+    "title_coverage": 1,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7b77a90a8493179bf4",
+    "book_id": "6991e19d339ebc850994a2c3",
+    "book_source_iso": "la"
+  },
+  "link_b1f9c202": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7f77a90a849317c9b8",
+    "book_id": "69aea83e1cbf28a363a4f302",
+    "book_source_iso": "la"
+  },
+  "link_cab5a55d": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7e77a90a849317bbdc",
+    "book_id": "69b2ff405545150b61b4738c",
+    "book_source_iso": "la"
+  },
+  "link_7943d74c": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7e77a90a849317bbdc",
+    "book_id": "69b2ff4b5545150b61b475b4",
+    "book_source_iso": "la"
+  },
+  "link_b2c23b11": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7e77a90a849317bbdc",
+    "book_id": "69b2ff5f5545150b61b47b54",
+    "book_source_iso": "la"
+  },
+  "link_c296aef8": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7e77a90a849317bbdc",
+    "book_id": "69b2ff6a5545150b61b48140",
+    "book_source_iso": "la"
+  },
+  "link_ac9b017f": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7f77a90a849317c9b8",
+    "book_id": "69b4cc2bd2bf9b45ea4783e4",
+    "book_source_iso": "la"
+  },
+  "link_de7fa4a3": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "openlibrary",
+    "catalog_id": "69ab0b7e77a90a849317bbdc",
+    "book_id": "69b2ff525545150b61b4795c",
+    "book_source_iso": "la"
+  },
+  "link_f2bdd96d": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "scholarly_complete",
+    "catalog_id": "6a4390f74b412c757bd5e920",
+    "book_id": "6955831757e3b773024f76ae",
+    "book_source_iso": "sa"
+  },
+  "link_e2ecbda0": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "sacred_books_east",
+    "catalog_id": "6a4390f74b412c757bd5e91f",
+    "book_id": "699258c28812793469fdd6be",
+    "book_source_iso": "sa"
+  },
+  "link_4df3383f": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "scholarly_pd",
+    "catalog_id": "6a43999e4b412c757bd60b63",
+    "book_id": "69de0b15534b281fb134e880",
+    "book_source_iso": "sa"
+  },
+  "link_30470e47": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "scholarly_pd",
+    "catalog_id": "6a43999d4b412c757bd60b61",
+    "book_id": "69e7491a85f786e884a4d6f9",
+    "book_source_iso": "sa"
+  },
+  "link_1c549ae7": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 0.667,
+    "catalog_source": "sacred_books_east",
+    "catalog_id": "6a4390f74b412c757bd5e91d",
+    "book_id": "69e8b27f2ff2a8dc09e77ed7",
+    "book_source_iso": "sa"
+  },
+  "link_c51a2558": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "scholarly_pd",
+    "catalog_id": "6a4390f74b412c757bd5e91e",
+    "book_id": "69e8b2852ff2a8dc09e77f6d",
+    "book_source_iso": "sa"
+  },
+  "link_04bd69c1": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "demote_candidate",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (sa)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "scholarly_pd",
+    "catalog_id": "6a43999e4b412c757bd60b62",
+    "book_id": "69ea3e63300d991d0f1d3186",
+    "book_source_iso": "sa"
+  },
+  "link_1e384d34": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29962",
+    "book_id": "699050d07d19f3f2aac1e6e4",
+    "book_source_iso": "la"
+  },
+  "link_f83f8dbb": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": false,
+        "reason": "source-language mismatch: book=grc (\"Greek/Latin\") vs catalog=la"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS",
+      "SOURCE_LANG"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29a0d",
+    "book_id": "6956952b8c9559f6c2db06a3",
+    "book_source_iso": "grc"
+  },
+  "link_7138368f": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd298fa",
+    "book_id": "699066472ec9f7db57179ee2",
+    "book_source_iso": "la"
+  },
+  "link_8f87debf": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_harvard_lcl",
+    "catalog_id": "69dbbde5f071889fedd29795",
+    "book_id": "69af21f8285bd73604373b80",
+    "book_source_iso": "la"
+  },
+  "link_81ecc30f": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.60"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 0.6,
+    "title_coverage": 0.667,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29989",
+    "book_id": "69907011245959b9547d672b",
+    "book_source_iso": "la"
+  },
+  "link_eae79c7f": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbde3f071889fedd294b8",
+    "book_id": "69ac7ee520878c5c9ba51e75",
+    "book_source_iso": "la"
+  },
+  "link_8a9280cd": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbde0f071889fedd29423",
+    "book_id": "69dbc9901040d1d5e20a4508",
+    "book_source_iso": "la"
+  },
+  "link_c30e9fe3": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": false,
+        "reason": "source-language mismatch: book=grc (\"Greek\") vs catalog=la"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS",
+      "SOURCE_LANG"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd2997d",
+    "book_id": "69e80631fdad300064d9e531",
+    "book_source_iso": "grc"
+  },
+  "link_ffb42abb": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29930",
+    "book_id": "6974b648457dd8909910b9fb",
+    "book_source_iso": "la"
+  },
+  "link_ade7af74": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdd9f071889fedd28f3b",
+    "book_id": "6991bd6d70254d38471e5686",
+    "book_source_iso": "la"
+  },
+  "link_cf3ccf26": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdd6f071889fedd28d55",
+    "book_id": "69e80536fdad300064d9cb77",
+    "book_source_iso": "la"
+  },
+  "link_8b04bde9": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdd9f071889fedd28fc4",
+    "book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+    "book_source_iso": "la"
+  },
+  "link_6166faab": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": false,
+        "reason": "source-language mismatch: book=it (\"Italian-German\") vs catalog=la"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS",
+      "SOURCE_LANG"
+    ],
+    "author_overlap": 0.5,
+    "title_coverage": 0.833,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdd6f071889fedd28e3d",
+    "book_id": "6953e47a77f38f6761bee83e",
+    "book_source_iso": "it"
+  },
+  "link_03e133e0": {
+    "kind": "link",
+    "stratum": "link · generic-namesake",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdd9f071889fedd28f14",
+    "book_id": "6991ed1e8bec46532eb4a21c",
+    "book_source_iso": "la"
+  },
+  "link_20642e4e": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": true,
+        "reason": "completeness=complete"
+      },
+      "SOURCE_LANG": {
+        "pass": false,
+        "reason": "source-language mismatch: book=grc (\"Greek\") vs catalog=greek"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "SOURCE_LANG"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 0.667,
+    "catalog_source": "claude_subagent_verify",
+    "catalog_id": "6a46b82d198872706e29f01e",
+    "book_id": "699388ed1075be7d3205541a",
+    "book_source_iso": "grc"
+  },
+  "link_d1f3c344": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd299a1",
+    "book_id": "697a7087367f907242581fe3",
+    "book_source_iso": "la"
+  },
+  "link_b33d7e9d": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd299d6",
+    "book_id": "69591171ecb01322b30691d6",
+    "book_source_iso": "la"
+  },
+  "link_a81b1b07": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd299fc",
+    "book_id": "69942ea1d607f8e57e4b9af3",
+    "book_source_iso": "la"
+  },
+  "link_86152ea0": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29907",
+    "book_id": "6978ee3a598a6361bba7fbaf",
+    "book_source_iso": "la"
+  },
+  "link_eeec4f31": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29947",
+    "book_id": "69906b02e0c258ddff203ac5",
+    "book_source_iso": "la"
+  },
+  "link_ea4f1070": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 0.5,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29987",
+    "book_id": "698255f145774ed8d6329888",
+    "book_source_iso": "la"
+  },
+  "link_3884dd55": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd299f6",
+    "book_id": "699200a2768b426600239dc3",
+    "book_source_iso": "la"
+  },
+  "link_c4ee68bc": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 1,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd299a2",
+    "book_id": "69942c9bb2f6748db4abdd64",
+    "book_source_iso": "la"
+  },
+  "link_2604f295": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 0.5,
+    "title_coverage": 0.75,
+    "catalog_source": "extended_unesco_index_translationum",
+    "catalog_id": "69dbbdddf071889fedd2912d",
+    "book_id": "69e8b110839ca3f47ec56f80",
+    "book_source_iso": "la"
+  },
+  "link_ffa4369d": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"partial\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 0.667,
+    "catalog_source": "unesco_master",
+    "catalog_id": "69ab0b7c77a90a849317a4d2",
+    "book_id": "6953c67c77f38f6761bd9970",
+    "book_source_iso": "la"
+  },
+  "link_1d689b54": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 0.5,
+    "title_coverage": 0.667,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29987",
+    "book_id": "69ac8955e5cfec73a7bd939d",
+    "book_source_iso": "la"
+  },
+  "link_efab79d0": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=0.50"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 0.5,
+    "title_coverage": 0.667,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd298fc",
+    "book_id": "6976e865caea4bb6304d1aac",
+    "book_source_iso": "la"
+  },
+  "link_b56fa1ca": {
+    "kind": "link",
+    "stratum": "link · specific",
+    "matcher_tier": "needs_review",
+    "guards": {
+      "ANTHOLOGY": {
+        "pass": true,
+        "reason": "no anthology/study keywords"
+      },
+      "COMPLETENESS": {
+        "pass": false,
+        "reason": "completeness=\"unknown\" (not complete)"
+      },
+      "SOURCE_LANG": {
+        "pass": true,
+        "reason": "source_language match (la)"
+      },
+      "NAMESAKE": {
+        "pass": true,
+        "reason": "author overlap=1.00"
+      }
+    },
+    "failed_guards": [
+      "COMPLETENESS"
+    ],
+    "author_overlap": 1,
+    "title_coverage": 0.6,
+    "catalog_source": "validated_additions",
+    "catalog_id": "69dbbdedf071889fedd29907",
+    "book_id": "6970e35e9b09d309d780a260",
+    "book_source_iso": "la"
+  },
+  "cocluster_e8bff2f6": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:eusebius-of-caesarea:gospel-preparation",
+    "work_title": "Preparation for the Gospel",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b2f439f9f1ad2b3b151af5",
+      "697b0799a12a626fbfe93ae4"
+    ]
+  },
+  "cocluster_551ba1c2": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:karl-friedrich-koppen:ancient-egyptian-initiation-into-priests-secret-society",
+    "work_title": "Initiation in die alten geheimen Gesellschaften der ägyptischen Priester",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "697a30558bd1fb4875964410",
+      "697a3055f077efe5c8fd6a2c"
+    ]
+  },
+  "cocluster_5aa899f5": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:colombo-realdo-colombo:anatomy",
+    "work_title": "On Anatomy",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69af0deb067c0c26ee26dceb",
+      "69af0de9acdbcba89ba1d68a"
+    ]
+  },
+  "cocluster_824fe175": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:apollonius:books-conics-four",
+    "work_title": "Conica",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69af201c89ab4ba83f42c996",
+      "69aff3334fe9cb3694093d6e"
+    ]
+  },
+  "cocluster_8f769685": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:johann-joachim-becher:chemical-experiment",
+    "work_title": "Experimentum chymicum novum",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b51dd4261c58d63664afa2",
+      "69b51ed8cf111105c42a4e6f"
+    ]
+  },
+  "cocluster_1bfab7a4": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:karl-von-eckartshausen:erzahlungen-seelenbildung-und-vergnugen-zum-zur",
+    "work_title": "Stories for Pleasure and Edification",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "6909f42ecf28baa1b4cb0dc3",
+      "69c7f9496c6f3cc53c84261b"
+    ]
+  },
+  "cocluster_0bf99f6d": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:johann-wilhelm-petersen:children-last-power-times",
+    "work_title": "Die Macht der Kinder in der letzten Zeit",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "69c89ea66c6f3cc53c85da9f",
+      "6909e609cf28baa1b4cb0705"
+    ]
+  },
+  "cocluster_f2c06841": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:johannes-virdung:1497-practica-prognosticon",
+    "work_title": "Prognosticon 1497",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbcce30f8c5edf20f4f6ca",
+      "69dbcce20f8c5edf20f4f6ad"
+    ]
+  },
+  "cocluster_e64d037c": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "corpus-hermeticum",
+    "work_title": null,
+    "work_id_source": "legacy-seed",
+    "work_id_confidence": null,
+    "book_ids": [
+      "69b51e0c768235dc6598b8b8",
+      "69aeb620b6cf480123443359"
+    ]
+  },
+  "cocluster_c3088d57": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q604091",
+    "work_title": "Philippicae",
+    "work_id_source": "wikidata:P50",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbc9351040d1d5e20a141f",
+      "69dbc9321040d1d5e20a12c7"
+    ]
+  },
+  "cocluster_0d536909": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "seneca-epistulae-morales",
+    "work_title": null,
+    "work_id_source": "legacy-seed",
+    "work_id_confidence": null,
+    "book_ids": [
+      "6953ce7c77f38f6761be46ba",
+      "6953ce7b77f38f6761be43fe"
+    ]
+  },
+  "cocluster_5be5a130": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q126364336",
+    "work_title": "Aeschyli Tragoediae",
+    "work_id_source": "wikidata:P50",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "699379b2b0a84a5763965b43",
+      "699376ccb0a84a576396195e"
+    ]
+  },
+  "cocluster_010fa1d6": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:peter-thyraeus:demoniacs",
+    "work_title": "De daemoniacis",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69905df32fd6a039938a03ad",
+      "69905df12fd6a039938a02c6"
+    ]
+  },
+  "cocluster_c7aa7dad": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:christoph-meiners:biographies-famous-from-men-restoration-sciences-times",
+    "work_title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaften",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "69804b901fb2ba7cf1d43a1c",
+      "69c4ec33a3a4a7c546ee611f"
+    ]
+  },
+  "cocluster_62842828": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:marin-mersenne:bini-demonstratarum-et-geometriae-mathematicae-mixtaeque-refractionum-synopsis-t",
+    "work_title": "Universae geometriae mixtaeque mathematicae synopsis",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b69a89080b19f98fcfeb4c",
+      "69af0da8be5fc7f363545d1a"
+    ]
+  },
+  "cocluster_f70c8c02": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "catalog:bdrc:WAEAP676-12-16",
+    "work_title": "Tithi Nirṇaya",
+    "work_id_source": "resolve-work-ids:distinctive-title",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69906d4964d44bd0a0ef5314",
+      "69906d4564d44bd0a0ef52ef"
+    ]
+  },
+  "cocluster_7f96066a": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:saint-cyprian:saint-works",
+    "work_title": "Opera omnia",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69af428aed0692ab5c226760",
+      "69af2366b5227118e60e5143"
+    ]
+  },
+  "cocluster_ec8d2012": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q22908644",
+    "work_title": "Septimana Philosophica",
+    "work_id_source": "wikidata:P50",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69ac853d960d5ad0b4731e00",
+      "69b51dbbcf111105c428ec05"
+    ]
+  },
+  "cocluster_376a65a3": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q1230444",
+    "work_title": "Orphica",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b43d53ee0300187dbd1c3a",
+      "69938dd2d5a98fd66f42f05b"
+    ]
+  },
+  "cocluster_a98d11ed": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:corpus-alchemicorum-graecorum",
+    "work_title": "Corpus of the Greek Alchemists",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "699438326879ff0184cb7e24",
+      "69a979e9daf647306a736c91"
+    ]
+  },
+  "cocluster_2ffdb3cb": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:n:collection-gangtey-monas:gzhon-nu-rdo-rgyud-rje-rtsa",
+    "work_title": "rTsa rgyud rdo rje gzhon nu",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "69e782edd93c1f6007505658",
+      "69e77a8f0fc6fc955e360958"
+    ]
+  },
+  "cocluster_bc2d96d4": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:michael-maier:chymicum-naturae-scrutinium-secretioris-secretorum",
+    "work_title": "Secretioris naturae secretorum scrutinium chymicum",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "6952d0c777f38f6761bc59f6",
+      "69c889796c6f3cc53c85a445"
+    ]
+  },
+  "cocluster_833cb228": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:chen-shiduo:esoteric-grotto-heavens-meanings",
+    "work_title": "Dongtian Aozhi",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "6992c9f58cc847bfb99df8f9",
+      "6992c9eb8cc847bfb99df822"
+    ]
+  },
+  "cocluster_b59d0625": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:martial:epigrams",
+    "work_title": "Epigrammata",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b267fd2195606b88d9a15b",
+      "69b2210c08069e96e842e56f"
+    ]
+  },
+  "cocluster_a1e51bb1": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q66041147",
+    "work_title": "Aesthetica",
+    "work_id_source": "wikidata:P50",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69ef3dbc72c1376fdf2b0c0c",
+      "69ef3d9872c1376fdf2b07a0"
+    ]
+  },
+  "cocluster_7c92dbd1": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:benedetto-ramberti:antichi-cioe-con-corte-cose-costantinopoli-da-del-delle-descriue-gli-il",
+    "work_title": "Libri tre delle cose de Turchi. Nel primo si descriue il uiaggio da Venetia à Costantinopoli, con gli nomi de luoghi antichi & moderni nel secondo la Porta, cioe la corte de Soltan Soleymano, signor d",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "6a08549615c643eb1af53295",
+      "6a08546a15c643eb1af52b34"
+    ]
+  },
+  "cocluster_fb840a79": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:bernardinus-senensis:contempt-mirror-sinners-world",
+    "work_title": "Mirror of Sinners on the Contempt of the World",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbc87f1040d1d5e209a0f8",
+      "69dbc8811040d1d5e209a10c"
+    ]
+  },
+  "cocluster_8dbdfa09": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:isocrates:aeschinis-aischinou-alcidamantis-alkidamantos-aristeidou-autou-contra-dicendi-en",
+    "work_title": "Orationes (Aldine edition)",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "6a08559c15c643eb1af56708",
+      "69b221c908069e96e843135b"
+    ]
+  },
+  "cocluster_f50a580f": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:jacobus-de-cessolis:chess-game-moralized",
+    "work_title": "Liber de moribus hominum et officiis nobilium ac popularium super ludo scachorum",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69a5ea03d507939f0352c8df",
+      "69a5ee3cbfd8cafd91e43719"
+    ]
+  },
+  "cocluster_ab4f9ae1": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:jacques-besson:bessoni-delphinatis-et-iacobi-instrumentorum-machinarum-theatrum",
+    "work_title": "Theatrum instrumentorum et machinarum",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b65cf7b3f4fc0441515dbf",
+      "69a5b973486a857b0587cbf2"
+    ]
+  },
+  "cocluster_901ee871": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "ji-great-meaning-five-elements",
+    "work_title": null,
+    "work_id_source": "legacy-seed",
+    "work_id_confidence": null,
+    "book_ids": [
+      "6992cabad4d545ae73fee83d",
+      "6992cabbd4d545ae73fee88b"
+    ]
+  },
+  "cocluster_d008814d": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:n:bartolomeo-fumo:animarum-apud-armilia-aurea-bartholomaei-breuiter-canonico-circa-continens-curam",
+    "work_title": "Bartholomaei Fumi Vilaurensis Placentini ... Summa quae Aurea armilia inscribitur, continens breuiter, et strictim quaecunque in iure canonico, & apud theologos circa animarum curam diffuse dispersimq",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "6a08565d15c643eb1af58c52",
+      "6a08533215c643eb1af4f14e"
+    ]
+  },
+  "cocluster_b9aece16": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "Q1233009",
+    "work_title": "De humani corporis fabrica",
+    "work_id_source": "wikidata:P50",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b63f741c1c21a3738708c8",
+      "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1"
+    ]
+  },
+  "cocluster_d401dd35": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "Q116742463",
+    "work_title": "Speculum vitae humanae",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbcba41040d1d5e20b9c16",
+      "69dbcba61040d1d5e20b9d22"
+    ]
+  },
+  "cocluster_d1a67f80": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "delafosse-hautsenegalniger-vol",
+    "work_title": null,
+    "work_id_source": "legacy-seed",
+    "work_id_confidence": null,
+    "book_ids": [
+      "69908a7093003de39c965796",
+      "69908a6b93003de39c96540f"
+    ]
+  },
+  "cocluster_a8a0820b": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:johannes-de-janduno:quaestiones-in-libros-de-anima-aristotelis",
+    "work_title": "Quaestiones in libros De anima Aristotelis",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbca981040d1d5e20ad021",
+      "69dbca991040d1d5e20ad0e7"
+    ]
+  },
+  "cocluster_fc9314e8": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:ibn-tufayl:autodidactus-philosophus",
+    "work_title": "Hayy ibn Yaqzan",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69c812c46c6f3cc53c847c97",
+      "69c827306c6f3cc53c84bf6c"
+    ]
+  },
+  "cocluster_7ed05137": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:stephan-michelspacher:alchemy-art-cabala-mirror-nature",
+    "work_title": "Cabala, Spiegel der Kunst und Natur in Alchymia",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b52c5fa2d71b015aa97e16",
+      "69c857136c6f3cc53c853f8b"
+    ]
+  },
+  "cocluster_0812e34f": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:fyodor-dostoyevsky:diary-writer",
+    "work_title": "A Writer's Diary (1877)",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "69af0eb4067c0c26ee26ec6b",
+      "69af0eaf067c0c26ee26eb11"
+    ]
+  },
+  "cocluster_e777f352": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:orosius:against-books-history-pagans-seven",
+    "work_title": "Seven Books of History Against the Pagans",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69af46e0d6be7ec9cc32379a",
+      "69af2331d510291a0ec78a9e"
+    ]
+  },
+  "cocluster_4cec556d": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:alberti-michael:abstinence-as-averting-death-disease-dissertation-from-means-medical-medicines-p",
+    "work_title": "Dissertatio inauguralis medica de abstinentia a medicis et medicamentis",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b51ec8768235dc65998aac",
+      "69b51ec847b06ecd581967ba"
+    ]
+  },
+  "cocluster_f62c64c8": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:peter-martyr-d-anghiera:decades-novo-octo-orbe",
+    "work_title": "De Orbe Novo Decades",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69e9c962625ec74a14473399",
+      "69e9c969625ec74a14473450"
+    ]
+  },
+  "cocluster_0bc0d69c": {
+    "kind": "cocluster",
+    "stratum": "cocluster · generic-namesake",
+    "work_id": "local:a:johann-georg-godelmann:magicians-poisoners-treatise-witches",
+    "work_title": "Treatise on Magicians, Poisoners, and Witches",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69b51e1c261c58d63664fb4c",
+      "69905d8d2fd6a0399389fe6d"
+    ]
+  },
+  "cocluster_70984beb": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "oviedo-historia-general-natural-las",
+    "work_title": null,
+    "work_id_source": "legacy-seed",
+    "work_id_confidence": null,
+    "book_ids": [
+      "695910f9ecb01322b3068858",
+      "695910f5ecb01322b306854d"
+    ]
+  },
+  "cocluster_d5b9935c": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:johannes-de-sancto-geminiano:book-examples-similitudes-things",
+    "work_title": "Summa de exemplis et rerum similitudinibus",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69dbcaae1040d1d5e20ae0b0",
+      "69dbcaac1040d1d5e20ade01"
+    ]
+  },
+  "cocluster_f40b04f3": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:lazarus-ercker:description-methods-mineral-mining-most-ores-principal",
+    "work_title": "Beschreibung allerfürnemisten mineralischen Ertzt unnd Berckwercksarten",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69a5b9f0d76b98f272fcfa68",
+      "69a5b975486a857b0587cc99"
+    ]
+  },
+  "cocluster_4c31ad44": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:zhou-dunyi:quanshu-siku",
+    "work_title": "周元公集·卷五~卷九 (Collected Works of Zhou Dunyi, juan 5-9) — Siku Quanshu",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "6a09ea7e3ca4edcd1ef01fdc",
+      "6a09ea573ca4edcd1ef01f1c"
+    ]
+  },
+  "cocluster_ef545b3b": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:christian-gottfried-ehrenberg:als-die-infusionsthierchen-organismen-vollkommene",
+    "work_title": "Die Infusionsthierchen als vollkommene Organismen (Atlas)",
+    "work_id_source": "local-mint",
+    "work_id_confidence": "deterministic",
+    "book_ids": [
+      "6a0b25a7620b66ad8f2343c4",
+      "6a0b25a2620b66ad8f23432d"
+    ]
+  },
+  "cocluster_50430d11": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:marsciano-francesco-onofrio-di:beginner-chemistry-epistle-hermetic-instructed",
+    "work_title": "Tyro-chymicus instructus epistola hermetica",
+    "work_id_source": "work-merge:llm-verified",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "69c581e48e452b634cbc3698",
+      "69c8993a6c6f3cc53c85cd3f"
+    ]
+  },
+  "cocluster_7fbb40e8": {
+    "kind": "cocluster",
+    "stratum": "cocluster · specific",
+    "work_id": "local:a:lodovico-parisetti:ad-iunioris-ludouici-pariseti-pausithea-regiensis-syluerium",
+    "work_title": "Iunioris Ludouici Pariseti Regiensis Pausithea ad P. Syluerium",
+    "work_id_source": "work-merge:identical-title-deterministic",
+    "work_id_confidence": "high",
+    "book_ids": [
+      "6a0857f315c643eb1af5d25e",
+      "6a08582615c643eb1af5db76"
+    ]
+  },
+  "split_b7c5851d": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "ed|beati-doctoris",
+    "work_id_left": "local:a:ramon-llull:beati-doctoris-et-illuminati-lulli-martyris-operum-raymundi-tertius-tomus",
+    "work_id_right": "local:a:ramon-llull:beati-doctoris-et-illuminati-lulli-martyris-operum-quartus-raymundi-tomus",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "6a0ac2baccff0aaf8df94f9b",
+      "6a0abea9c66676dd37277ca9"
+    ]
+  },
+  "split_0980c135": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "sumerian|king-letter",
+    "work_id_left": "local:n:sumerian:as-from-king-letter-lugal-moon-nesage-radiant",
+    "work_id_right": "local:n:sumerian:as-from-king-letter-lugal-nesage-radiant-sun",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69aff08b57adc49dbfc42491",
+      "69aff08c57adc49dbfc42498"
+    ]
+  },
+  "split_a3066bec": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "jacob|aller-bezeichnung",
+    "work_id_left": "boehme-signature-all-things",
+    "work_id_right": "local:a:jakob-bohme:all-signature-things",
+    "work_id_source_left": "legacy-seed",
+    "work_id_source_right": "work-merge:identical-title-deterministic",
+    "book_ids": [
+      "699ef9f4b0a976d32fd37465",
+      "699ef9f3b0a976d32fd37463"
+    ]
+  },
+  "split_924a6fdb": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "unknown|apprentif-compagnon",
+    "work_id_left": "local:n:unknown:apprentice-fellowcraft-grades-master-mystic",
+    "work_id_right": "local:n:unknown:apprentif-compagnon-ecossais-maitre",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69c271bdb82ba5d5beda2ee2",
+      "69c271b2b82ba5d5beda2ec6"
+    ]
+  },
+  "split_db3086cb": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "campagne|campagne-carl",
+    "work_id_left": "local:a:carl-joseph-von-campagne:1822-1869-alchemical-correspondence-ph455d",
+    "work_id_right": "local:a:carl-joseph-von-campagne:18th-19th-alchemical-early-late-letter-ph455c",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69b4194dddff1f043992a186",
+      "69b41950ddff1f043992a1c6"
+    ]
+  },
+  "split_4b60fbbb": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "de|cabale-clef",
+    "work_id_left": "local:n:andrea-nerciat:telescope-zoroaster",
+    "work_id_right": "local:a:nerciat-andrea-de:cabala-divinatory-great-key-magi-telescope-zoroaster",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "work-merge:llm-verified",
+    "book_ids": [
+      "69a027816a20ac4e1fc40514",
+      "6909d4a7cf28baa1b4cb01a5"
+    ]
+  },
+  "split_29572342": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "kant|german-kritik",
+    "work_id_left": "local:a:immanuel-kant:critique-practical-reason",
+    "work_id_right": "local:a:immanuel-kant:critique-judgement",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "work-merge:llm-verified",
+    "book_ids": [
+      "6954346f1479a63c11089855",
+      "6954347b1479a63c11089b35"
+    ]
+  },
+  "split_1d0b1325": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "anonymous|hermetischer-rosenkrantz",
+    "work_id_left": "local:n::hermetischer-rosenkrantz",
+    "work_id_right": "local:n::hermetic-rosary",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "697d9c9c72d515cb07bb384e",
+      "697d9c99f2b56306a9ec9616"
+    ]
+  },
+  "split_85ca1dd6": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|chen-rgyus",
+    "work_id_left": "local:n:collection-gangtey-monas:chen-gi-lo-mo-rgyus-snying-thig",
+    "work_id_right": "local:n:collection-gangtey-monas:chen-lo-mo-rgyus",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e77ab80fc6fc955e36198c",
+      "69e76183cc48e59ad74f01a8"
+    ]
+  },
+  "split_be49b3bd": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "paolo|atticum-brutum",
+    "work_id_left": "local:n:manuzio-paolo:ad-atticum-brutum-ciceronis-correctionibus-cum-epistolae-fratrem-manutii-pauli-q",
+    "work_id_right": "local:n:manuzio-paolo:ad-atticum-brutum-ciceronis-correctionibus-cum-epistolae-fratrem-manutij-pauli-q",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "6a0854b249638a50931c05f5",
+      "6a06c9d6c749b698e5b2753d"
+    ]
+  },
+  "split_09bae1af": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "cicero|aldi-auctore",
+    "work_id_left": "local:n:cicero-marcus-tullius:orator",
+    "work_id_right": "Q2028309",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "work-merge:llm-verified",
+    "book_ids": [
+      "6a08548815c643eb1af53026",
+      "6a08568915c643eb1af5946a"
+    ]
+  },
+  "split_320100a8": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|bcud-gsal",
+    "work_id_left": "local:n:collection-gangtey-monas:ba-bcud-gsal-gsang-klong-snying-sogs",
+    "work_id_right": "local:n:collection-drametse-mona:bcud-gsal-gsang-klong-snying-yang",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e77a9b0fc6fc955e360c62",
+      "69e787bf4a6785cfd60cd369"
+    ]
+  },
+  "split_8bcf7976": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|chen-dzin",
+    "work_id_left": "local:n:choling-collection-ogyen:cha-chen-dus-dzin-klong-lag-pa-po-rdzogs-rig-snying-thig",
+    "work_id_right": "local:n:collection-drametse-mona:chen-dzin-gsang-mdo-pa-po-rje-snags-su",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e7929680b52390feb1649a",
+      "69e7889b4a6785cfd60d13cf"
+    ]
+  },
+  "split_8775571c": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|chen-grel",
+    "work_id_left": "local:n:choling-collection-ogyen:ba-bde-chen-don-gi-grel-gro-gzhung-klong-mkha-mo-rgyal",
+    "work_id_right": "local:n:choling-collection-ogyen:ba-bya-ces-chen-grel-mchan-mdo-pa-po-rgyan-sde-theg",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e7891a4a6785cfd60d2b7e",
+      "69e78a5d4a6785cfd60d331e"
+    ]
+  },
+  "split_914215ee": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "temple|chen-kanjur",
+    "work_id_left": "local:n:temple-thadrak:chen-kanjur-nga-phal",
+    "work_id_right": "local:n:temple-thadrak:chen-ga-kanjur-phal",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e7ab385f1a22ab19a94da7",
+      "69e7ab365f1a22ab19a94b87"
+    ]
+  },
+  "split_f3e2bbb8": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "shizhen|bencao-gangmu",
+    "work_id_left": "local:a:li-shizhen:3",
+    "work_id_right": "local:a:li-shizhen:1-vol",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e787e04a6785cfd60cdf64",
+      "69e787fd4a6785cfd60ce50d"
+    ]
+  },
+  "split_e1028ed4": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "17|bibliotheque-chimiques",
+    "work_id_left": "local:a:maugin-de-richebourg-jean:bibliotheque-chimiques-philosophes-second-tome",
+    "work_id_right": "local:a:maugin-de-richenbourg-jean-16-17:chemical-philosophers",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "6a1008eef717292950967088",
+      "6a1008e8f717292950966e31"
+    ]
+  },
+  "split_7b7b92c5": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "a|abraham-afbeeldingen",
+    "work_id_left": "local:a:rademaker-a:alkmaar-alle-delft-dordregt-en-geleegen-gesigten-provin-steeden-van-voornaamste-",
+    "work_id_right": "local:a:rademaker-a:alle-deszelfs-dorpen-en-fraaiste-gezichten-heerenhuizen-lustplaatzen-rhynlands-v",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69b525d129577f283b57bec4",
+      "69b525d16be6046083032d64"
+    ]
+  },
+  "split_056dfaed": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "monastery|rgyud-rnying",
+    "work_id_left": "local:n:monastery-tshamdrak:ma-rgyud-rnying",
+    "work_id_right": "local:n:monastery-tshamdrak:pa-rgyud-rnying",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "6a14e1342f45ee330c27450a",
+      "6a14e12f2f45ee330c273fac"
+    ]
+  },
+  "split_4f26b4c7": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "aquinas|cornelius-libro",
+    "work_id_left": "local:a:thomas-aquinas:cornelius-libro-lombardi-petri-primo-sambucus-sententiarum-super",
+    "work_id_right": "local:a:thomas-aquinas:cornelius-libro-lombardi-petri-sambucus-secundo-sententiarum-super",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "work-merge:llm-verified",
+    "book_ids": [
+      "69dbcc1e1040d1d5e20bd3ee",
+      "69dbcc200f8c5edf20f46057"
+    ]
+  },
+  "split_666b1eaf": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|byung-gnas",
+    "work_id_left": "local:n:collection-gangtey-monas:byung-gnas-kyi-ma-pad-rabs-rgyan-rnam-skyes-thar",
+    "work_id_right": "local:n:collection-drametse-mona:byung-gnas-khrungs-kyi-pa-padma-rabs-rgyan-rgyas-rnam-thar",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e77a930fc6fc955e360a71",
+      "69e788a44a6785cfd60d15ed"
+    ]
+  },
+  "split_47cdc5ab": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "cicero|brutum-brutus",
+    "work_id_left": "local:n:cicero-marcus-tullius:1-2-3-4-ad-brutum-brutus-ciceronis-claris-continentur-dicitur-eiusdem",
+    "work_id_right": "Q2028309",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "work-merge:llm-verified",
+    "book_ids": [
+      "6a08549015c643eb1af5308d",
+      "6a0852db15c643eb1af4e5de"
+    ]
+  },
+  "split_e346d9b8": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "aristophanes|aristophanes-clouds",
+    "work_id_left": "Q815376",
+    "work_id_right": "Q868447",
+    "work_id_source_left": "wikidata:P50",
+    "work_id_source_right": "wikidata:P50",
+    "book_ids": [
+      "6993891ece15387065946843",
+      "69938a8ee07f979c72ac6590"
+    ]
+  },
+  "split_2e987dbd": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|chen-dang",
+    "work_id_left": "local:n:collection-drametse-mona:chen-dang-gdams-lo-me-mun-po-rgyus-rje-sel-sgron-sogs",
+    "work_id_right": "local:n:collection-drametse-mona:chen-dang-dpe-klong-man-mdzod-mo-mtshan-ngag-pa",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e787e04a6785cfd60cdf9b",
+      "69e787944a6785cfd60cc471"
+    ]
+  },
+  "split_47fa999f": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "collection|bzang-chen",
+    "work_id_left": "local:n:choling-collection-ogyen:bzang-chen-chos-cung-dga-dri-gi-gter-gyi-kun-kyi-mchog",
+    "work_id_right": "local:n:collection-drametse-mona:bzang-chen-khrid-lam-po-rdzogs-shes-snying-ye",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69e789094a6785cfd60d2676",
+      "69e7882e4a6785cfd60cfb07"
+    ]
+  },
+  "split_ef76bd27": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "heinrich|alchymiae-alchymisch",
+    "work_id_left": "local:a:heinrich-khunrath:chaos-general-hyleal-material-natural-prime-universal",
+    "work_id_right": "local:a:heinrich-khunrath:alchemists-alchemy-chaos-conforming-hyleal-is-material-natural-nature-prime-that",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69b51de2261c58d63664c611",
+      "69b51d69261c58d63664a5a4"
+    ]
+  },
+  "split_6254aa0f": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "michael|illustratus-philaletha",
+    "work_id_left": "local:a:johann-michael-faust:illustratus-philaletha",
+    "work_id_right": "local:n:faust-johannes-michael:closed-entrance-illustrated-king-open-palace-philaletha",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "6984e8498a2f054f912420d1",
+      "69c4ec33a3a4a7c546ee610b"
+    ]
+  },
+  "split_ec88a9ed": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "guglielmo|aenigmata-alchemiae",
+    "work_id_left": "local:a:guglielmo-grataroli:alchemy-art-certain-doctrine-metallurgy-method-true",
+    "work_id_right": "local:a:guglielmo-grataroli:aenigmata-alchemiae-artisque-certusque-citra-comprehensus-doctrina-editis-elench",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69b51cd098963ba069532757",
+      "69bd9d056120d54bd0372a3a"
+    ]
+  },
+  "split_75e5fdf3": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "unknown|achten-alten",
+    "work_id_left": "local:n:unknown:achten-alten-clerikalische-den-der-frankreich-freimaurer-gebrauchen-italien-loge",
+    "work_id_right": "local:n:unknown:boards-brother-explanation-fourth-freemasons-knight-order-three-tracing",
+    "work_id_source_left": "local-mint",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69c263e5b82ba5d5beda0895",
+      "69c1b925b82ba5d5bed961be"
+    ]
+  },
+  "split_263fc9c3": {
+    "kind": "split",
+    "stratum": "split · generic-namesake",
+    "family_key": "ed|armenian-astuatsashunch",
+    "work_id_left": "bible-ot",
+    "work_id_right": "local:a:yovhannes-zohrapean:bible-holy",
+    "work_id_source_left": "legacy-seed",
+    "work_id_source_right": "local-mint",
+    "book_ids": [
+      "69920b6ee0a548a13d8827e9",
+      "69a5eae5d507939f0352d3c8"
+    ]
+  }
+}
