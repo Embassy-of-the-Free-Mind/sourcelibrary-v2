@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
  * Matches tenant subdomain hosts like `bph.sourcelibrary.org`. Excludes
  * `www.` and the bare apex — those are the canonical global site.
  */
-function isTenantSubdomain(host: string): boolean {
+export function isTenantSubdomain(host: string): boolean {
   const h = host.toLowerCase();
   if (h.startsWith('www.')) return false;
   if (!/\.sourcelibrary\.(org|com|net)$/.test(h)) return false;
