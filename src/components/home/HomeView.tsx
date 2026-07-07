@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroSection from '@/components/layout/HeroSection';
+import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
@@ -24,6 +25,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Video Hero */}
       <HeroSection lang={lang} />
+
+      {/* Ask the source — the librarian's front door, its own section right
+          below the hero so it doesn't compete with the hero sign-up box. */}
+      <AskTheSourceBand lang={lang} />
 
       {/* Spanish podcast feature — the first real Spanish content a /es visitor
           meets. Only rendered on /es, so the English homepage is unchanged. */}
