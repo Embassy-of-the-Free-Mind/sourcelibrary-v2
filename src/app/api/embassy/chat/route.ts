@@ -272,8 +272,12 @@ export async function POST(request: NextRequest) {
   // Watchdog: fires ~10s before maxDuration to leave a breadcrumb in
   // embassy_errors when a request is about to be killed. Without this,
   // a timeout produces zero server-side trace because the function dies
-  // before the catch block.
+  // before the catch block. It also tells the reader what happened and
+  // closes the stream gracefully — otherwise the platform kill severs the
+  // SSE connection mid-read and the client can only guess at the cause.
+  let timedOut = false;
   const watchdog = setTimeout(async () => {
+    timedOut = true;
     try {
       await db.collection('embassy_errors').insertOne({
         kind: 'timeout_warning',
@@ -283,6 +287,10 @@ export async function POST(request: NextRequest) {
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
+    try {
+      await send({ type: 'error', message: 'I’m sorry, I got distracted (my search timed out). Try again?' });
+      await writer.close();
+    } catch { /* stream already gone */ }
   }, (maxDuration - 10) * 1000);
 
   const pipePromise = (async () => {
@@ -347,6 +355,11 @@ export async function POST(request: NextRequest) {
       await writer.close();
     } catch (err) {
       clearTimeout(watchdog);
+      // After a watchdog timeout the writer is already closed, so the loop's
+      // next send() throws — that's the timeout surfacing again, not a new
+      // agent error. The reader already got the timeout message; don't log
+      // a spurious agent_error on top of the timeout_warning breadcrumb.
+      if (timedOut) return;
       const errMsg = err instanceof Error ? `${err.message}\n${err.stack}` : String(err);
       console.error('[Embassy] Agentic stream error:', errMsg);
       // Log to DB for easier debugging
@@ -363,7 +376,7 @@ export async function POST(request: NextRequest) {
         });
       } catch { /* best effort */ }
       try {
-        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.', debug: errMsg });
+        await send({ type: 'error', message: 'I’m sorry — I lost my train of thought mid-search. Try again?', debug: errMsg });
         await writer.close();
       } catch { /* already closed */ }
     }

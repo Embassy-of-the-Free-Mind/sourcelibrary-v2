@@ -41,6 +41,10 @@ interface AssistantMessage {
   choices?: { text: string; options: string[]; descriptions?: (string | undefined)[] };
   notebookCount?: number;
   notebookTopic?: string;
+  // Set when the turn failed (timeout, network cut, upstream error). Enables
+  // the one-click "Try again" button, which resends retryQuestion.
+  error?: boolean;
+  retryQuestion?: string;
 }
 
 interface NotebookFinding {
@@ -263,26 +267,83 @@ function NotebookPanel({
 // ── Main Component ────────────────────────────────────────────────────
 
 const ALL_SUGGESTIONS = [
-  'Was there any conception of artificial intelligence?',
-  'What did Agrippa write about planetary seals?',
+  // Alchemy & Hermetica
   'How did alchemists describe the philosopher\'s stone?',
+  'What did alchemists believe about gold?',
+  'Tell me about the Emerald Tablet',
+  'Who was Hermes Trismegistus?',
+  'What equipment did a working alchemist actually use?',
+  'How did Arabic alchemy reach medieval Europe?',
+  'What did alchemists mean by the marriage of the sun and moon?',
+  // Renaissance philosophy & magic
   'Who was Marsilio Ficino?',
   'What do these texts say about the world soul?',
-  'What books explore resonance as magic?',
-  'Tell me about the Emerald Tablet',
-  'What did alchemists believe about gold?',
-  'How did Renaissance scholars understand the cosmos?',
-  'What is the Kabbalah\'s tree of life?',
-  'Did any of these authors write about dreams?',
-  'What did Paracelsus teach about medicine?',
-  'How were demons understood in early modern Europe?',
-  'What instruments did astrologers use?',
+  'What did Agrippa write about planetary seals?',
   'What is the relationship between music and magic?',
+  'What books explore resonance as magic?',
+  'How did Giordano Bruno imagine infinite worlds?',
+  'What was the art of memory?',
+  'Was there any conception of artificial intelligence?',
+  'Did anyone write about talking statues or artificial beings?',
+  // Kabbalah & religious mysticism
+  'What is the Kabbalah\'s tree of life?',
+  'What did Christian scholars make of the Zohar?',
+  'What did Jacob Boehme see in his visions?',
+  'How did mystics describe union with the divine?',
+  // Astrology & cosmology
+  'What instruments did astrologers use?',
+  'How did Renaissance scholars understand the cosmos?',
+  'How were comets interpreted before modern astronomy?',
+  'How did Kepler mix astrology with astronomy?',
+  'What did people believe about the music of the spheres?',
+  // Medicine & natural history
+  'What did Paracelsus teach about medicine?',
+  'How were dreams interpreted as medical symptoms?',
+  'What remedies did early herbals prescribe?',
+  'How did physicians explain the plague?',
+  'What did anatomists discover before the microscope?',
+  // Magic, witchcraft & demonology
+  'How were demons understood in early modern Europe?',
+  'What did witch-hunting manuals actually claim?',
+  'How did scholars defend accused witches?',
+  'What were angels thought to know?',
+  // Dreams, divination & prophecy
+  'Did any of these authors write about dreams?',
+  'How did people tell fortunes before tarot cards?',
+  'What prophecies circulated during the Reformation?',
+  // Rosicrucians & secret societies
+  'Who were the Rosicrucians?',
+  'What ciphers and secret alphabets appear in these books?',
+  'What did the Rosicrucian manifestos promise?',
+  // Eastern traditions
+  'What do Tibetan texts say about the nature of mind?',
+  'What does Ayurvedic medicine say about the elements?',
+  'How did Sanskrit astronomers calculate eclipses?',
+  // Art, images & books themselves
+  'What are the strangest illustrations in the collection?',
+  'How were emblem books meant to be read?',
+  'What did the first printed books look like?',
+  'Which books here were never translated until now?',
 ];
 
-function pickSuggestions(count: number): string[] {
-  const shuffled = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+function pickSuggestions(count: number, extras: string[] = []): string[] {
+  const pool = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
+  const picks = [...extras, ...pool.filter(s => !extras.includes(s))].slice(0, count);
+  // Second shuffle so real visitor questions don't always sit first.
+  return picks.sort(() => Math.random() - 0.5);
+}
+
+// Filter for surfacing real visitor questions (from public threads, already
+// shown verbatim in the Recent sidebar) as suggestion chips. Keeps genuine
+// questions; drops imperative prompts ("write a 30 sec reel"), links, and
+// anything too short or long to make a good chip.
+const QUESTION_START_RE = /^(what|who|whose|how|why|did|do|does|was|were|is|are|which|where|when|can|could|tell me|show me|explain)\b/i;
+function looksLikeGoodQuestion(q: string): boolean {
+  const t = q.trim();
+  return t.length >= 20 && t.length <= 80
+    && !t.includes('\n')
+    && !/https?:\/\//i.test(t)
+    && QUESTION_START_RE.test(t);
 }
 
 export default function LibrarianClient({ featuredPassage }: LibrarianClientProps) {
@@ -293,8 +354,8 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   // Seed deterministically so SSR and the first client render agree (a random
   // initial set caused a hydration mismatch — React #418). Shuffle for variety
   // only after mount, where a state update is safe.
-  const [suggestions, setSuggestions] = useState<string[]>(() => ALL_SUGGESTIONS.slice(0, 4));
-  useEffect(() => { setSuggestions(pickSuggestions(4)); }, []);
+  const [suggestions, setSuggestions] = useState<string[]>(() => ALL_SUGGESTIONS.slice(0, 6));
+  useEffect(() => { setSuggestions(pickSuggestions(6)); }, []);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
@@ -323,6 +384,17 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
       .then(data => { if (data.threads) setThreads(data.threads); })
       .catch(() => { });
   }, []);
+
+  // Blend up to two real visitor questions into the suggestion chips once
+  // public threads arrive, so the chips reflect what people actually ask.
+  useEffect(() => {
+    const real = Array.from(new Set(
+      threads.map(t => t.preview.question).filter(looksLikeGoodQuestion),
+    ));
+    if (real.length === 0) return;
+    const extras = real.sort(() => Math.random() - 0.5).slice(0, 2);
+    setSuggestions(pickSuggestions(6, extras));
+  }, [threads]);
 
   // Fetch user's own threads when signed in
   useEffect(() => {
@@ -409,7 +481,12 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
             content: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian&reason=limit) (free) to keep talking with the Librarian — create an account or sign in with Google.',
           }));
         } else {
-          updateLastAssistant(m => ({ ...m, content: err.error || 'Something went wrong. Please try again.' }));
+          updateLastAssistant(m => ({
+            ...m,
+            error: true,
+            retryQuestion: trimmed,
+            content: err.error || 'I’m sorry — something went wrong on my end. Try again?',
+          }));
         }
         setSending(false);
         return;
@@ -531,7 +608,12 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
                 case 'error':
                   console.error('[Librarian error]', event.debug || event.message);
-                  updateLastAssistant(m => ({ ...m, content: event.message || 'Something went wrong.' }));
+                  updateLastAssistant(m => ({
+                    ...m,
+                    error: true,
+                    retryQuestion: trimmed,
+                    content: event.message || 'I’m sorry — something went wrong on my end. Try again?',
+                  }));
                   break;
               }
             } catch { /* skip malformed */ }
@@ -542,10 +624,20 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
       const e = err as Error;
       if (e.name !== 'AbortError') {
         console.error('[Librarian] request failed:', e.name, e.message, e);
-        updateLastAssistant(m => ({
-          ...m,
-          content: 'The Librarian seems to be away. Please try again in a moment.',
-        }));
+        updateLastAssistant(m => {
+          // If searching had already started, the stream was cut mid-research;
+          // if nothing ever arrived, we never reached the library at all.
+          const gotPartway = !!(m.content || m.thinking || m.steps.length > 0);
+          const apology = gotPartway
+            ? 'I’m sorry — I got distracted (my connection was interrupted mid-search). Try again?'
+            : 'I’m sorry — I can’t reach the library right now. Try again in a moment?';
+          return {
+            ...m,
+            error: true,
+            retryQuestion: trimmed,
+            content: m.content ? `${m.content}\n\n${apology}` : apology,
+          };
+        });
       }
     }
 
@@ -605,6 +697,22 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const handleChoiceClick = (choice: string) => {
     pendingChoiceRef.current = choice;
     setInput(choice);
+  };
+
+  // Resend the question from a failed turn. Drops the failed exchange from
+  // the transcript first so the retry doesn't duplicate the question, then
+  // reuses the choice-click auto-submit path.
+  const handleRetry = (question: string) => {
+    if (sending) return;
+    setMessages(prev => {
+      const next = [...prev];
+      const last = next[next.length - 1];
+      if (last?.role === 'assistant' && (last as AssistantMessage).error) next.pop();
+      if (next[next.length - 1]?.role === 'user') next.pop();
+      return next;
+    });
+    pendingChoiceRef.current = question;
+    setInput(question);
   };
 
   // Auto-submit when input is set from a choice click
@@ -670,6 +778,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setNotebookFindings([]);
     setNotebookTopic(undefined);
     setNotebookOpen(false);
+    // Fresh chips for a fresh conversation.
+    const real = threads.map(t => t.preview.question).filter(looksLikeGoodQuestion);
+    const extras = real.sort(() => Math.random() - 0.5).slice(0, 2);
+    setSuggestions(pickSuggestions(6, extras));
     window.history.replaceState(null, '', window.location.pathname);
     inputRef.current?.focus();
   };
@@ -788,6 +900,16 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                             <LibrarianMessageBody content={assistant.content} variant="chat-bubble" />
                           )}
 
+                          {/* One-click retry after a failed turn */}
+                          {assistant.error && assistant.retryQuestion && !sending && (
+                            <button
+                              onClick={() => handleRetry(assistant.retryQuestion!)}
+                              className="mt-2 px-3.5 py-1.5 text-[12px] font-sans text-[#9e4a3a] border border-[#e0d9cc] rounded-full hover:border-[#c9a86c] hover:bg-[#fdfcf9] transition-colors"
+                            >
+                              Try again
+                            </button>
+                          )}
+
                           {/* Research direction choices */}
                           {assistant.choices && (
                             <div className="mt-4 space-y-3">
@@ -826,7 +948,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           <SourceCardRow sources={assistant.sources} tenant={tenant} />
 
                           {/* Copy / share actions (once the response has finished streaming) */}
-                          {assistant.content && !(sending && i === messages.length - 1) && (
+                          {assistant.content && !assistant.error && !(sending && i === messages.length - 1) && (
                             <div className="mt-2 flex items-center gap-3">
                               <button
                                 onClick={() => handleCopyResponse(i, assistant)}
