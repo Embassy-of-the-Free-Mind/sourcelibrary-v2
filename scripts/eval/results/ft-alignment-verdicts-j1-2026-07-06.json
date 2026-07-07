@@ -160,6 +160,369 @@
     "sources": []
   },
   {
+    "pair_id": "cocluster_010fa1d6",
+    "same": false,
+    "basis": "web",
+    "reason": "A is a 3-book omnibus (Daemoniaci+Loca Infesta+Terriculamenta Nocturna); B is just the Daemoniaci treatise alone, a container vs one part",
+    "sources": [
+      "https://catalog.hathitrust.org/Record/009302048"
+    ]
+  },
+  {
+    "pair_id": "cocluster_0812e34f",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Diary of a Writer for 1877 vs for 1876 are different yearly installments of Dostoevsky's serial work, not the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_0bc0d69c",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author (Gödelmann/Godelmann) and same Latin title Tractatus de Magis, Veneficis et Lamiis; B is a shortened title of the same treatise.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_0bf99f6d",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language on both records; no volume/part distinction indicated.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_0d536909",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Record A is Moral Essays (De Providentia, De Constantia, De Ira, De Clementia); Record B is Epistulae Morales (Letters 93-124) - distinct compositions.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_1bfab7a4",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language in both records; same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_2ffdb3cb",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author/collection, and language with no distinguishing volume/part info; same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_376a65a3",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are the Greek Orphic corpus (Hymns/Argonautica/Lithica) attributed to Orpheus; Hermann's 'Orphica' is a critical edition of the same corpus, not a different composition.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_4c31ad44",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Both are the Siku Quanshu edition of Zhou Dunyi's Collected Works but cover different juan ranges (1-4 vs 5-9) of the same multi-volume set.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_4cec556d",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different inaugural dissertations under praeses Alberti; different respondents (Stegmann vs Zeys) and different titles/subtitles on the abstinence theme.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_50430d11",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author; German title is literal translation of Latin title (Tyro-chymicus instructus = 'unterwiesener Anfänger in der Chymie', epistola hermetica = hermetisches Sendschreiben) - same work, translated.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_551ba1c2",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author Köppen, same title Crata Repoa (Egyptian priests' initiation rites); A is Russian translation, B is German original of the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_5aa899f5",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; Record B is explicitly the 1562 edition/printing of the same text as Record A.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_5be5a130",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same title 'Aeschyli Tragoediae' (collected tragedies of Aeschylus), one a Latin critical edition, other Greek original; same underlying work corpus.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_62842828",
+    "same": true,
+    "basis": "metadata",
+    "reason": "B's title is a truncation of A's full title (Mersenne 1644 Synopsis); same author, same work under abbreviated cataloging.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_70984beb",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Same author/title series but different volumes (Vol. 1 vs Vol. 2) of a multi-volume work, per rule differing volumes are different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_7c92dbd1",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language across both records; clearly the same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_7ed05137",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title (minor punctuation variant), same author Stephan Michelspacher, same language German; clearly same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_7f96066a",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Hartel's CSEL edition of Cyprian's collected Opera Omnia; matching title, author, series/editor.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_7fbb40e8",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language across both records - same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_824fe175",
+    "same": true,
+    "basis": "web",
+    "reason": "Both are Latin editions of the same surviving four books of Apollonius's Conics: A=Commandino's 1566 translation, B=Barrow's 1675 translation of the same Books I-IV.",
+    "sources": [
+      "https://archive.org/details/apolloniiconicam00apol",
+      "https://www.huntington.org/collections/lib-700974"
+    ]
+  },
+  {
+    "pair_id": "cocluster_833cb228",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Same title and author but different numbered volumes (Vol 7 vs Vol 1) of a multi-volume work; per rules, different volumes count as different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_8dbdfa09",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are the Isocrates Orationes anthology bundled with Alcidamas/Gorgias/Aristides texts; A is Latin translation (plus Aeschines/Lysias added), B is Greek Aldine original of same core collection.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_8f769685",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; B's title is the full catalog-style title (with subtitle) of the same Becher work, not a different volume or text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_901ee871",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Vol 1 and Vol 2 of the same multi-volume work; per rules different volumes of a set are different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_a1e51bb1",
+    "same": false,
+    "basis": "web",
+    "reason": "Baumgarten's Aesthetica was published in two separate volumes (Pars I 1750, Pars Altera 1758); A is explicitly vol.2, B is unspecified/whole-work title, so different parts.",
+    "sources": [
+      "https://plato.stanford.edu/entries/aesthetics-18th-german/",
+      "https://archive.org/details/bub_gb_dopKAAAAcAAJ"
+    ]
+  },
+  {
+    "pair_id": "cocluster_a8a0820b",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; both are John of Jandun's commentary on Aristotle's De anima.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_a98d11ed",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Same author/series but different numbered volumes (Vol.1 vs Vol.3) of a multi-volume set; different works per rule.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_ab4f9ae1",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title 'Theatrum instrumentorum et machinarum' by same author Jacques Besson, same language; A has fuller title text of same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_b59d0625",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Martial's Epigrammata in Latin; B is just an Aldine Press edition of the same text, no volume/part distinction given",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_b9aece16",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Vesalius's De Humani Corporis Fabrica; Record A gives the full original Latin title (libri septem), same author, same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_bc2d96d4",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Two distinct Maier works: Arcana Arcanissima (1614, mythological-alchemical treatise) vs Scrutinium Chymicum (1687, separate emblem book).",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_c3088d57",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Cicero's Orationes Philippicae in Latin; A adds Mataratius's commentary/edition apparatus but same underlying text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_c7aa7dad",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language; no volume/part numbering distinguishing them.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_d008814d",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language across both records; same edition of Fumo's Summa Aurea Armilla.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_d1a67f80",
+    "same": false,
+    "basis": "metadata",
+    "reason": "Different volumes (Vol.1 vs Vol.3) of the same multi-volume Haut-Senegal-Niger set; per rule, different volumes = different work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_d401dd35",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language given; both records match the known single work by Rodrigo Sanchez de Arevalo (Rodericus Zamorensis).",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_d5b9935c",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same title, same author (Johannes de Sancto Geminiano); B is just an edition edited by Sebastian Brant of the same work.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_e64d037c",
+    "same": false,
+    "basis": "metadata",
+    "reason": "A is single treatise (CH I, De potestate et sapientia Dei); B is Vol.II of Scott's multi-vol Hermetica, a notes/commentary volume covering many treatises, not that single text",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_e777f352",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author, same text (Historiarum adversum Paganos = Adversus Paganos Historiarum), same Zangemeister/CSEL edition, both Latin.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_e8bff2f6",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Eusebius's Evangelicae praeparationis (15 books), Greek text, same title minus edition detail; matches Estienne edition.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_ec8d2012",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same title, author, and language; Record B's title is the full subtitle expansion of Record A's short title for Maier's Septimana Philosophica.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_ef545b3b",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same title/author; Atlas and Text are the plates volume and text volume of one single Ehrenberg publication, not different works.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_f2c06841",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author (Virdung) and same title/year 'Prognosticon 1497 Practica'; A is German, B is Latin version of same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_f40b04f3",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Same author/title/language; B's title is the fuller form of A's (truncated) title, both Ercker's mining/metallurgy treatise.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_f50a580f",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are translations of Jacobus de Cessolis' Liber de ludo scacchorum: French rendering by Jean de Vignay and a German Schachzabelspiel version of the same text.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_f62c64c8",
+    "same": false,
+    "basis": "web",
+    "reason": "1511 editio princeps contains only Decade I; 'Decades Octo' is the complete 1530 compilation of all eight decades - part vs whole.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Decades_of_the_New_World"
+    ]
+  },
+  {
+    "pair_id": "cocluster_f70c8c02",
+    "same": "uncertain",
+    "basis": "web",
+    "reason": "Tithi Nirnaya is a generic genre title used by many unrelated authors; Nirnayoddhara Tithi Nirnaya may be a distinct catalogued work. Both authors unknown; can't confirm same composition.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Nir%E1%B9%87ay%C4%81m%E1%B9%9Bta",
+      "https://www.wisdomlib.org/definition/tithinirnaya"
+    ]
+  },
+  {
+    "pair_id": "cocluster_fb840a79",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Identical title, author, and language with no volume/part distinction; both describe Bernardino da Siena's same treatise.",
+    "sources": []
+  },
+  {
+    "pair_id": "cocluster_fc9314e8",
+    "same": true,
+    "basis": "metadata",
+    "reason": "Both are Dutch and German translations of Ibn Tufail's Hayy ibn Yaqzan (Hai Ebn Yokdan/Joktan), same author and same underlying philosophical tale.",
+    "sources": []
+  },
+  {
     "pair_id": "split_056dfaed",
     "same": false,
     "basis": "metadata",
