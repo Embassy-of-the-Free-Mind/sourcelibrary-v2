@@ -9,7 +9,11 @@ import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 120;
+// 120s was killing real research turns mid-stream: the agentic loop routinely
+// runs 4–9 tool calls and embassy_errors logged daily timeout_warning rows at
+// 110s elapsed. The killed function severs the SSE stream and the client shows
+// "The Librarian seems to be away." 300 matches our other long-running routes.
+export const maxDuration = 300;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
