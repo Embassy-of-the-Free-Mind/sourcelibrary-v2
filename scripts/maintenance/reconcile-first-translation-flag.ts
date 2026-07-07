@@ -15,6 +15,7 @@
  *   npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --only-demotions   # just flag:true -> derived:false
  *   npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --apply    # WRITE (asks nothing — be sure)
  */
+import { readFileSync } from 'node:fs';
 import { getDb } from '@/lib/mongodb';
 import { isFirstByVerdict, firstTranslationVerdict, canPromoteToFirst } from '@/lib/first-translation/derive';
 import type { FirstTranslationBook } from '@/lib/first-translation/types';
@@ -35,6 +36,18 @@ const VERDICT_FILTER = (args.find((a) => a.startsWith('--verdict='))?.split('=')
  */
 const RESOLVER_FILTER = (args.find((a) => a.startsWith('--resolver='))?.split('=')[1] || '')
   .split(',').map((s) => s.trim()).filter(Boolean);
+/**
+ * Restrict the write (BOTH promotions and demotions) to an explicit set of book
+ * ids/_ids from a newline-separated file. This is the surgical, multi-session-safe
+ * path: apply exactly the flips you signed off on, without sweeping in the rest
+ * of the pending queue. Unlike --verdict/--resolver (which scope demotions and
+ * suppress promotions), --ids scopes and PERMITS promotions within the id set.
+ */
+const IDS_FILE = args.find((a) => a.startsWith('--ids='))?.split('=')[1] || '';
+const IDS = new Set(
+  IDS_FILE ? readFileSync(IDS_FILE, 'utf8').split('\n').map((s) => s.trim()).filter(Boolean) : [],
+);
+const inIds = (b: BookDoc) => IDS.has(String(b.id ?? '')) || IDS.has(String(b._id));
 
 interface BookDoc extends FirstTranslationBook {
   _id: unknown;
@@ -135,8 +148,19 @@ async function main() {
     demoteSet = demoteSet.filter((b) => RESOLVER_FILTER.includes(b.first_translation?.resolver ?? 'none'));
     console.log(`--resolver filter ${JSON.stringify(RESOLVER_FILTER)} -> writing ${demoteSet.length} of ${before} demotions`);
   }
+  // --ids: surgical scope. Restrict BOTH directions to the signed-off id set;
+  // promotions ARE permitted here (the id set IS the sign-off).
+  let promoteSet = promotions;
+  if (IDS.size) {
+    const beforeD = demoteSet.length, beforeP = promoteSet.length;
+    demoteSet = demoteSet.filter(inIds);
+    promoteSet = promoteSet.filter(inIds);
+    console.log(`--ids filter (${IDS.size} ids) -> ${demoteSet.length} of ${beforeD} demotions, ${promoteSet.length} of ${beforeP} promotions`);
+  }
   const toDemote = demoteSet.map((b) => b._id);
-  const toPromote = (ONLY_DEMOTIONS || VERDICT_FILTER.length || RESOLVER_FILTER.length) ? [] : promotions.map((b) => b._id);
+  const toPromote = IDS.size
+    ? promoteSet.map((b) => b._id)
+    : (ONLY_DEMOTIONS || VERDICT_FILTER.length || RESOLVER_FILTER.length) ? [] : promotions.map((b) => b._id);
   let demoted = 0, promoted = 0;
   if (toDemote.length) {
     const r = await books.updateMany(

@@ -96,6 +96,14 @@ export interface Book {
   // Translation verification (catalog search + LLM knowledge check)
   translation_verification?: TranslationVerification;
 
+  // Prior human English translation credit (issue #3026). Present ONLY on books
+  // that are NOT the first English translation AND whose prior edition has been
+  // independently confirmed to exist in a real bibliographic record (WorldCat /
+  // publisher / library catalog) with a resolvable link. This is the verified,
+  // publishable half of the first-translation search — never render an
+  // unverified `translation_verification.translations_found` row as this credit.
+  prior_translation?: PriorTranslationCredit;
+
   // Dublin Core metadata for library interoperability
   dublin_core?: DublinCoreMetadata;
 
@@ -372,6 +380,41 @@ export interface TranslationVerification {
   tools_called?: string[];
   verified_at?: Date;
   model?: string;
+}
+
+/**
+ * A verified prior human English translation (issue #3026).
+ *
+ * Written ONLY after the named edition resolves to a real bibliographic record
+ * with a live, resolvable URL. The whole point of the credit is that a reader
+ * can act on it — so `url` is required and no record publishes without one.
+ * Populated by scripts/maintenance/ingest-prior-translations.mjs from the
+ * adversarially-verified sweep output; the reader gate is
+ * `hasPublishablePriorTranslation()` in src/lib/prior-translation.ts.
+ */
+export interface PriorTranslationCredit {
+  /** Title of the prior English edition. */
+  work_title: string;
+  /** Named translator(s). May be empty for anonymous/committee editions. */
+  translators: string[];
+  year?: number;
+  publisher?: string;
+  /** Scholarly series, e.g. "I Tatti Renaissance Library". */
+  series?: string;
+  /** Whether the prior edition is a complete or partial rendering. */
+  scope: 'complete' | 'partial' | 'unclear';
+  /** Live URL a reader follows to reach the edition (publisher / WorldCat / catalog). */
+  url: string;
+  /** How the edition was confirmed — drives outbound-link framing/priority. */
+  verification_method: 'worldcat' | 'publisher' | 'google_books' | 'library_catalog' | 'other';
+  oclc?: string;
+  isbn?: string;
+  /** One-sentence record of what confirmed the edition, for auditability. */
+  evidence?: string;
+  /** attempt_id in first_translation_attempts this credit was parsed from. */
+  source_attempt_id?: string;
+  /** ISO timestamp the credit was verified/ingested. */
+  verified_at?: string;
 }
 
 export interface TranslationEvidence {
