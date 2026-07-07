@@ -33,7 +33,7 @@ const IN = getArg('--in', null);
 const LIMIT = parseInt(getArg('--limit', '0'), 10) || 0;
 if (!IN || !process.env.MONGODB_URI) { console.error('need --in <file> and MONGODB_URI'); process.exit(1); }
 
-const TYPE_TO_VERDICT = { no_prior: 'first_no_prior', first_modern: 'first_modern', first_complete: 'first_complete' };
+const TYPE_TO_VERDICT = { no_prior: 'first_no_prior', first_modern: 'first_modern', first_complete: 'first_complete', first_from_source: 'first_from_source' };
 const nowIso = new Date().toISOString();
 
 function attemptId(bookId) {
@@ -66,6 +66,11 @@ for (const r of batch) {
     evidence_strength: r.confidence === 'high' ? 'strong' : 'moderate',
     our_completeness: 'complete',
     match_key: (book.work_id || r.work_id) ? 'work_id' : 'author_title',
+    // first_from_source: the work exists in English from a DIFFERENT source (or
+    // is itself a translation, e.g. the Dutch-from-English voyages) — ours is
+    // the first translation of THIS text/witness. The relationship records why
+    // the existing English does not defeat the claim.
+    ...(verdict === 'first_from_source' ? { prior_relationship: 'different_source_language' } : {}),
     resolver: 'tier2_agent',
     best_attempt_id: aid,
     resolved_at: nowIso,
