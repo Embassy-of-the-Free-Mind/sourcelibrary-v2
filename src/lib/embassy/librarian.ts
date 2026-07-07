@@ -1,6 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import type { CitationFix } from '@/lib/embassy/citation-fixes';
-import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
+import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
@@ -916,6 +916,39 @@ export async function* streamAgenticResponse(
     { role: 'user', parts: [{ text: userMessage }] },
   ];
 
+  // Transient Gemini failures (503 UNAVAILABLE "service overloaded", 500/504)
+  // occasionally kill a turn mid-research and the reader gets an apology
+  // instead of an answer. Retry the request with a short backoff — but only
+  // when this attempt hasn't streamed anything to the reader yet, because
+  // re-running after partial output would duplicate the streamed text.
+  const isTransientGeminiError = (err: unknown): boolean => {
+    const status = (err as { status?: number })?.status;
+    if (status && [500, 502, 503, 504].includes(status)) return true;
+    const msg = err instanceof Error ? err.message : String(err);
+    return /UNAVAILABLE|overloaded|Internal error encountered|"code":\s*50[0234]\b/i.test(msg);
+  };
+
+  async function* streamWithRetry(
+    request: Parameters<typeof ai.models.generateContentStream>[0],
+  ): AsyncGenerator<GenerateContentResponse> {
+    const MAX_ATTEMPTS = 3;
+    for (let attempt = 1; ; attempt++) {
+      let chunksSeen = false;
+      try {
+        const stream = await ai.models.generateContentStream(request);
+        for await (const chunk of stream) {
+          chunksSeen = true;
+          yield chunk;
+        }
+        return;
+      } catch (err) {
+        if (chunksSeen || attempt >= MAX_ATTEMPTS || !isTransientGeminiError(err)) throw err;
+        console.warn(`[Librarian] Transient Gemini error (attempt ${attempt}/${MAX_ATTEMPTS}), retrying:`, err instanceof Error ? err.message.slice(0, 200) : err);
+        await new Promise(resolve => setTimeout(resolve, 500 * 2 ** (attempt - 1)));
+      }
+    }
+  }
+
   const allSources: SourceCard[] = [];
   const seenSourceKeys = new Set<string>();
   // `${bookId}:${page}` for every page the model actually retrieved this turn
@@ -943,7 +976,7 @@ export async function* streamAgenticResponse(
   }
 
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const stream = await ai.models.generateContentStream({
+    const stream = streamWithRetry({
       model: MODEL,
       contents,
       config: {
@@ -1060,7 +1093,7 @@ export async function* streamAgenticResponse(
     });
 
     try {
-      const finalStream = await ai.models.generateContentStream({
+      const finalStream = streamWithRetry({
         model: MODEL,
         // No tools in the config → the model cannot search and must answer.
         contents,
