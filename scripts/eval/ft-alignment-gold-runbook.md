@@ -66,8 +66,11 @@ node scripts/eval/ft-alignment-merge-j1.mjs
 npx tsx scripts/eval/ft-alignment-score.ts
 ```
 
-To extend J1 to the co-cluster / split strata (not run in the first pass for cocluster):
-`node scripts/eval/ft-alignment-j1-prompts.mjs --kind cocluster` → run → merge → re-score.
+To extend J1 to another stratum (split was in the first pass; co-cluster was J1-extended
+2026-07-07, #3046):
+`node scripts/eval/ft-alignment-j1-prompts.mjs --kind cocluster` → run one unprimed subagent
+per prompt → merge → re-score. Still outstanding: the 28 `needs_review` link pairs
+(`--kind link --tier needs_review`) for the guard-rejection (miss) rate.
 
 ## First-run result (2026-07-06, seed 42)
 
@@ -81,8 +84,14 @@ To extend J1 to the co-cluster / split strata (not run in the first pass for coc
 - Split (recall) false-split rate 40% (12/30): real under-merges are edition/spelling
   variants of one work; the correctly-separated ones are genuinely distinct volumes/works
   (Kant's two Critiques, Aquinas Book I vs II of the Sentences).
-- Co-cluster homogeneity is J0-preliminary (100% of 15 confident pairs — an upper bound;
-  run J1 to verify).
+- **Co-cluster homogeneity (J1-verified 2026-07-07, #3046): 71.4% (35/49) [57.6–82.2%]**
+  — the earlier J0 "100% of 15 confident" was an upper bound (J0 is normalization-blind and
+  resolves only unambiguous `same`). 14 impure clusters, almost all a numbered volume/part
+  sharing one `work_id` with a sibling volume or the whole container (Opera-set volumes,
+  Chinese juan ranges, Oviedo/Delafosse vol.1↔vol.3, Seneca Moral Essays↔Epistulae Morales,
+  Dostoevsky Diary 1876↔1877); by source `legacy-seed` 0/5 is the worst slice,
+  `work-merge:llm-verified` 75% (18/24), `identical-title-deterministic` 7/7. 1 pair
+  returned "uncertain" (→ 49 resolved).
 - Bonus (catalog-quality, orthogonal to alignment): three Pico "Opera Omnia" links are
   correctly *aligned* but the catalog "prior" is a **1969 Latin facsimile reprint, not an
   English translation** — a completeness/kind-of-record issue for the guards, not a merge error.

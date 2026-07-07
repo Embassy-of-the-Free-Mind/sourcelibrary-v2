@@ -3,7 +3,7 @@
 **MEASURE-ONLY — no badge flips, no DB writes.** Answers: *is Tier-0 precise enough to auto-short-circuit (demote without an LLM), or must each match be verified?*
 
 Draw: 130 pairs, seed 42, over 14741 eligible books / 23836 catalog rows.
-Verdicts: 130 merged (52 from J1 independent subagents, 78 from J0 metadata). 63 pairs remain unresolved (J0 deferred, no J1 verdict yet) — excluded from rates and reported as coverage, never silently dropped.
+Verdicts: 130 merged (102 from J1 independent subagents, 28 from J0 metadata). 29 pairs remain unresolved (J0 deferred, no J1 verdict yet) — excluded from rates and reported as coverage, never silently dropped.
 
 ## 1. Link precision — the auto-demote go/no-go
 
@@ -29,20 +29,34 @@ A catalog link with `same:false` is a **false merge** — Tier-0 would demote a 
 
 Two of our books sharing a `work_id`. `same:false` = cluster impurity (a false merge in clustering).
 
-> ⚠️ **J0 PRE-SCREEN ONLY (preliminary, not independently verified).** These rates come from the cheap metadata oracle, which is blind to volume-level impurity (it cannot see distinctions normalization strips) and is therefore biased toward `same` — treat as an upper bound. To verify: `node scripts/eval/ft-alignment-j1-prompts.mjs --kind cocluster` → run J1 → `ft-alignment-merge-j1.mjs` → re-score.
-
-Overall: 100.0% (15/15) [79.6%–100.0%]
+Overall: 71.4% (35/49) [57.6%–82.2%]
 
 | slice | homogeneity [Wilson 95%] |
 |---|---|
-| source=work-merge:llm-verified (n=24) | 100.0% (5/5) [56.6%–100.0%] |
-| source=local-mint (n=8) | 100.0% (6/6) [61.0%–100.0%] |
-| source=work-merge:identical-title-deterministic (n=7) | 100.0% (3/3) [43.9%–100.0%] |
-| source=legacy-seed (n=5) | — (0 resolved) |
-| source=wikidata:P50 (n=5) | — (0 resolved) |
-| source=resolve-work-ids:distinctive-title (n=1) | 100.0% (1/1) [20.7%–100.0%] |
-| cocluster · generic-namesake | 100.0% (5/5) [56.6%–100.0%] |
-| cocluster · specific | 100.0% (10/10) [72.2%–100.0%] |
+| source=work-merge:llm-verified (n=24) | 75.0% (18/24) [55.1%–88.0%] |
+| source=local-mint (n=8) | 75.0% (6/8) [40.9%–92.9%] |
+| source=work-merge:identical-title-deterministic (n=7) | 100.0% (7/7) [64.6%–100.0%] |
+| source=legacy-seed (n=5) | 0.0% (0/5) [0.0%–43.4%] |
+| source=wikidata:P50 (n=5) | 80.0% (4/5) [37.6%–96.4%] |
+| source=resolve-work-ids:distinctive-title (n=1) | — (0 resolved) |
+| cocluster · generic-namesake | 75.0% (21/28) [56.6%–87.3%] |
+| cocluster · specific | 66.7% (14/21) [45.4%–82.8%] |
+
+**Impure co-clusters (14):**
+- [corpus-hermeticum] Mercvrii Trismegisti Liber De Potestate Et Sapientia Dei / Hermes, Trismegistus, ca. 2./4. Jh.  ⇔  Hermetica: The Ancient Greek and Latin Writings Attributed to Hermes Trismegistus, Volume II
+- [seneca-epistulae-morales] Seneca Moral Essays Vol. 1 (Providence, Constancy, Anger, Clemency) / Seneca  ⇔  Seneca Epistulae Morales Vol. 3 (Letters 93-124)
+- [local:a:peter-thyraeus:demoniacs] Daemoniaci cum Locis Infestis et Terriculamentis Nocturnis / Petrus Thyraeus  ⇔  Daemoniaci
+- [local:corpus-alchemicorum-graecorum] Collection des anciens alchimistes grecs, Vol. 1 / Marcellin Berthelot  ⇔  Collection des Anciens Alchimistes Grecs, vol. 3
+- [local:a:michael-maier:chymicum-naturae-scrutinium-secretioris-secretorum] Arcana arcanissima / Maier, Michael  ⇔  Secretioris naturae secretorum scrutinium chymicum
+- [local:a:chen-shiduo:esoteric-grotto-heavens-meanings] 洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 7 / Chen Shiduo  ⇔  洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 1
+- [Q66041147] Aesthetica, Pars Altera (Vol. 2) / Alexander Gottlieb Baumgarten  ⇔  Aesthetica
+- [ji-great-meaning-five-elements] 五行大義 (Wuxing Dayi: Great Meaning of the Five Elements) Vol 1 / Xiao Ji  ⇔  五行大義 (Wuxing Dayi: Great Meaning of the Five Elements) Vol 2
+- [delafosse-hautsenegalniger-vol] Haut-Senegal-Niger, Vol. 3 / Maurice Delafosse  ⇔  Haut-Senegal-Niger, Vol. 1
+- [local:a:fyodor-dostoyevsky:diary-writer] Дневник писателя за 1877 г. / Фёдор Достоевский  ⇔  Дневник писателя за 1876 г.
+- [local:a:alberti-michael:abstinence-as-averting-death-disease-dissertation-from-means-medical-medicines-p] Dissertatio Inauguralis Medica, De Abstinentia Medici Ab Aegrotis Famam Et Vitam Nonnunquam Conservante : = Wie sich die Medici bißweilen mit Nutzen der Francken enthalten / Alberti, Michael, 1682-1757; Stegmann, Johann Josua  ⇔  Dissertatio Inauguralis Medica, De Abstinentia A Medicis Et Medicamentis, Morbos Mortemque Interdum Avertente : = Wie sich die Menschen bißweilen mit Nutzen der Aertzte und Artzeneyen enthalten
+- [local:a:peter-martyr-d-anghiera:decades-novo-octo-orbe] De Orbe Novo Decades (Editio Princeps) / Peter Martyr d'Anghiera  ⇔  De Orbe Novo Decades Octo
+- [oviedo-historia-general-natural-las] Historia General y Natural de las Indias Vol. 2 / Gonzalo Fernandez de Oviedo  ⇔  Historia General y Natural de las Indias Vol. 1
+- [local:a:zhou-dunyi:quanshu-siku] 周元公集·卷五~卷九 (Collected Works of Zhou Dunyi, juan 5-9) — Siku Quanshu / （宋）周惇頣 (Zhou Dunyi)  ⇔  周元公集·卷一~卷四 (Collected Works of Zhou Dunyi, juan 1-4) — Siku Quanshu
 
 ## 3. Split candidates — clustering recall (under-merges)
 
@@ -66,9 +80,13 @@ False-split rate among title-family candidates: 40.0% (12/30) [24.6%–57.7%] ar
 - [local:a:johann-michael-faust:illustratus-philaletha ≠ local:n:faust-johannes-michael:closed-entrance-illustrated-king-open-palace-philaletha] Philaletha illustratus / Faust, Johannes Michael
 - [local:a:guglielmo-grataroli:alchemy-art-certain-doctrine-metallurgy-method-true ≠ local:a:guglielmo-grataroli:aenigmata-alchemiae-artisque-certusque-citra-comprehensus-doctrina-editis-elench] Verae Alchemiae Artisqve Metallicae, Citra Aenigmata, Doctrina, Certvsqve Modus : scriptis tum nouis tum ueteribus nunc primum & fideliter maiori ex parte editis, comprehensus ... / Grataroli, Guglielmo
 
+## 4. J0 ↔ J1 agreement (cheap-oracle data-quality check)
+
+Of 14 pairs judged by BOTH J0 and J1, they agree on 14 (100.0%).
+
 ## Decision
 
 - Acted-on Tier-0 link precision: **72.7% (16/22) [51.8%–86.8%]**.
 - In the generic-namesake stratum (where false merges concentrate): **66.7% (12/18) [43.7%–83.7%]**.
 - Go/no-go: if the **lower CI bound** in the namesake stratum falls below the tolerated false-demote rate, Tier-0 must NOT auto-short-circuit there — each such match needs a Tier-2 (LLM) check before demoting.
-- Coverage caveat: 63/130 pairs remain unresolved (no J1 verdict yet — chiefly the J0-deferred co-cluster pairs); rates above cover only resolved pairs.
+- Coverage caveat: 29/130 pairs remain unresolved (no J1 verdict, or J1 returned "uncertain") — 28 link/needs_review, 1 cocluster; rates above cover only resolved pairs.

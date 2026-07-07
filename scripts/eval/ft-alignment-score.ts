@@ -188,7 +188,20 @@ if (sDemote.n_resolved === 0) {
   if (ns.n_resolved) L.push(`- In the generic-namesake stratum (where false merges concentrate): **${ci(ns)}**.`);
   L.push(`- Go/no-go: if the **lower CI bound** in the namesake stratum falls below the tolerated false-demote rate, Tier-0 must NOT auto-short-circuit there — each such match needs a Tier-2 (LLM) check before demoting.`);
 }
-if (unresolved) L.push(`- Coverage caveat: ${unresolved}/${gold.summary.n} pairs remain unresolved (no J1 verdict yet — chiefly the J0-deferred co-cluster pairs); rates above cover only resolved pairs.`);
+if (unresolved) {
+  // Describe the unresolved set by the strata it actually falls in, rather than
+  // assuming it is the co-cluster pool (co-cluster is fully J1-verified once its
+  // prompts have been run). Groups by kind + matcher_tier, largest first.
+  const unresolvedPids = Object.keys(key).filter((p) => { const v = merged.get(p); return !v || !isResolved(v.same); });
+  const byStratum = new Map<string, number>();
+  for (const p of unresolvedPids) {
+    const k = key[p];
+    const label = k.kind === 'link' ? `link/${k.matcher_tier}` : k.kind;
+    byStratum.set(label, (byStratum.get(label) || 0) + 1);
+  }
+  const breakdown = [...byStratum.entries()].sort((a, b) => b[1] - a[1]).map(([label, n]) => `${n} ${label}`).join(', ');
+  L.push(`- Coverage caveat: ${unresolved}/${gold.summary.n} pairs remain unresolved (no J1 verdict, or J1 returned "uncertain") — ${breakdown}; rates above cover only resolved pairs.`);
+}
 L.push('');
 
 const report = L.join('\n');
