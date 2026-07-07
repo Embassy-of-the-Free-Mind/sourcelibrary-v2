@@ -145,7 +145,7 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
   it('tier2 refute over a catalog-only found → needs_review, never not_first (Arithmologia case)', () => {
     const ft = deriveVerdictFromAttempts([
       at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:1'],
-        priors: [{ english_title: 'Claimed prior', completeness: 'complete', pub_year: '1959' }] }),
+        priors: [{ english_title: 'Claimed prior', completeness: 'complete', pub_year: '1959', source_url: 'https://archive.org/claimed' }] }),
       at({ method: 'tier2_agent', result: 'none', evidence_strength: 'strong',
         queries: ['searched for the claimed prior'], notes: 'could not confirm the cited prior exists' }),
     ], BOOK);
@@ -157,7 +157,7 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
   it('tier2 found stands even when a catalog absence exists → not_first', () => {
     const ft = deriveVerdictFromAttempts([
       at({ method: 'tier2_agent', result: 'found', evidence_strength: 'strong', found_refs: ['cat:2'],
-        priors: [{ english_title: 'Real prior', completeness: 'complete', pub_year: '1986' }] }),
+        priors: [{ english_title: 'Real prior', completeness: 'complete', pub_year: '1986', source_url: 'https://archive.org/real' }] }),
       at({ method: 'tier1_catalog', result: 'none' }),
     ], BOOK);
     expect(ft?.verdict).toBe('not_first');
@@ -184,11 +184,32 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
     expect(ft?.verdict).toBe('not_first');
   });
 
-  it('registry found_refs (year unknown) still → not_first', () => {
+  // #3045: a found_refs pointer into translation_catalogs is only trustworthy when
+  // the referenced row is locatable (a resolvable source_url was copied off it).
+  // The ~302 ft_verification_discovery rows are url-less fabrications.
+  it('found_refs with a resolvable source_url → not_first', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:9'],
+        priors: [{ english_title: 'A real translation', source_url: 'https://archive.org/z' }] }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('not_first');
+    expect(ft?.prior_refs).toEqual(['cat:9']);
+  });
+
+  it('bare found_refs (no prior at all) does NOT demote → null (defer)', () => {
     const ft = deriveVerdictFromAttempts([
       at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:9'] }),
     ], BOOK);
-    expect(ft?.verdict).toBe('not_first');
+    expect(ft).toBeNull();
+  });
+
+  it('found_refs pointing at a url-less (contaminated) row does NOT demote → null (Madame Dupin case)', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier1_catalog', result: 'found', evidence_strength: 'moderate', found_refs: ['cat:discovery'],
+        priors: [{ english_title: 'De Verbo Mirifico', translator: 'Madame Dupin' /* no source_url */ }],
+        notes: '[ft_verification_discovery] unverified Gemini discovery-pass output' }),
+    ], BOOK);
+    expect(ft).toBeNull();
   });
 
   it('not_applicable rows are excluded from the absence family count', () => {

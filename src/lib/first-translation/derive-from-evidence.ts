@@ -129,16 +129,36 @@ function hasSearchCoverage(a: FirstTranslationAttempt): boolean {
   return (a.sources_checked?.length ?? 0) > 0 || (a.queries?.length ?? 0) > 0;
 }
 
+/** A prior is *locatable* when it carries a resolvable http(s) grounding link. */
+function hasResolvableUrl(p: NonNullable<FirstTranslationAttempt['priors']>[number]): boolean {
+  const u = p.source_url;
+  return typeof u === 'string' && /^https?:\/\/\S/i.test(u.trim());
+}
+
 /**
  * A found prior counts as a real defeat only when it is a TRUSTWORTHY sighting:
- * non-weak evidence AND (a concrete registry id OR a prior that survives the
- * evidence-quality guard). This is what excludes the legacy study/guess rows.
+ * non-weak evidence AND a corroborated prior.
+ *
+ * The `found_refs` pointer is NOT trusted on its own (#3045). It points into
+ * `translation_catalogs`, which contained ~302 `source: ft_verification_discovery`
+ * rows — unverified, url-less Gemini discovery-pass output, often fabricated (the
+ * "Madame Dupin" translation of Reuchlin that nearly triggered a false demote).
+ * A bare `found_refs` id is exactly as trustworthy as the row it points at, which
+ * a pure function can't resolve — so a `found_refs`-backed defeat requires the
+ * attempt to have copied a RESOLVABLE `source_url` off the referenced row (the
+ * fabricated discovery rows are url-less, so this excludes them). An agent/human
+ * that cited a structured prior directly (no `found_refs`) is trusted the old way:
+ * a prior that survives the evidence-quality guard. Legacy study/guess rows are
+ * `weak` and excluded upstream either way.
  */
 function isTrustworthyFound(a: FirstTranslationAttempt, bi: BookInput): boolean {
   if (a.result !== 'found') return false;
   if (a.evidence_strength === 'weak') return false;
-  if (a.found_refs && a.found_refs.length > 0) return true;
-  return (a.priors ?? []).some((p) => evaluatePrior(bi, toCited(p)).trustworthy);
+  const priors = a.priors ?? [];
+  if (a.found_refs && a.found_refs.length > 0) {
+    return priors.some(hasResolvableUrl);
+  }
+  return priors.some((p) => evaluatePrior(bi, toCited(p)).trustworthy);
 }
 
 /**
