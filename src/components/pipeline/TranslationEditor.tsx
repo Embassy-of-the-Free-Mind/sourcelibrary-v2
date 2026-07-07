@@ -50,6 +50,7 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import PageComments from '@/components/book/PageComments';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 
 // Languages that use non-Latin scripts and benefit from transliteration
 const NON_LATIN_LANGUAGES = new Set([
@@ -734,6 +735,15 @@ export default function TranslationEditor({
   const isNonLatin = hasNonLatinScript(book.language);
   const hasTransliteration = !!(page.transliteration?.data || transliterationText);
   const hasGermanSource = !!page.translation?.german_source;
+  const shouldShowRequestTranslation = shouldShowTranslationRequestCta({
+    ocrText,
+    translationText,
+    translationData: page.translation?.data,
+    translationUpdatedAt: page.translation?.updated_at,
+    modernizedText,
+    bookPagesTranslated: book.pages_translated,
+    bookPagesCount: book.pages_count,
+  });
   useEffect(() => {
     if (!showTransliterationPanel || !isNonLatin || !page.ocr?.data) return;
     // Check for cached transliteration first
@@ -1896,16 +1906,18 @@ export default function TranslationEditor({
                             so every request is identifiable, not an anonymous click. */}
                         <AuthCheck role="inner_circle" fallback={
                           <AuthCheck fallback={
-                            <a
-                              href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=translation-request`}
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
-                              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                              </svg>
-                              Sign in to request a translation
-                            </a>
+                            shouldShowRequestTranslation ? (
+                              <a
+                                href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=translation-request`}
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
+                                style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                Sign in to request a translation
+                              </a>
+                            ) : null
                           }>
                             {translationRequested ? (
                               <p className="text-sm font-medium" style={{ color: 'var(--accent-sage-dark)' }}>
@@ -1913,7 +1925,7 @@ export default function TranslationEditor({
                                   ? "Thanks! We'll email you when this page is translated."
                                   : "Thanks! We'll prioritize this book."}
                               </p>
-                            ) : (
+                            ) : shouldShowRequestTranslation ? (
                               <button
                                 onClick={async () => {
                                   try {
@@ -1937,7 +1949,7 @@ export default function TranslationEditor({
                                 </svg>
                                 Request translation
                               </button>
-                            )}
+                            ) : null}
                           </AuthCheck>
                         }>
                           <button
