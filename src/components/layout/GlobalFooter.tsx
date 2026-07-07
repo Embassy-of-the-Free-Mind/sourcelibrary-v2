@@ -108,9 +108,6 @@ export default function GlobalFooter() {
               unoptimized
             />
           </Link>
-          {/* Live reader presence — quiet, aggregate, self-hides when nobody's
-              here or on tenant subdomains (#3059). */}
-          <ReaderPresence variant="chip" />
           <Link href="/in-memoriam" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
             ad fontes
           </Link>
@@ -199,10 +196,17 @@ export default function GlobalFooter() {
         </div>
 
         {/* Zone 4: License line */}
-        <div className="pb-6 -mt-2 text-center">
+        <div className="pb-4 -mt-2 text-center">
           <Link href="/licensing" className="text-xs text-white/35 hover:text-white/60 transition-colors">
             {t.licenseLine}
           </Link>
+        </div>
+
+        {/* Zone 5: Live reader presence — the very bottom line, on every page
+            (#3059). The wrapper collapses (empty:hidden) when the chip renders
+            nothing (below the display floor, or on tenant subdomains). */}
+        <div className="flex justify-center pb-6 empty:hidden">
+          <ReaderPresence variant="chip" />
         </div>
       </div>
     </footer>

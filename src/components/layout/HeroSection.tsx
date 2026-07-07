@@ -2,65 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { isInAppBrowser } from '@/lib/in-app-browser';
 import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
+import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
 
 /**
- * The hero's primary front door: a prompt that hands the visitor's question
- * straight to the librarian (which auto-runs a ?q= seed — see
- * LibrarianClient's initial-query effect). Surfaces the most distinctive part
- * of the product the instant you land, instead of leaving it buried in the
- * nav. Framed as "Ask the source" (ad fontes) rather than "ask a librarian":
- * you're questioning the primary sources directly, and the answer comes back
- * with citations to them. Label is a single i18n string, trivial to re-tune.
- */
-function HeroLibrarianPrompt({ t }: { t: HomeStrings }) {
-  const router = useRouter();
-  const [q, setQ] = useState('');
-
-  const go = (e: React.FormEvent) => {
-    e.preventDefault();
-    const query = q.trim();
-    router.push(query ? `/librarian?q=${encodeURIComponent(query)}` : '/librarian');
-  };
-
-  return (
-    <div className="max-w-2xl">
-      <form onSubmit={go} className="flex gap-2">
-        <input
-          type="text"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={t.librarianPlaceholder}
-          aria-label={t.librarianPlaceholder}
-          className="flex-1 px-5 py-3.5 rounded-lg bg-white/95 text-stone-900 placeholder-stone-400 text-base outline-none border border-white focus:ring-2 focus:ring-white/50 transition-colors shadow-lg"
-        />
-        <button
-          type="submit"
-          aria-label={t.librarianAsk}
-          className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 shrink-0 inline-flex items-center gap-1.5"
-          style={{ background: 'var(--accent-rust)', color: '#fff' }}
-        >
-          {t.librarianAsk}
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </button>
-      </form>
-      <p className="mt-2 text-sm text-white/60">{t.librarianHint}</p>
-    </div>
-  );
-}
-
-/**
- * Inline email/Google sign-up — kept in the hero as a secondary action beneath
- * the "Ask the source" prompt. The hero email field is a primary signup source,
- * so we capture it here rather than punting to a linked page.
+ * Inline email/Google sign-up — the hero's primary action. The hero is the
+ * visitor-capture front door (email ≈44% of signups, Google ≈56%), so we
+ * capture inline rather than punting to a linked page. The "Ask the source"
+ * librarian invitation lives in its own section below (AskTheSourceBand).
  */
 function HeroSignUp({ t }: { t: HomeStrings }) {
   const [email, setEmail] = useState('');
@@ -252,27 +206,21 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
             {t.heroSubtitleLine1}<br /> {t.heroSubtitleLine2}
           </p>
 
-          {/* Primary front door: ask the source. Sign-up stays inline beneath
-              it for guests (the hero email field is a real signup source);
-              members get a search link instead. The min-h reservation keeps
-              the content below from shifting while the session resolves. */}
-          <div className="animate-fade-in">
-            <HeroLibrarianPrompt t={t} />
-            <div className="min-h-[128px] mt-6">
-              {status === 'authenticated' ? (
-                <Link
-                  href="/search"
-                  className="inline-block text-sm text-white/60 hover:text-white/90 transition-colors"
-                >
-                  {t.heroSearchInstead}
-                </Link>
-              ) : (
-                <>
-                  <p className="text-sm text-white/70 mb-2">{t.heroSignupLead}</p>
-                  <HeroSignUp t={t} />
-                </>
-              )}
-            </div>
+          {/* The hero's job is sign-up — the visitor-capture front door (email
+              ≈44% of signups, Google ≈56%). The "Ask the source" librarian
+              invitation lives in its own section just below (AskTheSourceBand),
+              so the two never compete for the same box. Reserve min-height so
+              the content below doesn't shift while the session resolves. */}
+          <div className="min-h-[120px]">
+            {status === 'authenticated' ? (
+              <div className="max-w-xl animate-fade-in">
+                <UnifiedSearch />
+              </div>
+            ) : (
+              <div className="animate-fade-in">
+                <HeroSignUp t={t} />
+              </div>
+            )}
           </div>
 
           {/* Language switch lives in the site header now (top-right EN · ES),

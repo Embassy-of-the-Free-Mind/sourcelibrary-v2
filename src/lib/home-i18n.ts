@@ -42,6 +42,10 @@ export interface HomeStrings {
   heroSignupLead: string;
   heroSignupCta: string;
   heroSearchInstead: string;
+  // "Ask the source" librarian band (below the hero)
+  askSourceEyebrow: string;
+  askSourceHeading: string;
+  askSourceSubtitle: string;
 
   // Collections section
   collectionsHeading: string;
@@ -140,6 +144,9 @@ const en: HomeStrings = {
   heroSignupLead: 'New here? Sign up to save your reading.',
   heroSignupCta: 'Sign up to save your reading →',
   heroSearchInstead: 'Or search the collection →',
+  askSourceEyebrow: 'The Librarian',
+  askSourceHeading: 'Ask the source',
+  askSourceSubtitle: 'Put a question to thousands of primary sources and get an answer — with citations to the originals you can read for yourself.',
 
   collectionsHeading: 'Collections',
   translationsLabel: 'translations',
@@ -238,6 +245,9 @@ const es: HomeStrings = {
   heroSignupLead: '¿Primera vez aquí? Regístrate para guardar tu lectura.',
   heroSignupCta: 'Regístrate para guardar tu lectura →',
   heroSearchInstead: 'O busca en la colección →',
+  askSourceEyebrow: 'El Bibliotecario',
+  askSourceHeading: 'Pregúntale a la fuente',
+  askSourceSubtitle: 'Haz una pregunta a miles de fuentes primarias y recibe una respuesta, con citas a los originales que puedes leer por ti mismo.',
 
   collectionsHeading: 'Colecciones',
   translationsLabel: 'traducciones',
