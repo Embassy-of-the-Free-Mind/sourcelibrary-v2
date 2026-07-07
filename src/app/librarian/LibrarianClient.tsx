@@ -623,6 +623,47 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     }
   };
 
+  // Copy/share actions on completed responses. copiedKey tracks which
+  // button just fired so its label can flash a confirmation.
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const flashCopied = (key: string) => {
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(prev => (prev === key ? null : prev)), 2000);
+  };
+
+  const handleCopyResponse = async (i: number, assistant: AssistantMessage) => {
+    let text = assistant.content.trim();
+    if (assistant.sources.length > 0) {
+      const origin = window.location.origin;
+      const lines = assistant.sources.map(s => {
+        const path = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant)
+          + (s.pageNumber ? `/page-number/${s.pageNumber}` : '');
+        return `- ${s.bookAuthor ? `${s.bookAuthor}, ` : ''}${s.bookTitle}${s.pageNumber ? `, p. ${s.pageNumber}` : ''} — ${origin}${path}`;
+      });
+      text += `\n\nSources:\n${lines.join('\n')}`;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      flashCopied(`copy-${i}`);
+    } catch { /* clipboard unavailable */ }
+  };
+
+  const handleShareThread = async (i: number) => {
+    if (!threadId) return;
+    const url = `${window.location.origin}/librarian/thread/${threadId}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'The Librarian — Source Library', url });
+        return;
+      } catch { return; /* user cancelled */ }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      flashCopied(`share-${i}`);
+    } catch { /* clipboard unavailable */ }
+  };
+
   const startNewThread = () => {
     setMessages([]);
     setThreadId(null);
@@ -639,7 +680,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     <div className="min-h-screen bg-[#f5f0e8]">
       <SiteHeader variant="light" />
       {/* Hero */}
-      <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[360px] sm:min-h-[420px]">
+      <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[200px] sm:min-h-[240px]">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -652,7 +693,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
 
-        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14 animate-fade-in-up">
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-10 sm:pt-12 pb-10 animate-fade-in-up">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
             The Librarian
           </h1>
@@ -660,42 +701,6 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
             Your research agent for over 10,000 rare books. Ask a question, and the Librarian
             will search the collection, cross-reference sources, and build up findings you can export.
           </p>
-          <Link
-            href="/librarian/voice"
-            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-sm rounded-lg backdrop-blur-sm border border-white/10 transition-all"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-            </svg>
-            Try voice conversation
-          </Link>
-          <Link
-            href="/podcast"
-            className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-sm rounded-lg backdrop-blur-sm border border-white/10 transition-all"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-            </svg>
-            Listen to Deep Dives
-          </Link>
-
-          {featuredPassage && (
-            <div className="mt-8 max-w-[560px]">
-              <p className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-sans mb-2">
-                The Librarian is reading
-              </p>
-              <Link href={featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`} className="block group">
-                <blockquote className="text-white/70 text-[15px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/40 pl-4">
-                  &ldquo;{featuredPassage.text}&rdquo;
-                </blockquote>
-                <p className="text-white/40 text-xs font-body mt-2 group-hover:text-white/60 transition-colors">
-                  {featuredPassage.bookAuthor && <span>{featuredPassage.bookAuthor}, </span>}
-                  <span className="italic">{featuredPassage.bookTitle}</span>
-                  {featuredPassage.bookYear && <span> ({featuredPassage.bookYear})</span>}
-                </p>
-              </Link>
-            </div>
-          )}
         </div>
       </div>
 
@@ -712,7 +717,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
             <div className="flex-1 min-w-0">
               <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
                 {/* Messages */}
-                <div ref={chatContainerRef} className="min-h-[300px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
+                <div ref={chatContainerRef} className="min-h-[200px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
                       <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
@@ -819,6 +824,26 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
                           {/* Source cards */}
                           <SourceCardRow sources={assistant.sources} tenant={tenant} />
+
+                          {/* Copy / share actions (once the response has finished streaming) */}
+                          {assistant.content && !(sending && i === messages.length - 1) && (
+                            <div className="mt-2 flex items-center gap-3">
+                              <button
+                                onClick={() => handleCopyResponse(i, assistant)}
+                                className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans"
+                              >
+                                {copiedKey === `copy-${i}` ? 'Copied ✓' : 'Copy response'}
+                              </button>
+                              {threadId && visibility === 'public' && (
+                                <button
+                                  onClick={() => handleShareThread(i)}
+                                  className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans"
+                                >
+                                  {copiedKey === `share-${i}` ? 'Link copied ✓' : 'Share'}
+                                </button>
+                              )}
+                            </div>
+                          )}
 
                           {/* Notebook indicator */}
                           {assistant.notebookCount && assistant.notebookCount > 0 && (
@@ -996,8 +1021,32 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                   );
                 })()}
 
+                {featuredPassage && (
+                  <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
+                    <p className="text-[11px] text-[#b0a89c] tracking-[0.15em] uppercase font-sans mb-2">
+                      The Librarian is reading
+                    </p>
+                    <Link href={featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`} className="block group">
+                      <blockquote className="text-[#6b6560] text-[14px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/50 pl-3">
+                        &ldquo;{featuredPassage.text}&rdquo;
+                      </blockquote>
+                      <p className="text-[#8a8480] text-xs font-body mt-2 group-hover:text-[#6b6560] transition-colors">
+                        {featuredPassage.bookAuthor && <span>{featuredPassage.bookAuthor}, </span>}
+                        <span className="italic">{featuredPassage.bookTitle}</span>
+                        {featuredPassage.bookYear && <span> ({featuredPassage.bookYear})</span>}
+                      </p>
+                    </Link>
+                  </div>
+                )}
+
                 <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
                   <div className="space-y-2">
+                    <Link href="/librarian/voice" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
+                      Voice conversation
+                    </Link>
+                    <Link href="/podcast" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
+                      Deep Dives podcast
+                    </Link>
                     <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
                       The Ficino Society
                     </Link>
