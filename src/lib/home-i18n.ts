@@ -35,6 +35,13 @@ export interface HomeStrings {
   // Banner shown on `/` to es-locale visitors, linking to `/es`
   suggestSpanish: string;
   dismiss: string;
+  // Librarian hero prompt — primary front-door action (#3059 follow-on)
+  librarianPlaceholder: string;
+  librarianHint: string;
+  librarianAsk: string;
+  heroSignupLead: string;
+  heroSignupCta: string;
+  heroSearchInstead: string;
 
   // Collections section
   collectionsHeading: string;
@@ -127,6 +134,12 @@ const en: HomeStrings = {
   langSpanish: 'Español',
   suggestSpanish: 'Ver esta página en español',
   dismiss: 'Dismiss',
+  librarianPlaceholder: 'Ask the librarian anything…',
+  librarianHint: 'e.g. “What did Newton write about prophecy?”',
+  librarianAsk: 'Ask',
+  heroSignupLead: 'New here?',
+  heroSignupCta: 'Sign up to save your reading →',
+  heroSearchInstead: 'Or search the collection →',
 
   collectionsHeading: 'Collections',
   translationsLabel: 'translations',
@@ -219,6 +232,12 @@ const es: HomeStrings = {
   langSpanish: 'Español',
   suggestSpanish: 'View this page in English',
   dismiss: 'Cerrar',
+  librarianPlaceholder: 'Pregúntale al bibliotecario lo que quieras…',
+  librarianHint: 'p. ej. «¿Qué escribió Newton sobre la profecía?»',
+  librarianAsk: 'Preguntar',
+  heroSignupLead: '¿Primera vez aquí?',
+  heroSignupCta: 'Regístrate para guardar tu lectura →',
+  heroSearchInstead: 'O busca en la colección →',
 
   collectionsHeading: 'Colecciones',
   translationsLabel: 'traducciones',
