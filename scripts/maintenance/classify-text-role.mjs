@@ -60,6 +60,15 @@ function coerceYear(...vals) {
 }
 
 function classify(book) {
+  // Explicit translation hint wins over the language proxy below (which assumes
+  // every non-English scan is an original). Mirrors classifyTextRole() in
+  // src/lib/text-role.ts — keep in sync. #2395.
+  if (book.is_translation === true) {
+    const yr = coerceYear(book.year, book.published, book.original_work_year);
+    const role = yr && yr > 0 && yr < 1700 ? 'period-translation' : 'modern-translation';
+    return { role, loeb: false };
+  }
+
   // Non-English scan → it's an original-language source.
   if (!enLike(book.language)) return { role: 'original', loeb: false };
 
@@ -104,7 +113,7 @@ async function main() {
     : { visible: true };
   const cursor = col.find(
     query,
-    { projection: { _id: 0, id: 1, title: 1, author: 1, year: 1, published: 1, original_work_year: 1, language: 1, original_language: 1, read_count: 1 } },
+    { projection: { _id: 0, id: 1, title: 1, author: 1, year: 1, published: 1, original_work_year: 1, language: 1, original_language: 1, is_translation: 1, text_role_source: 1, read_count: 1 } },
   );
 
   const dist = { original: 0, 'period-translation': 0, 'modern-translation': 0 };
@@ -112,9 +121,13 @@ async function main() {
   const samples = { 'period-translation': [], 'modern-translation': [] };
   const ops = [];
 
+  let skippedManual = 0;
   for await (const b of cursor) {
     if (limit && processed >= limit) break;
     processed++;
+    // Never clobber a human-QA'd label — the heuristic can't see what a person
+    // verified (e.g. an English-only translation the title didn't flag).
+    if (b.text_role_source === 'manual-qa') { skippedManual++; continue; }
     const { role, loeb } = classify(b);
     dist[role]++;
     if (loeb) loebCount++;
@@ -134,6 +147,7 @@ async function main() {
   console.log(`  original:            ${dist.original}`);
   console.log(`  period-translation:  ${dist['period-translation']}`);
   console.log(`  modern-translation:  ${dist['modern-translation']} (incl. ${loebCount} Loeb/SBE)`);
+  console.log(`  skipped (manual-qa): ${skippedManual}`);
   if (!dryRun) console.log(`  modifiedCount:       ${written}`);
   console.log('\nperiod-translation samples:'); samples['period-translation'].forEach(s => console.log('  ', s));
   console.log('\nmodern-translation samples:'); samples['modern-translation'].forEach(s => console.log('  ', s));

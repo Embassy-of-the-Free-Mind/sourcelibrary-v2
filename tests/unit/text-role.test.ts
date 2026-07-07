@@ -45,6 +45,24 @@ describe('classifyTextRole', () => {
     expect(classifyTextRole({ language: 'English', title: 'Englished out of the Greek', author: 'Anon', published: 'London, 1899' }).text_role)
       .toBe('modern-translation');
   });
+
+  it('explicit is_translation hint overrides the language proxy for non-English translations', () => {
+    // Charles's 1916 English translation of John of Nikiu — no title/author
+    // translation signal, so the heuristic alone reads it as English-native.
+    expect(classifyTextRole({ language: 'English', title: 'John Of Nikiu Chronicle 1916', author: 'John of Nikiu', year: 1916, is_translation: true }).text_role)
+      .toBe('modern-translation');
+    // Chaignet's French Damascius — non-English, so the proxy would force 'original'.
+    expect(classifyTextRole({ language: 'French', title: 'Vie de Porphyre', author: 'Bidez', year: 1913, is_translation: true }).text_role)
+      .toBe('modern-translation');
+    // A pre-1700 rendering with the hint is still a period-translation.
+    expect(classifyTextRole({ language: 'German', title: 'Ein Alt Werk', author: 'Anon', year: 1580, is_translation: true }).text_role)
+      .toBe('period-translation');
+  });
+
+  it('is_translation false / absent falls through to the normal heuristic', () => {
+    expect(classifyTextRole({ language: 'German', title: 'Aurora', author: 'Böhme', is_translation: false }).text_role)
+      .toBe('original');
+  });
 });
 
 describe('applyTextRole', () => {
@@ -63,6 +81,20 @@ describe('applyTextRole', () => {
     const plain: Record<string, unknown> = { language: 'German', title: 'Aurora', author: 'Böhme' };
     applyTextRole(plain);
     expect(plain.original_in_scan).toBeUndefined();
+  });
+
+  it('respects an explicit pre-set text_role instead of re-deriving', () => {
+    // A driver hard-sets the role for an edition the heuristic would misread.
+    const doc: Record<string, unknown> = { language: 'French', title: 'Vie de Porphyre', author: 'Bidez', text_role: 'modern-translation' };
+    applyTextRole(doc);
+    expect(doc.text_role).toBe('modern-translation');
+    expect(doc.text_role_source).toBe('import-explicit');
+  });
+
+  it('honours an is_translation hint passed through the doc', () => {
+    const doc: Record<string, unknown> = { language: 'English', title: 'John Of Nikiu Chronicle 1916', author: 'John of Nikiu', year: 1916, is_translation: true };
+    applyTextRole(doc);
+    expect(doc.text_role).toBe('modern-translation');
   });
 });
 

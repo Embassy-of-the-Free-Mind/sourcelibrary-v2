@@ -52,6 +52,13 @@ export interface ClassifiableBook {
   year?: number | string | null;
   published?: string | null;
   original_work_year?: number | string | null;
+  /**
+   * Explicit "this scan is a translation" hint from the import driver. The ONLY
+   * reliable signal for a non-English *translation* (Chaignet's French
+   * Damascius, Charles's English John of Nikiu) — the language proxy below
+   * assumes every non-English scan is an original and would mislabel these.
+   */
+  is_translation?: boolean | null;
 }
 
 /** First 4-digit year found in the given values, or NaN. */
@@ -66,6 +73,15 @@ function coerceYear(...vals: Array<number | string | null | undefined>): number 
 }
 
 export function classifyTextRole(book: ClassifiableBook): { text_role: TextRole; original_in_scan: boolean } {
+  // Explicit translation hint wins over the language proxy below (which would
+  // otherwise force any non-English scan to 'original'). Split by era so a
+  // pre-1700 rendering still reads as a period-translation artifact. #2395.
+  if (book.is_translation === true) {
+    const yr = coerceYear(book.year, book.published, book.original_work_year);
+    const role: TextRole = yr && yr > 0 && yr < 1700 ? 'period-translation' : 'modern-translation';
+    return { text_role: role, original_in_scan: false };
+  }
+
   // Non-English scan → original-language source.
   if (!enLike(book.language)) return { text_role: 'original', original_in_scan: false };
 
@@ -95,6 +111,13 @@ export function classifyTextRole(book: ClassifiableBook): { text_role: TextRole;
  * trusts it. Call right before `insertOne`.
  */
 export function applyTextRole(bookDoc: Record<string, unknown>): void {
+  // A caller that already knows the role (explicit import metadata, or a human
+  // QA value) wins — only auto-derive when text_role is absent. This lets an
+  // import driver hard-set `text_role` for editions the heuristic can't read.
+  if (typeof bookDoc.text_role === 'string' && bookDoc.text_role) {
+    if (!bookDoc.text_role_source) bookDoc.text_role_source = 'import-explicit';
+    return;
+  }
   const { text_role, original_in_scan } = classifyTextRole(bookDoc as ClassifiableBook);
   bookDoc.text_role = text_role;
   bookDoc.text_role_source = 'import-heuristic-v1';
