@@ -8,6 +8,7 @@ import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ReaderPresence from '@/components/presence/ReaderPresence';
 import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
 
 function HeroSignUp({ t }: { t: HomeStrings }) {
@@ -199,6 +200,12 @@ export default function HeroSection({ lang = 'en' }: { lang?: HomeLang }) {
           <p className="text-xl md:text-2xl lg:text-3xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             {t.heroSubtitleLine1}<br /> {t.heroSubtitleLine2}
           </p>
+
+          {/* Live "N people are reading right now" line (#3059). Reserve
+              height so the sign-up block below doesn't shift when it fades in. */}
+          <div className="min-h-[28px] mb-6 animate-fade-in">
+            <ReaderPresence variant="hero" />
+          </div>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
           <div className="min-h-[120px]">

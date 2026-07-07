@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
+import ReaderPresence from '@/components/presence/ReaderPresence';
 import { clearConsent } from '@/lib/consent';
 import { useLocale, FOOTER_STRINGS, type FooterStrings } from '@/lib/i18n';
 
@@ -107,6 +108,9 @@ export default function GlobalFooter() {
               unoptimized
             />
           </Link>
+          {/* Live reader presence — quiet, aggregate, self-hides when nobody's
+              here or on tenant subdomains (#3059). */}
+          <ReaderPresence variant="chip" />
           <Link href="/in-memoriam" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
             ad fontes
           </Link>
