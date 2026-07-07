@@ -81,9 +81,9 @@ export const visionContent: VisionContent = {
   bodyAfterImage1: [
     'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and the Gambrell Foundation, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. You can make a tax-deductible gift [here](/support).',
   ],
-  buildHeading: 'What I want to build',
+  buildHeading: 'Building something lasting',
   bodyBuild: [
-    'Everything so far has been made possible by a handful of people who believed in the work early. Now I want to build something lasting: a world-class humanist institution devoted to the stewardship of ancient wisdom — from books to oral histories to expeditions in the field. The wisdom, after all, is more than the books.',
+    'Everything so far has been made possible by a handful of people who believed in the work early. Now I want to build something enduring: a world-class humanist institution devoted to the stewardship of ancient wisdom — from books to oral histories to expeditions in the field. The wisdom, after all, is more than the books.',
     'I want our founding donors to feel that directly. Picture an evening in the Bibliotheca with the original volumes of Fludd and Ficino open in front of you; an expedition to scan a monastery’s manuscripts before they’re lost; a hand in deciding what humanity translates next; and your name on the work, in perpetuity. I want them in the room, not just on the donor wall.',
   ],
   montage: {
@@ -106,17 +106,15 @@ export const visionContent: VisionContent = {
     photo: '/founder-derek.jpg',
   },
   plan: {
-    heading: 'Year One',
-    intro: 'This is **Year One** of a five-year build. The full vision — translating hundreds of thousands of works, scanning tens of thousands that have never been online, partnering with a thousand libraries — is roughly a **$15 million** undertaking. But it starts with proving the engine. We are raising a **first round of $1 million** to run Source Library as a real institution for its first year (it costs about **$550,000 a year**), make good on the six months of work already delivered, and hold a reserve for the next. Here is what that first million builds.',
+    heading: 'The first $640,000',
+    intro: 'We are raising **$640,000** to build Source Library into a real institution by the end of this year — the first step of a five-year vision to translate and preserve the world’s ancient wisdom, a roughly **$15 million** undertaking. Here is what that first $640K puts in place.',
     items: [
-      { work: 'A small founding team — a director, a scanning specialist at the Embassy, community & partnerships, and visiting scholars', resource: '$500K' },
-      { work: 'Core technology & AI translation infrastructure — engineering, and keeping every page online', resource: '$270K' },
-      { work: 'Begin a Spanish edition of the library — AI-drafted across the collection, validated by expert translators', resource: '$25K' },
-      { work: 'Begin expert validation of our Tibetan translations — Tibetan scholars checking the AI against the canon', resource: '$10K' },
-      { work: 'A first expedition — endangered Javanese manuscripts with Javanologi (UNS) and B-NICE Amsterdam', resource: '$60K' },
-      { work: 'Contingency and a reserve into year two', resource: '$135K' },
+      { work: 'A founding team — operations, a librarian, and design & partnerships to run the institution day to day', resource: '$140K' },
+      { work: 'The platform and AI translation engine — the engineering that keeps every page online, and the AI compute that carries the collection into new languages', resource: '$220K' },
+      { work: 'Scanning rare books at the Embassy — a digitization specialist and a portable scanner, rescuing roughly 2,000 rare books', resource: '$130K' },
+      { work: 'Community and partnerships — gatherings at the Embassy, and carrying the work to scholars and libraries worldwide', resource: '$150K' },
     ],
-    footnote: 'These figures are illustrative of the scale of the work, not a fixed budget. Prove the engine in year one and the rest follows: over five years, hundreds of thousands of works translated and checked by experts into every major language, tens of thousands scanned for the first time, a thousand libraries joined together, and an endowment to keep it all online for good — the full **$15 million** vision, and the permanence it secures. More than half of this first round funds people, because the careful act of bringing an irreplaceable book into the light — and the scholars who validate every translation — is the part AI cannot do.',
+    footnote: 'These figures are a plan, not a fixed budget. Standing the institution up this year proves the model; the full vision — hundreds of thousands of works translated and validated by experts, tens of thousands of books scanned for the first time, a thousand libraries joined together, and an endowment to keep it all online — is the five-year, roughly **$15 million** undertaking this first step begins. The cost is real work: the people who run it, the scholars who validate every translation, the digitizer turning the pages of a 400-year-old book, and the AI compute that carries the collection into new languages.',
   },
   ways: {
     heading: 'A place in the lineage',
@@ -127,7 +125,7 @@ export const visionContent: VisionContent = {
       { gift: '$60K', label: 'Underwrite the Javanese expedition — rescue endangered manuscripts before they are lost' },
       { gift: '$80K', label: 'A named wing — 1,000 books of the digital library' },
       { gift: 'from $150K', label: 'Underwrite a language edition — bring the entire library into Spanish (or Arabic, Hindi, and beyond), expert-validated, your name on it' },
-      { gift: '$250K', label: 'Founding patron — underwrite all of Year One; your name on the institution, and a hand in what we translate next' },
+      { gift: '$250K', label: 'Founding patron — your name on the institution, and a hand in what we translate next' },
     ],
     footnote: 'Every tier funds the people and the careful work behind it — the digitizer at the Embassy, the scholars who validate, the pipeline that keeps each page online. You are not funding overhead; you are rescuing a book for the world, with your name beside it.',
   },
