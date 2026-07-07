@@ -143,6 +143,7 @@ function SignInContent({ locale }: { locale: Locale }) {
     }
     setLoading(true);
     setEmailError('');
+    trackEvent('signup_start', { source: 'signin_page', method: 'email' });
     try {
       const result = await signIn('nodemailer', {
         email,
@@ -277,6 +278,7 @@ function SignInContent({ locale }: { locale: Locale }) {
             onClick={async () => {
               setGoogleLoading(true);
               setEmailError('');
+              trackEvent('signup_start', { source: 'signin_page', method: 'google' });
               try {
                 await signIn('google', { callbackUrl });
               } catch {

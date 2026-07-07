@@ -2,6 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import { trackEvent } from '@/lib/track-event';
 
 interface AuthPromptProps {
   message?: string;
@@ -38,7 +39,13 @@ export default function AuthPrompt({
 
       <div className="space-y-2">
         <button
-          onClick={() => signIn('email', { callbackUrl })}
+          onClick={() => {
+            trackEvent('signup_start', { source: 'auth_prompt', method: 'email' });
+            // 'nodemailer' is the live provider id (v5 renamed Email→Nodemailer);
+            // the old 'email' id silently no-ops. With no email field here, this
+            // routes to /auth/signin to collect it.
+            signIn('nodemailer', { callbackUrl });
+          }}
           className="w-full px-3 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90"
           style={{
             background: 'var(--text-primary, #1c1917)',

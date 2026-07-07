@@ -6,6 +6,7 @@ import { signIn } from 'next-auth/react';
 import { isInAppBrowser } from '@/lib/in-app-browser';
 import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
+import { trackEvent } from '@/lib/track-event';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
@@ -32,6 +33,7 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
     if (!email) return;
     setLoading(true);
     setError(false);
+    trackEvent('signup_start', { source: 'hero', method: 'email' });
     try {
       // Provider id is 'nodemailer' (next-auth v5 renamed Email→Nodemailer);
       // the old 'email' id silently no-ops and faked a "check your email".
@@ -86,7 +88,10 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
       )}
       <div className="flex items-center gap-4 mt-4">
         <button
-          onClick={() => signIn('google', { callbackUrl: '/' })}
+          onClick={() => {
+            trackEvent('signup_start', { source: 'hero', method: 'google' });
+            signIn('google', { callbackUrl: '/' });
+          }}
           style={{ opacity: inApp ? 0.5 : 1 }}
           className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white/90 transition-colors"
         >
