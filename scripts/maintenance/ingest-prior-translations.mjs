@@ -110,15 +110,19 @@ async function main() {
     if (/^[0-9a-f]{24}$/.test(String(rec.book_id))) or.push({ _id: new ObjectId(String(rec.book_id)) });
     const book = await books.findOne(
       { $or: or },
-      { projection: { _id: 1, id: 1, title: 1, is_first_translation: 1, pages_translated: 1 } },
+      { projection: { _id: 1, id: 1, title: 1, is_first_translation: 1, pages_translated: 1, 'first_translation.verdict': 1 } },
     );
     if (!book) {
       stats.notFound++;
       continue;
     }
 
-    // Never overwrite a live first-translation badge with a "prior exists" credit.
-    if (book.is_first_translation && (book.pages_translated ?? 0) > 0) {
+    // Never overwrite a live first-translation badge with a "prior exists" credit —
+    // EXCEPT first_from_source, where a prior English legitimately exists (the work
+    // from a different source, or the English original the text was translated from).
+    // There the credit IS the "compare with the original" link, so it belongs.
+    const fromSource = book.first_translation?.verdict === 'first_from_source';
+    if (book.is_first_translation && (book.pages_translated ?? 0) > 0 && !fromSource) {
       stats.firstBadgeConflict++;
       conflicts.push({ book_id: String(rec.book_id), title: book.title, credit });
       continue;
