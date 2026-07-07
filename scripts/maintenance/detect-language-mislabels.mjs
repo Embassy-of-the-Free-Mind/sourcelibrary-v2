@@ -103,6 +103,11 @@ async function main() {
     query = { $or: or };
   } else if (PATTERN === 'latin-vernacular') {
     query = { language: /^latin/i, title: /\btradott|\btradui|\bvolgar|^l'|\bdelle\b|fatte volgari|übersetzt/i };
+  } else if (PATTERN === 'greek-in-latin') {
+    // Latin-tagged editions of Greek authors — often Greek texts wearing their
+    // critical-edition's Latin apparatus label. Greek-script content is
+    // unambiguous, so detection here is high-precision.
+    query = { language: /^latin/i, visible: true, pages_count: { $gt: 0 }, title: /graece|graeca|aristotel|platon|homer|plutarch|galen|hippocrat|xenophon|thucydid|herodot|sophocl|euripid|demosthen|isocrat|epictet|plotin|proclus|porphyr|byzantin|gregorae|nicephor|photii|origen|chrysostom|eusebi|basili|nazianzen|dioscorid|ptolem|euclid|archimed|diophant|apolloni|strabo|pausan|athenae|synesi|philon/i };
   } else if (PATTERN === 'loeb') {
     query = { language: { $not: /^english/i }, title: /loeb|with an english translation|\(english\)|parallel (english|text)/i };
   } else { console.error('need --pattern latin-vernacular|loeb or --ids <file>'); process.exit(1); }
@@ -119,7 +124,14 @@ async function main() {
     // front matter, and pull a wide window so real body text dominates.
     const pgs = await pages.find({ book_id: realId, page_number: { $gte: 12 } }, { projection: { 'ocr.data': 1 } }).sort({ page_number: 1 }).limit(50).toArray();
     const text = pgs.map((p) => transcription(p.ocr?.data)).filter((t) => t.length > 30).join(' ').slice(0, 8000);
-    const d = detect(text, excludeLangs);
+    let d = detect(text, excludeLangs);
+    // Fallback: when the page content is too noisy to read (short book, heavy
+    // OCR image-descriptions), the TITLE is often decisive for this pool. Only
+    // used to rescue an otherwise-unclear book, and only on a clear title signal.
+    if ((!d.lang || d.conf === 'low' || d.conf === 'none')) {
+      const td = detect((b.title || '') + ' ' + (b.title || ''), excludeLangs);
+      if (td.lang && (td.conf === 'high' || td.conf === 'medium')) d = { ...td, conf: td.conf === 'high' ? 'medium' : 'low', fromTitle: true };
+    }
     const stored = (b.language || '').trim();
     const changed = d.lang && d.conf !== 'none' && d.conf !== 'low' && !stored.toLowerCase().startsWith(d.lang.toLowerCase().slice(0, 4));
     const row = { book_id: realId, title: b.title, stored, detected: d.lang, conf: d.conf, score: d.score, runnerUp: d.runnerUp, text_role: b.text_role, sample: text.slice(0, 120) };
