@@ -5,7 +5,7 @@
  * keepalive fetch. Never throws — analytics must not break an interaction.
  */
 export function trackEvent(
-  event: 'cite' | 'share' | 'quote_copy' | 'doi_view' | 'download' | 'signin_view',
+  event: 'cite' | 'share' | 'quote_copy' | 'doi_view' | 'download' | 'signin_view' | 'signup_start',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;

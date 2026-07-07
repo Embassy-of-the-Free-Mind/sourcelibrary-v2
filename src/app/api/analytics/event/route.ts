@@ -16,11 +16,14 @@ import { anonymizeIp } from '@/lib/anonymize-ip';
 
 const ALLOWED_EVENTS = new Set([
   'cite', 'share', 'quote_copy', 'doi_view', 'download', 'signin_view',
+  // signup_start: fired when a visitor initiates sign-up from a surface, so we
+  // can attribute signups by `source` (hero / signin_page / …) and `method`.
+  'signup_start',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
 const ALLOWED_PROPS = new Set([
-  'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source', 'reason',
+  'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source', 'reason', 'method',
 ]);
 
 const DB_TIMEOUT_MS = 3000;
