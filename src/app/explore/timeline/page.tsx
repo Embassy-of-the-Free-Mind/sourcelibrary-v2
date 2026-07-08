@@ -112,10 +112,6 @@ async function fetchTimelineDataCanonical() {
     return best;
   }
 
-  const byCentury: Record<string, number> = {};
-  let minYear = Infinity;
-  let maxYear = -Infinity;
-
   const mapped = entities
     .map((e) => {
       const birthStr = e.wikidata_birth_date as string | undefined;
@@ -132,23 +128,9 @@ async function fetchTimelineDataCanonical() {
       // Filter out Anno Mundi / mythological dates (Eve, Noah, Cain, etc.)
       if ((bY && Math.abs(bY) > 2026) || (dY && Math.abs(dY) > 2026)) return null;
 
-      // Track year range
-      if (bY && bY < minYear) minYear = bY;
-      if (dY && dY > maxYear) maxYear = dY;
-      if (bY && bY > maxYear) maxYear = bY;
-      if (dY && dY < minYear) minYear = dY;
-
-      // Century stats — use absolute value for bucketing
-      const refYear = bY || dY!;
-      const absYear = Math.abs(refYear);
-      const century = refYear < 0
-        ? -Math.floor((absYear - 1) / 100) - 1
-        : Math.floor((absYear - 1) / 100) + 1;
-      byCentury[String(century)] = (byCentury[String(century)] || 0) + 1;
-
       return {
         name: e.name as string,
-        type: (e.type as string) === 'person' ? 'person' : 'concept',
+        type: ((e.type as string) === 'person' ? 'person' : 'concept') as 'person' | 'concept',
         birth_year: bY,
         death_year: dY,
         book_count: (e.book_count as number) || 0,
@@ -162,22 +144,40 @@ async function fetchTimelineDataCanonical() {
         occupations: (e.occupation_groups as string[] | undefined) ?? [],
       };
     })
-    .filter(Boolean) as {
-    name: string;
-    type: 'person' | 'concept';
-    birth_year: number | null;
-    death_year: number | null;
-    book_count: number;
-    total_mentions: number;
-    description?: string;
-    tradition: string;
-    occupations: string[];
-  }[];
+    .filter((e): e is NonNullable<typeof e> => e !== null);
+
+  // #3050: every timeline dot links to /encyclopedia/<name>, which resolves
+  // against the legacy `entities` collection (exact name → aliases[] → regex).
+  // A canonical_entities row whose name has no resolvable `entities` doc 404s
+  // the reader. Drop those here so the timeline never links to a dead page.
+  // Two indexed batch reads at ISR-rebuild time (every 6h) — not per request;
+  // resolution mirrors getEntity() in encyclopedia/[name]/layout.tsx exactly.
+  const visible = await filterResolvableEntities(db, mapped);
+
+  const byCentury: Record<string, number> = {};
+  let minYear = Infinity;
+  let maxYear = -Infinity;
+  for (const e of visible) {
+    const bY = e.birth_year;
+    const dY = e.death_year;
+    if (bY && bY < minYear) minYear = bY;
+    if (dY && dY > maxYear) maxYear = dY;
+    if (bY && bY > maxYear) maxYear = bY;
+    if (dY && dY < minYear) minYear = dY;
+
+    // Century stats — use absolute value for bucketing
+    const refYear = bY || dY!;
+    const absYear = Math.abs(refYear);
+    const century = refYear < 0
+      ? -Math.floor((absYear - 1) / 100) - 1
+      : Math.floor((absYear - 1) / 100) + 1;
+    byCentury[String(century)] = (byCentury[String(century)] || 0) + 1;
+  }
 
   return {
-    entities: mapped,
+    entities: visible,
     stats: {
-      total: mapped.length,
+      total: visible.length,
       year_range: [
         minYear === Infinity ? -500 : minYear,
         maxYear === -Infinity ? 2000 : maxYear,
@@ -185,6 +185,46 @@ async function fetchTimelineDataCanonical() {
       by_century: byCentury,
     },
   };
+}
+
+/**
+ * Keep only entities whose name resolves to an `entities` doc the same way the
+ * encyclopedia page does — exact `name`, then `aliases[]`. (The encyclopedia's
+ * third fallback is a case-insensitive regex full-scan; we deliberately skip
+ * that here — it is a 20s last-resort, and matching it would mean a full-name
+ * fetch of the ~1M-doc collection at every rebuild. The tiny case-only-mismatch
+ * tail it would rescue is acceptable to drop from the timeline.) Two `$in`
+ * reads over the name/aliases indexes; #3050.
+ */
+async function filterResolvableEntities<T extends { name: string }>(
+  db: Awaited<ReturnType<typeof getReadDb>>,
+  entities: T[],
+): Promise<T[]> {
+  const names = [...new Set(entities.map((e) => e.name))];
+  if (names.length === 0) return entities;
+
+  const resolvable = new Set<string>();
+
+  const byName = await db
+    .collection('entities')
+    .find({ name: { $in: names } }, { projection: { _id: 0, name: 1 }, maxTimeMS: 15000 })
+    .toArray();
+  for (const d of byName) resolvable.add(d.name as string);
+
+  const unresolved = names.filter((n) => !resolvable.has(n));
+  if (unresolved.length > 0) {
+    const byAlias = await db
+      .collection('entities')
+      .find({ aliases: { $in: unresolved } }, { projection: { _id: 0, aliases: 1 }, maxTimeMS: 15000 })
+      .toArray();
+    const aliasSet = new Set<string>();
+    for (const d of byAlias) {
+      for (const a of (d.aliases as string[] | undefined) ?? []) aliasSet.add(a);
+    }
+    for (const n of unresolved) if (aliasSet.has(n)) resolvable.add(n);
+  }
+
+  return entities.filter((e) => resolvable.has(e.name));
 }
 
 async function fetchTimelineData() {

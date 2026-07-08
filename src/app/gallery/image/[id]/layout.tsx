@@ -8,12 +8,65 @@
 
 import { cache } from 'react';
 import { Metadata } from 'next';
-import { permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
 
+/** True if `books` has a doc for this id (string `id` field or Mongo `_id`). */
+const bookExists = cache(async (bookId: string): Promise<boolean> => {
+  try {
+    const db = await getReadDb();
+    const or: Record<string, unknown>[] = [{ id: bookId }];
+    if (/^[a-f0-9]{24}$/i.test(bookId)) or.push({ _id: new ObjectId(bookId) });
+    const doc = await db.collection('books').findOne({ $or: or }, { projection: { _id: 1 } });
+    return !!doc;
+  } catch {
+    // Fail open on a transient DB error — never turn one into a 404.
+    return true;
+  }
+});
+
 /**
- * Rescue non-viewer ids that leaked into /gallery/image/ links.
+ * True if the bare viewer id `<pageId>-<n>` resolves to an image the API would
+ * actually serve — a live page detection OR a `gallery_images` fallback row
+ * (orphaned page / stale index), excluding hidden books. Mirrors
+ * /api/gallery/image/[id] so the 404 gate matches exactly what the client can
+ * render; without the gallery_images leg we would wrongly 404 orphaned-page
+ * images that resolve only through it (#3049).
+ */
+const imageResolves = cache(async (id: string): Promise<boolean> => {
+  try {
+    const decodedId = decodeURIComponent(id);
+    const match = decodedId.match(/^(.+)[:\-](\d+)$/);
+    if (!match) return false;
+    const [, pageId, indexStr] = match;
+    const index = parseInt(indexStr, 10);
+    const db = await getReadDb();
+
+    const pages = await db.collection('pages').aggregate([
+      { $match: { id: pageId } },
+      { $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } },
+      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+    ]).toArray();
+
+    if (pages.length) {
+      const p = pages[0] as { book?: { hidden?: boolean }; detected_images?: unknown[] };
+      if (p.book?.hidden === true) return false;
+      const detections = p.detected_images || [];
+      if (index >= 0 && index < detections.length && detections[index]) return true;
+    }
+
+    const galleryDoc = await db.collection('gallery_images').findOne({ id: `${pageId}-${index}` });
+    return !!galleryDoc;
+  } catch {
+    // Fail open — a transient DB error must not render as a 404.
+    return true;
+  }
+});
+
+/**
+ * Rescue (or reject) non-viewer ids that leaked into /gallery/image/ links.
  *
  * Several producers (clip_embeddings rows, the merged gallery browse) use
  * prefixed id namespaces that are NOT viewer ids:
@@ -21,20 +74,25 @@ import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
  *   - cover-<bookId>[-<n>]    — book cover clip row
  *   - gallery-<pageId>-<n>    — clip row for a real gallery image
  * The viewer only resolves bare `<pageId>-<n>`, so these all soft-404.
- * Redirect them to where the content actually lives instead.
+ * Redirect them to where the content actually lives — but only if it exists.
+ * An artwork/cover id whose book has been deleted (or never existed) must NOT
+ * be redirected into another dead `/book/<id>` page; render a clean 404 (#3049).
  */
-function redirectLeakedId(id: string): void {
+async function resolveLeakedId(id: string): Promise<void> {
   const decoded = decodeURIComponent(id);
   const prefixed = decoded.match(/^(artwork|cover|gallery)-(.+)$/);
   if (!prefixed) return;
   const [, prefix, rest] = prefixed;
   if (prefix === 'gallery') {
+    // Canonicalize to the bare viewer id; that page's own gate 404s if it too
+    // resolves to nothing.
     permanentRedirect(`/gallery/image/${rest}`);
   }
   // artwork/cover: the payload is a book id, sometimes with a synthetic
   // detection-index suffix (`artwork-<bookId>-0` from the merged browse).
   const bookId = rest.replace(/-\d+$/, '');
-  permanentRedirect(`/book/${bookId}`);
+  if (await bookExists(bookId)) permanentRedirect(`/book/${bookId}`);
+  notFound();
 }
 
 interface PageWithBook {
@@ -130,7 +188,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  redirectLeakedId(id);
+  await resolveLeakedId(id);
   let data;
   try {
     data = await getImageData(id);
@@ -200,11 +258,17 @@ export default async function ImageLayout({
   children: React.ReactNode;
 }) {
   const { id } = await params;
-  redirectLeakedId(id);
+  await resolveLeakedId(id);
   const data = await getImageData(id);
   const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');
 
-  if (!data) return <div className="min-h-screen bg-black">{children}</div>;
+  if (!data) {
+    // getImageData only checks page detections; the API also serves orphaned
+    // images from gallery_images. 404 only when neither resolves — otherwise
+    // render the shell so the client can fetch the gallery_images fallback.
+    if (!(await imageResolves(id))) notFound();
+    return <div className="min-h-screen bg-black">{children}</div>;
+  }
 
   const { page, detection } = data;
   const imageUrl = (page as any).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo;

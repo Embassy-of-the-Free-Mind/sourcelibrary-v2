@@ -7,6 +7,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 import { supabase } from '@/lib/supabase';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL } from '@/lib/clip';
 
 /**
@@ -669,14 +670,36 @@ async function executeTool(
 
       const { semanticArtworkSearch } = await import('@/lib/semantic-search');
       const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
+      const artworkDb = await getDb();
       const rawArtworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
-      const artworks = await filterVisibleArtworks(await getDb(), rawArtworks);
+      const artworks = await filterVisibleArtworks(artworkDb, rawArtworks);
+
+      // The Supabase `thumbnail_url` is a stale 150px `book-thumbnails/{id}-thumb.jpg`
+      // snapshot — too small to embed in a chat answer (reported on /librarian,
+      // #3051), and the real high-res lives at a different path we can't derive
+      // from that string. Resolve each artwork's live display image (2000px
+      // /artwork, Wikimedia CDN, or IIIF) from Mongo via getBookThumbnailUrl.
+      const displayImageById = new Map<string, string>();
+      if (artworks.length > 0) {
+        const artBooks = await artworkDb.collection('books')
+          .find(
+            { id: { $in: artworks.map(a => a.book_id) } },
+            { projection: { _id: 0, id: 1, image_display: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1 }, maxTimeMS: 3000 },
+          )
+          .toArray()
+          .catch(() => [] as Array<Record<string, unknown>>);
+        for (const b of artBooks) {
+          const url = getBookThumbnailUrl(b as Parameters<typeof getBookThumbnailUrl>[0], 'display');
+          if (url && b.id) displayImageById.set(b.id as string, url);
+        }
+      }
+      const imageFor = (a: (typeof artworks)[number]): string | null =>
+        displayImageById.get(a.book_id) || a.thumbnail_url;
 
       let context = '';
       if (artworks.length > 0) {
         context = 'Artworks found:\n';
         for (const a of artworks) {
-          const slug = a.book_id; // artwork slug lookup would need DB, use book_id for now
           context += `\n- **${a.display_title || a.title}** by ${a.author || 'Unknown artist'}`;
           if (a.period) context += ` (${a.period})`;
           if (a.technique) context += ` — ${a.technique}`;
@@ -694,14 +717,15 @@ async function executeTool(
             );
             context += `  ${descLines.slice(1, 3).join(' ').trim().slice(0, 250)}\n`;
           }
-          if (a.thumbnail_url) context += `  Image: ${a.thumbnail_url}\n`;
+          const img = imageFor(a);
+          if (img) context += `  Image: ${img}\n`;
         }
       } else {
         context = 'No matching artworks found.';
       }
 
       return {
-        result: { found: artworks.length, context, artworks: artworks.slice(0, 6).map(a => ({ title: a.display_title || a.title, author: a.author, thumbnail: a.thumbnail_url, period: a.period, genre: a.genre })) },
+        result: { found: artworks.length, context, artworks: artworks.slice(0, 6).map(a => ({ title: a.display_title || a.title, author: a.author, thumbnail: imageFor(a), period: a.period, genre: a.genre })) },
         step: { type: 'tool_result', name: 'search_artworks', query, found: artworks.length,
           summary: artworks.length > 0 ? `Found ${artworks.length} artworks` : 'No artworks found' },
       };
