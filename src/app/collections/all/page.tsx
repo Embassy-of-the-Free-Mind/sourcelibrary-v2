@@ -57,9 +57,12 @@ async function fetchWings(): Promise<Wing[]> {
     visible: true,
   }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, hero_image: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
-  // Get all subcollections with their first featured image
+  // Get all subcollections with their first featured image. Only explicit
+  // visible:false is excluded — hidden collections (e.g. takedowns) must not
+  // be listed at all, even dimmed; missing/undefined stays public.
   const subs = await db.collection('collections').find({
     parent: { $exists: true },
+    visible: { $ne: false },
   }).project({
     slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, parent: 1, visible: 1, type: 1,
     hero_image: 1, featured_images: { $slice: 1 }, _id: 0,

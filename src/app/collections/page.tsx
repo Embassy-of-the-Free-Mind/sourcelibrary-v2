@@ -121,7 +121,7 @@ const CURATED_PATHWAYS = [
 
 async function fetchCuratedPathways(tenantId: string | null): Promise<CollectionDoc[]> {
   const db = await getReadDb();
-  const query: Record<string, unknown> = { slug: { $in: CURATED_PATHWAYS } };
+  const query: Record<string, unknown> = { slug: { $in: CURATED_PATHWAYS }, visible: { $ne: false } };
   if (tenantId) query.tenantId = tenantId;
 
   const docs = await db.collection('collections').find(query).toArray();

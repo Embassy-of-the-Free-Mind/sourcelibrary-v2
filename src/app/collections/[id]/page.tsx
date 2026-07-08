@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       getReadDb(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
     ]);
-    const collection = await db.collection('collections').findOne({ slug: id });
+    const collection = await db.collection('collections').findOne({ slug: id, visible: { $ne: false } });
 
     if (!collection) {
       return { title: 'Collection Not Found - Source Library' };
@@ -340,17 +340,20 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
+  // Only explicit visible:false hides a collection (takedowns, prelaunch);
+  // missing/undefined stays public — same convention as books.
   const collection = await withTimeout(
     db.collection('collections').findOne(
       tenantId
         ? {
           slug: id,
+          visible: { $ne: false },
           $or: [
             { tenantId },
             { tenantId: { $exists: false } },
           ],
         }
-        : { slug: id }
+        : { slug: id, visible: { $ne: false } }
     ),
     8000, null,
   );
