@@ -28,7 +28,8 @@ import {
   AlertCircle,
   Crosshair,
 } from 'lucide-react';
-import { useReaderPreferences } from '@/hooks/useReaderPreferences';
+import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
+import ReaderFocusMode from '@/components/reader/ReaderFocusMode';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
@@ -477,7 +478,7 @@ export default function TranslationEditor({
     translation: page.translation?.data || '',
     summary: page.summary?.data || '',
   });
-  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize } = useReaderPreferences();
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme } = useReaderPreferences();
 
   // Modernized text toggle
   const [modernizedMode, setModernizedMode] = useState(() => {
@@ -1078,9 +1079,9 @@ export default function TranslationEditor({
     const isFullyTranslated = ocrText && translationText;
 
     return (
-      <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
+      <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
-        <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+        <header data-reader-chrome className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
           <div className="flex items-center justify-between gap-2 relative">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -1251,20 +1252,29 @@ export default function TranslationEditor({
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
             <div className="flex items-center gap-1 sm:gap-2">
-              {/* Desktop extras: Font size */}
-              <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              {/* Reading tools: focus mode + reading settings */}
+              <div className="flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                <ReaderFocusMode
+                  bookTitle={book.display_title || book.title}
+                  bookHref={`${tenantPrefix}/book/${book.id}`}
+                  pageLabel={`${currentIndex + 1} / ${pages.length}`}
+                  hasPrev={!!previousPage}
+                  hasNext={!!nextPage}
+                  onPrev={() => previousPage && onNavigate(previousPage.id)}
+                  onNext={() => nextPage && onNavigate(nextPage.id)}
+                />
                 <div className="relative" ref={fontControlsRef}>
                   <button
                     onClick={() => setShowFontControls(prev => !prev)}
                     className={`flex items-center gap-0.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 ${showFontControls ? 'bg-stone-200' : ''}`}
                     style={{ color: showFontControls ? 'var(--text-primary)' : 'var(--text-muted)' }}
-                    aria-label="Font size"
-                    title="Font size"
+                    aria-label="Reading settings"
+                    title="Reading settings"
                   >
                     <span className="text-xs">A</span><span className="text-base font-semibold leading-none">A</span>
                   </button>
                   {showFontControls && (
-                    <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '200px' }}>
+                    <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '220px' }}>
                       <div className="text-[10px] uppercase tracking-widest text-center mb-3" style={{ color: 'var(--text-muted)' }}>Font Size</div>
                       <div className="flex items-center justify-between gap-4">
                         <button
@@ -1294,6 +1304,30 @@ export default function TranslationEditor({
                         >
                           A
                         </button>
+                      </div>
+                      <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>Theme</div>
+                      <div className="flex items-center justify-between gap-2">
+                        {([
+                          ['paper', 'Paper', '#fdfcf9', '#1a1612'],
+                          ['sepia', 'Sepia', '#f6eeda', '#1a1612'],
+                          ['night', 'Night', '#1a1612', '#ece7df'],
+                        ] as [ReaderTheme, string, string, string][]).map(([key, label, bg, fg]) => (
+                          <button
+                            key={key}
+                            onClick={() => setTheme(key)}
+                            className="flex-1 flex flex-col items-center gap-1 py-2 rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                            style={{
+                              background: bg,
+                              color: fg,
+                              borderColor: theme === key ? 'var(--accent-rust)' : 'var(--border-light)',
+                            }}
+                            aria-pressed={theme === key}
+                            title={`${label} theme`}
+                          >
+                            <span className="text-sm font-serif leading-none">Aa</span>
+                            <span className="text-[10px]">{label}</span>
+                          </button>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -1403,7 +1437,7 @@ export default function TranslationEditor({
 
         {/* Rashi script quality warning */}
         {hasRashiScript && (
-          <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
+          <div data-reader-chrome className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
             <span className="font-bold flex-shrink-0">⚠</span>
             <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
           </div>
@@ -1413,7 +1447,7 @@ export default function TranslationEditor({
             disruptive line. Berthelot's text fills the Original/Translation
             columns below; the manuscript's own OCR is demoted inside them. */}
         {paired && (
-          <div className="px-4 py-2 bg-accent-gold/10 border-b border-accent-gold/20 text-xs flex items-center gap-2" style={{ color: 'var(--accent-gold-dark)' }}>
+          <div data-reader-chrome className="px-4 py-2 bg-accent-gold/10 border-b border-accent-gold/20 text-xs flex items-center gap-2" style={{ color: 'var(--accent-gold-dark)' }}>
             <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
             <span>
               <span className="font-medium">Reading text from the critical edition</span> — Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
@@ -1446,7 +1480,7 @@ export default function TranslationEditor({
               {/* Source Image Panel */}
               {showImagePanel && (
                 <div data-reader-section="image" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <div data-reader-chrome className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                       {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
                     </span>
@@ -1589,7 +1623,7 @@ export default function TranslationEditor({
               {/* OCR Panel */}
               {showOcrPanel && (
                 <div id="reader-text" data-reader-section="ocr" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <div data-reader-chrome className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                         {paired ? 'Greek · Berthelot' : ocrText ? (isEnglishBook ? 'Original Text' : (book.language || 'Original')) : 'Step 1: Transcribe'}
@@ -1681,7 +1715,7 @@ export default function TranslationEditor({
               {/* Transliteration Panel (non-Latin scripts only) */}
               {showTransliterationPanel && hasTransliteration && (
                 <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <div data-reader-chrome className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                         Romanized {book.language || ''}
@@ -1751,7 +1785,7 @@ export default function TranslationEditor({
               {/* German Source Panel (ORAEC Egyptian texts) */}
               {showGermanSourcePanel && hasGermanSource && (
                 <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <div data-reader-chrome className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                       Deutsch <span className="normal-case font-normal">(ORAEC)</span>
                     </span>
@@ -1775,7 +1809,7 @@ export default function TranslationEditor({
               {/* Translation Panel — suppressed for modern-print English books (OCR is the reading view) */}
               {showTranslationPanel && !englishOcrIsReadingView && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-section="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
-                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <div data-reader-chrome className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                         {paired ? 'English · Berthelot' : translationText ? translationLangLabel : 'Step 2: Translate'}
@@ -2062,7 +2096,7 @@ export default function TranslationEditor({
         })()}
 
         {/* Footer: like + nav hint + search */}
-        <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+        <div data-reader-chrome style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
           <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
             <LikeButton
               key={`footer-${page.id}`}
