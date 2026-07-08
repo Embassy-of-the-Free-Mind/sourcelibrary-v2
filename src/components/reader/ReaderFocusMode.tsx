@@ -104,10 +104,8 @@ export default function ReaderFocusMode({
       if (!target) return;
       if (target.closest('a, button, input, textarea, select, summary, [role="button"], [data-reader-focus-bar]')) return;
       if (window.getSelection()?.toString()) return;
-      setBarVisible(prev => {
-        clearHideTimer();
-        return !prev;
-      });
+      clearHideTimer();
+      setBarVisible(prev => !prev);
     };
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
