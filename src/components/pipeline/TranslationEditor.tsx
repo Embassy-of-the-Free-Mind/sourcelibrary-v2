@@ -484,6 +484,20 @@ export default function TranslationEditor({
   });
   const [modernizedText, setModernizedText] = useState<string | null>(page.modernized?.data || null);
 
+  // Navigation hint: shown for the reader's first few page views ever, then retired
+  const [showNavHint, setShowNavHint] = useState(false);
+  useEffect(() => {
+    const NAV_HINT_KEY = 'sl_nav_hint_views';
+    const NAV_HINT_MAX_VIEWS = 5;
+    const views = Number(localStorage.getItem(NAV_HINT_KEY) || '0');
+    if (views < NAV_HINT_MAX_VIEWS) {
+      setShowNavHint(true);
+      localStorage.setItem(NAV_HINT_KEY, String(views + 1));
+    } else {
+      setShowNavHint(false);
+    }
+  }, [page.id]);
+
   // Translation request (guest users)
   const [translationRequested, setTranslationRequested] = useState(false);
 
@@ -2028,12 +2042,12 @@ export default function TranslationEditor({
               </>
             )}
           </div>
-          <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
-            <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
-            <span className="lg:hidden">Swipe left/right to navigate</span>
-            <span>·</span>
-            <span>Produced by <a href="https://sourcelibrary.org" className="hover:underline" style={{ color: 'var(--text-muted)' }}>SourceLibrary.org</a> in Amsterdam, 2026</span>
-          </div>
+          {showNavHint && (
+            <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
+              <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
+              <span className="lg:hidden">Swipe left/right to navigate</span>
+            </div>
+          )}
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
             <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} />
           </div>
