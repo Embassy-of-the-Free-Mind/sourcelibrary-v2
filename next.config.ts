@@ -394,12 +394,22 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBotId(withPostHogConfig(nextConfig, {
-  personalApiKey: process.env.POSTHOG_API_KEY!,
-  projectId: process.env.POSTHOG_PROJECT_ID,
-  host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-  sourcemaps: {
-    enabled: true,
-    deleteAfterUpload: true,
-  },
-}));
+// PostHog's config wrapper hard-requires projectId once sourcemaps are
+// enabled, and those env vars only exist on Vercel — with the wrapper applied
+// unconditionally, `next dev` throws "projectId is required when sourcemaps
+// are enabled" on every local checkout. Sourcemap upload is a build/deploy
+// concern, so only wrap when the PostHog credentials are actually present.
+const withAnalytics = (config: typeof nextConfig) =>
+  process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
+    ? withPostHogConfig(config, {
+        personalApiKey: process.env.POSTHOG_API_KEY,
+        projectId: process.env.POSTHOG_PROJECT_ID,
+        host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+        sourcemaps: {
+          enabled: true,
+          deleteAfterUpload: true,
+        },
+      })
+    : config;
+
+export default withBotId(withAnalytics(nextConfig));
