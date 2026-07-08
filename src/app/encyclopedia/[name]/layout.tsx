@@ -26,9 +26,16 @@ export interface SharedConnection {
 export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
   try {
     const db = await getReadDb();
-    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
+    // Try exact match first (uses index, 2ms), then the aliases array (the timeline
+    // links figures by their canonical Wikidata name, e.g. "Apuleius", while the
+    // entity is stored under a surface name, e.g. "Apuleius of Madaura" — both share
+    // the same aliases[]), then case-insensitive regex on name (20s full scan) as a
+    // last resort.
     const entity = await db.collection('entities').findOne(
       { name },
+      { sort: { book_count: -1 } }
+    ) ?? await db.collection('entities').findOne(
+      { aliases: name },
       { sort: { book_count: -1 } }
     ) ?? await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
@@ -78,9 +85,16 @@ export const getSharedBooks = cache(async (name: string): Promise<SharedConnecti
 export const getEntity = cache(async (name: string) => {
   try {
     const db = await getReadDb();
-    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
+    // Try exact match first (uses index, 2ms), then the aliases array (the timeline
+    // links figures by their canonical Wikidata name, e.g. "Apuleius", while the
+    // entity is stored under a surface name, e.g. "Apuleius of Madaura" — both share
+    // the same aliases[]), then case-insensitive regex on name (20s full scan) as a
+    // last resort. Without the aliases fallback ~0.4% of timeline figures 404.
     const entity = await db.collection('entities').findOne(
       { name },
+      { sort: { book_count: -1 } }
+    ) ?? await db.collection('entities').findOne(
+      { aliases: name },
       { sort: { book_count: -1 } }
     ) ?? await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },

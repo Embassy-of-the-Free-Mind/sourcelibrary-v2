@@ -157,7 +157,18 @@ export async function browseBooks(opts: {
   query = query.range(offset, offset + limit - 1);
 
   const { data, count, error } = await query;
-  if (error) throw new Error(`books_catalog query failed: ${error.message}`);
+  if (error) {
+    // PostgREST returns 416 "Requested range not satisfiable" (PGRST103) when the
+    // requested offset is past the end of the result set — e.g. a bot or a stale
+    // pagination link hitting /libraries/[slug]?offset=60 on a provider with <60
+    // visible books. That's an empty page, not a server error, so don't throw
+    // (it was 500-ing library pages). The 416 response still carries the total in
+    // the Content-Range header, which supabase-js surfaces as `count`.
+    if (error.code === 'PGRST103' || /range not satisfiable/i.test(error.message)) {
+      return { books: [], total: count || 0 };
+    }
+    throw new Error(`books_catalog query failed: ${error.message}`);
+  }
 
   return { books: (data || []) as CatalogBook[], total: count || 0 };
 }
