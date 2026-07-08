@@ -258,16 +258,6 @@ const sources: SourceLibrary[] = [
     highlights: 'Core collection. Bibliotheca Philosophica Hermetica: Hermetica, alchemy, Kabbalah, Rosicrucianism.',
   },
   {
-    name: 'CMC Prins Frederik — Kloss Collection',
-    country: 'Netherlands',
-    url: 'https://www.cmcdenhaag.nl',
-    route: '/api/import/pdf',
-    iiif: 'PDF',
-    status: 'live',
-    holdings: '1,530 MSS catalogued',
-    highlights: 'Bibliotheca Klossiana: Masonic, Rosicrucian, esoteric manuscripts. Georg Kloss (1787–1854) collection. 1,019 imported.',
-  },
-  {
     name: 'John Rylands Library, Manchester',
     country: 'UK',
     url: 'https://www.digitalcollections.manchester.ac.uk',

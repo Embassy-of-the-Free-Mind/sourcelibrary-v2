@@ -238,17 +238,10 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
 
   // --- Other partners ---
 
-  'kloss-collection': {
-    slug: 'kloss-collection',
-    name: 'Kloss Collection (CMC)',
-    shortName: 'Kloss',
-    providerKey: 'cmc_kloss',
-    url: 'https://cmcdenhaag.nl',
-    description: 'The Bibliotheca Klossiana at CMC Prins Frederik in The Hague preserves the collection of Georg Kloss (1787–1854), one of the most important Masonic, Rosicrucian, and esoteric manuscript collections in Europe.',
-    color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69c1d094b82ba5d5bed99883/0355.jpg',
-    hasUnifiedCatalogue: true,
-  },
+  // 'kloss-collection' (CMC Prins Frederik / Museum of Freemasonry) removed
+  // 2026-07-08 at the museum's request, pending a partnership agreement.
+  // All cmc_kloss books are hidden (hidden_reason: kloss_manuscripts_removed_2026-07-08)
+  // and the kloss tenant is soft-disabled (tenants.status: 'deleted').
   'library-of-congress': {
     slug: 'library-of-congress',
     name: 'Library of Congress',

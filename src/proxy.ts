@@ -191,7 +191,9 @@ function logBotAccess(request: NextRequest, action: string) {
 // Adding a new tenant: insert a row here and create the DNS record.
 const TENANT_SUBDOMAINS: Record<string, string> = {
   'bph.sourcelibrary.org': 'bph',
-  'kloss.sourcelibrary.org': 'kloss-collection',
+  // 'kloss.sourcelibrary.org' removed 2026-07-08 — CMC/Museum of Freemasonry
+  // takedown request; tenant soft-disabled (status: 'deleted'), re-add both
+  // together if the partnership is formalized.
   'bhutan.sourcelibrary.org': 'bhutan',
   // 'ritman.sourcelibrary.org': 'ritman',
 };
