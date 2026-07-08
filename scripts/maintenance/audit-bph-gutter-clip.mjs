@@ -23,6 +23,23 @@
  * out). Anchor: held_by:'bph' ∩ per-book pages with crop + cropped_photo + not
  * split_from_spread.
  *
+ * ⚠ KNOWN LIMITATION — over-flags, do NOT drive a blanket sweep off this alone.
+ * The raw ink metric (min(R,G,B)<120) cannot tell CLIPPED TEXT apart from two
+ * other things that also darken the recover band: (1) the BINDING SHADOW of a
+ * tight-bound book (saturates to ~1.0 ink — distinct from text, which tops out
+ * ~0.6 because line spacing leaves white rows), and (2) FACING-PAGE bleed when
+ * the two text blocks sit close and the band crosses the gutter. Measured on the
+ * real BPH cohort (2026-07-08) this flags ~97% of books, and the HIGHEST-severity
+ * entries are tight pamphlets whose "clipping" is actually binding shadow — a
+ * naive +overlap re-crop there would pull in shadow + facing page, not recover
+ * content. So: verified-safe re-crops need WIDE-GUTTER books (like Artis
+ * auriferae). A trustworthy audit must be GUTTER-AWARE — locate the gutter
+ * (deepest/widest ink-free run, or the saturated dark run) and count only
+ * text-like ink BETWEEN the cut and the gutter (left-page content), excluding
+ * saturation and anything past the gutter. That is the hard, iteratively-tuned
+ * problem #1491 documents; treat this script as a first-pass triage + eye-check
+ * aid (the HTML gallery), NOT an auto-sweep driver.
+ *
  * Run:
  *   set -a; source .env.production.local; set +a
  *   node scripts/maintenance/audit-bph-gutter-clip.mjs --limit 50 --html /tmp/gutter-clip.html
