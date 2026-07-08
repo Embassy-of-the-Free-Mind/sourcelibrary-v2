@@ -298,6 +298,21 @@ body.reader-focus [data-reader-chrome] {
   display: none;
 }
 
+/* Mobile focus mode = just the text. Panels stack vertically below lg, so a
+   reader in focus mode would scroll past the facsimile on every page turn.
+   Hide the image panel — but only when a text panel is up, so an image-only
+   view (all text panels toggled off) still shows the facsimile. */
+@media (max-width: 1023.98px) {
+  body.reader-focus
+    [data-reader-panels-container]:has(
+      [data-reader-section='ocr'],
+      [data-reader-section='translation']
+    )
+    [data-reader-section='image'] {
+    display: none;
+  }
+}
+
 /* Prose styling for content/document pages */
 .prose-content {
   font-family: 'Newsreader', Georgia, serif;
