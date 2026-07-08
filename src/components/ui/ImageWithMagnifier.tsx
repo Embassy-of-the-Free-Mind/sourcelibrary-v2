@@ -90,7 +90,21 @@ export default function ImageWithMagnifier({
   const lensH = Math.round(magnifierSize * 0.85);
 
   const MIN_ZOOM = 1.5;
-  const MAX_ZOOM = 12;
+  // Absolute sanity bound only — the real ceiling is the scan's native pixel
+  // ratio (below), so a high-res master zooms deeper than a low-res one.
+  const MAX_ZOOM = 32;
+
+  // Native pixel ratio of the full image vs its displayed size — the deepest
+  // zoom that still shows real detail. Kept in a ref so the wheel handler
+  // (bound once) can clamp to it; render clamps effectiveZoom with the same
+  // numbers. 0 until the full image has loaded.
+  const nativeZoomRef = useRef(0);
+  useEffect(() => {
+    nativeZoomRef.current =
+      fullImageDimensions.width && imageDimensions.width
+        ? Math.max(fullImageDimensions.width / imageDimensions.width, MIN_ZOOM)
+        : 0;
+  }, [fullImageDimensions, imageDimensions, MIN_ZOOM]);
 
   // Scroll-to-zoom needs a native non-passive wheel listener (React attaches
   // wheel handlers passively, so preventDefault would be ignored). Only
@@ -101,7 +115,10 @@ export default function ImageWithMagnifier({
     const onWheel = (e: WheelEvent) => {
       if (!showMagnifierRef.current) return;
       e.preventDefault();
-      setUserZoom((z) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * Math.exp(-e.deltaY * 0.002))));
+      // Clamp the stored zoom to the native ceiling too — otherwise scrolling
+      // "past" the ceiling banks invisible zoom the user must scroll back out of.
+      const cap = nativeZoomRef.current > 0 ? Math.min(nativeZoomRef.current, MAX_ZOOM) : MAX_ZOOM;
+      setUserZoom((z) => Math.min(cap, Math.max(MIN_ZOOM, z * Math.exp(-e.deltaY * 0.002))));
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
