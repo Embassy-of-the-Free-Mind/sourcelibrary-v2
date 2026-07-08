@@ -2039,7 +2039,7 @@ export default function TranslationEditor({
         })()}
 
         {/* Footer: like + nav hint + search */}
-        <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+        <div data-reader-chrome style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
           <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
             <LikeButton
               key={`footer-${page.id}`}

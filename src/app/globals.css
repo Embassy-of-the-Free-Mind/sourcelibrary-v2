@@ -286,6 +286,8 @@ h1, h2, h3, h4 {
 [data-reader-theme='night'] .text-stone-400 { color: #857c70; }
 [data-reader-theme='night'] .text-stone-500 { color: #a49b8f; }
 [data-reader-theme='night'] .text-stone-600 { color: #b5ac9f; }
+[data-reader-theme='night'] .text-primary { color: #ece7df; }
+[data-reader-theme='night'] .hover\:text-secondary:hover { color: #cfc8bd; }
 [data-reader-theme='night'] .text-stone-700 { color: #cfc8bd; }
 [data-reader-theme='night'] .hover\:text-stone-700:hover { color: #ece7df; }
 

@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from 'lucide-react';
+import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 
 interface ReaderFocusModeProps {
   bookTitle: string;
@@ -30,6 +32,9 @@ export default function ReaderFocusMode({
   const [active, setActive] = useState(false);
   const [barVisible, setBarVisible] = useState(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The bar is portaled to <body>, outside the reader's themed root — read the
+  // theme here so the bar can carry its own data-reader-theme.
+  const { theme } = useReaderPreferences();
 
   const clearHideTimer = () => {
     if (hideTimer.current) {
@@ -128,9 +133,12 @@ export default function ReaderFocusMode({
         <Maximize2 className="w-4 h-4" aria-hidden="true" />
       </button>
 
-      {active && (
+      {/* The toggle button lives inside the (hidden-in-focus) toolbar, so the
+          floating bar must escape that subtree — portal it to <body>. */}
+      {active && createPortal(
         <div
           data-reader-focus-bar
+          data-reader-theme={theme}
           className={`fixed top-0 inset-x-0 z-50 transition-transform duration-200 motion-reduce:transition-none ${barVisible ? 'translate-y-0' : '-translate-y-full'}`}
           style={{
             background: 'var(--bg-white)',
@@ -182,7 +190,8 @@ export default function ReaderFocusMode({
               <span className="hidden sm:inline">Exit focus</span>
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
