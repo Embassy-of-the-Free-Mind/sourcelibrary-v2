@@ -26,9 +26,11 @@ import {
   BookOpen,
   Save,
   AlertCircle,
+  Crosshair,
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
+import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
 import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
 import { usePairedEdition } from '@/hooks/usePairedEdition';
@@ -605,6 +607,27 @@ export default function TranslationEditor({
   // no separate band. See .claude/docs/edition-facsimile-pairing.md.
   const paired = usePairedEdition(book.id, page.id, page.page_number);
   const [pageInputValue, setPageInputValue] = useState('');
+
+  // Trace mode (#3091): click a phrase in the translation, see the aligned
+  // span highlighted in the original-language OCR (and vice versa). Only
+  // meaningful when a genuine cross-language pair is on screen — hidden for
+  // English books, the Spanish edition view, modernized mode, paired critical
+  // editions, and edit mode (offsets are computed against the canonical
+  // English translation + OCR).
+  const [traceMode, setTraceMode] = useState(false);
+  const [traceStatus, setTraceStatus] = useState<TraceStatus>('idle');
+  const isSpanishView = translationLang.startsWith('es') || translationLang.includes('span');
+  const traceEligible = !paired && !isEnglishBook && !isSpanishView && !modernizedMode
+    && mode === 'read' && !!ocrText && !!translationText && showTranslationPanel;
+
+  useEffect(() => {
+    if (!traceMode) return;
+    if (traceStatus === 'unavailable') {
+      toast.info("Tracing isn't available for this page.");
+    } else if (traceStatus === 'rate_limited') {
+      toast.info('Tracing limit reached — sign in (free) to keep going.');
+    }
+  }, [traceStatus, traceMode]);
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
@@ -1803,6 +1826,26 @@ export default function TranslationEditor({
                     </div>
                     {translationText && (
                       <div className="flex items-center gap-2">
+                        {traceEligible && (
+                          <button
+                            onClick={() => {
+                              const next = !traceMode;
+                              setTraceMode(next);
+                              // Tracing needs both panes on screen.
+                              if (next && !showOcrPanel) setShowOcrPanel(true);
+                            }}
+                            className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${traceMode
+                              ? 'bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25'
+                              : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
+                              }`}
+                            title={traceMode
+                              ? 'Turn off tracing'
+                              : `Trace: click any phrase to see it in the ${book.language || 'original'}`}
+                          >
+                            <Crosshair className={`w-3 h-3 ${traceMode && traceStatus === 'loading' ? 'animate-pulse' : ''}`} />
+                            Trace
+                          </button>
+                        )}
                         <button
                           onClick={() => setShowNotes(prev => !prev)}
                           className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${showNotes
@@ -2062,7 +2105,13 @@ export default function TranslationEditor({
           />
         )}
 
-
+        {/* Trace mode: OCR↔translation span highlighting (#3091) */}
+        <TraceAlignment
+          bookId={book.id}
+          pageId={page.id}
+          active={traceMode && traceEligible}
+          onStatusChange={setTraceStatus}
+        />
       </div>
     );
   }
@@ -2644,6 +2693,7 @@ export default function TranslationEditor({
           onClose={() => setShowPageMetadata(false)}
         />
       )}
+
     </div>
   );
 }

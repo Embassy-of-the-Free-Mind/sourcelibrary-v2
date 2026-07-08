@@ -42,6 +42,11 @@ export interface Page {
     scored_at: Date;
   };
 
+  // Span-level OCR↔translation alignment for reader trace mode (#3091).
+  // Cached lazily; hash-invalidated when either text changes.
+  // Canonical type: WordAlignmentData in src/lib/word-alignment.ts.
+  word_alignment?: import('@/lib/word-alignment').WordAlignmentData;
+
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
 
