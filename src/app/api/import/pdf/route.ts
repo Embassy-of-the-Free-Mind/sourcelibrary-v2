@@ -8,13 +8,29 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { execFileSync } from 'child_process';
-import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
 export const maxDuration = 300;
+
+/**
+ * `pdftoppm` (poppler-utils) is NOT present in the Vercel serverless runtime, so
+ * this route can only extract pages where the binary exists (local dev / Hetzner).
+ * Probe once so we can return an honest 501 with the supported workaround instead
+ * of downloading the whole PDF and then dying on a cryptic `spawnSync ENOENT`
+ * 500 (#2526). The interim/native path is `scripts/import/pdf-direct.ts`.
+ */
+function pdftoppmAvailable(): boolean {
+  try {
+    execFileSync('pdftoppm', ['-v'], { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Import a book from a PDF URL
@@ -70,6 +86,18 @@ export const POST = withCuratorAuth(async (request) => {
       return NextResponse.json(
         { error: 'Missing required fields: pdf_url, title, provider, provider_name' },
         { status: 400 },
+      );
+    }
+
+    // Bail early on serverless (Vercel) where poppler is absent — before the
+    // multi-minute PDF download — with an actionable message instead of a 500.
+    if (!pdftoppmAvailable()) {
+      return NextResponse.json(
+        {
+          error: 'PDF import is unavailable in this runtime: pdftoppm (poppler-utils) is not installed on Vercel serverless.',
+          workaround: 'Run scripts/import/pdf-direct.ts locally or on Hetzner, where poppler is present. It uses the same download → pdftoppm → R2 → insert-hidden flow.',
+        },
+        { status: 501 },
       );
     }
 
@@ -138,7 +166,7 @@ export const POST = withCuratorAuth(async (request) => {
 
     // 2. Extract pages with pdftoppm
     const pagesDir = join(tmpDir, 'pages');
-    execFileSync('mkdir', ['-p', pagesDir]);
+    mkdirSync(pagesDir, { recursive: true });
 
     try {
       execFileSync('pdftoppm', [
