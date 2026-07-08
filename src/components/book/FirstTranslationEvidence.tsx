@@ -38,6 +38,7 @@ import {
   hasPublishablePriorTranslation,
   priorLinkLabel,
   priorTranslationSentence,
+  formatTranslators,
 } from '@/lib/prior-translation';
 
 interface LegacyPrior {
@@ -305,6 +306,15 @@ export default async function FirstTranslationEvidence({
     ? book.prior_translation
     : null;
 
+  // A first_from_source book IS a first (of this text/witness), but the work
+  // also exists in English from a different source — or the text is itself a
+  // translation from an English original (the Dutch voyage narratives). Surface
+  // that existing English *alongside* the badge so a reader can compare and see
+  // where this edition drifted — often the whole scholarly point (#3026).
+  const sourceComparePrior = isFirst && verdict === 'first_from_source' && hasPublishablePriorTranslation(book)
+    ? book.prior_translation
+    : null;
+
   if (!isFirst && !isExisting && !publishablePrior) return null;
 
   // A verified credit is self-contained (no attempt-log read needed) and
@@ -373,6 +383,26 @@ export default async function FirstTranslationEvidence({
             <StrengthChip strength={effectiveStrength} preliminary={isPreliminary} />
           </div>
           {legacy?.reasoning && <p className="text-stone-400">{legacy.reasoning}</p>}
+          {sourceComparePrior && (
+            <div className="space-y-1 pt-1 border-t border-stone-700/40">
+              <p className="text-stone-400">
+                The work also exists in English from a different source. Comparing the two shows where this edition departs from the original:
+              </p>
+              <p className="text-stone-300">
+                <span className="italic">{sourceComparePrior.work_title}</span>
+                {sourceComparePrior.translators?.length ? <span className="text-stone-400">, {formatTranslators(sourceComparePrior.translators)}</span> : null}
+                {sourceComparePrior.year ? <span className="text-stone-400"> ({sourceComparePrior.year})</span> : null}
+                {showExternalLinks && (
+                  <>
+                    {' '}
+                    <a href={sourceComparePrior.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 whitespace-nowrap">
+                      compare &rarr;
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
           {priors.length > 0 && (
             <div className="space-y-1">
               <span className="text-stone-500">Related translations found:</span>
