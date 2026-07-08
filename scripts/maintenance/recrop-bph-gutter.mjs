@@ -36,10 +36,25 @@
  *   node scripts/maintenance/recrop-bph-gutter.mjs --book-id 69751588a88d83c830d99e16
  *   node scripts/maintenance/recrop-bph-gutter.mjs --ids-file /tmp/clip-ids.json
  *
+ * TWO widen modes:
+ *   • BLIND (default) — add a fixed `--overlap` per-mille to the gutter side. Safe
+ *     for WIDE-gutter books (Artis auriferae): it recovers clipped content and only
+ *     over-includes a sliver of blank gutter. On TIGHT bindings it drags in the
+ *     shadow + the facing page, so don't blanket it across the cohort (issue #3088).
+ *   • --to-gutter — per-page, DETECT the true gutter (shared scripts/lib/gutter-clip.mjs,
+ *     same geometry the audit uses) and set the cut to the gutter centre. This
+ *     recovers exactly the content between the old cut and the binding without
+ *     guessing an overlap, and self-limits: a page whose cut is already at/past the
+ *     gutter is left untouched (no needless reprocess, no facing-page pull-in). This
+ *     is the mode for the targeted cohort sweep. Pages where no gutter is found are
+ *     skipped (we won't widen blindly into the unknown).
+ *
  * Options:
  *   --book-id ID       Process a single book
  *   --ids-file PATH    JSON array of book ids to process
- *   --overlap N        Per-mille (0-1000) added to the gutter side (default 35 = 3.5%)
+ *   --overlap N        BLIND mode: per-mille (0-1000) added to gutter side (default 35 = 3.5%)
+ *   --to-gutter        Per-page gutter-relative widen (recommended for the sweep)
+ *   --gutter-margin N  --to-gutter: per-mille past the gutter centre to keep (default 0)
  *   --concurrency N    Pages processed in parallel per book (default 5)
  *   --limit N          Process at most N books (from --ids-file)
  *   --dry-run          Print old→new bounds, write nothing
@@ -49,6 +64,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { readFileSync } from 'fs';
+import { spreadProfile, findGutter, measureClip, cropSide } from '../lib/gutter-clip.mjs';
 
 // --- Args ---
 const argVal = (flag, def) => {
@@ -57,7 +73,9 @@ const argVal = (flag, def) => {
 };
 const BOOK_ID = argVal('--book-id', null);
 const IDS_FILE = argVal('--ids-file', null);
-const OVERLAP = parseInt(argVal('--overlap', '35'), 10); // per-mille added to gutter side
+const OVERLAP = parseInt(argVal('--overlap', '35'), 10); // per-mille added to gutter side (blind mode)
+const TO_GUTTER = process.argv.includes('--to-gutter');
+const GUTTER_MARGIN = parseInt(argVal('--gutter-margin', '0'), 10); // ‰ past gutter centre (to-gutter mode)
 const CONCURRENCY = parseInt(argVal('--concurrency', '5'), 10);
 const LIMIT = parseInt(argVal('--limit', '0'), 10);
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -115,9 +133,9 @@ function fullSpreadSource(page) {
   return null;
 }
 
-// Widen the gutter side of a crop by OVERLAP per-mille. Returns null if the
-// side can't be determined (not a clean left/right half).
-function widenCrop(base) {
+// BLIND widen: add OVERLAP per-mille to the gutter side. Returns null if the side
+// can't be determined (not a clean left/right half).
+function blindWiden(base) {
   if (base.xStart === 0 && base.xEnd < 1000) {
     return { xStart: 0, xEnd: Math.min(1000, base.xEnd + OVERLAP) }; // left half
   }
@@ -125,6 +143,22 @@ function widenCrop(base) {
     return { xStart: Math.max(0, base.xStart - OVERLAP), xEnd: 1000 }; // right half
   }
   return null;
+}
+
+// GUTTER-RELATIVE widen: move the cut to the detected gutter centre so all content
+// between the old cut and the binding is recovered — no overlap guess. Only touches
+// pages the AUDIT would flag as clipping (same measureClip, so recrop ⇔ audit agree):
+// binding shadow / facing-page bleed / a cut already at-or-past the gutter all yield a
+// {status:'skip'} sentinel — the page is left untouched (no needless reprocess).
+function gutterWiden(base, profile) {
+  const sc = cropSide(base);
+  if (!sc) return { status: 'skip', reason: `undetermined side ${JSON.stringify(base)}` };
+  const m = measureClip(profile, base);
+  if (!m || !m.clipped) return { status: 'skip', reason: `no clip (${m?.gutterKind ?? 'na'}, recover ${m?.recoverWidth ?? 0}‰)` };
+  const g = findGutter(profile, sc.cut);
+  const target = Math.round(g.mid);
+  if (sc.side === 'L') return { crop: { xStart: 0, xEnd: Math.min(1000, target + GUTTER_MARGIN) }, gutter: g };
+  return { crop: { xStart: Math.max(0, target - GUTTER_MARGIN), xEnd: 1000 }, gutter: g };
 }
 
 // --- Concurrency limiter ---
@@ -145,17 +179,31 @@ async function processPage(r2, db, page) {
   // Idempotent base: always widen from the ORIGINAL crop, never a prior re-crop.
   const base = page.recrop_2898?.prev_crop || page.crop;
   const prevCropped = page.recrop_2898?.prev_cropped_photo || page.cropped_photo;
-  const newCrop = widenCrop(base);
-  if (!newCrop) return { status: 'skip', reason: `undetermined side ${JSON.stringify(base)}` };
 
   const src = fullSpreadSource(page);
   if (!src) return { status: 'skip', reason: 'no full-spread source' };
 
-  if (DRY_RUN) {
-    return { status: 'dry', side: base.xStart === 0 ? 'L' : 'R', from: base, to: newCrop };
+  // Compute the new crop. --to-gutter detects the gutter per page (needs the
+  // spread buffer up front, even for a dry-run); BLIND mode is pure arithmetic.
+  let newCrop, buf = null, gutter = null, keyTag;
+  if (TO_GUTTER) {
+    buf = await fetchImage(src);
+    const profile = await spreadProfile(buf);
+    const w = gutterWiden(base, profile);
+    if (w.status === 'skip') return w;
+    newCrop = w.crop; gutter = w.gutter;
+    keyTag = `g${gutter.kind[0]}${base.xStart === 0 ? newCrop.xEnd : newCrop.xStart}`;
+  } else {
+    newCrop = blindWiden(base);
+    if (!newCrop) return { status: 'skip', reason: `undetermined side ${JSON.stringify(base)}` };
+    keyTag = `rc${OVERLAP}`;
   }
 
-  const buf = await fetchImage(src);
+  if (DRY_RUN) {
+    return { status: 'dry', side: base.xStart === 0 ? 'L' : 'R', from: base, to: newCrop, gutter: gutter && { kind: gutter.kind, mid: gutter.mid } };
+  }
+
+  if (!buf) buf = await fetchImage(src);
   const meta = await sharp(buf).metadata();
   const W = meta.width || 1000;
   const H = meta.height || 1000;
@@ -168,8 +216,9 @@ async function processPage(r2, db, page) {
     .jpeg({ quality: CROPPED_QUALITY, progressive: true })
     .toBuffer();
 
-  // New unique key → fresh /api/image cache key, no CDN purge needed.
-  const key = `cropped/${page.book_id}/${page.id}-rc${OVERLAP}.jpg`;
+  // New unique key → fresh /api/image cache key, no CDN purge needed. The key
+  // encodes the new bound so a re-run with the same detection reuses it (idempotent).
+  const key = `cropped/${page.book_id}/${page.id}-${keyTag}.jpg`;
   const newUrl = await uploadToR2(r2, key, outBuf);
 
   await db.collection('pages').updateOne(
@@ -183,7 +232,9 @@ async function processPage(r2, db, page) {
         crop: newCrop,
         recrop_2898: {
           at: new Date(),
-          overlap: OVERLAP,
+          mode: TO_GUTTER ? 'to-gutter' : 'blind',
+          overlap: TO_GUTTER ? null : OVERLAP,
+          gutter: gutter ? { kind: gutter.kind, mid: gutter.mid } : null,
           prev_crop: base,
           prev_cropped_photo: prevCropped,
         },
@@ -231,8 +282,14 @@ async function processBook(r2, db, bookId) {
   }
 
   if (DRY_RUN) {
-    const sample = results.filter(r => r.status === 'dry').slice(0, 4);
-    for (const s of sample) console.log(`    [${s.side}] ${JSON.stringify(s.from)} → ${JSON.stringify(s.to)}`);
+    const sample = results.filter(r => r.status === 'dry').slice(0, 5);
+    for (const s of sample) {
+      const g = s.gutter ? `  gutter ${s.gutter.mid}(${s.gutter.kind})` : '';
+      console.log(`    [${s.side}] ${JSON.stringify(s.from)} → ${JSON.stringify(s.to)}${g}`);
+    }
+    // In to-gutter mode a "skip" means the page doesn't clip (cut already at/past
+    // the gutter) — that's expected and healthy, so report how many were touched.
+    console.log(`    would re-crop ${ok}/${pages.length} pages (${skip} left as-is)`);
   }
 
   const failFrac = pages.length ? err / pages.length : 0;
@@ -248,8 +305,9 @@ async function main() {
   else { console.error('Provide --book-id or --ids-file'); process.exit(1); }
   if (LIMIT > 0) bookIds = bookIds.slice(0, LIMIT);
 
-  console.log(`Re-crop BPH gutter (issue #2898)`);
-  console.log(`Books: ${bookIds.length}, overlap: ${OVERLAP}‰, concurrency: ${CONCURRENCY}, dry-run: ${DRY_RUN}\n`);
+  console.log(`Re-crop BPH gutter (issue #2898/#3088)`);
+  const modeStr = TO_GUTTER ? `to-gutter (margin ${GUTTER_MARGIN}‰)` : `blind +${OVERLAP}‰`;
+  console.log(`Books: ${bookIds.length}, mode: ${modeStr}, concurrency: ${CONCURRENCY}, dry-run: ${DRY_RUN}\n`);
 
   const r2 = getR2();
   const client = await MongoClient.connect(process.env.MONGODB_URI);
