@@ -351,10 +351,12 @@ ${bookToRecord(book)}
 
 export async function GET(request: NextRequest) {
   // Scope: a tenant subdomain harvests its own subset; the main domain (no tenant)
-  // harvests the GLOBAL public catalog. `visible: true` keeps hidden / in-copyright
-  // books out of the harvest, matching every other public surface.
+  // harvests the GLOBAL public catalog. `visible: true` applies in BOTH scopes —
+  // hidden / in-copyright / taken-down books must not be harvestable anywhere
+  // (the tenant branch missing it is how hidden Kloss books stayed exposed on
+  // the kloss subdomain's OAI endpoint, 2026-07-08).
   const { id: tenantId } = getTenantContextFromRequest(request);
-  const baseFilter: Document = tenantId ? { tenantId } : { visible: true };
+  const baseFilter: Document = tenantId ? { tenantId, visible: true } : { visible: true };
 
   const { searchParams } = new URL(request.url);
   const verb = searchParams.get('verb');

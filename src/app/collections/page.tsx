@@ -117,7 +117,6 @@ const CURATED_PATHWAYS = [
   'great-manuscripts',
   'herbalism',
   'jungs-library',
-  'kloss-collection',
 ];
 
 async function fetchCuratedPathways(tenantId: string | null): Promise<CollectionDoc[]> {
