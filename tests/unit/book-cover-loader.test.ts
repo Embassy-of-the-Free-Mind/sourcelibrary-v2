@@ -52,4 +52,26 @@ describe('bookCoverResponsiveLoader', () => {
       expect(bookCoverResponsiveLoader({ src: external, width: 1200 })).toBe(external);
     });
   });
+
+  // Single-variant R2 paths have ONLY the bare `.jpg` — rewriting them to
+  // `-thumb.jpg` 404s the small-viewport candidate (homepage broken cover,
+  // 2026-07-08). They must pass through unchanged even at mobile widths.
+  describe('single-variant paths (no -thumb sibling): pass through unchanged', () => {
+    // PDF-import blob path — note it CONTAINS `/pages/` but is NOT the
+    // canonical `.../pages/{id}/...` scan path, so must not be swapped.
+    const pdfBlob = 'https://images.sourcelibrary.org/books/69c1bdc0b82ba5d5bed96a69/pages/0000.jpg';
+    const archivedRaw = 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg';
+
+    it('PDF-import /books/{id}/pages/ blob untouched at w=150', () => {
+      expect(bookCoverResponsiveLoader({ src: pdfBlob, width: 150 })).toBe(pdfBlob);
+    });
+
+    it('PDF-import blob untouched at w=400', () => {
+      expect(bookCoverResponsiveLoader({ src: pdfBlob, width: 400 })).toBe(pdfBlob);
+    });
+
+    it('raw /archived/ upload untouched at w=150', () => {
+      expect(bookCoverResponsiveLoader({ src: archivedRaw, width: 150 })).toBe(archivedRaw);
+    });
+  });
 });

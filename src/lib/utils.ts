@@ -127,8 +127,12 @@ export function getBookThumbnailUrl(
     return `https://images.sourcelibrary.org/pages/${bookId}/${padded}${suffix}`;
   }
 
-  // Standard /pages/ URLs — rewrite suffix to requested variant
-  if (!raw.includes('/pages/')) return raw;
+  // Standard /pages/ URLs — rewrite suffix to requested variant. Anchor to the
+  // canonical `images.sourcelibrary.org/pages/{id}/` scan path so the PDF-import
+  // blob path `/books/{bookId}/pages/NNNN.jpg` (which merely CONTAINS `/pages/`
+  // and has ONLY the bare `.jpg`, no -thumb/-full siblings) is left untouched —
+  // otherwise 'thumb' size returns a 404ing `-thumb.jpg` (cf. book-cover-loader).
+  if (!raw.includes('images.sourcelibrary.org/pages/')) return raw;
 
   if (size === 'display') {
     // Rewrite -thumb.jpg or -full.jpg → .jpg (1200px display variant)

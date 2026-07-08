@@ -41,6 +41,16 @@
 const SOURCELIBRARY_HOST = 'images.sourcelibrary.org';
 const THUMB_WIDTH_THRESHOLD = 500;
 
+// Only these R2 path families actually materialize a `-thumb.jpg` sibling
+// (page scans, gallery crops, cropped covers, artworks). Other single-variant
+// uploads — notably PDF-import blobs at `/books/{bookId}/pages/NNNN.jpg` and
+// raw `/archived/{id}/N.jpg` — have ONLY the bare `.jpg`, so rewriting them to
+// `-thumb.jpg` 404s the small-viewport srcSet candidates and renders a broken
+// cover (homepage smoke-test failure, 2026-07-08). Anchor each prefix to the
+// host so the PDF-blob `/books/.../pages/` path is NOT matched by `/pages/`.
+const THUMB_VARIANT_PREFIXES = ['/pages/', '/gallery/', '/cropped/', '/artwork/']
+  .map(p => `${SOURCELIBRARY_HOST}${p}`);
+
 export function bookCoverResponsiveLoader({
   src,
   width,
@@ -52,9 +62,12 @@ export function bookCoverResponsiveLoader({
   if (width > THUMB_WIDTH_THRESHOLD) return src;
   if (!src.includes(SOURCELIBRARY_HOST)) return src;
 
-  // Standard pages URL: `.../pages/{book_id}/{page}.jpg` → swap to `-thumb.jpg`.
-  // Already-thumb URLs are kept; full-resolution suffix gets normalised.
+  // Already-thumb URLs are kept regardless of path.
   if (src.endsWith('-thumb.jpg')) return src;
+
+  // Only swap to the 150px thumb for paths that actually have that variant.
+  if (!THUMB_VARIANT_PREFIXES.some(p => src.includes(p))) return src;
+
   if (src.endsWith('-full.jpg')) return src.replace(/-full\.jpg$/, '-thumb.jpg');
   if (src.endsWith('.jpg')) return src.replace(/\.jpg$/, '-thumb.jpg');
 
