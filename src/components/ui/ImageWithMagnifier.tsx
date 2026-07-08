@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { ZoomIn } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
+
+// Readers can switch the hover lens off (it captures scroll-to-zoom, which makes
+// scrolling past a tall facsimile awkward). Remembered across pages and sessions.
+const LENS_PREF_KEY = 'sl-magnifier-lens';
 
 interface ImageWithMagnifierProps {
   src: string;
@@ -20,7 +25,8 @@ interface ImageWithMagnifierProps {
 
 // Magnifier component for zooming into the source image.
 // Desktop: hover to show a wide reading lens — scroll up/down over the image
-// adjusts magnification; click opens the in-app fullscreen viewer.
+// adjusts magnification; click opens the in-app fullscreen viewer. A corner
+// toggle switches the lens off (persisted), restoring normal page scrolling.
 // Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
 // native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
 // enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
@@ -53,10 +59,30 @@ export default function ImageWithMagnifier({
   // User-adjusted magnification (scroll over the image while the lens is up).
   // Stored unclamped; render clamps to [MIN_ZOOM, native pixel ratio].
   const [userZoom, setUserZoom] = useState(zoomLevel);
+  // Lens on/off toggle. Defaults on; hydrated from localStorage after mount
+  // (SSR-safe) so the choice sticks across pages and sessions.
+  const [lensEnabled, setLensEnabled] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const showMagnifierRef = useRef(false);
   showMagnifierRef.current = showMagnifier;
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(LENS_PREF_KEY) === '0') setLensEnabled(false);
+    } catch { /* private mode / storage disabled — keep default */ }
+  }, []);
+
+  const toggleLens = () => {
+    setLensEnabled((on) => {
+      const next = !on;
+      if (!next) setShowMagnifier(false);
+      try {
+        window.localStorage.setItem(LENS_PREF_KEY, next ? '1' : '0');
+      } catch { /* non-persistent is fine */ }
+      return next;
+    });
+  };
 
   // The lens is a wide reading rectangle (fits a line of text) rather than a
   // square/circle. Derived from magnifierSize so existing callers keep their scale.
@@ -215,8 +241,9 @@ export default function ImageWithMagnifier({
 
   // Desktop: mouse move for magnifier
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Skip magnifier on touch devices
-    if (isTouchDevice) return;
+    // Skip magnifier on touch devices or when the reader switched the lens off
+    // (also skips the full-res prefetch — it only serves the lens)
+    if (isTouchDevice || !lensEnabled) return;
 
     // Start loading full image on first hover
     if (!hasHovered) setHasHovered(true);
@@ -302,7 +329,7 @@ export default function ImageWithMagnifier({
           src={displaySrc}
           alt={alt}
           loading="eager"
-          className={`max-w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${imgClassName ? imgClassName : scrollable ? 'w-full' : 'w-full h-full object-contain'}`}
+          className={`max-w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice || !lensEnabled ? 'cursor-pointer' : 'cursor-crosshair'} ${imgClassName ? imgClassName : scrollable ? 'w-full' : 'w-full h-full object-contain'}`}
           onLoad={() => {
             // Detect broken/tiny images (e.g. corrupt Blob uploads)
             // Real gallery crops are 300px+ wide; corrupt ones come through ≤150px
@@ -330,8 +357,34 @@ export default function ImageWithMagnifier({
           }}
         />
 
+        {/* Desktop: lens on/off toggle — top-left (deep-zoom button owns top-right).
+            While the lens is up it captures scroll for zoom, so readers who want
+            to wheel past a tall facsimile can switch it off. */}
+        {!isTouchDevice && isLoaded && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleLens();
+            }}
+            title={lensEnabled ? 'Magnifier on — click to turn off (restores normal scrolling)' : 'Turn on magnifier'}
+            aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
+            aria-pressed={lensEnabled}
+            className={`absolute top-2 left-2 z-10 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
+              lensEnabled
+                ? 'bg-black/55 text-white hover:bg-black/80'
+                : 'bg-black/30 text-white/60 hover:bg-black/55 hover:text-white'
+            }`}
+          >
+            <ZoomIn className="h-4 w-4" />
+            {!lensEnabled && (
+              <span className="pointer-events-none absolute h-[2px] w-5 rotate-45 rounded-full bg-current" />
+            )}
+          </button>
+        )}
+
         {/* Desktop: wide reading lens - uses full resolution image, scroll adjusts zoom */}
-        {!isTouchDevice && showMagnifier && fullImageLoaded && (() => {
+        {!isTouchDevice && lensEnabled && showMagnifier && fullImageLoaded && (() => {
           // Never magnify past the full image's native pixels (it only blurs) —
           // the native ratio is the ceiling, the user's scroll-zoom picks within it.
           const nativeW = fullImageDimensions.width || imageDimensions.width;
