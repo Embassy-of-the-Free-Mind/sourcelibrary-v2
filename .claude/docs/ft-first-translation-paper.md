@@ -1,0 +1,207 @@
+# How Many First Translations? Auditing AI-Generated Novelty Claims in a Large Digital Library with Sampling, Multi-Model Adjudication, and Human Verification
+
+*Unified working paper — Source Library / EFM, June 2026. Supersedes the two prior drafts `ft-census-paper.md` (census/results lane) and `ft-audit-paper-draft.md` (audit-method lane). Methodology, code, and data: GitHub issue #2564, PR #2573. Numbers are the current best estimate; the AI-only figures are reconciled to the n=1,000 recall run, and the human-gold-standard layer (§6) is in progress and is the binding step before submission.*
+
+---
+
+## Abstract
+
+Digital libraries increasingly use language models to assert that a text is a *first English translation* — a claim about the **absence** of any prior translation. Such negative-existence claims are hard to verify at scale and fail in two opposite directions: false positives (a badge where a prior translation exists) and false negatives (a genuine first never claimed). We present a reusable framework for auditing such claims and apply it to ~14,000 translation-eligible books in Source Library, which badges ~5,700 as first English translations. The framework combines (1) **two-sided stratified sampling** over both the badged pool (precision) and the never-assessed pool (recall); (2) **multi-model grounded adjudication** (a Claude tool-using agent and a Gemini grounded-search call sharing one verdict taxonomy) that searches tradition-appropriate bibliographic sources and applies explicit source-language and completeness rules; (3) **prevalence correction under an imperfect test** (Rogan–Gladen), to debias the AI estimate once adjudicator sensitivity/specificity is measured; and (4) a **human gold standard** that breaks the AI-vs-AI circularity the estimate would otherwise inherit. We estimate that ~66% of badged firsts are genuine (≈3,774) — the largest error being *ill-posed* claims (multi-work containers, category errors), not works with an existing translation — while a **grounded** random sample finds ~21% of the 8,306 never-assessed eligible books are themselves genuine firsts (≈1,770; an earlier un-grounded run over-stated this at ~25%, having answered "no prior" from parametric memory rather than search). The two errors nearly cancel: the corpus holds an estimated **~5,500 strict first English translations** (~40% of eligible), close to the badge count but composed of materially different books. The library is **mis-aimed in both directions in near-equal measure** (≈1,900 over-claims vs ≈1,770 missed), and error tracks a work's *fame / catalogue density*, not its language. We report two methodological hazards caught by internal inconsistency (a prompt-specification bug that mis-disqualified source-language facsimiles; a small "anchor" benchmark that inverted a model ranking), characterise the adjudicators' failure modes, and argue that libraries should report novelty claims as sampled estimates with confidence intervals and per-item provenance, not as exact counts from an unaudited flag.
+
+---
+
+## 1. Introduction
+
+A "first English translation" is among the strongest claims a library can attach to a book, and one of the most useful to readers and scholars: it marks a text entering the Anglophone record for the first time. Increasingly, that claim is produced not by a cataloguer but by an AI pipeline that reads the scanned pages and writes interpretive metadata. This is a category shift: where catalogue metadata was once a *transcription* of the object (title, date, subject heading), an asserted "first translation" is an *inference about the entire historical record* — and one the originating pipeline cannot, even in principle, verify, because reading a book's own pages tells you nothing about whether someone else translated it a century earlier.
+
+The claim is a statement about a **negative** — that no prior English translation exists anywhere — and negatives cannot be confirmed by lookup. The absence of a record in any one catalogue is not evidence that no translation was ever made; a prior may survive only as a Victorian periodical chapter, a dissertation appendix, or a privately printed pamphlet no union catalogue indexes. The claim therefore degrades in two opposite ways:
+
+- **False first (precision error):** the badge is shown, but a prior translation exists. These concentrate around *famous* works — important enough that a scholar already translated them — especially in traditions where Western bibliographic databases are blind.
+- **Missed first (recall error):** a genuine first carries no badge, because the book was never assessed at all.
+
+Counting only badged books measures precision and is structurally blind to recall. An honest census must sample **both** the books a system claims and the books it never examined. This paper does so for Source Library, a digital library of ~31,000 publicly visible historical primary sources (early-modern science, alchemy, Hermetica, Kabbalah, and a substantial non-Western tail — Tibetan, Chinese, Sanskrit, Hebrew, Arabic) with AI-assisted OCR and translation that badges ~5,700 works as first English translations.
+
+Our contribution is methodological as much as empirical: a reusable audit pipeline for AI-generated negative-existence claims — sampling design → multi-model grounded adjudication → bias correction → human verification → documented search-provenance as graded evidence-of-absence — run end-to-end on a deployed system, reporting not just an accuracy number but the failure modes, the cost/quality trade-off across models, and the methodological traps we fell into and corrected.
+
+## 2. Related work
+
+Our work sits at the intersection of four literatures.
+
+**Metadata quality in digital libraries.** Library and information science treats catalogue metadata as a measurable artifact with error rates, completeness gaps, and provenance concerns (the accuracy/completeness/consistency dimensions of the metadata-quality literature; aggregation-era audits in Europeana and the DPLA). What is new here is that the metadata under audit is *machine-generated and interpretive* rather than human-keyed and descriptive, which moves the quality question from "does this field match the object?" to "is this assertion about the world true?" *(To cite: Bruce & Hillmann; Park; Europeana/DPLA aggregation-quality studies.)*
+
+**LLM factuality, abstention, and grounding.** The claim is a factual assertion an LLM gets wrong in a specific way: confident fabrication of, or failure to recall, an obscure prior. Calibration, selective prediction / abstention ("knowing what you don't know"), and retrieval grounding as a hallucination mitigant are directly relevant; our `unverifiable` verdict is an engineered abstention path, and our finding that grounded adjudication still fails systematically where the index is sparse is a concrete instance of grounding's limits. *(To cite: hallucination surveys; selective-prediction work; retrieval-grounded factuality.)*
+
+**Translation-studies bibliography.** The object of the claim — which works have been translated, when, by whom — is the domain of translation bibliography (UNESCO's *Index Translationum*; series authorities Loeb, Sacred Books of the East, the Ante-/Post-Nicene Fathers; tradition corpora 84000/BDRC, CTEXT/CBETA, GRETIL, Sefaria). We use these both as grounding sources and as a seed catalogue for deterministic checks; their known incompleteness for non-Western and pre-modern vernacular translation is why a first claim must be bounded, not absolute. *(To cite: Index Translationum; the digital tradition-corpora.)*
+
+**Evidence of absence and prevalence under an imperfect test.** Framing a "first" as a systematic-review-style gap claim — whose strength is the documented breadth and independence of the search, not a single lookup — comes from evidence-synthesis methodology. Correcting an observed rate for the fallibility of the measuring instrument is the **Rogan–Gladen** estimator from epidemiology, which recovers true prevalence from an apparent rate given a test's sensitivity and specificity; treating each LLM adjudicator as an imperfect diagnostic test with measurable operating characteristics is, to our knowledge, a novel transfer of that idea to bibliographic auditing. *(To cite: Rogan & Gladen 1978; prevalence-under-misclassification literature; systematic-review search-completeness methods.)*
+
+## 3. Population and denominators
+
+All counts are live against the production catalogue, 19 June 2026.
+
+| Population | Count |
+|---|---|
+| Publicly visible books | 30,868 |
+| Translated to English (`pages_translated > 0`) | 15,707 |
+| — English-language originals (not eligible) | 1,737 |
+| **First-translation-eligible (translated, non-English)** | **13,970** |
+| Currently badged as first translations | 5,696 |
+| **Eligible but never assessed** | **8,306** |
+
+The eligible population is the natural denominator: a first *English* translation presupposes a non-English source text we have rendered into English. The badged (5,696) and never-assessed (8,306) books partition the eligible pool (modulo a small assessed-and-rejected remainder).
+
+## 4. Method
+
+### 4.1 Verdict taxonomy
+
+Each book is adjudicated to one of eight mutually exclusive verdicts, replacing a prior boolean flag:
+
+- `first_no_prior` — no English translation of this text in any form.
+- `first_from_source` — English of the work exists from a *different* source language, but not from this text.
+- `first_complete` — only partial/excerpt English exists; ours is the first complete one (gated on our item being complete).
+- `first_modern` — only antiquated (pre-~1900) English exists.
+- `not_first` — a complete modern English translation of this text exists.
+- `not_applicable` — not a single translatable text: visual art, scripture-manuscript copy, a non-English edition, or a multi-work container/anthology where the claim is ill-defined.
+- `unverifiable` — competent tradition sources are catalogue-blind and the search cannot be bounded.
+- `needs_review` — conflicting or inconclusive evidence; unresolved work identity.
+
+The first four constitute the **first-family** (a genuine first claim). Orthogonal qualifiers are recorded per verdict: evidence strength (`strong`/`moderate`/`weak`), our-item completeness, the match key used (`work_id`/`author_title`/`transliteration`), and the prior-relationship when a candidate is found (`same_text`, `same_work_diff_edition`, `different_source_language`, `related_distinct_work`, `partial`, `adaptation`). The relationship qualifier encodes the **source-language rule** (a translation of the same work from another original language still defeats "first") and the **related-work rule** (a translation of a parent/sibling/derivative work does not).
+
+### 4.2 Per-book adjudication (two independent instruments)
+
+For each sampled book, a tool-using agent runs a focused investigation: it identifies the work precisely and separates it from look-alike relatives and other editions; searches **tradition-appropriate** sources rather than Western catalogues alone (84000/BDRC for Tibetan; CTEXT/CBETA for Chinese; GRETIL/SuttaCentral for Indic; Sefaria for Hebrew; Google Books, Internet Archive, HathiTrust, OpenAlex, EEBO and scholarship for European works); applies the source-language and completeness rules; and returns a structured verdict plus a full evidence trail (sources checked, the prior found if any, free-text rationale). Each adjudication is an append-only provenance entry — the "evidence of absence" record.
+
+We run **two independent model instruments** on the identical prompt and taxonomy: a Claude tool-using agent (careful, hand-spot-checked, used for the badged-precision sample and hard strata) and a **Gemini grounded-search call** (~$0.01/book, the scalable engine for the never-assessed pool and full enumeration). Agreement between independent models is treated as confidence; disagreement as an uncertainty band.
+
+### 4.3 Sampling, estimation, and bias correction
+
+We draw random samples and scale up. The badged set is stratified by catalogue density × language family × prior disposition; the never-assessed pool uses simple random sampling. Each stratum's rate is computed with a **Wilson 95% confidence interval**; stratum estimates are scaled to population size and summed, with a finite-population correction on the variance. The reported corpus figure is `N ± M`, not a point claim.
+
+Because the adjudicator is itself a fallible instrument, the headline AI-only estimate is a *biased* read of the truth. Once the human gold standard (§6) yields each adjudicator's sensitivity and specificity, we apply the **Rogan–Gladen** correction, `p_true = (p_obs + spec − 1)/(sens + spec − 1)`, to debias the population rate and propagate the additional uncertainty. Until then, the AI-only numbers below are reported as such, with the AI-vs-AI ceiling stated explicitly.
+
+## 5. Results (AI-only estimate)
+
+### 5.1 Precision: are badged firsts real? (n = 462 of 5,696, Claude)
+
+| Verdict class | Share | Interpretation |
+|---|---|---|
+| first-family | ~46% | genuine first claims |
+| not_first | ~18% | a real prior exists → demote |
+| not_applicable | ~30% | ill-defined claim (mostly multi-work containers; also non-English editions, scripture fragments, visual art) |
+| needs_review / unverifiable | ~6% | unresolved |
+
+Scaled: **≈3,774 genuine firsts among badged books (95% CI [3,259–4,289]).** The largest error category is not "a translation exists" (18%) but "the claim is ill-posed" (30%) — dominated by ~16% of the sample being multi-work containers (an *Opera Omnia*, a *Patrologia* volume, a Tibetan "miscellaneous writings" bundle) for which a single badge has no clean meaning.
+
+### 5.2 Recall: how many firsts are unclaimed? (n = 1,000 of 8,306, Gemini)
+
+A **grounded** random sample (n=300, drawn with web-search grounding actually enabled — see the caution below) puts the **strict** `first_no_prior` rate at **21.3%** (Wilson 95% [17.1–26.3%]) → **≈1,772 unclaimed genuine firsts ([1,418–2,186])**, and the *graded* first-family rate (incl. first-complete / first-modern) at **32.3%** ([27.3–37.8%]) → ≈2,686. The strict figure is the one to lean on.
+
+**Caution — grounding is load-bearing and an earlier estimate over-stated recall.** An initial n=1,000 run reported strict 25.5% / graded ~38–41%; it was run with a `thinkingConfig: {thinkingBudget:-1}` setting that, we later found, *suppresses Google-Search grounding entirely*. That run answered "no prior found" from the model's parametric memory rather than from search, systematically **over-claiming firsts** (a false-negative-on-priors). With grounding restored, the model surfaces priors it had missed and the genuine-first rate falls ~4 points. The lesson generalises: for a negative-existence claim, an un-grounded LLM verdict is not evidence of absence — and a configuration flag that silently disables search can masquerade as a higher "first" rate.
+
+A higher-yield recall sub-stratum exists and is worth acting on directly: of the **323** books the system itself dispositions `confirmed_first` while the badge is off (the no-setter contradiction pool), a stratified n=18 adjudication found **~47% genuine missed firsts** (Wilson [26–69%], ≈152 of 323) — but also that `disposition: confirmed_first` is itself **~53% wrong** here (containers, English-originals, already-translated texts). Two consequences: the 323 are the cheapest, best-catalogued books to re-badge, **and** a derived flag must not be promoted from disposition unfiltered, or it would inject ~170 new false positives while fixing ~150 false negatives.
+
+### 5.3 Corpus estimate
+
+Combining the two estimates (strict definition):
+
+> **≈ 5,550 genuine first English translations** (≈3,774 badged-genuine + ≈1,772 grounded-missed), band ≈ **5,200–5,950**; ≈ **40%** of the 13,970 eligible books. Under the graded definition, ≈ **6,460** (~46% of eligible). (The precision term is Claude-grounded and unchanged; only the recall term is revised to the grounded estimate.)
+
+### 5.4 The errors nearly cancel
+
+The badged set over-claims by ≈1,900; the never-assessed pool under-claims by ≈1,770 (grounded strict). The two are **near-equal, with over-claiming marginally the larger error** — so the true total lands close to (a touch below) the current badge count of 5,696, but the membership differs substantially. The system is not predominantly over-claiming *or* under-claiming; it is **mis-aimed in both directions at once**, and the corrective action is **re-balancing** (demote ≈1,900, badge ≈1,770), which keeps the count roughly flat while making every claim evidence-backed. (An earlier un-grounded recall run put the missed-firsts term at ≈2,100, which would have made under-claiming the larger error; grounding corrects that — see §5.2.)
+
+### 5.5 Fame, not language
+
+A natural hypothesis is that non-Western claims (Western-catalogue-blind) are systematically unreliable. The data contradict this: obscure Tibetan terma and obscure Latin pamphlets are *both* usually genuine firsts. The false firsts are the **famous** works in any tradition. Worked examples: Kircher's *Arithmologia* (1665) and Fludd's treatises are famous and genuinely untranslated (badges retained — Kircher's was restored after an automated pass wrongly removed it); Tsongkhapa's *Essence of True Eloquence* is famous and was translated by Thurman in 1984 (badge removed). The discriminating axis is catalogue density, not language.
+
+## 6. Human gold standard — the binding validation (in progress)
+
+The §5 estimate is **AI-only**. Two independent models catch each other's *independent* errors, but not their *correlated* ones — shared blind spots, offline or un-indexed priors both models miss. Only an external human authority removes that residual, and it is what turns an AI-vs-AI agreement number into a defensible accuracy claim. This is the binding step before submission, and it is the project's de-circularising layer.
+
+**Review, not re-search.** No human will independently re-hunt for the original of hundreds of obscure texts; that is the expensive search the AI agents already did. The realistic instrument is the systematic-review division of labour — one reviewer searches, a second *audits the search*. So the gold-standard tool runs in **review/audit mode**: for each book it presents the AI's verdict, the prior it surfaced (with a click-through "verify the cited record" link), the sources checked, and the rationale, and asks the reviewer to **Agree / Override / Can't-tell**. A discipline is built in — the reviewer must open the cited record before agreeing, because the model's prose describing a prior is not the prior. The export feeds a scorer that reports the **override rate** (the headline result: expert confirmed X%, overrode Y%), AI-accuracy-as-judged, the *cited-record-opened* rate (a rubber-stamping guard), and the human-corrected stratified first-rate with Wilson CIs and each model's sensitivity/specificity for the Rogan–Gladen correction of §4.3.
+
+**The anchoring tax.** Review mode lets the reviewer see the AI's answer, which inflates agreement. A random **blind-calibration subset** therefore hides the AI until the reviewer commits an independent verdict, then reveals it; the gap between blind agreement and review-mode agreement estimates the anchoring inflation and keeps the de-circularisation claim honest. Annotation is **hybrid**: well-catalogued Western cells are audited in-house; the catalogue-blind non-Western cells (Tibetan/CJK/Indic/Semitic) — where error is worst and where the *correlated* AI blind spot is most dangerous — are routed to tradition specialists, whose domain knowledge is the only thing that can surface an offline prior both models missed.
+
+**What review mode does and does not remove.** Auditing the AI's match cleanly catches **false positives** (a surfaced prior that is wrong or mis-matched — the dominant precision error) and **category errors** (containers, English-originals) at a glance. It is weaker on the **false-negative absence claim**: a reviewer who does not independently re-search can audit whether the AI's "no prior found" search was *competent*, but cannot, alone, surface a prior that both models and the reviewer all miss. This is precisely the *correlated-error* residual (§7, §10): the human layer reduces it only insofar as the reviewer (a specialist) brings knowledge the models lacked. Honest framing, then: the human pass converts the inter-model agreement number into a defensible accuracy claim and removes the *independent* and *match-quality* error, but the correlated offline-prior bias is bounded, not eliminated, short of an exhaustive external-authority pass.
+
+As a seed and feasibility check, AI Tier-2 adjudications of two trap-loaded pilots (12 badged + 18 recall, web-grounded) correctly caught all data-hygiene category errors, a famous prior (the *Ars Notoria*, Englished by Turner 1657), a model hallucination (a non-existent "complete 2009 translation" of the *Yingzao Fashi*), and applied the source-language rule on hard cases (a Greek recension of the Augsburg Confession → `first_from_source`). These seed the review tool directly. Until the human reviews are in hand, accuracy rests on the AI adjudicators, which is the principal limitation (§10).
+
+## 7. Instrument validation
+
+**Ground truth (n = 33).** Against a human-vetted set independently checked against five external catalogues, the Gemini instrument agreed with the catalogue-cron labels on ~77% of binary-comparable cases; every disagreement, on inspection, favoured the adjudicator (it caught prior English translations of Euclid, Dürer's fortification treatise, and Gaffarel's *Curiositez* that the deterministic cron had wrongly badged "first"). The set is two noisy automated signals, not a gold human label, so this understates accuracy.
+
+**Inter-instrument reliability (n = 150).** The same 150 never-assessed books were adjudicated independently by the Claude agent and the Gemini call. Exact-verdict agreement was ~71% (collapsed three-class ~75%, Cohen's κ ≈ 0.57, "moderate"). The decomposition is the key result: **on the evidence question — does any prior English translation exist — the two instruments agreed ~90%**, and the strict `first_no_prior` count was near-identical (32 vs 31). The residual disagreement is **taxonomy-grading variance** (`not_first` vs `first_from_source`; `first_modern` when the only English is pre-1900; `first_complete` when the prior is partial), not search failure. Hence the *strict* count is reproducible across independent models; the *graded* breakdown is instrument-sensitive and must be pinned by sharpening the rules before reporting at the work level. The cheaper Gemini instrument (~$0.01/book) is the appropriate engine for full-corpus enumeration.
+
+**Source quality is a measurable, uneven axis — and it is auditable.** The adjudicator does not query catalogue APIs; it performs *grounded open-web search* (Google Search), steered toward tradition-appropriate catalogues by the prompt. Because every verdict stores the domains it actually consulted, we can measure where the evidence comes from. Across the live full-corpus enumeration (≈1,400 books, ≈4,150 source-hits) the consulted sources are a **mix of authoritative and low-authority**: archive.org, HathiTrust, Brill, Cambridge/OUP, university presses, OpenEdition/OAPEN, Gutenberg, Wikisource and the tradition catalogues — but *also* file-sharing and forum/AI-mirror sites (Scribd, dokumen.pub, blogspot, reddit, grokipedia, ebay, goodreads), which together accounted for a non-trivial fraction of hits. Crucially, **WorldCat — the most authoritative union catalogue — returns 403 to automated agents**, so the cheap Gemini pass under-uses exactly the source a librarian would reach for first. Two consequences. (1) The independent Claude verification pass (Stage 2) sources *better*: when WorldCat blocks it, it pivots to ESTC, VD16/VD17, the Stanford Encyclopedia, and discipline-specific scholarship — part of why the second pass is not merely a different model but a higher-quality search. (2) We hardened the Stage-1 prompt to **down-weight low-authority aggregators and to mark a "no prior" that rests only on weak sources as `evidence_strength: weak`** — so source quality feeds the graded evidence-of-absence directly. The general point: per-source provenance turns "trust the search" into an auditable property of each claim, and reveals that *where* a model looked is as consequential as *which* model looked.
+
+## 8. Two methodological hazards, disclosed
+
+**A prompt-specification bug, caught by internal inconsistency.** The first full run mis-classified ~42% of one category. The cause was a specification error in *our* adjudication prompt: it instructed the agent to mark any book whose text was in the original language as `not_applicable` — but holding the source-language original *and* translating it is precisely the library's model, so those are valid first-translation candidates, not category errors. The error surfaced through the sample's own internal inconsistency (one Latin oration correctly called a first; a near-identical one wrongly disqualified). We corrected the instruction and re-ran the affected subset.
+
+**A small benchmark inverted a model ranking.** An early 10-item "anchor" set ranked a cheap model (Gemini Flash-Lite) *above* a frontier model; expanding to a 42-item clean set reversed the ranking. Separately, an initial heuristic/LLM-consensus ground truth was ~21% mislabelled on inspection. Both are cautions about benchmark-composition risk and about trusting automated ground truth — and both are why §6's human gold standard, not a cleverer prompt, is the linchpin.
+
+**A config flag misattributed to a model.** We initially recorded Gemini 3 Flash-Preview as "unusable" (~62% structured-output failure under grounding) and nearly abandoned it. The true cause was a single config flag — `thinkingConfig: {thinkingBudget: -1}` — which silently *suppressed grounding* and truncated the JSON; with grounding off the model answered from memory, producing both the parse failures *and* fabricated "no prior" verdicts. Removing the flag fixed it, and Flash-Preview (which grounds aggressively) became the primary engine. The lesson: a pipeline failure that looks like a model deficiency can be a configuration artefact — verify the *plumbing* before condemning the model, especially when "the model can't do X" would change the whole tooling choice.
+
+We report these because an auditable method must catch its own mistakes, including the auditor's, and because evidence-of-absence pipelines are unusually sensitive to definitional framing.
+
+## 9. Discussion
+
+**Evidence of absence must be graded, not binary.** A "no prior translation" claim is only as strong as the best documented search behind it. An absence confirmed in competent tradition sources (84000 for a Tibetan text) is `strong`; an absence inferred from a blind Western-catalogue miss is `weak` and is excluded from the headline. Recording the search — sources, match key, rationale — turns a marketing claim into a falsifiable, sourced assertion, and is a scholarly-credibility artifact no competitor offers.
+
+**Containers break one-book-one-claim.** ~16% of badged firsts are multi-work volumes; a first-translation claim is well-posed only at the level of a single work, which requires a work-identity layer (only ~12% of eligible books currently carry a `work_id`).
+
+**Single-writer derivation prevents drift, but must be gated.** The badge is now a derived read of the graded verdict, written by one reconciliation job, eliminating the historical flag↔disposition drift. As §5.2 shows, that derivation must apply the same data-hygiene gates (container / visual-art / English-original / already-translated) in *both* directions, or it re-introduces false positives while fixing false negatives.
+
+**Transparency as practice.** A library that publicly measures and reports that roughly a third of its headline claims are over-claims (mostly ill-posed) and a comparable number of genuine firsts sit unbadged is doing something rare and credibility-positive: turning a marketing assertion into an auditable one and publishing the method to check it. The honest number is smaller-feeling but more defensible than the round figure it replaces.
+
+### 9.x What generalizes (reflections)
+
+Six observations that we believe transfer beyond first-translation badges to any pipeline that writes AI-generated *factual* or *negative-existence* claims to a durable, public surface:
+
+1. **The evidence trail is the product, not the verdict.** The reusable asset is not "the AI's answer" but the per-claim record of *what was searched, where, and what was found*. This reframes the task from "can a model judge X?" to "is each claim accompanied by an auditable, falsifiable search?" — and it is the property that lets a third party (or a future model) re-check the claim without re-doing the work. Most LLM-evaluation reports *which model*; the durable contribution here is that *where it looked* is recorded and is as consequential as *which model looked*.
+
+2. **Verify-before-write is the binding architecture, and the economics make it tractable.** Single-pass generation cannot touch a public surface (we measured ~63% fabricated priors on the demote direction). The pattern that works is **cheap-wide generation → independent-skeptical verification, with verification applied only to the *flips***. Because the consequential set (the proposed changes) is a small fraction of the corpus, you can afford a *better, different* instrument exactly where it matters — Stage 1 at ~$0.01/book over everything, Stage 2 on hundreds, not thousands.
+
+3. **Correlated error is the structural ceiling — and the human layer is load-bearing, not polish.** Two passes of the *same model family* catch each other's *random* slips but share *knowledge* blind spots (an old scholarly edition neither was trained on, an un-indexed offline translation). Independence must be real (a different model family; ultimately a domain specialist). The human/specialist pass is reserved for precisely the *famous-adjacent* cases where models are most likely to share a gap — it is the only thing that removes correlated error, so it belongs in the architecture, not the acknowledgements.
+
+4. **Claim well-posedness is upstream of accuracy.** A large share of apparent "errors" were not wrong searches but *ill-posed claims*: multi-work containers, manuscript miscellanies, scripture-manuscript copies, works already in the target language. "Is there a prior translation?" presupposes a single, identifiable work — so a **work-identity layer is a prerequisite**, not an add-on, and "not_applicable / needs_review" verdicts carry as much signal as the binary.
+
+5. **A failure that looks like a model deficiency can be a configuration artefact.** We nearly discarded the right engine over a "62% structured-output failure" that was actually a single flag (`thinkingBudget: -1`) silently suppressing grounding. Auditing pipelines must *verify the plumbing before condemning the model* — the cost of misattribution is choosing the wrong tool for the whole project.
+
+6. **The method must catch its own mistakes.** Its credibility rests on reflexivity: the source-language prompt bug surfaced through the sample's *internal inconsistency* (a near-identical pair verdicted differently); an independent verifier *self-corrected* its own coding mid-answer; the grounding bug was found by noticing the evidence trail was empty. An auditor that cannot detect the auditor's errors should not be trusted to audit anyone else's — and provenance is what makes that self-detection possible.
+
+## 10. Limitations
+
+- **No human gold standard yet (§6).** Accuracy rests on AI adjudicators whose own sensitivity/specificity are not yet measured against human labels; the AI-vs-AI agreement bounds independent error, not correlated error. This is the dominant limitation and the next step.
+- The combined ±~750 interval is dominated by recall uncertainty; the badged-precision sample (n=462) is tighter than the recall estimate even at n=1,000.
+- "No prior translation found" is bounded by what online and tradition sources index; un-catalogued dissertations, single journal-article renderings, and offline scholarship can still harbour a prior. Verdicts grade this but cannot eliminate it.
+- Single library, esoterica-skewed domain; generalisability is unproven. A replication on a second collection would strengthen external validity.
+- Simple random sampling of the never-assessed pool is unbiased but not minimum-variance; post-stratification could tighten the recall interval.
+
+## 11. Conclusion
+
+A widely-quoted "~6,000 first translations" turns out to be roughly defensible as a *count* but wrong in *composition*: about a third of badged books are over-claims (mostly ill-posed container claims), and a comparable-or-larger number of genuine firsts sit unbadged in the never-assessed tail. The fix is not to shrink the claim but to **re-balance** it, and to attach to each badge the graded evidence of absence that makes it checkable — validated, finally, against a human gold standard that removes the AI-vs-AI circularity. The broader lesson for digital libraries: novelty claims at scale should be reported as sampled estimates with confidence intervals and per-item provenance, not as exact counts from an unaudited flag. We release the verdict taxonomy, prompts, sampling frame, adjudication code, and (forthcoming) gold-standard labels as a recipe other libraries can run.
+
+## Target venues
+
+- **Computational Humanities Research (CHR)** — strongest fit (methods + cultural-heritage data).
+- **Journal of Open Humanities Data (JOHD)** / **Digital Scholarship in the Humanities (DSH)** — data/methods paper.
+- **LaTeCH-CLfL** (NLP for cultural heritage) or an **LREC** track — for the evaluation / LLM-failure-mode angle.
+- *Not* a top-tier ML venue: ML novelty is thin; the contribution is the audit methodology + the deployed-system case study + the human-validated census.
+
+---
+
+### Appendix A. Figures and provenance
+
+- Denominators: production catalogue, 19 June 2026 (30,868 visible · 15,707 translated · 13,970 eligible · 5,696 badged · 8,306 never-assessed).
+- Precision sample: 462 books, stratified (catalogue-density × language-family × disposition), Claude tool-agent.
+- Recall sample: 1,000 books, simple random from the 8,306 never-assessed eligible pool, Gemini grounded-search; rate stable across 40/73/150/1,000.
+- High-yield recall sub-stratum: 323 disposition-contradiction books, n=18 adjudicated.
+- All intervals are 95% Wilson; corpus interval uses stratified variance with finite-population correction; Rogan–Gladen correction applied once human sens/spec is available.
+- Human gold standard: 150-book stratified sample, hybrid in-house + specialist annotation, anti-anchoring tool, double-annotated κ subset (PR #2614).
+- Per-book verdicts, evidence trails, and analysis code in the repository (issue #2564, PR #2573); each adjudication is an append-only provenance record.
+
+### Notes
+- **Citations are placeholders** (the *(To cite: …)* markers in §2) — fill before submission; Rogan & Gladen (1978, *Am. J. Epidemiology*) and the *Index Translationum* are load-bearing.
+- **Authorship/credit:** Source Library / EFM + collaborators; decide before drafting submission prose.
+- This draft is intentionally untracked (research draft in a public AGPL repo); it supersedes `ft-census-paper.md` and `ft-audit-paper-draft.md`.
