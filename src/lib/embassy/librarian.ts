@@ -1,5 +1,11 @@
 import { getDb } from '@/lib/mongodb';
-import type { CitationFix } from '@/lib/embassy/citation-fixes';
+import {
+  findCitedArtworkSlugs,
+  findCitedBookLinks,
+  findCitedCollectionSlugs,
+  findEmbeddedImageUrls,
+  type CitationFix,
+} from '@/lib/embassy/citation-fixes';
 import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
@@ -9,6 +15,8 @@ import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL } from '@/lib/clip';
+import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
+import collectionRedirects from '@/lib/collection-redirects.json';
 
 /**
  * The Librarian — Research agent for Source Library.
@@ -33,6 +41,10 @@ import { CLIP_URL } from '@/lib/clip';
 const MODEL = 'gemini-3-flash-preview';
 const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
+/** Broken slugs we attempt to repair in one turn; the rest are disclaimed. */
+const MAX_REPAIR_SLUGS = 12;
+/** Wall-clock ceiling on the whole repair loop, guarding the turn's deadline. */
+const REPAIR_BUDGET_MS = 5000;
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -70,12 +82,14 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals';
   text?: string;
   // Link repairs computed after citation verification — the route and the
   // streaming clients apply these to the already-emitted text (see
   // src/lib/embassy/citation-fixes.ts).
   fixes?: CitationFix[];
+  // Fabricated `![](url)` embeds to strip from the already-emitted text.
+  removeUrls?: string[];
   name?: string;
   query?: string;
   summary?: string;
@@ -854,7 +868,7 @@ Every mention of a book should link to it. Every mention of an author should lin
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
 **Step 6: Show images and suggest next steps.**
-When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — fabricated URLs render as broken thumbnails for the user. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
+When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — copy them character for character, and never build one by slugifying a title or an artwork's description. Fabricated embeds are stripped from your answer before the reader sees it, and the answer is then labelled as containing an illustration that could not be sourced. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
 
 When the user explicitly asks for pictures, images, illustrations, **art, artworks, paintings, prints, engravings, or sculptures** ("what pictures do we have of X", "show me X", "what art / artworks do you have of X", "any paintings of X"), calling search_artworks is REQUIRED before you answer (call search_images too when book-page illustrations could also fit) — and your answer must SHOW the results with \`![...](...)\`, not describe them. The word "artwork" (or art/painting/print/sculpture) in the user's question is an unambiguous signal to call search_artworks — never answer an art question from search results alone, since search does not index the standalone artworks. A prose description of a woodcut is never a substitute for embedding it. Prefer images whose descriptions name the subject over ones that merely look similar.
 
@@ -979,6 +993,13 @@ export async function* streamAgenticResponse(
   // (search hits + get_book_page + read_nearby_pages). Used to ground the
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
+  // Every image URL any tool returned this turn. The model is allowed to embed
+  // these and nothing else; anything else in an `![](...)` is fabricated.
+  const toolImageUrls = new Set<string>();
+  // Text the model produced THIS turn. `contents` is seeded with the thread
+  // history, so scanning it for citations re-flags every earlier answer's
+  // broken links — which crowds real, new breakage out of the repair budget.
+  const generatedChunks: string[] = [];
   let choicesPresented = false;
   // True once the model voluntarily stops searching and writes its answer. If it
   // instead runs out of search rounds (MAX_ROUNDS) while still calling tools, we
@@ -986,6 +1007,21 @@ export async function* streamAgenticResponse(
   // empty reply (see the "kites" regression, issue #2826).
   let answeredNaturally = false;
   const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
+
+  // Harvest every URL a tool handed back, wherever it sits in the payload
+  // (search_images `imageUrl`, search_artworks `thumbnail`, the prose
+  // `context` blocks). Scanning the serialized result keeps this correct when
+  // a tool grows a new image field.
+  function collectToolImageUrls(result: unknown) {
+    if (!result) return;
+    let blob: string;
+    try {
+      blob = JSON.stringify(result);
+    } catch {
+      return;
+    }
+    for (const m of blob.matchAll(/https?:\/\/[^\s"'\\)]+/g)) toolImageUrls.add(m[0]);
+  }
 
   function collectSources(sources?: SourceCard[]) {
     if (!sources) return;
@@ -1028,6 +1064,7 @@ export async function* streamAgenticResponse(
         if (p.functionCall) {
           functionCalls.push(p);
         } else if (p.text) {
+          generatedChunks.push(p.text);
           yield { type: 'text', text: p.text };
         }
       }
@@ -1076,6 +1113,7 @@ export async function* streamAgenticResponse(
 
       yield step;
       collectSources(sources);
+      collectToolImageUrls(result);
 
       // Pages read directly (not via search) also count as grounded.
       if (fc.name === 'get_book_page' && fc.args?.book_id != null && fc.args?.page_number != null) {
@@ -1136,6 +1174,7 @@ export async function* streamAgenticResponse(
           const p = part as any;
           if (p.text) {
             finalParts.push(p);
+            generatedChunks.push(p.text);
             yield { type: 'text', text: p.text };
           }
         }
@@ -1158,25 +1197,37 @@ export async function* streamAgenticResponse(
     yield { type: 'sources', sources: deduplicateSources(allSources) };
   }
 
-  // Verify links: extract sourcelibrary URLs from full response, check against DB
-  const fullText = contents
-    .filter(c => c.role === 'model')
-    .flatMap(c => c.parts)
-    .filter((p: Record<string, unknown>) => p.text)
-    .map((p: Record<string, unknown>) => p.text as string)
-    .join('');
+  // Verify links against the DB — but only over what the model wrote THIS
+  // turn. Scanning the whole `contents` array would re-flag (and re-disclaim)
+  // every broken link from earlier answers in the thread.
+  const fullText = generatedChunks.join('');
 
-  const { brokenBooks, hiddenBooks, unverifiedPages } = await verifyCitations(fullText, retrievedPageKeys);
+  const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
+
+  // Fabricated image embeds: the model was told to use only tool-returned URLs.
+  // Anything else renders as a broken thumbnail, so drop the embed.
+  const fabricatedImages = [...new Set(
+    findEmbeddedImageUrls(fullText).filter(u => !toolImageUrls.has(u)),
+  )];
+  if (fabricatedImages.length > 0) {
+    yield { type: 'image_removals', removeUrls: fabricatedImages };
+  }
 
   // Repair before disclaiming: a broken slug is almost always a title-composed
   // near-miss of a book we hold under a different slug (and a hidden book often
   // has a public edition). Resolve each to a held, visible book and emit the
   // rewrites — the route applies them to the persisted message, the streaming
   // clients to the on-screen text. Only what can't be repaired gets the note.
-  const badSlugs = [...new Set([...brokenBooks, ...hiddenBooks])].slice(0, 6);
+  //
+  // Every lookup is indexed now, so the cap is generous; the wall-clock budget
+  // is the real guard, because a slow Atlas Search must never push the whole
+  // turn past its response deadline.
+  const badSlugs = [...new Set([...brokenBooks, ...hiddenBooks])].slice(0, MAX_REPAIR_SLUGS);
+  const repairDeadline = Date.now() + REPAIR_BUDGET_MS;
   const fixes: CitationFix[] = [];
   const unrepaired: string[] = [];
   for (const slug of badSlugs) {
+    if (Date.now() >= repairDeadline) { unrepaired.push(slug); continue; }
     try {
       const held = await resolveSlugToHeldBook(slug);
       if (held) fixes.push({ fromSlug: slug, toSlug: held.slug, toTitle: held.title });
@@ -1185,6 +1236,10 @@ export async function* streamAgenticResponse(
       unrepaired.push(slug);
     }
   }
+  // Slugs past the cap are still dead — say so rather than let them pass silently.
+  const uncheckedSlugs = [...new Set([...brokenBooks, ...hiddenBooks])].slice(MAX_REPAIR_SLUGS);
+  unrepaired.push(...uncheckedSlugs);
+
   if (fixes.length > 0) {
     yield { type: 'citation_fixes', fixes };
   }
@@ -1193,6 +1248,16 @@ export async function* streamAgenticResponse(
   if (unrepaired.length > 0) {
     clauses.push(
       `${unrepaired.length === 1 ? 'a book link that points' : `${unrepaired.length} book links that point`} to a record not currently available in the collection (${unrepaired.map(s => `\`sourcelibrary.org/book/${s}\``).join(', ')})`,
+    );
+  }
+  if (brokenLinks.length > 0) {
+    clauses.push(
+      `${brokenLinks.length === 1 ? 'a link' : `${brokenLinks.length} links`} to a page that doesn't exist (${brokenLinks.map(p => `\`${p}\``).join(', ')})`,
+    );
+  }
+  if (fabricatedImages.length > 0) {
+    clauses.push(
+      `${fabricatedImages.length === 1 ? 'an illustration I could not source, which I removed' : `${fabricatedImages.length} illustrations I could not source, which I removed`}`,
     );
   }
   if (unverifiedPages.length > 0) {
@@ -1209,8 +1274,8 @@ export async function* streamAgenticResponse(
 
   // Leave a trace for monitoring — broken citations were previously invisible
   // outside per-message disclaimers (and soft-404s never hit status-code logs).
-  if (badSlugs.length > 0 || unverifiedPages.length > 0) {
-    console.warn('[Librarian] citation check flagged', { brokenBooks, hiddenBooks, unverifiedPages, fixes });
+  if (badSlugs.length > 0 || unverifiedPages.length > 0 || brokenLinks.length > 0 || fabricatedImages.length > 0) {
+    console.warn('[Librarian] citation check flagged', { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks, fabricatedImages, fixes });
     try {
       const db = await getDb();
       await db.collection('embassy_errors').insertOne({
@@ -1219,6 +1284,8 @@ export async function* streamAgenticResponse(
         brokenBooks,
         hiddenBooks,
         unverifiedPages,
+        brokenLinks,
+        fabricatedImages,
         repaired: fixes,
         unrepaired,
         createdAt: new Date(),
@@ -1244,7 +1311,7 @@ export async function* streamAgenticResponse(
 /**
  * Verify the book + page citations in a response against the library.
  *
- * Three failure modes matter for a scholarly tool:
+ * Four failure modes matter for a scholarly tool:
  *  - brokenBooks: links to /book/<slug> for a book that doesn't exist —
  *    usually a slug the model composed from a title instead of copying from a
  *    tool result (the real book almost always exists under another slug).
@@ -1253,9 +1320,17 @@ export async function* streamAgenticResponse(
  *  - unverifiedPages: a specific page the model never actually retrieved this
  *    turn AND that doesn't exist in the page store (or is out of range) — the
  *    signature of a fabricated or misremembered page number.
+ *  - brokenLinks: /artwork/<slug> and /collections/<slug> links that resolve
+ *    to nothing. These are reported, never repaired: there is no safe
+ *    substitution for a picture or a curated set.
  *
  * brokenBooks/hiddenBooks are returned as bare slugs so the caller can try to
  * repair them (see resolveSlugToHeldBook).
+ *
+ * A cited path is matched the way the live routes match it, or we would report
+ * working links as dead and "repair" them onto a different book: /book/<x>
+ * resolves by `slug`, then `slug_aliases`, then `id` (see findBookByIdOrSlug —
+ * and note the model is handed an id URL whenever a book has no slug).
  *
  * `retrievedPageKeys` holds `${bookId}:${page}` for every page the model read
  * (via search, get_book_page, or read_nearby_pages) during this turn; anything
@@ -1264,33 +1339,37 @@ export async function* streamAgenticResponse(
 export async function verifyCitations(
   text: string,
   retrievedPageKeys: Set<string>,
-): Promise<{ brokenBooks: string[]; hiddenBooks: string[]; unverifiedPages: string[] }> {
-  // /book/<slug>, optionally followed by ?page=N, /page-number/N, or /page/N.
-  const citePattern = /sourcelibrary\.org\/book\/([a-z0-9-]+)(?:(?:\/page-number\/|\/page\/|\?page=)(\d+))?/g;
+): Promise<{ brokenBooks: string[]; hiddenBooks: string[]; unverifiedPages: string[]; brokenLinks: string[] }> {
+  const brokenLinks = await verifyNonBookLinks(text);
+
   const citedPages = new Map<string, Set<number>>();
   const allSlugs = new Set<string>();
-  let match;
-  while ((match = citePattern.exec(text)) !== null) {
-    const slug = match[1];
+  for (const { slug, page } of findCitedBookLinks(text)) {
     allSlugs.add(slug);
-    if (match[2]) {
+    if (page !== undefined) {
       if (!citedPages.has(slug)) citedPages.set(slug, new Set());
-      citedPages.get(slug)!.add(Number(match[2]));
+      citedPages.get(slug)!.add(page);
     }
   }
-  if (allSlugs.size === 0) return { brokenBooks: [], hiddenBooks: [], unverifiedPages: [] };
+  if (allSlugs.size === 0) return { brokenBooks: [], hiddenBooks: [], unverifiedPages: [], brokenLinks };
 
   const db = await getDb();
+  const cited = [...allSlugs];
   const books = await db.collection('books')
-    .find({ slug: { $in: [...allSlugs] } })
-    .project({ slug: 1, id: 1, pages_count: 1, visible: 1 })
+    .find({ $or: [{ slug: { $in: cited } }, { slug_aliases: { $in: cited } }, { id: { $in: cited } }] })
+    .project({ slug: 1, slug_aliases: 1, id: 1, pages_count: 1, visible: 1 })
     .toArray();
 
-  const slugToBook = new Map(
-    books.map(b => [b.slug as string, { id: b.id as string, pagesCount: b.pages_count as number | undefined, visible: b.visible as boolean | undefined }]),
-  );
-  const brokenBooks = [...allSlugs].filter(s => !slugToBook.has(s));
-  const hiddenBooks = [...allSlugs].filter(s => slugToBook.get(s)?.visible === false);
+  // One cited token may resolve by slug, by alias, or by id — index all three.
+  const slugToBook = new Map<string, { id: string; pagesCount?: number; visible?: boolean }>();
+  for (const b of books) {
+    const entry = { id: b.id as string, pagesCount: b.pages_count as number | undefined, visible: b.visible as boolean | undefined };
+    for (const key of [b.slug as string, b.id as string, ...((b.slug_aliases as string[]) || [])]) {
+      if (key && allSlugs.has(key)) slugToBook.set(key, entry);
+    }
+  }
+  const brokenBooks = cited.filter(s => !slugToBook.has(s));
+  const hiddenBooks = cited.filter(s => slugToBook.get(s)?.visible === false);
 
   // A cited page is trusted if the model read it this turn; otherwise it must
   // exist in the page store and sit within the book's range.
@@ -1320,16 +1399,152 @@ export async function verifyCitations(
     }
   }
 
-  return { brokenBooks, hiddenBooks, unverifiedPages: [...unverified] };
+  return { brokenBooks, hiddenBooks, unverifiedPages: [...unverified], brokenLinks };
+}
+
+/**
+ * Check the non-book library links the model likes to compose: /artwork/<slug>
+ * and /collections/<slug>. Returns the dead ones as paths, for the disclaimer.
+ *
+ * `/collection/<slug>` (singular) is never a route — it hits the app's 404 —
+ * so it is always dead, no lookup needed.
+ */
+async function verifyNonBookLinks(text: string): Promise<string[]> {
+  const { plural, singular } = findCitedCollectionSlugs(text);
+  const artworkSlugs = new Set(findCitedArtworkSlugs(text));
+  const collectionSlugs = new Set(plural);
+  const dead: string[] = singular.map(s => `/collection/${s}`);
+
+  if (artworkSlugs.size === 0 && collectionSlugs.size === 0) return dead;
+  const db = await getDb();
+
+  if (artworkSlugs.size > 0) {
+    // Mirrors /artwork/[slug]: exact slug or an `art-` prefixed variant, and
+    // never a textual book.
+    const wanted = [...artworkSlugs];
+    const variants = wanted.flatMap(s => [s, `art-${s}`]);
+    const found = await db.collection('books')
+      .find({ slug: { $in: variants }, resource_type: { $exists: true }, content_type: { $ne: 'book' }, visible: { $ne: false } })
+      .project({ slug: 1 })
+      .toArray();
+    const live = new Set(found.map(a => (a.slug as string).replace(/^art-/, '')));
+    for (const s of wanted) if (!live.has(s)) dead.push(`/artwork/${s}`);
+  }
+
+  if (collectionSlugs.size > 0) {
+    const wanted = [...collectionSlugs];
+    const found = await db.collection('collections')
+      .find({ slug: { $in: wanted }, visible: { $ne: false } })
+      .project({ slug: 1 })
+      .toArray();
+    const live = new Set(found.map(c => c.slug as string));
+    const redirects = collectionRedirects as Record<string, string>;
+    for (const s of wanted) if (!live.has(s) && !redirects[s]) dead.push(`/collections/${s}`);
+  }
+
+  return dead;
 }
 
 // Slug tokens too generic to anchor a repair lookup on their own.
+//
+// The cataloguing words matter as much as the stopwords: a model composing a
+// slug from a title reaches for `-manuscript`, `-collection`, `-facsimile`,
+// and our catalogue rarely carries them. Leaving them in makes the lookup
+// require a word no candidate has, so it matches nothing (this is exactly how
+// `splendor-solis-manuscript` stayed unrepairable while we hold five editions
+// of the book).
 const SLUG_STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'les', 'des', 'der', 'die', 'das',
   'von', 'van', 'del', 'della', 'sive', 'seu', 'cum', 'per', 'quae', 'qua',
   'vol', 'volume', 'tome', 'tomus', 'pars', 'part', 'complete', 'edition',
   'trans', 'translated', 'translation', 'various', 'anonymous',
+  // Cataloguing / format words — describe the artefact, not the work.
+  'manuscript', 'manuscripts', 'codex', 'facsimile', 'collection',
+  'collections', 'compilation', 'digitization', 'unknown', 'author', 'authors',
 ]);
+
+/**
+ * Fields carried by the `books_search` Atlas index. `slug` is NOT among them,
+ * which is fine: every token worth anchoring on also appears in the title or
+ * the author.
+ */
+const REPAIR_SEARCH_PATHS = ['title', 'display_title', 'english_title', 'author'];
+
+/** Hard ceiling on one repair lookup — `$search` ignores maxTimeMS. */
+const REPAIR_QUERY_TIMEOUT_MS = 2500;
+
+async function withTimeout<T>(p: Promise<T>, ms: number, fallback: T): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<T>(resolve => { timer = setTimeout(() => resolve(fallback), ms); });
+  try {
+    return await Promise.race([p, timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+interface RepairCandidate {
+  slug: string;
+  title?: string;
+  display_title?: string;
+  english_title?: string;
+  author?: string;
+  read_count?: number;
+  pages_count?: number;
+}
+
+const normalizeForMatch = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+/**
+ * Reject a candidate whose only connection to the broken slug is the author's
+ * name. `inscriptionessac00apia-petrus-apian` matches *Cosmographia Petri
+ * Apiani* on "apian" alone — a different work by the same man, and a wrong-book
+ * substitution is worse than a dead link. Demand that at least one token land
+ * in the candidate's title without also being part of its author.
+ */
+function matchesBeyondAuthor(tokens: string[], cand: RepairCandidate): boolean {
+  const titleText = normalizeForMatch([cand.title, cand.display_title, cand.english_title].filter(Boolean).join(' '));
+  const authorText = normalizeForMatch(cand.author || '');
+  return tokens.some(t => {
+    const tok = normalizeForMatch(t);
+    return titleText.includes(tok) && !authorText.includes(tok);
+  });
+}
+
+/**
+ * Indexed candidate lookup. `minimumShouldMatch === tokens.length` gives the
+ * same AND semantics the old regex chain had, but as one `$search` hit instead
+ * of up to four collection scans.
+ */
+async function findRepairCandidates(
+  tokens: string[],
+  minimumShouldMatch: number,
+  excludeSlug: string,
+): Promise<RepairCandidate[]> {
+  const db = await getDb();
+  const pipeline = [
+    {
+      $search: {
+        index: BOOK_SEARCH_INDEX,
+        compound: {
+          should: tokens.map(t => ({ text: { query: t, path: REPAIR_SEARCH_PATHS } })),
+          minimumShouldMatch,
+        },
+      },
+    },
+    { $limit: 60 },
+    // `visible` and `pages_count` are not in the search index, so gate after.
+    { $match: { visible: true, pages_count: { $gt: 0 }, slug: { $exists: true, $nin: [null, excludeSlug] } } },
+    { $project: { _id: 0, slug: 1, title: 1, display_title: 1, english_title: 1, author: 1, read_count: 1, pages_count: 1 } },
+    { $limit: 10 },
+  ];
+  return withTimeout(
+    db.collection('books').aggregate(pipeline).toArray() as Promise<RepairCandidate[]>,
+    REPAIR_QUERY_TIMEOUT_MS,
+    [],
+  );
+}
 
 /**
  * Try to resolve a broken/hidden book slug to a public book we actually hold.
@@ -1338,9 +1553,9 @@ const SLUG_STOPWORDS = new Set([
  * composed from the title (`oedipus-aegyptiacus-kircher`) while the library
  * holds the book under a catalogued slug
  * (`oedipus-aegyptiacus-volume-i-1652-kircher`). Match strategy: every
- * significant token of the broken slug must appear in the candidate's slug,
- * title, or author (conservative — a wrong-book substitution would be worse
- * than a dead link). Among candidates, prefer the most-read edition.
+ * significant token of the broken slug must appear in the candidate's title or
+ * author (conservative — a wrong-book substitution would be worse than a dead
+ * link). Among candidates, prefer the most-read edition.
  *
  * Returns null when no candidate matches — the caller falls back to the
  * sourcing disclaimer.
@@ -1366,50 +1581,36 @@ function volumeOf(slug: string): number | null {
 export async function resolveSlugToHeldBook(
   slug: string,
 ): Promise<{ slug: string; title: string } | null> {
-  const tokens = slug
-    .split('-')
-    .filter(t => t.length >= 3 && !SLUG_STOPWORDS.has(t) && !/^\d+$/.test(t));
+  const tokens = [...new Set(
+    slug.split('-').filter(t => t.length >= 3 && !SLUG_STOPWORDS.has(t) && !/^\d+$/.test(t)),
+  )].slice(0, 8);
   if (tokens.length === 0) return null;
 
-  // Longest tokens are the most distinctive; cap the clause count.
-  const anchors = [...tokens].sort((a, b) => b.length - a.length).slice(0, 4);
-
-  const db = await getDb();
-  const lookup = async (toks: string[]) => {
-    const conds = toks.map(t => {
-      const rx = new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-      return { $or: [{ slug: rx }, { title: rx }, { author: rx }] };
-    });
-    return db.collection('books')
-      .find({ $and: conds, visible: true, pages_count: { $gt: 0 }, slug: { $exists: true, $nin: [null, slug] } })
-      .project({ slug: 1, title: 1, display_title: 1, read_count: 1, pages_count: 1 })
-      .limit(5)
-      .toArray();
-  };
-
-  let candidates = await lookup(anchors);
-  // Conservative relaxation: a composed slug often carries one word the
-  // catalogue lacks ("extrakt", "reformatum"). Leave each anchor out in turn —
-  // every remaining token must still match, so this drops exactly one bad
-  // token rather than loosening the whole query.
-  if (candidates.length === 0 && anchors.length >= 3) {
-    for (let i = anchors.length - 1; i >= 0 && candidates.length === 0; i--) {
-      candidates = await lookup(anchors.filter((_, j) => j !== i));
-    }
+  // Strict first: every token must match. Only if that finds nothing do we
+  // allow exactly one token to be missing — a composed slug often carries one
+  // word the catalogue lacks ("extrakt", "reformatum"). Relaxing by count
+  // rather than by dropping tokens one at a time removes the old ordering
+  // sensitivity, where the token most likely to be spurious was the last one
+  // tried because it happened to be the longest.
+  let candidates = await findRepairCandidates(tokens, tokens.length, slug);
+  if (candidates.length === 0 && tokens.length >= 3) {
+    candidates = await findRepairCandidates(tokens, tokens.length - 1, slug);
   }
 
   // Never swap volumes: if both slugs carry a volume designator and they
   // disagree, the candidate is a different physical book of the same work.
   const wantVol = volumeOf(slug);
   candidates = candidates.filter(cand => {
-    const candVol = volumeOf(cand.slug as string);
+    const candVol = volumeOf(cand.slug);
     return !(wantVol && candVol && wantVol !== candVol);
   });
+  // Never swap works: an author-only match is a different book by the same hand.
+  candidates = candidates.filter(cand => matchesBeyondAuthor(tokens, cand));
   if (candidates.length === 0) return null;
 
   candidates.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (b.pages_count || 0) - (a.pages_count || 0));
   const best = candidates[0];
-  return { slug: best.slug as string, title: (best.display_title || best.title || best.slug) as string };
+  return { slug: best.slug, title: best.display_title || best.title || best.slug };
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {
