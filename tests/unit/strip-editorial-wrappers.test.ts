@@ -179,3 +179,52 @@ describe('cleanOcrArtifacts', () => {
     expect(cleanOcrArtifacts('it cost $5 to $10')).toBe('it cost $5 to $10');
   });
 });
+
+describe('stripLeadingAiPreamble (via cleanOcrArtifacts)', () => {
+  it('strips the Dec-2025 language-mismatch disclaimer (real production case)', () => {
+    const text =
+      "Note: The text in the image is in French, not Latin. I have transcribed it exactly as it appears, including the use of the long 's' (ſ) and original punctuation.\n\nT A B L E\nCHAP. XII. *De la neceſſité…*";
+    expect(cleanOcrArtifacts(text)).toBe('T A B L E\nCHAP. XII. *De la neceſſité…*');
+  });
+
+  it('strips a "Here is the transcription:" preface', () => {
+    expect(cleanOcrArtifacts('Here is the transcription of the page as requested:\n\nDe Lapide Philosophorum')).toBe(
+      'De Lapide Philosophorum',
+    );
+  });
+
+  it('strips a refusal, leaving the page empty rather than fake text', () => {
+    expect(cleanOcrArtifacts("I'm sorry, I cannot transcribe this image.")).toBe('');
+  });
+
+  it('strips a two-paragraph preamble (disclaimer + preface)', () => {
+    const text =
+      'Note: The text in the image is in German, not Latin.\n\nHere is the transcription as it appears:\n\nVon der wahren Medicin';
+    expect(cleanOcrArtifacts(text)).toBe('Von der wahren Medicin');
+  });
+
+  it('keeps a printed editorial note that merely begins with "Note:"', () => {
+    const printed = 'Note: this passage cannot be dated with certainty.\n\nBody text follows.';
+    expect(cleanOcrArtifacts(printed)).toBe(printed);
+  });
+
+  it('keeps real body text that begins with "The image"', () => {
+    const optics = 'The image formed by the lens is inverted and diminished.\n\nProposition II.';
+    expect(cleanOcrArtifacts(optics)).toBe(optics);
+  });
+
+  it('keeps mid-text conversational-looking sentences (guard anchors to the start)', () => {
+    const text = 'Real page text.\n\nNote: The text in the image is in French. I have transcribed it.';
+    expect(cleanOcrArtifacts(text)).toBe(text);
+  });
+
+  it('does not touch tagged content — wrapper strip owns tags', () => {
+    const tagged = '<warning>faded page</warning>\nBody text.';
+    expect(cleanOcrArtifacts(tagged)).toBe(tagged);
+  });
+
+  it('does not strip an over-long opening paragraph even if it matches', () => {
+    const long = 'Note: The text in the image ' + 'x'.repeat(520) + '\n\nBody.';
+    expect(cleanOcrArtifacts(long)).toBe(long);
+  });
+});
