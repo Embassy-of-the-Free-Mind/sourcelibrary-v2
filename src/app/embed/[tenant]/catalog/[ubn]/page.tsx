@@ -77,6 +77,9 @@ interface BphWorkRow {
   volume_title: string | null;
   bibliography: string | null;
   remarks: string | null;
+  // Memorix "Internal remarks" — cataloguers' working notes. Rendered ONLY
+  // for editor+ roles; must never appear on the public page (José B., #3105).
+  internal_remarks: string | null;
   number_of_copies: number | null;
   object_size_cm: string | null;
   bibliographic_format: string | null;
@@ -135,7 +138,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
-      bibliography, remarks, number_of_copies, object_size_cm, bibliographic_format,
+      bibliography, remarks, internal_remarks, number_of_copies, object_size_cm, bibliographic_format,
       binding, bound_with,
       provenance, collection, impressum_original, contributors,
       ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
@@ -146,6 +149,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   // then external-link columns, then author-authority columns. Each migration
   // runs independently per environment — the page renders if any are missing.
   const fallbackSelect = select
+    .replace('remarks, internal_remarks,', 'remarks,')
     .replace('provenance, collection, impressum_original, contributors,', 'provenance,')
     .replace(
       'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
@@ -748,6 +752,12 @@ export default async function CatalogEntryPage({ params }: Props) {
         <Section title="Notes">
           <Field label="Bibliography" value={work.bibliography} />
           <Field label="Remarks" value={work.remarks} />
+          {/* Staff-only working notes — never rendered for public visitors.
+              Safe to role-gate here: this page is fully dynamic (private,
+              no-store), so an editor's render is never cached for others. */}
+          {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] && (
+            <Field label="Internal remarks (staff only)" value={work.internal_remarks} />
+          )}
         </Section>
 
         <Section title="Identifiers">

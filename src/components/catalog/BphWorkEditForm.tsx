@@ -45,7 +45,7 @@ interface Props {
 // can map their mental model 1:1.
 const SECTIONS: Array<{
   title: string;
-  fields: Array<{ name: string; label: string; type?: 'text' | 'number' | 'textarea'; hidden?: boolean }>;
+  fields: Array<{ name: string; label: string; type?: 'text' | 'number' | 'textarea'; hidden?: boolean; editorOnly?: boolean }>;
 }> = [
   {
     title: 'Title',
@@ -122,6 +122,9 @@ const SECTIONS: Array<{
     fields: [
       { name: 'bibliography', label: 'Bibliography', type: 'textarea' },
       { name: 'remarks', label: 'Remarks', type: 'textarea' },
+      // Memorix "Internal remarks" — staff working notes (José B.). Shown to
+      // editors only; the public catalog page never renders this field.
+      { name: 'internal_remarks', label: 'Internal remarks (staff only, never public)', type: 'textarea', editorOnly: true },
     ],
   },
   {
@@ -481,7 +484,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
                 />
               </div>
             )}
-            {section.fields.filter((f) => !f.hidden).map((field) => {
+            {section.fields.filter((f) => !f.hidden && !(f.editorOnly && mode === 'contributor')).map((field) => {
               const provenance =
                 (initial.field_provenance as Record<string, { source?: string; edited_by?: string; edited_at?: string }> | null)?.[field.name];
               const isChanged = changedFields.includes(field.name);
