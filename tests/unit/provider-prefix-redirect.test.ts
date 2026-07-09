@@ -39,6 +39,15 @@ describe('getProviderPrefixRedirect', () => {
     }
   });
 
+  it('strips the phantom default-tenant prefix', () => {
+    expect(getProviderPrefixRedirect('/default/book/foo')).toBe('/book/foo');
+    expect(getProviderPrefixRedirect('/default/book/foo/page/abc123')).toBe(
+      '/book/foo/page/abc123'
+    );
+    expect(getProviderPrefixRedirect('/default')).toBe('/');
+    expect(getProviderPrefixRedirect('/default/')).toBe('/');
+  });
+
   it('ignores non-provider paths', () => {
     expect(getProviderPrefixRedirect('/book/foo')).toBeNull();
     expect(getProviderPrefixRedirect('/author/marsilio-ficino')).toBeNull();
