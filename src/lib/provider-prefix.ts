@@ -38,6 +38,14 @@ export function getProviderPrefixRedirect(pathname: string): string | null {
   const match = pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/);
   if (!match) return null;
   const [, firstSegment, rest] = match;
+  // '/default/book/foo' → '/book/foo'. The `tenants` collection has a
+  // kind:'default' row whose slug leaked into externally-built links
+  // (~390 not_found_reports/3d as of 2026-07-09). No book carries
+  // tenantId 'default', so the whole prefix is safe to strip; the bare
+  // root goes home rather than to a (nonexistent) credit page.
+  if (firstSegment === 'default') {
+    return rest && rest !== '/' ? rest : '/';
+  }
   if (!PROVIDER_PREFIX_SLUGS.has(firstSegment)) return null;
   return rest && rest !== '/' ? rest : `/libraries/${firstSegment}`;
 }
