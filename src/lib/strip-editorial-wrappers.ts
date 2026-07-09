@@ -103,9 +103,55 @@ function stripMarkdownMarkers(text: string): string {
  * table separator rows (`|---|`) are left intact (the dash guard skips any run
  * adjacent to a `|`). See issue #2764.
  */
+/**
+ * Strip a leading CONVERSATIONAL AI preamble from OCR/translation text.
+ *
+ * Early OCR batches (Dec 2025 era) asserted the book's language in the prompt;
+ * when that metadata was wrong, Gemini prepended an untagged disclaimer before
+ * the transcription — "Note: The text in the image is in French, not Latin.
+ * I have transcribed it exactly as it appears…" — which then rendered in the
+ * reader and every quote/snippet surface indistinguishable from source text.
+ * The same class covers "Here is the transcription:" prefaces and outright
+ * refusals ("I'm sorry, I cannot…"). None of it sits inside a wrapper tag, so
+ * the editorial strip can't catch it; this is the read-time guard for that
+ * frozen legacy data (the OCR prompt's output contract forbids untagged
+ * commentary at write time going forward).
+ *
+ * Deliberately conservative to protect real page text: only the leading
+ * paragraph(s), each capped at 500 chars, and only when a conversational
+ * opener AND self-referential transcription vocabulary ("I have transcribed",
+ * "the image", "as requested"…) BOTH appear. A printed editorial note that
+ * merely begins with "Note:" survives unless it also talks about "the image"
+ * or transcribing in the first person.
+ */
+const PREAMBLE_OPENER =
+  /^(?:\*\*)?(?:note[:,]|sure[,!:]|certainly|okay|of course|here (?:is|are)\b|here's\b|i(?:'ve| have)\b|i(?:'m| am)\b|i(?:'ll| will)\b|i apologize|i can(?:no|')t\b|please\b|if you\b|the text (?:in|on|of) th(?:e|is) (?:image|page|scan)\b)/i;
+const PREAMBLE_META_VOCAB =
+  /\b(?:transcri(?:be|bed|bing|ption)|ocr|the image|this image|image provided|you (?:provided|requested)|as requested|as it appears|i apologize|i(?:'m| am) sorry|cannot assist|unable to assist)\b/i;
+
+function stripLeadingAiPreamble(text: string): string {
+  let out = text;
+  // Up to 3 leading paragraphs ("Note: …" followed by "Here is the transcription:").
+  for (let i = 0; i < 3; i++) {
+    const trimmed = out.replace(/^\s+/, '');
+    // Leading paragraph = up to the first blank line, else the first line.
+    const parEnd = trimmed.search(/\n[ \t]*\n/);
+    const para = parEnd === -1 ? trimmed.split('\n', 1)[0] : trimmed.slice(0, parEnd);
+    if (
+      para.length === 0 ||
+      para.length > 500 ||
+      para.startsWith('<') || // tagged content belongs to the wrapper strip
+      !PREAMBLE_OPENER.test(para) ||
+      !PREAMBLE_META_VOCAB.test(para)
+    ) break;
+    out = trimmed.slice(para.length).replace(/^\s+/, '');
+  }
+  return out;
+}
+
 export function cleanOcrArtifacts(text: string): string {
   if (!text) return text;
-  return text
+  return stripLeadingAiPreamble(text)
     // 1a. 12+ of the same dot-class char, optionally space-separated (". . . ."),
     //     collapse to a single […] lacuna marker.
     .replace(/([.·•…])(?:[ \t ]*\1){11,}/g, '[…]')
