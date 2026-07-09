@@ -7,7 +7,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
-import { applyCitationFixes } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-fixes';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from './_components/MessageBody';
@@ -572,6 +572,15 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                   updateLastAssistant(m => ({
                     ...m,
                     content: applyCitationFixes(m.content, event.fixes || []),
+                  }));
+                  break;
+
+                case 'image_removals':
+                  // The model embedded an image URL no tool returned; it would
+                  // render as a broken thumbnail. Drop the embed on-screen too.
+                  updateLastAssistant(m => ({
+                    ...m,
+                    content: applyImageRemovals(m.content, event.removeUrls || []),
                   }));
                   break;
 

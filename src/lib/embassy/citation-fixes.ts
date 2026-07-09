@@ -11,6 +11,12 @@
  * the wrong page. Landing on the book page is honest; page 427 of the wrong
  * edition is a misquote.
  *
+ * A "removal" deletes a fabricated `![alt](url)` image embed. The model is told
+ * to embed only image URLs a tool returned this turn; when it invents one
+ * anyway the reader gets a broken thumbnail. There is no honest repair for a
+ * fabricated image — a different picture is not the picture the caption
+ * describes — so we drop the embed and leave the prose.
+ *
  * Client-safe: no server imports.
  */
 
@@ -23,6 +29,46 @@ export interface CitationFix {
 
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * The reader host, and ONLY that host.
+ *
+ * The lookbehind is load-bearing: `images.sourcelibrary.org` ends with
+ * `sourcelibrary.org`, so an unanchored pattern reads a perfectly good CDN URL
+ * (`images.sourcelibrary.org/artwork/foo.jpg`) as a link to the `/artwork/foo`
+ * page and reports it dead.
+ */
+export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org';
+
+/** Book links in a response: `/book/<slug>` plus any page suffix. */
+export function findCitedBookLinks(text: string): Array<{ slug: string; page?: number }> {
+  const pattern = new RegExp(
+    `${SITE_HOST_PATTERN}\\/book\\/([a-z0-9-]+)(?:(?:\\/page-number\\/|\\/page\\/|\\?page=)(\\d+))?`,
+    'g',
+  );
+  const out: Array<{ slug: string; page?: number }> = [];
+  for (const m of text.matchAll(pattern)) {
+    out.push(m[2] ? { slug: m[1], page: Number(m[2]) } : { slug: m[1] });
+  }
+  return out;
+}
+
+/** `/artwork/<slug>` links in a response. */
+export function findCitedArtworkSlugs(text: string): string[] {
+  const pattern = new RegExp(`${SITE_HOST_PATTERN}\\/artwork\\/([a-z0-9-]+)`, 'g');
+  return [...text.matchAll(pattern)].map(m => m[1]);
+}
+
+/**
+ * Collection links, split by route shape. `/collections/<slug>` (plural) is the
+ * real route; `/collection/<slug>` (singular) is not a route at all and always
+ * 404s, so it needs no lookup.
+ */
+export function findCitedCollectionSlugs(text: string): { plural: string[]; singular: string[] } {
+  const plural = [...text.matchAll(new RegExp(`${SITE_HOST_PATTERN}\\/collections\\/([a-z0-9-]+)`, 'g'))].map(m => m[1]);
+  const singular = [...text.matchAll(new RegExp(`${SITE_HOST_PATTERN}\\/collection\\/([a-z0-9-]+)`, 'g'))].map(m => m[1]);
+  return { plural, singular };
 }
 
 /**
@@ -41,6 +87,36 @@ export function applyCitationFixes(text: string, fixes: CitationFix[]): string {
       'g',
     );
     out = out.replace(pattern, `https://sourcelibrary.org/book/${fix.toSlug}`);
+  }
+  return out;
+}
+
+/**
+ * Strip `![alt](url)` embeds whose URL the model invented.
+ *
+ * Only the embed is removed — a following italic caption line is left alone,
+ * because it usually carries real book/author citations that survive their
+ * image. A removed embed that sat on its own line takes its blank line with it
+ * so the prose doesn't gain a gap.
+ */
+/** Every `![alt](url)` embed URL in a response, in order of appearance. */
+export function findEmbeddedImageUrls(text: string): string[] {
+  const urls: string[] = [];
+  const pattern = /!\[[^\]]*\]\(\s*([^\s)]+)(?:\s+"[^"]*")?\s*\)/g;
+  let m;
+  while ((m = pattern.exec(text)) !== null) urls.push(m[1]);
+  return urls;
+}
+
+export function applyImageRemovals(text: string, removeUrls: string[]): string {
+  let out = text;
+  for (const url of removeUrls) {
+    if (!url) continue;
+    const embed = `!\\[[^\\]]*\\]\\(\\s*${escapeRegex(url)}(?:\\s+"[^"]*")?\\s*\\)`;
+    // Own-line embed: take the line and one trailing newline with it.
+    out = out.replace(new RegExp(`^[ \\t]*${embed}[ \\t]*\\r?\\n`, 'gm'), '');
+    // Any survivor (inline, or last line with no trailing newline).
+    out = out.replace(new RegExp(embed, 'g'), '');
   }
   return out;
 }
