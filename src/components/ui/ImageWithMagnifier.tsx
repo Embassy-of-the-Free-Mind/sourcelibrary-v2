@@ -8,6 +8,10 @@ import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 // scrolling past a tall facsimile awkward). Remembered across pages and sessions.
 const LENS_PREF_KEY = 'sl-magnifier-lens';
 
+// Lens toggle geometry — the button is h-8/w-8, inset 8px from the image edge.
+const TOGGLE_SIZE = 32;
+const TOGGLE_MARGIN = 8;
+
 interface ImageWithMagnifierProps {
   src: string;
   thumbnail?: string;
@@ -62,8 +66,12 @@ export default function ImageWithMagnifier({
   // Lens on/off toggle. Defaults on; hydrated from localStorage after mount
   // (SSR-safe) so the choice sticks across pages and sessions.
   const [lensEnabled, setLensEnabled] = useState(true);
+  // Distance of the lens toggle from the top of the image. Follows the scroll
+  // position so the button stays on screen over a tall facsimile (see effect below).
+  const [toggleTop, setToggleTop] = useState(TOGGLE_MARGIN);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const showMagnifierRef = useRef(false);
   showMagnifierRef.current = showMagnifier;
 
@@ -105,6 +113,63 @@ export default function ImageWithMagnifier({
         ? Math.max(fullImageDimensions.width / imageDimensions.width, MIN_ZOOM)
         : 0;
   }, [fullImageDimensions, imageDimensions, MIN_ZOOM]);
+
+  // The lens toggle floats: as the reader scrolls down a tall facsimile it tracks
+  // the top of the still-visible slice of the image rather than scrolling away.
+  // CSS `position: sticky` can't do this — callers wrap the image in a
+  // `rounded-lg overflow-hidden` box, which becomes sticky's scroll container
+  // and never scrolls, so the button would simply sit still. Instead we measure
+  // the nearest genuinely scrollable ancestor (the reader panel, else the page)
+  // and offset the button from the container's own top edge.
+  useEffect(() => {
+    if (isTouchDevice || !isLoaded) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    let scroller: HTMLElement | null = el.parentElement;
+    while (scroller) {
+      const overflowY = window.getComputedStyle(scroller).overflowY;
+      if (overflowY === 'auto' || overflowY === 'scroll') break;
+      scroller = scroller.parentElement;
+    }
+
+    // Page-scrolled callers (artwork hero) have no scrollable ancestor — the
+    // top of their "viewport" is whatever the sticky site header leaves free.
+    const viewportTop = () => {
+      if (scroller) return scroller.getBoundingClientRect().top;
+      const header = document.querySelector<HTMLElement>('[data-site-header]');
+      if (!header) return 0;
+      const position = window.getComputedStyle(header).position;
+      if (position !== 'sticky' && position !== 'fixed') return 0;
+      return Math.max(0, header.getBoundingClientRect().bottom);
+    };
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = el.getBoundingClientRect();
+      const viewTop = viewportTop();
+      // Never push the button below the image's bottom edge.
+      const maxTop = Math.max(TOGGLE_MARGIN, rect.height - TOGGLE_SIZE - TOGGLE_MARGIN);
+      const wanted = viewTop - rect.top + TOGGLE_MARGIN;
+      setToggleTop(Math.min(maxTop, Math.max(TOGGLE_MARGIN, wanted)));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    // Scroll events don't bubble, so listen in the capture phase to catch them
+    // from whichever ancestor is actually scrolling.
+    const capture = { capture: true, passive: true } as const;
+    window.addEventListener('scroll', schedule, capture);
+    window.addEventListener('resize', schedule);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule, capture);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [isTouchDevice, isLoaded]);
 
   // Scroll-to-zoom needs a native non-passive wheel listener (React attaches
   // wheel handlers passively, so preventDefault would be ignored). Only
@@ -262,6 +327,20 @@ export default function ImageWithMagnifier({
     // (also skips the full-res prefetch — it only serves the lens)
     if (isTouchDevice || !lensEnabled) return;
 
+    // Get out of the toggle's way — the lens is centred on the cursor, so it would
+    // otherwise cover the very button the reader is reaching for.
+    const toggleRect = toggleRef.current?.getBoundingClientRect();
+    if (
+      toggleRect &&
+      e.clientX >= toggleRect.left - TOGGLE_MARGIN &&
+      e.clientX <= toggleRect.right + TOGGLE_MARGIN &&
+      e.clientY >= toggleRect.top - TOGGLE_MARGIN &&
+      e.clientY <= toggleRect.bottom + TOGGLE_MARGIN
+    ) {
+      setShowMagnifier(false);
+      return;
+    }
+
     // Start loading full image on first hover
     if (!hasHovered) setHasHovered(true);
     if (!containerRef.current || !imgRef.current || !fullImageLoaded) return;
@@ -376,9 +455,11 @@ export default function ImageWithMagnifier({
 
         {/* Desktop: lens on/off toggle — top-left (deep-zoom button owns top-right).
             While the lens is up it captures scroll for zoom, so readers who want
-            to wheel past a tall facsimile can switch it off. */}
+            to wheel past a tall facsimile can switch it off. Floats with the
+            scroll position, and sits above the lens so it's never painted over. */}
         {!isTouchDevice && isLoaded && (
           <button
+            ref={toggleRef}
             type="button"
             onClick={(e) => {
               e.stopPropagation();
@@ -387,7 +468,8 @@ export default function ImageWithMagnifier({
             title={lensEnabled ? 'Magnifier on — click to turn off (restores normal scrolling)' : 'Turn on magnifier'}
             aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
             aria-pressed={lensEnabled}
-            className={`absolute top-2 left-2 z-10 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
+            style={{ top: toggleTop, zIndex: 110 }}
+            className={`absolute left-2 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
               lensEnabled
                 ? 'bg-black/55 text-white hover:bg-black/80'
                 : 'bg-black/30 text-white/60 hover:bg-black/55 hover:text-white'
