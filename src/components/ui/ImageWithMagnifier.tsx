@@ -3,14 +3,15 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { ZoomIn } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
+import {
+  useFloatingOverlayTop,
+  FLOATING_OVERLAY_MARGIN,
+  LENS_AVOID_ATTR,
+} from '@/hooks/useFloatingOverlayTop';
 
 // Readers can switch the hover lens off (it captures scroll-to-zoom, which makes
 // scrolling past a tall facsimile awkward). Remembered across pages and sessions.
 const LENS_PREF_KEY = 'sl-magnifier-lens';
-
-// Lens toggle geometry — the button is h-8/w-8, inset 8px from the image edge.
-const TOGGLE_SIZE = 32;
-const TOGGLE_MARGIN = 8;
 
 interface ImageWithMagnifierProps {
   src: string;
@@ -66,14 +67,16 @@ export default function ImageWithMagnifier({
   // Lens on/off toggle. Defaults on; hydrated from localStorage after mount
   // (SSR-safe) so the choice sticks across pages and sessions.
   const [lensEnabled, setLensEnabled] = useState(true);
-  // Distance of the lens toggle from the top of the image. Follows the scroll
-  // position so the button stays on screen over a tall facsimile (see effect below).
-  const [toggleTop, setToggleTop] = useState(TOGGLE_MARGIN);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const showMagnifierRef = useRef(false);
   showMagnifierRef.current = showMagnifier;
+
+  // The toggle floats: over a tall facsimile it tracks the top of the visible
+  // slice rather than scrolling out of reach — which is exactly when a reader
+  // wants it, since the lens captures the wheel for zoom.
+  const toggleTop = useFloatingOverlayTop(toggleRef, !isTouchDevice && isLoaded);
 
   useEffect(() => {
     try {
@@ -113,63 +116,6 @@ export default function ImageWithMagnifier({
         ? Math.max(fullImageDimensions.width / imageDimensions.width, MIN_ZOOM)
         : 0;
   }, [fullImageDimensions, imageDimensions, MIN_ZOOM]);
-
-  // The lens toggle floats: as the reader scrolls down a tall facsimile it tracks
-  // the top of the still-visible slice of the image rather than scrolling away.
-  // CSS `position: sticky` can't do this — callers wrap the image in a
-  // `rounded-lg overflow-hidden` box, which becomes sticky's scroll container
-  // and never scrolls, so the button would simply sit still. Instead we measure
-  // the nearest genuinely scrollable ancestor (the reader panel, else the page)
-  // and offset the button from the container's own top edge.
-  useEffect(() => {
-    if (isTouchDevice || !isLoaded) return;
-    const el = containerRef.current;
-    if (!el) return;
-
-    let scroller: HTMLElement | null = el.parentElement;
-    while (scroller) {
-      const overflowY = window.getComputedStyle(scroller).overflowY;
-      if (overflowY === 'auto' || overflowY === 'scroll') break;
-      scroller = scroller.parentElement;
-    }
-
-    // Page-scrolled callers (artwork hero) have no scrollable ancestor — the
-    // top of their "viewport" is whatever the sticky site header leaves free.
-    const viewportTop = () => {
-      if (scroller) return scroller.getBoundingClientRect().top;
-      const header = document.querySelector<HTMLElement>('[data-site-header]');
-      if (!header) return 0;
-      const position = window.getComputedStyle(header).position;
-      if (position !== 'sticky' && position !== 'fixed') return 0;
-      return Math.max(0, header.getBoundingClientRect().bottom);
-    };
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const rect = el.getBoundingClientRect();
-      const viewTop = viewportTop();
-      // Never push the button below the image's bottom edge.
-      const maxTop = Math.max(TOGGLE_MARGIN, rect.height - TOGGLE_SIZE - TOGGLE_MARGIN);
-      const wanted = viewTop - rect.top + TOGGLE_MARGIN;
-      setToggleTop(Math.min(maxTop, Math.max(TOGGLE_MARGIN, wanted)));
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-
-    update();
-    // Scroll events don't bubble, so listen in the capture phase to catch them
-    // from whichever ancestor is actually scrolling.
-    const capture = { capture: true, passive: true } as const;
-    window.addEventListener('scroll', schedule, capture);
-    window.addEventListener('resize', schedule);
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule, capture);
-      window.removeEventListener('resize', schedule);
-    };
-  }, [isTouchDevice, isLoaded]);
 
   // Scroll-to-zoom needs a native non-passive wheel listener (React attaches
   // wheel handlers passively, so preventDefault would be ignored). Only
@@ -321,22 +267,34 @@ export default function ImageWithMagnifier({
     img.src = magnifierSrc;
   }, [magnifierSrc, hasHovered]);
 
+  // Is the cursor on (or just beside) a control the lens must not cover? Searches
+  // from the positioning wrapper, so it finds sibling controls drawn over the
+  // same image as well as our own toggle.
+  const isOverLensAvoidControl = (clientX: number, clientY: number) => {
+    const scope = containerRef.current?.parentElement ?? containerRef.current;
+    if (!scope) return false;
+    return [...scope.querySelectorAll<HTMLElement>(`[${LENS_AVOID_ATTR}]`)].some((control) => {
+      const box = control.getBoundingClientRect();
+      return (
+        clientX >= box.left - FLOATING_OVERLAY_MARGIN &&
+        clientX <= box.right + FLOATING_OVERLAY_MARGIN &&
+        clientY >= box.top - FLOATING_OVERLAY_MARGIN &&
+        clientY <= box.bottom + FLOATING_OVERLAY_MARGIN
+      );
+    });
+  };
+
   // Desktop: mouse move for magnifier
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     // Skip magnifier on touch devices or when the reader switched the lens off
     // (also skips the full-res prefetch — it only serves the lens)
     if (isTouchDevice || !lensEnabled) return;
 
-    // Get out of the toggle's way — the lens is centred on the cursor, so it would
-    // otherwise cover the very button the reader is reaching for.
-    const toggleRect = toggleRef.current?.getBoundingClientRect();
-    if (
-      toggleRect &&
-      e.clientX >= toggleRect.left - TOGGLE_MARGIN &&
-      e.clientX <= toggleRect.right + TOGGLE_MARGIN &&
-      e.clientY >= toggleRect.top - TOGGLE_MARGIN &&
-      e.clientY <= toggleRect.bottom + TOGGLE_MARGIN
-    ) {
+    // Get out of the controls' way — the lens is centred on the cursor, so it
+    // would otherwise cover the very button the reader is reaching for. Covers
+    // our own toggle plus any sibling control that opts in (the deep-zoom
+    // button, which lives outside this component but over the same image).
+    if (isOverLensAvoidControl(e.clientX, e.clientY)) {
       setShowMagnifier(false);
       return;
     }
@@ -461,6 +419,7 @@ export default function ImageWithMagnifier({
           <button
             ref={toggleRef}
             type="button"
+            {...{ [LENS_AVOID_ATTR]: '' }}
             onClick={(e) => {
               e.stopPropagation();
               toggleLens();
