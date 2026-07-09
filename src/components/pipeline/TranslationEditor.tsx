@@ -28,7 +28,7 @@ import {
   AlertCircle,
   Crosshair,
 } from 'lucide-react';
-import { useReaderPreferences } from '@/hooks/useReaderPreferences';
+import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
@@ -477,7 +477,7 @@ export default function TranslationEditor({
     translation: page.translation?.data || '',
     summary: page.summary?.data || '',
   });
-  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize } = useReaderPreferences();
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme } = useReaderPreferences();
 
   // Modernized text toggle
   const [modernizedMode, setModernizedMode] = useState(() => {
@@ -1078,7 +1078,7 @@ export default function TranslationEditor({
     const isFullyTranslated = ocrText && translationText;
 
     return (
-      <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
+      <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
@@ -1251,20 +1251,20 @@ export default function TranslationEditor({
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
             <div className="flex items-center gap-1 sm:gap-2">
-              {/* Desktop extras: Font size */}
-              <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              {/* Reading settings: font size + theme */}
+              <div className="flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
                 <div className="relative" ref={fontControlsRef}>
                   <button
                     onClick={() => setShowFontControls(prev => !prev)}
                     className={`flex items-center gap-0.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 ${showFontControls ? 'bg-stone-200' : ''}`}
                     style={{ color: showFontControls ? 'var(--text-primary)' : 'var(--text-muted)' }}
-                    aria-label="Font size"
-                    title="Font size"
+                    aria-label="Reading settings"
+                    title="Reading settings"
                   >
                     <span className="text-xs">A</span><span className="text-base font-semibold leading-none">A</span>
                   </button>
                   {showFontControls && (
-                    <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '200px' }}>
+                    <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '220px' }}>
                       <div className="text-[10px] uppercase tracking-widest text-center mb-3" style={{ color: 'var(--text-muted)' }}>Font Size</div>
                       <div className="flex items-center justify-between gap-4">
                         <button
@@ -1294,6 +1294,30 @@ export default function TranslationEditor({
                         >
                           A
                         </button>
+                      </div>
+                      <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>Theme</div>
+                      <div className="flex items-center justify-between gap-2">
+                        {([
+                          ['paper', 'Paper', '#fdfcf9', '#1a1612'],
+                          ['sepia', 'Sepia', '#f6eeda', '#1a1612'],
+                          ['night', 'Night', '#1a1612', '#ece7df'],
+                        ] as [ReaderTheme, string, string, string][]).map(([key, label, bg, fg]) => (
+                          <button
+                            key={key}
+                            onClick={() => setTheme(key)}
+                            className="flex-1 flex flex-col items-center gap-1 py-2 rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                            style={{
+                              background: bg,
+                              color: fg,
+                              borderColor: theme === key ? 'var(--accent-rust)' : 'var(--border-light)',
+                            }}
+                            aria-pressed={theme === key}
+                            title={`${label} theme`}
+                          >
+                            <span className="text-sm font-serif leading-none">Aa</span>
+                            <span className="text-[10px]">{label}</span>
+                          </button>
+                        ))}
                       </div>
                     </div>
                   )}

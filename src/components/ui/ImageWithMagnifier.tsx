@@ -3,6 +3,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { ZoomIn } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
+import {
+  useFloatingOverlayTop,
+  FLOATING_OVERLAY_MARGIN,
+  LENS_AVOID_ATTR,
+} from '@/hooks/useFloatingOverlayTop';
 
 // Readers can switch the hover lens off (it captures scroll-to-zoom, which makes
 // scrolling past a tall facsimile awkward). Remembered across pages and sessions.
@@ -64,8 +69,14 @@ export default function ImageWithMagnifier({
   const [lensEnabled, setLensEnabled] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const showMagnifierRef = useRef(false);
   showMagnifierRef.current = showMagnifier;
+
+  // The toggle floats: over a tall facsimile it tracks the top of the visible
+  // slice rather than scrolling out of reach — which is exactly when a reader
+  // wants it, since the lens captures the wheel for zoom.
+  const toggleTop = useFloatingOverlayTop(toggleRef, !isTouchDevice && isLoaded);
 
   useEffect(() => {
     try {
@@ -256,11 +267,37 @@ export default function ImageWithMagnifier({
     img.src = magnifierSrc;
   }, [magnifierSrc, hasHovered]);
 
+  // Is the cursor on (or just beside) a control the lens must not cover? Searches
+  // from the positioning wrapper, so it finds sibling controls drawn over the
+  // same image as well as our own toggle.
+  const isOverLensAvoidControl = (clientX: number, clientY: number) => {
+    const scope = containerRef.current?.parentElement ?? containerRef.current;
+    if (!scope) return false;
+    return [...scope.querySelectorAll<HTMLElement>(`[${LENS_AVOID_ATTR}]`)].some((control) => {
+      const box = control.getBoundingClientRect();
+      return (
+        clientX >= box.left - FLOATING_OVERLAY_MARGIN &&
+        clientX <= box.right + FLOATING_OVERLAY_MARGIN &&
+        clientY >= box.top - FLOATING_OVERLAY_MARGIN &&
+        clientY <= box.bottom + FLOATING_OVERLAY_MARGIN
+      );
+    });
+  };
+
   // Desktop: mouse move for magnifier
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     // Skip magnifier on touch devices or when the reader switched the lens off
     // (also skips the full-res prefetch — it only serves the lens)
     if (isTouchDevice || !lensEnabled) return;
+
+    // Get out of the controls' way — the lens is centred on the cursor, so it
+    // would otherwise cover the very button the reader is reaching for. Covers
+    // our own toggle plus any sibling control that opts in (the deep-zoom
+    // button, which lives outside this component but over the same image).
+    if (isOverLensAvoidControl(e.clientX, e.clientY)) {
+      setShowMagnifier(false);
+      return;
+    }
 
     // Start loading full image on first hover
     if (!hasHovered) setHasHovered(true);
@@ -376,10 +413,13 @@ export default function ImageWithMagnifier({
 
         {/* Desktop: lens on/off toggle — top-left (deep-zoom button owns top-right).
             While the lens is up it captures scroll for zoom, so readers who want
-            to wheel past a tall facsimile can switch it off. */}
+            to wheel past a tall facsimile can switch it off. Floats with the
+            scroll position, and sits above the lens so it's never painted over. */}
         {!isTouchDevice && isLoaded && (
           <button
+            ref={toggleRef}
             type="button"
+            {...{ [LENS_AVOID_ATTR]: '' }}
             onClick={(e) => {
               e.stopPropagation();
               toggleLens();
@@ -387,7 +427,8 @@ export default function ImageWithMagnifier({
             title={lensEnabled ? 'Magnifier on — click to turn off (restores normal scrolling)' : 'Turn on magnifier'}
             aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
             aria-pressed={lensEnabled}
-            className={`absolute top-2 left-2 z-10 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
+            style={{ top: toggleTop, zIndex: 110 }}
+            className={`absolute left-2 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
               lensEnabled
                 ? 'bg-black/55 text-white hover:bg-black/80'
                 : 'bg-black/30 text-white/60 hover:bg-black/55 hover:text-white'
