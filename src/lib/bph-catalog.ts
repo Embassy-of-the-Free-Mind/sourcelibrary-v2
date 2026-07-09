@@ -88,6 +88,9 @@ export const EDITABLE_BPH_FIELDS = [
   // Notes
   'bibliography',
   'remarks',
+  // Memorix "Internal remarks" — staff working notes. Editable/visible for
+  // editor+ only; the public catalog entry page must never render it.
+  'internal_remarks',
   // Provenance (ownership history) + collection (named collection the copy
   // belongs to) — kept as two distinct fields per Paul D. (2026-06-24).
   'provenance',
