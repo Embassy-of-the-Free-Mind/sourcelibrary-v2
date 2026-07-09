@@ -227,4 +227,16 @@ describe('stripLeadingAiPreamble (via cleanOcrArtifacts)', () => {
     const long = 'Note: The text in the image ' + 'x'.repeat(520) + '\n\nBody.';
     expect(cleanOcrArtifacts(long)).toBe(long);
   });
+
+  it('strips a multi-paragraph refusal including the "If you provide…" tail (production case)', () => {
+    const refusal =
+      'I cannot fulfill this request because no image of a manuscript page was provided. The image provided is a placeholder that says "image not available."\n\nIf you provide the actual image of the manuscript, I will transcribe it.';
+    expect(cleanOcrArtifacts(refusal)).toBe('');
+  });
+
+  it('strips a "solid black image" refusal with a "Please provide…" tail (production case)', () => {
+    const refusal =
+      'I cannot transcribe this image because it is completely blank (solid black).\n\nPlease provide a clear image of the manuscript page you would like me to transcribe.';
+    expect(cleanOcrArtifacts(refusal)).toBe('');
+  });
 });

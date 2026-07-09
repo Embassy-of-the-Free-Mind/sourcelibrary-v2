@@ -125,7 +125,7 @@ function stripMarkdownMarkers(text: string): string {
  * or transcribing in the first person.
  */
 const PREAMBLE_OPENER =
-  /^(?:\*\*)?(?:note[:,]|sure[,!:]|certainly|okay|of course|here (?:is|are)\b|here's\b|i(?:'ve| have)\b|i(?:'m| am)\b|i(?:'ll| will)\b|i apologize|i can(?:no|')t\b|the text (?:in|on|of) th(?:e|is) (?:image|page|scan)\b)/i;
+  /^(?:\*\*)?(?:note[:,]|sure[,!:]|certainly|okay|of course|here (?:is|are)\b|here's\b|i(?:'ve| have)\b|i(?:'m| am)\b|i(?:'ll| will)\b|i apologize|i can(?:no|')t\b|please\b|if you\b|the text (?:in|on|of) th(?:e|is) (?:image|page|scan)\b)/i;
 const PREAMBLE_META_VOCAB =
   /\b(?:transcri(?:be|bed|bing|ption)|ocr|the image|this image|image provided|you (?:provided|requested)|as requested|as it appears|i apologize|i(?:'m| am) sorry|cannot assist|unable to assist)\b/i;
 
