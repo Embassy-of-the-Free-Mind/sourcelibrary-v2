@@ -19,7 +19,11 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Search, X, Maximize2 } from 'lucide-react';
 import type { DeepZoomManifest } from '@/lib/types/book';
-import { useFloatingOverlayTop, LENS_AVOID_ATTR } from '@/hooks/useFloatingOverlayTop';
+import {
+  useFloatingOverlayTop,
+  LENS_AVOID_ATTR,
+  OVERLAY_CONTROL_Z,
+} from '@/hooks/useFloatingOverlayTop';
 
 const DeepZoomInline = lazy(() => import('./DeepZoomInline'));
 const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
@@ -60,7 +64,7 @@ export default function PageDeepZoomButton({
           ref={buttonRef}
           {...{ [LENS_AVOID_ATTR]: '' }}
           onClick={() => (isDesktop ? setInline(true) : setOverlay(true))}
-          style={{ top: buttonTop, zIndex: 110 }}
+          style={{ top: buttonTop, zIndex: OVERLAY_CONTROL_Z }}
           className="absolute right-2 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/55 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors"
           title="Open deep zoom — stream this page at full resolution"
         >
