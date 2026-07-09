@@ -8,10 +8,6 @@ const MAX_SIZE = 32;
 const STEP = 2;
 const DEFAULT_SIZE = 18;
 
-export type ReaderTheme = 'paper' | 'sepia' | 'night';
-const THEMES: ReaderTheme[] = ['paper', 'sepia', 'night'];
-const DEFAULT_THEME: ReaderTheme = 'paper';
-
 function computeLineHeight(fontSize: number): number {
   // 1.6 at 14px, 1.8 at 18px, 2.0 at 24px
   return 1.6 + (fontSize - MIN_SIZE) * 0.04;
@@ -19,23 +15,20 @@ function computeLineHeight(fontSize: number): number {
 
 interface ReaderPrefs {
   fontSize: number;
-  theme: ReaderTheme;
 }
 
 function loadPrefs(): ReaderPrefs {
-  const defaults: ReaderPrefs = { fontSize: DEFAULT_SIZE, theme: DEFAULT_THEME };
-  if (typeof window === 'undefined') return defaults;
+  if (typeof window === 'undefined') return { fontSize: DEFAULT_SIZE };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      return {
-        fontSize: parsed.fontSize >= MIN_SIZE && parsed.fontSize <= MAX_SIZE ? parsed.fontSize : DEFAULT_SIZE,
-        theme: THEMES.includes(parsed.theme) ? parsed.theme : DEFAULT_THEME,
-      };
+      if (parsed.fontSize >= MIN_SIZE && parsed.fontSize <= MAX_SIZE) {
+        return { fontSize: parsed.fontSize };
+      }
     }
   } catch { /* ignore */ }
-  return defaults;
+  return { fontSize: DEFAULT_SIZE };
 }
 
 function savePrefs(prefs: ReaderPrefs) {
@@ -46,18 +39,15 @@ function savePrefs(prefs: ReaderPrefs) {
 
 export function useReaderPreferences() {
   const [fontSize, setFontSize] = useState(DEFAULT_SIZE);
-  const [theme, setThemeState] = useState<ReaderTheme>(DEFAULT_THEME);
 
   useEffect(() => {
-    const prefs = loadPrefs();
-    setFontSize(prefs.fontSize);
-    setThemeState(prefs.theme);
+    setFontSize(loadPrefs().fontSize);
   }, []);
 
   const increaseFontSize = useCallback(() => {
     setFontSize(prev => {
       const next = Math.min(prev + STEP, MAX_SIZE);
-      savePrefs({ ...loadPrefs(), fontSize: next });
+      savePrefs({ fontSize: next });
       return next;
     });
   }, []);
@@ -65,19 +55,14 @@ export function useReaderPreferences() {
   const decreaseFontSize = useCallback(() => {
     setFontSize(prev => {
       const next = Math.max(prev - STEP, MIN_SIZE);
-      savePrefs({ ...loadPrefs(), fontSize: next });
+      savePrefs({ fontSize: next });
       return next;
     });
   }, []);
 
   const resetFontSize = useCallback(() => {
     setFontSize(DEFAULT_SIZE);
-    savePrefs({ ...loadPrefs(), fontSize: DEFAULT_SIZE });
-  }, []);
-
-  const setTheme = useCallback((next: ReaderTheme) => {
-    setThemeState(next);
-    savePrefs({ ...loadPrefs(), theme: next });
+    savePrefs({ fontSize: DEFAULT_SIZE });
   }, []);
 
   return {
@@ -89,7 +74,5 @@ export function useReaderPreferences() {
     isMinSize: fontSize <= MIN_SIZE,
     isMaxSize: fontSize >= MAX_SIZE,
     isDefaultSize: fontSize === DEFAULT_SIZE,
-    theme,
-    setTheme,
   };
 }
