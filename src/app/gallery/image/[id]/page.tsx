@@ -853,9 +853,9 @@ export default function ImageDetailPage({
             </div>
           </div>
 
-          {/* Type badge */}
+          {/* Type badge — left-12 clears the magnifier's lens toggle, which owns top-left */}
           {data.type && (
-            <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs bg-accent-rust/90 text-white capitalize z-10">
+            <span className="absolute top-3 left-12 px-2.5 py-0.5 rounded-full text-xs bg-accent-rust/90 text-white capitalize z-10">
               {data.type}
             </span>
           )}
@@ -913,8 +913,12 @@ export default function ImageDetailPage({
             </button>
           )}
 
-          {/* Title + attribution overlay at bottom of image */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+          {/* Title + attribution overlay at bottom of image.
+              pointer-events-none: this band (plus its 96px of gradient padding)
+              lies over the bottom of the image, and swallowing the pointer there
+              killed the magnifier lens across the lower fifth of every plate.
+              The same title and caption are selectable in the details section below. */}
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
             <p className="text-base sm:text-lg text-white/60 mt-1.5">
               {data.book.title}{data.book.author && data.book.author !== 'Various' ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''}, p.{data.pageNumber}

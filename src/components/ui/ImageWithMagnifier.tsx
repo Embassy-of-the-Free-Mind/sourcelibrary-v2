@@ -7,6 +7,8 @@ import {
   useFloatingOverlayTop,
   FLOATING_OVERLAY_MARGIN,
   LENS_AVOID_ATTR,
+  LENS_Z,
+  OVERLAY_CONTROL_Z,
 } from '@/hooks/useFloatingOverlayTop';
 
 // Readers can switch the hover lens off (it captures scroll-to-zoom, which makes
@@ -427,7 +429,7 @@ export default function ImageWithMagnifier({
             title={lensEnabled ? 'Magnifier on — click to turn off (restores normal scrolling)' : 'Turn on magnifier'}
             aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
             aria-pressed={lensEnabled}
-            style={{ top: toggleTop, zIndex: 110 }}
+            style={{ top: toggleTop, zIndex: OVERLAY_CONTROL_Z }}
             className={`absolute left-2 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-sm transition-colors ${
               lensEnabled
                 ? 'bg-black/55 text-white hover:bg-black/80'
@@ -465,7 +467,7 @@ export default function ImageWithMagnifier({
                 backgroundPosition: `${-(magnifierPosition.x / 100) * bgW + lensW / 2}px ${-(magnifierPosition.y / 100) * bgH + lensH / 2}px`,
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: 'white',
-                zIndex: 100,
+                zIndex: LENS_Z,
               }}
             >
               <span

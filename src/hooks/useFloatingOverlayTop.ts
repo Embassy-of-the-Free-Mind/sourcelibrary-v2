@@ -6,6 +6,15 @@ import { useEffect, useState, type RefObject } from 'react';
 export const FLOATING_OVERLAY_MARGIN = 8;
 
 /**
+ * Stacking tiers *within* an image area. Both must stay below the full-screen
+ * overlays that cover the image entirely — `DeepZoomOverlay` (z-60) and
+ * `FullscreenImageViewer` (z-100) — or a control paints on top of the very
+ * viewer it opened.
+ */
+export const LENS_Z = 30; // above the page's own image chrome (badges, arrows, captions)
+export const OVERLAY_CONTROL_Z = 40; // above the lens, so the lens never hides a button
+
+/**
  * Marks a control the magnifier lens must not cover. `ImageWithMagnifier` hides
  * the lens while the cursor is on (or just beside) any element carrying this
  * attribute, so a reader can always see the button they're reaching for.
