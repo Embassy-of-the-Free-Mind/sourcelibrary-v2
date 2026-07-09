@@ -200,7 +200,7 @@ The policy across the whole site (open-access posture since 2026-07-05, #2963): 
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-05-26: ~46K total docs, ~29K `visible: true` (publicly shown), ~15K with `pages_count > 0` (actually processed), ~14K with any OCR. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
+- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-07-09: ~99.7K total docs, ~32K `visible: true` (publicly shown), ~74.7K with `pages_count > 0` (actually processed), ~48.3K with any OCR. Re-measure before quoting — the previous figures here were 2026-05-26 vintage and had drifted by up to 5× (`pages_count > 0` read ~15K against a true 74.7K). The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.

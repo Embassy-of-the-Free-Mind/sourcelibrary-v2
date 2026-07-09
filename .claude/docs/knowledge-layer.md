@@ -66,8 +66,12 @@ the handoff, where nobody will look, and it decays. Both of the large CRITICAL s
 in `CLAUDE.md` were written this way. The `/lesson` skill runs this loop.
 
 The reverse also has to happen. A doc that no longer describes reality is worse than no
-doc, because it is trusted. There is a monthly `CLAUDE.md` staleness audit; stats older
-than 14 days are to be verified before use, not quoted.
+doc, because it is trusted. Stats older than 14 days are to be verified before use, not
+quoted — `scripts/audit/doc-staleness.mjs` finds the ones that date themselves, and
+`.github/workflows/doc-staleness.yml` runs it monthly into a tracking issue. Its first
+run caught `CLAUDE.md`'s corpus counts six weeks stale, with "actually processed" off by
+5×. Undated stats are invisible to it: if you write a number into an auto-loaded file,
+date it, or nothing can defend it.
 
 ## Two rules that are load-bearing
 
@@ -92,10 +96,12 @@ didn't read the prose.
 
 ## Doc lifecycle — the archive convention
 
-Reference docs accrete. A 2026-07 audit found **39 of 115 living docs with zero inbound
-references** from anywhere in the tracked tree. Two different kinds were mixed together:
-dated one-off audits, and live drafts nobody had linked yet. `.claude/docs/archive/`
-already existed for the first kind — it just wasn't being fed.
+Reference docs accrete. A 2026-07 audit found **40 of 115 living docs with zero inbound
+references** from anywhere in the tracked tree (full writeup, definitions, and the
+re-measured numbers: `.claude/docs/archive/doc-reference-audit-2026-07-09.md`). Two
+different kinds were mixed together: dated one-off audits, and live drafts nobody had
+linked yet. `.claude/docs/archive/` already existed for the first kind — it just wasn't
+being fed.
 
 The convention that separates them:
 

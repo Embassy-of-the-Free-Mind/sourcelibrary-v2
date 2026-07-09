@@ -1,0 +1,61 @@
+name: Doc staleness audit
+
+# `.claude/docs/knowledge-layer.md` says a doc that no longer describes reality is
+# worse than no doc, because it is trusted. This is the check that makes that
+# statement enforceable rather than aspirational: every month it re-counts orphaned
+# docs, dated docs still outside archive/, and stale statistics in the auto-loaded
+# files (CLAUDE.md, memory/), and files the result as a tracking issue.
+#
+# It NEVER moves or deletes a file. Archiving is a deletion-class action — of the
+# five dated docs the first run found outside archive/, all five were referenced by
+# code and two were script WRITE TARGETS. The report is a candidate list for a human,
+# never an instruction. See .claude/docs/archive/doc-reference-audit-2026-07-09.md.
+#
+# Runs on a schedule and on demand. Not a PR check: the findings are judgment calls,
+# and failing a contributor's PR because an unrelated doc went unreferenced would
+# train people to ignore it.
+
+on:
+  schedule:
+    # 09:00 UTC on the 1st of each month
+    - cron: '0 9 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # git grep only searches tracked files, but it needs the full tree.
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run the audit
+        id: audit
+        run: |
+          node scripts/audit/doc-staleness.mjs > report.txt
+          cat report.txt
+
+      - name: File or update the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Doc staleness audit — $(date -u +'%Y-%m')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "Monthly run of \`scripts/audit/doc-staleness.mjs\`. Findings are candidates, not instructions — archiving is deletion-class, so read the inbound lines before moving anything." \
+            "$(cat report.txt)")
+
+          EXISTING=$(gh issue list --search "$TITLE in:title" --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label documentation
+          fi
