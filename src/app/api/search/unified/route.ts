@@ -185,7 +185,7 @@ export async function GET(request: NextRequest) {
         emptyIndex, 'index',
       ),
       withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(matchQuery, galleryLimit), emptyGallery, 'visual', 5000),
+      withTimeout(searchVisual(db, matchQuery, galleryLimit), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
         semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
@@ -709,6 +709,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
           {
             ...(tenantId ? { tenantId } : {}),
             gallery_quality: { $gte: 0.5 },
+            book_visible: { $ne: false },
             extracted_url: { $ne: null },
             $or: [
               { description: queryRegex },
@@ -728,8 +729,13 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
     // Filter out images without any thumbnail/extracted URL (detection without extraction)
     const withImages = images.filter((img: any) => img.thumbnail_url || img.extracted_url);
 
+    // Drop images from hidden/removed books (takedowns, dedup hides). The
+    // Atlas Search branch can't filter on book_visible, and the gallery_images
+    // mirror can drift — check books.visible in Mongo, same as the artwork lanes.
+    const visibleImages = await filterVisibleArtworks(db, withImages as Array<{ book_id: string }>);
+
     return {
-      results: withImages.slice(0, limit).map((img: any) => ({
+      results: visibleImages.slice(0, limit).map((img: any) => ({
         id: `${img.page_id}-${img.detection_index}`,
         imageUrl: img.thumbnail_url || img.extracted_url || '',
         description: img.description || '',
@@ -737,7 +743,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         bookTitle: img.book_title || '',
         bookId: img.book_id || '',
       })),
-      total: withImages.length,
+      total: visibleImages.length,
     };
   } catch (err) {
     console.error('Gallery search error:', err);
@@ -749,7 +755,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
  * CLIP visual search: encode text query via CLIP, search against image embeddings.
  * Finds images by what they look like, not just their metadata.
  */
-async function searchVisual(query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchVisual(db: any, query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
@@ -778,7 +784,7 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
     // (artwork semantic+lexical, book search), so dropping them loses nothing.
     // Deduplicate by book (max 2 per book).
     const byBook = new Map<string, number>();
-    const deduped = (data as Array<{
+    const matches = (data as Array<{
       id: string; source_type: string; book_id: string; image_url: string; thumbnail_url: string;
       title: string; author: string; resource_type: string; similarity: number;
     }>).filter(m => {
@@ -787,7 +793,11 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
       if (count >= 2) return false;
       byBook.set(m.book_id, count + 1);
       return true;
-    }).slice(0, limit);
+    });
+
+    // clip_embeddings is a snapshot with no visibility column — drop rows whose
+    // book is hidden/removed in Mongo (takedowns), same as the other image lanes.
+    const deduped = (await filterVisibleArtworks(db, matches)).slice(0, limit);
 
     return {
       results: deduped.map(m => ({

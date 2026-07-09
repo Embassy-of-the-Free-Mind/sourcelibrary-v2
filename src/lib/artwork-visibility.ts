@@ -11,6 +11,10 @@ import type { Db } from 'mongodb';
  * /api/gallery do — run their results through this to drop anything not currently
  * visible in Mongo. Defense in depth for the books visible/hidden invariant.
  *
+ * Despite the name it is generic over any `{ book_id }` row: the unified-search
+ * gallery lane (gallery_images, whose book_visible mirror can drift) and CLIP
+ * visual lane (clip_embeddings, no visibility column at all) run through it too.
+ *
  * Returns the input rows minus any whose book is not `visible: true` in Mongo.
  */
 export async function filterVisibleArtworks<T extends { book_id: string }>(
