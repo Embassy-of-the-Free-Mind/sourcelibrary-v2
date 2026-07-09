@@ -1,0 +1,42 @@
+# Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis
+
+*A Source Library essay, drawn from the collection [An Account of the Plant](https://sourcelibrary.org/collections/cannabis-western-record).*
+
+On 18 December 1689, Robert Hooke — curator of experiments at the Royal Society, Newton's rival, the man who gave biology the word *cell* — stood before the Fellows to describe a drug. He had been given a sample six weeks earlier, on 7 November, by an old friend named Robert Knox over coffee in a London coffeehouse. Knox was an East India Company captain who had spent nearly twenty years a captive in Ceylon, and who credited the plant with keeping him well on foul water during his escape. Hooke called it by the names the traders used: "the intoxicating Leaf and Seed, by the Moors called *Ganges*, in Portug. *Banga*."
+
+His report, printed posthumously in his *[Philosophical Experiments and Observations](https://sourcelibrary.org/book/philosophical-experiments-and-observations-hooke?page=224)* (1726), is precise and a little astonished. The dose is "about as much as may fill a common Tobacco-Pipe." The patient grows "unable to speak a Word of Sense, yet is he very merry, and laughs, and sings." And Hooke's verdict: it might "prove as considerable a Medicine in Drugs, as any that is brought from the Indies." He even tried to grow the seeds in London.
+
+This is usually told as a charming first — the first detailed English-language scientific account of cannabis. But the historian **Benjamin Breen**, in *The Age of Intoxication* (2019), reads the same scene as something sharper. Hooke knew nothing of this plant's effects until an imperial sailor handed it to him in a coffeehouse; the knowledge traveled along the arteries of the East India Company and then was quietly relabeled as European discovery. Breen's argument is that early-modern science was *built on colonial knowledge networks while erasing the non-European and non-elite people who supplied them* — and that "every decision about intoxicants is, at root, a judgment about cultural difference." A drug is medicine or vice depending on who is holding it.
+
+The Source Library collection *An Account of the Plant* is, in effect, the receipts. Sixty books across twelve languages, from −200 to 1925, let you watch that judgment get made, unmade, and made again.
+
+## The plant had two lives
+
+Read the European herbals and you would never guess cannabis could do anything to the mind. From Dioscorides through the 1484 *[Latin Herbal](https://sourcelibrary.org/book/herbarius-latinus-with-german-synonyms?page=107)*, Fuchs's *[De historia stirpium](https://sourcelibrary.org/book/de-historia-stirpium-commentarii-insignes-fuchs-2?page=426)* (1542), and Mattioli's Italian *Discorsi* (1568), hemp is a sober fiber-and-seed crop: "hot and dry," good for rope, the seed good for the ears. Europe grew the plant for two thousand years and wrote, essentially, nothing about its high. The word itself — Greek *kánnabis*, Latin *cannabis*, German *Hanf*, Dutch *hennep*, Russian *konoplja*, all the way back to Assyrian *qunnabu* — is one ancient wander-root that traveled with the crop across Eurasia.
+
+The *other* life of the plant — the intoxicant — lived in the East, under entirely different names, and the texts that record it are equally in our collection. The oldest is the most startling. The Chinese *[Shennong Bencao Jing](https://sourcelibrary.org/book/the-divine-farmers-classic-of-materia-medica?page=68)* (by ~200 BCE) already warns that eating cannabis flowers "makes people see ghosts and run wildly," and that long use "communicates with the spirit." China knew the high at the very dawn of its pharmacopeia — and then deliberately set it aside, domesticating cannabis as a fiber staple (so the later *Bencao Gangmu* and *Zhiwu Mingshi Tukao* treat it almost entirely as crop and seed-medicine). India did the opposite, sacralizing it as *vijayā*, "the victorious"; the Ayurvedic *[Sushruta Saṃhitā](https://sourcelibrary.org/q/BikGhXedgmGP6zkhMFw)* files it among the fast-acting *vyāyī* drugs, "for example, cannabis and opium." The Islamic world made the resin a mass intoxicant and gave us, by way of the hashish-eaters, our word *assassin* — a story Edward Lane lays out in his *[Modern Egyptians](https://sourcelibrary.org/book/an-account-of-the-manners-and-customs-of-the-modern-lane?page=374)*.
+
+Even this written record sits on top of something older. In 2019, archaeologists found high-THC cannabis residue in mortuary braziers at the **Jirzankal cemetery** in the Pamirs, dated to ~500 BCE (Ren et al., *Science Advances*) — ritual cannabis smoking that predates every text we hold. Herodotus saw a version of it among the Scythians: in our *[Histories](https://sourcelibrary.org/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=298)* they throw hemp-seed on hot stones and "howl with pleasure" in the vapor-bath.
+
+## The bridge word, and the forgetting
+
+The two lives met at a single word: **bangue**. It is the Portuguese transliteration (from Persian *bang*, Sanskrit *bhaṅgā*) that the Indies pharmacologists carried into European print — Garcia de Orta, Monardes, and Cristóvão da Costa, whose *[Tractado de las Drogas](https://sourcelibrary.org/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa?page=391)* (1578) gives a chapter and a botanical plate to "the Bangue." It is *bangue* that Knox carried to Hooke. The hinge of the whole story is a loan-word.
+
+Then came the forgetting Breen describes. When O'Shaughnessy published his famous Calcutta studies of "Indian hemp" in the 1840s — present in our collection as the *[Bengal Dispensatory](https://sourcelibrary.org/book/the-bengal-dispensatory-and-pharmacopoeia-o-shaughnessy)* (1841) — and when Moreau de Tours used hashish to model madness in *Du hachisch et de l'aliénation mentale* (1845), the Victorians hailed it as cannabis *entering* Western medicine. But Avicenna had catalogued *qinnab* in the *Canon* eight centuries earlier; Ibn al-Baytar and the Persian *Makhzan al-Adviyah* had it; Hooke and Knox had it in 1689. The "discovery" was a re-importation with the sources filed off. (Anna Winterbottom's study of Knox's Ceylon narrative, *BJHS* 2009, traces exactly how a captive's account became a scientific source.)
+
+By the time Baudelaire is dissolving a spoonful of *[dawamesc](https://sourcelibrary.org/book/les-paradis-artificiels-opium-et-haschisch-charles-baudelair?page=115)* in *Les Paradis Artificiels* (1860) and Fitz Hugh Ludlow is narrating his visions in *The Hasheesh Eater* (1857), the same molecule Avicenna prescribed for earache has become a satanic shortcut to a false paradise — and then, with the **Indian Hemp Drugs Commission** of 1894, an object of imperial bureaucracy. Same plant; opposite verdict; different century.
+
+## What the collection teaches
+
+Lined up end to end, these sixty books make an argument no single one of them makes: that "medicine versus vice" is a cultural verdict, not a property of a plant; that the "respectable" seed and the "dangerous" flower have been split apart in every tradition; and that what Europe called the *discovery* of cannabis was really the slow, repeated rediscovery of what China, India, and the Islamic world had written down — and what the Pamir herders had burned in their braziers — long before a sea-captain set a sample on Robert Hooke's coffeehouse table.
+
+---
+
+### Sources
+- Robert Hooke, *Philosophical Experiments and Observations* (1726) — "An Account of the Plant called Bangue."
+- Benjamin Breen, *The Age of Intoxication: Origins of the Global Drug Trade* (Univ. of Pennsylvania Press, 2019); and "Theire Soe Admirable Herbe," *Public Domain Review* (2020).
+- Anna Winterbottom, "Producing and Using the *Historical Relation of Ceylon*: Robert Knox…," *British Journal for the History of Science* 42:4 (2009). doi:10.1017/S0007087409002209
+- Mia Touw, "The Religious and Medicinal Uses of Cannabis in China, India and Tibet," *Journal of Psychoactive Drugs* 13:1 (1981). doi:10.1080/02791072.1981.10471447
+- Ethan Russo, "History of Cannabis and Its Preparations in Saga, Science, and Sobriquet," *Chemistry & Biodiversity* 4 (2007).
+- James H. Mills, *Cannabis Britannica: Empire, Trade, and Prohibition 1800–1928* (Oxford Univ. Press, 2003).
+- Meng Ren et al., "The origins of cannabis smoking: Chemical residue evidence from the first millennium BCE in the Pamirs," *Science Advances* 5 (2019). doi:10.1126/sciadv.aaw1391
