@@ -49,6 +49,9 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - Active worktrees: `git worktree list`
 - Worktrees live in `.claude/worktrees/`
 - **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
+- **Worktrees accumulate structurally, not from sloppiness.** A worktree can't be removed while its PR is open, and the PR merges *after* the creating session ends — so nothing is left to reap it. Per-session `ExitWorktree` discipline cannot fix this. `/gnite` runs the reaper, and `/reap-worktrees` runs it on demand.
+- **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
+- **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
