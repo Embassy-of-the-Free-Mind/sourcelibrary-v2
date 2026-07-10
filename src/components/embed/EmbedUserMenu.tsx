@@ -237,7 +237,7 @@ export default function EmbedUserMenu() {
       )}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm hover:bg-white transition-colors"
+        className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm cursor-pointer hover:bg-white transition-colors"
         aria-label={session ? 'Account & view options' : 'View options'}
       >
         {session ? (

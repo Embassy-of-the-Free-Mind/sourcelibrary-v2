@@ -69,7 +69,8 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     <div ref={menuRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 focus:outline-none"
+        aria-label="Account menu"
+        className="flex items-center gap-2 cursor-pointer focus:outline-none"
       >
         {session.user?.image && !imgError ? (
           // eslint-disable-next-line @next/next/no-img-element
