@@ -1702,9 +1702,11 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Transliteration Panel (non-Latin scripts only) */}
+              {/* Transliteration Panel (non-Latin scripts only). data-reader-section
+                  opts it into trace mode: clicking a phrase in any pane lights the
+                  romanized span too (TraceAlignment). */}
               {showTransliterationPanel && hasTransliteration && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
+                <div data-reader-section="transliteration" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>

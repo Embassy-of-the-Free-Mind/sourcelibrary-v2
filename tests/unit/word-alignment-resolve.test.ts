@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { normalizeForSearch, normalizeNeedle, locateSpan } from '@/lib/align-text';
-import { resolveAlignmentPairs } from '@/lib/word-alignment';
+import { resolveAlignmentPairs, resolveRomanSpans, type AlignmentPair } from '@/lib/word-alignment';
 
 // Trace mode (#3091) stores span strings + offsets resolved against the
 // wrapper-stripped page text. Every stored pair must be locatable text —
@@ -76,6 +76,35 @@ describe('locateSpan', () => {
     const hit = locateSpan(h, 'militatem aduerfus Corpus');
     expect(hit).not.toBeNull();
   });
+
+  // The reader's trace layer asks "is this normalized click offset inside the
+  // span?" It must use normEnd. A raw length is not a normalized length: folds
+  // grow (æ→ae) and shrink (dehyphenation, diacritic stripping) the string.
+  describe('normEnd is a normalized offset, not a raw length', () => {
+    it('reports normEnd larger than the raw span when folding expands', () => {
+      const h = normalizeForSearch('cœleſti Animæ gaudium');
+      const hit = locateSpan(h, 'Animæ')!;
+      expect(h.norm.slice(hit.normStart, hit.normEnd)).toBe('animae');
+      // raw 'Animæ' is 5 chars; normalized 'animae' is 6.
+      expect(hit.end - hit.start).toBe(5);
+      expect(hit.normEnd - hit.normStart).toBe(6);
+    });
+
+    it('reports normEnd smaller than the raw span when dehyphenation shrinks', () => {
+      const h = normalizeForSearch('reſurrectio-\nnem atque');
+      const hit = locateSpan(h, 'reſurrectionem')!;
+      expect(h.norm.slice(hit.normStart, hit.normEnd)).toBe('resurrectionem');
+      expect(hit.normEnd - hit.normStart).toBe(14);
+      // The raw slice still spans the hyphen and the newline.
+      expect(hit.end - hit.start).toBe(16);
+    });
+
+    it('always delimits the matched text in the normalized string', () => {
+      const h = normalizeForSearch('MENTI laeticiam &\ngaudium attribuit');
+      const hit = locateSpan(h, 'laeticiam & gaudium')!;
+      expect(h.norm.slice(hit.normStart, hit.normEnd)).toBe('laeticiam & gaudium');
+    });
+  });
 });
 
 describe('normalizeNeedle', () => {
@@ -147,5 +176,58 @@ describe('resolveAlignmentPairs', () => {
     // Stored span is the RAW slice from the text, not the model's string.
     expect(pairs[0].s).toBe('menti laeticiam & gaudium');
     expect(pairs[0].t).toBe('gladness and joy');
+  });
+});
+
+// The romanized pane joins trace via a second, additive pass: source spans in,
+// verified spans of the transliteration out. A pair that fails verification
+// keeps working for OCR↔translation and simply gains no romanized highlight.
+describe('resolveRomanSpans', () => {
+  // Greek source, its romanization, and pairs as the aligner would store them.
+  const translit = 'ta men homos polees te kai allydis alloi iontes ouranoi helkontai';
+  const pairs: AlignmentPair[] = [
+    { s: 'τὰ μὲν ὁμῶς', t: 'these alike', so: 0, to: 0 },
+    { s: 'πολέες τε', t: 'many and', so: 12, to: 12 },
+    { s: 'οὐρανῷ ἕλκονται', t: 'are drawn through heaven', so: 30, to: 30 },
+  ];
+
+  it('attaches verified spans and leaves the base pair intact', () => {
+    const out = resolveRomanSpans(pairs, [
+      { i: 0, rom: 'ta men homos' },
+      { i: 2, rom: 'ouranoi helkontai' },
+    ], translit);
+    expect(out[0].r).toBe('ta men homos');
+    expect(translit.slice(out[0].ro!, out[0].ro! + out[0].r!.length)).toBe(out[0].r);
+    expect(out[1].r).toBeUndefined();          // no span offered → untouched
+    expect(out[2].r).toBe('ouranoi helkontai');
+    // Base fields survive untouched.
+    expect(out.map((p) => p.s)).toEqual(pairs.map((p) => p.s));
+    expect(out.map((p) => p.t)).toEqual(pairs.map((p) => p.t));
+  });
+
+  it('drops a hallucinated span rather than highlighting the wrong words', () => {
+    const out = resolveRomanSpans(pairs, [{ i: 1, rom: 'this text is nowhere on the page' }], translit);
+    expect(out[1].r).toBeUndefined();
+  });
+
+  it('drops a span that runs backwards through the romanization', () => {
+    // The romanization has the same words in the same order as the source, so a
+    // later pair whose span sits EARLIER in the text is a mis-quote. locateSpan
+    // would happily find it via its global fallback; the guard must not.
+    const out = resolveRomanSpans(pairs, [
+      { i: 1, rom: 'ouranoi helkontai' },  // pair 1 grabs pair 2's words (offset 48)
+      { i: 2, rom: 'ta men' },             // pair 2 then resolves back at offset 0
+    ], translit);
+    expect(out[1].r).toBe('ouranoi helkontai');
+    expect(out[2].r).toBeUndefined();
+  });
+
+  it('ignores entries whose index is out of range or empty', () => {
+    const out = resolveRomanSpans(pairs, [{ i: 99, rom: 'ta men' }, { i: 0, rom: '' }], translit);
+    expect(out.every((p) => p.r === undefined)).toBe(true);
+  });
+
+  it('is a no-op when the model returns nothing', () => {
+    expect(resolveRomanSpans(pairs, [], translit)).toEqual(pairs);
   });
 });

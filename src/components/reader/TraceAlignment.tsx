@@ -30,7 +30,26 @@ interface TraceAlignmentProps {
 
 export type TraceStatus = 'idle' | 'loading' | 'ready' | 'unavailable' | 'rate_limited';
 
-type Side = 'ocr' | 'translation';
+type Side = 'ocr' | 'translation' | 'transliteration';
+
+const SIDES: Side[] = ['ocr', 'translation', 'transliteration'];
+
+/** The pair field holding this side's span, and the field holding its offset. */
+function spanFor(pair: AlignmentPair, side: Side): string | undefined {
+  return side === 'ocr' ? pair.s : side === 'translation' ? pair.t : pair.r;
+}
+function offsetFor(pair: AlignmentPair, side: Side): number | undefined {
+  return side === 'ocr' ? pair.so : side === 'translation' ? pair.to : pair.ro;
+}
+
+/**
+ * How far (in normalized chars) a click may sit outside a span and still snap
+ * to it. Generous enough to absorb a click on trailing punctuation or the space
+ * after a phrase; too small to reach the next phrase. It used to be 60 — about
+ * ten words — which meant that clicking anywhere in the ~33% of a page the
+ * model leaves unaligned confidently highlighted an unrelated phrase.
+ */
+const SNAP_TOLERANCE = 12;
 
 interface PaneMap {
   /** Concatenated text of all text nodes in the pane. */
@@ -42,6 +61,8 @@ interface PaneMap {
 
 const HIGHLIGHT_PRIMARY = 'sl-trace-primary';
 const HIGHLIGHT_COUNTERPART = 'sl-trace-counterpart';
+/** Second counterpart, so a click lights all three panes at once. */
+const HIGHLIGHT_COUNTERPART_2 = 'sl-trace-counterpart-2';
 
 function highlightsSupported(): boolean {
   return typeof window !== 'undefined'
@@ -110,25 +131,28 @@ interface PairInterval {
   start: number;      // raw offsets in pane text
   end: number;
   normStart: number;
+  normEnd: number;    // offsets in the NORMALIZED pane text
 }
 
 /**
  * Locate every pair's span on one side of the rendered DOM, walking in
  * stored-offset order with a moving cursor so repeated phrases bind to
  * successive occurrences (mirrors resolveAlignmentPairs on the server).
+ * Pairs with no span on this side (a romanized span that never resolved) are
+ * simply absent — clicking their words highlights nothing rather than guessing.
  */
 function locatePairIntervals(map: PaneMap, pairs: AlignmentPair[], side: Side): PairInterval[] {
   const order = pairs
     .map((_, i) => i)
-    .sort((a, b) => (side === 'ocr' ? pairs[a].so - pairs[b].so : pairs[a].to - pairs[b].to));
+    .filter((i) => spanFor(pairs[i], side) !== undefined)
+    .sort((a, b) => (offsetFor(pairs[a], side)! - offsetFor(pairs[b], side)!));
   const out: PairInterval[] = [];
   let cursor = 0;
   for (const i of order) {
-    const span = side === 'ocr' ? pairs[i].s : pairs[i].t;
-    const hit = locateSpan(map.norm, span, cursor);
+    const hit = locateSpan(map.norm, spanFor(pairs[i], side)!, cursor);
     if (!hit) continue;
     cursor = hit.normStart + 1;
-    out.push({ pairIndex: i, start: hit.start, end: hit.end, normStart: hit.normStart });
+    out.push({ pairIndex: i, start: hit.start, end: hit.end, normStart: hit.normStart, normEnd: hit.normEnd });
   }
   return out;
 }
@@ -163,6 +187,7 @@ function setHighlight(name: string, range: Range | null) {
 function clearHighlights() {
   setHighlight(HIGHLIGHT_PRIMARY, null);
   setHighlight(HIGHLIGHT_COUNTERPART, null);
+  setHighlight(HIGHLIGHT_COUNTERPART_2, null);
 }
 
 /** Scroll a range to the vertical center of its pane's scroll container. */
@@ -250,13 +275,11 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
       const panel = target?.closest?.('[data-reader-panel]');
       const section = target?.closest?.('[data-reader-section]') as HTMLElement | null;
       const side = section?.dataset.readerSection as Side | undefined;
-      if (!panel || !side || (side !== 'ocr' && side !== 'translation')) return;
+      if (!panel || !side || !SIDES.includes(side)) return;
       // Ignore clicks on interactive elements inside the panes.
       if (target?.closest('a, button, summary, input, textarea')) return;
 
       const clickedPane = getPaneEl(side);
-      const otherSide: Side = side === 'ocr' ? 'translation' : 'ocr';
-      const otherPane = getPaneEl(otherSide);
       if (!clickedPane) return;
 
       const caret = caretFromPoint(e.clientX, e.clientY);
@@ -271,24 +294,23 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
       const normOffset = rawToNorm(clickedMap.norm, rawOffset);
 
       // Prefer the SHORTEST interval containing the click (most specific
-      // phrase); fall back to the nearest interval within ~60 chars.
+      // phrase); otherwise snap only to a span the click all but touches.
       let hit: PairInterval | null = null;
       for (const iv of intervals) {
-        const normEnd = iv.normStart + (iv.end - iv.start); // approximate but adequate
-        if (normOffset >= iv.normStart && normOffset <= normEnd) {
-          if (!hit || iv.end - iv.start < hit.end - hit.start) hit = iv;
+        if (normOffset >= iv.normStart && normOffset <= iv.normEnd) {
+          if (!hit || iv.normEnd - iv.normStart < hit.normEnd - hit.normStart) hit = iv;
         }
       }
       if (!hit) {
-        let bestDist = 60;
+        let bestDist = SNAP_TOLERANCE;
         for (const iv of intervals) {
-          const dist = normOffset < iv.normStart
-            ? iv.normStart - normOffset
-            : normOffset - (iv.normStart + (iv.end - iv.start));
+          const dist = normOffset < iv.normStart ? iv.normStart - normOffset : normOffset - iv.normEnd;
           if (dist < bestDist) { bestDist = dist; hit = iv; }
         }
       }
       if (!hit) {
+        // The click landed on text the model never aligned. Say nothing rather
+        // than highlighting a phrase that merely happens to be nearby.
         clearHighlights();
         setSheet(null);
         return;
@@ -298,34 +320,50 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
       const primaryRange = rangeFromOffsets(clickedMap, hit.start, hit.end);
       setHighlight(HIGHLIGHT_PRIMARY, primaryRange);
 
-      // Locate the counterpart span in the other pane (may be hidden on
-      // mobile-collapsed layouts or missing — then we still show the sheet).
-      let counterRange: Range | null = null;
-      let counterPaneEl: HTMLElement | null = null;
-      if (otherPane) {
+      // Light up the pair in every other pane that is on screen and has a span
+      // for it. The romanized pane only participates when its span resolved.
+      const counterparts: Array<{ side: Side; range: Range; pane: HTMLElement }> = [];
+      for (const otherSide of SIDES) {
+        if (otherSide === side) continue;
+        const otherPane = getPaneEl(otherSide);
+        if (!otherPane || spanFor(pair, otherSide) === undefined) continue;
         const otherMap = buildPaneMap(otherPane);
-        const otherIntervals = locatePairIntervals(otherMap, currentPairs, otherSide);
-        const counter = otherIntervals.find((iv) => iv.pairIndex === hit!.pairIndex);
-        if (counter) {
-          counterRange = rangeFromOffsets(otherMap, counter.start, counter.end);
-          counterPaneEl = otherPane;
-        }
+        const counter = locatePairIntervals(otherMap, currentPairs, otherSide)
+          .find((iv) => iv.pairIndex === hit!.pairIndex);
+        if (!counter) continue;
+        const range = rangeFromOffsets(otherMap, counter.start, counter.end);
+        if (range) counterparts.push({ side: otherSide, range, pane: otherPane });
       }
-      setHighlight(HIGHLIGHT_COUNTERPART, counterRange);
 
-      const counterpartText = side === 'translation' ? pair.s : pair.t;
+      // The sheet (mobile / no-highlight fallback) shows the reader's opposite
+      // text, so a romanized click reads back as the translation.
+      const sheetSide: Side = side === 'translation' ? 'ocr' : 'translation';
+      const scrollTarget = counterparts.find((c) => c.side === sheetSide) ?? counterparts[0];
+
+      setHighlight(HIGHLIGHT_COUNTERPART, scrollTarget?.range ?? null);
+      setHighlight(
+        HIGHLIGHT_COUNTERPART_2,
+        counterparts.find((c) => c !== scrollTarget)?.range ?? null,
+      );
+
       const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
       const doScroll = () => {
-        if (counterRange && counterPaneEl) scrollRangeIntoPane(counterPaneEl, counterRange);
+        if (scrollTarget) scrollRangeIntoPane(scrollTarget.pane, scrollTarget.range);
       };
 
-      if (isDesktop && counterRange && highlightsSupported()) {
+      if (isDesktop && counterparts.length && highlightsSupported()) {
         setSheet(null);
         doScroll();
       } else {
         // Mobile (stacked panes — don't yank the reader away), or no
-        // highlight support: show the counterpart in a bottom sheet.
-        setSheet({ snippet: counterpartText, counterpartSide: otherSide, scrollTo: doScroll });
+        // highlight support: show the counterpart in a bottom sheet. The
+        // snippet is always the sheet's labelled side, never whichever pane
+        // happened to scroll.
+        setSheet({
+          snippet: spanFor(pair, sheetSide) ?? '',
+          counterpartSide: sheetSide,
+          scrollTo: doScroll,
+        });
       }
     };
 
@@ -343,13 +381,14 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
     <>
       {/* ::highlight() rules live here (not globals.css): Next's CSS processor
           rejects the Custom Highlight API pseudo-element. Gold family from the
-          /blog/word-alignment demo; primary = clicked span, counterpart = the
-          aligned span in the other pane. */}
+          /blog/word-alignment demo; primary = clicked span, counterparts = the
+          aligned span in each other pane. */}
       <style>{`
         ::highlight(${HIGHLIGHT_PRIMARY}) {
           background-color: rgba(160, 120, 40, 0.22);
         }
-        ::highlight(${HIGHLIGHT_COUNTERPART}) {
+        ::highlight(${HIGHLIGHT_COUNTERPART}),
+        ::highlight(${HIGHLIGHT_COUNTERPART_2}) {
           background-color: rgba(160, 120, 40, 0.38);
           text-decoration: underline;
           text-decoration-color: rgba(160, 120, 40, 0.85);
