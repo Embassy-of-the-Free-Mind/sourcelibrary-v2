@@ -8,6 +8,7 @@ import { useStableSession } from '@/hooks/useStableSession';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 
 function timeAgo(dateStr: string): string {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -94,34 +95,37 @@ export function RecentlyReadSlider({ entries }: { entries: ReadingHistoryEntry[]
             <h2 className="text-2xl md:text-3xl text-primary font-display">Recently looked at</h2>
             <p className="text-muted mt-1 text-sm">Pick up where you left off.</p>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => step(-1)}
-                disabled={atStart}
-                aria-label="Previous"
-                className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm cursor-pointer hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => step(1)}
-                disabled={atEnd}
-                aria-label="Next"
-                className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm cursor-pointer hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-            <Link
-              href="/reading-history"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-rust hover:text-accent-rust/80 transition-colors"
+          <Link
+            href="/reading-history"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-rust hover:text-accent-rust/80 transition-colors"
+          >
+            See all
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Arrows — same as the first-translations slider on the collection
+            pages (MycoSlider): own right-aligned row directly above the track. */}
+        <div className="flex items-center justify-end gap-3 mb-3">
+          <div className="hidden sm:flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => step(-1)}
+              disabled={atStart}
+              aria-label="Previous"
+              className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              See all
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => step(1)}
+              disabled={atEnd}
+              aria-label="Next"
+              className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -131,7 +135,7 @@ export function RecentlyReadSlider({ entries }: { entries: ReadingHistoryEntry[]
           className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-1 px-1"
         >
           {entries.map((entry, i) => (
-            <RecentCard key={`${entry.book_id}-${entry.started_at}-${i}`} entry={entry} priority={i < 6} />
+            <RecentCard key={`${entry.book_id}-${entry.started_at}-${i}`} entry={entry} priority={i < 5} />
           ))}
         </div>
       </div>
@@ -141,11 +145,17 @@ export function RecentlyReadSlider({ entries }: { entries: ReadingHistoryEntry[]
 
 function RecentCard({ entry, priority }: { entry: ReadingHistoryEntry; priority: boolean }) {
   const [imageError, setImageError] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
   const book = entry.book;
   const title = book.display_title || book.title;
   const url = bookUrl({ slug: book.slug, id: book.id });
   const pageUrl = `${url}/page/${entry.last_page_id}`;
-  const thumb = getBookThumbnailUrl(book, 'thumb');
+  // Match CollectionBookCard's quality path: the ~1200px `display` variant via
+  // the responsive R2 loader, falling back to the smaller `thumb` variant only
+  // if the display URL 404s. (Was using the low-res `thumb` variant directly.)
+  const displayUrl = getBookThumbnailUrl(book, 'display');
+  const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
+  const thumb = useFallback && fallbackUrl ? fallbackUrl : displayUrl;
   const progress = book.pages_count
     ? Math.min(100, Math.round((entry.last_page_number / book.pages_count) * 100))
     : 0;
@@ -154,20 +164,25 @@ function RecentCard({ entry, priority }: { entry: ReadingHistoryEntry; priority:
     <Link
       href={pageUrl}
       data-card
-      className="group snap-start shrink-0 basis-[42%] sm:basis-[calc((100%-3rem)/4)] lg:basis-[calc((100%-5rem)/6)] flex flex-col border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
+      className="group snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)] flex flex-col border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
     >
       {/* Cover */}
       <div className="relative aspect-[3/4] bg-warm overflow-hidden">
         {thumb && !imageError ? (
           <Image
             src={thumb}
+            loader={bookCoverResponsiveLoader}
             alt={title}
             fill
+            quality={85}
             className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 42vw, (max-width: 1024px) 25vw, 16vw"
-            onError={() => setImageError(true)}
+            sizes="(max-width: 640px) 66vw, (max-width: 1024px) 33vw, 20vw"
+            onError={() => {
+              if (!useFallback && fallbackUrl) setUseFallback(true);
+              else setImageError(true);
+            }}
             loading={priority ? 'eager' : 'lazy'}
-            unoptimized
+            priority={priority}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-border-medium">
