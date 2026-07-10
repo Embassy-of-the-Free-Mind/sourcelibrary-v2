@@ -1,15 +1,18 @@
 /**
  * KDP Cover Image Generator
  *
- * Generates 2560x1600px JPEG cover images for KDP ebook publishing.
- * Uses Sharp for image processing with SVG text overlays.
+ * Generates portrait JPEG cover images for KDP ebook publishing.
+ * KDP eBook covers must be TALLER than wide — Amazon's recommended size is
+ * 1600 × 2560 px (a 1.6:1 height:width ratio). Uses Sharp for image processing
+ * with SVG text overlays.
  */
 
 import sharp from 'sharp';
 
-// KDP cover dimensions (1.6:1 ratio, Amazon spec)
-const COVER_WIDTH = 2560;
-const COVER_HEIGHT = 1600;
+// KDP eBook cover dimensions (portrait, 1.6:1 height:width — Amazon spec)
+const COVER_WIDTH = 1600;
+const COVER_HEIGHT = 2560;
+const CENTER_X = COVER_WIDTH / 2;
 
 // Brand colors from style system
 const COLOR_GOLD = '#c9a86c';
@@ -55,71 +58,67 @@ function wrapText(text: string, maxCharsPerLine: number): string[] {
 
 /**
  * Build the SVG text overlay for the cover.
- * Positions title, author, subtitle, and Source Library branding.
+ * Positions title (upper-middle), author (below), subtitle + Source Library
+ * branding (lower third), all centered on a portrait canvas.
  */
 function buildTextOverlaySvg(
   title: string,
   author: string,
   subtitle: string
 ): string {
-  const escapedTitle = escapeXml(title);
   const escapedAuthor = escapeXml(author);
   const escapedSubtitle = escapeXml(subtitle);
 
-  // Title: wrap to ~22 chars per line at 110px font
-  const titleLines = wrapText(escapedTitle, 22);
-  const titleFontSize = titleLines.length > 3 ? 80 : 110;
-  const titleCharsPerLine = titleLines.length > 3
-    ? wrapText(escapedTitle, 30)
-    : titleLines;
-  const finalTitleLines = titleLines.length > 3
-    ? wrapText(escapedTitle, 30)
-    : titleLines;
+  // Title: fewer chars/line at the larger size; step down font + widen wrap for
+  // long titles so they still fit the 1600px-wide canvas.
+  const firstPass = wrapText(title, 16);
+  const isLong = firstPass.length > 3;
+  const titleFontSize = isLong ? 88 : 118;
+  const titleLines = isLong ? wrapText(title, 20) : firstPass;
+  const titleLineHeight = titleFontSize * 1.28;
 
-  // Vertical layout: title centered in upper portion, author below, subtitle + brand at bottom
-  const titleStartY = 400;
-  const titleLineHeight = titleFontSize * 1.3;
-
-  const titleElements = finalTitleLines.map((line, i) =>
-    `<text x="1280" y="${titleStartY + i * titleLineHeight}"
+  // Vertical layout (portrait): title block centered in the upper-middle.
+  const titleStartY = 760;
+  const titleElements = titleLines.map((line, i) =>
+    `<text x="${CENTER_X}" y="${titleStartY + i * titleLineHeight}"
        font-family="serif" font-size="${titleFontSize}" font-weight="700"
        fill="${COLOR_GOLD}" text-anchor="middle"
        letter-spacing="3">${escapeXml(line)}</text>`
   ).join('\n    ');
 
-  // Decorative line below title
-  const lineY = titleStartY + finalTitleLines.length * titleLineHeight + 40;
+  // Decorative line below the title.
+  const lineY = titleStartY + titleLines.length * titleLineHeight + 30;
 
-  // Author positioned below decorative line
-  const authorY = lineY + 80;
+  // Author below the decorative line.
+  const authorY = lineY + 100;
 
-  // Subtitle and branding near bottom
-  const subtitleY = COVER_HEIGHT - 280;
-  const brandY = COVER_HEIGHT - 180;
+  // Subtitle + brand near the bottom.
+  const subtitleY = COVER_HEIGHT - 360;
+  const brandY = COVER_HEIGHT - 240;
 
   return `<svg width="${COVER_WIDTH}" height="${COVER_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
     <!-- Title -->
     ${titleElements}
 
     <!-- Decorative line -->
-    <line x1="980" y1="${lineY}" x2="1580" y2="${lineY}"
+    <line x1="${CENTER_X - 300}" y1="${lineY}" x2="${CENTER_X + 300}" y2="${lineY}"
       stroke="${COLOR_GOLD}" stroke-width="2" opacity="0.6"/>
 
     <!-- Author -->
-    <text x="1280" y="${authorY}"
-      font-family="serif" font-size="56" font-style="italic"
+    <text x="${CENTER_X}" y="${authorY}"
+      font-family="serif" font-size="60" font-style="italic"
       fill="${COLOR_GOLD}" text-anchor="middle"
       letter-spacing="2">${escapedAuthor}</text>
 
     <!-- Subtitle -->
-    <text x="1280" y="${subtitleY}"
-      font-family="sans-serif" font-size="36"
+    <text x="${CENTER_X}" y="${subtitleY}"
+      font-family="sans-serif" font-size="40"
       fill="${COLOR_GOLD_DIM}" text-anchor="middle"
-      letter-spacing="4" text-transform="uppercase">${escapedSubtitle}</text>
+      letter-spacing="4">${escapedSubtitle}</text>
 
     <!-- Source Library branding -->
-    <text x="1280" y="${brandY}"
-      font-family="sans-serif" font-size="28"
+    <text x="${CENTER_X}" y="${brandY}"
+      font-family="sans-serif" font-size="30"
       fill="${COLOR_GOLD_DIM}" text-anchor="middle"
       letter-spacing="6" opacity="0.7">SOURCE LIBRARY</text>
   </svg>`;
@@ -177,7 +176,7 @@ async function fetchImage(url: string): Promise<Buffer> {
  *
  * @param book - Book record with title, author, display_title, language
  * @param coverImageUrl - URL of the cover image to use as background (optional)
- * @returns JPEG buffer at 2560x1600px
+ * @returns JPEG buffer at 1600x2560px (portrait, KDP eBook spec)
  *
  * @example
  * const coverBuffer = await generateKdpCover(book, book.thumbnail_blob || book.thumbnail);

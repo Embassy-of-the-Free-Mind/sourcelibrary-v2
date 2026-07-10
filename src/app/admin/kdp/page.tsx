@@ -875,7 +875,7 @@ function ReviewStep({
                         )}
                       </div>
                       <p className="text-[10px] mt-1" style={{ color: 'var(--text-faint)' }}>
-                        Cover will be generated at 2560x1600 with title overlay
+                        Cover will be generated at 1600x2560 (portrait) with title overlay
                       </p>
                     </div>
                   </div>
