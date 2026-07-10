@@ -64,6 +64,11 @@ export interface HomeStrings {
   recentlyTranslatedHeading: string;
   recentlyTranslatedSubtitle: string;
 
+  // From the Collection — gallery masonry
+  fromCollectionHeading: string;
+  fromCollectionSubtitle: string;
+  fromCollectionViewAll: (n: number) => string;
+
   // Discover section
   discoverHeading: string;
   discoverSubtitle: string;
@@ -166,6 +171,9 @@ const en: HomeStrings = {
 
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  fromCollectionHeading: 'From the Collection',
+  fromCollectionSubtitle: 'Illustrations, plates, and engravings from rare books across the library.',
+  fromCollectionViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
   discoverHeading: 'Discover',
   discoverSubtitle: 'Translated primary sources from the collection.',
   discoverEmpty: 'Browse the collection to discover translated primary sources.',
@@ -269,6 +277,9 @@ const es: HomeStrings = {
 
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  fromCollectionHeading: 'De la colección',
+  fromCollectionSubtitle: 'Ilustraciones, láminas y grabados de libros raros de toda la biblioteca.',
+  fromCollectionViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
   discoverHeading: 'Descubre',
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',

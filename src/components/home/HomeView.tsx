@@ -4,10 +4,13 @@ import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
-import FromTheCollection from '@/components/prototype/FromTheCollection';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
+import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
+import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import SignUpCTA from '@/components/auth/SignUpCTA';
+import { galleryImageUrl } from '@/lib/slugify';
+import { toGalleryCardUrl } from '@/lib/utils';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
@@ -19,6 +22,23 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   const t = HOME_STRINGS[lang];
   const { featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, blogPosts, spanishPodcast } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
+
+  // "From the Collection" — the same true-height gallery masonry as the Mycology
+  // collection page, filled with high-quality illustrations from across the whole
+  // library (getCollectionShowcase samples site-wide museum-described plates).
+  const galleryPlates: Plate[] = (showcase as Array<Record<string, unknown>>)
+    .filter((it) => it.thumbnail_url || it.extracted_url)
+    .slice(0, 30)
+    .map((it) => {
+      const galleryId = `${it.page_id}-${it.detection_index}`;
+      const thumb = it.thumbnail_url as string | undefined;
+      return {
+        src: (thumb && toGalleryCardUrl(thumb)) || thumb || (it.extracted_url as string),
+        fallback: (it.extracted_url as string) || thumb,
+        href: it.page_id != null && it.detection_index != null ? galleryImageUrl({ id: galleryId, tenant_slug: null }) : undefined,
+        label: (it.museum_description as string) || (it.book_title as string) || 'Illustration',
+      };
+    });
 
   return (
     <div className="min-h-screen">
@@ -239,8 +259,41 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         />
       )}
 
-      {/* From the Collection — image-heavy gallery showcase */}
-      <FromTheCollection items={showcase} />
+      {/* From the Collection — true-height gallery masonry (Mycology-style),
+          capped and faded into the page, filled with high-quality illustrations
+          from across the whole library. */}
+      {galleryPlates.length > 0 && (
+        <section className="bg-warm py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
+              {t.fromCollectionHeading}
+            </h2>
+            <p className="text-muted mb-10 max-w-2xl">
+              {t.fromCollectionSubtitle}
+            </p>
+            <div
+              className="relative max-h-[560px] sm:max-h-[1000px] lg:max-h-[1200px] overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+              }}
+            >
+              <GalleryMasonry plates={galleryPlates} />
+            </div>
+            {counts.illustrationCount > 0 && (
+              <div className="mt-8 flex justify-center">
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+                >
+                  {t.fromCollectionViewAll(counts.illustrationCount)}
+                  <span className="text-xs">&rarr;</span>
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Discover Section */}
       <section className="bg-white py-16 md:py-24">
@@ -289,42 +342,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
-              >
-                {post.image && (
-                  <div className="aspect-[16/10] relative bg-warm overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${post.tagColor}`}>
-                    {post.tagKey === 'deepDive' ? t.tagDeepDive : t.tagCollection}
-                  </span>
-                  <h3 className="font-display text-lg text-primary mt-2 group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted mt-1.5 line-clamp-2">
-                    {post.subtitle}
-                  </p>
-                  <p className="text-xs text-faint mt-3">
-                    {post.date} &middot; {post.readTime}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ResearchNotesSlider
+            posts={blogPosts}
+            deepDiveLabel={t.tagDeepDive}
+            collectionLabel={t.tagCollection}
+          />
         </div>
       </section>
 
