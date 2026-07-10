@@ -112,6 +112,14 @@ export interface LocatedSpan {
   end: number;
   /** Where the match begins in the normalized string (for cursor movement). */
   normStart: number;
+  /**
+   * Where the match ends in the normalized string (exclusive). NOT derivable
+   * from `end - start`: folding changes length in both directions (`æ`→`ae`
+   * grows, dehyphenation and diacritic stripping shrink), so a raw length is
+   * not a normalized length. Callers testing "is this normalized offset inside
+   * the span?" must use this.
+   */
+  normEnd: number;
 }
 
 function indexWithFallback(norm: string, needle: string, fromNorm: number): number {
@@ -144,5 +152,5 @@ export function locateSpan(
   if (at === -1) return null;
   const start = hay.rawIdx[at];
   const end = hay.rawIdx[at + needle.length - 1] + 1;
-  return { start, end, normStart: at };
+  return { start, end, normStart: at, normEnd: at + needle.length };
 }

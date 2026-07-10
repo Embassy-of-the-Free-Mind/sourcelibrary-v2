@@ -41,7 +41,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     const page = await db.collection('pages').findOne(
       { id: pageId, book_id: book.id },
-      { projection: { id: 1, 'ocr.data': 1, 'translation.data': 1, word_alignment: 1 } },
+      { projection: { id: 1, 'ocr.data': 1, 'translation.data': 1, 'transliteration.data': 1, word_alignment: 1 } },
     );
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
