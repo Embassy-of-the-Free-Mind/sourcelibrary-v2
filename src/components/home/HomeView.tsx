@@ -6,6 +6,7 @@ import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
@@ -197,6 +198,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
         </div>
       </section>
+
+      {/* Recently looked at — personalized slider from the signed-in reader's
+          history, tucked right under the collections grid. Self-hides for
+          anonymous visitors and readers with no history. */}
+      <RecentlyRead />
 
       {/* Ask the source — the librarian's front door. Placed after the
           collections grid so the invitation lands once the visitor has seen
