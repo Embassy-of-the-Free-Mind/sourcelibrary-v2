@@ -27,6 +27,9 @@ const nextConfig: NextConfig = {
       // Internet Archive (IIIF images & downloads)
       { protocol: 'https', hostname: 'iiif.archive.org' },
       { protocol: 'https', hostname: 'archive.org' },
+      // National Diet Library, Japan (IIIF) — hotlink-walled, so images
+      // must be archived to R2; keep in sync with ARCHIVABLE_SOURCES.
+      { protocol: 'https', hostname: 'dl.ndl.go.jp' },
       // Gallica (BnF)
       { protocol: 'https', hostname: 'gallica.bnf.fr' },
       // MDZ (Bavarian State Library)

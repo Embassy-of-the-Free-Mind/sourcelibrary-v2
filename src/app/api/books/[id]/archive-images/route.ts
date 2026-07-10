@@ -10,7 +10,7 @@ import sharp from 'sharp';
 export const maxDuration = 300;
 
 // Regex pattern to match pages from external sources that can be archived
-const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/;
+const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|dl\.ndl\.go\.jp/;
 
 /**
  * POST /api/books/[id]/archive-images
