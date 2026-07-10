@@ -240,17 +240,17 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         />
       )}
 
-      {/* From the Collection — true-height gallery masonry (Mycology-style),
-          capped and faded into the page, filled with high-quality illustrations
-          from across the whole library. */}
+      {/* Gallery — true-height masonry (Mycology-style), capped and faded into
+          the page, filled with high-quality illustrations from across the whole
+          library. */}
       {galleryPlates.length > 0 && (
         <section className="bg-warm py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
             <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
-              {t.fromCollectionHeading}
+              {t.galleryHeading}
             </h2>
             <p className="text-muted mb-10 max-w-2xl">
-              {t.fromCollectionSubtitle}
+              {t.gallerySubtitle}
             </p>
             <div
               className="relative max-h-[560px] sm:max-h-[1000px] lg:max-h-[1200px] overflow-hidden"
@@ -267,7 +267,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                   href="/gallery"
                   className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
                 >
-                  {t.fromCollectionViewAll(counts.illustrationCount)}
+                  {t.galleryViewAll(counts.illustrationCount)}
                   <span className="text-xs">&rarr;</span>
                 </Link>
               </div>
