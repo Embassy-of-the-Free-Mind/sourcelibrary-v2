@@ -4,6 +4,8 @@ import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout } from '@/lib/collections-utils';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
+import { toGalleryCardUrl } from '@/lib/utils';
+import { type Plate } from '@/components/GalleryMasonry';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -348,6 +350,52 @@ async function getRecentlyTranslated(): Promise<CatalogBook[]> {
     if (out.length >= RECENTLY_TRANSLATED_COUNT) break;
   }
   return out;
+}
+
+// "From the Collection" gallery masonry — high-quality illustrations sampled
+// from across the whole library, mirroring the Mycology gallery. Returns enough
+// plates (48, max 2 per book for variety) to densely fill the 5-column masonry;
+// too few and the columns render ragged with empty space. Small `-card` thumbs
+// keep it light. `$sample`-first preserves MongoDB's fast random cursor.
+async function getHomeGalleryPlates(): Promise<Plate[]> {
+  const db = await getReadDb();
+  const raw = await db.collection('gallery_images').aggregate([
+    { $sample: { size: 3000 } },
+    {
+      $match: {
+        book_visible: true,
+        gallery_quality: { $gte: 0.8 },
+        $or: [
+          { thumbnail_url: { $type: 'string', $gt: '' } },
+          { extracted_url: { $type: 'string', $gt: '' } },
+        ],
+      },
+    },
+    { $limit: 300 },
+    { $project: { _id: 0, book_id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, museum_description: 1, book_title: 1 } },
+  ], { maxTimeMS: 8000 }).toArray();
+
+  const perBook = new Map<string, number>();
+  const plates: Plate[] = [];
+  for (const g of raw as Array<Record<string, unknown>>) {
+    const bookId = String(g.book_id ?? '');
+    const n = perBook.get(bookId) ?? 0;
+    if (n >= 2) continue; // at most 2 plates per book for variety
+    const thumb = g.thumbnail_url as string | undefined;
+    const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
+    const src = (thumb && toGalleryCardUrl(thumb)) || thumb || full;
+    if (!src) continue;
+    const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
+    perBook.set(bookId, n + 1);
+    plates.push({
+      src,
+      fallback: full || thumb,
+      href: id ? `/gallery/image/${id}` : undefined,
+      label: (g.museum_description as string) || (g.book_title as string) || 'Illustration',
+    });
+    if (plates.length >= 48) break;
+  }
+  return plates;
 }
 
 async function getCollectionShowcase() {
@@ -720,7 +768,7 @@ export interface HomeData {
   featuredItems: FeaturedItem[];
   discoverBooks: Book[];
   recentlyTranslated: CatalogBook[];
-  showcase: any[];
+  galleryPlates: Plate[];
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
@@ -728,15 +776,15 @@ export interface HomeData {
 }
 
 export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, spanishPodcast] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
-    withTimeout(getCollectionShowcase(), 20000, [] as any[]),
+    withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getSpanishPodcast(), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
 }

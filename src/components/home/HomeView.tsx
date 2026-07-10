@@ -6,11 +6,9 @@ import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
-import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
+import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { galleryImageUrl } from '@/lib/slugify';
-import { toGalleryCardUrl } from '@/lib/utils';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
@@ -20,25 +18,8 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, blogPosts, spanishPodcast } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, spanishPodcast } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
-
-  // "From the Collection" — the same true-height gallery masonry as the Mycology
-  // collection page, filled with high-quality illustrations from across the whole
-  // library (getCollectionShowcase samples site-wide museum-described plates).
-  const galleryPlates: Plate[] = (showcase as Array<Record<string, unknown>>)
-    .filter((it) => it.thumbnail_url || it.extracted_url)
-    .slice(0, 30)
-    .map((it) => {
-      const galleryId = `${it.page_id}-${it.detection_index}`;
-      const thumb = it.thumbnail_url as string | undefined;
-      return {
-        src: (thumb && toGalleryCardUrl(thumb)) || thumb || (it.extracted_url as string),
-        fallback: (it.extracted_url as string) || thumb,
-        href: it.page_id != null && it.detection_index != null ? galleryImageUrl({ id: galleryId, tenant_slug: null }) : undefined,
-        label: (it.museum_description as string) || (it.book_title as string) || 'Illustration',
-      };
-    });
 
   return (
     <div className="min-h-screen">
