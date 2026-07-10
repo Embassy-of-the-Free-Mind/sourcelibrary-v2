@@ -6,6 +6,7 @@ import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
@@ -16,7 +17,7 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, showcase, counts, collections, blogPosts, spanishPodcast } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, blogPosts, spanishPodcast } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
   return (
@@ -197,6 +198,32 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
         </div>
       </section>
+
+      {/* Recently translated — the same slider as the Mycology collection's
+          "First translations" band, auto-filled with the 15 works most recently
+          brought into a modern translation site-wide (Supabase last_translation_at).
+          Hidden if the catalog query returns nothing. */}
+      {recentlyTranslated.length > 0 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.recentlyTranslatedHeading}
+              </h2>
+              <Link
+                href="/catalog?sort=last_translated"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.browseCatalog} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.recentlyTranslatedSubtitle}
+            </p>
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} />
+          </div>
+        </section>
+      )}
 
       {/* Ask the source — the librarian's front door. Placed after the
           collections grid so the invitation lands once the visitor has seen

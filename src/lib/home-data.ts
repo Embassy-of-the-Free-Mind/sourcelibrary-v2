@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -287,6 +288,22 @@ async function getDiscoverBooks(): Promise<Book[]> {
   }));
 
   return JSON.parse(JSON.stringify(booksWithTenantSlug)) as Book[];
+}
+
+// Top 15 most recently translated works, site-wide. Reads the Supabase
+// `books_catalog` mirror (indexed on `last_translation_at`) rather than Mongo —
+// the equivalent Mongo sort is a 15s full scan because that field is unindexed,
+// whereas this returns in ~0.5s. `hasTranslation` filters to books with at least
+// one translated page (which also excludes artworks, pages_translated: 0), and
+// browseBooks already constrains to `visible: true`.
+async function getRecentlyTranslated(): Promise<CatalogBook[]> {
+  const { books } = await browseBooks({
+    hasTranslation: true,
+    sort: 'last_translated',
+    limit: 15,
+    skipCount: true,
+  });
+  return books;
 }
 
 async function getCollectionShowcase() {
@@ -658,6 +675,7 @@ async function getSpanishPodcast(): Promise<SpanishPodcast | null> {
 export interface HomeData {
   featuredItems: FeaturedItem[];
   discoverBooks: Book[];
+  recentlyTranslated: CatalogBook[];
   showcase: any[];
   counts: HomeCounts;
   collections: CollectionForGrid[];
@@ -666,14 +684,15 @@ export interface HomeData {
 }
 
 export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, showcase, counts, collections, spanishPodcast] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, spanishPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
+    withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
     withTimeout(getCollectionShowcase(), 20000, [] as any[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getSpanishPodcast(), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, showcase, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, showcase, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
 }
