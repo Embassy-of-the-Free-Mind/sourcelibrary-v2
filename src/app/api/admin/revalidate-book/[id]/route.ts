@@ -35,8 +35,15 @@ export async function POST(
   // Also revalidate by ID in case both are cached
   revalidatePath(`/book/${id}`);
 
-  // Revalidate individual page routes via layout invalidation
-  revalidatePath(`/book/${slug}`, 'layout');
+  // Revalidate individual page routes (/book/<x>/page/<pageId>) via layout
+  // invalidation. Layout invalidation is keyed on the literal /book/<x> prefix,
+  // so it must run for every identifier a reader can arrive under — slug, the
+  // route param, and the canonical book id. Doing it for the slug alone left
+  // id-form page URLs serving a stale render for the full 24h ISR window.
+  const bookPathKeys = new Set([slug, id, book.id as string].filter(Boolean));
+  for (const key of bookPathKeys) {
+    revalidatePath(`/book/${key}`, 'layout');
+  }
 
   const revalidated = [`/book/${slug}`, `/book/${id}`];
 
@@ -54,14 +61,16 @@ export async function POST(
     // Regular tenant route
     revalidatePath(`/${tenantSlug}/book/${slug}`);
     revalidatePath(`/${tenantSlug}/book/${slug}/search`);
-    revalidatePath(`/${tenantSlug}/book/${slug}`, 'layout');
     revalidatePath(`/${tenantSlug}/book/${id}`);
     // Tenant subdomains route to /embed/[tenant]/book/[slug] via proxy.ts.
     // Without this, Vercel's edge cache happily keeps serving the stale 404
     // after a visibility flip — that's how the Bhutan promotion bit us.
     revalidatePath(`/embed/${tenantSlug}/book/${slug}`);
-    revalidatePath(`/embed/${tenantSlug}/book/${slug}`, 'layout');
     revalidatePath(`/embed/${tenantSlug}/book/${id}`);
+    for (const key of bookPathKeys) {
+      revalidatePath(`/${tenantSlug}/book/${key}`, 'layout');
+      revalidatePath(`/embed/${tenantSlug}/book/${key}`, 'layout');
+    }
     revalidated.push(
       `/${tenantSlug}/book/${slug}`,
       `/${tenantSlug}/book/${id}`,
