@@ -352,28 +352,31 @@ async function getRecentlyTranslated(): Promise<CatalogBook[]> {
   return out;
 }
 
-// "From the Collection" gallery masonry — high-quality illustrations sampled
-// from across the whole library, mirroring the Mycology gallery. Returns enough
-// plates (48, max 2 per book for variety) to densely fill the 5-column masonry;
-// too few and the columns render ragged with empty space. Small `-card` thumbs
-// keep it light. `$sample`-first preserves MongoDB's fast random cursor.
+// Gallery masonry — the highest-quality illustrations from across the library,
+// mirroring the Mycology gallery. DETERMINISTIC by design: a stable sort on the
+// `{gallery_quality:-1, book_year, book_id, page_number}` index returns the same
+// top plates on every render (no per-refresh re-randomisation), and the query is
+// far cheaper than the old `$sample` over 3000 docs. `extracted_width/height`
+// come back so the masonry can reserve each cell's aspect ratio and load without
+// layout shift. Diversified to max 2 plates per book for variety.
 async function getHomeGalleryPlates(): Promise<Plate[]> {
   const db = await getReadDb();
-  const raw = await db.collection('gallery_images').aggregate([
-    { $sample: { size: 3000 } },
+  const raw = await db.collection('gallery_images').find(
     {
-      $match: {
-        book_visible: true,
-        gallery_quality: { $gte: 0.8 },
-        $or: [
-          { thumbnail_url: { $type: 'string', $gt: '' } },
-          { extracted_url: { $type: 'string', $gt: '' } },
-        ],
-      },
+      book_hidden: { $ne: true },
+      gallery_quality: { $gte: 0.9 },
+      extracted_width: { $gt: 0 },
+      extracted_height: { $gt: 0 },
+      $or: [
+        { thumbnail_url: { $type: 'string', $gt: '' } },
+        { extracted_url: { $type: 'string', $gt: '' } },
+      ],
     },
-    { $limit: 300 },
-    { $project: { _id: 0, book_id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, museum_description: 1, book_title: 1 } },
-  ], { maxTimeMS: 8000 }).toArray();
+    {
+      projection: { _id: 0, book_id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, extracted_width: 1, extracted_height: 1, museum_description: 1, book_title: 1 },
+      maxTimeMS: 8000,
+    },
+  ).sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 }).limit(240).toArray();
 
   const perBook = new Map<string, number>();
   const plates: Plate[] = [];
@@ -392,6 +395,8 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
       fallback: full || thumb,
       href: id ? `/gallery/image/${id}` : undefined,
       label: (g.museum_description as string) || (g.book_title as string) || 'Illustration',
+      w: g.extracted_width as number | undefined,
+      h: g.extracted_height as number | undefined,
     });
     if (plates.length >= 48) break;
   }

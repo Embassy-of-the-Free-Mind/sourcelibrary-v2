@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export interface Plate { src: string; href?: string; label?: string; fallback?: string }
+export interface Plate { src: string; href?: string; label?: string; fallback?: string; w?: number; h?: number }
 
 /**
  * Lightweight masonry. Columns fill round-robin (item i → column i % cols) so the
@@ -38,11 +38,16 @@ export default function GalleryMasonry({ plates }: { plates: Plate[] }) {
                   alt={p.label || 'Illustration'}
                   loading="lazy"
                   decoding="async"
+                  width={p.w}
+                  height={p.h}
+                  // Reserve the cell's aspect ratio up front so images fade in
+                  // without shifting the masonry layout as they decode.
+                  style={p.w && p.h ? { aspectRatio: `${p.w} / ${p.h}` } : undefined}
                   onError={p.fallback ? (e) => {
                     const im = e.currentTarget;
                     if (p.fallback && im.src !== p.fallback) im.src = p.fallback;
                   } : undefined}
-                  className="w-full h-auto block group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-auto block bg-warm group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             );
