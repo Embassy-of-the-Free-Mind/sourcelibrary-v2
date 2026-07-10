@@ -7,6 +7,9 @@ import FeedbackWidget from './FeedbackWidget';
 // Pages with their own "get involved" / feedback section opt out of this global
 // callout to avoid a duplicate. (Redesigned collection pages, mycology for now.)
 const HIDE_ON = ['/collections/mycology'];
+// Homepage editions opt out entirely — they carry their own "Be part of this"
+// band. Matched exactly, since every path startsWith('/').
+const HIDE_EXACT = ['/', '/es'];
 
 /**
  * A warm callout section inviting visitors to share feedback.
@@ -23,7 +26,7 @@ export default function FeedbackCallout() {
     }
   }, []);
 
-  if (pathname && HIDE_ON.some((p) => pathname.startsWith(p))) return null;
+  if (pathname && (HIDE_EXACT.includes(pathname) || HIDE_ON.some((p) => pathname.startsWith(p)))) return null;
   if (dismissed) return null;
 
   return (

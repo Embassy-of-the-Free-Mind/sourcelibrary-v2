@@ -4,7 +4,6 @@ import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
-import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
@@ -275,33 +274,6 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
         </section>
       )}
-
-      {/* Discover Section */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
-            {t.discoverHeading}
-          </h2>
-          <p className="text-muted mb-10 max-w-2xl">
-            {t.discoverSubtitle}
-          </p>
-
-          {discoverBooks.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-              {discoverBooks.map((book, i) => (
-                <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={i < 2} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted mb-4">{t.discoverEmpty}</p>
-              <Link href="/catalog" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
-                {t.browseCatalog}
-              </Link>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* Blog Section */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
