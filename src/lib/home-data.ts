@@ -290,20 +290,64 @@ async function getDiscoverBooks(): Promise<Book[]> {
   return JSON.parse(JSON.stringify(booksWithTenantSlug)) as Book[];
 }
 
-// Top 15 most recently translated works, site-wide. Reads the Supabase
-// `books_catalog` mirror (indexed on `last_translation_at`) rather than Mongo —
-// the equivalent Mongo sort is a 15s full scan because that field is unindexed,
-// whereas this returns in ~0.5s. `hasTranslation` filters to books with at least
-// one translated page (which also excludes artworks, pages_translated: 0), and
-// browseBooks already constrains to `visible: true`.
+const RECENTLY_TRANSLATED_COUNT = 15;
+
+// A book renders a real cover only when its thumbnail is a rehosted R2 URL
+// (images.sourcelibrary.org) or a whitelisted Wikimedia Commons URL — those are
+// the hosts the site CSP `img-src` allows. Freshly-imported books still point at
+// the raw source (archive.org, …), which the browser blocks → the card falls
+// back to a placeholder. We only want real covers in this slider, so filter to
+// renderable ones. Mirrors the resolution order in getBookThumbnailUrl().
+function hasRenderableCover(b: CatalogBook): boolean {
+  const t = b.thumbnail || '';
+  return t.includes('images.sourcelibrary.org/') || t.includes('upload.wikimedia.org/wikipedia/commons/');
+}
+
+// Collapse multi-volume sets / series to one entry so a single work (e.g. the
+// 20-volume "Herculaneum Volumes") can't fill the whole slider. Key on the title
+// with volume/part/collection markers, parentheticals, and digits stripped, plus
+// the author.
+function workKey(b: CatalogBook): string {
+  const title = (b.display_title || b.title || '')
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, '')
+    .replace(/\b(vol|volume|part|book|tome|band|no|first collection|second collection)\.?\s*[ivxlcdm0-9]*\b/g, '')
+    .replace(/[0-9]+/g, '')
+    .replace(/[^a-z\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 32);
+  return `${title}|${(b.author || '').toLowerCase().trim().slice(0, 18)}`;
+}
+
+// The 15 most recently translated *distinct* works that have a real cover.
+// Reads the Supabase `books_catalog` mirror (indexed on `last_translation_at`)
+// rather than Mongo — the equivalent Mongo sort is a 15s full scan because that
+// field is unindexed, whereas this returns in well under a second. `hasTranslation`
+// filters to books with a translated page (which also excludes artworks,
+// pages_translated: 0) and browseBooks already constrains to `visible: true`.
+// We over-fetch because the newest translations are batch imports whose covers
+// aren't rehosted yet, and big multi-volume sets dedupe down (15 distinct
+// cover-complete works currently sit within the first ~140 rows).
 async function getRecentlyTranslated(): Promise<CatalogBook[]> {
   const { books } = await browseBooks({
     hasTranslation: true,
     sort: 'last_translated',
-    limit: 15,
+    limit: 400,
     skipCount: true,
   });
-  return books;
+
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b)) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= RECENTLY_TRANSLATED_COUNT) break;
+  }
+  return out;
 }
 
 async function getCollectionShowcase() {
