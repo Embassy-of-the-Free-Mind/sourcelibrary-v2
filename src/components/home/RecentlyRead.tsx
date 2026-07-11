@@ -1,50 +1,47 @@
 'use client';
 
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Clock, ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useStableSession } from '@/hooks/useStableSession';
-import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
-import { bookUrl } from '@/lib/slugify';
-import { getBookThumbnailUrl } from '@/lib/utils';
-import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
-
-function timeAgo(dateStr: string): string {
-  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-  if (seconds < 60) return 'just now';
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days}d ago`;
-  return `${Math.floor(days / 30)}mo ago`;
-}
+import { readingHistory } from '@/lib/api-client';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
 
 /**
- * "Recently looked at" — a personalized horizontal slider drawn from the
- * signed-in reader's reading history, shown just under the collections grid on
- * the homepage. Each card links straight back to the last page they read so
- * they can pick up where they left off.
+ * "Recently looked at" — a personalized slider drawn from the signed-in reader's
+ * reading history, shown just under the collections grid on the homepage.
+ *
+ * Each book appears ONCE (deduped by book, keeping the most recent view — the
+ * history API returns multiple page-view rows per book) and renders with the
+ * standard site-wide book card, so it matches every other book grid/slider.
  *
  * Renders nothing for anonymous users or when there's no history yet, so the
- * homepage is unchanged for logged-out visitors. Slider mechanics mirror the
- * collection-page first-translations slider (arrows step one card, scroll-snap
- * on mobile).
+ * homepage is unchanged for logged-out visitors.
  */
 export default function RecentlyRead() {
   const { data: session, status } = useStableSession();
-  const [entries, setEntries] = useState<ReadingHistoryEntry[]>([]);
+  const [books, setBooks] = useState<MiniBook[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (status !== 'authenticated') return;
     let cancelled = false;
+    // Over-fetch: the history has one row per page-view, so many rows share a
+    // book. Dedupe down to one card per book, newest first (API sorts by
+    // updated_at desc), capped at 15.
     readingHistory
-      .list({ limit: 15 })
+      .list({ limit: 60 })
       .then((res) => {
-        if (!cancelled) setEntries(res.entries);
+        if (cancelled) return;
+        const seen = new Set<string>();
+        const unique: MiniBook[] = [];
+        for (const entry of res.entries) {
+          if (seen.has(entry.book_id)) continue;
+          seen.add(entry.book_id);
+          unique.push(entry.book as unknown as MiniBook);
+          if (unique.length >= 15) break;
+        }
+        setBooks(unique);
       })
       .catch(() => { /* silent — the widget just stays hidden */ })
       .finally(() => { if (!cancelled) setLoaded(true); });
@@ -52,41 +49,18 @@ export default function RecentlyRead() {
   }, [status]);
 
   // Hidden entirely for anonymous users and until we have something to show.
-  if (!session || !loaded || entries.length === 0) return null;
+  if (!session || !loaded || books.length === 0) return null;
 
-  return <RecentlyReadSlider entries={entries} />;
+  return <RecentlyReadSlider books={books} />;
 }
 
 /**
- * Presentational slider — pure function of `entries`. Split out from the
- * data/auth wrapper so it can be rendered in isolation (and previewed with
- * sample data) without a live session.
+ * Presentational slider — pure function of `books`. Split out from the data/auth
+ * wrapper so it can be rendered in isolation (and previewed with sample data)
+ * without a live session. Uses the shared BookSlider so the cards and slider
+ * mechanics match the rest of the site.
  */
-export function RecentlyReadSlider({ entries }: { entries: ReadingHistoryEntry[] }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
-
-  const updateArrows = useCallback(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    setAtStart(track.scrollLeft <= 1);
-    setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 1);
-  }, []);
-
-  useEffect(() => {
-    if (entries.length) updateArrows();
-  }, [entries, updateArrows]);
-
-  const step = useCallback((dir: -1 | 1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.querySelector<HTMLElement>('[data-card]');
-    const gap = parseFloat(getComputedStyle(track).columnGap || '16') || 16;
-    const delta = ((card?.offsetWidth || 160) + gap) * dir;
-    track.scrollBy({ left: delta, behavior: 'smooth' });
-  }, []);
-
+export function RecentlyReadSlider({ books }: { books: MiniBook[] }) {
   return (
     <section className="bg-[#f3ede6] pb-16 md:pb-24 -mt-4">
       <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
@@ -104,113 +78,8 @@ export function RecentlyReadSlider({ entries }: { entries: ReadingHistoryEntry[]
           </Link>
         </div>
 
-        {/* Arrows — same as the first-translations slider on the collection
-            pages (MycoSlider): own right-aligned row directly above the track. */}
-        <div className="flex items-center justify-end gap-3 mb-3">
-          <div className="hidden sm:flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => step(-1)}
-              disabled={atStart}
-              aria-label="Previous"
-              className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => step(1)}
-              disabled={atEnd}
-              aria-label="Next"
-              className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        <div
-          ref={trackRef}
-          onScroll={updateArrows}
-          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-1 px-1"
-        >
-          {entries.map((entry, i) => (
-            <RecentCard key={`${entry.book_id}-${entry.started_at}-${i}`} entry={entry} priority={i < 5} />
-          ))}
-        </div>
+        <BookSlider books={books} />
       </div>
     </section>
-  );
-}
-
-function RecentCard({ entry, priority }: { entry: ReadingHistoryEntry; priority: boolean }) {
-  const [imageError, setImageError] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
-  const book = entry.book;
-  const title = book.display_title || book.title;
-  const url = bookUrl({ slug: book.slug, id: book.id });
-  const pageUrl = `${url}/page/${entry.last_page_id}`;
-  // Match CollectionBookCard's quality path: the ~1200px `display` variant via
-  // the responsive R2 loader, falling back to the smaller `thumb` variant only
-  // if the display URL 404s. (Was using the low-res `thumb` variant directly.)
-  const displayUrl = getBookThumbnailUrl(book, 'display');
-  const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
-  const thumb = useFallback && fallbackUrl ? fallbackUrl : displayUrl;
-  const progress = book.pages_count
-    ? Math.min(100, Math.round((entry.last_page_number / book.pages_count) * 100))
-    : 0;
-
-  return (
-    <Link
-      href={pageUrl}
-      data-card
-      className="group snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)] flex flex-col border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
-    >
-      {/* Cover */}
-      <div className="relative aspect-[3/4] bg-warm overflow-hidden">
-        {thumb && !imageError ? (
-          <Image
-            src={thumb}
-            loader={bookCoverResponsiveLoader}
-            alt={title}
-            fill
-            quality={85}
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 66vw, (max-width: 1024px) 33vw, 20vw"
-            onError={() => {
-              if (!useFallback && fallbackUrl) setUseFallback(true);
-              else setImageError(true);
-            }}
-            loading={priority ? 'eager' : 'lazy'}
-            priority={priority}
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-border-medium">
-            <BookOpen className="w-6 h-6" />
-          </div>
-        )}
-        {/* Progress bar pinned to the bottom of the cover */}
-        {book.pages_count ? (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/20">
-            <div className="h-full bg-accent-gold" style={{ width: `${progress}%` }} />
-          </div>
-        ) : null}
-      </div>
-
-      {/* Info */}
-      <div className="flex flex-col flex-1 p-3">
-        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
-          {title}
-        </h3>
-        {book.author && <p className="text-xs text-muted mt-0.5 line-clamp-1">{book.author}</p>}
-        <div className="flex items-center justify-between gap-2 mt-auto pt-3 text-[11px] text-faint">
-          <span className="inline-flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            {timeAgo(entry.updated_at)}
-          </span>
-          {book.pages_count ? <span>p. {entry.last_page_number}</span> : null}
-        </div>
-      </div>
-    </Link>
   );
 }
