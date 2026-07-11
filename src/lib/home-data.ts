@@ -352,19 +352,36 @@ async function getRecentlyTranslated(): Promise<CatalogBook[]> {
   return out;
 }
 
-// Gallery masonry — the highest-quality illustrations from across the library,
-// mirroring the Mycology gallery. DETERMINISTIC by design: a stable sort on the
-// `{gallery_quality:-1, book_year, book_id, page_number}` index returns the same
-// top plates on every render (no per-refresh re-randomisation), and the query is
-// far cheaper than the old `$sample` over 3000 docs. `extracted_width/height`
-// come back so the masonry can reserve each cell's aspect ratio and load without
-// layout shift. Diversified to max 2 plates per book for variety.
+// How often the gallery selection rotates. It stays identical to everyone within
+// a window (so it does NOT reshuffle on every refresh) and picks a fresh 48 each
+// window. Tune this one number to change the cadence.
+const GALLERY_ROTATION_HOURS = 12;
+
+// Tiny deterministic PRNG (mulberry32) — same seed → same sequence, so the
+// shuffle is reproducible for a given time window across all renders/visitors.
+function mulberry32(seed: number): () => number {
+  return () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 1 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Gallery masonry — high-quality illustrations from across the library,
+// mirroring the Mycology gallery. A deterministic, indexed sort (on the
+// `{gallery_quality:-1, book_year, book_id, page_number}` index — far cheaper
+// than the old `$sample` over 3000 docs) builds a stable POOL of the best plates;
+// we then pick 48 via a shuffle seeded by the current time window, so the display
+// stays fixed within a `GALLERY_ROTATION_HOURS` window and rotates between windows
+// (dynamic, but not per-refresh). `extracted_width/height` come back so the
+// masonry reserves each cell's aspect ratio and loads without layout shift.
 async function getHomeGalleryPlates(): Promise<Plate[]> {
   const db = await getReadDb();
   const raw = await db.collection('gallery_images').find(
     {
       book_hidden: { $ne: true },
-      gallery_quality: { $gte: 0.9 },
+      gallery_quality: { $gte: 0.85 },
       extracted_width: { $gt: 0 },
       extracted_height: { $gt: 0 },
       $or: [
@@ -376,21 +393,23 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
       projection: { _id: 0, book_id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, extracted_width: 1, extracted_height: 1, museum_description: 1, book_title: 1 },
       maxTimeMS: 8000,
     },
-  ).sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 }).limit(240).toArray();
+  ).sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 }).limit(500).toArray();
 
+  // Build the candidate pool (max 2 plates per book for variety), in the stable
+  // quality-sorted order.
   const perBook = new Map<string, number>();
-  const plates: Plate[] = [];
+  const pool: Plate[] = [];
   for (const g of raw as Array<Record<string, unknown>>) {
     const bookId = String(g.book_id ?? '');
     const n = perBook.get(bookId) ?? 0;
-    if (n >= 2) continue; // at most 2 plates per book for variety
+    if (n >= 2) continue;
     const thumb = g.thumbnail_url as string | undefined;
     const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
     const src = (thumb && toGalleryCardUrl(thumb)) || thumb || full;
     if (!src) continue;
     const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
     perBook.set(bookId, n + 1);
-    plates.push({
+    pool.push({
       src,
       fallback: full || thumb,
       href: id ? `/gallery/image/${id}` : undefined,
@@ -398,9 +417,16 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
       w: g.extracted_width as number | undefined,
       h: g.extracted_height as number | undefined,
     });
-    if (plates.length >= 48) break;
   }
-  return plates;
+
+  // Shuffle the pool with a per-window seed, then take 48. Same window → same 48.
+  const windowSeed = Math.floor(Date.now() / (GALLERY_ROTATION_HOURS * 3600 * 1000));
+  const rand = mulberry32(windowSeed);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 48);
 }
 
 async function getCollectionShowcase() {
