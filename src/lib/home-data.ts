@@ -3,6 +3,9 @@ import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
+import { toGalleryCardUrl } from '@/lib/utils';
+import { type Plate } from '@/components/GalleryMasonry';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -289,135 +292,143 @@ async function getDiscoverBooks(): Promise<Book[]> {
   return JSON.parse(JSON.stringify(booksWithTenantSlug)) as Book[];
 }
 
-async function getCollectionShowcase() {
-  const db = await getReadDb();
+const RECENTLY_TRANSLATED_COUNT = 15;
 
-  // Keep sample-first to preserve the fast random cursor behavior.
-  // A larger sample plus a relaxed second pass avoids the frequent empty/1-item result.
-  const baseMatch = {
-    museum_description: { $exists: true, $ne: '' },
-    $or: [
-      { thumbnail_url: { $type: 'string', $gt: '' } },
-      { extracted_url: { $type: 'string', $gt: '' } },
-    ],
-    book_visible: true,
-  };
+// A book renders a real cover only when its thumbnail is a rehosted R2 URL
+// (images.sourcelibrary.org) or a whitelisted Wikimedia Commons URL — those are
+// the hosts the site CSP `img-src` allows. Freshly-imported books still point at
+// the raw source (archive.org, …), which the browser blocks → the card falls
+// back to a placeholder. We only want real covers in this slider, so filter to
+// renderable ones. Mirrors the resolution order in getBookThumbnailUrl().
+function hasRenderableCover(b: CatalogBook): boolean {
+  const t = b.thumbnail || '';
+  return t.includes('images.sourcelibrary.org/') || t.includes('upload.wikimedia.org/wikipedia/commons/');
+}
 
-  const strictAspectRatio = {
-    extracted_width: { $exists: true },
-    extracted_height: { $exists: true },
-    $expr: {
-      $and: [
-        { $lt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 2] },
-        { $gt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 0.3] },
-      ],
-    },
-  };
+// Collapse multi-volume sets / series to one entry so a single work (e.g. the
+// 20-volume "Herculaneum Volumes") can't fill the whole slider. Key on the title
+// with volume/part/collection markers, parentheticals, and digits stripped, plus
+// the author.
+function workKey(b: CatalogBook): string {
+  const title = (b.display_title || b.title || '')
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, '')
+    .replace(/\b(vol|volume|part|book|tome|band|no|first collection|second collection)\.?\s*[ivxlcdm0-9]*\b/g, '')
+    .replace(/[0-9]+/g, '')
+    .replace(/[^a-z\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 32);
+  return `${title}|${(b.author || '').toLowerCase().trim().slice(0, 18)}`;
+}
 
-  const strictImages = await db.collection('gallery_images').aggregate([
-    { $sample: { size: 2500 } },
-    {
-      $match: {
-        ...baseMatch,
-        gallery_quality: { $gte: 0.85 },
-        ...strictAspectRatio,
-      },
-    },
-    { $limit: 120 },
-  ], { maxTimeMS: 8000 }).toArray();
-
-  // If strict pass is sparse, run a softer pass (still sampled) to fill the showcase.
-  const relaxedImages = strictImages.length >= 40
-    ? []
-    : await db.collection('gallery_images').aggregate([
-      { $sample: { size: 2500 } },
-      {
-        $match: {
-          ...baseMatch,
-          gallery_quality: { $gte: 0.75 },
-        },
-      },
-      { $limit: 120 },
-    ], { maxTimeMS: 8000 }).toArray();
-
-  const rawImages = [...strictImages, ...relaxedImages];
-
-  // Diversify: max 1 per book, take 8
-  const seenBookIds = new Set<string>();
-  const seenGalleryIds = new Set<string>();
-  const selected: any[] = [];
-  for (const img of rawImages) {
-    if (!img?.book_id || !img?.page_id) continue;
-    const galleryId = `${img.page_id}-${img.detection_index || 0}`;
-    if (seenBookIds.has(img.book_id) || seenGalleryIds.has(galleryId)) continue;
-    seenBookIds.add(img.book_id);
-    seenGalleryIds.add(galleryId);
-    selected.push(img);
-    if (selected.length >= 8) break;
-  }
-
-  // Randomized fallback: if random sampling is sparse, top up from a
-  // broad high-quality pool without fixed ordering.
-  if (selected.length < 8) {
-    const fallbackImages = await db.collection('gallery_images').aggregate([
-      { $sample: { size: 3000 } },
-      {
-        $match: {
-          ...baseMatch,
-          gallery_quality: { $gte: 0.65 },
-        },
-      },
-      { $limit: 400 },
-    ], { maxTimeMS: 8000 }).toArray();
-
-    for (const img of fallbackImages) {
-      if (!img?.book_id || !img?.page_id) continue;
-      const galleryId = `${img.page_id}-${img.detection_index || 0}`;
-      if (seenBookIds.has(img.book_id) || seenGalleryIds.has(galleryId)) continue;
-      seenBookIds.add(img.book_id);
-      seenGalleryIds.add(galleryId);
-      selected.push(img);
-      if (selected.length >= 8) break;
-    }
-  }
-
-  // Batch-fetch quotes + slugs for all selected books in ONE query (not N+1)
-  const bookIds = [...new Set(selected.map(img => img.book_id))];
-  const booksWithQuotes = await db.collection('books').find(
-    { id: { $in: bookIds } },
-    { projection: { id: 1, tenantId: 1, 'reading_summary.quotes': 1, slug: 1 } },
-  ).toArray();
-  const tenantIds = [...new Set(booksWithQuotes.map((book: any) => book.tenantId).filter(Boolean))];
-  const tenantSlugMap = await getTenantSlugMap(db, tenantIds);
-  const bookMap = new Map(booksWithQuotes.map(b => [b.id, b]));
-
-  const items = selected.map((img) => {
-    const book = bookMap.get(img.book_id);
-    let quote: { text: string; page: number } | undefined;
-    const quotes = book?.reading_summary?.quotes;
-    const tenantSlug = book?.tenantId ? tenantSlugMap.get(book.tenantId) || null : null;
-    if (quotes && quotes.length > 0) {
-      quote = quotes[Math.floor(Math.random() * quotes.length)];
-    }
-    return {
-      page_id: img.page_id,
-      book_id: img.book_id,
-      page_number: img.page_number || 0,
-      detection_index: img.detection_index || 0,
-      thumbnail_url: img.thumbnail_url || img.extracted_url,
-      type: img.type || '',
-      museum_description: img.museum_description,
-      book_title: img.book_title || '',
-      book_author: img.book_author || '',
-      book_year: img.book_year || 0,
-      book_slug: book?.slug,
-      tenant_slug: tenantSlug,
-      quote,
-    };
+// The 15 most recently translated *distinct* works that have a real cover.
+// Reads the Supabase `books_catalog` mirror (indexed on `last_translation_at`)
+// rather than Mongo — the equivalent Mongo sort is a 15s full scan because that
+// field is unindexed, whereas this returns in well under a second. `hasTranslation`
+// filters to books with a translated page (which also excludes artworks,
+// pages_translated: 0) and browseBooks already constrains to `visible: true`.
+// We over-fetch because the newest translations are batch imports whose covers
+// aren't rehosted yet, and big multi-volume sets dedupe down (15 distinct
+// cover-complete works currently sit within the first ~140 rows).
+async function getRecentlyTranslated(): Promise<CatalogBook[]> {
+  const { books } = await browseBooks({
+    hasTranslation: true,
+    sort: 'last_translated',
+    limit: 400,
+    skipCount: true,
   });
 
-  return JSON.parse(JSON.stringify(items));
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b)) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= RECENTLY_TRANSLATED_COUNT) break;
+  }
+  return out;
 }
+
+// How often the gallery selection rotates. It stays identical to everyone within
+// a window (so it does NOT reshuffle on every refresh) and picks a fresh 48 each
+// window. Tune this one number to change the cadence.
+const GALLERY_ROTATION_HOURS = 12;
+
+// Tiny deterministic PRNG (mulberry32) — same seed → same sequence, so the
+// shuffle is reproducible for a given time window across all renders/visitors.
+function mulberry32(seed: number): () => number {
+  return () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 1 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Gallery masonry — high-quality illustrations from across the library,
+// mirroring the Mycology gallery. A deterministic, indexed sort (on the
+// `{gallery_quality:-1, book_year, book_id, page_number}` index — far cheaper
+// than the old `$sample` over 3000 docs) builds a stable POOL of the best plates;
+// we then pick 48 via a shuffle seeded by the current time window, so the display
+// stays fixed within a `GALLERY_ROTATION_HOURS` window and rotates between windows
+// (dynamic, but not per-refresh). `extracted_width/height` come back so the
+// masonry reserves each cell's aspect ratio and loads without layout shift.
+async function getHomeGalleryPlates(): Promise<Plate[]> {
+  const db = await getReadDb();
+  const raw = await db.collection('gallery_images').find(
+    {
+      book_hidden: { $ne: true },
+      gallery_quality: { $gte: 0.85 },
+      extracted_width: { $gt: 0 },
+      extracted_height: { $gt: 0 },
+      $or: [
+        { thumbnail_url: { $type: 'string', $gt: '' } },
+        { extracted_url: { $type: 'string', $gt: '' } },
+      ],
+    },
+    {
+      projection: { _id: 0, book_id: 1, page_id: 1, detection_index: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, extracted_width: 1, extracted_height: 1, museum_description: 1, book_title: 1 },
+      maxTimeMS: 8000,
+    },
+  ).sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 }).limit(500).toArray();
+
+  // Build the candidate pool (max 2 plates per book for variety), in the stable
+  // quality-sorted order.
+  const perBook = new Map<string, number>();
+  const pool: Plate[] = [];
+  for (const g of raw as Array<Record<string, unknown>>) {
+    const bookId = String(g.book_id ?? '');
+    const n = perBook.get(bookId) ?? 0;
+    if (n >= 2) continue;
+    const thumb = g.thumbnail_url as string | undefined;
+    const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
+    const src = (thumb && toGalleryCardUrl(thumb)) || thumb || full;
+    if (!src) continue;
+    const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
+    perBook.set(bookId, n + 1);
+    pool.push({
+      src,
+      fallback: full || thumb,
+      href: id ? `/gallery/image/${id}` : undefined,
+      label: (g.museum_description as string) || (g.book_title as string) || 'Illustration',
+      w: g.extracted_width as number | undefined,
+      h: g.extracted_height as number | undefined,
+    });
+  }
+
+  // Shuffle the pool with a per-window seed, then take 48. Same window → same 48.
+  const windowSeed = Math.floor(Date.now() / (GALLERY_ROTATION_HOURS * 3600 * 1000));
+  const rand = mulberry32(windowSeed);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 48);
+}
+
 
 export interface HomeCounts {
   totalBooks: number;
@@ -658,7 +669,8 @@ async function getSpanishPodcast(): Promise<SpanishPodcast | null> {
 export interface HomeData {
   featuredItems: FeaturedItem[];
   discoverBooks: Book[];
-  showcase: any[];
+  recentlyTranslated: CatalogBook[];
+  galleryPlates: Plate[];
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
@@ -666,14 +678,15 @@ export interface HomeData {
 }
 
 export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, showcase, counts, collections, spanishPodcast] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
-    withTimeout(getCollectionShowcase(), 20000, [] as any[]),
+    withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
+    withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getSpanishPodcast(), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, showcase, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
 }

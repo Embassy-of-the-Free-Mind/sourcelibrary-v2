@@ -60,6 +60,15 @@ export interface HomeStrings {
   curatedExhibitions: string;
   allCollections: string;
 
+  // Recently translated slider
+  recentlyTranslatedHeading: string;
+  recentlyTranslatedSubtitle: string;
+
+  // Gallery masonry (homepage)
+  galleryHeading: string;
+  gallerySubtitle: string;
+  galleryViewAll: (n: number) => string;
+
   // Discover section
   discoverHeading: string;
   discoverSubtitle: string;
@@ -160,6 +169,11 @@ const en: HomeStrings = {
   curatedExhibitions: 'Browse curated exhibitions',
   allCollections: 'All collections',
 
+  recentlyTranslatedHeading: 'Recently translated',
+  recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  galleryHeading: 'Gallery',
+  gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
+  galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
   discoverHeading: 'Discover',
   discoverSubtitle: 'Translated primary sources from the collection.',
   discoverEmpty: 'Browse the collection to discover translated primary sources.',
@@ -261,6 +275,11 @@ const es: HomeStrings = {
   curatedExhibitions: 'Explorar exposiciones comisariadas',
   allCollections: 'Todas las colecciones',
 
+  recentlyTranslatedHeading: 'Traducidas recientemente',
+  recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  galleryHeading: 'Galería',
+  gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
+  galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
   discoverHeading: 'Descubre',
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',

@@ -4,8 +4,9 @@ import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
-import FromTheCollection from '@/components/prototype/FromTheCollection';
-import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
+import GalleryMasonry from '@/components/GalleryMasonry';
+import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
@@ -17,7 +18,7 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, showcase, counts, collections, blogPosts, spanishPodcast } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, spanishPodcast } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
   return (
@@ -204,6 +205,32 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           anonymous visitors and readers with no history. */}
       <RecentlyRead />
 
+      {/* Recently translated — the same slider as the Mycology collection's
+          "First translations" band, auto-filled with the 15 works most recently
+          brought into a modern translation site-wide (Supabase last_translation_at).
+          Hidden if the catalog query returns nothing. */}
+      {recentlyTranslated.length > 0 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.recentlyTranslatedHeading}
+              </h2>
+              <Link
+                href="/catalog?sort=last_translated"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.browseCatalog} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.recentlyTranslatedSubtitle}
+            </p>
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} />
+          </div>
+        </section>
+      )}
+
       {/* Ask the source — the librarian's front door. Placed after the
           collections grid so the invitation lands once the visitor has seen
           the breadth of the library, and so it doesn't stack a second input
@@ -218,35 +245,41 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         />
       )}
 
-      {/* From the Collection — image-heavy gallery showcase */}
-      <FromTheCollection items={showcase} />
-
-      {/* Discover Section */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
-            {t.discoverHeading}
-          </h2>
-          <p className="text-muted mb-10 max-w-2xl">
-            {t.discoverSubtitle}
-          </p>
-
-          {discoverBooks.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-              {discoverBooks.map((book, i) => (
-                <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={i < 2} />
-              ))}
+      {/* Gallery — true-height masonry (Mycology-style), capped and faded into
+          the page, filled with high-quality illustrations from across the whole
+          library. */}
+      {galleryPlates.length > 0 && (
+        <section className="bg-warm py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
+              {t.galleryHeading}
+            </h2>
+            <p className="text-muted mb-10 max-w-2xl">
+              {t.gallerySubtitle}
+            </p>
+            <div
+              className="relative max-h-[560px] sm:max-h-[1000px] lg:max-h-[1200px] overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+              }}
+            >
+              <GalleryMasonry plates={galleryPlates} />
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted mb-4">{t.discoverEmpty}</p>
-              <Link href="/catalog" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
-                {t.browseCatalog}
-              </Link>
-            </div>
-          )}
-        </div>
-      </section>
+            {counts.illustrationCount > 0 && (
+              <div className="mt-8 flex justify-center">
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+                >
+                  {t.galleryViewAll(counts.illustrationCount)}
+                  <span className="text-xs">&rarr;</span>
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Blog Section */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
@@ -268,42 +301,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
-              >
-                {post.image && (
-                  <div className="aspect-[16/10] relative bg-warm overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${post.tagColor}`}>
-                    {post.tagKey === 'deepDive' ? t.tagDeepDive : t.tagCollection}
-                  </span>
-                  <h3 className="font-display text-lg text-primary mt-2 group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted mt-1.5 line-clamp-2">
-                    {post.subtitle}
-                  </p>
-                  <p className="text-xs text-faint mt-3">
-                    {post.date} &middot; {post.readTime}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ResearchNotesSlider
+            posts={blogPosts}
+            deepDiveLabel={t.tagDeepDive}
+            collectionLabel={t.tagCollection}
+          />
         </div>
       </section>
 
