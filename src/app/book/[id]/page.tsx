@@ -48,6 +48,7 @@ import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence
 import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSearch';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import BookAnchorBar from '@/components/book/BookAnchorBar';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { getEffectiveByline } from '@/lib/byline';
@@ -781,7 +782,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       : 0;
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
     const hasAuthorSection = !!(authorEntity?.name || (book.author && book.author !== 'Unknown'));
-    const hasRelated = !!(embedPolicy.showBookRelatedBooks && (book as unknown as { related_books?: unknown }).related_books);
+    // Related books: prefer the pre-computed shared-entity graph; if a book has
+    // none (common), fall back to a rail of books that share subject tags.
+    const relatedBooksData = (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books;
+    const hasPrecomputedRelated = !!(relatedBooksData && ((relatedBooksData.direct?.length ?? 0) > 0 || (relatedBooksData.shared?.length ?? 0) > 0));
+    const subjectKeywords = (book as unknown as { subject_keywords?: string[] }).subject_keywords || [];
+    const tagRelated = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && subjectKeywords.length)
+      ? await getReadDb().then(db => db.collection('books').find(
+          { subject_keywords: { $in: subjectKeywords }, visible: true, id: { $ne: book.id }, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } },
+          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 }, maxTimeMS: 4000 },
+        ).limit(24).toArray())
+        .then(rows => rows.filter(r => { const t = String(r.thumbnail || ''); return t.includes('images.sourcelibrary.org') || t.includes('public.blob.vercel-storage.com') || t.includes('upload.wikimedia.org'); }).slice(0, 12))
+        .catch(() => [] as Record<string, unknown>[])
+      : [] as Record<string, unknown>[];
+    const hasRelated = hasPrecomputedRelated || tagRelated.length > 0;
     const anchorSections = [
       hasSummary ? { id: 'about', label: 'About' } : null,
       hasContents ? { id: 'contents', label: 'Contents' } : null,
@@ -885,7 +899,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </Link>
                 )}
               </div>
-              <div className="[&_a]:!text-[#eab59f]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+              {/* Subject tags */}
+              {(book as unknown as { subject_keywords?: string[] }).subject_keywords?.length ? (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {(book as unknown as { subject_keywords?: string[] }).subject_keywords!.slice(0, 8).map((tag) => (
+                    <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[12px] px-2 py-0.5 transition-colors" style={{ border: '1px solid rgba(245,240,232,0.18)', color: 'rgba(245,240,232,0.72)' }}>{tag}</Link>
+                  ))}
+                </div>
+              ) : null}
+              {/* Composition / publication dates */}
+              {(() => {
+                const comp = book.source_work_dates?.find(l => l.type === 'composition');
+                const trans = book.source_work_dates?.find(l => l.type === 'translation');
+                const parts: string[] = [];
+                if (comp) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+                else if (trans) parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+                if (book.published) parts.push(`published ${book.published}`);
+                return parts.length ? <div className="text-[13px] mt-2.5" style={{ color: 'rgba(245,240,232,0.55)' }}>{parts.join(' · ')}</div> : null;
+              })()}
+              <div className="[&_a]:!text-[#eab59f] mt-3"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
               <div className="flex flex-wrap items-center gap-2.5 mt-6">
@@ -967,9 +999,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="space-y-6">
               <AISection kind="reading-guide" className="card p-6">
                 <h3 className="font-display font-medium text-[22px] mb-4" style={{ color: '#2b2620' }}>Reading guide</h3>
-                <div className="max-h-[640px] overflow-y-auto -mr-2 pr-2">
-                  <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
-                </div>
+                <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
               </AISection>
               {(() => {
                 const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
@@ -983,8 +1013,29 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="space-y-6">
               <div className="card p-6">
                 <h3 className="font-display font-medium text-[22px] mb-4" style={{ color: '#2b2620' }}>Contents</h3>
+
+                {/* Contents — as printed (top of the section) */}
+                {tocPage && (() => {
+                  const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
+                  return (
+                    <Link href={`/book/${bookSlug}/page/${tocPage.id}`} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
+                      <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
+                        {tocThumb && (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[14px] font-semibold" style={{ color: '#2b2620' }}>Contents — as printed</div>
+                        <div className="text-[13px]" style={{ color: '#948d80' }}>p. {tocPage.page_number}</div>
+                      </div>
+                      <span className="text-[14px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>View scan →</span>
+                    </Link>
+                  );
+                })()}
+
                 {book.chapters?.length ? (
-                  <div className="max-h-[520px] overflow-y-auto -mr-2 pr-2 border-t" style={{ borderColor: '#e6e0d3' }}>
+                  <div className="border-t" style={{ borderColor: '#e6e0d3' }}>
                     {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
                       <Link
                         key={i}
@@ -1000,26 +1051,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 ) : (
                   <p className="text-sm" style={{ color: '#8a8170' }}>No table of contents recorded for this edition.</p>
                 )}
-
-                {/* Contents — as printed */}
-                {tocPage && (() => {
-                  const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
-                  return (
-                    <Link href={`/book/${bookSlug}/page/${tocPage.id}`} className="flex items-center gap-4 border px-4 py-3 mt-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
-                      <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
-                        {tocThumb && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[14px] font-semibold" style={{ color: '#2b2620' }}>Contents — as printed</div>
-                        <div className="text-[13px]" style={{ color: '#948d80' }}>p. {tocPage.page_number}</div>
-                      </div>
-                      <span className="text-[14px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>View scan →</span>
-                    </Link>
-                  );
-                })()}
               </div>
               {book.editions?.length ? (
                 <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
@@ -1030,7 +1061,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== PAGES ===================== */}
         <section id="pages" style={{ background: '#faf7f0' }} className="pb-16 scroll-mt-4">
-          <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+          <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
             {embedPolicy.showBookOverviewLink && pages.length > 0 && (
               <div className="mb-4">
                 <Link href={`/book/${bookSlug}/overview`} className="text-sm text-accent-rust hover:text-accent-gold-dark">Overview →</Link>
@@ -1104,10 +1135,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         </section>
 
         {/* ===================== RELATED BOOKS ===================== */}
-        {embedPolicy.showBookRelatedBooks && (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books && (
+        {hasRelated && (
           <section id="related" style={{ background: '#faf7f0' }} className="px-6 md:px-12 py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto">
-              <RelatedBooks relatedBooks={(book as unknown as { related_books: import('@/lib/types').RelatedBooks }).related_books} />
+              {hasPrecomputedRelated ? (
+                <RelatedBooks relatedBooks={relatedBooksData!} />
+              ) : (
+                <>
+                  <h2 className="font-display font-medium text-2xl md:text-[28px] mb-6" style={{ color: '#2b2620' }}>Related books</h2>
+                  <BookSlider books={tagRelated as unknown as MiniBook[]} />
+                </>
+              )}
             </div>
           </section>
         )}

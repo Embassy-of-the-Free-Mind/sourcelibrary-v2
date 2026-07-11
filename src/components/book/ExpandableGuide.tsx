@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { BookText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { books, gallery } from '@/lib/api-client';
+import { getPageGridUrl } from '@/lib/utils';
 import SectionsNav from '@/components/layout/SectionsNav';
 
 interface SectionSummary {
@@ -54,7 +55,7 @@ export default function ExpandableGuide({ bookId, detailedSummary, defaultExpand
   const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
   const [showSections, setShowSections] = useState(true);
   const [showIllustrations, setShowIllustrations] = useState(true);
-  const [pages, setPages] = useState<Array<{ id: string; page_number: number }>>([]);
+  const [pages, setPages] = useState<Array<{ id: string; page_number: number; page_type?: string; thumb?: string }>>([]);
   const [extrasLoaded, setExtrasLoaded] = useState(false);
 
   // Lazy-load sections + illustrations when first expanded
@@ -71,7 +72,7 @@ export default function ExpandableGuide({ bookId, detailedSummary, defaultExpand
         setSections(idx.sectionSummaries);
       }
       if (bookData?.pages) {
-        setPages(bookData.pages.map((p: any) => ({ id: p.id || p._id, page_number: p.page_number })));
+        setPages(bookData.pages.map((p: any) => ({ id: p.id || p._id, page_number: p.page_number, page_type: p.page_type, thumb: getPageGridUrl(p) || undefined })));
       }
       setIllustrations(galleryData.items || []);
       setExtrasLoaded(true);
@@ -111,30 +112,12 @@ export default function ExpandableGuide({ bookId, detailedSummary, defaultExpand
 
           {/* Sections — lazy-loaded */}
           {sections.length > 0 && (
-            <div>
-              <button
-                onClick={() => setShowSections(!showSections)}
-                className="w-full flex items-center justify-between py-2 text-left"
-              >
-                <h3 className="text-base font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                  Table of Contents
-                  <span className="text-xs font-normal text-stone-400">({sections.length} sections)</span>
-                </h3>
-                {showSections ? (
-                  <ChevronUp className="w-4 h-4 text-stone-400" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-stone-400" />
-                )}
-              </button>
-              {showSections && (
-                <SectionsNav
-                  bookId={bookId}
-                  sections={sections}
-                  pages={pages}
-                  illustrations={illustrations}
-                />
-              )}
-            </div>
+            <SectionsNav
+              bookId={bookId}
+              sections={sections}
+              pages={pages}
+              illustrations={illustrations}
+            />
           )}
 
           {/* Illustrations — lazy-loaded. Per-book, so safe in embed mode
