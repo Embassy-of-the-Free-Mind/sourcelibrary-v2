@@ -809,6 +809,41 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const placePub = [place, publisher].filter(Boolean).join(': ');
       return [placePub, year].filter(Boolean).join(', ');
     })();
+    // Single hero meta line: impressum (publisher, year) + the source-work
+    // composition/translation date. The impressum already carries the printed
+    // year, so drop a duplicate "published YYYY" when it's present.
+    const heroMetaLine = (() => {
+      const parts: string[] = [];
+      if (impressum) parts.push(impressum);
+      const comp = book.source_work_dates?.find(l => l.type === 'composition');
+      const trans = book.source_work_dates?.find(l => l.type === 'translation');
+      if (comp) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+      else if (trans) parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+      if (!impressum && book.published) parts.push(`published ${book.published}`);
+      return parts.filter(Boolean).join(' · ');
+    })();
+    // Subject tags — moved out of the hero into a "Tags" dropdown below.
+    const subjectTags = (book as unknown as { subject_keywords?: string[] }).subject_keywords?.filter(Boolean) ?? [];
+    // A single interesting visual for the details column: prefer a curated
+    // gallery plate, else a frontispiece/plate/illustration page, else any
+    // non-blank page that isn't the cover.
+    const sideVisual = (() => {
+      const plate = galleryImages[0];
+      if (plate) {
+        const src = plate.thumbnail_url || plate.extracted_url || plate.image_url;
+        if (src) {
+          const pageId = plate.id.match(/^(.+)[:\-]\d+$/)?.[1];
+          return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
+        }
+      }
+      const pg = pages.find(p => !!p.page_type && ['frontispiece', 'plate', 'illustration'].includes(p.page_type) && p.id !== coverPage?.id)
+        || pages.find(p => p.page_type !== 'blank' && p.id !== coverPage?.id);
+      if (pg) {
+        const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
+        if (src) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
+      }
+      return null;
+    })();
 
     return (
       <>
@@ -874,7 +909,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {book.display_title && book.title !== book.display_title && (
                 <div className="font-display italic text-lg md:text-xl mb-1.5" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
               )}
-              {impressum && <div className="text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{impressum}</div>}
+              {heroMetaLine && <div className="text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
 
               {/* Chips */}
               <div className="flex flex-wrap gap-2 mt-6 mb-1">
@@ -892,24 +927,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </Link>
                 )}
               </div>
-              {/* Subject tags */}
-              {(book as unknown as { subject_keywords?: string[] }).subject_keywords?.length ? (
-                <div className="flex flex-wrap gap-1.5 mt-3">
-                  {(book as unknown as { subject_keywords?: string[] }).subject_keywords!.slice(0, 8).map((tag) => (
-                    <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[12px] px-2 py-0.5 transition-colors" style={{ border: '1px solid rgba(245,240,232,0.18)', color: 'rgba(245,240,232,0.72)' }}>{tag}</Link>
-                  ))}
-                </div>
-              ) : null}
-              {/* Composition / publication dates */}
-              {(() => {
-                const comp = book.source_work_dates?.find(l => l.type === 'composition');
-                const trans = book.source_work_dates?.find(l => l.type === 'translation');
-                const parts: string[] = [];
-                if (comp) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
-                else if (trans) parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
-                if (book.published) parts.push(`published ${book.published}`);
-                return parts.length ? <div className="text-[13px] mt-2.5" style={{ color: 'rgba(245,240,232,0.55)' }}>{parts.join(' · ')}</div> : null;
-              })()}
               <div className="[&_a]:!text-[#eab59f] mt-3"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
@@ -978,10 +995,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} />
         )}
 
-        {/* ===================== THEMATIC OUTLINE | BOOK CONTENTS ===================== */}
+        {/* ===================== READING GUIDE · CONTENTS · TAGS  |  STICKY VISUAL ===================== */}
         <section id="contents" style={{ background: '#faf7f0' }} className="pt-2 pb-16 scroll-mt-4">
-          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-start">
-            {/* Thematic outline (AI reading guide + themes) */}
+          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            {/* Left column: collapsible reading guide, contents, tags */}
             <div className="space-y-6">
               <AISection kind="reading-guide" className="card">
                 <details open className="group">
@@ -1001,9 +1018,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 if (entries.length === 0) return null;
                 return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
               })()}
-            </div>
-            {/* Book's own contents — always expanded, scrolls if long */}
-            <div className="space-y-6">
+
+              {/* Book's own contents */}
               <details open className="card group">
                 <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
                   <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
@@ -1050,10 +1066,41 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 )}
                 </div>
               </details>
+
+              {/* Subject tags */}
+              {subjectTags.length > 0 && (
+                <details className="card group">
+                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Tags</h3>
+                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                  </summary>
+                  <div className="px-6 pb-6 flex flex-wrap gap-2">
+                    {subjectTags.map((tag) => (
+                      <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[13px] px-3 py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
+                    ))}
+                  </div>
+                </details>
+              )}
+
               {book.editions?.length ? (
                 <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
               ) : null}
             </div>
+
+            {/* Right column: a single interesting page/plate, sticky on desktop */}
+            {sideVisual && (
+              <div className="md:sticky md:top-6 self-start">
+                <Link href={sideVisual.href} className="block group">
+                  <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={sideVisual.src} alt={sideVisual.caption || ''} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
+                  </div>
+                  {sideVisual.caption && (
+                    <div className="mt-3 text-[13px] italic" style={{ color: '#948d80' }}>{sideVisual.caption}</div>
+                  )}
+                </Link>
+              </div>
+            )}
           </div>
         </section>
 
