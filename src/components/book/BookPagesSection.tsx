@@ -20,7 +20,7 @@ interface BookPagesSectionProps {
   displayBrightness?: number;
 }
 
-const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
+const PAGES_PER_LOAD = 20; // 2 rows on the 10-col grid
 
 export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);

@@ -46,6 +46,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
 import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSearch';
+import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -723,6 +724,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   if (!isEmbedded) {
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
+    const coverDisplay = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
+    const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
+      const src = img.thumbnail_url || img.extracted_url || img.image_url;
+      if (!src) return null;
+      const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
+      const href = pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${img.id}`;
+      return { src, fallback: img.extracted_url || img.image_url, href, label: img.description };
+    }).filter((p): p is Plate => p !== null);
     const readHref = (() => {
       if (pages.length === 0) return null;
       const firstChapterPageNumber = book.chapters?.length
@@ -770,18 +779,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.32) 0%, rgba(165,80,61,0.08) 34%, transparent 60%)' }} />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(80% 70% at 16% 32%, rgba(247,242,234,0.10) 0%, transparent 55%)' }} />
           <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(245,240,232,0.05) 0 1px, transparent 1px 3px)' }} />
-          <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 py-14 md:py-16 grid md:grid-cols-[300px_1fr] gap-10 md:gap-14 md:items-center">
-            {/* Cover — fills the column height */}
-            <div className="w-full max-w-[300px] mx-auto md:mx-0" style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}>
-              <CoverImagePicker
-                bookId={book.id}
-                currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
-                currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
-                bookTitle={book.display_title || book.title}
-                bookAuthor={book.author}
-                bookYear={book.published}
-                pages={pages}
-              />
+          <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 py-14 md:py-16 grid md:grid-cols-[auto_1fr] gap-10 md:gap-14 md:items-center">
+            {/* Cover — the actual scan at its true aspect ratio (never cropped):
+                as tall as the hero allows, with the width flexing to the scan. */}
+            <div className="flex justify-center md:justify-start">
+              {coverDisplay ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={coverDisplay}
+                  alt={book.display_title || book.title}
+                  className="block h-auto w-auto max-h-[420px] md:max-h-[520px] max-w-[360px] object-contain"
+                  style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))', border: '1px solid rgba(255,255,255,0.08)' }}
+                />
+              ) : (
+                <div className="w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-6" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
+                  {book.display_title || book.title}
+                </div>
+              )}
             </div>
 
             {/* Meta */}
@@ -945,6 +959,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             })()}
           </main>
         </section>
+
+        {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
+        {galleryPlates.length > 0 && (
+          <section style={{ background: '#faf7f0' }} className="border-t border-[#e6e0d3] px-6 md:px-10 py-14">
+            <div className="max-w-[1280px] mx-auto">
+              <div className="flex items-baseline justify-between mb-6">
+                <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: '#2b2620' }}>Illustrations</h2>
+                {imageCount > galleryPlates.length && (
+                  <Link href={`/gallery?bookId=${book.id}`} className="text-sm" style={{ color: '#a5503d' }}>View all {imageCount} →</Link>
+                )}
+              </div>
+              <GalleryMasonry plates={galleryPlates} />
+            </div>
+          </section>
+        )}
 
         {/* ===================== ABOUT THE AUTHOR ===================== */}
         {(authorEntity?.name || (book.author && book.author !== 'Unknown')) && (
