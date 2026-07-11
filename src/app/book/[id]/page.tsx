@@ -49,6 +49,7 @@ import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSea
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import BookAnchorBar from '@/components/book/BookAnchorBar';
 import HeroVariants from '@/components/book/HeroVariants';
+import AboutVariants from '@/components/book/AboutVariants';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -745,6 +746,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
+    // A dense body text page — the background for the immersive "About" variant.
+    const aboutTextPage = pages.find(p => p.page_type === 'text' && p.page_number >= 12)
+      || pages.find(p => p.page_type === 'text') || coverPage;
+    const aboutBgUrl = aboutTextPage ? (getPageImageUrl(aboutTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined;
     // Fixed page-scan grid behind the hero (same across all hero treatments).
     const heroPageThumbs = pages
       .filter(p => p.page_type !== 'blank')
@@ -966,14 +971,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ABOUT THIS BOOK ===================== */}
         {hasSummary && (
-          <section id="about" style={{ background: '#faf7f0' }} className="pt-14 pb-8 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="font-mono uppercase text-xs tracking-[0.14em] mb-4" style={{ color: '#a5503d' }}>About This Book</div>
-              <div className="font-display text-lg md:text-[21px] leading-[1.62] max-w-[720px]" style={{ color: '#2b2620' }}>
-                {linkEntities(summaryText!, summaryEntities)}
-              </div>
-            </div>
-          </section>
+          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} />
         )}
 
         {/* ===================== THEMATIC OUTLINE | BOOK CONTENTS ===================== */}
