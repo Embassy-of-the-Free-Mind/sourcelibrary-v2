@@ -1,16 +1,38 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, useEffect, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 /**
  * "About this book" section with switchable variants (arrows, in place):
  *  1. Plain — serif prose on the cream background (as-is).
- *  2. Immersive — a full-height (100vh) text-page background with the about
- *     text in a left-aligned, 3/5-width frosted panel (light tint + blur).
+ *  2. Immersive — a full-height (100vh) text-page background (with a subtle
+ *     scroll parallax) and the about text in a left-aligned, 3/5-width frosted
+ *     panel (light tint + blur).
  */
 export default function AboutVariants({ content, bgUrl }: { content: ReactNode; bgUrl?: string }) {
   const [v, setV] = useState(1);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [parallax, setParallax] = useState(0);
+
+  // Scroll-driven parallax for the immersive variant's background.
+  useEffect(() => {
+    if (v !== 2) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const progress = Math.max(-1, Math.min(1, rect.top / (window.innerHeight || 1)));
+        setParallax(progress * 60); // ±60px
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+  }, [v]);
 
   const Switcher = ({ dark }: { dark: boolean }) => (
     <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
@@ -18,7 +40,7 @@ export default function AboutVariants({ content, bgUrl }: { content: ReactNode; 
       <button type="button" aria-label="Previous about variant" onClick={() => setV(x => (x === 1 ? 2 : x - 1))} className="w-8 h-8 inline-flex items-center justify-center rounded-full border transition-colors hover:bg-black/5" style={{ borderColor: dark ? 'rgba(43,38,32,0.25)' : 'rgba(245,240,232,0.3)', color: dark ? '#2b2620' : '#f7f2ea' }}>
         <ChevronLeft className="w-4 h-4" />
       </button>
-      <button type="button" aria-label="Next about variant" onClick={() => setV(x => (x === 2 ? 1 : x + 1))} className="w-8 h-8 inline-flex items-center justify-center rounded-full border transition-colors hover:bg-black/5" style={{ borderColor: dark ? 'rgba(43,38,32,0.25)' : 'rgba(245,240,232,0.3)', color: dark ? '#2b2620' : '#f7f2ea' }}>
+      <button type="button" aria-label="Next about variant" onClick={() => setV(x => (x === 1 ? 2 : 1))} className="w-8 h-8 inline-flex items-center justify-center rounded-full border transition-colors hover:bg-black/5" style={{ borderColor: dark ? 'rgba(43,38,32,0.25)' : 'rgba(245,240,232,0.3)', color: dark ? '#2b2620' : '#f7f2ea' }}>
         <ChevronRight className="w-4 h-4" />
       </button>
     </div>
@@ -39,10 +61,15 @@ export default function AboutVariants({ content, bgUrl }: { content: ReactNode; 
   }
 
   return (
-    <section id="about" className="relative h-screen min-h-[560px] overflow-hidden scroll-mt-4" style={{ background: '#14100c' }}>
+    <section ref={sectionRef} id="about" className="relative h-screen min-h-[560px] overflow-hidden scroll-mt-4" style={{ background: '#14100c' }}>
       {bgUrl && (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={bgUrl} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 12%' }} />
+        <img
+          src={bgUrl}
+          alt=""
+          className="absolute left-0 -top-[10%] w-full h-[120%] object-cover"
+          style={{ objectPosition: 'center top', transform: `translateY(${parallax}px)`, willChange: 'transform' }}
+        />
       )}
       <div className="absolute inset-0" style={{ background: 'rgba(20,16,12,0.22)' }} />
       <Switcher dark={false} />

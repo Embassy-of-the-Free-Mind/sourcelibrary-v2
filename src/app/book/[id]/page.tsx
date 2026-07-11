@@ -746,9 +746,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
-    // A dense body text page — the background for the immersive "About" variant.
-    const aboutTextPage = pages.find(p => p.page_type === 'text' && p.page_number >= 12)
-      || pages.find(p => p.page_type === 'text') || coverPage;
+    // A dense body text page (full column of text, not a chapter opener) — the
+    // background for the immersive "About" variant. Pick from the middle of the
+    // body text pages so it's a full page of text top-to-bottom.
+    const bodyTextPages = pages.filter(p => p.page_type === 'text' && p.page_number >= 10);
+    const aboutTextPage = bodyTextPages.length
+      ? bodyTextPages[Math.floor(bodyTextPages.length / 2)]
+      : (pages.find(p => p.page_type === 'text') || coverPage);
     const aboutBgUrl = aboutTextPage ? (getPageImageUrl(aboutTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined;
     // Fixed page-scan grid behind the hero (same across all hero treatments).
     const heroPageThumbs = pages
