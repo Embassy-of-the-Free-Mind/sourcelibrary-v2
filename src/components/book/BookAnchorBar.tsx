@@ -32,7 +32,7 @@ export default function BookAnchorBar({ sections, slug }: { sections: Section[];
 
   return (
     <nav aria-label="On this page" className="border-b border-border-light bg-cream">
-      <div ref={rootRef} className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div ref={rootRef} className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           <span className="text-muted">On this page</span>
           {sections.map((s) => (

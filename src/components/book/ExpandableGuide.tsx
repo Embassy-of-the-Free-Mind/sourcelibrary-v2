@@ -34,16 +34,21 @@ interface ExpandableGuideProps {
   bookId: string;
   /** Detailed summary text, passed from server — renders instantly on expand */
   detailedSummary?: string;
+  /** Render open with no collapse toggle (book page v2 shows it inline). */
+  defaultExpanded?: boolean;
+  /** Hide the standalone illustrations block (the per-section thumbnails in
+   *  SectionsNav are kept). */
+  hideIllustrations?: boolean;
 }
 
-export default function ExpandableGuide({ bookId, detailedSummary, }: ExpandableGuideProps) {
+export default function ExpandableGuide({ bookId, detailedSummary, defaultExpanded = false, hideIllustrations = false }: ExpandableGuideProps) {
   const pathname = usePathname();
 
   // Extract tenant prefix from pathname (format: /{tenant}/book/...)
   const pathParts = pathname.split('/').filter(Boolean);
   const tenantPrefix = pathParts[0] && pathParts[1] === 'book' ? `/${pathParts[0]}` : '';
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [loadingExtras, setLoadingExtras] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
@@ -74,19 +79,21 @@ export default function ExpandableGuide({ bookId, detailedSummary, }: Expandable
   }, [expanded, extrasLoaded, bookId]);
 
   return (
-    <div className="mt-4">
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
-      >
-        <BookText className="w-4 h-4" />
-        {expanded ? 'Collapse Reading Guide' : 'Reading Guide: chapter-by-chapter summary, selected quotes and illustrations'}
-        {expanded ? (
-          <ChevronUp className="w-3.5 h-3.5" />
-        ) : (
-          <ChevronDown className="w-3.5 h-3.5" />
-        )}
-      </button>
+    <div className={defaultExpanded ? '' : 'mt-4'}>
+      {!defaultExpanded && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
+        >
+          <BookText className="w-4 h-4" />
+          {expanded ? 'Collapse Reading Guide' : 'Reading Guide: chapter-by-chapter summary, selected quotes and illustrations'}
+          {expanded ? (
+            <ChevronUp className="w-3.5 h-3.5" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5" />
+          )}
+        </button>
+      )}
 
       {expanded && (
         <div className="mt-5 space-y-6">
@@ -133,7 +140,7 @@ export default function ExpandableGuide({ bookId, detailedSummary, }: Expandable
           {/* Illustrations — lazy-loaded. Per-book, so safe in embed mode
               (gallery.list is scoped to bookId — a tenant book's images are
               tenant-scoped by inheritance). */}
-          {illustrations.length > 0 && (
+          {!hideIllustrations && illustrations.length > 0 && (
             <div>
               <button
                 onClick={() => setShowIllustrations(!showIllustrations)}
