@@ -8,11 +8,90 @@
  */
 
 import sharp from 'sharp';
+import type { Db } from 'mongodb';
 
 // KDP eBook cover dimensions (portrait, 1.6:1 height:width — Amazon spec)
 const COVER_WIDTH = 1600;
 const COVER_HEIGHT = 2560;
 const CENTER_X = COVER_WIDTH / 2;
+
+// Only illustrations at/above this quality are considered as cover art.
+const COVER_MIN_QUALITY = 0.75;
+
+/** Minimal shape of a page needed to resolve its scan URL. */
+interface CoverPage {
+  page_number: number;
+  photo?: string | null;
+  cropped_photo?: string | null;
+  archived_photo?: string | null;
+}
+
+interface CoverGalleryImage {
+  page_number: number;
+  type?: string;
+  gallery_quality?: number;
+  extracted_url?: string;
+  image_url?: string;
+}
+
+/**
+ * Bias certain illustration types toward (or away from) being the cover.
+ * Frontispieces are literally designed to open a book; diagrams / maps / tables
+ * / musical scores make poor covers even when they score well for the gallery.
+ */
+function coverTypeBias(type?: string): number {
+  const t = (type || '').toLowerCase();
+  if (t.includes('frontispiece') || t.includes('title')) return 0.15;
+  if (t.includes('engraving') || t.includes('emblem') || t.includes('figure') || t.includes('portrait') || t.includes('allegor') || t.includes('illustration')) return 0.05;
+  if (t.includes('diagram') || t.includes('map') || t.includes('table') || t.includes('music') || t.includes('score')) return -0.2;
+  return 0;
+}
+
+/**
+ * Pick the best cover-image URL for a book from its extracted illustrations.
+ *
+ * Returns the FULL page scan of the page holding the highest-scoring figural
+ * plate (a full manuscript/print page fills the portrait cover frame far better
+ * than a tightly-cropped emblem), falling back to the emblem crop itself. Books
+ * with no suitable plates return `null` — callers should then fall back to the
+ * binding/first-page thumbnail.
+ */
+export async function pickKdpCoverImageUrl(
+  db: Db,
+  bookId: string,
+  pages: CoverPage[]
+): Promise<string | null> {
+  let candidates: CoverGalleryImage[] = [];
+  try {
+    candidates = await db.collection('gallery_images')
+      .find({
+        book_id: bookId,
+        gallery_quality: { $gte: COVER_MIN_QUALITY },
+        type: { $nin: ['decorative'] },
+      })
+      .sort({ gallery_quality: -1 })
+      .limit(20)
+      .toArray() as unknown as CoverGalleryImage[];
+  } catch (e) {
+    console.error('[kdp-cover] gallery lookup failed', e);
+    return null;
+  }
+  if (!candidates.length) return null;
+
+  const best = candidates
+    .map(c => ({ img: c, score: (c.gallery_quality ?? 0) + coverTypeBias(c.type) }))
+    .sort((a, b) => b.score - a.score)[0].img;
+
+  const page = pages.find(p => p.page_number === best.page_number);
+  return (
+    page?.cropped_photo ||
+    page?.archived_photo ||
+    page?.photo ||
+    best.extracted_url ||
+    best.image_url ||
+    null
+  );
+}
 
 // Brand colors from style system
 const COLOR_GOLD = '#c9a86c';
@@ -212,10 +291,24 @@ export async function generateKdpCover(
         })
         .toBuffer();
 
-      // Apply dark overlay for text legibility
-      // Create a semi-transparent dark rectangle as an SVG
-      const overlaySvg = `<svg width="${COVER_WIDTH}" height="${COVER_HEIGHT}">
-        <rect width="${COVER_WIDTH}" height="${COVER_HEIGHT}" fill="${COLOR_DARK}" opacity="0.65"/>
+      // Darken only the text zones with a vertical gradient scrim: a strong
+      // scrim behind the title (top third) and behind the subtitle/brand
+      // (bottom eighth), fading to fully transparent through the middle so the
+      // artwork keeps its colour. A flat full-image overlay (the old approach)
+      // greyed out the plate; the gradient keeps it vivid where there's no text.
+      const overlaySvg = `<svg width="${COVER_WIDTH}" height="${COVER_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${COLOR_DARK}" stop-opacity="0.80"/>
+            <stop offset="28%" stop-color="${COLOR_DARK}" stop-opacity="0.66"/>
+            <stop offset="42%" stop-color="${COLOR_DARK}" stop-opacity="0.60"/>
+            <stop offset="52%" stop-color="${COLOR_DARK}" stop-opacity="0.06"/>
+            <stop offset="72%" stop-color="${COLOR_DARK}" stop-opacity="0.06"/>
+            <stop offset="82%" stop-color="${COLOR_DARK}" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="${COLOR_DARK}" stop-opacity="0.85"/>
+          </linearGradient>
+        </defs>
+        <rect width="${COVER_WIDTH}" height="${COVER_HEIGHT}" fill="url(#scrim)"/>
       </svg>`;
 
       backgroundBuffer = await sharp(resizedImage)

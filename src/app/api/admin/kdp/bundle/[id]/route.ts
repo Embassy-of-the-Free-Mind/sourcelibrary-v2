@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
-import { generateKdpCover } from '@/lib/kdp-cover';
+import { generateKdpCover, pickKdpCoverImageUrl } from '@/lib/kdp-cover';
 import { generateKdpEpub } from '@/lib/kdp-epub';
 import type { Book, Page } from '@/lib/types';
 import archiver from 'archiver';
@@ -54,6 +54,16 @@ export const GET = withAdminAuth(async (request: NextRequest, session, { params 
     const slug = bookRecord.slug || bookRecord.id;
     const meta = publication.kdp_metadata;
 
+    // Choose the cover background: an editor-set override wins; otherwise lead
+    // with the book's most striking illustration (far nicer than the plain
+    // binding for illustrated works), falling back to the binding/first-page
+    // thumbnail when the book has no suitable plates.
+    const coverImageUrl =
+      publication.cover_image_url ||
+      (await pickKdpCoverImageUrl(db, publication.book_id, pages)) ||
+      bookRecord.thumbnail_blob ||
+      bookRecord.thumbnail;
+
     // Generate the cover first so the same JPEG is embedded in the EPUB and
     // written to the bundle ZIP (identical to what gets uploaded to KDP).
     const coverBuffer = await generateKdpCover(
@@ -63,7 +73,7 @@ export const GET = withAdminAuth(async (request: NextRequest, session, { params 
         author: bookRecord.author,
         language: bookRecord.language,
       },
-      publication.cover_image_url || bookRecord.thumbnail_blob || bookRecord.thumbnail
+      coverImageUrl
     );
 
     const epubBuffer = await generateKdpEpub(bookRecord, pages, db, {

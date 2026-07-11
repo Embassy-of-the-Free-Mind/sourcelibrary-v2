@@ -16,7 +16,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { getDb } from '@/lib/mongodb';
-import { generateKdpCover } from '@/lib/kdp-cover';
+import { generateKdpCover, pickKdpCoverImageUrl } from '@/lib/kdp-cover';
 import { generateKdpEpub } from '@/lib/kdp-epub';
 import { generateKdpMetadata } from '@/lib/kdp-scoring';
 import type { Book, Page } from '@/lib/types';
@@ -68,7 +68,13 @@ async function main() {
 
   const meta = generateKdpMetadata(book as Parameters<typeof generateKdpMetadata>[0]);
 
-  console.log('Generating cover…');
+  // Lead with the book's best illustration when it has one; fall back to the
+  // binding/first-page thumbnail otherwise.
+  const coverImageUrl =
+    (await pickKdpCoverImageUrl(db, book.id, pages)) ||
+    book.thumbnail_blob ||
+    book.thumbnail;
+  console.log(`Generating cover… (source: ${coverImageUrl ? coverImageUrl.slice(0, 70) : 'solid fallback'})`);
   const coverBuffer = await generateKdpCover(
     {
       title: book.title,
@@ -76,7 +82,7 @@ async function main() {
       author: book.author,
       language: book.language,
     },
-    book.thumbnail_blob || book.thumbnail
+    coverImageUrl
   );
 
   console.log('Generating EPUB (fetching facsimile/illustration images)…');
