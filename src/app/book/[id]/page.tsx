@@ -754,6 +754,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       .slice(0, 40)
       .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'thumb'))
       .filter((u): u is string => !!u);
+    // A dense text page for the "wall of text" variant — a body page well past
+    // the front matter (avoids the IA/Google notice + title page).
+    const heroTextPage = pages.find(p => p.page_type === 'text' && p.page_number >= 12)
+      || pages.find(p => p.page_type === 'text')
+      || coverPage;
+    const heroTextPageUrl = heroTextPage ? (getPageImageUrl(heroTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : heroPlateUrl;
     const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
       if (!src) return null;
@@ -850,6 +856,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         <HeroVariants
           plateUrl={heroPlateUrl}
           pageThumbs={heroPageThumbs}
+          textPageUrl={heroTextPageUrl}
           cover={(
             <div className="flex justify-center md:justify-start">
               {coverDisplay ? (
@@ -857,11 +864,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <img
                   src={coverDisplay}
                   alt={book.display_title || book.title}
-                  className="block h-auto w-auto max-h-[420px] md:max-h-[520px] max-w-[360px] object-contain"
+                  className="block h-auto w-full md:w-auto max-h-[420px] md:max-h-[520px] md:max-w-[360px] object-contain"
                   style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
               ) : (
-                <div className="w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-6" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
+                <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
                   {book.display_title || book.title}
                 </div>
               )}
@@ -883,7 +890,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
                 </div>
               )}
-              <h1 className="font-display font-medium text-4xl md:text-[52px] leading-[1.04] tracking-[-0.01em] mb-3 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-display font-medium text-2xl sm:text-3xl md:text-[52px] leading-[1.08] md:leading-[1.04] tracking-[-0.01em] mb-3 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (
