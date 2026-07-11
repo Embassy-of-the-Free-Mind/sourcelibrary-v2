@@ -7,6 +7,7 @@ import EditorialSpread from '@/components/prototype/EditorialSpread';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
+import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
@@ -198,6 +199,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
         </div>
       </section>
+
+      {/* Recently looked at — personalized slider from the signed-in reader's
+          history, tucked right under the collections grid. Self-hides for
+          anonymous visitors and readers with no history. */}
+      <RecentlyRead />
 
       {/* Recently translated — the same slider as the Mycology collection's
           "First translations" band, auto-filled with the 15 works most recently
