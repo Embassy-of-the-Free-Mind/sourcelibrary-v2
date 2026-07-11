@@ -48,6 +48,7 @@ import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence
 import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSearch';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import BookAnchorBar from '@/components/book/BookAnchorBar';
+import HeroVariants from '@/components/book/HeroVariants';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -744,6 +745,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
+    // Hero variant backgrounds: a single plate/page (v2) and a wall of page
+    // scans (v3/v4).
+    const heroPlateUrl = galleryImages[0]?.extracted_url || galleryImages[0]?.image_url || galleryImages[0]?.thumbnail_url
+      || (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined);
+    const heroPageThumbs = pages
+      .filter(p => p.page_type !== 'blank')
+      .slice(0, 40)
+      .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'thumb'))
+      .filter((u): u is string => !!u);
     const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
       if (!src) return null;
@@ -837,13 +847,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         />
 
         {/* ===================== HERO ===================== */}
-        <section className="relative overflow-hidden" style={{ background: '#14100c' }}>
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.32) 0%, rgba(165,80,61,0.08) 34%, transparent 60%)' }} />
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(80% 70% at 16% 32%, rgba(247,242,234,0.10) 0%, transparent 55%)' }} />
-          <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(245,240,232,0.05) 0 1px, transparent 1px 3px)' }} />
-          <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-14 md:py-16 grid md:grid-cols-[auto_1fr] gap-10 md:gap-14 md:items-center">
-            {/* Cover — the actual scan at its true aspect ratio (never cropped):
-                as tall as the hero allows, with the width flexing to the scan. */}
+        <HeroVariants
+          plateUrl={heroPlateUrl}
+          pageThumbs={heroPageThumbs}
+          cover={(
             <div className="flex justify-center md:justify-start">
               {coverDisplay ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
@@ -859,8 +866,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               )}
             </div>
-
-            {/* Meta */}
+          )}
+          meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {backCollection && (
                 <Link href={`/collections/${backCollection.slug}`} className="inline-flex items-center gap-2 text-[13.5px] mb-5 transition-colors" style={{ color: 'rgba(245,240,232,0.6)' }}>
@@ -975,8 +982,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </AuthCheck>
               </div>
             </div>
-          </div>
-        </section>
+          )}
+        />
 
         {/* ===================== ON THIS PAGE (sub-nav) ===================== */}
         <BookAnchorBar sections={anchorSections} slug={bookSlug} />
