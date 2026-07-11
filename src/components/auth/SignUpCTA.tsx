@@ -13,7 +13,20 @@ interface SignUpCTAProps {
   bgAttribution?: { text: string; href: string };
 }
 
-export default function SignUpCTA({ variant = 'section', bgImageUrl, bgAttribution }: SignUpCTAProps) {
+// Default background for the shared "Join the project" section: the Flamsteed
+// celestial allegory. Any page that passes its own bgImageUrl (e.g. a collection
+// with a themed plate, like mycology) overrides it.
+const DEFAULT_BG_IMAGE_URL = '/api/gallery-crop/6955d43628a09ca65928002a-0';
+const DEFAULT_BG_ATTRIBUTION = {
+  text: 'Image: Flamsteed, Historia Coelestis Britannica, Vol. 3, 1725.',
+  href: '/gallery/image/6955d43628a09ca65928002a-0',
+};
+
+export default function SignUpCTA({
+  variant = 'section',
+  bgImageUrl = DEFAULT_BG_IMAGE_URL,
+  bgAttribution = DEFAULT_BG_ATTRIBUTION,
+}: SignUpCTAProps) {
   const { status } = useStableSession();
   const isEmbedded = useIsEmbedded();
 
