@@ -9,7 +9,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -745,21 +745,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
-    // Hero variant backgrounds: a single plate/page (v2) and a wall of page
-    // scans (v3/v4).
-    const heroPlateUrl = galleryImages[0]?.extracted_url || galleryImages[0]?.image_url || galleryImages[0]?.thumbnail_url
-      || (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined);
+    // Fixed page-scan grid behind the hero (same across all hero treatments).
     const heroPageThumbs = pages
       .filter(p => p.page_type !== 'blank')
       .slice(0, 40)
       .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'thumb'))
       .filter((u): u is string => !!u);
-    // A dense text page for the "wall of text" variant — a body page well past
-    // the front matter (avoids the IA/Google notice + title page).
-    const heroTextPage = pages.find(p => p.page_type === 'text' && p.page_number >= 12)
-      || pages.find(p => p.page_type === 'text')
-      || coverPage;
-    const heroTextPageUrl = heroTextPage ? (getPageImageUrl(heroTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : heroPlateUrl;
     const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
       if (!src) return null;
@@ -778,26 +769,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return readPage ? `/book/${bookSlug}/page/${readPage.id}` : null;
     })();
     const backCollection = bookCollections[0];
-    const authorDates = [authorEntity?.wikidata_birth_date, authorEntity?.wikidata_death_date].filter(Boolean).join(' – ');
-    // Author display strings often carry the life-dates and a role suffix inline
-    // ("Lightfoot, Joseph Barber, 1828-1889, ed"). Split those out so the heading
-    // is just the name and the dates/role sit in the sub-line.
-    const rawAuthorStr = typeof book.author === 'string' ? book.author : ((book.author as { name?: string } | undefined)?.name || '');
-    const roleMatch = rawAuthorStr.match(/,\s*(ed|trans|editor|translator|comp|compiler)\.?\s*$/i);
-    const authorRole = roleMatch ? ({ ed: 'editor', trans: 'translator', comp: 'compiler' }[roleMatch[1].toLowerCase()] || roleMatch[1].toLowerCase()) : '';
-    const parsedDatesMatch = rawAuthorStr.match(/(\d{3,4})\s*[-–]\s*(\d{3,4})/);
-    const parsedDates = parsedDatesMatch ? `${parsedDatesMatch[1]}–${parsedDatesMatch[2]}` : '';
-    const cleanAuthorName = rawAuthorStr
-      .replace(/,\s*(ed|trans|editor|translator|comp|compiler)\.?\s*$/i, '')
-      .replace(/,?\s*\d{3,4}\s*[-–]\s*\d{3,4}\.?/, '')
-      .replace(/,\s*$/, '')
-      .trim();
-    const authorId = (book as { author_id?: string }).author_id;
-    const authorWorksCount = authorId
-      ? await getReadDb().then(db => db.collection('books').countDocuments({ author_id: authorId, visible: true, id: { $ne: book.id } }, { maxTimeMS: 3000 })).catch(() => 0)
-      : 0;
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
-    const hasAuthorSection = !!(authorEntity?.name || (book.author && book.author !== 'Unknown'));
     // Related books: prefer the pre-computed shared-entity graph; if a book has
     // none (common), fall back to a rail of books that share subject tags.
     const relatedBooksData = (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books;
@@ -818,7 +790,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       hasContents ? { id: 'contents', label: 'Contents' } : null,
       pages.length > 0 ? { id: 'pages', label: 'Pages' } : null,
       galleryPlates.length > 0 ? { id: 'illustrations', label: 'Illustrations' } : null,
-      hasAuthorSection ? { id: 'author', label: 'Author' } : null,
       { id: 'librarian', label: 'Librarian' },
       hasRelated ? { id: 'related', label: 'Related' } : null,
     ].filter((s): s is { id: string; label: string } => s !== null);
@@ -854,9 +825,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== HERO ===================== */}
         <HeroVariants
-          plateUrl={heroPlateUrl}
           pageThumbs={heroPageThumbs}
-          textPageUrl={heroTextPageUrl}
           cover={(
             <div className="flex justify-center md:justify-start">
               {coverDisplay ? (
@@ -1012,9 +981,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-start">
             {/* Thematic outline (AI reading guide + themes) */}
             <div className="space-y-6">
-              <AISection kind="reading-guide" className="card p-6">
-                <h3 className="font-display font-medium text-[22px] mb-4" style={{ color: '#2b2620' }}>Reading guide</h3>
-                <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
+              <AISection kind="reading-guide" className="card">
+                <details open className="group">
+                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
+                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
+                  </div>
+                </details>
               </AISection>
               {(() => {
                 const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
@@ -1026,8 +1002,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </div>
             {/* Book's own contents — always expanded, scrolls if long */}
             <div className="space-y-6">
-              <div className="card p-6">
-                <h3 className="font-display font-medium text-[22px] mb-4" style={{ color: '#2b2620' }}>Contents</h3>
+              <details open className="card group">
+                <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                  <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
+                  <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                </summary>
+                <div className="px-6 pb-6">
 
                 {/* Contents — as printed (top of the section) */}
                 {tocPage && (() => {
@@ -1066,7 +1046,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 ) : (
                   <p className="text-sm" style={{ color: '#8a8170' }}>No table of contents recorded for this edition.</p>
                 )}
-              </div>
+                </div>
+              </details>
               {book.editions?.length ? (
                 <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
               ) : null}
@@ -1108,33 +1089,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </section>
         )}
 
-        {/* ===================== ABOUT THE AUTHOR ===================== */}
-        {(authorEntity?.name || (book.author && book.author !== 'Unknown')) && (
-          <section id="author" style={{ background: '#f4efe6', borderTop: '1px solid #e6e0d3' }} className="py-16 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="font-mono uppercase text-xs tracking-[0.14em] mb-3" style={{ color: '#a5503d' }}>About the Author</div>
-              <h2 className="font-display font-medium text-2xl md:text-3xl mb-1" style={{ color: '#2b2620' }}>{authorEntity?.canonical_name || authorEntity?.name || cleanAuthorName || <AuthorName author={book.author} />}</h2>
-              {(authorDates || parsedDates || authorRole || authorWorksCount > 0) && (
-                <div className="text-sm mb-4" style={{ color: '#948d80' }}>
-                  {[
-                    authorDates || parsedDates,
-                    authorRole && `${authorRole} of this edition`,
-                    authorWorksCount > 0 ? `${authorWorksCount} other ${authorWorksCount === 1 ? 'work' : 'works'} in the library` : '',
-                  ].filter(Boolean).join(' · ')}
-                </div>
-              )}
-              {authorEntity && <div className="mb-5"><AuthorAuthority entity={authorEntity as never} /></div>}
-              <div className="flex flex-wrap gap-6 items-center">
-                {authorUrl(book.author) && (
-                  <Link href={authorUrl(book.author)!} className="text-[15px] font-semibold" style={{ color: '#a5503d' }}>View author page →</Link>
-                )}
-                {authorEntity?.wikipedia_url && (
-                  <a href={authorEntity.wikipedia_url} target="_blank" rel="noopener noreferrer" className="text-[15px]" style={{ color: '#4a443b' }}>Wikipedia →</a>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* ===================== ASK THE LIBRARIAN ===================== */}
         <section id="librarian" style={{ background: '#17120e' }} className="py-16 scroll-mt-4">
