@@ -733,8 +733,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
     const coverRenderable = !!storedCover && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(storedCover);
-    const firstRealPage = pages.find(p => p.page_type !== 'blank') || pages[0];
-    const coverDisplay = coverRenderable ? storedCover : (firstRealPage ? (getPageImageUrl(firstRealPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
+    // Best cover-scan candidate: the actual title page, else a frontispiece,
+    // else the first non-blank page (avoids the Google/IA boilerplate + endpapers
+    // when a classified title page exists).
+    const coverPage = pages.find(p => p.page_type === 'title-page')
+      || pages.find(p => p.page_type === 'frontispiece')
+      || pages.find(p => p.page_type !== 'blank')
+      || pages[0];
+    const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
+    // Printed table-of-contents page (design's "Original printed contents" card).
+    const tocPage = pages.find(p => p.page_type === 'toc');
     const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
       if (!src) return null;
@@ -958,6 +966,24 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </div>
             {/* Book's own contents */}
             <div className="space-y-6">
+              {tocPage && (() => {
+                const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
+                return (
+                  <Link href={`/book/${bookSlug}/page/${tocPage.id}`} className="flex items-center gap-4 border px-5 py-4 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fffefb' }}>
+                    <div className="w-[40px] h-[50px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
+                      {tocThumb && (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[15px] font-semibold" style={{ color: '#2b2620' }}>Original printed contents</div>
+                      <div className="text-[13px]" style={{ color: '#948d80' }}>The table of contents as printed in this edition · p. {tocPage.page_number}</div>
+                    </div>
+                    <span className="text-[14px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>View scan →</span>
+                  </Link>
+                );
+              })()}
               {book.chapters?.length ? (
                 <ChaptersDropdown chapters={book.chapters as never} bookSlug={bookSlug} />
               ) : null}
