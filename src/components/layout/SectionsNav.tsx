@@ -70,7 +70,6 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
     <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
       <div className="p-4 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
         <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Sections</h3>
-        <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>{sections.length} sections</span>
       </div>
 
       <div>

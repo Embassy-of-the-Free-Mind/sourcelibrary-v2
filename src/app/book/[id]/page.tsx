@@ -8,7 +8,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { getBookDetail } from '@/lib/books-catalog';
+import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
@@ -786,15 +786,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // none (common), fall back to a rail of books that share subject tags.
     const relatedBooksData = (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books;
     const hasPrecomputedRelated = !!(relatedBooksData && ((relatedBooksData.direct?.length ?? 0) > 0 || (relatedBooksData.shared?.length ?? 0) > 0));
-    const subjectKeywords = (book as unknown as { subject_keywords?: string[] }).subject_keywords || [];
-    const tagRelated = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && subjectKeywords.length)
-      ? await getReadDb().then(db => db.collection('books').find(
-          { subject_keywords: { $in: subjectKeywords }, visible: true, id: { $ne: book.id }, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } },
-          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 }, maxTimeMS: 4000 },
-        ).limit(24).toArray())
-        .then(rows => rows.filter(r => { const t = String(r.thumbnail || ''); return t.includes('images.sourcelibrary.org') || t.includes('public.blob.vercel-storage.com') || t.includes('upload.wikimedia.org'); }).slice(0, 12))
-        .catch(() => [] as Record<string, unknown>[])
-      : [] as Record<string, unknown>[];
+    // Fast fallback via the indexed Supabase catalog: books in the same
+    // collection (or category) as this one. `subject_keywords` is unindexed in
+    // Mongo and a $in scan times out, so we use the thematic collection instead.
+    const relCollection = (book as unknown as { collections?: string[] }).collections?.find(Boolean);
+    const relCategory = book.categories?.find(Boolean);
+    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && (relCollection || relCategory))
+      ? await browseBooks({ collection: relCollection, category: relCollection ? undefined : relCategory, sort: 'popular', limit: 24, skipCount: true })
+          .then(r => r.books.filter(bk => bk.id !== book.id && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(bk.thumbnail || ''))).slice(0, 12))
+          .catch(() => [] as CatalogBook[])
+      : [] as CatalogBook[];
     const hasRelated = hasPrecomputedRelated || tagRelated.length > 0;
     const anchorSections = [
       hasSummary ? { id: 'about', label: 'About' } : null,
@@ -982,8 +983,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ABOUT THIS BOOK ===================== */}
         {hasSummary && (
-          <section id="about" style={{ background: '#faf7f0' }} className="px-6 md:px-12 pt-14 pb-8 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto">
+          <section id="about" style={{ background: '#faf7f0' }} className="pt-14 pb-8 scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="font-mono uppercase text-xs tracking-[0.14em] mb-4" style={{ color: '#a5503d' }}>About This Book</div>
               <div className="font-display text-lg md:text-[21px] leading-[1.62] max-w-[720px]" style={{ color: '#2b2620' }}>
                 {linkEntities(summaryText!, summaryEntities)}
@@ -993,8 +994,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         )}
 
         {/* ===================== THEMATIC OUTLINE | BOOK CONTENTS ===================== */}
-        <section id="contents" style={{ background: '#faf7f0' }} className="px-6 md:px-12 pt-2 pb-16 scroll-mt-4">
-          <div className="max-w-[var(--container-wide)] mx-auto grid md:grid-cols-2 gap-8 items-start">
+        <section id="contents" style={{ background: '#faf7f0' }} className="pt-2 pb-16 scroll-mt-4">
+          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-start">
             {/* Thematic outline (AI reading guide + themes) */}
             <div className="space-y-6">
               <AISection kind="reading-guide" className="card p-6">
@@ -1080,8 +1081,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
         {galleryPlates.length > 0 && (
-          <section id="illustrations" style={{ background: '#faf7f0' }} className="border-t border-[#e6e0d3] px-6 md:px-12 py-14 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto">
+          <section id="illustrations" style={{ background: '#faf7f0' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="flex items-baseline justify-between mb-6">
                 <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: '#2b2620' }}>Illustrations</h2>
                 {imageCount > galleryPlates.length && (
@@ -1095,8 +1096,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ABOUT THE AUTHOR ===================== */}
         {(authorEntity?.name || (book.author && book.author !== 'Unknown')) && (
-          <section id="author" style={{ background: '#f4efe6', borderTop: '1px solid #e6e0d3' }} className="px-6 md:px-12 py-16 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto">
+          <section id="author" style={{ background: '#f4efe6', borderTop: '1px solid #e6e0d3' }} className="py-16 scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="font-mono uppercase text-xs tracking-[0.14em] mb-3" style={{ color: '#a5503d' }}>About the Author</div>
               <h2 className="font-display font-medium text-2xl md:text-3xl mb-1" style={{ color: '#2b2620' }}>{authorEntity?.canonical_name || authorEntity?.name || cleanAuthorName || <AuthorName author={book.author} />}</h2>
               {(authorDates || parsedDates || authorRole || authorWorksCount > 0) && (
@@ -1122,8 +1123,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         )}
 
         {/* ===================== ASK THE LIBRARIAN ===================== */}
-        <section id="librarian" style={{ background: '#17120e' }} className="px-6 md:px-12 py-16 scroll-mt-4">
-          <div className="max-w-[720px] mx-auto text-center">
+        <section id="librarian" style={{ background: '#17120e' }} className="py-16 scroll-mt-4">
+          <div className="max-w-[720px] mx-auto text-center px-6 md:px-12">
             <h2 className="font-display font-medium text-3xl mb-3" style={{ color: '#f7f2ea' }}>Ask the Librarian</h2>
             <p className="text-base leading-relaxed mb-7 mx-auto max-w-[560px]" style={{ color: 'rgba(245,240,232,0.7)' }}>
               Ask anything about this volume — its contents, the surviving translations, or its historical context. Answers cite the scanned pages.
@@ -1136,8 +1137,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
-          <section id="related" style={{ background: '#faf7f0' }} className="px-6 md:px-12 py-14 border-t border-[#e6e0d3] scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto">
+          <section id="related" style={{ background: '#faf7f0' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               {hasPrecomputedRelated ? (
                 <RelatedBooks relatedBooks={relatedBooksData!} />
               ) : (
@@ -1771,7 +1772,12 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       }>
         <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} previewProposed={previewProposed} allowHidden={allowHidden} />
       </Suspense>
-      {!isEmbedded && <SignUpCTA />}
+      {!isEmbedded && (
+        <SignUpCTA
+          bgImageUrl="https://images.sourcelibrary.org/artwork/woman-of-the-apocalypse-hortus-deliciarum.jpg"
+          bgAttribution={{ text: 'Woman of the Apocalypse, Hortus Deliciarum (12th c.)', href: '/collections/visions-ecstasies' }}
+        />
+      )}
     </div>
   );
 }
