@@ -45,6 +45,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSearch';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -568,7 +569,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false, allowHidden = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean; allowHidden?: boolean }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, previewProposed = false, allowHidden = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; previewProposed?: boolean; allowHidden?: boolean }) {
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -714,6 +715,284 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
   const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+
+  // ============================================================================
+  // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
+  // proven layout below to preserve the Tenant Subdomain Lockdown invariants.
+  // ============================================================================
+  if (!isEmbedded) {
+    const heroByline = getEffectiveByline(book);
+    const bookSlug = book.slug || book.id;
+    const readHref = (() => {
+      if (pages.length === 0) return null;
+      const firstChapterPageNumber = book.chapters?.length
+        ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
+        : null;
+      if (typeof firstChapterPageNumber === 'number') return `/book/${bookSlug}/page-number/${firstChapterPageNumber}`;
+      const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
+      const readPage = pages[skipTo] || pages[0];
+      return readPage ? `/book/${bookSlug}/page/${readPage.id}` : null;
+    })();
+    const backCollection = bookCollections[0];
+    const authorDates = [authorEntity?.wikidata_birth_date, authorEntity?.wikidata_death_date].filter(Boolean).join(' – ');
+    const impressum = (() => {
+      const place = book.place_published?.trim();
+      const publisher = book.publisher?.trim();
+      const year = book.published ? String(book.published).trim() : '';
+      const placePub = [place, publisher].filter(Boolean).join(': ');
+      return [placePub, year].filter(Boolean).join(', ');
+    })();
+
+    return (
+      <>
+        <EmbedNavigationReporter book={book.slug || book.id} />
+        <SchemaOrgMetadata book={book} pageCount={totalPages} translatedCount={translatedCount} currentEdition={currentEdition} />
+        <DublinCoreMeta
+          title={book.title}
+          displayTitle={book.display_title}
+          author={book.author}
+          language={book.language}
+          year={(book as unknown as { year_published?: number }).year_published}
+          description={book.ai_metadata?.description as string | undefined}
+          categories={book.categories}
+          keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
+          publisher={book.dublin_core?.dc_publisher || book.image_source?.provider_name}
+          rights={book.dublin_core?.dc_rights}
+          identifier={`https://sourcelibrary.org/book/${book.slug || book.id}`}
+          source={book.image_source?.source_url}
+          pageCount={totalPages}
+          doi={book.doi}
+          ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
+        />
+
+        {/* ===================== HERO ===================== */}
+        <section className="relative overflow-hidden" style={{ background: '#14100c' }}>
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.32) 0%, rgba(165,80,61,0.08) 34%, transparent 60%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(80% 70% at 16% 32%, rgba(247,242,234,0.10) 0%, transparent 55%)' }} />
+          <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(245,240,232,0.05) 0 1px, transparent 1px 3px)' }} />
+          <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 py-14 md:py-16 grid md:grid-cols-[300px_1fr] gap-10 md:gap-14 md:items-center">
+            {/* Cover — fills the column height */}
+            <div className="w-full max-w-[300px] mx-auto md:mx-0" style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}>
+              <CoverImagePicker
+                bookId={book.id}
+                currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+                currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
+                bookTitle={book.display_title || book.title}
+                bookAuthor={book.author}
+                bookYear={book.published}
+                pages={pages}
+              />
+            </div>
+
+            {/* Meta */}
+            <div className="min-w-0" style={{ color: '#f7f2ea' }}>
+              {backCollection && (
+                <Link href={`/collections/${backCollection.slug}`} className="inline-flex items-center gap-2 text-[13.5px] mb-5 transition-colors" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                  ← {backCollection.name}
+                </Link>
+              )}
+              {(heroByline.role === 'author' || heroByline.role === 'editor') && (
+                <div className="font-mono uppercase text-[12.5px] tracking-[0.14em] mb-3.5" style={{ color: '#d98a72' }}>
+                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
+                    <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
+                      {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
+                    </Link>
+                  ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                </div>
+              )}
+              <h1 className="font-display font-medium text-4xl md:text-[52px] leading-[1.04] tracking-[-0.01em] mb-3 break-words" style={{ color: '#f7f2ea' }}>
+                {book.display_title || book.title}
+              </h1>
+              {book.display_title && book.title !== book.display_title && (
+                <div className="font-display italic text-lg md:text-xl mb-1.5" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
+              )}
+              {impressum && <div className="text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{impressum}</div>}
+
+              {/* Chips */}
+              <div className="flex flex-wrap gap-2 mt-6 mb-1">
+                {book.language && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
+                    <Globe className="w-3.5 h-3.5" />{book.language}
+                  </span>
+                )}
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
+                  <FileText className="w-3.5 h-3.5" />{totalPages} scans
+                </span>
+                {imageCount > 0 && (
+                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] transition-colors" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
+                    <Images className="w-3.5 h-3.5" />{imageCount} images
+                  </Link>
+                )}
+              </div>
+              <div className="[&_a]:!text-[#eab59f]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap items-center gap-2.5 mt-6">
+                {embedPolicy.showBookReadCta && readHref && (
+                  <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors" style={{ background: '#a5503d', boxShadow: '0 12px 30px -8px rgba(165,80,61,0.8)' }}>
+                    <BookOpen className="w-[18px] h-[18px]" />Read This Book
+                  </Link>
+                )}
+                <div className="flex items-center gap-1 px-1 py-0.5" style={{ background: 'rgba(245,240,232,0.05)' }}>
+                  <AuthCheck role="admin">
+                    {isComplete ? (
+                      <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
+                    )}
+                  </AuthCheck>
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-200 hover:!text-white hover:!bg-white/10" />
+                  <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.1)' }} />
+                  <div className="flex items-center gap-2.5 px-2 py-1.5">
+                    <BookAnalytics bookId={book.id} className="!text-stone-300" />
+                    <LikeButton targetType="book" targetId={book.id} size="sm" showCount={true} className="!text-stone-300" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Meta row: search, book history (admin), edit (admin) */}
+              <div className="flex flex-wrap items-center gap-4 mt-5 text-[13.5px]" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                <div className="[&_input]:!bg-white/5 [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400"><SearchPanel bookId={book.id} /></div>
+                <AuthCheck role="inner_circle">
+                  <details className="group relative">
+                    <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:text-white transition-colors">Book History ▾</summary>
+                    <div className="absolute z-40 top-full left-0 mt-2.5 w-[320px] p-3 text-left" style={{ background: '#fffefb', border: '1px solid #e6e0d3', boxShadow: '0 18px 44px rgba(20,12,4,0.4)' }}>
+                      <BookHistory bookId={book.id} />
+                    </div>
+                  </details>
+                </AuthCheck>
+                <AuthCheck role="inner_circle">
+                  <Link href={`/book/${bookSlug}/edit`} className="transition-colors" style={{ color: '#d98a72' }}>✎ Edit</Link>
+                </AuthCheck>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== BIBLIOGRAPHIC (light strip under hero) ===================== */}
+        <section style={{ background: '#faf7f0' }} className="border-b border-[#e6e0d3]">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6">
+            <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0} showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink} showExternalLinks={embedPolicy.showExternalLinks}>
+              {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+                <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
+              )}
+              {embedPolicy.showIndexCatalogStatus && (
+                <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
+              )}
+            </BibliographicInfo>
+          </div>
+        </section>
+
+        {/* ===================== ABOUT THIS BOOK ===================== */}
+        {hasSummary && (
+          <section style={{ background: '#faf7f0' }} className="px-6 md:px-10 pt-14 pb-8">
+            <div className="max-w-[1280px] mx-auto">
+              <div className="font-mono uppercase text-xs tracking-[0.14em] mb-4" style={{ color: '#a5503d' }}>About This Book</div>
+              <div className="font-display text-lg md:text-[21px] leading-[1.62]" style={{ color: '#2b2620' }}>
+                {linkEntities(summaryText!, summaryEntities)}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ===================== THEMATIC OUTLINE | BOOK CONTENTS ===================== */}
+        <section style={{ background: '#faf7f0' }} className="px-6 md:px-10 pt-2 pb-16">
+          <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-8 items-start">
+            {/* Thematic outline (AI reading guide + themes) */}
+            <div className="space-y-6">
+              <AISection kind="reading-guide" className="card p-6">
+                <div className="flex items-center gap-2 text-xs mb-3" style={{ color: '#8a8170' }}>
+                  <span className="font-semibold" style={{ color: '#6e685e' }}>Generated summary</span> — not part of the original work.
+                </div>
+                <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} />
+              </AISection>
+              {(() => {
+                const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+                if (!allEntries || allEntries.length === 0) return null;
+                const entries = allEntries.filter(e => e.pages.length >= 2);
+                if (entries.length === 0) return null;
+                return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
+              })()}
+            </div>
+            {/* Book's own contents */}
+            <div className="space-y-6">
+              {book.chapters?.length ? (
+                <ChaptersDropdown chapters={book.chapters as never} bookSlug={bookSlug} />
+              ) : null}
+              {book.editions?.length ? (
+                <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
+              ) : null}
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== PAGES ===================== */}
+        <section style={{ background: '#faf7f0' }} className="pb-16">
+          <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+            {embedPolicy.showBookOverviewLink && pages.length > 0 && (
+              <div className="mb-4">
+                <Link href={`/book/${bookSlug}/overview`} className="text-sm text-accent-rust hover:text-accent-gold-dark">Overview →</Link>
+              </div>
+            )}
+            {(() => {
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+              const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
+              if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
+                return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
+              }
+              return pagesEl;
+            })()}
+          </main>
+        </section>
+
+        {/* ===================== ABOUT THE AUTHOR ===================== */}
+        {(authorEntity?.name || (book.author && book.author !== 'Unknown')) && (
+          <section style={{ background: '#f4efe6', borderTop: '1px solid #e6e0d3' }} className="px-6 md:px-10 py-16">
+            <div className="max-w-[1280px] mx-auto grid md:grid-cols-[148px_1fr] gap-10 items-start">
+              <div className="w-[148px] h-[148px] flex items-center justify-center text-xs" style={{ background: '#e7dfd0', border: '1px solid #ddd5c6', color: '#a79f8f' }}>Portrait</div>
+              <div>
+                <div className="font-mono uppercase text-xs tracking-[0.14em] mb-3" style={{ color: '#a5503d' }}>About the Author</div>
+                <h2 className="font-display font-medium text-2xl md:text-3xl mb-0.5" style={{ color: '#2b2620' }}>{authorEntity?.canonical_name || authorEntity?.name || <AuthorName author={book.author} />}</h2>
+                {authorDates && <div className="text-sm mb-4" style={{ color: '#948d80' }}>{authorDates}</div>}
+                {authorEntity && <div className="mb-4"><AuthorAuthority entity={authorEntity as never} /></div>}
+                <div className="flex flex-wrap gap-6 items-center">
+                  {authorUrl(book.author) && (
+                    <Link href={authorUrl(book.author)!} className="text-[15px] font-semibold" style={{ color: '#a5503d' }}>View author page →</Link>
+                  )}
+                  {authorEntity?.wikipedia_url && (
+                    <a href={authorEntity.wikipedia_url} target="_blank" rel="noopener noreferrer" className="text-[15px]" style={{ color: '#4a443b' }}>Wikipedia →</a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ===================== ASK THE LIBRARIAN ===================== */}
+        <section style={{ background: '#17120e' }} className="px-6 md:px-10 py-16">
+          <div className="max-w-[720px] mx-auto text-center">
+            <h2 className="font-display font-medium text-3xl mb-3" style={{ color: '#f7f2ea' }}>Ask the Librarian</h2>
+            <p className="text-base leading-relaxed mb-7 mx-auto max-w-[560px]" style={{ color: 'rgba(245,240,232,0.7)' }}>
+              Ask anything about this volume — its contents, the surviving translations, or its historical context. Answers cite the scanned pages.
+            </p>
+            <div className="[&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_>div]:!border-white/25 [&_>div]:!bg-white/5">
+              <LibrarianSearch placeholder={`Ask a question about ${book.display_title || book.title}…`} />
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== RELATED BOOKS ===================== */}
+        {embedPolicy.showBookRelatedBooks && (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books && (
+          <section style={{ background: '#faf7f0' }} className="px-6 md:px-10 py-14 border-t border-[#e6e0d3]">
+            <div className="max-w-[1280px] mx-auto">
+              <RelatedBooks relatedBooks={(book as unknown as { related_books: import('@/lib/types').RelatedBooks }).related_books} />
+            </div>
+          </section>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -1331,7 +1610,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} allowHidden={allowHidden} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} previewProposed={previewProposed} allowHidden={allowHidden} />
       </Suspense>
       {!isEmbedded && <SignUpCTA />}
     </div>
