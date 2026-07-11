@@ -17,17 +17,24 @@ const HIDE_EXACT = ['/', '/es'];
  */
 export default function FeedbackCallout() {
   const [dismissed, setDismissed] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
-  // Read localStorage after mount to avoid hydration mismatch
+  // Gate on client mount, and read the dismissed flag from localStorage. Gating
+  // matters because the homepage (and other pages) are ISR-prerendered, where
+  // `usePathname()` is null — so a render-time path check can't keep the callout
+  // out of the STATIC HTML, and it would flash in before hydration hides it.
+  // Rendering nothing until mounted keeps it out of the prerender entirely; it
+  // then appears on the client only where the path isn't excluded.
   useEffect(() => {
+    setMounted(true);
     if (localStorage.getItem('sl_feedback_callout_dismissed') === '1') {
       setDismissed(true);
     }
   }, []);
 
+  if (!mounted || dismissed) return null;
   if (pathname && (HIDE_EXACT.includes(pathname) || HIDE_ON.some((p) => pathname.startsWith(p)))) return null;
-  if (dismissed) return null;
 
   return (
     <section
