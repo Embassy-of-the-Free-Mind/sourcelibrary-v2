@@ -809,24 +809,46 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const placePub = [place, publisher].filter(Boolean).join(': ');
       return [placePub, year].filter(Boolean).join(', ');
     })();
+    // Book author as a plain string (for de-duping the composition line below).
+    const bookAuthorName = (() => {
+      const a = book.author as unknown;
+      if (typeof a === 'string') return a.trim();
+      if (a && typeof a === 'object' && 'name' in a) return String((a as { name?: string }).name || '').trim();
+      return '';
+    })();
     // Single hero meta line: impressum (publisher, year) + the source-work
-    // composition/translation date. The impressum already carries the printed
-    // year, so drop a duplicate "published YYYY" when it's present.
+    // *composition* date (when the original was written — meaningful for
+    // translations / ancient texts, e.g. "Paul the Apostle 1st century AD").
+    // Suppress it when it just restates the impressum (same author AND the
+    // composition year is the printed year), which is the common case for a
+    // 19th-century original printed in its own year.
     const heroMetaLine = (() => {
       const parts: string[] = [];
       if (impressum) parts.push(impressum);
       const comp = book.source_work_dates?.find(l => l.type === 'composition');
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
-      if (comp) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
-      else if (trans) parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+      if (comp) {
+        const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
+        const sameYear = !!book.published && String(comp.date_display || '').includes(String(book.published));
+        if (!(sameAuthor && sameYear)) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+      } else if (trans) {
+        parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+      }
       if (!impressum && book.published) parts.push(`published ${book.published}`);
       return parts.filter(Boolean).join(' · ');
     })();
-    // Subject tags — moved out of the hero into a "Tags" dropdown below.
+    // Subject tags — moved out of the hero, shown below the About text.
     const subjectTags = (book as unknown as { subject_keywords?: string[] }).subject_keywords?.filter(Boolean) ?? [];
-    // A single interesting visual for the details column: prefer a curated
-    // gallery plate, else a frontispiece/plate/illustration page, else any
-    // non-blank page that isn't the cover.
+    // A single interesting visual for the About section. Prefer a curated
+    // gallery plate (these are illustrations scored ≥0.7 — never blanks or
+    // calibration targets). Failing that, a classified illustration page, then
+    // a mid-book page of body text. We deliberately never fall back to "first
+    // non-blank page": on many scans that's a cradle/color-card shot or an
+    // endpaper. The cover is always excluded.
+    const junkPageType = (t?: string) => {
+      const v = (t || '').toLowerCase();
+      return !v || ['blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata', 'scanner-metadata', 'color-card', 'colorcard', 'endpaper', 'cover', 'spine'].includes(v);
+    };
     const sideVisual = (() => {
       const plate = galleryImages[0];
       if (plate) {
@@ -836,8 +858,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      const pg = pages.find(p => !!p.page_type && ['frontispiece', 'plate', 'illustration'].includes(p.page_type) && p.id !== coverPage?.id)
-        || pages.find(p => p.page_type !== 'blank' && p.id !== coverPage?.id);
+      const illus = pages.find(p => !!p.page_type && ['frontispiece', 'plate', 'illustration'].includes(p.page_type) && p.id !== coverPage?.id && !junkPageType(p.page_type));
+      const textPg = bodyTextPages.length
+        ? bodyTextPages[Math.floor(bodyTextPages.length / 2)]
+        : pages.find(p => p.page_type === 'text' && p.id !== coverPage?.id);
+      const pg = illus
+        || (textPg && textPg.id !== coverPage?.id ? textPg : undefined)
+        || pages.find(p => p.page_type === 'text' && p.id !== coverPage?.id);
       if (pg) {
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
         if (src) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
@@ -954,32 +981,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               </div>
 
-              {/* Meta row: search + small links (biblio / history / edit) */}
+              {/* Meta row: in-book search + edit (biblio / history moved below) */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-5 text-[13.5px]" style={{ color: 'rgba(245,240,232,0.6)' }}>
                 <div className="[&_input]:!bg-white/5 [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400"><SearchPanel bookId={book.id} /></div>
-                <span style={{ color: 'rgba(245,240,232,0.28)' }}>|</span>
-                <details className="relative">
-                  <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:text-white transition-colors">Bibliographic Info ▾</summary>
-                  <div className="absolute z-40 top-full left-0 mt-2.5 w-[min(92vw,640px)] max-h-[70vh] overflow-auto p-4 text-left" style={{ background: '#fffefb', border: '1px solid #e6e0d3', boxShadow: '0 18px 44px rgba(20,12,4,0.4)' }}>
-                    <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0} showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink} showExternalLinks={embedPolicy.showExternalLinks}>
-                      {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
-                        <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
-                      )}
-                      {embedPolicy.showIndexCatalogStatus && (
-                        <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
-                      )}
-                    </BibliographicInfo>
-                  </div>
-                </details>
                 <AuthCheck role="inner_circle">
-                  <details className="relative">
-                    <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:text-white transition-colors">Book History ▾</summary>
-                    <div className="absolute z-40 top-full left-0 mt-2.5 w-[min(92vw,360px)] max-h-[70vh] overflow-auto p-3 text-left" style={{ background: '#fffefb', border: '1px solid #e6e0d3', boxShadow: '0 18px 44px rgba(20,12,4,0.4)' }}>
-                      <BookHistory bookId={book.id} />
-                    </div>
-                  </details>
-                </AuthCheck>
-                <AuthCheck role="inner_circle">
+                  <span style={{ color: 'rgba(245,240,232,0.28)' }}>|</span>
                   <Link href={`/book/${bookSlug}/edit`} className="transition-colors" style={{ color: '#d98a72' }}>✎ Edit</Link>
                 </AuthCheck>
               </div>
@@ -1069,6 +1075,37 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {book.editions?.length ? (
                 <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
               ) : null}
+
+              {/* Bibliographic information */}
+              <details className="card group">
+                <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                  <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
+                  <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                </summary>
+                <div className="px-6 pb-6">
+                  <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0} showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink} showExternalLinks={embedPolicy.showExternalLinks}>
+                    {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+                      <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
+                    )}
+                    {embedPolicy.showIndexCatalogStatus && (
+                      <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
+                    )}
+                  </BibliographicInfo>
+                </div>
+              </details>
+
+              {/* Book history (staff only) */}
+              <AuthCheck role="inner_circle">
+                <details className="card group">
+                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
+                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <BookHistory bookId={book.id} />
+                  </div>
+                </details>
+              </AuthCheck>
             </div>
           </div>
         </section>

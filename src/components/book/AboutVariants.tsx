@@ -75,16 +75,16 @@ export default function AboutVariants({
       <section id="about" className="relative pt-14 pb-8 scroll-mt-4" style={{ background: '#faf7f0' }}>
         <Switcher dark />
         <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-          <div className={visual ? 'grid md:grid-cols-[1fr_340px] gap-10 md:gap-14 items-start' : ''}>
-            {/* Text + tags (right of the plate on desktop, below it on mobile) */}
-            <div className="order-2 md:order-1">
+          <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
+            {/* Text + tags: 2/5 on desktop (right of the plate on mobile below it) */}
+            <div className="order-2 md:order-1 md:col-span-2">
               {eyebrow}
-              <div className="font-display text-lg md:text-[21px] leading-[1.62] max-w-[720px]" style={{ color: '#2b2620' }}>{content}</div>
+              <div className="font-display text-lg md:text-[21px] leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
               {tagRow}
             </div>
-            {/* Interesting page / plate */}
+            {/* Interesting page / plate: 2/5 on desktop, offset one column from the text */}
             {visual && (
-              <div className="order-1 md:order-2 md:sticky md:top-6">
+              <div className="order-1 md:order-2 md:col-span-2 md:col-start-4 md:sticky md:top-6">
                 <Link href={visual.href} className="block group">
                   <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
