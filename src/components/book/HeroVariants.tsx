@@ -26,7 +26,9 @@ export default function HeroVariants({
           dropdowns (rendered in the content below) can overflow the section. */}
       <div className="absolute inset-0 overflow-hidden">
         {mosaicUrl ? (
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${mosaicUrl})` }} />
+          /* Mobile: ~6 columns across (166% width), tiled vertically to fill the
+             tall hero. Desktop: cover the whole area. */
+          <div className="absolute inset-0 bg-[length:166%_auto] bg-top bg-repeat-y md:bg-cover md:bg-center md:bg-no-repeat" style={{ backgroundImage: `url(${mosaicUrl})` }} />
         ) : pageThumbs.length > 0 ? (
           <div className="absolute inset-0 overflow-hidden">
             <div className="grid grid-cols-6 md:grid-cols-10 gap-1.5">

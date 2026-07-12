@@ -812,11 +812,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return readPage ? `/book/${bookSlug}/page/${readPage.id}` : null;
     })();
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
-    // Related books: prefer the pre-computed shared-entity graph; if a book has
-    // none (common), fall back to a rail of books that share subject tags.
-    const relatedBooksData = (book as unknown as { related_books?: import('@/lib/types').RelatedBooks }).related_books;
-    const hasPrecomputedRelated = !!(relatedBooksData && ((relatedBooksData.direct?.length ?? 0) > 0 || (relatedBooksData.shared?.length ?? 0) > 0));
-    // Fast fallback via the indexed Supabase catalog: books in the same
+    // Related books: a cover slider via the indexed Supabase catalog — books in the same
     // collection (or category) as this one. `subject_keywords` is unindexed in
     // Mongo and a $in scan times out, so we use the thematic collection instead.
     const relCollection = (book as unknown as { collections?: string[] }).collections?.find(Boolean);
@@ -828,7 +824,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // language, keeping the first set that yields renderable covers.
     const renderableCover = (u?: string | null) => /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(u || ''));
     const relLanguage = book.language?.trim() || undefined;
-    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && (relCollection || relCategory || relLanguage))
+    // Always a cover slider (never the pre-computed text list), via the indexed
+    // catalog: collection → category → language.
+    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && (relCollection || relCategory || relLanguage))
       ? await (async () => {
           const queries: Array<Record<string, unknown>> = [];
           if (relCollection) queries.push({ collection: relCollection });
@@ -844,7 +842,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return [] as CatalogBook[];
         })()
       : [] as CatalogBook[];
-    const hasRelated = hasPrecomputedRelated || tagRelated.length > 0;
+    const hasRelated = tagRelated.length > 0;
     const impressum = (() => {
       const place = book.place_published?.trim();
       const publisher = book.publisher?.trim();
@@ -1183,7 +1181,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {hasSummary ? (
           <AboutVariants content={linkEntities(summaryText!, summaryEntities)} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
         ) : (
-          <section style={{ background: '#fdfcf9' }} className="pt-2 pb-16">
+          <section style={{ background: '#fdfcf9' }} className="pt-12 md:pt-16 pb-10 md:pb-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="max-w-[860px] space-y-3 md:space-y-6">{readingDropdowns}</div>
             </div>
@@ -1229,15 +1227,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {hasRelated && (
           <section id="related" style={{ background: '#f5f0e8' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              {hasPrecomputedRelated ? (
-                <RelatedBooks relatedBooks={relatedBooksData!} />
-              ) : (
-                <>
-                  <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
-                  <p className="text-sm md:text-[15px] mb-3" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
-                  <BookSlider books={tagRelated as unknown as MiniBook[]} />
-                </>
-              )}
+              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
+              <p className="text-sm md:text-[15px] -mb-1" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
+              <BookSlider books={tagRelated as unknown as MiniBook[]} />
             </div>
           </section>
         )}
