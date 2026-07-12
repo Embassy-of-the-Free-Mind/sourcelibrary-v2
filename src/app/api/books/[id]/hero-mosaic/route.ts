@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import sharp from 'sharp';
+
+// sharp + mongodb + node:crypto require the Node.js runtime (never edge).
+export const runtime = 'nodejs';
 import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
