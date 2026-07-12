@@ -992,16 +992,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ABOUT THIS BOOK ===================== */}
         {hasSummary && (
-          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} />
+          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} visual={sideVisual} tags={subjectTags} />
         )}
 
-        {/* ===================== READING GUIDE · CONTENTS · TAGS  |  STICKY VISUAL ===================== */}
+        {/* ===================== READING GUIDE · CONTENTS (closed dropdowns) ===================== */}
         <section id="contents" style={{ background: '#faf7f0' }} className="pt-2 pb-16 scroll-mt-4">
-          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-            {/* Left column: collapsible reading guide, contents, tags */}
-            <div className="space-y-6">
+          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+            <div className="max-w-[860px] space-y-6">
               <AISection kind="reading-guide" className="card">
-                <details open className="group">
+                <details className="group">
                   <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
                     <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
                     <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
@@ -1020,7 +1019,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               })()}
 
               {/* Book's own contents */}
-              <details open className="card group">
+              <details className="card group">
                 <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
                   <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
                   <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
@@ -1067,40 +1066,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               </details>
 
-              {/* Subject tags */}
-              {subjectTags.length > 0 && (
-                <details className="card group">
-                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Tags</h3>
-                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-                  </summary>
-                  <div className="px-6 pb-6 flex flex-wrap gap-2">
-                    {subjectTags.map((tag) => (
-                      <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[13px] px-3 py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
-                    ))}
-                  </div>
-                </details>
-              )}
-
               {book.editions?.length ? (
                 <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
               ) : null}
             </div>
-
-            {/* Right column: a single interesting page/plate, sticky on desktop */}
-            {sideVisual && (
-              <div className="md:sticky md:top-6 self-start">
-                <Link href={sideVisual.href} className="block group">
-                  <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={sideVisual.src} alt={sideVisual.caption || ''} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
-                  </div>
-                  {sideVisual.caption && (
-                    <div className="mt-3 text-[13px] italic" style={{ color: '#948d80' }}>{sideVisual.caption}</div>
-                  )}
-                </Link>
-              </div>
-            )}
           </div>
         </section>
 
