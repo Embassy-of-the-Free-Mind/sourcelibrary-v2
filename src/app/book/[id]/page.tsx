@@ -904,6 +904,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== HERO ===================== */}
         <HeroVariants
           pageThumbs={heroPageThumbs}
+          mosaicUrl={`/api/books/${book.id}/hero-mosaic`}
           cover={(
             <div className="flex justify-center md:justify-start">
               {coverDisplay ? (
@@ -911,7 +912,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <img
                   src={coverDisplay}
                   alt={book.display_title || book.title}
-                  className="block h-auto w-full md:w-auto max-h-[420px] md:max-h-[520px] md:max-w-[360px] object-contain"
+                  className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-none object-contain"
                   style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
               ) : (
@@ -966,7 +967,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {/* Actions */}
               <div className="flex flex-wrap items-center gap-2.5 mt-6">
                 {embedPolicy.showBookReadCta && readHref && (
-                  <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors" style={{ background: '#a5503d', boxShadow: '0 12px 30px -8px rgba(165,80,61,0.8)' }}>
+                  <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
                     <BookOpen className="w-[18px] h-[18px]" />Read This Book
                   </Link>
                 )}

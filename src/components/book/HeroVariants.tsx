@@ -18,10 +18,13 @@ export default function HeroVariants({
   cover,
   meta,
   pageThumbs = [],
+  mosaicUrl,
 }: {
   cover: ReactNode;
   meta: ReactNode;
   pageThumbs?: string[];
+  /** A single pre-composited tiled background image (preferred over pageThumbs). */
+  mosaicUrl?: string;
 }) {
   const [t, setT] = useState(0);
   const total = TREATMENTS.length;
@@ -42,8 +45,14 @@ export default function HeroVariants({
 
   return (
     <section className="relative overflow-hidden" style={{ background: '#14100c' }}>
-      {/* Fixed page-grid background (same across all variants) */}
-      {pageThumbs.length > 0 && (
+      {/* Fixed page-scan background (same across all variants). Prefer the single
+          pre-composited mosaic image; fall back to the client-side tile grid. */}
+      {mosaicUrl ? (
+        <div className="absolute inset-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={mosaicUrl} alt="" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
+        </div>
+      ) : pageThumbs.length > 0 ? (
         <div className="absolute inset-0 overflow-hidden">
           <div className="grid grid-cols-10 gap-1">
             {pageThumbs.map((src, i) => (
@@ -52,7 +61,7 @@ export default function HeroVariants({
             ))}
           </div>
         </div>
-      )}
+      ) : null}
       {/* Base tint + a left-anchored scrim so the (left-aligned) text reads */}
       <div className="absolute inset-0" style={{ background: tint }} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.55) 0%, rgba(14,10,7,0.15) 60%, transparent 100%)' }} />
