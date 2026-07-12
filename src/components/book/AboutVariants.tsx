@@ -63,12 +63,11 @@ export default function AboutVariants({
     </div>
   );
 
-  const eyebrow = <div className="font-mono uppercase text-xs tracking-[0.14em] mb-4" style={{ color: '#a5503d' }}>About This Book</div>;
 
   const tagRow = tags.length > 0 ? (
-    <div className="flex flex-wrap gap-2 mt-8">
+    <div className="flex flex-wrap gap-1.5 md:gap-2 mt-6 md:mt-8">
       {tags.map((tag) => (
-        <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[13px] px-3 py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
+        <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[11px] md:text-[13px] px-2 py-0.5 md:px-3 md:py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
       ))}
     </div>
   ) : null;
@@ -81,8 +80,7 @@ export default function AboutVariants({
           <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
             {/* Text + tags + dropdowns: 3/5 on desktop (below the plate on mobile) */}
             <div className="order-2 md:order-1 md:col-span-3">
-              {eyebrow}
-              <div className="font-display text-lg md:text-[21px] leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
+              <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
               {tagRow}
               {belowContent && <div className="mt-8 space-y-6">{belowContent}</div>}
             </div>
@@ -120,7 +118,6 @@ export default function AboutVariants({
       <Switcher dark={false} />
       <div className="relative h-full flex items-center max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
         <div className="w-full md:w-3/5 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl" style={{ background: 'rgba(250,247,240,0.72)', border: '1px solid rgba(255,255,255,0.45)' }}>
-          {eyebrow}
           <div className="font-display text-lg md:text-[22px] leading-[1.6]" style={{ color: '#2b2620' }}>{content}</div>
           {tagRow}
         </div>

@@ -717,7 +717,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const readingSummary = previewProposed && candidate?.abstract
     ? candidate.abstract
     : (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
-  const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  const rawSummaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  // The generated summary usually opens by restating the book's title
+  // ("<Title> is a scholarly commentary by …"). Drop that leading restatement
+  // so the About text starts with the actual description. Only triggers when
+  // the text genuinely starts with the book's title, and never over-strips.
+  const summaryText = (() => {
+    const text = rawSummaryText;
+    if (!text) return text;
+    const titles = [book.title, book.display_title].filter((t): t is string => !!t && t.length >= 8);
+    const startsWithTitle = titles.some(t => text.toLowerCase().startsWith(t.toLowerCase().slice(0, Math.min(t.length, 40))));
+    if (!startsWithTitle) return text;
+    const m = text.slice(0, 320).match(/\b(?:is|was|are|were|remains|represents|provides|serves|contains|documents|comprises|constitutes)\b\s+/i);
+    if (!m || m.index === undefined) return text;
+    const rest = text.slice(m.index + m[0].length).replace(/^["'“(\s]+/, '');
+    if (rest.length < 24) return text;
+    return rest.charAt(0).toUpperCase() + rest.slice(1);
+  })();
   const hasSummary = !!summaryText;
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
@@ -796,7 +812,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const readPage = pages[skipTo] || pages[0];
       return readPage ? `/book/${bookSlug}/page/${readPage.id}` : null;
     })();
-    const backCollection = bookCollections[0];
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
     // Related books: prefer the pre-computed shared-entity graph; if a book has
     // none (common), fall back to a rail of books that share subject tags.
@@ -818,7 +833,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       hasContents ? { id: 'contents', label: 'Contents' } : null,
       pages.length > 0 ? { id: 'pages', label: 'Pages' } : null,
       galleryPlates.length > 0 ? { id: 'illustrations', label: 'Illustrations' } : null,
-      { id: 'librarian', label: 'Librarian' },
+      { id: 'search-librarian', label: 'Search' },
       hasRelated ? { id: 'related', label: 'Related' } : null,
     ].filter((s): s is { id: string; label: string } => s !== null);
     const impressum = (() => {
@@ -1044,13 +1059,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           )}
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
-              {backCollection && (
-                <Link href={`/collections/${backCollection.slug}`} className="inline-flex items-center gap-2 text-[11px] md:text-[13.5px] mb-2 md:mb-5 transition-colors" style={{ color: 'rgba(245,240,232,0.6)' }}>
-                  ← {backCollection.name}
-                </Link>
-              )}
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
-                <div className="font-mono uppercase text-[10.5px] md:text-[12.5px] tracking-[0.14em] mb-1.5 md:mb-3.5" style={{ color: '#d98a72' }}>
+                <div className="font-mono uppercase text-[9.5px] md:text-[12.5px] tracking-[0.13em] mb-1 md:mb-3.5" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                     <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
@@ -1058,13 +1068,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
                 </div>
               )}
-              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.12] md:leading-[1.04] tracking-[-0.01em] mb-1.5 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-display font-medium text-base sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-1 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (
-                <div className="font-display italic text-[13px] md:text-xl mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
+                <div className="font-display italic text-[11.5px] md:text-xl mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
               )}
-              {heroMetaLine && <div className="text-[12px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
+              {heroMetaLine && <div className="text-[11px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
 
               {/* Chips */}
               <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-6 mb-1">
@@ -1109,14 +1119,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               </div>
 
-              {/* Meta row: in-book search + edit (biblio / history moved below) */}
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-5 text-[13.5px]" style={{ color: 'rgba(245,240,232,0.6)' }}>
-                <div className="[&_input]:!bg-white/5 [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400"><SearchPanel bookId={book.id} /></div>
-                <AuthCheck role="inner_circle">
-                  <span style={{ color: 'rgba(245,240,232,0.28)' }}>|</span>
+              {/* Staff-only edit link (in-book search moved to the sub-nav + combo section) */}
+              <AuthCheck role="inner_circle">
+                <div className="mt-4 md:mt-5 text-[13.5px]">
                   <Link href={`/book/${bookSlug}/edit`} className="transition-colors" style={{ color: '#d98a72' }}>✎ Edit</Link>
-                </AuthCheck>
-              </div>
+                </div>
+              </AuthCheck>
             </div>
           )}
         />
@@ -1170,13 +1178,24 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         )}
 
 
-        {/* ===================== ASK THE LIBRARIAN ===================== */}
-        <section id="librarian" style={{ background: '#17120e' }} className="py-16 scroll-mt-4">
+        {/* ===================== SEARCH THIS BOOK · ASK THE LIBRARIAN ===================== */}
+        <section id="search-librarian" style={{ background: '#17120e' }} className="py-16 scroll-mt-4">
           <div className="max-w-[720px] mx-auto text-center px-6 md:px-12">
-            <h2 className="font-display font-medium text-3xl mb-3" style={{ color: '#f7f2ea' }}>Ask the Librarian</h2>
-            <p className="text-base leading-relaxed mb-7 mx-auto max-w-[560px]" style={{ color: 'rgba(245,240,232,0.7)' }}>
-              Ask anything about this volume — its contents, the surviving translations, or its historical context. Answers cite the scanned pages.
+            <h2 className="font-display font-medium text-2xl md:text-3xl mb-3" style={{ color: '#f7f2ea' }}>Search this book</h2>
+            <p className="text-sm md:text-base leading-relaxed mb-6 mx-auto max-w-[560px]" style={{ color: 'rgba(245,240,232,0.7)' }}>
+              Find a word or passage in the original scans, or ask the Librarian a question in plain language — answers cite the pages.
             </p>
+            {/* In-book keyword search */}
+            <div className="[&_input]:!bg-white/5 [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_input]:!border-white/25">
+              <SearchPanel bookId={book.id} />
+            </div>
+            {/* Divider */}
+            <div className="flex items-center gap-3 my-7 mx-auto max-w-[420px]">
+              <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.14)' }} />
+              <span className="font-mono uppercase text-[11px] tracking-[0.16em]" style={{ color: 'rgba(245,240,232,0.4)' }}>or ask the librarian</span>
+              <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.14)' }} />
+            </div>
+            {/* Ask-the-Librarian AI */}
             <div className="[&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_>div]:!border-white/25 [&_>div]:!bg-white/5">
               <LibrarianSearch placeholder={`Ask a question about ${book.display_title || book.title}…`} />
             </div>
