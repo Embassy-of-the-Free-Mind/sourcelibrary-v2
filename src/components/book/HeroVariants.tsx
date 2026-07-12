@@ -56,11 +56,11 @@ export default function HeroVariants({
         /* CSS background so we can show ~6 columns across on mobile (band) while
            still covering the full hero on desktop / mobile variant 2. */
         <div
-          className={`absolute inset-x-0 top-0 ${mv === 2 ? 'h-full bg-cover bg-center' : 'h-[25vh] bg-[length:166%_auto] bg-top'} md:h-full md:bg-cover md:bg-center bg-no-repeat`}
+          className={`absolute inset-x-0 top-0 ${mv === 1 ? 'h-[25vh] bg-[length:166%_auto] bg-top' : 'h-full bg-cover bg-center'} md:h-full md:bg-cover md:bg-center bg-no-repeat`}
           style={{ backgroundImage: `url(${mosaicUrl})` }}
         />
       ) : pageThumbs.length > 0 ? (
-        <div className={`absolute inset-x-0 top-0 ${mv === 2 ? 'h-full' : 'h-[25vh]'} md:h-full overflow-hidden`}>
+        <div className={`absolute inset-x-0 top-0 ${mv === 1 ? 'h-[25vh]' : 'h-full'} md:h-full overflow-hidden`}>
           <div className="grid grid-cols-6 md:grid-cols-10 gap-1.5">
             {pageThumbs.map((src, i) => (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -70,14 +70,25 @@ export default function HeroVariants({
         </div>
       ) : null}
 
-      {/* Mobile overlays */}
-      {mv === 2 ? (
-        /* Variant 2: tint the full background (matches the desktop Scrim tint)
-           so the content reads clearly over it */
-        <div className="absolute inset-0 md:hidden" style={{ background: 'rgba(16,12,8,0.82)' }} />
-      ) : (
-        /* Variant 1: fade the band into the solid dark below */
+      {/* Mobile overlays (the reddish radial mirrors the desktop tint) */}
+      {mv === 1 && (
+        /* Variant 1: band across the top fading into the solid dark below */
         <div className="absolute inset-x-0 top-0 h-[25vh] md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(20,16,12,0.28) 0%, rgba(20,16,12,0.12) 45%, #14100c 100%)' }} />
+      )}
+      {mv === 2 && (
+        /* Variant 2: full background with the desktop Scrim tint + reddish glow */
+        <>
+          <div className="absolute inset-0 md:hidden" style={{ background: 'rgba(16,12,8,0.82)' }} />
+          <div className="absolute inset-0 md:hidden" style={{ background: 'radial-gradient(120% 80% at 78% 16%, rgba(165,80,61,0.26) 0%, transparent 55%)' }} />
+        </>
+      )}
+      {mv === 3 && (
+        /* Variant 3: full background, a lighter "forehead" up top that darkens
+           downward, + the reddish glow. Content starts lower (like variant 1). */
+        <>
+          <div className="absolute inset-0 md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(16,12,8,0.28) 0%, rgba(16,12,8,0.58) 40%, rgba(16,12,8,0.93) 100%)' }} />
+          <div className="absolute inset-0 md:hidden" style={{ background: 'radial-gradient(120% 80% at 78% 16%, rgba(165,80,61,0.24) 0%, transparent 55%)' }} />
+        </>
       )}
 
       {/* Desktop: base tint + a left-anchored scrim so the left-aligned text reads */}
@@ -96,22 +107,22 @@ export default function HeroVariants({
         </button>
       </div>
 
-      {/* Mobile hero-variant switcher (band vs full background) */}
+      {/* Mobile hero-variant switcher (band / full-tint / forehead) */}
       <div className="flex md:hidden absolute top-3 right-3 z-20 items-center gap-1.5">
-        <span className="text-[11px] font-mono" style={{ color: 'rgba(245,240,232,0.6)' }}>Hero {mv}/2</span>
-        <button type="button" aria-label="Previous hero layout" onClick={() => setMv(x => (x === 1 ? 2 : 1))} className="w-7 h-7 inline-flex items-center justify-center rounded-full border transition-colors" style={{ borderColor: 'rgba(245,240,232,0.3)', color: '#f7f2ea', background: 'rgba(16,12,8,0.4)' }}>
+        <span className="text-[11px] font-mono" style={{ color: 'rgba(245,240,232,0.6)' }}>Hero {mv}/3</span>
+        <button type="button" aria-label="Previous hero layout" onClick={() => setMv(x => (x === 1 ? 3 : x - 1))} className="w-7 h-7 inline-flex items-center justify-center rounded-full border transition-colors" style={{ borderColor: 'rgba(245,240,232,0.3)', color: '#f7f2ea', background: 'rgba(16,12,8,0.4)' }}>
           <ChevronLeft className="w-3.5 h-3.5" />
         </button>
-        <button type="button" aria-label="Next hero layout" onClick={() => setMv(x => (x === 1 ? 2 : 1))} className="w-7 h-7 inline-flex items-center justify-center rounded-full border transition-colors" style={{ borderColor: 'rgba(245,240,232,0.3)', color: '#f7f2ea', background: 'rgba(16,12,8,0.4)' }}>
+        <button type="button" aria-label="Next hero layout" onClick={() => setMv(x => (x === 3 ? 1 : x + 1))} className="w-7 h-7 inline-flex items-center justify-center rounded-full border transition-colors" style={{ borderColor: 'rgba(245,240,232,0.3)', color: '#f7f2ea', background: 'rgba(16,12,8,0.4)' }}>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
       </div>
 
-      {/* Content: variant 1 sits below the band; variant 2 + desktop overlay the
-          full-height background. */}
-      <div className={`relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 ${mv === 2 ? 'pt-16' : 'pt-[27vh]'} md:pt-16 pb-10 md:pb-16 grid gap-4 md:gap-14 items-start md:items-center grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:grid-cols-[auto_minmax(0,1fr)]`}>
+      {/* Content: variants 1 & 3 sit lower (below the forehead); variant 2 +
+          desktop overlay the full-height background from near the top. */}
+      <div data-hero-mv={mv} className={`relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 ${mv === 2 ? 'pt-16' : 'pt-[27vh]'} md:pt-16 pb-10 md:pb-16 grid gap-4 md:gap-14 items-start md:items-center grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:grid-cols-[auto_minmax(0,1fr)]`}>
         {cover}
-        <div className={metaWrap} style={{ ...metaWrapStyle, ...metaTextShadow, ...(mv === 2 ? { textShadow: '0 1px 12px rgba(0,0,0,0.6)' } : {}) }}>
+        <div className={metaWrap} style={{ ...metaWrapStyle, ...metaTextShadow, ...(mv !== 1 ? { textShadow: '0 1px 12px rgba(0,0,0,0.6)' } : {}) }}>
           {meta}
         </div>
       </div>

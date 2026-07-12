@@ -686,6 +686,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
   const totalPages = book.pages_count || pages.length;
+  const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
+  const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
+  const readablePages = Math.max(1, ocrCount - pagesBlank);
+  const translatedPct = Math.min(100, Math.round((translatedCount / readablePages) * 100));
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
@@ -822,10 +826,28 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Mongo and a $in scan times out, so we use the thematic collection instead.
     const relCollection = (book as unknown as { collections?: string[] }).collections?.find(Boolean);
     const relCategory = book.categories?.find(Boolean);
-    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && (relCollection || relCategory))
-      ? await browseBooks({ collection: relCollection, category: relCollection ? undefined : relCategory, sort: 'popular', limit: 24, skipCount: true })
-          .then(r => r.books.filter(bk => bk.id !== book.id && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(bk.thumbnail || ''))).slice(0, 12))
-          .catch(() => [] as CatalogBook[])
+    // The rail only shows books with a CSP-renderable cover (rehosted to R2 /
+    // blob / Wikimedia); archive.org covers are blocked and would render broken.
+    // Many books' catalog thumbnails aren't rehosted yet, so a single query can
+    // come back all-filtered-out. Widen the net: collection → category →
+    // language, keeping the first set that yields renderable covers.
+    const renderableCover = (u?: string | null) => /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(u || ''));
+    const relLanguage = book.language?.trim() || undefined;
+    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && !hasPrecomputedRelated && (relCollection || relCategory || relLanguage))
+      ? await (async () => {
+          const queries: Array<Record<string, unknown>> = [];
+          if (relCollection) queries.push({ collection: relCollection });
+          if (relCategory) queries.push({ category: relCategory });
+          if (relLanguage) queries.push({ language: relLanguage });
+          for (const q of queries) {
+            try {
+              const r = await browseBooks({ ...q, sort: 'popular', limit: 24, skipCount: true } as Parameters<typeof browseBooks>[0]);
+              const filtered = r.books.filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail)).slice(0, 12);
+              if (filtered.length > 0) return filtered;
+            } catch { /* try next query */ }
+          }
+          return [] as CatalogBook[];
+        })()
       : [] as CatalogBook[];
     const hasRelated = hasPrecomputedRelated || tagRelated.length > 0;
     const anchorSections = [
@@ -1059,15 +1081,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {book.display_title || book.title}
                 </div>
               )}
-              {/* Mobile: compact 3-up icon-only actions under the cover (the
-                  desktop action bar is hidden on mobile). */}
-              <div className="grid md:hidden grid-cols-3 gap-1.5 mt-2.5 w-full [&_svg]:!w-5 [&_svg]:!h-5 [&_button]:!w-full [&_button]:!justify-center">
+              {/* Mobile: small icon-only actions under the cover (the desktop
+                  action bar is hidden on mobile). */}
+              <div className="flex md:hidden gap-1.5 mt-2 [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none">
                 {[
                   <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
-                  <div key={i} className="flex items-center justify-center py-2.5" style={{ background: 'rgba(12,9,6,0.5)', border: '1px solid rgba(245,240,232,0.18)' }}>{el}</div>
+                  <div key={i} className="w-8 h-8 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.5)', border: '1px solid rgba(245,240,232,0.18)' }}>{el}</div>
                 ))}
               </div>
             </div>
@@ -1091,22 +1113,43 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               {heroMetaLine && <div className="text-[11px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
 
-              {/* Chips */}
-              <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-6 mb-1">
-                {book.language && (
-                  <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
-                    <Globe className="w-3 h-3 md:w-3.5 md:h-3.5" />{book.language}
+              {/* Chips. On mobile hero variant 3 the outlines + padding drop away
+                  for a cleaner inline look (data-hero-mv is set on the wrapper). */}
+              {(() => {
+                const chip = "inline-flex items-center gap-1 md:gap-1.5 border border-white/20 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px] [[data-hero-mv='3']_&]:!border-0 [[data-hero-mv='3']_&]:!px-0 [[data-hero-mv='3']_&]:!py-0";
+                return (
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-6 mb-1 [[data-hero-mv='3']_&]:gap-x-4">
+                    {book.language && (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }}>
+                        <Globe className="w-3 h-3 md:w-3.5 md:h-3.5" />{book.language}
+                      </span>
+                    )}
+                    <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
+                      <FileText className="w-3 h-3 md:w-3.5 md:h-3.5" />{totalPages} scans
+                    </span>
+                    {imageCount > 0 && (
+                      <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors`} style={{ color: 'rgba(245,240,232,0.92)' }}>
+                        <Images className="w-3 h-3 md:w-3.5 md:h-3.5" />{imageCount} images
+                      </Link>
+                    )}
+                  </div>
+                );
+              })()}
+              {/* OCR / Translated progress */}
+              {ocrPct > 0 && (
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 md:mt-2.5 text-[11px] md:text-[13px]">
+                  <span className="inline-flex items-center gap-1.5" title={`${ocrCount} of ${totalPages} pages transcribed`}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#7fb2dd' }} />
+                    <span style={{ color: 'rgba(245,240,232,0.82)' }}>OCR {ocrPct >= 100 ? 'complete' : `${ocrPct}%`}</span>
                   </span>
-                )}
-                <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
-                  <FileText className="w-3 h-3 md:w-3.5 md:h-3.5" />{totalPages} scans
-                </span>
-                {imageCount > 0 && (
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px] transition-colors" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
-                    <Images className="w-3 h-3 md:w-3.5 md:h-3.5" />{imageCount} images
-                  </Link>
-                )}
-              </div>
+                  <span className="inline-flex items-center gap-1.5" title={`${translatedCount} pages translated to English`}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: translatedPct > 0 ? '#86c98f' : 'rgba(245,240,232,0.3)' }} />
+                    <span style={{ color: 'rgba(245,240,232,0.82)' }}>
+                      {translatedPct >= 100 ? 'Fully translated' : translatedPct > 0 ? `Translated ${translatedPct}%` : 'Not yet translated'}
+                    </span>
+                  </span>
+                </div>
+              )}
               <div className="[&_a]:!text-[#eab59f] mt-2 md:mt-3 text-[12px] md:text-[15px]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
