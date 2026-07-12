@@ -31,9 +31,15 @@
  */
 
 // Translation-side page-description blocks ∪ OCR-side page-level metadata
-// envelope. All *describe* the page; none are verbatim source text.
+// envelope ∪ AI image descriptions. All *describe* the page; none are verbatim
+// source text. `image-desc` is an AI-written account of a plate/diagram (e.g.
+// "a complex nine-pointed star (enneagram)…" on Morestel p.39) — quoting it
+// fabricates a citation to words that aren't in the source. The reader keeps
+// these as captions via NotesRenderer's own <image-desc> handling; only the
+// quote/search/text/IIIF surfaces route through here, so stripping it here does
+// not touch the reader.
 const EDITORIAL_WRAPPERS =
-  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning';
+  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc';
 
 /**
  * Flatten GFM markdown tables to plain text.
