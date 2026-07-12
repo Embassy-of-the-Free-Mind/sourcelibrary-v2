@@ -6,21 +6,23 @@ import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useEmbedHref } from '@/lib/EmbedContext';
 
-function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+function PageImage({ src, alt, className, natural }: { src: string; alt: string; className?: string; natural?: boolean }) {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useCallback((img: HTMLImageElement | null) => {
     if (img?.complete && img.naturalWidth > 0) setLoaded(true);
   }, []);
   return (
     <>
+      {/* Placeholder reserves space. In `natural` mode it's a block (a 3:4
+          guess) so the grid has height before load; otherwise it fills the box. */}
       {!loaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+        <div className={`${natural ? 'w-full aspect-[3/4]' : 'absolute inset-0'} bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer`} />
       )}
       <img
         ref={imgRef}
         src={src}
         alt={alt}
-        className={`w-full h-full object-contain transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'} ${className || ''}`}
+        className={`w-full ${natural ? 'h-auto block' : 'h-full object-contain'} transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0 hidden'} ${className || ''}`}
         onLoad={() => setLoaded(true)}
       />
     </>
@@ -92,7 +94,7 @@ export default function PagesGrid({
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
-        <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-10 gap-2 sm:gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-10 gap-2 sm:gap-2 items-start">
           {pages.slice(0, visibleCount).map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page);
@@ -172,11 +174,11 @@ export default function PagesGrid({
                 <a
                   href={embedHref(`/book/${bookId}/page/${page.id}`)}
                 >
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
+                  <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
-                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="group-hover:scale-105 transition-transform duration-200" />
+                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} natural className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <div className="w-full aspect-[3/4] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
                     {(hasOcr || hasTranslation || hasSummary) && (
                       <div className="absolute bottom-1 right-1 flex gap-0.5 bg-black/40 rounded-full px-1 py-0.5">

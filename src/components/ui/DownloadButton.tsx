@@ -201,7 +201,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-stone-200 py-2 z-50">
+        <>
+        {/* Backdrop (mobile) — tap to dismiss */}
+        <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
+        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-64 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+          {/* Drag handle (mobile) */}
+          <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto mb-2" />
 
           {/* Sign-in wall — all downloads require an account */}
           {isAnonymous && (
@@ -323,7 +328,9 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               Downloads include source attribution and CC BY-SA 4.0 license.
             </p>
           </div>
+          <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
         </div>
+        </>
       )}
     </div>
   );

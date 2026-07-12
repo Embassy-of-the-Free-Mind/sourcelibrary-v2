@@ -31,7 +31,7 @@ export default function HeroVariants({
   // Mobile-only layout variant: 1 = tiled band across the top + content below;
   // 2 = the tiled background fills the whole hero (like desktop) with a tint
   // between it and the content.
-  const [mv, setMv] = useState(1);
+  const [mv, setMv] = useState(2);
 
   // Overall tint over the page-grid: heavier for "Deep", lighter where the meta
   // has its own panel (Panel/Card).
@@ -48,7 +48,10 @@ export default function HeroVariants({
   const metaTextShadow = (t === 0 || t === 3) ? { textShadow: '0 1px 12px rgba(0,0,0,0.55)' } as const : undefined;
 
   return (
-    <section className="relative overflow-hidden" style={{ background: '#14100c' }}>
+    <section className="relative" style={{ background: '#14100c' }}>
+      {/* Background + tints live in their own clipped layer so the action-bar
+          dropdowns (rendered in the content below) can overflow the section. */}
+      <div className="absolute inset-0 overflow-hidden">
       {/* Page-scan background. Mobile variant 1: a band across the TOP that fades
           into the solid dark below the content. Mobile variant 2 + desktop: it
           fills the whole hero behind the content. Prefer the composited mosaic. */}
@@ -95,6 +98,7 @@ export default function HeroVariants({
       <div className="hidden md:block absolute inset-0" style={{ background: tint }} />
       <div className="hidden md:block absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.55) 0%, rgba(14,10,7,0.15) 60%, transparent 100%)' }} />
       <div className="hidden md:block absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.22) 0%, transparent 55%)' }} />
+      </div>
 
       {/* Desktop treatment switcher */}
       <div className="hidden md:flex absolute top-4 right-4 z-20 items-center gap-2">
