@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { Resend } from 'resend';
+import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 
 const VALID_ROUTES = ['naf', 'efm', 'undecided'] as const;
 const VALID_AMOUNTS = ['under-1000', '1000-5000', '5000-10000', '10000-25000', '25000-50000', '50000-plus', ''] as const;
+
+// This route emails the submitted address. Uncapped, that is a spam relay:
+// anyone can make sourcelibrary.org mail a stranger. A donor submits once.
+const RATE_LIMIT = { name: 'donate', limit: 3, windowSeconds: 3600 };
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 interface DonationIntention {
   name: string;
@@ -34,7 +47,7 @@ function buildDonorEmail(firstName: string, route: string): string {
       </div>
 
       <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
-        <p>Dear ${firstName},</p>
+        <p>Dear ${escapeHtml(firstName)},</p>
         <p>
           Thank you for your interest in supporting Source Library. Every contribution
           moves us closer to making these extraordinary texts freely available to the world.
@@ -86,15 +99,15 @@ function buildNotificationEmail(intention: DonationIntention): string {
     <div style="font-family: -apple-system, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; color: #1a1612;">
       <h2 style="font-size: 18px; margin: 0 0 16px;">New Donation Interest</h2>
       <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600; width: 120px;">Name</td><td style="padding: 8px 12px;">${intention.name}</td></tr>
-        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Email</td><td style="padding: 8px 12px;"><a href="mailto:${intention.email}">${intention.email}</a></td></tr>
+        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600; width: 120px;">Name</td><td style="padding: 8px 12px;">${escapeHtml(intention.name)}</td></tr>
+        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Email</td><td style="padding: 8px 12px;"><a href="mailto:${escapeHtml(intention.email)}">${escapeHtml(intention.email)}</a></td></tr>
         <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Route</td><td style="padding: 8px 12px;">${routeLabel}</td></tr>
-        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Amount</td><td style="padding: 8px 12px;">${amountLabel}</td></tr>
-        ${intention.message ? `<tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600; vertical-align: top;">Message</td><td style="padding: 8px 12px;">${intention.message}</td></tr>` : ''}
-        ${intention.referrer ? `<tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Referrer</td><td style="padding: 8px 12px;">${intention.referrer}</td></tr>` : ''}
+        <tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Amount</td><td style="padding: 8px 12px;">${escapeHtml(amountLabel)}</td></tr>
+        ${intention.message ? `<tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600; vertical-align: top;">Message</td><td style="padding: 8px 12px;">${escapeHtml(intention.message)}</td></tr>` : ''}
+        ${intention.referrer ? `<tr><td style="padding: 8px 12px; background: #f5f0e8; font-weight: 600;">Referrer</td><td style="padding: 8px 12px;">${escapeHtml(intention.referrer)}</td></tr>` : ''}
       </table>
       <p style="margin-top: 16px; font-size: 13px; color: #8a8480;">
-        Reply directly to this email to reach the donor at ${intention.email}.
+        Reply directly to this email to reach the donor at ${escapeHtml(intention.email)}.
       </p>
     </div>
   `;
@@ -102,6 +115,14 @@ function buildNotificationEmail(intention: DonationIntention): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const limit = await checkRateLimitShared(RATE_LIMIT, getClientIp(request));
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfter) } },
+      );
+    }
+
     const body = await request.json();
     const { name, email, route, amount_range, message, referrer } = body;
 
