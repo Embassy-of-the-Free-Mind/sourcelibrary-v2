@@ -746,13 +746,31 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
-    // A dense body text page (full column of text, not a chapter opener) — the
-    // background for the immersive "About" variant. Pick from the middle of the
-    // body text pages so it's a full page of text top-to-bottom.
-    const bodyTextPages = pages.filter(p => p.page_type === 'text' && p.page_number >= 10);
-    const aboutTextPage = bodyTextPages.length
-      ? bodyTextPages[Math.floor(bodyTextPages.length / 2)]
-      : (pages.find(p => p.page_type === 'text') || coverPage);
+    // Page types we never want to surface as a "representative" page: blanks,
+    // digitizer inserts, and — importantly — the scanner calibration / colour-
+    // card / cradle shots that cluster in the front matter of many scans.
+    const KNOWN_JUNK_PAGE_TYPES = new Set(['blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata', 'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target', 'endpaper', 'cover', 'spine', 'frontcover', 'backcover']);
+    const ptype = (p: { page_type?: string }) => (p.page_type || '').toLowerCase();
+    // Pick a representative *interior content* page, robust to books whose pages
+    // aren't type-classified. Order: deep body text → a classified illustration
+    // → a position-based mid-book page (skips the front-matter/calibration
+    // cluster). Never the cover, never a known-junk type.
+    const interiorCandidates = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
+    const interiorTextPage = (() => {
+      const deep = interiorCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
+      if (deep.length) return midOf(deep);
+      const anyText = interiorCandidates.filter(p => ptype(p) === 'text');
+      if (anyText.length) return midOf(anyText);
+      // No usable classification — take a page from the middle of the book,
+      // skipping the first several scans where calibration/blank pages live.
+      const start = Math.min(8, Math.floor(interiorCandidates.length / 4));
+      const pool = interiorCandidates.slice(start);
+      return midOf(pool.length ? pool : interiorCandidates);
+    })();
+    const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
+    // Immersive "About" variant background: a full page of body text.
+    const aboutTextPage = interiorTextPage || coverPage;
     const aboutBgUrl = aboutTextPage ? (getPageImageUrl(aboutTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined;
     // Fixed page-scan grid behind the hero (same across all hero treatments).
     const heroPageThumbs = pages
@@ -840,15 +858,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Subject tags — moved out of the hero, shown below the About text.
     const subjectTags = (book as unknown as { subject_keywords?: string[] }).subject_keywords?.filter(Boolean) ?? [];
     // A single interesting visual for the About section. Prefer a curated
-    // gallery plate (these are illustrations scored ≥0.7 — never blanks or
-    // calibration targets). Failing that, a classified illustration page, then
-    // a mid-book page of body text. We deliberately never fall back to "first
-    // non-blank page": on many scans that's a cradle/color-card shot or an
-    // endpaper. The cover is always excluded.
-    const junkPageType = (t?: string) => {
-      const v = (t || '').toLowerCase();
-      return !v || ['blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata', 'scanner-metadata', 'color-card', 'colorcard', 'endpaper', 'cover', 'spine'].includes(v);
-    };
+    // gallery plate (illustrations scored ≥0.7 — never blanks or calibration
+    // targets). Failing that, a classified illustration page, then a mid-book
+    // content page. Both fallbacks come from `interiorCandidates`, which skips
+    // the cover and the front-matter calibration/colour-card/cradle shots.
     const sideVisual = (() => {
       const plate = galleryImages[0];
       if (plate) {
@@ -858,13 +871,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      const illus = pages.find(p => !!p.page_type && ['frontispiece', 'plate', 'illustration'].includes(p.page_type) && p.id !== coverPage?.id && !junkPageType(p.page_type));
-      const textPg = bodyTextPages.length
-        ? bodyTextPages[Math.floor(bodyTextPages.length / 2)]
-        : pages.find(p => p.page_type === 'text' && p.id !== coverPage?.id);
-      const pg = illus
-        || (textPg && textPg.id !== coverPage?.id ? textPg : undefined)
-        || pages.find(p => p.page_type === 'text' && p.id !== coverPage?.id);
+      const pg = interiorIllusPage || interiorTextPage;
       if (pg) {
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
         if (src) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
