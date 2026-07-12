@@ -147,7 +147,7 @@ export default function SearchPanel({ bookId, className = '', inline = false, th
             router.push(`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
           }
         }}
-        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl transition-shadow ${light ? 'border border-[#e6e0d3] focus-within:border-[#c98a6f] focus-within:ring-2 focus-within:ring-[#c98a6f]/25' : 'focus-within:ring-2 focus-within:ring-white/25'}`}
+        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl ${light ? 'border border-[#e6e0d3]' : ''}`}
         style={light ? { background: '#fdfbf6' } : { background: 'rgba(255,255,255,0.15)' }}
       >
         {isSearching ? (
@@ -161,7 +161,7 @@ export default function SearchPanel({ bookId, className = '', inline = false, th
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className={`flex-1 min-w-0 bg-transparent outline-none focus:outline-none focus:ring-0 text-sm ${light ? 'text-stone-800 placeholder-stone-400' : 'text-white placeholder-white/50 w-64 sm:w-80'}`}
+          className={`flex-1 min-w-0 bg-transparent outline-none focus:outline-none focus:ring-0 text-base sm:text-sm ${light ? 'text-stone-800 placeholder-stone-400' : 'text-white placeholder-white/50 sm:w-80'}`}
           autoFocus={!inline}
         />
         {query && (

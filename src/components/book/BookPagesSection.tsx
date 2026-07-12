@@ -19,11 +19,12 @@ interface BookPagesSectionProps {
   totalPageCount?: number;
   displayBrightness?: number;
   overviewHref?: string;
+  subtitle?: string;
 }
 
 const PAGES_PER_LOAD = 20; // 2 rows on the 10-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, subtitle }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -530,6 +531,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         getImageUrl={getImageUrl}
         totalCount={totalPages}
         overviewHref={overviewHref}
+        subtitle={subtitle}
       />
     </div>
   );

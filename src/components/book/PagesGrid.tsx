@@ -49,6 +49,7 @@ interface PagesGridProps {
   onLoadMore: () => void;
   getImageUrl: (page: Page) => string | null;
   overviewHref?: string;
+  subtitle?: string;
 }
 
 export default function PagesGrid({
@@ -71,6 +72,7 @@ export default function PagesGrid({
   getImageUrl,
   totalCount,
   overviewHref,
+  subtitle,
 }: PagesGridProps) {
   const embedHref = useEmbedHref();
   const displayTotal = totalCount || pages.length;
@@ -80,9 +82,9 @@ export default function PagesGrid({
     : undefined;
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 mb-4">
+      <div className="flex items-start justify-between gap-4 mb-1">
         <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>Pages</h2>
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-3 md:gap-4 pt-1">
           <span className="text-sm text-stone-500 whitespace-nowrap">
             {Math.min(visibleCount, pages.length)} of {displayTotal}
           </span>
@@ -97,6 +99,7 @@ export default function PagesGrid({
           )}
         </div>
       </div>
+      {subtitle && <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{subtitle}</p>}
 
       {pages.length === 0 ? (
         <div className="text-center py-16 card">

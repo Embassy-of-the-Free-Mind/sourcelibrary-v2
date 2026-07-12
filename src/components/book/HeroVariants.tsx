@@ -49,7 +49,7 @@ export default function HeroVariants({
       </div>
 
       {/* Content. Mobile: a tall (≈66vh) panel, cover 1/3 + meta 2/3, centred. */}
-      <div className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 min-h-[66vh] md:min-h-0 pt-8 md:pt-16 pb-8 md:pb-16 grid gap-4 md:gap-14 items-center grid-cols-[1fr_2fr] md:grid-cols-[auto_minmax(0,1fr)]">
+      <div className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 min-h-[66vh] md:min-h-0 pt-10 md:pt-16 pb-8 md:pb-16 grid gap-4 md:gap-14 items-start md:items-center grid-cols-[1fr_2fr] md:grid-cols-[auto_minmax(0,1fr)]">
         {cover}
         <div style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}>
           {meta}

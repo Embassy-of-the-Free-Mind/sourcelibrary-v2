@@ -1077,13 +1077,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               {/* Mobile: icon-only actions under the cover — one bar the full
                   width of the cover, cells touching, no gaps. */}
-              <div className="grid md:hidden grid-cols-3 w-full mt-2.5 rounded overflow-hidden divide-x [&_svg]:!w-[19px] [&_svg]:!h-[19px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
+              <div className="grid md:hidden grid-cols-3 w-full mt-2.5 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
                   <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
-                  <div key={i} className="h-11 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
+                  <div key={i} className="h-9 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
                 ))}
               </div>
             </div>
@@ -1183,7 +1183,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {hasSummary ? (
           <AboutVariants content={linkEntities(summaryText!, summaryEntities)} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
         ) : (
-          <section style={{ background: '#faf7f0' }} className="pt-2 pb-16">
+          <section style={{ background: '#fdfcf9' }} className="pt-2 pb-16">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="max-w-[860px] space-y-3 md:space-y-6">{readingDropdowns}</div>
             </div>
@@ -1191,10 +1191,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         )}
 
         {/* ===================== PAGES ===================== */}
-        <section id="pages" style={{ background: '#faf7f0' }} className="pb-16 scroll-mt-4">
+        <section id="pages" style={{ background: '#f5f0e8' }} className="pt-14 pb-16 scroll-mt-4">
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
             {(() => {
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} />;
+              const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              const pagesSubtitle = digitizer
+                ? `Every page scanned from the original, digitized by ${digitizer}.`
+                : 'Every page of the original scan, in reading order.';
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -1206,7 +1210,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
         {galleryPlates.length > 0 && (
-          <section id="illustrations" style={{ background: '#faf7f0' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
+          <section id="illustrations" style={{ background: '#fdfcf9' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <div className="flex items-baseline justify-between gap-4 mb-1">
                 <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: '#2b2620' }}>Illustrations</h2>
@@ -1223,14 +1227,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
-          <section id="related" style={{ background: '#faf7f0' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
+          <section id="related" style={{ background: '#f5f0e8' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               {hasPrecomputedRelated ? (
                 <RelatedBooks relatedBooks={relatedBooksData!} />
               ) : (
                 <>
                   <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
-                  <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Other volumes from the same part of the collection.</p>
+                  <p className="text-sm md:text-[15px] mb-3" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
                   <BookSlider books={tagRelated as unknown as MiniBook[]} />
                 </>
               )}

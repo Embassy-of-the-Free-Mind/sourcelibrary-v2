@@ -205,8 +205,11 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         {/* Backdrop (mobile) — tap to dismiss */}
         <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
         <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-64 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
-          {/* Drag handle (mobile) */}
-          <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto mb-2" />
+          {/* Header with close (mobile bottom sheet) */}
+          <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
+            <span className="text-[15px] font-semibold text-stone-900">Download</span>
+            <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+          </div>
 
           {/* Sign-in wall — all downloads require an account */}
           {isAnonymous && (
@@ -357,7 +360,7 @@ function FormatOption({
     <button
       onClick={() => onDownload(format)}
       disabled={downloading !== null}
-      className={`w-full h-full px-3 py-2.5 flex items-center gap-2.5 hover:bg-stone-50 transition-colors disabled:opacity-50 rounded-lg border border-stone-200 sm:border-0 sm:rounded-none text-left ${className}`}
+      className={`w-full h-full min-h-[54px] sm:min-h-0 px-3.5 py-3 flex items-center justify-start gap-2.5 hover:bg-stone-50 active:bg-stone-100 transition-colors disabled:opacity-50 rounded-lg border border-stone-200 sm:border-0 sm:rounded-none text-left ${className}`}
     >
       {icon}
       <div className="min-w-0">

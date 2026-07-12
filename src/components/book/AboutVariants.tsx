@@ -31,12 +31,12 @@ export default function AboutVariants({
   ) : null;
 
   return (
-    <section id="about" className="relative pt-12 md:pt-14 pb-8 scroll-mt-4" style={{ background: '#faf7f0' }}>
+    <section id="about" className="relative pt-12 md:pt-16 pb-10 md:pb-14 scroll-mt-4" style={{ background: '#fdfcf9' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
         <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
           {/* Text + tags + dropdowns: 3/5 on desktop (below the plate on mobile) */}
           <div className="order-2 md:order-1 md:col-span-3">
-            <div className="font-mono uppercase text-[11px] tracking-[0.16em] mb-3 md:mb-4" style={{ color: '#a5503d' }}>About this book</div>
+            <h2 className="font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
             <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
             {tagRow}
             {belowContent && <div className="mt-6 md:mt-8 space-y-3 md:space-y-6">{belowContent}</div>}
