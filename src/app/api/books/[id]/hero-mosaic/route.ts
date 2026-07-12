@@ -18,7 +18,7 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 3; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 4; // bump to force-regenerate cached mosaics
 const COLS = 10;
 const MAX_TILES = 50;
 const TILE_W = 168;
@@ -84,32 +84,43 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         .filter((u): u is string => !!u && RENDERABLE.test(u)),
     )).slice(0, MAX_TILES);
 
+    // Too few distinct source pages to ever make a mosaic — a permanent fact.
     if (urls.length < MIN_UNIQUE_TILES) return cacheNegative();
 
-    // Fetch + resize each tile; drop any that fail so gaps just show the dark bg.
+    // Fetch + resize each tile (one retry each), dropping any that fail.
     const tiles = await Promise.all(urls.map(async (url) => {
-      try {
-        const buf = await images.fetchBuffer(url, { timeout: 12000 });
-        const resized = await sharp(buf).resize(TILE_W, TILE_H, { fit: 'cover', position: 'centre' }).toBuffer();
-        return resized;
-      } catch {
-        return null;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const buf = await images.fetchBuffer(url, { timeout: 15000 });
+          return await sharp(buf).resize(TILE_W, TILE_H, { fit: 'cover', position: 'centre' }).toBuffer();
+        } catch {
+          if (attempt === 1) return null;
+        }
       }
+      return null;
     }));
 
-    // Keep only distinct tiles (identical image bytes ⇒ same hash) so a
-    // cover-fallback book doesn't render 50 copies of one image.
+    const fetched = tiles.filter((b): b is Buffer => !!b);
+
+    // Keep only distinct tiles (identical bytes ⇒ same hash) so a cover-fallback
+    // book doesn't render many copies of one image.
     const seen = new Set<string>();
     const distinct: Buffer[] = [];
-    for (const buf of tiles) {
-      if (!buf) continue;
+    for (const buf of fetched) {
       const h = createHash('md5').update(buf).digest('hex');
       if (seen.has(h)) continue;
       seen.add(h);
       distinct.push(buf);
     }
 
-    if (distinct.length < MIN_UNIQUE_TILES) return cacheNegative();
+    if (distinct.length < MIN_UNIQUE_TILES) {
+      // We fetched plenty of tiles but they collapsed to near-identical images
+      // (the cover-fallback case) → cache the negative result permanently.
+      // Otherwise most fetches just FAILED (transient) → 404 WITHOUT caching so
+      // the next request retries instead of locking in "no mosaic" forever.
+      if (fetched.length >= MIN_UNIQUE_TILES) return cacheNegative();
+      return noMosaic();
+    }
 
     const rows = Math.ceil(distinct.length / COLS);
     const width = COLS * TILE_W + (COLS + 1) * GAP;
