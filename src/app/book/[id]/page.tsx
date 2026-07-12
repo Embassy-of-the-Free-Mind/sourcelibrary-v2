@@ -880,7 +880,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      const pg = interiorIllusPage || interiorTextPage;
+      // Prefer a deep body-text page over a classified "illustration" page:
+      // genuine content illustrations already come through the gallery path
+      // above, so a leftover illustration here is usually front-matter — an
+      // owner's bookplate / frontispiece — which we don't want to feature.
+      const pg = interiorTextPage || interiorIllusPage;
       if (pg) {
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
         if (src) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
@@ -1087,7 +1091,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <BookOpen className="w-4 h-4 md:w-[18px] md:h-[18px]" />Read This Book
                   </Link>
                 )}
-                <div className="flex items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
+                <div className="flex flex-wrap items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
                   <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />

@@ -85,7 +85,7 @@ export default function HeroVariants({
 
       {/* Content: on mobile it sits BELOW the bg band (cover 1/3 left, text 2/3
           right); on desktop it overlays the full-height background. */}
-      <div className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 pt-[36vh] md:pt-16 pb-10 md:pb-16 grid gap-4 md:gap-14 items-start md:items-center grid-cols-[1fr_2fr] md:grid-cols-[auto_1fr]">
+      <div className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12 pt-[36vh] md:pt-16 pb-10 md:pb-16 grid gap-4 md:gap-14 items-start md:items-center grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:grid-cols-[auto_minmax(0,1fr)]">
         {cover}
         <div className={metaWrap} style={{ ...metaWrapStyle, ...metaTextShadow }}>
           {meta}
