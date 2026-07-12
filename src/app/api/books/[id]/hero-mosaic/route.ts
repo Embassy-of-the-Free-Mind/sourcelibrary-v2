@@ -21,17 +21,20 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 4; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 5; // bump to force-regenerate cached mosaics
 const MAX_TILES = 50;
+const PLATE_MIN = 8; // ≥ this many curated plates ⇒ build a plate mosaic
 
 /**
- * Column count for the composited grid, scaled to the number of distinct tiles
- * so short books still make a full, roughly-landscape mosaic (≈1.4:1) instead
- * of one sparse row. e.g. 6 tiles → 3 cols (2 rows); 50 → 9 cols (6 rows).
+ * Column count for the composited grid, scaled to the tile count so shorter
+ * books still make a full, roughly-landscape mosaic instead of one sparse row.
+ * Text-page mosaics clamp to 6–10 columns (fewer/bigger tiles would let page
+ * text compete with the hero copy); PLATE mosaics allow 4–8 columns since
+ * illustrations read fine larger and carry no interfering text.
  */
-function chooseColumns(n: number): number {
-  const cols = Math.max(3, Math.round(Math.sqrt(n * 2.2)));
-  return Math.min(10, cols);
+function chooseColumns(n: number, usingPlates: boolean): number {
+  const cols = Math.round(Math.sqrt(n * 2.2));
+  return usingPlates ? Math.min(8, Math.max(4, cols)) : Math.min(10, Math.max(6, cols));
 }
 
 const TILE_W = 168;
@@ -84,20 +87,43 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return noMosaic();
     };
 
-    const pages = await db.collection('pages')
-      .find({ book_id: book.id, page_type: { $ne: 'blank' } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
-      .sort({ page_number: 1 })
-      .limit(120)
+    // Prefer curated plates (illustrations) — they make a nicer, text-free tiled
+    // background. Only when a book has enough of them; otherwise use page scans.
+    const plates = await db.collection('gallery_images')
+      .find(
+        { book_id: book.id, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, dhash: 1 }, maxTimeMS: 6000 },
+      )
+      .sort({ gallery_quality: -1 })
+      .limit(MAX_TILES)
       .toArray();
 
-    // Dedupe the resolved thumb URLs — repeated URLs can only make repeated tiles.
-    const urls = Array.from(new Set(
-      pages
-        .map(p => getPageImageUrl(p as PageImageFields, 'thumb'))
+    const plateUrls = Array.from(new Set(
+      plates
+        .map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined)
         .filter((u): u is string => !!u && RENDERABLE.test(u)),
     )).slice(0, MAX_TILES);
 
-    // Too few distinct source pages to ever make a mosaic — a permanent fact.
+    const usingPlates = plateUrls.length >= PLATE_MIN;
+
+    let urls: string[];
+    if (usingPlates) {
+      urls = plateUrls;
+    } else {
+      const pages = await db.collection('pages')
+        .find({ book_id: book.id, page_type: { $ne: 'blank' } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
+        .sort({ page_number: 1 })
+        .limit(120)
+        .toArray();
+      // Dedupe resolved thumb URLs — repeated URLs can only make repeated tiles.
+      urls = Array.from(new Set(
+        pages
+          .map(p => getPageImageUrl(p as PageImageFields, 'thumb'))
+          .filter((u): u is string => !!u && RENDERABLE.test(u)),
+      )).slice(0, MAX_TILES);
+    }
+
+    // Too few distinct source images to ever make a mosaic — a permanent fact.
     if (urls.length < MIN_UNIQUE_TILES) return cacheNegative();
 
     // Fetch + resize each tile (one retry each), dropping any that fail.
@@ -138,7 +164,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Adapt the column count to how many tiles we have, so short books still
     // read as a full, balanced grid rather than one sparse row. Aim for a
     // roughly landscape mosaic (cols ≈ 1.4 × rows).
-    const cols = chooseColumns(distinct.length);
+    const cols = chooseColumns(distinct.length, usingPlates);
     const rows = Math.ceil(distinct.length / cols);
     const width = cols * TILE_W + (cols + 1) * GAP;
     const height = rows * TILE_H + (rows + 1) * GAP;
