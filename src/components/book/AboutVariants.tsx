@@ -19,11 +19,14 @@ export default function AboutVariants({
   bgUrl,
   visual,
   tags = [],
+  belowContent,
 }: {
   content: ReactNode;
   bgUrl?: string;
   visual?: Visual | null;
   tags?: string[];
+  /** Reading guide / Contents / etc. dropdowns, rendered under the text+tags. */
+  belowContent?: ReactNode;
 }) {
   const [v, setV] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
@@ -76,15 +79,16 @@ export default function AboutVariants({
         <Switcher dark />
         <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
           <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
-            {/* Text + tags: 2/5 on desktop (right of the plate on mobile below it) */}
-            <div className="order-2 md:order-1 md:col-span-2">
+            {/* Text + tags + dropdowns: 3/5 on desktop (below the plate on mobile) */}
+            <div className="order-2 md:order-1 md:col-span-3">
               {eyebrow}
               <div className="font-display text-lg md:text-[21px] leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
               {tagRow}
+              {belowContent && <div className="mt-8 space-y-6">{belowContent}</div>}
             </div>
-            {/* Interesting page / plate: 2/5 on desktop, offset one column from the text */}
+            {/* Interesting page / plate: 2/5 on desktop, sticky while sections expand */}
             {visual && (
-              <div className="order-1 md:order-2 md:col-span-2 md:col-start-4 md:sticky md:top-6">
+              <div className="order-1 md:order-2 md:col-span-2 md:sticky md:top-6">
                 <Link href={visual.href} className="block group">
                   <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -101,6 +105,7 @@ export default function AboutVariants({
   }
 
   return (
+    <>
     <section ref={sectionRef} id="about" className="relative h-screen min-h-[560px] overflow-hidden scroll-mt-4" style={{ background: '#14100c' }}>
       {bgUrl && (
         /* eslint-disable-next-line @next/next/no-img-element */
@@ -121,5 +126,13 @@ export default function AboutVariants({
         </div>
       </div>
     </section>
+    {belowContent && (
+      <section className="pt-8 pb-8" style={{ background: '#faf7f0' }}>
+        <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+          <div className="max-w-[860px] space-y-6">{belowContent}</div>
+        </div>
+      </section>
+    )}
+    </>
   );
 }

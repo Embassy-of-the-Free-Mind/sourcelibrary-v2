@@ -50,6 +50,7 @@ import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import BookAnchorBar from '@/components/book/BookAnchorBar';
 import HeroVariants from '@/components/book/HeroVariants';
 import AboutVariants from '@/components/book/AboutVariants';
+import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -857,13 +858,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     })();
     // Subject tags — moved out of the hero, shown below the About text.
     const subjectTags = (book as unknown as { subject_keywords?: string[] }).subject_keywords?.filter(Boolean) ?? [];
-    // A single interesting visual for the About section. Prefer a curated
-    // gallery plate (illustrations scored ≥0.7 — never blanks or calibration
-    // targets). Failing that, a classified illustration page, then a mid-book
-    // content page. Both fallbacks come from `interiorCandidates`, which skips
-    // the cover and the front-matter calibration/colour-card/cradle shots.
+    // A single *representative* visual for the About section. We want an image
+    // that speaks to the BOOK's content — a plate, diagram, or frontispiece —
+    // not provenance marks (a previous owner's bookplate / ex-libris), library
+    // stamps, blanks, or scanner calibration targets. Selection order:
+    //   1. Best curated gallery plate (quality ≥0.7) that isn't a provenance
+    //      mark — gallery images are already sorted best-first.
+    //   2. A classified illustration page from the book interior.
+    //   3. A mid-book content page (skips front-matter calibration/blanks).
+    // The cover is always excluded (handled by interiorCandidates / coverPage).
+    const PROVENANCE_RE = /\b(book\s?plate|ex[\s-]?libris|from the library of|library of|armorial|ownership|owner'?s|stamp|inscription|donor|gift of|presented by|bequest|shelf\s?mark|call\s?number|barcode|catalog(?:ue)? card|colou?r\s?(?:card|chart|target|checker)|calibration)\b/i;
+    const isRepresentativePlate = (desc?: string) => !desc || !PROVENANCE_RE.test(desc);
     const sideVisual = (() => {
-      const plate = galleryImages[0];
+      // Only use a gallery plate if a non-provenance one exists; otherwise fall
+      // through to a real interior page rather than showing a bookplate.
+      const plate = galleryImages.find(g => isRepresentativePlate(g.description));
       if (plate) {
         const src = plate.thumbnail_url || plate.extracted_url || plate.image_url;
         if (src) {
@@ -878,6 +887,113 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       }
       return null;
     })();
+
+    // Reading guide / Contents / Bibliographic info / Book history dropdowns —
+    // rendered below the About text (inside the About left column) so they sit
+    // right under the text + tags, not in a separate row.
+    const readingDropdowns = (
+      <>
+        <AISection kind="reading-guide" className="card">
+          <details className="group">
+            <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+              <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
+              <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+            </summary>
+            <div className="px-6 pb-6">
+              <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
+            </div>
+          </details>
+        </AISection>
+        {(() => {
+          const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+          if (!allEntries || allEntries.length === 0) return null;
+          const entries = allEntries.filter(e => e.pages.length >= 2);
+          if (entries.length === 0) return null;
+          return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
+        })()}
+
+        {/* Book's own contents */}
+        <details id="contents" className="card group scroll-mt-24">
+          <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+            <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
+            <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+          </summary>
+          <div className="px-6 pb-6">
+            {/* Contents — as printed (top of the section) */}
+            {tocPage && (() => {
+              const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
+              return (
+                <Link href={`/book/${bookSlug}/page/${tocPage.id}`} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
+                  <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
+                    {tocThumb && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13.5px] font-semibold" style={{ color: '#2b2620' }}>Contents — as printed</div>
+                    <div className="text-[12.5px]" style={{ color: '#948d80' }}>p. {tocPage.page_number}</div>
+                  </div>
+                  <span className="text-[13px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>View scan →</span>
+                </Link>
+              );
+            })()}
+
+            {book.chapters?.length ? (
+              <div className="border-t" style={{ borderColor: '#e6e0d3' }}>
+                {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
+                  <Link
+                    key={i}
+                    href={typeof ch.pageNumber === 'number' ? `/book/${bookSlug}/page-number/${ch.pageNumber}` : `/book/${bookSlug}`}
+                    className="flex items-baseline justify-between gap-4 py-2 border-b transition-colors hover:bg-[#f4efe6]"
+                    style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
+                  >
+                    <span className="font-display text-[14.5px] leading-snug" style={{ color: '#4a443b' }}>{ch.titleEn || ch.title}</span>
+                    {typeof ch.pageNumber === 'number' ? <span className="font-mono text-[12px] whitespace-nowrap" style={{ color: '#a09884' }}>p. {ch.pageNumber}</span> : null}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm" style={{ color: '#8a8170' }}>No table of contents recorded for this edition.</p>
+            )}
+          </div>
+        </details>
+
+        {book.editions?.length ? (
+          <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
+        ) : null}
+
+        {/* Bibliographic information */}
+        <details className="card group">
+          <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+            <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
+            <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+          </summary>
+          <div className="px-6 pb-6">
+            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
+            {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+              <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
+            )}
+            {embedPolicy.showIndexCatalogStatus && (
+              <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
+            )}
+          </div>
+        </details>
+
+        {/* Book history (staff only) */}
+        <AuthCheck role="inner_circle">
+          <details className="card group">
+            <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+              <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
+              <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+            </summary>
+            <div className="px-6 pb-6">
+              <BookHistory bookId={book.id} />
+            </div>
+          </details>
+        </AuthCheck>
+      </>
+    );
 
     return (
       <>
@@ -971,7 +1087,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <BookOpen className="w-[18px] h-[18px]" />Read This Book
                   </Link>
                 )}
-                <div className="flex items-center gap-1 px-1 py-0.5" style={{ background: 'rgba(245,240,232,0.05)' }}>
+                <div className="flex items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
                   <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />
@@ -979,12 +1095,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-200 hover:!text-white hover:!bg-white/10" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
-                  <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.1)' }} />
+                  <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
-                    <BookAnalytics bookId={book.id} className="!text-stone-300" />
-                    <LikeButton targetType="book" targetId={book.id} size="sm" showCount={true} className="!text-stone-300" />
+                    <BookAnalytics bookId={book.id} className="!text-stone-200" />
+                    <LikeButton targetType="book" targetId={book.id} size="sm" showCount={true} className="!text-stone-200" />
                   </div>
                 </div>
               </div>
@@ -1004,119 +1120,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== ON THIS PAGE (sub-nav) ===================== */}
         <BookAnchorBar sections={anchorSections} slug={bookSlug} />
 
-        {/* ===================== ABOUT THIS BOOK ===================== */}
-        {hasSummary && (
-          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} visual={sideVisual} tags={subjectTags} />
-        )}
-
-        {/* ===================== READING GUIDE · CONTENTS (closed dropdowns) ===================== */}
-        <section id="contents" style={{ background: '#faf7f0' }} className="pt-2 pb-16 scroll-mt-4">
-          <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-            <div className="max-w-[860px] space-y-6">
-              <AISection kind="reading-guide" className="card">
-                <details className="group">
-                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
-                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-                  </summary>
-                  <div className="px-6 pb-6">
-                    <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
-                  </div>
-                </details>
-              </AISection>
-              {(() => {
-                const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
-                if (!allEntries || allEntries.length === 0) return null;
-                const entries = allEntries.filter(e => e.pages.length >= 2);
-                if (entries.length === 0) return null;
-                return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
-              })()}
-
-              {/* Book's own contents */}
-              <details className="card group">
-                <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                  <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
-                  <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-                </summary>
-                <div className="px-6 pb-6">
-
-                {/* Contents — as printed (top of the section) */}
-                {tocPage && (() => {
-                  const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
-                  return (
-                    <Link href={`/book/${bookSlug}/page/${tocPage.id}`} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
-                      <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
-                        {tocThumb && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[14px] font-semibold" style={{ color: '#2b2620' }}>Contents — as printed</div>
-                        <div className="text-[13px]" style={{ color: '#948d80' }}>p. {tocPage.page_number}</div>
-                      </div>
-                      <span className="text-[14px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>View scan →</span>
-                    </Link>
-                  );
-                })()}
-
-                {book.chapters?.length ? (
-                  <div className="border-t" style={{ borderColor: '#e6e0d3' }}>
-                    {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
-                      <Link
-                        key={i}
-                        href={typeof ch.pageNumber === 'number' ? `/book/${bookSlug}/page-number/${ch.pageNumber}` : `/book/${bookSlug}`}
-                        className="flex items-baseline justify-between gap-4 py-3 border-b transition-colors hover:bg-[#f4efe6]"
-                        style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
-                      >
-                        <span className="font-display text-[17px] leading-snug" style={{ color: '#2b2620' }}>{ch.titleEn || ch.title}</span>
-                        {typeof ch.pageNumber === 'number' ? <span className="font-mono text-[13px] whitespace-nowrap" style={{ color: '#948d80' }}>p. {ch.pageNumber}</span> : null}
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm" style={{ color: '#8a8170' }}>No table of contents recorded for this edition.</p>
-                )}
-                </div>
-              </details>
-
-              {book.editions?.length ? (
-                <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
-              ) : null}
-
-              {/* Bibliographic information */}
-              <details className="card group">
-                <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                  <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
-                  <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-                </summary>
-                <div className="px-6 pb-6">
-                  <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0} showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink} showExternalLinks={embedPolicy.showExternalLinks}>
-                    {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
-                      <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
-                    )}
-                    {embedPolicy.showIndexCatalogStatus && (
-                      <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
-                    )}
-                  </BibliographicInfo>
-                </div>
-              </details>
-
-              {/* Book history (staff only) */}
-              <AuthCheck role="inner_circle">
-                <details className="card group">
-                  <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                    <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
-                    <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-                  </summary>
-                  <div className="px-6 pb-6">
-                    <BookHistory bookId={book.id} />
-                  </div>
-                </details>
-              </AuthCheck>
+        {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
+        {hasSummary ? (
+          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
+        ) : (
+          <section style={{ background: '#faf7f0' }} className="pt-2 pb-16">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+              <div className="max-w-[860px] space-y-6">{readingDropdowns}</div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ===================== PAGES ===================== */}
         <section id="pages" style={{ background: '#faf7f0' }} className="pb-16 scroll-mt-4">
