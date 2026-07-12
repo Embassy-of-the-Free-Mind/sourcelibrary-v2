@@ -53,13 +53,15 @@ export default function HeroVariants({
           into the solid dark below the content. Mobile variant 2 + desktop: it
           fills the whole hero behind the content. Prefer the composited mosaic. */}
       {mosaicUrl ? (
-        <div className={`absolute inset-x-0 top-0 ${mv === 2 ? 'h-full' : 'h-[25vh]'} md:h-full overflow-hidden`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={mosaicUrl} alt="" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
-        </div>
+        /* CSS background so we can show ~6 columns across on mobile (band) while
+           still covering the full hero on desktop / mobile variant 2. */
+        <div
+          className={`absolute inset-x-0 top-0 ${mv === 2 ? 'h-full bg-cover bg-center' : 'h-[25vh] bg-[length:166%_auto] bg-top'} md:h-full md:bg-cover md:bg-center bg-no-repeat`}
+          style={{ backgroundImage: `url(${mosaicUrl})` }}
+        />
       ) : pageThumbs.length > 0 ? (
         <div className={`absolute inset-x-0 top-0 ${mv === 2 ? 'h-full' : 'h-[25vh]'} md:h-full overflow-hidden`}>
-          <div className="grid grid-cols-5 md:grid-cols-10 gap-1.5">
+          <div className="grid grid-cols-6 md:grid-cols-10 gap-1.5">
             {pageThumbs.map((src, i) => (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img key={i} src={src} alt="" className="w-full aspect-[3/4] object-cover" loading="lazy" />
@@ -70,8 +72,9 @@ export default function HeroVariants({
 
       {/* Mobile overlays */}
       {mv === 2 ? (
-        /* Variant 2: tint the full background so the content reads over it */
-        <div className="absolute inset-0 md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(16,12,8,0.55) 0%, rgba(16,12,8,0.78) 100%)' }} />
+        /* Variant 2: tint the full background (matches the desktop Scrim tint)
+           so the content reads clearly over it */
+        <div className="absolute inset-0 md:hidden" style={{ background: 'rgba(16,12,8,0.82)' }} />
       ) : (
         /* Variant 1: fade the band into the solid dark below */
         <div className="absolute inset-x-0 top-0 h-[25vh] md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(20,16,12,0.28) 0%, rgba(20,16,12,0.12) 45%, #14100c 100%)' }} />

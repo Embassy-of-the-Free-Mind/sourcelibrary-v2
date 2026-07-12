@@ -80,6 +80,8 @@ interface CiteButtonProps {
   /** Tenant slug (e.g. "bph") — produces /bph/book/… URLs instead of /book/… */
   tenantSlug?: string;
   className?: string;
+  /** Hide the "Cite" label — show only the icon. */
+  iconOnly?: boolean;
 }
 
 function formatAccessedDate(): string {
@@ -165,6 +167,7 @@ export default function CiteButton({
   editionVersion,
   tenantSlug,
   className = '',
+  iconOnly = false,
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -187,7 +190,7 @@ export default function CiteButton({
         title="Cite this book"
       >
         {copiedId ? <Check className="w-4 h-4 text-green-400" /> : <Quote className="w-4 h-4" />}
-        Cite
+        {!iconOnly && 'Cite'}
       </button>
 
       {showMenu && (

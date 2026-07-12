@@ -18,9 +18,11 @@ interface DownloadButtonProps {
   imageRestricted?: boolean;
   imageAccess?: ImageAccess;
   variant?: 'default' | 'header';
+  /** Hide the "Download" label + chevron — show only the icon. */
+  iconOnly?: boolean;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default' }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
@@ -195,8 +197,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         className={buttonClass}
       >
         <Download className="w-4 h-4" />
-        Download
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
       </button>
 
       {isOpen && (

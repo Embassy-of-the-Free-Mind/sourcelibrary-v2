@@ -910,19 +910,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Reading guide / Contents / Bibliographic info / Book history dropdowns —
     // rendered below the About text (inside the About left column) so they sit
     // right under the text + tags, not in a separate row.
+    const readingGuideText = bookSummaryObj?.detailed || readingSummary || '';
+    const hasReadingGuide = !!readingGuideText.trim();
     const readingDropdowns = (
       <>
-        <AISection kind="reading-guide" className="card">
-          <details className="group">
-            <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-              <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
-              <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-            </summary>
-            <div className="px-6 pb-6">
-              <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || readingSummary || ''} defaultExpanded hideIllustrations />
-            </div>
-          </details>
-        </AISection>
+        {hasReadingGuide && (
+          <AISection kind="reading-guide" className="card">
+            <details className="group">
+              <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
+                <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
+                <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+              </summary>
+              <div className="px-6 pb-6">
+                <ExpandableGuide bookId={book.id} detailedSummary={readingGuideText} defaultExpanded hideIllustrations />
+              </div>
+            </details>
+          </AISection>
+        )}
         {(() => {
           const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
           if (!allEntries || allEntries.length === 0) return null;
@@ -1041,7 +1045,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           pageThumbs={heroPageThumbs}
           mosaicUrl={`/api/books/${book.id}/hero-mosaic`}
           cover={(
-            <div className="flex justify-center md:justify-start">
+            <div className="flex flex-col items-center md:items-start">
               {coverDisplay ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
@@ -1055,6 +1059,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {book.display_title || book.title}
                 </div>
               )}
+              {/* Mobile: compact 2×2 icon-only actions under the cover (the
+                  desktop action bar is hidden on mobile). */}
+              <div className="grid md:hidden grid-cols-2 gap-1.5 mt-2.5 w-full [&_svg]:!w-5 [&_svg]:!h-5 [&_button]:!w-full [&_button]:!justify-center">
+                {[
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
+                  <BookAnalytics key="views" bookId={book.id} className="!text-stone-100" iconOnly />,
+                  <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
+                ].map((el, i) => (
+                  <div key={i} className="flex items-center justify-center py-2.5" style={{ background: 'rgba(12,9,6,0.5)', border: '1px solid rgba(245,240,232,0.18)' }}>{el}</div>
+                ))}
+              </div>
             </div>
           )}
           meta={(
@@ -1101,7 +1117,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <BookOpen className="w-4 h-4 md:w-[18px] md:h-[18px]" />Read This Book
                   </Link>
                 )}
-                <div className="flex flex-wrap items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
+                <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
                   <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />

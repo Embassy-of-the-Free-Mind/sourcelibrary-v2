@@ -86,7 +86,7 @@ export default function AboutVariants({
             </div>
             {/* Interesting page / plate: 2/5 on desktop, sticky while sections expand */}
             {visual && (
-              <div className="order-1 md:order-2 md:col-span-2 md:sticky md:top-6">
+              <div className="order-1 md:order-2 md:col-span-2">
                 <Link href={visual.href} className="block group">
                   <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
