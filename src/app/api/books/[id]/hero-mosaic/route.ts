@@ -15,10 +15,12 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * for a book composes and stores it.
  */
 
+const MOSAIC_VERSION = 2; // bump to force-regenerate cached mosaics
 const COLS = 10;
 const MAX_TILES = 50;
 const TILE_W = 168;
 const TILE_H = 224; // 3:4
+const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const JPEG_QUALITY = 58;
 const BG = { r: 20, g: 16, b: 12 }; // matches the hero's #14100c
 
@@ -48,11 +50,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { _id: 0, id: 1, hero_mosaic_url: 1 } },
+      { projection: { _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1 } },
     );
     if (!book?.id) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
 
-    if (book.hero_mosaic_url) return redirectToMosaic(book.hero_mosaic_url);
+    if (book.hero_mosaic_url && book.hero_mosaic_version === MOSAIC_VERSION) return redirectToMosaic(book.hero_mosaic_url);
 
     const pages = await db.collection('pages')
       .find({ book_id: book.id, page_type: { $ne: 'blank' } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
@@ -82,22 +84,22 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     if (ok.length === 0) return NextResponse.json({ error: 'Could not fetch page scans' }, { status: 502 });
 
     const rows = Math.ceil(urls.length / COLS);
-    const width = COLS * TILE_W;
-    const height = rows * TILE_H;
+    const width = COLS * TILE_W + (COLS + 1) * GAP;
+    const height = rows * TILE_H + (rows + 1) * GAP;
 
     const composed = await sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(ok.map(({ i, buf }) => ({
         input: buf,
-        left: (i % COLS) * TILE_W,
-        top: Math.floor(i / COLS) * TILE_H,
+        left: GAP + (i % COLS) * (TILE_W + GAP),
+        top: GAP + Math.floor(i / COLS) * (TILE_H + GAP),
       })))
       .jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true })
       .toBuffer();
 
-    const key = `hero-mosaic/${book.id}.jpg`;
+    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.jpg`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/jpeg', allowOverwrite: true });
 
-    await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_at: new Date() } }).catch(() => {});
+    await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_at: new Date() } }).catch(() => {});
 
     return redirectToMosaic(uploaded.url);
   } catch (error) {

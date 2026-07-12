@@ -1041,12 +1041,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {backCollection && (
-                <Link href={`/collections/${backCollection.slug}`} className="inline-flex items-center gap-2 text-[13.5px] mb-5 transition-colors" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                <Link href={`/collections/${backCollection.slug}`} className="inline-flex items-center gap-2 text-[11px] md:text-[13.5px] mb-2 md:mb-5 transition-colors" style={{ color: 'rgba(245,240,232,0.6)' }}>
                   ← {backCollection.name}
                 </Link>
               )}
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
-                <div className="font-mono uppercase text-[12.5px] tracking-[0.14em] mb-3.5" style={{ color: '#d98a72' }}>
+                <div className="font-mono uppercase text-[10.5px] md:text-[12.5px] tracking-[0.14em] mb-1.5 md:mb-3.5" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                     <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
@@ -1054,37 +1054,37 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
                 </div>
               )}
-              <h1 className="font-display font-medium text-2xl sm:text-3xl md:text-[52px] leading-[1.08] md:leading-[1.04] tracking-[-0.01em] mb-3 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.12] md:leading-[1.04] tracking-[-0.01em] mb-1.5 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (
-                <div className="font-display italic text-lg md:text-xl mb-1.5" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
+                <div className="font-display italic text-[13px] md:text-xl mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
               )}
-              {heroMetaLine && <div className="text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
+              {heroMetaLine && <div className="text-[12px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
 
               {/* Chips */}
-              <div className="flex flex-wrap gap-2 mt-6 mb-1">
+              <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-6 mb-1">
                 {book.language && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
-                    <Globe className="w-3.5 h-3.5" />{book.language}
+                  <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
+                    <Globe className="w-3 h-3 md:w-3.5 md:h-3.5" />{book.language}
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
-                  <FileText className="w-3.5 h-3.5" />{totalPages} scans
+                <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px]" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
+                  <FileText className="w-3 h-3 md:w-3.5 md:h-3.5" />{totalPages} scans
                 </span>
                 {imageCount > 0 && (
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] transition-colors" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
-                    <Images className="w-3.5 h-3.5" />{imageCount} images
+                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-1 md:gap-1.5 px-2 py-1 md:px-3 md:py-1.5 text-[11px] md:text-[13.5px] transition-colors" style={{ border: '1px solid rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.92)' }}>
+                    <Images className="w-3 h-3 md:w-3.5 md:h-3.5" />{imageCount} images
                   </Link>
                 )}
               </div>
-              <div className="[&_a]:!text-[#eab59f] mt-3"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+              <div className="[&_a]:!text-[#eab59f] mt-2 md:mt-3 text-[12px] md:text-[15px]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center gap-2.5 mt-6">
+              <div className="flex flex-wrap items-center gap-2 md:gap-2.5 mt-4 md:mt-6">
                 {embedPolicy.showBookReadCta && readHref && (
-                  <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
-                    <BookOpen className="w-[18px] h-[18px]" />Read This Book
+                  <Link href={readHref} className="inline-flex items-center gap-2 md:gap-2.5 px-4 py-2.5 md:px-6 md:py-3 text-[13px] md:text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
+                    <BookOpen className="w-4 h-4 md:w-[18px] md:h-[18px]" />Read This Book
                   </Link>
                 )}
                 <div className="flex items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
