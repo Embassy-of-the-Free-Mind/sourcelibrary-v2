@@ -107,9 +107,10 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                   )}
                 </div>
                 {sectionThumb && (
-                  <div className="shrink-0 w-[54px] h-[68px] overflow-hidden border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}>
+                  <div className="shrink-0 flex items-center justify-center" style={{ minWidth: '56px' }}>
+                    {/* True page dimensions (no crop), bounded by a max box. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={sectionThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+                    <img src={sectionThumb} alt="" className="max-w-[56px] max-h-[84px] w-auto h-auto object-contain border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }} loading="lazy" />
                   </div>
                 )}
                 <div className="flex-1 min-w-0">

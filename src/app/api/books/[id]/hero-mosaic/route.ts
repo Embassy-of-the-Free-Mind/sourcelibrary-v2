@@ -19,8 +19,18 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  */
 
 const MOSAIC_VERSION = 4; // bump to force-regenerate cached mosaics
-const COLS = 10;
 const MAX_TILES = 50;
+
+/**
+ * Column count for the composited grid, scaled to the number of distinct tiles
+ * so short books still make a full, roughly-landscape mosaic (≈1.4:1) instead
+ * of one sparse row. e.g. 6 tiles → 3 cols (2 rows); 50 → 9 cols (6 rows).
+ */
+function chooseColumns(n: number): number {
+  const cols = Math.max(3, Math.round(Math.sqrt(n * 2.2)));
+  return Math.min(10, cols);
+}
+
 const TILE_W = 168;
 const TILE_H = 224; // 3:4
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
@@ -122,15 +132,19 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return noMosaic();
     }
 
-    const rows = Math.ceil(distinct.length / COLS);
-    const width = COLS * TILE_W + (COLS + 1) * GAP;
+    // Adapt the column count to how many tiles we have, so short books still
+    // read as a full, balanced grid rather than one sparse row. Aim for a
+    // roughly landscape mosaic (cols ≈ 1.4 × rows).
+    const cols = chooseColumns(distinct.length);
+    const rows = Math.ceil(distinct.length / cols);
+    const width = cols * TILE_W + (cols + 1) * GAP;
     const height = rows * TILE_H + (rows + 1) * GAP;
 
     const composed = await sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(distinct.map((buf, i) => ({
         input: buf,
-        left: GAP + (i % COLS) * (TILE_W + GAP),
-        top: GAP + Math.floor(i / COLS) * (TILE_H + GAP),
+        left: GAP + (i % cols) * (TILE_W + GAP),
+        top: GAP + Math.floor(i / cols) * (TILE_H + GAP),
       })))
       .jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true })
       .toBuffer();

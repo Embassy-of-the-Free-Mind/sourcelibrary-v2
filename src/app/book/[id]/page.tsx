@@ -1065,7 +1065,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <img
                   src={coverDisplay}
                   alt={book.display_title || book.title}
-                  className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-none object-contain"
+                  className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
                   style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
               ) : (
