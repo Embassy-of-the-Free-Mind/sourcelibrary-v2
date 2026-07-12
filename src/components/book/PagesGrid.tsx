@@ -81,7 +81,7 @@ export default function PagesGrid({
   return (
     <div>
       <div className="flex items-center justify-between gap-4 mb-4">
-        <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Pages</h2>
+        <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>Pages</h2>
         <div className="flex items-center gap-3 md:gap-4">
           <span className="text-sm text-stone-500 whitespace-nowrap">
             {Math.min(visibleCount, pages.length)} of {displayTotal}
@@ -89,8 +89,7 @@ export default function PagesGrid({
           {overviewHref && (
             <a
               href={embedHref(overviewHref)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-lg border transition-colors"
-              style={{ borderColor: '#e6d9c9', color: '#a5503d' }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium rounded-lg bg-stone-900 text-white hover:bg-stone-800 transition-colors"
             >
               <LayoutGrid className="w-3.5 h-3.5" />
               Overview

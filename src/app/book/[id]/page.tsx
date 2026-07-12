@@ -788,9 +788,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return midOf(pool.length ? pool : interiorCandidates);
     })();
     const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
-    // Immersive "About" variant background: a full page of body text.
-    const aboutTextPage = interiorTextPage || coverPage;
-    const aboutBgUrl = aboutTextPage ? (getPageImageUrl(aboutTextPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined;
     // Fixed page-scan grid behind the hero (same across all hero treatments).
     const heroPageThumbs = pages
       .filter(p => p.page_type !== 'blank')
@@ -1078,15 +1075,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {book.display_title || book.title}
                 </div>
               )}
-              {/* Mobile: small icon-only actions under the cover (the desktop
-                  action bar is hidden on mobile). */}
-              <div className="flex md:hidden gap-1.5 mt-2 [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none">
+              {/* Mobile: icon-only actions under the cover — one bar the full
+                  width of the cover, cells touching, no gaps. */}
+              <div className="grid md:hidden grid-cols-3 w-full mt-2.5 rounded overflow-hidden divide-x [&_svg]:!w-[19px] [&_svg]:!h-[19px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
                   <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
-                  <div key={i} className="w-8 h-8 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.5)', border: '1px solid rgba(245,240,232,0.18)' }}>{el}</div>
+                  <div key={i} className="h-11 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
                 ))}
               </div>
             </div>
@@ -1094,7 +1091,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
-                <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1 md:mb-3" style={{ color: '#d98a72' }}>
+                <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-2 md:mb-3" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                     <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
@@ -1102,19 +1099,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
                 </div>
               )}
-              <h1 className="font-display font-medium text-base sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-1 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-2 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (
-                <div className="text-[12px] md:text-[15px] mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(248,244,238,0.85)' }}>{book.title}</div>
+                <div className="text-[12px] md:text-[15px] mb-1.5 md:mb-1.5 leading-snug" style={{ color: 'rgba(248,244,238,0.85)' }}>{book.title}</div>
               )}
-              {heroMetaLine && <div className="text-[11px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
+              {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
 
               {/* Chips — borderless / padless inline items */}
               {(() => {
-                const chip = "inline-flex items-center gap-1.5 text-[11px] md:text-[13.5px]";
+                const chip = "inline-flex items-center gap-1.5 text-[11.5px] md:text-[13.5px]";
                 return (
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 md:mt-5 mb-1">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 md:mt-5 mb-1">
                     {book.language && (
                       <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }}>
                         <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{book.language}
@@ -1131,30 +1128,30 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </div>
                 );
               })()}
-              {/* OCR / Translated status — tick when complete else the percentage,
-                  shown to the left of the label. */}
+              {/* OCR / Translated status — coloured, with the tick/percentage to
+                  the left of the label. */}
               {ocrPct > 0 && (
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium" style={{ color: 'rgba(245,240,232,0.82)' }}>
-                  <span title={`${ocrCount} of ${totalPages} pages transcribed`}>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
+                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
                   {translatedPct > 0 && (
-                    <span title={`${translatedCount} pages translated to English`}>
+                    <span title={`${translatedCount} pages translated to English`} style={{ color: '#86c98f' }}>
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
                   )}
                 </div>
               )}
-              <div className="[&_a]:!text-[#eab59f] mt-2 md:mt-3 text-[12px] md:text-[15px]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+              <div className="[&_a]:!text-[#eab59f] mt-3 md:mt-3 text-[12px] md:text-[15px]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-2.5 mt-4 md:mt-6">
+              <div className="flex flex-wrap items-center gap-2 md:gap-2.5 mt-5 md:mt-6">
                 {embedPolicy.showBookReadCta && readHref && (
                   <Link href={readHref} className="inline-flex items-center gap-2 md:gap-2.5 px-4 py-2.5 md:px-6 md:py-3 text-[13px] md:text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
                     <BookOpen className="w-4 h-4 md:w-[18px] md:h-[18px]" />Read this book
                   </Link>
                 )}
-                <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1 backdrop-blur-sm" style={{ background: 'rgba(12,9,6,0.62)', border: '1px solid rgba(245,240,232,0.16)' }}>
+                <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1" style={{ background: 'rgba(12,9,6,0.82)', border: '1px solid rgba(245,240,232,0.16)' }}>
                   <AuthCheck role="admin">
                     {isComplete ? (
                       <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />
@@ -1184,7 +1181,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
         {hasSummary ? (
-          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
+          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
         ) : (
           <section style={{ background: '#faf7f0' }} className="pt-2 pb-16">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
@@ -1211,12 +1208,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {galleryPlates.length > 0 && (
           <section id="illustrations" style={{ background: '#faf7f0' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="flex items-baseline justify-between mb-6">
+              <div className="flex items-baseline justify-between gap-4 mb-1">
                 <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: '#2b2620' }}>Illustrations</h2>
                 {imageCount > galleryPlates.length && (
-                  <Link href={`/gallery?bookId=${book.id}`} className="text-sm" style={{ color: '#a5503d' }}>View all {imageCount} →</Link>
+                  <Link href={`/gallery?bookId=${book.id}`} className="text-sm whitespace-nowrap" style={{ color: '#a5503d' }}>View all {imageCount} →</Link>
                 )}
               </div>
+              <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Plates, diagrams, and figures detected in the scanned pages.</p>
               <GalleryMasonry plates={galleryPlates} />
             </div>
           </section>
@@ -1231,7 +1229,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <RelatedBooks relatedBooks={relatedBooksData!} />
               ) : (
                 <>
-                  <h2 className="font-display font-medium text-2xl md:text-[28px] mb-6" style={{ color: '#2b2620' }}>Related books</h2>
+                  <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
+                  <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Other volumes from the same part of the collection.</p>
                   <BookSlider books={tagRelated as unknown as MiniBook[]} />
                 </>
               )}

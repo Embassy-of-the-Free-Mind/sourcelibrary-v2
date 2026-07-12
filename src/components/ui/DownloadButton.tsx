@@ -213,7 +213,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={goToSignIn}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors"
+                className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors"
               >
                 Sign in to download
               </button>
@@ -229,7 +229,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               <button
                 onClick={handlePurchase}
                 disabled={purchasing}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
               >
                 {purchasing ? 'Redirecting...' : 'Download this book ($5)'}
               </button>
@@ -243,61 +243,65 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             TXT
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="translation" label="English Translation" desc="Translated text only"
-              icon={<Languages className="w-4 h-4 text-status-success" />}
+              icon={<Languages className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
-              icon={<FileText className="w-4 h-4 text-blue-600" />}
+              icon={<FileText className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
-              icon={<Layers className="w-4 h-4 text-purple-600" />}
+              icon={<Layers className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          </div>
 
           <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
             EPUB
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-status-success" />}
+              icon={<BookOpen className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-blue-600" />}
+              icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-both" label="Complete (Both)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-purple-600" />}
+              icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-parallel" label="Parallel Text" desc="Facing pages"
-              icon={<Columns className="w-4 h-4 text-accent-rust" />}
-              onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
+              icon={<Columns className="w-4 h-4 text-accent-rust shrink-0" />}
+              onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-stone-700" />}
+              icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-bilingual" label="Bilingual Scholarly" desc="Original + translation with apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-accent-rust" />}
+              icon={<GraduationCap className="w-4 h-4 text-accent-rust shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
-              icon={<Image className="w-4 h-4 text-emerald-700" />}
+              icon={<Image className="w-4 h-4 text-emerald-700 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          </div>
 
           {hasImages && !imageRestricted && (
             <>
@@ -307,12 +311,14 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                   <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
                 )}
               </div>
-              <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
-                icon={<Image className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload} downloading={downloading} />
-              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book"
-                icon={<BookOpen className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload} downloading={downloading} />
+              <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
+                <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
+                  icon={<Image className="w-4 h-4 text-stone-600 shrink-0" />}
+                  onDownload={handleDownload} downloading={downloading} />
+                <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book"
+                  icon={<BookOpen className="w-4 h-4 text-stone-600 shrink-0" />}
+                  onDownload={handleDownload} downloading={downloading} />
+              </div>
             </>
           )}
           {hasImages && imageRestricted && (
@@ -351,12 +357,12 @@ function FormatOption({
     <button
       onClick={() => onDownload(format)}
       disabled={downloading !== null}
-      className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50 ${className}`}
+      className={`w-full h-full px-3 py-2.5 flex items-center gap-2.5 hover:bg-stone-50 transition-colors disabled:opacity-50 rounded-lg border border-stone-200 sm:border-0 sm:rounded-none text-left ${className}`}
     >
       {icon}
-      <div className="text-left">
-        <div className="text-sm font-medium text-stone-900">{label}</div>
-        <div className="text-xs text-stone-500">{desc}</div>
+      <div className="min-w-0">
+        <div className="text-[13px] sm:text-sm font-medium text-stone-900 leading-tight">{label}</div>
+        <div className="hidden sm:block text-xs text-stone-500">{desc}</div>
       </div>
       {downloading === format && (
         <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
