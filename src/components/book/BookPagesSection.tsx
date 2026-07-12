@@ -36,7 +36,14 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
-  const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
+  const [visibleCount, setVisibleCount] = useState(9); // Pagination — mobile default (3×3); desktop bumps to PAGES_PER_LOAD on mount
+
+  // Desktop shows a fuller first screen (2 rows on the 10-col grid); mobile keeps 9.
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 640) {
+      setVisibleCount(v => (v < PAGES_PER_LOAD ? PAGES_PER_LOAD : v));
+    }
+  }, []);
 
   // Fetch remaining pages from API when SSR only sent a partial set
   const fetchRemainingPages = useCallback(async () => {

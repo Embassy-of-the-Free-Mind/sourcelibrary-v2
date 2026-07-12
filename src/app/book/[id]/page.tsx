@@ -9,7 +9,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown, Search, Sparkles } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -917,11 +917,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {hasReadingGuide && (
           <AISection kind="reading-guide" className="card">
             <details className="group">
-              <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-                <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
+              <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+                <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
                 <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
               </summary>
-              <div className="px-6 pb-6">
+              <div className="px-4 pb-4 md:px-6 md:pb-6">
                 <ExpandableGuide bookId={book.id} detailedSummary={readingGuideText} defaultExpanded hideIllustrations />
               </div>
             </details>
@@ -937,11 +937,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* Book's own contents */}
         <details id="contents" className="card group scroll-mt-24">
-          <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-            <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
+          <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
             <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
           </summary>
-          <div className="px-6 pb-6">
+          <div className="px-4 pb-4 md:px-6 md:pb-6">
             {/* Contents — as printed (top of the section) */}
             {tocPage && (() => {
               const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
@@ -988,11 +988,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* Bibliographic information */}
         <details className="card group">
-          <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-            <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
+          <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
             <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
           </summary>
-          <div className="px-6 pb-6">
+          <div className="px-4 pb-4 md:px-6 md:pb-6">
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
@@ -1006,11 +1006,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* Book history (staff only) */}
         <AuthCheck role="inner_circle">
           <details className="card group">
-            <summary className="p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-4">
-              <h3 className="font-display font-medium text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
+            <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+              <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
               <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
             </summary>
-            <div className="px-6 pb-6">
+            <div className="px-4 pb-4 md:px-6 md:pb-6">
               <BookHistory bookId={book.id} />
             </div>
           </details>
@@ -1059,13 +1059,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {book.display_title || book.title}
                 </div>
               )}
-              {/* Mobile: compact 2×2 icon-only actions under the cover (the
+              {/* Mobile: compact 3-up icon-only actions under the cover (the
                   desktop action bar is hidden on mobile). */}
-              <div className="grid md:hidden grid-cols-2 gap-1.5 mt-2.5 w-full [&_svg]:!w-5 [&_svg]:!h-5 [&_button]:!w-full [&_button]:!justify-center">
+              <div className="grid md:hidden grid-cols-3 gap-1.5 mt-2.5 w-full [&_svg]:!w-5 [&_svg]:!h-5 [&_button]:!w-full [&_button]:!justify-center">
                 {[
                   <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
-                  <BookAnalytics key="views" bookId={book.id} className="!text-stone-100" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
                   <div key={i} className="flex items-center justify-center py-2.5" style={{ background: 'rgba(12,9,6,0.5)', border: '1px solid rgba(245,240,232,0.18)' }}>{el}</div>
@@ -1088,9 +1087,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (
-                <div className="font-display italic text-[11.5px] md:text-xl mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(245,240,232,0.72)' }}>{book.title}</div>
+                <div className="font-display italic text-[11.5px] md:text-xl mb-1 md:mb-1.5 leading-snug" style={{ color: 'rgba(248,244,238,0.9)' }}>{book.title}</div>
               )}
-              {heroMetaLine && <div className="text-[11px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.6)' }}>{heroMetaLine}</div>}
+              {heroMetaLine && <div className="text-[11px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
 
               {/* Chips */}
               <div className="flex flex-wrap gap-1.5 md:gap-2 mt-3 md:mt-6 mb-1">
@@ -1154,7 +1153,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         ) : (
           <section style={{ background: '#faf7f0' }} className="pt-2 pb-16">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="max-w-[860px] space-y-6">{readingDropdowns}</div>
+              <div className="max-w-[860px] space-y-3 md:space-y-6">{readingDropdowns}</div>
             </div>
           </section>
         )}
@@ -1195,25 +1194,44 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
 
         {/* ===================== SEARCH THIS BOOK · ASK THE LIBRARIAN ===================== */}
-        <section id="search-librarian" style={{ background: '#17120e' }} className="py-16 scroll-mt-4">
-          <div className="max-w-[720px] mx-auto text-center px-6 md:px-12">
-            <h2 className="font-display font-medium text-2xl md:text-3xl mb-3" style={{ color: '#f7f2ea' }}>Search this book</h2>
-            <p className="text-sm md:text-base leading-relaxed mb-6 mx-auto max-w-[560px]" style={{ color: 'rgba(245,240,232,0.7)' }}>
-              Find a word or passage in the original scans, or ask the Librarian a question in plain language — answers cite the pages.
-            </p>
-            {/* In-book keyword search */}
-            <div className="[&_input]:!bg-white/5 [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_input]:!border-white/25">
-              <SearchPanel bookId={book.id} />
+        <section id="search-librarian" className="relative py-16 md:py-24 scroll-mt-4 overflow-hidden" style={{ background: '#17120e' }}>
+          {/* warm glow */}
+          <div className="absolute inset-x-0 top-0 h-2/3 pointer-events-none" style={{ background: 'radial-gradient(70% 80% at 50% 0%, rgba(165,80,61,0.20) 0%, transparent 62%)' }} />
+          <div className="relative max-w-[720px] mx-auto px-6 md:px-12">
+            <div className="text-center mb-8 md:mb-10">
+              <div className="font-mono uppercase text-[11px] tracking-[0.2em] mb-3" style={{ color: '#d98a72' }}>Research this volume</div>
+              <h2 className="font-display font-medium text-[26px] md:text-[36px] leading-tight" style={{ color: '#f7f2ea' }}>Search the text, or ask the Librarian</h2>
             </div>
-            {/* Divider */}
-            <div className="flex items-center gap-3 my-7 mx-auto max-w-[420px]">
-              <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.14)' }} />
-              <span className="font-mono uppercase text-[11px] tracking-[0.16em]" style={{ color: 'rgba(245,240,232,0.4)' }}>or ask the librarian</span>
-              <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.14)' }} />
-            </div>
-            {/* Ask-the-Librarian AI */}
-            <div className="[&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_>div]:!border-white/25 [&_>div]:!bg-white/5">
-              <LibrarianSearch placeholder={`Ask a question about ${book.display_title || book.title}…`} />
+
+            <div className="rounded-2xl p-5 md:p-8 space-y-7" style={{ background: 'rgba(255,255,255,0.035)', border: '1px solid rgba(245,240,232,0.10)', boxShadow: '0 24px 60px -30px rgba(0,0,0,0.7)' }}>
+              {/* Keyword search over the scans */}
+              <div>
+                <div className="flex items-center gap-2.5 mb-3">
+                  <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(217,138,114,0.14)' }}><Search className="w-4 h-4" style={{ color: '#e0a48f' }} /></span>
+                  <span className="text-[13.5px] md:text-sm text-left" style={{ color: 'rgba(245,240,232,0.82)' }}>Find a word or passage in the original scans</span>
+                </div>
+                <div className="[&_input]:!bg-white/[0.06] [&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_input]:!border-white/20 [&_input]:!rounded-xl">
+                  <SearchPanel bookId={book.id} />
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3">
+                <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.12)' }} />
+                <span className="font-mono uppercase text-[10.5px] tracking-[0.18em]" style={{ color: 'rgba(245,240,232,0.38)' }}>or</span>
+                <span className="flex-1 h-px" style={{ background: 'rgba(245,240,232,0.12)' }} />
+              </div>
+
+              {/* Ask-the-Librarian AI */}
+              <div>
+                <div className="flex items-center gap-2.5 mb-3">
+                  <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(217,138,114,0.14)' }}><Sparkles className="w-4 h-4" style={{ color: '#e0a48f' }} /></span>
+                  <span className="text-[13.5px] md:text-sm text-left" style={{ color: 'rgba(245,240,232,0.82)' }}>Ask the Librarian anything — answers cite the scanned pages</span>
+                </div>
+                <div className="[&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_>div]:!border-white/20 [&_>div]:!bg-white/[0.06] [&_>div]:!rounded-xl">
+                  <LibrarianSearch placeholder={`Ask a question about ${book.display_title || book.title}…`} />
+                </div>
+              </div>
             </div>
           </div>
         </section>

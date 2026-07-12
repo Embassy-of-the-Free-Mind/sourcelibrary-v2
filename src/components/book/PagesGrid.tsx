@@ -92,7 +92,7 @@ export default function PagesGrid({
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-10 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-10 gap-2 sm:gap-2">
           {pages.slice(0, visibleCount).map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page);
