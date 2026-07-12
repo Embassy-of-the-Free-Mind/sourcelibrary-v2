@@ -21,7 +21,7 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 5; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 6; // bump to force-regenerate cached mosaics
 const MAX_TILES = 50;
 const PLATE_MIN = 8; // ≥ this many curated plates ⇒ build a plate mosaic
 
@@ -169,14 +169,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const width = cols * TILE_W + (cols + 1) * GAP;
     const height = rows * TILE_H + (rows + 1) * GAP;
 
-    const composed = await sharp({ create: { width, height, channels: 3, background: BG } })
+    const canvas = sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(distinct.map((buf, i) => ({
         input: buf,
         left: GAP + (i % cols) * (TILE_W + GAP),
         top: GAP + Math.floor(i / cols) * (TILE_H + GAP),
-      })))
-      .jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true })
-      .toBuffer();
+      })));
+
+    // Skip mosaics that are mostly black — dark manuscripts, palm-leaf strips on
+    // black grounds, etc. They tile into odd stripes and, under the hero tint,
+    // add nothing over a plain dark panel. Cache the negative → dark hero.
+    const raw = await canvas.clone().removeAlpha().toColourspace('b-w').raw().toBuffer();
+    const meanLuma = raw.reduce((s, v) => s + v, 0) / raw.length;
+    if (meanLuma < 55) return cacheNegative();
+
+    const composed = await canvas.jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true }).toBuffer();
 
     const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.jpg`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/jpeg', allowOverwrite: true });
