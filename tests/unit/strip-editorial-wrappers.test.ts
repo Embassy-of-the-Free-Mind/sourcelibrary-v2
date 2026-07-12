@@ -61,6 +61,18 @@ describe('stripEditorialWrappers', () => {
     expect(out).toContain('<insert>OLIN BM 175</insert>');
   });
 
+  it('drops an <image-desc> AI plate description content-and-all', () => {
+    // Real leak: get_quote on Morestel 1621 p.39 served this AI description of a
+    // woodcut as quotable translation text. The word "enneagram" is the model's,
+    // not the author's — quoting it fabricates a citation. Strip content and tag.
+    const t = `The third section encompasses the relative predicates, the sign of which is T.\n\n<image-desc>A circular diagram... a complex nine-pointed star (enneagram) is formed by lines connecting each of the nine points.</image-desc>`;
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/enneagram/i);
+    expect(out).not.toMatch(/nine-pointed/i);
+    expect(out).not.toContain('<image-desc>');
+    expect(out).toContain('relative predicates'); // real translated body survives
+  });
+
   it('strips inline <language> switch markers without eating the body', () => {
     const t = `Lorem ipsum <language>Latin</language> dolor sit amet`;
     const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
