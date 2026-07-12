@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
+import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, LayoutGrid } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useEmbedHref } from '@/lib/EmbedContext';
@@ -48,6 +48,7 @@ interface PagesGridProps {
   onDragEnd: () => void;
   onLoadMore: () => void;
   getImageUrl: (page: Page) => string | null;
+  overviewHref?: string;
 }
 
 export default function PagesGrid({
@@ -69,6 +70,7 @@ export default function PagesGrid({
   onLoadMore,
   getImageUrl,
   totalCount,
+  overviewHref,
 }: PagesGridProps) {
   const embedHref = useEmbedHref();
   const displayTotal = totalCount || pages.length;
@@ -78,11 +80,23 @@ export default function PagesGrid({
     : undefined;
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between gap-4 mb-4">
         <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Pages</h2>
-        <span className="text-sm text-stone-500">
-          Showing {Math.min(visibleCount, pages.length)} of {displayTotal}
-        </span>
+        <div className="flex items-center gap-3 md:gap-4">
+          <span className="text-sm text-stone-500 whitespace-nowrap">
+            {Math.min(visibleCount, pages.length)} of {displayTotal}
+          </span>
+          {overviewHref && (
+            <a
+              href={embedHref(overviewHref)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-lg border transition-colors"
+              style={{ borderColor: '#e6d9c9', color: '#a5503d' }}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              Overview
+            </a>
+          )}
+        </div>
       </div>
 
       {pages.length === 0 ? (
@@ -179,13 +193,6 @@ export default function PagesGrid({
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} natural className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (
                       <div className="w-full aspect-[3/4] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
-                    )}
-                    {(hasOcr || hasTranslation || hasSummary) && (
-                      <div className="absolute bottom-1 right-1 flex gap-0.5 bg-black/40 rounded-full px-1 py-0.5">
-                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-400" title="OCR" />}
-                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-400" title="Translated" />}
-                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-400" title="Summarized" />}
-                      </div>
                     )}
                   </div>
                 </a>

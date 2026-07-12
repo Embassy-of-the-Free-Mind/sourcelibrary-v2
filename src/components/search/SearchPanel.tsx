@@ -35,9 +35,11 @@ interface SearchPanelProps {
   inline?: boolean;
   /** Colour theme for the input chrome. Results are always light. */
   theme?: 'light' | 'dark';
+  /** Input placeholder text. */
+  placeholder?: string;
 }
 
-export default function SearchPanel({ bookId, className = '', inline = false, theme = 'dark' }: SearchPanelProps) {
+export default function SearchPanel({ bookId, className = '', inline = false, theme = 'dark', placeholder = 'Search pages…' }: SearchPanelProps) {
   const router = useRouter();
   const embedHref = useEmbedHref();
   const [query, setQuery] = useState('');
@@ -158,7 +160,7 @@ export default function SearchPanel({ bookId, className = '', inline = false, th
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search this book…"
+          placeholder={placeholder}
           className={`flex-1 min-w-0 bg-transparent outline-none text-sm ${light ? 'text-stone-800 placeholder-stone-400' : 'text-white placeholder-white/50 w-64 sm:w-80'}`}
           autoFocus={!inline}
         />

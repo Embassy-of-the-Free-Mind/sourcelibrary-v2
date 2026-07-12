@@ -9,7 +9,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown, Sparkles } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -45,9 +45,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
-import LibrarianSearch from '@/app/collections/mycology/_components/LibrarianSearch';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
-import BookAnchorBar from '@/components/book/BookAnchorBar';
 import HeroVariants from '@/components/book/HeroVariants';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
@@ -850,14 +848,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         })()
       : [] as CatalogBook[];
     const hasRelated = hasPrecomputedRelated || tagRelated.length > 0;
-    const anchorSections = [
-      hasSummary ? { id: 'about', label: 'About' } : null,
-      hasContents ? { id: 'contents', label: 'Contents' } : null,
-      pages.length > 0 ? { id: 'pages', label: 'Pages' } : null,
-      galleryPlates.length > 0 ? { id: 'illustrations', label: 'Illustrations' } : null,
-      { id: 'search-librarian', label: 'Librarian' },
-      hasRelated ? { id: 'related', label: 'Related' } : null,
-    ].filter((s): s is { id: string; label: string } => s !== null);
     const impressum = (() => {
       const place = book.place_published?.trim();
       const publisher = book.publisher?.trim();
@@ -1029,7 +1019,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             card grows to show results (max-height + scroll) as you type. */}
         <div className="card p-4 md:p-6">
           <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>Search this book</h3>
-          <SearchPanel bookId={book.id} inline theme="light" />
+          <SearchPanel bookId={book.id} inline theme="light" placeholder="Find a word, name, or phrase…" />
         </div>
 
         {/* Book history (staff only) */}
@@ -1135,22 +1125,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     </span>
                     {imageCount > 0 && (
                       <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.92)' }}>
-                        <Images className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{imageCount} images
+                        <Images className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{imageCount} image{imageCount === 1 ? '' : 's'}
                       </Link>
                     )}
                   </div>
                 );
               })()}
-              {/* OCR / Translated status — coloured like the book cards; tick when
-                  complete, otherwise the percentage. */}
+              {/* OCR / Translated status — tick when complete else the percentage,
+                  shown to the left of the label. */}
               {ocrPct > 0 && (
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
-                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
-                    OCR {ocrPct >= 100 ? '✓' : `${ocrPct}%`}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium" style={{ color: 'rgba(245,240,232,0.82)' }}>
+                  <span title={`${ocrCount} of ${totalPages} pages transcribed`}>
+                    {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
                   {translatedPct > 0 && (
-                    <span title={`${translatedCount} pages translated to English`} style={{ color: '#86c98f' }}>
-                      Translated {translatedPct >= 100 ? '✓' : `${translatedPct}%`}
+                    <span title={`${translatedCount} pages translated to English`}>
+                      {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
                   )}
                 </div>
@@ -1192,9 +1182,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           )}
         />
 
-        {/* ===================== ON THIS PAGE (sub-nav) ===================== */}
-        <BookAnchorBar sections={anchorSections} slug={bookSlug} />
-
         {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
         {hasSummary ? (
           <AboutVariants content={linkEntities(summaryText!, summaryEntities)} bgUrl={aboutBgUrl} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
@@ -1209,13 +1196,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== PAGES ===================== */}
         <section id="pages" style={{ background: '#faf7f0' }} className="pb-16 scroll-mt-4">
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-            {embedPolicy.showBookOverviewLink && pages.length > 0 && (
-              <div className="mb-4">
-                <Link href={`/book/${bookSlug}/overview`} className="text-sm text-accent-rust hover:text-accent-gold-dark">Overview →</Link>
-              </div>
-            )}
             {(() => {
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -1240,28 +1222,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </section>
         )}
 
-
-        {/* ===================== SEARCH THIS BOOK · ASK THE LIBRARIAN ===================== */}
-        <section id="search-librarian" className="relative py-16 md:py-24 scroll-mt-4 overflow-hidden" style={{ background: '#17120e' }}>
-          {/* warm glow */}
-          <div className="absolute inset-x-0 top-0 h-2/3 pointer-events-none" style={{ background: 'radial-gradient(70% 80% at 50% 0%, rgba(165,80,61,0.20) 0%, transparent 62%)' }} />
-          <div className="relative max-w-[720px] mx-auto px-6 md:px-12">
-            <div className="text-center mb-8 md:mb-10">
-              <div className="font-mono uppercase text-[11px] tracking-[0.2em] mb-3" style={{ color: '#d98a72' }}>Ask the Librarian</div>
-              <h2 className="font-display font-medium text-[26px] md:text-[36px] leading-tight" style={{ color: '#f7f2ea' }}>Ask anything about this volume</h2>
-            </div>
-
-            <div className="rounded-2xl p-5 md:p-8" style={{ background: 'rgba(255,255,255,0.035)', border: '1px solid rgba(245,240,232,0.10)', boxShadow: '0 24px 60px -30px rgba(0,0,0,0.7)' }}>
-              <div className="flex items-center gap-2.5 mb-3">
-                <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(217,138,114,0.14)' }}><Sparkles className="w-4 h-4" style={{ color: '#e0a48f' }} /></span>
-                <span className="text-[13.5px] md:text-sm text-left" style={{ color: 'rgba(245,240,232,0.82)' }}>Answers cite the scanned pages. For an exact word or passage, use “Search this book” above.</span>
-              </div>
-              <div className="[&_input]:!text-stone-100 [&_input]:placeholder:!text-stone-400 [&_>div]:!border-white/20 [&_>div]:!bg-white/[0.06] [&_>div]:!rounded-xl">
-                <LibrarianSearch placeholder={`Ask a question about ${book.display_title || book.title}…`} />
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
