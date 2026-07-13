@@ -24,7 +24,14 @@
  *   only_partial_exists|complete_prior_found), survivor (bool), bucket,
  *   prior (string), evidence_url, queries_run[], sources_consulted[{url,found}],
  *   reasoning, registry_rows?[{author, english_title, translator, pub_year,
- *   publisher?, original_title?, source_language?, completeness, source_url?, notes?}]
+ *   publisher?, original_title?, source_language?, completeness, source_url?, notes?}],
+ *   priors?[{translator, year, english_title, completeness, source_url}]
+ *
+ * The attempt's structured `priors[]` are built from `registry_rows` (or the
+ * `priors` array), NOT the free `prior` string — so every prior carries a
+ * `pub_year`. The derive step needs that year to grade `first_modern` (a prior
+ * that is only pre-1900 is a badgeable "First Modern Translation", not not_first);
+ * a year lost inside a string collapses a genuine first-modern to not_first.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
@@ -56,6 +63,53 @@ const registry = db.collection('translation_catalogs');
 const FOUND = new Set(['confirmed_complete', 'confirmed_partial', 'complete_prior_found', 'only_partial_exists']);
 let aIns = 0, aSkip = 0, cIns = 0, cSkip = 0, badRows = 0;
 
+const completenessFor = (result) =>
+  result === 'confirmed_complete' || result === 'complete_prior_found' ? 'complete'
+  : result === 'confirmed_partial' || result === 'only_partial_exists' ? 'partial'
+  : 'unknown';
+
+/**
+ * Build the attempt's structured `priors[]`.
+ *
+ * CRITICAL: prefer `registry_rows` (they carry `pub_year`, `translator`,
+ * `english_title` as separate fields) over the free `prior` string. The derive
+ * step grades `first_modern` (a badgeable first) vs `not_first` by whether the
+ * priors are ALL pre-1900 — but it can only read the year if `pub_year` is a
+ * structured field. Cramming "translator, 1547, title" into `english_title`
+ * (the old behaviour) hides the year, so a genuine first-modern collapses to
+ * not_first. This is exactly how De remediis fortuitorum (Whittington 1547) was
+ * mis-graded before the fix.
+ */
+function buildPriors(r) {
+  // 1. registry_rows — the canonical structured source (pub_year, translator).
+  const rows = Array.isArray(r.registry_rows) ? r.registry_rows.filter((t) => t.english_title) : [];
+  if (rows.length) {
+    return rows.map((t) => ({
+      english_title: t.english_title,
+      translator: t.translator || undefined,
+      pub_year: t.pub_year != null ? String(t.pub_year) : undefined,
+      completeness: t.completeness || completenessFor(r.result),
+      source_url: t.source_url || r.evidence_url || undefined,
+    }));
+  }
+  // 2. priors[] — the subagent's structured array (year as a number field).
+  const sub = Array.isArray(r.priors) ? r.priors.filter((t) => t.english_title) : [];
+  if (sub.length) {
+    return sub.map((t) => ({
+      english_title: t.english_title,
+      translator: t.translator || undefined,
+      pub_year: t.year != null && t.year !== 0 ? String(t.year) : (t.pub_year != null ? String(t.pub_year) : undefined),
+      completeness: t.completeness || completenessFor(r.result),
+      source_url: t.source_url || r.evidence_url || undefined,
+    }));
+  }
+  // 3. Fallback: only a free `prior` string is available (no structured row).
+  //    The year is unparseable here — the derive step cannot grade first_modern.
+  return r.prior
+    ? [{ english_title: r.prior, completeness: completenessFor(r.result), source_url: r.evidence_url || undefined }]
+    : [];
+}
+
 for (const r of rows) {
   if (!r.book_id || !r.result || !Array.isArray(r.queries_run)) { badRows++; continue; }
 
@@ -77,17 +131,7 @@ for (const r of rows) {
         sources_detail: r.sources_consulted ?? [],
         result: FOUND.has(r.result) ? 'found' : 'none',
         verdict: r.result,
-        priors: r.prior
-          ? [{
-              english_title: r.prior,
-              completeness: r.result === 'confirmed_complete' || r.result === 'complete_prior_found'
-                ? 'complete'
-                : r.result === 'confirmed_partial' || r.result === 'only_partial_exists'
-                  ? 'partial'
-                  : 'unknown',
-              source_url: r.evidence_url || undefined,
-            }]
-          : [],
+        priors: buildPriors(r),
         evidence_strength: 'strong',
         independence_score: 1,
         notes: `[ft-verify-${runDate} ${r.direction ?? 'demote'}-check bucket=${r.bucket ?? 'unbucketed'}] ${r.reasoning ?? ''}`,
