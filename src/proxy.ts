@@ -176,10 +176,17 @@ function logBotAccess(request: NextRequest, action: string) {
     const path = request.nextUrl.pathname;
     if (path.startsWith('/api/analytics') || path.startsWith('/api/cron')) return;
 
+    // Forward the edge-provided country so the unknown-bot sampler can cluster
+    // opaque bots by origin (a coarse residential-vs-datacenter proxy until we
+    // have real ASN enrichment).
+    const country = request.headers.get('cf-ipcountry')
+      || request.headers.get('x-vercel-ip-country')
+      || '';
+
     fetch(`${origin}/api/analytics/bots`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userAgent: ua, path, action, ip }),
+      body: JSON.stringify({ userAgent: ua, path, action, ip, country }),
     }).catch(() => {}); // swallow errors
   } catch {
     // never throw from logging
