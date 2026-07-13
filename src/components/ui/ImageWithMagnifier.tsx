@@ -97,8 +97,13 @@ export default function ImageWithMagnifier({
   const fullDimRef = useRef(fullImageDimensions);
   const imgDimRef = useRef(imageDimensions);
   const dragRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+  // Last viewport cursor point (for repositioning the lens on scroll) and a
+  // mirror of showMagnifier the scroll listener can read without re-binding.
+  const lastMouseRef = useRef<{ x: number; y: number } | null>(null);
+  const showMagnifierRef = useRef(false);
   useEffect(() => { fullDimRef.current = fullImageDimensions; }, [fullImageDimensions]);
   useEffect(() => { imgDimRef.current = imageDimensions; }, [imageDimensions]);
+  useEffect(() => { showMagnifierRef.current = showMagnifier; }, [showMagnifier]);
   // Write ref + state together so the listeners never read a stale transform.
   const commitPanZoom = useCallback((v: { scale: number; x: number; y: number }) => {
     panZoomRef.current = v;
@@ -389,17 +394,20 @@ export default function ImageWithMagnifier({
     });
   };
 
-  // Desktop: mouse move for magnifier
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Skip magnifier on touch devices, in inline zoom mode, or when the reader
-    // switched the lens off (also skips the full-res prefetch — it only serves the lens)
+  // Position the lens for a given viewport cursor point. Reads all geometry
+  // fresh from the DOM, so it's correct whether it fires from a mousemove or
+  // from a scroll (the reader panel scrolls the tall facsimile under a
+  // stationary cursor — see the scroll listener below).
+  const positionLensAt = useCallback((clientX: number, clientY: number) => {
+    // Skip on touch devices, in inline zoom mode, or when the lens is off
+    // (also skips the full-res prefetch — it only serves the lens)
     if (isTouchDevice || zoomMode || !lensEnabled) return;
 
     // Get out of the controls' way — the lens is centred on the cursor, so it
     // would otherwise cover the very button the reader is reaching for. Covers
     // our own toggle plus any sibling control that opts in (the deep-zoom
     // button, which lives outside this component but over the same image).
-    if (isOverLensAvoidControl(e.clientX, e.clientY)) {
+    if (isOverLensAvoidControl(clientX, clientY)) {
       setShowMagnifier(false);
       return;
     }
@@ -424,9 +432,12 @@ export default function ImageWithMagnifier({
     const imgOffsetX = imgRect.left - containerRect.left + (imgRect.width - dims.width) / 2;
     const imgOffsetY = imgRect.top - containerRect.top + (imgRect.height - dims.height) / 2;
 
-    // Get cursor position relative to container
-    const containerX = e.clientX - containerRect.left;
-    const containerY = e.clientY - containerRect.top;
+    // Cursor position relative to the lens's positioning parent (the container).
+    // Because the lens is absolutely positioned inside the container, this must
+    // be re-derived from the LIVE container rect every time — the container
+    // scrolls with the page, so a cached value would drift the lens off-cursor.
+    const containerX = clientX - containerRect.left;
+    const containerY = clientY - containerRect.top;
 
     // Get cursor position relative to the actual rendered image content
     const imgX = containerX - imgOffsetX;
@@ -446,7 +457,30 @@ export default function ImageWithMagnifier({
     } else {
       setShowMagnifier(false);
     }
+  }, [isTouchDevice, zoomMode, lensEnabled, hasHovered, fullImageLoaded, getRenderedImageSize, imageDimensions]);
+
+  // Desktop: mouse move drives the lens, and remember the last cursor point so
+  // the scroll listener can keep the lens glued to it while the page scrolls.
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    lastMouseRef.current = { x: e.clientX, y: e.clientY };
+    positionLensAt(e.clientX, e.clientY);
   };
+
+  // Keep the lens glued to the cursor while the reader scrolls the facsimile.
+  // A trackpad/wheel scroll fires no mousemove, so without this the image (and
+  // the lens absolutely positioned inside it) slides out from under a
+  // stationary cursor — the "magnifier not aligned" report (2026-07-13). Only
+  // reposition while the lens is already up; capture:true catches the panel's
+  // own scroll (scroll events don't bubble).
+  useEffect(() => {
+    const onScroll = () => {
+      if (!showMagnifierRef.current) return;
+      const m = lastMouseRef.current;
+      if (m) positionLensAt(m.x, m.y);
+    };
+    window.addEventListener('scroll', onScroll, true);
+    return () => window.removeEventListener('scroll', onScroll, true);
+  }, [positionLensAt]);
 
   // Tap/click to open fullscreen.
   // On touch devices, skip the in-app viewer (capped at 5x) and open the
