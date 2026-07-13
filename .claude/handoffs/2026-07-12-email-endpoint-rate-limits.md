@@ -68,9 +68,47 @@ No new invariant needed. The crawler three-layer gate is already documented; the
 proxy-limiter-vs-curl issue is a per-machine testing footgun (captured in auto-memory),
 not a codebase invariant. The IP-header divergence is tracked in #3124.
 
+## Follow-on session (2026-07-13): bot/abuse visibility — PR #3138 (open, CI green)
+Prompted by "what's our current bot protection?" → "improve this situation." Walked the
+three-layer crawler gate live (CCBot 403s at Cloudflare edge before our code; GPTBot
+reaches the app on allow-listed API paths). Key correction to the 07-12 framing: the
+proxy layer **was already** recording blocks durably to `analytics_bot_access` (182k+
+docs). The real gaps were (a) nothing surfaced it and (b) `src/lib/rate-limit.ts`
+denials evaporated.
+
+PR #3138 (branch `feat/bot-abuse-visibility`, cherry-picked clean onto origin/main —
+NOT stacked on the merged #3123 branch):
+- `src/lib/abuse-log.ts` — `recordRateLimitDenial(name, ip)`, durable fire-and-forget
+  write into `analytics_bot_access` (synthetic bot `ratelimit`, `path_prefix`
+  `limiter:<name>`, action `rate-limited`, IP via `anonymizeIp`). Never throws/blocks.
+- `rate-limit.ts` — calls it from both denial paths. Logging is OUTSIDE the Mongo
+  `run()` closure and AFTER the timeout race → one event per denial. (First cut
+  double-counted on the slow-Mongo fallback: 6-for-3. Fixed; re-verified 4-for-4.)
+- `/admin/bots` page + AdminNav entry — renders the existing but UI-less
+  `GET /api/analytics/bots`.
+- Verified on dev (Resend blanked): 4 denials → 4 hits, correct IP/action; endpoint
+  401 unauth, page 307 unauth, no errors; test docs cleaned from prod collection.
+- Enforcement untouched (pure observability). #3124 updated with done-vs-open.
+
+Traffic snapshot taken this session: PostHog (project 148667, eu.posthog.com, HogQL via
+`POSTHOG_PERSONAL_API_KEY`) shows steady growth to ~17-18k pageviews/day, ~15-16k
+users/day — but users≈pageviews ≈1:1, i.e. mostly single-hit/anonymous (bot-ish). The
+internal `analytics_pageviews` counter disagrees (peaked ~Jul 1, ~12k/day) because it's
+JS-only with no bot filtering. **Side finding:** `POSTHOG_PERSONAL_API_KEY` is NOT in
+the current `.env.production.local` (only in `.bak.20260601`), so
+`scripts/maintenance/monitor-auth-verification.mjs` is probably failing — restore it if
+that auth monitor matters.
+
+## CLAUDE.md invariant check
+No new invariant needed. The crawler three-layer gate is already documented; the
+proxy-limiter-vs-curl issue is a per-machine testing footgun (captured in auto-memory),
+not a codebase invariant. The IP-header divergence is tracked in #3124.
+
 ## Next
-- Merge #3123 after review, then `npm run deploy:prod` from main (frontend routes).
-- Optionally: enable the **already-wired** Turnstile (just needs
-  `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` set) and extend the widget
-  to these two forms. Altcha is a later optional swap, not needed now.
-- Pick up #3124 when there's appetite for the observability build.
+- #3123 merged + deployed to prod (2026-07-12). Turnstile still dormant — enable by
+  setting `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` and extending the
+  widget to donate/subscribe. Altcha remains a later optional swap.
+- Merge #3138 (bot visibility), then `npm run deploy:prod` from main (it adds an admin
+  page + a `src/lib` module, so it needs a Vercel deploy).
+- Pick up the rest of #3124: alerting via `health-check`, decouple alarm from Resend,
+  fold `api_usage.blocked` into `/admin/bots`, `security_events` for auth/admin events.
