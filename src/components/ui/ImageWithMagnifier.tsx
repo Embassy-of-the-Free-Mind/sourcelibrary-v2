@@ -12,8 +12,11 @@ import {
 } from '@/hooks/useFloatingOverlayTop';
 
 // Readers can switch the hover lens off entirely (some prefer no lens at all).
-// Remembered across pages and sessions.
-const LENS_PREF_KEY = 'sl-magnifier-lens';
+// Remembered across pages and sessions. The key is versioned: the lens is on
+// by default, and bumping the suffix forgets stale "off" preferences so the
+// default takes effect again — done when the lens stopped capturing scroll
+// (#3137), which removed the main reason anyone had turned it off.
+const LENS_PREF_KEY = 'sl-magnifier-lens-v2';
 
 interface ImageWithMagnifierProps {
   src: string;
@@ -302,6 +305,15 @@ export default function ImageWithMagnifier({
     setFullImageDimensions({ width: 0, height: 0 });
     setUseFallback(false);
     setHiResDisplayReady(false);
+
+    // Page navigation drops out of inline zoom back to the reading view of the
+    // NEW page. Without this the next page opens stuck at the previous page's
+    // zoom/pan (the reading <img> is unmounted in zoom mode, so it never shows
+    // the new scan) — "next page doesn't reset / move to the next image".
+    zoomModeRef.current = false;
+    panZoomRef.current = { scale: 1, x: 0, y: 0 };
+    setZoomMode(false);
+    setPanZoom({ scale: 1, x: 0, y: 0 });
 
     // Check if image is already cached/loaded (fixes race condition on initial render)
     // Use a small timeout to let the img element mount first
