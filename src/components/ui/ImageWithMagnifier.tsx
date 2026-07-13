@@ -11,8 +11,8 @@ import {
   OVERLAY_CONTROL_Z,
 } from '@/hooks/useFloatingOverlayTop';
 
-// Readers can switch the hover lens off (it captures scroll-to-zoom, which makes
-// scrolling past a tall facsimile awkward). Remembered across pages and sessions.
+// Readers can switch the hover lens off entirely (some prefer no lens at all).
+// Remembered across pages and sessions.
 const LENS_PREF_KEY = 'sl-magnifier-lens';
 
 interface ImageWithMagnifierProps {
@@ -31,9 +31,13 @@ interface ImageWithMagnifierProps {
 }
 
 // Magnifier component for zooming into the source image.
-// Desktop: hover to show a wide reading lens — scroll up/down over the image
-// adjusts magnification; click opens the in-app fullscreen viewer. A corner
-// toggle switches the lens off (persisted), restoring normal page scrolling.
+// Desktop: hover to show a wide reading lens at a fixed magnification; click
+// opens the in-app fullscreen viewer. The lens NEVER captures scroll — a
+// two-finger/wheel scroll over the image always scrolls the page, so readers
+// can browse a passage down a tall facsimile without the lens hijacking it
+// (user feedback, 2026-07-13). A corner toggle hides the lens (persisted) for
+// those who prefer none. For deeper zoom, click through to the fullscreen
+// viewer or the deep-zoom button.
 // Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
 // native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
 // enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
@@ -63,21 +67,16 @@ export default function ImageWithMagnifier({
   const [showFullscreen, setShowFullscreen] = useState(false);
   // Track last known image height to prevent layout shift during page transitions
   const [lastImageHeight, setLastImageHeight] = useState<number>(0);
-  // User-adjusted magnification (scroll over the image while the lens is up).
-  // Stored unclamped; render clamps to [MIN_ZOOM, native pixel ratio].
-  const [userZoom, setUserZoom] = useState(zoomLevel);
   // Lens on/off toggle. Defaults on; hydrated from localStorage after mount
   // (SSR-safe) so the choice sticks across pages and sessions.
   const [lensEnabled, setLensEnabled] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const showMagnifierRef = useRef(false);
-  showMagnifierRef.current = showMagnifier;
 
   // The toggle floats: over a tall facsimile it tracks the top of the visible
-  // slice rather than scrolling out of reach — which is exactly when a reader
-  // wants it, since the lens captures the wheel for zoom.
+  // slice rather than scrolling out of reach, so it stays reachable as the
+  // reader scrolls the page past the image.
   const toggleTop = useFloatingOverlayTop(toggleRef, !isTouchDevice && isLoaded);
 
   useEffect(() => {
@@ -103,39 +102,6 @@ export default function ImageWithMagnifier({
   const lensH = Math.round(magnifierSize * 0.85);
 
   const MIN_ZOOM = 1.5;
-  // Absolute sanity bound only — the real ceiling is the scan's native pixel
-  // ratio (below), so a high-res master zooms deeper than a low-res one.
-  const MAX_ZOOM = 32;
-
-  // Native pixel ratio of the full image vs its displayed size — the deepest
-  // zoom that still shows real detail. Kept in a ref so the wheel handler
-  // (bound once) can clamp to it; render clamps effectiveZoom with the same
-  // numbers. 0 until the full image has loaded.
-  const nativeZoomRef = useRef(0);
-  useEffect(() => {
-    nativeZoomRef.current =
-      fullImageDimensions.width && imageDimensions.width
-        ? Math.max(fullImageDimensions.width / imageDimensions.width, MIN_ZOOM)
-        : 0;
-  }, [fullImageDimensions, imageDimensions, MIN_ZOOM]);
-
-  // Scroll-to-zoom needs a native non-passive wheel listener (React attaches
-  // wheel handlers passively, so preventDefault would be ignored). Only
-  // intercepts while the lens is visible — otherwise the page scrolls normally.
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      if (!showMagnifierRef.current) return;
-      e.preventDefault();
-      // Clamp the stored zoom to the native ceiling too — otherwise scrolling
-      // "past" the ceiling banks invisible zoom the user must scroll back out of.
-      const cap = nativeZoomRef.current > 0 ? Math.min(nativeZoomRef.current, MAX_ZOOM) : MAX_ZOOM;
-      setUserZoom((z) => Math.min(cap, Math.max(MIN_ZOOM, z * Math.exp(-e.deltaY * 0.002))));
-    };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, []);
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
@@ -414,9 +380,9 @@ export default function ImageWithMagnifier({
         />
 
         {/* Desktop: lens on/off toggle — top-left (deep-zoom button owns top-right).
-            While the lens is up it captures scroll for zoom, so readers who want
-            to wheel past a tall facsimile can switch it off. Floats with the
-            scroll position, and sits above the lens so it's never painted over. */}
+            The lens is a reading aid at fixed magnification; readers who prefer
+            no lens can switch it off. Floats with the scroll position, and sits
+            above the lens so it's never painted over. */}
         {!isTouchDevice && isLoaded && (
           <button
             ref={toggleRef}
@@ -426,7 +392,7 @@ export default function ImageWithMagnifier({
               e.stopPropagation();
               toggleLens();
             }}
-            title={lensEnabled ? 'Magnifier on — click to turn off (restores normal scrolling)' : 'Turn on magnifier'}
+            title={lensEnabled ? 'Magnifier on — click to turn off' : 'Turn on magnifier'}
             aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
             aria-pressed={lensEnabled}
             style={{ top: toggleTop, zIndex: OVERLAY_CONTROL_Z }}
@@ -443,13 +409,14 @@ export default function ImageWithMagnifier({
           </button>
         )}
 
-        {/* Desktop: wide reading lens - uses full resolution image, scroll adjusts zoom */}
+        {/* Desktop: wide reading lens at fixed magnification — full-res image */}
         {!isTouchDevice && lensEnabled && showMagnifier && fullImageLoaded && (() => {
-          // Never magnify past the full image's native pixels (it only blurs) —
-          // the native ratio is the ceiling, the user's scroll-zoom picks within it.
+          // Fixed magnification (no scroll-to-zoom — scroll always scrolls the
+          // page). Never magnify past the full image's native pixels (it only
+          // blurs), so a low-res scan clamps below the requested zoomLevel.
           const nativeW = fullImageDimensions.width || imageDimensions.width;
           const nativeZoom = Math.max(nativeW / (imageDimensions.width || 1), MIN_ZOOM);
-          const effectiveZoom = Math.min(Math.max(userZoom, MIN_ZOOM), nativeZoom);
+          const effectiveZoom = Math.min(Math.max(zoomLevel, MIN_ZOOM), nativeZoom);
           const bgW = imageDimensions.width * effectiveZoom;
           const bgH = imageDimensions.height * effectiveZoom;
           return (
