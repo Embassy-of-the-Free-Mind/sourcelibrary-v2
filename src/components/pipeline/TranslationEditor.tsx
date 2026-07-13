@@ -1490,7 +1490,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
-                        <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
+                        <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable inlineZoomable />
                       ) : hasWitnessPhotos && currentWitness ? (
                         <ImageWithMagnifier
                           src={currentWitness.photo_url!}
@@ -2343,7 +2343,7 @@ export default function TranslationEditor({
                   <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                 )}
                 {pageDisplayUrl ? (
-                  <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
+                  <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable inlineZoomable />
                 ) : hasWitnessPhotos && currentWitness ? (
                   <ImageWithMagnifier
                     src={currentWitness.photo_url!}
