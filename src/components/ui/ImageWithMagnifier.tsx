@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { ZoomIn } from 'lucide-react';
+import { ZoomIn, Move, Plus, Minus, RotateCcw, X } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 import {
   useFloatingOverlayTop,
@@ -23,6 +23,7 @@ interface ImageWithMagnifierProps {
   magnifierSize?: number;
   zoomLevel?: number;
   scrollable?: boolean;
+  inlineZoomable?: boolean; // Desktop: offer an in-place pan/zoom mode (no modal) — see below
   highResSrc?: string; // For magnifier/zoom, use higher resolution version
   fallbackSrc?: string; // Fallback if src fails to load (e.g. on-the-fly crop URL)
   darkMode?: boolean; // Dark skeleton/background for lightbox contexts
@@ -41,6 +42,12 @@ interface ImageWithMagnifierProps {
 // Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
 // native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
 // enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
+//
+// Inline zoom mode (desktop, opt-in via `inlineZoomable`): a corner toggle turns
+// the pane into an in-place pan/zoom surface — no modal (user request,
+// 2026-07-13). At 1× the scan fits the pane width; drag pans (so you can browse
+// a passage down the page) and the wheel zooms toward the cursor (zoom out to
+// orient, move, zoom in on the spot). Esc or the ✕ exits back to reading mode.
 export default function ImageWithMagnifier({
   src,
   thumbnail,
@@ -49,6 +56,7 @@ export default function ImageWithMagnifier({
   magnifierSize = 200,
   zoomLevel = 2.5,
   scrollable = false,
+  inlineZoomable = false,
   highResSrc,
   fallbackSrc,
   darkMode = false,
@@ -70,9 +78,32 @@ export default function ImageWithMagnifier({
   // Lens on/off toggle. Defaults on; hydrated from localStorage after mount
   // (SSR-safe) so the choice sticks across pages and sessions.
   const [lensEnabled, setLensEnabled] = useState(true);
+  // Inline pan/zoom mode (desktop, opt-in). scale=1 fits the pane width; x/y are
+  // the CSS translate in px (transformOrigin is the pane's top-left).
+  const [zoomMode, setZoomMode] = useState(false);
+  const [panZoom, setPanZoom] = useState({ scale: 1, x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  // Load the full-res image only once it's needed (first lens hover or zoom).
+  const [hasHovered, setHasHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  // Refs feed the once-bound native wheel / window drag listeners fresh values
+  // without re-binding. panZoomRef is authoritative (written synchronously via
+  // commitPanZoom); zoomModeRef is set in enter/exit; the dim refs sync in
+  // effects. None are written during render (react-hooks/refs).
+  const zoomModeRef = useRef(false);
+  const panZoomRef = useRef(panZoom);
+  const fullDimRef = useRef(fullImageDimensions);
+  const imgDimRef = useRef(imageDimensions);
+  const dragRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+  useEffect(() => { fullDimRef.current = fullImageDimensions; }, [fullImageDimensions]);
+  useEffect(() => { imgDimRef.current = imageDimensions; }, [imageDimensions]);
+  // Write ref + state together so the listeners never read a stale transform.
+  const commitPanZoom = useCallback((v: { scale: number; x: number; y: number }) => {
+    panZoomRef.current = v;
+    setPanZoom(v);
+  }, []);
 
   // The toggle floats: over a tall facsimile it tracks the top of the visible
   // slice rather than scrolling out of reach, so it stays reachable as the
@@ -102,6 +133,114 @@ export default function ImageWithMagnifier({
   const lensH = Math.round(magnifierSize * 0.85);
 
   const MIN_ZOOM = 1.5;
+
+  // ── Inline pan/zoom mode (desktop) ─────────────────────────────────────────
+  // The scan's aspect ratio, from the loaded full image (falls back to the
+  // rendered reading image). Read from refs so the once-bound listeners below
+  // never see a stale value.
+  const zoomAspect = useCallback(() => {
+    const f = fullDimRef.current, r = imgDimRef.current;
+    if (f.width && f.height) return f.width / f.height;
+    if (r.width && r.height) return r.width / r.height;
+    return 0.7; // portrait book page fallback
+  }, []);
+
+  // Deepest useful zoom: the scan's native pixels vs the pane width. Clamped so
+  // even a huge master doesn't let you zoom into mush, and a small one still zooms.
+  const getMaxScale = useCallback(() => {
+    const vpW = containerRef.current?.clientWidth || imgDimRef.current.width || 1;
+    const native = fullDimRef.current.width || 0;
+    return Math.min(Math.max(native ? native / vpW : 4, 2), 8);
+  }, []);
+
+  // Keep the image covering the pane: no dragging it off into empty space.
+  // Centres an axis when the content is smaller than the pane on that axis.
+  const clampPan = useCallback((x: number, y: number, s: number) => {
+    const el = containerRef.current;
+    if (!el) return { x, y };
+    const vpW = el.clientWidth, vpH = el.clientHeight;
+    const baseH = vpW / zoomAspect();
+    const contentW = vpW * s, contentH = baseH * s;
+    const cx = contentW <= vpW ? (vpW - contentW) / 2 : Math.min(0, Math.max(vpW - contentW, x));
+    const cy = contentH <= vpH ? (vpH - contentH) / 2 : Math.min(0, Math.max(vpH - contentH, y));
+    return { x: cx, y: cy };
+  }, [zoomAspect]);
+
+  // Zoom to a new scale while keeping the point at (cx, cy) — pane coords — fixed.
+  const zoomAround = useCallback((cx: number, cy: number, nextScale: number) => {
+    const { scale, x, y } = panZoomRef.current;
+    const s = Math.min(Math.max(nextScale, 1), getMaxScale());
+    const nx = cx - (cx - x) * (s / scale);
+    const ny = cy - (cy - y) * (s / scale);
+    const c = clampPan(nx, ny, s);
+    commitPanZoom({ scale: s, x: c.x, y: c.y });
+  }, [getMaxScale, clampPan, commitPanZoom]);
+
+  const enterZoom = useCallback(() => {
+    setHasHovered(true); // pull the full-res image (idempotent)
+    setShowMagnifier(false);
+    commitPanZoom({ scale: 1, x: 0, y: 0 });
+    zoomModeRef.current = true;
+    setZoomMode(true);
+  }, [commitPanZoom]);
+
+  const exitZoom = useCallback(() => {
+    zoomModeRef.current = false;
+    setZoomMode(false);
+    commitPanZoom({ scale: 1, x: 0, y: 0 });
+  }, [commitPanZoom]);
+
+  // Wheel zooms toward the cursor (non-passive so we can preventDefault). Only
+  // acts in zoom mode — reading mode leaves the wheel to scroll the page.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!zoomModeRef.current) return;
+      e.preventDefault();
+      const rect = el.getBoundingClientRect();
+      const { scale } = panZoomRef.current;
+      zoomAround(e.clientX - rect.left, e.clientY - rect.top, scale * Math.exp(-e.deltaY * 0.002));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [zoomAround]);
+
+  // Drag to pan, plus Esc to exit — bound only while zoom mode is active.
+  useEffect(() => {
+    if (!zoomMode) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const onDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      // Let the toolbar buttons work without starting a drag.
+      if ((e.target as HTMLElement)?.closest('[data-zoom-control]')) return;
+      e.preventDefault();
+      dragRef.current = { active: true, startX: e.clientX, startY: e.clientY, baseX: panZoomRef.current.x, baseY: panZoomRef.current.y };
+      setDragging(true);
+    };
+    const onMove = (e: MouseEvent) => {
+      if (!dragRef.current.active) return;
+      const c = clampPan(
+        dragRef.current.baseX + (e.clientX - dragRef.current.startX),
+        dragRef.current.baseY + (e.clientY - dragRef.current.startY),
+        panZoomRef.current.scale,
+      );
+      commitPanZoom({ scale: panZoomRef.current.scale, x: c.x, y: c.y });
+    };
+    const onUp = () => { dragRef.current.active = false; setDragging(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') exitZoom(); };
+    el.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      el.removeEventListener('mousedown', onDown);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [zoomMode, clampPan, exitZoom, commitPanZoom]);
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
@@ -222,9 +361,7 @@ export default function ImageWithMagnifier({
     };
   }, [isLoaded, getRenderedImageSize]);
 
-  // Load full image only on first hover (lazy load for magnifier)
-  const [hasHovered, setHasHovered] = useState(false);
-
+  // Load full image only on first hover / zoom (lazy load for magnifier)
   useEffect(() => {
     if (!hasHovered) return;
     const img = new window.Image();
@@ -254,9 +391,9 @@ export default function ImageWithMagnifier({
 
   // Desktop: mouse move for magnifier
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Skip magnifier on touch devices or when the reader switched the lens off
-    // (also skips the full-res prefetch — it only serves the lens)
-    if (isTouchDevice || !lensEnabled) return;
+    // Skip magnifier on touch devices, in inline zoom mode, or when the reader
+    // switched the lens off (also skips the full-res prefetch — it only serves the lens)
+    if (isTouchDevice || zoomMode || !lensEnabled) return;
 
     // Get out of the controls' way — the lens is centred on the cursor, so it
     // would otherwise cover the very button the reader is reaching for. Covers
@@ -316,7 +453,7 @@ export default function ImageWithMagnifier({
   // highest-resolution image in a new tab so the browser's native pinch-zoom
   // can take over. Desktop keeps the in-app viewer where the magnifier lives.
   const handleClick = () => {
-    if (!isLoaded) return;
+    if (!isLoaded || zoomMode) return; // in zoom mode, clicks drive drag/pan
     if (isTouchDevice) {
       window.open(highResSrc || src, '_blank', 'noopener,noreferrer');
       return;
@@ -328,7 +465,8 @@ export default function ImageWithMagnifier({
     <>
       <div
         ref={containerRef}
-        className={`relative ${className}`}
+        className={`relative ${className} ${zoomMode ? `overflow-hidden select-none ${dragging ? 'cursor-grabbing' : 'cursor-grab'}` : ''}`}
+        style={zoomMode ? { height: 'min(78vh, 900px)', background: darkMode ? '#000' : 'var(--bg-white, #fff)' } : undefined}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setShowMagnifier(false)}
         onClick={handleClick}
@@ -336,7 +474,7 @@ export default function ImageWithMagnifier({
         {/* Loading skeleton — use last known height in scrollable mode to prevent layout shift.
             Default to 140vw for portrait book pages (~1.4:1 aspect ratio) to avoid a big
             jump when the real image loads. Capped at 900px for large screens. */}
-        {!isLoaded && (
+        {!zoomMode && !isLoaded && (
           <div
             className={`flex items-center justify-center ${darkMode ? 'bg-black' : 'bg-stone-100 animate-pulse'} ${scrollable ? 'w-full' : 'absolute inset-0'}`}
             style={scrollable && lastImageHeight > 0 ? { height: lastImageHeight } : scrollable ? { height: 'min(140vw, 900px)' } : undefined}
@@ -346,6 +484,7 @@ export default function ImageWithMagnifier({
         )}
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
+        {!zoomMode && (
         <img
           ref={imgRef}
           src={displaySrc}
@@ -378,12 +517,87 @@ export default function ImageWithMagnifier({
             }
           }}
         />
+        )}
+
+        {/* Inline zoom mode: the pane becomes a pan/zoom surface. High-res image,
+            transformed about the top-left; drag pans, wheel zooms to the cursor. */}
+        {zoomMode && (() => {
+          const zoomTransform = `translate(${panZoom.x}px, ${panZoom.y}px) scale(${panZoom.scale})`;
+          return (
+          <>
+            {/* Low-res backdrop under the full-res image — same transform, so
+                there's detail on screen instantly while the master decodes. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={displaySrc}
+              alt=""
+              aria-hidden
+              draggable={false}
+              className="absolute top-0 left-0 pointer-events-none select-none max-w-none"
+              style={{ width: '100%', height: 'auto', transform: zoomTransform, transformOrigin: '0 0' }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={magnifierSrc}
+              alt={alt}
+              draggable={false}
+              className="absolute top-0 left-0 pointer-events-none select-none max-w-none"
+              style={{
+                width: '100%',
+                height: 'auto',
+                transform: zoomTransform,
+                transformOrigin: '0 0',
+                willChange: 'transform',
+              }}
+            />
+            {/* Toolbar: zoom out / % / zoom in / reset / exit */}
+            <div
+              data-zoom-control
+              className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-0.5 rounded-lg bg-black/65 px-1.5 py-1 text-white backdrop-blur-sm"
+              style={{ zIndex: OVERLAY_CONTROL_Z }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button type="button" onClick={() => { const el = containerRef.current; if (el) zoomAround(el.clientWidth / 2, el.clientHeight / 2, panZoom.scale / 1.4); }} title="Zoom out" aria-label="Zoom out" className="flex h-7 w-7 items-center justify-center rounded hover:bg-white/20">
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="min-w-[3rem] text-center text-xs font-medium" style={{ fontVariantNumeric: 'tabular-nums' }}>{Math.round(panZoom.scale * 100)}%</span>
+              <button type="button" onClick={() => { const el = containerRef.current; if (el) zoomAround(el.clientWidth / 2, el.clientHeight / 2, panZoom.scale * 1.4); }} title="Zoom in" aria-label="Zoom in" className="flex h-7 w-7 items-center justify-center rounded hover:bg-white/20">
+                <Plus className="h-4 w-4" />
+              </button>
+              <button type="button" onClick={() => commitPanZoom({ scale: 1, x: 0, y: 0 })} title="Reset" aria-label="Reset zoom" className="ml-0.5 flex h-7 w-7 items-center justify-center rounded hover:bg-white/20">
+                <RotateCcw className="h-4 w-4" />
+              </button>
+              <span className="mx-0.5 h-4 w-px bg-white/25" />
+              <button type="button" onClick={exitZoom} title="Exit zoom (Esc)" aria-label="Exit zoom" className="flex h-7 w-7 items-center justify-center rounded hover:bg-white/20">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </>
+          );
+        })()}
+
+        {/* Desktop: inline pan/zoom toggle — sits beside the lens toggle. Opens
+            the in-place zoom surface (no modal); hidden while zoom mode is on
+            (the toolbar's ✕ exits). */}
+        {inlineZoomable && !isTouchDevice && isLoaded && !zoomMode && (
+          <button
+            type="button"
+            {...{ [LENS_AVOID_ATTR]: '' }}
+            onClick={(e) => { e.stopPropagation(); enterZoom(); }}
+            title="Zoom & pan this page (in place)"
+            aria-label="Zoom and pan this page"
+            style={{ top: toggleTop, zIndex: OVERLAY_CONTROL_Z }}
+            className="absolute left-11 flex h-8 w-8 items-center justify-center rounded-lg bg-black/55 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+          >
+            <Move className="h-4 w-4" />
+          </button>
+        )}
 
         {/* Desktop: lens on/off toggle — top-left (deep-zoom button owns top-right).
             The lens is a reading aid at fixed magnification; readers who prefer
             no lens can switch it off. Floats with the scroll position, and sits
             above the lens so it's never painted over. */}
-        {!isTouchDevice && isLoaded && (
+        {!isTouchDevice && isLoaded && !zoomMode && (
           <button
             ref={toggleRef}
             type="button"
