@@ -12,6 +12,14 @@ interface ByBot {
   last_seen: string;
 }
 interface Counted { _id: string; hits: number; bots?: string[] }
+interface UnknownAgent {
+  ua: string;
+  hits: number;
+  buckets: string[];
+  countries: string[];
+  paths: string[];
+  last_seen: string;
+}
 interface BotStats {
   period: { since: string; days: number };
   total_hits: number;
@@ -20,6 +28,7 @@ interface BotStats {
   by_day: Counted[];
   by_path: Counted[];
   by_action: Counted[];
+  unknown_agents?: UnknownAgent[];
 }
 
 const ACTION_LABEL: Record<string, string> = {
@@ -114,6 +123,28 @@ export default function AdminBotsPage() {
               </div>
             ))}
           </Section>
+
+          {/* Unknown user-agents — what the opaque buckets actually are */}
+          {data.unknown_agents && data.unknown_agents.length > 0 && (
+            <Section title="Unknown / unnamed bot user-agents">
+              <p style={{ color: '#6e7681', fontSize: 12, margin: '0 0 12px' }}>
+                Raw UA strings behind the <code>unknown-bot</code> / <code>other-bot</code> / <code>script</code> buckets. A flood of single-hit UAs = a UA-randomizing scraper.
+              </p>
+              {data.unknown_agents.map((u, i) => (
+                <div key={i} style={{ padding: '7px 0', borderBottom: '1px solid #161b22' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                    <code style={{ fontSize: 12, color: '#c9d1d9', wordBreak: 'break-all' }}>{u.ua || '(empty UA)'}</code>
+                    <span style={{ color: '#8b949e', fontSize: 12, whiteSpace: 'nowrap' }}>{fmt(u.hits)} hits</span>
+                  </div>
+                  <div style={{ color: '#6e7681', fontSize: 11, marginTop: 2 }}>
+                    {u.buckets.join(', ')}
+                    {u.countries.length > 0 && ` · ${u.countries.slice(0, 8).join(' ')}`}
+                    {u.paths.length > 0 && ` · ${u.paths.slice(0, 4).join(' ')}`}
+                  </div>
+                </div>
+              ))}
+            </Section>
+          )}
 
           {/* By path */}
           <Section title="Top targets">
