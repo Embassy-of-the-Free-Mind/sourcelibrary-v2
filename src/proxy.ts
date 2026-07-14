@@ -111,7 +111,16 @@ We respond within 24 hours. Let's build something remarkable.
  * Real browsers send Accept-Language and Sec-Fetch-Mode headers.
  * Missing both is a strong signal of automated traffic.
  */
-function looksLikeBot(request: NextRequest): boolean {
+// Read-only content APIs the reader fans out to as a human turns pages
+// (BookPagesSection's "load more", per-page trace alignment, etc.). These are
+// already protected at the app layer — the anti-bulk budget (api-budget.ts) and
+// the bot page-gate (bot-gate.ts, 20% cap) — so the crude header heuristic below
+// only ever produced false positives here.
+function isContentReadPath(pathname: string): boolean {
+  return pathname.startsWith('/api/books/') || pathname.startsWith('/api/pages/');
+}
+
+export function looksLikeBot(request: NextRequest): boolean {
   const ua = request.headers.get('user-agent') || '';
 
   // No UA at all — definitely not a browser
@@ -123,7 +132,16 @@ function looksLikeBot(request: NextRequest): boolean {
   // Explicit bot/crawler/spider UA strings
   if (/bot|crawl|spider|scrape|fetch|http|wget|curl|python|java\/|php\//i.test(ua)) return true;
 
-  // Missing both Accept-Language and Sec-Fetch-Mode — no browser omits both
+  // Missing both Accept-Language and Sec-Fetch-Mode — a decent bot signal, but
+  // privacy browsers, in-app webviews, and some corporate proxies strip these
+  // from real people too. On read-only content GETs that heuristic clamped real
+  // readers to ~2 pages (the reader's per-page /api fan-out trips the 10-req/60s
+  // soft limiter below), so skip it there — those paths are already app-layer
+  // protected. Keep it for writes and every other endpoint.
+  const isContentRead =
+    request.method === 'GET' && isContentReadPath(request.nextUrl.pathname);
+  if (isContentRead) return false;
+
   const hasAcceptLang = !!request.headers.get('accept-language');
   const hasSecFetch = !!request.headers.get('sec-fetch-mode');
   if (!hasAcceptLang && !hasSecFetch) return true;
