@@ -1007,18 +1007,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             {embedPolicy.showIndexCatalogStatus && (
               <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
             )}
-            {/* Translation history + (staff) book-history log — smaller, in-panel,
-                not their own big dropdowns. Dark sub-panel matches their theme. */}
-            <div className="mt-5 rounded-lg p-3 md:p-4 space-y-2" style={{ background: '#211c17' }}>
-              <Suspense fallback={null}>
-                <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
-              </Suspense>
-              <AuthCheck role="inner_circle">
-                <div className="[&_.bg-white]:!bg-transparent [&_.border-stone-200]:!border-white/15 [&_.text-stone-700]:!text-stone-200 [&_.rounded-xl]:!rounded-lg">
-                  <BookHistory bookId={book.id} />
-                </div>
-              </AuthCheck>
-            </div>
+            {/* Translation history — a small dark sub-panel (readable on the light
+                card), shown only when there's translation info to report. */}
+            {(!!book.is_first_translation || translatedCount > 0) && (
+              <div className="mt-5 rounded-lg p-3 md:p-4" style={{ background: '#211c17' }}>
+                <Suspense fallback={null}>
+                  <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+                </Suspense>
+              </div>
+            )}
+            {/* Book history (staff) — its own light, self-contained collapsible. */}
+            <AuthCheck role="inner_circle">
+              <div className="mt-4"><BookHistory bookId={book.id} /></div>
+            </AuthCheck>
           </div>
         </details>
 
