@@ -9,7 +9,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, ChevronDown } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -49,6 +49,7 @@ import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
+import PlusToggle from '@/components/book/PlusToggle';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -926,7 +927,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <details className="group">
               <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
                 <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
-                <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+                <PlusToggle />
               </summary>
               <div className="px-4 pb-4 md:px-6 md:pb-6">
                 <ExpandableGuide bookId={book.id} detailedSummary={readingGuideText} defaultExpanded hideIllustrations />
@@ -942,11 +943,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
         })()}
 
-        {/* Book's own contents */}
+        {/* Book's own contents — only when there's a TOC scan or chapters */}
+        {(!!book.chapters?.length || !!tocPage) && (
         <details id="contents" className="card group scroll-mt-24">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
-            <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+            <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
             {/* Contents — as printed (top of the section) */}
@@ -983,24 +985,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </Link>
                 ))}
               </div>
-            ) : (
-              <p className="text-sm" style={{ color: '#8a8170' }}>No table of contents recorded for this edition.</p>
-            )}
+            ) : null}
           </div>
         </details>
-
-        {book.editions?.length ? (
-          <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
-        ) : null}
+        )}
 
         {/* Bibliographic information */}
         <details className="card group">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
-            <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
+            <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
+            {book.editions?.length ? (
+              <div className="mt-5">
+                <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
+                <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
+              </div>
+            ) : null}
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
             )}

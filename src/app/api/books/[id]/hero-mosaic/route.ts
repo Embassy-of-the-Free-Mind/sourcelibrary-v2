@@ -21,27 +21,27 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 6; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 7; // bump to force-regenerate cached mosaics
 const MAX_TILES = 50;
-const PLATE_MIN = 8; // ≥ this many curated plates ⇒ build a plate mosaic
 
 /**
- * Column count for the composited grid, scaled to the tile count so shorter
- * books still make a full, roughly-landscape mosaic instead of one sparse row.
- * Text-page mosaics clamp to 6–10 columns (fewer/bigger tiles would let page
- * text compete with the hero copy); PLATE mosaics allow 4–8 columns since
- * illustrations read fine larger and carry no interfering text.
+ * Column count for the composited grid, scaled to the tile count so a mosaic is
+ * always as full as it can be — a landscape-ish 10×5 at the top end, shrinking
+ * gracefully all the way down to 2×2 and a single tile for short items.
+ *   50→10  30→8  20→7  12→5  6→4  4→3  2→2  1→1
  */
-function chooseColumns(n: number, usingPlates: boolean): number {
-  const cols = Math.round(Math.sqrt(n * 2.2));
-  return usingPlates ? Math.min(8, Math.max(4, cols)) : Math.min(10, Math.max(6, cols));
+function chooseColumns(n: number): number {
+  if (n <= 1) return 1;
+  if (n <= 3) return 2;
+  return Math.min(10, Math.max(3, Math.round(Math.sqrt(n * 2.2))));
 }
 
 const TILE_W = 168;
 const TILE_H = 224; // 3:4
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const JPEG_QUALITY = 58;
-const MIN_UNIQUE_TILES = 6; // fewer distinct tiles than this ⇒ degenerate mosaic
+const PURE_PLATE_MIN = 6; // ≥ this many plates ⇒ illustration-only mosaic
+const ILLUS_TYPES = new Set(['frontispiece', 'plate', 'illustration']);
 const BG = { r: 20, g: 16, b: 12 }; // matches the hero's #14100c
 
 const PAGE_IMAGE_PROJECTION = {
@@ -87,12 +87,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return noMosaic();
     };
 
-    // Prefer curated plates (illustrations) — they make a nicer, text-free tiled
-    // background. Only when a book has enough of them; otherwise use page scans.
+    // Curated plates (illustrations) make the nicest, text-free tiles — prefer
+    // them. Enough of them → a pure plate mosaic; otherwise plates lead and page
+    // scans fill (illustration-type pages first).
     const plates = await db.collection('gallery_images')
       .find(
         { book_id: book.id, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, dhash: 1 }, maxTimeMS: 6000 },
+        { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 6000 },
       )
       .sort({ gallery_quality: -1 })
       .limit(MAX_TILES)
@@ -104,27 +105,29 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         .filter((u): u is string => !!u && RENDERABLE.test(u)),
     )).slice(0, MAX_TILES);
 
-    const usingPlates = plateUrls.length >= PLATE_MIN;
-
     let urls: string[];
-    if (usingPlates) {
-      urls = plateUrls;
+    if (plateUrls.length >= PURE_PLATE_MIN) {
+      urls = plateUrls; // enough plates for a clean illustration-only mosaic
     } else {
       const pages = await db.collection('pages')
         .find({ book_id: book.id, page_type: { $ne: 'blank' } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
         .sort({ page_number: 1 })
         .limit(120)
         .toArray();
-      // Dedupe resolved thumb URLs — repeated URLs can only make repeated tiles.
-      urls = Array.from(new Set(
-        pages
-          .map(p => getPageImageUrl(p as PageImageFields, 'thumb'))
-          .filter((u): u is string => !!u && RENDERABLE.test(u)),
-      )).slice(0, MAX_TILES);
+      // Illustration-type pages first, then the rest in reading order.
+      const ranked = [...pages].sort((a, b) => {
+        const ai = ILLUS_TYPES.has((a.page_type || '').toLowerCase()) ? 0 : 1;
+        const bi = ILLUS_TYPES.has((b.page_type || '').toLowerCase()) ? 0 : 1;
+        return ai - bi || (a.page_number ?? 0) - (b.page_number ?? 0);
+      });
+      const pageUrls = ranked
+        .map(p => getPageImageUrl(p as PageImageFields, 'thumb'))
+        .filter((u): u is string => !!u && RENDERABLE.test(u));
+      // Plates lead, then pages; dedupe; cap.
+      urls = Array.from(new Set([...plateUrls, ...pageUrls])).slice(0, MAX_TILES);
     }
 
-    // Too few distinct source images to ever make a mosaic — a permanent fact.
-    if (urls.length < MIN_UNIQUE_TILES) return cacheNegative();
+    if (urls.length === 0) return cacheNegative();
 
     // Fetch + resize each tile (one retry each), dropping any that fail.
     const tiles = await Promise.all(urls.map(async (url) => {
@@ -152,19 +155,16 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       distinct.push(buf);
     }
 
-    if (distinct.length < MIN_UNIQUE_TILES) {
-      // We fetched plenty of tiles but they collapsed to near-identical images
-      // (the cover-fallback case) → cache the negative result permanently.
-      // Otherwise most fetches just FAILED (transient) → 404 WITHOUT caching so
-      // the next request retries instead of locking in "no mosaic" forever.
-      if (fetched.length >= MIN_UNIQUE_TILES) return cacheNegative();
-      return noMosaic();
-    }
+    if (distinct.length === 0) return noMosaic(); // all fetches failed → retry later
+    // Many source images that collapse to ≤2 distinct = the cover-fallback bug
+    // (every "thumb" resolved to one shared cover) → cache negative, dark hero.
+    if (urls.length >= 8 && distinct.length <= 2) return cacheNegative();
+    // Otherwise build with whatever distinct tiles we have — down to a single one.
 
     // Adapt the column count to how many tiles we have, so short books still
     // read as a full, balanced grid rather than one sparse row. Aim for a
     // roughly landscape mosaic (cols ≈ 1.4 × rows).
-    const cols = chooseColumns(distinct.length, usingPlates);
+    const cols = chooseColumns(distinct.length);
     const rows = Math.ceil(distinct.length / cols);
     const width = cols * TILE_W + (cols + 1) * GAP;
     const height = rows * TILE_H + (rows + 1) * GAP;
