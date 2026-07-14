@@ -1007,6 +1007,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             {embedPolicy.showIndexCatalogStatus && (
               <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
             )}
+            {/* Translation history + (staff) book-history log — smaller, in-panel,
+                not their own big dropdowns. Dark sub-panel matches their theme. */}
+            <div className="mt-5 rounded-lg p-3 md:p-4 space-y-2" style={{ background: '#211c17' }}>
+              <Suspense fallback={null}>
+                <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+              </Suspense>
+              <AuthCheck role="inner_circle">
+                <div className="[&_.bg-white]:!bg-transparent [&_.border-stone-200]:!border-white/15 [&_.text-stone-700]:!text-stone-200 [&_.rounded-xl]:!rounded-lg">
+                  <BookHistory bookId={book.id} />
+                </div>
+              </AuthCheck>
+            </div>
           </div>
         </details>
 
@@ -1016,19 +1028,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>Search this book</h3>
           <SearchPanel bookId={book.id} inline theme="light" placeholder="Find a word, name, or phrase…" />
         </div>
-
-        {/* Book history (staff only) */}
-        <AuthCheck role="inner_circle">
-          <details className="card group">
-            <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-              <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
-              <ChevronDown className="w-5 h-5 shrink-0 transition-transform group-open:rotate-180" style={{ color: '#948d80' }} />
-            </summary>
-            <div className="px-4 pb-4 md:px-6 md:pb-6">
-              <BookHistory bookId={book.id} />
-            </div>
-          </details>
-        </AuthCheck>
       </>
     );
 
@@ -1127,12 +1126,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 );
               })()}
               {/* OCR / Translated status — coloured, with the tick/percentage to
-                  the left of the label. */}
+                  the left of the label. The First-Translation tag sits left of
+                  Translated (full translation history lives in Bibliographic info). */}
               {ocrPct > 0 && (
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
+                  {!!book.is_first_translation && translatedCount > 0 && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] md:text-[12px]" style={{ background: 'rgba(217,158,74,0.16)', color: '#e0b46a', border: '1px solid rgba(217,158,74,0.35)' }}>First Translation</span>
+                  )}
                   {translatedPct > 0 && (
                     <span title={`${translatedCount} pages translated to English`} style={{ color: '#86c98f' }}>
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
@@ -1140,7 +1143,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   )}
                 </div>
               )}
-              <div className="[&_a]:!text-[#eab59f] mt-3 md:mt-3 text-[12px] md:text-[15px]"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
 
               {/* Actions */}
               <div className="flex flex-wrap items-center gap-2 md:gap-2.5 mt-5 md:mt-6">
