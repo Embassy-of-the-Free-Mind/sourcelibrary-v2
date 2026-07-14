@@ -82,22 +82,11 @@ export default function PagesGrid({
     : undefined;
   return (
     <div>
-      <div className="flex items-start justify-between gap-4 mb-1">
+      <div className="flex items-baseline justify-between gap-4 mb-1">
         <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>Pages</h2>
-        <div className="flex items-center gap-3 md:gap-4 pt-1">
-          <span className="text-sm text-stone-500 whitespace-nowrap">
-            {Math.min(visibleCount, pages.length)} of {displayTotal}
-          </span>
-          {overviewHref && (
-            <a
-              href={embedHref(overviewHref)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium rounded-lg bg-stone-900 text-white hover:bg-stone-800 transition-colors"
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              Overview
-            </a>
-          )}
-        </div>
+        <span className="text-sm text-stone-500 whitespace-nowrap">
+          {Math.min(visibleCount, pages.length)} of {displayTotal}
+        </span>
       </div>
       {subtitle && <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{subtitle}</p>}
 
@@ -224,16 +213,27 @@ export default function PagesGrid({
         </div>
       )}
 
-      {/* Load More */}
-      {visibleCount < displayTotal && (
-        <div className="mt-6 text-center">
-          <button
-            onClick={onLoadMore}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Load more ({displayTotal - visibleCount} remaining)
-          </button>
+      {/* Load more, then Overview stacked below it — both white-on-black. */}
+      {(visibleCount < displayTotal || overviewHref) && (
+        <div className="mt-6 flex flex-col items-center gap-3">
+          {visibleCount < displayTotal && (
+            <button
+              onClick={onLoadMore}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Load more ({displayTotal - visibleCount} remaining)
+            </button>
+          )}
+          {overviewHref && (
+            <a
+              href={embedHref(overviewHref)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
+            >
+              <LayoutGrid className="w-4 h-4" />
+              Overview
+            </a>
+          )}
         </div>
       )}
     </div>

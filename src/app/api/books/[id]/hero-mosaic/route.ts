@@ -21,23 +21,26 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 7; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 8; // bump to force-regenerate cached mosaics
 const MAX_TILES = 50;
 
 /**
- * Column count for the composited grid, scaled to the tile count so a mosaic is
- * always as full as it can be — a landscape-ish 10×5 at the top end, shrinking
- * gracefully all the way down to 2×2 and a single tile for short items.
- *   50→10  30→8  20→7  12→5  6→4  4→3  2→2  1→1
+ * Column count for the masonry, scaled to the tile count and whether the tiles
+ * are text pages or curated plates.
+ *   - Text pages read best dense: never below 6 columns (up to 10).
+ *   - Plates read best larger: 3–6 columns (a "smaller grid" of bigger images).
+ * Always clamped to the tile count so we never leave an empty column.
  */
-function chooseColumns(n: number): number {
+function chooseColumns(n: number, plate: boolean): number {
   if (n <= 1) return 1;
-  if (n <= 3) return 2;
-  return Math.min(10, Math.max(3, Math.round(Math.sqrt(n * 2.2))));
+  const cols = plate
+    ? Math.max(2, Math.min(6, Math.round(Math.sqrt(n))))
+    : (n <= 5 ? n : Math.min(10, Math.max(6, Math.round(Math.sqrt(n * 2.2)))));
+  return Math.min(cols, n);
 }
 
-const TILE_W = 168;
-const TILE_H = 224; // 3:4
+const TILE_W = 168; // fixed column width; height follows the page's true aspect
+const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a column
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const JPEG_QUALITY = 58;
 const PURE_PLATE_MIN = 6; // ≥ this many plates ⇒ illustration-only mosaic
@@ -105,8 +108,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         .filter((u): u is string => !!u && RENDERABLE.test(u)),
     )).slice(0, MAX_TILES);
 
+    const isPlateMosaic = plateUrls.length >= PURE_PLATE_MIN;
     let urls: string[];
-    if (plateUrls.length >= PURE_PLATE_MIN) {
+    if (isPlateMosaic) {
       urls = plateUrls; // enough plates for a clean illustration-only mosaic
     } else {
       const pages = await db.collection('pages')
@@ -129,12 +133,20 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     if (urls.length === 0) return cacheNegative();
 
-    // Fetch + resize each tile (one retry each), dropping any that fail.
+    // Fetch each tile (one retry each) and resize to a fixed column WIDTH,
+    // preserving the page's true aspect ratio (so pages aren't cropped to a
+    // uniform box). Clamp very tall strips so one tile can't dominate a column.
     const tiles = await Promise.all(urls.map(async (url) => {
       for (let attempt = 0; attempt < 2; attempt++) {
         try {
           const buf = await images.fetchBuffer(url, { timeout: 15000 });
-          return await sharp(buf).resize(TILE_W, TILE_H, { fit: 'cover', position: 'centre' }).toBuffer();
+          const { data, info } = await sharp(buf)
+            .resize({ width: TILE_W, withoutEnlargement: false })
+            .toBuffer({ resolveWithObject: true });
+          if (info.height <= MAX_TILE_H) return { data, height: info.height };
+          // Too tall — keep the top of the page (the interesting part).
+          const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
+          return { data: cropped, height: MAX_TILE_H };
         } catch {
           if (attempt === 1) return null;
         }
@@ -142,17 +154,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return null;
     }));
 
-    const fetched = tiles.filter((b): b is Buffer => !!b);
+    type Tile = { data: Buffer; height: number };
+    const fetched = tiles.filter((t): t is Tile => !!t);
 
     // Keep only distinct tiles (identical bytes ⇒ same hash) so a cover-fallback
     // book doesn't render many copies of one image.
     const seen = new Set<string>();
-    const distinct: Buffer[] = [];
-    for (const buf of fetched) {
-      const h = createHash('md5').update(buf).digest('hex');
+    const distinct: Tile[] = [];
+    for (const t of fetched) {
+      const h = createHash('md5').update(t.data).digest('hex');
       if (seen.has(h)) continue;
       seen.add(h);
-      distinct.push(buf);
+      distinct.push(t);
     }
 
     if (distinct.length === 0) return noMosaic(); // all fetches failed → retry later
@@ -161,29 +174,44 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     if (urls.length >= 8 && distinct.length <= 2) return cacheNegative();
     // Otherwise build with whatever distinct tiles we have — down to a single one.
 
-    // Adapt the column count to how many tiles we have, so short books still
-    // read as a full, balanced grid rather than one sparse row. Aim for a
-    // roughly landscape mosaic (cols ≈ 1.4 × rows).
-    const cols = chooseColumns(distinct.length);
-    const rows = Math.ceil(distinct.length / cols);
+    // Masonry layout — like the Pages grid: fixed-width columns, tiles stacked
+    // top-aligned at their true aspect, each new tile added to the shortest
+    // column. The canvas is then cropped to the SHORTEST column's bottom so the
+    // grid is always completely filled (no ragged dark gap in a corner).
+    const cols = chooseColumns(distinct.length, isPlateMosaic);
     const width = cols * TILE_W + (cols + 1) * GAP;
-    const height = rows * TILE_H + (rows + 1) * GAP;
+    const colBottoms = new Array<number>(cols).fill(GAP); // y where the next tile starts
+    const placements = distinct.map((t) => {
+      let c = 0;
+      for (let i = 1; i < cols; i++) if (colBottoms[i] < colBottoms[c]) c = i;
+      const left = GAP + c * (TILE_W + GAP);
+      const top = colBottoms[c];
+      colBottoms[c] = top + t.height + GAP;
+      return { input: t.data, left, top };
+    });
+    // Build at the tallest column's height (all tiles fit — no composite
+    // overflow), then crop down to the SHORTEST column's bottom so the grid is
+    // completely filled with no ragged dark corner. Every column holds ≥1 tile
+    // (cols ≤ tile count, shortest-first packing), so fillHeight is always > 0.
+    const fullHeight = Math.max(...colBottoms);
+    const fillHeight = Math.min(...colBottoms) - GAP;
 
-    const canvas = sharp({ create: { width, height, channels: 3, background: BG } })
-      .composite(distinct.map((buf, i) => ({
-        input: buf,
-        left: GAP + (i % cols) * (TILE_W + GAP),
-        top: GAP + Math.floor(i / cols) * (TILE_H + GAP),
-      })));
+    // Composite onto the full-height canvas first (all tiles fit, no overflow),
+    // then crop to the fill line in a fresh pass so op ordering is unambiguous.
+    const full = await sharp({ create: { width, height: fullHeight, channels: 3, background: BG } })
+      .composite(placements)
+      .jpeg()
+      .toBuffer();
+    const flat = await sharp(full).extract({ left: 0, top: 0, width, height: fillHeight }).jpeg().toBuffer();
 
     // Skip mosaics that are mostly black — dark manuscripts, palm-leaf strips on
     // black grounds, etc. They tile into odd stripes and, under the hero tint,
     // add nothing over a plain dark panel. Cache the negative → dark hero.
-    const raw = await canvas.clone().removeAlpha().toColourspace('b-w').raw().toBuffer();
+    const raw = await sharp(flat).removeAlpha().toColourspace('b-w').raw().toBuffer();
     const meanLuma = raw.reduce((s, v) => s + v, 0) / raw.length;
     if (meanLuma < 55) return cacheNegative();
 
-    const composed = await canvas.jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true }).toBuffer();
+    const composed = await sharp(flat).jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true }).toBuffer();
 
     const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.jpg`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/jpeg', allowOverwrite: true });

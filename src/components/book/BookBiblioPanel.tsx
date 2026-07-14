@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
+import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 
 /**
  * Light-themed bibliographic panel for the book page's "Bibliographic
@@ -52,7 +53,12 @@ export default function BookBiblioPanel({
   return (
     <div className="text-[14.5px]" style={{ color: '#2b2620' }}>
       <div className="divide-y" style={{ borderColor: '#ece6da' }}>
-        {book.title && <Row label="Title"><span className="italic">{book.title}</span></Row>}
+        {book.title && (() => {
+          const original = cleanOriginalTitle(book.title);
+          if (!original) return null;
+          // Latin-alphabet titles italicise; titles in their own script stand upright.
+          return <Row label="Title"><span className={isNonLatinScript(original) ? '' : 'italic'}>{original}</span></Row>;
+        })()}
         {book.display_title && book.display_title !== book.title && <Row label="English">{book.display_title}</Row>}
         {book.author && <Row label="Author">{book.author}</Row>}
         {book.language && <Row label="Language">{book.language}</Row>}

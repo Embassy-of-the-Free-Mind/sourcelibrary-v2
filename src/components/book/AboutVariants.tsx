@@ -16,7 +16,9 @@ export default function AboutVariants({
   tags = [],
   belowContent,
 }: {
-  content: ReactNode;
+  /** About prose. When null, the heading + prose are omitted and only the
+   *  dropdowns render in the left column (the plate still shows on the right). */
+  content?: ReactNode | null;
   visual?: Visual | null;
   tags?: string[];
   /** Reading guide / Contents / etc. dropdowns, rendered under the text+tags. */
@@ -36,16 +38,21 @@ export default function AboutVariants({
         <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
           {/* Text + tags + dropdowns: 3/5 on desktop (below the plate on mobile) */}
           <div className="order-2 md:order-1 md:col-span-3">
-            <h2 className="font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
-            <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
-            {tagRow}
-            {belowContent && <div className="mt-6 md:mt-8 space-y-3 md:space-y-6">{belowContent}</div>}
+            {content != null && (
+              <>
+                <h2 className="font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
+                <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
+                {tagRow}
+              </>
+            )}
+            {belowContent && <div className={`${content != null ? 'mt-6 md:mt-8' : ''} space-y-3 md:space-y-6`}>{belowContent}</div>}
           </div>
-          {/* Interesting page / plate: desktop only (hidden on mobile), 2/5 wide */}
+          {/* Interesting page / plate: desktop only (hidden on mobile), 2/5 wide.
+              No shadow — sits flush on the cream background. */}
           {visual && (
             <div className="hidden md:block order-1 md:order-2 md:col-span-2">
               <Link href={visual.href} className="block group">
-                <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff', boxShadow: '0 18px 40px -18px rgba(20,12,4,0.35)' }}>
+                <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={visual.src} alt={visual.caption || ''} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
                 </div>

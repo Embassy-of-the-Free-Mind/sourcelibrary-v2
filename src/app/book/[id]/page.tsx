@@ -53,6 +53,7 @@ import PlusToggle from '@/components/book/PlusToggle';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
+import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -892,10 +893,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The cover is always excluded (handled by interiorCandidates / coverPage).
     const PROVENANCE_RE = /\b(book\s?plate|ex[\s-]?libris|from the library of|library of|armorial|ownership|owner'?s|stamp|inscription|donor|gift of|presented by|bequest|shelf\s?mark|call\s?number|barcode|catalog(?:ue)? card|colou?r\s?(?:card|chart|target|checker)|calibration)\b/i;
     const isRepresentativePlate = (desc?: string) => !desc || !PROVENANCE_RE.test(desc);
+    // The side plate must never be the same image as the hero cover.
+    const coverSrcKey = (coverDisplay || '').split('?')[0];
+    const notCover = (src?: string | null) => !!src && src.split('?')[0] !== coverSrcKey;
     const sideVisual = (() => {
       // Only use a gallery plate if a non-provenance one exists; otherwise fall
       // through to a real interior page rather than showing a bookplate.
-      const plate = galleryImages.find(g => isRepresentativePlate(g.description));
+      const plate = galleryImages.find(g => isRepresentativePlate(g.description) && notCover(g.thumbnail_url || g.extracted_url || g.image_url));
       if (plate) {
         const src = plate.thumbnail_url || plate.extracted_url || plate.image_url;
         if (src) {
@@ -907,10 +911,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // genuine content illustrations already come through the gallery path
       // above, so a leftover illustration here is usually front-matter — an
       // owner's bookplate / frontispiece — which we don't want to feature.
-      const pg = interiorTextPage || interiorIllusPage;
-      if (pg) {
+      for (const pg of [interiorIllusPage, interiorTextPage]) {
+        if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
-        if (src) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
+        if (src && notCover(src)) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
       }
       return null;
     })();
@@ -924,7 +928,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       <>
         {hasReadingGuide && (
           <AISection kind="reading-guide" className="card">
-            <details className="group">
+            <details className="group sl-collapse">
               <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
                 <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
                 <PlusToggle />
@@ -945,7 +949,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* Book's own contents — only when there's a TOC scan or chapters */}
         {(!!book.chapters?.length || !!tocPage) && (
-        <details id="contents" className="card group scroll-mt-24">
+        <details id="contents" className="card group scroll-mt-24 sl-collapse">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
             <PlusToggle />
@@ -990,41 +994,55 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         </details>
         )}
 
-        {/* Bibliographic information */}
-        <details className="card group">
+        {/* Bibliographic information — the source's own record only. */}
+        <details className="card group sl-collapse">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
-            {book.editions?.length ? (
-              <div className="mt-5">
-                <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
-                <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
-              </div>
-            ) : null}
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
             )}
             {embedPolicy.showIndexCatalogStatus && (
               <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
             )}
-            {/* Translation history — a small dark sub-panel (readable on the light
-                card), shown only when there's translation info to report. */}
-            {(!!book.is_first_translation || translatedCount > 0) && (
-              <div className="mt-5 rounded-lg p-3 md:p-4" style={{ background: '#211c17' }}>
-                <Suspense fallback={null}>
-                  <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
-                </Suspense>
-              </div>
-            )}
-            {/* Book history (staff) — its own light, self-contained collapsible. */}
-            <AuthCheck role="inner_circle">
-              <div className="mt-4"><BookHistory bookId={book.id} /></div>
-            </AuthCheck>
           </div>
         </details>
+
+        {/* Editions & translations — our published editions + translation history,
+            kept separate from the source's bibliographic record. */}
+        {(!!book.editions?.length || !!book.is_first_translation || translatedCount > 0) && (
+          <details className="card group sl-collapse">
+            <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+              <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Editions &amp; translations</h3>
+              <PlusToggle />
+            </summary>
+            <div className="px-4 pb-4 md:px-6 md:pb-6">
+              {book.editions?.length ? (
+                <div>
+                  <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
+                  <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
+                </div>
+              ) : null}
+              {/* Translation history — the evidence component is dark-themed, so it
+                  sits in a small dark sub-panel to stay legible on the light card. */}
+              {(!!book.is_first_translation || translatedCount > 0) && (
+                <div className={`${book.editions?.length ? 'mt-5' : ''} rounded-lg p-3 md:p-4`} style={{ background: '#211c17' }}>
+                  <Suspense fallback={null}>
+                    <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
+                  </Suspense>
+                </div>
+              )}
+            </div>
+          </details>
+        )}
+
+        {/* Book history — staff-only processing log; its own self-contained collapsible. */}
+        <AuthCheck role="inner_circle">
+          <BookHistory bookId={book.id} />
+        </AuthCheck>
 
         {/* Search this book — styled like a dropdown card but always open; the
             card grows to show results (max-height + scroll) as you type. */}
@@ -1069,7 +1087,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   src={coverDisplay}
                   alt={book.display_title || book.title}
                   className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
-                  style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))', border: '1px solid rgba(255,255,255,0.08)' }}
+                  style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
                 />
               ) : (
                 <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
@@ -1103,9 +1121,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-2 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
-              {book.display_title && book.title !== book.display_title && (
-                <div className="text-[12px] md:text-[15px] mb-1.5 md:mb-1.5 leading-snug" style={{ color: 'rgba(248,244,238,0.85)' }}>{book.title}</div>
-              )}
+              {book.display_title && book.title !== book.display_title && (() => {
+                const original = cleanOriginalTitle(book.title);
+                if (!original) return null;
+                const latin = !isNonLatinScript(original);
+                return (
+                  <div className={`text-[12px] md:text-[15px] mb-1.5 md:mb-1.5 leading-snug ${latin ? 'italic' : ''}`} style={{ color: 'rgba(248,244,238,0.85)' }}>{original}</div>
+                );
+              })()}
               {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
 
               {/* Chips — borderless / padless inline items */}
@@ -1130,20 +1153,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 );
               })()}
               {/* OCR / Translated status — coloured, with the tick/percentage to
-                  the left of the label. The First-Translation tag sits left of
-                  Translated (full translation history lives in Bibliographic info). */}
+                  the left of the label. "First translation" reads as plain text
+                  to the right of Translated (full history lives in Editions &
+                  translations). */}
               {ocrPct > 0 && (
                 <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
-                  {!!book.is_first_translation && translatedCount > 0 && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] md:text-[12px]" style={{ background: 'rgba(217,158,74,0.16)', color: '#e0b46a', border: '1px solid rgba(217,158,74,0.35)' }}>First Translation</span>
-                  )}
                   {translatedPct > 0 && (
                     <span title={`${translatedCount} pages translated to English`} style={{ color: '#86c98f' }}>
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
+                  )}
+                  {!!book.is_first_translation && translatedCount > 0 && (
+                    <span title="First translation into English" style={{ color: '#e0b46a' }}>First translation</span>
                   )}
                 </div>
               )}
@@ -1184,15 +1208,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         />
 
         {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
-        {hasSummary ? (
-          <AboutVariants content={linkEntities(summaryText!, summaryEntities)} visual={sideVisual} tags={subjectTags} belowContent={readingDropdowns} />
-        ) : (
-          <section style={{ background: '#fdfcf9' }} className="pt-12 md:pt-16 pb-10 md:pb-14 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="max-w-[860px] space-y-3 md:space-y-6">{readingDropdowns}</div>
-            </div>
-          </section>
-        )}
+        {/* Always render the two-column About section: prose (when present) + the
+            dropdowns on the left, an interesting non-cover plate on the right. */}
+        <AboutVariants
+          content={hasSummary ? linkEntities(summaryText!, summaryEntities) : null}
+          visual={sideVisual}
+          tags={hasSummary ? subjectTags : []}
+          belowContent={readingDropdowns}
+        />
 
         {/* ===================== PAGES ===================== */}
         <section id="pages" style={{ background: '#f5f0e8' }} className="pt-14 pb-16 scroll-mt-4">
@@ -1216,14 +1239,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {galleryPlates.length > 0 && (
           <section id="illustrations" style={{ background: '#fdfcf9' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-              <div className="flex items-baseline justify-between gap-4 mb-1">
-                <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: '#2b2620' }}>Illustrations</h2>
-                {imageCount > galleryPlates.length && (
-                  <Link href={`/gallery?bookId=${book.id}`} className="text-sm whitespace-nowrap" style={{ color: '#a5503d' }}>View all {imageCount} →</Link>
-                )}
-              </div>
+              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Illustrations</h2>
               <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Plates, diagrams, and figures detected in the scanned pages.</p>
               <GalleryMasonry plates={galleryPlates} />
+              {imageCount > galleryPlates.length && (
+                <div className="mt-8 text-center">
+                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                    <Images className="w-4 h-4" />
+                    View all {imageCount} illustrations
+                  </Link>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -1234,7 +1260,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <section id="related" style={{ background: '#f5f0e8' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
-              <p className="text-sm md:text-[15px] -mb-1" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
+              <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
               <BookSlider books={tagRelated as unknown as MiniBook[]} />
             </div>
           </section>
