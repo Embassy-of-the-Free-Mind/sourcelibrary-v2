@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 
 export const metadata: Metadata = {
@@ -567,7 +566,6 @@ export default function WorldsLargestCollectionPage() {
           </div>
         </section>
 
-        <BlogComments slug="worlds-largest-collection" />
 
       </article>
     </ContentPageLayout>

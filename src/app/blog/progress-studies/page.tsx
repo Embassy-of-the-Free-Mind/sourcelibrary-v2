@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
@@ -678,7 +677,6 @@ export default function ProgressStudiesPage() {
         </div>
       </article>
 
-      <BlogComments slug="progress-studies" />
     </ContentPageLayout>
   );
 }

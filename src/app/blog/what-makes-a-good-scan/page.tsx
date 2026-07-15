@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Makes a Good Scan? - Research Notes - Source Library',
@@ -383,7 +382,6 @@ export default function WhatMakesAGoodScanPage() {
           <em>The full design document (with schema, prompt, characteristics formulas, validation table, and the full eleven-sample spot-check) lives at <code>.claude/docs/automated-image-quality-system.md</code> in the repository. Phase 1 is tracked at GitHub issue <Link href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1810" className="text-accent-rust hover:underline">#1810</Link>.</em>
         </p>
 
-        <BlogComments slug="what-makes-a-good-scan" />
       </article>
     </ContentPageLayout>
   );

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts - Source Library',
@@ -338,7 +337,6 @@ export default function TibetanOcrPage() {
 
       </article>
 
-      <BlogComments slug="tibetan-ocr" />
 
     </ContentPageLayout>
   );

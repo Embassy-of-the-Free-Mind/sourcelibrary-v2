@@ -622,7 +622,13 @@ export default function BlogPage() {
           subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
           image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
-        />
+        >
+          <p className="text-stone-400 text-sm mt-4">
+            <Link href="/blog/how-these-are-made" className="hover:text-white underline decoration-stone-500 underline-offset-2 transition-colors">
+              How these notes are made
+            </Link>
+          </p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >

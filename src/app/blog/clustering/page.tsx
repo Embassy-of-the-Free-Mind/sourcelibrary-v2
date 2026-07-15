@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Does a Library of 3,400 Rare Books Look Like? - Research Notes - Source Library',
@@ -436,7 +435,6 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
 
       </article>
 
-      <BlogComments slug="clustering" />
     </ContentPageLayout>
   );
 }

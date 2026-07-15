@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg';
@@ -234,7 +233,6 @@ export default function ReadingClassicalChinesePage() {
 
       </article>
 
-      <BlogComments slug="reading-classical-chinese" />
     </ContentPageLayout>
   );
 }

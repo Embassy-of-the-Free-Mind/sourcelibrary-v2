@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Mapping the Incunabula: A Knowledge Graph of the First Printed Books - Research Notes - Source Library',
@@ -233,7 +232,6 @@ export default function IncunabulaKnowledgeGraphPage() {
 
       </article>
 
-      <BlogComments slug="incunabula-knowledge-graph" />
     </ContentPageLayout>
   );
 }

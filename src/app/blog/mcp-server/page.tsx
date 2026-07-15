@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Claude Can Now Read Thousands of Rare Books - Research Notes - Source Library',
@@ -280,7 +279,6 @@ export default function McpServerPage() {
         </div>
       </article>
 
-      <BlogComments slug="mcp-server" />
     </ContentPageLayout>
   );
 }

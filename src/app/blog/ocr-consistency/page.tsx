@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Consistent Is AI OCR? - Research Notes - Source Library',
@@ -363,7 +362,6 @@ export default function OcrConsistencyPage() {
 
       </article>
 
-      <BlogComments slug="ocr-consistency" />
     </ContentPageLayout>
   );
 }

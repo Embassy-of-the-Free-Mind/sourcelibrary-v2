@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Research Notes - Source Library',
@@ -449,7 +448,6 @@ export default function UntranslatedRenaissancePage() {
         </div>
       </article>
 
-      <BlogComments slug="untranslated-renaissance" />
     </ContentPageLayout>
   );
 }

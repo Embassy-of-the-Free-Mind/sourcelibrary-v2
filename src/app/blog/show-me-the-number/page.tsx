@@ -2,7 +2,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Fludd's 1617 engraving of Nature and, at the centre of the cosmos, the ape of Art holding a gridded model of the world — the artificial imitator, four centuries early.";
@@ -199,7 +198,6 @@ export default function ShowMeTheNumberPage() {
           Opus 4.8.
         </p>
 
-        <BlogComments slug="show-me-the-number" />
       </article>
     </ContentPageLayout>
   );

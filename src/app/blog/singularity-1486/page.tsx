@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Singularity Was Published in 1486 - Research Notes - Source Library',
@@ -569,7 +568,6 @@ export default function Singularity1486Page() {
         </p>
       </article>
 
-      <BlogComments slug="singularity-1486" />
     </ContentPageLayout>
   );
 }

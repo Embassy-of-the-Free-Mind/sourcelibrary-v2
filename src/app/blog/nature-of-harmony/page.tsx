@@ -2,7 +2,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Robert Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature as a crowned virgin chained to the divine name above and to an ape (Art) on the terrestrial globe below.";
@@ -427,7 +426,6 @@ export default function NatureOfHarmonyPage() {
           as far as we can establish, never before appeared in English.
         </p>
 
-        <BlogComments slug="nature-of-harmony" />
       </article>
     </ContentPageLayout>
   );

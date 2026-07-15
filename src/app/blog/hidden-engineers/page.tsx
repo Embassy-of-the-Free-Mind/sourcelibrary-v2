@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy - Source Library',
@@ -833,7 +832,6 @@ export default function HiddenEngineersPage() {
         </div>
       </article>
 
-      <BlogComments slug="hidden-engineers" />
     </ContentPageLayout>
   );
 }

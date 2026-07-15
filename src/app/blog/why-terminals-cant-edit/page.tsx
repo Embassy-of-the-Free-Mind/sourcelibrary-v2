@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Why You Can\'t Click to Place Your Cursor in a Terminal - Research Notes - Source Library',
@@ -336,7 +335,6 @@ export default function WhyTerminalsCantEditPage() {
 
       <hr className="my-12 border-border-light" />
 
-      <BlogComments slug="why-terminals-cant-edit" />
     </ContentPageLayout>
   );
 }

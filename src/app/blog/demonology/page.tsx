@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
@@ -609,7 +608,6 @@ export default function DemonologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="demonology" />
     </ContentPageLayout>
   );
 }

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How We Identify First Translations - Research Notes - Source Library',
@@ -571,7 +570,6 @@ export default function FirstTranslationMethodologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="first-translation-methodology" />
     </ContentPageLayout>
   );
 }

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const metadata: Metadata = {
@@ -460,7 +459,6 @@ export default function FirstTranslationsPage() {
         </div>
       </article>
 
-      <BlogComments slug="first-translations" />
     </ContentPageLayout>
     </>
   );

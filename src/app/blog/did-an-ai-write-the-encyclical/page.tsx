@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: "Did an AI Write the Pope's AI Encyclical? - Research Notes - Source Library",
@@ -262,7 +261,6 @@ export default function DidAnAiWriteTheEncyclicalPage() {
           <em>Full interactive data &mdash; every paragraph, both languages, all three methods &mdash; at <Link href="https://magnifica-ai-analysis.vercel.app" className="text-accent-rust hover:underline">magnifica-ai-analysis.vercel.app</Link>. The encyclical itself is on <Link href="https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html" className="text-accent-rust hover:underline">vatican.va</Link>. Detector: the <Link href="https://arxiv.org/abs/2401.12070" className="text-accent-rust hover:underline">Binoculars</Link> method (Hans et al., 2024).</em>
         </p>
 
-        <BlogComments slug="did-an-ai-write-the-encyclical" />
       </article>
     </ContentPageLayout>
   );
