@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     canonical: '/contribute/wikipedia',
   },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Help Bring Historical Texts to Wikipedia',
     description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources — Copernicus, Galileo, Kepler, and more.',
   },

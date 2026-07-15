@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     canonical: '/categories',
   },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Categories - Source Library',
     description: 'Browse books by category: alchemy, astrology, Hermetica, Kabbalah, natural philosophy, and more.',
     type: 'website',

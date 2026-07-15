@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: 'Browse Source Library by language — Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
   alternates: { canonical: '/languages' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Languages | Source Library',
     description: 'Browse Source Library by language — Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
     type: 'website',
