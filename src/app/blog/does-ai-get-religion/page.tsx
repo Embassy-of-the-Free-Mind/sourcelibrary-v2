@@ -8,9 +8,14 @@ export const metadata: Metadata = {
   description:
     "The longest page in our library is one leaf of a Javanese Old Testament that the AI translated into 491,418 characters of 'generations of generations of generations.' It does this only with scripture.",
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Does the AI Get Religion?',
     description:
       "An AI translation model that picked up a book of sacred genealogies and could not stop generating generations. It only happens with scripture.",
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/does-ai-get-religion',

@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'What Makes a Good Scan? - Research Notes - Source Library',
   description: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg', alt: 'Woodcut of Ramon Llull and disciples, with the alphabetum operis consequentis table beneath. Ars Inventiva Veritatis, 1515.' }],
     title: 'What Makes a Good Scan?',
     description: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg', alt: 'Woodcut of Ramon Llull and disciples, with the alphabetum operis consequentis table beneath. Ars Inventiva Veritatis, 1515.' }],
   },
   alternates: {
     canonical: '/blog/what-makes-a-good-scan',

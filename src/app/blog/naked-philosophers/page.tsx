@@ -8,9 +8,14 @@ export const metadata: Metadata = {
   description:
     'In 327 BCE Alexander’s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. A story told through eight books in the library.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg', alt: 'Alexander the Great, crowned and haloed, gesturing toward three naked bearded philosophers among flowering plants — labelled in the manuscript\'s Armenian as \'the Brahmans who speak.\' A 1544 Armenian Romance of Alexander miniature' }],
     title: 'The Naked Philosophers: How Alexander’s India Became the Rosicrucians’ Ancestor',
     description:
       'Power summons wisdom, and wisdom declines to come. The gymnosophists from Strabo and the Aldine Philostratus to Michael Maier’s College of the Rosy Cross.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg', alt: 'Alexander the Great, crowned and haloed, gesturing toward three naked bearded philosophers among flowering plants — labelled in the manuscript\'s Armenian as \'the Brahmans who speak.\' A 1544 Armenian Romance of Alexander miniature' }],
   },
   alternates: {
     canonical: '/blog/naked-philosophers',

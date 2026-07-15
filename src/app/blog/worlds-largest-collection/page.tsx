@@ -20,6 +20,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.png' }],
+  },
   alternates: {
     canonical: '/blog/worlds-largest-collection',
   },

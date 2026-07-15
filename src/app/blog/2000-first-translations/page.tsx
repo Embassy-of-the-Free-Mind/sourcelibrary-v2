@@ -21,6 +21,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.png' }],
+  },
 };
 
 // --- Static data from MongoDB aggregation (March 2026) ---

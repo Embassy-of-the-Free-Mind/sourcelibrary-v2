@@ -8,9 +8,14 @@ export const metadata: Metadata = {
   description:
     "Detectors flagged Magnifica Humanitas as 46% AI-written; the headline was 127 em-dashes vs zero in a comparison encyclical. We re-ran the test locally against eight human encyclicals. The smoking gun is a baseline-selection artifact.",
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg', alt: 'Frontispiece of Athanasius Kircher\'s Turris Babel (1679): a draftsman sketches the half-built Tower of Babel on a tablet while a sage and a general look on, beneath a radiant divine eye — the encyclical\'s own central image.' }],
     title: "Did an AI Write the Pope's AI Encyclical?",
     description:
       'Detectors flagged Magnifica Humanitas as 46% AI-written. We re-ran the test against eight human encyclicals — and the evidence dissolves. A note on why baselines decide everything.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg', alt: 'Frontispiece of Athanasius Kircher\'s Turris Babel (1679): a draftsman sketches the half-built Tower of Babel on a tablet while a sage and a general look on, beneath a radiant divine eye — the encyclical\'s own central image.' }],
   },
   alternates: {
     canonical: '/blog/did-an-ai-write-the-encyclical',

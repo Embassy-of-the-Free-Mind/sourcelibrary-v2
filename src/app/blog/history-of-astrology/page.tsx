@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg' }],
+  },
   alternates: {
     canonical: '/blog/history-of-astrology',
   },

@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg' }],
+  },
   alternates: {
     canonical: '/blog/mcp-server',
   },

@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     description: 'Measuring AI OCR and translation on the Chinese classics — against ctext.org for the characters, and against James Legge for the English.',
     images: [{ url: HERO, width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: HERO }],
+  },
   alternates: { canonical: '/blog/reading-classical-chinese' },
 };
 

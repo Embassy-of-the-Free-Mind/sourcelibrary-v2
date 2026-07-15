@@ -26,10 +26,15 @@ export const metadata: Metadata = {
   description:
     "Source Library has OCR'd 4.1 million pages and translated almost all of them into English using AI. We logged every API call. This is what it cost — in dollars, tokens, and carbon.",
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', alt: 'Allegorical frontispiece of Athanasius Kircher\'s Ars Magna Lucis et Umbrae (1671)' }],
     title: 'The Carbon Ledger of a Digital Library',
     description:
       "4.1 million pages, OCR'd and translated by AI. We logged every API call. This is what it cost — in dollars, tokens, and carbon.",
     type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', alt: 'Allegorical frontispiece of Athanasius Kircher\'s Ars Magna Lucis et Umbrae (1671)' }],
   },
   alternates: { canonical: '/blog/carbon-ledger' },
 };

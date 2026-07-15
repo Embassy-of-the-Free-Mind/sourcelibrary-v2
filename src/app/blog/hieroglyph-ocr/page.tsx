@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Four approaches to AI hieroglyphic OCR. Four failures. What the results reveal about the limits of visual language models.',
     images: [{ url: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg', width: 1000, height: 1400 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg' }],
+  },
   alternates: {
     canonical: '/blog/hieroglyph-ocr',
   },

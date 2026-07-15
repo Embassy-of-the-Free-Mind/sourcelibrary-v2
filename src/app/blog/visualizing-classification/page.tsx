@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'Visualizing 20,000 Books Across Six Dimensions - Source Library',
   description: 'Interactive visualizations of Source Library\'s faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram — showing how 17 traditions flow into 15 domains across 11 cultural spheres.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg', alt: 'Jyotisha classification tree in Sanskrit from the Celestial Tree of Natal Astrology' }],
     title: 'Visualizing 20,000 Books Across Six Dimensions',
     description: 'Four interactive D3 visualizations of a faceted library classification system.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg', alt: 'Jyotisha classification tree in Sanskrit from the Celestial Tree of Natal Astrology' }],
   },
   alternates: {
     canonical: '/blog/visualizing-classification',

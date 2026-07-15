@@ -8,9 +8,14 @@ export const metadata: Metadata = {
   description:
     'We measured the rate of new Latin translations and counted what is left. At the current pace, finishing the Latin Renaissance alone would take roughly ten thousand years.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'How Long Would It Take to Translate the Renaissance?',
     description:
       'We did the division. At the current rate of scholarly translation, the Latin Renaissance alone would take about ten thousand years to finish.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/how-long-to-translate',

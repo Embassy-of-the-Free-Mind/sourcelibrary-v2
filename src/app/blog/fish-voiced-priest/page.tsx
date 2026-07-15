@@ -19,6 +19,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg' }],
+  },
   alternates: {
     canonical: '/blog/fish-voiced-priest',
   },

@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Eight experiments testing Gemini and Claude on cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg' }],
+  },
   alternates: {
     canonical: '/blog/cuneiform-ocr',
   },

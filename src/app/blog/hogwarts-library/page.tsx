@@ -13,6 +13,10 @@ export const metadata: Metadata = {
       'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — bestiaries, alchemy, grimoires, Kabbalah — read in modern English.',
     images: [{ url: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg' }],
+  },
   alternates: {
     canonical: '/blog/hogwarts-library',
   },

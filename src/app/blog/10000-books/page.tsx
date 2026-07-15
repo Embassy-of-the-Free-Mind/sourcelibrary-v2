@@ -22,6 +22,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg' }],
+  },
   alternates: {
     canonical: '/blog/10000-books',
   },

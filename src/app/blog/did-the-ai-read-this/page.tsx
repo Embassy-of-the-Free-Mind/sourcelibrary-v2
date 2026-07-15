@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'Did the AI Read This? - Research Notes - Source Library',
   description: 'A Bayesian survey of which books in our 16,871-volume OCR\'d corpus are already in frontier-model training data. About 43% are confidently new to AI; about 21% are confidently in training.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg', alt: 'Title page of Cornelius Drebbel\'s Tractatus duo de Natura Elementorum (Hamburg, 1621)' }],
     title: 'Did the AI Read This?',
     description: 'Mapping which books in the library are in frontier-model training data, with a Bayesian fusion of bibliographic priors and behavioural probes.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg', alt: 'Title page of Cornelius Drebbel\'s Tractatus duo de Natura Elementorum (Hamburg, 1621)' }],
   },
   alternates: {
     canonical: '/blog/did-the-ai-read-this',

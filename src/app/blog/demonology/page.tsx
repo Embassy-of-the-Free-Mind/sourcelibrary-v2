@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     description: 'The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel. Source Library holds the texts that document this extraordinary reversal.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg' }],
+  },
   alternates: {
     canonical: '/blog/demonology',
   },

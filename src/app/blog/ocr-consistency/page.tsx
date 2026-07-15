@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: '1,448 duplicate scans of the same physical pages, OCR\'d independently. The results quantify something nobody has measured before.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg' }],
+  },
   alternates: {
     canonical: '/blog/ocr-consistency',
   },

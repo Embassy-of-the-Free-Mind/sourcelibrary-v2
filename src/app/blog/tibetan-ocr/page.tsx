@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Testing Claude and Gemini on handwritten Tibetan from five Bhutanese monasteries. Modal Consistency Rate, cross-model agreement, and comparison to human translation.',
     images: [{ url: 'https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg' }],
+  },
   alternates: {
     canonical: '/blog/tibetan-ocr',
   },
