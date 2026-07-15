@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
 import { logSearchQuery } from '@/lib/search-log';
 
@@ -150,16 +151,59 @@ export async function GET(request: NextRequest) {
         slug: thumbnailMap[b.book_id]?.slug || b.book_id,
       }));
 
+    // Lexical fallback for named-entity / single-token queries (#3141).
+    // Pure vector search returns nothing for a bare surname, proper noun, or
+    // title fragment ("hartmann", "Voynich", "fludd") — the embedding of a name
+    // has no conceptual neighbours above the floor, so this endpoint reported 0
+    // results despite us holding many editions (31 daily-agent "hartmann" hits,
+    // all zero). When semantic recall is empty, fall back to lexical trigram
+    // search on title/author/display_title so these queries surface the held
+    // editions. searchBooksCatalog already gates on visible:true && pages_count>0,
+    // so the hidden-book concern the semantic lane guards against doesn't apply.
+    let results: typeof enriched = enriched;
+    let mode: 'semantic' | 'lexical' = 'semantic';
+    if (enriched.length === 0) {
+      try {
+        const lexical = await searchBooksCatalog(searchQuery, { limit, language });
+        const filtered = lexical.filter(b => {
+          const y = typeof b.year === 'number' ? b.year : undefined;
+          if (yearMin !== undefined && (y === undefined || y < yearMin)) return false;
+          if (yearMax !== undefined && (y === undefined || y > yearMax)) return false;
+          return true;
+        });
+        if (filtered.length > 0) {
+          mode = 'lexical';
+          results = filtered.map(b => ({
+            book_id: b.id,
+            title: b.title,
+            author: b.author,
+            year: typeof b.year === 'number' ? b.year : null,
+            language: b.language,
+            summary_text: b.summary_text,
+            metadata: undefined,
+            // Exact lexical match on title/author — rank as high confidence so
+            // callers that sort by similarity keep these at the top.
+            similarity: 1,
+            thumbnail: b.thumbnail || null,
+            thumbnail_blob: b.thumbnail_blob || null,
+            slug: b.slug || b.id,
+          })) as unknown as typeof enriched;
+        }
+      } catch (e) {
+        console.warn('[semantic-search] lexical fallback failed:', e instanceof Error ? e.message : String(e));
+      }
+    }
+
     logSearchQuery({
       request, route: 'search.semantic.book', query: query!,
-      total: enriched.length, ms: Date.now() - _searchStart, ok: true,
-      filters: { language, year_min: yearMin, year_max: yearMax },
+      total: results.length, ms: Date.now() - _searchStart, ok: true,
+      filters: { language, year_min: yearMin, year_max: yearMax, mode },
     });
     return NextResponse.json({
-      results: enriched,
+      results,
       query,
-      total: enriched.length,
-      mode: 'semantic',
+      total: results.length,
+      mode,
     }, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
     });
