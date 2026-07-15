@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 14; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 15; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -50,6 +50,18 @@ const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a c
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const JPEG_QUALITY = 58;
 const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
+const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
+
+/** Pick `n` items evenly spread across `arr` (keeps order). Sampling ACROSS the
+ *  book — not just the front — means a broken/duplicate contiguous cluster of
+ *  pages can't starve the grid, and the hero represents the whole book. */
+function sampleEvenly<T>(arr: T[], n: number): T[] {
+  if (arr.length <= n) return arr;
+  const out: T[] = [];
+  const step = arr.length / n;
+  for (let i = 0; i < n; i++) out.push(arr[Math.floor(i * step)]);
+  return out;
+}
 const BG = { r: 20, g: 16, b: 12 }; // matches the hero's #14100c
 
 // Page types we never tile: blanks, digitizer inserts, and the scanner
@@ -106,10 +118,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     );
     if (!book?.id) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
 
-    const debugMode = request.nextUrl.searchParams.get('debug') === '1';
     // Up-to-date cache: redirect to the stored image, or 404 the negative result.
-    // (debug bypasses the cache so we can inspect a fresh generation.)
-    if (!debugMode && book.hero_mosaic_version === MOSAIC_VERSION) {
+    if (book.hero_mosaic_version === MOSAIC_VERSION) {
       return book.hero_mosaic_url ? redirectToMosaic(book.hero_mosaic_url) : noMosaic();
     }
 
@@ -171,28 +181,19 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const pageDocs = await db.collection('pages')
       .find({ book_id: book.id, page_type: { $nin: JUNK_PAGE_TYPES } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
       .sort({ page_number: 1 })
-      .limit(CANDIDATE_LIMIT)
+      .limit(PAGE_DOC_LIMIT)
       .toArray();
-    const pageUrls = Array.from(new Set(
+    // Distinct absolute URLs across the WHOLE book, then sample evenly to the
+    // fetch budget — so a broken contiguous cluster (e.g. a run of pages sharing
+    // one thumbnail) can't dominate, and the hero samples the whole book.
+    const allPageUrls = Array.from(new Set(
       pageDocs.map(p => absPageUrl(p as PageImageFields)).filter((u): u is string => !!u),
     ));
+    const pageUrls = sampleEvenly(allPageUrls, CANDIDATE_LIMIT);
 
-    const pf = await fetchTiles(pageUrls);
-    let distinct = pf.tiles;
+    let distinct = (await fetchTiles(pageUrls)).tiles;
     let usingPlates = false;
     let plateUrlCount = 0;
-
-    if (request.nextUrl.searchParams.get('debug') === '1') {
-      // One raw fetch probe so we can see WHY server fetches fail.
-      let probe: Record<string, unknown> = { none: true };
-      if (pageUrls[0]) {
-        try {
-          const r = await fetch(pageUrls[0], { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
-          probe = { url: pageUrls[0], status: r.status, ok: r.ok, ct: r.headers.get('content-type'), len: r.headers.get('content-length') };
-        } catch (e) { probe = { url: pageUrls[0], error: e instanceof Error ? e.message : String(e) }; }
-      }
-      return NextResponse.json({ pageUrlCount: pageUrls.length, pageTilesDistinct: distinct.length, pageTilesFetched: pf.fetched, sampleUrls: pageUrls.slice(0, 3), probe });
-    }
 
     // Plates are a fallback ONLY for pages that genuinely can't make a grid:
     //  - too few distinct page URLs (structurally image-poor pages), or
