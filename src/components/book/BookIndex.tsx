@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import PlusToggle from './PlusToggle';
 
 interface IndexEntry {
   term: string;
@@ -55,17 +56,15 @@ export default function BookIndex({ entries, bookSlug, totalPages, isEmbedded = 
   const hapaxCount = entries.length - themes.length - indexEntries.length;
 
   return (
-    <details className="card mt-6">
-      <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Index</h2>
-          <span className="text-xs text-stone-400">{entries.length} terms</span>
+    <details className="card group sl-collapse">
+      <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+        <div className="flex items-baseline gap-3">
+          <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Index</h3>
+          <span className="text-xs" style={{ color: '#a09884' }}>{entries.length} terms</span>
         </div>
-        <span className="text-sm text-accent-rust">
-          See All &rarr;
-        </span>
+        <PlusToggle />
       </summary>
-      <div className="px-6 pb-6">
+      <div className="px-4 pb-4 md:px-6 md:pb-6">
         {/* Themes — high-frequency terms shown as tags */}
         {themes.length > 0 && (
           <div className="mb-5">

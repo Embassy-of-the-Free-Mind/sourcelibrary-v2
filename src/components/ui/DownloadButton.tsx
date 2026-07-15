@@ -204,7 +204,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         <>
         {/* Backdrop (mobile) — tap to dismiss */}
         <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
-        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-64 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
           {/* Header with close (mobile bottom sheet) */}
           <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
             <span className="text-[15px] font-semibold text-stone-900">Download</span>
@@ -216,7 +216,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={goToSignIn}
-                className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors"
+                className="w-full min-h-[48px] px-4 py-3.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-[15px] font-semibold transition-colors"
               >
                 Sign in to download
               </button>

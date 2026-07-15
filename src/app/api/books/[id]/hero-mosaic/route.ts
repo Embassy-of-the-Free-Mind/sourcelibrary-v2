@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 13; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 14; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       }
       return null;
     };
-    const fetchTiles = async (urls: string[]): Promise<Tile[]> => {
+    const fetchTiles = async (urls: string[]): Promise<{ tiles: Tile[]; fetched: number }> => {
       const list = urls.slice(0, CANDIDATE_LIMIT);
       const raw: (Tile | null)[] = new Array(list.length).fill(null);
       let next = 0;
@@ -152,14 +152,16 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       await Promise.all(Array.from({ length: Math.min(FETCH_CONCURRENCY, list.length) }, worker));
       const seen = new Set<string>();
       const out: Tile[] = [];
+      let fetched = 0;
       for (const t of raw) {
         if (!t) continue;
+        fetched++;
         const h = createHash('md5').update(t.data).digest('hex');
         if (seen.has(h)) continue;
         seen.add(h);
         out.push(t);
       }
-      return out;
+      return { tiles: out, fetched };
     };
 
     // Primary source: PAGE SCANS in reading order (skip blanks + scanner junk).
@@ -173,15 +175,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       pageDocs.map(p => absPageUrl(p as PageImageFields)).filter((u): u is string => !!u),
     ));
 
-    let distinct = await fetchTiles(pageUrls);
+    let { tiles: distinct } = await fetchTiles(pageUrls);
     let usingPlates = false;
     let plateUrlCount = 0;
 
-    // Fallback: when the page scans don't yield enough DISTINCT tiles for a real
-    // grid (broken per-page data / cover-fallback / heavy fetch failures), use
-    // curated plate crops instead — better a clean plate grid than one blurred
-    // page stretched across the hero.
-    if (distinct.length < MIN_TILES * 3) {
+    // Plates are a fallback ONLY for pages that genuinely can't make a grid:
+    //  - too few distinct page URLs (structurally image-poor pages), or
+    //  - cover-fallback (we fetched plenty of pages but they collapsed to ~1
+    //    distinct image — every "page" is really the same cover).
+    // A merely-flaky page fetch (many URLs, transient failures) must NOT drop us
+    // to plates — that's how a rich text book (e.g. the Compendium) wrongly
+    // cached a plate grid. It instead builds from whatever pages it got, or 404s
+    // to retry (below).
+    const pageStructural = pageUrls.length < MIN_TILES * 3;      // < ~12 distinct page URLs
+    const pageCoverFallback = pageUrls.length >= 12 && distinct.length <= 3; // collapsed to one image
+    if (distinct.length < MIN_TILES * 3 && (pageStructural || pageCoverFallback)) {
       const plates = await db.collection('gallery_images')
         .find(
           { book_id: book.id, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
@@ -195,18 +203,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       ));
       plateUrlCount = plateUrls.length;
       if (plateUrls.length) {
-        const plateTiles = await fetchTiles(plateUrls);
+        const plateTiles = (await fetchTiles(plateUrls)).tiles;
         if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
       }
     }
 
     if (distinct.length < MIN_TILES) {
-      // Distinguish a STRUCTURALLY image-poor book (genuinely < a grid's worth of
-      // renderable images → cache a dark hero) from a TRANSIENT fetch failure (we
-      // had plenty of candidate URLs but the fetches flaked → 404 WITHOUT caching
-      // so the next request regenerates). Never lock a rich book to a dark hero.
-      const candidates = pageUrls.length + plateUrlCount;
-      return candidates >= 12 ? noMosaic() : cacheNegative();
+      // Nothing usable yet. If we HAD plenty of candidate URLs (rich book) but the
+      // fetches flaked, 404 WITHOUT caching so the next request regenerates — never
+      // lock a rich book to a dark hero. Only a structurally image-poor book (few
+      // page URLs AND few plate URLs) caches a dark negative.
+      const structural = pageUrls.length < 12 && plateUrlCount < 12;
+      return structural ? cacheNegative() : noMosaic();
     }
 
     // Height-outlier filter: keep tiles whose height sits near the MEDIAN so rows

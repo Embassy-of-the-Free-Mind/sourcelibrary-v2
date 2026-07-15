@@ -941,14 +941,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </details>
           </AISection>
         )}
-        {(() => {
-          const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
-          if (!allEntries || allEntries.length === 0) return null;
-          const entries = allEntries.filter(e => e.pages.length >= 2);
-          if (entries.length === 0) return null;
-          return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
-        })()}
-
         {/* Book's own contents — only when there's a TOC scan or chapters */}
         {(!!book.chapters?.length || !!tocPage) && (
         <details id="contents" className="card group scroll-mt-24 sl-collapse">
@@ -995,6 +987,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </div>
         </details>
         )}
+
+        {/* Index — below Contents, same dropdown treatment as the others */}
+        {(() => {
+          const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+          if (!allEntries || allEntries.length === 0) return null;
+          const entries = allEntries.filter(e => e.pages.length >= 2);
+          if (entries.length === 0) return null;
+          return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
+        })()}
 
         {/* Bibliographic information — the source's own record only. */}
         <details className="card group sl-collapse">
