@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: 'Read the primary sources discussed on the Secret History of Western Esotericism Podcast. Browse episodes and access original texts in Latin, Greek, and other languages.',
   alternates: { canonical: '/shwep' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'SHWEP Reading Room - Source Library',
     description: 'Read the primary sources discussed on the Secret History of Western Esotericism Podcast.',
     url: 'https://sourcelibrary.org/shwep',

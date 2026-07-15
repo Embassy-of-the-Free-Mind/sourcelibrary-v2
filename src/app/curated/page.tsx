@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     'Thematic exhibitions across the library, stories that cut across traditions and centuries.',
   alternates: { canonical: '/curated' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Curated Collections | Source Library',
     description:
       'Thematic exhibitions across the library, stories that cut across traditions and centuries.',

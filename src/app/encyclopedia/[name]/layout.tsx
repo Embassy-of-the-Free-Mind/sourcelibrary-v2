@@ -180,6 +180,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       canonical: `/encyclopedia/${encodeURIComponent(decodedName)}`,
     },
     openGraph: {
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
       title: decodedName,
       description,
       type: 'article',

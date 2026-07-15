@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: data.description,
     alternates: { canonical: `/gallery/collections/${slug}` },
     openGraph: {
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
       title: `${data.title} | Source Library Gallery`,
       description: data.description,
     },

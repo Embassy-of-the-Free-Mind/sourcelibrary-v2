@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     'Structured parallel-text training data from 10,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Dataset — Source Library',
     description:
       'The only structured parallel-text dataset for historical languages. Page-aligned original text, English translation, and metadata.',

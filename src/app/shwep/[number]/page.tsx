@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,
     alternates: { canonical: `/shwep/${ep.number}` },
     openGraph: {
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
       title: `${ep.title} - SHWEP Reading Room`,
       description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,
       url: `https://sourcelibrary.org/shwep/${ep.number}`,

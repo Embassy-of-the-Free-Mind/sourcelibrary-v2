@@ -75,6 +75,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${partner.name} - Source Library`,
       description,
       type: 'website',
+      // Defining openGraph replaces the root layout's block wholesale, so an
+      // explicit image is required or the page ships no og:image at all.
+      images: [{
+        url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
+        alt: `${partner.name} — Source Library`,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [{
+        url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
+        alt: `${partner.name} — Source Library`,
+      }],
     },
   };
 }

@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Source Library — Fuentes antiguas traducidas con IA',
     description:
       'La mayor biblioteca de acceso abierto de fuentes primarias traducidas. Alquimia, hermética, filosofía y ciencia, accesibles para todos.',

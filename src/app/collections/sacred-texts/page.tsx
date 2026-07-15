@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description:
     'The foundational scriptures of the world\'s spiritual traditions, from the Vedas and Upanishads to the Bible and Quran, from Sumerian hymns to Buddhist sutras and Zoroastrian texts.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Sacred Texts - Source Library',
     description:
       'The foundational scriptures of the world\'s spiritual traditions, from Sumerian hymns to the Vedas, Bible, Quran, and beyond.',

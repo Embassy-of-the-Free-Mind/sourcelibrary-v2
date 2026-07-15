@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     'Of ~1.4 million early-modern works in the Universal Short Title Catalogue, how many have a known modern translation? A federated, authority-reconciled census. About one in a hundred.',
   alternates: { canonical: '/research/translation-gap' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'The Translation Gap',
     description:
       'Of ~1.4 million early-modern works, roughly 1% have a known modern translation. A federated census against the Universal Short Title Catalogue.',

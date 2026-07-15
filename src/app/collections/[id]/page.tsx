@@ -61,6 +61,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? String(collection.description).slice(0, 200)
       : `Browse the ${collection.name} collection on Source Library.`;
 
+    // Social-card image: the curated hero plate, falling back to the site
+    // default. Without an explicit entry this page ships no og:image at all —
+    // defining `openGraph` replaces the root layout's block, images included.
+    const cardImage = typeof collection.hero_image === 'string' && collection.hero_image
+      ? collection.hero_image
+      : 'https://sourcelibrary.org/og-image.jpg';
+
     return {
       title: `${collection.name} - Source Library`,
       description,
@@ -69,11 +76,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${collection.name} - Source Library`,
         description,
         type: 'website',
+        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${collection.name} - Source Library`,
         description,
+        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
       },
     };
   } catch {
