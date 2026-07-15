@@ -50,12 +50,11 @@ export default function HeroVariants({
         {/* Oversized parallax layer — the tiled bg AND tint drift together. */}
         <div className="absolute inset-x-0 -top-[12%] h-[124%] will-change-transform" style={{ transform: `translateY(${parallax}px)` }}>
           {mosaicUrl ? (
-            /* The mosaic is one block of the page-grid; we TILE it to fill the
-               hero so every book gets a full grid regardless of the mosaic's own
-               aspect (a short palm-leaf block just repeats more). Mobile shows
-               ~6 columns across (166% width); desktop shows the full grid width
-               (100%). Both repeat vertically to fill. */
-            <div className="absolute inset-0 bg-[length:166%_auto] md:bg-[length:100%_auto] bg-top bg-repeat-y" style={{ backgroundImage: `url(${mosaicUrl})` }} />
+            /* One page-grid block that fills the hero via background-cover — NEVER
+               repeated (repeating pages would misrepresent the book). The mosaic
+               is composited at roughly the hero's aspect so cover-fill crops only
+               a little. */
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${mosaicUrl})` }} />
           ) : pageThumbs.length > 0 ? (
             <div className="absolute inset-0 overflow-hidden">
               <div className="grid grid-cols-6 md:grid-cols-10 gap-1.5">

@@ -21,22 +21,27 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 10; // bump to force-regenerate cached mosaics
-const MAX_TILES = 50;
+const MOSAIC_VERSION = 11; // bump to force-regenerate cached mosaics
+const MAX_TILES = 60;
+const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
+const TARGET_ASPECT = 1.6; // mosaic width:height — a 10×5 of portrait pages; the
+                           // hero shows it via background-cover (never repeated)
 
 /**
- * Column count for the masonry, scaled to the tile count and whether the tiles
- * are text pages or curated plates.
- *   - Text pages read best dense: never below 6 columns (up to 10).
- *   - Plates read best larger: 3–6 columns (a "smaller grid" of bigger images).
- * Always clamped to the tile count so we never leave an empty column.
+ * Grid shape for `n` tiles of median height `mh`. Columns/rows are chosen so the
+ * composited mosaic lands near TARGET_ASPECT — this is what keeps SHORT tiles
+ * (palm-leaf strips, wide scans) from producing a 1-row, wildly-wide block. A
+ * book of tall portrait pages naturally lands ~10×5; short strips get fewer
+ * columns and more rows. Only whole rows are used, so the bottom is never ragged.
  */
-function chooseColumns(n: number, plate: boolean): number {
-  if (n <= 1) return 1;
-  const cols = plate
-    ? Math.max(2, Math.min(6, Math.round(Math.sqrt(n))))
-    : (n <= 5 ? n : Math.min(10, Math.max(6, Math.round(Math.sqrt(n * 2.2)))));
-  return Math.min(cols, n);
+function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: number } {
+  const ratio = (TARGET_ASPECT * mh) / TILE_W; // = cols/rows to hit the aspect
+  let cols = Math.round(Math.sqrt(n * ratio));
+  cols = Math.max(3, Math.min(10, cols, n));
+  let rows = Math.max(1, Math.floor(n / cols));
+  // Prefer ≥2 rows when we have the tiles — a single row cover-crops badly.
+  if (rows < 2 && n >= 6) { cols = Math.max(2, Math.floor(n / 2)); rows = Math.floor(n / cols); }
+  return { cols, rows, used: cols * rows };
 }
 
 const TILE_W = 168; // fixed column width; height follows the page's true aspect
@@ -95,27 +100,56 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return noMosaic();
     };
 
-    // The hero grid is built from PAGE SCANS in reading order — never a wall of
-    // cropped plates. Pages that happen to contain a plate/illustration are a
-    // welcome bonus, but we don't front-load them; a book reads as its pages.
-    // Skip blanks + scanner junk (covers, calibration cards, spines) so the
-    // tiles are real content pages of a consistent shape.
+    type Tile = { data: Buffer; height: number };
+
+    // Fetch a batch of URLs → resize each to the fixed column width (true aspect)
+    // → keep only byte-DISTINCT tiles (so a cover-fallback book, whose every page
+    // thumbnail resolves to the same image, collapses to 1 and triggers the plate
+    // fallback below instead of tiling one page).
+    const fetchTiles = async (urls: string[]): Promise<Tile[]> => {
+      const raw = await Promise.all(urls.slice(0, CANDIDATE_LIMIT).map(async (url) => {
+        for (let attempt = 0; attempt < 2; attempt++) {
+          try {
+            const buf = await images.fetchBuffer(url, { timeout: 15000 });
+            const { data, info } = await sharp(buf).resize({ width: TILE_W, withoutEnlargement: false }).toBuffer({ resolveWithObject: true });
+            if (info.height <= MAX_TILE_H) return { data, height: info.height };
+            const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
+            return { data: cropped, height: MAX_TILE_H };
+          } catch { if (attempt === 1) return null; }
+        }
+        return null;
+      }));
+      const seen = new Set<string>();
+      const out: Tile[] = [];
+      for (const t of raw) {
+        if (!t) continue;
+        const h = createHash('md5').update(t.data).digest('hex');
+        if (seen.has(h)) continue;
+        seen.add(h);
+        out.push(t);
+      }
+      return out;
+    };
+
+    // Primary source: PAGE SCANS in reading order (skip blanks + scanner junk).
+    // A book reads as its pages; pages that happen to hold a plate are a bonus.
     const pageDocs = await db.collection('pages')
       .find({ book_id: book.id, page_type: { $nin: JUNK_PAGE_TYPES } }, { projection: PAGE_IMAGE_PROJECTION, maxTimeMS: 8000 })
       .sort({ page_number: 1 })
       .limit(CANDIDATE_LIMIT)
       .toArray();
     const pageUrls = Array.from(new Set(
-      pageDocs
-        .map(p => getPageImageUrl(p as PageImageFields, 'thumb'))
-        .filter((u): u is string => !!u && RENDERABLE.test(u)),
+      pageDocs.map(p => getPageImageUrl(p as PageImageFields, 'thumb')).filter((u): u is string => !!u && RENDERABLE.test(u)),
     ));
 
-    let urls = pageUrls;
+    let distinct = await fetchTiles(pageUrls);
     let usingPlates = false;
-    // Fallback ONLY when a book has essentially no renderable page thumbnails
-    // (source not rehosted) — then curated plate crops are better than nothing.
-    if (pageUrls.length < 6) {
+
+    // Fallback: when the page scans don't yield enough DISTINCT tiles for a real
+    // grid (broken per-page data / cover-fallback / heavy fetch failures), use
+    // curated plate crops instead — better a clean plate grid than one blurred
+    // page stretched across the hero.
+    if (distinct.length < MIN_TILES * 3) {
       const plates = await db.collection('gallery_images')
         .find(
           { book_id: book.id, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
@@ -125,73 +159,36 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         .limit(MAX_TILES)
         .toArray();
       const plateUrls = Array.from(new Set(
-        plates
-          .map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined)
-          .filter((u): u is string => !!u && RENDERABLE.test(u)),
+        plates.map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined).filter((u): u is string => !!u && RENDERABLE.test(u)),
       ));
-      if (plateUrls.length > pageUrls.length) { urls = plateUrls; usingPlates = true; }
-    }
-    urls = urls.slice(0, CANDIDATE_LIMIT);
-
-    if (urls.length === 0) return cacheNegative();
-
-    // Fetch each tile (one retry each) and resize to a fixed column WIDTH,
-    // preserving the page's true aspect ratio (so pages aren't cropped to a
-    // uniform box). Clamp very tall strips so one tile can't dominate a column.
-    const tiles = await Promise.all(urls.map(async (url) => {
-      for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-          const buf = await images.fetchBuffer(url, { timeout: 15000 });
-          const { data, info } = await sharp(buf)
-            .resize({ width: TILE_W, withoutEnlargement: false })
-            .toBuffer({ resolveWithObject: true });
-          if (info.height <= MAX_TILE_H) return { data, height: info.height };
-          // Too tall — keep the top of the page (the interesting part).
-          const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
-          return { data: cropped, height: MAX_TILE_H };
-        } catch {
-          if (attempt === 1) return null;
-        }
+      if (plateUrls.length) {
+        const plateTiles = await fetchTiles(plateUrls);
+        if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
       }
-      return null;
-    }));
-
-    type Tile = { data: Buffer; height: number };
-    const fetched = tiles.filter((t): t is Tile => !!t);
-
-    // Keep only distinct tiles (identical bytes ⇒ same hash) so a cover-fallback
-    // book doesn't render many copies of one image.
-    const seen = new Set<string>();
-    const distinct: Tile[] = [];
-    for (const t of fetched) {
-      const h = createHash('md5').update(t.data).digest('hex');
-      if (seen.has(h)) continue;
-      seen.add(h);
-      distinct.push(t);
     }
 
-    if (distinct.length === 0) return noMosaic(); // all fetches failed → retry later
+    if (distinct.length < MIN_TILES) return cacheNegative(); // too few images to make a grid
 
-    // Height-outlier filter: keep tiles whose height sits near the MEDIAN, so
-    // the rows are uniform (no single tall foldout/spread stretching a row).
-    // This is what makes the hero read like the Pages section instead of a
-    // jagged mix. If the band would drop too much, fall back to all tiles.
-    const sortedH = distinct.map(t => t.height).sort((a, b) => a - b);
-    const median = sortedH[Math.floor(sortedH.length / 2)] || MAX_TILE_H;
-    let kept = distinct.filter(t => t.height >= median * 0.82 && t.height <= median * 1.2);
-    if (kept.length < Math.min(distinct.length, 10)) kept = distinct;
-    // Cap to a full grid's worth (10×5 for 50+ page books).
+    // Height-outlier filter: keep tiles whose height sits near the MEDIAN so rows
+    // are uniform (no foldout/spread stretching a row) — the hero then reads like
+    // the Pages section. Only meaningful with enough tiles; skip when few, and
+    // revert if the band would drop too much.
+    let kept = distinct;
+    if (distinct.length >= 12) {
+      const sortedH = distinct.map(t => t.height).sort((a, b) => a - b);
+      const median = sortedH[Math.floor(sortedH.length / 2)] || MAX_TILE_H;
+      const band = distinct.filter(t => t.height >= median * 0.82 && t.height <= median * 1.2);
+      if (band.length >= Math.max(12, Math.floor(distinct.length * 0.6))) kept = band;
+    }
     kept = kept.slice(0, MAX_TILES);
 
-    // Row grid — exactly like the Pages section: a fixed number of columns,
-    // tiles laid out row by row at their TRUE dimensions, top-aligned within
-    // each row (a shorter page leaves a little space below it). Each row is as
-    // tall as its tallest tile. Only whole rows are kept so the bottom edge is
-    // always a full row — never a ragged half-filled corner.
-    const cols = chooseColumns(kept.length, usingPlates);
-    const numRows = kept.length <= cols ? 1 : Math.floor(kept.length / cols);
-    const rowCols = kept.length <= cols ? kept.length : cols;
-    const used = kept.slice(0, numRows * rowCols);
+    // Shape the grid to the hero's aspect (never repeated, always background-cover
+    // filled). Short tiles get more rows / fewer columns so the block is never a
+    // 1-row wide strip. Rows are laid out top-aligned at true dimensions.
+    void usingPlates;
+    const medH = kept.map(t => t.height).sort((a, b) => a - b)[Math.floor(kept.length / 2)] || MAX_TILE_H;
+    const { cols: rowCols, rows: numRows } = chooseGrid(kept.length, medH);
+    const used = kept.slice(0, rowCols * numRows);
     const width = rowCols * TILE_W + (rowCols + 1) * GAP;
 
     const placements: { input: Buffer; left: number; top: number }[] = [];
