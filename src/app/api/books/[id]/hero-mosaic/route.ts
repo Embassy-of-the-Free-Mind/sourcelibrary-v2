@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
-import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
+import { type PageImageFields } from '@/lib/page-image-url';
 
 /**
  * GET /api/books/[id]/hero-mosaic
@@ -21,7 +21,7 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 12; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 13; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -75,10 +75,25 @@ const PAGE_IMAGE_PROJECTION = {
   crop: 1,
 } as const;
 
-// A per-page thumbnail on a renderable host. Deliberately EXCLUDES the archive
-// .org `thumbnail` fallback: on many imports every page shares the same item
-// URL there (= the cover), which produced walls of identical cover tiles.
-const RENDERABLE = /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org|\/full\/|\/iiif\/|\/api\/image)/;
+// An ABSOLUTE image URL the serverless function can fetch directly. Must be
+// absolute — a relative `/api/image?...` proxy URL (what getPageImageUrl returns
+// for pages lacking a pre-sized thumb) can't be fetch()'d server-side and would
+// silently fail, starving the grid. We resize whatever we fetch ourselves.
+const RENDERABLE = /^https:\/\/([^/]*\.)?(sourcelibrary\.org|public\.blob\.vercel-storage\.com|r2\.dev|wikimedia\.org)\//i;
+const IIIF_ABS = /^https:\/\/[^?]*\/(full|iiif)\//i; // per-page IIIF images (distinct, resizable)
+const UNSAFE_IMG = /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i;
+
+/** Best absolute, server-fetchable, per-page image URL (pre-sized thumb first,
+ *  then the archived/display source — the route resizes it). Skips relative
+ *  proxy URLs and non-decodable formats. */
+function absPageUrl(p: PageImageFields): string | null {
+  const cands = [p.image_thumb, p.archived_photo, p.display_photo, p.cropped_photo, p.enhanced_photo, p.photo_original, p.photo];
+  for (const u of cands) {
+    if (typeof u !== 'string' || UNSAFE_IMG.test(u)) continue;
+    if (RENDERABLE.test(u) || IIIF_ABS.test(u)) return u;
+  }
+  return null;
+}
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -155,7 +170,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       .limit(CANDIDATE_LIMIT)
       .toArray();
     const pageUrls = Array.from(new Set(
-      pageDocs.map(p => getPageImageUrl(p as PageImageFields, 'thumb')).filter((u): u is string => !!u && RENDERABLE.test(u)),
+      pageDocs.map(p => absPageUrl(p as PageImageFields)).filter((u): u is string => !!u),
     ));
 
     let distinct = await fetchTiles(pageUrls);
@@ -176,7 +191,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         .limit(MAX_TILES)
         .toArray();
       const plateUrls = Array.from(new Set(
-        plates.map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined).filter((u): u is string => !!u && RENDERABLE.test(u)),
+        plates.map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined).filter((u): u is string => !!u && !UNSAFE_IMG.test(u) && (RENDERABLE.test(u) || IIIF_ABS.test(u))),
       ));
       plateUrlCount = plateUrls.length;
       if (plateUrls.length) {
