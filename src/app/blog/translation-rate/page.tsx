@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'How Many Renaissance Books Get Translated Each Year? - Research Notes - Source Library',
   description: 'We queried 23,700+ records from the UNESCO Index Translationum, Library of Congress, and 20+ other translation catalogs to measure the annual rate of new English translations of early modern texts. The answer is smaller than anyone guesses.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg', alt: 'Arts and Crafts frontispiece from the Book of Divine Consolation of Angela of Foligno, 1909' }],
     title: 'How Many Renaissance Books Get Translated Each Year?',
     description: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other translation catalogs. The answer is smaller than anyone guesses.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg', alt: 'Arts and Crafts frontispiece from the Book of Divine Consolation of Angela of Foligno, 1909' }],
   },
   alternates: {
     canonical: '/blog/translation-rate',

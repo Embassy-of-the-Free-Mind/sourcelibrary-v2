@@ -13,6 +13,10 @@ export const metadata: Metadata = {
       'A long read on Leo XIV&rsquo;s AI encyclical Magnifica Humanitas, Pico della Mirandola&rsquo;s banned Oration on the Dignity of Man, and what artificial intelligence forces us to decide about the soul.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg' }],
+  },
   alternates: {
     canonical: '/blog/man-his-own-maker',
   },

@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
     images: [{ url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg' }],
+  },
   alternates: {
     canonical: '/blog/chakra-tradition',
   },

@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'The Confident Hallucinator - Research Notes - Source Library',
   description: 'AI OCR evaluation across five scripts and three Gemini model tiers. A model can be perfectly consistent and completely wrong. Thinking mode fixes what model size cannot.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6956eaf4f23ebf30578dba35/221.jpg', alt: 'Comparative table of five scripts from Agrippa\'s Occult Philosophy, 1531' }],
     title: 'The Confident Hallucinator',
     description: 'AI OCR evaluation across Latin, Tibetan, Arabic, Hebrew, and Sanskrit reveals that consistency alone is a dangerous quality signal — and thinking mode is the cure.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6956eaf4f23ebf30578dba35/221.jpg', alt: 'Comparative table of five scripts from Agrippa\'s Occult Philosophy, 1531' }],
   },
   alternates: {
     canonical: '/blog/confident-hallucinator',

@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     description: 'AI reads Arabic and Sanskrit fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg', width: 1200, height: 1600 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg' }],
+  },
   alternates: {
     canonical: '/blog/rashi-ocr',
   },

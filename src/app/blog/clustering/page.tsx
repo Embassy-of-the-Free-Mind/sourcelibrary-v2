@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'What Does a Library of 3,400 Rare Books Look Like? - Research Notes - Source Library',
   description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
   openGraph: {
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg', alt: 'Integra Naturae Speculum by Robert Fludd, 1617' }],
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
     description: 'Embedding-based clustering reveals 34 curated groupings across seven intellectual traditions in one of the largest digitized rare book collections.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg', alt: 'Integra Naturae Speculum by Robert Fludd, 1617' }],
   },
   alternates: {
     canonical: '/blog/clustering',

@@ -20,6 +20,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg' }],
+  },
   alternates: {
     canonical: '/blog/translations-across-civilizations',
   },

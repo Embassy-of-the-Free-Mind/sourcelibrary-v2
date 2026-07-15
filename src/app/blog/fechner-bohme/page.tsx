@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works reveal the mysticism behind the Weber-Fechner law.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg' }],
+  },
   alternates: {
     canonical: '/blog/fechner-bohme',
   },

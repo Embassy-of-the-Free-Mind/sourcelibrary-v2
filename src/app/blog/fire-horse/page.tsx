@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology — from the sexagenary cycle to the I Ching.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg' }],
+  },
   alternates: {
     canonical: '/blog/fire-horse',
   },

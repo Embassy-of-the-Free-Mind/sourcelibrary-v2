@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     description: 'A visual tour from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics — the original diagrams that mapped humanity\'s relationship to the heavens.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg' }],
+  },
   alternates: {
     canonical: '/blog/astrological-diagrams',
   },

@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'Where Source Library Came From - Research Notes - Source Library',
   description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations — the origin story of Source Library.',
   openGraph: {
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
     title: 'Where Source Library Came From',
     description: 'From a single untranslated Ficino manuscript to 5,000+ books — the origin story of Source Library.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
   },
   alternates: {
     canonical: '/blog/origin-story',

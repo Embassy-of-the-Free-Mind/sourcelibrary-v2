@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 2,500 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg' }],
+  },
   alternates: {
     canonical: '/blog/progress-studies',
   },

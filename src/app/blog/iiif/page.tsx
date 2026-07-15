@@ -19,6 +19,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg' }],
+  },
   alternates: {
     canonical: '/blog/iiif',
   },

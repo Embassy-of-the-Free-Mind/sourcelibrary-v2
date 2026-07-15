@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Research Notes - Source Library',
   description: 'We built the first draft of a translation census — matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
   openGraph: {
+    images: [{ url: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg', alt: 'Human head as microcosm mapping mental faculties, from Fludd\'s History of the Microcosm, 1619' }],
     title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
     description: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg', alt: 'Human head as microcosm mapping mental faculties, from Fludd\'s History of the Microcosm, 1619' }],
   },
   alternates: {
     canonical: '/blog/untranslated-renaissance',
