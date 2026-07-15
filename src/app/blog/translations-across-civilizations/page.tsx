@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import PassageComparison from '@/components/comparison/PassageComparison';
 
 export const metadata: Metadata = {
@@ -379,7 +378,6 @@ export default function TranslationsAcrossCivilizationsPage() {
           </p>
         </div>
 
-        <BlogComments slug="translations-across-civilizations" />
       </article>
     </ContentPageLayout>
   );

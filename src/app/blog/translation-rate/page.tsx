@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Many Renaissance Books Get Translated Each Year? - Research Notes - Source Library',
@@ -464,7 +463,6 @@ export default function TranslationRatePage() {
         </div>
       </article>
 
-      <BlogComments slug="translation-rate" />
     </ContentPageLayout>
   );
 }

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Naked Philosophers: How Alexander’s India Became the Rosicrucians’ Ancestor - Source Library',
@@ -379,7 +378,6 @@ export default function NakedPhilosophersPage() {
           </p>
         </section>
 
-        <BlogComments slug="naked-philosophers" />
       </article>
     </ContentPageLayout>
   );

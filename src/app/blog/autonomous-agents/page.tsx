@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How We Added 950 Books in a Weekend - Research Notes - Source Library',
@@ -491,7 +490,6 @@ export default function AutonomousAgentsPage() {
 
       </article>
 
-      <BlogComments slug="autonomous-agents" />
     </ContentPageLayout>
   );
 }

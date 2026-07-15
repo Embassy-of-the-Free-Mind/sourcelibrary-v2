@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources - Source Library",
@@ -731,7 +730,6 @@ export default function PhilosophersStonePage() {
         </div>
       </article>
 
-      <BlogComments slug="philosophers-stone" />
     </ContentPageLayout>
   );
 }

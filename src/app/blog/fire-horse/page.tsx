@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Year of the Fire Horse - Research Notes - Source Library',
@@ -389,7 +388,6 @@ export default function FireHorsePage() {
         </div>
       </article>
 
-      <BlogComments slug="fire-horse" />
     </ContentPageLayout>
   );
 }

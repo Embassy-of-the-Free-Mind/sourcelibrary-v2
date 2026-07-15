@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Reading the Stars: Astrological Diagrams from Nine Centuries — Blog — Source Library',
@@ -598,7 +597,6 @@ export default function AstrologicalDiagramsPage() {
 
       </article>
 
-      <BlogComments slug="astrological-diagrams" />
     </ContentPageLayout>
   );
 }

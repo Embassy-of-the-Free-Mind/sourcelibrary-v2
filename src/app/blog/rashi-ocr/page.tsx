@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew - Research Notes - Source Library',
@@ -364,7 +363,6 @@ export default function RashiOcrPage() {
 
       </article>
 
-      <BlogComments slug="rashi-ocr" />
 
     </ContentPageLayout>
   );

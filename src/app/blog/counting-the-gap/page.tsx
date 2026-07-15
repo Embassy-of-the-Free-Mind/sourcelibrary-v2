@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'We Spent a Day Counting What Hasn\'t Been Translated - Research Notes - Source Library',
@@ -255,7 +254,6 @@ export default function CountingTheGapPage() {
         </div>
       </article>
 
-      <BlogComments slug="counting-the-gap" />
     </ContentPageLayout>
   );
 }

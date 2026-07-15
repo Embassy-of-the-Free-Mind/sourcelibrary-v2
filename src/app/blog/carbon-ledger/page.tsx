@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 import { Footnote } from '@/components/blog/carbon-ledger/Footnote';
 import { HeroStats } from '@/components/blog/carbon-ledger/HeroStats';
@@ -444,7 +443,6 @@ export default function CarbonLedgerPage() {
         </p>
       </article>
 
-      <BlogComments slug="carbon-ledger" />
     </ContentPageLayout>
   );
 }

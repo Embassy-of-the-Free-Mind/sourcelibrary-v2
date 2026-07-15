@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Recovering the Chakra Tradition - Research Notes - Source Library',
@@ -321,7 +320,6 @@ export default function ChakraTraditionPage() {
         </div>
       </article>
 
-      <BlogComments slug="chakra-tradition" />
     </ContentPageLayout>
   );
 }

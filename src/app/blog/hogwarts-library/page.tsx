@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Real Hogwarts Library - Source Library',
@@ -943,7 +942,6 @@ export default function HogwartsLibraryPage() {
         </div>
       </article>
 
-      <BlogComments slug="hogwarts-library" />
     </ContentPageLayout>
   );
 }

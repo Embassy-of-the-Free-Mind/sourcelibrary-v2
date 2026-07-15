@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const revalidate = 86400;
@@ -321,7 +320,6 @@ export default function HowBigIsTheLibraryPage() {
           </section>
         </article>
 
-        <BlogComments slug="how-big-is-the-library" />
       </ContentPageLayout>
     </>
   );

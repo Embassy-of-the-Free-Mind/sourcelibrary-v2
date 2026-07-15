@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Deletion: How Claude Code accidentally deleted 4,758 books — Research Notes — Source Library',
@@ -404,7 +403,6 @@ Delta (published - supabase):  -5,594`}</code></pre>
           <em>&mdash; Derek</em>
         </p>
 
-        <BlogComments slug="the-deletion" />
       </article>
     </ContentPageLayout>
   );

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Cellulae: What Two Pages of a Medieval Manuscript Reveal About Biology, Law, and the Dangers of Careful Reasoning - Source Library',
@@ -487,7 +486,6 @@ export default function CellulaePage() {
           </ul>
         </section>
 
-        <BlogComments slug="cellulae" />
       </article>
     </ContentPageLayout>
   );

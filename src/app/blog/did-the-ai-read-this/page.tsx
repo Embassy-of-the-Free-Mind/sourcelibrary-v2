@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Did the AI Read This? - Research Notes - Source Library',
@@ -167,7 +166,6 @@ export default function DidTheAIReadThisPage() {
 
       </article>
 
-      <BlogComments slug="did-the-ai-read-this" />
     </ContentPageLayout>
   );
 }

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Visualizing 20,000 Books Across Six Dimensions - Source Library',
@@ -165,7 +164,6 @@ export default function VisualizingClassificationPage() {
 
       </article>
 
-      <BlogComments slug="visualizing-classification" />
     </ContentPageLayout>
   );
 }

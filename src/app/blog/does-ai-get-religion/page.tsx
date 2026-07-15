@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Does the AI Get Religion? — Research Notes — Source Library',
@@ -133,7 +132,6 @@ export default function DoesAiGetReligionPage() {
         </p>
       </article>
 
-      <BlogComments slug="does-ai-get-religion" />
     </ContentPageLayout>
   );
 }

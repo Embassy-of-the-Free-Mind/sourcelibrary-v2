@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How IIIF Helped Us Translate the Renaissance - Research Notes - Source Library',
@@ -784,7 +783,6 @@ export default function IIIFPage() {
         </div>
       </article>
 
-      <BlogComments slug="iiif" />
     </ContentPageLayout>
   );
 }

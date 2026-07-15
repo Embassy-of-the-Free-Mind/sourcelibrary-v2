@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Many First Translations, Really? - Research Notes - Source Library',
@@ -165,7 +164,6 @@ Roughly <strong>5,700 genuine first English translations</strong> across the lib
         </p>
       </article>
 
-      <BlogComments slug="counting-first-translations" />
     </ContentPageLayout>
   );
 }
