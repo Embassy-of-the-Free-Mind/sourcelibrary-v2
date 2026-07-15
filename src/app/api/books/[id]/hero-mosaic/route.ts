@@ -106,8 +106,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     );
     if (!book?.id) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
 
+    const debugMode = request.nextUrl.searchParams.get('debug') === '1';
     // Up-to-date cache: redirect to the stored image, or 404 the negative result.
-    if (book.hero_mosaic_version === MOSAIC_VERSION) {
+    // (debug bypasses the cache so we can inspect a fresh generation.)
+    if (!debugMode && book.hero_mosaic_version === MOSAIC_VERSION) {
       return book.hero_mosaic_url ? redirectToMosaic(book.hero_mosaic_url) : noMosaic();
     }
 
