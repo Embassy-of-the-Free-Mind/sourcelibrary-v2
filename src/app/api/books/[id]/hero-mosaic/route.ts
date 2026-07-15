@@ -21,7 +21,7 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 8; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 9; // bump to force-regenerate cached mosaics
 const MAX_TILES = 50;
 
 /**
@@ -174,35 +174,33 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     if (urls.length >= 8 && distinct.length <= 2) return cacheNegative();
     // Otherwise build with whatever distinct tiles we have — down to a single one.
 
-    // Masonry layout — like the Pages grid: fixed-width columns, tiles stacked
-    // top-aligned at their true aspect, each new tile added to the shortest
-    // column. The canvas is then cropped to the SHORTEST column's bottom so the
-    // grid is always completely filled (no ragged dark gap in a corner).
+    // Row grid — exactly like the Pages section: a fixed number of columns,
+    // tiles laid out row by row at their TRUE dimensions, top-aligned within
+    // each row (a shorter page leaves a little space below it). Each row is as
+    // tall as its tallest tile. Only whole rows are kept so the bottom edge is
+    // always a full row — never a ragged half-filled corner.
     const cols = chooseColumns(distinct.length, isPlateMosaic);
-    const width = cols * TILE_W + (cols + 1) * GAP;
-    const colBottoms = new Array<number>(cols).fill(GAP); // y where the next tile starts
-    const placements = distinct.map((t) => {
-      let c = 0;
-      for (let i = 1; i < cols; i++) if (colBottoms[i] < colBottoms[c]) c = i;
-      const left = GAP + c * (TILE_W + GAP);
-      const top = colBottoms[c];
-      colBottoms[c] = top + t.height + GAP;
-      return { input: t.data, left, top };
-    });
-    // Build at the tallest column's height (all tiles fit — no composite
-    // overflow), then crop down to the SHORTEST column's bottom so the grid is
-    // completely filled with no ragged dark corner. Every column holds ≥1 tile
-    // (cols ≤ tile count, shortest-first packing), so fillHeight is always > 0.
-    const fullHeight = Math.max(...colBottoms);
-    const fillHeight = Math.min(...colBottoms) - GAP;
+    const numRows = distinct.length <= cols ? 1 : Math.floor(distinct.length / cols);
+    const rowCols = distinct.length <= cols ? distinct.length : cols;
+    const used = distinct.slice(0, numRows * rowCols);
+    const width = rowCols * TILE_W + (rowCols + 1) * GAP;
 
-    // Composite onto the full-height canvas first (all tiles fit, no overflow),
-    // then crop to the fill line in a fresh pass so op ordering is unambiguous.
-    const full = await sharp({ create: { width, height: fullHeight, channels: 3, background: BG } })
+    const placements: { input: Buffer; left: number; top: number }[] = [];
+    let y = GAP;
+    for (let r = 0; r < numRows; r++) {
+      const row = used.slice(r * rowCols, r * rowCols + rowCols);
+      const rowHeight = Math.max(...row.map(t => t.height));
+      row.forEach((t, c) => {
+        placements.push({ input: t.data, left: GAP + c * (TILE_W + GAP), top: y }); // top-aligned
+      });
+      y += rowHeight + GAP;
+    }
+    const height = y; // sum of row heights + gaps → a clean rectangle
+
+    const flat = await sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(placements)
       .jpeg()
       .toBuffer();
-    const flat = await sharp(full).extract({ left: 0, top: 0, width, height: fillHeight }).jpeg().toBuffer();
 
     // Skip mosaics that are mostly black — dark manuscripts, palm-leaf strips on
     // black grounds, etc. They tile into odd stripes and, under the hero tint,

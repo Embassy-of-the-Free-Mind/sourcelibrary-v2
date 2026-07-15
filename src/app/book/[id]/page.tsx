@@ -54,6 +54,8 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
+import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
+import type { PriorTranslationCredit } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -1011,33 +1013,44 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </div>
         </details>
 
-        {/* Editions & translations — our published editions + translation history,
-            kept separate from the source's bibliographic record. */}
-        {(!!book.editions?.length || !!book.is_first_translation || translatedCount > 0) && (
-          <details className="card group sl-collapse">
-            <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-              <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Editions &amp; translations</h3>
-              <PlusToggle />
-            </summary>
-            <div className="px-4 pb-4 md:px-6 md:pb-6">
-              {book.editions?.length ? (
-                <div>
-                  <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
-                  <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
-                </div>
-              ) : null}
-              {/* Translation history — the evidence component is dark-themed, so it
-                  sits in a small dark sub-panel to stay legible on the light card. */}
-              {(!!book.is_first_translation || translatedCount > 0) && (
-                <div className={`${book.editions?.length ? 'mt-5' : ''} rounded-lg p-3 md:p-4`} style={{ background: '#211c17' }}>
-                  <Suspense fallback={null}>
-                    <div className="[&_.mt-3]:!mt-0"><FirstTranslationEvidence book={book as never} showExternalLinks={embedPolicy.showExternalLinks} /></div>
-                  </Suspense>
-                </div>
-              )}
-            </div>
-          </details>
-        )}
+        {/* Editions & translations — our published editions and any EXISTING
+            English translation to credit. Shown only when there's real content:
+            not merely because a book is a first translation (that's in the hero)
+            or has some translated pages. Rendered light and expanded. */}
+        {(() => {
+          const hasEditions = !!book.editions?.length;
+          const prior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
+            ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
+            : null;
+          if (!hasEditions && !prior) return null;
+          return (
+            <details className="card group sl-collapse">
+              <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+                <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Editions &amp; translations</h3>
+                <PlusToggle />
+              </summary>
+              <div className="px-4 pb-4 md:px-6 md:pb-6">
+                {hasEditions && (
+                  <div>
+                    <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
+                    <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
+                  </div>
+                )}
+                {prior && (
+                  <div className={hasEditions ? 'mt-5' : ''}>
+                    <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Existing translation</div>
+                    <p className="text-[14.5px] leading-relaxed" style={{ color: '#2b2620' }}>
+                      {priorTranslationSentence(prior)}
+                      {embedPolicy.showExternalLinks && (
+                        <>{' '}<a href={prior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(prior)} →</a></>
+                      )}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </details>
+          );
+        })()}
 
         {/* Book history — staff-only processing log; its own self-contained collapsible. */}
         <AuthCheck role="inner_circle">
