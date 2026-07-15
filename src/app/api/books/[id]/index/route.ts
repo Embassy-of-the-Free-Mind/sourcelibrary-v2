@@ -1373,7 +1373,12 @@ export const POST = withAuth(async (request, session, context) => {
     // them via /admin/book-revisions even after the cache is cleared.
     await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
 
-    // Clear cached index and summary
+    // Clear cached index and summary. There are TWO stores: the dedicated
+    // `book_indexes` collection (what getBookIndex reads FIRST) and the legacy
+    // inline `book.index`. Clearing only the inline field left a stale
+    // `book_indexes` doc in place, so GET kept returning the old cached index
+    // and never regenerated. Clear both.
+    await db.collection('book_indexes').deleteOne({ book_id: id });
     await db.collection('books').updateOne(
       { id },
       { $unset: { index: '', summary: '', reading_summary: '' } }
