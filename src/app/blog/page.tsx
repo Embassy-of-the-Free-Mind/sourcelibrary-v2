@@ -26,6 +26,32 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'nature-of-harmony',
+    title: 'The Nature of Harmony',
+    subtitle:
+      'For twenty-five centuries and across five civilizations, people said the world is built like music — and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
+    date: '15 July 2026',
+    readTime: '18 min read',
+    tag: 'History of Ideas',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
+    imageAlt:
+      "Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature chained to the divine name above and to the ape of Art below.",
+  },
+  {
+    slug: 'show-me-the-number',
+    title: 'Show Me the Number',
+    subtitle:
+      'We keep saying AI should be in "harmony" with us — aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
+    date: '15 July 2026',
+    readTime: '12 min read',
+    tag: 'Essay',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
+    imageAlt:
+      "Fludd's ape of Art at the centre of the cosmos, holding a gridded model of the world — the artificial imitator, four centuries early.",
+  },
+  {
     slug: 'fish-voiced-priest',
     title: 'The Fish-Voiced Priest',
     subtitle:
