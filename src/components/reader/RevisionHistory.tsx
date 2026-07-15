@@ -30,6 +30,18 @@ function truncate(text: string, len: number) {
   return text.slice(0, len) + '...';
 }
 
+// Friendly display names for the per-page AI model badge. Gemini ids fall through
+// to the old gemini-/‑preview stripping; Claude ids get a clean short name.
+const MODEL_LABELS: Record<string, string> = {
+  'claude-opus-4-8': 'Opus 4.8',
+  'claude-opus-4-8[1m]': 'Opus 4.8',
+  'claude-sonnet-5': 'Sonnet 5',
+  'claude-haiku-4-5': 'Haiku 4.5',
+};
+function formatModel(model: string) {
+  return MODEL_LABELS[model] ?? model.replace('gemini-', '').replace('-preview', '');
+}
+
 function SourceBadge({ source }: { source: string }) {
   const styles: Record<string, { bg: string; color: string; label: string }> = {
     ai: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'AI' },
@@ -125,7 +137,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
             <SourceBadge source={currentSource || 'ai'} />
             {model && (
               <span style={{ color: 'var(--text-faint)' }}>
-                {model.replace('gemini-', '').replace('-preview', '')}
+                {formatModel(model)}
               </span>
             )}
           </>
@@ -192,7 +204,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                       <SourceBadge source={rev.source} />
                       {rev.model && (
                         <span className="text-[10px] truncate" style={{ color: 'var(--text-faint)' }}>
-                          {rev.model.replace('gemini-', '').replace('-preview', '')}
+                          {formatModel(rev.model)}
                         </span>
                       )}
                       {rev.edited_by && (
