@@ -1022,7 +1022,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           const prior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
             ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
             : null;
-          if (!hasEditions && !prior) return null;
+          // A prior English translation exists (verdict not_first) — show it, but
+          // never for a first-translation verdict (that's already in the hero).
+          const disposition = (book as unknown as { translation_verification?: { disposition?: string } }).translation_verification?.disposition;
+          const existingTranslation = !prior && disposition === 'translation_found';
+          if (!hasEditions && !prior && !existingTranslation) return null;
           return (
             <details className="card group sl-collapse">
               <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
@@ -1036,13 +1040,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
                   </div>
                 )}
-                {prior && (
+                {(prior || existingTranslation) && (
                   <div className={hasEditions ? 'mt-5' : ''}>
                     <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Existing translation</div>
                     <p className="text-[14.5px] leading-relaxed" style={{ color: '#2b2620' }}>
-                      {priorTranslationSentence(prior)}
-                      {embedPolicy.showExternalLinks && (
-                        <>{' '}<a href={prior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(prior)} →</a></>
+                      {prior ? (
+                        <>
+                          {priorTranslationSentence(prior)}
+                          {embedPolicy.showExternalLinks && (
+                            <>{' '}<a href={prior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(prior)} →</a></>
+                          )}
+                        </>
+                      ) : (
+                        'An earlier English translation of this work has been published.'
                       )}
                     </p>
                   </div>
