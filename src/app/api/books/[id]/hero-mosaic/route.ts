@@ -21,9 +21,10 @@ import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 11; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 12; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
+const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
 const TARGET_ASPECT = 1.6; // mosaic width:height — a 10×5 of portrait pages; the
                            // hero shows it via background-cover (never repeated)
 
@@ -106,19 +107,34 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // → keep only byte-DISTINCT tiles (so a cover-fallback book, whose every page
     // thumbnail resolves to the same image, collapses to 1 and triggers the plate
     // fallback below instead of tiling one page).
+    //
+    // Fetches run through a small concurrency POOL, not all at once: firing 80+
+    // outbound requests from one serverless function exhausts its sockets and
+    // most fail, which used to starve the grid (and then wrongly negative-cache).
+    const fetchOne = async (url: string): Promise<Tile | null> => {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const buf = await images.fetchBuffer(url, { timeout: 15000 });
+          const { data, info } = await sharp(buf).resize({ width: TILE_W, withoutEnlargement: false }).toBuffer({ resolveWithObject: true });
+          if (info.height <= MAX_TILE_H) return { data, height: info.height };
+          const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
+          return { data: cropped, height: MAX_TILE_H };
+        } catch { if (attempt === 1) return null; }
+      }
+      return null;
+    };
     const fetchTiles = async (urls: string[]): Promise<Tile[]> => {
-      const raw = await Promise.all(urls.slice(0, CANDIDATE_LIMIT).map(async (url) => {
-        for (let attempt = 0; attempt < 2; attempt++) {
-          try {
-            const buf = await images.fetchBuffer(url, { timeout: 15000 });
-            const { data, info } = await sharp(buf).resize({ width: TILE_W, withoutEnlargement: false }).toBuffer({ resolveWithObject: true });
-            if (info.height <= MAX_TILE_H) return { data, height: info.height };
-            const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
-            return { data: cropped, height: MAX_TILE_H };
-          } catch { if (attempt === 1) return null; }
+      const list = urls.slice(0, CANDIDATE_LIMIT);
+      const raw: (Tile | null)[] = new Array(list.length).fill(null);
+      let next = 0;
+      const worker = async () => {
+        for (;;) {
+          const i = next++;
+          if (i >= list.length) return;
+          raw[i] = await fetchOne(list[i]);
         }
-        return null;
-      }));
+      };
+      await Promise.all(Array.from({ length: Math.min(FETCH_CONCURRENCY, list.length) }, worker));
       const seen = new Set<string>();
       const out: Tile[] = [];
       for (const t of raw) {
@@ -144,6 +160,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     let distinct = await fetchTiles(pageUrls);
     let usingPlates = false;
+    let plateUrlCount = 0;
 
     // Fallback: when the page scans don't yield enough DISTINCT tiles for a real
     // grid (broken per-page data / cover-fallback / heavy fetch failures), use
@@ -161,13 +178,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       const plateUrls = Array.from(new Set(
         plates.map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined).filter((u): u is string => !!u && RENDERABLE.test(u)),
       ));
+      plateUrlCount = plateUrls.length;
       if (plateUrls.length) {
         const plateTiles = await fetchTiles(plateUrls);
         if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
       }
     }
 
-    if (distinct.length < MIN_TILES) return cacheNegative(); // too few images to make a grid
+    if (distinct.length < MIN_TILES) {
+      // Distinguish a STRUCTURALLY image-poor book (genuinely < a grid's worth of
+      // renderable images → cache a dark hero) from a TRANSIENT fetch failure (we
+      // had plenty of candidate URLs but the fetches flaked → 404 WITHOUT caching
+      // so the next request regenerates). Never lock a rich book to a dark hero.
+      const candidates = pageUrls.length + plateUrlCount;
+      return candidates >= 12 ? noMosaic() : cacheNegative();
+    }
 
     // Height-outlier filter: keep tiles whose height sits near the MEDIAN so rows
     // are uniform (no foldout/spread stretching a row) — the hero then reads like
