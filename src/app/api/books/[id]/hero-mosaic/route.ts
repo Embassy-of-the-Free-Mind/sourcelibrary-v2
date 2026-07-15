@@ -175,9 +175,22 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       pageDocs.map(p => absPageUrl(p as PageImageFields)).filter((u): u is string => !!u),
     ));
 
-    let { tiles: distinct } = await fetchTiles(pageUrls);
+    const pf = await fetchTiles(pageUrls);
+    let distinct = pf.tiles;
     let usingPlates = false;
     let plateUrlCount = 0;
+
+    if (request.nextUrl.searchParams.get('debug') === '1') {
+      // One raw fetch probe so we can see WHY server fetches fail.
+      let probe: Record<string, unknown> = { none: true };
+      if (pageUrls[0]) {
+        try {
+          const r = await fetch(pageUrls[0], { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
+          probe = { url: pageUrls[0], status: r.status, ok: r.ok, ct: r.headers.get('content-type'), len: r.headers.get('content-length') };
+        } catch (e) { probe = { url: pageUrls[0], error: e instanceof Error ? e.message : String(e) }; }
+      }
+      return NextResponse.json({ pageUrlCount: pageUrls.length, pageTilesDistinct: distinct.length, pageTilesFetched: pf.fetched, sampleUrls: pageUrls.slice(0, 3), probe });
+    }
 
     // Plates are a fallback ONLY for pages that genuinely can't make a grid:
     //  - too few distinct page URLs (structurally image-poor pages), or
