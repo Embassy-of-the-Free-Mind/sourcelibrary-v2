@@ -435,8 +435,9 @@ h1, h2, h3, h4 {
 
 /* Smooth open/close for <details> dropdowns (progressive enhancement:
  * animates in browsers that support ::details-content + interpolate-size,
- * and is an instant show/hide everywhere else). */
-:root {
+ * and is an instant show/hide everywhere else). Scoped to the dropdowns so
+ * keyword-size interpolation doesn't leak into the rest of the app. */
+details.sl-collapse {
   interpolate-size: allow-keywords;
 }
 details.sl-collapse::details-content {
