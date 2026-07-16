@@ -5,8 +5,10 @@ import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
+import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -75,8 +77,8 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
     notFound();
   }
 
-  // Step 2: Book lookup + nav pages in parallel (both can start now)
-  const [bookResult, navPages] = await Promise.all([
+  // Step 2: Book lookup + nav pages + music transcriptions in parallel
+  const [bookResult, navPages, musicTranscriptions] = await Promise.all([
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
@@ -89,6 +91,7 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
       }),
+    getTranscriptionsForPage(db, pageId),
   ]);
 
   if (!bookResult) {
@@ -131,6 +134,9 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         initialPage={serializedPage}
         initialPageList={serializedNavPages}
       />
+      {musicTranscriptions.length > 0 && (
+        <HymnPlayer transcriptions={musicTranscriptions} />
+      )}
     </>
   );
 }
