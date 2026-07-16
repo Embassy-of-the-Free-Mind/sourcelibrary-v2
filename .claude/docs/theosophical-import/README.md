@@ -99,7 +99,16 @@ and confirm against `archive.org/metadata/<id>` before acting.
 |---|---|---|---|---|
 | *Lucifer* Vols 1–20 (no 14) | 19 | 10,276 | ~9,074 | `theosophicalrevi00NNunse` |
 | *The Theosophist* | 4 | 3,152 | ~2,827 | `theosophist0*goog`, `theosophist0037unse` |
-| *Lucifer* v19 n114 (single issue) | 1 | 88 | 88 | `lucifer_v19_n114_feb_15_1897` |
+| *Lucifer* v19 n114 (single issue) | 1 | 88 | — | `lucifer_v19_n114_feb_15_1897` |
+
+**Batch result (2026-07-16):** 23 of 24 books submitted — **11,900 pages, $9.41**.
+No 429s, no quota trouble. The single *Lucifer* issue **failed and was skipped**:
+it was never archived to R2 (no `display_photo` / `archived_photo`, only the IA
+source URL, which now **403s**). That is an archiving-stage gap, not an OCR
+problem — see [[lesson_archiving_provider_routing_gaps]]; fix with
+`archiving-watchdog.mjs --rearchive` if it's wanted. Low priority: it is a single
+issue of Vol 19, whose full volume (`theosophicalrevi0019unse`, 552pp) was OCR'd
+in this same batch, so the content is very likely already covered.
 
 All English and all post-1820, so **OCR-only — no translation or modernization
 pass** (see the English reader year-split). Measured from `gemini_usage`: realtime
