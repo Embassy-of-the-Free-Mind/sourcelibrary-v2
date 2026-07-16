@@ -28,16 +28,20 @@ function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: '
     return { x: C + r * Math.sin(theta), y: C - r * Math.cos(theta), cents, r };
   };
   const points = Array.from({ length: n + 1 }, (_, i) => pt(i));
-  const gapDeg = n === 12 && temper === 'just' ? (points[12].cents / 1200) * 360 : 0;
 
-  // Arc marking the comma gap, drawn just outside the final landing.
-  const gapArc = () => {
-    const r = points[12].r + 9;
-    const a = (2 * Math.PI * points[12].cents) / 1200;
-    const x1 = C + r * Math.sin(a);
-    const y1 = C - r * Math.cos(a);
-    return `M ${C} ${C - r} A ${r} ${r} 0 0 1 ${x1} ${y1}`;
-  };
+  // Comma-gap annotation, fully precomputed: no array indexing may sit inside
+  // conditional JSX — the React Compiler can hoist member accesses above the
+  // guard (same failure mode as the TranslationEditor inline-conditional bug).
+  const last = points[points.length - 1];
+  const showGap = n === 12 && temper === 'just';
+  let gapPath = '';
+  let gapTextY = 0;
+  if (showGap) {
+    const r = last.r + 9;
+    const a = (2 * Math.PI * last.cents) / 1200;
+    gapPath = `M ${C} ${C - r} A ${r} ${r} 0 0 1 ${C + r * Math.sin(a)} ${C - r * Math.cos(a)}`;
+    gapTextY = C - last.r - 14;
+  }
 
   return (
     <svg viewBox="0 0 280 280" className="w-full max-w-[280px] mx-auto block" role="img"
@@ -85,10 +89,10 @@ function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: '
       })}
 
       {/* the comma gap */}
-      {gapDeg > 0 && (
+      {showGap && (
         <g>
-          <path d={gapArc()} fill="none" stroke="#a8503c" strokeWidth={2.5} strokeLinecap="round" />
-          <text x={C + 8} y={C - points[12].r - 14} fontSize={10} fill="#a8503c">
+          <path d={gapPath} fill="none" stroke="#a8503c" strokeWidth={2.5} strokeLinecap="round" />
+          <text x={C + 8} y={gapTextY} fontSize={10} fill="#a8503c">
             +23.5 ¢ — the comma
           </text>
         </g>
