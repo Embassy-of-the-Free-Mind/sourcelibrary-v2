@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'sound-laboratory',
+    title: 'The Sound Laboratory',
+    subtitle:
+      'Five interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Salmon\'s Royal Society trial, and Tartini\'s ghost tone. Headphones recommended.',
+    date: '16 July 2026',
+    readTime: '5 experiments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg',
+    imageAlt: "A smith at his anvil, hammer raised — Aegidius Sadeler's engraving, 1608.",
+  },
+  {
     slug: 'nature-of-harmony',
     title: 'The Nature of Harmony',
     subtitle:
