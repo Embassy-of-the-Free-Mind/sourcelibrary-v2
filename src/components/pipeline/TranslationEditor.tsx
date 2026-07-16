@@ -50,7 +50,6 @@ import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
-import PageComments from '@/components/book/PageComments';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 
@@ -2099,17 +2098,6 @@ export default function TranslationEditor({
               showCount={true}
               label="Like this page"
             />
-            {!isEmbedded && (
-              <>
-                <span style={{ color: 'var(--border-light)' }}>·</span>
-                <PageComments
-                  key={`comments-${page.id}`}
-                  bookId={book.id}
-                  pageId={page.id}
-                  pageNumber={page.page_number}
-                />
-              </>
-            )}
           </div>
           {showNavHint && (
             <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
