@@ -250,6 +250,20 @@ async function thumbnailAndMaterialize(db, bid) {
     proc.on('exit', resolve); proc.on('error', resolve);
   });
   await materializeGalleryForBook(db, bid);
+  // Recovered detections change the book-level rollup and the ISR-cached book
+  // page; without these two steps every sweep needs a manual follow-up pass.
+  const [agg] = await db.collection('pages').aggregate([
+    { $match: { book_id: bid, 'detected_images.0': { $exists: true } } },
+    { $unwind: '$detected_images' },
+    { $count: 'n' },
+  ]).toArray();
+  await db.collection('books').updateOne({ id: bid }, { $set: { detected_images_count: agg?.n || 0, updated_at: new Date() } });
+  if (process.env.CRON_SECRET) {
+    await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${bid}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.CRON_SECRET}`, 'User-Agent': 'Mozilla/5.0 (reextract-missed-pages)' },
+    }).catch(() => {}); // best-effort — ISR windows self-heal
+  }
 }
 
 // ── Reconcile: re-crop + re-materialize books whose recovered pages have no gallery_images doc ──
