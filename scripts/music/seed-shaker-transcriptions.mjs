@@ -24,32 +24,34 @@ const SEEDS = [
   {
     page_number: 21,
     title: 'The Faithful Witness (opening)',
+    status: 'verified',
     notes:
-      'Opening phrases of the first anthem (scan image 21). Pitch letters read from the print; rhythm/octaves approximate — draft pending verification.',
+      'First two phrases of the opening anthem (scan image 21). Letter-for-letter pass 2026-07-16: durations from printed letter forms (|g half, plain quarter, underlined slur-pairs eighths), medium note c, opening g on the line below. Free meter — barlines as printed. Model-verified against the scan; a human listen-through before public launch is still advisable.',
     abc: `X:1
 T:The Faithful Witness (opening)
 C:Shaker anthem, Canterbury, N.H. (1852)
-M:C
+M:none
 L:1/8
 Q:1/4=92
 K:C
-G2 | C2 C2 C2 D2 | E2 (ED) D2 (EF) | G2 (GA) G2 (EF) | G6 :|
-w:These things saith the Son of God, who hath his eyes like un-to_ a flame of fi-re;`,
+G4 | C2 C2 C2 | D2 E2 (DE) | D4 (EF) | G2 (GA) | G2 (EF) | G4 | C2 C2 E2 F2 | (GA) G4 | G4 |]
+w:These things saith the Son of God_ who hath_ his eyes_ like un-_ to a flame of fi_-r-e;`,
   },
   {
     page_number: 181,
     title: 'Holy Ascension (opening)',
+    status: 'draft',
     notes:
-      'Opening of the anthem on p.161 (scan image 181). Pitch letters read from the print; rhythm/octaves approximate — draft pending verification.',
+      'Opening of the anthem on p.161 (scan image 181). Pitch letters corrected against the scan 2026-07-16 (opening Come/come = whole notes G, A below the medium; all/ye = half e/d above). The long melisma on "ho——ly angels" makes syllable alignment uncertain — stays draft pending a human pass.',
     abc: `X:1
 T:Holy Ascension (opening)
 C:Shaker anthem, Canterbury, N.H. (1852)
-M:C
-L:1/4
+M:none
+L:1/8
 Q:1/4=88
 K:C
-G,2 A,2 | E D C E | (D/C/) D E2 | G G G F | E (D/C/) C C |
-w:Come come, all ye ho-ly, ho-ly_ an-gels, ye se-raphs bright, ye_ saints of the`,
+G,8 | A,8 | E4 D4 | C2 E2 (DC) | D4 E2 | G2 G2 G2 | F2 E2 (DC) | C4 C4 |]
+w:Come come all ye ho-ly_ ho_ ly_ an-gels_ ye se-raphs_ bright,`,
   },
 ];
 
@@ -74,8 +76,11 @@ for (const seed of SEEDS) {
     spans_pages: [page.id],
     title: seed.title,
     abc: seed.abc,
-    status: 'draft',
+    status: seed.status ?? 'draft',
     transcriber: 'claude-fable-5 (hand-read from scan, 2026-07-16)',
+    ...(seed.status === 'verified'
+      ? { verified_by: 'claude-fable-5 (letter-for-letter second pass vs scan, 2026-07-16)' }
+      : {}),
     notes: seed.notes,
     updated_at: new Date(),
   };
