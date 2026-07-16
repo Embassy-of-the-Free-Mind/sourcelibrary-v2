@@ -26,6 +26,9 @@
  *   --limit=N     max candidate pages to process this run (default 500)
  *   --concurrency vision-call concurrency (default 10)
  *   --book=ID     restrict to a single book (debugging)
+ *   --any-marker  widen the candidate test to ANY non-trivial <image-desc> tag,
+ *                 including bare attribute-less tags from old OCR vintages
+ *                 (issue #3165). Skips pages the vision model already examined.
  */
 
 import { MongoClient } from 'mongodb';
@@ -49,6 +52,14 @@ const ONLY_BOOK = getArg('book', null);
 // _id-order iteration front-loads early-imported books that aren't typical).
 // Use for validation batches; omit for an exhaustive full sweep.
 const RANDOM_BOOKS = parseInt(getArg('random-books', '0'));
+// Old-vintage OCR (pre-2026 prompts) emits bare, attribute-less <image-desc>
+// tags — no significance/type — which the default high-significance filter
+// can't see, so books extracted before the #2094 gate widening stay stranded
+// (issue #3165; the al-Qazwini case: 159 tagged pages, 0 candidates). This
+// opt-in widens the marker test to the production worker's gate: any
+// <image-desc> whose type attribute is absent or non-trivial. Expect lower
+// yield than the default filter's measured ~63% (Qazwini pilot: 49%).
+const ANY_MARKER = args.includes('--any-marker');
 
 const MODEL = 'gemini-3-flash-preview';
 const TRIVIAL = new Set(['symbol', 'stamp', 'ornament', 'blank', 'exlibris', 'bookplate', 'decorative', "printer's mark", 'photograph', 'photographic']);
@@ -104,13 +115,14 @@ function pageHasNonTrivialHighSigMarker(ocr) {
   const tags = [...ocr.matchAll(/<image-desc([^>]*)>/g)];
   return tags.some(m => {
     const type = (m[1].match(/type="([^"]+)"/) || [])[1];
+    if (ANY_MARKER) return !type || !TRIVIAL.has(type);
     const sig = (m[1].match(/significance="([^"]+)"/) || [])[1];
     return sig === 'high' && type && !TRIVIAL.has(type);
   });
 }
 
 async function main() {
-  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} keys=${API_KEYS.length}`);
+  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} keys=${API_KEYS.length}`);
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
@@ -137,6 +149,10 @@ async function main() {
       page_number: { $gt: 0 },
       'detected_images.0': { $exists: false },
       miss_recheck_at: { $exists: false },
+      // Default mode re-tests examined-but-empty pages (the vision-missed
+      // pattern its high-significance marker is strong evidence for). The
+      // relaxed marker isn't — restrict to never-examined pages.
+      ...(ANY_MARKER ? { image_extraction_updated_at: { $exists: false } } : {}),
     }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, display_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } }).toArray();
     for (const p of pages) {
       // Require the high-significance non-trivial OCR marker — the precise
