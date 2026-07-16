@@ -1,0 +1,143 @@
+/**
+ * Shared Web Audio engine for the Sound Laboratory stations
+ * (src/app/blog/sound-laboratory). Client-side only.
+ *
+ * Conventions (established by DissonanceDemo, #3159):
+ * - The AudioContext is created lazily, on a user gesture (browser requirement).
+ * - All level changes ramp via setTargetAtTime — no clicks.
+ * - Callers own teardown: suspend() on pause, dispose() on unmount.
+ *
+ * Two timbres: 'sine' (pure tone — psychoacoustics stations) and 'rich'
+ * (six harmonics at 1/n^1.5 — tuning-preference stations, where beating
+ * between upper partials is the audible difference between temperaments).
+ */
+
+export type Timbre = 'sine' | 'rich';
+
+interface Voice {
+  osc: OscillatorNode;
+  gain: GainNode;
+}
+
+export class ToneEngine {
+  private ctx: AudioContext | null = null;
+  private master: GainNode | null = null;
+  private richWave: PeriodicWave | null = null;
+  private voices = new Map<string, Voice>();
+
+  /** Create (or resume) the context. Call only from a user-gesture handler. */
+  ensure(): AudioContext | null {
+    if (this.ctx) {
+      void this.ctx.resume();
+      return this.ctx;
+    }
+    const Ctx: typeof AudioContext | undefined =
+      typeof window !== 'undefined'
+        ? window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+        : undefined;
+    if (!Ctx) return null;
+    const ctx = new Ctx();
+    const master = ctx.createGain();
+    master.gain.value = 0.22;
+    master.connect(ctx.destination);
+    const n = 6;
+    const real = new Float32Array(n + 1);
+    const imag = new Float32Array(n + 1);
+    for (let i = 1; i <= n; i++) imag[i] = 1 / Math.pow(i, 1.5);
+    this.richWave = ctx.createPeriodicWave(real, imag, { disableNormalization: false });
+    this.ctx = ctx;
+    this.master = master;
+    return ctx;
+  }
+
+  get context(): AudioContext | null {
+    return this.ctx;
+  }
+
+  /** Create or retune a sustained voice. Level is per-voice (0..1). */
+  setVoice(id: string, freq: number, level: number, timbre: Timbre = 'sine') {
+    const ctx = this.ctx;
+    if (!ctx || !this.master) return;
+    const t = ctx.currentTime;
+    const existing = this.voices.get(id);
+    if (existing) {
+      existing.osc.frequency.setTargetAtTime(freq, t, 0.02);
+      existing.gain.gain.setTargetAtTime(level, t, 0.03);
+      return;
+    }
+    const osc = ctx.createOscillator();
+    if (timbre === 'rich' && this.richWave) osc.setPeriodicWave(this.richWave);
+    else osc.type = 'sine';
+    osc.frequency.value = freq;
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain);
+    gain.connect(this.master);
+    osc.start();
+    gain.gain.setTargetAtTime(level, t, 0.03);
+    this.voices.set(id, { osc, gain });
+  }
+
+  removeVoice(id: string) {
+    const ctx = this.ctx;
+    const v = this.voices.get(id);
+    if (!ctx || !v) return;
+    v.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.03);
+    const osc = v.osc;
+    window.setTimeout(() => {
+      try { osc.stop(); } catch { /* stopped */ }
+    }, 150);
+    this.voices.delete(id);
+  }
+
+  stopAllVoices() {
+    for (const id of [...this.voices.keys()]) this.removeVoice(id);
+  }
+
+  suspend() {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    window.setTimeout(() => { void ctx.suspend(); }, 180);
+  }
+
+  /**
+   * Play one enveloped tone (or a chord) for `ms`, resolving when it ends.
+   * Used by the trial-based stations (śruti test, Salmon trial).
+   */
+  playTones(freqs: number[], ms: number, timbre: Timbre = 'sine', level = 0.5): Promise<void> {
+    const ctx = this.ensure();
+    if (!ctx || !this.master) return Promise.resolve();
+    const t0 = ctx.currentTime;
+    const dur = ms / 1000;
+    const per = level / Math.max(1, freqs.length);
+    for (const f of freqs) {
+      const osc = ctx.createOscillator();
+      if (timbre === 'rich' && this.richWave) osc.setPeriodicWave(this.richWave);
+      else osc.type = 'sine';
+      osc.frequency.value = f;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(per, t0 + 0.03);
+      g.gain.setValueAtTime(per, t0 + dur - 0.06);
+      g.gain.linearRampToValueAtTime(0, t0 + dur);
+      osc.connect(g);
+      g.connect(this.master);
+      osc.start(t0);
+      osc.stop(t0 + dur + 0.02);
+    }
+    return new Promise((resolve) => window.setTimeout(resolve, ms + 40));
+  }
+
+  dispose() {
+    try {
+      for (const v of this.voices.values()) v.osc.stop();
+      void this.ctx?.close();
+    } catch { /* already closed */ }
+    this.voices.clear();
+    this.ctx = null;
+    this.master = null;
+    this.richWave = null;
+  }
+}
+
+export const centsBetween = (f1: number, f2: number) => 1200 * Math.log2(f2 / f1);
