@@ -8,6 +8,95 @@ const ROOT = 220;
 const JUST_FIFTH = 1200 * Math.log2(3 / 2); // 701.955 ¢
 const EQUAL_FIFTH = 700;
 
+// Pitch-class letters reached from A by successive fifths.
+const FIFTH_NAMES = ['A', 'E', 'B', 'F♯', 'C♯', 'G♯', 'D♯', 'A♯', 'F', 'C', 'G', 'D'];
+
+/**
+ * The circle the fifths actually draw. Angle is honest pitch space — cents
+ * around the octave, root at twelve o'clock — so successive fifths hop
+ * ~210° and trace the {12/7} star. The radius creeps outward one notch per
+ * step, making the walk legible and letting the twelfth landing sit right
+ * next to the root: dead aligned under Zhu Zaiyu's fifths, visibly rotated
+ * past it by the comma under pure 3:2.
+ */
+function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: 'just' | 'equal' }) {
+  const C = 140;
+  const pt = (step: number) => {
+    const cents = ((step * fifth) % 1200 + 1200) % 1200;
+    const theta = (2 * Math.PI * cents) / 1200;
+    const r = 76 + step * 3.2;
+    return { x: C + r * Math.sin(theta), y: C - r * Math.cos(theta), cents, r };
+  };
+  const points = Array.from({ length: n + 1 }, (_, i) => pt(i));
+  const gapDeg = n === 12 && temper === 'just' ? (points[12].cents / 1200) * 360 : 0;
+
+  // Arc marking the comma gap, drawn just outside the final landing.
+  const gapArc = () => {
+    const r = points[12].r + 9;
+    const a = (2 * Math.PI * points[12].cents) / 1200;
+    const x1 = C + r * Math.sin(a);
+    const y1 = C - r * Math.cos(a);
+    return `M ${C} ${C - r} A ${r} ${r} 0 0 1 ${x1} ${y1}`;
+  };
+
+  return (
+    <svg viewBox="0 0 280 280" className="w-full max-w-[280px] mx-auto block" role="img"
+      aria-label={`Circle of fifths after ${n} steps: ${temper === 'just' ? 'pure fifths spiral past the root by the comma' : 'equal fifths close the circle'}`}>
+      {/* pitch-class ring + semitone ticks */}
+      <circle cx={C} cy={C} r={76} fill="none" stroke="#d6d3d1" strokeWidth={1} />
+      {Array.from({ length: 12 }, (_, i) => {
+        const a = (2 * Math.PI * i) / 12;
+        return (
+          <line key={i}
+            x1={C + 72 * Math.sin(a)} y1={C - 72 * Math.cos(a)}
+            x2={C + 76 * Math.sin(a)} y2={C - 76 * Math.cos(a)}
+            stroke="#d6d3d1" strokeWidth={1}
+          />
+        );
+      })}
+
+      {/* the walk */}
+      {points.length > 1 && (
+        <polyline
+          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
+          fill="none" stroke="#a8503c" strokeOpacity={0.35} strokeWidth={1.5}
+        />
+      )}
+
+      {/* landings */}
+      {points.map((p, i) => {
+        const isRoot = i === 0;
+        const isLast = i === n && n > 0;
+        const label = i === 12 ? (temper === 'just' ? 'A′' : 'A') : FIFTH_NAMES[i % 12];
+        const lr = p.r + 13;
+        const a = (2 * Math.PI * p.cents) / 1200;
+        return (
+          <g key={i}>
+            <circle cx={p.x} cy={p.y} r={isLast ? 5 : 3.5}
+              fill={isRoot ? 'white' : isLast ? '#a8503c' : '#78716c'}
+              stroke={isRoot ? '#a8503c' : 'none'} strokeWidth={1.5}
+            />
+            <text x={C + lr * Math.sin(a)} y={C - lr * Math.cos(a) + 3}
+              textAnchor="middle" fontSize={9} fill={isRoot || isLast ? '#a8503c' : '#a8a29e'}>
+              {label}
+            </text>
+          </g>
+        );
+      })}
+
+      {/* the comma gap */}
+      {gapDeg > 0 && (
+        <g>
+          <path d={gapArc()} fill="none" stroke="#a8503c" strokeWidth={2.5} strokeLinecap="round" />
+          <text x={C + 8} y={C - points[12].r - 14} fontSize={10} fill="#a8503c">
+            +23.5 ¢ — the comma
+          </text>
+        </g>
+      )}
+    </svg>
+  );
+}
+
 /**
  * Station II — the circle that won't close.
  *
@@ -78,6 +167,10 @@ export default function CommaSpiralDemo() {
         >
           Reset
         </button>
+      </div>
+
+      <div className="mb-4">
+        <CommaCircle n={n} fifth={fifth} temper={temper} />
       </div>
 
       <div className="grid grid-cols-3 gap-3">
