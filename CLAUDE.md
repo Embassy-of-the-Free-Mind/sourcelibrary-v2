@@ -198,6 +198,13 @@ The policy across the whole site (open-access posture since 2026-07-05, #2963): 
 
 **Declaration layer (separate from enforcement):** `src/app/robots.txt/route.ts` (custom route — carries the CC0 Content Signals Policy preamble and `Content-Signal: search=yes, ai-input=yes, ai-train=no` on every UA group; pinned by `tests/unit/robots-content-signals.test.ts`), `/.well-known/tdmrep.json`, the `TDM-Reservation`/`TDM-Policy` headers (`next.config.ts`) plus `tdm-reservation` meta tags (root layout), `public/llms.txt`, `/licensing` (rate card + layered legal grounds), and the `CONTENT_LICENSE` block (`src/lib/license-info.ts`) embedded in content-API JSON. Prices appear ONLY on /licensing + llms.txt. Keep all of these consistent with the enforcement layers when the policy changes.
 
+## Social-card metadata invariant
+Next.js merges page `metadata` shallowly per top-level key. Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):
+- A page that defines `openGraph` **replaces the root layout's entire openGraph object, images included** — title/description-only blocks ship NO `og:image` at all (blank share cards on FB/LinkedIn/Slack/iMessage).
+- The root layout's `twitter.images` (generic logo) **wins over per-page `openGraph.images` on X** — a correct og image still cards as the logo unless the page sets its own `twitter.images`.
+
+Rule: **any page that defines `openGraph` must set `images` explicitly and mirror them in a `twitter` block.** Exempt: routes with a file-convention `opengraph-image.tsx` (book, author, category detail, reader pages, gallery images) — the convention feeds the twitter card automatically. Tenant/embed routes are deliberately image-less pending tenant-scoped cards. New blog notes copy the openGraph+twitter pattern from any existing post; their "Last revised" footer dates come from `src/generated/blog-revisions.json` (regenerated from git history by `deploy-prod.sh` — see `scripts/maintenance/generate-blog-revisions.mjs`).
+
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-07-09: ~99.7K total docs, ~32K `visible: true` (publicly shown), ~74.7K with `pages_count > 0` (actually processed), ~48.3K with any OCR. Re-measure before quoting — the previous figures here were 2026-05-26 vintage and had drifted by up to 5× (`pages_count > 0` read ~15K against a true 74.7K). The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
