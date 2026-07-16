@@ -2,6 +2,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import DissonanceDemo from '@/components/blog/DissonanceDemo';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Robert Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature as a crowned virgin chained to the divine name above and to an ape (Art) on the terrestrial globe below.";
@@ -298,6 +299,13 @@ export default function NatureOfHarmonyPage() {
             <Link href="/q/BhI8eaAwF31xcf5TJAE" className="text-accent-rust hover:text-accent-rust underline">sourcelibrary.org/q/BhI8eaAwF31xcf5TJAE</Link>
           </figcaption>
         </figure>
+
+        <DissonanceDemo
+          title="Hear what Galileo heard"
+          caption="Two pure tones. Slide the second one across the octave: at the simple ratios — 2:1, 3:2, 4:3 — the pulses fall into step and the sound locks; in between, you hear the beating his theory predicts. The frequencies, their ratio, and the beat rate update live."
+          sourceHref="/book/discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei"
+          sourceLabel="Galileo, Discorsi (1638)"
+        />
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           The word Descartes reaches for is the hinge of the whole story: <em>resonare</em>. By 1650 sympathetic resonance was
