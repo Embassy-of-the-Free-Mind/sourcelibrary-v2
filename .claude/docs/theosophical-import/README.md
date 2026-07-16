@@ -87,17 +87,48 @@ Olcott's *Old Diary Leaves* First Series. Net-new imports (5, `visible: false`):
   before importing, not a guess.
 
 ### The real Theosophy asset is already here, unprocessed
-The largest holding is periodical runs imported hidden and never OCR'd:
+The largest holding is periodical runs imported hidden and never OCR'd. **Do not
+scope this run by title — the titles are wrong.** A title-regex sweep
+(`/^Lucifer/`, `/^The Theosophist/`) reports 38 books / 16,117 un-OCR'd pages. The
+true figure is 24 books / ~12,000 pages. Always cluster these by `ia_identifier`
+and confirm against `archive.org/metadata/<id>` before acting.
 
-| Run | Vols | Pages | OCR'd | Visible |
+**The canonical run (verified against IA, batch-submitted 2026-07-16):**
+
+| Run | Books | Pages | Un-OCR'd | IA id pattern |
 |---|---|---|---|---|
-| *Lucifer* (HPB ed., 1887–1897) | 28 | 14,234 | 2,004 | 1 |
-| *The Theosophist* (from Vol 1, 1879) | 10 | 5,401 | 1,514 | 0 |
+| *Lucifer* Vols 1–20 (no 14) | 19 | 10,276 | ~9,074 | `theosophicalrevi00NNunse` |
+| *The Theosophist* | 4 | 3,152 | ~2,827 | `theosophist0*goog`, `theosophist0037unse` |
+| *Lucifer* v19 n114 (single issue) | 1 | 88 | 88 | `lucifer_v19_n114_feb_15_1897` |
 
-~16,100 un-OCR'd pages here, plus 993 from the Tier 2 imports. All English and all
-post-1820, so they are **OCR-only — no translation or modernization pass** (see the
-English reader year-split). Measured cost from `gemini_usage` (last 200k ops,
-2026-07-16): OCR runs **$0.00324/page** on `gemini-3-flash-preview`, and these route
-to `gemini-3.1-flash-lite` at ~half that. **Whole run ≈ $30–55.** The blocker is not
-money — it's that the pipeline is deliberately paused, and selective unpause has a
-known phase-local bug (#2610): use `$addToSet` on `allow_book_ids`, never `$set`.
+All English and all post-1820, so **OCR-only — no translation or modernization
+pass** (see the English reader year-split). Measured from `gemini_usage`: realtime
+OCR costs $0.00324/page, but the Batch API path (`scripts/batch/bulk-reocr-local.mjs`,
+`--new-only`) is **$0.00079/page → ~$9.50 for the whole run**. That script submits
+batch jobs directly and **does not touch the paused pipeline**, so no selective
+unpause and no #2610 exposure. Results land via the `process-batches` cron (2h).
+
+### Two traps in this run — read before re-scoping it
+
+1. **`/^Lucifer/` catches two non-Lucifer books:** Steiner's *Lucifer-Gnosis (GA 34)*
+   (660pp, already 100% OCR'd) and a Wikimedia artwork *Lucifer* by Collin de Plancy
+   (0pp). Both inflated the original estimate.
+2. **Six records titled `The Theosophist — YYYY` are not The Theosophist at all.**
+   Their titles were assigned from an assumed series pattern at import, not from IA
+   metadata (cf. [[lesson_import_author_linking_editor_trap]]). Verified true titles:
+
+   | Book title (wrong) | `ia_identifier` | What it actually is |
+   |---|---|---|
+   | The Theosophist — 1885 | `fiveyearstheoso00meadgoog` | *Five Years of Theosophy* |
+   | The Theosophist — 1889 | `b30480188` | *Why I Became a Theosophist* |
+   | The Theosophist — 1892 | `irishtheosophist0000unse` | *The Irish Theosophist* |
+   | The Theosophist — 1918 | `evolutionbesant00anonuoft` | *Evolution of Mrs. Besant* |
+   | The Theosophist — 1919 | `lifeworkofalanle00leob` | *The Life and Work of Alan Leo* |
+   | The Theosophist — Volume-V 1896-97 | `ult.irishtheosophist0000dndu...` | *The Irish Theosophist* |
+
+   These are real, wanted books — but they must be **retitled before OCR or go-live**,
+   or we publish Besant's biography as a journal volume. Held back from the batch.
+   Also note `theosophist00arungoog` is dated **1890** by IA, not 1879 as titled.
+3. **Six `ult.lucifer*` scans duplicate `theosophicalrevi*` volumes** (2, 3, 5, 6, 8,
+   10 — "Lucifer — 1892" is Vol X). ~3,210pp of redundant OCR; excluded. Pick one
+   copy per volume before any go-live, or the public run shows doubled volumes.
