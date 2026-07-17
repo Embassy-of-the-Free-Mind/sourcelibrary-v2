@@ -197,9 +197,16 @@ async function syncCollectionCounts(db) {
   console.log('\n--- Sync Collection Counts ---');
   const start = Date.now();
 
+  // Resource types the art surfaces treat as non-artwork (documentary/photographic
+  // records). Kept in sync with ART_EXCLUDED_RESOURCE_TYPES in src/lib/collections-utils.ts
+  // (source of truth for the /collections/[id] artwork query) — change both together.
+  const ART_EXCLUDED_RESOURCE_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
+
   // One pass over books per counter, instead of 2 countDocuments per collection.
   // book_count uses the canonical "readable book" filter from the archived cron;
-  // artwork_count counts resource_type-bearing entries regardless of visibility.
+  // artwork_count must match what the public /collections/[id] page shows — VISIBLE
+  // artworks only, excluding the documentary resource types (was counting hidden
+  // artworks too, overstating card counts by ~14.6K — e.g. natural-philosophy 800 vs 1697).
   // total_book_count = ALL visible member books (any translation state), so
   // collection cards can show total holdings rather than the readable-only
   // book_count. Artworks (resource_type present) stay excluded — they have
@@ -211,7 +218,7 @@ async function syncCollectionCounts(db) {
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
     db.collection('books').aggregate([
-      { $match: { resource_type: { $exists: true } } },
+      { $match: { status: { $ne: 'deleted' }, visible: true, resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES } } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
