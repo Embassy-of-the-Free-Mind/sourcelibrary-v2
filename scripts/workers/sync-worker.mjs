@@ -200,7 +200,11 @@ async function syncCollectionCounts(db) {
   // One pass over books per counter, instead of 2 countDocuments per collection.
   // book_count uses the canonical "readable book" filter from the archived cron;
   // artwork_count counts resource_type-bearing entries regardless of visibility.
-  const [bookCounts, artworkCounts] = await Promise.all([
+  // total_book_count = ALL visible member books (any translation state), so
+  // collection cards can show total holdings rather than the readable-only
+  // book_count. Artworks (resource_type present) stay excluded — they have
+  // their own artwork_count.
+  const [bookCounts, artworkCounts, totalBookCounts] = await Promise.all([
     db.collection('books').aggregate([
       { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, resource_type: { $exists: false } } },
       { $unwind: '$collections' },
@@ -211,12 +215,18 @@ async function syncCollectionCounts(db) {
       { $unwind: '$collections' },
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
+    db.collection('books').aggregate([
+      { $match: { status: { $ne: 'deleted' }, visible: true, resource_type: { $exists: false } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ], { allowDiskUse: true }).toArray(),
   ]);
   const bookMap = new Map(bookCounts.map(r => [r._id, r.n]));
   const artMap = new Map(artworkCounts.map(r => [r._id, r.n]));
+  const totalMap = new Map(totalBookCounts.map(r => [r._id, r.n]));
 
   const collections = await db.collection('collections')
-    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1 } })
+    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1, total_book_count: 1 } })
     .toArray();
 
   const ops = [];
@@ -224,13 +234,14 @@ async function syncCollectionCounts(db) {
   for (const col of collections) {
     const liveBookCount = bookMap.get(col.slug) || 0;
     const liveArtworkCount = artMap.get(col.slug) || 0;
-    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount) {
+    const liveTotalBookCount = totalMap.get(col.slug) || 0;
+    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount || (col.total_book_count || 0) !== liveTotalBookCount) {
       mismatchCount++;
       if (!DRY_RUN) {
         ops.push({
           updateOne: {
             filter: { _id: col._id },
-            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, updated_at: new Date() } },
+            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, total_book_count: liveTotalBookCount, updated_at: new Date() } },
           },
         });
       }
