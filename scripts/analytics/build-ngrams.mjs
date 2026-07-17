@@ -57,6 +57,9 @@ const LANGUAGE = arg('--language', null);         // validation: restrict to one
 const MIN_YEAR = Number(arg('--min-year', 800));
 const MAX_YEAR = Number(arg('--max-year', 2030));
 const CREATE_TABLES = has('--create-tables');
+const TRUNCATE = has('--truncate'); // wipe both tables before a fresh load — REQUIRED when
+// replacing a run built with different thresholds/filters, or stale rows from the
+// old run survive the upsert (only matching keys get overwritten)
 const MAX_PAGE_TOKENS = 15_000; // corpus-size.mjs found ~50k-word junk pages (whole-book dumps); skip them
 
 if (!['all', 'emit', 'load'].includes(PHASE)) { console.error(`Unknown --phase ${PHASE}`); process.exit(1); }
@@ -262,6 +265,14 @@ async function load() {
 
   const checkpointPath = path.join(DIR, 'loaded-shards.json');
   const loaded = new Set(fs.existsSync(checkpointPath) ? JSON.parse(fs.readFileSync(checkpointPath, 'utf8')) : []);
+  if (TRUNCATE) {
+    if (loaded.size > 0) {
+      console.log(`[load] --truncate skipped: resuming a checkpointed load (${loaded.size} shards already in)`);
+    } else {
+      await pgc.query('TRUNCATE ngram_series, ngram_totals');
+      console.log('[load] truncated ngram_series + ngram_totals');
+    }
+  }
   const shardFiles = fs.readdirSync(DIR).filter(f => /^shard-\d+\.tsv\.gz$/.test(f)).sort();
   if (!shardFiles.length) { console.error(`[load] no shard files in ${DIR} — run emit first`); process.exit(1); }
 
