@@ -1,0 +1,88 @@
+// Scripts-side twin of src/lib/strip-editorial-wrappers.ts — keep the two in
+// lockstep. tests/unit/ngram-normalize.test.ts runs a parity check between this
+// file and the TS original on shared fixtures; if you change one side, change
+// the other or that test fails.
+//
+// Why it exists: .mjs workers/analytics scripts can't import the TS module.
+// Previous scripts inlined partial copies (e.g. corpus-size.mjs); this is the
+// full pipeline so batch consumers (ngram counting, future analytics) get the
+// same guarantees as the app surfaces: editorial wrapper blocks stripped
+// content-and-all, untagged AI preambles removed, lacuna runs collapsed,
+// markdown scaffolding flattened. See the TS file for the full rationale and
+// incident history (PR #2232, #3108, issue #2764).
+
+const EDITORIAL_WRAPPERS =
+  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc';
+
+function flattenMarkdownTables(text) {
+  return text
+    .replace(/^[ \t]*\|?[ \t]*:?-+:?[ \t]*(?:\|[ \t]*:?-+:?[ \t]*)+\|?[ \t]*$/gm, '')
+    .replace(/^[ \t]*\|(.+)\|[ \t]*$/gm, (_m, inner) =>
+      inner.split('|').map(c => c.trim()).filter(Boolean).join('  '))
+    .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
+}
+
+function stripMarkdownMarkers(text) {
+  return text
+    .replace(/^[ \t]*#{1,6}[ \t]+/gm, '')
+    .replace(/^[ \t]*(?:-{3,}|\*{3,})[ \t]*$/gm, '')
+    .replace(/->\s*(.+?)\s*<-/g, '$1')
+    .replace(/\*\*\*(\S(?:[^*]*?\S)?)\*\*\*/g, '$1')
+    .replace(/\*\*(\S(?:[^*]*?\S)?)\*\*/g, '$1')
+    .replace(/\*(\S(?:[^*]*?\S)?)\*/g, '$1')
+    .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
+}
+
+const PREAMBLE_OPENER =
+  /^(?:\*\*)?(?:note[:,]|sure[,!:]|certainly|okay|of course|here (?:is|are)\b|here's\b|i(?:'ve| have)\b|i(?:'m| am)\b|i(?:'ll| will)\b|i apologize|i can(?:no|')t\b|please\b|if you\b|the text (?:in|on|of) th(?:e|is) (?:image|page|scan)\b)/i;
+const PREAMBLE_META_VOCAB =
+  /\b(?:transcri(?:be|bed|bing|ption)|ocr|the image|this image|image provided|you (?:provided|requested)|as requested|as it appears|i apologize|i(?:'m| am) sorry|cannot assist|unable to assist)\b/i;
+
+function stripLeadingAiPreamble(text) {
+  let out = text;
+  for (let i = 0; i < 3; i++) {
+    const trimmed = out.replace(/^\s+/, '');
+    const parEnd = trimmed.search(/\n[ \t]*\n/);
+    const para = parEnd === -1 ? trimmed.split('\n', 1)[0] : trimmed.slice(0, parEnd);
+    if (
+      para.length === 0 ||
+      para.length > 500 ||
+      para.startsWith('<') ||
+      !PREAMBLE_OPENER.test(para) ||
+      !PREAMBLE_META_VOCAB.test(para)
+    ) break;
+    out = trimmed.slice(para.length).replace(/^\s+/, '');
+  }
+  return out;
+}
+
+export function cleanOcrArtifacts(text) {
+  if (!text) return text;
+  return stripLeadingAiPreamble(text)
+    .replace(/([.·•…])(?:[ \t ]*\1){11,}/g, '[…]')
+    .replace(/_{12,}/g, '[…]')
+    .replace(/(?<![|\-–—])[-–—](?:[ \t ]*[-–—]){11,}(?![-–—|])/g, ' […]')
+    .replace(/\$?\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}\$?/g, '($1)/($2)')
+    .replace(/\$?\\sqrt\s*\{([^{}]*)\}\$?/g, '√($1)')
+    .replace(/\\times(?![a-z])/gi, '×')
+    .replace(/\\cdot(?![a-z])/gi, '·')
+    .replace(/\\div(?![a-z])/gi, '÷')
+    .replace(/\\pm(?![a-z])/gi, '±')
+    .replace(/\\(?:leq|le)(?![a-z])/gi, '≤')
+    .replace(/\\(?:geq|ge)(?![a-z])/gi, '≥')
+    .replace(/\\neq(?![a-z])/gi, '≠')
+    .replace(/\\infty(?![a-z])/gi, '∞');
+}
+
+export function stripEditorialWrappers(text) {
+  if (!text) return text;
+  return cleanOcrArtifacts(
+    stripMarkdownMarkers(
+      flattenMarkdownTables(
+        text
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+      ),
+    ),
+  );
+}
