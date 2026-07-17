@@ -7,22 +7,27 @@
  * - All level changes ramp via setTargetAtTime — no clicks.
  * - Callers own teardown: suspend() on pause, dispose() on unmount.
  *
- * Two timbres: 'sine' (pure tone — psychoacoustics stations) and 'rich'
+ * Three timbres: 'sine' (pure tone — psychoacoustics stations), 'rich'
  * (six harmonics at 1/n^1.5 — tuning-preference stations, where beating
- * between upper partials is the audible difference between temperaments).
+ * between upper partials is the audible difference between temperaments),
+ * and 'pulse' (a click train: hundreds of near-equal harmonics, so the same
+ * oscillator is countable ticks at 2 Hz and a buzzy pitch at 200 Hz — the
+ * Galileo rhythm-becomes-pitch continuum needs one mechanism across both).
  */
 
-export type Timbre = 'sine' | 'rich';
+export type Timbre = 'sine' | 'rich' | 'pulse';
 
 interface Voice {
   osc: OscillatorNode;
   gain: GainNode;
+  lfo?: OscillatorNode;
 }
 
 export class ToneEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   private richWave: PeriodicWave | null = null;
+  private pulseWave: PeriodicWave | null = null;
   private voices = new Map<string, Voice>();
 
   /** Create (or resume) the context. Call only from a user-gesture handler. */
@@ -45,6 +50,13 @@ export class ToneEngine {
     const imag = new Float32Array(n + 1);
     for (let i = 1; i <= n; i++) imag[i] = 1 / Math.pow(i, 1.5);
     this.richWave = ctx.createPeriodicWave(real, imag, { disableNormalization: false });
+    // Click train: near-flat spectrum. WebAudio band-limits PeriodicWave per
+    // octave, so the same wave is safe from 2 Hz (ticks) to 300 Hz (a tone).
+    const pn = 1024;
+    const preal = new Float32Array(pn + 1);
+    const pimag = new Float32Array(pn + 1);
+    for (let i = 1; i <= pn; i++) pimag[i] = 1 / Math.pow(i, 0.2);
+    this.pulseWave = ctx.createPeriodicWave(preal, pimag, { disableNormalization: false });
     this.ctx = ctx;
     this.master = master;
     return ctx;
@@ -52,6 +64,17 @@ export class ToneEngine {
 
   get context(): AudioContext | null {
     return this.ctx;
+  }
+
+  /** Master bus, for stations that build their own node graphs (resonator banks). */
+  get output(): GainNode | null {
+    return this.master;
+  }
+
+  private applyTimbre(osc: OscillatorNode, timbre: Timbre) {
+    if (timbre === 'rich' && this.richWave) osc.setPeriodicWave(this.richWave);
+    else if (timbre === 'pulse' && this.pulseWave) osc.setPeriodicWave(this.pulseWave);
+    else osc.type = 'sine';
   }
 
   /** Create or retune a sustained voice. Level is per-voice (0..1). */
@@ -66,8 +89,7 @@ export class ToneEngine {
       return;
     }
     const osc = ctx.createOscillator();
-    if (timbre === 'rich' && this.richWave) osc.setPeriodicWave(this.richWave);
-    else osc.type = 'sine';
+    this.applyTimbre(osc, timbre);
     osc.frequency.value = freq;
     const gain = ctx.createGain();
     gain.gain.value = 0;
@@ -78,14 +100,45 @@ export class ToneEngine {
     this.voices.set(id, { osc, gain });
   }
 
+  /**
+   * A sustained voice that glides continuously between two frequencies —
+   * Kepler's planet-song, "a continuous series of intermediate notes"
+   * (Harmonices Mundi V.6). Sine-shaped sweep, one full cycle per `periodS`.
+   */
+  setSiren(id: string, fLow: number, fHigh: number, periodS: number, level: number, timbre: Timbre = 'sine') {
+    const ctx = this.ctx;
+    if (!ctx || !this.master) return;
+    this.removeVoice(id);
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    this.applyTimbre(osc, timbre);
+    osc.frequency.value = (fLow + fHigh) / 2;
+    const lfo = ctx.createOscillator();
+    lfo.type = 'sine';
+    lfo.frequency.value = 1 / periodS;
+    const depth = ctx.createGain();
+    depth.gain.value = (fHigh - fLow) / 2;
+    lfo.connect(depth);
+    depth.connect(osc.frequency);
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain);
+    gain.connect(this.master);
+    osc.start();
+    lfo.start();
+    gain.gain.setTargetAtTime(level, t, 0.03);
+    this.voices.set(id, { osc, gain, lfo });
+  }
+
   removeVoice(id: string) {
     const ctx = this.ctx;
     const v = this.voices.get(id);
     if (!ctx || !v) return;
     v.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.03);
     const osc = v.osc;
+    const lfo = v.lfo;
     window.setTimeout(() => {
-      try { osc.stop(); } catch { /* stopped */ }
+      try { osc.stop(); lfo?.stop(); } catch { /* stopped */ }
     }, 150);
     this.voices.delete(id);
   }
@@ -112,8 +165,7 @@ export class ToneEngine {
     const per = level / Math.max(1, freqs.length);
     for (const f of freqs) {
       const osc = ctx.createOscillator();
-      if (timbre === 'rich' && this.richWave) osc.setPeriodicWave(this.richWave);
-      else osc.type = 'sine';
+      this.applyTimbre(osc, timbre);
       osc.frequency.value = f;
       const g = ctx.createGain();
       g.gain.setValueAtTime(0, t0);
@@ -130,13 +182,14 @@ export class ToneEngine {
 
   dispose() {
     try {
-      for (const v of this.voices.values()) v.osc.stop();
+      for (const v of this.voices.values()) { v.osc.stop(); v.lfo?.stop(); }
       void this.ctx?.close();
     } catch { /* already closed */ }
     this.voices.clear();
     this.ctx = null;
     this.master = null;
     this.richWave = null;
+    this.pulseWave = null;
   }
 }
 

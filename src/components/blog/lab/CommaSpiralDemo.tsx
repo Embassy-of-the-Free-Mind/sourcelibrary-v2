@@ -1,12 +1,37 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { ToneEngine } from './audio';
 import { LabCard, PlayToggle, Readout, Chip } from './LabCard';
 
 const ROOT = 220;
 const JUST_FIFTH = 1200 * Math.log2(3 / 2); // 701.955 ¢
 const EQUAL_FIFTH = 700;
+
+/**
+ * The circle-as-pitch-space convention this station draws is itself a
+ * historical artifact we hold: Descartes' Compendium Musicae — his first
+ * book, written 1618 (ours is the 1656 printing) — renders the octave as
+ * nested circles, intervals as arcs. `focus` is the CSS object-position
+ * that centers each plate's circle in the square thumbnail crop.
+ */
+const DESCARTES_PLATES = [
+  {
+    src: 'https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/23.jpg',
+    href: '/book/musicae-compendium-descartes?page=23',
+    label: 'The consonances as nested arcs',
+    detail: 'Diapason, diapente, diatessaron — every consonance drawn as an arc of the same circle, so that adding a full turn adds an octave.',
+    focus: '50% 52%',
+  },
+  {
+    src: 'https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/33.jpg',
+    href: '/book/musicae-compendium-descartes?page=33',
+    label: 'The octave ring, with string numbers',
+    detail: 'The solmization syllables around concentric rings, each note pinned to a string number (C.360, D.320/324, A.432…) — the same angle-is-pitch convention as the diagram above, three centuries early.',
+    focus: '50% 38%',
+  },
+];
 
 // Pitch-class letters reached from A by successive fifths.
 const FIFTH_NAMES = ['A', 'E', 'B', 'F♯', 'C♯', 'G♯', 'D♯', 'A♯', 'F', 'C', 'G', 'D'];
@@ -113,6 +138,10 @@ export default function CommaSpiralDemo() {
   const [playing, setPlaying] = useState(false);
   const [n, setN] = useState(0);
   const [temper, setTemper] = useState<'just' | 'equal'>('just');
+  const [plate, setPlate] = useState<number | null>(null);
+  // Precomputed: no indexing inside conditional JSX — the React Compiler can
+  // hoist member access above the null guard (see CommaCircle note below).
+  const activePlate = plate === null ? null : DESCARTES_PLATES[plate];
 
   const engineRef = useRef<ToneEngine | null>(null);
 
@@ -196,6 +225,57 @@ export default function CommaSpiralDemo() {
           3¹²/2¹⁹ = 531441/524288 ≈ 1.01364 — twelve pure fifths overshoot seven octaves by 23.46 ¢
         </p>
       )}
+
+      <div className="mt-5 pt-4 border-t border-border-light">
+        <p className="text-[11px] uppercase tracking-wider text-muted mb-2">
+          Where the circle comes from — Descartes, age 22
+        </p>
+        <p className="text-xs text-secondary mb-3">
+          Drawing pitch as a circle — one octave per turn, intervals as arcs — was itself an
+          invention. The earliest circular pitch diagrams we hold are in{' '}
+          <Link href="/book/musicae-compendium-descartes" className="text-accent-rust underline">
+            Descartes&apos; <em>Compendium Musicae</em>
+          </Link>
+          , his first book, written in 1618. Click a folio:
+        </p>
+        <div className="flex gap-2 mb-3">
+          {DESCARTES_PLATES.map((p, i) => (
+            <button
+              key={p.src}
+              onClick={() => setPlate((v) => (v === i ? null : i))}
+              className={`w-20 h-20 rounded overflow-hidden border transition-colors ${
+                plate === i ? 'border-accent-rust' : 'border-border-light hover:border-stone-300'
+              }`}
+              aria-label={`${plate === i ? 'Hide' : 'Show'} plate: ${p.label}`}
+              aria-expanded={plate === i}
+            >
+              <img
+                src={p.src}
+                alt={p.label}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: p.focus, transform: 'scale(2.4)', transformOrigin: p.focus }}
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+        {activePlate && (
+          <figure className="m-0">
+            <img
+              src={activePlate.src}
+              alt={activePlate.label}
+              className="w-full rounded border border-border-light"
+              loading="lazy"
+            />
+            <figcaption className="text-xs text-muted mt-2">
+              {activePlate.detail}{' '}
+              <Link href={activePlate.href} className="text-accent-rust underline">
+                Read this page
+              </Link>
+            </figcaption>
+          </figure>
+        )}
+      </div>
     </LabCard>
   );
 }
