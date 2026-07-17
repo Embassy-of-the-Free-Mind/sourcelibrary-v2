@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ToneEngine } from './audio';
-import { LabCard, Chip } from './LabCard';
+import { LabCard, Chip, Readout } from './LabCard';
 
 /** The five tuned strings of the bank. Spaced whole steps apart or more, so resonance is selective. */
 const STRINGS = [
@@ -26,20 +26,29 @@ function response(f: number, f0: number): number {
   return 1 / Math.sqrt(1 + Q * Q * x * x);
 }
 
+// SVG frequency axis: strings sit at their true (log-scaled) pitch positions,
+// so the strike marker can land honestly between two tunings.
+const F_LO = 185;
+const F_HI = 350;
+const W = 320;
+const fx = (f: number) => 24 + ((Math.log2(f) - Math.log2(F_LO)) / (Math.log2(F_HI) - Math.log2(F_LO))) * (W - 48);
+
 /**
  * Station VIII — Kircher's sympathetic strings.
  *
  * Musurgia Universalis: pluck a string and an untouched string tuned in
  * unison answers, while its mistuned neighbours stay silent. Kircher read
  * this as the natural magic of consonance; the modern reading is resonance.
- * Here the untouched strings are resonators (narrow bandpass filters, the
- * physicist's model of a sympathetic string): the struck tone is fed
- * through all five at once, and only the one whose tuning matches rings —
- * and keeps ringing after the strike dies.
+ * The five drawn strings are resonators (narrow bandpass filters, the
+ * physicist's model of a sympathetic string). Every strike feeds ONE tone
+ * equally into all five at once; a string only accumulates energy at its
+ * own natural frequency, and that response is what the bars report.
  */
 export default function KircherResonanceDemo() {
-  const [amps, setAmps] = useState<number[]>(STRINGS.map(() => 0));
-  const [lastStrike, setLastStrike] = useState<number | null>(null);
+  // `result` is sticky (stays until the next strike); `ringing` drives the
+  // string-vibration visual and decays like the sound does.
+  const [result, setResult] = useState<{ freq: number; amps: number[] } | null>(null);
+  const [ringing, setRinging] = useState(false);
 
   const engineRef = useRef<ToneEngine | null>(null);
   const bankRef = useRef<BiquadFilterNode[] | null>(null);
@@ -77,7 +86,7 @@ export default function KircherResonanceDemo() {
     const out = e?.output;
     if (!ctx || !e || !out || !bankRef.current) return;
 
-    // The struck string: a plucked tone that decays in ~1.8 s.
+    // The struck tone: a pluck that decays in ~1.8 s.
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator();
     osc.type = 'sine';
@@ -96,66 +105,93 @@ export default function KircherResonanceDemo() {
     osc.start(t0);
     osc.stop(t0 + 2.0);
 
-    setLastStrike(freq);
-    setAmps(STRINGS.map((s) => response(freq, s.freq)));
+    setResult({ freq, amps: STRINGS.map((s) => response(freq, s.freq)) });
+    setRinging(true);
     if (decayRef.current !== null) window.clearTimeout(decayRef.current);
-    decayRef.current = window.setTimeout(() => setAmps(STRINGS.map(() => 0)), 2600);
+    decayRef.current = window.setTimeout(() => setRinging(false), 2400);
   };
+
+  // All derived values precomputed as plain scalars/arrays — nothing below may
+  // index or dot into `result` inside conditional JSX (React Compiler hoists
+  // member access above guards; two confirmed incidents in this repo).
+  const amps = result ? result.amps : STRINGS.map(() => 0);
+  const struckX = result ? fx(result.freq) : 0;
+  const struckHz = result ? Math.round(result.freq) : 0;
+  const struckNote = result ? STRINGS.find((s) => Math.abs(s.freq - result.freq) < 1)?.note ?? null : null;
+  const best = amps.indexOf(Math.max(...amps));
+  const bestValue = result ? `${STRINGS[best].note} · ${Math.round(amps[best] * 100)}%` : '—';
+  const bestNote = result ? (amps[best] > 0.5 ? 'unison — the string answers' : 'no string answers') : ' ';
+  const struckValue = result ? `${struckHz} Hz` : '—';
+  const struckDesc = result
+    ? (struckNote ? `the pitch of string ${struckNote}` : 'between A and B — matches no string')
+    : 'strike a tone above';
 
   return (
     <LabCard
       title="Station VIII — The string that answers"
       headerRight={null}
-      caption="Five tuned strings, none of them touched. Strike a tone: the string in unison with it swells and keeps singing after the strike fades; its neighbours, a tone away, barely stir. Then strike between two tunings and hear the answer refuse to come."
+      caption="Five tuned strings, none of them touched. Each strike sounds one tone (the dashed line) and feeds it equally into all five; the bars show how much each string drinks. Strike a string's own pitch and it answers near 100%, singing on after the strike fades; strike between two tunings and nothing fully answers."
       sourceHref="/book/kircher-musurgia-universalis-vol-ii-1650-kircher"
       sourceLabel="Kircher, Musurgia Universalis, Vol. II (1650)"
     >
       <div className="flex gap-1.5 mb-5 flex-wrap">
         {STRIKES.map((s) => (
-          <Chip key={s.label} active={lastStrike === s.freq} onClick={() => strike(s.freq)}>
+          <Chip key={s.label} active={result?.freq === s.freq} onClick={() => strike(s.freq)}>
             {s.label}
           </Chip>
         ))}
       </div>
 
-      <svg viewBox="0 0 300 110" className="w-full max-w-[340px] mx-auto block mb-4" role="img"
-        aria-label="Five vertical strings; the one tuned to the struck pitch vibrates most">
+      <svg viewBox={`0 0 ${W} 190`} className="w-full max-w-[400px] mx-auto block mb-4" role="img"
+        aria-label="Five strings on a frequency axis; a dashed marker shows the struck tone, and bars under each string show how strongly it answers">
+        {/* frequency axis */}
+        <line x1={16} y1={118} x2={W - 16} y2={118} stroke="#d6d3d1" strokeWidth={1} />
+
+        {/* the struck tone */}
+        {result && (
+          <g>
+            <line x1={struckX} y1={4} x2={struckX} y2={118}
+              stroke="#a8503c" strokeWidth={1.5} strokeDasharray="4 3" />
+            <text x={struckX} y={13} textAnchor="middle" fontSize={9} fill="#a8503c">
+              ▼ struck · {struckHz} Hz
+            </text>
+          </g>
+        )}
+
+        {/* strings + response bars */}
         {STRINGS.map((s, i) => {
-          const x = 40 + i * 55;
-          const a = amps[i] * 16;
-          const ringing = a > 1.5;
+          const x = fx(s.freq);
+          const amp = amps[i];
+          const bulge = (ringing ? amp : 0) * 13;
+          const answering = amp > 0.5;
           return (
             <g key={s.note}>
-              <path
-                d={`M ${x} 8 Q ${x + a} 55 ${x} 102`}
-                fill="none"
-                stroke={ringing ? '#a8503c' : '#78716c'}
-                strokeWidth={ringing ? 2 : 1.2}
-                style={{ transition: 'all 2.2s ease-out' }}
-              />
-              <path
-                d={`M ${x} 8 Q ${x - a} 55 ${x} 102`}
-                fill="none"
-                stroke={ringing ? '#a8503c' : '#78716c'}
-                strokeOpacity={0.45}
-                strokeWidth={1}
-                style={{ transition: 'all 2.2s ease-out' }}
-              />
-              <text x={x} y={109} textAnchor="middle" fontSize={8} fill={ringing ? '#a8503c' : '#a8a29e'}>
-                {s.note} · {Math.round(s.freq)} Hz
+              <path d={`M ${x} 22 Q ${x + bulge} 70 ${x} 118`} fill="none"
+                stroke={answering ? '#a8503c' : '#78716c'} strokeWidth={answering ? 2 : 1.2}
+                style={{ transition: 'all 1.8s ease-out' }} />
+              <path d={`M ${x} 22 Q ${x - bulge} 70 ${x} 118`} fill="none"
+                stroke={answering ? '#a8503c' : '#78716c'} strokeOpacity={0.45} strokeWidth={1}
+                style={{ transition: 'all 1.8s ease-out' }} />
+              {/* response bar — sticky until the next strike */}
+              <rect x={x - 7} y={166 - amp * 36} width={14} height={amp * 36}
+                fill={answering ? '#a8503c' : '#a8a29e'}
+                style={{ transition: 'all 0.4s ease-out' }} />
+              <line x1={x - 10} y1={166} x2={x + 10} y2={166} stroke="#d6d3d1" strokeWidth={1} />
+              <text x={x} y={177} textAnchor="middle" fontSize={9}
+                fill={answering ? '#a8503c' : '#78716c'}>
+                {s.note} · {Math.round(s.freq)}
+              </text>
+              <text x={x} y={187} textAnchor="middle" fontSize={8} fill="#a8a29e">
+                {result ? `${Math.round(amp * 100)}%` : ''}
               </text>
             </g>
           );
         })}
       </svg>
 
-      <div className="grid grid-cols-5 gap-2">
-        {STRINGS.map((s, i) => (
-          <div key={s.note} className="rounded border border-border-light bg-cream px-1 py-1.5 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted">{s.note} answers</p>
-            <p className="font-mono text-xs text-primary">{Math.round(amps[i] * 100)}%</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 gap-3">
+        <Readout label="Struck" value={struckValue} note={struckDesc} />
+        <Readout label="Strongest answer" value={bestValue} note={bestNote} />
       </div>
     </LabCard>
   );
