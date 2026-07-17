@@ -29,9 +29,9 @@ export const posts: BlogPost[] = [
     slug: 'sound-laboratory',
     title: 'The Sound Laboratory',
     subtitle:
-      'Five interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Salmon\'s Royal Society trial, and Tartini\'s ghost tone. Headphones recommended.',
+      'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
     date: '16 July 2026',
-    readTime: '5 experiments',
+    readTime: '10 experiments',
     tag: 'Interactive',
     tagColor: 'bg-stone-100 text-stone-600',
     image: 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg',

@@ -6,13 +6,18 @@ import CommaSpiralDemo from '@/components/blog/lab/CommaSpiralDemo';
 import ShrutiTestDemo from '@/components/blog/lab/ShrutiTestDemo';
 import SalmonTrialDemo from '@/components/blog/lab/SalmonTrialDemo';
 import TartiniDemo from '@/components/blog/lab/TartiniDemo';
+import GalileoRhythmDemo from '@/components/blog/lab/GalileoRhythmDemo';
+import KeplerPlanetsDemo from '@/components/blog/lab/KeplerPlanetsDemo';
+import KircherResonanceDemo from '@/components/blog/lab/KircherResonanceDemo';
+import YueJiAffectDemo from '@/components/blog/lab/YueJiAffectDemo';
+import EulerGradusDemo from '@/components/blog/lab/EulerGradusDemo';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg';
 
 export const metadata: Metadata = {
   title: 'The Sound Laboratory - Source Library',
   description:
-    'Five interactive stations that put twenty-five centuries of claims about harmony to the test — the smith\'s hammers, the Pythagorean comma, Bharata\'s two vīṇās, Salmon\'s Royal Society trial, and Tartini\'s third tone. Bring headphones.',
+    'Ten interactive stations that put twenty-five centuries of claims about harmony to the test — the smith\'s hammers, the Pythagorean comma, Bharata\'s two vīṇās, Salmon\'s Royal Society trial, Tartini\'s third tone, Galileo\'s rhythm-into-pitch continuum, Kepler\'s planet-songs, Kircher\'s sympathetic strings, the Record of Music\'s six sounds, and Euler\'s formula for sweetness. Bring headphones.',
   alternates: {
     canonical: '/blog/sound-laboratory',
   },
@@ -38,7 +43,7 @@ export default function SoundLaboratoryPage() {
           image={HERO}
           imageAlt="A smith at his anvil, hammer raised — Aegidius Sadeler's engraving of the smith and the dog, 1608"
         >
-          <p className="text-stone-400 text-sm mt-4">16 July 2026 &middot; 5 experiments &middot; headphones recommended</p>
+          <p className="text-stone-400 text-sm mt-4">16 July 2026 &middot; 10 experiments &middot; headphones recommended</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -137,18 +142,85 @@ export default function SoundLaboratoryPage() {
         </p>
         <TartiniDemo />
 
+        <h2 className="font-serif text-3xl text-primary mb-6 mt-12">VI. Rhythm, sped up</h2>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          If Tartini&apos;s ear manufactures tones, what is a tone to begin with? In the{' '}
+          <Link href="/book/discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei" className="text-accent-rust hover:text-accent-rust underline"><em>Discorsi</em></Link>{' '}
+          (1638), Galileo grounded consonance in coincidence: strings sound sweet together when
+          their pulses strike the ear in step, harsh when the pattern never settles. Taken
+          seriously, that claim dissolves the boundary between two things we experience as utterly
+          different — rhythm and pitch. A two-against-three drum pattern and a perfect fifth are
+          the same object at different speeds. That is a claim a slider can test: nothing changes
+          below but the rate.
+        </p>
+        <GalileoRhythmDemo />
+
+        <h2 className="font-serif text-3xl text-primary mb-6 mt-12">VII. The planets, auditioned</h2>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          The grandest claim in the whole literature is Kepler&apos;s: that the heavens are a
+          polyphonic choir, each planet singing a glissando between its slowest motion at aphelion
+          and its fastest at perihelion. His{' '}
+          <Link href="/book/the-harmony-of-the-world-kepler?page=325" className="text-accent-rust hover:text-accent-rust underline"><em>Harmonices Mundi</em></Link>{' '}
+          (1619) tabulates the extremes planet by planet and assigns each its interval — Saturn a
+          major third, Mars a fifth, Earth a bare semitone. A margin note beside the Earth&apos;s
+          entry may be the darkest joke in the history of astronomy:{' '}
+          <Link href="/book/the-harmony-of-the-world-kepler?page=336" className="text-accent-rust hover:text-accent-rust underline">&ldquo;The Earth sings MI FA MI, so that we may observe from the symbol that even in our own home we obtain Misery and Famine.&rdquo;</Link>{' '}
+          Kepler&apos;s numbers, unlike the smith&apos;s hammers, were real measurements — which
+          means we can grade them. Four centuries of refined orbital elements are the answer key.
+        </p>
+        <KeplerPlanetsDemo />
+
+        <h2 className="font-serif text-3xl text-primary mb-6 mt-12">VIII. The string that answers</h2>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          For Athanasius Kircher, the deepest evidence that harmony was woven into nature was
+          sympathy: pluck a string, and an untouched string tuned in unison answers across the
+          room, while its mistuned neighbours keep silent. His{' '}
+          <Link href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>{' '}
+          (1650) treats the effect as natural magic — consonance acting at a distance. The modern
+          name for his magic is resonance, and the demonstration works exactly as he describes: the
+          answer comes only when the tuning matches.
+        </p>
+        <KircherResonanceDemo />
+
+        <h2 className="font-serif text-3xl text-primary mb-6 mt-12">IX. The sound of a state of mind</h2>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          The oldest empirical claim about music and emotion we hold is Chinese. The{' '}
+          <Link href="/book/the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans?page=107" className="text-accent-rust hover:text-accent-rust underline"><em>Record of Music</em></Link>{' '}
+          opens by listing six states of mind and the sound each one stamps on the voice:{' '}
+          <Link href="/book/the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans?page=107" className="text-accent-rust hover:text-accent-rust underline">&ldquo;When the mind is moved to sorrow, the sound is sharp and fading away&rdquo;</Link>
+          ; anger is coarse and fierce, reverence straightforward and humble, and{' '}
+          <Link href="/book/the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans?page=107" className="text-accent-rust hover:text-accent-rust underline">&ldquo;when it is moved to love, the sound is harmonious and soft.&rdquo;</Link>{' '}
+          For the Record this is statecraft, not aesthetics — the same passage reads the music of an
+          age as a diagnostic of its government. But underneath sits a testable psychological claim:
+          that the six signatures are legible. If they are, you should be able to hear a phrase
+          built to one description and name the state of mind blind.
+        </p>
+        <YueJiAffectDemo />
+
+        <h2 className="font-serif text-3xl text-primary mb-6 mt-12">X. Grade the formula</h2>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          Salmon&apos;s 1705 trial (Station IV) put temperaments to an audience; a generation later{' '}
+          <Link href="/book/tentamen-novae-theoriae-musicae-euler" className="text-accent-rust hover:text-accent-rust underline">Leonhard Euler</Link>{' '}
+          removed the audience altogether. His <em>Tentamen novae theoriae musicae</em> (1739)
+          assigns every interval a <em>gradus suavitatis</em> — a degree of agreeableness computed
+          from the prime factors of its ratio. It is the boldest reduction in this whole story:
+          taste itself, made arithmetic. Two and a half centuries before anyone said
+          &ldquo;empirical aesthetics,&rdquo; the formula was on the table; what was missing was
+          the panel of listeners. That&apos;s you.
+        </p>
+        <EulerGradusDemo />
+
         <hr className="border-border-light my-12" />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">The bench stays open</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          Five stations in, the old quarrel looks different: the ancients were not just theorizing
-          about harmony, they were <em>experimenting</em> — Bharata with his vīṇās, Galilei with his
-          weights, Salmon with his viols — and their claims are still runnable. More stations are
-          planned:{' '}
-          <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust underline">Kepler&apos;s planetary intervals</Link>{' '}
-          checked against modern orbits, Kircher&apos;s sympathetic strings, and the{' '}
-          <Link href="/book/the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans?page=106" className="text-accent-rust hover:text-accent-rust underline"><em>Record of Music</em></Link>&apos;s
-          claim that modes carry moral weather. If a station misbehaves, or you know a claim from the
+          Ten stations in, a shape emerges: this is the history of empirical aesthetics, run in
+          miniature — Bharata detuning his vīṇās, Galilei hanging his weights, Salmon staging his
+          viols before the Royal Society, Euler writing taste as a formula, and now a reader with
+          headphones adjudicating all of them at a desk. Some claims survived their audit (Kircher&apos;s
+          strings answer; the Earth really does sing a semitone), some died gloriously (weigh the
+          hammers), and the deepest — that what pleases the ear can be computed — is still an open
+          question you just generated data on. If a station misbehaves, or you know a claim from the
           old books that belongs on this bench, use the suggest-an-edit link below — this note is a
           living instrument, and corrections are the point.
         </p>
