@@ -1,12 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { X, FileText, Languages, Clock, User, Cpu, Tag, BookOpen, ChevronDown, ChevronRight } from 'lucide-react';
-import { Page } from '@/lib/types';
+import { X, FileText, Languages, Clock, User, Cpu, Tag, BookOpen, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
+import { Page, Book } from '@/lib/types';
+import BibliographicInfo from '@/components/book/BibliographicInfo';
 
 interface PageMetadataPanelProps {
   page: Page;
   onClose: () => void;
+  // Edition context (lazy-fetched by the caller when the panel opens).
+  // editionBook === undefined means still loading; editionError flags a failed fetch.
+  editionBook?: Book | null;
+  editionError?: boolean;
+  bookHref?: string;
+  isEmbedded?: boolean;
 }
 
 // Extract metadata tags from text (supports both XML and bracket syntax)
@@ -182,9 +189,17 @@ function TagList({ tags, color = 'stone' }: { tags: string[]; color?: 'stone' | 
   );
 }
 
-export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelProps) {
+export default function PageMetadataPanel({
+  page,
+  onClose,
+  editionBook,
+  editionError,
+  bookHref,
+  isEmbedded,
+}: PageMetadataPanelProps) {
   const ocrMeta = extractMetadataFromText(page.ocr?.data || '');
   const translationMeta = extractMetadataFromText(page.translation?.data || '');
+  const hasEditionContext = !!bookHref;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -193,7 +208,7 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
         <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-stone-50">
           <h2 className="font-semibold text-stone-900 flex items-center gap-2">
             <FileText className="w-5 h-5 text-stone-500" />
-            Page {page.page_number} Metadata
+            {hasEditionContext ? `Edition & Page Info` : `Page ${page.page_number} Metadata`}
           </h2>
           <button
             onClick={onClose}
@@ -218,6 +233,39 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
             <div className="mx-4 mt-4 p-3 bg-accent-gold/8 border border-accent-gold/20 rounded-lg text-sm text-accent-gold-dark">
               <strong>Summary:</strong> {translationMeta.summary}
             </div>
+          )}
+
+          {/* Edition Section — book-level bibliographic info, lazy-fetched by the caller */}
+          {hasEditionContext && (
+            <MetadataSection title="This Edition" icon={BookOpen}>
+              {editionBook ? (
+                // BibliographicInfo is styled for a dark background (book-page hero),
+                // so it sits inside its native dark container here.
+                <div className="bg-stone-900 rounded-lg px-4 pb-4 pt-1">
+                  <BibliographicInfo
+                    book={editionBook}
+                    pagesCount={editionBook.pages_count ?? 0}
+                    hasTranslations={(editionBook.pages_translated ?? 0) > 0}
+                    showExternalLinks={!isEmbedded}
+                    showTranslationMethodologyLink={!isEmbedded}
+                    defaultExpanded
+                  />
+                </div>
+              ) : editionError ? (
+                <p className="text-sm text-stone-400 italic">
+                  Couldn&apos;t load edition info.
+                </p>
+              ) : (
+                <p className="text-sm text-stone-400 italic">Loading edition info…</p>
+              )}
+              <a
+                href={bookHref}
+                className="inline-flex items-center gap-1.5 text-sm text-accent-gold-dark hover:underline mt-1"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                {isEmbedded ? 'View book details' : 'View on Source Library'}
+              </a>
+            </MetadataSection>
           )}
 
           {/* OCR Section */}

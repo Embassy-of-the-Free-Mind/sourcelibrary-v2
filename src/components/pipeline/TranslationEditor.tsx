@@ -582,6 +582,23 @@ export default function TranslationEditor({
   const [transliterationLoading, setTransliterationLoading] = useState(false);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
+  // Full book doc for the edition-info section of the metadata panel. The reader
+  // route only ships a slim book projection, so the bibliographic fields are
+  // fetched on demand — once per book, the first time the panel opens.
+  const [editionBook, setEditionBook] = useState<Book | null>(null);
+  const [editionError, setEditionError] = useState(false);
+  const editionFetchStartedRef = useRef(false);
+  useEffect(() => {
+    if (!showPageMetadata || editionFetchStartedRef.current) return;
+    editionFetchStartedRef.current = true;
+    fetch(`/api/books/${book.id}?pageLimit=1`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data) => {
+        const { pages: _pages, ...fullBook } = data;
+        setEditionBook(fullBook as Book);
+      })
+      .catch(() => setEditionError(true));
+  }, [showPageMetadata, book.id]);
   const fontControlsRef = useRef<HTMLDivElement>(null);
 
   // Highlights and Annotations panels
@@ -2116,6 +2133,10 @@ export default function TranslationEditor({
           <PageMetadataPanel
             page={page}
             onClose={() => setShowPageMetadata(false)}
+            editionBook={editionBook}
+            editionError={editionError}
+            bookHref={`${tenantPrefix}/book/${book.id}`}
+            isEmbedded={isEmbedded}
           />
         )}
 
@@ -2705,6 +2726,10 @@ export default function TranslationEditor({
         <PageMetadataPanel
           page={page}
           onClose={() => setShowPageMetadata(false)}
+          editionBook={editionBook}
+          editionError={editionError}
+          bookHref={`${tenantPrefix}/book/${book.id}`}
+          isEmbedded={isEmbedded}
         />
       )}
 

@@ -116,6 +116,7 @@ interface BibliographicInfoProps {
   children?: React.ReactNode;
   showTranslationMethodologyLink?: boolean;
   showExternalLinks?: boolean;
+  defaultExpanded?: boolean;
 }
 
 export default function BibliographicInfo({
@@ -125,9 +126,10 @@ export default function BibliographicInfo({
   children,
   showTranslationMethodologyLink = true,
   showExternalLinks = true,
+  defaultExpanded = false,
 }: BibliographicInfoProps) {
   const router = useRouter();
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [copied, setCopied] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [provenanceExpanded, setProvenanceExpanded] = useState(false);
