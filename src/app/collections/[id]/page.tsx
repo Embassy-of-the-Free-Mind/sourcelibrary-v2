@@ -634,7 +634,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     db.collection('collections')
       .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
       .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, featured_images: 1 })
       .toArray(),
     8000, [],
   );
@@ -750,7 +750,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     galleryTotalCount,
     exhibition: curationDraft?.curation ? JSON.parse(JSON.stringify(curationDraft.curation)) : null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
+    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; total_book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -1038,9 +1038,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {child.book_count ? (
+                      {(child.total_book_count ?? child.book_count) ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {child.book_count.toLocaleString('en-US')} {itemLabel}
+                          {(child.total_book_count ?? child.book_count)!.toLocaleString('en-US')} {itemLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">

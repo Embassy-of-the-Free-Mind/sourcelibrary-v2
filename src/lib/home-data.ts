@@ -217,6 +217,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       subtitle: rest.subtitle || '',
       description: rest.description || '',
       book_count: rest.book_count || 0,
+      total_book_count: rest.total_book_count,
       artwork_count: rest.artwork_count || 0,
       hero_image: heroUrl as string | null,
       languages,
