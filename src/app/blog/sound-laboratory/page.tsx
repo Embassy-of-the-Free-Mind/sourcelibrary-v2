@@ -95,8 +95,12 @@ export default function SoundLaboratoryPage() {
           The cleanest solution came from a Ming prince:{' '}
           <Link href="/book/complete-works-on-music-and-tuning-vol-1" className="text-accent-rust hover:text-accent-rust underline">Zhu Zaiyu</Link>{' '}
           (1584) made every fifth equal to the twelfth root of two — shaving each one by two cents,
-          less than most ears can find — and the circle closed for the first time. Stack the fifths
-          yourself and listen to the comma churn against the root; then let the prince fix it.
+          less than most ears can find — and the circle closed for the first time. Even drawing
+          pitch as a circle had to be invented: the earliest circular pitch diagrams we hold are in{' '}
+          <Link href="/book/musicae-compendium-descartes" className="text-accent-rust hover:text-accent-rust underline">Descartes&apos;s first book</Link>,
+          the <em>Compendium Musicae</em> of 1618, and two of his folios are tucked into the station
+          below. Stack the fifths yourself and listen to the comma churn against the root; then let
+          the prince fix it.
         </p>
         <CommaSpiralDemo />
 
