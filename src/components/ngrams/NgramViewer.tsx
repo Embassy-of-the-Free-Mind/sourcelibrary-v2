@@ -23,7 +23,7 @@ interface Series {
 }
 interface ApiResponse {
   corpus: string; from: number; to: number; smoothing: number;
-  totals: Array<{ year: number; tokens: number }>;
+  totals: Array<{ year: number; tokens: number; books: number }>;
   series: Series[];
   error?: string;
 }
@@ -209,6 +209,12 @@ export default function NgramViewer() {
   const hoverInfo = hover && shown[hover.seriesIdx]
     ? { series: shown[hover.seriesIdx], point: shown[hover.seriesIdx].points.find(p => p.year === hover.year) }
     : null;
+
+  const totalsByYear = useMemo(
+    () => new Map((data?.totals || []).map(t => [t.year, t])),
+    [data],
+  );
+  const hoverVolume = hover ? totalsByYear.get(hover.year) : null;
 
   return (
     <div>
@@ -415,10 +421,22 @@ export default function NgramViewer() {
             <div className="text-[var(--text-muted)]">
               {hoverInfo.point.count.toLocaleString()} raw hits that year
             </div>
+            {hoverVolume && (
+              <div className="text-[var(--text-faint)] mt-0.5 pt-0.5 border-t border-[var(--border-light)]">
+                corpus in {hover!.year}: {hoverVolume.books.toLocaleString()} books · {compactNumber(hoverVolume.tokens)} tokens
+              </div>
+            )}
             <div className="mt-1 text-[var(--accent-rust)]">Click to read these passages →</div>
           </div>
         )}
       </div>
+
+      {data && (
+        <p className="mt-1.5 text-xs text-[var(--text-faint)]">
+          Gray backdrop: how much text each year contributes ({compactNumber(data.totals.reduce((s, t) => s + t.books, 0))} books
+          across this range). Hover any point for that year&apos;s exact book and token counts.
+        </p>
+      )}
     </div>
   );
 }
