@@ -50,11 +50,27 @@ interface Identification {
   web_sources?: { title: string; url: string }[];
 }
 
+interface ConfirmedMatch {
+  book_id: string;
+  book_slug?: string;
+  book_title?: string;
+  book_author?: string;
+  gallery_image_id?: string;
+  page_id?: string;
+  page_number?: number;
+  description?: string;
+  image_url: string;
+  read_url: string;
+  gallery_url?: string;
+  source_type: string;
+}
+
 interface Result {
   identification: Identification;
   matches: Match[];
   visual_search?: boolean;
   verified?: boolean;
+  confirmed?: ConfirmedMatch | null;
   page?: { book_id: string; page_number: number; score: number } | null;
 }
 
@@ -237,6 +253,52 @@ export default function IdentifyPage() {
         {/* Results */}
         {result && (
           <div className="space-y-6">
+            {/* Visually confirmed match — the answer, front and center */}
+            {result.confirmed && (
+              <div className="rounded-xl overflow-hidden bg-white border-2 border-accent-rust/40 shadow-sm">
+                <div className="flex items-center gap-2 px-5 py-3 bg-accent-rust/5 border-b border-accent-rust/20">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-accent-rust">Found in the library</span>
+                  <span className="text-[10px] text-green-700 bg-green-50 rounded px-1.5 py-0.5">confirmed by visual comparison</span>
+                </div>
+                <div className="flex gap-4 p-5">
+                  <div className="w-24 sm:w-32 flex-shrink-0 rounded overflow-hidden bg-stone-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={result.confirmed.image_url} alt="" className="w-full h-auto object-contain" />
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    {result.confirmed.description && (
+                      <p className="text-sm text-secondary line-clamp-3">{result.confirmed.description}</p>
+                    )}
+                    <p className="font-display font-semibold text-primary">
+                      {result.confirmed.book_title}
+                      {result.confirmed.page_number != null && (
+                        <span className="text-sm font-normal text-muted ml-2">page {result.confirmed.page_number}</span>
+                      )}
+                    </p>
+                    {result.confirmed.book_author && (
+                      <p className="text-sm text-secondary">{result.confirmed.book_author}</p>
+                    )}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Link
+                        href={result.confirmed.read_url}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
+                      >
+                        Read this book
+                      </Link>
+                      {result.confirmed.gallery_url && (
+                        <Link
+                          href={result.confirmed.gallery_url}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-rust/30 transition-colors"
+                        >
+                          View in gallery
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">
               <div className="flex items-center justify-between">
@@ -379,14 +441,16 @@ export default function IdentifyPage() {
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <h2 className="text-lg font-display font-semibold text-primary">
-                    {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
+                    {result.confirmed
+                      ? 'Related results'
+                      : result.matches.length === 1 ? 'Closest Match' : `${result.matches.length} Possible Matches`}
                   </h2>
                   {result.visual_search && (
                     <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
                   )}
                 </div>
                 <div className="space-y-2">
-                  {result.matches.map((match, i) => {
+                  {result.matches.filter(m => !result.confirmed || m.id !== result.confirmed.book_id).map((match, i) => {
                     const pageUrl = match.page_number
                       ? `${bookUrl({ slug: match.slug, id: match.id })}/page-number/${match.page_number}`
                       : bookUrl({ slug: match.slug, id: match.id });
@@ -408,7 +472,7 @@ export default function IdentifyPage() {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1">
-                          {i === 0 && result.matches.length > 1 && (
+                          {i === 0 && !result.confirmed && result.matches.length > 1 && (
                             <span className="text-xs bg-accent-rust/10 text-accent-rust rounded px-1.5 py-0.5 mr-2">Best match</span>
                           )}
                           {match.display_title || match.title}

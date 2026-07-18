@@ -5,8 +5,15 @@ import { supabase } from '@/lib/supabase';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { CLIP_URL } from '@/lib/clip';
+import {
+  getGalleryCandidatesByText,
+  hydrateCandidates,
+  rerankByVisualComparison,
+  type IdentifyCandidate,
+  type ConfirmedMatch,
+} from '@/lib/identify-rerank';
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
 
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
@@ -215,6 +222,82 @@ export async function POST(request: NextRequest) {
     const semanticArtworkPromise: Promise<SemanticArtworkResult[]> = artworkSearchQuery
       ? semanticArtworkSearch(artworkSearchQuery, 10, { threshold: 0.4 }).catch(() => [])
       : Promise.resolve([]);
+
+    // Promise 3b: two-stage visual confirmation (#3193). Candidates come from
+    // the CLIP index and a description-text match; one Gemini vision call then
+    // compares the photo against candidate thumbnails and confirms or declines.
+    // Runs concurrently with the Mongo strategies and web verification below.
+    const rerankPromise = (async () => {
+      try {
+        const db = await getDb();
+        // Description-only query — benchmarks showed hallucinated titles poison
+        // retrieval, while the visual description alone ranks best.
+        const textQuery = [identification.subject, ...(identification.search_terms || []).slice(0, 3)]
+          .filter(Boolean).join('. ');
+        const textCands = await getGalleryCandidatesByText(textQuery, 10);
+
+        const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(cm => ({
+          id: cm.id,
+          source: 'clip' as const,
+          sourceType: (cm.source_type as IdentifyCandidate['sourceType']) || 'gallery_image',
+          bookId: cm.book_id,
+          galleryId: cm.source_type === 'gallery_image' && cm.id.startsWith('gallery-') ? cm.id.slice('gallery-'.length) : undefined,
+          thumbnailUrl: cm.thumbnail_url || cm.image_url,
+          similarity: cm.similarity,
+          title: cm.title,
+          author: cm.author,
+        }));
+
+        // Union, CLIP first (dedupe by id), capped to keep the rerank call small
+        const byId = new Map<string, IdentifyCandidate>();
+        for (const c of [...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
+        let candidates = [...byId.values()].slice(0, 16);
+
+        const hydration = await hydrateCandidates(db, candidates);
+        candidates = candidates
+          .map(c => {
+            const h = c.galleryId ? hydration.get(c.galleryId) : undefined;
+            return {
+              ...c,
+              thumbnailUrl: c.thumbnailUrl || h?.thumbnail_url || '',
+              title: c.title || h?.book_title,
+              author: c.author || h?.book_author,
+              _hydrated: h,
+            };
+          })
+          .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
+
+        const verdict = await rerankByVisualComparison(base64, mimeType, candidates);
+        if (!verdict?.picked) return { confirmed: null as ConfirmedMatch | null, candidateCount: candidates.length, ran: candidates.length > 0 };
+
+        const picked = verdict.picked as IdentifyCandidate & { _hydrated?: { page_id?: string; page_number?: number; description?: string; book_title?: string; book_author?: string } };
+        const book = await db.collection('books').findOne(
+          { id: picked.bookId },
+          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1 } },
+        );
+        if (book && book.visible === false) return { confirmed: null, candidateCount: candidates.length, ran: true };
+        const slugOrId = (book?.slug as string) || picked.bookId;
+        const h = picked._hydrated;
+        const confirmed: ConfirmedMatch = {
+          book_id: picked.bookId,
+          book_slug: book?.slug as string | undefined,
+          book_title: (book?.display_title || book?.title || picked.title) as string | undefined,
+          book_author: (book?.author || picked.author) as string | undefined,
+          gallery_image_id: picked.galleryId,
+          page_id: h?.page_id,
+          page_number: h?.page_number,
+          description: h?.description,
+          image_url: picked.thumbnailUrl,
+          read_url: h?.page_id ? `/book/${slugOrId}/page/${h.page_id}` : `/book/${slugOrId}`,
+          gallery_url: picked.galleryId ? `/gallery/image/${picked.galleryId}` : undefined,
+          source_type: picked.sourceType,
+        };
+        return { confirmed, candidateCount: candidates.length, ran: true, sure: verdict.sure };
+      } catch (e) {
+        console.warn('[identify] rerank pipeline failed:', e instanceof Error ? e.message : String(e));
+        return { confirmed: null as ConfirmedMatch | null, candidateCount: 0, ran: false };
+      }
+    })();
 
     // Promise 4: Google Search verification (runs after initial ID, in parallel with DB search)
     // Uses grounding to verify/correct the identification against museum catalogs
@@ -666,6 +749,31 @@ Return JSON only:
     // The artwork image fields are already in the match object from Strategy 1 query
     // (commons_full_url, archived_full_url were projected but not shown — now we surface them)
 
+    // Await visual confirmation (started right after identification)
+    const rerank = await rerankPromise;
+    const confirmed = rerank.confirmed;
+
+    if (confirmed) {
+      // The visually confirmed book is the answer — put it first.
+      const idx = matches.findIndex(m => m.id === confirmed.book_id);
+      if (idx >= 0) {
+        const [hit] = matches.splice(idx, 1);
+        hit._score = Math.max(hit._score ?? 0, 100);
+        hit._match_source = 'visual_confirmed';
+        matches.unshift(hit);
+      } else {
+        matches.unshift({
+          id: confirmed.book_id,
+          slug: confirmed.book_slug,
+          title: confirmed.book_title,
+          author: confirmed.book_author,
+          thumbnail: confirmed.image_url,
+          _score: 100,
+          _match_source: 'visual_confirmed',
+        });
+      }
+    }
+
     // Await Google Search verification (started earlier, should be done by now)
     const verification = await verifyPromise;
 
@@ -712,11 +820,17 @@ Return JSON only:
       visual_search: clipMatches.length > 0,
       semantic_artwork_search: semanticArtworks.length > 0,
       verified: !!verification,
-      page: bestPage ? {
-        book_id: bestPage.bookId,
-        page_number: bestPage.pageNumber,
-        score: bestPage.score,
-      } : null,
+      confirmed,
+      // A visually confirmed match supersedes the text-heuristic page guess —
+      // an unconfirmed guess pointing at a different book misleads (see #3193
+      // benchmark: the heuristic picked the wrong book on degraded photos).
+      page: confirmed
+        ? (confirmed.page_number != null ? { book_id: confirmed.book_id, page_number: confirmed.page_number, score: 100 } : null)
+        : bestPage ? {
+          book_id: bestPage.bookId,
+          page_number: bestPage.pageNumber,
+          score: bestPage.score,
+        } : null,
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
