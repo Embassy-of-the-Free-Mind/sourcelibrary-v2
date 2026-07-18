@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getShwepIndexData } from './shwep-data';
 import ShwepClient from './ShwepClient';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 // Must be a finite number — `false` would cache a bad-render fallback forever.
@@ -28,6 +29,7 @@ export default async function ShwepPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
+      <SiteHeader variant="light" />
       <ShwepClient data={data} />
     </div>
   );

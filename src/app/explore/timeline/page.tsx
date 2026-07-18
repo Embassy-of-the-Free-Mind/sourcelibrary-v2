@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
+import SiteHeader from '@/components/layout/SiteHeader';
 import {
   CANONICAL_ENTITIES_COLLECTION,
   canonicalEntitiesReadpathEnabled,
@@ -377,5 +378,10 @@ export default async function TimelinePage() {
   const data = canonicalEntitiesReadpathEnabled()
     ? await fetchTimelineDataCanonical()
     : await fetchTimelineData();
-  return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  return (
+    <>
+      <SiteHeader variant="light" />
+      <TimelineLoader entities={data.entities} stats={data.stats} />
+    </>
+  );
 }

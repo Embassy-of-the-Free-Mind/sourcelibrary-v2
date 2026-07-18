@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, BookOpen, Scroll, Compass, FlaskConical, Calculator, Star } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { books } from '@/lib/api-client';
 
 interface RoadmapBook {
@@ -133,18 +134,7 @@ export default function RoadmapPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">

@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
 import type { MatchedBook } from '../shwep-data';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -52,22 +53,7 @@ export default async function EpisodePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <span className="font-medium">Source Library</span>
-          </Link>
-          <span className="text-stone-300">/</span>
-          <Link href="/shwep" className="text-stone-500 hover:text-stone-800 transition-colors text-sm">
-            SHWEP Reading Room
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'SHWEP Reading Room', href: '/shwep' }]} />
 
       {/* Caveat */}
       <div className="bg-stone-100 border-b border-stone-200">

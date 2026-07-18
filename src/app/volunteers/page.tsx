@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import ReviewStats from '@/components/review/ReviewStats';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 /**
  * Orphan welcome page for invited volunteers.
@@ -46,6 +47,8 @@ const QUEUES = [
 
 export default function VolunteersWelcomePage() {
   return (
+    <>
+    <SiteHeader variant="light" />
     <main className="max-w-3xl mx-auto px-6 py-14">
       <div className="text-sm font-medium text-accent-rust mb-3 tracking-wide uppercase">You're one of the first</div>
       <h1 className="text-4xl font-serif font-bold text-stone-900 mb-4 leading-tight">
@@ -104,5 +107,6 @@ export default function VolunteersWelcomePage() {
         </p>
       </div>
     </main>
+    </>
   );
 }
