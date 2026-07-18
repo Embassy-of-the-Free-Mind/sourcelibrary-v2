@@ -7,6 +7,7 @@ import {
   ArrowUpDown, ArrowUp, ArrowDown, FileText, ChevronDown,
 } from 'lucide-react';
 import AuthorName from '@/components/AuthorName';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 
@@ -627,7 +628,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                               {book.display_title || book.title}
                             </span>
                           </Link>
-                          {book.is_first_translation && (
+                          {isPublishedFirstTranslation(book) && (
                             <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
                               {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
                             </span>

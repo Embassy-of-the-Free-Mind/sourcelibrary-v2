@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
-import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import { sortCollections, withTimeout, coverOverride } from '@/lib/collections-utils';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
@@ -196,7 +196,12 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).thumbnail_url || (img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url))
     );
     // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
-    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
+    const featuredUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
+    // Honour the curated cover with the SAME precedence as the /collections card
+    // helper (cardImageCandidates): coverOverride → hero_image → featured_images.
+    // Without this the homepage grid ignored `hero_image` and showed a different
+    // image than /collections for every collection with a curated cover.
+    const heroUrl = coverOverride(rest.slug) || (rest.hero_image as string | undefined) || featuredUrl;
     const languageValues = Array.isArray(rest.languages)
       ? rest.languages
       : [];
