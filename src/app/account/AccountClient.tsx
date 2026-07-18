@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Heart, LogOut, Crown, Users } from 'lucide-react';
 import { toast } from 'sonner';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 interface AccountClientProps {
   user: {
@@ -75,6 +76,7 @@ export default function AccountClient({ user }: AccountClientProps) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+      <SiteHeader variant="light" />
       <div className="max-w-xl mx-auto px-4 py-16">
         <h1 className="text-2xl font-serif font-medium mb-8" style={{ color: 'var(--text-primary)' }}>
           Account

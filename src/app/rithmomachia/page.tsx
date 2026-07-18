@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import RithmomachiaGame from '@/components/rithmomachia/RithmomachiaGame';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia — Play the Battle of Numbers - Source Library',
@@ -24,19 +25,8 @@ export const metadata: Metadata = {
 export default function RithmomachiaPage() {
   return (
     <main className="min-h-screen bg-cream">
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Rithmomachia', href: '/rithmomachia' }]} />
       <div className="max-w-[1500px] mx-auto px-4 py-8 md:py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <Link
-            href="/"
-            className="text-sm text-muted hover:text-secondary transition-colors"
-          >
-            Source Library
-          </Link>
-          <span className="text-muted mx-2">/</span>
-          <span className="text-sm text-secondary">Rithmomachia</span>
-        </nav>
-
         <RithmomachiaGame />
 
         {/* Footer links */}

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import NgramViewer from '@/components/ngrams/NgramViewer';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 const TITLE = 'Ngram Viewer — Source Library';
 const DESCRIPTION =
@@ -30,7 +31,9 @@ export const metadata: Metadata = {
 
 export default function NgramsPage() {
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <>
+      <SiteHeader variant="light" />
+      <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="font-serif text-3xl mb-2">Ngram Viewer</h1>
       <p className="text-[var(--text-secondary)] mb-6 max-w-3xl">
         How often does a word or phrase appear across the library, year by year?
@@ -59,6 +62,7 @@ export default function NgramsPage() {
           Latin, German, French, and Greek sources at once.
         </p>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

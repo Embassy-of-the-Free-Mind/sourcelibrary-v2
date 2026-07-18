@@ -2,7 +2,8 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { Camera, Upload, Loader2, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Camera, Upload, Loader2, ExternalLink } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { bookUrl } from '@/lib/slugify';
 
 interface Match {
@@ -143,11 +144,8 @@ export default function IdentifyPage() {
     <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="bg-dark text-white">
+        <SiteHeader variant="dark" />
         <div className="max-w-2xl mx-auto px-4 py-6">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Library
-          </Link>
           <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
           <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
         </div>

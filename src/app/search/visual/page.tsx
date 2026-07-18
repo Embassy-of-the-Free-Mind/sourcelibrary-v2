@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { Search, ArrowLeft, Loader2 } from 'lucide-react';
+import { Search, Loader2 } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { bookUrl } from '@/lib/slugify';
 
 interface VisualResult {
@@ -70,11 +71,8 @@ export default function VisualSearchPage() {
     <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="bg-dark text-white">
+        <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <Link href="/gallery" className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Gallery
-          </Link>
           <h1 className="text-2xl sm:text-3xl font-display font-semibold">Visual Search</h1>
           <p className="text-white/60 mt-1 text-sm">
             Search images by what they look like, not just their descriptions
