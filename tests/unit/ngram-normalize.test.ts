@@ -141,3 +141,34 @@ describe('series math', () => {
     expect(series[0].smoothed).toBeCloseTo((10 + 0) / 2);
   });
 });
+
+describe('cross-language term specs + lexicon', () => {
+  it('parses a :corpus suffix into a tagged spec', async () => {
+    const { parseTermSpec } = await import('../../src/lib/ngram-series');
+    expect(parseTermSpec('mercurius:la', 'en')).toEqual({ term: 'mercurius', corpus: 'la', tagged: true });
+    expect(parseTermSpec('stein der weisen:de', 'en')).toEqual({ term: 'stein der weisen', corpus: 'de', tagged: true });
+  });
+
+  it('treats unknown suffixes and bare colons as text, not tags', async () => {
+    const { parseTermSpec } = await import('../../src/lib/ngram-series');
+    expect(parseTermSpec('12:30', 'en')).toEqual({ term: '12:30', corpus: 'en', tagged: false });
+    expect(parseTermSpec('mercury:xx', 'en')).toEqual({ term: 'mercury:xx', corpus: 'en', tagged: false });
+    expect(parseTermSpec(':la', 'en')).toEqual({ term: ':la', corpus: 'en', tagged: false });
+  });
+
+  it('lexicon corpus ids are all real corpora and forms normalize non-empty', async () => {
+    const { NGRAM_LEXICON, findTermFamily } = await import('../../src/lib/ngram-lexicon');
+    const ids = new Set(ts.NGRAM_CORPORA.map(c => c.id));
+    for (const fam of NGRAM_LEXICON) {
+      expect(ts.normalizePhrase(fam.en, 'en')).not.toBe('');
+      for (const [corpus, forms] of Object.entries(fam.forms)) {
+        expect(ids.has(corpus)).toBe(true);
+        for (const form of forms) {
+          expect(ts.normalizePhrase(form, corpus)).not.toBe('');
+        }
+      }
+    }
+    expect(findTermFamily('Mercurius')?.en).toBe('mercury');
+    expect(findTermFamily('unknownword')).toBeNull();
+  });
+});
