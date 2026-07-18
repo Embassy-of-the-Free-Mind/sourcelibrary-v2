@@ -76,3 +76,28 @@ documented in CLAUDE.md.
 - #3165: full stranded-pages sweep, pending spend approval.
 - The `fix+bph-catalog-hidden-read-links` worktree sits clean with no PR (reaper
   keeps it as "left for iteration") — decide keep or kill next session.
+
+## Addendum (same night): post-ship crit → corrections PR #3205 (merged, deployed)
+
+Derek asked for a self-crit; verification of the quoted pages against OCR found real
+errors, fixed in #3205:
+- Gaffurius has SIX hammers (4/6/8/9/12/16) — VIIII was missing from Station I.
+  Bonus now in copy: 9:4 is a perfect square, the one pair whose promised interval
+  (a fifth) survives √tension physics.
+- "Necessariò quintam sonabit" (Musurgia II p382) is the WIND-HARP chapter — wind
+  dividing one string — not a sympathetic-fifth promise. Station VIII copy now
+  attributes the fifth-answers prediction to shared-partials physics, grounded in
+  his division arithmetic. Demo sourceHref back to book level.
+- Tartini presets no longer claim to be the p177 figures (those work
+  major/minor-tone cases).
+- nature-of-harmony → sound-laboratory cross-link added (7/16 handoff open item).
+- Mobile pass (390px): no overflow, hotspots align, no page errors.
+
+Meta-lesson worth keeping: **verify quoted source text via OCR/get_quote BEFORE it
+ships in UI copy, not after** — the quote-integrity rules apply to captions and demo
+copy exactly as much as to essays. Both errors were the predictable product of
+reading cropped images instead of the page text.
+
+Still genuinely unverified: nobody has LISTENED to the smithy ensemble or the
+six-planet choir on real speakers (gain arithmetic says no clipping: 6×0.22 and
+6×0.16 voices against master 0.22 both peak <0.3). First human listen = Derek.
