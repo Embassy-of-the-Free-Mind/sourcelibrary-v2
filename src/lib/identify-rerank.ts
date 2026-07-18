@@ -59,7 +59,7 @@ export async function getGalleryCandidatesByText(queryText: string, limit = 10):
     query_embedding: JSON.stringify(embedding),
     match_threshold: 0.2,
     match_count: limit,
-  });
+  }).abortSignal(AbortSignal.timeout(8000));
   if (error || !data) return [];
 
   return (data as GalleryTextMatch[]).map(m => ({
