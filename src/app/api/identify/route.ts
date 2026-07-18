@@ -138,6 +138,9 @@ export async function POST(request: NextRequest) {
           }],
           generationConfig: { temperature: 0.1 },
         }),
+        // Without a timeout a stalled Gemini connection holds the whole
+        // request to maxDuration and the client sees a hang (2026-07-18).
+        signal: AbortSignal.timeout(25000),
       },
     );
 
@@ -171,7 +174,7 @@ export async function POST(request: NextRequest) {
           query_embedding: embedding,
           match_threshold: 0.25,
           match_count: 20,
-        });
+        }).abortSignal(AbortSignal.timeout(8000));
         if (error) {
           console.error('[identify] CLIP search error:', error.message);
           return [];
@@ -749,8 +752,15 @@ Return JSON only:
     // The artwork image fields are already in the match object from Strategy 1 query
     // (commons_full_url, archived_full_url were projected but not shown — now we surface them)
 
-    // Await visual confirmation (started right after identification)
-    const rerank = await rerankPromise;
+    // Await visual confirmation (started right after identification), but never
+    // let it hold the response — a stalled dependency degrades to "no
+    // confirmation" instead of a hung request.
+    const rerank = await Promise.race([
+      rerankPromise,
+      new Promise<{ confirmed: ConfirmedMatch | null; candidateCount: number; ran: boolean }>(
+        resolve => setTimeout(() => resolve({ confirmed: null, candidateCount: 0, ran: false }), 25000),
+      ),
+    ]);
     const confirmed = rerank.confirmed;
 
     if (confirmed) {
