@@ -2,6 +2,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { ArnoldTongues } from '@/components/blog/HarmonyVisuals';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Fludd's 1617 engraving of Nature and, at the centre of the cosmos, the ape of Art holding a gridded model of the world — the artificial imitator, four centuries early.";
@@ -127,6 +128,8 @@ export default function ShowMeTheNumberPage() {
           simplest ratios lock over the widest range of conditions — so if the coupling has a law, it leaves a measurable
           signature.)<sup>3</sup>
         </p>
+
+        <ArnoldTongues />
         <p className="text-secondary leading-relaxed mb-8 font-body">
           And the distinction the physics forces is already the spine of the empirical work. In{' '}
           <a href="https://www.frontiersin.org/journals/neurorobotics/articles/10.3389/fnbot.2022.850489/full" className="text-accent-rust hover:text-accent-rust underline">"Resonance as a Design Strategy for AI and Social Robots"</a>{' '}
