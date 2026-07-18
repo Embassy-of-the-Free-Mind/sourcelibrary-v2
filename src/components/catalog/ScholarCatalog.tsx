@@ -593,7 +593,57 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
         {books.length === 0 && !loading ? (
           <div className="py-20 text-center text-muted">No books match your filters.</div>
         ) : (
-          <div className="overflow-x-auto">
+          <>
+          {/* Mobile (<md): stacked list + a sort control, since a table reads
+              cramped on a phone. Desktop keeps the sortable table below. */}
+          <div className="md:hidden">
+            <div className="mb-3 flex items-center gap-2">
+              <label htmlFor="mobile-sort" className="text-xs text-muted uppercase tracking-wide">Sort</label>
+              <select
+                id="mobile-sort"
+                value={sort}
+                onChange={(e) => handleSort(e.target.value)}
+                className="text-sm border border-border-medium rounded px-2 py-1 bg-white text-primary"
+              >
+                <option value="title">Title</option>
+                <option value="year_asc">Year (oldest first)</option>
+                <option value="year_desc">Year (newest first)</option>
+                <option value="author">Author</option>
+                <option value="popular">Most read</option>
+                <option value="recent">Recently added</option>
+              </select>
+            </div>
+            <ul className="divide-y divide-border-light">
+              {books.map((book) => {
+                const href = `/book/${book.slug || book.id}`;
+                return (
+                  <li key={book.id}>
+                    <Link href={href} className="block py-3 active:bg-warm/50 transition-colors">
+                      <div className="flex items-start gap-2">
+                        <span className="text-sm font-medium text-primary line-clamp-2 flex-1" style={{ fontFamily: 'var(--font-serif)' }}>
+                          {book.display_title || book.title}
+                        </span>
+                        {isPublishedFirstTranslation(book) && (
+                          <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                            {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-muted mt-1 flex flex-wrap items-center gap-x-1.5">
+                        <AuthorName author={book.author} fallback="—" />
+                        <span aria-hidden>·</span>
+                        <span className="tabular-nums">{displayYear(book)}</span>
+                        {book.language && (<><span aria-hidden>·</span><span>{book.language}</span></>)}
+                        {book.pages_count ? (<><span aria-hidden>·</span><span className="tabular-nums">{book.pages_count} pp</span></>) : null}
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          {/* Desktop (md+): sortable table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border-medium text-xs text-muted uppercase tracking-wide">
@@ -664,6 +714,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
 

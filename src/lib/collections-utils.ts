@@ -36,6 +36,9 @@ export const PINNED_COLLECTION_SLUGS = [
   // Row 5 — remaining
   'psychology',
   'history-political-thought',
+  // Row 6 — regional wings (major domains, promoted out of the misc top-level bucket)
+  'east-asia',
+  'south-asia',
 ];
 
 /** Pin specific collections first, shuffle the rest. */
