@@ -54,7 +54,13 @@ function buildSections(pages: OverviewPage[], chapters: OverviewChapter[]): Sect
 }
 
 export default function BookOverviewShell({ bookId, bookSlug, bookTitle, pages, chapters }: BookOverviewShellProps) {
-  const [view, setView] = useState<'contents' | 'wall'>('contents');
+  const [view, setViewState] = useState<'contents' | 'wall'>('contents');
+  // Body scroll persists across the swap — a wall opened mid-scroll would show
+  // the site footer instead of the canvas.
+  const setView = (v: 'contents' | 'wall') => {
+    window.scrollTo(0, 0);
+    setViewState(v);
+  };
   const sections = useMemo(() => buildSections(pages, chapters), [pages, chapters]);
   const bookPath = `/book/${bookSlug || bookId}`;
   const hasChapters = sections.some(s => s.headings.length > 0);
