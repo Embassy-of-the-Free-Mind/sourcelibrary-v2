@@ -6,7 +6,12 @@
  * only archives pages with NO `archived_photo`), this script targets
  * pages whose `archived_photo` IS set but where the source was imported
  * at a downsized IIIF resolution (e.g. `/full/1000,/`). It refetches at
- * `/full/full/` and overwrites the existing R2 archive.
+ * `/full/full/` and overwrites the existing R2 archive. When the server
+ * caps single-request output below the master size (e.g. Cambridge:
+ * maxWidth 2000 vs a 9718px master), it tile-stitches region requests to
+ * recover native resolution (via fetchIiifNativeRes). It also regenerates
+ * the pre-sized display/thumb R2 variants the reader serves directly —
+ * without that, the reader keeps showing the old low-res derivative.
  *
  * Three modes:
  *
@@ -61,7 +66,8 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
-import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap } from '../lib/iiif-utils.mjs';
+import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
+import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -147,7 +153,16 @@ async function fetchUpgraded(url) {
   if (upgraded === url) return { skipped: 'no-upgrade-pattern', url };
   let raw;
   try {
-    raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
+    // Servers like Cambridge (maxWidth/maxHeight 2000) silently downscale
+    // /full/full/ below the master size — the only path to native pixels is
+    // region tiles. Per-page info.json: dimensions vary page to page.
+    const pageInfo = await fetchIiifInfo(url);
+    if (pageInfo && shouldTileStitch(pageInfo, url)) {
+      const maxChunk = Math.min(pageInfo.maxWidth || 2000, pageInfo.maxHeight || 2000, 2000);
+      ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
+    } else {
+      raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
+    }
   } catch (e) {
     return { skipped: 'fetch-fail', url: upgraded, error: e.message };
   }
@@ -230,12 +245,30 @@ async function audit() {
   }
 }
 
+/**
+ * Regenerate the pre-sized R2 display/thumb variants (the files the reader
+ * serves directly) from an upgraded master buffer, overwriting the SAME R2
+ * keys so no DB pointer changes. No-op for pages without R2-hosted variants.
+ */
+async function regenerateVariants(page, masterBuffer) {
+  const toKey = (url) =>
+    typeof url === 'string' && url.startsWith(`${R2_PUBLIC_URL}/`)
+      ? url.slice(R2_PUBLIC_URL.length + 1)
+      : null;
+  const displayKey = toKey(page.display_photo);
+  const thumbKey = toKey(page.image_thumb) || toKey(page.thumbnail_blob);
+  if (!displayKey && !thumbKey) return;
+  const { display, thumb } = await generateDisplayVariants(masterBuffer);
+  if (displayKey) await r2Put(displayKey, display);
+  if (thumbKey) await r2Put(thumbKey, thumb);
+}
+
 // ── Refetch mode (un-split books) ──
 
 async function refetchOne(book) {
   const pages = await db.collection('pages').find(
     { book_id: book.id },
-    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1 } },
+    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1 } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
@@ -268,6 +301,10 @@ async function refetchOne(book) {
     }
     try {
       const newUrl = await r2Put(key, result.processed);
+      // Pre-sized R2 variants (display_photo / image_thumb) are what the reader
+      // actually serves — regenerate them from the upgraded master onto the SAME
+      // keys, else the reader keeps showing the old low-res derivative.
+      await regenerateVariants(page, result.processed);
       await db.collection('pages').updateOne(
         { _id: page._id || new ObjectId(page.id) },
         { $set: {
