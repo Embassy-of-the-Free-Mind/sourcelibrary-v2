@@ -19,11 +19,11 @@ function response(f: number, f0: number): number {
 
 /**
  * The full sympathetic response: every partial of the plucked string (h)
- * against every mode of the untouched string (m). This is what Kircher's
- * text beside the p382 diagram asserts — pluck a string and its fifth
- * "necessario quintam sonabit": the untouched string tuned a fifth up
- * answers through the SHARED partial (3 × 220 = 2 × 330). A pure-sine
- * model would falsify him; a string with overtones proves him right.
+ * against every mode of the untouched string (m). The fifth-answers
+ * prediction is the MODERN shared-partials reading (3 × 220 = 2 × 330),
+ * not a sentence of Kircher's — his "necessariò quintam sonabit" (p382)
+ * is about wind dividing ONE string, though it runs on the same
+ * arithmetic. A pure-sine model can't show either; real overtones can.
  */
 function stringResponse(tune: number): { r: number; h: number; m: number } {
   let best = { r: 0, h: 1, m: 1 };
@@ -41,7 +41,7 @@ const PRESETS = [
   { label: 'G · 196 Hz', freq: 196 },
   { label: 'A · 220 Hz — unison', freq: 220 },
   { label: 'B · 247 Hz', freq: 247 },
-  { label: 'E · 330 Hz — the fifth he promised', freq: 330 },
+  { label: 'E · 330 Hz — the fifth', freq: 330 },
   { label: 'A · 440 Hz — octave', freq: 440 },
 ];
 
@@ -57,10 +57,11 @@ function verdict(r: number, h: number, m: number): string {
 /**
  * Station VIII — Kircher's sympathetic strings, as he staged it: TWO
  * strings. One is plucked; the other is never touched. Tuned in unison the
- * untouched string sings back; tuned to the FIFTH it still answers, in a
- * whisper, through the partial the two strings share — the stronger,
- * stranger half of Kircher's claim. The untouched string is modeled as a
- * bank of mode resonators fed by a pluck with real overtones.
+ * untouched string sings back — his natural magic of consonance. Tuned to
+ * the FIFTH it still answers, in a whisper, through the partial the two
+ * strings share — the modern physics extending his division arithmetic.
+ * The untouched string is a bank of mode resonators fed by a pluck with
+ * real overtones.
  */
 export default function KircherResonanceDemo() {
   const [tune, setTune] = useState(247); // start mistuned: the first pluck fails
@@ -156,9 +157,9 @@ export default function KircherResonanceDemo() {
           Pluck the left string
         </button>
       }
-      caption="Two strings. The left is plucked, always at A · 220 Hz; the right is never touched. At unison the silent string sings back. But Kircher promises more: tuned a fifth up it must still answer — through the one partial the two strings share. Find both answers."
-      sourceHref="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=382"
-      sourceLabel="Kircher, Musurgia Universalis, Vol. II (1650), p382"
+      caption="Two strings. The left is plucked, always at A · 220 Hz; the right is never touched. At unison the silent string sings back — the effect Kircher read as natural magic. And the physics of shared partials adds a prediction he would have relished: tuned a fifth up, it still answers, faintly. Find both."
+      sourceHref="/book/kircher-musurgia-universalis-vol-ii-1650-kircher"
+      sourceLabel="Kircher, Musurgia Universalis, Vol. II (1650)"
     >
       <div className="mb-4">
         <label className="text-[11px] uppercase tracking-wider text-muted block mb-1">
@@ -230,8 +231,10 @@ export default function KircherResonanceDemo() {
       <p className="mt-3 text-xs text-muted">
         The plucked string carries overtones at 440, 660 and 880 Hz; the untouched string listens
         with modes of its own. Tuned to E · 330, its second mode sits at 660 — exactly the pluck&apos;s
-        third partial — and the text beside Kircher&apos;s diagram says it plainly: it{' '}
-        <em>necessario quintam sonabit</em>, will of necessity sound the fifth.
+        third partial — so it answers without being touched. Kircher never wrote that sentence;
+        his wind-harp chapter derives the fifth from the same string-divisions (<em>necessariò
+        quintam sonabit</em> — the plate above), and the shared-partial answer is where his
+        arithmetic leads once a string is allowed its overtones.
       </p>
     </LabCard>
   );

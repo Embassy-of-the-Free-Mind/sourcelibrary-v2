@@ -218,8 +218,8 @@ export default function SoundLaboratoryPage() {
         <FolioPair>
           <FolioFigure
             src="https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a741-0.jpg?v=17718766663"
-            alt="A personified breath projects rays onto a string marked with the letters A through F, mapping the consonant divisions"
-            caption={<>A breath strikes a string at its consonant divisions — and the surrounding text promises that the fifth <em>will necessarily sound</em>.</>}
+            alt="A personified wind head blows rays onto a string marked A through F, showing how pressing it at different division points yields different notes"
+            caption={<>Wind as plectrum, from the wind-harp chapter: press the string at a division point and the remainder sounds the octave, the fifth (<em>necessariò quintam sonabit</em>), the fifteenth — one string, many voices, by pure arithmetic.</>}
             href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=382"
             sourceLabel="Musurgia Universalis II, p382"
           />

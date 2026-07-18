@@ -9,11 +9,14 @@ const BASE = 220;
 
 /**
  * The hammer weights as Gaffurius printed them (Theorica Musicae, 1492, p46
- * of our copy): IIII, VI, VIII, XII, XVI. The marginal annotations in our
- * copy work through the pairs — "ex XVI ad VIII dupla proportio: diapason."
+ * of our copy): IIII, VI, VIII, VIIII, XII, XVI — six hammers, per the
+ * page's own pairing table ("Ex xvi ad viij dupla proportione diapason
+ * creabatur"; the OCR of p46 lists all six weights). The 9-pound hammer is
+ * the fun one: 9:4 is a perfect square, so it is the ONE pair that still
+ * sounds its promised interval (a fifth) under real sqrt-tension physics.
  */
-const HAMMERS = [4, 6, 8, 12, 16] as const;
-const ROMAN: Record<number, string> = { 4: 'IIII', 6: 'VI', 8: 'VIII', 12: 'XII', 16: 'XVI' };
+const HAMMERS = [4, 6, 8, 9, 12, 16] as const;
+const ROMAN: Record<number, string> = { 4: 'IIII', 6: 'VI', 8: 'VIII', 9: 'VIIII', 12: 'XII', 16: 'XVI' };
 
 const GAFFURIUS_PLATE =
   'https://images.sourcelibrary.org/gallery/695688febe7c607c5f03c1da/69569e3b1479a63c110927ca-0.jpg?v=17805160105';
@@ -39,7 +42,7 @@ function intervalName(cents: number): string {
  * octave needs 4:1 — and the legend's 2:1 lands on a tritone. String LENGTH,
  * by contrast, really does behave as the legend claims.
  *
- * Two benches: the single-pair lab (sliders), and the whole smithy — all five
+ * Two benches: the single-pair lab (sliders), and the whole smithy — all six
  * of Gaffurius's hammers at once, under the legend's law and under Galilei's.
  */
 export default function HammerStringDemo() {
@@ -196,17 +199,18 @@ export default function HammerStringDemo() {
           >
             <img
               src={GAFFURIUS_PLATE}
-              alt="Gaffurius's 1492 woodcut of the smithy legend: men strike an anvil with hammers marked IIII, VI, VIII, XII and XVI"
+              alt="Gaffurius's 1492 woodcut of the smithy legend: six men strike an anvil with hammers marked IIII, VI, VIII, VIIII, XII and XVI"
               className="w-full h-auto"
               loading="lazy"
             />
           </Link>
           <div className="mt-3 md:mt-0 min-w-0">
             <p className="text-xs text-secondary mb-2">
-              Gaffurius&apos;s woodcut numbers the hammers — IIII, VI, VIII, XII, XVI — and a
-              15th-century reader has inked the promised proportions into the margins of{' '}
-              <Link href="/book/theorica-musicae-gaffurius?page=46" className="text-accent-rust underline">our copy</Link>.
-              Tap two hammers to hang exactly that weight ratio:
+              Gaffurius&apos;s woodcut numbers six hammers — IIII, VI, VIII, VIIII, XII, XVI — and
+              the page itself works through every pairing (an early reader re-inks them in the margins of{' '}
+              <Link href="/book/theorica-musicae-gaffurius?page=46" className="text-accent-rust underline">our copy</Link>).
+              Tap two hammers to hang exactly that weight ratio — and try VIIII : IIII, the one
+              pair that keeps its promise even under the real law:
             </p>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {HAMMERS.map((w) => (
@@ -219,7 +223,7 @@ export default function HammerStringDemo() {
               </p>
             )}
             <p className="text-xs text-secondary mb-2">
-              And the legend&apos;s real claim is the whole smithy ringing in concord. Hear all five
+              And the legend&apos;s real claim is the whole smithy ringing in concord. Hear all six
               hammers under each law:
             </p>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -229,7 +233,7 @@ export default function HammerStringDemo() {
             </div>
             <p className="text-xs text-muted mt-2">
               {law === 'legend'
-                ? 'Ratios straight through: 4 : 6 : 8 : 12 : 16 rings as octaves, fifths and fourths — the miracle as told.'
+                ? 'Ratios straight through: 4 : 6 : 8 : 9 : 12 : 16 rings as octaves, fifths, fourths and a tone — the miracle as told.'
                 : 'Frequency follows √weight: the same numbers smear into a cluster nothing in music theory can name.'}
             </p>
           </div>
