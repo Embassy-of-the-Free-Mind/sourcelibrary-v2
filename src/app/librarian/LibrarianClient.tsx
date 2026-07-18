@@ -14,6 +14,29 @@ import LibrarianMessageBody from './_components/MessageBody';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
+// Minimal Web Speech API surface (not in the default TS DOM lib).
+interface SpeechRecognitionResultEventLike {
+  results: ArrayLike<{ isFinal: boolean } & ArrayLike<{ transcript: string }>>;
+}
+
+interface SpeechRecognitionLike {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((e: SpeechRecognitionResultEventLike) => void) | null;
+  onend: (() => void) | null;
+  onerror: ((e: unknown) => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+function getSpeechRecognitionCtor(): (new () => SpeechRecognitionLike) | null {
+  if (typeof window === 'undefined') return null;
+  const w = window as unknown as Record<string, unknown>;
+  return (w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null) as (new () => SpeechRecognitionLike) | null;
+}
+
 interface SourceCard {
   bookId: string;
   bookTitle: string;
@@ -377,6 +400,62 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
+  // ── Speech input (Web Speech API dictation) ─────────────────────────
+  // Live transcription into the textarea; the user reviews/edits, then sends.
+  // Chrome/Edge/Safari only — the mic button is hidden where unsupported.
+  const [listening, setListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  // Text already in the box when dictation starts; transcripts append to it.
+  const dictationBaseRef = useRef('');
+
+  useEffect(() => {
+    setSpeechSupported(Boolean(getSpeechRecognitionCtor()));
+    return () => recognitionRef.current?.abort();
+  }, []);
+
+  const stopDictation = useCallback(() => {
+    recognitionRef.current?.stop();
+    setListening(false);
+  }, []);
+
+  const toggleDictation = useCallback(() => {
+    if (listening) {
+      stopDictation();
+      return;
+    }
+    const Ctor = getSpeechRecognitionCtor();
+    if (!Ctor) return;
+    const rec = new Ctor();
+    rec.lang = typeof navigator !== 'undefined' && navigator.language ? navigator.language : 'en-US';
+    rec.continuous = true;
+    rec.interimResults = true;
+    const current = inputRef.current?.value ?? '';
+    dictationBaseRef.current = current ? current.replace(/\s+$/, '') + ' ' : '';
+    rec.onresult = (e: SpeechRecognitionResultEventLike) => {
+      let transcript = '';
+      for (let i = 0; i < e.results.length; i++) {
+        transcript += e.results[i][0].transcript;
+      }
+      setInput(dictationBaseRef.current + transcript);
+      // Mirror handleInputChange's auto-grow, since programmatic setState
+      // doesn't fire the textarea's onChange.
+      const el = inputRef.current;
+      if (el) {
+        requestAnimationFrame(() => {
+          el.style.height = 'auto';
+          el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+        });
+      }
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    recognitionRef.current = rec;
+    rec.start();
+    setListening(true);
+    inputRef.current?.focus();
+  }, [listening, stopDictation]);
+
   // Fetch public threads
   useEffect(() => {
     fetch('/api/embassy/threads?limit=50')
@@ -437,6 +516,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     const trimmed = input.trim();
     if (!trimmed || sending) return;
 
+    if (listening) stopDictation();
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setInput('');
     setSending(true);
@@ -1021,6 +1101,25 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       rows={1}
                       className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
                     />
+                    {speechSupported && (
+                      <button
+                        type="button"
+                        onClick={toggleDictation}
+                        aria-label={listening ? 'Stop voice input' : 'Start voice input'}
+                        aria-pressed={listening}
+                        title={listening ? 'Stop voice input' : 'Speak your question'}
+                        className={`flex-shrink-0 p-2.5 rounded-lg border transition-colors ${listening
+                          ? 'border-[#9e4a3a] bg-[#9e4a3a] text-white animate-pulse'
+                          : 'border-[#e8e4dc] text-[#8a8480] hover:text-[#1a1612] hover:border-[#c9a86c]'
+                          }`}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <rect x="9" y="2" width="6" height="12" rx="3" />
+                          <path d="M5 10a7 7 0 0 0 14 0" />
+                          <line x1="12" y1="19" x2="12" y2="22" />
+                        </svg>
+                      </button>
+                    )}
                     {sending ? (
                       <button
                         type="button"
