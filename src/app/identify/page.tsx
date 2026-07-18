@@ -168,13 +168,37 @@ export default function IdentifyPage() {
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        {/* Upload area */}
+        {/* Landing: explain + engage */}
         {!image && (
-          <div className="space-y-3">
+          <div className="space-y-4">
+            {/* Hero — the picture room at the Embassy of the Free Mind */}
+            <div className="relative rounded-xl overflow-hidden bg-dark">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/identify-hero.jpg"
+                alt="The picture room at the Embassy of the Free Mind in Amsterdam, its walls covered with framed engravings and prints"
+                className="w-full h-[44vh] min-h-[300px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 text-white">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/70 mb-1.5">
+                  Embassy of the Free Mind · Amsterdam
+                </p>
+                <h2 className="font-display text-2xl sm:text-3xl font-semibold leading-tight">
+                  Every picture on these walls comes from a book.
+                </h2>
+                <p className="text-sm text-white/85 mt-2 max-w-md">
+                  Photograph any print or engraving — on a museum wall, or on the open page
+                  of an old book — and we&apos;ll find the original in the library, together
+                  with the book it belongs to.
+                </p>
+              </div>
+            </div>
+
             {/* Camera button (primary on mobile) */}
             <button
               onClick={() => cameraInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-3 px-6 py-12 rounded-xl border-2 border-dashed border-accent-rust/30 bg-white hover:border-accent-rust/60 hover:bg-accent-rust/5 transition-colors cursor-pointer"
+              className="w-full flex items-center justify-center gap-3 px-6 py-10 rounded-xl border-2 border-dashed border-accent-rust/30 bg-white hover:border-accent-rust/60 hover:bg-accent-rust/5 transition-colors cursor-pointer"
             >
               <Camera className="w-8 h-8 text-accent-rust" />
               <div className="text-left">
@@ -206,6 +230,23 @@ export default function IdentifyPage() {
               onChange={handleInputChange}
               className="hidden"
             />
+
+            {/* How it works */}
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              {[
+                { n: '1', title: 'Photograph', body: 'A print, a plate, or a page — frames and angles are fine.' },
+                { n: '2', title: 'We compare', body: 'Your photo is checked against the illustrations of the whole library.' },
+                { n: '3', title: 'Read the source', body: 'Land on the exact page in the reader, with translation.' },
+              ].map(step => (
+                <div key={step.n} className="text-center px-1">
+                  <div className="w-7 h-7 mx-auto rounded-full bg-accent-rust/10 text-accent-rust text-sm font-semibold flex items-center justify-center">
+                    {step.n}
+                  </div>
+                  <p className="text-sm font-medium text-primary mt-2">{step.title}</p>
+                  <p className="text-xs text-muted mt-1 leading-snug">{step.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
