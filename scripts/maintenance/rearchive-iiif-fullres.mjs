@@ -343,9 +343,61 @@ async function refetchOne(book) {
         updated_at: new Date(),
       } },
     );
+    await recordUpgradeEvent(book, { fromWidthCap: cap, toMasterWidth: info.width, pagesUpdated: updated });
   }
 
   return { updated, skipped, failed };
+}
+
+/**
+ * Provenance for the upgrade (issue #3186): one book_events record per upgraded
+ * book, plus a reocr_candidate flag when existing OCR was produced from the old
+ * low-res images. OCR always predates the upgrade here, so the OCR input width
+ * IS the old import cap — record it now, while that fact is still cheap to know.
+ */
+async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpdated }) {
+  const now = new Date();
+  const full = await db.collection('books').findOne(
+    { id: book.id },
+    { projection: { pages_ocr: 1, pages_translated: 1, 'image_source.provider': 1 } },
+  );
+  const ocrPage = await db.collection('pages').findOne(
+    { book_id: book.id, 'ocr.updated_at': { $exists: true } },
+    { projection: { 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1 } },
+  );
+  const hasOcr = (full?.pages_ocr ?? 0) > 0;
+  await db.collection('book_events').insertOne({
+    book_id: book.id,
+    type: 'image_resolution_upgrade',
+    at: now,
+    source: 'rearchive-iiif-fullres',
+    details: {
+      from_width_cap: fromWidthCap,
+      to_master_width: toMasterWidth,
+      pages_updated: pagesUpdated,
+      provider: full?.image_source?.provider ?? null,
+      // OCR provenance at upgrade time: existing OCR read the OLD images.
+      ocr_pages: full?.pages_ocr ?? 0,
+      ocr_input_width: hasOcr ? fromWidthCap : null,
+      ocr_model: ocrPage?.ocr?.model ?? null,
+      ocr_prompt_version: ocrPage?.ocr?.prompt_version ?? null,
+      ocr_updated_at: ocrPage?.ocr?.updated_at ?? null,
+    },
+  });
+  if (hasOcr) {
+    await db.collection('books').updateOne(
+      { id: book.id },
+      { $set: {
+        reocr_candidate: {
+          reason: 'resolution_upgrade',
+          flagged_at: now,
+          ocr_input_width: fromWidthCap,
+          new_width: toMasterWidth,
+          upgrade_ratio: Math.round((toMasterWidth / fromWidthCap) * 10) / 10,
+        },
+      } },
+    );
+  }
 }
 
 // ── Recovery mode (already-split books) ──
