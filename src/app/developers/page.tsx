@@ -155,7 +155,38 @@ export default function DevelopersPage() {
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Code (remote &mdash; no install)</span>
+              <span className="text-sm font-medium text-stone-700">Claude.ai &amp; Claude Desktop (Connectors)</span>
+              <span className="text-xs text-muted">No code &mdash; works in the chat you already use</span>
+            </div>
+            <div className="p-4">
+              <ol className="list-decimal list-inside space-y-2 text-sm text-secondary">
+                <li>
+                  Open <span className="font-medium text-stone-700">claude.ai &rarr; Settings &rarr; Connectors</span>{' '}
+                  (Claude Desktop uses the same Connectors settings).
+                </li>
+                <li>
+                  Click <span className="font-medium text-stone-700">Add custom connector</span>.
+                </li>
+                <li>
+                  Name it{' '}
+                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded">Source Library</code>{' '}
+                  &mdash; keep this exact name; shared pages and artifacts that call the library look your connector up by it.
+                </li>
+                <li>
+                  URL:{' '}
+                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded select-all">https://sourcelibrary.org/api/mcp</code>{' '}
+                  &mdash; leave the OAuth fields empty (no authentication), then save.
+                </li>
+                <li>
+                  In any chat, open the tools menu, switch the connector on, and ask away &mdash; try the prompts below.
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
+              <span className="text-sm font-medium text-stone-700">Claude Code (one command)</span>
               <span className="text-xs text-muted">
                 Add <code className="text-stone-700">-H &quot;Authorization: Bearer YOUR_KEY&quot;</code> for higher limits
               </span>
@@ -167,20 +198,8 @@ export default function DevelopersPage() {
 
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Code (local via npm)</span>
-              <span className="text-xs text-muted">Legacy &mdash; prefer remote above</span>
-            </div>
-            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
-{`claude mcp add source-library -- npx -y @source-library/mcp-server`}
-            </pre>
-          </div>
-
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Desktop</span>
-              <span className="text-xs text-muted">
-                macOS: ~/Library/Application Support/Claude/ &nbsp;&bull;&nbsp; Windows: %APPDATA%\Claude\
-              </span>
+              <span className="text-sm font-medium text-stone-700">Other MCP clients (Cursor, Windsurf, custom)</span>
+              <span className="text-xs text-muted">Any client that speaks Streamable HTTP</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`{
@@ -190,6 +209,16 @@ export default function DevelopersPage() {
     }
   }
 }`}
+            </pre>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
+              <span className="text-sm font-medium text-stone-700">Local via npm (stdio-only clients)</span>
+              <span className="text-xs text-muted">Legacy &mdash; prefer the remote URL above</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`claude mcp add source-library -- npx -y @source-library/mcp-server`}
             </pre>
           </div>
         </div>
