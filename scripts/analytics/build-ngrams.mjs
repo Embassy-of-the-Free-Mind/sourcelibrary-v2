@@ -120,6 +120,13 @@ async function emit() {
     visible: true,
     pages_count: { $gt: 0 },
     year: { $gte: MIN_YEAR, $lte: MAX_YEAR, $type: 'number' },
+    // Modern-translation editions are excluded (620 books, ~3.4%): their year
+    // is the modern translation's publication date, so a 1911 Jowett Plato
+    // would inject a translator's 1911 English at year=1911 — semantically
+    // different from every other book, where year = the period edition and our
+    // own translation is pinned to it. period-translation stays: a 1650
+    // English rendering IS 1650 voice.
+    text_role: { $ne: 'modern-translation' },
     ...(LANGUAGE ? { language: LANGUAGE } : {}),
   };
   const books = await db.collection('books')

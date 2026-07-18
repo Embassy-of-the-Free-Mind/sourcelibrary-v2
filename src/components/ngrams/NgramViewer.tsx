@@ -13,10 +13,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { linearScale, linePath, areaPath, niceTicks, compactNumber } from '@/components/analytics/charts/chart-utils';
 import { NGRAM_CORPORA, ORIGINAL_LANGUAGE_CORPUS } from '@/lib/ngram-normalize';
+import { findTermFamily } from '@/lib/ngram-lexicon';
 
 interface Point { year: number; count: number; perMillion: number; smoothed: number }
 interface Series {
-  term: string; ngram: string; found: boolean; tooLong: boolean;
+  term: string; corpus: string; corpusLabel: string;
+  ngram: string; found: boolean; tooLong: boolean;
   totalCount: number; bookCount: number; points: Point[];
 }
 interface ApiResponse {
@@ -40,6 +42,7 @@ const EXAMPLES: Array<{ label: string; q: string; corpus: string }> = [
   { label: "philosopher's stone vs elixir", q: "philosopher's stone,elixir", corpus: 'en' },
   { label: 'kabbalah vs hieroglyphics', q: 'kabbalah,hieroglyphics', corpus: 'en' },
   { label: 'lapis philosophorum (Latin)', q: 'lapis philosophorum,quinta essentia', corpus: 'la' },
+  { label: 'mercury across languages', q: 'mercury,mercurius:la,quecksilber:de,mercure:fr', corpus: 'en' },
 ];
 
 // corpus id → books.language value, for the /search click-through filter.
@@ -59,7 +62,8 @@ export default function NgramViewer() {
   const [corpus, setCorpus] = useState(searchParams.get('corpus') || 'en');
   const [smoothing, setSmoothing] = useState(Number(searchParams.get('smoothing') ?? 3));
   const [from, setFrom] = useState(Number(searchParams.get('from') ?? 1450));
-  const [to, setTo] = useState(Number(searchParams.get('to') ?? 1950));
+  // 1930 default: later years are thin and dominated by reprint/edition noise.
+  const [to, setTo] = useState(Number(searchParams.get('to') ?? 1930));
   const [committed, setCommitted] = useState(query);
   const [data, setData] = useState<ApiResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -147,16 +151,60 @@ export default function NgramViewer() {
 
   const handleClick = useCallback(() => {
     if (!hover || !shown[hover.seriesIdx]) return;
-    const term = shown[hover.seriesIdx].term;
+    const s = shown[hover.seriesIdx];
     const params = new URLSearchParams({
-      q: term,
+      q: s.term,
       date_from: String(Math.max(from, hover.year - 5)),
       date_to: String(Math.min(to, hover.year + 5)),
     });
-    const lang = CORPUS_SEARCH_LANGUAGE[corpus];
+    // Scope the search to the series' own corpus language (a tagged term like
+    // mercurius:la searches Latin books even when the default corpus is en).
+    const lang = CORPUS_SEARCH_LANGUAGE[s.corpus];
     if (lang) params.set('language', lang);
     window.open(`/search?${params.toString()}`, '_blank');
-  }, [hover, shown, corpus, from, to]);
+  }, [hover, shown, from, to]);
+
+  // Short language name for legend/chips: "Latin (originals)" → "Latin".
+  const shortLabel = (label: string) => label.split(/[—(]/)[0].trim();
+
+  // Cross-language suggestions: for every charted term that belongs to a
+  // lexicon family, offer the other languages' equivalents not already charted.
+  const chartedKeys = useMemo(
+    () => new Set((data?.series || []).map(s => `${s.corpus}:${s.term.toLowerCase()}`)),
+    [data],
+  );
+  const suggestions = useMemo(() => {
+    if (!data) return [];
+    const out: Array<{ display: string; append: string; language: string }> = [];
+    const seen = new Set<string>();
+    for (const s of data.series) {
+      const fam = findTermFamily(s.term);
+      if (!fam) continue;
+      for (const [corpusId, forms] of Object.entries(fam.forms)) {
+        const form = forms[0];
+        const key = `${corpusId}:${form.toLowerCase()}`;
+        if (seen.has(key) || chartedKeys.has(key)) continue;
+        if (corpusId === s.corpus && form.toLowerCase() === s.term.toLowerCase()) continue;
+        const label = NGRAM_CORPORA.find(c => c.id === corpusId)?.label;
+        if (!label) continue;
+        seen.add(key);
+        out.push({ display: form, append: `${form}:${corpusId}`, language: shortLabel(label) });
+      }
+      // The English headword itself, when a foreign form is charted.
+      const enKey = `en:${fam.en}`;
+      if (!seen.has(enKey) && !chartedKeys.has(enKey) && s.term.toLowerCase() !== fam.en) {
+        seen.add(enKey);
+        out.push({ display: fam.en, append: fam.en, language: 'English' });
+      }
+    }
+    return out.slice(0, 8);
+  }, [data, chartedKeys]);
+
+  const addTerm = useCallback((append: string) => {
+    const next = query.trim() ? `${query.replace(/,\s*$/, '')},${append}` : append;
+    setQuery(next);
+    setCommitted(next);
+  }, [query]);
 
   const hoverInfo = hover && shown[hover.seriesIdx]
     ? { series: shown[hover.seriesIdx], point: shown[hover.seriesIdx].points.find(p => p.year === hover.year) }
@@ -167,7 +215,7 @@ export default function NgramViewer() {
       {/* Controls */}
       <div className="flex flex-wrap items-end gap-3 mb-3">
         <label className="flex-1 min-w-[260px]">
-          <span className="block text-xs text-[var(--text-muted)] mb-1">Terms (comma-separated, up to 6, max 3 words each)</span>
+          <span className="block text-xs text-[var(--text-muted)] mb-1">Terms (comma-separated, up to 6, max 3 words · tag a language with :la, :de, :fr…)</span>
           <input
             type="text"
             value={query}
@@ -232,12 +280,17 @@ export default function NgramViewer() {
       {data && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 mb-2 text-sm">
           {data.series.map((s, i) => (
-            <span key={s.term} className="inline-flex items-center gap-1.5">
+            <span key={`${s.corpus}:${s.term}`} className="inline-flex items-center gap-1.5">
               <span
                 className="inline-block w-3 h-[3px] rounded"
                 style={{ backgroundColor: SERIES_COLORS[i % SERIES_COLORS.length], opacity: s.found ? 1 : 0.3 }}
               />
               <span className={s.found ? '' : 'text-[var(--text-faint)] line-through'}>{s.term}</span>
+              {s.corpus !== data.corpus && (
+                <span className="text-xs px-1 rounded bg-[var(--bg-warm,#f5f0e8)] text-[var(--text-muted)]">
+                  {shortLabel(s.corpusLabel)}
+                </span>
+              )}
               {s.found && (
                 <span className="text-xs text-[var(--text-muted)]">
                   {compactNumber(s.totalCount)}× in {compactNumber(s.bookCount)} books
@@ -249,6 +302,23 @@ export default function NgramViewer() {
                 </span>
               )}
             </span>
+          ))}
+        </div>
+      )}
+
+      {/* Cross-language comparison chips */}
+      {suggestions.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1.5 mb-2 text-xs text-[var(--text-muted)]">
+          <span>Compare across languages:</span>
+          {suggestions.map(s => (
+            <button
+              key={s.append}
+              onClick={() => addTerm(s.append)}
+              className="px-2 py-0.5 rounded-full border border-[var(--border-medium)] text-[var(--text-secondary)] hover:border-[var(--accent-rust)] hover:text-[var(--accent-rust)] transition-colors"
+              title={`Add ${s.display} (${s.language} corpus) to the chart`}
+            >
+              {s.display} <span className="text-[var(--text-faint)]">· {s.language}</span>
+            </button>
           ))}
         </div>
       )}

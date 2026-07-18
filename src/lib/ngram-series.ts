@@ -1,8 +1,37 @@
 /**
- * Series math for the ngram viewer — shared by /api/ngrams and unit tests.
- * App-side only (the batch build stores raw counts; frequency and smoothing are
- * derived at read time so they can be re-parameterized per request).
+ * Series math + term-spec parsing for the ngram viewer — shared by /api/ngrams,
+ * the viewer UI, and unit tests. App-side only (the batch build stores raw
+ * counts; frequency and smoothing are derived at read time so they can be
+ * re-parameterized per request).
  */
+
+import { NGRAM_CORPORA } from './ngram-normalize';
+
+export interface TermSpec {
+  /** The term text without any corpus tag. */
+  term: string;
+  /** Resolved corpus id for this term. */
+  corpus: string;
+  /** True if the corpus came from an explicit `term:corpus` tag. */
+  tagged: boolean;
+}
+
+/**
+ * Parse one query term with optional `:corpus` suffix — `mercurius:la` charts
+ * mercurius against the Latin corpus regardless of the page's default corpus.
+ * An unknown suffix is NOT treated as a tag (the colon is just text and the
+ * tokenizer will drop it), so "12:30" or a stray colon can't break a query.
+ */
+export function parseTermSpec(raw: string, defaultCorpus: string): TermSpec {
+  const idx = raw.lastIndexOf(':');
+  if (idx > 0) {
+    const suffix = raw.slice(idx + 1).trim().toLowerCase();
+    if (NGRAM_CORPORA.some(c => c.id === suffix)) {
+      return { term: raw.slice(0, idx).trim(), corpus: suffix, tagged: true };
+    }
+  }
+  return { term: raw.trim(), corpus: defaultCorpus, tagged: false };
+}
 
 export interface NgramPoint {
   year: number;
