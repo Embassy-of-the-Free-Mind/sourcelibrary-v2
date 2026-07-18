@@ -61,6 +61,9 @@ const TRUNCATE = has('--truncate'); // wipe both tables before a fresh load — 
 // replacing a run built with different thresholds/filters, or stale rows from the
 // old run survive the upsert (only matching keys get overwritten)
 const MAX_PAGE_TOKENS = 15_000; // corpus-size.mjs found ~50k-word junk pages (whole-book dumps); skip them
+const MAX_PAGE_CHARS = 200_000; // and skip them BEFORE the wrapper strip: a real dense page is <20K
+// chars, and running the cleanup regexes over a 400KB junk dump is what turned
+// into a 2h regex spin on 2026-07-18 (regexes now bounded too — defense in depth)
 
 if (!['all', 'emit', 'load'].includes(PHASE)) { console.error(`Unknown --phase ${PHASE}`); process.exit(1); }
 
@@ -144,8 +147,13 @@ async function emit() {
     .toArray();
 
   let nextPages = workList.length ? fetchPages(workList[0].id) : null;
+  const statusPath = path.join(DIR, 'current-book.txt');
   for (let b = 0; b < workList.length; b++) {
     const book = workList[b];
+    // Breadcrumb for stall diagnosis: if the process ever wedges (e.g. a
+    // pathological page), this names the book it wedged on.
+    fs.writeFileSync(statusPath, `${b} ${book.id} year=${book.year} lang=${book.language || '?'}\n`);
+    const bookStart = Date.now();
     const pages = await nextPages;
     if (b + 1 < workList.length) nextPages = fetchPages(workList[b + 1].id);
 
@@ -162,6 +170,7 @@ async function emit() {
 
     const ingest = (raw, corpus) => {
       if (!raw || !corpus) return;
+      if (raw.length > MAX_PAGE_CHARS) { nSkippedJunk++; return; }
       const tokens = tokenize(stripApparatusTags(stripEditorialWrappers(raw)), corpus);
       if (!tokens.length) return;
       if (tokens.length > MAX_PAGE_TOKENS) { nSkippedJunk++; return; }
@@ -199,6 +208,8 @@ async function emit() {
     for (const [s, buf] of buffers) await writeShard(s, buf.join(''));
 
     nBooks++;
+    const bookSecs = (Date.now() - bookStart) / 1000;
+    if (bookSecs > 30) console.log(`[emit] slow book ${book.id} (${pages.length} pages) took ${bookSecs.toFixed(0)}s`);
     if (nBooks % 200 === 0 || nBooks === workList.length) {
       const rate = nBooks / ((Date.now() - t0) / 60000);
       const eta = ((workList.length - nBooks) / rate).toFixed(0);

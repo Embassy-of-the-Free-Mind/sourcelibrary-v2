@@ -75,6 +75,16 @@ function flattenMarkdownTables(text: string): string {
  * Deliberately conservative: emphasis must hug non-whitespace (real markdown
  * rule) so spaced-out literal asterisks survive, and underscore emphasis is left
  * alone — "_" appears too often as a literal in OCR/transliteration to strip safely.
+ *
+ * BOUNDED interiors, not lazy-unbounded (2026-07-18): the emphasis/centered
+ * patterns originally used `[^*]*?` / `.+?` interiors. On junk pages (the
+ * ~50k-word single-page ingest dumps, which can also carry thousands of stray
+ * asterisks) every unpaired `*` triggered an O(line)-scan and the whole call
+ * went quadratic — the ngram batch build sat 2h at 111% CPU inside this
+ * function on one page, and the same text served through a reader/quote route
+ * would spin that request. Real emphasis and ->centered<- spans are short and
+ * never cross a line, so interiors are capped at 300 chars and excluded from
+ * matching newlines; longer spans keep their literal markers (harmless).
  */
 function stripMarkdownMarkers(text: string): string {
   return text
@@ -84,11 +94,11 @@ function stripMarkdownMarkers(text: string): string {
     // are left alone to honour the "never touch _" guarantee below.
     .replace(/^[ \t]*(?:-{3,}|\*{3,})[ \t]*$/gm, '')
     // ->centered<- markers (content kept).
-    .replace(/->\s*(.+?)\s*<-/g, '$1')
+    .replace(/->[ \t]*(\S(?:[^\n]{0,300}?\S)?)[ \t]*<-/g, '$1')
     // Paired bold/italic asterisks (content must start & end non-space).
-    .replace(/\*\*\*(\S(?:[^*]*?\S)?)\*\*\*/g, '$1')
-    .replace(/\*\*(\S(?:[^*]*?\S)?)\*\*/g, '$1')
-    .replace(/\*(\S(?:[^*]*?\S)?)\*/g, '$1')
+    .replace(/\*\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*\*/g, '$1')
+    .replace(/\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*/g, '$1')
+    .replace(/\*(\S(?:[^*\n]{0,300}?\S)?)\*/g, '$1')
     // Collapse blank lines left by removed headings/rules.
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
