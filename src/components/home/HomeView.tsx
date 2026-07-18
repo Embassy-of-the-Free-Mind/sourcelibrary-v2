@@ -109,6 +109,8 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.collectionsHeading}
               </h2>
               <p className="text-muted mt-2">
+                <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
+                {' '}&middot;{' '}
                 <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
                 {' '}&middot;{' '}
                 <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
