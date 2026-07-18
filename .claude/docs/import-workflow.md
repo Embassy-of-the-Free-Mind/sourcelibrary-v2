@@ -75,4 +75,12 @@ Applies to all contributors — human and AI.
 - Imports land HIDDEN; flip visible only after QA. Always set `visible`/`hidden` as a pair.
 - Dedup on `source_fingerprint` before insert; don't filter dedup by visibility.
 - Subject-filter keyword enumerations by hand — they're noisy.
+- **Archive IIIF pages at NATIVE resolution, never a fixed width cap.** Historic
+  imports at `/full/1000,/`–`/full/2000,/` left ~2.1M pages at 2–9× below the
+  source master (issue #3186; the recovery sweep is expensive — don't add to it).
+  Check `info.json` for the true `width`; if the server caps single-response
+  output below it (`maxWidth`/`maxHeight`, or a `SILENT_CAP_HOSTS` entry in
+  `scripts/lib/iiif-utils.mjs`), tile-stitch with `fetchIiifNativeRes()`.
+  Width caps are doubly destructive on wide-format material (palm leaves,
+  scrolls), where they crush the readable dimension.
 - Respect source terms: ctext.org and NLC China prohibit automated download — do NOT scrape them.
