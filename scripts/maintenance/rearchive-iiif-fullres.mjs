@@ -41,6 +41,9 @@
  *   --crisis-only              books with spread_translation_crisis: true
  *
  * Other:
+ *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
+ *                              (resume flag for long interruptible runs; the stamp is
+ *                              only written when a book completes with zero failures)
  *   --concurrency N            books processed in parallel (default 2)
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
@@ -91,6 +94,7 @@ const LIMIT = parseInt(ARG('--limit', '0'));
 const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
+const SKIP_UPGRADED = FLAG('--skip-upgraded');
 
 // ── Setup ──
 
@@ -127,6 +131,10 @@ function buildBookQuery() {
   const q = {};
   if (PROVIDER) q['image_source.provider'] = PROVIDER;
   if (CRISIS_ONLY) q.spread_translation_crisis = true;
+  // Resume support for long interruptible runs: refetchOne stamps
+  // image_resolution_upgraded_at on success, so this makes re-runs converge
+  // on the remaining books instead of redoing finished ones.
+  if (SKIP_UPGRADED) q.image_resolution_upgraded_at = { $exists: false };
   return q;
 }
 
@@ -324,7 +332,9 @@ async function refetchOne(book) {
     }
   }, PAGE_CONCURRENCY);
 
-  if (!DRY_RUN && updated > 0) {
+  // Stamp only fully-clean books: a partial failure (e.g. laptop sleep killed
+  // in-flight fetches) must not look "done" to --skip-upgraded re-runs.
+  if (!DRY_RUN && updated > 0 && failed === 0) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
