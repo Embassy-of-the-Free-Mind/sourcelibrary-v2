@@ -294,6 +294,13 @@ async function load() {
   const shardFiles = fs.readdirSync(DIR).filter(f => /^shard-\d+\.tsv\.gz$/.test(f)).sort();
   if (!shardFiles.length) { console.error(`[load] no shard files in ${DIR} — run emit first`); process.exit(1); }
 
+  // Totals load FIRST: they're tiny, already final at emit time, and the API
+  // 404s the whole corpus without them. Loading them last meant /api/ngrams
+  // was dead for the entire multi-hour shard stream after a --truncate
+  // (observed live 2026-07-18). With totals in, the viewer works progressively
+  // as shards land.
+  await loadTotals(pgc);
+
   let totalRows = 0, totalDropped = 0;
   for (const file of shardFiles) {
     if (loaded.has(file)) continue;
@@ -351,6 +358,11 @@ async function load() {
     console.log(`[load] ${file}: ${rows.length.toLocaleString()} rows kept (${loaded.size}/${shardFiles.length} shards, ${totalRows.toLocaleString()} rows total, ${elapsed()})`);
   }
 
+  console.log(`[load] done: ${totalRows.toLocaleString()} series rows (${totalDropped.toLocaleString()} below threshold), ${elapsed()}`);
+  await pgc.end();
+}
+
+async function loadTotals(pgc) {
   const totals = JSON.parse(fs.readFileSync(path.join(DIR, 'totals.json'), 'utf8'));
   let totalRowCount = 0;
   for (const [corpus, years] of Object.entries(totals)) {
@@ -373,8 +385,7 @@ async function load() {
       totalRowCount += chunk.length;
     }
   }
-  console.log(`[load] done: ${totalRows.toLocaleString()} series rows (${totalDropped.toLocaleString()} below threshold), ${totalRowCount} totals rows, ${elapsed()}`);
-  await pgc.end();
+  console.log(`[load] ${totalRowCount} totals rows loaded (up-front)`);
 }
 
 // ------------------------------------------------------------------- driver

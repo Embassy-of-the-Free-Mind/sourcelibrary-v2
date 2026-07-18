@@ -61,12 +61,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Provide 1-6 comma-separated terms via ?q=' }, { status: 400 });
   }
 
-  const clamp = (v: number, lo: number, hi: number, def: number) =>
-    Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : def;
-  const from = clamp(Number(sp.get('from')), YEAR_FLOOR, YEAR_CEIL, 1450);
-  let to = clamp(Number(sp.get('to')), YEAR_FLOOR, YEAR_CEIL, 1930);
+  // Note: Number(null) is 0, not NaN — an absent param must fall to the
+  // default BEFORE numeric coercion or every default collapses to the floor.
+  const clamp = (raw: string | null, lo: number, hi: number, def: number) => {
+    if (raw === null || raw.trim() === '') return def;
+    const v = Number(raw);
+    return Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : def;
+  };
+  const from = clamp(sp.get('from'), YEAR_FLOOR, YEAR_CEIL, 1450);
+  let to = clamp(sp.get('to'), YEAR_FLOOR, YEAR_CEIL, 1930);
   if (to < from) to = Math.min(YEAR_CEIL, from + 50);
-  const smoothing = clamp(Number(sp.get('smoothing')), 0, 10, 3);
+  const smoothing = clamp(sp.get('smoothing'), 0, 10, 3);
 
   const terms = rawTerms.map(raw => {
     const spec = parseTermSpec(raw, defaultCorpus);
