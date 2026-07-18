@@ -211,10 +211,10 @@ export default function KeplerPlanetsDemo() {
         <Readout label="Kepler's error" value={`${dev.toFixed(1)} ¢`} note={verdict(dev)} />
       </div>
 
-      <svg viewBox="0 0 320 118" className="w-full mb-4" role="img"
+      <svg viewBox="0 0 320 118" className="w-full max-w-[400px] mx-auto block mb-4" role="img"
         aria-label={`Schematic staff: ${p.name}'s glissando spans ${Math.round(kc)} cents in Kepler's notation; the measured orbit gives ${Math.round(mc)} cents`}>
         {staffLineYs.map((y) => (
-          <line key={y} x1="8" y1={y} x2="312" y2={y} stroke="currentColor" strokeWidth="0.75" className="text-border-light" />
+          <line key={y} x1="8" y1={y} x2="312" y2={y} stroke="#d6d3d1" strokeWidth="1" />
         ))}
         <ellipse cx="70" cy={yLow} rx="7" ry="5" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-primary" />
         <ellipse cx="118" cy={yKepler} rx="7" ry="5" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-primary" />
