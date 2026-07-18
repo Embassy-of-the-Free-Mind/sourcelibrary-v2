@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
   // under the cap.
   const [totalsResList, seriesRes] = await Promise.all([
     Promise.all(totalsCorpora.map(corpus =>
-      supabase.from('ngram_totals').select('corpus, year, tokens').eq('corpus', corpus),
+      supabase.from('ngram_totals').select('corpus, year, tokens, books').eq('corpus', corpus),
     )),
     Promise.all([...lookupByCorpus.entries()].map(([corpus, ngrams]) =>
       supabase.from('ngram_series')
@@ -115,11 +115,13 @@ export async function GET(request: NextRequest) {
   }
 
   const totalsByCorpus = new Map<string, Map<number, number>>();
+  const booksByYear = new Map<number, number>(); // default corpus only — drives the UI's per-year "N books"
   for (const res of totalsResList) {
     for (const r of res.data || []) {
       let m = totalsByCorpus.get(r.corpus);
       if (!m) { m = new Map(); totalsByCorpus.set(r.corpus, m); }
       m.set(Number(r.year), Number(r.tokens));
+      if (r.corpus === defaultCorpus) booksByYear.set(Number(r.year), Number(r.books));
     }
   }
   if (!totalsByCorpus.get(defaultCorpus)?.size) {
@@ -157,7 +159,7 @@ export async function GET(request: NextRequest) {
   const totalsOut = [...defaultTotals.entries()]
     .filter(([year]) => year >= from && year <= to)
     .sort((a, b) => a[0] - b[0])
-    .map(([year, tokens]) => ({ year, tokens }));
+    .map(([year, tokens]) => ({ year, tokens, books: booksByYear.get(year) ?? 0 }));
 
   return NextResponse.json(
     {
