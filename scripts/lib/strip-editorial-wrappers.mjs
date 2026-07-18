@@ -23,13 +23,16 @@ function flattenMarkdownTables(text) {
 }
 
 function stripMarkdownMarkers(text) {
+  // Interiors are BOUNDED (300 chars, no newlines) — the lazy-unbounded
+  // originals went quadratic on junk pages with thousands of stray asterisks
+  // (2h regex spin in the ngram build, 2026-07-18). See the TS twin's comment.
   return text
     .replace(/^[ \t]*#{1,6}[ \t]+/gm, '')
     .replace(/^[ \t]*(?:-{3,}|\*{3,})[ \t]*$/gm, '')
-    .replace(/->\s*(.+?)\s*<-/g, '$1')
-    .replace(/\*\*\*(\S(?:[^*]*?\S)?)\*\*\*/g, '$1')
-    .replace(/\*\*(\S(?:[^*]*?\S)?)\*\*/g, '$1')
-    .replace(/\*(\S(?:[^*]*?\S)?)\*/g, '$1')
+    .replace(/->[ \t]*(\S(?:[^\n]{0,300}?\S)?)[ \t]*<-/g, '$1')
+    .replace(/\*\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*\*/g, '$1')
+    .replace(/\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*/g, '$1')
+    .replace(/\*(\S(?:[^*\n]{0,300}?\S)?)\*/g, '$1')
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
 
