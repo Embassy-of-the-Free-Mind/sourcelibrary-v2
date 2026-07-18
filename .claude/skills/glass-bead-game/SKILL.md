@@ -20,12 +20,23 @@ claim.**
 1. Ask for: the theme (or offer to draw one), player names (optional — the
    string belongs to the table, not to individuals), and party vs. Castalia mode
    (default: party).
-2. Create the **table view** artifact (see "The table view" below) with the
+2. **Pre-flight the theme** before committing: a quick `search_concept` to
+   confirm the corpus answers it richly. A thin theme dies quietly here, not
+   on turn one.
+3. Create the **table view** artifact (see "The table view" below) with the
    theme and an empty string. Give the user the URL to open on the shared
    screen/TV. Republish to the SAME artifact URL after every accepted bead.
-3. Themes are ordinary words with body: hunger, sleep, salt, waiting, rain,
+4. **Write the game-state file immediately, and rewrite it after every
+   accepted bead**: a JSON file (scratchpad or `~/sourcelibrary-ops/games/`)
+   holding theme, mode, players, all beads (book_id, page, quote, shortlink,
+   bridge, vote), AND the artifact URL. A game evening outlives context
+   windows; any fresh session must be able to resume the string — and
+   republishing to the same artifact from a new conversation requires passing
+   that stored URL as the Artifact tool's `url` parameter. On invocation,
+   check for an unfinished game-state file and offer to resume it.
+5. Themes are ordinary words with body: hunger, sleep, salt, waiting, rain,
    jealousy, doors, north. In party mode avoid technical/scholarly themes.
-4. The Magister (any human, or the table jointly) may seed the first bead, or
+6. The Magister (any human, or the table jointly) may seed the first bead, or
    ask Claude to propose three seed passages to choose from.
 
 ## The turn loop (party mode — default)
@@ -49,20 +60,25 @@ For each turn:
    the candidate dies and they pick another. Only `snippet_type: translation`
    or `ocr` text is quotable — never AI summaries or image descriptions.
 4. **Read aloud.** The player reads the chosen passage to the table.
-5. **Vote.** Eyes closed, thumbs up/down — did it land? Majority accepts.
-   The scribe types the outcome. Accepted → add the bead (image, quote,
-   citation shortlink, bridge) to the artifact and republish. Rejected → it
-   burns; no residue on the string; play passes on.
+5. **Vote.** Eyes closed, thumbs up/down. **The vote judges the pairing
+   only — does the passage answer the bridge? The bridge itself is never on
+   trial.** (Bridges are often personal disclosure; a thumbs-down must never
+   read as a verdict on someone's life.) Majority accepts. The scribe types
+   the outcome. Accepted → add the bead (image, quote, citation shortlink,
+   bridge) to the artifact and republish. Rejected → the pairing burns, the
+   bridge survives; the player may hunt again next round with the same bridge.
 6. **Optional print.** If a printer is configured, compose a one-page PDF for
    the accepted bead (facsimile crop, quote, shortlink QR) and print via `lp`.
 
 ## The close
 
-Instead of taking a normal turn, any player may declare the string complete —
-then has one minute to retell the WHOLE string as a single story, first bead to
-last. Table votes. Accepted: one minute of silence, then the game ends and the
-close story is written into the artifact as the colophon. Rejected: they've
-spent their turn.
+Instead of taking a normal turn, any player may declare the string complete.
+Default close is **collaborative**: round-robin, each player retells one bead
+in order, and the declarer ends by naming how the theme was transformed. The
+solo variant — one player retells the whole string alone in a minute — is the
+flourish for tables that want it, never the requirement. Table votes on the
+close. Accepted: one minute of silence, then the close is written into the
+artifact as the colophon. Rejected: the declarer has spent their turn.
 
 ## Castalia mode (variant for scholars)
 
