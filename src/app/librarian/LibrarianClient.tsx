@@ -1108,7 +1108,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                         aria-label={listening ? 'Stop voice input' : 'Start voice input'}
                         aria-pressed={listening}
                         title={listening ? 'Stop voice input' : 'Speak your question'}
-                        className={`flex-shrink-0 p-2.5 rounded-lg border transition-colors ${listening
+                        className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg border transition-colors ${listening
                           ? 'border-[#9e4a3a] bg-[#9e4a3a] text-white animate-pulse'
                           : 'border-[#e8e4dc] text-[#8a8480] hover:text-[#1a1612] hover:border-[#c9a86c]'
                           }`}
