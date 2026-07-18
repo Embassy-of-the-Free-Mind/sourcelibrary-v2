@@ -100,8 +100,11 @@ export default function RoadmapPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <BookLoader />
+      <div className="min-h-screen bg-stone-50">
+        <SiteHeader variant="light" />
+        <div className="flex items-center justify-center py-40">
+          <BookLoader />
+        </div>
       </div>
     );
   }
