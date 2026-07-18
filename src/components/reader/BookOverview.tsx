@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface OverviewPage {
+export interface OverviewPage {
   id: string;
   page_number: number;
   photo?: string;
@@ -15,6 +15,7 @@ interface OverviewPage {
   split_from_spread?: boolean;
   crop?: { xStart?: number; xEnd?: number };
   display_photo?: string;
+  has_illustration?: boolean;
 }
 
 interface BookOverviewProps {
@@ -22,6 +23,8 @@ interface BookOverviewProps {
   bookSlug?: string;
   bookTitle?: string;
   pages: OverviewPage[];
+  /** When provided, renders a "Contents" button that switches back to the grid view */
+  onShowContents?: () => void;
 }
 
 // Two-tier image URLs: fast thumbnail for overview, mid-res for zoom.
@@ -29,7 +32,7 @@ interface BookOverviewProps {
 // both point at the full uncropped spread for split pages, so falling
 // through to them renders the wrong image. cropped_photo is the half-page
 // crop and is the canonical source for split pages.
-function getThumbUrl(page: OverviewPage): string | null {
+export function getThumbUrl(page: OverviewPage): string | null {
   if (page.split_from_spread || page.crop) {
     return page.thumbnail_blob || page.cropped_photo || null;
   }
@@ -69,7 +72,7 @@ const HIRES_MIN_CELL_PX = 350; // on-screen cell width before hi-res is worth fe
 const HIRES_SETTLE_MS = 150; // camera must be still this long before hi-res loads start
 const HIRES_CONCURRENCY = 3;
 
-export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: BookOverviewProps) {
+export default function BookOverview({ bookId, bookSlug, bookTitle, pages, onShowContents }: BookOverviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -626,8 +629,23 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         </div>
       )}
 
-      {/* Zoom controls — bottom-right pill */}
-      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-1
+      {/* Bottom-right controls */}
+      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
+      {onShowContents && (
+        <button
+          onClick={onShowContents}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
+            bg-black/60 backdrop-blur-md border border-white/10
+            text-white/70 hover:text-white text-sm transition-colors shadow-lg"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 3.5h10M2 7h10M2 10.5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          Contents
+        </button>
+      )}
+      {/* Zoom controls pill */}
+      <div className="flex items-center gap-1
         bg-black/60 backdrop-blur-md border border-white/10 rounded-full
         px-1 py-1 shadow-lg">
         <button
@@ -669,6 +687,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
             <path d="M5 5h6v6H5z" stroke="currentColor" strokeWidth="1" strokeDasharray="2 1" />
           </svg>
         </button>
+      </div>
       </div>
 
       {/* Back link — bottom-left */}

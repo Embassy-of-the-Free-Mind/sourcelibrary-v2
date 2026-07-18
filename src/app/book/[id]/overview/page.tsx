@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Metadata } from 'next';
-import BookOverview from '@/components/reader/BookOverview';
+import BookOverviewShell from '@/components/reader/BookOverviewShell';
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export async function generateStaticParams() {
@@ -25,6 +25,7 @@ const BOOK_PROJECTION = {
   display_title: 1,
   author: 1,
   pages_count: 1,
+  chapters: 1,
 };
 
 const PAGE_PROJECTION = {
@@ -41,6 +42,9 @@ const PAGE_PROJECTION = {
   split_from_spread: 1,
   crop: 1,
   page_type: 1,
+  // First gallery-worthy illustration only (>=0.5 = gallery materialization
+  // threshold) — mapped to a has_illustration boolean before serialization.
+  detected_images: { $elemMatch: { gallery_quality: { $gte: 0.5 } } },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -100,16 +104,27 @@ export default async function BookOverviewPage({ params }: PageProps) {
     display_photo: p.display_photo as string | undefined,
     split_from_spread: p.split_from_spread as boolean | undefined,
     crop: p.crop as { xStart?: number; xEnd?: number } | undefined,
+    has_illustration: Array.isArray(p.detected_images) && p.detected_images.length > 0 ? true : undefined,
   }));
 
   if (pages.length === 0) notFound();
 
+  const chapters = (Array.isArray(book.chapters) ? book.chapters : [])
+    .filter(c => typeof c?.pageNumber === 'number' && c.confidence !== 'low')
+    .map(c => ({
+      title: c.title as string,
+      titleEn: c.titleEn as string | undefined,
+      pageNumber: c.pageNumber as number,
+      level: (c.level as number) || 1,
+    }));
+
   return (
-    <BookOverview
+    <BookOverviewShell
       bookId={bookId}
       bookSlug={book.slug}
       bookTitle={book.display_title || book.title}
       pages={pages}
+      chapters={chapters}
     />
   );
 }
