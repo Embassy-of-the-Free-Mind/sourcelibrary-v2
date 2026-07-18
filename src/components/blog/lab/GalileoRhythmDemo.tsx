@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ToneEngine } from './audio';
 import { LabCard, PlayToggle, Readout, Chip } from './LabCard';
 
@@ -11,6 +11,9 @@ const RATIOS = [
   { a: 4, b: 5, name: 'a major third' },
 ];
 
+const PX_PER_SEC = 130;
+const CANVAS_H = 96;
+
 /**
  * Station VI — Galileo's continuum: rhythm sped up until it is pitch.
  *
@@ -20,6 +23,12 @@ const RATIOS = [
  * to count — so one tempo knob should carry a 2-against-3 drum pattern all
  * the way up into a sounding fifth. It does. Both voices here are the SAME
  * oscillator patch (a click train) from 2 clicks per second to 300.
+ *
+ * The pulse-train picture is drawn in the idiom Euler engraved a century
+ * later (Tentamen figs. 1–9, Station X) and Kircher's pendulum plate above:
+ * two rows of pulses, coincidences marked. When the dots pack tighter than
+ * the eye can split, the rows are drawn as solid bands — the visualization
+ * failing at exactly the rate the ear stops counting is the point.
  */
 export default function GalileoRhythmDemo() {
   const [playing, setPlaying] = useState(false);
@@ -27,6 +36,9 @@ export default function GalileoRhythmDemo() {
   const [speed, setSpeed] = useState(0); // 0..1 → base rate 1..100 /s (log)
 
   const engineRef = useRef<ToneEngine | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animRef = useRef(0);
+  const startRef = useRef(0);
 
   const ratio = RATIOS[ratioIdx];
   const base = Math.pow(10, 2 * speed); // 1..100
@@ -40,6 +52,84 @@ export default function GalileoRhythmDemo() {
     e.setVoice('trainA', rateA, 0.5, 'pulse');
     e.setVoice('trainB', rateB, 0.5, 'pulse');
   }, [playing, rateA, rateB]);
+
+  const render = useCallback((elapsed: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const w = canvas.offsetWidth;
+    if (w === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+    if (canvas.width !== Math.round(w * dpr)) {
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(CANVAS_H * dpr);
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, CANVAS_H);
+
+    const styles = getComputedStyle(canvas);
+    const ink = styles.color || '#211c15';
+    const rust = getComputedStyle(document.documentElement).getPropertyValue('--accent-rust').trim() || '#9e4a3a';
+
+    // Coincidence columns: both trains strike together every 1/base seconds.
+    const coSpacing = PX_PER_SEC / base;
+    ctx.strokeStyle = rust;
+    ctx.globalAlpha = coSpacing < 4 ? 0.15 : 0.3;
+    ctx.lineWidth = 1;
+    if (coSpacing >= 2) {
+      for (let k = Math.ceil(elapsed * base); ; k++) {
+        const x = (k / base - elapsed) * PX_PER_SEC;
+        if (x > w) break;
+        ctx.beginPath();
+        ctx.moveTo(x, 8);
+        ctx.lineTo(x, CANVAS_H - 8);
+        ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    const rows: { rate: number; y: number }[] = [
+      { rate: rateA, y: CANVAS_H * 0.32 },
+      { rate: rateB, y: CANVAS_H * 0.68 },
+    ];
+    ctx.fillStyle = ink;
+    for (const row of rows) {
+      const spacing = PX_PER_SEC / row.rate;
+      if (spacing < 2.5) {
+        // Dots packed beyond the eye's resolution: a solid band — the
+        // countable pattern is gone, which is the ear's experience too.
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(0, row.y - 2, w, 4);
+        ctx.globalAlpha = 1;
+      } else {
+        const r = Math.min(3.2, spacing * 0.28);
+        for (let k = Math.ceil(elapsed * row.rate); ; k++) {
+          const x = (k / row.rate - elapsed) * PX_PER_SEC;
+          if (x > w) break;
+          ctx.beginPath();
+          ctx.arc(x, row.y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+  }, [rateA, rateB, base]);
+
+  // Animate while playing (dots stream leftward, striking "now" at the left
+  // edge); otherwise draw the static pattern — Euler's figure, in effect.
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (playing && !reduced) {
+      startRef.current = performance.now();
+      const loop = (now: number) => {
+        render((now - startRef.current) / 1000);
+        animRef.current = requestAnimationFrame(loop);
+      };
+      animRef.current = requestAnimationFrame(loop);
+      return () => cancelAnimationFrame(animRef.current);
+    }
+    render(0);
+  }, [playing, render]);
 
   useEffect(() => () => { engineRef.current?.dispose(); }, []);
 
@@ -91,6 +181,20 @@ export default function GalileoRhythmDemo() {
           <span>a chord</span>
         </div>
       </div>
+
+      <div className="mb-1 rounded border border-border-light bg-cream overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          className="block w-full text-primary"
+          style={{ height: CANVAS_H }}
+          role="img"
+          aria-label={`Two pulse trains at ${ratio.a} against ${ratio.b}; vertical marks show where the pulses coincide`}
+        />
+      </div>
+      <p className="text-[11px] text-muted mb-4">
+        The pulses as Euler would later draw them (Station X) — coincidences marked in rust. When
+        the dots pack into a solid band, the eye has lost count at the same moment the ear does.
+      </p>
 
       <div className="grid grid-cols-3 gap-3">
         <Readout label="Lower voice" value={`${rateA.toFixed(rateA < 10 ? 1 : 0)} /s`} note={regime === 'tone' ? `= ${rateA.toFixed(0)} Hz` : 'pulses per second'} />

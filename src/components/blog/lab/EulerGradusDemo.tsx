@@ -1,8 +1,47 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { ToneEngine } from './audio';
 import { LabCard, Readout } from './LabCard';
+
+const EULER_PLATE =
+  'https://images.sourcelibrary.org/gallery/6990585917295890441359aa/6990585a17295890441359ec-0.jpg';
+
+/**
+ * One dyad in the idiom of Euler's own figures (Tentamen figs. 1–9): two
+ * rows of pulse dots, one per voice, coincidences enlarged. Shown ONLY on
+ * the results screen — the dot alignment gives away the ratio's simplicity,
+ * so rendering it during the blind trial would let the eye outvote the ear.
+ */
+function EulerDots({ p, q }: { p: number; q: number }) {
+  const cyclePx = 56;
+  const cycles = 4;
+  const w = cyclePx * cycles;
+  const rows: { rate: number; y: number }[] = [
+    { rate: p, y: 8 },
+    { rate: q, y: 19 },
+  ];
+  return (
+    <svg viewBox={`0 0 ${w} 27`} className="w-full max-w-[240px] block" aria-hidden="true">
+      {rows.map((row) =>
+        Array.from({ length: row.rate * cycles + 1 }, (_, k) => {
+          const x = (k * cyclePx) / row.rate;
+          const isCoincidence = k % row.rate === 0;
+          return (
+            <circle
+              key={`${row.y}-${k}`}
+              cx={x === 0 ? 2 : Math.min(x, w - 2)}
+              cy={row.y}
+              r={isCoincidence ? 2.4 : 1.5}
+              fill={isCoincidence ? '#a8503c' : '#78716c'}
+            />
+          );
+        })
+      )}
+    </svg>
+  );
+}
 
 /**
  * Euler's gradus suavitatis (Tentamen, 1739, ch. II): for a just interval
@@ -125,6 +164,7 @@ export default function EulerGradusDemo() {
   // Sweetness should fall as the degree rises, so agreement = −ρ(rating, gradus).
   const agreement = done ? -spearman(ratings, DYADS.map((d) => d.gradus)) : 0;
   const sorted = [...DYADS.keys()].sort((a, b) => DYADS[a].gradus - DYADS[b].gradus);
+  const byYourRating = [...DYADS.keys()].sort((a, b) => ratings[b] - ratings[a]);
 
   return (
     <LabCard
@@ -190,6 +230,39 @@ export default function EulerGradusDemo() {
             />
             <Readout label="Euler's claim" value="ρ = 1.00" note="taste, computable" />
           </div>
+
+          <div className="mb-4 md:flex md:gap-4">
+            <Link
+              href="/book/tentamen-novae-theoriae-musicae-euler?page=66"
+              className="block md:w-44 shrink-0 rounded overflow-hidden border border-border-light hover:border-stone-300"
+            >
+              <img
+                src={EULER_PLATE}
+                alt="Euler's engraved figures 1 through 9: rows of dots representing pulse trains of simple ratios"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </Link>
+            <div className="mt-3 md:mt-0 min-w-0 grow">
+              <p className="text-xs text-secondary mb-2">
+                Euler drew every ratio as rows of coinciding pulses (figs. 1–9, engraved at left —
+                hidden until now so your eye couldn&apos;t outvote your ear). Here are the same
+                figures ordered by <em>your</em> ratings, sweetest first — the data column his 1739
+                page was missing:
+              </p>
+              <div className="space-y-2">
+                {byYourRating.map((idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="text-[10px] text-muted w-28 shrink-0">
+                      {DYADS[idx].name} · {ratings[idx]}/7 <span className="font-mono">(g {DYADS[idx].gradus})</span>
+                    </span>
+                    <EulerDots p={DYADS[idx].p} q={DYADS[idx].q} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <table className="w-full text-xs text-secondary">
             <thead>
               <tr className="text-muted uppercase tracking-wider text-[10px]">

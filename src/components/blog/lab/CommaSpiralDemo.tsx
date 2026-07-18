@@ -31,6 +31,13 @@ const DESCARTES_PLATES = [
     detail: 'The solmization syllables around concentric rings, each note pinned to a string number (C.360, D.320/324, A.432…) — the same angle-is-pitch convention as the diagram above, three centuries early.',
     focus: '50% 38%',
   },
+  {
+    src: 'https://images.sourcelibrary.org/gallery/69b1cafca282e3475aab4148/69b1cafca282e3475aab4167-0.jpg?v=1784332368366',
+    href: '/book/musicae-compendium-descartes?page=31',
+    label: 'The octave cut as a pie — with a leftover',
+    detail: 'Descartes divides the octave into major and minor tones and semitones, string numbers around the rim — and the division does not come out even: a thin sliver marked "Schisma" is wedged in to absorb the remainder. The leftover this station is about, drawn as a leftover in 1618.',
+    focus: '50% 26%',
+  },
 ];
 
 // Pitch-class letters reached from A by successive fifths.
@@ -60,11 +67,17 @@ function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: '
   const last = points[points.length - 1];
   const showGap = n === 12 && temper === 'just';
   let gapPath = '';
+  let wedgePath = '';
   let gapTextY = 0;
   if (showGap) {
     const r = last.r + 9;
     const a = (2 * Math.PI * last.cents) / 1200;
-    gapPath = `M ${C} ${C - r} A ${r} ${r} 0 0 1 ${C + r * Math.sin(a)} ${C - r * Math.cos(a)}`;
+    const ax = C + r * Math.sin(a);
+    const ay = C - r * Math.cos(a);
+    gapPath = `M ${C} ${C - r} A ${r} ${r} 0 0 1 ${ax} ${ay}`;
+    // The comma as Descartes drew his schisma: a filled sliver of the pie,
+    // not a mark — the leftover has area.
+    wedgePath = `M ${C} ${C} L ${C} ${C - r} A ${r} ${r} 0 0 1 ${ax} ${ay} Z`;
     gapTextY = C - last.r - 14;
   }
 
@@ -113,9 +126,10 @@ function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: '
         );
       })}
 
-      {/* the comma gap */}
+      {/* the comma gap — a filled sliver, Descartes' schisma idiom */}
       {showGap && (
         <g>
+          <path d={wedgePath} fill="#a8503c" fillOpacity={0.16} stroke="none" />
           <path d={gapPath} fill="none" stroke="#a8503c" strokeWidth={2.5} strokeLinecap="round" />
           <text x={C + 8} y={gapTextY} fontSize={10} fill="#a8503c">
             +23.5 ¢ — the comma
@@ -205,6 +219,31 @@ export default function CommaSpiralDemo() {
       <div className="mb-4">
         <CommaCircle n={n} fifth={fifth} temper={temper} />
       </div>
+
+      {temper === 'equal' && (
+        <div className="mb-4 md:flex md:gap-4 md:items-start rounded border border-border-light bg-cream/60 p-3">
+          <Link
+            href="/book/complete-works-on-music-and-tuning-vols-4-5?page=99"
+            className="block md:w-48 shrink-0 rounded overflow-hidden border border-border-light hover:border-stone-300"
+          >
+            <img
+              src="https://images.sourcelibrary.org/gallery/69c6614901a26ccff09f5036/69c6614901a26ccff09f5099-0.jpg"
+              alt="Zhu Zaiyu's woodblock diagram of the twelve equal-tempered pipe lengths as nested L-shaped rules"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </Link>
+          <p className="mt-2 md:mt-0 text-xs text-secondary">
+            The twelve lengths that just closed your circle, drawn by the prince himself: each
+            pipe shorter than the last by the twelfth root of two, nested like carpenter&apos;s
+            rules. From a later volume of the same{' '}
+            <Link href="/book/complete-works-on-music-and-tuning-vols-4-5?page=99" className="text-accent-rust underline">
+              Complete Works on Music and Tuning
+            </Link>{' '}
+            the station cites.
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-3">
         <Readout label="Walker" value={`${freq.toFixed(1)} Hz`} note={`${Math.round(cents)} ¢ above root`} />

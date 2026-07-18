@@ -11,6 +11,7 @@ import KeplerPlanetsDemo from '@/components/blog/lab/KeplerPlanetsDemo';
 import KircherResonanceDemo from '@/components/blog/lab/KircherResonanceDemo';
 import YueJiAffectDemo from '@/components/blog/lab/YueJiAffectDemo';
 import EulerGradusDemo from '@/components/blog/lab/EulerGradusDemo';
+import { FolioFigure, FolioPair } from '@/components/blog/lab/FolioFigure';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg';
 
@@ -117,6 +118,22 @@ export default function SoundLaboratoryPage() {
           octave works out to about fifty-five cents per śruti; a trained modern ear resolves several
           times finer. Measure yours.
         </p>
+        <FolioPair>
+          <FolioFigure
+            src="https://images.sourcelibrary.org/gallery/69ef2b6c85daccce30f2e66d/69ef2b6c85daccce30f2e6db-0.jpg?v=1780586760763"
+            alt="A seventeenth-century Mughal line drawing of a kneeling musician playing a bīn, the stick-zither rudra vīṇā"
+            caption={<>A bīn player — the rudra vīṇā of Bharata&apos;s tradition — in a seventeenth-century Mughal drawing, reproduced in Strangways.</>}
+            href="/book/the-music-of-hindostan-strangways?page=110"
+            sourceLabel="The Music of Hindostan (1914)"
+          />
+          <FolioFigure
+            src="https://images.sourcelibrary.org/gallery/69ef2b7985daccce30f2e810/69ef2b7985daccce30f2e8ae-0.jpg?v=17817236117"
+            alt="Chromolithograph of two vīṇās: a rudra vīṇā with two painted gourd resonators and a peacock-bodied mayuri vīṇā with its bow"
+            caption={<>Two vīṇās, as the śaraṇa protocol requires — a rudra vīṇā and a peacock-bodied mayuri vīṇā, from Day&apos;s 1891 survey of South Indian instruments.</>}
+            href="/book/the-music-and-musical-instruments-of-southern-india-and-the-day?page=158"
+            sourceLabel="Day, Music of Southern India (1891)"
+          />
+        </FolioPair>
         <ShrutiTestDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">IV. Salmon before the Royal Society</h2>
@@ -133,6 +150,13 @@ export default function SoundLaboratoryPage() {
           temperament, in random order. The fifths differ by two cents, the thirds by fourteen — which
           is why the argument was always really about thirds.
         </p>
+        <FolioFigure
+          src="https://images.sourcelibrary.org/gallery/69aebe72a103e42dc941438e/69aebe72a103e42dc941439b-0.jpg?v=17816670555"
+          alt="Faithorne's engraved frontispiece: a woman plays a lute in a formal garden while a hand from a cloud holds a musical score"
+          caption={<>Faithorne&apos;s frontispiece to the <em>Essay</em> — a hand from a cloud holds the thesis, set to music: <em>Concordiâ res parvae crescunt, discordiâ maximae dilabuntur</em>: by concord small things grow; by discord the greatest fall apart.</>}
+          href="/book/an-essay-to-the-advancement-of-musick-salmon?page=13"
+          sourceLabel="Salmon, Essay (1672)"
+        />
         <SalmonTrialDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">V. The tone nobody is playing</h2>
@@ -157,6 +181,13 @@ export default function SoundLaboratoryPage() {
           the same object at different speeds. That is a claim a slider can test: nothing changes
           below but the rate.
         </p>
+        <FolioFigure
+          src="https://images.sourcelibrary.org/gallery/69af0a2069627f8eeaa1b8ac/69af0a2069627f8eeaa1ba97-1.jpg?v=1781667093876"
+          alt="Engraving of five numbered pendulums with the consonances — diapason, diapente, diatessaron — drawn as arcs between them"
+          caption={<>Galileo&apos;s argument as Kircher drew it fifteen years later: five pendulums, and the consonances — diapason, diapente, diatessaron — as arcs between the swings that coincide. Not from the <em>Discorsi</em>; from Kircher&apos;s <em>Mundus Subterraneus</em>, which we also hold.</>}
+          href="/book/mundus-subterraneus-tomus-ii-kircher?page=491"
+          sourceLabel="Mundus Subterraneus II (1665)"
+        />
         <GalileoRhythmDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">VII. The planets, auditioned</h2>
@@ -184,6 +215,22 @@ export default function SoundLaboratoryPage() {
           name for his magic is resonance, and the demonstration works exactly as he describes: the
           answer comes only when the tuning matches.
         </p>
+        <FolioPair>
+          <FolioFigure
+            src="https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a741-0.jpg?v=17718766663"
+            alt="A personified breath projects rays onto a string marked with the letters A through F, mapping the consonant divisions"
+            caption={<>A breath strikes a string at its consonant divisions — and the surrounding text promises that the fifth <em>will necessarily sound</em>.</>}
+            href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=382"
+            sourceLabel="Musurgia Universalis II, p382"
+          />
+          <FolioFigure
+            src="https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a73f-0.jpg?v=17718766731"
+            alt="Diagram of a wind-harp: a box of strings sounded by wind entering through an opening, with no player"
+            caption={<>Two pages earlier, the wind-harp: strings that sound with no player at all.</>}
+            href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=380"
+            sourceLabel="Musurgia Universalis II, p380"
+          />
+        </FolioPair>
         <KircherResonanceDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">IX. The sound of a state of mind</h2>
@@ -199,6 +246,13 @@ export default function SoundLaboratoryPage() {
           that the six signatures are legible. If they are, you should be able to hear a phrase
           built to one description and name the state of mind blind.
         </p>
+        <FolioFigure
+          src="https://images.sourcelibrary.org/gallery/69907b1f5f855ec553e70c6b/69907b1f5f855ec553e70cbe-0.jpg"
+          alt="Color plate of Yu Boya, seated by a rock, playing the guqin"
+          caption={<>The claim as a story: Yu Boya at his qin. His friend Ziqi could hear mountains and flowing water in his playing; when Ziqi died, Yu Boya broke the instrument — no one was left who could hear the meaning. Plate from Doré&apos;s survey of Chinese religion, another book on these shelves.</>}
+          href="/book/recherches-sur-les-superstitions-en-chine-vol-12-dore?page=83"
+          sourceLabel="Doré, Recherches sur les superstitions en Chine XII"
+        />
         <YueJiAffectDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">X. Grade the formula</h2>
@@ -228,6 +282,13 @@ export default function SoundLaboratoryPage() {
           old books that belongs on this bench, use the suggest-an-edit link below — this note is a
           living instrument, and corrections are the point.
         </p>
+        <FolioFigure
+          src="https://images.sourcelibrary.org/gallery/e48a21de-4db2-4c94-a71a-e952b9fa5393/69500507f426a210d109c2be-0.jpg?v=1773156760813"
+          alt="The Musurgia Universalis frontispiece: an angelic choir sings a notated canon above the celestial globe, with Pythagoras and the smithy at the base"
+          caption={<>What the untested faith looked like at full magnificence: the <em>Musurgia</em> frontispiece — a thirty-six-voice angelic canon notated on a banner, Musica enthroned on the celestial globe, and, tucked at the base, the smithy where this page began.</>}
+          href="/book/musurgia-universalis-universal-music-kircher?page=7"
+          sourceLabel="Kircher, Musurgia Universalis (1650)"
+        />
       </article>
     </ContentPageLayout>
   );
