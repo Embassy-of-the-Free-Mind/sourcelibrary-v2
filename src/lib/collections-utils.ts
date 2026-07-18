@@ -39,16 +39,25 @@ export const PINNED_COLLECTION_SLUGS = [
 ];
 
 /** Pin specific collections first, shuffle the rest. */
-export function sortCollections<T extends { slug: string }>(collections: T[]): T[] {
+export function sortCollections<T extends { slug: string; children_count?: number }>(collections: T[]): T[] {
   const pinned = PINNED_COLLECTION_SLUGS
     .map(s => collections.find(c => c.slug === s))
     .filter(Boolean) as T[];
   const rest = collections.filter(c => !PINNED_COLLECTION_SLUGS.includes(c.slug));
-  for (let i = rest.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rest[i], rest[j]] = [rest[j], rest[i]];
-  }
-  return [...pinned, ...rest];
+  const shuffle = (arr: T[]) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+  // Collections with sub-collections are richer entry points — lift them ahead of
+  // the thin single-topic collections in the (otherwise randomised) tail. Pinned
+  // curation still leads. When children_count is absent (e.g. homepage grid) this
+  // is a no-op and the tail is simply shuffled.
+  const withSubs = shuffle(rest.filter(c => (c.children_count ?? 0) > 0));
+  const withoutSubs = shuffle(rest.filter(c => !(c.children_count ?? 0)));
+  return [...pinned, ...withSubs, ...withoutSubs];
 }
 
 // ---------- Thumbnail sanitization ----------
