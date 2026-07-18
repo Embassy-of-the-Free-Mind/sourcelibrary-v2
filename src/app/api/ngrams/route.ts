@@ -91,26 +91,36 @@ export async function GET(request: NextRequest) {
   }
   const totalsCorpora = [...new Set([defaultCorpus, ...lookupByCorpus.keys()])];
 
-  const [totalsRes, ...seriesRes] = await Promise.all([
-    supabase.from('ngram_totals').select('corpus, year, tokens').in('corpus', totalsCorpora),
-    ...[...lookupByCorpus.entries()].map(([corpus, ngrams]) =>
+  // One totals query PER corpus: supabase-js caps a response at 1,000 rows, and
+  // a combined .in('corpus', [...]) query for 2+ corpora exceeds that (~500-800
+  // year-rows each) — it truncated alphabetically, silently zeroing whole
+  // corpora (mercurius:la charted flat while "found"). Per-corpus queries stay
+  // under the cap.
+  const [totalsResList, seriesRes] = await Promise.all([
+    Promise.all(totalsCorpora.map(corpus =>
+      supabase.from('ngram_totals').select('corpus, year, tokens').eq('corpus', corpus),
+    )),
+    Promise.all([...lookupByCorpus.entries()].map(([corpus, ngrams]) =>
       supabase.from('ngram_series')
         .select('corpus, ngram, counts, total_count, book_count')
         .eq('corpus', corpus)
         .in('ngram', ngrams),
-    ),
+    )),
   ]);
-  const firstError = totalsRes.error || seriesRes.find(r => r.error)?.error;
+  const firstError =
+    totalsResList.find(r => r.error)?.error || seriesRes.find(r => r.error)?.error;
   if (firstError) {
     console.error('[ngrams] supabase error:', firstError);
     return NextResponse.json({ error: 'Lookup failed' }, { status: 500 });
   }
 
   const totalsByCorpus = new Map<string, Map<number, number>>();
-  for (const r of totalsRes.data || []) {
-    let m = totalsByCorpus.get(r.corpus);
-    if (!m) { m = new Map(); totalsByCorpus.set(r.corpus, m); }
-    m.set(Number(r.year), Number(r.tokens));
+  for (const res of totalsResList) {
+    for (const r of res.data || []) {
+      let m = totalsByCorpus.get(r.corpus);
+      if (!m) { m = new Map(); totalsByCorpus.set(r.corpus, m); }
+      m.set(Number(r.year), Number(r.tokens));
+    }
   }
   if (!totalsByCorpus.get(defaultCorpus)?.size) {
     return NextResponse.json(
