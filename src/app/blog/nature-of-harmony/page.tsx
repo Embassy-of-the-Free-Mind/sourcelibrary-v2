@@ -308,6 +308,12 @@ export default function NatureOfHarmonyPage() {
           sourceLabel="Galileo, Discorsi (1638)"
         />
 
+        <p className="text-muted text-sm mb-8 font-body italic">
+          This bench has nine siblings — the smith&apos;s hammers weighed, Kepler&apos;s planets
+          auditioned, Tartini&apos;s ghost tone summoned — in{' '}
+          <Link href="/blog/sound-laboratory" className="text-accent-rust hover:text-accent-rust underline not-italic">The Sound Laboratory</Link>.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8 font-body">
           The word Descartes reaches for is the hinge of the whole story: <em>resonare</em>. By 1650 sympathetic resonance was
           no longer a metaphor at all — it was a repeatable experiment. Athanasius Kircher, in his vast{' '}

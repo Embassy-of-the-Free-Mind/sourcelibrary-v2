@@ -11,8 +11,9 @@ const TARTINI_PLATE =
   'https://images.sourcelibrary.org/gallery/6990585617295890441358e0/699058571729589044135991-0.jpg?v=17816616026';
 
 /**
- * The dyads Tartini works through in the Trattato's terzo-suono figures —
- * simple ratios against the fixed 660 Hz voice. For any m:n dyad built on a
+ * Simple consonances against the fixed 660 Hz voice. (Not a transcription
+ * of the p177 examples — those work through major/minor-tone cases; these
+ * are the textbook dyads of the same phenomenon.) For any m:n dyad on a
  * common fundamental g (f1 = m·g, f2 = n·g with m = n+1), the difference
  * tone IS g: the bass the consonance implies. That is his whole theory.
  */
@@ -141,7 +142,7 @@ export default function TartiniDemo() {
 
       <div className="mt-5 pt-4 border-t border-border-light">
         <p className="text-[11px] uppercase tracking-wider text-muted mb-2">
-          His figures, playable
+          The phenomenon he engraved, playable
         </p>
         <div className="md:flex md:gap-4">
           <Link
@@ -158,7 +159,8 @@ export default function TartiniDemo() {
           <div className="mt-3 md:mt-0">
             <p className="text-xs text-secondary mb-2">
               Tartini engraves the ghost as a real note — <em>terzo suono</em> written under each
-              worked dyad. Set the slider to a figure and hear the bass he notated:
+              worked dyad on this page. These presets put the slider on simple consonances so you
+              can hear the bass his theory predicts:
             </p>
             <div className="flex flex-wrap gap-1.5">
               {FIGURES.map((fig) => (
