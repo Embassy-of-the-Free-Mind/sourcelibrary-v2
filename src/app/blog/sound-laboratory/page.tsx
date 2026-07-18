@@ -290,7 +290,6 @@ export default function SoundLaboratoryPage() {
           sourceLabel="Kircher, Musurgia Universalis (1650)"
         />
       </article>
-      </article>
     </ContentPageLayout>
   );
 }
