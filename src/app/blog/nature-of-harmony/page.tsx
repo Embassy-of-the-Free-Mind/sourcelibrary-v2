@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import DissonanceDemo from '@/components/blog/DissonanceDemo';
+import { BalmerSpectrum, ChladniFigure } from '@/components/blog/HarmonyVisuals';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Robert Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature as a crowned virgin chained to the divine name above and to an ape (Art) on the terrestrial globe below.";
@@ -364,6 +365,8 @@ export default function NatureOfHarmonyPage() {
           simply true: an electron's allowed orbits are the ones where a whole number of wavelengths fits, and hydrogen emits
           only the discrete lines that integer arithmetic permits. Matter really does have a discrete set of tones.
         </p>
+
+        <BalmerSpectrum />
         <p className="text-secondary leading-relaxed mb-8 font-body">
           But "reality is ratios" is too loose, and getting it precise is the whole gift of the quarrel. Integer ratios are not
           fundamental to resonance. A single driven oscillator — a wine glass, a swing — has no privileged ratios at all; its
@@ -376,6 +379,8 @@ export default function NatureOfHarmonyPage() {
           in a way you can state exactly: ratio is real where there is a boundary, a closed loop, or genuine coupling, and
           everywhere else "harmony" is only matching and amplitude.
         </p>
+
+        <ChladniFigure />
 
         <hr className="border-border-light my-12" />
 
