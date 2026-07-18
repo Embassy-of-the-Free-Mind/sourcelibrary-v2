@@ -401,6 +401,18 @@ async function shareFindings(args: Record<string, unknown>) {
   return { ok: true, id: result.id, message: result.message || 'Findings shared with the Source Library team. Thank you!' };
 }
 
+async function proposeCollection(args: Record<string, unknown>) {
+  const result = await apiPost('/collection-proposals', {
+    title: args.title,
+    rationale: args.rationale,
+    book_ids: args.book_ids || [],
+    suggested_slug: args.suggested_slug || null,
+    name: args.name || null,
+    email: args.email || null,
+  }) as Record<string, unknown>;
+  return { ok: true, id: result.id, message: result.message || 'Collection proposal sent to the Source Library team for review. Thank you!' };
+}
+
 // ── Tool definitions ───────────────────────────────────────────────
 
 // Shared annotation for all read-only tools
@@ -614,6 +626,27 @@ const TOOLS: Tool[] = [
       required: ['title', 'citations'],
     },
   },
+  {
+    name: 'propose_collection',
+    title: 'Propose a Collection',
+    description: 'Propose a themed collection of books to the Source Library team — a title, a rationale (why these books belong together and what thread connects them), and an ordered list of book ids. Get book ids from search_library / list_books / get_book. Like submit_feedback and share_findings, this goes to the team for REVIEW — it does NOT create a public collection instantly; a curator reviews and approves it. Use this when the user has identified a coherent set of books worth grouping and wants to contribute that curation back.',
+    annotations: { title: 'Propose a Collection', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        title: { type: 'string', description: 'Title of the proposed collection (2-200 chars)' },
+        rationale: { type: 'string', description: 'Why these books belong together and what connects them (max 5000 chars)' },
+        book_ids: {
+          type: 'array',
+          description: 'Ordered list of book ids to include (1-200). Get ids from search_library / list_books / get_book.',
+          items: { type: 'string', description: 'A book id' },
+        },
+        suggested_slug: { type: 'string', description: 'Optional URL slug suggestion, e.g. "renaissance-astronomy"' },
+        name: { type: 'string' }, email: { type: 'string' },
+      },
+      required: ['title', 'rationale', 'book_ids'],
+    },
+  },
 ];
 
 // ── Tool dispatch ──────────────────────────────────────────────────
@@ -635,6 +668,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
+    case 'propose_collection': return proposeCollection(args);
     default: throw new Error(`Unknown tool: ${name}`);
   }
 }
@@ -726,7 +760,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.3.4' },
+    { name: 'source-library', version: '4.4.0' },
     { capabilities: { tools: {} } },
   );
 
@@ -811,7 +845,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.3.4',
+    version: '4.4.0',
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
