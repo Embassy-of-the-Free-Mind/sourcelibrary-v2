@@ -87,6 +87,8 @@ export const INDEXES = [
   { collection: 'api_usage', key: { 'ip_hash': 1, 'ts': -1 }, options: { 'name': 'ip_hash_1_ts_-1' }, why: 'Per-client analysis, hashed IP for PII-light logging. src/lib/api-usage.ts.' },
   // ── audit_log ─────────────────────────────────────────────────
   { collection: 'audit_log', key: { 'book_id': 1 }, options: { 'name': 'audit_log_book_idx', 'background': true }, why: 'Lookup by book_id. Archived ensure-indexes route.' },
+  // ── book_events ───────────────────────────────────────────────
+  { collection: 'book_events', key: { 'book_id': 1, 'type': 1 }, options: { 'name': 'book_events_book_type_idx', 'background': true }, why: 'Per-book durable history lookups (image_resolution_upgrade etc.). Unlike audit_log this collection is PERMANENT — never add it to prune-telemetry. rearchive-iiif-fullres.mjs, backfill-resolution-upgrade-events.mjs (#3191).' },
   // ── authors ───────────────────────────────────────────────────
   { collection: 'authors', key: { 'slug': 1 }, options: { 'name': 'slug_1', 'unique': true }, why: 'Canonical slug lookup, the primary key for the author thesaurus. scripts/maintenance/build-authors-collection.mjs.' },
   { collection: 'authors', key: { 'variant_slugs': 1 }, options: { 'name': 'variant_slugs_1' }, why: 'Redirect-map lookup: any variant slug resolves to the canonical author. build-authors-collection.mjs.' },
