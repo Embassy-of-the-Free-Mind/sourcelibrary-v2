@@ -117,8 +117,8 @@ export async function rerankByVisualComparison(
   photoBase64: string,
   photoMime: string,
   candidates: IdentifyCandidate[],
-): Promise<{ picked: IdentifyCandidate | null; sure: boolean } | null> {
-  if (candidates.length === 0) return { picked: null, sure: false };
+): Promise<{ picked: IdentifyCandidate | null; sure: boolean; error?: string; thumbsFetched?: number } | null> {
+  if (candidates.length === 0) return { picked: null, sure: false, error: 'no_candidates' };
 
   // Fetch candidate thumbnails in parallel; skip any that fail.
   const thumbs = await Promise.all(candidates.map(async c => {
@@ -134,7 +134,7 @@ export async function rerankByVisualComparison(
     }
   }));
   const kept = thumbs.filter((t): t is NonNullable<typeof t> => t !== null);
-  if (kept.length === 0) return { picked: null, sure: false };
+  if (kept.length === 0) return { picked: null, sure: false, error: 'no_thumbnails_fetched' };
 
   const parts: Array<{ text: string } | { inline_data: { mime_type: string; data: string } }> = [
     {
@@ -157,16 +157,20 @@ export async function rerankByVisualComparison(
         signal: AbortSignal.timeout(20000),
       },
     );
-    if (!resp.ok) return null;
+    if (!resp.ok) {
+      const body = await resp.text().catch(() => '');
+      return { picked: null, sure: false, thumbsFetched: kept.length, error: `gemini_${resp.status}:${body.slice(0, 120)}` };
+    }
     const data = await resp.json();
     const text = (data.candidates?.[0]?.content?.parts || []).map((p: { text?: string }) => p.text || '').join('');
     const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     const parsed = JSON.parse((jsonMatch?.[1] || text).trim());
     const idx = typeof parsed.best === 'number' ? parsed.best - 1 : -1;
     const picked = idx >= 0 && idx < kept.length ? kept[idx].candidate : null;
-    return { picked, sure: !!parsed.sure };
+    return { picked, sure: !!parsed.sure, thumbsFetched: kept.length };
   } catch (e) {
-    console.warn('[identify] rerank failed:', e instanceof Error ? e.message : String(e));
-    return null;
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn('[identify] rerank failed:', msg);
+    return { picked: null, sure: false, thumbsFetched: kept.length, error: `rerank_call:${msg.slice(0, 120)}` };
   }
 }

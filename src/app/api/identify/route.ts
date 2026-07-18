@@ -270,8 +270,17 @@ export async function POST(request: NextRequest) {
           })
           .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
 
+        const t0 = Date.now();
         const verdict = await rerankByVisualComparison(base64, mimeType, candidates);
-        if (!verdict?.picked) return { confirmed: null as ConfirmedMatch | null, candidateCount: candidates.length, ran: candidates.length > 0 };
+        if (!verdict?.picked) {
+          return {
+            confirmed: null as ConfirmedMatch | null,
+            candidateCount: candidates.length,
+            ran: candidates.length > 0,
+            ms: Date.now() - t0,
+            error: verdict?.error,
+          };
+        }
 
         const picked = verdict.picked as IdentifyCandidate & { _hydrated?: { page_id?: string; page_number?: number; description?: string; book_title?: string; book_author?: string } };
         const book = await db.collection('books').findOne(
@@ -295,10 +304,11 @@ export async function POST(request: NextRequest) {
           gallery_url: picked.galleryId ? `/gallery/image/${picked.galleryId}` : undefined,
           source_type: picked.sourceType,
         };
-        return { confirmed, candidateCount: candidates.length, ran: true, sure: verdict.sure };
+        return { confirmed, candidateCount: candidates.length, ran: true, sure: verdict.sure, ms: Date.now() - t0 };
       } catch (e) {
-        console.warn('[identify] rerank pipeline failed:', e instanceof Error ? e.message : String(e));
-        return { confirmed: null as ConfirmedMatch | null, candidateCount: 0, ran: false };
+        const msg = e instanceof Error ? e.message : String(e);
+        console.warn('[identify] rerank pipeline failed:', msg);
+        return { confirmed: null as ConfirmedMatch | null, candidateCount: 0, ran: false, error: `pipeline:${msg.slice(0, 120)}` };
       }
     })();
 
@@ -757,8 +767,8 @@ Return JSON only:
     // confirmation" instead of a hung request.
     const rerank = await Promise.race([
       rerankPromise,
-      new Promise<{ confirmed: ConfirmedMatch | null; candidateCount: number; ran: boolean }>(
-        resolve => setTimeout(() => resolve({ confirmed: null, candidateCount: 0, ran: false }), 25000),
+      new Promise<{ confirmed: ConfirmedMatch | null; candidateCount: number; ran: boolean; error?: string }>(
+        resolve => setTimeout(() => resolve({ confirmed: null, candidateCount: 0, ran: false, error: 'race_timeout_25s' }), 25000),
       ),
     ]);
     const confirmed = rerank.confirmed;
@@ -831,6 +841,13 @@ Return JSON only:
       semantic_artwork_search: semanticArtworks.length > 0,
       verified: !!verification,
       confirmed,
+      rerank: {
+        ran: rerank.ran,
+        candidates: rerank.candidateCount,
+        sure: (rerank as { sure?: boolean }).sure ?? false,
+        ms: (rerank as { ms?: number }).ms,
+        error: (rerank as { error?: string }).error,
+      },
       // A visually confirmed match supersedes the text-heuristic page guess —
       // an unconfirmed guess pointing at a different book misleads (see #3193
       // benchmark: the heuristic picked the wrong book on degraded photos).
