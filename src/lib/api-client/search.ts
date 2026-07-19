@@ -30,10 +30,12 @@ export const search = {
   /**
    * Search book indexes (keywords, concepts, people, places, quotes)
    */
-  index: async (query: string, options?: { type?: string; bookId?: string }): Promise<IndexSearchResponse> => {
+  index: async (query: string, options?: { type?: string; bookId?: string; dateFrom?: string; dateTo?: string }): Promise<IndexSearchResponse> => {
     const params = new URLSearchParams({ q: query });
     if (options?.type) params.append('type', options.type);
     if (options?.bookId) params.append('book_id', options.bookId);
+    if (options?.dateFrom) params.append('date_from', options.dateFrom);
+    if (options?.dateTo) params.append('date_to', options.dateTo);
 
     return await apiClient.get(`/api/search/index?${params}`);
   },
