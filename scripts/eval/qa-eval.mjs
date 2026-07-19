@@ -434,7 +434,11 @@ async function cmdScorecard() {
   const gtDir = path.join(__dirname, 'ground-truth');
   if (!fs.existsSync(gtDir)) { console.error(`No ground truth at ${gtDir}`); process.exit(1); }
   const entries = [];
+  // --only=<substring> restricts to matching ground-truth filenames (e.g.
+  // --only=tibetan) so new-passage model runs don't re-spend on the whole set.
+  const only = typeof args.only === 'string' ? args.only : null;
   for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
+    if (only && !file.includes(only)) continue;
     try {
       const gt = JSON.parse(fs.readFileSync(path.join(gtDir, file), 'utf8'));
       if (gt.ocr_ground_truth) entries.push(gt);
@@ -554,7 +558,9 @@ async function cmdScorecard() {
   console.log(`  on clean canonical pages. Manuscripts and rare works (the OCR frontier) are`);
   console.log(`  covered by consistency/cross-model/embedding checks, not this scorecard.`);
 
-  saveResults('scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, summary });
+  // Scoped runs save under their own name — saveResults keys the filename on
+  // kind+date alone, so an --only run would otherwise clobber the full scorecard.
+  saveResults(only ? `scorecard-${only}` : 'scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────
