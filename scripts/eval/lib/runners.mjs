@@ -1,7 +1,7 @@
 /**
  * QA-Eval Model Runners
  *
- * Unified execution wrappers for Gemini, Claude, and Mistral models.
+ * Unified execution wrappers for Gemini and Claude models.
  * Handles key rotation, cost tracking, and normalizes output.
  */
 
@@ -20,15 +20,7 @@ const PRICING = {
   'claude-opus-4-6':              { input: 15.00, output: 75.00 },
   'claude-sonnet-4-6':            { input: 3.00, output: 15.00 },
   'claude-haiku-4-5-20251001':    { input: 0.80, output: 4.00 },
-  'mistral-medium-latest':        { input: 1.50, output: 7.50 },
-  'mistral-small-latest':         { input: 0.15, output: 0.60 },
   default:                        { input: 0.50, output: 3.00 },
-};
-
-// Mistral OCR is priced per page, not per token (verified 2026-07-19:
-// OCR 4 = $4 / 1000 pages on the dedicated /v1/ocr endpoint).
-const PAGE_PRICING = {
-  'mistral-ocr-latest': 0.004,
 };
 
 function calcCost(model, inputTokens, outputTokens) {
@@ -37,13 +29,11 @@ function calcCost(model, inputTokens, outputTokens) {
 }
 
 export function estimateCost(model, runsPerPage, sampleSize) {
-  const calls = runsPerPage * sampleSize;
-  if (PAGE_PRICING[model]) {
-    return { calls, estimatedUsd: calls * PAGE_PRICING[model] };
-  }
+  const p = PRICING[model] || PRICING.default;
   // Rough estimate: ~1500 input tokens (image), ~2000 output tokens per OCR call
   const inputPerCall = 1500;
   const outputPerCall = 2000;
+  const calls = runsPerPage * sampleSize;
   return {
     calls,
     estimatedUsd: calls * calcCost(model, inputPerCall, outputPerCall),
@@ -217,98 +207,6 @@ export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   };
 }
 
-// ── Run Mistral ────────────────────────────────────────────────────
-
-function getMistralKey() {
-  const key = process.env.MISTRAL_API_KEY;
-  if (!key) throw new Error('MISTRAL_API_KEY not set');
-  return key;
-}
-
-/**
- * Dedicated OCR endpoint (mistral-ocr-latest). NOTE: this is Mistral's own
- * document→markdown pipeline — it does NOT take our OCR prompt, so the output
- * has no <language>/<page-type>/etc. tag contract. Comparable on transcription
- * quality only.
- */
-async function runMistralOcr(model, imageBuffer, _prompt, _opts = {}) {
-  const b64 = imageBuffer.toString('base64');
-  const start = Date.now();
-  const resp = await fetch('https://api.mistral.ai/v1/ocr', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getMistralKey()}` },
-    body: JSON.stringify({
-      model,
-      document: { type: 'image_url', image_url: `data:image/jpeg;base64,${b64}` },
-    }),
-  });
-
-  if (!resp.ok) {
-    const errText = await resp.text();
-    throw new Error(`Mistral OCR ${resp.status}: ${errText.slice(0, 200)}`);
-  }
-
-  const data = await resp.json();
-  const durationMs = Date.now() - start;
-  const pages = data.pages || [];
-  const text = pages.map(p => p.markdown ?? p.text ?? '').join('\n\n');
-  const pagesProcessed = data.usage_info?.pages_processed ?? pages.length ?? 1;
-
-  return {
-    text,
-    model,
-    inputTokens: 0,
-    outputTokens: 0,
-    costUsd: pagesProcessed * (PAGE_PRICING[model] ?? PAGE_PRICING['mistral-ocr-latest']),
-    durationMs,
-    finishReason: 'ocr',
-  };
-}
-
-/** Vision chat models (mistral-medium / mistral-small) — same prompt contract as Gemini/Claude. */
-async function runMistralChat(model, imageBuffer, prompt, opts = {}) {
-  const { temperature = 0, maxTokens = 8000 } = opts;
-  const b64 = imageBuffer.toString('base64');
-  const start = Date.now();
-  const resp = await fetch('https://api.mistral.ai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getMistralKey()}` },
-    body: JSON.stringify({
-      model,
-      temperature,
-      max_tokens: maxTokens,
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'text', text: prompt },
-          { type: 'image_url', image_url: `data:image/jpeg;base64,${b64}` },
-        ],
-      }],
-    }),
-  });
-
-  if (!resp.ok) {
-    const errText = await resp.text();
-    throw new Error(`Mistral ${resp.status}: ${errText.slice(0, 200)}`);
-  }
-
-  const data = await resp.json();
-  const durationMs = Date.now() - start;
-  const text = data.choices?.[0]?.message?.content || '';
-  const inputTokens = data.usage?.prompt_tokens || 0;
-  const outputTokens = data.usage?.completion_tokens || 0;
-
-  return {
-    text,
-    model,
-    inputTokens,
-    outputTokens,
-    costUsd: calcCost(model, inputTokens, outputTokens),
-    durationMs,
-    finishReason: data.choices?.[0]?.finish_reason || 'unknown',
-  };
-}
-
 // ── Unified runner ─────────────────────────────────────────────────
 
 const MODEL_ALIASES = {
@@ -322,10 +220,6 @@ const MODEL_ALIASES = {
   'opus': 'claude-opus-4-6',
   'sonnet': 'claude-sonnet-4-6',
   'haiku': 'claude-haiku-4-5-20251001',
-  'mistral-ocr': 'mistral-ocr-latest',
-  'mistral': 'mistral-medium-latest',
-  'mistral-medium': 'mistral-medium-latest',
-  'mistral-small': 'mistral-small-latest',
 };
 
 export function resolveModel(nameOrAlias) {
@@ -336,16 +230,11 @@ export function isClaudeModel(model) {
   return model.startsWith('claude-');
 }
 
-export function isMistralModel(model) {
-  return model.startsWith('mistral-') || model.startsWith('pixtral-');
-}
-
 export async function runModel(model, imageBuffer, prompt, opts = {}) {
   const resolved = resolveModel(model);
-  if (isClaudeModel(resolved)) return runClaude(resolved, imageBuffer, prompt, opts);
-  if (resolved.startsWith('mistral-ocr')) return runMistralOcr(resolved, imageBuffer, prompt, opts);
-  if (isMistralModel(resolved)) return runMistralChat(resolved, imageBuffer, prompt, opts);
-  return runGemini(resolved, imageBuffer, prompt, opts);
+  return isClaudeModel(resolved)
+    ? runClaude(resolved, imageBuffer, prompt, opts)
+    : runGemini(resolved, imageBuffer, prompt, opts);
 }
 
 // ── Image fetching helper ──────────────────────────────────────────
