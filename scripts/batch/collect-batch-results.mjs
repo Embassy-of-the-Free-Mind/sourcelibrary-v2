@@ -8,6 +8,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -273,6 +274,14 @@ async function processOneJob(db, job) {
     }
 
     if (bulkOps.length > 0) {
+      // Retain any existing content as a revision before overwriting (#3240).
+      // No-op for pages getting their first OCR/translation.
+      await saveRevisionsBeforeOverwrite(
+        db,
+        bulkOps.map(op => op.updateOne.filter.id),
+        job.type === 'ocr' ? 'ocr' : 'translation',
+        { jobId: jobIdStr, reason: job.type === 'ocr' ? 'reocr_batch' : 'retranslate_batch' }
+      );
       const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
       successCount = bulkResult.matchedCount;
       failCount += (bulkOps.length - bulkResult.matchedCount);

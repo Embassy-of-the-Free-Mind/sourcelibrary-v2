@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -201,6 +202,9 @@ async function processPage(page, promptText, db) {
     const pageType = extractPageType(result.text);
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
+
+    // Retain existing OCR as a revision before overwriting (#3240)
+    await saveRevisionBeforeOverwrite(db, page.id, 'ocr', { reason: 'reocr_realtime' });
 
     // Save to MongoDB
     await db.collection('pages').updateOne(
