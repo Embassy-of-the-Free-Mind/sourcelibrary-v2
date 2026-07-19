@@ -878,6 +878,16 @@ export default function TranslationEditor({
   // Swipe navigation handlers (mobile only)
   const SWIPE_THRESHOLD = 50;
   const handleTouchStart = (e: React.TouchEvent) => {
+    // Two fingers = pinch (the scan zooms in place), never a page swipe. Also
+    // cancels a swipe already in progress when the second finger lands, so a
+    // pinch whose first finger drifted sideways can't turn the page.
+    if (e.touches.length > 1) {
+      swipeActive.current = false;
+      setSwipeOffset(0);
+      setIsSwiping(false);
+      return;
+    }
+
     // Don't track if touching a scrollable area or interactive element
     const target = e.target as HTMLElement;
     if (target.closest('textarea, input, button, a, [data-no-swipe]')) return;
@@ -892,6 +902,12 @@ export default function TranslationEditor({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) {
+      swipeActive.current = false;
+      setSwipeOffset(0);
+      setIsSwiping(false);
+      return;
+    }
     if (!swipeActive.current) return;
 
     const deltaX = e.touches[0].clientX - touchStartX.current;

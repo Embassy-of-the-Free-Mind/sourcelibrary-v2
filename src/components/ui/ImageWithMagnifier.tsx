@@ -42,9 +42,12 @@ interface ImageWithMagnifierProps {
 // (user feedback, 2026-07-13). A corner toggle hides the lens (persisted) for
 // those who prefer none. For deeper zoom, click through to the fullscreen
 // viewer or the deep-zoom button.
-// Mobile/Touch: tap opens the raw high-res image in a new tab so the browser's
-// native pinch-zoom can take over (the in-app viewer caps at 5x, which isn't
-// enough for high-DPI scans — see PR #1873 for the prior escape-hatch button).
+// Mobile/Touch: a two-finger pinch on the scan zooms it in place (same pan/zoom
+// surface as the desktop inline toggle, when `inlineZoomable` is set) — one
+// finger pans while zoomed, pinching back to 1× returns to reading. Tap still
+// opens the raw high-res image in a new tab as the deep-zoom escape hatch (the
+// in-place surface clamps at the scan's native pixels — see PR #1873 for the
+// prior escape-hatch button).
 //
 // Inline zoom mode (desktop, opt-in via `inlineZoomable`): a corner toggle turns
 // the pane into an in-place pan/zoom surface — no modal (user request,
@@ -100,6 +103,9 @@ export default function ImageWithMagnifier({
   const fullDimRef = useRef(fullImageDimensions);
   const imgDimRef = useRef(imageDimensions);
   const dragRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+  // Touch gesture state: an in-flight pinch (dist 0 = none) and a one-finger pan.
+  const pinchRef = useRef({ dist: 0, midX: 0, midY: 0 });
+  const touchPanRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
   // Last viewport cursor point (for repositioning the lens on scroll) and a
   // mirror of showMagnifier the scroll listener can read without re-binding.
   const lastMouseRef = useRef<{ x: number; y: number } | null>(null);
@@ -249,6 +255,98 @@ export default function ImageWithMagnifier({
       window.removeEventListener('keydown', onKey);
     };
   }, [zoomMode, clampPan, exitZoom, commitPanZoom]);
+
+  // ── Touch: pinch zooms the scan in place ───────────────────────────────────
+  // A pinch that starts on the image enters the same inline pan/zoom surface the
+  // desktop toggle uses; the pinch zooms about the fingers' midpoint and follows
+  // it (two-finger pan), one finger pans while zoomed, and pinching back down to
+  // fit-width exits to the reading view. Bound natively with passive: false so
+  // preventDefault works — the reader panel's touch-action: pan-y suppresses the
+  // BROWSER's pinch but still delivers the touch events to us.
+  useEffect(() => {
+    if (!inlineZoomable) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const touchDist = (t: TouchList) =>
+      Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    const touchMid = (t: TouchList) => {
+      const rect = el.getBoundingClientRect();
+      return {
+        x: (t[0].clientX + t[1].clientX) / 2 - rect.left,
+        y: (t[0].clientY + t[1].clientY) / 2 - rect.top,
+      };
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      if ((e.target as HTMLElement)?.closest('[data-zoom-control]')) return;
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        if (!zoomModeRef.current) enterZoom();
+        touchPanRef.current.active = false;
+        const m = touchMid(e.touches);
+        pinchRef.current = { dist: touchDist(e.touches), midX: m.x, midY: m.y };
+      } else if (e.touches.length === 1 && zoomModeRef.current) {
+        touchPanRef.current = {
+          active: true,
+          startX: e.touches[0].clientX,
+          startY: e.touches[0].clientY,
+          baseX: panZoomRef.current.x,
+          baseY: panZoomRef.current.y,
+        };
+      }
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && pinchRef.current.dist > 0) {
+        e.preventDefault();
+        const dist = touchDist(e.touches);
+        const m = touchMid(e.touches);
+        const prev = pinchRef.current;
+        zoomAround(m.x, m.y, panZoomRef.current.scale * (dist / prev.dist));
+        const p = panZoomRef.current;
+        const c = clampPan(p.x + (m.x - prev.midX), p.y + (m.y - prev.midY), p.scale);
+        commitPanZoom({ scale: p.scale, x: c.x, y: c.y });
+        pinchRef.current = { dist, midX: m.x, midY: m.y };
+      } else if (e.touches.length === 1 && touchPanRef.current.active && zoomModeRef.current) {
+        e.preventDefault();
+        const t = e.touches[0];
+        const d = touchPanRef.current;
+        const c = clampPan(
+          d.baseX + (t.clientX - d.startX),
+          d.baseY + (t.clientY - d.startY),
+          panZoomRef.current.scale,
+        );
+        commitPanZoom({ scale: panZoomRef.current.scale, x: c.x, y: c.y });
+      }
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2 && pinchRef.current.dist > 0) {
+        pinchRef.current.dist = 0;
+        // Pinched back out to fit-width: return to the reading view.
+        if (zoomModeRef.current && panZoomRef.current.scale <= 1.01) exitZoom();
+      }
+      if (e.touches.length === 0) {
+        touchPanRef.current.active = false;
+      } else if (e.touches.length === 1 && zoomModeRef.current) {
+        // The finger that stays down continues seamlessly as a pan.
+        touchPanRef.current = {
+          active: true,
+          startX: e.touches[0].clientX,
+          startY: e.touches[0].clientY,
+          baseX: panZoomRef.current.x,
+          baseY: panZoomRef.current.y,
+        };
+      }
+    };
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd);
+    el.addEventListener('touchcancel', onTouchEnd);
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, [inlineZoomable, enterZoom, exitZoom, zoomAround, clampPan, commitPanZoom]);
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
@@ -511,8 +609,13 @@ export default function ImageWithMagnifier({
     <>
       <div
         ref={containerRef}
+        // data-no-swipe while zoomed: a one-finger pan must not read as the
+        // reader's swipe-between-pages gesture (reading mode keeps the swipe).
+        {...(zoomMode ? { 'data-no-swipe': '' } : {})}
         className={`relative ${className} ${zoomMode ? `overflow-hidden select-none ${dragging ? 'cursor-grabbing' : 'cursor-grab'}` : ''}`}
-        style={zoomMode ? { height: 'min(78vh, 900px)', background: darkMode ? '#000' : 'var(--bg-white, #fff)' } : undefined}
+        // touchAction none while zoomed: the pan/pinch is ours, the page must
+        // not scroll underneath (overrides the reader panel's pan-y).
+        style={zoomMode ? { height: 'min(78vh, 900px)', background: darkMode ? '#000' : 'var(--bg-white, #fff)', touchAction: 'none' } : undefined}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setShowMagnifier(false)}
         onClick={handleClick}
