@@ -1,7 +1,9 @@
 {
   "language": "Armenian",
   "script": "armenian",
-  "db_languages": ["Armenian"],
+  "db_languages": [
+    "Armenian"
+  ],
   "_note": "Reference is the TITUS etext of the SAME edition we hold (Zohrab, Venice 1805) — best-case reference. The hy.wikisource Buzand under the identical title is the MODERN translation; never use it as grabar ground truth (see tests/unit/reference-ocr-guard.test.ts).",
   "works": [
     {
@@ -12,6 +14,34 @@
       "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
       "edition": "Zohrab Bible, Venice 1805",
       "reference": "Ի սկզբանէ էր բանն . եւ բանն էր առ Աստուած . եւ Աստուած էր բանն ։ Նա էր ի սկզբանէ առ Աստուած ։ Ամենայն ինչ ՝ նովաւ եղեւ . եւ առանց նորա եղեւ եւ ոչինչ ՝ որ ինչ եղեւն ։ Նովաւ ՝ կեանք էր , եւ կեանքն ՝ էր լոյս մարդկան . Եւ լոյսն ՝ ի խաւարի անդ ՝ լուսաւոր էր , եւ խաւար ՝ նմա ոչ եղեւ հասու ։ Եղեւ այր մի առաքեալ յԱստուծոյ . անուն նմա Յովհաննէս ։ Սա ՝ եկն ի վկայութիւն զի վկայեսցէ վասն լուսոյն . զի ամենեքին հաւատասցեն նովաւ ։ Ոչ էր նա լոյսն , այլ զի վկայեսցէ վասն լուսոյն ։ Էր լոյսն ճշմարիտ , որ լուսաւոր առնէ զամենայն մարդ ՝ որ գալոց է յաշխարհ ։ Յաշխարհի էր , եւ աշխարհ նովաւ եղեւ , եւ աշխարհ զնա ոչ ծանեաւ ։ Յիւրսն եկն , եւ իւրքն զնա ոչ ընկալան ։ Իսկ որք ընկալան զնա , ետ նոցա իշխանութիւն որդիս Աստուծոյ լինել , որոց հաւատասցեն յանուն նորա ։ Ոյք ոչ յարենէ , եւ ոչ ի կամաց մարմնոյ , եւ ոչ ի կամաց առն , այլ յԱստուծոյ ծնան ։ Եւ բանն մարմին եղեւ , եւ բնակեաց ի մեզ ։ եւ տեսաք զփառս նորա զփառս իբրեւ զմիածնի առ ի հօրէ , լի շնորհօք եւ ճշմարտութեամբ ։"
+    },
+    {
+      "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.60 (death of Artashes / Bar Kokhba digression)",
+      "slug": "xorenatsi-patmutiwn-2-60",
+      "title_rx": "Patmutiwn Hayots|Xorenats",
+      "source": "TITUS etext keyed from the SAME edition we hold (Abełean–Yarut'iwnean, Tiflis 1913); passage = printed p.189",
+      "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho095.htm",
+      "edition": "Abełean–Yarut'iwnean, Tiflis 1913",
+      "non_canonical": true,
+      "memorization_risk": "medium",
+      "_note": "Non-canonical row (#3235): famous work, but the exact grabar wording of this mid-text chapter has tiny training-data frequency vs its translations. TITUS preserves the 1913 print pagination, so printed p.189 maps 1:1 onto scan page 256. Guard-verified 2026-07-19 at 0.031, pipeline char accuracy 99.7%.",
+      "reference": "Յաղագս մահուանն Արտաշիսի ։ Գեղեցիկ իմն պատմէ եւ Արիսոն Փեղղացի յաղագս մահուանն Արտաշիսի ։ Քանզի ի ժամանակին որպէս ապստամբեցին Հրեայք յԱդրիանոսէ Հռոմայեցւոց թագաւորէ , եւ եՏուն պատերազմ ընդ Րուփոսի եպարքոսի , առաջնորդութեամբ առն ուրումն աւազակի , որում անուն էր Բարքոբայ , այս ինքն աստեղ որդի , որ էր գործովք չարագործ եւ սպանող , բայց անուամբ իւրով մեծաբանեալ պարծէր , որպէս թէ յերկնից ծագեաց նոցա փրկիչ , իբր նեղելոց եւ գերեաց ։ Եւ այնքան սաստկացոյց զմարտն , մինչեւ ի նա հայելով ի բաց կացին ի հարկելոյ Հռոմայեցւոց Ասորիք եւ Միջագետք եւ Պարսք ամենայն . քանզի էր եւ լուեալ , եթէ եմուտ յԱդրիանոս ախտ ուրկութեան ։ Բայց մերն Արտաշէս ոչ երկմտեաց ի նմանէ ։ Եւ եղեւ ընդ նոյն ժամնակս հասանել Ադրիանոսի ի Պաղեստինէ եւ սատակել զապստամբսն պաշարմամբ ի քաղաքի մի փքր , հուպ յերուսաղէմ . Վասն որոյ եւ ամենայն ազգին Հրէից հրամայեաց մերժել ի հայրենի աշխարհէն , որ եւ ոչ ի բազում հեռաստանէ հայեսցեն յԵրուսաղէմ ։ Եւ ինքն շինէր զԵրուսաղէմ , զաւերեալն ի Վեսպասիանոսէ եւ ի Տիտոսէ եւ յիւրմէ . եւ անուանեաց Հեղիայ յիւր անուն , որպէս եւ կոչէրն իսկ Ադրիանոս ՝ արեգակն ։ Բնակեցոյց ի նմա հեթանոսս եւ քրիստոնեայս , որոց եպիսկոպոս էր Մարկոս ոմն ։ Ընդ այն ժամանակս առաքեաց",
+      "book_id": "69944861185a84ef595aae5b",
+      "page_number": 256
+    },
+    {
+      "work": "Eznik of Kołb, Ełc ałandoc' 70-71 (tamed-animals argument)",
+      "slug": "eznik-elc-alandoc-70",
+      "title_rx": "Eghts|Eznik",
+      "source": "TITUS etext (Mariès–Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.69",
+      "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik070.htm",
+      "edition": "Venice 1826",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): obscure 5th-c. anti-sectarian treatise, mid-text zoological passage — about as non-canonical as grabar gets. TITUS orthography follows the 1959 critical editors (եթե vs the 1826 printing's եթէ, աւ/օ variance), so its 0.163 guard is edition-orthography noise, not OCR error. Guard-verified 2026-07-19, pipeline char accuracy 97.2% on scan page 80.",
+      "reference": "եւ իբրեւ զշան կորիւնս ՝ առ ընտելութեան ընդ անձն անկանին ։ Եւ միւսոյն զառիւծու կորիւն սնուցեալ ՝ ածէ ի համբոյր եւ ի քծինս , մինչեւ պատել զսնուցանելեաւն . եւ եթե այլ ոք ի նա հուպ գայցէ , չմոռացեալ զբարս գազանութեանն ՝ ի վերայ յարձակի . եւ նորա սաստեալ գազանին իբրեւ շան , ցածուցանէ յանսաստ գազանութենէն ։ Եւ այլոյ զարջոյ թոժիւնս սնուցեալ ՝ կաքաւիչս ուսուցանէ , եւ նմանեցուցեալ բարուց մարդկան ՝ զգազանաբարոյն ցածուցանէ ։ Եւ այլոց զկապիկս անապատականս ըմբռնեալս ՝ հտպիտս եւ ընչապտուկս եւ ամենաչար ուսուցանեն ։ Եւ այլոց զքարբս իգակերս կալեալ ՝ թովչութեամբք յընտելութիւն մարդկան ածեն , ջրեցուցեալ զթոյնսն սպանողս ։ Արդ եթե չար ինչ եին գազանքն բնութեամբ , չէր հնար վնասակարացն ընդ իւրեանց վնասակարին ընտելութիւն ունել ։ Եւ թե զխորշակս եւ զսառամանիս ի",
+      "book_id": "69a5e9bb787d6e9b8d42e183",
+      "page_number": 80
     }
   ]
 }

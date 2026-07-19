@@ -433,18 +433,20 @@ async function cmdCompare() {
 async function cmdScorecard() {
   const gtDir = path.join(__dirname, 'ground-truth');
   if (!fs.existsSync(gtDir)) { console.error(`No ground truth at ${gtDir}`); process.exit(1); }
-  const entries = [];
-  // --only=<substring> restricts to matching ground-truth filenames (e.g.
-  // --only=tibetan) so new-passage model runs don't re-spend on the whole set.
+  // --only=<regex> restricts to matching ground-truth filenames (e.g.
+  // --only=tibetan, --only='eznik|vita-vergilii') so new-passage model runs —
+  // the paid part — don't re-spend on the whole set. Plain substrings work too.
   const only = typeof args.only === 'string' ? args.only : null;
+  const onlyRx = only ? new RegExp(only, 'i') : null;
+  const entries = [];
   for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
-    if (only && !file.includes(only)) continue;
+    if (onlyRx && !onlyRx.test(file)) continue;
     try {
       const gt = JSON.parse(fs.readFileSync(path.join(gtDir, file), 'utf8'));
       if (gt.ocr_ground_truth) entries.push(gt);
     } catch { /* skip */ }
   }
-  if (!entries.length) { console.error('No OCR ground-truth files.'); process.exit(1); }
+  if (!entries.length) { console.error(`No OCR ground-truth files${only ? ` matching --only=${only}` : ''}.`); process.exit(1); }
 
   // Optional model comparison: re-OCR each pinned page with each model and score
   // against the same reference. Costs API money — always honor --dry-run.
@@ -560,7 +562,7 @@ async function cmdScorecard() {
 
   // Scoped runs save under their own name — saveResults keys the filename on
   // kind+date alone, so an --only run would otherwise clobber the full scorecard.
-  saveResults(only ? `scorecard-${only}` : 'scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
+  saveResults(only ? `scorecard-${only.replace(/[^a-z0-9._-]+/gi, '-')}` : 'scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────
@@ -726,6 +728,7 @@ Common options:
   --runs=N          OCR runs per model for consistency (default: 3)
   --delay=MS        Delay between API calls in ms (default: 2000)
   --dry-run         Estimate cost without running
+  --only=REGEX      scorecard: only ground-truth files whose filename matches
   --blog            Generate markdown blog post
   --book-id=ID      Evaluate a specific book
 

@@ -1,0 +1,22 @@
+{
+  "work": "Vita Vergilii (Donatus auctus), 1580 Meyen Virgil",
+  "book_id": "6a084d9715c643eb1af3f59e",
+  "page_number": 22,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Living Poets (Durham University), Donatus auctus critical text after Brugnoli–Stok, Vitae Vergilianae antiquae (1997)",
+  "source_url": "https://livingpoets.dur.ac.uk/w/index.php/Draft:Donatus_auctus",
+  "edition": "Venice 1580 (Meyen)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ubi, cum litteris et Graecis et Latinis uehementissimam operam dedisset, tandem omni cura omnique studio indulsit medicinae et mathematicis. quibus rebus cum ante alios eruditior peritiorque esset, se in urbem contulit statimque, magistri stabuli equorum Augusti amicitiam nactus, multos uariosque morbos incidentes equis curauit. at ille in mercedem singulis diebus panes Virgilio ut uni ex stabulariis dari iussit. interea a Crotoniatis pullus equi mirae pulchritudinis Caesari missus dono fuit, qui omnium iudicio spem portendebat uirtutis et celeritatis immensae. hunc cum aspexisset Maro, magistro stabuli dixit, natum esse ex morbosa equa et nec uiribus ualiturum nec celeritate, idque uerum fuisse inuentum est. quod cum magister stabuli Augusto recitasset, duplicari sibi in mercedem panes iussit. cum item ex Hispania Augusto canes dono mitterentur, et parentes eorum dixit Virgilius, et animum celeritatemque futuram. quo cognito mandat iterum augumentari Virgilio panes. dubitauit Augustus, Octauiine filius fuerit, an alterius, idque Maronem aperire posse arbitratus est,",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column",
+    "density": "medium",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}
