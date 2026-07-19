@@ -57,6 +57,38 @@ for (const m of models) {
   console.log(`  ${m.padEnd(9)} canon ${(c * 100).toFixed(2)}% (n=${pool.canon.length})  noncanon ${(n * 100).toFixed(2)}% (n=${pool.noncanon.length})  gap ${((c - n) * 100).toFixed(2)}pp`);
 }
 
+// Outcome battery per model — ALL runs, not just aligned (no survivorship bias):
+// aligned rate; unconditional (raw) accuracy; truncation rate; span dispersion.
+console.log('\n=== outcome battery per model (all runs; no alignment survivorship) ===');
+console.log('  model      aligned   acc_uncond   truncated   dispersion(med)');
+for (const m of models) {
+  const runs = rows.filter(r => {
+    if (r.source === 'interactive') return false;
+    return (r.source === 'pipeline' ? 'pipeline' : shortModel(r.model)) === m;
+  });
+  if (!runs.length) continue;
+  const alignedRate = runs.filter(r => r.aligned).length / runs.length;
+  const rawAcc = runs.filter(r => r.char_accuracy_raw != null);
+  const accU = rawAcc.length ? rawAcc.reduce((s, r) => s + r.char_accuracy_raw, 0) / rawAcc.length : NaN;
+  const trunc = runs.filter(r => r.finish_reason === 'MAX_TOKENS').length / runs.length;
+  const disp = runs.map(r => r.span_dispersion).filter(d => d != null).sort((a, b) => a - b);
+  const dMed = disp.length ? disp[Math.floor(disp.length / 2)] : NaN;
+  console.log(`  ${m.padEnd(9)}  ${(alignedRate * 100).toFixed(0).padStart(4)}%     ${(accU * 100).toFixed(1).padStart(5)}%       ${(trunc * 100).toFixed(0).padStart(3)}%        ${dMed.toFixed(2)}`);
+}
+
+// Recension divergence where alt references exist: printed-edition vs alternate.
+const withAlt = rows.filter(r => r.alt_scores && r.source !== 'interactive');
+if (withAlt.length) {
+  console.log('\n=== recension divergence (printed-edition ref vs alternates) ===');
+  for (const r of withAlt) {
+    for (const [name, a] of Object.entries(r.alt_scores)) {
+      const delta = (a.char_accuracy_raw - r.char_accuracy_raw) * 100;
+      if (delta > 1) console.log(`  RECITATION FLAG ${r.slug} ${shortModel(r.model)} run${r.run_index}: matches "${name}" ${delta.toFixed(1)}pp BETTER than the printed edition`);
+    }
+  }
+  console.log(`  (${withAlt.length} runs carry alternate recensions; only >1pp inversions printed)`);
+}
+
 // same-book contrasts
 console.log('\n=== same-book contrasts (book: canon-slug vs noncanon-slugs) ===');
 const byBook = new Map();

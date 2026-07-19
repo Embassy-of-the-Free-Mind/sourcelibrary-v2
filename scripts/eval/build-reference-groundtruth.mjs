@@ -120,6 +120,10 @@ for (const w of cfg.works) {
     work, book_id: best.bookId, page_number: best.page, script,
     language: cfg.language, source, source_url, edition,
     ...(non_canonical ? { non_canonical, memorization_risk } : {}),
+    // Alternate recensions of the same passage (e.g. the critical text a model
+    // most likely memorized vs the edition actually printed) ride along for the
+    // recension-divergence outcome in build-observations.
+    ...(w.alt_references ? { alt_references: w.alt_references } : {}),
     ocr_ground_truth: reference,
   };
   console.log(`WRITE ${work}: ${best.bookId} p${best.page}  guard=${(best.guardVal * 100).toFixed(0)}%  CER=${(best.cer * 100).toFixed(1)}%  [${best.title.slice(0, 40)}]`);

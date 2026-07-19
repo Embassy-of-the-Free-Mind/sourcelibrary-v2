@@ -413,7 +413,33 @@ export function subsequenceWER(reference, ocr, script) {
   const R = normalizeForScript(reference, script).split(' ').filter(w => w.length > 1);
   const O = normalizeForScript(ocr, script).split(' ').filter(w => w.length > 1);
   const r = subsequenceErrorRate(R, O, 3);
-  return { wer: r.cer, refWords: r.refLen, matchedWords: r.matched };
+  return { wer: r.cer, refWords: r.refLen, matchedWords: r.matched, ...greedySpanStats(R, O) };
+}
+
+/**
+ * SPAN DISPERSION — a reading-order outcome, separate from accuracy (#3235).
+ * Greedy in-order match of reference units against the OCR records where the
+ * matches land. spanDispersion = (last − first + 1) / matched: 1.0 means the
+ * reference sits contiguously in the output; >>1 means its words are
+ * interleaved with other material — the signature of two-column reading-order
+ * scrambling, which free-skip alignment deliberately does not penalize in the
+ * accuracy score. Greedy matching is a proxy (common words can mis-anchor),
+ * so treat as an ordinal signal, not a calibrated quantity.
+ */
+export function greedySpanStats(R, O) {
+  let first = -1, last = -1, matched = 0, j = 0;
+  for (let i = 0; i < R.length; i++) {
+    while (j < O.length && O[j] !== R[i]) j++;
+    if (j >= O.length) break;
+    if (first < 0) first = j;
+    last = j; matched++; j++;
+  }
+  if (matched === 0) return { spanUnits: 0, spanDispersion: null, greedyMatched: 0 };
+  return {
+    spanUnits: last - first + 1,
+    spanDispersion: +((last - first + 1) / matched).toFixed(3),
+    greedyMatched: matched,
+  };
 }
 
 // Guard thresholds: measured separation is wide on both sides (right page ~0%,
@@ -430,7 +456,8 @@ export const GUARD_THRESHOLDS = { cjk: 0.30, word: 0.35 };
 export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds = GUARD_THRESHOLDS) {
   if (script === 'cjk') {
     const r = subsequenceCER(reference, ocr);
-    return { aligned: r.cer <= thresholds.cjk, guard: { type: 'char', value: r.cer }, ...r, charAccuracy: 1 - r.cer };
+    const span = greedySpanStats([...normalizeCJK(reference)], [...normalizeCJK(ocr)]);
+    return { aligned: r.cer <= thresholds.cjk, guard: { type: 'char', value: r.cer }, ...r, charAccuracy: 1 - r.cer, spanDispersion: span.spanDispersion };
   }
   const guard = subsequenceWER(reference, ocr, script);
   const aligned = guard.wer <= thresholds.word;
@@ -438,5 +465,5 @@ export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds
   const R = [...normalizeForScript(reference, script).replace(/ /g, '')];
   const O = [...normalizeForScript(ocr, script).replace(/ /g, '')];
   const r = subsequenceErrorRate(R, O, 12);
-  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r, charAccuracy: 1 - r.cer };
+  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r, charAccuracy: 1 - r.cer, spanDispersion: guard.spanDispersion };
 }
