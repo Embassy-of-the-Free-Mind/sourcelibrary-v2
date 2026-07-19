@@ -105,7 +105,7 @@ export default function ImageWithMagnifier({
   const dragRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
   // Touch gesture state: an in-flight pinch (dist 0 = none) and a one-finger pan.
   const pinchRef = useRef({ dist: 0, midX: 0, midY: 0 });
-  const touchPanRef = useRef({ active: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+  const touchPanRef = useRef({ active: false, lastX: 0, lastY: 0 });
   // Last viewport cursor point (for repositioning the lens on scroll) and a
   // mirror of showMagnifier the scroll listener can read without re-binding.
   const lastMouseRef = useRef<{ x: number; y: number } | null>(null);
@@ -159,12 +159,17 @@ export default function ImageWithMagnifier({
     return 0.7; // portrait book page fallback
   }, []);
 
-  // Deepest useful zoom: the scan's native pixels vs the pane width. Clamped so
-  // even a huge master doesn't let you zoom into mush, and a small one still zooms.
+  // Deepest useful zoom: the scan's native pixels vs the pane's DEVICE pixels
+  // (CSS width × devicePixelRatio) — at that scale one scan pixel maps to one
+  // screen pixel, past it there's only blur. Matters most on phones, where the
+  // pane is ~400 CSS px at 3× DPR and a 4000px master genuinely supports ~20×.
+  // Ceiling 16 keeps the transformed layer inside what mobile Safari will
+  // rasterize sharply; floor 2 so even a low-res scan zooms a little.
   const getMaxScale = useCallback(() => {
     const vpW = containerRef.current?.clientWidth || imgDimRef.current.width || 1;
     const native = fullDimRef.current.width || 0;
-    return Math.min(Math.max(native ? native / vpW : 4, 2), 8);
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    return Math.min(Math.max(native ? (native / vpW) * dpr : 4, 2), 16);
   }, []);
 
   // Keep the image covering the pane: no dragging it off into empty space.
@@ -263,6 +268,9 @@ export default function ImageWithMagnifier({
   // fit-width exits to the reading view. Bound natively with passive: false so
   // preventDefault works — the reader panel's touch-action: pan-y suppresses the
   // BROWSER's pinch but still delivers the touch events to us.
+  // A pan that runs out of image chains into the page: the vertical leftover at
+  // the top/bottom edge scrolls the nearest scrollable ancestor, so the reader
+  // can keep moving down to the translation without leaving zoom.
   useEffect(() => {
     if (!inlineZoomable) return;
     const el = containerRef.current;
@@ -276,6 +284,15 @@ export default function ImageWithMagnifier({
         y: (t[0].clientY + t[1].clientY) / 2 - rect.top,
       };
     };
+    const getScrollParent = (): HTMLElement | null => {
+      let cur: HTMLElement | null = el.parentElement;
+      while (cur) {
+        const style = window.getComputedStyle(cur);
+        if (/(auto|scroll)/.test(style.overflowY) && cur.scrollHeight > cur.clientHeight) return cur;
+        cur = cur.parentElement;
+      }
+      return (document.scrollingElement as HTMLElement | null);
+    };
     const onTouchStart = (e: TouchEvent) => {
       if ((e.target as HTMLElement)?.closest('[data-zoom-control]')) return;
       if (e.touches.length === 2) {
@@ -285,13 +302,7 @@ export default function ImageWithMagnifier({
         const m = touchMid(e.touches);
         pinchRef.current = { dist: touchDist(e.touches), midX: m.x, midY: m.y };
       } else if (e.touches.length === 1 && zoomModeRef.current) {
-        touchPanRef.current = {
-          active: true,
-          startX: e.touches[0].clientX,
-          startY: e.touches[0].clientY,
-          baseX: panZoomRef.current.x,
-          baseY: panZoomRef.current.y,
-        };
+        touchPanRef.current = { active: true, lastX: e.touches[0].clientX, lastY: e.touches[0].clientY };
       }
     };
     const onTouchMove = (e: TouchEvent) => {
@@ -309,12 +320,22 @@ export default function ImageWithMagnifier({
         e.preventDefault();
         const t = e.touches[0];
         const d = touchPanRef.current;
-        const c = clampPan(
-          d.baseX + (t.clientX - d.startX),
-          d.baseY + (t.clientY - d.startY),
-          panZoomRef.current.scale,
-        );
-        commitPanZoom({ scale: panZoomRef.current.scale, x: c.x, y: c.y });
+        const dx = t.clientX - d.lastX;
+        const dy = t.clientY - d.lastY;
+        d.lastX = t.clientX;
+        d.lastY = t.clientY;
+        const p = panZoomRef.current;
+        const desiredY = p.y + dy;
+        const c = clampPan(p.x + dx, desiredY, p.scale);
+        commitPanZoom({ scale: p.scale, x: c.x, y: c.y });
+        // Scroll chaining: the vertical delta the clamp swallowed at the image's
+        // top/bottom edge goes to the page instead. desiredY > clamped means the
+        // finger pulled past the top (page scrolls up); below the bottom, down.
+        const overshoot = desiredY - c.y;
+        if (overshoot !== 0) {
+          const scroller = getScrollParent();
+          if (scroller) scroller.scrollTop -= overshoot;
+        }
       }
     };
     const onTouchEnd = (e: TouchEvent) => {
@@ -327,13 +348,7 @@ export default function ImageWithMagnifier({
         touchPanRef.current.active = false;
       } else if (e.touches.length === 1 && zoomModeRef.current) {
         // The finger that stays down continues seamlessly as a pan.
-        touchPanRef.current = {
-          active: true,
-          startX: e.touches[0].clientX,
-          startY: e.touches[0].clientY,
-          baseX: panZoomRef.current.x,
-          baseY: panZoomRef.current.y,
-        };
+        touchPanRef.current = { active: true, lastX: e.touches[0].clientX, lastY: e.touches[0].clientY };
       }
     };
     el.addEventListener('touchstart', onTouchStart, { passive: false });
