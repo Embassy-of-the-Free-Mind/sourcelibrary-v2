@@ -133,6 +133,18 @@ const bodyWords = s => {
 // regression — but it is a distinct failure mode worth counting on its own.
 const REFUSAL_RE = /\b(i (?:cannot|can't|am unable to|'m unable to)\b|i (?:apologize|'m sorry|am sorry)\b|as an ai\b|unable to (?:fulfill|process|transcribe)\b)/i;
 
+// A WIDER failure mode than refusal, and the one that actually corrupts pages:
+// the model's own reasoning stored verbatim AS the transcription. Sampled from
+// the near-zero-overlap tail, real stored "OCR" includes
+//   `croire a ma lague:" -> wait, "croire a ma lague:" is on the same line as`
+//   `- there's a symbol at the end of the caption box. I'll provide the
+//    transcription now. I will include the German section as it's part of`
+// These name no refusal, so REFUSAL_RE misses them. They matter for DIRECTION:
+// when the PRIOR side is commentary and the current side is clean, the re-OCR
+// REPAIRED the page — the opposite of a regression — and such pairs must not sit
+// in an audit queue built on the assumption that the prior text was good.
+const META_RE = /(\bi(?:'ll| will| am going to| shall)\s+(?:provide|transcribe|include|give|now\b)|\bhere is the (?:transcription|text)\b|\bthe image shows\b|\bnote:\s*the (?:text|image)\b|->\s*wait\b|\bwait,\s*["'`]|^\s*(?:okay|alright|ah),\s|\bline \d+:\s*[`"']|\blet me (?:transcribe|provide|check|re-?read)\b)/im;
+
 // Marginalia is the hardest thing on the page for OCR to catch: small, rotated,
 // in the gutter, often a different hand. Whether a re-run finds the SAME marginal
 // notes is a sharper quality signal than bulk text agreement, which is dominated
@@ -223,7 +235,8 @@ async function main() {
   const overallWord = new Stat();  // pilot-parity word metric, for comparability
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
-  const flow = {}, margFate = {};
+  const flow = {}, margFate = {}, directionCount = {};
+  let nearZero = 0;
   const margStat = new Stat();   // agreement on marginal text alone
   const t0 = Date.now();
 
@@ -300,6 +313,7 @@ async function main() {
         const margAgr = (mp.length || mc.length)
           ? (cls === 'spaceless' ? agreementChar : agreement)(mp.join(' '), mc.join(' '))
           : null;
+        const a0 = +((cls === 'spaceless' && agrChar != null) ? agrChar : agr).toFixed(4);
         const ep = envelope(prior.data), ec = envelope(current.data);
         const row = {
           page_id: entry.page_id,
@@ -323,7 +337,7 @@ async function main() {
           agreement_char: agrChar == null ? null : +agrChar.toFixed(4),
           // The number to trust per row: character-level on space-less scripts,
           // word-level (pilot parity) everywhere else.
-          agreement_primary: +((cls === 'spaceless' && agrChar != null) ? agrChar : agr).toFixed(4),
+          agreement_primary: a0,
           script_class: cls,
           body_words_prior: bodyPrior,
           body_words_current: bodyCurrent,
@@ -346,6 +360,13 @@ async function main() {
             : 'kept',
           prior_refusal: REFUSAL_RE.test(prior.data.slice(0, 400)),
           current_refusal: REFUSAL_RE.test(current.data.slice(0, 400)),
+          // commentary-as-transcription on either side (checked over more text
+          // than the refusal head — reasoning often starts mid-page)
+          prior_meta: META_RE.test(prior.data.slice(0, 1200)) || REFUSAL_RE.test(prior.data.slice(0, 400)),
+          current_meta: META_RE.test(current.data.slice(0, 1200)) || REFUSAL_RE.test(current.data.slice(0, 400)),
+          // two substantial texts sharing almost no words cannot both be reads of
+          // one page image: contamination, a wholesale re-read, or commentary
+          near_zero_overlap: null,   // filled below (needs the computed agreement)
           len_prior: prior.data.length,
           len_current: current.data.length,
           len_ratio: +(current.data.length / Math.max(1, prior.data.length)).toFixed(3),
@@ -357,6 +378,11 @@ async function main() {
           lang_tag_changed: ep.lang_tag !== ec.lang_tag,
           prior_at: prior.at,
         };
+        row.near_zero_overlap = a0 < 0.05 && row.body_words_prior >= 40 && row.body_words_current >= 40;
+        // Direction: prior is commentary, current is clean -> the re-OCR FIXED it.
+        row.direction = row.prior_meta && !row.current_meta ? 'repair'
+          : !row.prior_meta && row.current_meta ? 'degraded-to-commentary'
+          : 'both-transcription';
         out.write(JSON.stringify(row) + '\n');
         pairs++;
 
@@ -377,6 +403,9 @@ async function main() {
         bump('position_bucket', row.position_bucket, a);
         bump('soft_hidden', String(row.soft_hidden), a);
         bump('marginalia_fate', row.marginalia_fate, a);
+        bump('direction', row.direction, a);
+        if (row.near_zero_overlap) nearZero++;
+        directionCount[row.direction] = (directionCount[row.direction] || 0) + 1;
         if (row.marginalia_agreement != null) margStat.add(row.marginalia_agreement);
         margFate[row.marginalia_fate] = (margFate[row.marginalia_fate] || 0) + 1;
         bump('image_only', String(row.image_only), a);
@@ -395,7 +424,9 @@ async function main() {
         // image_only pages are excluded: on a cover or endpaper both sides are
         // AI descriptions of the same picture, so they disagree by construction
         // and nothing was transcribed to lose.
-        if (a < 0.5 && row.len_ratio < 0.6) {
+        // Repairs are excluded: there the PRIOR text was the model's commentary,
+        // so a shorter, disagreeing current text is the fix, not the damage.
+        if (a < 0.5 && row.len_ratio < 0.6 && row.direction !== 'repair') {
           regressions.push({
             ...row,
             severity: +((1 - a) * (1 - row.len_ratio) * Math.log10(10 + row.body_words_prior)).toFixed(4),
@@ -449,6 +480,8 @@ async function main() {
       missing: missingPage,
       eligibility_flow: flow,
       refusal_pairs: refusals,
+      direction: directionCount,
+      near_zero_overlap_pairs: nearZero,
       marginalia_fate: margFate,
       marginalia_mean_agreement: margStat.n ? +margStat.mean.toFixed(4) : null,
       marginalia_pairs_scored: margStat.n,
@@ -522,6 +555,21 @@ async function main() {
     table('prompt_transition', 'By prompt-version transition'),
     table('lang_x_year', 'By language × year bucket', 100),
     table('lang_x_modelpair', 'By language × model pair', 100),
+    '## Which side is broken? (direction)', '',
+    'A regression queue assumes the prior text was good. Sampling the near-zero-overlap',
+    'tail showed that is often false: the stored "OCR" is sometimes the model thinking',
+    'out loud (`-> wait, "croire a ma lague:" is on the same line as…`, `I\'ll provide the',
+    'transcription now`). When the prior side is commentary and the current side is clean,',
+    'the re-run REPAIRED the page.', '',
+    ...Object.entries(directionCount).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
+      `- \`${k}\`: **${v.toLocaleString()}** (${(v / overall.n * 100).toFixed(1)}%)`),
+    '',
+    `- pairs where two substantial texts share almost no words (agreement < 5%, both sides ≥ 40 body words): **${nearZero.toLocaleString()}** (${(nearZero / overall.n * 100).toFixed(2)}%)`,
+    '  These are not one failure mode. Verified samples include genuinely divergent reads of',
+    '  hard scripts (Hebrew cursive), commentary-as-transcription on the prior side, and at',
+    '  least one cross-book contamination (an Armenian book\'s page carrying Middle Dutch',
+    '  text). Treat the class as a triage bucket, not a diagnosis.', '',
+    table('direction', 'Agreement by direction', 1),
     '## Marginalia', '',
     'Marginal notes are the hardest marks on the page: small, rotated, in the gutter,',
     'often a different hand. Whether a re-run recovers the SAME notes is a sharper',
