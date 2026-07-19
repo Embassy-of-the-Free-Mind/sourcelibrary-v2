@@ -42,6 +42,17 @@ export interface NgramPoint {
   smoothed: number;
 }
 
+/** Doc-frequency point (?mode=docs): count is distinct books, not occurrences. */
+export interface DocPoint {
+  year: number;
+  /** Distinct books mentioning the term at least once that year. */
+  count: number;
+  /** count as a percentage of the corpus's books that year. */
+  pctBooks: number;
+  /** Centered moving average of pctBooks over ±smoothing years. */
+  smoothed: number;
+}
+
 /** Years with fewer corpus tokens than this are dropped from series — a term
  * hitting twice in a 3,000-token year would otherwise spike to ~600/million and
  * dwarf every real signal. The UI's token backdrop shows where thin years were
@@ -69,6 +80,32 @@ export function buildSeries(
     points.push({ year, count, perMillion: (count / tokens) * 1e6 });
   }
   const smoothed = smoothSeries(points.map(p => p.perMillion), smoothing);
+  return points.map((p, i) => ({ ...p, smoothed: smoothed[i] }));
+}
+
+/**
+ * Doc-frequency variant (#3217): % of each year's books that mention the term
+ * at least once — immune to one wordy treatise dominating a thin year.
+ * Year eligibility is the SAME token threshold as buildSeries, so both modes
+ * chart an identical set of years and toggling never shifts the x-axis.
+ */
+export function buildDocSeries(
+  booksByYear: Record<string, number>,
+  tokenTotals: Map<number, number>,
+  bookTotals: Map<number, number>,
+  from: number,
+  to: number,
+  smoothing: number,
+): DocPoint[] {
+  const points: Array<Omit<DocPoint, 'smoothed'>> = [];
+  for (let year = from; year <= to; year++) {
+    const tokens = tokenTotals.get(year) ?? 0;
+    if (tokens < MIN_YEAR_TOKENS) continue;
+    const books = bookTotals.get(year) ?? 0;
+    const count = booksByYear[String(year)] ?? 0;
+    points.push({ year, count, pctBooks: books > 0 ? (count / books) * 100 : 0 });
+  }
+  const smoothed = smoothSeries(points.map(p => p.pctBooks), smoothing);
   return points.map((p, i) => ({ ...p, smoothed: smoothed[i] }));
 }
 

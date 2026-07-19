@@ -15,7 +15,10 @@
 //           per-(corpus, year) token totals.
 //   load  — per shard: aggregate lines in memory (1/SHARDS of the vocabulary),
 //           drop tails below --min-total occurrences or --min-books distinct
-//           books, upsert into Supabase via direct pg. Shards are checkpointed
+//           books, upsert into Supabase via direct pg. Also derives per-year
+//           distinct-book counts (books_by_year — doc-frequency mode, #3217)
+//           from the one-line-per-book emit format, so adding that column only
+//           needs a load re-run over existing shards, never a recount. Shards are checkpointed
 //           in loaded-shards.json, so a killed load resumes where it stopped.
 //           Finishes by upserting ngram_totals from the emit's totals.json.
 //
@@ -248,8 +251,13 @@ CREATE TABLE IF NOT EXISTS ngram_series (
   counts jsonb NOT NULL,
   total_count integer NOT NULL,
   book_count integer NOT NULL,
+  books_by_year jsonb,
   PRIMARY KEY (corpus, ngram)
 );
+-- Doc-frequency mode (#3217): distinct books mentioning the ngram, per year.
+-- Nullable so a pre-#3217 table upgrades in place; rows fill in as the load
+-- streams shards, and /api/ngrams?mode=docs treats null as not-yet-loaded.
+ALTER TABLE ngram_series ADD COLUMN IF NOT EXISTS books_by_year jsonb;
 CREATE TABLE IF NOT EXISTS ngram_totals (
   corpus text NOT NULL,
   year smallint NOT NULL,
@@ -317,10 +325,13 @@ async function load() {
       const year = line.slice(tab1 + 1, tab2);
       const count = Number(line.slice(tab2 + 1));
       let e = agg.get(key);
-      if (!e) { e = { total: 0, books: 0, years: {} }; agg.set(key, e); }
+      if (!e) { e = { total: 0, books: 0, years: {}, bookYears: {} }; agg.set(key, e); }
       e.total += count;
       e.books += 1; // emit writes exactly one line per (book, corpus, ngram)
       e.years[year] = (e.years[year] || 0) + count;
+      // …so lines-per-year = distinct books mentioning the ngram that year
+      // (every book has exactly one publication year) — doc frequency (#3217).
+      e.bookYears[year] = (e.bookYears[year] || 0) + 1;
     }
 
     const rows = [];
@@ -330,7 +341,7 @@ async function load() {
       const ngram = key.slice(sep + 1);
       let n = 1;
       for (let i = 0; i < ngram.length; i++) if (ngram.charCodeAt(i) === 32) n++;
-      rows.push([key.slice(0, sep), ngram, n, JSON.stringify(e.years), e.total, e.books]);
+      rows.push([key.slice(0, sep), ngram, n, JSON.stringify(e.years), e.total, e.books, JSON.stringify(e.bookYears)]);
     }
     agg.clear();
 
@@ -340,15 +351,16 @@ async function load() {
       const params = [];
       const values = chunk.map((r, j) => {
         params.push(...r);
-        const o = j * 6;
-        return `($${o + 1},$${o + 2},$${o + 3},$${o + 4}::jsonb,$${o + 5},$${o + 6})`;
+        const o = j * 7;
+        return `($${o + 1},$${o + 2},$${o + 3},$${o + 4}::jsonb,$${o + 5},$${o + 6},$${o + 7}::jsonb)`;
       });
       await pgc.query(
-        `INSERT INTO ngram_series (corpus, ngram, n, counts, total_count, book_count)
+        `INSERT INTO ngram_series (corpus, ngram, n, counts, total_count, book_count, books_by_year)
          VALUES ${values.join(',')}
          ON CONFLICT (corpus, ngram) DO UPDATE SET
            n = EXCLUDED.n, counts = EXCLUDED.counts,
-           total_count = EXCLUDED.total_count, book_count = EXCLUDED.book_count`,
+           total_count = EXCLUDED.total_count, book_count = EXCLUDED.book_count,
+           books_by_year = EXCLUDED.books_by_year`,
         params,
       );
     }

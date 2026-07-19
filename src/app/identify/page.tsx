@@ -158,98 +158,110 @@ export default function IdentifyPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header */}
+      {/* Header — the page title band only appears once a photo is in play;
+          the landing hero speaks for itself */}
       <div className="bg-dark text-white">
         <SiteHeader variant="dark" />
-        <div className="max-w-2xl mx-auto px-4 py-6">
-          <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
-          <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
-        </div>
+        {image && (
+          <div className="max-w-2xl mx-auto px-4 py-6">
+            <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
+            <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
+          </div>
+        )}
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        {/* Landing: explain + engage */}
-        {!image && (
-          <div className="space-y-4">
-            {/* Hero — the picture room at the Embassy of the Free Mind */}
-            <div className="relative rounded-xl overflow-hidden bg-dark">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/identify-hero.jpg"
-                alt="The picture room at the Embassy of the Free Mind in Amsterdam, its walls covered with framed engravings and prints"
-                className="w-full h-[44vh] min-h-[300px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 text-white">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/70 mb-1.5">
-                  Embassy of the Free Mind · Amsterdam
-                </p>
-                <h2 className="font-display text-2xl sm:text-3xl font-semibold leading-tight">
-                  Every picture on these walls comes from a book.
-                </h2>
-                <p className="text-sm text-white/85 mt-2 max-w-md">
-                  Photograph any print or engraving — on a museum wall, or on the open page
-                  of an old book — and we&apos;ll find the original in the library, together
-                  with the book it belongs to.
-                </p>
+      {/* Hidden inputs live outside the conditional states so the hero and
+          any future entry points can share them */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={handleInputChange}
+        className="hidden"
+      />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleInputChange}
+        className="hidden"
+      />
+
+      {/* Landing: you are standing in the room */}
+      {!image && (
+        <>
+          <section className="relative bg-dark">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/identify-hero.jpg"
+              alt="The picture room at the Embassy of the Free Mind in Amsterdam, its walls covered with framed engravings and prints"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Blend the dark site header into the room's ceiling, and carry
+                the text on a deep bottom gradient */}
+            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-dark to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+            <div className="relative max-w-5xl mx-auto px-5 sm:px-8 min-h-[78vh] sm:min-h-[72vh] flex flex-col justify-end pb-12 sm:pb-16 pt-40">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-white/60 mb-3">
+                Embassy of the Free Mind · Amsterdam
+              </p>
+              <h1 className="font-display text-white font-semibold leading-[1.05] text-[clamp(2.1rem,5.5vw,3.8rem)] max-w-3xl [text-shadow:0_1px_24px_rgba(0,0,0,0.45)]">
+                Every picture here comes from a book.
+              </h1>
+              <p className="text-white/85 mt-4 max-w-xl text-base sm:text-lg leading-relaxed">
+                Photograph any print or engraving — on this wall, or on a page in
+                your hands — and we&apos;ll open the book it comes from.
+              </p>
+
+              {/* Signature: the viewfinder CTA — one more frame on a wall of frames */}
+              <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <button
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="group relative inline-flex items-center gap-3 px-8 py-5 text-white cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+                  aria-label="Take a photo of an artwork or page"
+                >
+                  <span aria-hidden className="pointer-events-none absolute inset-0">
+                    <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-top-1.5 motion-safe:group-hover:-left-1.5" />
+                    <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-top-1.5 motion-safe:group-hover:-right-1.5" />
+                    <span className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-bottom-1.5 motion-safe:group-hover:-left-1.5" />
+                    <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-bottom-1.5 motion-safe:group-hover:-right-1.5" />
+                  </span>
+                  <Camera className="w-6 h-6" />
+                  <span className="text-lg font-medium tracking-wide">Take a photo</span>
+                </button>
+
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer underline-offset-4 hover:underline outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-sm"
+                >
+                  <Upload className="w-4 h-4" />
+                  Upload an image
+                </button>
               </div>
             </div>
+          </section>
 
-            {/* Camera button (primary on mobile) */}
-            <button
-              onClick={() => cameraInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-3 px-6 py-10 rounded-xl border-2 border-dashed border-accent-rust/30 bg-white hover:border-accent-rust/60 hover:bg-accent-rust/5 transition-colors cursor-pointer"
-            >
-              <Camera className="w-8 h-8 text-accent-rust" />
-              <div className="text-left">
-                <p className="text-lg font-medium text-primary">Take a Photo</p>
-                <p className="text-sm text-muted">Point your camera at an artwork or book</p>
-              </div>
-            </button>
-            <input
-              ref={cameraInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handleInputChange}
-              className="hidden"
-            />
-
-            {/* File upload (secondary) */}
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-border-light bg-white hover:border-accent-rust/30 transition-colors text-sm text-secondary cursor-pointer"
-            >
-              <Upload className="w-4 h-4" />
-              Upload from gallery
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleInputChange}
-              className="hidden"
-            />
-
-            {/* How it works */}
-            <div className="grid grid-cols-3 gap-3 pt-2">
+          {/* How it works — one quiet strip, order is the information */}
+          <section className="border-b border-border-light bg-cream">
+            <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10">
               {[
-                { n: '1', title: 'Photograph', body: 'A print, a plate, or a page — frames and angles are fine.' },
-                { n: '2', title: 'We compare', body: 'Your photo is checked against the illustrations of the whole library.' },
-                { n: '3', title: 'Read the source', body: 'Land on the exact page in the reader, with translation.' },
+                { label: 'Photograph', body: 'Frames, glare, and angles are fine.' },
+                { label: 'Match', body: 'Compared against every illustration in the library.' },
+                { label: 'Read', body: 'The exact page opens in the reader, with translation.' },
               ].map(step => (
-                <div key={step.n} className="text-center px-1">
-                  <div className="w-7 h-7 mx-auto rounded-full bg-accent-rust/10 text-accent-rust text-sm font-semibold flex items-center justify-center">
-                    {step.n}
-                  </div>
-                  <p className="text-sm font-medium text-primary mt-2">{step.title}</p>
-                  <p className="text-xs text-muted mt-1 leading-snug">{step.body}</p>
+                <div key={step.label}>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-accent-rust">{step.label}</p>
+                  <p className="text-sm text-secondary mt-1.5 leading-snug">{step.body}</p>
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          </section>
+        </>
+      )}
 
+      <div className={`max-w-2xl mx-auto px-4 space-y-6 ${image ? 'py-8' : ''}`}>
         {/* Preview + loading */}
         {image && (
           <div className="space-y-4">

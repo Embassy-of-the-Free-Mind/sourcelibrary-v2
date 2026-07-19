@@ -25,6 +25,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -225,6 +226,10 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
       }
 
       const translationMeta = extractTranslationMetadata(result.text);
+
+      // Retain existing translation as a revision before overwriting (#3240) —
+      // no-op on first translation, fires in --stale mode re-translations.
+      await saveRevisionBeforeOverwrite(db, page.id, 'translation', { reason: 'retranslate_stale' });
 
       await db.collection('pages').updateOne(
         { id: page.id },

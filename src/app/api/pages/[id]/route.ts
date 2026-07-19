@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
 
 export const preferredRegion = 'fra1';
@@ -113,13 +114,10 @@ export const PATCH = withAuth(async (request, session, context) => {
     const now = new Date();
     const editedBy = body.edited_by || 'Unknown';
 
-    // Create revisions of existing content before manual overwrite
-    if (body.ocr) {
-      await createRevision(id, 'ocr');
-    }
-    if (body.translation) {
-      await createRevision(id, 'translation');
-    }
+    // Create revisions of existing content before manual overwrite.
+    // The returned revision carries the before-text for the correction event below.
+    const ocrRevision = body.ocr ? await createRevision(id, 'ocr') : undefined;
+    const translationRevision = body.translation ? await createRevision(id, 'translation') : undefined;
 
     // Update OCR if provided - mark as manual edit
     if (body.ocr) {
@@ -167,6 +165,21 @@ export const PATCH = withAuth(async (request, session, context) => {
 
     if (!updatedPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Capture the correction as a labeled model error (#3241) — fire and forget
+    const sessionEmail = session.user?.email;
+    if (body.ocr) {
+      recordCorrectionEvent({
+        revision: ocrRevision, after: body.ocr.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail, tenantId,
+      }).catch(() => {});
+    }
+    if (body.translation) {
+      recordCorrectionEvent({
+        revision: translationRevision, after: body.translation.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail, tenantId,
+      }).catch(() => {});
     }
 
     // Track edit for the book (fire and forget - don't block response)
