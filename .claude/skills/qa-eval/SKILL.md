@@ -68,7 +68,7 @@ Defined in `scripts/eval/corpus-registry.json`:
 | fraktur | German | Pre-1800 Fraktur/blackletter |
 | arabic | Arabic | Printed Naskh |
 | hebrew | Hebrew | Hebrew + Rashi script |
-| chinese-classical | CJK | Woodblock-printed classical Chinese |
+| chinese | CJK | Woodblock-printed classical Chinese |
 | sanskrit | Devanagari | Printed Sanskrit editions |
 | greek-ancient | Greek | Aldine and early printed Greek |
 | bph-manuscripts | Mixed | BPH high-quality manuscript scans |
@@ -136,6 +136,30 @@ Place reference transcriptions and translations in `scripts/eval/ground-truth/` 
 ```
 
 Sources: BDRC etexts, OpenPecha, Esukhia Derge Kangyur, Lotsawa House, scholarly editions.
+
+### Multi-language reference ground truth (#3212)
+
+Ground truth for ANY language is built from published etexts with `build-reference-groundtruth.mjs`, which generalizes the ctext system below. Per-language works files live in `scripts/eval/reference-works/<language>.json` (curated passages + provenance; sources registry in `scripts/eval/reference-sources.json`):
+
+```bash
+node scripts/eval/build-reference-groundtruth.mjs --language=hebrew            # dry run
+node scripts/eval/build-reference-groundtruth.mjs --language=hebrew --write    # pin ground truth
+node scripts/eval/qa-eval.mjs compare --corpus=hebrew --against=ocr            # score one corpus
+node scripts/eval/qa-eval.mjs scorecard                                        # per-language table
+```
+
+Two hard-won rules (measured on Armenian/Latin, 2026-07-19 — see `tests/unit/reference-ocr-guard.test.ts`):
+
+- **The identity guard is WORD-level for alphabetic scripts.** Char-level free-skip matching accepted a modern Armenian translation of the grabar Buzand at 22-25% CER (under the 0.30 bar); word-level scored the same decoy 88-96%. CJK stays char-level (its huge character inventory makes coincidental matches rare). Wikisource often shelves translations under the original's exact title — the guard, not the title, decides.
+- **One-page rule.** Reference passages must fit on a single printed page of the densest edition held (commentary editions print ~4 verse lines per page). A passage spanning a page boundary fails the guard on honest deletions — shorten the passage, don't loosen the guard.
+
+Orthography that varies BETWEEN EDITIONS (Latin u/v, i/j, long-s; Hebrew niqqud + maqaf; Greek polytonic marks; Armenian ew-ligature) is folded before comparison in `normalizeForScript` (`lib/metrics.mjs`) so it never counts as OCR error.
+
+Current scorecard (2026-07-19): Armenian 91.8%* · Chinese ~98.5% · Greek 100% · Hebrew 100% · Latin ~99% (char accuracy on aligned canonical passages; run `scorecard` for current numbers).
+
+\* Armenian is a lower bound: manual audit of the page scan showed ~18/21 word errors are the 1805 printing's nomina-sacra abbreviations (ա՟ծ = Աստուած etc.) transcribed diplomatically by our OCR but silently expanded by the TITUS reference — true misread rate on the page is ~1%. See `audit_note` in `ground-truth/armenian-zohrab-john-1.json`. General lesson: when a scorecard number looks bad, diff the words and READ THE SCAN before believing it — reference transcription conventions (abbreviation expansion, normalized punctuation) masquerade as OCR error.
+
+**RECITATION HAZARD (the inverse failure — a number that looks too GOOD).** Two pinned rows were deleted on 2026-07-19 after page-scan audits proved the pipeline OCR *recited* the canonical passage from memory instead of reading the page: a 1450 Mishnah-commentary manuscript (OCR contained only the letter-perfect canonical Mishnah, none of the visible commentary) and a Daxue Huowen page (OCR half-read the real columns then emitted the whole Zhongyong opening, which is not printed there). A third row (Zhuangzi) had its reference trimmed because the OCR completed the famous sentence past the page edge. Pattern: **pages that discuss a canonical text prime the model to recite it, and the identity guard cannot tell reading from reciting** — it verifies the reference is in the OCR, not that it came from the page. Rules: (1) pin only pages that verifiably PRINT the passage — check the image, not the OCR; (2) prefer pages where the OCR also transcribes non-canonical page furniture (apparatus, commentary, adjacent text) at several times the reference length; (3) treat a perfect score on a degraded/manuscript source as a hallucination flag, not a triumph. Related: `lesson_gemini_recitation_canonical_texts` (Gemini's RECITATION safety block on canonical texts is the same memorization surfacing differently).
 
 ### OCR vs. ctext (Chinese)
 

@@ -1,0 +1,22 @@
+{
+  "language": "Tibetan",
+  "script": "tibetan",
+  "db_languages": [
+    "Tibetan",
+    "Tibetan; Tibetan (script)",
+    "Tibetan (script); Tibetan"
+  ],
+  "_note": "BLOCKED — do not build ground truth from this file until the corpus holds a LEGIBLE Tibetan page (block print or formal dbu-can) verified by eye. Finding of 2026-07-19: the only candidate pages are semi-cursive manuscript folios that defeat every current model under a neutral transcription prompt (fresh flash-lite loops to MAX_TOKENS; Mistral OCR reads the script as ARMENIAN; gemini-3.1-pro recites the Astasahasrika opening on our 3000px scan and Abhisamayalankara-commentary prose on the 5120px BDRC original; claude-opus-4-8 loops). Yet the STORED pipeline OCR of the same page (book 69e7484085f786e884a4c10f p7, BDRC W1KG2849 img 7 — a stray Yum-margin folio in a mixed bundle) matches the Derge Heart Sutra etext at 96%/7% syllable WER with liturgical-recension variants: that is RECITATION frozen into the corpus, not a reading. Consequence: pinning Tibetan ground truth by probing stored OCR is CIRCULAR — the guard validates one model recitation against another text of the same family. Path to real ground truth: import a legible Derge block-print folio (e.g. Toh 21, BDRC open scans) and verify visually before pinning.",
+  "works": [
+    {
+      "work": "Heart Sutra (long recension), opening–aggregates",
+      "slug": "heart-sutra-1",
+      "title_rx": "tsangpa gyare",
+      "source": "Esukhia derge-kangyur digital etext, vol. 034 (shes rab sna tshogs), Toh 21, fol. 144b–145a",
+      "source_url": "https://raw.githubusercontent.com/Esukhia/derge-kangyur/master/text/034_ཤེས་རབ་སྣ་ཚོགས།.txt",
+      "edition": "Derge Kangyur (par phud), digital input",
+      "reference": "རྒྱ་གར་སྐད་དུ། བྷ་ག་བ་ཏཱི་པྲཛྙཱ་པཱ་ར་མི་ཏཱ་ཧྲྀ་ད་ཡ། བོད་སྐད་དུ། བཅོམ་ལྡན་འདས་མ་ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པའི་སྙིང་པོ། བམ་པོ་གཅིག་གོ། །བཅོམ་ལྡན་འདས་མ་ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ལ་ཕྱག་འཚལ་ལོ། །འདི་སྐད་བདག་གིས་ཐོས་པ་དུས་གཅིག་ན། བཅོམ་ལྡན་འདས་རྒྱལ་པོའི་ཁབ་ན་བྱ་རྒོད་ཕུང་པོའི་རི་ལ། དགེ་སློང་གི་དགེ་འདུན་ཆེན་པོ་དང་། བྱང་ཆུབ་སེམས་དཔའི་དགེ་འདུན་ཆེན་པོ་དང་ཐབས་ཅིག་ཏུ་བཞུགས་ཏེ། དེའི་ཚེ་བཅོམ་ལྡན་འདས་ཟབ་མོ་སྣང་བ་ཞེས་བྱ་བའི་ཆོས་ཀྱི་རྣམ་གྲངས་ཀྱི་ཏིང་ངེ་འཛིན་ལ་སྙོམས་པར་ཞུགས་སོ། །ཡང་དེའི་ཚེ་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་འཕགས་པ་སྤྱན་རས་གཟིགས་དབང་ཕྱུག་ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ཟབ་མོ་སྤྱོད་པ་ཉིད་ལ་རྣམ་པར་ལྟ་ཞིང་། ཕུང་པོ་ལྔ་པོ་དེ་དག་ལ་ཡང་རང་བཞིན་གྱིས་སྟོང་པར་རྣམ་པར་ལྟའོ། །དེ་ནས་སངས་རྒྱས་ཀྱི་མཐུས། ཚེ་དང་ལྡན་པ་ཤཱ་རིའི་བུས་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་འཕགས་པ་སྤྱན་རས་གཟིགས་དབང་ཕྱུག་ལ་འདི་སྐད་ཅེས་སྨྲས་སོ། །རིགས་ཀྱི་བུའམ། རིགས་ཀྱི་བུ་མོ་གང་ལ་ལ་ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ཟབ་མོ་སྤྱོད་པ་སྤྱད་པར་འདོད་པ་དེས་ཇི་ལྟར་བསླབ་པར་བྱ། དེ་སྐད་ཅེས་སྨྲས་པ་དང་། བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་འཕགས་པ་སྤྱན་རས་གཟིགས་དབང་ཕྱུག་གིས་ཚེ་དང་ལྡན་པ་ཤ་ར་དྭ་ཏིའི་བུ་ལ་འདི་སྐད་ཅེས་སྨྲས་སོ། །ཤཱ་རིའི་བུ་རིགས་ཀྱི་བུའམ། རིགས་ཀྱི་བུ་མོ་གང་ལ་ལ་ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ཟབ་མོ་སྤྱོད་པ་སྤྱད་པར་འདོད་པ་དེས་འདི་ལྟར་རྣམ་པར་བལྟ་བར་བྱ་སྟེ། ཕུང་པོ་ལྔ་པོ་དེ་དག་ཀྱང་རང་བཞིན་གྱིས་སྟོང་པར་རྣམ་པར་ཡང་དག་པར་རྗེས་སུ་བལྟའོ། །གཟུགས་སྟོང་པའོ། །སྟོང་པ་ཉིད་གཟུགས་སོ། །གཟུགས་ལས་སྟོང་པ་ཉིད་གཞན་མ་ཡིན། སྟོང་པ་ཉིད་ལས་ཀྱང་གཟུགས་གཞན་མ་ཡིན་ནོ། །དེ་བཞིན་དུ་ཚོར་བ་དང་། འདུ་ཤེས་དང་། འདུ་བྱེད་དང་། རྣམ་པར་ཤེས་པ་རྣམས་སྟོང་པའོ། །",
+      "blocked": true
+    }
+  ]
+}

@@ -80,6 +80,15 @@ export interface FirstTranslationAttempt {
   model?: string;
   cost_usd?: number;
   notes?: string;
+  /**
+   * The verifier's raw result string, preserved by the ingest
+   * (ingest-ft-verify-results.mjs) alongside the coarse `result`. For a
+   * demote-direction Tier-2 check, `'not_found'` means the agent went looking
+   * for the SPECIFIC cited prior and could not confirm it exists — a targeted
+   * refutation, stronger than a generic absence sweep (which can simply miss a
+   * real prior — the Bacon/Davis case).
+   */
+  verdict?: string;
 }
 
 /**

@@ -7,6 +7,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -206,6 +207,9 @@ async function main() {
           { id: pageId, ocr: null },
           { $set: { ocr: {} } }
         );
+
+        // Retain existing OCR as a revision before overwriting (#3240); no-op on first write
+        await saveRevisionBeforeOverwrite(db, pageId, 'ocr', { jobId: String(job._id), reason: 'reocr_batch' });
 
         const updateResult = await db.collection('pages').updateOne(
           { id: pageId },

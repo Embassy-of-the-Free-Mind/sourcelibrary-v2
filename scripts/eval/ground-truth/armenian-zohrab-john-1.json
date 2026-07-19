@@ -1,0 +1,20 @@
+{
+  "work": "Zohrab NT, John 1:1-14",
+  "book_id": "69a5eae5d507939f0352d3c8",
+  "page_number": 724,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
+  "edition": "Zohrab Bible, Venice 1805",
+  "ocr_ground_truth": "Ի սկզբանէ էր բանն . եւ բանն էր առ Աստուած . եւ Աստուած էր բանն ։ Նա էր ի սկզբանէ առ Աստուած ։ Ամենայն ինչ ՝ նովաւ եղեւ . եւ առանց նորա եղեւ եւ ոչինչ ՝ որ ինչ եղեւն ։ Նովաւ ՝ կեանք էր , եւ կեանքն ՝ էր լոյս մարդկան . Եւ լոյսն ՝ ի խաւարի անդ ՝ լուսաւոր էր , եւ խաւար ՝ նմա ոչ եղեւ հասու ։ Եղեւ այր մի առաքեալ յԱստուծոյ . անուն նմա Յովհաննէս ։ Սա ՝ եկն ի վկայութիւն զի վկայեսցէ վասն լուսոյն . զի ամենեքին հաւատասցեն նովաւ ։ Ոչ էր նա լոյսն , այլ զի վկայեսցէ վասն լուսոյն ։ Էր լոյսն ճշմարիտ , որ լուսաւոր առնէ զամենայն մարդ ՝ որ գալոց է յաշխարհ ։ Յաշխարհի էր , եւ աշխարհ նովաւ եղեւ , եւ աշխարհ զնա ոչ ծանեաւ ։ Յիւրսն եկն , եւ իւրքն զնա ոչ ընկալան ։ Իսկ որք ընկալան զնա , ետ նոցա իշխանութիւն որդիս Աստուծոյ լինել , որոց հաւատասցեն յանուն նորա ։ Ոյք ոչ յարենէ , եւ ոչ ի կամաց մարմնոյ , եւ ոչ ի կամաց առն , այլ յԱստուծոյ ծնան ։ Եւ բանն մարմին եղեւ , եւ բնակեաց ի մեզ ։ եւ տեսաք զփառս նորա զփառս իբրեւ զմիածնի առ ի հօրէ , լի շնորհօք եւ ճշմարտութեամբ ։",
+  "audit_note": "Manually audited 2026-07-19 against the page scan: of 21 word errors, ~18 are transcription-convention mismatches, NOT OCR errors — the 1805 printing abbreviates nomina sacra (ա՟ծ=Աստուած, այ=Աստուծոյ, նր=նորա, վս=վասն, suspended -ութիւն) which our OCR transcribes diplomatically while TITUS expands silently; 2 more are unhyphenated line-break splits. One genuine misread found (ղի for զի). The scorecard's 91.8% is therefore a LOWER BOUND; true misread rate on this page is ~99% accuracy. Do not 'fix' by auto-expanding abbreviations in the fold — forms like այ are ambiguous with real words.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_column_plus_chapter_index",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
+}

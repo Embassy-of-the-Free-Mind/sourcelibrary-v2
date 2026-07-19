@@ -236,8 +236,8 @@
   "nature-of-harmony": {
     "path": "src/app/blog/nature-of-harmony/page.tsx",
     "published": "2026-07-15T08:32:30-07:00",
-    "revised": "2026-07-18T02:11:01+02:00",
-    "revisions": 4
+    "revised": "2026-07-18T12:20:37+02:00",
+    "revisions": 5
   },
   "ocr-consistency": {
     "path": "src/app/blog/ocr-consistency/page.tsx",
@@ -296,8 +296,8 @@
   "sound-laboratory": {
     "path": "src/app/blog/sound-laboratory/page.tsx",
     "published": "2026-07-16T18:28:33+02:00",
-    "revised": "2026-07-18T02:52:56+02:00",
-    "revisions": 3
+    "revised": "2026-07-19T02:42:17+02:00",
+    "revisions": 5
   },
   "the-deletion": {
     "path": "src/app/blog/the-deletion/page.tsx",

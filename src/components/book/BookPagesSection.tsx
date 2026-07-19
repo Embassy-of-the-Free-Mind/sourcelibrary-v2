@@ -14,6 +14,7 @@ import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
   bookId: string;
+  bookPath?: string;
   bookTitle?: string;
   pages: Page[];
   totalPageCount?: number;
@@ -22,7 +23,7 @@ interface BookPagesSectionProps {
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -505,6 +506,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           return firstSubstantive > 0 ? pages.slice(firstSubstantive) : pages;
         })()}
         bookId={bookId}
+        bookPath={bookPath}
         batchMode={false}
         reorderMode={false}
         selectedPages={selectedPages}
