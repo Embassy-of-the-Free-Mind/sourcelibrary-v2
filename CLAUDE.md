@@ -232,6 +232,48 @@ A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine
 
 **Record images: use the accessor, never raw fields — book vs artwork store images differently.** The `books` collection mixes content types with *different* image-field conventions: book **covers** live in `thumbnail` / `thumbnail_blob`; **page scans** in `pages.display_photo` / `archived_photo` / `photo`; and **artworks** (`content_type:'artwork'` — single-image gallery items like the Tarot cards) in `image_display` / `image_full` / `image_thumb` / `archived_full_url`. Checking the *wrong* family makes an artwork look imageless when it isn't (a real footgun — it produced a false "94% of artworks have no image" during a 2026-06 audit; the images were all present in the `image_*` fields). **Always resolve a record's display image via `getBookThumbnailUrl()` / `getCoverImageCandidates()` (`src/lib/utils.ts`)** — they already handle every convention (incl. Wikimedia CDN URLs and the artwork 600px/2000px/full thumb variants). Don't hand-check `photo` / `display_photo` on an artwork record. Likewise, **artworks legitimately have `pages_count: 0`** — they're single images, not paginated books, so a `visible:true, pages_count:0` record is usually fine art, not a broken "stub."
 
+## Search filters must be enforced in every lane
+Lessons from PRs #3267/#3268/#3269 (the "dates leak" report, 2026-07-19 — three
+independent instances of one shape in a single session).
+
+Search fans out into **independent lanes whose results are merged into one list**.
+A filter is only as strong as its weakest lane, and the UI's "active filter"
+indicator reads page state, not what the query path received — so an unenforced
+filter renders as *on* while out-of-range results sit at the top.
+
+- **`/api/search/unified` (All tab):** the book lane is **Supabase
+  `books_catalog`** via `searchBooksCatalog()` — NOT Atlas Search. Adding a
+  predicate to `BookSearchFilters` (`src/lib/atlas-search.ts`) does nothing for
+  it. Other lanes: index, gallery, CLIP-visual, semantic, artwork (semantic +
+  lexical), collections.
+- **`/api/search` (Books tab):** four lanes — Supabase trigram books, Atlas
+  pages, `semanticBookSearch`, `semanticPageSearchGlobal`.
+- **Vector lanes carry no metadata predicate** and their hits merge in as
+  book/passage results. They must be post-filtered in JS or they leak past every
+  filter. This is the one people miss.
+- **`books.published` is FREE TEXT** (`circa 1600`, `[1620]`, `n.d.`, roman
+  numerals). Never range-compare it as a string — `$gte: "1600"` is not a year
+  comparison. The numeric `year` field is the filterable one, in both Mongo and
+  `books_catalog`.
+- **"That source has no year/metadata to filter on" is usually false — check the
+  data before asserting it.** Index hits are entity→book pairs whose book has a
+  year (and the lane already does a books lookup for tenant scoping);
+  `gallery_images` denormalizes `book_year` (83% of rows). Both were filterable
+  all along. `filterVisibleArtworks()` takes an optional year range folded into
+  the books lookup it already performs — one helper covers the gallery,
+  CLIP-visual, and artwork lanes.
+- **Wire-name mismatches are the recurring failure mode.** `/gallery`'s year
+  filter was inert in production because the api-client sent `yearFrom`/`yearTo`
+  while `/api/gallery` reads `yearStart`/`yearEnd`. Pinned by
+  `tests/unit/search-filter-wire-names.test.ts` — add a case there for any new
+  filter.
+
+**Verifying:** a browser always looks fine — results appear and the filter chip
+lights up. Proof is a **curl matrix against a deployed preview**: unfiltered vs
+filtered vs an impossible range (which must return 0). Check every lane in the
+response body, not just the first list. Same discipline as the three-layer
+crawler gate above: changing one layer alone is silently defeated by the others.
+
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
 
