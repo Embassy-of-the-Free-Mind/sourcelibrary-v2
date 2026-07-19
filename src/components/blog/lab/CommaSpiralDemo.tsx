@@ -31,14 +31,9 @@ const DESCARTES_PLATES = [
     detail: 'The solmization syllables around concentric rings, each note pinned to a string number (C.360, D.320/324, A.432…) — the same angle-is-pitch convention as the diagram above, three centuries early.',
     focus: '50% 38%',
   },
-  {
-    src: 'https://images.sourcelibrary.org/gallery/69b1cafca282e3475aab4148/69b1cafca282e3475aab4167-0.jpg?v=1784332368366',
-    href: '/book/musicae-compendium-descartes?page=31',
-    label: 'The octave cut as a pie — with a leftover',
-    detail: 'Descartes divides the octave into major and minor tones and semitones, string numbers around the rim — and the division does not come out even: a thin sliver marked "Schisma" is wedged in to absorb the remainder. The leftover this station is about, drawn as a leftover in 1618.',
-    focus: '50% 26%',
-  },
 ];
+// The p31 schisma pie is no longer in this strip — it graduated to a live
+// instrument of its own (SchismaSliverDemo, directly below this station).
 
 // Pitch-class letters reached from A by successive fifths.
 const FIFTH_NAMES = ['A', 'E', 'B', 'F♯', 'C♯', 'G♯', 'D♯', 'A♯', 'F', 'C', 'G', 'D'];
