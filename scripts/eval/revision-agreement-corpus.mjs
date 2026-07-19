@@ -133,6 +133,38 @@ const bodyWords = s => {
 // regression — but it is a distinct failure mode worth counting on its own.
 const REFUSAL_RE = /\b(i (?:cannot|can't|am unable to|'m unable to)\b|i (?:apologize|'m sorry|am sorry)\b|as an ai\b|unable to (?:fulfill|process|transcribe)\b)/i;
 
+// Marginalia is the hardest thing on the page for OCR to catch: small, rotated,
+// in the gutter, often a different hand. Whether a re-run finds the SAME marginal
+// notes is a sharper quality signal than bulk text agreement, which is dominated
+// by the easy body block. Captured as counts per side plus agreement computed on
+// the marginal text alone.
+const MARGIN_RE = /<(margin|note)[^>]*>([\s\S]*?)<\/\1>/gi;
+const marginalia = s => {
+  const out = [];
+  for (const m of (s || '').matchAll(MARGIN_RE)) {
+    const t = m[2].replace(/<[^>]+>/g, ' ').trim();
+    if (t) out.push(t);
+  }
+  return out;
+};
+
+// Where in the book the page sits. Front matter, plates and back matter (indexes,
+// errata, ads) are typographically unlike the body block, so position is a real
+// covariate and not just a proxy for page count.
+// A NEGATIVE page_number is a deliberate soft-hide marker, not a bad value —
+// |page_number| is the true page (verified: abs(pn) <= pages_count on every such
+// row). Using the sign as-is would dump every soft-hidden page into 'unknown'.
+const positionBucket = (pageNumber, pagesCount) => {
+  if (!pagesCount || pagesCount < 10 || typeof pageNumber !== 'number' || pageNumber === 0) return 'unknown';
+  const f = Math.abs(pageNumber) / pagesCount;
+  if (f > 1) return 'unknown';
+  if (f <= 0.05) return '1 front (0-5%)';
+  if (f <= 0.25) return '2 early (5-25%)';
+  if (f <= 0.75) return '3 middle (25-75%)';
+  if (f <= 0.95) return '4 late (75-95%)';
+  return '5 back (95-100%)';
+};
+
 // ── envelope tags ────────────────────────────────────────────────
 const tag = (s, name) => {
   const m = (s || '').match(new RegExp(`<${name}>\\s*([^<]{0,40}?)\\s*</${name}>`, 'i'));
@@ -191,7 +223,8 @@ async function main() {
   const overallWord = new Stat();  // pilot-parity word metric, for comparability
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
-  const flow = {};
+  const flow = {}, margFate = {};
+  const margStat = new Stat();   // agreement on marginal text alone
   const t0 = Date.now();
 
   // Sorted by page_id so a page's revisions arrive contiguously — served by the
@@ -218,7 +251,7 @@ async function main() {
     if (needBooks.length) {
       const bookDocs = await BOOKS.find(
         { $or: [{ _id: { $in: needBooks } }, { id: { $in: needBooks } }] },
-        { projection: { id: 1, slug: 1, language: 1, year: 1, script: 1, text_role: 1 } },
+        { projection: { id: 1, slug: 1, language: 1, year: 1, script: 1, text_role: 1, pages_count: 1 } },
       ).toArray();
       const found = new Set();
       for (const b of bookDocs) {
@@ -255,6 +288,10 @@ async function main() {
         const agrChar = agreementChar(prior.data, current.data);
         const cls = scriptClass(current.data) === 'unknown' ? scriptClass(prior.data) : scriptClass(current.data);
         const bodyPrior = bodyWords(prior.data), bodyCurrent = bodyWords(current.data);
+        const mp = marginalia(prior.data), mc = marginalia(current.data);
+        const margAgr = (mp.length || mc.length)
+          ? (cls === 'spaceless' ? agreementChar : agreement)(mp.join(' '), mc.join(' '))
+          : null;
         const ep = envelope(prior.data), ec = envelope(current.data);
         const row = {
           page_id: entry.page_id,
@@ -287,6 +324,18 @@ async function main() {
           image_only: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX,
           eligibility: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX ? 'image_only'
             : Math.max(bodyPrior, bodyCurrent) < ELIGIBLE_MIN ? 'micro_text' : 'eligible',
+          position_bucket: positionBucket(pg?.page_number, bk?.pages_count),
+          pages_count: bk?.pages_count ?? null,
+          soft_hidden: typeof pg?.page_number === 'number' && pg.page_number < 0,
+          marginalia_prior: mp.length,
+          marginalia_current: mc.length,
+          marginalia_delta: mc.length - mp.length,
+          // null when neither side marked any marginalia
+          marginalia_agreement: margAgr == null ? null : +margAgr.toFixed(4),
+          marginalia_fate: !mp.length && !mc.length ? 'none'
+            : mp.length && !mc.length ? 'lost'
+            : !mp.length && mc.length ? 'gained'
+            : 'kept',
           prior_refusal: REFUSAL_RE.test(prior.data.slice(0, 400)),
           current_refusal: REFUSAL_RE.test(current.data.slice(0, 400)),
           len_prior: prior.data.length,
@@ -317,6 +366,11 @@ async function main() {
         bump('model_pair', row.model_pair, a);
         bump('prompt_transition', row.prompt_transition, a);
         bump('script_class', row.script_class, a);
+        bump('position_bucket', row.position_bucket, a);
+        bump('soft_hidden', String(row.soft_hidden), a);
+        bump('marginalia_fate', row.marginalia_fate, a);
+        if (row.marginalia_agreement != null) margStat.add(row.marginalia_agreement);
+        margFate[row.marginalia_fate] = (margFate[row.marginalia_fate] || 0) + 1;
         bump('image_only', String(row.image_only), a);
         bump('current_page_type', row.current_page_type || '(none)', a);
         bump('current_columns', row.current_columns || '(none)', a);
@@ -387,6 +441,9 @@ async function main() {
       missing: missingPage,
       eligibility_flow: flow,
       refusal_pairs: refusals,
+      marginalia_fate: margFate,
+      marginalia_mean_agreement: margStat.n ? +margStat.mean.toFixed(4) : null,
+      marginalia_pairs_scored: margStat.n,
       eligible_pairs: overall.n,
       mean_agreement: +overall.mean.toFixed(4),
       mean_agreement_word_only: +overallWord.mean.toFixed(4),
@@ -447,6 +504,8 @@ async function main() {
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
     `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
     '## Stratified agreement', '',
+    table('position_bucket', 'By position in the book', 1),
+    table('soft_hidden', 'Soft-hidden pages (negative page_number)', 1),
     table('script_class', 'By script class (space-less scripts need the char metric)', 1),
     table('image_only', 'Image-only pages (no transcribed body text on either side)', 1),
     table('language', 'By language'),
@@ -455,6 +514,19 @@ async function main() {
     table('prompt_transition', 'By prompt-version transition'),
     table('lang_x_year', 'By language × year bucket', 100),
     table('lang_x_modelpair', 'By language × model pair', 100),
+    '## Marginalia', '',
+    'Marginal notes are the hardest marks on the page: small, rotated, in the gutter,',
+    'often a different hand. Whether a re-run recovers the SAME notes is a sharper',
+    'quality signal than bulk agreement, which the easy body block dominates.', '',
+    `- pairs where at least one side marked marginalia: **${margStat.n.toLocaleString()}**`,
+    `- mean agreement on the marginal text alone: **${margStat.n ? (margStat.mean * 100).toFixed(1) + '%' : 'n/a'}**` +
+      `${margStat.n ? ` (vs ${(overall.mean * 100).toFixed(1)}% on the full page)` : ''}`,
+    `- fate across the revision: ` + ['kept', 'lost', 'gained', 'none'].filter(k => margFate[k])
+      .map(k => `${k} ${margFate[k].toLocaleString()}`).join(' · '),
+    '',
+    '`lost` = the prior pass marked marginalia and the re-run marked none. Those are',
+    'the pages where a re-OCR quietly dropped the annotation layer.', '',
+    table('marginalia_fate', 'Full-page agreement by marginalia fate', 1),
     '## Envelope-tag covariates', '',
     'The OCR envelope (`<columns>`, `<page-type>`, `<lang>`) is metadata the model writes',
     'about the scan. A transition that *changes* one of these is a disagreement about what',
