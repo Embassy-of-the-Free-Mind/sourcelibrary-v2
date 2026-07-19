@@ -95,6 +95,42 @@ for (const spec of (args.transcripts || '').split(',').filter(Boolean)) {
   }
 }
 
+// 4. Legacy consistency runs (results/*-consistency-*.json, 2026-04 → 06).
+// Those runs sampled arbitrary pages with NO reference texts, so accuracy fields
+// are null — they contribute stability metrics (MCR, pairwise similarity) plus
+// the ONE raw text that survived: mcr.modalOutput (the majority-vote output).
+// Per-run texts were discarded at the time and are unrecoverable — which is the
+// cautionary tale behind this dataset's raw-text-first design.
+for (const f of fs.readdirSync(resultsDir).filter(f => /-consistency-\d{4}-\d{2}-\d{2}\.json$/.test(f))) {
+  let d;
+  try { d = JSON.parse(fs.readFileSync(path.join(resultsDir, f), 'utf8')); } catch { continue; }
+  const runDate = f.match(/(\d{4}-\d{2}-\d{2})/)[1];
+  for (const p of d.pages || []) {
+    for (const [combo, r] of Object.entries(p.results || {})) {
+      if (!r?.mcr) continue;
+      rows.push({
+        run_id: f.replace('.json', ''), date: runDate, source: 'api',
+        model: r.model || combo.split('@')[0], run_index: 'modal',
+        temperature: r.temperature ?? null,
+        slug: null, work: null, corpus: d.corpus || null,
+        book_id: p.bookId, page_number: p.pageNumber,
+        script: (p.script || '').toLowerCase() || null, language: null,
+        reference_source: null, reference_url: null,
+        ref_chars: null, aligned: null, guard_type: null, guard_value: null,
+        cer: null, char_accuracy: null,
+        mcr_rate: r.mcr.rate ?? null,
+        mcr_runs: r.mcr.totalRuns ?? null,
+        pairwise_char: r.pairwise?.avgCharSimilarity ?? null,
+        pairwise_syllable: r.pairwise?.avgSyllableSimilarity ?? null,
+        output_norm_chars: (r.mcr.modalOutput || '').length,
+        modal_output: r.mcr.modalOutput || null,
+        cost_usd: r.costUsd ?? null,
+        page_class: null, audit_note: false, scoring_version: scoringVersion,
+      });
+    }
+  }
+}
+
 const outDir = path.join(__dirname, 'observations');
 fs.mkdirSync(outDir, { recursive: true });
 const outFile = path.join(outDir, `ocr-observations-${DATE}.jsonl`);
