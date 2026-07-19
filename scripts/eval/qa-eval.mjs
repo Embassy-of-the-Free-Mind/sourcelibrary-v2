@@ -23,7 +23,8 @@
 
 import { loadEnv, samplePages, getPage, disconnect, loadCorpusRegistry } from './lib/sampling.mjs';
 import { runModel, resolveModel, fetchImage, estimateCost } from './lib/runners.mjs';
-import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER, scoreAgainstReference } from './lib/metrics.mjs';
+import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER, scoreAgainstReference, normalizeCJK, normalizeForScript } from './lib/metrics.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveResults, loadLatestResults, listResults, generateConsistencyReport, generateEmbeddingReport, generateMatrixReport, saveBlogPost } from './lib/report.mjs';
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
@@ -441,6 +442,22 @@ async function cmdScorecard() {
   }
   if (!entries.length) { console.error('No OCR ground-truth files.'); process.exit(1); }
 
+  // Optional model comparison: re-OCR each pinned page with each model and score
+  // against the same reference. Costs API money — always honor --dry-run.
+  const models = args.models ? args.models.split(',').map(resolveModel) : [];
+  const runs = parseInt(args.runs || '1');
+  if (args['dry-run'] && models.length) {
+    console.log(`\nCost estimate: ${entries.length} pages × ${runs} run(s) each:`);
+    let total = 0;
+    for (const model of models) {
+      const est = estimateCost(model, runs, entries.length);
+      total += est.estimatedUsd;
+      console.log(`  ${model.padEnd(30)} ${est.calls} calls  ~$${est.estimatedUsd.toFixed(2)}`);
+    }
+    console.log(`  TOTAL ~$${total.toFixed(2)}`);
+    return;
+  }
+
   console.log(`\nOCR Quality Scorecard — ${entries.length} reference passages vs published texts\n`);
 
   const byLang = new Map();
@@ -453,12 +470,48 @@ async function cmdScorecard() {
       continue;
     }
     const r = scoreAgainstReference(gt.ocr_ground_truth, page.ocr.data, gt.script || 'cjk');
-    byLang.get(label).rows.push({
+    const row = {
       work: gt.work, bookId: gt.book_id, pageNumber: gt.page_number,
       aligned: r.aligned, guard: r.guard.value, cer: r.cer,
       charAccuracy: r.charAccuracy, refLen: r.refLen, matched: r.matched,
       source: gt.source, source_url: gt.source_url,
-    });
+    };
+    byLang.get(label).rows.push(row);
+
+    if (models.length) {
+      // Same image source the pipeline OCR'd (getPageSource handles split pages).
+      const imageUrl = getPageSource(page);
+      if (!imageUrl) { console.log(`  ! ${gt.work}: no usable page image, skipping model runs`); continue; }
+      const imageBuffer = await fetchImage(imageUrl);
+      row.models = {};
+      for (const model of models) {
+        const outputs = [];
+        let cost = 0, best = null, refused = 0;
+        for (let i = 0; i < runs; i++) {
+          try {
+            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000 });
+            cost += res.costUsd;
+            if (res.finishReason === 'refusal') { refused++; continue; }
+            const score = scoreAgainstReference(gt.ocr_ground_truth, res.text, gt.script || 'cjk');
+            outputs.push({ text: res.text, score });
+            if (!best || score.cer < best.cer) best = score;
+          } catch (e) {
+            console.log(`  ! ${gt.work} × ${model} run ${i + 1}: ${e.message.slice(0, 120)}`);
+          }
+        }
+        // Consistency: MCR over normalized outputs (identical normalized text = same run).
+        const norm = t => gt.script === 'cjk' ? normalizeCJK(t) : normalizeForScript(t, gt.script);
+        const consistency = outputs.length > 1 ? mcr(outputs.map(o => norm(o.text))).rate : null;
+        row.models[model] = {
+          runs: outputs.length, refused, costUsd: cost, consistency,
+          aligned: best?.aligned ?? false,
+          charAccuracy: best?.aligned ? best.charAccuracy : null,
+          cer: best?.aligned ? best.cer : null,
+        };
+        const m = row.models[model];
+        console.log(`  ${gt.work.padEnd(28)} ${model.padEnd(28)} acc=${m.charAccuracy === null ? '  n/a' : (m.charAccuracy * 100).toFixed(1) + '%'}  ${consistency === null ? '' : `MCR=${(consistency * 100).toFixed(0)}%`}${refused ? `  refused=${refused}` : ''}  $${cost.toFixed(3)}`);
+      }
+    }
   }
 
   const summary = [];
@@ -476,11 +529,28 @@ async function cmdScorecard() {
       if (!r.aligned) console.log(`      - ${r.work}: guard ${(r.guard * 100).toFixed(0)}% — excluded (not cleanly present; NOT an OCR failure)`);
     }
   }
+  if (models.length) {
+    console.log(`\n  Model comparison (best-of-${runs} char accuracy on aligned passages, vs stored pipeline OCR):`);
+    console.log(`  ${'Model'.padEnd(30)} ${'Aligned'.padStart(7)} ${'Accuracy'.padStart(9)} ${'Mean MCR'.padStart(9)} ${'Cost'.padStart(8)}`);
+    const allRows = [...byLang.values()].flatMap(l => l.rows).filter(r => r.models);
+    for (const model of models) {
+      const ms = allRows.map(r => r.models[model]).filter(Boolean);
+      const aligned = ms.filter(m => m.aligned);
+      const refTotal = allRows.filter(r => r.models[model]?.aligned).reduce((s, r) => s + r.refLen, 0);
+      const matched = allRows.filter(r => r.models[model]?.aligned).reduce((s, r) => s + r.refLen * r.models[model].charAccuracy, 0);
+      const cons = ms.map(m => m.consistency).filter(c => c !== null);
+      const cost = ms.reduce((s, m) => s + m.costUsd, 0);
+      console.log(`  ${model.padEnd(30)} ${`${aligned.length}/${ms.length}`.padStart(7)} ${refTotal ? ((matched / refTotal) * 100).toFixed(1) + '%' : 'n/a'.padStart(4)}`.padEnd(52)
+        + ` ${cons.length ? (cons.reduce((s, c) => s + c, 0) / cons.length * 100).toFixed(0) + '%' : 'n/a'}`.padStart(9)
+        + ` $${cost.toFixed(2)}`.padStart(8));
+    }
+  }
+
   console.log(`\n  Coverage note: reference etexts exist for canonical texts — this measures OCR`);
   console.log(`  on clean canonical pages. Manuscripts and rare works (the OCR frontier) are`);
   console.log(`  covered by consistency/cross-model/embedding checks, not this scorecard.`);
 
-  saveResults('scorecard', { date: new Date().toISOString().slice(0, 10), summary });
+  saveResults('scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────

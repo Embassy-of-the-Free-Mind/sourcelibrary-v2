@@ -14,6 +14,8 @@ const PRICING = {
   'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
   'gemini-3.1-pro-preview':       { input: 2.50, output: 15.00 },
   'gemini-2.5-flash':             { input: 0.15, output: 0.60 },
+  'claude-fable-5':               { input: 10.00, output: 50.00 },
+  'claude-opus-4-8':              { input: 5.00, output: 25.00 },
   'claude-opus-4-6':              { input: 15.00, output: 75.00 },
   'claude-sonnet-4-6':            { input: 3.00, output: 15.00 },
   'claude-haiku-4-5-20251001':    { input: 0.80, output: 4.00 },
@@ -164,6 +166,10 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
 
 // ── Run Claude ─────────────────────────────────────────────────────
 
+// Fable 5 / Opus 4.7+ / Sonnet 5 reject sampling params (400) and have thinking
+// always-on or adaptive — the temperature knob only exists on older models.
+const NO_SAMPLING_RE = /claude-(fable|mythos)-|claude-opus-4-[78]|claude-sonnet-5/;
+
 export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   const { temperature = 0, maxTokens = 8000 } = opts;
   const client = getAnthropic();
@@ -173,7 +179,7 @@ export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   const resp = await client.messages.create({
     model,
     max_tokens: maxTokens,
-    temperature,
+    ...(NO_SAMPLING_RE.test(model) ? {} : { temperature }),
     messages: [{
       role: 'user',
       content: [
@@ -184,7 +190,8 @@ export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   });
 
   const durationMs = Date.now() - start;
-  const text = resp.content[0]?.text || '';
+  // Thinking-capable models may lead with a thinking block — take the text blocks.
+  const text = resp.content.filter(b => b.type === 'text').map(b => b.text).join('') || '';
   const inputTokens = resp.usage?.input_tokens || 0;
   const outputTokens = resp.usage?.output_tokens || 0;
 
@@ -206,6 +213,8 @@ const MODEL_ALIASES = {
   'flash-lite': 'gemini-3.1-flash-lite',
   'lite': 'gemini-3.1-flash-lite',
   'pro': 'gemini-3.1-pro-preview',
+  'fable': 'claude-fable-5',
+  'opus48': 'claude-opus-4-8',
   'opus': 'claude-opus-4-6',
   'sonnet': 'claude-sonnet-4-6',
   'haiku': 'claude-haiku-4-5-20251001',

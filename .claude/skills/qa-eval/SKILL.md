@@ -155,7 +155,9 @@ Two hard-won rules (measured on Armenian/Latin, 2026-07-19 — see `tests/unit/r
 
 Orthography that varies BETWEEN EDITIONS (Latin u/v, i/j, long-s; Hebrew niqqud + maqaf; Greek polytonic marks; Armenian ew-ligature) is folded before comparison in `normalizeForScript` (`lib/metrics.mjs`) so it never counts as OCR error.
 
-Current scorecard (2026-07-19): Armenian 91.8% · Chinese 98.5% · Greek 100% · Hebrew 100% · Latin 97.4% (char accuracy on aligned canonical passages).
+Current scorecard (2026-07-19): Armenian 91.8%* · Chinese 98.5% · Greek 100% · Hebrew 100% · Latin 97.4% (char accuracy on aligned canonical passages).
+
+\* Armenian is a lower bound: manual audit of the page scan showed ~18/21 word errors are the 1805 printing's nomina-sacra abbreviations (ա՟ծ = Աստուած etc.) transcribed diplomatically by our OCR but silently expanded by the TITUS reference — true misread rate on the page is ~1%. See `audit_note` in `ground-truth/armenian-zohrab-john-1.json`. General lesson: when a scorecard number looks bad, diff the words and READ THE SCAN before believing it — reference transcription conventions (abbreviation expansion, normalized punctuation) masquerade as OCR error.
 
 ### OCR vs. ctext (Chinese)
 

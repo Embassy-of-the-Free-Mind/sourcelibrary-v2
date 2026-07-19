@@ -190,6 +190,7 @@ export async function getPage(bookId, pageNumber) {
       projection: {
         _id: 1, book_id: 1, page_number: 1,
         photo: 1, archived_photo: 1, compressed_photo: 1,
+        cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
         'ocr.data': 1, 'ocr.language': 1,
         'translation.data': 1,
       },
