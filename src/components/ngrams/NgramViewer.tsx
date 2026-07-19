@@ -478,6 +478,7 @@ export default function NgramViewer() {
           totals={data.totals}
           from={from}
           to={to}
+          corpus={data.corpus}
           corpusLabel={shortLabel(NGRAM_CORPORA.find(c => c.id === data.corpus)?.label || data.corpus)}
         />
       )}
