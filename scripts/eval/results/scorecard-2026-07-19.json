@@ -1,9 +1,7 @@
 {
   "date": "2026-07-19",
   "models": [
-    "gemini-3.1-pro-preview",
-    "gemini-3-flash-preview",
-    "gemini-3.1-flash-lite"
+    "mistral-small-latest"
   ],
   "runs": 3,
   "summary": [
@@ -28,32 +26,14 @@
           "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
           "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.537855,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 0.9234104046242775,
-              "cer": 0.07658959537572255
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.005484,
-              "consistency": 0.6666666666666666,
+              "costUsd": 0.0025128,
+              "consistency": 1,
               "aligned": false,
               "charAccuracy": null,
               "cer": null
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0020258999999999997,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9291907514450867,
-              "cer": 0.0708092485549133
             }
           }
         }
@@ -80,32 +60,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/analects/xue-er/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.0464775,
+              "costUsd": 0.00214065,
               "consistency": 0.3333333333333333,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0084375,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.000913275,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         },
@@ -122,32 +84,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/dao-de-jing/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.0319875,
+              "costUsd": 0.00107895,
               "consistency": 0.6666666666666666,
               "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0065474999999999995,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0006995249999999999,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9830508474576272,
-              "cer": 0.01694915254237288
+              "charAccuracy": 0.7627118644067796,
+              "cer": 0.23728813559322035
             }
           }
         },
@@ -164,32 +108,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/hanfeizi/nan-yan/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.02718,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 0.9836065573770492,
-              "cer": 0.01639344262295082
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.006858,
-              "consistency": 0.6666666666666666,
+              "costUsd": 0.0016361999999999998,
+              "consistency": 1,
               "aligned": false,
               "charAccuracy": null,
               "cer": null
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0005147999999999999,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9836065573770492,
-              "cer": 0.01639344262295082
             }
           }
         },
@@ -206,32 +132,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.06390000000000001,
+              "costUsd": 0.00256035,
               "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.010251,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0009593999999999999,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.95,
-              "cer": 0.05
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         },
@@ -248,32 +156,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/xunzi/quan-xue/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.026729999999999997,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.005405999999999999,
-              "consistency": 0.3333333333333333,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0005715,
+              "costUsd": 0.0014989499999999998,
               "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         },
@@ -290,32 +180,14 @@
           "source": "ctext",
           "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.016717500000000003,
-              "consistency": 0.3333333333333333,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0034035,
-              "consistency": 0.3333333333333333,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.00039757499999999995,
+              "costUsd": 0.0023399999999999996,
               "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9803921568627451,
-              "cer": 0.0196078431372549
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         }
@@ -342,32 +214,14 @@
           "source": "Wikisource (el)",
           "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.039134999999999996,
+              "costUsd": 0.0015588,
               "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.007385999999999999,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.00084645,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         }
@@ -394,28 +248,10 @@
           "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
           "source_url": "https://www.sefaria.org/Genesis.1",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.0368625,
-              "consistency": 0.6666666666666666,
-              "aligned": false,
-              "charAccuracy": null,
-              "cer": null
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.007402499999999999,
-              "consistency": 0.6666666666666666,
-              "aligned": true,
-              "charAccuracy": 0.751269035532995,
-              "cer": 0.24873096446700507
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.001817775,
+              "costUsd": 0.0049662,
               "consistency": 1,
               "aligned": true,
               "charAccuracy": 1,
@@ -436,32 +272,14 @@
           "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
           "source_url": "https://www.sefaria.org/Psalms.1",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.0330525,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0066195,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.000732375,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 1,
-              "cer": 0
+              "costUsd": 0.00203745,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
             }
           }
         }
@@ -488,32 +306,14 @@
           "source": "Wikisource (la), ed. with macrons; folded at compare time",
           "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.0508125,
-              "consistency": 0.6666666666666666,
+              "costUsd": 0.0023331,
+              "consistency": 0.3333333333333333,
               "aligned": true,
               "charAccuracy": 0.9791666666666666,
               "cer": 0.020833333333333332
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0083205,
-              "consistency": 0.3333333333333333,
-              "aligned": true,
-              "charAccuracy": 0.9722222222222222,
-              "cer": 0.027777777777777776
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0011031749999999999,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9722222222222222,
-              "cer": 0.027777777777777776
             }
           }
         },
@@ -530,32 +330,14 @@
           "source": "Clementine Vulgate (drbo.org)",
           "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
           "models": {
-            "gemini-3.1-pro-preview": {
+            "mistral-small-latest": {
               "runs": 3,
               "refused": 0,
-              "costUsd": 0.04827,
-              "consistency": 0.6666666666666666,
-              "aligned": false,
-              "charAccuracy": null,
-              "cer": null
-            },
-            "gemini-3-flash-preview": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.008205,
+              "costUsd": 0.0022595999999999996,
               "consistency": 0.6666666666666666,
               "aligned": true,
-              "charAccuracy": 0.9893617021276596,
-              "cer": 0.010638297872340425
-            },
-            "gemini-3.1-flash-lite": {
-              "runs": 3,
-              "refused": 0,
-              "costUsd": 0.0010575,
-              "consistency": 1,
-              "aligned": true,
-              "charAccuracy": 0.9893617021276596,
-              "cer": 0.010638297872340425
+              "charAccuracy": 0.9822695035460993,
+              "cer": 0.01773049645390071
             }
           }
         }
