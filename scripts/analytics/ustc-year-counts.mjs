@@ -54,6 +54,25 @@ const { rows } = await pgc.query(`
   GROUP BY year
   ORDER BY year
 `);
+
+// Per-language subsets keyed by NGRAM corpus id, so the panel can compare an
+// original-language corpus against USTC's same-language editions (apples to
+// apples). The `en` corpus (translations of EVERYTHING) deliberately has no
+// subset — it reads against all of European print.
+const USTC_LANG_TO_CORPUS = {
+  Latin: 'la', German: 'de', French: 'fr', English: 'en-orig', Dutch: 'nl',
+  Italian: 'it', Spanish: 'es', Greek: 'el', Portuguese: 'pt', Hebrew: 'he',
+};
+const { rows: langRows } = await pgc.query(`
+  SELECT language_1 AS lang, year,
+         count(*)::int AS editions,
+         count(*) FILTER (WHERE in_source_library)::int AS matched
+  FROM ustc_editions
+  WHERE year IS NOT NULL AND language_1 = ANY($1)
+  GROUP BY language_1, year
+  ORDER BY language_1, year
+`, [Object.keys(USTC_LANG_TO_CORPUS)]);
+
 const { rows: [{ coverage_built_at }] } = await pgc.query(
   'SELECT max(coverage_built_at) AS coverage_built_at FROM ustc_editions',
 );
@@ -65,6 +84,15 @@ const years = rows
   .map(r => ({ ...r, year: Number(r.year) }))
   .filter(r => Number.isInteger(r.year) && r.year >= YEAR_MIN && r.year <= YEAR_MAX)
   .map(({ year, editions, matched, scanned, translated }) => ({ year, editions, matched, scanned, translated }));
+
+const languages = {};
+for (const r of langRows) {
+  const year = Number(r.year);
+  if (!Number.isInteger(year) || year < YEAR_MIN || year > YEAR_MAX) continue;
+  const corpusId = USTC_LANG_TO_CORPUS[r.lang];
+  const entry = (languages[corpusId] ??= { label: r.lang, years: [] });
+  entry.years.push({ year, editions: r.editions, matched: r.matched });
+}
 
 const sum = (k) => years.reduce((s, r) => s + r[k], 0);
 const out = {
@@ -79,6 +107,7 @@ const out = {
   total_scanned: sum('scanned'),
   total_translated: sum('translated'),
   years,
+  languages,
 };
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
