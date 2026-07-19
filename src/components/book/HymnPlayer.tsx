@@ -14,6 +14,19 @@ import type { MusicTranscription } from '@/lib/music-transcriptions';
  * abcjs is loaded dynamically on first expand so readers who never open the
  * player pay no bundle cost.
  */
+// abcjs's own synth streams instrument samples from a third-party CDN at play
+// time, which is both a broken promise (this player claims to be self-contained)
+// and a silent-failure mode when that host is unreachable. Instead we take the
+// parsed note sequence from setUpAudio() and schedule plain WebAudio oscillators
+// — fully offline, and a plain unison tone suits unaccompanied Shaker singing.
+interface AudioNoteEvent {
+  cmd: string;
+  pitch: number; // MIDI note number
+  volume?: number; // 0–127
+  start: number; // in whole notes
+  duration: number; // in whole notes
+}
+
 export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTranscription[] }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -21,7 +34,8 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
   const [error, setError] = useState<string | null>(null);
   const paperRef = useRef<HTMLDivElement>(null);
   const abcjsRef = useRef<typeof import('abcjs') | null>(null);
-  const synthRef = useRef<{ stop: () => void } | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const endTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const current = transcriptions[active];
 
@@ -50,16 +64,19 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
   // Stop audio when the tune changes or the component unmounts (page nav)
   useEffect(() => {
     return () => {
-      synthRef.current?.stop();
-      synthRef.current = null;
+      if (endTimerRef.current) clearTimeout(endTimerRef.current);
+      audioCtxRef.current?.close().catch(() => {});
+      audioCtxRef.current = null;
     };
   }, [active, current?.abc]);
 
   if (!transcriptions.length) return null;
 
   const stop = () => {
-    synthRef.current?.stop();
-    synthRef.current = null;
+    if (endTimerRef.current) clearTimeout(endTimerRef.current);
+    endTimerRef.current = null;
+    audioCtxRef.current?.close().catch(() => {});
+    audioCtxRef.current = null;
     setPlaying(false);
   };
 
@@ -72,28 +89,60 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
     try {
       const abcjs = abcjsRef.current ?? (await import('abcjs'));
       abcjsRef.current = abcjs;
-      if (!abcjs.synth.supportsAudio()) {
+      // Render into a detached element to get the parsed tune (the visible
+      // panel may be closed); '*' would skip the layout pass setUpAudio needs.
+      const holder = document.createElement('div');
+      const tuneObj = abcjs.renderAbc(holder, current.abc, {})[0];
+      const seq = (tuneObj as unknown as {
+        setUpAudio: () => { tempo?: number; tracks?: AudioNoteEvent[][] };
+      }).setUpAudio();
+      const notes = (seq.tracks?.[0] ?? []).filter(e => e.cmd === 'note' && Number.isFinite(e.pitch));
+      if (!notes.length) {
+        setError('No notes to play.');
+        return;
+      }
+      const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!Ctor) {
         setError('Audio is not supported in this browser.');
         return;
       }
-      const tuneObj = abcjs.renderAbc('*', current.abc)[0];
-      const synth = new abcjs.synth.CreateSynth();
-      await synth.init({
-        visualObj: tuneObj,
-        options: {
-          // Unaccompanied unison voice was Shaker practice — a plain timbre
-          // is more faithful than anything produced. 73 = flute.
-          program: 73,
-        },
-      });
-      await synth.prime();
-      synthRef.current = synth;
-      setPlaying(true);
-      synth.start();
-      const ms = (synth as unknown as { duration?: number }).duration;
-      if (typeof ms === 'number' && Number.isFinite(ms)) {
-        setTimeout(() => setPlaying(p => (synthRef.current === synth ? false : p)), ms * 1000 + 250);
+      const ctx = new Ctor();
+      await ctx.resume();
+      const wholeNoteSec = (4 * 60) / (seq.tempo || 92);
+      const t0 = ctx.currentTime + 0.1;
+      const master = ctx.createGain();
+      master.gain.value = 0.5;
+      master.connect(ctx.destination);
+      let endsAt = t0;
+      for (const n of notes) {
+        const freq = 440 * Math.pow(2, (n.pitch - 69) / 12);
+        const start = t0 + n.start * wholeNoteSec;
+        const dur = Math.max(0.09, n.duration * wholeNoteSec - 0.04);
+        const osc = ctx.createOscillator();
+        // Triangle wave: soft, breathy, close to an untrained unison voice.
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        const env = ctx.createGain();
+        const peak = 0.85 * (typeof n.volume === 'number' ? Math.min(n.volume, 127) / 127 : 0.85);
+        env.gain.setValueAtTime(0.0001, start);
+        env.gain.linearRampToValueAtTime(peak, start + 0.02);
+        env.gain.setValueAtTime(peak, Math.max(start + 0.02, start + dur - 0.05));
+        env.gain.linearRampToValueAtTime(0.0001, start + dur);
+        osc.connect(env);
+        env.connect(master);
+        osc.start(start);
+        osc.stop(start + dur + 0.05);
+        endsAt = Math.max(endsAt, start + dur);
       }
+      audioCtxRef.current = ctx;
+      setPlaying(true);
+      endTimerRef.current = setTimeout(() => {
+        if (audioCtxRef.current === ctx) {
+          audioCtxRef.current = null;
+          ctx.close().catch(() => {});
+          setPlaying(false);
+        }
+      }, (endsAt - ctx.currentTime) * 1000 + 300);
     } catch {
       setError('Playback failed.');
       setPlaying(false);
