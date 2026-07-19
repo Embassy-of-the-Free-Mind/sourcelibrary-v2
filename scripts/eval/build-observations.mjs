@@ -42,6 +42,17 @@ const norm = (gt, t) => gt.script === 'cjk' ? normalizeCJK(t || '') : normalizeF
 
 function observation(gt, source, runId, model, runIndex, text, extra = {}) {
   const r = scoreAgainstReference(gt.ocr_ground_truth, text || '', gt.script || 'cjk');
+  // Recension divergence (#3235 outcome battery): score any alternate reference
+  // recensions too. A model matching a canonical recension BETTER than the
+  // edition actually printed on the page is a recitation fingerprint.
+  let alt_scores;
+  for (const alt of gt.alt_references || []) {
+    const a = scoreAgainstReference(alt.reference, text || '', gt.script || 'cjk');
+    (alt_scores ??= {})[alt.name] = {
+      aligned: a.aligned, guard_value: +a.guard.value.toFixed(4),
+      char_accuracy_raw: +a.charAccuracy.toFixed(4),
+    };
+  }
   return {
     run_id: runId, date: DATE, source, model, run_index: runIndex,
     slug: gt.slug, work: gt.work, book_id: gt.book_id, page_number: gt.page_number,
@@ -51,7 +62,13 @@ function observation(gt, source, runId, model, runIndex, text, extra = {}) {
     guard_type: r.guard.type, guard_value: +r.guard.value.toFixed(4),
     cer: r.aligned ? +r.cer.toFixed(4) : null,
     char_accuracy: r.aligned ? +r.charAccuracy.toFixed(4) : null,
+    // Raw (unconditional) accuracy: retained even when the guard fails, so
+    // roll-ups can report expected accuracy without alignment-survivorship bias.
+    // Interpret with care — on unaligned runs this may score a coincidental match.
+    char_accuracy_raw: +r.charAccuracy.toFixed(4),
+    span_dispersion: r.spanDispersion,
     output_norm_chars: norm(gt, text).length,
+    ...(alt_scores ? { alt_scores } : {}),
     page_class: gt.page_class || null,
     audit_note: gt.audit_note ? true : false,
     scoring_version: scoringVersion,
