@@ -19,25 +19,44 @@ on the page at all. Scores on non-canonical text — which models can only read 
 the numbers that transfer to the rare, untranscribed material digitization projects
 actually exist to serve.
 
-## Contributions
+## Contributions (revised 2026-07-19 per the verified related-work dossier)
 
 1. **The memorization control**: canonical vs non-canonical reference rows on matched
    pages (three same-book contrasts), each row visually audited against the page scan.
-   To our knowledge the first quantification of training-data contamination for OCR
-   evaluation (contamination is heavily studied for text benchmarks; a 2026 survey of
-   OCR evaluation explicitly notes the absence — VERIFY against related-work dossier).
-2. **An outcome battery that separates failure modes** (see below) — in particular,
-   unconditional accuracy reverses the model ranking that alignment-conditioned
-   accuracy produces.
-3. **A page-covariate observation design** (layout, density, type size, source class,
-   measured image resolution, canonicity, memorization risk on every row) enabling the
-   disaggregated and interaction analysis the eval literature calls for and lacks.
-4. **A cheap ground-truth method**: page-aligned scholarly etexts (TITUS, First1KGreek;
-   DTA generalizes) of editions a library holds map transcription pages 1:1 onto scan
-   pages — free, deterministic ground truth with document provenance.
+   Per the dossier's novelty assessment: the specific quantity "canonical-vs-non-canonical
+   OCR accuracy gap" is unpublished as of 2026-07-19. Position as "known in speech
+   (Tseng et al. 2505.22251 proved test-transcript contamination in ASR), unmeasured in
+   OCR" — never claim "never studied in transcription." **The window is months, not
+   years** (see scoop watchlist) — sequence the release accordingly.
+2. **An outcome battery that separates failure modes** — in particular, unconditional
+   accuracy reverses the model ranking that alignment-conditioned accuracy produces;
+   and the observation that **consensus/agreement methods fail on canonical text**
+   (models reciting the same memorized passage agree while both misreport the page) is
+   a new failure condition against the Consensus Entropy line (2504.11101, 2603.19790).
+3. **A page-covariate observation design** enabling disaggregated + interaction
+   analysis. NOT a first — frame as "restoring the UNLV-ISRI factor-analysis tradition
+   (Rice/Jenkins/Nartker 1996) for the VLM era, with canonicity as the new factor";
+   Beyene & Dancy (FAccT 2026) indict the field for exactly this metric poverty.
+4. **Ground truth from page-aligned scholarly etexts — REFRAMED.** Not novel as "etexts
+   as ground truth" (GT4HistOCR built training GT from DTA in 2018; Smith & Cordell
+   recommended the practice; Angleraud et al. 2603.02803 generate GT from TEI). The
+   honest, still-novel version: page-aligning *independent* etexts (TITUS, First1K) to
+   a library's *own held editions* as near-zero-cost evaluation references — coupled to
+   the reflexive point that **the ground-truth supply and the contamination are the
+   same variable**: the texts with free transcriptions are precisely the texts models
+   have memorized. (The dossier confirms no prior work states this; it may be the
+   paper's sharpest sentence.)
 5. **A released dataset**: pages/references/runs JSONL with license-gated reference
    texts, sha256 pointers where sources forbid redistribution, and raw model outputs
    for re-scoring.
+6. **(If the prompt ablation lands)** the effect of annotation-format prompts on OCR
+   character accuracy — the dossier found no existing study; unclaimed territory worth
+   a subsection.
+
+**Title note:** "Reading or Guessing?" (Karamolegkou et al., arXiv:2605.27750, May
+2026) already exists with the same title shape on the adjacent phenomenon. Either keep
+"Reading or Reciting?" as a deliberate, cited echo (defensible — recitation vs guessing
+IS the distinction between the papers) or retitle; decide at draft time.
 
 ## Outcome measures (the design core — why "accuracy" alone misleads)
 
@@ -97,15 +116,63 @@ is the likely resolution.
 5. Truncation is a model-family behavior (Gemini Pro/Flash), not a page property
    alone, and only appears on dense pages — a genuine interaction.
 
-## Related work
+## Related work — verified dossier (2026-07-19 sweep; every entry abstract-checked)
 
-_Slot for the verified dossier (agent sweep in progress): contamination/memorization
-literature, OCR factor studies (UNLV-ISRI resolution classics; 2602.14524 error
-patterns; 2603.25761 eval survey — "no substantial work on factor interactions,
-contamination, or memorization"), VLM-OCR benchmarks (OCRBench v2, CHURRO-DS,
-Consensus Entropy, HCPR/AIR), etext-as-ground-truth precedents (GT4HistOCR, IMPACT),
-prompt-format effects. Novelty assessment to be pasted verbatim, including scoop
-risks._
+### Contamination / benchmark leakage
+- **Xu et al. 2406.04244** — canonical BDC survey; text benchmarks only, no OCR/vision → supports "the field lacks this for OCR".
+- **Sainz et al. 2310.18018** (Findings of EMNLP; re-check 2023-vs-2024 against the Anthology) — "contamination causes overestimation"; calls for per-benchmark measurement. We answer this call for the OCR benchmark class.
+- **Golchin & Surdeanu 2308.08493** (ICLR'24 spotlight) — guided-completion contamination detection; our page-scan audit is the OCR-native analog.
+- **Shi et al. 2310.16789** (ICLR'24) — Min-K% Prob membership inference; could VALIDATE our memorization_risk covariate (planned check).
+- **Song et al. 2411.03823** (Findings EMNLP'25) — MM-Detect: contamination in 12 MLLMs; shows text-side pretraining contamination surfaces in multimodal evals — exactly our mechanism, but VQA, never OCR.
+- **Park et al. 2511.03774** (ICLR'26) — VLM contamination detection via semantic perturbation; method could jump to OCR quickly (watchlist).
+- **Xu, Wu & Ryu 2606.10066** — controlled contamination audit of medical VLM benchmarks; the "per-domain audit" genre we join.
+- **Tseng et al. 2505.22251** — ASR test-set contamination (LibriSpeech/Common Voice verbatim in pretraining): THE cross-modal precedent. Position: "known in speech, unmeasured in OCR." Their "subtle WER effect" warns us to handle confounds carefully.
+- **Akeret 2606.07608** — Swiss German ASR SOTA fabricated by contamination (3.9% WER via memorization); recent proof contamination fabricates transcription SOTA.
+
+### Memorization & extraction of canonical text
+- **Carlini et al. 2012.07805** (USENIX'21) — verbatim extraction exists, scales with model size.
+- **Carlini et al. 2202.07646** (ICLR'23) — memorization drivers: scale, duplication, context. Predicts our canonicity gradient; tension to discuss: our SMALL models show LARGER gaps.
+- **McCoy et al. 2111.09509** (RAVEN) — n-gram novelty; usable as an overlap-based canonicity score for our passages.
+- **Chang et al. 2305.00118** (EMNLP'23, "Speak, Memory") — memorized books inflate downstream task performance; the closest existing "memorization subsidy" statement, text-only. Cite prominently; ours is the vision channel in pp-of-CER.
+- **Karamolegkou et al. 2310.13771** (EMNLP'23) — verbatim reproduction of famous literary works — exactly our canonical class. NB: author overlap with the nearest-competitor group.
+- **Cooper et al. 2505.12546** — per-work, per-model graded memorization of books (Llama 3.1 70B near-complete on some) → motivates graded memorization_risk, not binary.
+- **Ahmed et al. 2601.02671** — extraction from PRODUCTION models (Gemini 2.5 Pro 76.8% nv-recall on Harry Potter, no jailbreak) — the exact model families we score.
+- **Jayaraman et al. 2402.02103** (NeurIPS'24) — VLM déjà-vu memorization is image-side/privacy; text-recitation-through-vision remains unmeasured.
+
+### OCR factor studies
+- **Rice, Jenkins & Nartker, UNLV-ISRI TR-96-01** — the 1990s stratified OCR tests; our design is its VLM-era descendant. (Pull the PDF before quoting specific dpi numbers.)
+- **Smith & Cordell 2018 agenda** — recommended etext reuse + statistical analysis of OCR; claim (3/4) implements, doesn't invent.
+- **van Strien et al. 2020** — OCR quality's downstream impact; the standard "OCR error as variable" citation.
+- **Vesalainen et al. 2602.14524** — Qwen beats TrOCR on CER but silently MODERNIZES historical orthography ("selective linguistic regularization") — language-prior interference in factor form; no memorization angle. Also motivates our fold choices.
+- **Beyene & Dancy 2603.25761** (FAccT'26) — OCR eval review 2006-2025: historical material invisible, CER-centric metrics miss structural failure, no contamination coverage → citable evidence of the gap.
+
+### VLM-OCR benchmarks & failure modes
+- **OCRBench v2 (2501.00321)** — keeps a PRIVATE test set to validate public trends: implicit admission contamination is live, unmeasured.
+- **CHURRO (2509.19768, EMNLP'25)** — 155 corpora, 99K pages; flagship historical benchmark; aggregates widely digitized (= plausibly memorized) transcriptions with no contamination analysis. Our claim (1) is a critique its users need.
+- **olmOCR (2502.18443)** — the citable eval venue for Mistral-OCR-class systems (Mistral OCR itself: vendor blog only).
+- **Consensus Entropy (2504.11101)**; **risk-controlled OCR (2603.19790)** — consensus methods; we document their failure condition on memorized text (recitation breaks independence).
+- **Levchenko 2510.06743** (LM4DH) — HCPR/AIR "over-historicization": the prior MISFIRING stylistically; recitation is the prior SUCCEEDING — and contaminating the score. Sharpens our distinction.
+- **Greif et al. 2504.00414** — <1% CER post-correction on 18-19th c. German directories — note: administrative text is memorization-clean; which celebrated numbers to trust.
+- **Kanerva et al. 2502.01205** ("No Free Lunches") — post-correction helps English, fails Finnish: language priors are the active ingredient — resource-level cousin of the subsidy.
+- **DeepSeek-OCR (2510.18234)** — ~97% precision under 10× token compression → ~60% at 20×: resolution/token budget as first-order factor (our caveat 2's mechanism).
+- **Humphries et al. 2411.03340** (Historical Methods) — the DH "LLMs transcribe archives" landmark; journal version notes whole-page hallucination qualitatively — our fabrication finding, unmeasured, unframed.
+- **Shu et al. 2506.05551** (NeurIPS'25, TextHalu-Bench) — "semantically plausible yet visually incorrect" scene-text readings; priors override vision; no historical docs.
+- **HalluText (OpenReview LRnt6foJ3q, under review)** — names "OCR hallucination" from language priors; modern docs, no canonicity. Flag as under-review if cited.
+- **Karamolegkou, Angleraud, Sagot & Clérice 2605.27750 ("Reading or Guessing?", May 2026)** — THE closest prior: VLM OCR on Ancient Greek critical editions; perturbation + grounding analysis shows errors stay fluent and weakly image-conditioned. Does NOT: label canonicity, quantify a memorized-vs-novel gap, frame as contamination, release covariates. Cite in the first paragraph; differentiate generously.
+- **Angleraud et al. 2603.02803** — same group: TEI-generated GT, Qwen3VL-8B at 1.0% median CER on real Greek editions. This team owns the adjacent lane.
+
+### Etexts as ground truth
+- **GT4HistOCR (1809.05501, Zenodo)** — 313K line pairs from DTA et al., CC-BY: the direct precedent; ours differs by page-alignment to HELD editions, for EVALUATION, with contamination labels.
+- **IMPACT dataset (HIP 2013)** — institutional-scale manual GT; our cost contrast.
+- Cross-ref: CHURRO-DS is already recycled scholarly transcription at scale, unlabeled for canonicity — the field's ground truth is contaminated by construction.
+
+### Prompt/format effects
+- **Tam et al. 2408.02442** (EMNLP'24 industry) — structured-output constraints degrade reasoning; nearest rigorous result, not OCR.
+- **GutenOCR (2601.14490)** — prompt contract materially changes OCR behavior on same model/page.
+- **Gap (dossier-verified): no study measures annotation-format effects on OCR character accuracy** → our prompt ablation is unclaimed territory.
+
+### Scoop watchlist (re-check before submission)
+Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Akeret-style honest-baseline audits spreading ASR→OCR; Park et al.'s perturbation method applied to OCR; CHURRO team under reviewer pressure; medical-audit template (2606.10066) transferring. **As of 2026-07-19 the quantity "memorization subsidy in VLM OCR" is unpublished. Publish fast.**
 
 ## Experiments planned (each cheap, each targets one confound)
 
