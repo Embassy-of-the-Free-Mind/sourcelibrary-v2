@@ -34,7 +34,7 @@ const PLATE =
 const APEX_X = 348;
 const APEX_Y = 315;
 const LINE_LEN = 182;
-const VIEW = '80 55 520 585'; // upper circle + its string numbers
+const VIEW = '80 55 542 585'; // upper circle + its string numbers (right edge includes the full "288")
 
 const CENTS = (a: number, b: number) => 1200 * Math.log2(a / b);
 
