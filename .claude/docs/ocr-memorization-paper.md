@@ -188,8 +188,14 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 - **Recension alt-references** for 2-3 rows (recitation fingerprint at scale).
 - **Agreement→accuracy calibration** on non-canonical rows only (consensus is NOT
   independent on canonical text — two models reciting agree while both misreport the
-  page), then extended to the double-OCR corpus (split-page parents, duplicate
-  holdings, re-archive pairs) for corpus-scale factor analysis.
+  page), then extended to the double-OCR corpus for corpus-scale factor analysis.
+  The double-OCR supply is far larger than first thought: the `page_revisions`
+  collection snapshots every OCR overwrite — **126,551 prior OCR versions across
+  100,992 distinct pages**, full text with model + prompt_version on both sides
+  (mostly flash→current and lite→current transitions) — plus split-page parents,
+  duplicate holdings, and re-archive before/after pairs. Every page also carries
+  `ocr.prompt_version`/`prompt_name`, so prompt provenance is a corpus-wide
+  covariate for free.
 
 ## Limitations to state plainly
 

@@ -1,0 +1,23 @@
+{
+  "work": "Hero of Alexandria, Pneumatica II (Teubner p.266, self-feeding lamp construction)",
+  "book_id": "695aa97dbe4023bd34bd6715",
+  "page_number": 340,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+  "edition": "Schmidt, Teubner 1899, vol. 1",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ἀγγείου ἐπὶ τοῦ λύχνου ἐπικειμένου, ἐξ οὗ τὸ ἔλαιον ἐπιρρέει. Κατασκευαζέσθω ἡ λυχνία κοίλην ἔχουσα βάσιν τρίγωνον καθάπερ πυραμίδα γίνεσθαι. καὶ ἔστω βάσις ἡ ΑΒΓ∠ κοίλη διάφραγμα ἔχουσα τὸ ΕΖ. ὁ δὲ τῆς λυχνίας καυλὸς ἔστω ὁ ΗΘ καὶ αὐτὸς κοῖλος, ὑπὲρ δὲ τὸν καυλόν, ὡς εἴρηται, κοῖλος κάλαθος ὁ ΚΛ δυνάμενος πλέον ἔλαιον χωρεῖν. καὶ ἐκ μὲν τοῦ ΕΖ διαφράγματος ἀνατεινέτω σωλὴν ὁ ΜΝ συντετρημένος τῷ διαφράγματι καὶ ἀπέχων ἀπὸ τοῦ ΚΛ ἐπιφράγματος τοῦ καλάθου, ἐφʼ ὅ δὴ καὶ ἐπίκειται ὁ λύχνος, ὅσον ἀέρι διέξοδον. ἕτερος δὲ σωληνίσκος ὁ ΞΟ καθείσθω διὰ τοῦ ΚΛ ἐπιφράγματος ἀπέχων ἀπὸ τοῦ πυθμένος τοῦ καλάθου ὅσον ὕδατι διάρρυσιν. ὑπερεχέτω δὲ ὁ ΞΟ σωλὴν τοῦ ΚΛ ἐπιφράγματος βραχύ. τῇ δὲ ὑπεροχῇ συνεσμηρίσθω ἕτερον σωληνάριον τὸ Π ἐπιπεφραγμένον τὸ ἄνω στόμιον, ὅ διὰ τοῦ πυθμένος τοῦ λύχνου διωθει συνηνώσθω τῷ λύχνῳ μηδὲν ἔχων εἰς τὸ ἐκτὸς τοῦ λύχνου. τῷ δὲ Π σωλῆνι συγκεκολλήσθω ἕτερον σωληνάριον λεπτὸν ἀνατεῖνον εἰς τὸ ἄκρον τοῦ ὠτὸς καὶ συντετρήσθω αὐτῷ, ὥστε ἐπιρρεῖν ἐν τῷ κοιλάσματι τοῦ λύχνου, ἔχον τρῆμα ὥσπερ καὶ οἱ ἄλλοι. ὑπὸ δὲ τὸ ΕΖ διάφραγμα ὑποκεκολλήσθω κλειδίον φέρον εἰς τὴν Γ∠ΕΖ χώραν, ὥστε, ἐὰν ἀνοιχθῇ, τὸ ἐκ τῆς ΑΒΕΖ χώρας ὕδωρ μεταβαίνειν εἰς τὴν Γ∠ΕΖ. ἔστω δὲ ἐν τῷ ΑΒ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "medium",
+    "type_size": "large",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Full-text page with an 8-line Latin+Greek apparatus and two obelized (†) words in the body — tests sigla handling. Geometric letter labels (ΑΒΓΔ, ΞΟ, †διωθει) throughout. Printed p.266 = scan 340. Guard-verified + visually audited 2026-07-19."
+}

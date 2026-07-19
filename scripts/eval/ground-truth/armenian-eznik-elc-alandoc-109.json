@@ -1,0 +1,23 @@
+{
+  "work": "Eznik of Kołb, Ełc ałandoc' 142-143 (those who curse Satan yet do his will, 1826 printed p.109)",
+  "book_id": "69a5e9bb787d6e9b8d42e183",
+  "page_number": 120,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.109",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik142.htm",
+  "edition": "Venice 1826",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "հեթանոսութեան , եւ ոչ յինքն միայն կորզիցէ ։ Զի բամբասեալ ի չարութիւն է սատանայ , այն ամենեցուն յայտնի է ։ Արդ եթե իւր միայն խնդրէր զպաշտաւնն , վաղվաղակի խրտուցանէր զպաշտաւնեայսն իւր , այնու զի չար եւ չարչարիչ կարծիցի նոցա ։ Այլ յաւժարեցոյց զկէսսն ՝ լուսաւորաց երկիր պագանել , եւ զայլս ՝ աւդոյ եւ հրոյ երկրի եւ ջրոյ եւ {հասարակաց} եւ փայտից եւ քարանց , մինչեւ աւձից եւ գազանաց եւ ճճեաց անգամ . զի միայն զնախանձն ՝ զոր ի մտի եդեալ էր գոռալոյ ընդ մարդոյն ՝ կատարեսցէ ։ Եւ արդ մի ինչ վերտեսցին , որ արարածոցն երկիր պագանեն ՝ թե զսատանայի զկամս ոչ առնիցեն ։ Զի արարածոց պաշտաւն մատուցանելոյ վարդապեա այլ ոք չէր , բայց միայն սատանայ ։ Եւ արդ զիա՞րդ կարիցեն նզովել զսատանայ , որք զկամս նորա կատարեն ։ Զի եթե որք զճշմարիտն Աստուած պաշտեն , եւ վարուք ինչ զեղծիցին , բամբասին",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column",
+    "density": "light",
+    "type_size": "large",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Same light×large×bitonal cell; page straddles TITUS chapters 142-143 but the passage sits entirely on printed p.109 (first ref word is mid-first-line of the scan). Guard 0.13 = 1959-vs-1826 orthography noise. Printed p.109 = scan 120. Guard-verified + visually audited 2026-07-19."
+}

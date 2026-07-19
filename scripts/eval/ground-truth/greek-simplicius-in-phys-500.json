@@ -1,0 +1,23 @@
+{
+  "work": "Simplicius, In Phys. comm. III 6 ad 206b33-207a18 (CAG IX p.500, on the infinite)",
+  "book_id": "695580c057e3b773024f5e03",
+  "page_number": 536,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+  "edition": "Diels, CAG 9, 1882",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ἀριθμοὺς μέχρι τῆς δεκάδος ἱστῶν οὐ κωλύει τὴν τοῦ ἀριθμοῦ πρόσθεσιν ἐπ’ ἄπειρον αὔξεσθαι. Σθμβαίνει δὲ τοὐναντίον ἄπειρον εἶναι ἕως τοῦ I οὐ γὰρ λίνον λίνῳ συνάπτειν ἔστι τῷ παντὶ καὶ ὅλῳ τὸ ἄπειρον. Υποδείξας τὴν τοῦ ἀπείρου φύσιν ἐν διαιρέσει καὶ προσθέσει τὴν ὑπό. στάσιν ἔχουσαν καὶ κατὰ τὸ ἐπ’ ἄπειρον θεωρουμένην, καὶ τὰς ἀδιορθώτους ἐννοίας τὰς περὶ τοῦ ἀπείρου ἐφεξῆς διορθῶσι προτίθεται. εἰ γὰρ καλῶς ἡμεῖς τὸ ἄπειρον ἐθέμεθα, συμβαίνει τοὐναντίον εἶναι τὸ ἄπειρον ἢ ὡς βούλονταί τινες. ἐκεῖνοι μὲν γὰρ ἄπειρον εἶναι λέγουσιν, οὗ μηδέν ἐστιν ἔξω λαβεῖν, ἡμεῖς δὲ οὗ πάντως ἔστι τι λαβεῖν ἔξω. καὶ γὰρ κατὰ τὴν διαίρεσιν δεῖ τι εἶναι πάντως τὸ διαιρεθησόμενον καὶ κατὰ τὴν πρόσθεσιν τὸ προστεθησόμενον. καὶ μή τις ἡμᾶς ἀπεμφαίνοντα λέγειν οἰέσθω ἄπειρον λέγοντας, οὗ πάντως ἔστιν ἔξω τι λαβεῖν. οἶδε γὰρ καὶ ἡ συνήθεια τὸ τοιοῦτον ὄνομα, εἴπερ ἀπείρους λέγουσι δακτυλίους τοὺς σφενδόνην μὴ ἔχοντας, διότι ἔστι τι ἀεὶ λαβεῖν ἔξω τοῦ λαμβανομένου. καὶ τοῦτο μὲν ὅμοιον ἔχει τῷ ἀπείρῳ ὁ κρικωτὸς δακτύλιος ἤτοι ὁ κύκλος, ὡς ὕστερον ὀνομάσει· διαφέρει δὲ καθόσον ἐπὶ τοῦ κύκλου, κἄν ἀεί τι ἕτερον λαμβάνωμεν, ἀλλὰ καὶ πάλιν τὸ αὐτὸ κατὰ τὴν περιστροφήν, ἐπὶ δὲ τοῦ ἀπείρου ἀεὶ μὲν ἕτερον, οὐδέποτε δὲ τὸ αὐτό.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Page carries a letter-spaced (gesperrt) Aristotle lemma block near the top — tests OCR on mixed set-widths. First1K etext has one typo (Σθμβαίνει for the printed Συμβαίνει), included verbatim; costs <0.1% char accuracy. Printed p.500 = scan 536. Guard-verified + visually audited 2026-07-19."
+}
