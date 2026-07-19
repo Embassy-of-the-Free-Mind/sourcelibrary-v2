@@ -208,3 +208,7 @@ scripts/eval/
 - Prototype: `_tmp-ocr-consistency.mjs`
 - Embedding model: `gemini-embedding-2-preview` (768d, matches production search)
 - Related papers: GlotOCR Bench, Wang & Wang 2025, Conformal Risk Control for OCR
+
+### Published dataset export
+
+`node scripts/eval/export-eval-dataset.mjs --version=vX.Y` emits `scripts/eval/dataset/<version>/` — pages (with MEASURED image resolution), license-gated reference texts (TITUS/ctext ship as sha256 pointers, not text), and raw scored runs. Datasheet + caveats in the version README. Resolution spans 0.64–17.4 MP across pinned pages and confounds naive language-level gaps — read caveat 2 before quoting numbers.
