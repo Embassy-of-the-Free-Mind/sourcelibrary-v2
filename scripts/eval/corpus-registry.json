@@ -26,6 +26,16 @@
     "default_sample": 20,
     "notes": "1,109 books. dbu can + dbu med scripts. EAP/BDRC/IIIF sources."
   },
+  "tibetan-native": {
+    "label": "Tibetan (native-res re-archived)",
+    "script": "tibetan",
+    "filter": {
+      "language": "Tibetan",
+      "image_resolution_upgraded_at": { "$exists": true }
+    },
+    "default_sample": 15,
+    "notes": "Books whose images were re-archived at native resolution (#3186). Stored OCR predates the upgrade — compare fresh runs on the new image against it to separate resolution effects from model effects."
+  },
   "greek": {
     "label": "Ancient Greek Texts",
     "script": "greek",

@@ -7,6 +7,7 @@
 
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 // ── Env loading (from ft-eval.mjs pattern) ─────────────────────────
 
@@ -147,7 +148,8 @@ export async function samplePages(corpusName, n = 10, opts = {}) {
         {
           projection: {
             _id: 1, book_id: 1, page_number: 1,
-            photo: 1, archived_photo: 1, compressed_photo: 1,
+            photo: 1, archived_photo: 1, compressed_photo: 1, photo_original: 1,
+            cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, crop: 1,
             'ocr.data': 1, 'ocr.language': 1,
             'translation.data': 1,
           },
@@ -158,7 +160,9 @@ export async function samplePages(corpusName, n = 10, opts = {}) {
 
     for (const page of bookPages) {
       if (sampled.length >= n) break;
-      const imageUrl = page.archived_photo || page.photo || page.compressed_photo;
+      // Canonical source resolver — split-aware (#1727). The old ad-hoc
+      // archived_photo||photo priority OCR'd the full spread on split pages.
+      const imageUrl = getPageSource(page) || page.compressed_photo;
       if (!imageUrl) continue;
 
       sampled.push({
