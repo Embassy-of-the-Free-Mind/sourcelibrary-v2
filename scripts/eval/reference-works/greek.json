@@ -1,0 +1,16 @@
+{
+  "language": "Greek",
+  "script": "greek",
+  "db_languages": ["Greek", "Ancient Greek", "Greek, Ancient"],
+  "_note": "Our Greek holdings are largely MANUSCRIPTS (minuscule hands, abbreviations) — guard rejections here are expected and informative, not failures of the system.",
+  "works": [
+    {
+      "work": "Iliad I.1-7",
+      "slug": "iliad-1",
+      "title_rx": "homer|ilia|ιλιά|Ομήρου",
+      "source": "Wikisource (el)",
+      "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+      "reference": "Μῆνιν ἄειδε, θεά, Πηληϊάδεω Ἀχιλῆος οὐλομένην, ἣ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκε, πολλὰς δ' ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν οἰωνοῖσί τε πᾶσι· Διὸς δ' ἐτελείετο βουλή, ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς."
+    }
+  ]
+}

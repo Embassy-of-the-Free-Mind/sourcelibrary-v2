@@ -262,9 +262,13 @@ export function stripWrappers(s) {
   return t.replace(/<\/?(note|term|margin|gloss|unclear|insert|header|catchword|sig|page-num)[^>]*>/gi, '');
 }
 
-/** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace. */
+/** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace.
+ * Glyph variants that differ BETWEEN EDITIONS (not OCR errors) are folded to one form. */
+const CJK_VARIANTS = { '爲': '為', '靑': '青', '敎': '教', '曓': '暴', '愼': '慎', '鐘': '鍾' };
 export function normalizeCJK(s) {
-  return stripWrappers(s).replace(/[。、，；：！？「」『』（）〈〉《》【】\s·．,.;:!?()0-9a-zA-Z○◯●－—\-]/g, '');
+  return stripWrappers(s)
+    .replace(/[爲靑敎曓愼鐘]/g, c => CJK_VARIANTS[c])
+    .replace(/[。、，；：！？「」『』（）〈〉《》【】\s·．,.;:!?()0-9a-zA-Z○◯●－—\-]/g, '');
 }
 
 /**
@@ -277,20 +281,29 @@ export function normalizeCJK(s) {
  * i.e. wrong page/book or a divergent recension, not a salvageable OCR read.
  */
 export function subsequenceCER(reference, ocr) {
-  const R = normalizeCJK(reference);
-  let O = normalizeCJK(ocr);
+  return subsequenceErrorRate([...normalizeCJK(reference)], [...normalizeCJK(ocr)], 8);
+}
+
+/**
+ * Core subsequence-error DP over pre-tokenized units (chars or words).
+ * Cost = substitutions + reference-unit deletions; OCR-extra units skip free.
+ * `headLen` bounds the OCR side to a window anchored at the reference head so the
+ * DP stays cheap and can't match across a whole book.
+ */
+function subsequenceErrorRate(R, O, headLen) {
   if (!R.length) return { cer: 0, refLen: 0, matched: 0 };
-  // Bound O to a window around the reference head so we don't match across a whole
-  // book and so the DP stays cheap.
-  const head = R.slice(0, 8);
-  const idx = O.indexOf(head);
+  // Anchor a window around the first occurrence of the reference head.
+  const head = R.slice(0, headLen).join(' ');
+  const flat = O.map(u => u).join(' ');
+  const idx = head ? flat.indexOf(head) : -1;
+  const startUnit = idx > 0 ? flat.slice(0, idx).split(' ').length - 1 : 0;
   const cap = R.length * 6 + 60;
-  O = idx >= 0 ? O.slice(idx, idx + cap) : O.slice(0, Math.max(cap, 400));
+  O = idx >= 0 ? O.slice(startUnit, startUnit + cap) : O.slice(0, Math.max(cap, 400));
   const m = R.length, n = O.length;
   let prev = new Array(n + 1).fill(0); // dp[0][j] = 0: leading/extra O skips are free
   for (let i = 1; i <= m; i++) {
     const cur = new Array(n + 1);
-    cur[0] = i; // O exhausted → must delete remaining R chars
+    cur[0] = i; // O exhausted → must delete remaining R units
     for (let j = 1; j <= n; j++) {
       cur[j] = Math.min(
         cur[j - 1],                                   // skip O[j-1] (commentary) — free
@@ -302,4 +315,120 @@ export function subsequenceCER(reference, ocr) {
   }
   const dist = prev[n];
   return { cer: dist / m, refLen: m, matched: m - dist };
+}
+
+// ── Script-aware reference comparison (multi-language ground truth) ──
+// Generalizes the ctext system (#3212). Two stages:
+//   1. IDENTITY GUARD — is the reference passage genuinely present on this page?
+//      CJK guards at char level (a ~5,000-char inventory makes coincidental
+//      subsequence matches rare). Alphabetic scripts MUST guard at word level:
+//      with a ~30-letter alphabet, free-skip char matching accepted a modern
+//      Armenian translation of the grabar Buzand at 22-25% CER (measured
+//      2026-07-19) — word-level scored the same decoy at 88-96% error.
+//   2. SCORE — char-level subsequence CER inside the verified window is the
+//      reported OCR accuracy. Char level is fine once identity is guaranteed.
+//
+// Folding is deliberately conservative and only folds distinctions that vary
+// BETWEEN EDITIONS rather than reflecting OCR quality (u/v and long-s in Latin,
+// niqqud in Hebrew, polytonic diacritics in Greek, the ew-ligature in Armenian).
+
+const foldDiacritics = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC');
+
+export const SCRIPT_DEFS = {
+  cjk: null, // handled by normalizeCJK / subsequenceCER
+  latin: {
+    letters: /[a-z]/,
+    // '&' is the et-ligature — early modern printing writes "et" as "&";
+    // folding it prevents every printed ampersand counting as a deleted word.
+    fold: s => foldDiacritics(s.toLowerCase()).replace(/&/g, ' et ')
+      .replace(/ſ/g, 's').replace(/æ/g, 'ae').replace(/œ/g, 'oe')
+      .replace(/v/g, 'u').replace(/j/g, 'i').replace(/w/g, 'uu'),
+  },
+  greek: {
+    letters: /[α-ω]/,
+    // NFD strip covers polytonic accents/breathings; fold final sigma.
+    fold: s => foldDiacritics(s.toLowerCase()).replace(/ς/g, 'σ').replace(/ϲ/g, 'σ'),
+  },
+  armenian: {
+    letters: /[ա-ֆ]/,
+    fold: s => s.toLowerCase().replace(/և/g, 'եւ'),
+  },
+  hebrew: {
+    letters: /[א-ת]/,
+    // Maqaf-joined pairs split into words FIRST (the cantillation range below
+    // contains U+05BE maqaf and would silently delete it); then strip niqqud +
+    // cantillation; fold final forms.
+    fold: s => s.replace(/[־-]/g, ' ').replace(/[֑-ׇ]/g, '')
+      .replace(/ך/g, 'כ').replace(/ם/g, 'מ').replace(/ן/g, 'נ').replace(/ף/g, 'פ').replace(/ץ/g, 'צ'),
+  },
+  arabic: {
+    letters: /[ء-ي]/,
+    // Strip tashkeel + tatweel; fold alef/hamza variants and alef maqsura.
+    fold: s => s.replace(/[ً-ٰٟـ]/g, '')
+      .replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه'),
+  },
+  devanagari: {
+    letters: /[ऀ-ॏक़-९]/,
+    fold: s => s.replace(/[।॥]/g, ' '),
+  },
+  cyrillic: {
+    letters: /[а-я]/,
+    // Pre-reform orthography folds (ѣ і ѳ ѵ ъ vary between editions).
+    fold: s => s.toLowerCase().replace(/ѣ/g, 'е').replace(/і/g, 'и').replace(/ѳ/g, 'ф').replace(/ѵ/g, 'и').replace(/ъ\b/g, ''),
+  },
+};
+
+/**
+ * Normalize page/reference text for a script: strip editorial wrappers, apply the
+ * script's orthography folding, keep only the script's letters, collapse spaces.
+ * Returns a space-separated string (word boundaries preserved).
+ */
+export function normalizeForScript(s, script) {
+  const def = SCRIPT_DEFS[script];
+  if (!def) throw new Error(`normalizeForScript: unknown script "${script}" (cjk uses normalizeCJK)`);
+  // Rejoin words hyphenated across line breaks (early modern printing uses - or ¬)
+  // BEFORE tokenizing, or each break splits one word into two mismatches.
+  const dehyphenated = stripWrappers(s || '').replace(/(\p{L})[-¬]\s*\n\s*/gu, '$1');
+  const folded = def.fold(dehyphenated);
+  return folded
+    .split(/\s+/)
+    .map(w => [...w].filter(c => def.letters.test(c)).join(''))
+    .filter(Boolean)
+    .join(' ');
+}
+
+/**
+ * Word-level subsequence error rate — the identity guard for alphabetic scripts.
+ * Reference words matched in order; OCR-extra words (notes, marginalia) skip free.
+ */
+export function subsequenceWER(reference, ocr, script) {
+  const R = normalizeForScript(reference, script).split(' ').filter(w => w.length > 1);
+  const O = normalizeForScript(ocr, script).split(' ').filter(w => w.length > 1);
+  const r = subsequenceErrorRate(R, O, 3);
+  return { wer: r.cer, refWords: r.refLen, matchedWords: r.matched };
+}
+
+// Guard thresholds: measured separation is wide on both sides (right page ~0%,
+// wrong text 88%+ at word level; ctext baseline uses 0.30 at char level).
+export const GUARD_THRESHOLDS = { cjk: 0.30, word: 0.35 };
+
+/**
+ * Two-stage reference comparison. Returns
+ *   { aligned, guard, cer, charAccuracy, refLen, matched }
+ * `aligned:false` means the reference is not cleanly present (wrong book/page,
+ * divergent recension, or a translation decoy) — NOT an OCR failure; such pages
+ * must be excluded from accuracy roll-ups, never averaged in.
+ */
+export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds = GUARD_THRESHOLDS) {
+  if (script === 'cjk') {
+    const r = subsequenceCER(reference, ocr);
+    return { aligned: r.cer <= thresholds.cjk, guard: { type: 'char', value: r.cer }, ...r, charAccuracy: 1 - r.cer };
+  }
+  const guard = subsequenceWER(reference, ocr, script);
+  const aligned = guard.wer <= thresholds.word;
+  // Char-level score on space-stripped normalized text (spaces are layout, not OCR).
+  const R = [...normalizeForScript(reference, script).replace(/ /g, '')];
+  const O = [...normalizeForScript(ocr, script).replace(/ /g, '')];
+  const r = subsequenceErrorRate(R, O, 12);
+  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r, charAccuracy: 1 - r.cer };
 }

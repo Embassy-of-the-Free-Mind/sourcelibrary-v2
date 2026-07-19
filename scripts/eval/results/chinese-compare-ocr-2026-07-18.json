@@ -1,0 +1,91 @@
+{
+  "corpus": "chinese",
+  "against": "ocr",
+  "results": [
+    {
+      "work": "Analects 1.1",
+      "bookId": "69e8b24d2ff2a8dc09e77295",
+      "pageNumber": 156,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 30,
+      "matched": 30,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/analects/xue-er/zh"
+    },
+    {
+      "work": "Daodejing ch.1",
+      "bookId": "69935b692c63944063133f67",
+      "pageNumber": 13,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 59,
+      "matched": 59,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/dao-de-jing/zh"
+    },
+    {
+      "work": "Han Feizi (Nan Yan)",
+      "bookId": "69e8b2742ff2a8dc09e77bdb",
+      "pageNumber": 549,
+      "cer": 0.08196721311475409,
+      "charAccuracy": 0.9180327868852459,
+      "refLen": 61,
+      "matched": 56,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/hanfeizi/nan-yan/zh"
+    },
+    {
+      "work": "Book of Odes (Guan Ju)",
+      "bookId": "69d5ae594dc55b8478de1380",
+      "pageNumber": 34,
+      "cer": 0.0125,
+      "charAccuracy": 0.9875,
+      "refLen": 80,
+      "matched": 79,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh"
+    },
+    {
+      "work": "Xunzi (Quan Xue)",
+      "bookId": "69e8b26b2ff2a8dc09e77afc",
+      "pageNumber": 34,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 50,
+      "matched": 50,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/xunzi/quan-xue/zh"
+    },
+    {
+      "work": "Doctrine of the Mean",
+      "bookId": "69aebb3439a4307877772f55",
+      "pageNumber": 50,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 55,
+      "matched": 55,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/liji/zhong-yong/zh"
+    },
+    {
+      "work": "Zhuangzi 1",
+      "bookId": "69e72c60a409200ea79f46f6",
+      "pageNumber": 46,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 57,
+      "matched": 57,
+      "aligned": true,
+      "source": "ctext",
+      "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh"
+    }
+  ],
+  "date": "2026-07-18"
+}

@@ -1,0 +1,18 @@
+{
+  "work": "Iliad I.1-7",
+  "book_id": "699382dd84cf5845c644b377",
+  "page_number": 9,
+  "script": "greek",
+  "language": "Greek",
+  "source": "Wikisource (el)",
+  "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+  "ocr_ground_truth": "Μῆνιν ἄειδε, θεά, Πηληϊάδεω Ἀχιλῆος οὐλομένην, ἣ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκε, πολλὰς δ' ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν οἰωνοῖσί τε πᾶσι· Διὸς δ' ἐτελείετο βουλή, ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς.",
+  "page_class": {
+    "source_class": "manuscript",
+    "layout": "single_column_with_marginalia",
+    "density": "light",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
+}
