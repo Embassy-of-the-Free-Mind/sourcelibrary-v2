@@ -155,7 +155,7 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
         <div className="mb-2 rounded-lg border border-border-light bg-cream shadow-xl p-4 w-[min(94vw,640px)] max-h-[50vh] overflow-y-auto">
           <div className="flex items-start justify-between gap-3 mb-2">
             <div>
-              <p className="font-serif text-base text-ink font-semibold">{current.title}</p>
+              <p className="font-serif text-base text-primary font-semibold">{current.title}</p>
               <p className="text-xs text-muted">
                 {current.status === 'verified'
                   ? 'Transcribed from the original notation'
@@ -166,7 +166,7 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close notation"
-              className="text-muted hover:text-ink transition-colors shrink-0"
+              className="text-muted hover:text-primary transition-colors shrink-0"
             >
               <X className="w-4 h-4" />
             </button>
@@ -184,8 +184,8 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
                   }}
                   className={`text-xs px-2 py-1 rounded border transition-colors ${
                     i === active
-                      ? 'border-ink text-ink'
-                      : 'border-border-light text-muted hover:text-ink'
+                      ? 'border-primary text-primary'
+                      : 'border-border-light text-muted hover:text-primary'
                   }`}
                 >
                   {t.title}
@@ -201,14 +201,14 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
           type="button"
           onClick={play}
           aria-label={playing ? 'Stop' : `Play ${current.title}`}
-          className="flex items-center justify-center w-8 h-8 rounded-full bg-ink text-cream hover:opacity-85 transition-opacity"
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-dark text-cream hover:opacity-85 transition-opacity"
         >
           {playing ? <Square className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
         </button>
         <button
           type="button"
           onClick={() => setOpen(o => !o)}
-          className="flex items-center gap-1.5 text-sm text-ink hover:opacity-75 transition-opacity"
+          className="flex items-center gap-1.5 text-sm text-primary hover:opacity-75 transition-opacity"
           aria-expanded={open}
         >
           <Music className="w-4 h-4" />
