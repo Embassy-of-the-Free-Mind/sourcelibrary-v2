@@ -28,7 +28,13 @@ waits for the sweep (469 lines) then runs, sequentially: German bare baseline
 prompt ablation (production Standard OCR v15 prompt vs bare, all 40 pages ×
 flash+lite ×3 — tagged `@annotated`). ~$2 total, Derek-approved. It ends by
 rebuilding observations and writing final-gap-report.txt + final-recommendations.txt
-to the scratchpad. **Check its log FIRST**: if "ALL DONE", skip straight to
+to the scratchpad. **KNOWN DATA LOSS (2026-07-19 ~15:15): a `git reset --hard` destroyed ~64 uncommitted
+sweep-output lines** (≈$1.20 of paid calls) while the sweep was mid-run, so the file will
+top out around ~404 lines, NOT 469, and the driver will proceed when the sweep process
+exits. Recovery (documented below, now mandatory): after the driver finishes, count
+outputs per work — `node -e` over the jsonl, 12 per work = complete — strip partial
+works' lines and rerun ONLY those slugs with pro,flash,lite,sonnet5 ×3 (~$1.20).
+Do this BEFORE the v0.2 export. **Check its log FIRST**: if "ALL DONE", skip straight to
 committing + analysis below (rebuild already done); if it died mid-arm, the per-arm
 `--only`/`--tag`/`--width` commands in the script are re-runnable individually.
 New analysis to run on the arms: resolution curves (accuracy vs @w600/@w1000/@w2000/native
