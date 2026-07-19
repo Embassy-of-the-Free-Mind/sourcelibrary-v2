@@ -488,7 +488,20 @@ async function cmdScorecard() {
       // Same image source the pipeline OCR'd (getPageSource handles split pages).
       const imageUrl = getPageSource(page);
       if (!imageUrl) { console.log(`  ! ${gt.work}: no usable page image, skipping model runs`); continue; }
-      const imageBuffer = await fetchImage(imageUrl);
+      let imageBuffer = await fetchImage(imageUrl);
+      // --width=N resizes the image before sending (resolution-ablation arm).
+      // --tag=STR labels an experimental arm (e.g. annotated-prompt). Both are
+      // recorded as a @suffix on the model field in the raw-outputs JSONL so
+      // build-observations keeps arms separate from baseline runs.
+      let armSuffix = typeof args.tag === 'string' ? `@${args.tag}` : '';
+      if (args.width) {
+        const width = parseInt(args.width);
+        const sharp = (await import('sharp')).default;
+        const meta = await sharp(imageBuffer).metadata();
+        if (meta.width > width) imageBuffer = await sharp(imageBuffer).resize({ width }).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@w${width}${armSuffix}`;
+        console.log(`  resized to ${Math.min(width, meta.width)}px wide (native ${meta.width}) → ${imageBuffer.length} bytes`);
+      }
       row.models = {};
       for (const model of models) {
         const outputs = [];
@@ -500,7 +513,7 @@ async function cmdScorecard() {
             // Raw outputs are dumped so runs can be RE-scored offline when
             // normalization improves — model calls are the expensive part.
             fs.appendFileSync(path.join(__dirname, 'results', `scorecard-outputs-${new Date().toISOString().slice(0, 10)}.jsonl`),
-              JSON.stringify({ work: gt.work, model, run: i + 1, finishReason: res.finishReason, text: res.text }) + '\n');
+              JSON.stringify({ work: gt.work, model: model + armSuffix, run: i + 1, finishReason: res.finishReason, text: res.text }) + '\n');
             if (res.finishReason === 'refusal') { refused++; continue; }
             const score = scoreAgainstReference(gt.ocr_ground_truth, res.text, gt.script || 'cjk');
             outputs.push({ text: res.text, score });
