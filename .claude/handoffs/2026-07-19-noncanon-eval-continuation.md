@@ -18,13 +18,30 @@ committed; sweep outputs deliberately NOT committed mid-run).
    `scripts/eval/results/revision-agreement-pilot-2026-07-19.json` when done. Log:
    `<scratchpad>/pilot-5k.log`.
 
+## UPDATE (late 2026-07-19): a detached experiment driver is running
+
+`<scratchpad>/flashlite-experiments.sh` (log: `<scratchpad>/flashlite-experiments.log`,
+scratchpad = /private/tmp/claude-501/-Users-dereklomas-sourcelibrary/c9dbb822-0ebc-4e99-a577-df4592530f19/scratchpad)
+waits for the sweep (469 lines) then runs, sequentially: German bare baseline
+(flash+lite ×3), Mistral non-canonical, resolution ablation (6 pages × widths
+2000/1000/600 × flash+lite ×2 — outputs tagged `@wN` on the model field), and the
+prompt ablation (production Standard OCR v15 prompt vs bare, all 40 pages ×
+flash+lite ×3 — tagged `@annotated`). ~$2 total, Derek-approved. It ends by
+rebuilding observations and writing final-gap-report.txt + final-recommendations.txt
+to the scratchpad. **Check its log FIRST**: if "ALL DONE", skip straight to
+committing + analysis below (rebuild already done); if it died mid-arm, the per-arm
+`--only`/`--tag`/`--width` commands in the script are re-runnable individually.
+New analysis to run on the arms: resolution curves (accuracy vs @w600/@w1000/@w2000/native
+per page × model) and the prompt-ablation delta (@annotated vs bare per page × model)
+— add both to the paper doc's Results.
+
 ## Then, in order (mechanical — good Opus work)
 
 1. `set -a; source .env.production.local; set +a; node scripts/eval/build-observations.mjs`
    → expect ~640 rows (35 pages).
 2. `node scripts/eval/report-canonical-gap.mjs` → update the paper doc's Results section
    (gap table, outcome battery, same-book contrasts — now 5 same-language contrast sets).
-3. `node scripts/eval/export-eval-dataset.mjs --version=v0.2` → commit dataset dir.
+3. `node scripts/eval/export-eval-dataset.mjs --version=v0.2` → commit dataset dir. Run this AFTER the experiment driver finishes so the ablation arms are included in runs.jsonl.
 4. Commit `scorecard-outputs-2026-07-19.jsonl` + observations + pilot json + dataset
    v0.2 on this branch, PR, merge (scripts+data only; DCO signoff:
    `Signed-off-by: JDerekLomas <j.d.lomas@tudelft.nl>`).
