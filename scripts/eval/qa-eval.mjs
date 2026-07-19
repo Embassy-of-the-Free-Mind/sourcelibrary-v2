@@ -23,7 +23,7 @@
 
 import { loadEnv, samplePages, getPage, disconnect, loadCorpusRegistry } from './lib/sampling.mjs';
 import { runModel, resolveModel, fetchImage, estimateCost } from './lib/runners.mjs';
-import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER } from './lib/metrics.mjs';
+import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER, scoreAgainstReference } from './lib/metrics.mjs';
 import { saveResults, loadLatestResults, listResults, generateConsistencyReport, generateEmbeddingReport, generateMatrixReport, saveBlogPost } from './lib/report.mjs';
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
@@ -338,8 +338,14 @@ async function cmdCompare() {
   }
 
   // Scope ground truth to the corpus's script so a Chinese run ignores e.g. Tibetan GT.
+  // An unknown corpus must FAIL here: an undefined script would silently disable the
+  // filter and aggregate every language's ground truth into one bogus number.
   const registry = loadCorpusRegistry();
-  const corpusScript = registry[corpus]?.script;
+  if (!registry[corpus]) {
+    console.error(`Unknown corpus "${corpus}". Known: ${Object.keys(registry).join(', ')}`);
+    process.exit(1);
+  }
+  const corpusScript = registry[corpus].script;
   const entries = [];
   for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
     try {
@@ -373,8 +379,11 @@ async function cmdCompare() {
     const script = corpusScript || 'default';
 
     if (against === 'ocr' && gt.ocr_ground_truth && ocrText) {
-      const { cer: score, refLen, matched } = subsequenceCER(gt.ocr_ground_truth, ocrText);
-      const aligned = score <= DIVERGENCE;
+      // Script-aware two-stage scoring: word-level identity guard for alphabetic
+      // scripts, char-level for cjk; char-CER inside the verified window.
+      const r = scoreAgainstReference(gt.ocr_ground_truth, ocrText, gt.script || 'cjk',
+        { cjk: DIVERGENCE, word: parseFloat(args['word-threshold'] || '0.35') });
+      const { cer: score, refLen, matched, aligned } = r;
       results.push({
         work: label, bookId: gt.book_id, pageNumber: gt.page_number,
         cer: score, charAccuracy: 1 - score, refLen, matched, aligned,
@@ -416,6 +425,62 @@ async function cmdCompare() {
   }
 
   saveResults(`${corpus}-compare-${against}`, { corpus, against, results, date: new Date().toISOString().slice(0, 10) });
+}
+
+// ── Subcommand: scorecard (per-language OCR quality vs published texts) ──
+
+async function cmdScorecard() {
+  const gtDir = path.join(__dirname, 'ground-truth');
+  if (!fs.existsSync(gtDir)) { console.error(`No ground truth at ${gtDir}`); process.exit(1); }
+  const entries = [];
+  for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
+    try {
+      const gt = JSON.parse(fs.readFileSync(path.join(gtDir, file), 'utf8'));
+      if (gt.ocr_ground_truth) entries.push(gt);
+    } catch { /* skip */ }
+  }
+  if (!entries.length) { console.error('No OCR ground-truth files.'); process.exit(1); }
+
+  console.log(`\nOCR Quality Scorecard — ${entries.length} reference passages vs published texts\n`);
+
+  const byLang = new Map();
+  for (const gt of entries) {
+    const page = await getPage(gt.book_id, gt.page_number);
+    const label = `${gt.language || gt.script}`;
+    if (!byLang.has(label)) byLang.set(label, { script: gt.script, rows: [] });
+    if (!page?.ocr?.data) {
+      byLang.get(label).rows.push({ work: gt.work, missing: true });
+      continue;
+    }
+    const r = scoreAgainstReference(gt.ocr_ground_truth, page.ocr.data, gt.script || 'cjk');
+    byLang.get(label).rows.push({
+      work: gt.work, bookId: gt.book_id, pageNumber: gt.page_number,
+      aligned: r.aligned, guard: r.guard.value, cer: r.cer,
+      charAccuracy: r.charAccuracy, refLen: r.refLen, matched: r.matched,
+      source: gt.source, source_url: gt.source_url,
+    });
+  }
+
+  const summary = [];
+  console.log(`  ${'Language'.padEnd(12)} ${'Script'.padEnd(10)} ${'Passages'.padStart(8)} ${'Aligned'.padStart(7)} ${'Ref chars'.padStart(9)} ${'Accuracy'.padStart(9)}`);
+  console.log('  ' + '─'.repeat(60));
+  for (const [lang, { script, rows }] of [...byLang.entries()].sort()) {
+    const scored = rows.filter(r => !r.missing);
+    const aligned = scored.filter(r => r.aligned);
+    const totalRef = aligned.reduce((s, r) => s + r.refLen, 0);
+    const acc = totalRef ? aligned.reduce((s, r) => s + r.matched, 0) / totalRef : null;
+    summary.push({ language: lang, script, passages: scored.length, aligned: aligned.length, refChars: totalRef, charAccuracy: acc, rows });
+    console.log(`  ${lang.padEnd(12)} ${script.padEnd(10)} ${String(scored.length).padStart(8)} ${String(aligned.length).padStart(7)} ${String(totalRef).padStart(9)} ${acc === null ? '      n/a' : ((acc * 100).toFixed(1) + '%').padStart(9)}`);
+    for (const r of rows) {
+      if (r.missing) { console.log(`      - ${r.work}: page missing`); continue; }
+      if (!r.aligned) console.log(`      - ${r.work}: guard ${(r.guard * 100).toFixed(0)}% — excluded (not cleanly present; NOT an OCR failure)`);
+    }
+  }
+  console.log(`\n  Coverage note: reference etexts exist for canonical texts — this measures OCR`);
+  console.log(`  on clean canonical pages. Manuscripts and rare works (the OCR frontier) are`);
+  console.log(`  covered by consistency/cross-model/embedding checks, not this scorecard.`);
+
+  saveResults('scorecard', { date: new Date().toISOString().slice(0, 10), summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────
@@ -555,6 +620,7 @@ const commands = {
   'cross-model': cmdConsistency, // cross-model is part of consistency when >1 model
   embedding: cmdEmbedding,
   compare: cmdCompare,
+  scorecard: cmdScorecard,
   matrix: cmdMatrix,
   readiness: cmdReadiness,
   report: cmdReport,
@@ -568,6 +634,7 @@ Subcommands:
   consistency   Run OCR N times per model, compute MCR and pairwise similarity
   embedding     Embedding-space evaluation (hallucination detection)
   compare       Compare against ground truth (CER, BLEU, ROUGE)
+  scorecard     Per-language OCR accuracy vs published reference texts (#3212)
   matrix        Show evaluation matrix across all registered corpora
   readiness     Quick corpus readiness score
   report        Show last results

@@ -1,0 +1,32 @@
+{
+  "language": "Latin",
+  "script": "latin",
+  "db_languages": ["Latin"],
+  "works": [
+    {
+      "work": "Aeneid I.1-7",
+      "slug": "aeneid-1",
+      "title_rx": "virgil|vergil|aenei|bucolica",
+      "source": "Wikisource (la), ed. with macrons; folded at compare time",
+      "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+      "_note": "Lines 1-4 only — one-page rule: our 1580 editions print the poem embedded in commentary, ~4 verse lines per page; a longer passage spans the page boundary and fails the guard on honest word deletions.",
+      "reference": "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam, fātō profugus, Lāvīniaque vēnit lītora, multum ille et terrīs iactātus et altō vī superum saevae memorem Iūnōnis ob īram;"
+    },
+    {
+      "work": "Vulgate Genesis 1:1-5",
+      "slug": "vulgate-genesis-1",
+      "title_rx": "vulgat|biblia sacra|bibliorum",
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+      "reference": "In principio creavit Deus caelum et terram. Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi : et spiritus Dei ferebatur super aquas. Dixitque Deus : Fiat lux. Et facta est lux. Et vidit Deus lucem quod esset bona : et divisit lucem a tenebris. Appellavitque lucem Diem, et tenebras Noctem : factumque est vespere et mane, dies unus."
+    },
+    {
+      "work": "Vulgate John 1:1-5",
+      "slug": "vulgate-john-1",
+      "title_rx": "vulgat|biblia sacra|evangelium|johannis|joannis",
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/50001.htm",
+      "reference": "In principio erat Verbum, et Verbum erat apud Deum, et Deus erat Verbum. Hoc erat in principio apud Deum. Omnia per ipsum facta sunt : et sine ipso factum est nihil, quod factum est. In ipso vita erat, et vita erat lux hominum : et lux in tenebris lucet, et tenebrae eam non comprehenderunt."
+    }
+  ]
+}

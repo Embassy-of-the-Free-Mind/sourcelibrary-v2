@@ -68,7 +68,7 @@ Defined in `scripts/eval/corpus-registry.json`:
 | fraktur | German | Pre-1800 Fraktur/blackletter |
 | arabic | Arabic | Printed Naskh |
 | hebrew | Hebrew | Hebrew + Rashi script |
-| chinese-classical | CJK | Woodblock-printed classical Chinese |
+| chinese | CJK | Woodblock-printed classical Chinese |
 | sanskrit | Devanagari | Printed Sanskrit editions |
 | greek-ancient | Greek | Aldine and early printed Greek |
 | bph-manuscripts | Mixed | BPH high-quality manuscript scans |
@@ -136,6 +136,26 @@ Place reference transcriptions and translations in `scripts/eval/ground-truth/` 
 ```
 
 Sources: BDRC etexts, OpenPecha, Esukhia Derge Kangyur, Lotsawa House, scholarly editions.
+
+### Multi-language reference ground truth (#3212)
+
+Ground truth for ANY language is built from published etexts with `build-reference-groundtruth.mjs`, which generalizes the ctext system below. Per-language works files live in `scripts/eval/reference-works/<language>.json` (curated passages + provenance; sources registry in `scripts/eval/reference-sources.json`):
+
+```bash
+node scripts/eval/build-reference-groundtruth.mjs --language=hebrew            # dry run
+node scripts/eval/build-reference-groundtruth.mjs --language=hebrew --write    # pin ground truth
+node scripts/eval/qa-eval.mjs compare --corpus=hebrew --against=ocr            # score one corpus
+node scripts/eval/qa-eval.mjs scorecard                                        # per-language table
+```
+
+Two hard-won rules (measured on Armenian/Latin, 2026-07-19 — see `tests/unit/reference-ocr-guard.test.ts`):
+
+- **The identity guard is WORD-level for alphabetic scripts.** Char-level free-skip matching accepted a modern Armenian translation of the grabar Buzand at 22-25% CER (under the 0.30 bar); word-level scored the same decoy 88-96%. CJK stays char-level (its huge character inventory makes coincidental matches rare). Wikisource often shelves translations under the original's exact title — the guard, not the title, decides.
+- **One-page rule.** Reference passages must fit on a single printed page of the densest edition held (commentary editions print ~4 verse lines per page). A passage spanning a page boundary fails the guard on honest deletions — shorten the passage, don't loosen the guard.
+
+Orthography that varies BETWEEN EDITIONS (Latin u/v, i/j, long-s; Hebrew niqqud + maqaf; Greek polytonic marks; Armenian ew-ligature) is folded before comparison in `normalizeForScript` (`lib/metrics.mjs`) so it never counts as OCR error.
+
+Current scorecard (2026-07-19): Armenian 91.8% · Chinese 98.5% · Greek 100% · Hebrew 100% · Latin 97.4% (char accuracy on aligned canonical passages).
 
 ### OCR vs. ctext (Chinese)
 

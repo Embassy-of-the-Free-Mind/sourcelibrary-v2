@@ -1,0 +1,68 @@
+{
+  "_readme": [
+    "Registry of published-etext sources used for reference-based OCR scoring (#3212).",
+    "Each language has a works file in scripts/eval/reference-works/<key>.json holding",
+    "short curated passages (reference text inline, with provenance). Tiers:",
+    "  api    — passages fetched programmatically (fetch helper noted below)",
+    "  bulk   — passages extracted from a one-time corpus download",
+    "  manual — passages hand-pasted from an edition with no clean API; source_url required",
+    "We compare against short reference passages; we never re-host reference texts.",
+    "Identity NEVER comes from titles — titles are only a cheap candidate prefilter;",
+    "the word-level (char-level for cjk) subsequence guard in lib/metrics.mjs decides."
+  ],
+  "chinese": {
+    "script": "cjk",
+    "sources": [{ "name": "ctext.org", "tier": "manual", "url": "https://ctext.org" }],
+    "notes": "Original system (build-ctext-groundtruth.mjs). Canonical printed texts only."
+  },
+  "hebrew": {
+    "script": "hebrew",
+    "sources": [{ "name": "Sefaria", "tier": "api", "url": "https://www.sefaria.org/api/texts/" }],
+    "notes": "Sefaria returns structured JSON (he field). Strip niqqud at normalize time."
+  },
+  "latin": {
+    "script": "latin",
+    "sources": [
+      { "name": "Wikisource (la)", "tier": "manual", "url": "https://la.wikisource.org" },
+      { "name": "Perseus/Scaife", "tier": "api", "url": "https://scaife.perseus.org" }
+    ],
+    "notes": "Fold u/v, i/j, long-s, ae/oe ligatures — edition orthography, not OCR error."
+  },
+  "greek": {
+    "script": "greek",
+    "sources": [
+      { "name": "Perseus/Scaife CTS", "tier": "api", "url": "https://scaife.perseus.org" },
+      { "name": "First1KGreek", "tier": "bulk", "url": "https://opengreekandlatin.github.io/First1KGreek/" }
+    ],
+    "notes": "Polytonic diacritics folded at normalize time."
+  },
+  "arabic": {
+    "script": "arabic",
+    "sources": [{ "name": "OpenITI", "tier": "bulk", "url": "https://github.com/OpenITI" }]
+  },
+  "sanskrit": {
+    "script": "devanagari",
+    "sources": [{ "name": "GRETIL", "tier": "bulk", "url": "https://gretil.sub.uni-goettingen.de" }]
+  },
+  "tibetan": {
+    "script": "tibetan",
+    "sources": [
+      { "name": "BDRC etexts", "tier": "bulk", "url": "https://library.bdrc.io" },
+      { "name": "OpenPecha", "tier": "bulk", "url": "https://openpecha.org" }
+    ],
+    "notes": "Existing hand-built ground truth in ground-truth/ predates this registry."
+  },
+  "german": {
+    "script": "latin",
+    "sources": [{ "name": "Deutsches Textarchiv", "tier": "api", "url": "https://www.deutschestextarchiv.de" }],
+    "notes": "DTA is page-aligned TEI, often the SAME edition we scanned — best-case reference."
+  },
+  "armenian": {
+    "script": "armenian",
+    "sources": [
+      { "name": "Digilib AUA", "tier": "manual", "url": "https://digilib.aua.am" },
+      { "name": "TITUS", "tier": "manual", "url": "https://titus.uni-frankfurt.de" }
+    ],
+    "notes": "No clean fetch API. CAUTION: hy.wikisource's same-title Buzand is the MODERN translation — a decoy the guard must reject (pinned in tests/unit/reference-ocr-guard.test.ts)."
+  }
+}
