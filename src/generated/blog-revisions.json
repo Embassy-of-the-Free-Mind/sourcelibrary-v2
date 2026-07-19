@@ -239,6 +239,12 @@
     "revised": "2026-07-18T12:20:37+02:00",
     "revisions": 5
   },
+  "ngram-viewer": {
+    "path": "src/app/blog/ngram-viewer/page.tsx",
+    "published": "2026-07-19T03:50:50+02:00",
+    "revised": "2026-07-19T03:50:50+02:00",
+    "revisions": 1
+  },
   "ocr-consistency": {
     "path": "src/app/blog/ocr-consistency/page.tsx",
     "published": "2026-03-07T10:39:44+03:00",
@@ -256,6 +262,12 @@
     "published": "2026-02-27T12:23:50+04:00",
     "revised": "2026-07-16T01:06:36+02:00",
     "revisions": 6
+  },
+  "playable-page": {
+    "path": "src/app/blog/playable-page/page.tsx",
+    "published": "2026-07-19T04:19:58+02:00",
+    "revised": "2026-07-19T04:19:58+02:00",
+    "revisions": 1
   },
   "progress-studies": {
     "path": "src/app/blog/progress-studies/page.tsx",
