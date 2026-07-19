@@ -1,0 +1,1832 @@
+{
+ "generated_at": "2026-07-18T23:48:36.733Z",
+ "coverage_built_at": "2026-04-10T07:06:35.389Z",
+ "year_min": 1450,
+ "year_max": 1744,
+ "total_editions": 1597896,
+ "total_matched": 4187,
+ "total_scanned": 325847,
+ "total_translated": 110335,
+ "years": [
+  {
+   "year": 1450,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1453,
+   "editions": 2,
+   "matched": 0,
+   "scanned": 2,
+   "translated": 2
+  },
+  {
+   "year": 1454,
+   "editions": 6,
+   "matched": 0,
+   "scanned": 3,
+   "translated": 3
+  },
+  {
+   "year": 1455,
+   "editions": 18,
+   "matched": 0,
+   "scanned": 13,
+   "translated": 14
+  },
+  {
+   "year": 1456,
+   "editions": 12,
+   "matched": 0,
+   "scanned": 8,
+   "translated": 10
+  },
+  {
+   "year": 1457,
+   "editions": 4,
+   "matched": 0,
+   "scanned": 1,
+   "translated": 1
+  },
+  {
+   "year": 1458,
+   "editions": 4,
+   "matched": 0,
+   "scanned": 1,
+   "translated": 1
+  },
+  {
+   "year": 1459,
+   "editions": 5,
+   "matched": 0,
+   "scanned": 2,
+   "translated": 4
+  },
+  {
+   "year": 1460,
+   "editions": 4,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1461,
+   "editions": 19,
+   "matched": 0,
+   "scanned": 1,
+   "translated": 2
+  },
+  {
+   "year": 1462,
+   "editions": 19,
+   "matched": 0,
+   "scanned": 1,
+   "translated": 0
+  },
+  {
+   "year": 1463,
+   "editions": 6,
+   "matched": 0,
+   "scanned": 1,
+   "translated": 3
+  },
+  {
+   "year": 1464,
+   "editions": 3,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1465,
+   "editions": 205,
+   "matched": 0,
+   "scanned": 127,
+   "translated": 132
+  },
+  {
+   "year": 1466,
+   "editions": 19,
+   "matched": 0,
+   "scanned": 8,
+   "translated": 11
+  },
+  {
+   "year": 1467,
+   "editions": 34,
+   "matched": 0,
+   "scanned": 18,
+   "translated": 18
+  },
+  {
+   "year": 1468,
+   "editions": 23,
+   "matched": 0,
+   "scanned": 9,
+   "translated": 11
+  },
+  {
+   "year": 1469,
+   "editions": 57,
+   "matched": 1,
+   "scanned": 28,
+   "translated": 31
+  },
+  {
+   "year": 1470,
+   "editions": 212,
+   "matched": 0,
+   "scanned": 80,
+   "translated": 117
+  },
+  {
+   "year": 1471,
+   "editions": 278,
+   "matched": 3,
+   "scanned": 81,
+   "translated": 120
+  },
+  {
+   "year": 1472,
+   "editions": 403,
+   "matched": 2,
+   "scanned": 104,
+   "translated": 165
+  },
+  {
+   "year": 1473,
+   "editions": 445,
+   "matched": 8,
+   "scanned": 91,
+   "translated": 161
+  },
+  {
+   "year": 1474,
+   "editions": 507,
+   "matched": 5,
+   "scanned": 118,
+   "translated": 171
+  },
+  {
+   "year": 1475,
+   "editions": 774,
+   "matched": 3,
+   "scanned": 175,
+   "translated": 249
+  },
+  {
+   "year": 1476,
+   "editions": 547,
+   "matched": 6,
+   "scanned": 139,
+   "translated": 175
+  },
+  {
+   "year": 1477,
+   "editions": 634,
+   "matched": 3,
+   "scanned": 117,
+   "translated": 174
+  },
+  {
+   "year": 1478,
+   "editions": 653,
+   "matched": 6,
+   "scanned": 138,
+   "translated": 209
+  },
+  {
+   "year": 1479,
+   "editions": 562,
+   "matched": 1,
+   "scanned": 120,
+   "translated": 157
+  },
+  {
+   "year": 1480,
+   "editions": 973,
+   "matched": 1,
+   "scanned": 157,
+   "translated": 248
+  },
+  {
+   "year": 1481,
+   "editions": 815,
+   "matched": 2,
+   "scanned": 166,
+   "translated": 184
+  },
+  {
+   "year": 1482,
+   "editions": 828,
+   "matched": 7,
+   "scanned": 152,
+   "translated": 200
+  },
+  {
+   "year": 1483,
+   "editions": 900,
+   "matched": 2,
+   "scanned": 187,
+   "translated": 236
+  },
+  {
+   "year": 1484,
+   "editions": 705,
+   "matched": 2,
+   "scanned": 111,
+   "translated": 134
+  },
+  {
+   "year": 1485,
+   "editions": 1087,
+   "matched": 4,
+   "scanned": 230,
+   "translated": 254
+  },
+  {
+   "year": 1486,
+   "editions": 868,
+   "matched": 5,
+   "scanned": 176,
+   "translated": 206
+  },
+  {
+   "year": 1487,
+   "editions": 944,
+   "matched": 3,
+   "scanned": 167,
+   "translated": 226
+  },
+  {
+   "year": 1488,
+   "editions": 1207,
+   "matched": 6,
+   "scanned": 211,
+   "translated": 265
+  },
+  {
+   "year": 1489,
+   "editions": 1024,
+   "matched": 9,
+   "scanned": 202,
+   "translated": 196
+  },
+  {
+   "year": 1490,
+   "editions": 1636,
+   "matched": 5,
+   "scanned": 329,
+   "translated": 348
+  },
+  {
+   "year": 1491,
+   "editions": 1094,
+   "matched": 4,
+   "scanned": 174,
+   "translated": 217
+  },
+  {
+   "year": 1492,
+   "editions": 1370,
+   "matched": 4,
+   "scanned": 263,
+   "translated": 306
+  },
+  {
+   "year": 1493,
+   "editions": 1320,
+   "matched": 10,
+   "scanned": 285,
+   "translated": 292
+  },
+  {
+   "year": 1494,
+   "editions": 1263,
+   "matched": 8,
+   "scanned": 258,
+   "translated": 263
+  },
+  {
+   "year": 1495,
+   "editions": 1941,
+   "matched": 10,
+   "scanned": 387,
+   "translated": 408
+  },
+  {
+   "year": 1496,
+   "editions": 1263,
+   "matched": 9,
+   "scanned": 244,
+   "translated": 271
+  },
+  {
+   "year": 1497,
+   "editions": 1407,
+   "matched": 7,
+   "scanned": 295,
+   "translated": 331
+  },
+  {
+   "year": 1498,
+   "editions": 1437,
+   "matched": 4,
+   "scanned": 281,
+   "translated": 295
+  },
+  {
+   "year": 1499,
+   "editions": 1460,
+   "matched": 8,
+   "scanned": 312,
+   "translated": 338
+  },
+  {
+   "year": 1500,
+   "editions": 3030,
+   "matched": 6,
+   "scanned": 565,
+   "translated": 557
+  },
+  {
+   "year": 1501,
+   "editions": 1533,
+   "matched": 2,
+   "scanned": 353,
+   "translated": 273
+  },
+  {
+   "year": 1502,
+   "editions": 1268,
+   "matched": 10,
+   "scanned": 287,
+   "translated": 257
+  },
+  {
+   "year": 1503,
+   "editions": 1297,
+   "matched": 11,
+   "scanned": 330,
+   "translated": 267
+  },
+  {
+   "year": 1504,
+   "editions": 1118,
+   "matched": 10,
+   "scanned": 295,
+   "translated": 254
+  },
+  {
+   "year": 1505,
+   "editions": 1849,
+   "matched": 5,
+   "scanned": 451,
+   "translated": 391
+  },
+  {
+   "year": 1506,
+   "editions": 1351,
+   "matched": 8,
+   "scanned": 296,
+   "translated": 270
+  },
+  {
+   "year": 1507,
+   "editions": 1395,
+   "matched": 10,
+   "scanned": 336,
+   "translated": 259
+  },
+  {
+   "year": 1508,
+   "editions": 1505,
+   "matched": 6,
+   "scanned": 397,
+   "translated": 289
+  },
+  {
+   "year": 1509,
+   "editions": 1523,
+   "matched": 6,
+   "scanned": 450,
+   "translated": 306
+  },
+  {
+   "year": 1510,
+   "editions": 2225,
+   "matched": 10,
+   "scanned": 498,
+   "translated": 444
+  },
+  {
+   "year": 1511,
+   "editions": 1481,
+   "matched": 12,
+   "scanned": 396,
+   "translated": 301
+  },
+  {
+   "year": 1512,
+   "editions": 1797,
+   "matched": 20,
+   "scanned": 489,
+   "translated": 362
+  },
+  {
+   "year": 1513,
+   "editions": 1712,
+   "matched": 20,
+   "scanned": 443,
+   "translated": 342
+  },
+  {
+   "year": 1514,
+   "editions": 1728,
+   "matched": 20,
+   "scanned": 482,
+   "translated": 379
+  },
+  {
+   "year": 1515,
+   "editions": 2409,
+   "matched": 30,
+   "scanned": 638,
+   "translated": 476
+  },
+  {
+   "year": 1516,
+   "editions": 1812,
+   "matched": 17,
+   "scanned": 522,
+   "translated": 370
+  },
+  {
+   "year": 1517,
+   "editions": 1704,
+   "matched": 28,
+   "scanned": 503,
+   "translated": 392
+  },
+  {
+   "year": 1518,
+   "editions": 2076,
+   "matched": 26,
+   "scanned": 700,
+   "translated": 509
+  },
+  {
+   "year": 1519,
+   "editions": 2133,
+   "matched": 36,
+   "scanned": 822,
+   "translated": 648
+  },
+  {
+   "year": 1520,
+   "editions": 3268,
+   "matched": 12,
+   "scanned": 1130,
+   "translated": 917
+  },
+  {
+   "year": 1521,
+   "editions": 2567,
+   "matched": 8,
+   "scanned": 1052,
+   "translated": 765
+  },
+  {
+   "year": 1522,
+   "editions": 2364,
+   "matched": 11,
+   "scanned": 1031,
+   "translated": 738
+  },
+  {
+   "year": 1523,
+   "editions": 2585,
+   "matched": 4,
+   "scanned": 1268,
+   "translated": 803
+  },
+  {
+   "year": 1524,
+   "editions": 2631,
+   "matched": 10,
+   "scanned": 1270,
+   "translated": 670
+  },
+  {
+   "year": 1525,
+   "editions": 2776,
+   "matched": 9,
+   "scanned": 1060,
+   "translated": 715
+  },
+  {
+   "year": 1526,
+   "editions": 2295,
+   "matched": 9,
+   "scanned": 851,
+   "translated": 570
+  },
+  {
+   "year": 1527,
+   "editions": 1957,
+   "matched": 18,
+   "scanned": 697,
+   "translated": 497
+  },
+  {
+   "year": 1528,
+   "editions": 2014,
+   "matched": 17,
+   "scanned": 733,
+   "translated": 443
+  },
+  {
+   "year": 1529,
+   "editions": 2318,
+   "matched": 16,
+   "scanned": 805,
+   "translated": 533
+  },
+  {
+   "year": 1530,
+   "editions": 3140,
+   "matched": 19,
+   "scanned": 988,
+   "translated": 698
+  },
+  {
+   "year": 1531,
+   "editions": 2193,
+   "matched": 21,
+   "scanned": 717,
+   "translated": 539
+  },
+  {
+   "year": 1532,
+   "editions": 2013,
+   "matched": 21,
+   "scanned": 678,
+   "translated": 417
+  },
+  {
+   "year": 1533,
+   "editions": 2014,
+   "matched": 32,
+   "scanned": 724,
+   "translated": 475
+  },
+  {
+   "year": 1534,
+   "editions": 2209,
+   "matched": 24,
+   "scanned": 770,
+   "translated": 542
+  },
+  {
+   "year": 1535,
+   "editions": 2661,
+   "matched": 19,
+   "scanned": 844,
+   "translated": 539
+  },
+  {
+   "year": 1536,
+   "editions": 2396,
+   "matched": 12,
+   "scanned": 886,
+   "translated": 579
+  },
+  {
+   "year": 1537,
+   "editions": 2329,
+   "matched": 16,
+   "scanned": 876,
+   "translated": 580
+  },
+  {
+   "year": 1538,
+   "editions": 2690,
+   "matched": 14,
+   "scanned": 935,
+   "translated": 696
+  },
+  {
+   "year": 1539,
+   "editions": 2709,
+   "matched": 22,
+   "scanned": 949,
+   "translated": 626
+  },
+  {
+   "year": 1540,
+   "editions": 3440,
+   "matched": 21,
+   "scanned": 1104,
+   "translated": 707
+  },
+  {
+   "year": 1541,
+   "editions": 2501,
+   "matched": 13,
+   "scanned": 871,
+   "translated": 607
+  },
+  {
+   "year": 1542,
+   "editions": 2991,
+   "matched": 18,
+   "scanned": 1001,
+   "translated": 706
+  },
+  {
+   "year": 1543,
+   "editions": 3079,
+   "matched": 25,
+   "scanned": 1027,
+   "translated": 695
+  },
+  {
+   "year": 1544,
+   "editions": 2871,
+   "matched": 23,
+   "scanned": 939,
+   "translated": 618
+  },
+  {
+   "year": 1545,
+   "editions": 3299,
+   "matched": 13,
+   "scanned": 1074,
+   "translated": 710
+  },
+  {
+   "year": 1546,
+   "editions": 3279,
+   "matched": 24,
+   "scanned": 1174,
+   "translated": 619
+  },
+  {
+   "year": 1547,
+   "editions": 2645,
+   "matched": 18,
+   "scanned": 745,
+   "translated": 546
+  },
+  {
+   "year": 1548,
+   "editions": 2946,
+   "matched": 14,
+   "scanned": 995,
+   "translated": 546
+  },
+  {
+   "year": 1549,
+   "editions": 2921,
+   "matched": 18,
+   "scanned": 1005,
+   "translated": 537
+  },
+  {
+   "year": 1550,
+   "editions": 4559,
+   "matched": 19,
+   "scanned": 1359,
+   "translated": 728
+  },
+  {
+   "year": 1551,
+   "editions": 3293,
+   "matched": 22,
+   "scanned": 1043,
+   "translated": 641
+  },
+  {
+   "year": 1552,
+   "editions": 3122,
+   "matched": 17,
+   "scanned": 970,
+   "translated": 571
+  },
+  {
+   "year": 1553,
+   "editions": 3194,
+   "matched": 9,
+   "scanned": 1019,
+   "translated": 518
+  },
+  {
+   "year": 1554,
+   "editions": 3395,
+   "matched": 23,
+   "scanned": 1066,
+   "translated": 653
+  },
+  {
+   "year": 1555,
+   "editions": 3945,
+   "matched": 15,
+   "scanned": 1223,
+   "translated": 671
+  },
+  {
+   "year": 1556,
+   "editions": 3718,
+   "matched": 11,
+   "scanned": 1177,
+   "translated": 619
+  },
+  {
+   "year": 1557,
+   "editions": 3348,
+   "matched": 17,
+   "scanned": 1023,
+   "translated": 543
+  },
+  {
+   "year": 1558,
+   "editions": 3683,
+   "matched": 29,
+   "scanned": 1246,
+   "translated": 624
+  },
+  {
+   "year": 1559,
+   "editions": 3504,
+   "matched": 17,
+   "scanned": 1018,
+   "translated": 533
+  },
+  {
+   "year": 1560,
+   "editions": 4910,
+   "matched": 20,
+   "scanned": 1462,
+   "translated": 693
+  },
+  {
+   "year": 1561,
+   "editions": 4238,
+   "matched": 22,
+   "scanned": 1285,
+   "translated": 588
+  },
+  {
+   "year": 1562,
+   "editions": 4317,
+   "matched": 22,
+   "scanned": 1239,
+   "translated": 655
+  },
+  {
+   "year": 1563,
+   "editions": 4082,
+   "matched": 13,
+   "scanned": 1138,
+   "translated": 497
+  },
+  {
+   "year": 1564,
+   "editions": 4112,
+   "matched": 18,
+   "scanned": 1064,
+   "translated": 451
+  },
+  {
+   "year": 1565,
+   "editions": 4288,
+   "matched": 17,
+   "scanned": 1111,
+   "translated": 493
+  },
+  {
+   "year": 1566,
+   "editions": 4297,
+   "matched": 24,
+   "scanned": 1045,
+   "translated": 502
+  },
+  {
+   "year": 1567,
+   "editions": 4222,
+   "matched": 12,
+   "scanned": 994,
+   "translated": 464
+  },
+  {
+   "year": 1568,
+   "editions": 4091,
+   "matched": 15,
+   "scanned": 1006,
+   "translated": 435
+  },
+  {
+   "year": 1569,
+   "editions": 3722,
+   "matched": 23,
+   "scanned": 897,
+   "translated": 421
+  },
+  {
+   "year": 1570,
+   "editions": 4400,
+   "matched": 19,
+   "scanned": 1194,
+   "translated": 491
+  },
+  {
+   "year": 1571,
+   "editions": 3871,
+   "matched": 16,
+   "scanned": 1014,
+   "translated": 400
+  },
+  {
+   "year": 1572,
+   "editions": 4149,
+   "matched": 9,
+   "scanned": 1060,
+   "translated": 457
+  },
+  {
+   "year": 1573,
+   "editions": 3933,
+   "matched": 8,
+   "scanned": 1066,
+   "translated": 453
+  },
+  {
+   "year": 1574,
+   "editions": 4083,
+   "matched": 10,
+   "scanned": 1090,
+   "translated": 498
+  },
+  {
+   "year": 1575,
+   "editions": 4356,
+   "matched": 14,
+   "scanned": 1114,
+   "translated": 540
+  },
+  {
+   "year": 1576,
+   "editions": 3961,
+   "matched": 4,
+   "scanned": 946,
+   "translated": 418
+  },
+  {
+   "year": 1577,
+   "editions": 4030,
+   "matched": 10,
+   "scanned": 1053,
+   "translated": 403
+  },
+  {
+   "year": 1578,
+   "editions": 4525,
+   "matched": 15,
+   "scanned": 1178,
+   "translated": 483
+  },
+  {
+   "year": 1579,
+   "editions": 4414,
+   "matched": 8,
+   "scanned": 1164,
+   "translated": 484
+  },
+  {
+   "year": 1580,
+   "editions": 5320,
+   "matched": 22,
+   "scanned": 1359,
+   "translated": 566
+  },
+  {
+   "year": 1581,
+   "editions": 4563,
+   "matched": 18,
+   "scanned": 1227,
+   "translated": 545
+  },
+  {
+   "year": 1582,
+   "editions": 4731,
+   "matched": 22,
+   "scanned": 1245,
+   "translated": 496
+  },
+  {
+   "year": 1583,
+   "editions": 4873,
+   "matched": 20,
+   "scanned": 1347,
+   "translated": 504
+  },
+  {
+   "year": 1584,
+   "editions": 4914,
+   "matched": 21,
+   "scanned": 1398,
+   "translated": 557
+  },
+  {
+   "year": 1585,
+   "editions": 5472,
+   "matched": 18,
+   "scanned": 1283,
+   "translated": 587
+  },
+  {
+   "year": 1586,
+   "editions": 5641,
+   "matched": 13,
+   "scanned": 1366,
+   "translated": 541
+  },
+  {
+   "year": 1587,
+   "editions": 5822,
+   "matched": 8,
+   "scanned": 1372,
+   "translated": 544
+  },
+  {
+   "year": 1588,
+   "editions": 6635,
+   "matched": 8,
+   "scanned": 1617,
+   "translated": 532
+  },
+  {
+   "year": 1589,
+   "editions": 6500,
+   "matched": 10,
+   "scanned": 1483,
+   "translated": 512
+  },
+  {
+   "year": 1590,
+   "editions": 6151,
+   "matched": 17,
+   "scanned": 1463,
+   "translated": 455
+  },
+  {
+   "year": 1591,
+   "editions": 5171,
+   "matched": 14,
+   "scanned": 1385,
+   "translated": 423
+  },
+  {
+   "year": 1592,
+   "editions": 5208,
+   "matched": 2,
+   "scanned": 1502,
+   "translated": 534
+  },
+  {
+   "year": 1593,
+   "editions": 5603,
+   "matched": 12,
+   "scanned": 1590,
+   "translated": 457
+  },
+  {
+   "year": 1594,
+   "editions": 5934,
+   "matched": 9,
+   "scanned": 1529,
+   "translated": 522
+  },
+  {
+   "year": 1595,
+   "editions": 6166,
+   "matched": 10,
+   "scanned": 1658,
+   "translated": 492
+  },
+  {
+   "year": 1596,
+   "editions": 6312,
+   "matched": 24,
+   "scanned": 1701,
+   "translated": 564
+  },
+  {
+   "year": 1597,
+   "editions": 6147,
+   "matched": 17,
+   "scanned": 1644,
+   "translated": 551
+  },
+  {
+   "year": 1598,
+   "editions": 6487,
+   "matched": 20,
+   "scanned": 1618,
+   "translated": 558
+  },
+  {
+   "year": 1599,
+   "editions": 6315,
+   "matched": 13,
+   "scanned": 1539,
+   "translated": 524
+  },
+  {
+   "year": 1600,
+   "editions": 7484,
+   "matched": 22,
+   "scanned": 1763,
+   "translated": 591
+  },
+  {
+   "year": 1601,
+   "editions": 7729,
+   "matched": 19,
+   "scanned": 1721,
+   "translated": 588
+  },
+  {
+   "year": 1602,
+   "editions": 6451,
+   "matched": 12,
+   "scanned": 1738,
+   "translated": 617
+  },
+  {
+   "year": 1603,
+   "editions": 6544,
+   "matched": 19,
+   "scanned": 1758,
+   "translated": 536
+  },
+  {
+   "year": 1604,
+   "editions": 6416,
+   "matched": 17,
+   "scanned": 1680,
+   "translated": 527
+  },
+  {
+   "year": 1605,
+   "editions": 6269,
+   "matched": 21,
+   "scanned": 1659,
+   "translated": 481
+  },
+  {
+   "year": 1606,
+   "editions": 6941,
+   "matched": 17,
+   "scanned": 1789,
+   "translated": 590
+  },
+  {
+   "year": 1607,
+   "editions": 6823,
+   "matched": 10,
+   "scanned": 1856,
+   "translated": 592
+  },
+  {
+   "year": 1608,
+   "editions": 7295,
+   "matched": 31,
+   "scanned": 1998,
+   "translated": 486
+  },
+  {
+   "year": 1609,
+   "editions": 7891,
+   "matched": 16,
+   "scanned": 2008,
+   "translated": 562
+  },
+  {
+   "year": 1610,
+   "editions": 8703,
+   "matched": 28,
+   "scanned": 2080,
+   "translated": 585
+  },
+  {
+   "year": 1611,
+   "editions": 7413,
+   "matched": 24,
+   "scanned": 1925,
+   "translated": 523
+  },
+  {
+   "year": 1612,
+   "editions": 8075,
+   "matched": 19,
+   "scanned": 1999,
+   "translated": 604
+  },
+  {
+   "year": 1613,
+   "editions": 7495,
+   "matched": 28,
+   "scanned": 1880,
+   "translated": 524
+  },
+  {
+   "year": 1614,
+   "editions": 8136,
+   "matched": 55,
+   "scanned": 2135,
+   "translated": 628
+  },
+  {
+   "year": 1615,
+   "editions": 8963,
+   "matched": 33,
+   "scanned": 2211,
+   "translated": 617
+  },
+  {
+   "year": 1616,
+   "editions": 8352,
+   "matched": 42,
+   "scanned": 1995,
+   "translated": 581
+  },
+  {
+   "year": 1617,
+   "editions": 9031,
+   "matched": 37,
+   "scanned": 2183,
+   "translated": 569
+  },
+  {
+   "year": 1618,
+   "editions": 9378,
+   "matched": 61,
+   "scanned": 2201,
+   "translated": 529
+  },
+  {
+   "year": 1619,
+   "editions": 9994,
+   "matched": 37,
+   "scanned": 2252,
+   "translated": 603
+  },
+  {
+   "year": 1620,
+   "editions": 11768,
+   "matched": 26,
+   "scanned": 2532,
+   "translated": 580
+  },
+  {
+   "year": 1621,
+   "editions": 10640,
+   "matched": 23,
+   "scanned": 1942,
+   "translated": 470
+  },
+  {
+   "year": 1622,
+   "editions": 10389,
+   "matched": 26,
+   "scanned": 1865,
+   "translated": 510
+  },
+  {
+   "year": 1623,
+   "editions": 9131,
+   "matched": 21,
+   "scanned": 1755,
+   "translated": 452
+  },
+  {
+   "year": 1624,
+   "editions": 8776,
+   "matched": 26,
+   "scanned": 1861,
+   "translated": 431
+  },
+  {
+   "year": 1625,
+   "editions": 9606,
+   "matched": 24,
+   "scanned": 1785,
+   "translated": 596
+  },
+  {
+   "year": 1626,
+   "editions": 8462,
+   "matched": 13,
+   "scanned": 1555,
+   "translated": 530
+  },
+  {
+   "year": 1627,
+   "editions": 8022,
+   "matched": 19,
+   "scanned": 1544,
+   "translated": 390
+  },
+  {
+   "year": 1628,
+   "editions": 8688,
+   "matched": 19,
+   "scanned": 1619,
+   "translated": 475
+  },
+  {
+   "year": 1629,
+   "editions": 8752,
+   "matched": 25,
+   "scanned": 1698,
+   "translated": 525
+  },
+  {
+   "year": 1630,
+   "editions": 9633,
+   "matched": 14,
+   "scanned": 1792,
+   "translated": 509
+  },
+  {
+   "year": 1631,
+   "editions": 9176,
+   "matched": 19,
+   "scanned": 1675,
+   "translated": 395
+  },
+  {
+   "year": 1632,
+   "editions": 8627,
+   "matched": 31,
+   "scanned": 1348,
+   "translated": 376
+  },
+  {
+   "year": 1633,
+   "editions": 8588,
+   "matched": 17,
+   "scanned": 1421,
+   "translated": 388
+  },
+  {
+   "year": 1634,
+   "editions": 8583,
+   "matched": 24,
+   "scanned": 1311,
+   "translated": 338
+  },
+  {
+   "year": 1635,
+   "editions": 8811,
+   "matched": 18,
+   "scanned": 1352,
+   "translated": 385
+  },
+  {
+   "year": 1636,
+   "editions": 8381,
+   "matched": 17,
+   "scanned": 1254,
+   "translated": 348
+  },
+  {
+   "year": 1637,
+   "editions": 8034,
+   "matched": 13,
+   "scanned": 1297,
+   "translated": 310
+  },
+  {
+   "year": 1638,
+   "editions": 8384,
+   "matched": 22,
+   "scanned": 1327,
+   "translated": 347
+  },
+  {
+   "year": 1639,
+   "editions": 7876,
+   "matched": 13,
+   "scanned": 1331,
+   "translated": 371
+  },
+  {
+   "year": 1640,
+   "editions": 9367,
+   "matched": 28,
+   "scanned": 1599,
+   "translated": 388
+  },
+  {
+   "year": 1641,
+   "editions": 10383,
+   "matched": 19,
+   "scanned": 1879,
+   "translated": 383
+  },
+  {
+   "year": 1642,
+   "editions": 12706,
+   "matched": 24,
+   "scanned": 1732,
+   "translated": 439
+  },
+  {
+   "year": 1643,
+   "editions": 11769,
+   "matched": 16,
+   "scanned": 1688,
+   "translated": 447
+  },
+  {
+   "year": 1644,
+   "editions": 11626,
+   "matched": 37,
+   "scanned": 1589,
+   "translated": 381
+  },
+  {
+   "year": 1645,
+   "editions": 11493,
+   "matched": 18,
+   "scanned": 1660,
+   "translated": 378
+  },
+  {
+   "year": 1646,
+   "editions": 11343,
+   "matched": 12,
+   "scanned": 1560,
+   "translated": 343
+  },
+  {
+   "year": 1647,
+   "editions": 11888,
+   "matched": 23,
+   "scanned": 1831,
+   "translated": 363
+  },
+  {
+   "year": 1648,
+   "editions": 13549,
+   "matched": 31,
+   "scanned": 1984,
+   "translated": 425
+  },
+  {
+   "year": 1649,
+   "editions": 13040,
+   "matched": 17,
+   "scanned": 1779,
+   "translated": 381
+  },
+  {
+   "year": 1650,
+   "editions": 14463,
+   "matched": 29,
+   "scanned": 2071,
+   "translated": 507
+  },
+  {
+   "year": 1651,
+   "editions": 12077,
+   "matched": 41,
+   "scanned": 1736,
+   "translated": 498
+  },
+  {
+   "year": 1652,
+   "editions": 12690,
+   "matched": 28,
+   "scanned": 1761,
+   "translated": 408
+  },
+  {
+   "year": 1653,
+   "editions": 12373,
+   "matched": 17,
+   "scanned": 2158,
+   "translated": 450
+  },
+  {
+   "year": 1654,
+   "editions": 11166,
+   "matched": 20,
+   "scanned": 2030,
+   "translated": 424
+  },
+  {
+   "year": 1655,
+   "editions": 11619,
+   "matched": 30,
+   "scanned": 2192,
+   "translated": 464
+  },
+  {
+   "year": 1656,
+   "editions": 11268,
+   "matched": 37,
+   "scanned": 2276,
+   "translated": 480
+  },
+  {
+   "year": 1657,
+   "editions": 11488,
+   "matched": 29,
+   "scanned": 2219,
+   "translated": 495
+  },
+  {
+   "year": 1658,
+   "editions": 12368,
+   "matched": 49,
+   "scanned": 2409,
+   "translated": 537
+  },
+  {
+   "year": 1659,
+   "editions": 13281,
+   "matched": 47,
+   "scanned": 2584,
+   "translated": 517
+  },
+  {
+   "year": 1660,
+   "editions": 15333,
+   "matched": 32,
+   "scanned": 2948,
+   "translated": 562
+  },
+  {
+   "year": 1661,
+   "editions": 13215,
+   "matched": 31,
+   "scanned": 2672,
+   "translated": 539
+  },
+  {
+   "year": 1662,
+   "editions": 12049,
+   "matched": 28,
+   "scanned": 2534,
+   "translated": 563
+  },
+  {
+   "year": 1663,
+   "editions": 12974,
+   "matched": 24,
+   "scanned": 2642,
+   "translated": 575
+  },
+  {
+   "year": 1664,
+   "editions": 13402,
+   "matched": 37,
+   "scanned": 2633,
+   "translated": 610
+  },
+  {
+   "year": 1665,
+   "editions": 14580,
+   "matched": 22,
+   "scanned": 2635,
+   "translated": 542
+  },
+  {
+   "year": 1666,
+   "editions": 13965,
+   "matched": 31,
+   "scanned": 2318,
+   "translated": 527
+  },
+  {
+   "year": 1667,
+   "editions": 13666,
+   "matched": 28,
+   "scanned": 2406,
+   "translated": 552
+  },
+  {
+   "year": 1668,
+   "editions": 14568,
+   "matched": 23,
+   "scanned": 2636,
+   "translated": 599
+  },
+  {
+   "year": 1669,
+   "editions": 14276,
+   "matched": 35,
+   "scanned": 2478,
+   "translated": 564
+  },
+  {
+   "year": 1670,
+   "editions": 14699,
+   "matched": 24,
+   "scanned": 2892,
+   "translated": 625
+  },
+  {
+   "year": 1671,
+   "editions": 14041,
+   "matched": 25,
+   "scanned": 2625,
+   "translated": 497
+  },
+  {
+   "year": 1672,
+   "editions": 15293,
+   "matched": 20,
+   "scanned": 2656,
+   "translated": 571
+  },
+  {
+   "year": 1673,
+   "editions": 15161,
+   "matched": 25,
+   "scanned": 2496,
+   "translated": 514
+  },
+  {
+   "year": 1674,
+   "editions": 14986,
+   "matched": 20,
+   "scanned": 2582,
+   "translated": 508
+  },
+  {
+   "year": 1675,
+   "editions": 15913,
+   "matched": 24,
+   "scanned": 2907,
+   "translated": 654
+  },
+  {
+   "year": 1676,
+   "editions": 14766,
+   "matched": 29,
+   "scanned": 2616,
+   "translated": 533
+  },
+  {
+   "year": 1677,
+   "editions": 15166,
+   "matched": 24,
+   "scanned": 2549,
+   "translated": 553
+  },
+  {
+   "year": 1678,
+   "editions": 14383,
+   "matched": 21,
+   "scanned": 2685,
+   "translated": 580
+  },
+  {
+   "year": 1679,
+   "editions": 14943,
+   "matched": 16,
+   "scanned": 2676,
+   "translated": 541
+  },
+  {
+   "year": 1680,
+   "editions": 19334,
+   "matched": 32,
+   "scanned": 2971,
+   "translated": 601
+  },
+  {
+   "year": 1681,
+   "editions": 15030,
+   "matched": 19,
+   "scanned": 2621,
+   "translated": 453
+  },
+  {
+   "year": 1682,
+   "editions": 14933,
+   "matched": 25,
+   "scanned": 2605,
+   "translated": 460
+  },
+  {
+   "year": 1683,
+   "editions": 15973,
+   "matched": 20,
+   "scanned": 2622,
+   "translated": 483
+  },
+  {
+   "year": 1684,
+   "editions": 16816,
+   "matched": 29,
+   "scanned": 2792,
+   "translated": 572
+  },
+  {
+   "year": 1685,
+   "editions": 17107,
+   "matched": 29,
+   "scanned": 2973,
+   "translated": 616
+  },
+  {
+   "year": 1686,
+   "editions": 15724,
+   "matched": 16,
+   "scanned": 2493,
+   "translated": 538
+  },
+  {
+   "year": 1687,
+   "editions": 15489,
+   "matched": 18,
+   "scanned": 2532,
+   "translated": 517
+  },
+  {
+   "year": 1688,
+   "editions": 17517,
+   "matched": 15,
+   "scanned": 2908,
+   "translated": 634
+  },
+  {
+   "year": 1689,
+   "editions": 17896,
+   "matched": 11,
+   "scanned": 2675,
+   "translated": 511
+  },
+  {
+   "year": 1690,
+   "editions": 18729,
+   "matched": 25,
+   "scanned": 2774,
+   "translated": 516
+  },
+  {
+   "year": 1691,
+   "editions": 16745,
+   "matched": 32,
+   "scanned": 2550,
+   "translated": 459
+  },
+  {
+   "year": 1692,
+   "editions": 16771,
+   "matched": 21,
+   "scanned": 2569,
+   "translated": 472
+  },
+  {
+   "year": 1693,
+   "editions": 17397,
+   "matched": 29,
+   "scanned": 2785,
+   "translated": 554
+  },
+  {
+   "year": 1694,
+   "editions": 15684,
+   "matched": 22,
+   "scanned": 2650,
+   "translated": 501
+  },
+  {
+   "year": 1695,
+   "editions": 17449,
+   "matched": 18,
+   "scanned": 2932,
+   "translated": 480
+  },
+  {
+   "year": 1696,
+   "editions": 17699,
+   "matched": 22,
+   "scanned": 2777,
+   "translated": 530
+  },
+  {
+   "year": 1697,
+   "editions": 18360,
+   "matched": 14,
+   "scanned": 2834,
+   "translated": 540
+  },
+  {
+   "year": 1698,
+   "editions": 17992,
+   "matched": 16,
+   "scanned": 3043,
+   "translated": 466
+  },
+  {
+   "year": 1699,
+   "editions": 18852,
+   "matched": 12,
+   "scanned": 3092,
+   "translated": 505
+  },
+  {
+   "year": 1700,
+   "editions": 16566,
+   "matched": 15,
+   "scanned": 2216,
+   "translated": 422
+  },
+  {
+   "year": 1701,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1702,
+   "editions": 2,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1703,
+   "editions": 3,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1708,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1711,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1712,
+   "editions": 2,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1719,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1727,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1730,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1735,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  },
+  {
+   "year": 1744,
+   "editions": 1,
+   "matched": 0,
+   "scanned": 0,
+   "translated": 0
+  }
+ ]
+}

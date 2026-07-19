@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { linearScale, linePath, areaPath, niceTicks, compactNumber } from '@/components/analytics/charts/chart-utils';
 import { NGRAM_CORPORA, ORIGINAL_LANGUAGE_CORPUS } from '@/lib/ngram-normalize';
 import { findTermFamily } from '@/lib/ngram-lexicon';
+import UstcCoveragePanel from '@/components/ngrams/UstcCoveragePanel';
 
 interface Point { year: number; count: number; perMillion: number; smoothed: number }
 interface Series {
@@ -436,6 +437,16 @@ export default function NgramViewer() {
           Gray backdrop: how much text each year contributes ({compactNumber(data.totals.reduce((s, t) => s + t.books, 0))} books
           across this range). Hover any point for that year&apos;s exact book and token counts.
         </p>
+      )}
+
+      {/* USTC coverage panel (#3214): quantify how much of European print the curves rest on */}
+      {data && (
+        <UstcCoveragePanel
+          totals={data.totals}
+          from={from}
+          to={to}
+          corpusLabel={shortLabel(NGRAM_CORPORA.find(c => c.id === data.corpus)?.label || data.corpus)}
+        />
       )}
     </div>
   );
