@@ -491,6 +491,10 @@ async function cmdScorecard() {
           try {
             const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000 });
             cost += res.costUsd;
+            // Raw outputs are dumped so runs can be RE-scored offline when
+            // normalization improves — model calls are the expensive part.
+            fs.appendFileSync(path.join(__dirname, 'results', `scorecard-outputs-${new Date().toISOString().slice(0, 10)}.jsonl`),
+              JSON.stringify({ work: gt.work, model, run: i + 1, finishReason: res.finishReason, text: res.text }) + '\n');
             if (res.finishReason === 'refusal') { refused++; continue; }
             const score = scoreAgainstReference(gt.ocr_ground_truth, res.text, gt.script || 'cjk');
             outputs.push({ text: res.text, score });

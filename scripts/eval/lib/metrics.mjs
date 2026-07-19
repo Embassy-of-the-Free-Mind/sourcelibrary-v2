@@ -262,9 +262,13 @@ export function stripWrappers(s) {
   return t.replace(/<\/?(note|term|margin|gloss|unclear|insert|header|catchword|sig|page-num)[^>]*>/gi, '');
 }
 
-/** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace. */
+/** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace.
+ * Glyph variants that differ BETWEEN EDITIONS (not OCR errors) are folded to one form. */
+const CJK_VARIANTS = { '爲': '為', '靑': '青', '敎': '教', '曓': '暴', '愼': '慎', '鐘': '鍾' };
 export function normalizeCJK(s) {
-  return stripWrappers(s).replace(/[。、，；：！？「」『』（）〈〉《》【】\s·．,.;:!?()0-9a-zA-Z○◯●－—\-]/g, '');
+  return stripWrappers(s)
+    .replace(/[爲靑敎曓愼鐘]/g, c => CJK_VARIANTS[c])
+    .replace(/[。、，；：！？「」『』（）〈〉《》【】\s·．,.;:!?()0-9a-zA-Z○◯●－—\-]/g, '');
 }
 
 /**
@@ -334,7 +338,9 @@ export const SCRIPT_DEFS = {
   cjk: null, // handled by normalizeCJK / subsequenceCER
   latin: {
     letters: /[a-z]/,
-    fold: s => foldDiacritics(s.toLowerCase())
+    // '&' is the et-ligature — early modern printing writes "et" as "&";
+    // folding it prevents every printed ampersand counting as a deleted word.
+    fold: s => foldDiacritics(s.toLowerCase()).replace(/&/g, ' et ')
       .replace(/ſ/g, 's').replace(/æ/g, 'ae').replace(/œ/g, 'oe')
       .replace(/v/g, 'u').replace(/j/g, 'i').replace(/w/g, 'uu'),
   },
