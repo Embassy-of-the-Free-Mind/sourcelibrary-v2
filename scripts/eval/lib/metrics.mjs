@@ -376,6 +376,14 @@ export const SCRIPT_DEFS = {
     // Pre-reform orthography folds (ѣ і ѳ ѵ ъ vary between editions).
     fold: s => s.toLowerCase().replace(/ѣ/g, 'е').replace(/і/g, 'и').replace(/ѳ/g, 'ф').replace(/ѵ/g, 'и').replace(/ъ\b/g, ''),
   },
+  tibetan: {
+    // Consonants (ཀ–ཬ), vowel signs, and subjoined letters (ྐ–ྼ) — one range
+    // covers the Sanskrit-transliteration extensions used in mantra/title lines.
+    letters: /[ཀ-ྼ]/,
+    // The "word" unit is the syllable: tsheg (་ ༌) and shad (། ༎ ༏ ༐ ༑ ༔)
+    // become spaces so the generic whitespace split yields syllables.
+    fold: s => s.replace(/[་༌]/g, ' ').replace(/[།༎༏༐༑༔]/g, ' '),
+  },
 };
 
 /**

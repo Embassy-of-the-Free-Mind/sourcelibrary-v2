@@ -66,6 +66,9 @@ if (WRITE) fs.mkdirSync(gtDir, { recursive: true });
 let written = 0, skipped = 0;
 for (const w of cfg.works) {
   const { work, slug, title_rx, source, source_url, reference, edition } = w;
+  // A blocked work is a known trap, not a TODO: the probe would "confirm" a page
+  // whose stored OCR is itself model recitation (see the works file's _note).
+  if (w.blocked) { console.log(`SKIP ${work}: blocked in works file — ${path.basename(worksFile)} _note explains why`); skipped++; continue; }
   const books = await B.find(
     {
       language: { $in: db_languages },
