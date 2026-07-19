@@ -15,14 +15,18 @@ import { linearScale, linePath, areaPath, niceTicks, compactNumber } from '@/com
 import { NGRAM_CORPORA, ORIGINAL_LANGUAGE_CORPUS } from '@/lib/ngram-normalize';
 import { findTermFamily } from '@/lib/ngram-lexicon';
 
-interface Point { year: number; count: number; perMillion: number; smoothed: number }
+// tokens mode carries perMillion; docs mode (#3217) carries pctBooks, and
+// count means distinct books rather than occurrences. smoothed rides on
+// whichever value the mode uses, so the chart reads it uniformly.
+interface Point { year: number; count: number; perMillion?: number; pctBooks?: number; smoothed: number }
 interface Series {
   term: string; corpus: string; corpusLabel: string;
   ngram: string; found: boolean; tooLong: boolean;
   totalCount: number; bookCount: number; points: Point[];
 }
+type Mode = 'tokens' | 'docs';
 interface ApiResponse {
-  corpus: string; from: number; to: number; smoothing: number;
+  corpus: string; mode?: Mode; from: number; to: number; smoothing: number;
   totals: Array<{ year: number; tokens: number; books: number }>;
   series: Series[];
   error?: string;
@@ -60,6 +64,7 @@ export default function NgramViewer() {
 
   const [query, setQuery] = useState(searchParams.get('q') || DEFAULT_Q);
   const [corpus, setCorpus] = useState(searchParams.get('corpus') || 'en');
+  const [mode, setMode] = useState<Mode>(searchParams.get('mode') === 'docs' ? 'docs' : 'tokens');
   const [smoothing, setSmoothing] = useState(Number(searchParams.get('smoothing') ?? 3));
   const [from, setFrom] = useState(Number(searchParams.get('from') ?? 1450));
   // 1930 default: later years are thin and dominated by reprint/edition noise.
@@ -82,6 +87,8 @@ export default function NgramViewer() {
     const params = new URLSearchParams();
     if (committed.trim()) params.set('q', committed);
     params.set('corpus', corpus);
+    // Only non-default so existing shared links (and their CDN cache keys) stay unchanged.
+    if (mode === 'docs') params.set('mode', mode);
     params.set('smoothing', String(smoothing));
     params.set('from', String(from));
     params.set('to', String(to));
@@ -99,7 +106,7 @@ export default function NgramViewer() {
       .catch((e) => { if (e.name !== 'AbortError') setError('Lookup failed'); })
       .finally(() => setLoading(false));
     return () => ctrl.abort();
-  }, [committed, corpus, smoothing, from, to, router]);
+  }, [committed, corpus, mode, smoothing, from, to, router]);
 
   // ---- chart geometry ----
   const width = 900, height = 420;
@@ -267,6 +274,26 @@ export default function NgramViewer() {
             {[0, 1, 2, 3, 5, 10].map(s => <option key={s} value={s}>±{s}y</option>)}
           </select>
         </label>
+        <div>
+          <span className="block text-xs text-[var(--text-muted)] mb-1">Measure</span>
+          <div className="inline-flex rounded border border-[var(--border-medium)] overflow-hidden text-sm" role="group">
+            {([['tokens', 'per million tokens'], ['docs', '% of books']] as Array<[Mode, string]>).map(([m, label]) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                aria-pressed={mode === m}
+                title={m === 'docs'
+                  ? 'Share of each year’s books that mention the term at least once — robust to one wordy treatise dominating a thin year'
+                  : 'Occurrences per million tokens of the corpus that year'}
+                className={`px-2 py-1.5 transition-colors ${mode === m
+                  ? 'bg-[var(--accent-rust)] text-white'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--accent-rust)]'}`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Example queries */}
@@ -396,7 +423,7 @@ export default function NgramViewer() {
               ))}
               <text x={-44} y={plotH / 2} fontSize={11} fill="var(--text-secondary)"
                 textAnchor="middle" transform={`rotate(-90, -44, ${plotH / 2})`}>
-                per million tokens
+                {mode === 'docs' ? '% of books mentioning' : 'per million tokens'}
               </text>
             </g>
           </svg>
@@ -416,10 +443,16 @@ export default function NgramViewer() {
           >
             <div className="font-medium">{hoverInfo.series.term} · {hover!.year}</div>
             <div className="text-[var(--text-muted)] mt-0.5">
-              {hoverInfo.point.smoothed.toFixed(2)}/million (smoothed)
+              {mode === 'docs'
+                ? `${hoverInfo.point.smoothed.toFixed(1)}% of books (smoothed)`
+                : `${hoverInfo.point.smoothed.toFixed(2)}/million (smoothed)`}
             </div>
             <div className="text-[var(--text-muted)]">
-              {hoverInfo.point.count.toLocaleString()} raw hits that year
+              {mode === 'docs'
+                // "of N" only when the series rides the default corpus — hoverVolume
+                // holds the default corpus's book count, not a tagged term's.
+                ? `mentioned in ${hoverInfo.point.count.toLocaleString()}${hoverVolume && hoverInfo.series.corpus === data?.corpus ? ` of ${hoverVolume.books.toLocaleString()}` : ''} books that year`
+                : `${hoverInfo.point.count.toLocaleString()} raw hits that year`}
             </div>
             {hoverVolume && (
               <div className="text-[var(--text-faint)] mt-0.5 pt-0.5 border-t border-[var(--border-light)]">

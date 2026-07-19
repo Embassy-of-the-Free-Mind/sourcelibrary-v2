@@ -14,7 +14,7 @@ import * as mjs from '../../scripts/lib/ngram-normalize.mjs';
 import * as ts from '../../src/lib/ngram-normalize';
 import { stripEditorialWrappers as stripMjs } from '../../scripts/lib/strip-editorial-wrappers.mjs';
 import { stripEditorialWrappers as stripTs } from '../../src/lib/strip-editorial-wrappers';
-import { buildSeries, smoothSeries, MIN_YEAR_TOKENS } from '../../src/lib/ngram-series';
+import { buildSeries, buildDocSeries, smoothSeries, MIN_YEAR_TOKENS } from '../../src/lib/ngram-series';
 
 const CORPORA = ['en', 'la', 'el', 'de', 'fr'];
 
@@ -139,6 +139,18 @@ describe('series math', () => {
   it('smoothed values ride on the series points', () => {
     const series = buildSeries({ '1600': 10 }, totals, 1600, 1603, 1);
     expect(series[0].smoothed).toBeCloseTo((10 + 0) / 2);
+  });
+
+  it('doc-frequency mode: % of books, same thin-year elision as tokens mode', () => {
+    const bookTotals = new Map<number, number>([
+      [1600, 40], [1601, 10], [1602, 1], [1603, 20],
+    ]);
+    const series = buildDocSeries({ '1600': 8, '1602': 1 }, totals, bookTotals, 1600, 1603, 0);
+    // 1602 elided by the TOKEN threshold (identical x-axis to tokens mode).
+    expect(series.map(p => p.year)).toEqual([1600, 1601, 1603]);
+    expect(series[0]).toMatchObject({ year: 1600, count: 8 });
+    expect(series[0].pctBooks).toBeCloseTo(20); // 8 of 40 books
+    expect(series[1]).toMatchObject({ year: 1601, count: 0, pctBooks: 0 });
   });
 });
 

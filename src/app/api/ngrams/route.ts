@@ -7,6 +7,11 @@
  *                                      cross-language overlays (mercury vs
  *                                      mercurius:la on one chart)
  * &corpus=en                           default corpus for untagged terms
+ * &mode=tokens|docs                    tokens (default): occurrences per
+ *                                      million tokens; docs: % of that year's
+ *                                      books mentioning the term at least once
+ *                                      (#3217 — immune to one wordy treatise
+ *                                      dominating a thin year)
  * &smoothing=3                         ±years moving average, 0–10
  * &from=1450&to=1930                   year range (1930 default: later years
  *                                      are thin and skew toward reprint noise)
@@ -21,7 +26,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { NGRAM_CORPORA, normalizePhrase, MAX_NGRAM_N } from '@/lib/ngram-normalize';
-import { buildSeries, parseTermSpec, MIN_YEAR_TOKENS, type NgramPoint } from '@/lib/ngram-series';
+import {
+  buildSeries, buildDocSeries, parseTermSpec, MIN_YEAR_TOKENS,
+  type NgramPoint, type DocPoint,
+} from '@/lib/ngram-series';
 
 const MAX_TERMS = 6;
 const YEAR_FLOOR = 800;
@@ -35,13 +43,14 @@ interface SeriesOut {
   corpusLabel: string;
   /** The normalized ngram key actually looked up ('' if nothing tokenizable). */
   ngram: string;
-  /** false = not in the table (below build threshold, or truly absent). */
+  /** false = not in the table (below build threshold, or truly absent).
+   *  In docs mode, also false while books_by_year hasn't been loaded yet. */
   found: boolean;
   /** true = more words than the build counts (>3). */
   tooLong: boolean;
   totalCount: number;
   bookCount: number;
-  points: NgramPoint[];
+  points: NgramPoint[] | DocPoint[];
 }
 
 export async function GET(request: NextRequest) {
@@ -51,6 +60,7 @@ export async function GET(request: NextRequest) {
   if (!NGRAM_CORPORA.some(c => c.id === defaultCorpus)) {
     return NextResponse.json({ error: `Unknown corpus "${defaultCorpus}"` }, { status: 400 });
   }
+  const mode: 'tokens' | 'docs' = sp.get('mode') === 'docs' ? 'docs' : 'tokens';
 
   const rawTerms = (sp.get('q') || '')
     .split(',')
@@ -102,7 +112,9 @@ export async function GET(request: NextRequest) {
     )),
     Promise.all([...lookupByCorpus.entries()].map(([corpus, ngrams]) =>
       supabase.from('ngram_series')
-        .select('corpus, ngram, counts, total_count, book_count')
+        // books_by_year only in docs mode — it's the largest column and tokens
+        // mode never reads it.
+        .select(`corpus, ngram, counts, total_count, book_count${mode === 'docs' ? ', books_by_year' : ''}`)
         .eq('corpus', corpus)
         .in('ngram', ngrams),
     )),
@@ -115,15 +127,21 @@ export async function GET(request: NextRequest) {
   }
 
   const totalsByCorpus = new Map<string, Map<number, number>>();
-  const booksByYear = new Map<number, number>(); // default corpus only — drives the UI's per-year "N books"
+  // Per-corpus book counts: the docs-mode denominator (every term normalizes
+  // against its own corpus). The default corpus's map also drives the UI's
+  // per-year "N books" readout.
+  const booksByCorpus = new Map<string, Map<number, number>>();
   for (const res of totalsResList) {
     for (const r of res.data || []) {
       let m = totalsByCorpus.get(r.corpus);
       if (!m) { m = new Map(); totalsByCorpus.set(r.corpus, m); }
       m.set(Number(r.year), Number(r.tokens));
-      if (r.corpus === defaultCorpus) booksByYear.set(Number(r.year), Number(r.books));
+      let bm = booksByCorpus.get(r.corpus);
+      if (!bm) { bm = new Map(); booksByCorpus.set(r.corpus, bm); }
+      bm.set(Number(r.year), Number(r.books));
     }
   }
+  const booksByYear = booksByCorpus.get(defaultCorpus) ?? new Map<number, number>();
   if (!totalsByCorpus.get(defaultCorpus)?.size) {
     return NextResponse.json(
       { error: `Corpus "${defaultCorpus}" has no data yet` },
@@ -137,7 +155,23 @@ export async function GET(request: NextRequest) {
   const labelOf = (id: string) => NGRAM_CORPORA.find(c => c.id === id)?.label || id;
 
   const series: SeriesOut[] = terms.map(({ term, corpus, ngram, tooLong }) => {
-    const row = ngram && !tooLong ? rowByKey.get(`${corpus}${ngram}`) : undefined;
+    let row = ngram && !tooLong ? rowByKey.get(`${corpus}${ngram}`) : undefined;
+    // Docs mode needs books_by_year; a null there means this row predates the
+    // #3217 load re-run. Zeros would chart as a real "nobody mentioned it" —
+    // report not-found instead until the load has reached the row.
+    if (mode === 'docs' && row && row.books_by_year == null) row = undefined;
+    const points = mode === 'docs'
+      ? buildDocSeries(
+          (row?.books_by_year as Record<string, number>) || {},
+          totalsByCorpus.get(corpus) || new Map(),
+          booksByCorpus.get(corpus) || new Map(),
+          from, to, smoothing,
+        )
+      : buildSeries(
+          (row?.counts as Record<string, number>) || {},
+          totalsByCorpus.get(corpus) || new Map(),
+          from, to, smoothing,
+        );
     return {
       term,
       corpus,
@@ -147,11 +181,7 @@ export async function GET(request: NextRequest) {
       tooLong,
       totalCount: row ? Number(row.total_count) : 0,
       bookCount: row ? Number(row.book_count) : 0,
-      points: buildSeries(
-        (row?.counts as Record<string, number>) || {},
-        totalsByCorpus.get(corpus) || new Map(),
-        from, to, smoothing,
-      ),
+      points,
     };
   });
 
@@ -163,7 +193,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json(
     {
-      corpus: defaultCorpus, from, to, smoothing,
+      corpus: defaultCorpus, mode, from, to, smoothing,
       minYearTokens: MIN_YEAR_TOKENS, totals: totalsOut, series,
     },
     {
