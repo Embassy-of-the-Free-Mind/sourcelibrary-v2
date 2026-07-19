@@ -6,5 +6,13 @@
   "language": "Latin",
   "source": "Clementine Vulgate (drbo.org)",
   "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
-  "ocr_ground_truth": "In principio creavit Deus caelum et terram. Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi : et spiritus Dei ferebatur super aquas. Dixitque Deus : Fiat lux. Et facta est lux. Et vidit Deus lucem quod esset bona : et divisit lucem a tenebris. Appellavitque lucem Diem, et tenebras Noctem : factumque est vespere et mane, dies unus."
+  "ocr_ground_truth": "In principio creavit Deus caelum et terram. Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi : et spiritus Dei ferebatur super aquas. Dixitque Deus : Fiat lux. Et facta est lux. Et vidit Deus lucem quod esset bona : et divisit lucem a tenebris. Appellavitque lucem Diem, et tenebras Noctem : factumque est vespere et mane, dies unus.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_column_with_woodcut",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
 }
