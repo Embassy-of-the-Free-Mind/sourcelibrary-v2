@@ -209,6 +209,7 @@ Rule: **any page that defines `openGraph` must set `images` explicitly and mirro
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-07-09: ~99.7K total docs, ~32K `visible: true` (publicly shown), ~74.7K with `pages_count > 0` (actually processed), ~48.3K with any OCR. Re-measure before quoting — the previous figures here were 2026-05-26 vintage and had drifted by up to 5× (`pages_count > 0` read ~15K against a true 74.7K). The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
+- **supabase-js silently caps every response at 1,000 rows** — no error, no warning, just a truncated array (truncation order follows the query plan, so it can look systematic, e.g. alphabetical). Any `.select()` that can exceed 1K rows needs `.range()` pagination or must be split into per-key queries. This zeroed whole corpora on `/api/ngrams` while reporting `found=true` (PR #3208) — the bug shape is "some keys work, others silently empty."
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
