@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'ngram-viewer',
+    title: 'Chart a Word, Then Read the Page',
+    subtitle:
+      'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science — with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
+    date: '19 July 2026',
+    readTime: '7 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg',
+    imageAlt: "Concentric rings of Latin, Greek, and Hebrew words — Heinrich Khunrath's 'The Four, the Three, the Two, and the One,' 1595.",
+  },
+  {
     slug: 'sound-laboratory',
     title: 'The Sound Laboratory',
     subtitle:
