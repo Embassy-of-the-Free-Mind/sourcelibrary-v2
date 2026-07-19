@@ -36,6 +36,7 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
   const abcjsRef = useRef<typeof import('abcjs') | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const endTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const highlightTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const current = transcriptions[active];
 
@@ -51,6 +52,8 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
         abcjs.renderAbc(paperRef.current, current.abc, {
           responsive: 'resize',
           add_classes: true,
+          // Sing-along: lyrics big enough to read at arm's length
+          format: { vocalfont: 'Georgia 16', gchordfont: 'Georgia 14' },
         });
       } catch {
         if (!cancelled) setError('Notation could not be rendered.');
@@ -72,9 +75,18 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
 
   if (!transcriptions.length) return null;
 
+  const clearHighlights = () => {
+    for (const t of highlightTimersRef.current) clearTimeout(t);
+    highlightTimersRef.current = [];
+    if (paperRef.current) {
+      for (const el of paperRef.current.querySelectorAll('.hymn-now')) el.classList.remove('hymn-now');
+    }
+  };
+
   const stop = () => {
     if (endTimerRef.current) clearTimeout(endTimerRef.current);
     endTimerRef.current = null;
+    clearHighlights();
     audioCtxRef.current?.close().catch(() => {});
     audioCtxRef.current = null;
     setPlaying(false);
@@ -109,7 +121,9 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
       const ctx = new Ctor();
       await ctx.resume();
       const wholeNoteSec = (4 * 60) / (seq.tempo || 92);
-      const t0 = ctx.currentTime + 0.1;
+      // Longer lead-in when the panel has to open first, so the notation is
+      // on screen before the first note sounds (and gets its highlight).
+      const t0 = ctx.currentTime + (open ? 0.15 : 0.5);
       const master = ctx.createGain();
       master.gain.value = 0.5;
       master.connect(ctx.destination);
@@ -136,10 +150,30 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
       }
       audioCtxRef.current = ctx;
       setPlaying(true);
+      // Sing-along follow: the notation panel opens automatically, and each
+      // note + its lyric syllable lights up on the same clock the oscillators
+      // were scheduled on. Index-matching works because these tunes are
+      // monophonic: the k-th audio note is the k-th rendered .abcjs-note.
+      if (!open) setOpen(true);
+      const lead = (ctx.currentTime < t0 ? t0 - ctx.currentTime : 0) * 1000;
+      notes.forEach((n, k) => {
+        const at = lead + n.start * wholeNoteSec * 1000;
+        highlightTimersRef.current.push(setTimeout(() => {
+          const paper = paperRef.current;
+          if (!paper) return;
+          for (const el of paper.querySelectorAll('.hymn-now')) el.classList.remove('hymn-now');
+          const noteEl = paper.querySelectorAll('.abcjs-note')[k];
+          const lyricEl = paper.querySelectorAll('.abcjs-lyric')[k];
+          noteEl?.classList.add('hymn-now');
+          lyricEl?.classList.add('hymn-now');
+          (noteEl as Element | undefined)?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+        }, at));
+      });
       endTimerRef.current = setTimeout(() => {
         if (audioCtxRef.current === ctx) {
           audioCtxRef.current = null;
           ctx.close().catch(() => {});
+          clearHighlights();
           setPlaying(false);
         }
       }, (endsAt - ctx.currentTime) * 1000 + 300);
