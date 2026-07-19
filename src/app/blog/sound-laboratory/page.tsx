@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import HammerStringDemo from '@/components/blog/lab/HammerStringDemo';
 import CommaSpiralDemo from '@/components/blog/lab/CommaSpiralDemo';
+import SchismaSliverDemo from '@/components/blog/lab/SchismaSliverDemo';
 import ShrutiTestDemo from '@/components/blog/lab/ShrutiTestDemo';
 import SalmonTrialDemo from '@/components/blog/lab/SalmonTrialDemo';
 import TartiniDemo from '@/components/blog/lab/TartiniDemo';
@@ -104,6 +105,15 @@ export default function SoundLaboratoryPage() {
           the prince fix it.
         </p>
         <CommaSpiralDemo />
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          And Descartes did more than draw the circle — he drew the <em>leftover</em>. On another
+          folio of the same little book, the octave is cut as a pie whose division doesn&apos;t come
+          out even: a sliver marked <em>Schisma</em> is wedged in to absorb the remainder, between
+          two string-numbers, 486 and 480, that are both trying to be the note D. Below, his
+          engraving is awake: drag the sliver shut and you perform, with one finger, the repair
+          that took tuning theory two thousand years.
+        </p>
+        <SchismaSliverDemo />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">III. The two vīṇās</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
