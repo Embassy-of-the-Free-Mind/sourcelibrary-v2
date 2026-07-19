@@ -73,8 +73,24 @@ const IMAGE_ONLY_MAX = parseInt(args['image-only-max'] || '15');
 const ELIGIBLE_MIN = parseInt(args['eligible-min'] || '40');
 const SITE = 'https://sourcelibrary.org';
 
+// HTML entities are not text. A prior revision on Kircher's Arithmologia p9 was
+// 24,692 chars of `&nbsp;` padding around 73 real words — and because `nbsp` is a
+// letter run, it counted as 4,025 body words and shot to the top of the
+// regression queue as "text that was lost".
+const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
+
+// Degenerate output: the model looped. A Tibetan page carried 8,104 words with 40
+// unique (ratio 0.005, `तथा तथा तथा…`). Low type/token ratio on a long text means
+// the side is garbage regardless of which side it is.
+const repetitionRatio = s => {
+  const w = deEntity(stripWrappers(s || '')).replace(/[^\p{L}\s]/gu, ' ').split(/\s+/).filter(x => x.length > 1);
+  if (w.length < 120) return null;   // short pages legitimately repeat
+  return new Set(w).size / w.length;
+};
+const DEGENERATE = 0.15;
+
 // ── metric (parity with revision-agreement-pilot.mjs) ─────────────
-const toWords = s => stripWrappers(s || '')
+const toWords = s => deEntity(stripWrappers(s || ''))
   .toLowerCase()
   .replace(/[^\p{L}\s]/gu, ' ')
   .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
@@ -94,7 +110,7 @@ export function agreement(a, b) {
 // agreement reads 48.9% (Chinese 36.7% → 72.7%). On spaced scripts the two
 // differ by ~4.5pt. `agreement` stays the pilot-parity primary; this is the
 // honest number for CJK/Tibetan and is reported alongside everywhere.
-const toChars = s => [...stripWrappers(s || '').toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
+const toChars = s => [...deEntity(stripWrappers(s || '')).toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
 export function agreementChar(a, b) {
   const A = toChars(a), B = toChars(b);
   if (!A.length && !B.length) return null;
@@ -124,7 +140,7 @@ const bodyWords = s => {
   for (const w of `image-desc|${INLINE_MARKS}`.split('|')) {
     t = t.replace(new RegExp(`<${w}[^>]*>[\\s\\S]*?</${w}>`, 'gi'), '');
   }
-  return stripWrappers(t).replace(/^#{1,6}\s.*$/gm, '')
+  return deEntity(stripWrappers(t)).replace(/^#{1,6}\s.*$/gm, '')
     .replace(/[^\p{L}\s]/gu, ' ').split(/\s+/).filter(w => w.length > 1).length;
 };
 
@@ -236,7 +252,7 @@ async function main() {
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
   const flow = {}, margFate = {}, directionCount = {};
-  let nearZero = 0;
+  let nearZero = 0, degenerate = 0;
   const margStat = new Stat();   // agreement on marginal text alone
   const t0 = Date.now();
 
@@ -314,6 +330,9 @@ async function main() {
           ? (cls === 'spaceless' ? agreementChar : agreement)(mp.join(' '), mc.join(' '))
           : null;
         const a0 = +((cls === 'spaceless' && agrChar != null) ? agrChar : agr).toFixed(4);
+        const repPrior = repetitionRatio(prior.data), repCurrent = repetitionRatio(current.data);
+        const degPrior = repPrior != null && repPrior < DEGENERATE;
+        const degCurrent = repCurrent != null && repCurrent < DEGENERATE;
         const ep = envelope(prior.data), ec = envelope(current.data);
         const row = {
           page_id: entry.page_id,
@@ -362,6 +381,10 @@ async function main() {
           current_refusal: REFUSAL_RE.test(current.data.slice(0, 400)),
           // commentary-as-transcription on either side (checked over more text
           // than the refusal head — reasoning often starts mid-page)
+          prior_repetition: repPrior == null ? null : +repPrior.toFixed(3),
+          current_repetition: repCurrent == null ? null : +repCurrent.toFixed(3),
+          prior_degenerate: degPrior,
+          current_degenerate: degCurrent,
           prior_meta: META_RE.test(prior.data.slice(0, 1200)) || REFUSAL_RE.test(prior.data.slice(0, 400)),
           current_meta: META_RE.test(current.data.slice(0, 1200)) || REFUSAL_RE.test(current.data.slice(0, 400)),
           // two substantial texts sharing almost no words cannot both be reads of
@@ -380,8 +403,10 @@ async function main() {
         };
         row.near_zero_overlap = a0 < 0.05 && row.body_words_prior >= 40 && row.body_words_current >= 40;
         // Direction: prior is commentary, current is clean -> the re-OCR FIXED it.
-        row.direction = row.prior_meta && !row.current_meta ? 'repair'
-          : !row.prior_meta && row.current_meta ? 'degraded-to-commentary'
+        const priorBad = row.prior_meta || degPrior, currentBad = row.current_meta || degCurrent;
+        row.direction = priorBad && !currentBad ? 'repair'
+          : !priorBad && currentBad ? 'degraded'
+          : priorBad && currentBad ? 'both-broken'
           : 'both-transcription';
         out.write(JSON.stringify(row) + '\n');
         pairs++;
@@ -404,6 +429,7 @@ async function main() {
         bump('soft_hidden', String(row.soft_hidden), a);
         bump('marginalia_fate', row.marginalia_fate, a);
         bump('direction', row.direction, a);
+        if (row.prior_degenerate || row.current_degenerate) degenerate++;
         if (row.near_zero_overlap) nearZero++;
         directionCount[row.direction] = (directionCount[row.direction] || 0) + 1;
         if (row.marginalia_agreement != null) margStat.add(row.marginalia_agreement);
@@ -482,6 +508,7 @@ async function main() {
       refusal_pairs: refusals,
       direction: directionCount,
       near_zero_overlap_pairs: nearZero,
+      degenerate_pairs: degenerate,
       marginalia_fate: margFate,
       marginalia_mean_agreement: margStat.n ? +margStat.mean.toFixed(4) : null,
       marginalia_pairs_scored: margStat.n,
@@ -561,6 +588,13 @@ async function main() {
     'out loud (`-> wait, "croire a ma lague:" is on the same line as…`, `I\'ll provide the',
     'transcription now`). When the prior side is commentary and the current side is clean,',
     'the re-run REPAIRED the page.', '',
+    'A second, larger prior-side failure is DEGENERATION: the model loops. One Tibetan',
+    'page carried 8,104 words with 40 unique (`तथा तथा तथा…`); a Kircher page carried',
+    '24,692 characters of `&nbsp;` padding around 73 real words. Both scored as huge',
+    'text losses when the re-run replaced them with a correct short read — they ranked',
+    '1st and 5th in an earlier build of the audit queue. Detected by type/token ratio',
+    `below ${DEGENERATE} on texts over 120 words, and treated as prior-side damage.`, '',
+    `- pairs with a degenerate (looping) side: **${degenerate.toLocaleString()}** (${(degenerate / overall.n * 100).toFixed(2)}%)`,
     ...Object.entries(directionCount).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
       `- \`${k}\`: **${v.toLocaleString()}** (${(v / overall.n * 100).toFixed(1)}%)`),
     '',
