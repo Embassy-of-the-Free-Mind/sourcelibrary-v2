@@ -638,11 +638,21 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         setBookTotal(data.total || 0);
         clickCtx.current = { query: q, ranking: (data as any).ranking || null, results: data.results || [], view: 'books', total: data.total || 0 };
       } else if (mode === 'index') {
-        const data = await searchApi.index(q, { type: indexType || undefined });
+        const data = await searchApi.index(q, {
+          type: indexType || undefined,
+          dateFrom: dateFrom || undefined,
+          dateTo: dateTo || undefined,
+        });
         setIndexResults(data.results || []);
         setIndexTotal(data.total || 0);
       } else if (mode === 'images') {
-        const data = await galleryApi.list({ query: q, limit: resultsPerPage, offset: pageOffset });
+        const data = await galleryApi.list({
+          query: q,
+          limit: resultsPerPage,
+          offset: pageOffset,
+          yearFrom: dateFrom ? parseInt(dateFrom, 10) || undefined : undefined,
+          yearTo: dateTo ? parseInt(dateTo, 10) || undefined : undefined,
+        });
         const items = data.items || [];
         // Merge any AI-supplemented images that arrived before gallery API responded
         const pending = pendingAiImages.current;
