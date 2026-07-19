@@ -285,8 +285,16 @@ async function main() {
         const prior = chain[i], current = chain[i + 1];
         const agr = agreement(prior.data, current.data);
         if (agr == null) { skipped++; continue; }
-        const agrChar = agreementChar(prior.data, current.data);
         const cls = scriptClass(current.data) === 'unknown' ? scriptClass(prior.data) : scriptClass(current.data);
+        // The char metric is a 3000x3000 Levenshtein (~9M cells) against the word
+        // metric's ~310x310 — 14x the cost, and it measured at 11 pairs/s vs 100
+        // when run on everything. It is REQUIRED on space-less scripts (where it
+        // is the primary) and merely informational on spaced ones, so spaced pairs
+        // get it on a deterministic 1-in-20 subsample: enough to keep the
+        // word-vs-char comparison alive, cheap enough to finish.
+        const charSample = cls === 'spaceless' ||
+          ([...entry.page_id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % 20 === 0);
+        const agrChar = charSample ? agreementChar(prior.data, current.data) : null;
         const bodyPrior = bodyWords(prior.data), bodyCurrent = bodyWords(current.data);
         const mp = marginalia(prior.data), mc = marginalia(current.data);
         const margAgr = (mp.length || mc.length)
