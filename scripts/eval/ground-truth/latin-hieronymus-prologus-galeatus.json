@@ -1,0 +1,23 @@
+{
+  "work": "Hieronymus, Prologus Galeatus, 1566 Louvain Vulgate",
+  "book_id": "6a26b84361b3857ed05a5221",
+  "page_number": 15,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Latin Wikisource, Vulgata Clementina — Prologus Galeatus",
+  "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Prologus_Galeatus,_sive_in_libros_Regum_praefatio",
+  "edition": "Louvain Vulgate (Hentenius), 1566",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "Viginti et duas litteras esse apud Hebræos, Syrorum quoque lingua et Chaldæorum testatur, quæ Hebræa magna ex parte confinis est. Nam et ipsi vigintiduo elementa habent eodem sono, sed diversis characteribus. Samaritani etiam Pentateuchum Moysi totidem litteris scriptitant, figuris tantum et apicibus discrepantes. Certumque est Esdram scribam, legisque doctorem, post captam Jerosolymam et instaurationem templi sub Zorobabel, alias litteras reperisse quibus nunc utimur, cum ad illud usque tempus iidem Samaritanorum et Hebræorum characteres fuerint. In libro quoque Numerorum hæc eadem supputatio, sub Levitarum, ac sacerdotum censu, mystice ostenditur. Et nomen Domini tetragrammaton, in quibusdam Græcis voluminibus, usque hodie antiquis expressum litteris invenimus. Sed et psalmi, trigesimus sextus, et centesimus decimus, et centesimus undecimus, et centesimus decimus octavus, et centesimus quadragesimus quartus, quanquam diverso scribantur metro, tamen ejusdem numeri texuntur alphabeto. Et Jeremiæ lamentationes, et oratio ejus : Salomonis quoque in fine proverbia, ab eo loco in quo ait : Mulierem fortem quis inveniet ? iisdem alphabetis vel incisionibus supputantur.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_column_mixed_script",
+    "density": "dense",
+    "type_size": "small",
+    "layout_note": "italic Latin with embedded Hebrew words",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "work": "Hero of Alexandria, Pneumatica I.7-8 (Teubner p.60)",
+  "book_id": "695aa97dbe4023bd34bd6715",
+  "page_number": 134,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+  "edition": "Schmidt, Teubner 1899, vol. 1",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ἄκρον τοῦ Γ σωλῆνος τὸ πρὸς τῷ Γ, οὐδὲν διοίσει· εὔχρηστον γὰρ μᾶλλον γίνεται πρὸς τὸ εὐκόπως τῷ δακτύλῳ καταλαμβάνεσθαι τὸ στόμιον. VIII. Τῷ δὲ αὐτῷ τρόπῳ ἐκ τοῦ αὐτοῦ σφαιρίου καὶ ψυχρὸν καὶ θερμὸν προέσθαι δυνατόν ἐστιν, ὅσον προαιρούμεθα. Κατασκευάζεται γὰρ ὁμοίως σφαιρίον τὸ ΑΒ διάφραγμα ἔχον μέσον ὀρθὸν τὸ Γ καὶ ἄνωθεν ὁμοίως σωλῆνα τὸν ΕΖ συντετρημένον καὶ συνεστεγνωμένον τῷ σφαιρίῳ καὶ ἔχοντα μέσον διάφραγμα τὸ ΓΗ συνεχὲς τῷ Γ διαφράγματι· ἄνωθεν δὲ ἀνακαμπὰς ἐχέτω τὰς Θ, Κ φερούσας εἰς ἑκάτερον μέρος τῶν ἐν τῷ ΕΖ χωρῶν. ἐφʼ ἑκάτερα δὲ τοῦ Γ διαφράγματος εἰλήφθω εἰς τὸ κάτω μέρος τοῦ σφαιρίου τοῦ ΑΒ πρὸς τῷ τρυπήματα ὅμοια τῶν ἐν τοῖς τρουλλίοις τοῖς μαγειρικοῖς γινομένων, ἠθμοειδῆ. ὅταν οὖν βουλώμεθα θερμὸν ἀρύσασθαι, καταλαβόμενοι τοῖς δυσὶ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "light",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

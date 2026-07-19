@@ -35,6 +35,10 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 }));
 const WRITE = !!args.write;
 const VERBOSE = !!args.verbose;
+// --only=<regex on slug> restricts to matching works, so --write can add new
+// rows without regenerating (and clobbering the hand-added page_class /
+// audit_note annotations of) already-pinned ground-truth files.
+const ONLY = args.only ? new RegExp(args.only, 'i') : null;
 const LANG = args.language;
 if (!LANG) {
   const avail = fs.readdirSync(path.join(__dirname, 'reference-works')).filter(f => f.endsWith('.json'));
@@ -65,24 +69,35 @@ if (WRITE) fs.mkdirSync(gtDir, { recursive: true });
 
 let written = 0, skipped = 0;
 for (const w of cfg.works) {
-  const { work, slug, title_rx, source, source_url, reference, edition } = w;
-  const books = await B.find(
-    {
-      language: { $in: db_languages },
-      $or: [{ title: { $regex: title_rx, $options: 'i' } }, { display_title: { $regex: title_rx, $options: 'i' } }],
-    },
-    { projection: { id: 1, _id: 1, title: 1, display_title: 1 }, sort: { pages_count: -1 } },
-  ).limit(15).toArray();
+  const { work, slug, title_rx, source, source_url, reference, edition, non_canonical, memorization_risk } = w;
+  if (!slug || (ONLY && !ONLY.test(slug))) continue;
+  // A works entry may pin book_id (and optionally page_number) directly — used
+  // when the copy matters (same-book canonical/non-canonical contrasts, or a
+  // specific edition among several copies) or when the opening-words probe is
+  // too brittle (OCR errors in the exact probe words hide a page the alignment
+  // guard would accept). The guard still decides; pinning only scopes the search.
+  const books = w.book_id
+    ? await B.find({ $or: [{ id: w.book_id }, { _id: w.book_id }] },
+        { projection: { id: 1, _id: 1, title: 1, display_title: 1 } }).toArray()
+    : await B.find(
+        {
+          language: { $in: db_languages },
+          $or: [{ title: { $regex: title_rx, $options: 'i' } }, { display_title: { $regex: title_rx, $options: 'i' } }],
+        },
+        { projection: { id: 1, _id: 1, title: 1, display_title: 1 }, sort: { pages_count: -1 } },
+      ).limit(15).toArray();
 
   if (VERBOSE) console.log(`\n${work}: ${books.length} candidate books`);
   const probe = probeOf(reference);
   let best = null;
   for (const bk of books) {
     const bookId = bk.id || bk._id.toString();
-    const cursor = P.find({ book_id: bookId, 'ocr.data': { $exists: true } },
+    const pageQuery = { book_id: bookId, 'ocr.data': { $exists: true } };
+    if (w.book_id && w.page_number) pageQuery.page_number = w.page_number;
+    const cursor = P.find(pageQuery,
       { projection: { page_number: 1, 'ocr.data': 1 }, sort: { page_number: 1 } });
     for await (const pg of cursor) {
-      if (!pageNorm(pg.ocr?.data || '').includes(probe)) continue;
+      if (!pageQuery.page_number && !pageNorm(pg.ocr?.data || '').includes(probe)) continue;
       const r = scoreAgainstReference(reference, pg.ocr.data, script);
       const guardVal = r.guard.value;
       if (VERBOSE) console.log(`  probe hit: ${bookId} p${pg.page_number} guard=${(guardVal * 100).toFixed(0)}% cer=${(r.cer * 100).toFixed(1)}% [${(bk.display_title || bk.title).slice(0, 40)}]`);
@@ -101,6 +116,7 @@ for (const w of cfg.works) {
   const gt = {
     work, book_id: best.bookId, page_number: best.page, script,
     language: cfg.language, source, source_url, edition,
+    ...(non_canonical ? { non_canonical, memorization_risk } : {}),
     ocr_ground_truth: reference,
   };
   console.log(`WRITE ${work}: ${best.bookId} p${best.page}  guard=${(best.guardVal * 100).toFixed(0)}%  CER=${(best.cer * 100).toFixed(1)}%  [${best.title.slice(0, 40)}]`);

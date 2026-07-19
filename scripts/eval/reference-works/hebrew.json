@@ -1,7 +1,9 @@
 {
   "language": "Hebrew",
   "script": "hebrew",
-  "db_languages": ["Hebrew"],
+  "db_languages": [
+    "Hebrew"
+  ],
   "works": [
     {
       "work": "Genesis 1:1-5 (Bereshit)",
@@ -21,6 +23,35 @@
     },
     {
       "_removed": "Mishnah Berakhot 1:1 REMOVED 2026-07-19 — the only aligning page was a 1450 cursive commentary manuscript whose stored OCR contains ONLY the letter-perfect canonical Mishnah and none of the ~35 visible commentary lines: the model recited the passage from memory rather than reading the page (verified against the scan). Berakhot 1:1 is among the most-memorized texts in existence; re-add only with a page that verifiably PRINTS it, checked against the image."
+    },
+    {
+      "work": "Sha'arei Orah (Gikatilla), Gate 2 — Yovel/El Chai discourse",
+      "slug": "shaarei-orah-gate2-yovel",
+      "title_rx": "Sha.?arei orah|Gates of Light",
+      "source": "Sefaria, Sha'arei Orah, Second Gate, Ninth Sefirah 71-74",
+      "source_url": "https://www.sefaria.org/Sha'arei_Orah%2C_Second_Gate%2C_Ninth_Sefirah.71-74",
+      "edition": "1715 printing",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): kabbalistic doctrinal prose — on Sefaria but nothing like biblical/liturgical memorization density. Printed page-num רה (205), header שער ב. Guard-verified 2026-07-19 at 0.145, pipeline char accuracy 95.1% over 1,153 normalized chars.",
+      "reference": "וביאור העיקר הזה: דע, כי מידת היוב\"ל למעלה היא שביעית, היא עליונה, והיא סוד הגאולה השלמה והחירות; ומן היובל, שהיא סוד הגאולה השלמה, מקבלת מידת אל ח\"י שפע הגאולה ומביא גאולה לעולם, כמו שמקבל מן היובל כוח החיים ונקרא על זה אל ח\"י. ודע כי בכוח ספירת היובל, שנמשכת באל חי, נגאלו ישראל ויצאו ממצרים, שנאמר: וחמושים עלו בני ישראל מארץ מצרים (שמות יג, יח); אל תקרי וחמושים אלא וחמישים. וכן הוא אומר: יובל היא שנת החמישים שנה, וכתיב: גאולה תהיה לו וביובל יצא, וכתיב: ובכל ארץ אחוזתכם גאולה תתנו לארץ (ויקרא כה, כד). והכלל הגדול הוא שכתוב: בשנת היובל הזאת תשובו איש אל אחוזתו (שם, יג) ודע כי מן היובל מושך אל חי הגאולה וגואל את הצדיקים, בשעה שהוא סומך לאדנ\"י. נמצא היובל, שביעית עליונה, והשבת שהוא סוד אל חי, שביעית תחתונה. ואנו סופרים ליובל שבע שבתות שנים, ולשבת ששת ימים וביום השביעי שבת. ואם תאמר: היובל היא תחילת השמינית כאמרו 'שנת החמישים'? דע כי בעזרת השם בעניין זה נרמוז לך עיקרים גדולים, בהגיענו לביאור שם יהו\"ה יתברך, שהוא סוד היובל וסוד בינה, ושם אתן את דודי לך: ועתה דע והאמן כי השבת היא מעיין כל הטובה ומקור כל האצילות לשם אדנ\"י ולישראל הדבקים במידה הזאת. ומן השבת אדם נכנס לחיי העולם הבא, שהוא סוד היובל, כמו שהודענוך. והעולם הבא נקראת שבת הגדול שהיא שביעית עליונה, ואל ח\"י הוא סוד השבת שהיא שביעית של מטה; ומן העולם הבא מושכת השבת כל האצילות והטוב הגדול והחיים והגאולה. ואם כן פקח עיניך וראה היאך תשמור השבת, אם אתה חפץ לזכות לחיים ולגאולה ולהיכנס לחיי העולם הבא. והנה השבת שלנו בדמיון בית שער להיכנס לטרקלין הגדולים לחיי העולם הבא הנקרא שבת הגדול, והתקן עצמך בפרוזדור כדי שתיכנס לטרקלין.",
+      "book_id": "699ef9f2c2bcb75dbdbaad92",
+      "page_number": 60
+    },
+    {
+      "work": "Sefer HaYirah (Rabbenu Yonah) — blessings before enjoyment",
+      "slug": "sefer-hayirah-blessings",
+      "title_rx": "Sefer ha-Yir",
+      "source": "Sefaria, Sefer HaYirah 119-123",
+      "source_url": "https://www.sefaria.org/Sefer_HaYirah.119-123",
+      "edition": "Amsterdam 1627 (pointed print)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): everyday musar/halakha prose, non-liturgical. Short (~324 normalized chars) — the longest window passing the guard on this edition, whose text diverges from Sefaria's base elsewhere. Guard-verified 2026-07-19 at 0.169, pipeline char accuracy 96.3%.",
+      "reference": "ויגביהם בנטילה שלא יחזרו מים הראשונים ויטמאו את הידים. וינגבם היטב ויברך על הלחם המוציא. ויתן ריוח בין תיבה לתיבה. וכל מה שיהנה בו מן העולם הזה בין בפירות בין בריח בין באכילה בין בכל דבר שיהנה אסור להנות בלא ברכה. ויברך בכל דבר לפניו ולאחריו הברכה האמורה בה על פי רבותינו ע\"ה. ואם אינו בקי ילך אצל בקי ללמוד ואל ישים עצמו כבהמה. ואם לא מצא בקי ילך ויניח הנאתו. ולא יהנה מן הדבר עד שידע לברך עליו את בוראו כדת ומשפט.",
+      "_rejected_sibling": "Zohar Saba de-Mishpatim (Cremona 1558 p200) aligned at guard 0.295 vs Sefaria, but Sefaria transcribes the Mantua/Vilna recension and Cremona is a known divergent recension — its 86.5% 'accuracy' conflates recension variance with OCR error. Not pinned.",
+      "book_id": "69b52593cced70d8e6d72941",
+      "page_number": 20
     }
   ]
 }

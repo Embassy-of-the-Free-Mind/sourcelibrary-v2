@@ -1,7 +1,11 @@
 {
   "language": "Greek",
   "script": "greek",
-  "db_languages": ["Greek", "Ancient Greek", "Greek, Ancient"],
+  "db_languages": [
+    "Greek",
+    "Ancient Greek",
+    "Greek, Ancient"
+  ],
   "_note": "Our Greek holdings are largely MANUSCRIPTS (minuscule hands, abbreviations) — guard rejections here are expected and informative, not failures of the system.",
   "works": [
     {
@@ -11,6 +15,63 @@
       "source": "Wikisource (el)",
       "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
       "reference": "Μῆνιν ἄειδε, θεά, Πηληϊάδεω Ἀχιλῆος οὐλομένην, ἣ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκε, πολλὰς δ' ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν οἰωνοῖσί τε πᾶσι· Διὸς δ' ἐτελείετο βουλή, ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς."
+    },
+    {
+      "work": "Hero of Alexandria, Pneumatica I.7-8 (Teubner p.60)",
+      "slug": "hero-pneumatica-60",
+      "title_rx": "heronis|pneumatic|spiritali",
+      "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+      "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+      "edition": "Schmidt, Teubner 1899, vol. 1",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): mid-chapter technical prose (the hot-and-cold dispenser sphere) full of geometric letter labels. First1K pb markers map printed p.60 → scan page 134 (Greek on even pages only, facing German). First1K is public on GitHub so training exposure is nonzero, but orders of magnitude below Iliad I. Guard-verified 2026-07-19 at 0.000, pipeline char accuracy 100%.",
+      "reference": "ἄκρον τοῦ Γ σωλῆνος τὸ πρὸς τῷ Γ, οὐδὲν διοίσει· εὔχρηστον γὰρ μᾶλλον γίνεται πρὸς τὸ εὐκόπως τῷ δακτύλῳ καταλαμβάνεσθαι τὸ στόμιον. VIII. Τῷ δὲ αὐτῷ τρόπῳ ἐκ τοῦ αὐτοῦ σφαιρίου καὶ ψυχρὸν καὶ θερμὸν προέσθαι δυνατόν ἐστιν, ὅσον προαιρούμεθα. Κατασκευάζεται γὰρ ὁμοίως σφαιρίον τὸ ΑΒ διάφραγμα ἔχον μέσον ὀρθὸν τὸ Γ καὶ ἄνωθεν ὁμοίως σωλῆνα τὸν ΕΖ συντετρημένον καὶ συνεστεγνωμένον τῷ σφαιρίῳ καὶ ἔχοντα μέσον διάφραγμα τὸ ΓΗ συνεχὲς τῷ Γ διαφράγματι· ἄνωθεν δὲ ἀνακαμπὰς ἐχέτω τὰς Θ, Κ φερούσας εἰς ἑκάτερον μέρος τῶν ἐν τῷ ΕΖ χωρῶν. ἐφʼ ἑκάτερα δὲ τοῦ Γ διαφράγματος εἰλήφθω εἰς τὸ κάτω μέρος τοῦ σφαιρίου τοῦ ΑΒ πρὸς τῷ τρυπήματα ὅμοια τῶν ἐν τοῖς τρουλλίοις τοῖς μαγειρικοῖς γινομένων, ἠθμοειδῆ. ὅταν οὖν βουλώμεθα θερμὸν ἀρύσασθαι, καταλαβόμενοι τοῖς δυσὶ",
+      "_source_note": "Schmidt's Γ∠ siglum appears as bare Γ after entity-cleanup; non-Greek chars are stripped by the normalizer anyway.",
+      "book_id": "695aa97dbe4023bd34bd6715",
+      "page_number": 134
+    },
+    {
+      "work": "Simplicius, In Phys. comm. (CAG IX p.150)",
+      "slug": "simplicius-in-phys-150",
+      "title_rx": "simplici|physicorum",
+      "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+      "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+      "edition": "Diels, CAG 9, 1882",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): deep mid-volume passage (rarefaction/condensation in the monists) of an 800-page late-antique commentary. The two stray Πλάτων' apostrophes are First1K transcription artifacts, folded at compare time. Guard-verified 2026-07-19 at 0.006, pipeline char accuracy 100%.",
+      "reference": "μάνωσιν εἴρηκε καὶ πύκνωσιν. δῆλον δὲ ὡς καὶ οἱ ἄλλοι τῇ μανότητι καὶ πυκνότητι ἐχρῶντο. καὶ γὰρ Ἀριστοτέλης περὶ πάντων τούτων εἶπε κοίνως, ὅτι τὰ ἄλλα γεννῶσι πυκνότητι καὶ μανότητι πολλὰ ποιοῦντες τὰ ἐκ τῆς μιᾶς ὕλης. εἰ δὲ ἡ μάνωσις καὶ ἡ πύκνωσις ἐναντία, ὥσπερ ἔτι καθολικωτέρα ἐναντίωσις ἥ τε ὑπερβολὴ καὶ ἡ ἔλλειψις, ὡς καὶ ὁ Πλάτων’ τὸ μέγα καὶ μικρὸν ἔλεγε, δῆλον ὅτι οὗτοι πάντες οὐκέτι μίαν ἔλεγον τὴν ἀρχήν, ἀλλὰ τρεῖς, καὶ ἐναντιότητι ἐχρῶντο, ὃ καὶ αὐτὸς ποιήσει· πλὴν ὁ μὲν Πλάτων μέγα καὶ μικρὸν τὴν ὕλην ἔλεγεν, ἐκ μιᾶς ἀντιθέσεως πάσας αὐτῇ δυνάμει τὰς ἀντιθέσεις προσεῖναι μαρτυρῶν, οἱ δὲ ἄλλοι ἓν μὲν ἔλεγον τὸ ὑποκείμενον τὴν ὕλην, τὴν δὲ μάνωσιν καὶ πύκνωσιν ἐναντία ὄντα διαφορὰς καὶ εἴδη. ὥστε πάντες οὗτοι τρεῖς ἔλεγον τὰς ἀρχὰς τά τε ἐναντία καὶ ἄλλο τι ἕν. εἰ μὴ ἄρα ὁ Πλάτων’ οὐχ ὡς δύο ἀρχὰς μέγα καὶ μικρὸν τὴν ὕλην ἔλεγεν, ἀλλὰ συμβολικῶς, ὥσπερ καὶ δυάδα ἀόριστον καὶ ἀσυμμετρίαν, ἧς μέρη ὑπερβολὴ καὶ ἔλλειψις καὶ τὸ πολὺ καὶ ὀλίγον καὶ ἡ ἀνισότης πάντα τῇ ὕλῃ προσήκοντα. ἅπερ ἴσως διὰ τοῦ μεγάλου καὶ μικροῦ ὁ Πλάτων ἐνεδείκνυτο, ὡς τῆς ὕλης ἀσωμάτου",
+      "book_id": "695580c057e3b773024f5e03",
+      "page_number": 186
+    },
+    {
+      "work": "Philo, De opificio mundi 45-47 (Cohn p.15, first part)",
+      "slug": "philo-opificio-45",
+      "title_rx": "philo|opificio",
+      "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896; our book is Cohn's 1889 editio minor, same editor's text)",
+      "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+      "edition": "Cohn-Wendland 1896 (editio maior, vols 1-3)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): mid-passage (charioteer simile and the tetrad). Pinned to the Cohn-Wendland 1896 editio maior we hold — the very edition First1K transcribed. The reference is the first part of 1896 p.15 only: it was originally trimmed to fit an 1889 editio-minor copy whose page break splits that page (full page scored an honest straddle rejection at 0.37 there, per the one-page rule); the trimmed form aligns at 0.01 on the editio maior too. Guard-verified 2026-07-19.",
+      "reference": "πρώτην τῶν ὅλων γένεσιν, ὅτε πρὸ ἡλίου καὶ σελήνης παντοῖα μὲν φυτά, παντοίους δὲ καρποὺς ἤνεγκεν ἡ γῆ, καὶ θεασάμενοι ταῖς διανοίαις ἐλπιζέτωσαν ὅτι καὶ αὖθις οἴσει κατὰ πρόσταξιν τοῦ πατρός, ὅταν αὐτῷ δοκῇ μὴ προσδεηθέντι τῶν κατ’ οὐρανὸν ἐκγόνων, οἷς δυνάμεις μὲν ἔδωκεν, οὐ μὴν αὐτοκρατεῖς· οἷα γὰρ ἡνίοχος ἡνιῶν ἢ κυβερνήτης οἰάκων ἐνειλημμένος ἄγει ᾗ ἂν ἐθέλῃ κατὰ νόμον καὶ δίκην ἕκαστα μηδενὸς προσδεόμενος ἄλλου· πάντα γὰρ θεῷ δυνατά. ἥδ’ ἐστὶν αἰτία δι’ ἣν προτέρα μὲν ἐβλάστησε καὶ ἐχλοηφόρησεν ἡ γῆ. ὁ δ’ οὐρανὸς διεκοσμεῖτο αὖθις ἐν ἀριθμῷ τελείῳ τετράδι, ἣν δεκάδος τῆς παντελείας οὐκ ἂν διαμάρτοι τις ἀφορμὴν εἶναι λέγων καὶ",
+      "book_id": "69944b491ba83513779056b0",
+      "page_number": 139
+    },
+    {
+      "work": "Dioscorides, De materia medica I.106-107, 1549 Ruel print",
+      "slug": "dioscorides-ruel-106",
+      "title_rx": "dioscorid",
+      "source": "First1KGreek tlg0656.tlg001 (Wellmann 1907 critical text — DIFFERENT edition from our 1549 Ruel Greek-Latin print)",
+      "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0656/tlg001/tlg0656.tlg001.1st1K-grc1.xml",
+      "edition": "Ruel, 1549 (Greek-Latin)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "Non-canonical row (#3235): the one candidate on genuinely hard 16th-c ligatured Greek type. Cross-edition reference (Wellmann 1907 vs Ruel 1549), so char accuracy mixes real OCR error with edition variance — treat pipeline 94.8% as a LOWER BOUND. Guard separation is clean (0.12; next-best page 0.66). Guard-verified 2026-07-19.",
+      "reference": "ἄχρις οὗ τακηρὸς γένηται, καὶ ἐπιπλασθεὶς νύκτα ὅλην τρίχας μελαίνει προαποσμηχθείσας Κιμωλίᾳ γῇ. 3 ἁρμόζει δὲ τὰ φύλλα πάντων λεῖα κοπέντα οἰδήμασι, καὶ τὰ ἄτονα δὲ μέρη κρατύνει. αἱ δὲ Σαρδιαναὶ βάλανοι, ἄς τινες λόπιμα ἢ καστανίας ἢ μότα ἡ Διὸς βαλάνους καλοῦσι, στύρουσι καὶ αὐταί, τῶν ὁμοίων τέ εἰσι δραστικαί, καὶ μάλιστα ὁ μεταξὺ τῆς σαρκὸς καὶ τοῦ λέπους φλοιός. ἡ δὲ σὰρξ καὶ τοῖς ἐφήμερον πεπωκόσιν ἁρμόζει. 107 κηκὶς καρπός ἐστι δρυός, ἦς ἡ μέν τις ὀμφακῖτις καλουμένη μικρὰ καὶ κονδυλώδης, στιβαρά, ἀτρύπητος, ἡ δέ τις λεία καὶ κούφη καὶ",
+      "book_id": "69aff2b8c83500af1dbf681e",
+      "page_number": 155
     }
   ]
 }
