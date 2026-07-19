@@ -490,6 +490,8 @@ async function searchBooks(
     firstTranslation: searchFilters.isFirstTranslation,
     hasTranslation: searchFilters.hasTranslation,
     library,
+    yearMin: searchFilters.yearFrom,
+    yearMax: searchFilters.yearTo,
   });
 
   // Canon-weighted reranking: older editions first, original language preferred
