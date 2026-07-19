@@ -71,6 +71,9 @@ let written = 0, skipped = 0;
 for (const w of cfg.works) {
   const { work, slug, title_rx, source, source_url, reference, edition, non_canonical, memorization_risk } = w;
   if (!slug || (ONLY && !ONLY.test(slug))) continue;
+  // A blocked work is a known trap, not a TODO: the probe would "confirm" a page
+  // whose stored OCR is itself model recitation (see the works file's _note).
+  if (w.blocked) { console.log(`SKIP ${work}: blocked in works file — ${path.basename(worksFile)} _note explains why`); skipped++; continue; }
   // A works entry may pin book_id (and optionally page_number) directly — used
   // when the copy matters (same-book canonical/non-canonical contrasts, or a
   // specific edition among several copies) or when the opening-words probe is

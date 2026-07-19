@@ -258,8 +258,31 @@ export function deriveVerdictFromAttempts(
 
   // 3) Any UNconfirmable "found" hint (weak/guard-failing) makes a "first" claim
   //    unsafe — we can't demote (not trustworthy) but mustn't promote over a
-  //    possible prior either. Defer: change nothing.
-  if (attempts.some((a) => a.result === 'found')) return null;
+  //    possible prior either. Defer: change nothing — UNLESS a higher-effort
+  //    family ran a TARGETED refutation. Symmetric §17 refute-precedence: an
+  //    agent/human demote-check that went looking for the SPECIFIC cited prior
+  //    and reported it non-existent (verdict 'not_found', with recorded search
+  //    coverage) refutes the hints when it outranks every hint's family — the
+  //    Tier-2 pilot proved Stage-1 priors can be fabricated outright (a
+  //    "Letter 82: On Pleasure" the publisher's own TOC disproves). A GENERIC
+  //    absence sweep does NOT qualify: it can simply miss a real prior (the
+  //    Bacon/Davis case below keeps deferring). Refuted hints fall through to
+  //    clean-absence grading.
+  const foundHints = attempts.filter((a) => a.result === 'found');
+  if (foundHints.length > 0) {
+    const targetedRefutes = attempts.filter(
+      (a) =>
+        a.result === 'none' &&
+        a.verdict === 'not_found' &&
+        !isNotApplicable(a) &&
+        hasSearchCoverage(a),
+    );
+    const maxHintTier = Math.max(...foundHints.map(familyTier));
+    const maxRefuteTier = targetedRefutes.length
+      ? Math.max(...targetedRefutes.map(familyTier))
+      : -1;
+    if (!(maxRefuteTier >= 2 && maxRefuteTier > maxHintTier)) return null;
+  }
 
   // 4) Clean absence only. Count independent FAMILIES (not raw methods);
   //    exclude not_applicable rows (not absence votes) and rows with no recorded

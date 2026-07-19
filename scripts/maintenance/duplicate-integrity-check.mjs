@@ -27,6 +27,12 @@
  *   node scripts/maintenance/duplicate-integrity-check.mjs --json    # summary
  *                                          # as one JSON line (for crons)
  *
+ * Repair mode (the one mechanical fix this script owns):
+ *   --flatten-chains          # plan re-pointing A→B→…→terminal as A→terminal
+ *   --flatten-chains --apply  # write it (backup of prior pointers in
+ *                             # scripts/output/, cycle-guarded, skips chains
+ *                             # ending at a missing keeper)
+ *
  * Detail rows land in scripts/output/duplicate-integrity-<date>.ndjson.
  */
 import { MongoClient } from 'mongodb';
@@ -35,6 +41,8 @@ import path from 'node:path';
 
 const STRICT = process.argv.includes('--strict');
 const JSON_OUT = process.argv.includes('--json');
+const FLATTEN = process.argv.includes('--flatten-chains');
+const APPLY = process.argv.includes('--apply');
 
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
@@ -89,6 +97,59 @@ for (const h of holders) {
       hiddenKeeperPointers++;
       row({ check: 'hidden-keeper', id: h.id, keeper: keeper.id, keeperSlug: keeper.slug, keeperTitle: keeper.title });
     }
+  }
+}
+
+// ---- repair: flatten keeper→keeper chains ----------------------------------
+// A copy should point at its cluster's terminal keeper, not at another copy.
+// Follow duplicate_of hops to the terminal (a keeper with no onward pointer),
+// cycle-guarded; chains that dead-end at a missing keeper are skipped and left
+// for the orphan report above.
+let chainFlattenPlan = [];
+if (FLATTEN) {
+  const keeperOf = async (id) => {
+    if (keepers.has(id)) return keepers.get(id);
+    const d = await books.findOne({ id }, { projection: { id: 1, visible: 1, duplicate_of: 1 } });
+    if (d) keepers.set(id, d);
+    return d;
+  };
+  for (const h of holders) {
+    let cur = String(h.duplicate_of);
+    const seen = new Set([h.id, cur]);
+    let hops = 0;
+    let terminal = null;
+    while (hops < 20) {
+      const k = await keeperOf(cur);
+      if (!k) { terminal = null; break; } // dead-ends at orphan — skip
+      if (!k.duplicate_of) { terminal = k.id; break; }
+      const next = String(k.duplicate_of);
+      if (seen.has(next)) { terminal = k.id; break; } // cycle — stop at last real keeper
+      seen.add(next);
+      cur = next;
+      hops++;
+    }
+    if (terminal && terminal !== String(h.duplicate_of) && terminal !== h.id) {
+      chainFlattenPlan.push({ id: h.id, from: h.duplicate_of, to: terminal });
+    }
+  }
+  if (chainFlattenPlan.length) {
+    const planPath = path.join(outDir, `duplicate-chain-flatten-${stamp}.json`);
+    fs.writeFileSync(planPath, JSON.stringify(chainFlattenPlan, null, 1));
+    console.log(`chain-flatten plan: ${chainFlattenPlan.length} pointer(s) -> ${planPath}`);
+    for (const p of chainFlattenPlan) console.log(`  ${p.id}: ${p.from} -> ${p.to}`);
+    if (APPLY) {
+      const r = await books.bulkWrite(
+        chainFlattenPlan.map((p) => ({
+          updateOne: { filter: { id: p.id, duplicate_of: p.from }, update: { $set: { duplicate_of: p.to } } },
+        })),
+        { ordered: false },
+      );
+      console.log(`chain-flatten APPLIED: modified ${r.modifiedCount} of ${chainFlattenPlan.length} (prior pointers in the plan file)`);
+    } else {
+      console.log('chain-flatten DRY RUN — re-run with --flatten-chains --apply to write.');
+    }
+  } else {
+    console.log('chain-flatten: nothing to flatten.');
   }
 }
 

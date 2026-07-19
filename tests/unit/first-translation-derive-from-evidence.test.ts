@@ -76,6 +76,9 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
   });
 
   // A weak/url-less "found" hint blocks a confident promote (Bacon/Davis case).
+  // The tier-2 'none' here is a GENERIC absence sweep (no targeted verdict) —
+  // it may simply have missed the real Davis 1923 translation, so it must NOT
+  // override the hint.
   it('an unconfirmable found hint blocks promotion → null (defer)', () => {
     const ft = deriveVerdictFromAttempts([
       at({ method: 'gemini_verifier', result: 'found', evidence_strength: 'weak',
@@ -83,6 +86,35 @@ describe('deriveVerdictFromAttempts — hardened against the real ledger', () =>
         notes: '[legacy_llm] unverified model knowledge' }),
       at({ method: 'tier1_catalog', result: 'none', evidence_strength: 'weak' }),
       at({ method: 'tier2_agent', result: 'none', evidence_strength: 'moderate' }),
+    ], BOOK);
+    expect(ft).toBeNull();
+  });
+
+  // Symmetric §17 refute-precedence (Tier-2 pilot, Ficino De Voluptate case):
+  // a TARGETED tier-2 demote-check (verdict 'not_found') that went looking for
+  // the specific cited prior and proved it fabricated outranks lower-tier
+  // found-hints → fall through to clean-absence grading.
+  it('targeted tier-2 not_found refutes lower-tier found hints → first_no_prior', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'gemini_verifier', result: 'found', evidence_strength: 'weak',
+        priors: [{ english_title: 'The Letters of Marsilio Ficino, Vol 1 (Letter 82: On Pleasure)', pub_year: '1975' }],
+        notes: '[legacy_tv] disposition=translation_found' }),
+      at({ method: 'claude_subagent_verify', result: 'none', verdict: 'not_found',
+        queries: ['Ficino "De Voluptate" English translation'],
+        evidence_strength: 'strong',
+        notes: '[ft-verify demote-check] cited prior fabricated: Letter 82 is about the use of time' }),
+    ], BOOK);
+    expect(ft?.verdict).toBe('first_no_prior');
+    expect(isFirstByVerdict(withVerdict(ft))).toBe(true);
+  });
+
+  // A targeted refute at the SAME tier as the hint does not outrank it → defer.
+  it('targeted refute must OUTRANK the found hint family → null when equal tier', () => {
+    const ft = deriveVerdictFromAttempts([
+      at({ method: 'tier2_agent', result: 'found', evidence_strength: 'weak',
+        priors: [{ english_title: 'Maybe-real translation', pub_year: '1950' }] }),
+      at({ method: 'claude_subagent_verify', result: 'none', verdict: 'not_found',
+        queries: ['q'], evidence_strength: 'moderate' }),
     ], BOOK);
     expect(ft).toBeNull();
   });
