@@ -1,0 +1,80 @@
+{
+  "language": "German",
+  "script": "latin",
+  "db_languages": [
+    "German"
+  ],
+  "_note": "All rows non-canonical (#3235). Source: Deutsches Textarchiv page-aligned TEI — DTA's Reintext (plain-text) versions are explicitly gemeinfrei/public domain per DTA Nutzungsbedingungen (checked 2026-07-19), so reference texts ship verbatim in the public dataset; attribute 'Deutsches Textarchiv' regardless. DTA sometimes preserves original orthography (long-s ſ, combining-e umlauts uͤ) and sometimes normalizes (Kosmos: plain s in a Fraktur book) — copy their rendering verbatim; the latin fold handles it. page_class carries a 'typeface' covariate (fraktur|antiqua) — Fraktur is a known OCR difficulty factor with no reference coverage elsewhere in the set.",
+  "works": [
+    {
+      "work": "Herder, Abhandlung über den Ursprung der Sprache (1772) — faculties of mind",
+      "slug": "herder-sprache-p44",
+      "title_rx": "abhandlung.*ursprung.*sprache|herder.*ursprung",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/herder_abhandlung_1772?p=50",
+      "edition": "Berlin: Christian Friedrich Voß, 1772 (1. Auflage)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "book_id": "69ade7eeda7f32a00bedaa7c",
+      "page_number": 50,
+      "_note": "Printed p.44 = scan 50. Mid-argument prose (Witz/Scharfsinn/Phantasie/Vernunft), not the famous opening anecdote. DTA preserves 1772 orthography (ſ, uͤ/oͤ/aͤ). Guard-verified 2026-07-19 at 0.069, pipeline char accuracy 98.9%.",
+      "reference": "Kraft in die Seele hinein gedacht, die dem Menſchen als eine Zugabe vor allen Thieren zu eigen geworden, und die alſo auch, wie die vierte Stuffe einer Leiter nach den drei unterſten, allein betrachtet werden muͤſſe; und das iſt freilich, es moͤgen es ſo große Philoſophen ſagen, als da wollen, Philoſophiſcher Unſinn. Alle Kraͤfte unſrer und der Thierſeelen ſind nichts als Metaphyſiſche Abſtraktionen, Wuͤrkungen! ſie werden abgetheilt, weil ſie von unſerm ſchwachen Geiſte nicht auf einmal betrachtet werden konnten: ſie ſtehen in Kapiteln, nicht, weil ſie ſo Kapitelweiſe in der Natur wuͤrkten, ſondern ein Lehrling ſie ſich vieleicht ſo am beſten entwickelt. Daß wir gewiſſe ihrer Verrichtungen unter gewiſſe Hauptnamen gebracht haben z. E. Witz, Scharfſinn, Phantaſie, Vernunft, iſt nicht, als wenn je eine einzige Handlung des Geiſtes moͤglich waͤre, wo der Witz oder die Vernunft allein wuͤrkt: ſondern nur, weil wir in dieſer Handlung am meiſten von der Abſtraktion entdecken, die wir Witz oder Vernunft nennen, z. E. Vergleichung oder Deutlichmachung der Jdeen."
+    },
+    {
+      "work": "Humboldt, Kosmos Bd. 1 (1845) — meteor streams",
+      "slug": "humboldt-kosmos1-p150",
+      "title_rx": "kosmos.*weltbeschreibung|humboldt.*kosmos",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/humboldt_kosmos01_1845?p=150",
+      "edition": "Stuttgart u. Tübingen: J. G. Cotta, 1845 (1. Auflage)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "book_id": "698fb77b6b95eeda7d2d1eaf",
+      "page_number": 151,
+      "_note": "Fraktur print but DTA's transcription renders plain 's' (no long-s) — copied verbatim per report-don't-fix. Guard-verified 2026-07-19 at 0.000, pipeline char accuracy 100%.",
+      "reference": "Die verschiedenen Meteorströme, jeder aus Myriaden kleiner Weltkörper zusammengesetzt, schneiden wahrscheinlich unsere Erdbahn, wie es der Comet von Biela thut. Die Sternschnuppen-Asteroiden würde man sich nach dieser Ansicht als einen geschlossenen Ring bildend und in demselben einerlei Bahn befolgend vorstellen können. Die sogenannten kleinen Planeten zwischen Mars und Jupiter bieten uns, mit Ausschluß der Pallas, in ihren so engverschlungenen Bahnen ein analoges Verhältniß dar. Ob Veränderungen in den Epochen, zu welchen der Strom uns sichtbar wird, ob Verspätungen der Erscheinungen, auf die ich schon lange aufmerksam gemacht habe, ein regelmäßiges Fortrücken oder Schwanken der Knoten (der Durchschnittspunkte der Erdbahn und der Ringe) andeuten, oder ob bei ungleicher Gruppirung und bei sehr ungleichen Abständen der kleinen Körper von einander die Zone eine so beträchtliche Breite hat, daß die Erde sie erst in mehreren Tagen durchschneiden kann; darüber ist jetzt noch nicht zu entscheiden."
+    },
+    {
+      "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+      "slug": "hegel-logik-p148",
+      "title_rx": "wissenschaft der logik|hegel.*logik",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+      "edition": "Nürnberg: Schrag, 1812 (1. Auflage)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "book_id": "69afe356cf56258c93891081",
+      "page_number": 148,
+      "_note": "Edition-exact (Nürnberg/Schrag/1812 = our BSB scan). Dense dialectical prose deep in the Logic, not a quoted-everywhere passage. Guard-verified 2026-07-19 at 0.000, pipeline char accuracy 100%.",
+      "reference": "Das Leere iſt alſo in Wahrheit nicht unmittelbar, gleichguͤltig fuͤr ſich dem Eins gegenuͤber, ſondern es iſt deſſen Sich-beziehen-auf-Anderes oder deſſen Grenze. Das Eins aber iſt ſelbſt, als das abſolute Beſtimmtſeyn, die reine Grenze, die reine Negation oder Leere. Es iſt alſo, indem es ſich zum Leeren verhaͤlt, die unendliche Beziehung auf ſich. Es ſelbſt iſt aber die reine Negation, als unmittelbar ſich ſelbſt gleich, als ſeyend; die Leere aber iſt dagegen dieſelbe Negation, als Nichtſeyn."
+    },
+    {
+      "work": "Hegel, Phänomenologie des Geistes — Ethical Order (duty to the dead), 1832 Werke printing",
+      "slug": "hegel-phaenomenologie-p351",
+      "title_rx": "ph[äa]nomenologie des geistes",
+      "source": "Deutsches Textarchiv TEI of the 1807 FIRST edition — our copy is the 1832 Werke edition (cross-edition reference)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_phaenomenologie_1807?p=500",
+      "edition": "Berlin: Duncker und Humblot, 1832 (Werke, 2nd ed.); DTA reference = Bamberg/Würzburg: Goebhardt, 1807",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "book_id": "69e8b2ee2ff2a8dc09e790fc",
+      "page_number": 351,
+      "_note": "CROSS-EDITION row (like Dioscorides): reference is the 1807 text, our page is the 1832 printing — wording survived, orthography modernized, so 98.7% is a LOWER BOUND. A longer draft failed the guard at 48% because the editions break the paragraph at different page boundaries — trimmed to the sentence verifiably on one page. DTA labels the 1807 ed. Antiqua; our 1832 page is visually FRAKTUR — a DTA Schriftart label describes DTA's edition only. Guard-verified 2026-07-19 at 0.037.",
+      "reference": "Diese letzte Pflicht macht also das vollkommene göttliche Gesetz, oder die positive sittliche Handlung gegen den Einzelnen aus. Alles andre Verhältniß gegen ihn, das nicht in der Liebe stehen bleibt, sondern sittlich ist, gehört dem menschlichen Gesetze an, und hat die negative Bedeutung, den Einzelnen über die Einschließung in das natürliche Gemeinwesen zu erheben."
+    },
+    {
+      "work": "Boltzmann, Vorlesungen über Gastheorie II (1898) — molecular limits",
+      "slug": "boltzmann-gastheorie2-p128",
+      "title_rx": "vorlesungen.*gastheorie|boltzmann.*gastheorie",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/boltzmann_gastheorie02_1898?p=130",
+      "edition": "Leipzig: J. A. Barth, 1898 (1. Auflage)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "book_id": "6990540738e1fdee57b365c1",
+      "page_number": 128,
+      "_note": "The set's only German ANTIQUA exemplar (19th-c physics was Antiqua; everything else surveyed in our German holdings is Fraktur). Pre-reform orthography (dass/Grösse) on both sides. Guard-verified 2026-07-19 at 0.000, pipeline char accuracy 100%.",
+      "reference": "Unter dieser Annahme müssen wir aber auch Uebereinstimmung mit der Erfahrung erhalten, wenn wir die Limite berechnen, der sich die Gesetze der Erscheinungen bei stets ins Unendliche wachsender Anzahl und abnehmender Grösse der Moleküle nähern. Bei Berechnung der letzteren Limite haben wir aber in der That wieder zwei Grössen, die unabhängig von einander beliebig klein gemacht werden können: die Grösse der Volumelemente, und die Dimensionen der Moleküle, und wir können bei jeder gegebenen Kleinheit der ersteren letztere noch so klein wählen, dass jedes Volumelement noch sehr viele Moleküle enthält, deren Eigenschaften in gegebenen engen Grenzen eingeschlossen sind."
+    }
+  ]
+}
