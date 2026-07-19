@@ -112,9 +112,10 @@ export async function GET(request: NextRequest) {
     )),
     Promise.all([...lookupByCorpus.entries()].map(([corpus, ngrams]) =>
       supabase.from('ngram_series')
-        // books_by_year only in docs mode — it's the largest column and tokens
-        // mode never reads it.
-        .select(`corpus, ngram, counts, total_count, book_count${mode === 'docs' ? ', books_by_year' : ''}`)
+        // Static select string: supabase-js types the rows by parsing this
+        // literal, and a template literal degrades it to ParserError. At most
+        // 6 rows per request, so always carrying books_by_year is negligible.
+        .select('corpus, ngram, counts, total_count, book_count, books_by_year')
         .eq('corpus', corpus)
         .in('ngram', ngrams),
     )),
