@@ -397,7 +397,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     try {
       if (mode === 'unified') {
         // Check client-side cache first
-        const cacheKey = `unified:${q}:${language}:${category}:${hasTranslation}:${firstTranslation}:${library}`;
+        const cacheKey = `unified:${q}:${language}:${category}:${hasTranslation}:${firstTranslation}:${library}:${dateFrom}:${dateTo}`;
         const cached = searchCache.current.get(cacheKey);
         if (cached && Date.now() - cached.ts < CACHE_TTL) {
           setBookResults(cached.books);
@@ -418,6 +418,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             has_translation: hasTranslation ? 'true' : undefined,
             first_translation: firstTranslation ? 'true' : undefined,
             library: library || undefined,
+            date_from: dateFrom || undefined,
+            date_to: dateTo || undefined,
           };
           const data = await searchApi.unified(q, {
             limit: PREVIEW_BOOKS,

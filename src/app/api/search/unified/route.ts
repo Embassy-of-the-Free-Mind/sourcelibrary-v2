@@ -96,6 +96,15 @@ export async function GET(request: NextRequest) {
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const library = searchParams.get('library') || undefined;
+    // Publication-year range. The search page shows these inputs on every tab
+    // (and the ngram viewer deep-links into /search with a ±5y window), so a
+    // range that isn't honoured here reads as "filter set, results ignore it".
+    const parseYear = (v: string | null): number | undefined => {
+      const n = parseInt(v || '', 10);
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const yearFrom = parseYear(searchParams.get('date_from'));
+    const yearTo = parseYear(searchParams.get('date_to'));
 
     if (!query || query.length < 2) {
       return NextResponse.json({
@@ -128,6 +137,8 @@ export async function GET(request: NextRequest) {
     if (category) searchFilters.category = category;
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
+    if (yearFrom !== undefined) searchFilters.yearFrom = yearFrom;
+    if (yearTo !== undefined) searchFilters.yearTo = yearTo;
     if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
 
     // Run book, index, gallery, and visual search in parallel.
@@ -304,7 +315,19 @@ export async function GET(request: NextRequest) {
 
     // Dedup semantic results: remove books already in keyword results
     const keywordBookIds = new Set(booksResult.results.map((b: any) => b.id));
-    const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
+    // Semantic search has no year predicate (vector index) — post-filter it so
+    // the semantic lane obeys the same range as the keyword lane. A book with an
+    // unknown year is dropped only when a range is actually set.
+    const inYearRange = (year: number | null | undefined) => {
+      if (yearFrom === undefined && yearTo === undefined) return true;
+      if (typeof year !== 'number') return false;
+      if (yearFrom !== undefined && year < yearFrom) return false;
+      if (yearTo !== undefined && year > yearTo) return false;
+      return true;
+    };
+    const dedupedSemantic = semanticResultRaw.results
+      .filter(s => !keywordBookIds.has(s.book_id))
+      .filter(s => inYearRange(s.year));
     const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
     // Apply similarity floor to visual/semantic/artwork lanes.
