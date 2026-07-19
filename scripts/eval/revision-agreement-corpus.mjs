@@ -21,6 +21,17 @@
  * parsed from BOTH sides (the tag families listed in CLAUDE.md's quote-integrity
  * section — they describe the scan, so a change in them is itself a signal).
  *
+ * Two corrections the pilot's metric needs at corpus scale, both measured, both
+ * reported alongside the parity number rather than replacing it:
+ *   1. `agreement_char` — the word tokenizer collapses space-less scripts (Han,
+ *      Tibetan, kana, Thai…) into a handful of huge tokens, so one wrong glyph
+ *      sinks a whole page. `agreement_primary` uses characters there, words
+ *      elsewhere. See `revision-agreement-annotation-probe.mjs`.
+ *   2. `image_only` — on covers, endpapers and plates neither side transcribes
+ *      anything; both emit an AI-written <image-desc>, and two descriptions of
+ *      one picture disagree by construction. Flagged, excluded from the
+ *      regression queue, reported as its own stratum.
+ *
  * Cost: free. Mongo reads + local compute only, no model API calls.
  *
  *   set -a; source .env.production.local; set +a
@@ -48,6 +59,18 @@ const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.json`)
 const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.md`);
 const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions-${DATE}.md`);
 const TOP_REGRESSIONS = parseInt(args['top'] || '200');
+// ── Pair eligibility (stated up front, counted, never post-hoc) ───
+// A page's OCR text is only comparable if BOTH passes actually transcribed
+// something. Two thresholds on body-word count (annotation excluded) split the
+// population into three, each reported with its own n:
+//   image_only  — max body < IMAGE_ONLY_MAX on both sides. Covers, endpapers,
+//                 plates: both texts are AI descriptions of the same picture,
+//                 so they disagree by construction with nothing transcribed.
+//   micro_text  — max body < ELIGIBLE_MIN. Title pages, colophons, near-blanks.
+//                 Real text, but the metric is unstable on a handful of words.
+//   eligible    — the headline population.
+const IMAGE_ONLY_MAX = parseInt(args['image-only-max'] || '15');
+const ELIGIBLE_MIN = parseInt(args['eligible-min'] || '40');
 const SITE = 'https://sourcelibrary.org';
 
 // ── metric (parity with revision-agreement-pilot.mjs) ─────────────
@@ -62,6 +85,53 @@ export function agreement(a, b) {
   const d = levenshtein(A, B);
   return 1 - d / Math.max(A.length, B.length);
 }
+
+// Character-level twin of the same metric. REQUIRED for space-less scripts:
+// `toWords` splits on whitespace, so a page of Chinese or Tibetan collapses into
+// a handful of enormous tokens (median 22/page for Chinese vs ~310 for Latin),
+// and a single wrong character flips a whole token — measured on a 900-pair
+// sample, word-agreement reads 27.5% on space-less scripts where character
+// agreement reads 48.9% (Chinese 36.7% → 72.7%). On spaced scripts the two
+// differ by ~4.5pt. `agreement` stays the pilot-parity primary; this is the
+// honest number for CJK/Tibetan and is reported alongside everywhere.
+const toChars = s => [...stripWrappers(s || '').toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
+export function agreementChar(a, b) {
+  const A = toChars(a), B = toChars(b);
+  if (!A.length && !B.length) return null;
+  if (!A.length || !B.length) return 0;
+  return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
+}
+
+// Script class, detected from the text itself rather than books.language (which
+// is the EDITION language and is wrong often enough to matter).
+const SPACELESS_RE = /[\p{Script=Han}\p{Script=Tibetan}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Khmer}\p{Script=Lao}\p{Script=Myanmar}]/u;
+const scriptClass = s => {
+  const letters = (s || '').replace(/[^\p{L}]/gu, '');
+  if (!letters) return 'unknown';
+  let n = 0;
+  for (const ch of letters.slice(0, 2000)) if (SPACELESS_RE.test(ch)) n++;
+  return n / Math.min(letters.length, 2000) > 0.3 ? 'spaceless' : 'spaced';
+};
+
+// Body text = what survives after ALSO dropping <image-desc> prose and the
+// CONTENT of inline marks. A page whose body is near-empty is a cover, endpaper
+// or plate: its "text" is entirely an AI-written description, so two passes
+// disagree completely while transcribing nothing. Those must not enter the
+// regression audit queue as if OCR had lost text.
+const INLINE_MARKS = 'note|term|margin|gloss|unclear|insert|header|catchword|sig|page-num';
+const bodyWords = s => {
+  let t = s || '';
+  for (const w of `image-desc|${INLINE_MARKS}`.split('|')) {
+    t = t.replace(new RegExp(`<${w}[^>]*>[\\s\\S]*?</${w}>`, 'gi'), '');
+  }
+  return stripWrappers(t).replace(/^#{1,6}\s.*$/gm, '')
+    .replace(/[^\p{L}\s]/gu, ' ').split(/\s+/).filter(w => w.length > 1).length;
+};
+
+// Untagged AI refusals / conversational preambles (CLAUDE.md's third wrapper
+// class). Not an exclusion — a refusal replacing a transcription is a genuine
+// regression — but it is a distinct failure mode worth counting on its own.
+const REFUSAL_RE = /\b(i (?:cannot|can't|am unable to|'m unable to)\b|i (?:apologize|'m sorry|am sorry)\b|as an ai\b|unable to (?:fulfill|process|transcribe)\b)/i;
 
 // ── envelope tags ────────────────────────────────────────────────
 const tag = (s, name) => {
@@ -117,9 +187,11 @@ async function main() {
 
   const out = fs.createWriteStream(OUT_JSONL, { flags: 'w' });
   const bookCache = new Map();
-  const overall = new Stat();
+  const overall = new Stat();      // agreement_primary
+  const overallWord = new Stat();  // pilot-parity word metric, for comparability
   const regressions = [];
-  let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0;
+  let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
+  const flow = {};
   const t0 = Date.now();
 
   // Sorted by page_id so a page's revisions arrive contiguously — served by the
@@ -180,6 +252,9 @@ async function main() {
         const prior = chain[i], current = chain[i + 1];
         const agr = agreement(prior.data, current.data);
         if (agr == null) { skipped++; continue; }
+        const agrChar = agreementChar(prior.data, current.data);
+        const cls = scriptClass(current.data) === 'unknown' ? scriptClass(prior.data) : scriptClass(current.data);
+        const bodyPrior = bodyWords(prior.data), bodyCurrent = bodyWords(current.data);
         const ep = envelope(prior.data), ec = envelope(current.data);
         const row = {
           page_id: entry.page_id,
@@ -200,6 +275,20 @@ async function main() {
           prompt_transition: `${prior.prompt || '?'}→${current.prompt || '?'}`,
           prior_source: prior.source,
           agreement: +agr.toFixed(4),
+          agreement_char: agrChar == null ? null : +agrChar.toFixed(4),
+          // The number to trust per row: character-level on space-less scripts,
+          // word-level (pilot parity) everywhere else.
+          agreement_primary: +((cls === 'spaceless' && agrChar != null) ? agrChar : agr).toFixed(4),
+          script_class: cls,
+          body_words_prior: bodyPrior,
+          body_words_current: bodyCurrent,
+          // Cover / endpaper / plate: nothing was transcribed on either side, so
+          // the "disagreement" is two AI descriptions of the same image.
+          image_only: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX,
+          eligibility: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX ? 'image_only'
+            : Math.max(bodyPrior, bodyCurrent) < ELIGIBLE_MIN ? 'micro_text' : 'eligible',
+          prior_refusal: REFUSAL_RE.test(prior.data.slice(0, 400)),
+          current_refusal: REFUSAL_RE.test(current.data.slice(0, 400)),
           len_prior: prior.data.length,
           len_current: current.data.length,
           len_ratio: +(current.data.length / Math.max(1, prior.data.length)).toFixed(3),
@@ -214,27 +303,40 @@ async function main() {
         out.write(JSON.stringify(row) + '\n');
         pairs++;
 
-        overall.add(row.agreement);
-        bump('language', row.language || '(unknown)', row.agreement);
-        bump('year_bucket', row.year_bucket, row.agreement);
-        bump('model_pair', row.model_pair, row.agreement);
-        bump('prompt_transition', row.prompt_transition, row.agreement);
-        bump('current_page_type', row.current_page_type || '(none)', row.agreement);
-        bump('current_columns', row.current_columns || '(none)', row.agreement);
-        bump('columns_changed', String(row.columns_changed), row.agreement);
-        bump('page_type_changed', String(row.page_type_changed), row.agreement);
-        bump('lang_tag_changed', String(row.lang_tag_changed), row.agreement);
-        bump('is_live', String(row.is_live), row.agreement);
-        bump('lang_x_year', `${row.language || '?'} | ${row.year_bucket}`, row.agreement);
-        bump('lang_x_modelpair', `${row.language || '?'} | ${row.model_pair}`, row.agreement);
+        // Strata are keyed on agreement_primary (word-level except on space-less
+        // scripts). overallWord keeps the pilot-parity headline comparable.
+        const a = row.agreement_primary;
+        flow[row.eligibility] = (flow[row.eligibility] || 0) + 1;
+        bump('eligibility', row.eligibility, a);
+        if (row.prior_refusal || row.current_refusal) refusals++;
+        if (row.eligibility !== 'eligible') continue;  // pairs already counted
+        overall.add(a);
+        overallWord.add(row.agreement);
+        bump('language', row.language || '(unknown)', a);
+        bump('year_bucket', row.year_bucket, a);
+        bump('model_pair', row.model_pair, a);
+        bump('prompt_transition', row.prompt_transition, a);
+        bump('script_class', row.script_class, a);
+        bump('image_only', String(row.image_only), a);
+        bump('current_page_type', row.current_page_type || '(none)', a);
+        bump('current_columns', row.current_columns || '(none)', a);
+        bump('columns_changed', String(row.columns_changed), a);
+        bump('page_type_changed', String(row.page_type_changed), a);
+        bump('lang_tag_changed', String(row.lang_tag_changed), a);
+        bump('is_live', String(row.is_live), a);
+        bump('lang_x_year', `${row.language || '?'} | ${row.year_bucket}`, a);
+        bump('lang_x_modelpair', `${row.language || '?'} | ${row.model_pair}`, a);
 
         // Regression candidate: low agreement AND current much shorter than
         // prior — the shape of "re-OCR made it worse". Severity ranks the audit
         // queue: how much text was lost, scaled by how little the texts agree.
-        if (row.agreement < 0.5 && row.len_ratio < 0.6) {
+        // image_only pages are excluded: on a cover or endpaper both sides are
+        // AI descriptions of the same picture, so they disagree by construction
+        // and nothing was transcribed to lose.
+        if (a < 0.5 && row.len_ratio < 0.6) {
           regressions.push({
             ...row,
-            severity: +((1 - row.agreement) * (1 - row.len_ratio) * Math.log10(10 + row.len_prior)).toFixed(4),
+            severity: +((1 - a) * (1 - row.len_ratio) * Math.log10(10 + row.body_words_prior)).toFixed(4),
             url: row.book_slug ? `${SITE}/book/${row.book_slug}/page/${row.page_id}` : null,
           });
         }
@@ -283,7 +385,11 @@ async function main() {
     corpus_summary: {
       usable: pairs,
       missing: missingPage,
+      eligibility_flow: flow,
+      refusal_pairs: refusals,
+      eligible_pairs: overall.n,
       mean_agreement: +overall.mean.toFixed(4),
+      mean_agreement_word_only: +overallWord.mean.toFixed(4),
       histogram: Object.fromEntries(overall.hist.map((h, i) => [`${BUCKETS[i]}-${Math.min(BUCKETS[i + 1], 1)}`, h])),
       regressions: regressions.length,
       regression_rate: +(regressions.length / Math.max(1, pairs)).toFixed(4),
@@ -313,11 +419,36 @@ async function main() {
     '## Corpus summary', '',
     `- revisions read: **${revsRead.toLocaleString()}**`,
     `- pages with revisions: **${pagesSeen.toLocaleString()}** (${missingPage.toLocaleString()} live page docs not found — book purged; their rev→rev pairs are still included)`,
-    `- usable pairs: **${pairs.toLocaleString()}** (${skipped.toLocaleString()} skipped: single-element chain or empty after stripping)`,
-    `- mean agreement: **${(overall.mean * 100).toFixed(1)}%**`,
+    `- computable pairs: **${pairs.toLocaleString()}** (${skipped.toLocaleString()} skipped: single-element chain or empty after stripping)`,
+    '',
+    '### Pair eligibility', '',
+    'Stated before the analysis, not filtered after it. Body-word count excludes',
+    'annotation (`<image-desc>`, inline marks, headings) — it is what was actually',
+    '*transcribed*. Every computable pair lands in exactly one class:', '',
+    '| class | criterion | n | share | mean agreement |',
+    '|---|---|---:|---:|---:|',
+    ...['eligible', 'micro_text', 'image_only'].filter(k => flow[k]).map(k => {
+      const st = strata.eligibility?.get(k);
+      const crit = k === 'eligible' ? `max body ≥ ${ELIGIBLE_MIN} words`
+        : k === 'micro_text' ? `${IMAGE_ONLY_MAX}–${ELIGIBLE_MIN} words (title pages, colophons)`
+        : `< ${IMAGE_ONLY_MAX} words on both sides (covers, plates)`;
+      return `| ${k} | ${crit} | ${flow[k].toLocaleString()} | ${(flow[k] / pairs * 100).toFixed(1)}% | ${(st.mean * 100).toFixed(1)}% |`;
+    }),
+    '',
+    `Only **eligible** pairs enter the headline, the strata and the regression queue.`,
+    `\`image_only\` pairs disagree by construction: both sides are AI descriptions of the`,
+    `same picture, so a low score there means two different sentences about one engraving,`,
+    `not lost text. \`micro_text\` is real but the metric is unstable on a few dozen words.`,
+    `Pairs where either side is an untagged AI refusal or preamble: **${refusals.toLocaleString()}** —`,
+    `kept (a refusal replacing a transcription is a genuine regression), counted here.`, '',
+    `**Eligible pairs: ${overall.n.toLocaleString()}.**`,
+    `- mean agreement (primary — char-level on space-less scripts, word-level elsewhere): **${(overall.mean * 100).toFixed(1)}%**`,
+    `- mean agreement, pilot-parity word metric on every script: ${(overallWord.mean * 100).toFixed(1)}% — the gap is the CJK/Tibetan tokenization artifact`,
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
-    `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / pairs * 100).toFixed(2)}%)`, '',
+    `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
     '## Stratified agreement', '',
+    table('script_class', 'By script class (space-less scripts need the char metric)', 1),
+    table('image_only', 'Image-only pages (no transcribed body text on either side)', 1),
     table('language', 'By language'),
     table('year_bucket', 'By year bucket'),
     table('model_pair', 'By model pair (prior → current)'),
@@ -344,13 +475,15 @@ async function main() {
     `# OCR re-run regression candidates — top ${top.length} (${DATE})`, '',
     `Pairs where the re-OCR **disagrees** with what it replaced (agreement < 0.5) **and**`,
     `lost most of the text (current < 60% of prior length). This is the shape of "re-OCR`,
-    `made it worse". ${regressions.length.toLocaleString()} candidates total; ranked by severity`,
-    `= (1 − agreement) × (1 − length ratio) × log10(10 + prior length).`, '',
+    `made it worse". Image-only pages (covers, plates — no transcribed body text on either`,
+    `side) are excluded: there both texts are AI descriptions of the same picture, so they`,
+    `disagree by construction with nothing lost. ${regressions.length.toLocaleString()} candidates total; ranked by`,
+    `severity = (1 − agreement) × (1 − length ratio) × log10(10 + prior body words).`, '',
     `Visual audit: open each URL, compare the rendered page image against the text.`,
     `A confirmed regression means the *prior* revision should be restored.`, '',
-    '| # | severity | agr | len prior→current | lang | year | model pair | prompt | page |',
-    '|---:|---:|---:|---|---|---:|---|---|---|',
-    ...top.map((r, i) => `| ${i + 1} | ${r.severity.toFixed(2)} | ${(r.agreement * 100).toFixed(0)}% | ${r.len_prior}→${r.len_current} (${(r.len_ratio * 100).toFixed(0)}%) | ${r.language || '?'} | ${r.year ?? '?'} | ${r.model_pair} | ${r.prompt_transition} | ${r.url ? `[p${r.page_number ?? '?'}](${r.url})` : `\`${r.page_id}\``} |`),
+    '| # | severity | agr | body words prior→current | len prior→current | lang | year | model pair | prompt | page |',
+    '|---:|---:|---:|---|---|---|---:|---|---|---|',
+    ...top.map((r, i) => `| ${i + 1} | ${r.severity.toFixed(2)} | ${(r.agreement_primary * 100).toFixed(0)}% | ${r.body_words_prior}→${r.body_words_current} | ${r.len_prior}→${r.len_current} (${(r.len_ratio * 100).toFixed(0)}%) | ${r.language || '?'} | ${r.year ?? '?'} | ${r.model_pair} | ${r.prompt_transition} | ${r.url ? `[p${r.page_number ?? '?'}](${r.url})` : `\`${r.page_id}\``} |`),
     '',
   ].join('\n');
   fs.writeFileSync(OUT_REGRESSIONS, regMd);
