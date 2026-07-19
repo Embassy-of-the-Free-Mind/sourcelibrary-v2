@@ -1,0 +1,23 @@
+{
+  "work": "Movses Xorenac'i, Patmut'iwn Hayoc' III.35 (fall of Artagers, deportations under Shapuh, printed p.300)",
+  "book_id": "69944861185a84ef595aae5b",
+  "page_number": 367,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.300",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho161.htm",
+  "edition": "Abełean-Yarut'iwnean, Tiflis 1913",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "եւ տայ տանել յերկիրն Խուժաստանի յԱնուշն կոչեցեալ Բերդ ։ Եւ բազում զօրս գումարեալ ի ձեռն Մեհրուժանայ Արծրունւոյ եւ Վահանայ Մամիկոնէի , ուրացողաց զ ՝կրիստոս , արձակէ յաշխարհս Հայոց . որք եկեալ նստան շուրջ զբերդաւն Արտագերից ։ Եւ թէպէտ ոչ ինչ կարէին առնել նմա վասն անմատչելի ամրութեանն , բայց զի բարկութիւնն Աստուծոյ էր ի վերայ Արշակայ ՝ մարդիկ ամրոցին ոչ անսացին մնալ համբաւուն Պապայ , այլ անձնատուրք եղեն ի կամաց , եւ ոչ ի բռնութենէն ։ Զորս գերեալ հանդերձ գանձիւքն եւ տիկինաւն Փառանձեմաւ խաղացուցին ի յԱսորեստան . եւ անդ ընդ սայլի ցից հանեալ ՝ սատակեցին ։ Ի նմին ժամու եհաս հրաման ի Շապհոյ արքայէ , զի քանդեալ աւերեսցին զամրութիւն ամենայն քաղաքաց , եւ զՀրեայսն խաղացուսցեն ի գերութիւն , եւ զայս Հրեայսն , որ նովին հրէութեան օրինօք կային ի Վանն Տոսպայ , զորս ածեալ էր Բարզափրանայ Ռըշտունւոյ յաւուրս Տիգրանայ . զորս բնակեցոյց Շապուհ յԱսպահան ։ Գերեցին եւ զայն Հրեայսն որք յԱրտաշատ եւ ի Վաղարշապատ , զորս ածեալ էր նոյն Տիգրանայ արքայի , որք յաւուրս սրբոյն Գրիգորի եւ Տրդատայ հաւատացեալ էին ի Քրիստոս . ընդ որս եւ զԶուիթայ երէց Արտաշատու ։ Յայնժամ մատուցեալ առ Շապուհ Մեհրուժան եւ Վահան չարախօսէին զԶուիթայ երիցուէ Արտաշատու , եթէ յայն սակս եկն ընդ գերութիւնն , զի խրատեսցէ զնոսա պինդ ունել զօրէնս քրիստոնէութեան ։ Վասն որոյ Շապուհ հրամայեաց",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  },
+  "_note": "~20 body lines + two-column apparatus (~50% of page); proper-noun-dense narrative (Meruzhan Arcruni, P'aranjem, Barzap'ran Rshtuni) — a good named-entity OCR test. TITUS carries one etext oddity ('զ ՝կրիստոս') costing <1% accuracy. Printed p.300 = scan 367. Guard-verified + visually audited 2026-07-19."
+}
