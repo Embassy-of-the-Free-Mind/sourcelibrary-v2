@@ -180,6 +180,33 @@ export class ToneEngine {
     return new Promise((resolve) => window.setTimeout(resolve, ms + 40));
   }
 
+  /**
+   * One plucked-string note: eight partials at 1/n^1.1, higher partials
+   * decaying faster (τ = 0.55/n^0.75 s) — the playable-facsimile demos'
+   * voice (#3224). `at` is seconds from now (for arpeggios); level 1 peaks
+   * around −14 dBFS after the master bus.
+   */
+  pluck(freq: number, at = 0, level = 1) {
+    const ctx = this.ensure();
+    if (!ctx || !this.master) return;
+    const t0 = ctx.currentTime + 0.02 + Math.max(0, at);
+    for (let h = 1; h <= 8; h++) {
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = freq * h;
+      const g = ctx.createGain();
+      const a = (1.27 * level) / Math.pow(h, 1.1);
+      const tau = 0.55 / Math.pow(h, 0.75);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.linearRampToValueAtTime(a, t0 + 0.01);
+      g.gain.setTargetAtTime(0.0001, t0 + 0.015, tau);
+      osc.connect(g);
+      g.connect(this.master);
+      osc.start(t0);
+      osc.stop(t0 + 2.6);
+    }
+  }
+
   dispose() {
     try {
       for (const v of this.voices.values()) { v.osc.stop(); v.lfo?.stop(); }
