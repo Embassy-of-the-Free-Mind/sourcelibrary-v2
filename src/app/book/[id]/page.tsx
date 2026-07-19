@@ -1265,11 +1265,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
             return (
               <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
-                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+                <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
               </EarlyAccessGate>
             );
           }
-          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+          return <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
         <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />

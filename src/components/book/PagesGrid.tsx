@@ -30,6 +30,9 @@ function PageImage({ src, alt, className }: { src: string; alt: string; classNam
 interface PagesGridProps {
   pages: Page[];
   bookId: string;
+  /** Slug (or id fallback) for building page hrefs — keeps grid links on the
+      canonical /book/<slug>/... URL instead of minting hex-id duplicates (#2266). */
+  bookPath?: string;
   batchMode: boolean;
   reorderMode: boolean;
   selectedPages: Set<string>;
@@ -51,6 +54,7 @@ interface PagesGridProps {
 export default function PagesGrid({
   pages,
   bookId,
+  bookPath,
   batchMode,
   reorderMode,
   selectedPages,
@@ -170,7 +174,7 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a
-                  href={embedHref(`/book/${bookId}/page/${page.id}`)}
+                  href={embedHref(`/book/${bookPath || bookId}/page/${page.id}`)}
                 >
                   <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
