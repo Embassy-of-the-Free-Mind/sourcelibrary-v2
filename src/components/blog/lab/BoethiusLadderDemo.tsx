@@ -137,7 +137,7 @@ export default function BoethiusLadderDemo() {
                 className="cursor-pointer hover:stroke-[var(--accent-rust,#a8503c)]"
                 onClick={() => playArc(a.lo, a.hi, a.label)}
               >
-                <title>{a.label} — play both strings</title>
+                <title>{`${a.label} — play both strings`}</title>
               </path>
               {a.big && (
                 <text
