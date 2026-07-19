@@ -647,6 +647,9 @@ export default function TranslationEditor({
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
+  // Real hrefs on prev/next so crawlers can walk the page chain (#2266);
+  // onClick preventDefault keeps SPA navigation exactly as before.
+  const pageHref = (p: { id: string }) => `${tenantPrefix}/book/${bookSlugOrId}/page/${p.id}`;
 
   const commitJumpToPage = () => {
     const n = parseInt(pageInputValue, 10);
@@ -1119,7 +1122,7 @@ export default function TranslationEditor({
               {/* Hide Source Library branding in embed mode */}
               {!isEmbedded && <Logo mini />}
               {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
-              <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              <a href={`${tenantPrefix}/book/${bookSlugOrId}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
@@ -1148,15 +1151,25 @@ export default function TranslationEditor({
 
             {/* Page Navigation */}
             <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
-              <button
-                onClick={() => previousPage && onNavigate(previousPage.id)}
-                disabled={!previousPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
-                aria-label="Previous page"
-              >
-                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-              </button>
+              {previousPage ? (
+                <a
+                  href={pageHref(previousPage)}
+                  onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
+                  className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <span
+                  className="p-1.5 sm:p-2 rounded-md opacity-30"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-hidden="true"
+                >
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                </span>
+              )}
               <div className="flex items-center px-1 sm:px-2">
                 {isEditingPage ? (
                   <form
@@ -1192,15 +1205,25 @@ export default function TranslationEditor({
                   </button>
                 )}
               </div>
-              <button
-                onClick={() => nextPage && onNavigate(nextPage.id)}
-                disabled={!nextPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
-                aria-label="Next page"
-              >
-                <ChevronRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+              {nextPage ? (
+                <a
+                  href={pageHref(nextPage)}
+                  onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
+                  className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <span
+                  className="p-1.5 sm:p-2 rounded-md opacity-30"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-hidden="true"
+                >
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                </span>
+              )}
             </div>
           </div>
 
@@ -1622,22 +1645,24 @@ export default function TranslationEditor({
                   </div>
                   {/* Floating page arrows on image panel edges */}
                   {previousPage && (
-                    <button
-                      onClick={() => onNavigate(previousPage.id)}
+                    <a
+                      href={pageHref(previousPage)}
+                      onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
                       className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                       aria-label="Previous page"
                     >
                       <ChevronLeft className="w-5 h-5" />
-                    </button>
+                    </a>
                   )}
                   {nextPage && (
-                    <button
-                      onClick={() => onNavigate(nextPage.id)}
+                    <a
+                      href={pageHref(nextPage)}
+                      onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
                       className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                       aria-label="Next page"
                     >
                       <ChevronRight className="w-5 h-5" />
-                    </button>
+                    </a>
                   )}
                 </div>
               )}
