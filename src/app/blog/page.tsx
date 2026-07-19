@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'playable-page',
+    title: 'The Playable Page',
+    subtitle:
+      'Old treatises are full of instruments diagrammed and silenced — monochord divisions, tetrachord arcs, string tables worked out to the integer. Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+    date: '19 July 2026',
+    readTime: '3 instruments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg',
+    imageAlt:
+      'A page of the Boethius manuscript: nested red arcs mapping the chromatic and enharmonic tetrachords, with string names and monochord numbers.',
+  },
+  {
     slug: 'ngram-viewer',
     title: 'Chart a Word, Then Read the Page',
     subtitle:
