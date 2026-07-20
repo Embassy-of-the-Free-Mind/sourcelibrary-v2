@@ -13,9 +13,19 @@
  * said "This edition is not yet translated" (gate: translated/pages < 5%) while
  * the reader below it served English on 581 of its pages — the counter said 20.
  *
- * Counting rules mirror collect-batch-results.mjs exactly (all pages, including
- * negative page_number soft-hidden ones) so this script can never disagree with
- * the pipeline's own writer.
+ * Counting rule: VISIBLE pages only — `page_number > 0`. A negative page_number
+ * is a deliberate soft-hide (dropped duplicate spreads, junk scans), those pages
+ * never render in the reader, and `books.pages_count` is what the book page
+ * prints as "N scans" and divides by for every ratio it shows. Counting hidden
+ * pages inflates the scan count and depresses the translated fraction.
+ *
+ * This is the corpus's dominant convention but NOT a universal one: sampling 400
+ * visible books that have hidden pages, 387 store the positive-only count and 13
+ * store the all-pages count. `collect-batch-results.mjs` (and the sibling writers
+ * that copied it) count all pages — that writer is the source of the minority,
+ * and of the bug above: it is what left Histoire de la magie claiming 929 scans
+ * for 620 readable pages. Fixing those writers is issue-worthy follow-up; until
+ * then this script is the corrective, so do not "align" it back to them.
  *
  * Usage:
  *   node scripts/maintenance/recount-page-stats.mjs --slug <slug> [...]
@@ -38,7 +48,7 @@ if (!STALE && slugs.length === 0) {
 }
 
 const COUNT_PIPELINE = (bookId) => [
-  { $match: { book_id: bookId } },
+  { $match: { book_id: bookId, page_number: { $gt: 0 } } },
   {
     $group: {
       _id: null,
