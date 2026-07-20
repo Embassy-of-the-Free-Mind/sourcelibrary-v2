@@ -72,7 +72,7 @@ export default async function ResearchSessionPage({ params }: PageProps) {
       <SubPageHeader
         title={s.title}
         subtitle={dateStr}
-        backHref="/research"
+        backHref="/research/sessions"
         backLabel="Back to Research Sessions"
       />
 
