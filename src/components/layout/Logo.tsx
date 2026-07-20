@@ -24,6 +24,15 @@ export default function Logo({ white, compact, mini }: LogoProps) {
       ? 'text-lg'
       : 'text-base md:text-[1.2rem]';
 
+  // When to reveal the "Source Library" wordmark. The reader header (mini) is
+  // dense on mobile — logo, a long title, the chapter dropdown and the page
+  // navigator all share one row — so the wordmark stays hidden until `lg`
+  // (the same width at which the site nav stops collapsing to a hamburger),
+  // leaving just the three rings on phones/tablets. Reader feedback: the logo
+  // read as "smooshed" and "should collapse to just the circles" (#3085).
+  // The marketing/site header keeps its wordmark from `sm` up.
+  const wordmarkVisibility = mini ? 'hidden lg:inline' : 'hidden sm:inline';
+
   return (
     <Link
       href="/"
@@ -46,7 +55,7 @@ export default function Logo({ white, compact, mini }: LogoProps) {
         <circle cx="12" cy="12" r="4" stroke={strokeColor} strokeWidth="1" />
       </svg>
       <span
-        className={`${textSize} uppercase tracking-wider hidden sm:inline`}
+        className={`${textSize} uppercase tracking-wider ${wordmarkVisibility}`}
       >
         <span className="font-semibold">Source</span>
         <span className="font-light">Library</span>

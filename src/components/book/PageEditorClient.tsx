@@ -241,15 +241,18 @@ export default function PageEditorClient({
   }, [book.id, currentPageId, currentPage?.page_number]);
 
   // Client-side navigation - update URL and current page
-  const handleNavigate = useCallback((newPageId: string) => {
+  const handleNavigate = useCallback((newPageId: string, opts?: { toTop?: boolean }) => {
     // On mobile the panels stack vertically (image, then OCR, then translation).
     // Flipping a page used to dump the reader back to the top of the page even
     // when they were mid-way through the translation. Capture which panel is
     // currently filling the viewport *before* the swap, so we can land on the
     // same panel of the new page. (Reader feedback: "going to the next page from
     // the OCR or translation should take you to the same part of the next page.")
+    // Exception: a swipe passes { toTop: true } — readers expect a swipe to land
+    // at the top of the new page, and section-preserving read as "lands mid-page"
+    // there (#3085).
     const isMobile = window.innerWidth < 1024;
-    const activeSection = isMobile ? (getActiveReaderSection() || 'image') : null;
+    const activeSection = isMobile && !opts?.toTop ? (getActiveReaderSection() || 'image') : null;
 
     setCurrentPageId(newPageId);
     // Build URL with supported query params (version pinning)
@@ -258,7 +261,7 @@ export default function PageEditorClient({
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
     window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${suffix}`);
 
-    if (isMobile) {
+    if (isMobile && activeSection) {
       // Land on the same section the reader was in (image / OCR / translation),
       // at its top. The section <div>s persist across the page swap (only their
       // content changes), so the same selector resolves on the new page. Two rAFs
@@ -267,6 +270,12 @@ export default function PageEditorClient({
         const el = document.querySelector(`[data-reader-section="${activeSection}"]`);
         if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
         else window.scrollTo({ top: 0, behavior: 'instant' });
+      }));
+    } else if (isMobile) {
+      // Swipe (opts.toTop): always land at the very top of the new page. Wait two
+      // rAFs so the page swap has committed before scrolling.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }));
     } else {
       // Desktop: go to the top.
