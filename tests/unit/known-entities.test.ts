@@ -5,18 +5,15 @@ import { matchKnownEntity } from '@/lib/known-entities';
 // to a direct destination; generic words must NOT resolve (strict match only).
 
 describe('matchKnownEntity', () => {
-  // The SHWEP reading room was taken down; no query may route to /shwep again.
-  it('does NOT resolve the retired SHWEP reading room', () => {
-    expect(matchKnownEntity('shwep')).toBeNull();
-    expect(matchKnownEntity('  SHWEP ')).toBeNull();
-    expect(matchKnownEntity('Secret History of Western Esotericism')).toBeNull();
+  it('resolves the SHWEP reading room by short alias', () => {
+    const m = matchKnownEntity('shwep');
+    expect(m?.href).toBe('/shwep');
+    expect(m?.kind).toBe('reading-room');
   });
 
   it('is case-insensitive and tolerant of spacing', () => {
-    const collections = [
-      { slug: 'alchemy', name: 'Alchemy', description: 'The art', subtitle: 'Transmutation' },
-    ];
-    expect(matchKnownEntity('  ALCHEMY ', { collections })?.href).toBe('/collections/alchemy');
+    expect(matchKnownEntity('  SHWEP ')?.href).toBe('/shwep');
+    expect(matchKnownEntity('Secret History of Western Esotericism')?.href).toBe('/shwep');
   });
 
   it('resolves a collection by slug or name', () => {

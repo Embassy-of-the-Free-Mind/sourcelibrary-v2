@@ -308,16 +308,9 @@ const nextConfig: NextConfig = {
         destination: '/support',
         permanent: false,
       },
-      // SHWEP reading room taken down (collection hidden). Keep inbound podcast
-      // links off a 404 — temporary so it can be restored.
       {
-        source: '/shwep',
-        destination: '/collections',
-        permanent: false,
-      },
-      {
-        source: '/shwep/:path*',
-        destination: '/collections',
+        source: '/collections/shwep',
+        destination: '/shwep',
         permanent: false,
       },
       // Embassy → Reading Room → Librarian rename chain
