@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
   experimental: {
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
+  // Belt-and-suspenders for the pdf-translation/pdf-facsimile download formats
+  // (issue #3283): src/lib/pdf-fonts.ts reads the bundled Noto Serif TTFs via
+  // a static `path.join(process.cwd(), 'src/assets/fonts/…')`, which Vercel's
+  // build-time file tracer should already pick up automatically — this pins
+  // it explicitly in case static analysis ever misses it.
+  outputFileTracingIncludes: {
+    '/api/books/[id]/download': ['./src/assets/fonts/**'],
+    '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [75, 80, 85, 90],
