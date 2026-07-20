@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/track-event';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
 type ImageAccess = 'open' | 'nc-free' | 'blocked';
@@ -65,7 +65,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   }, []);
 
   const isImageFormat = (f: BookDownloadFormats) =>
-    f === 'images-zip' || f === 'epub-images' || f === 'epub-facsimile';
+    f === 'images-zip' || f === 'epub-images' || f === 'epub-facsimile' || f === 'pdf-facsimile';
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
 
@@ -124,7 +124,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');
       const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
-      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : 'txt';
+      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : format.startsWith('pdf-') ? 'pdf' : 'txt';
       const filename = filenameMatch ? filenameMatch[1] : `download-${format}.${defaultExt}`;
 
       const url = window.URL.createObjectURL(blob);
@@ -250,6 +250,21 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
               icon={<Layers className="w-4 h-4 text-purple-600" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+
+          <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
+            PDF
+          </div>
+
+          {hasTranslations && hasImages && !imageRestricted && (
+            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Page scans + translation"
+              icon={<FileType className="w-4 h-4 text-emerald-700" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+          {hasTranslations && (
+            <FormatOption format="pdf-translation" label="English Translation (PDF)" desc="Translated text only"
+              icon={<FileType className="w-4 h-4 text-status-success" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 
