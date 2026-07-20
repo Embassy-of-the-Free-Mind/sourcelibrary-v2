@@ -45,6 +45,16 @@
  *   - 725ada69-...  Batch 1            200  subj "A new Renaissance — by translating the first"
  *   - 33bc889e-...  Recent Week        200  subj "...has never been read"  (wrong word, shipped)
  *   - 7137b7fe-...  Cohort 2           200  subj "...has never been translated"
+ *   - c8f7b2ac-...  Cohort 3                sent 2026-06-22
+ *   - aa32ca61-...  Cohort 4                sent 2026-06-23
+ *   - ddbd412f-...  Cohort 5                sent 2026-06-24
+ *   - a730380e-...  Cohort 6          1154  sent 2026-06-28
+ *   (2,554 distinct people emailed in total; 4 unsubscribes.)
+ *
+ * NOTE: a standing "Source Library Newsletter" audience (5dd84247-...) is
+ * refreshed daily by scripts/workers/refresh-newsletter-audience.mjs and is the
+ * right target for recurring letters. The cohort machinery here is only for
+ * giving the WELCOME letter to people who have never received it.
  *
  * Env: RESEND_API_KEY (--sync/--test/--send). Source via
  *   set -a; source .env.production.local; set +a
@@ -80,7 +90,7 @@ const subjectFor = (n) => process.env.EMAIL_SUBJECT || SUBJECTS[(n || 1) - 1] ||
 const HERO_IMG = 'https://images.sourcelibrary.org/artwork/art-ouroboros.jpg';
 const HERO_LINK = 'https://sourcelibrary.org/book/ouroboros';
 const HERO_CAPTION = 'The Ouroboros — an 18th-century Arabic alchemical manuscript, one of 110,000 illustrations in the library.';
-const PREHEADER = 'More than 2,400 of you have joined since our beta launch — a thank-you, and a small favor.';
+const PREHEADER = 'More than 3,600 of you have joined since our beta launch — a thank-you, and a small favor.';
 // Round, dark-mode-safe brand badge (brown circle + white mark on R2). Self-
 // contained colour so it reads on both light and dark inboxes, and it's a
 // circle (not a square that would show an ugly box in dark mode).
@@ -92,6 +102,10 @@ const BADGE_IMG = 'https://images.sourcelibrary.org/brand/email-badge-black.png'
 // "Leer en español" link to this page. Rebuild after copy changes: --build-es-page.
 const SPANISH_PAGE_URL = 'https://images.sourcelibrary.org/email/bienvenida-es.html';
 const REPLY_MAILTO = 'mailto:derek@sourcelibrary.org';
+// CAN-SPAM §7704(a)(5) requires a valid physical postal address in every
+// commercial email. Sends before 2026-07-20 carried none. This is the Embassy
+// of the Free Mind (Huis met de Hoofden), Source Library's host institution.
+const POSTAL_ADDRESS = 'Source Library &middot; c/o Embassy of the Free Mind &middot; Keizersgracht 123, 1015 CJ Amsterdam, Netherlands';
 
 // Fludd "most popular book" payoff image at the bottom. The Divine Monochord
 // (a divine hand tuning the string of the universe), quality 1.0, from Fludd's
@@ -169,7 +183,7 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
 
             <p style="margin:0 0 18px;">Hey friend,</p>
 
-            <p style="margin:0 0 18px;">Since we launched, more than 2,400 people have signed up &mdash; hundreds in a single day at our peak. Amazing&hellip; and welcome!</p>
+            <p style="margin:0 0 18px;">Since we launched, more than 3,600 people have signed up &mdash; hundreds in a single day at our peak. Amazing&hellip; and welcome!</p>
 
             <p style="margin:0 0 18px;">One of our most-read books is by <a href="${FLUDD_LINK}" style="color:#9e4a3a;">Robert Fludd</a> &mdash; and it is gorgeous. It's one of about 6,000 books we've translated for the first time in history. In total, we've translated over 15,000 books in Latin, Chinese, Sanskrit, Tibetan, etc. I hope you'll find amazing discoveries in our library of lost knowledge. If you do, please share it with me and your friends!</p>
 
@@ -203,7 +217,7 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
               <a href="${ig}" style="color:#9e4a3a;">Instagram</a> &nbsp;&middot;&nbsp;
               <a href="${ia}" style="color:#9e4a3a;">The article</a> &nbsp;&middot;&nbsp;
               <a href="${yt || 'https://sourcelibrary.org'}" style="color:#9e4a3a;">Launch video</a></p>
-            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.</p>
+            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.<br>${POSTAL_ADDRESS}</p>
           </td></tr>
         </table>
       </td></tr>
@@ -234,7 +248,7 @@ function renderEsPage({ ia, yt, ig = IG_URL }) {
 
             <p style="margin:0 0 18px;">Hola:</p>
 
-            <p style="margin:0 0 18px;">Desde que lanzamos la beta de Source Library, casi 2.000 personas se han registrado. El viernes pasado se registraron 600 en un solo día. Incre&iacute;ble&hellip; &iexcl;y bienvenido!</p>
+            <p style="margin:0 0 18px;">Desde que lanzamos la beta de Source Library, m&aacute;s de 3.600 personas se han registrado. Cientos en un solo d&iacute;a en nuestro punto m&aacute;ximo. Incre&iacute;ble&hellip; &iexcl;y bienvenido!</p>
 
             <p style="margin:0 0 18px;">Uno de nuestros libros m&aacute;s le&iacute;dos es de <a href="${FLUDD_PAGE_LINK}" style="color:#9e4a3a;">Robert Fludd</a>, y es una maravilla. Es uno de los cerca de 6.000 libros que hemos traducido por primera vez en la historia. En total, hemos traducido m&aacute;s de 15.000 libros en lat&iacute;n, chino, s&aacute;nscrito, tibetano, etc. Espero que encuentres descubrimientos asombrosos en nuestra biblioteca de conocimiento perdido. Si es as&iacute;, &iexcl;comp&aacute;rtela conmigo y con tus amigos!</p>
 
@@ -312,7 +326,7 @@ function renderConcise({ ia, yt, ig = IG_URL }) {
             <p style="margin:0 0 24px;">&mdash; Derek</p>
 
             <hr style="border:none;border-top:1px solid #e6e3dd;margin:0 0 14px;">
-            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.</p>
+            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.<br>${POSTAL_ADDRESS}</p>
           </td></tr>
         </table>
       </td></tr>
