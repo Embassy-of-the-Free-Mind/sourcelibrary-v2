@@ -103,10 +103,12 @@ function translationToTypst(text) {
   // Now escape Typst special chars (but not our %%FN%% placeholders)
   out = escapeTypst(out);
 
-  // Convert footnote placeholders to Typst footnotes
+  // Convert footnote placeholders to Typst footnotes. The trailing semicolon
+  // explicitly ends the code expression — without it, adjacent text like
+  // "#footnote[...].Feverish" parses as a field access and fails to compile
   for (let i = 0; i < footnotes.length; i++) {
     const escaped = escapeTypst(footnotes[i]);
-    out = out.replace(`%%FN${i}%%`, `#footnote[${escaped}]`);
+    out = out.replace(`%%FN${i}%%`, `#footnote[${escaped}];`);
   }
 
   // Remove markdown table rows (they don't render well — keep content)
