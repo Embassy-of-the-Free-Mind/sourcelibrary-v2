@@ -94,6 +94,7 @@
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.11",
+    "@types/pdfkit": "^0.17.6",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
