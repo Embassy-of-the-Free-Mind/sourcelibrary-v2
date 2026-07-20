@@ -242,7 +242,7 @@ const ROLE_STYLE: Record<EditionRef['role'], string> = {
   critical: 'bg-amber-50 text-amber-800 border-amber-200',
   princeps: 'bg-amber-50 text-amber-800 border-amber-200',
   manuscript: 'bg-violet-50 text-violet-800 border-violet-200',
-  source: 'bg-stone-100 text-stone-600 border-stone-200',
+  edition: 'bg-stone-100 text-stone-600 border-stone-200',
   translation: 'bg-green-50 text-green-700 border-green-200',
 };
 
@@ -260,8 +260,10 @@ function EditionRow({ edition }: { edition: EditionRef }) {
           {edition.title}
         </span>
         {edition.year && <span className="text-sm text-stone-400 tabular-nums">{edition.year}</span>}
-        {edition.translated && (
-          <span className="text-xs text-green-700">· readable in English</span>
+        {/* Only worth saying on a non-English edition — on an English translation it is
+            the same fact twice. */}
+        {edition.translated && edition.role !== 'translation' && (
+          <span className="text-xs text-green-700">· translated here</span>
         )}
         {edition.alsoCopies > 0 && (
           <span className="text-xs text-stone-400">

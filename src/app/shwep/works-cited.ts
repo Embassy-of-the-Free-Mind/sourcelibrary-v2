@@ -19,7 +19,7 @@ export type EditionRole =
   | 'critical'
   | 'princeps'
   | 'manuscript'
-  | 'source'
+  | 'edition'
   | 'translation';
 
 export interface EditionRef {
@@ -61,31 +61,44 @@ const NOT_AN_EDITION =
 
 const MANUSCRIPT =
   /\bms\.?\b|\bmss\b|\bcod(ex|\.)|\bpal\.\s?gr|\bvat\.\s?gr|manuscript|palimpsest|bodmer|houghton library|\bor\.\s?\d/i;
-const CRITICAL = /critical edition|kritische|teubner|oxford classical text|\bocT\b/i;
-const PRINCEPS = /editio princeps|aldine|incunabul/i;
+const CRITICAL = /critical[- ]edition|kritische|teubner|oxford classical text/i;
+const PRINCEPS = /editio[- ]princeps|aldine|incunabul/i;
 
-function classify(title: string, language: string): { role: EditionRole; roleLabel: string } {
+/**
+ * We deliberately do NOT claim which language a work was composed in. `text_role` is
+ * set to 'original' on Latin renderings of Greek works and `original_language` is
+ * absent or wrong (a Greek De mysteriis records original_language: Latin), so any
+ * "source text" badge derived from the book record would assert something false —
+ * the same error as presenting Ficino's Latin as though it were Iamblichus. A
+ * language is named; a claim about priority is left to the reader.
+ *
+ * The slug is matched alongside the title because an edition's scholarly character
+ * often survives only there (Parthey's critical text is titled just "On the
+ * Mysteries", and was ranked below three later Latin printings until we looked here).
+ */
+function classify(title: string, slug: string | null, language: string): { role: EditionRole; roleLabel: string } {
+  const hay = `${title} ${slug || ''}`;
   const lang = (language || '').trim();
   const isEnglish = /^english$/i.test(lang);
-  const langWord = lang && !isEnglish ? lang : 'English';
+  const langWord = lang && lang !== 'Unknown' ? lang : '';
 
-  if (CRITICAL.test(title)) return { role: 'critical', roleLabel: `${langWord} critical edition` };
-  if (PRINCEPS.test(title)) return { role: 'princeps', roleLabel: `${langWord} editio princeps` };
-  if (MANUSCRIPT.test(title)) return { role: 'manuscript', roleLabel: `${langWord} manuscript` };
-  if (!isEnglish) return { role: 'source', roleLabel: `${langWord} text` };
-  return { role: 'translation', roleLabel: 'English translation' };
+  if (CRITICAL.test(hay)) return { role: 'critical', roleLabel: `${langWord} critical edition`.trim() };
+  if (PRINCEPS.test(hay)) return { role: 'princeps', roleLabel: `${langWord} editio princeps`.trim() };
+  if (MANUSCRIPT.test(hay)) return { role: 'manuscript', roleLabel: `${langWord} manuscript`.trim() };
+  if (isEnglish) return { role: 'translation', roleLabel: 'English translation' };
+  return { role: 'edition', roleLabel: langWord ? `${langWord} edition` : 'Edition' };
 }
 
 /**
- * Ad fontes: a source-language witness outranks a later translation, and an edited or
- * hand-written witness outranks a reprint. The reader still needs something they can
- * read, so `pickForDisplay` re-admits a translation below.
+ * An edited or hand-written witness outranks a later reprint; among plain printings the
+ * earliest goes first. The reader still needs something they can actually read, so
+ * `pickForDisplay` re-admits a translation below.
  */
 const ROLE_RANK: Record<EditionRole, number> = {
   critical: 100,
   princeps: 90,
   manuscript: 75,
-  source: 55,
+  edition: 55,
   translation: 30,
 };
 
@@ -166,7 +179,7 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       const title = m.display_title || m.title || h.title;
       if (NOT_AN_EDITION.test(title)) continue;
       const language = m.language || h.language || 'Unknown';
-      const { role, roleLabel } = classify(title, language);
+      const { role, roleLabel } = classify(title, h.slug, language);
       refs.push({
         id: h.id,
         title,
