@@ -1,4 +1,4 @@
-# OCR re-run regression candidates — top 200 (2026-07-19)
+# OCR re-run regression candidates — top 200 (2026-07-20)
 
 Pairs where the re-OCR **disagrees** with what it replaced (agreement < 0.5) **and**
 lost most of the text (current < 60% of prior length). This is the shape of "re-OCR
