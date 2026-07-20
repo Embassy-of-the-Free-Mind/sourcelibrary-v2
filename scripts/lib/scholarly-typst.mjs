@@ -456,7 +456,9 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
 
   try {
     execSync(`typst compile "${typFile}" "${pdfFile}"`, {
-      timeout: 60000,
+      // Large books legitimately take minutes, and a loaded machine (this box
+      // often runs concurrent pipeline jobs) stretches that further
+      timeout: 300000,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 
