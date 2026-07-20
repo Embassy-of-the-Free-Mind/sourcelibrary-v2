@@ -128,7 +128,7 @@ export default async function EpisodePage({ params }: Props) {
             <p className="text-sm text-stone-500 mb-6">
               {heldWorks.length} work{heldWorks.length !== 1 ? 's' : ''} discussed in this episode {heldWorks.length !== 1 ? 'are' : 'is'} held here,
               in {heldWorks.reduce((n, w) => n + w.editions.length + w.moreEditions.length, 0)} editions.
-              Where several editions survive, they are listed together — the source text, the early printings, and the translations are different objects.
+              Where several editions survive they are listed together, because a manuscript, an early printing and a later translation are different objects.
             </p>
             <ul className="space-y-5">
               {heldWorks.map(w => (

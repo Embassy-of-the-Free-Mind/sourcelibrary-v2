@@ -60,7 +60,7 @@ const NOT_AN_EDITION =
   /catalogus librorum|catalogue of (the )?(books|library)|bibliotheca \w+(iana|ana) sive|sale catalog|auction catalog/i;
 
 const MANUSCRIPT =
-  /\bms\.?\b|\bmss\b|\bcod(ex|\.)|\bpal\.\s?gr|\bvat\.\s?gr|manuscript|palimpsest|bodmer|houghton library|\bor\.\s?\d/i;
+  /\bms\.?\b|\bmss\b|\bcod(ex|\.)|\bpal\.\s?gr|\bvat\.\s?gr|manuscript|palimpsest|bodmer|houghton library|\bor\.\s?\d|\bfolios?\b/i;
 const CRITICAL = /critical[- ]edition|kritische|teubner|oxford classical text/i;
 const PRINCEPS = /editio[- ]princeps|aldine|incunabul/i;
 
