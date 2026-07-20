@@ -365,7 +365,6 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   literature: 'Literatura y poesía',
   herbalism: 'Herbolaria y botánica',
   'music-sound': 'Música y sonido',
-  shwep: 'Sala de lectura SHWEP',
 };
 
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {

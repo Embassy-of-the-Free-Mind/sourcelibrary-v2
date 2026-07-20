@@ -746,9 +746,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   }, [viewMode, performSearch, updateUrl, startAiStream]);
 
   // Known-entity capture (#2790): a query that names a place in the library (a
-  // reading room like "shwep", a collection, a library partner) gets a direct
+  // collection, a library partner, a bespoke landing page) gets a direct
   // entry card above results instead of being left to the LLM's guess. Suppressed
-  // in embed/tenant mode — these hrefs (/shwep, /collections, /libraries) point
+  // in embed/tenant mode — these hrefs (/collections, /libraries) point
   // off-tenant and would leak past the subdomain lockdown.
   const knownEntity = useMemo(
     () => (embed ? null : matchKnownEntity(query, { collections: collectionsList })),

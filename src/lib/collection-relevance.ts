@@ -36,7 +36,6 @@ const COLLECTIONS = [
   { slug: 'music-harmony', name: 'Music, Harmony & Resonance', desc: 'Music theory, Pythagorean harmonics, acoustic science' },
   { slug: 'herbalism', name: 'Herbalism & Botany', desc: 'Herbals, materia medica, botanical illustration, plant taxonomy' },
   { slug: 'leonardo-da-vinci', name: 'Leonardo da Vinci', desc: 'Manuscripts, codices, treatises by Leonardo da Vinci' },
-  { slug: 'shwep', name: 'SHWEP Reading Room', desc: 'Primary sources discussed on the Secret History of Western Esotericism Podcast' },
 ];
 
 const TRADITIONS = [
