@@ -26,6 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${ep.title} - SHWEP Reading Room`,
     description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,
+    // See the note in ../page.tsx: an alias domain does not inherit the preview
+    // deployment's noindex, and this branch is shown privately pending the SHWEP's
+    // author's say-so.
+    robots: { index: false, follow: false },
     alternates: { canonical: `/shwep/${ep.number}` },
     openGraph: {
       images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],

@@ -8,9 +8,15 @@ import SiteHeader from '@/components/layout/SiteHeader';
 export const revalidate = 21600;
 export const maxDuration = 60;
 
+// This branch exists to show the reading room privately to the SHWEP's author, who
+// found the public version through a search engine and objected to it existing at all.
+// A Vercel *alias* domain does NOT inherit the deployment URL's `x-robots-tag: noindex`
+// and serves the site's normal permissive robots.txt, so the guard has to live in the
+// page. Removing it would risk indexing the page again while its future is unsettled.
 export const metadata: Metadata = {
   title: 'SHWEP Reading Room - Source Library',
   description: 'Read the primary sources discussed on the Secret History of Western Esotericism Podcast. Browse episodes and access original texts in Latin, Greek, and other languages.',
+  robots: { index: false, follow: false },
   alternates: { canonical: '/shwep' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
