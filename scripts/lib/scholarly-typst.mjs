@@ -125,7 +125,8 @@ function translationToTypst(text) {
 
 function escapeTypst(text) {
   // Escape characters special in Typst content mode
-  return text
+  // Coerce non-strings: fields like ustc_id are stored as numbers on some books
+  return String(text ?? '')
     .replace(/\\/g, '\\\\')
     .replace(/#/g, '\\#')
     .replace(/\$/g, '\\$')
@@ -136,7 +137,13 @@ function escapeTypst(text) {
     .replace(/\[/g, '\\[')
     .replace(/\]/g, '\\]')
     .replace(/_/g, '\\_')
-    .replace(/\*/g, '\\*');
+    .replace(/\*/g, '\\*')
+    // // and /* open Typst comments even in content mode: // silently eats
+    // the rest of the line (and any closing ] of an enclosing #footnote)
+    .replace(/\/\//g, '\\/\\/')
+    .replace(/\/\*/g, '\\/\\*')
+    // backtick opens a Typst raw block and swallows everything to the next one
+    .replace(/`/g, '\\`');
 }
 
 function markdownToTypst(md) {
@@ -146,6 +153,10 @@ function markdownToTypst(md) {
   // ## Heading → = Heading (Typst level 2 since we use = for title)
   out = out.replace(/^### (.+)$/gm, '=== $1');
   out = out.replace(/^## (.+)$/gm, '== $1');
+
+  // Markdown `*` bullets → `-` bullets BEFORE emphasis conversion,
+  // so a bullet asterisk can't pair with an italic asterisk on the same line
+  out = out.replace(/^(\s*)\*\s+/gm, '$1- ');
 
   // **bold** → *bold*
   out = out.replace(/\*\*(.+?)\*\*/g, '*$1*');
@@ -164,6 +175,20 @@ function markdownToTypst(md) {
   out = out.replace(/@/g, '\\@');
   out = out.replace(/(?<!\\)<(?![a-z])/g, '\\<');
   out = out.replace(/(?<![a-z])>(?!])/g, '\\>');
+
+  // Typst comment-openers in prose (e.g. https:// URLs) silently eat the
+  // rest of the line — escape them
+  out = out.replace(/\/\//g, '\\/\\/');
+  out = out.replace(/\/\*/g, '\\/\\*');
+
+  // Unclosed-delimiter guard: any line left with an odd number of * or _
+  // (AI markdown variance) would make Typst fail to compile — escape them
+  out = out.split('\n').map(line => {
+    if (((line.match(/(?<!\\)\*/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)\*/g, '\\*');
+    if (((line.match(/(?<!\\)_/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)_/g, '\\_');
+    if (((line.match(/(?<!\\)`/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)`/g, '\\`');
+    return line;
+  }).join('\n');
 
   return out;
 }
