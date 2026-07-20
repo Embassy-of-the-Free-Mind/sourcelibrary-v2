@@ -180,7 +180,7 @@ interface TranslationEditorProps {
   page: Page;
   pages: Page[];
   currentIndex: number;
-  onNavigate: (pageId: string) => void;
+  onNavigate: (pageId: string, opts?: { toTop?: boolean }) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
   onRefresh?: () => Promise<void>;
 }
@@ -934,10 +934,13 @@ export default function TranslationEditor({
     const deltaX = swipeOffset * 2; // Reverse the 0.5 multiplier
 
     if (!hasSelection && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      // A swipe always lands at the top of the new page. The section-preserving
+      // scroll (keep the reader in the OCR/translation panel across a flip) is
+      // for button/keyboard nav; on a swipe it read as "lands mid-page" (#3085).
       if (deltaX > 0 && previousPage) {
-        onNavigate(previousPage.id);
+        onNavigate(previousPage.id, { toTop: true });
       } else if (deltaX < 0 && nextPage) {
-        onNavigate(nextPage.id);
+        onNavigate(nextPage.id, { toTop: true });
       }
     }
 
