@@ -309,6 +309,20 @@ function WorkEntry({ entry }: { entry: CitedWorkEntry }) {
         <p className="text-[15px] text-stone-600 mt-2 leading-relaxed">{entry.note}</p>
       )}
 
+      {/* The point of the whole page: land on the passage, not the front of a folio.
+          Only present when a second pass confirmed this page's own text holds it. */}
+      {entry.passage && (
+        <Link
+          href={entry.passage.url}
+          className="group inline-flex items-baseline gap-1.5 mt-2 text-[15px] text-accent-rust font-medium hover:underline underline-offset-2"
+        >
+          Read the cited passage
+          <span className="text-sm font-normal text-stone-500 group-hover:text-stone-600">
+            p.{entry.passage.pageNumber} · {entry.passage.edition}
+          </span>
+        </Link>
+      )}
+
       <ul className="mt-3">
         {entry.editions.map(e => <EditionRow key={e.id} edition={e} />)}
       </ul>

@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { SHWEP_CITED_WORKS } from '@/data/shwep-cited-works';
 import { SHWEP_WORK_LANGUAGES } from '@/data/shwep-work-languages';
 import { SHWEP_WORK_NOTES } from '@/data/shwep-work-notes';
+import { SHWEP_RESOLVED_LOCI } from '@/data/shwep-resolved-loci';
 
 /**
  * Works cited in a SHWEP episode, rendered as a bibliography rather than as the
@@ -49,6 +50,12 @@ export interface CitedWorkEntry {
   workLanguage?: string;
   /** What this episode cites the work for, compressed from the episode's own works-cited prose. */
   note?: string;
+  /**
+   * The page the citation points at, in an edition we hold — verified against the real
+   * page text before being written. Absent when it could not be confirmed, in which case
+   * the reader still gets the volume.
+   */
+  passage?: { url: string; pageNumber: number; edition: string };
   held: boolean;
   /** The editions worth showing up front, already ordered. */
   editions: EditionRef[];
@@ -204,6 +211,7 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
   for (const w of works) {
     const workLanguage = SHWEP_WORK_LANGUAGES[`${w.author}|${w.work}`];
     const note = SHWEP_WORK_NOTES[`${episodeNumber}|${w.author}|${w.work}`];
+    const loc = SHWEP_RESOLVED_LOCI[`${episodeNumber}|${w.author}|${w.work}`];
     const refs: EditionRef[] = [];
     for (const h of w.held) {
       const m = meta.get(h.id);
@@ -235,6 +243,15 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       era: w.era,
       workLanguage: workLanguage && workLanguage !== 'Unknown' ? workLanguage : undefined,
       note: note || undefined,
+      passage: loc
+        ? {
+            // The reader route takes a page ID, never a page number — a number renders a
+            // soft-404 (HTTP 200 with a "Page Not Found" body).
+            url: `/book/${loc.slug || loc.bookId}/page/${loc.pageId}`,
+            pageNumber: loc.pageNumber,
+            edition: loc.title,
+          }
+        : undefined,
       held: editions.length > 0,
       editions,
       moreEditions,
