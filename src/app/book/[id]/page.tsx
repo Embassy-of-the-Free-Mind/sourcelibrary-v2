@@ -858,32 +858,33 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
       const partner = provider ? getPartnerByProvider(provider) : undefined;
       if (!partner || !embedPolicy.showBookRelatedBooks) return null;
-      try {
-        const [all, translated, languages] = await Promise.all([
-          browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12, exactCount: true } as Parameters<typeof browseBooks>[0]),
-          browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]).catch(() => ({ total: 0, books: [] })),
-          getLanguageCounts({ provider: partner.providerKey }).catch(() => [] as Array<{ lang: string; count: number }>),
-        ]);
-        if (all.total < 2) return null; // not worth a "collection" callout for a lone book
-        const covers = all.books
-          .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
-          .slice(0, 12)
-          .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
-        const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
-        return {
-          slug: partner.slug,
-          name: partner.name,
-          shortName: partner.shortName,
-          url: partner.url,
-          description: partner.description,
-          color: partner.color,
-          image,
-          stats: { books: all.total, languages: languages.length, translated: translated.total },
-          covers,
-        };
-      } catch {
-        return null;
-      }
+      // Each query is timeout-guarded and independently caught so a slow/failing
+      // one (e.g. an exact count over a huge provider like Internet Archive)
+      // never nulls the whole section — we degrade a stat, not the feature.
+      const guard = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
+        Promise.race([p, new Promise<T>((res) => setTimeout(() => res(fallback), 3500))]).catch(() => fallback);
+      const [all, translated, languages] = await Promise.all([
+        guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12 }), { books: [] as CatalogBook[], total: 0 }),
+        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1 }), { total: 0, books: [] as CatalogBook[] }),
+        guard(getLanguageCounts({ provider: partner.providerKey }), [] as Array<{ lang: string; count: number }>),
+      ]);
+      if (all.total < 2) return null; // not worth a "collection" callout for a lone book
+      const covers = all.books
+        .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
+        .slice(0, 12)
+        .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
+      const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
+      return {
+        slug: partner.slug,
+        name: partner.name,
+        shortName: partner.shortName,
+        url: partner.url,
+        description: partner.description,
+        color: partner.color,
+        image,
+        stats: { books: all.total, languages: languages.length, translated: translated.total },
+        covers,
+      };
     })();
 
     const impressum = (() => {
