@@ -51,6 +51,7 @@ function observation(gt, source, runId, model, runIndex, text, extra = {}) {
     (alt_scores ??= {})[alt.name] = {
       aligned: a.aligned, guard_value: +a.guard.value.toFixed(4),
       char_accuracy_raw: +a.charAccuracy.toFixed(4),
+      char_accuracy_windowed: a.charAccuracyWindowed == null ? null : +a.charAccuracyWindowed.toFixed(4),
     };
   }
   return {
@@ -66,6 +67,15 @@ function observation(gt, source, runId, model, runIndex, text, extra = {}) {
     // roll-ups can report expected accuracy without alignment-survivorship bias.
     // Interpret with care — on unaligned runs this may score a coincidental match.
     char_accuracy_raw: +r.charAccuracy.toFixed(4),
+    // WINDOWED accuracy (PR #3304): the LOWER bound to char_accuracy's UPPER one.
+    // Free-skip inflation scales with output verbosity (12.9pp for Tesseract vs
+    // 5.7pp for Gemini on these pages), so it does NOT cancel when models or
+    // engines are differenced. Quote the pair, never one alone.
+    char_accuracy_windowed: r.charAccuracyWindowed == null ? null : +r.charAccuracyWindowed.toFixed(4),
+    // Width of the bracket = how much non-reference material sits inside the
+    // passage span. Small on clean single-column pages, large where apparatus
+    // interleaves with the text.
+    bracket_width: r.charAccuracyWindowed == null ? null : +(r.charAccuracy - r.charAccuracyWindowed).toFixed(4),
     span_dispersion: r.spanDispersion,
     output_norm_chars: norm(gt, text).length,
     ...(alt_scores ? { alt_scores } : {}),
