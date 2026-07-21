@@ -46,6 +46,13 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 
 // ---------- Static params ----------
 
+// Self-heal window. Without a numeric revalidate, a generateStaticParams page is
+// baked ONCE at build time — and if the build-time catalog query flaked (an
+// exactCount timeout over a big provider returns an EMPTY result, not a throw),
+// the empty grid froze into the static page forever (the anti-pattern CLAUDE.md
+// warns about). ISR re-renders in the background so the grid recovers.
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   return getAllPartnerSlugs().map(slug => ({ slug }));
 }
@@ -92,15 +99,19 @@ async function fetchLibraryData(
     browseBooks({
       provider: providerKey,
       language: language || undefined,
-      hasTranslation: true,
+      // Show ALL of the library's holdings — not only translated ones (that
+      // hid every book for art/untranslated collections like the Met). Include
+      // artworks (hasPages:false, since single-object items have pages_count:0).
+      hasPages: false,
       search: q && q.length >= 2 ? q : undefined,
       sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
       offset,
       limit: PER_PAGE_LOCAL,
-      exactCount: true,
+      // NOT exactCount: an exact count over a big provider times out and returns
+      // an empty page (see revalidate note above). Estimated is fast + safe.
     }),
     getLanguageCounts({ provider: providerKey }),
-    browseBooks({ provider: providerKey, hasTranslation: true, sort: 'popular', limit: 50 }),
+    browseBooks({ provider: providerKey, hasPages: false, sort: 'popular', limit: 50 }),
   ]);
 
   const sampleBookIds = sampleResult.books.map(b => b.id);
