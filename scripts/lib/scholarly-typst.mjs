@@ -17,6 +17,7 @@ import { writeFileSync, readFileSync, unlinkSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
+import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
@@ -39,7 +40,11 @@ function translationToTypst(text) {
     ''
   );
 
-  // Remove AI preambles
+  // Remove AI preambles — the canonical guard (#3108) catches conversational
+  // openers ("Note: the text in the image is in French...") that the narrow
+  // regex below misses; it runs after tag removal so a leading tag can't mask
+  // the preamble, and it leaves inline tags intact for footnote extraction
+  out = cleanOcrArtifacts(out);
   out = out.replace(/^(?:Okay,?\s*)?(?:Here(?:'s| is) (?:the|my) (?:translation|modernization|transcription)[\s\S]*?:\s*\n+)/i, '');
 
   // Helper: clean raw tag content for use in footnotes

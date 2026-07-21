@@ -353,12 +353,7 @@ Rules:
 - Do NOT fabricate biographical details, publication histories, or scholarly reception you are not confident about
 - Do NOT claim human editorial review occurred
 - Do NOT include any preamble — start directly with the first heading
-- If you include a claim about historical influence or reception, it should be something a scholar could verify
-- Do NOT name printers, publishers, patrons, or dedicatees unless they appear in the BIBLIOGRAPHIC DATA above — a 2026 audit of earlier editions found invented imprint details were the #1 error class
-- Do NOT give specific dates/cities/printers for OTHER editions of the work unless you are certain; write "later editions followed" instead
-- Do NOT claim specific named individuals owned, studied, or were influenced by this work unless the connection is famous and well documented
-- Do NOT assert provenance of this particular copy (former owners, famous libraries)
-- If the edition date in the BIBLIOGRAPHIC DATA conflicts with the work's known publication history, do not invent a reconciliation — describe the work generally and refer to "this edition" without dating other printings`;
+- If you include a claim about historical influence or reception, it should be something a scholar could verify`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();
