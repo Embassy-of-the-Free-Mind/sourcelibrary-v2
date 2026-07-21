@@ -216,14 +216,32 @@ const yearBucket = y => {
 
 // ── streaming accumulators (never hold the rows in memory) ───────
 class Stat {
-  constructor() { this.n = 0; this.sum = 0; this.low = 0; this.high = 0; this.hist = new Array(BUCKETS.length - 1).fill(0); }
+  constructor() {
+    this.n = 0; this.sum = 0; this.low = 0; this.high = 0;
+    this.hist = new Array(BUCKETS.length - 1).fill(0);
+    // 1000-bin ladder over [0,1] for streaming quantiles. The agreement
+    // distribution is heavily LEFT-TAILED — a catastrophic minority drags the mean
+    // far below the typical pair (corpus: mean 87.0%, median 98.1%) — so the mean
+    // alone misdescribes it. Quantiles are exact to 0.1pp, which is finer than any
+    // claim made from them.
+    this.fine = new Int32Array(1000);
+  }
   add(x) {
     this.n++; this.sum += x;
     if (x < 0.5) this.low++;
     if (x >= 0.95) this.high++;
     for (let i = 0; i < BUCKETS.length - 1; i++) if (x >= BUCKETS[i] && x < BUCKETS[i + 1]) { this.hist[i]++; break; }
+    this.fine[Math.max(0, Math.min(999, Math.floor(x * 1000)))]++;
   }
   get mean() { return this.n ? this.sum / this.n : NaN; }
+  quantile(q) {
+    if (!this.n) return NaN;
+    const target = q * this.n;
+    let cum = 0;
+    for (let i = 0; i < 1000; i++) { cum += this.fine[i]; if (cum >= target) return (i + 0.5) / 1000; }
+    return 1;
+  }
+  get median() { return this.quantile(0.5); }
 }
 const BUCKETS = [0, 0.5, 0.7, 0.85, 0.95, 1.01];
 const strata = {}; // name -> Map(key -> Stat)
@@ -490,7 +508,7 @@ async function main() {
   const strataOut = {};
   for (const [dim, m] of Object.entries(strata)) {
     strataOut[dim] = [...m.entries()]
-      .map(([key, s]) => ({ key, n: s.n, mean_agreement: +s.mean.toFixed(4), pct_low: +(s.low / s.n).toFixed(4), pct_high: +(s.high / s.n).toFixed(4) }))
+      .map(([key, s]) => ({ key, n: s.n, mean_agreement: +s.mean.toFixed(4), median_agreement: +s.median.toFixed(4), pct_low: +(s.low / s.n).toFixed(4), pct_high: +(s.high / s.n).toFixed(4) }))
       .sort((a, b) => b.n - a.n);
   }
 
@@ -514,6 +532,9 @@ async function main() {
       marginalia_pairs_scored: margStat.n,
       eligible_pairs: overall.n,
       mean_agreement: +overall.mean.toFixed(4),
+      median_agreement: +overall.median.toFixed(4),
+      p25_agreement: +overall.quantile(0.25).toFixed(4),
+      p75_agreement: +overall.quantile(0.75).toFixed(4),
       mean_agreement_word_only: +overallWord.mean.toFixed(4),
       histogram: Object.fromEntries(overall.hist.map((h, i) => [`${BUCKETS[i]}-${Math.min(BUCKETS[i + 1], 1)}`, h])),
       regressions: regressions.length,
@@ -530,9 +551,9 @@ async function main() {
   const table = (dim, title, minN = 30) => {
     const rows = (strataOut[dim] || []).filter(r => r.n >= minN);
     if (!rows.length) return '';
-    rows.sort((a, b) => a.mean_agreement - b.mean_agreement);
-    return [`### ${title}`, '', '| stratum | n | mean agreement | % <0.5 | % ≥0.95 |', '|---|---:|---:|---:|---:|',
-      ...rows.map(r => `| ${r.key} | ${r.n.toLocaleString()} | ${(r.mean_agreement * 100).toFixed(1)}% | ${(r.pct_low * 100).toFixed(1)}% | ${(r.pct_high * 100).toFixed(1)}% |`), ''].join('\n');
+    rows.sort((a, b) => a.median_agreement - b.median_agreement);
+    return [`### ${title}`, '', '| stratum | n | median | mean | % <0.5 | % ≥0.95 |', '|---|---:|---:|---:|---:|---:|',
+      ...rows.map(r => `| ${r.key} | ${r.n.toLocaleString()} | ${(r.median_agreement * 100).toFixed(1)}% | ${(r.mean_agreement * 100).toFixed(1)}% | ${(r.pct_low * 100).toFixed(1)}% | ${(r.pct_high * 100).toFixed(1)}% |`), ''].join('\n');
   };
   const md = [
     `# OCR revision agreement — full corpus (${DATE})`, '',
@@ -567,7 +588,8 @@ async function main() {
     `Pairs where either side is an untagged AI refusal or preamble: **${refusals.toLocaleString()}** —`,
     `kept (a refusal replacing a transcription is a genuine regression), counted here.`, '',
     `**Eligible pairs: ${overall.n.toLocaleString()}.**`,
-    `- mean agreement (primary — char-level on space-less scripts, word-level elsewhere): **${(overall.mean * 100).toFixed(1)}%**`,
+    `- **median agreement ${(overall.median * 100).toFixed(1)}%** (p25 ${(overall.quantile(0.25) * 100).toFixed(1)}%, p75 ${(overall.quantile(0.75) * 100).toFixed(1)}%) — primary metric: char-level on space-less scripts, word-level elsewhere`,
+    `- mean agreement ${(overall.mean * 100).toFixed(1)}% — QUOTE THE MEDIAN, not this. The distribution is heavily left-tailed: a catastrophic minority drags the mean ~11pp below the typical pair.`,
     `- mean agreement, pilot-parity word metric on every script: ${(overallWord.mean * 100).toFixed(1)}% — the gap is the CJK/Tibetan tokenization artifact`,
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
     `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
