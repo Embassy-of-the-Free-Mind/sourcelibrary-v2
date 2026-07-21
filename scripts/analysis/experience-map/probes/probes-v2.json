@@ -1,0 +1,186 @@
+{
+  "_note": "Probe set v2. Changes from v1: (a) sixteen new dimensions covering states the modern instruments (MEQ30/5D-ASC/Hood) have no items for but the historical record documents heavily; (b) four probes per dimension instead of three; (c) rewritten probes for the four v1 dimensions that under-retrieved because the probe sentences were bad, not because the corpus was thin — dream_incubation (13 hits), possession (15), synesthesia (32), time (46). Probes are written as first-person report sentences in period-plausible register, because retrieval matches passages and we want experiential voice rather than topic vocabulary.",
+  "dimensions": [
+    { "id": "unity", "label": "Unity / ego dissolution", "source": "MEQ30; 5D-ASC OBN", "probes": [
+      "I felt myself dissolve and become one with everything around me",
+      "the boundary between myself and the world fell away entirely",
+      "I no longer knew whether I existed as a separate person",
+      "all things appeared to me as a single undivided whole"] },
+    { "id": "light", "label": "Inner light / photism", "source": "Hood M-scale", "probes": [
+      "a great light appeared to me though my eyes were closed",
+      "I was surrounded by a brightness clearer than the noonday sun",
+      "the darkness opened and a shining splendour poured in upon me",
+      "a light not of this world shone about me and I could not look upon it"] },
+    { "id": "ineffability", "label": "Ineffability", "source": "MEQ30", "probes": [
+      "what I saw cannot be set down in any words of ours",
+      "no tongue could utter and no pen could write what was shown to me",
+      "I lack all speech to declare that which I then perceived",
+      "were I to speak of it a thousand years I should not have told the half"] },
+    { "id": "noetic", "label": "Noetic quality / revealed knowing", "source": "MEQ30", "probes": [
+      "in that moment I knew with utter certainty, without being taught",
+      "the whole of it was made plain to me at once, as knowledge given not learned",
+      "I understood the secret in an instant and doubted it no more",
+      "it was shown to me, and I saw that it had always been so"] },
+    { "id": "time", "label": "Time distortion / timelessness", "source": "5D-ASC; MEQ30", "probes": [
+      "an hour seemed to me a hundred years",
+      "I was outside of time altogether and knew neither before nor after",
+      "when I came to myself I found that a whole night had passed as a moment",
+      "past and future stood before me together as one present thing"] },
+    { "id": "sacred_awe", "label": "Sacredness, awe, reverence", "source": "MEQ30", "probes": [
+      "a trembling reverence came over me and I fell upon my face",
+      "I was filled with an awe such as I had never known in my life",
+      "sweetness and joy beyond all earthly delight flooded my heart",
+      "my hair stood up and a holy fear took hold of my whole body"] },
+    { "id": "dread", "label": "Anxious ego dissolution / terror", "source": "5D-ASC AED", "probes": [
+      "a horror without cause seized me and I thought I should die",
+      "I was afraid though nothing was there to be afraid of",
+      "I felt myself falling into an abyss and could not cry out",
+      "a nameless dread came upon me in the darkness and I could not move"] },
+    { "id": "vision_encounter", "label": "Visionary encounter with a presence", "source": "historical", "probes": [
+      "there stood before me a figure whom I knew was not of this world",
+      "an angel appeared to me and spoke, and I heard the words plainly",
+      "I beheld a form of great beauty which addressed me by name",
+      "the appearance of a man stood over against me and I was afraid"] },
+    { "id": "voice", "label": "Heard voice attributed elsewhere", "source": "historical; clinical", "probes": [
+      "I heard a voice within me that was not my own",
+      "words were spoken to me inwardly which I did not compose",
+      "a voice sounded in my ear, and yet no man was present",
+      "I heard my name called distinctly when there was nobody by"] },
+    { "id": "ascent", "label": "Ascent / celestial journey", "source": "Hekhalot, Hermetic, shamanic", "probes": [
+      "I was carried upward through the spheres and saw the heavens opened",
+      "my spirit was lifted out of my body and travelled far away",
+      "I passed through gate after gate rising ever higher",
+      "I was borne aloft and looked down upon the earth as a small thing"] },
+    { "id": "body_alienation", "label": "Body dissolution / disembodiment", "source": "5D-ASC; OBE", "probes": [
+      "I could no longer feel my limbs nor tell where my body ended",
+      "I saw my own body lying below me as if it belonged to another",
+      "my flesh became as if it were not mine at all",
+      "I seemed to stand beside myself and watch my own person"] },
+    { "id": "synesthesia", "label": "Cross-modal perception", "source": "5D-ASC", "probes": [
+      "I saw the sounds as colours moving before me",
+      "the music appeared to me in shapes and figures",
+      "every colour had its own voice and sang to me",
+      "the odour of it had a colour, and the colour a taste, all mingled together"] },
+    { "id": "elementary_imagery", "label": "Elementary geometric imagery", "source": "5D-ASC; form constants", "probes": [
+      "figures and patterns turned continually before my closed eyes",
+      "I saw wheels within wheels and circles of fire revolving",
+      "colours and geometrical shapes rose up unbidden before my sight",
+      "lattices and gratings of light spread themselves over everything I looked at"] },
+    { "id": "possession", "label": "Possession / agency displacement", "source": "historical", "probes": [
+      "another moved my hand and I only watched it write",
+      "a spirit entered into me and used my tongue to speak",
+      "I was no longer the one acting, though the deed was done through me",
+      "something within me spoke and answered the questions put to it, and I could not stop it"] },
+    { "id": "dream_incubation", "label": "Dream / hypnagogic vision", "source": "historical", "probes": [
+      "as I lay between sleeping and waking there came to me a vision",
+      "in a dream of the night it was shown to me plainly",
+      "I slept in the temple that I might receive an answer in a dream",
+      "I dreamed a dream and behold, and when I awoke the thing remained with me"] },
+    { "id": "melancholy", "label": "Melancholy, desolation, dark night", "source": "historical", "probes": [
+      "a heaviness lay upon my soul and all light was withdrawn from me",
+      "I was left utterly dry and could find no comfort in anything",
+      "for many days I lived in a darkness of spirit without cause",
+      "God had hidden his face from me and I could not pray at all"] },
+    { "id": "substance", "label": "Substance-induced states", "source": "historical", "probes": [
+      "after taking the draught my senses were wholly altered",
+      "having eaten of it, I fell into a laughter I could not govern, and strange fancies rose in me",
+      "the smoke being taken, I was transported and knew not where I was",
+      "I had taken the opium, and there followed such visions as I cannot describe"] },
+    { "id": "concentration", "label": "Absorbed concentration", "source": "contemplative technique", "probes": [
+      "my mind became fixed upon one point and would not wander",
+      "I held the image steady before my inner eye without effort",
+      "thought grew still and quiet until nothing stirred in me",
+      "so intent was I upon it that I heard nothing said to me"] },
+    { "id": "clarity_cessation", "label": "Luminous emptiness / cessation", "source": "Tibetan, Advaita", "probes": [
+      "the mind rested in its own nature, empty and clear",
+      "there was awareness without any object of awareness",
+      "all appearance ceased and yet knowing remained",
+      "like the sky, without centre or edge, luminous and unobstructed"] },
+    { "id": "bodily_heat", "label": "Bodily energetic phenomena", "source": "kundalini, tummo, ardour", "probes": [
+      "a heat rose up along my spine and filled my whole body",
+      "I felt a burning sweetness in my breast that was not a fever",
+      "a power moved within me from below upward like a flame",
+      "my body glowed with warmth though I sat naked in the snow"] },
+
+    { "id": "felt_presence", "label": "Felt presence of another", "source": "NEW — absent from modern instruments", "probes": [
+      "I felt certain that someone was in the room, though I saw no one",
+      "there was a presence beside me which I could not see but could not doubt",
+      "I knew myself to be accompanied, though I walked alone",
+      "something stood behind me and I dared not turn my head"] },
+    { "id": "sleep_paralysis", "label": "Sleep paralysis / night pressure", "source": "NEW — the incubus/mare complaint", "probes": [
+      "I awoke and could not move a limb, and a weight pressed upon my chest",
+      "the nightmare sat upon me and I could neither speak nor stir",
+      "I lay awake in terror while something held me down",
+      "I would cry out but no sound came, and I was as one bound"] },
+    { "id": "near_death", "label": "Near-death and revival", "source": "NEW", "probes": [
+      "I was taken for dead, and when I revived I told what I had seen",
+      "in my extremity I passed through a darkness and came out into light",
+      "my soul departed a little way from my body and was brought back again",
+      "they thought me dead three days, and I had been in another place"] },
+    { "id": "vision_of_dead", "label": "Apparition of the dead / grief-vision", "source": "NEW", "probes": [
+      "my mother appeared to me after her death and spoke with me",
+      "the dead came to me in the night and I knew him at once",
+      "he stood at the foot of my bed as plainly as in life, and he had been buried",
+      "since her death she has come to me often, and I am not afraid"] },
+    { "id": "fever_delirium", "label": "Fever, delirium, sickness-vision", "source": "NEW", "probes": [
+      "in the height of the fever I saw things that were not in the room",
+      "my sickness brought strange fancies which I believed while they lasted",
+      "in my delirium I spoke to people who were not there",
+      "the walls seemed to breathe and the figures on them moved as I lay ill"] },
+    { "id": "erotic_union", "label": "Erotic / nuptial union", "source": "NEW — mystical eros", "probes": [
+      "he embraced my soul as a bridegroom his bride",
+      "a wound of love pierced me and the pain was sweeter than any pleasure",
+      "I was ravished and melted wholly into the beloved",
+      "my soul was drunk with love and desired nothing else forever"] },
+    { "id": "pain_ordeal", "label": "Pain, ordeal, childbirth", "source": "NEW", "probes": [
+      "in the extremity of the pain I left myself and felt nothing",
+      "under the torment my mind went elsewhere and I was not there",
+      "in the throes of the birth I saw and heard things strangely",
+      "the pain was such that I no longer knew who was suffering it"] },
+    { "id": "unsourced_music", "label": "Music heard with no source", "source": "NEW", "probes": [
+      "I heard a music sweeter than any instrument, and none was playing",
+      "there was singing in the air about me and I could not tell whence it came",
+      "a harmony sounded through the house at the hour of his death",
+      "such melody filled my ears that all earthly music seemed harsh after it"] },
+    { "id": "animal_transformation", "label": "Transformation / animal form", "source": "NEW", "probes": [
+      "it seemed to me that I had become a beast and ran upon all fours",
+      "I felt my body change its shape and take another form",
+      "in that state I flew as a bird flies and saw with a bird's eyes",
+      "she confessed that she went out at night in the likeness of a wolf"] },
+    { "id": "mesmeric_trance", "label": "Magnetic / mesmeric trance", "source": "NEW", "probes": [
+      "under the passes of the magnetiser I fell into a deep sleep and yet answered",
+      "in the magnetic state she saw with her eyes closed and described distant things",
+      "being entranced, I obeyed without willing it and remembered nothing after",
+      "the somnambulist described the interior of her own body while sleeping"] },
+    { "id": "sensory_deprivation", "label": "Darkness, solitude, retreat", "source": "NEW", "probes": [
+      "shut in the dark cell for many days, I began to see and hear things",
+      "in that long solitude my mind turned upon itself and strange things came",
+      "having sat in the dark retreat, visions arose of their own accord",
+      "the silence itself became a sound that I could hear"] },
+    { "id": "fasting_austerity", "label": "Fasting, vigil, austerity", "source": "NEW", "probes": [
+      "after fasting many days my sight became strange and clear",
+      "with long watching and little food, the visions began to come",
+      "I had eaten nothing for a week when the thing appeared to me",
+      "by scourging and vigil I brought my body low, and then it was given me"] },
+    { "id": "prophetic_inspiration", "label": "Inspired speech / dictation", "source": "NEW", "probes": [
+      "the words came to me faster than I could write them down",
+      "I did not compose this; it was dictated to me and I set it down as given",
+      "the spirit of prophecy came upon me and I spoke before the people",
+      "my hand wrote what my mind did not know beforehand"] },
+    { "id": "ecstatic_dance", "label": "Rhythm, dance, ecstatic motion", "source": "NEW", "probes": [
+      "we turned and turned until the self was lost in the turning",
+      "the drumming carried me out of myself and I danced without weariness",
+      "in the dance they fell down as dead and afterwards told what they had seen",
+      "the shaking came upon them and they could not stand still"] },
+    { "id": "doubling", "label": "Autoscopy / the double", "source": "NEW", "probes": [
+      "I met myself coming toward me and knew my own face",
+      "my double was seen by others in a place where I was not",
+      "there appeared a second self standing over against me",
+      "he beheld his own likeness sitting in his chair, and died soon after"] },
+    { "id": "uncanny_familiarity", "label": "Uncanny recognition / foreknowledge", "source": "NEW", "probes": [
+      "I had never been in that place, and yet I knew every corner of it",
+      "it seemed to me that all this had happened before in the same way",
+      "I knew what he would say before the words were spoken",
+      "a strange familiarity came over me as though I remembered the future"] }
+  ]
+}

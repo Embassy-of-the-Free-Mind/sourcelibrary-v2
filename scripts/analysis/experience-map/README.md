@@ -1,0 +1,69 @@
+# Experience map — probe-based phenomenology over the corpus
+
+Built 2026-07-20/21. Live site: **https://experience-atlas.vercel.app**
+
+Retrieves passages describing conscious experience "from the inside" across the
+translated corpus, classifies them, and projects them. Four public surfaces:
+the working paper (`/`), the Atlas (`/atlas`), a Visuddhimagga comparison
+(`/compare`), a subtle-body reconstruction (`/bodies`), and a response to the
+PEACE framework (`/peace`).
+
+**Bulk data lives in `scripts/output/experience-map/` — which is gitignored.**
+Only the pipeline is tracked here. Regenerating the data costs ~$3 in
+`gemini-3.1-flash-lite` calls; embeddings are free-tier.
+
+## Pipeline
+
+    probes/     probe sets. Each dimension is several FIRST-PERSON REPORT
+                SENTENCES, not topic labels — retrieval matches passages and we
+                want experiential register, not vocabulary.
+                  probes.json       v1, 20 dims from MEQ30 / 5D-ASC / Hood
+                  probes-v2.json    36 dims (+16 the modern scales lack)
+                  probes-jhana.json 26 Visuddhimagga stages, extracted from the
+                                    manual itself (see build/extract-jhana-*)
+                  probes-body.json  10 subtle-body systems + a control
+
+    retrieve/   embed probes, query match_semantic, stratify by language.
+                retrieve-v4.mjs is current. baseline-sample.mjs draws the random
+                corpus sample that gives every rate a denominator.
+
+    classify/   register / experiential / features / trigger / aftermath /
+                attributed agent, with a HARD verbatim quote gate.
+
+    build/      extraction, quote embedding, UMAP projection, figures, and
+                build-deploy.py which assembles the Vercel site.
+
+    templates/  page bodies. build-deploy.py injects figures + data.
+
+## Non-obvious things that cost time
+
+- **`scripts/output/` is gitignored.** Anything written there is invisible to git
+  and to other sessions. That is fine for 30MB of JSONL; it is not fine for code.
+- **Quote integrity is a hard gate, not a metric.** ~3% of model-extracted
+  quotations are silently altered from the source. `classify-*.mjs` normalises
+  whitespace/case and *discards* any quote that is not a substring of its page.
+  Never report the rate and keep the quotes.
+- **Retrieval must be stratified by language.** Global similarity search returns a
+  popularity contest: v1 was 22% English (corpus share 6.5%) and 2.8% Tibetan
+  (corpus share 14.5%). Equal probe budget per language fixes it — but the result
+  is then neither proportional nor random, and must be labelled as such.
+- **`match_semantic` year filtering is CORRECT.** An earlier claim here that
+  year-only filters under-return was wrong: the HNSW and seq-scan paths return
+  identical rows (tested across four eras). Do not "fix" it.
+- **Concurrency above ~6 gets `fetch failed`** from both Gemini and Supabase.
+  Every long job retries with backoff and aborts loudly if the failure rate
+  passes 50% — an early run burned all 9,936 queries in seconds because errors
+  were swallowed and nothing backed off.
+- **Python-generated inline JS: use typographic apostrophes.** A `\'` inside a
+  `"""..."""` block reaches the page as a bare `'` and terminates the JS string,
+  killing the whole script silently. `build-deploy.py` parse-checks its output.
+- **Source Library's accent palette fails as a chart palette.** sage and
+  gold-dark fall below the chroma floor and sit 3.9 ΔE apart under deuteranopia.
+  The pages use SL identity for type/ground and a validated categorical palette
+  for marks.
+
+## Status
+
+Two blockers before any of this is citable: **citations in the paper are
+unverified** (marked ⚠ on the page), and **classification has no second rater**,
+so there is no inter-rater agreement figure.
