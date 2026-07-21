@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
+import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
 import { isBookReadable } from '@/lib/book-access';
+import { isInnerCircle } from '@/lib/auth-helpers';
+import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
+import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -2498,9 +2501,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'epub-bilingual', 'images-zip', 'pdf-translation', 'pdf-facsimile'];
-    if (!validFormats.includes(format)) {
+    // Valid formats: TXT, EPUB, ZIP, and PDF — tier membership (free text vs.
+    // premium) lives in src/lib/download-formats.ts, the single source of
+    // truth shared with the global route and DownloadButton.tsx.
+    if (!isValidDownloadFormat(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
         { status: 400 }
@@ -2554,15 +2558,39 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
     }
 
-    // Member-or-purchased gate for paid formats. NC-free image formats bypass
-    // this (charging for an NC scan would cross the commercial line).
-    if (process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    // Member-or-purchased gate applies ONLY to premium formats (#3290). NC-free
+    // image formats bypass this too (charging for an NC scan would cross the
+    // commercial line).
+    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
           { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
           { status: 402 },
         );
+      }
+    }
+
+    // Daily free-tier cap (#3290): free text formats are ungated by price but
+    // capped at 20 distinct books/24h per account, to keep the free tier from
+    // becoming a bulk-export path. Members, per-book purchasers, and
+    // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
+    // and before any expensive generation work below.
+    if (!isPremiumFormat(format)) {
+      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isExemptEditor = await isInnerCircle();
+      const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
+      if (!isMember && !isExemptEditor && !isPurchased) {
+        const cap = await checkAndRecordDownload(userId, id);
+        if (!cap.allowed) {
+          return NextResponse.json(
+            {
+              error: 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see https://sourcelibrary.org/licensing',
+              limit_reached: true,
+            },
+            { status: 429 },
+          );
+        }
       }
     }
 
