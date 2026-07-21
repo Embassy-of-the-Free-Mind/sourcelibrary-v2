@@ -49,7 +49,8 @@
  *   - aa32ca61-...  Cohort 4                sent 2026-06-23
  *   - ddbd412f-...  Cohort 5                sent 2026-06-24
  *   - a730380e-...  Cohort 6          1154  sent 2026-06-28
- *   (2,554 distinct people emailed in total; 4 unsubscribes.)
+ *   - 39acebdd-...  Cohort 7          1084  sent 2026-07-21  (broadcast bce47345)
+ *   (3,638 distinct people emailed in total as of 2026-07-21; 4 unsubscribes.)
  *
  * NOTE: a standing "Source Library Newsletter" audience (5dd84247-...) is
  * refreshed daily by scripts/workers/refresh-newsletter-audience.mjs and is the
