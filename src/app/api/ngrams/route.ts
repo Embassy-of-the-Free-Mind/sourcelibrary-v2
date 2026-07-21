@@ -199,7 +199,13 @@ export async function GET(request: NextRequest) {
     },
     {
       headers: {
-        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
+        // max-age=0 is load-bearing: without it a browser applies HEURISTIC
+        // freshness and honours the 7-day stale-while-revalidate, so a response
+        // captured mid-backfill (docs mode reports found:false until
+        // books_by_year lands) kept rendering "no data" in an already-open tab
+        // for days after the data was live and the CDN had been purged.
+        // The CDN keeps its own 24h window via s-maxage.
+        'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
         'CDN-Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
       },
     },
