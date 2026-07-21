@@ -867,7 +867,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // counts are fetched separately and fall back to the estimate if slow — so
       // the numbers are real (not the planner's round "1,001" estimate) without
       // ever hiding the section on a big provider.
-      const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12 }), { books: [] as CatalogBook[], total: 0 });
+      const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 24 }), { books: [] as CatalogBook[], total: 0 });
       if (all.total < 2) return null; // not worth a "collection" callout for a lone book
       const [exactBooks, translated, languages] = await Promise.all([
         guard(browseBooks({ provider: partner.providerKey, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: all.total, books: [] as CatalogBook[] }),
@@ -876,7 +876,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       ]);
       const covers = all.books
         .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
-        .slice(0, 12)
+        .slice(0, 14)
         .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
       const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
       return {

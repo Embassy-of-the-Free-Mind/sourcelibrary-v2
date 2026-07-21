@@ -25,7 +25,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
  * (falling back to a single representative image).
  */
 export default function BookLibrarySection({ data }: { data: LibrarySectionData }) {
-  const covers = data.covers.filter((c) => c.thumbnail).slice(0, 10);
+  const covers = data.covers.filter((c) => c.thumbnail).slice(0, 12);
   const hasCovers = covers.length >= 4;
 
   const stats = [
@@ -36,7 +36,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
 
   const CoversStrip = ({ className = '' }: { className?: string }) => (
     <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible ${className}`}>
-      <div className="flex gap-3 md:grid md:grid-cols-5">
+      <div className="flex gap-3 md:grid md:grid-cols-6">
         {covers.map((c) => (
           <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[84px] md:w-auto group">
             <div className="aspect-[3/4] overflow-hidden rounded border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
