@@ -59,6 +59,10 @@ const CORPUS_SEARCH_LANGUAGE: Record<string, string> = Object.fromEntries(
 
 const DEFAULT_Q = "philosopher's stone,elixir";
 
+/** Fraction of the plot height where the corpus-volume backdrop tops out
+ *  (0 = top of plot, 1 = baseline). It occupies the bottom 40%. */
+const BACKDROP_TOP = 0.6;
+
 export default function NgramViewer() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -121,12 +125,28 @@ export default function NgramViewer() {
     for (const s of shown) for (const p of s.points) m = Math.max(m, p.smoothed);
     return m || 1;
   }, [shown]);
-  const tokensMax = useMemo(() => Math.max(1, ...(data?.totals || []).map(t => t.tokens)), [data]);
+  // Backdrop scale: the corpus is dominated by a handful of freak years (1700
+  // alone holds 104M tokens — 8x the 99th percentile — because round years are
+  // the fallback for undated editions). Scaling the backdrop to the true max
+  // flattened every other year into an invisible smear at ~3% of a quarter-
+  // height band. Scale to the 98th percentile instead and let the outliers clip
+  // flat against the band top, so the shape of the ordinary years is readable.
+  const tokenBand = useMemo(() => {
+    const vals = (data?.totals || []).map(t => t.tokens).sort((a, b) => a - b);
+    if (!vals.length) return { top: 1, clipped: 0 };
+    const top = Math.max(1, vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.98))]);
+    return { top, clipped: vals.filter(v => v > top).length };
+  }, [data]);
 
   const xScale = useMemo(() => linearScale(from, to, 0, plotW), [from, to, plotW]);
   const yScale = useMemo(() => linearScale(0, yMax * 1.05, plotH, 0), [yMax, plotH]);
-  // Token backdrop rides in the bottom quarter of the plot on its own scale.
-  const tokenScale = useMemo(() => linearScale(0, tokensMax, plotH, plotH * 0.75), [tokensMax, plotH]);
+  // Backdrop rides in the bottom ~40% of the plot on its OWN scale — it shares
+  // the x-axis with the curves but nothing else. The y-axis labels describe the
+  // curves only; the band's own ceiling is labelled at its top edge.
+  const tokenScale = useMemo(
+    () => linearScale(0, tokenBand.top, plotH, plotH * BACKDROP_TOP),
+    [tokenBand, plotH],
+  );
 
   const xTicks = useMemo(() => niceTicks(from, to, 8), [from, to]);
   const yTicks = useMemo(() => niceTicks(0, yMax * 1.05, 5), [yMax]);
@@ -374,12 +394,31 @@ export default function NgramViewer() {
             onClick={handleClick}
           >
             <g transform={`translate(${margin.left},${margin.top})`}>
-              {/* Token-volume backdrop — the honesty layer: how much corpus is under each year */}
+              {/* Token-volume backdrop — the honesty layer: how much corpus is
+                  under each year. Own scale, clipped at the 98th percentile. */}
               <path
-                d={areaPath(data.totals.map(t => ({ x: xScale(t.year), y: tokenScale(t.tokens) })), plotH)}
+                d={areaPath(
+                  data.totals.map(t => ({
+                    x: xScale(t.year),
+                    y: tokenScale(Math.min(t.tokens, tokenBand.top)),
+                  })),
+                  plotH,
+                )}
                 fill="var(--text-faint)"
-                opacity={0.12}
+                opacity={0.16}
               />
+              {/* Band ceiling — gives the grey a number so it isn't a scaleless smear */}
+              <line
+                x1={0} y1={plotH * BACKDROP_TOP} x2={plotW} y2={plotH * BACKDROP_TOP}
+                stroke="var(--text-faint)" strokeDasharray="2,5" opacity={0.4}
+              />
+              <text
+                x={plotW - 2} y={plotH * BACKDROP_TOP - 4}
+                fontSize={10} fill="var(--text-faint)" textAnchor="end"
+              >
+                {compactNumber(tokenBand.top)} tokens/yr
+                {tokenBand.clipped > 0 && ' (peaks clipped)'}
+              </text>
 
               {/* Grid */}
               {yTicks.map(t => (
@@ -468,7 +507,11 @@ export default function NgramViewer() {
       {data && (
         <p className="mt-1.5 text-xs text-[var(--text-faint)]">
           Gray backdrop: how much text each year contributes ({compactNumber(data.totals.reduce((s, t) => s + t.books, 0))} books
-          across this range). Hover any point for that year&apos;s exact book and token counts.
+          across this range). It has its own scale — the dashed line marks{' '}
+          {compactNumber(tokenBand.top)} tokens in a year
+          {tokenBand.clipped > 0 && `, and ${tokenBand.clipped} outlier ${tokenBand.clipped === 1 ? 'year runs' : 'years run'} off the top of it`}
+          {' '}— so it says nothing about the y-axis on the left, which belongs to the curves.
+          Hover any point for that year&apos;s exact book and token counts.
         </p>
       )}
 
