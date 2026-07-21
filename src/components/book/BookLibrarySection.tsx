@@ -43,8 +43,8 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
     <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ background: '#fdfcf9', borderColor: '#e6e0d3' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-9 md:gap-14 items-center">
-          {/* Text side */}
-          <div className="order-2 md:order-1">
+          {/* Text side (first on mobile, left on desktop) */}
+          <div>
             <div className="font-mono uppercase text-[11px] tracking-[0.16em] mb-4" style={{ color: accent }}>From the collection of</div>
             {data.logo ? (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -73,7 +73,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
           </div>
 
           {/* Collection side — a strip of the library's book covers */}
-          <div className="order-1 md:order-2">
+          <div>
             {hasCovers ? (
               <div className="-mx-6 md:mx-0 px-6 md:px-0 overflow-x-auto md:overflow-visible">
                 <div className="flex gap-3 md:grid md:grid-cols-5">
