@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import { ConfirmTracker } from './ConfirmTracker';
 
 /**
  * Prefetch-safe magic-link interstitial.
@@ -56,6 +57,7 @@ export default async function ConfirmSignInPage({
       <div className="absolute inset-0 bg-black/50" />
 
       <div className="relative z-10 w-full max-w-md p-8 rounded-2xl text-center bg-white/95 backdrop-blur-sm border border-white/20 mx-4">
+        <ConfirmTracker safe={safe} />
         <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="12" cy="12" r="10" stroke="var(--text-primary)" strokeWidth="1" />
           <circle cx="12" cy="12" r="7" stroke="var(--text-primary)" strokeWidth="1" />
@@ -73,6 +75,7 @@ export default async function ConfirmSignInPage({
             {/* Plain <a> (not next/link) to the absolute callback URL so Next.js
                 never prefetches it — only a human click consumes the token. */}
             <a
+              id="confirm-signin"
               href={next}
               rel="nofollow"
               className="inline-block w-full px-4 py-3 rounded-lg text-base font-medium transition-all hover:brightness-110"

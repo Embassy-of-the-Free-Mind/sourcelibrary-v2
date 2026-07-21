@@ -8,6 +8,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app-browser';
 import { trackEvent } from '@/lib/track-event';
 import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
+import { suggestEmailFix } from '@/lib/email-typo';
 import type { Locale } from '@/lib/i18n';
 
 // Page-specific copy. Funnel pages (sign-in, support) get native Spanish so the
@@ -26,6 +27,8 @@ interface SignInStrings {
   errEmailSignin: string;
   errGeneric: string;
   errSendLink: string;
+  errRateLimited: string;
+  didYouMean: (suggestion: string) => string;
   errVerify: string;
   errGoogle: string;
   emailLabel: string;
@@ -55,6 +58,8 @@ const STRINGS: Record<Locale, SignInStrings> = {
     errEmailSignin: 'Could not send sign-in email. Please try again.',
     errGeneric: 'An error occurred during sign in. Please try again.',
     errSendLink: 'Could not send sign-in link. Please try again.',
+    errRateLimited: 'Too many sign-in requests from your network in the last hour. Wait a little and try again — this limit is shared by everyone on the same connection.',
+    didYouMean: (suggestion) => `Did you mean ${suggestion}?`,
     errVerify: 'Please complete the verification below.',
     errGoogle: 'Could not connect to Google. Please try again.',
     emailLabel: 'Email address',
@@ -82,6 +87,8 @@ const STRINGS: Record<Locale, SignInStrings> = {
     errEmailSignin: 'No se pudo enviar el correo de acceso. Inténtalo de nuevo.',
     errGeneric: 'Ocurrió un error al iniciar sesión. Inténtalo de nuevo.',
     errSendLink: 'No se pudo enviar el enlace de acceso. Inténtalo de nuevo.',
+    errRateLimited: 'Demasiadas solicitudes de acceso desde tu red en la última hora. Espera un poco e inténtalo de nuevo — este límite se comparte con todos los que usan la misma conexión.',
+    didYouMean: (suggestion) => `¿Quisiste decir ${suggestion}?`,
     errVerify: 'Por favor completa la verificación abajo.',
     errGoogle: 'No se pudo conectar con Google. Inténtalo de nuevo.',
     emailLabel: 'Correo electrónico',
@@ -110,6 +117,9 @@ function SignInContent({ locale }: { locale: Locale }) {
   const [emailSent, setEmailSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
+  // Non-blocking domain-typo hint. A mistyped domain mints a token, bounces at
+  // Resend, and the person never learns why nothing arrived — see src/lib/email-typo.ts.
+  const [suggestion, setSuggestion] = useState<string | null>(null);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
@@ -152,7 +162,10 @@ function SignInContent({ locale }: { locale: Locale }) {
         'cf-turnstile-response': turnstileToken ?? '',
       });
       if (result?.error) {
-        setEmailError(s.errSendLink);
+        // 429 comes from our own magic-link guard (5/hour per IP, shared across
+        // everyone behind one NAT). Saying so beats a generic failure the user
+        // can only respond to by retrying into the same wall.
+        setEmailError(result.status === 429 ? s.errRateLimited : s.errSendLink);
       } else {
         setEmailSent(true);
       }
@@ -245,7 +258,11 @@ function SignInContent({ locale }: { locale: Locale }) {
             id="email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (suggestion) setSuggestion(null);
+            }}
+            onBlur={(e) => setSuggestion(suggestEmailFix(e.target.value))}
             placeholder="you@example.com"
             required
             className="w-full px-4 py-3 rounded-lg text-base outline-none transition-all"
@@ -255,6 +272,22 @@ function SignInContent({ locale }: { locale: Locale }) {
               border: '1px solid var(--border-medium)',
             }}
           />
+          {/* A hint, never a block: plenty of valid addresses live on domains no
+              list will contain, and this audience uses hotmail.es / yahoo.com.ar
+              heavily. One tap accepts it; typing dismisses it. */}
+          {suggestion && (
+            <button
+              type="button"
+              onClick={() => {
+                setEmail(suggestion);
+                setSuggestion(null);
+              }}
+              className="mt-1.5 text-sm underline text-left"
+              style={{ color: 'var(--accent-rust)' }}
+            >
+              {s.didYouMean(suggestion)}
+            </button>
+          )}
           {/* Renders only when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set. */}
           <TurnstileWidget onVerify={setTurnstileToken} />
           <button
