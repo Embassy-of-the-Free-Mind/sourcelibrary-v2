@@ -19,11 +19,19 @@ const ALLOWED_EVENTS = new Set([
   // signup_start: fired when a visitor initiates sign-up from a surface, so we
   // can attribute signups by `source` (hero / signin_page / …) and `method`.
   'signup_start',
+  // confirm_view / confirm_click: the two halves of the magic-link interstitial
+  // at /auth/confirm. views-minus-clicks is the drop-off introduced by the
+  // prefetch-safe second click; without them an unconsumed verification token
+  // is indistinguishable from mail that was never opened at all.
+  'confirm_view', 'confirm_click',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
 const ALLOWED_PROPS = new Set([
   'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source', 'reason', 'method',
+  // safe: on confirm_view/confirm_click, whether the `next` callback parameter
+  // survived transit — separates "changed their mind" from "the link broke".
+  'safe',
 ]);
 
 const DB_TIMEOUT_MS = 3000;
