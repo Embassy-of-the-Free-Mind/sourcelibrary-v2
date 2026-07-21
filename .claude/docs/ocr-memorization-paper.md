@@ -168,6 +168,43 @@ Reproduce with `report-canonical-gap.mjs` (main battery) and `report-arms.mjs`
    OCR system with no recitation channel is the natural control group for the
    subsidy argument, and its pooled gap is the most negative in the set (−1.95pp).
 
+### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
+
+Free, reference-free, and complementary: `page_revisions` stores the text each
+re-OCR replaced, so every consecutive transition is a same-page double-OCR pair.
+126,551 revisions → 109,953 eligible pairs, mean agreement **87.0%**.
+
+6. **Agreement tracks era and script far more than model.** pre-1500 58.4% → 1900+
+   96.2%; space-less scripts 50.4% vs spaced 87.5%; Tibetan 21.7% and Hebrew 57.1%
+   against German 95.3% and English 95.5%. Model pair is a minor term next to these.
+7. **Marginalia is the discriminating signal.** Marginal text agrees at **56.9%** on
+   pages whose body text agrees at 87.0% — models reproduce the body block and
+   disagree about the gutter. Fate across revisions: kept 19,696 / gained 6,235 /
+   lost 2,477. This is a paper-worthy result in its own right: bulk CER on the body
+   block hides the fact that the hardest, most scholarly-valuable marks on the page
+   are essentially unreliable.
+8. **Bulk agreement is not a quality measure without inclusion criteria.** Five
+   distinct populations score identically as "disagreement", each found by reading
+   page text rather than by reasoning about the metric: editorial notes (only ~3% of
+   measured disagreement); space-less-script tokenization (a Chinese page is ~22
+   whitespace tokens vs ~310 for Latin, so one glyph invalidates a token — 36.7%
+   word-agreement vs 72.7% character-agreement); image-only pages (covers and plates
+   where both texts are AI descriptions of one engraving); commentary-as-transcription
+   (`I'll provide the transcription now` stored AS the transcription); and
+   degeneration (repetition loops — one page with 8,104 words and 40 unique — plus
+   `&nbsp;` padding). The last two **invert direction**: a shorter, disagreeing
+   re-OCR of a looping prior is the repair, not the damage.
+9. **Consensus-method caveat, corpus-scale.** Contribution 2 argues agreement fails on
+   canonical text because reciting models agree. The corpus adds the converse failure:
+   agreement also *understates* quality wherever the metric itself is mis-specified
+   (space-less scripts) or the page has no text to agree about (plates). Both
+   directions of failure are now measured, not asserted.
+
+Caveat carried forward: this arm has NO ground truth. It characterises agreement and
+its factors; it cannot say whether 87% agreement means 87% correct. The regression
+queue derived from it is explicitly unverified (priors longer than a page can hold
+still rank at the top).
+
 ## Related work — verified dossier (2026-07-19 sweep; every entry abstract-checked)
 
 ### Contamination / benchmark leakage
@@ -243,14 +280,54 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 - **Recension alt-references** for 2-3 rows (recitation fingerprint at scale).
 - **Agreement→accuracy calibration** on non-canonical rows only (consensus is NOT
   independent on canonical text — two models reciting agree while both misreport the
-  page), then extended to the double-OCR corpus for corpus-scale factor analysis.
-  The double-OCR supply is far larger than first thought: the `page_revisions`
-  collection snapshots every OCR overwrite — **126,551 prior OCR versions across
-  100,992 distinct pages**, full text with model + prompt_version on both sides
-  (mostly flash→current and lite→current transitions) — plus split-page parents,
-  duplicate holdings, and re-archive before/after pairs. Every page also carries
-  `ocr.prompt_version`/`prompt_name`, so prompt provenance is a corpus-wide
-  covariate for free.
+  page). The corpus arm of this is now MEASURED (PR #3273) — see "Corpus arm" below —
+  but calibration itself is still open: the corpus gives agreement and its factors,
+  never accuracy. Only the anchor rows can supply truth.
+  The double-OCR supply is far larger than first thought: `page_revisions` snapshots
+  every OCR overwrite — **126,551 prior OCR versions across 100,992 distinct pages**,
+  full text with model + prompt_version on both sides (mostly flash→current and
+  lite→current transitions) — plus split-page parents, duplicate holdings, and
+  re-archive before/after pairs. Every page also carries `ocr.prompt_version` /
+  `prompt_name`, so prompt provenance is a corpus-wide covariate for free.
+- **Within-work canonicity gradient** (Derek, 2026-07-19) — the design upgrade the
+  same-book contrasts approximate but do not achieve. Aeneid vs *Vita Vergilii* share
+  a *binding*; they are still two texts, two genres, two typographic settings. The
+  clean contrast is within ONE work and ONE scan: *Iliad* I (hyper-canonical, quoted
+  everywhere) vs a middle book; Genesis 1 vs a genealogy chapter; the *Analects*
+  opening vs an inner chapter. Edition, typeface, scan quality, resolution and layout
+  are held constant by construction, and canonicity varies only by how often that
+  PASSAGE appears in training corpora. Two payoffs: it removes the confounds
+  Results #3 currently apologises for in both directions, and it converts a two-cell
+  contrast into a **slope**. Requires replacing the binary `page_class.canonical_text`
+  (currently 12 true / 11 false, with `memorization_risk` on only 11 of 23 pages) with
+  a graded per-passage canonicity score. Derek's framing: this is the inverse of
+  standard membership inference — instead of asking whether a text is in the training
+  data, rank passages by how *hard* they were to avoid.
+- **Non-generative baseline → difference-in-differences.** The strongest identification
+  available and currently absent from this design. Every measurement here is
+  VLM-against-reference, so page difficulty and memorization stay entangled; the
+  paper handles that with caveats rather than design. A **non-generative engine cannot
+  recite**, so it absorbs difficulty and nothing else:
+
+      subsidy = (VLM − baseline)|canonical − (VLM − baseline)|non-canonical
+
+  The baseline must be genuinely non-generative — Tesseract or Kraken (free, local;
+  Kraken has historical-script models). `runners.mjs` already has Gemini, Claude and
+  `mistral-ocr-latest`, but all three are neural and all could in principle recite, so
+  none of them can serve as the control. Tesseract will read 16th-c type badly; badly
+  *in a way that cannot recite* is exactly the required property. This also gives the
+  paper a claim that survives the scoop watchlist: a contamination estimate that does
+  not depend on the reference text being uncontaminated.
+- **Error taxonomy** (unblocked, free, no model calls). The outcome battery measures
+  error RATES, never error KINDS. A second recitation fingerprint is available in
+  data already held: classify each diff as **image-conditioned** (long-ſ/s confusion,
+  ligature splits, gutter and margin loss, line-order scrambling — errors that track
+  what the scan looks like) versus **editorial** (normalised spelling, expanded
+  abbreviations, regularised orthography, modern punctuation — errors that track a
+  critical edition). A model reading the page makes the first kind; a model reciting
+  makes the second. Unlike `recension divergence`, this needs no redistributable
+  alternate text, and it is computable over the 109,953-pair corpus as well as the
+  anchor rows.
 
 ## Limitations to state plainly
 
@@ -268,6 +345,11 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   masquerade as OCR error; per-row audit notes document known cases; cross-edition
   rows are lower bounds.
 - Greedy span dispersion is ordinal, not calibrated.
+- `canonical_text` is binary and `memorization_risk` is populated on only 11 of 23
+  pages; the within-work gradient above is the fix, and until it lands every
+  canonicity claim is a two-cell contrast, not a dose-response.
+- The corpus arm (n=109,953) has no ground truth and its regression queue is
+  unverified — cite it for agreement structure and factor effects, never for accuracy.
 
 ## Venue / form
 
