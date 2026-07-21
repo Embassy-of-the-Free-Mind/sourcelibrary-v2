@@ -65,6 +65,37 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const year = searchParams.get('year'); // Exact year filter
     const yearFrom = searchParams.get('year_from'); // Year range start
     const yearTo = searchParams.get('year_to'); // Year range end
+    // date_from/date_to are publication-year bounds (the search UI's "Published
+    // after/before"). They used to be applied as a STRING comparison on
+    // `published` — a free-text field ("circa 1600", "[1620]", "n.d.") — where
+    // the comparison silently misfires. Normalize to the numeric `year` field,
+    // which is what every other surface filters on, and share one range between
+    // the book lane, the page lane, and the semantic lanes.
+    const parseYear = (v: string | null): number | undefined => {
+      const n = parseInt(v || '', 10);
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const exactYear = parseYear(year);
+    const yearMin = parseYear(yearFrom) ?? parseYear(dateFrom);
+    const yearMax = parseYear(yearTo) ?? parseYear(dateTo);
+    const hasYearRange = exactYear !== undefined || yearMin !== undefined || yearMax !== undefined;
+    /** True when a book's year satisfies the requested range. Undated books drop out of a bounded range. */
+    const yearInRange = (y: number | null | undefined): boolean => {
+      if (!hasYearRange) return true;
+      if (typeof y !== 'number') return false;
+      if (exactYear !== undefined) return y === exactYear;
+      if (yearMin !== undefined && y < yearMin) return false;
+      if (yearMax !== undefined && y > yearMax) return false;
+      return true;
+    };
+    /** Attach the year predicate to a MongoDB book-level filter object. */
+    const applyYearFilter = (target: Record<string, unknown>) => {
+      if (exactYear !== undefined) { target.year = exactYear; return; }
+      const range: Record<string, number> = {};
+      if (yearMin !== undefined) range.$gte = yearMin;
+      if (yearMax !== undefined) range.$lte = yearMax;
+      if (Object.keys(range).length > 0) target.year = range;
+    };
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
     const firstTranslation = searchParams.get('first_translation');
@@ -141,28 +172,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       else if (excludeLanguages.length > 0) filters.language = { $nin: excludeLanguages };
       else if (language) filters.language = language;
       if (category) filters.categories = category;
-      if (dateFrom || dateTo) {
-        filters.published = {};
-        if (dateFrom) (filters.published as Record<string, string>).$gte = dateFrom;
-        if (dateTo) (filters.published as Record<string, string>).$lte = dateTo;
-      }
-      if (year || yearFrom || yearTo) {
-        const yearFilter: Record<string, number> = {};
-        if (year) {
-          const yearNum = parseInt(year);
-          if (!isNaN(yearNum)) filters.year = yearNum;
-        } else {
-          if (yearFrom) {
-            const yearNum = parseInt(yearFrom);
-            if (!isNaN(yearNum)) yearFilter.$gte = yearNum;
-          }
-          if (yearTo) {
-            const yearNum = parseInt(yearTo);
-            if (!isNaN(yearNum)) yearFilter.$lte = yearNum;
-          }
-          if (Object.keys(yearFilter).length > 0) filters.year = yearFilter;
-        }
-      }
+      applyYearFilter(filters);
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
@@ -297,11 +307,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
             else if (language) bookIdFilter.language = language;
             if (category) bookIdFilter.categories = category;
-            if (dateFrom || dateTo) {
-              bookIdFilter.published = {};
-              if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
-              if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
-            }
+            applyYearFilter(bookIdFilter);
             if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
 
             const filteredBooks = await db.collection('books')
@@ -367,7 +373,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             language: language || undefined,
             tenantId: tenantId || undefined,
           });
-          return books.map(b => ({
+          return books.filter(b => yearInRange(b.year)).map(b => ({
             page_id: '',
             book_id: b.book_id,
             page_number: 0,
@@ -403,7 +409,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
               .map(d => d.id as string),
           );
-          return pages.filter(p => !badIds.has(p.page_id));
+          // Year range applies to the semantic page lane too — its hits are
+          // rendered as book-attributed passages, so an out-of-range book
+          // arriving here reads exactly like an unfiltered result.
+          return pages.filter(p => !badIds.has(p.page_id) && yearInRange(p.book_year));
         } catch {
           degradedLanes.push('semantic_page'); // BUG 2: lane dropped out — total is now incomplete.
           return [];

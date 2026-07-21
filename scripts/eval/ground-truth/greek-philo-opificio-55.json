@@ -1,0 +1,23 @@
+{
+  "work": "Philo, De opificio mundi 157-159 (Cohn p.55, the serpent as symbol of pleasure)",
+  "book_id": "69944b491ba83513779056b0",
+  "page_number": 179,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+  "edition": "Cohn-Wendland 1896 (editio maior, vols 1-3)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "παρακαλοῦντα κατὰ τὰς δι’ ὑπονοιῶν ἀποδόσεις. ἑπόμενος δέ τις εἰκότι στοχασμῷ φήσει προσηκόντως τὸν εἰρημένον ὄφιν ἡδονῆς εἶναι σύμβολον, ὅτι πρῶτον μὲν ζῷον ἄπουν ἐστὶ καὶ πρηνὲς πεπτωκὸς ἐπὶ γαστέρα, δεύτερον δ’ ὅτι γῆς βώλοις σιτίῳ χρῆται, τρίτον δ’ ὅτι τὸν ἰὸν ἐπιφέρεται τοῖς ὀδοῦσιν, ᾧ τοὺς δηχθέντας ἀναιρεῖν πέφυκεν. οὐδενὸς δὲ τῶν λεχθέντων ὁ φιλήδονος ἀμοιρεῖ· μόλις τε γὰρ τὴν κεφαλὴν ἐπαίρει βαρυνόμενος καὶ καθελκόμενος, ἐκτραχηλιζούσης καὶ ὑποσκελιζούσης τῆς ἀκρασίας· σιτεῖταί τε οὐκ οὐράνιον τροφήν, ἣν ὀρέγει τοῖς φιλοθεάμοσι διὰ λόγων καὶ δογμάτων σοφία, τὴν δ’ ἀναδιδομένην ἐκ γῆς κατὰ τὰς ἐτησίους ὥρας, ἐξ ἧς οἰνοφλυγίαι καὶ ὀψοφαγίαι καὶ λαιμαργίαι, αἳ τὰς γαστρὸς ἐπιθυμίας προσαναρρηγνῦσαι καὶ ἀναρριπίζουσαι [καὶ ἀνδραποδίζουσαι] πρὸς γαστριμαργίαν συναύξουσι καὶ ἀναρρηγνύουσι καὶ τοὺς ὑπογαστρίους οἴστρους· σιτοπόνων τε γὰρ καὶ ὀψαρτυτῶν κάματον ἐπιλιχνεύει καὶ τῆς ἀπὸ τῶν ἡδυσμάτων κνίσσης ἐν κύκλῳ τὴν κεφαλὴν περιάγων μεταλαμβάνειν [τῆς εἰδεχθείας] ὀρέγεται, καὶ ὁπότε πολυτελῆ τράπεζαν θεάσαιτο, καταβαλὼν αὑτὸν ὅλον ἐπὶ τὰ εὐτρεπισθέντα ἐκχεῖται, πάντων ἀθρόων σπουδάζων ἐμφορεῖσθαι, τέλος οὐ κόρον ἀλλὰ τὸ μηδὲν ὑπολείπεσθαι τῶν εὐτρεπισθέντων ποιούμενος. ὅθεν οὐχ ἧττον ὄφεως ἐν τοῖς ὀδοῦσιν ἐπιφέρεται τὸν ἰόν·",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Densest apparatus of the set — ~24 apparatus lines filling the lower 40% of the page, plus square-bracket seclusions and angle-bracket additions in the body text. Printed p.55 = scan 179 (vol. 1). Guard-verified + visually audited 2026-07-19."
+}

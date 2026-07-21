@@ -1,0 +1,23 @@
+{
+  "work": "Hegel, Phänomenologie des Geistes — Ethical Order (duty to the dead), 1832 Werke printing",
+  "book_id": "69e8b2ee2ff2a8dc09e790fc",
+  "page_number": 351,
+  "script": "latin",
+  "language": "German",
+  "source": "Deutsches Textarchiv TEI of the 1807 FIRST edition — our copy is the 1832 Werke edition (cross-edition reference)",
+  "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_phaenomenologie_1807?p=500",
+  "edition": "Berlin: Duncker und Humblot, 1832 (Werke, 2nd ed.); DTA reference = Bamberg/Würzburg: Goebhardt, 1807",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "Diese letzte Pflicht macht also das vollkommene göttliche Gesetz, oder die positive sittliche Handlung gegen den Einzelnen aus. Alles andre Verhältniß gegen ihn, das nicht in der Liebe stehen bleibt, sondern sittlich ist, gehört dem menschlichen Gesetze an, und hat die negative Bedeutung, den Einzelnen über die Einschließung in das natürliche Gemeinwesen zu erheben.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_prose_with_running_header",
+    "density": "dense",
+    "type_size": "small",
+    "typeface": "fraktur",
+    "classified_by": "visual audit of the scan, 2026-07-19 (sonnet hunt agent)",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

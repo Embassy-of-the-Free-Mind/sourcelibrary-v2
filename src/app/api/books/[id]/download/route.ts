@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
+import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
 import { isBookReadable } from '@/lib/book-access';
+import { isInnerCircle } from '@/lib/auth-helpers';
+import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
+import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -15,6 +18,7 @@ import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
+import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf } from '@/lib/pdf-export';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -1173,6 +1177,126 @@ function generateImagesZipStream(book: Book, pages: Page[]): archiver.Archiver {
   });
 
   return archive;
+}
+
+// Generate text-only English translation PDF: front matter, continuous
+// flowing translation text with a "PAGE N" heading before each page, then a
+// colophon. Streamed the same way as generateImagesZipStream — the returned
+// PDFDocument is itself a Readable; content is appended asynchronously after
+// the caller starts piping it to the response, so we never buffer the whole
+// document before the first byte goes out.
+function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
+  const now = new Date().toISOString().split('T')[0];
+  const { doc, fonts } = createPdfDocument(book);
+
+  const translatedPages = pages.filter(p => p.translation?.data);
+
+  (async () => {
+    writePdfTitlePage(doc, fonts, book, {
+      subtitle: 'English Translation',
+      baseUrl: BASE_URL,
+      now,
+    });
+
+    doc.addPage();
+
+    for (const page of translatedPages) {
+      if (!page.translation?.data) continue;
+      const text = cleanTranslationForPdf(page.translation.data, book.id);
+      if (!text) continue;
+
+      writePdfPageHeading(doc, fonts, page.page_number);
+      doc.font(fonts.regular).fontSize(11).text(text, { lineGap: 3 });
+      doc.moveDown(0.8);
+    }
+
+    doc.addPage();
+    writePdfColophon(doc, fonts, book, {
+      baseUrl: BASE_URL,
+      now,
+      contentLabel: 'English translation',
+      translatedCount: translatedPages.length,
+      totalCount: pages.length,
+    });
+
+    doc.end();
+  })().catch(err => {
+    console.error('pdf-translation stream failed:', err);
+    doc.destroy(err instanceof Error ? err : new Error(String(err)));
+  });
+
+  return doc;
+}
+
+// Generate facsimile PDF: title page, then per book page a "PAGE N" heading,
+// the page scan image, and the translation text flowing beneath it (onto
+// continuation pages as needed — pdfkit auto-paginates flowing text). Reuses
+// pageExportImageUrl() (canonical split-page-aware resolver) and
+// fetchPageImagesOrdered() (bounded concurrency) exactly like the facsimile
+// EPUB above. Streamed the same way as generatePdfTranslationStream.
+function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
+  const now = new Date().toISOString().split('T')[0];
+  const { doc, fonts } = createPdfDocument(book);
+
+  // Pages with an image or a translation are worth a spread; pages with
+  // neither carry nothing to show.
+  const validPages = pages.filter(p => pageExportImageUrl(p) || p.translation?.data);
+
+  (async () => {
+    writePdfTitlePage(doc, fonts, book, {
+      subtitle: 'Facsimile Edition — page scans with English translation',
+      baseUrl: BASE_URL,
+      now,
+    });
+
+    console.log(`Fetching ${validPages.length} images for pdf-facsimile (streaming)...`);
+    const pageImages = await fetchPageImagesOrdered(validPages);
+
+    const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
+
+    for (const { page, imageBuffer } of pageImages) {
+      doc.addPage();
+      writePdfPageHeading(doc, fonts, page.page_number);
+
+      if (imageBuffer) {
+        try {
+          doc.image(imageBuffer, { fit: [usableWidth, usableHeight * 0.6], align: 'center' });
+        } catch (e) {
+          console.error(`pdf-facsimile: failed to embed image for page ${page.page_number}:`, e);
+          doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
+          doc.fillColor('#000000');
+        }
+      } else {
+        doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
+        doc.fillColor('#000000');
+      }
+
+      if (page.translation?.data) {
+        const text = cleanTranslationForPdf(page.translation.data, book.id);
+        if (text) {
+          doc.moveDown(0.5);
+          doc.font(fonts.regular).fontSize(10.5).text(text, { lineGap: 3 });
+        }
+      }
+    }
+
+    doc.addPage();
+    writePdfColophon(doc, fonts, book, {
+      baseUrl: BASE_URL,
+      now,
+      contentLabel: 'facsimile edition',
+      translatedCount: pageImages.filter(p => p.page.translation?.data).length,
+      totalCount: pages.length,
+    });
+
+    doc.end();
+  })().catch(err => {
+    console.error('pdf-facsimile stream failed:', err);
+    doc.destroy(err instanceof Error ? err : new Error(String(err)));
+  });
+
+  return doc;
 }
 
 // Generate images-only EPUB (no translation, just the processed page images)
@@ -2389,9 +2513,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'translation';
 
-    // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'epub-bilingual', 'images-zip'];
-    if (!validFormats.includes(format)) {
+    // Valid formats: TXT, EPUB, ZIP, and PDF — tier membership (free text vs.
+    // premium) lives in src/lib/download-formats.ts, the single source of
+    // truth shared with the tenant route and DownloadButton.tsx.
+    if (!isValidDownloadFormat(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
         { status: 400 }
@@ -2418,7 +2543,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const isScholarly = format === 'epub-scholarly';
     const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
-    const imageFormat = isFacsimile || isImagesOnly || isImagesZip;
+    const isPdfTranslation = format === 'pdf-translation';
+    const isPdfFacsimile = format === 'pdf-facsimile';
+    // pdf-facsimile embeds page scans, so it's gated like the other image
+    // formats (blocked/nc-free license classification). pdf-translation is
+    // text-only and follows the plain paid gate below.
+    const imageFormat = isFacsimile || isImagesOnly || isImagesZip || isPdfFacsimile;
 
     let imageAccess: 'open' | 'nc-free' | 'blocked' = 'open';
     if (imageFormat) {
@@ -2434,14 +2564,39 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
     }
 
-    // NC-free image formats skip the paid gate (charging would cross the NC line).
-    if (process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    // Paid gate applies ONLY to premium formats (#3290) — free text formats
+    // never hit this. NC-free image formats skip it too (charging would
+    // cross the NC line).
+    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
           { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
           { status: 402 },
         );
+      }
+    }
+
+    // Daily free-tier cap (#3290): free text formats are ungated by price but
+    // capped at 20 distinct books/24h per account, to keep the free tier from
+    // becoming a bulk-export path. Members, per-book purchasers, and
+    // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
+    // and before any expensive generation work below.
+    if (!isPremiumFormat(format)) {
+      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isExemptEditor = await isInnerCircle();
+      const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
+      if (!isMember && !isExemptEditor && !isPurchased) {
+        const cap = await checkAndRecordDownload(userId, id);
+        if (!cap.allowed) {
+          return NextResponse.json(
+            {
+              error: 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see https://sourcelibrary.org/licensing',
+              limit_reached: true,
+            },
+            { status: 429 },
+          );
+        }
       }
     }
 
@@ -2482,6 +2637,25 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+
+    // Handle PDF downloads (pdf-translation, pdf-facsimile). Streamed exactly
+    // like images-zip above: the PDFDocument is a Readable, and content is
+    // appended asynchronously after this Response starts — buffering the
+    // whole PDF first would cross Cloudflare's ~100s origin window on a big
+    // book and die as a 524 saved as a corrupt file.
+    if (isPdfTranslation || isPdfFacsimile) {
+      const doc = isPdfFacsimile
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[])
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[]);
+      const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
+      return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="${safeTitle}-${suffix}.pdf"`,
           'Cache-Control': 'no-cache',
         },
       });

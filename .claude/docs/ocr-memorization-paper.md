@@ -12,8 +12,10 @@ Genesis, Homer, the Vulgate — because those are the texts with published trans
 to score against. But frontier vision-language models have *memorized* those texts, so
 benchmark scores conflate reading the page with reciting the training data. We measure
 this **memorization subsidy** directly: matched canonical/non-canonical reference
-passages on pages of the same books, scored identically. The subsidy is real (~1–3pp
-for Pro-class models, up to ~5pp for small ones, same-book controlled), and its extreme
+passages on pages of the same books, scored identically. Same-book controlled, the
+subsidy is real (~1pp for Pro-class models, ~5pp for small ones); pooled across
+unmatched pages it vanishes into page-difficulty noise, which is itself the
+methodological point. Its extreme
 form is **fabrication**: models emit letter-perfect canonical text that is not printed
 on the page at all. Scores on non-canonical text — which models can only read — are
 the numbers that transfer to the rare, untranscribed material digitization projects
@@ -22,7 +24,8 @@ actually exist to serve.
 ## Contributions (revised 2026-07-19 per the verified related-work dossier)
 
 1. **The memorization control**: canonical vs non-canonical reference rows on matched
-   pages (three same-book contrasts), each row visually audited against the page scan.
+   pages (two books currently carry both classes; expanding this is the top priority),
+   each row visually audited against the page scan.
    Per the dossier's novelty assessment: the specific quantity "canonical-vs-non-canonical
    OCR accuracy gap" is unpublished as of 2026-07-19. Position as "known in speech
    (Tseng et al. 2505.22251 proved test-transcript contamination in ASR), unmeasured in
@@ -71,11 +74,14 @@ Every run is scored on a battery; each outcome isolates a different failure mode
 | **span_dispersion** | greedy in-order match span ÷ matched units (1.0 = contiguous) | reading-order scrambling (two-column interleave) that free-skip accuracy deliberately ignores |
 | **recension divergence** | accuracy vs alternate recension minus accuracy vs printed edition | recitation fingerprint: output matches the memorized critical text better than the page |
 
-Headline demonstration (2026-07-19, n=495 observations, 23 pages): conditional
-accuracy ranks Pro best (99.2% canon); **unconditional accuracy inverts the ranking**
-— Pro 90.5%, Flash 86.9% (truncation rates 20%/29%), while Flash-Lite, the cheapest
-model, leads API models at 97.3% with zero truncation. Alignment-conditioned accuracy
-silently excuses exactly the failure mode that distinguishes models.
+Headline demonstration (2026-07-19 evening rebuild, n=1,077 observations / 921
+reference-scored, 40 pages): conditional accuracy ranks Pro best (99.2% canon);
+**unconditional accuracy inverts the ranking** — Pro 90.5%, Flash 88.1% (truncation
+15%/19%), while Flash-Lite, the cheapest API model, leads at 98.0% with zero
+truncation and the production pipeline reaches 98.9%. Alignment-conditioned accuracy
+silently excuses exactly the failure mode that distinguishes models. The inversion is
+the most robust result in the set: it survived tripling the page count and held under
+every arm.
 
 Recension divergence status: plumbing implemented (`alt_references` in works files →
 `alt_scores` per observation); measured once manually (Prologus Galeatus: Stuttgart
@@ -85,7 +91,8 @@ is the likely resolution.
 
 ## Dataset design (summary; datasheet in dataset README)
 
-- 23 pinned pages (→ ~35-38 after workstream-1), 4 scripts + CJK, print + manuscript
+- 40 pinned pages (12 canonical / 28 non-canonical; Armenian 8, Greek 12, Latin 5,
+  Hebrew 4, German 5, Chinese 6), 4 scripts + CJK, print + manuscript
   + woodblock, visually audited `page_class` covariates, **measured image resolution
   (0.64–17.4 MP, 27× range)**.
 - References: published transcriptions only; identity decided by the subsequence
@@ -98,23 +105,68 @@ is the likely resolution.
   proved recitation (a 1450 Mishnah MS; a Daxue Huowen page) — the incident that
   motivated the whole design.
 
-## Results so far (all preliminary at n=23 pages)
+## Results (n=40 pages, 1,077 observations; rebuilt 2026-07-19 evening)
 
-1. Same-book Virgil contrast: canonical Aeneid beats non-canonical Vita for every
-   model; largest gaps in small models (lite 5.4pp, sonnet5 4.7pp). Vulgate same-book
-   contrast ~flat — consistent with Jerome's prologues being partially memorized
+Reproduce with `report-canonical-gap.mjs` (main battery) and `report-arms.mjs`
+(resolution + prompt arms) over `observations/ocr-observations-2026-07-19.jsonl`.
+
+1. **Same-book contrasts hold — and they are the only clean subsidy evidence.**
+   Virgil book (canonical Aeneid I vs non-canonical Vita Vergilii, same 1580
+   edition, same scan): canon beats non-canon for **every** model — lite 97.2 vs
+   91.8 (5.4pp), sonnet5 96.8 vs 92.1 (4.7pp), pipeline 99.3 vs 96.2 (3.1pp),
+   mistral 96.5 vs 95.2 (1.3pp), flash 97.2 vs 96.0 (1.2pp), pro 97.0 vs 96.0
+   (1.0pp). Vulgate book (Genesis 1 vs Jerome's two prologues) is flat to slightly
+   negative — consistent with the prologues being partially memorized themselves
    (medium risk), i.e. the gap tracks the memorization gradient, not text genre.
-2. Manuscript-beats-print anomaly: sonnet5 reads Iliad I at 99.4% on a 1555
-   manuscript (1.66 MP) vs 97.3% on clean Teubner print it cannot recite.
-3. Pooled subsidy among aligned runs: pro +2.2pp, sonnet5 +2.6pp, lite +1.3pp,
-   pipeline +1.1pp, flash −0.7pp — pooled numbers carry page-difficulty confounds
-   in BOTH directions (Armenian inverts: its canonical page is the hardest page in
-   the set; Hebrew's non-canonical pages are its lowest-resolution ones).
-4. Factor structure: density and layout hit *alignment* (reading order, deliberation)
-   while type/ligatures hit *accuracy*; resolution spans 27× and confounds naive
-   language-level comparisons (measured, now controllable).
-5. Truncation is a model-family behavior (Gemini Pro/Flash), not a page property
-   alone, and only appears on dense pages — a genuine interaction.
+   Only **two** books currently carry both classes; expanding that count is the
+   single highest-value next page-hunt.
+2. **The pooled gap did NOT survive tripling the page count — report this plainly.**
+   At n=23 the pooled subsidy read pro +2.2pp / sonnet5 +2.6pp / lite +1.3pp. At
+   n=40 it is pro +1.19pp, sonnet5 +1.07pp, pipeline +0.34pp, lite −0.08pp,
+   flash −1.31pp, mistral −1.95pp. The added non-canonical pages (Teubner Hero,
+   Simplicius, 19th-c. German) are *cleaner* than the canonical pages they pool
+   against, so the pooled statistic moved with the page mix, exactly as predicted.
+   **The paper's quantitative claim must rest on same-book contrasts; pooled
+   numbers belong in the text only as a demonstration that pooling is unsafe.**
+3. Manuscript-beats-print anomaly (unchanged): sonnet5 reads Iliad I at 99.4% on a
+   1555 manuscript (1.66 MP) vs 97.3% on clean Teubner print it cannot recite.
+4. **Outcome-battery ranking inversion** (all runs, no alignment survivorship):
+   lite 98% aligned / 98.0% unconditional / 0% truncated; pipeline 100 / 98.9 / 0;
+   sonnet5 77 / 92.3 / 0; pro 86 / 90.5 / 15; flash 85 / 88.1 / 19; mistral
+   83 / 95.6 / 0. Conditional accuracy ranks Pro first; unconditional accuracy puts
+   the cheapest model and the production pipeline ahead of it.
+5. Factor structure: density and layout hit *alignment* (reading order,
+   deliberation) while type/ligatures hit *accuracy*. Truncation remains a
+   model-family behavior (Gemini Pro/Flash) that appears only on dense pages.
+6. **Resolution ablation (new arm; 6 pages × {native, 2000, 1000, 600}px × 2 models
+   × 2 runs).** Legibility is not the active variable in this range — *truncation
+   is*. Flash pooled: 90.0% native, 83.2% @2000, 88.4% @1000, 92.8% @600, entirely
+   non-monotonic, and the page-level swings track truncation flips: the Hebrew
+   Sha'arei Orah page goes 50.2% → 95.2% when downscaled to 600px as its truncation
+   rate falls 100% → 0%, while the Greek Dioscorides page collapses 94.3% → 65.5%
+   as *its* truncation rises 0% → 100%. Lite is flat within 0.6pp across the whole
+   27× range (95.5 / 96.1 / 96.1 / 96.1) with zero truncation throughout. Reading
+   these pages is not resolution-limited above 600px; output-budget behavior is.
+   This weakens the "Hebrew pages are low-resolution" confound hypothesis — the
+   Hebrew page got *better* smaller.
+7. **Prompt ablation (new arm; all 40 pages × 2 models × 3 runs, production
+   annotated OCR prompt vs bare transcription).** The annotation contract costs
+   about a point of unconditional accuracy — flash 88.1% → 87.2% (−0.91pp), lite
+   98.0% → 96.7% (−1.24pp) — with alignment essentially unchanged (lite even
+   improves, 97.5% → 99.2%). Per-page variance dwarfs the mean: flash swings from
+   −48pp (Simplicius) to +84pp (Zohrab John), and inspection shows those extremes
+   are alignment/truncation flips, not character-level reading changes. Split by
+   canonicity the interaction is inconsistent across models (flash +6.3pp canon /
+   −4.0pp noncanon; lite −5.0pp canon / +0.4pp noncanon), so **no canonicity ×
+   prompt interaction is claimed**. The defensible sentence: the production
+   annotation overhead is close to free on average, and any per-page effect runs
+   through the output budget.
+8. **Mistral OCR now covers the non-canonical set** (the recommender's P1 gap-hole
+   arm). It aligns on 83% of runs at 95.6% unconditional accuracy, and it fails
+   *categorically* rather than gradually: 0/4 aligned on canonical Armenian and 0/3
+   on canonical Greek, while reaching 99.6% on non-canonical Greek. A specialist
+   OCR system with no recitation channel is the natural control group for the
+   subsidy argument, and its pooled gap is the most negative in the set (−1.95pp).
 
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
@@ -213,21 +265,30 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Experiments planned (each cheap, each targets one confound)
 
-- **Resolution ablation**: same pages fetched at multiple widths → resolution curve
-  with everything else constant. Cheapest manipulable factor; directly tests the
-  Hebrew confound. (Natural experiment also available: the corpus-wide native-res
-  re-archive gives before/after image pairs.)
-- **Prompt ablation**: bare transcription vs production annotated prompt, same pages
-  ×3 runs — is the annotation overhead free? (Current evidence: suggestive no-harm,
-  uncontrolled.)
-- **Workstream-1 pages**: 10-15 more non-canonical pages across density/type cells
-  within the five page-aligned editions (agent running).
+- ~~**Resolution ablation**~~ — RUN 2026-07-19 (result 6). Follow-up worth doing:
+  extend below 600px to find where legibility actually binds, and re-run on pro to
+  see whether the truncation mediation is a Flash-family artifact. (Natural
+  experiment also available: the corpus-wide native-res re-archive gives
+  before/after image pairs.)
+- ~~**Prompt ablation**~~ — RUN 2026-07-19 (result 7): ≈1pp unconditional cost, no
+  reliable canonicity interaction.
+- ~~**Workstream-1 pages**~~ — LANDED: 12 new non-canonical pages (Hero, Simplicius,
+  Philo, Eznik, Xorenac'i) plus 5 German DTA pages, taking the set to 40.
+- **More same-book pairs** — the binding constraint on the headline claim. Every new
+  book that prints both a memorized and a non-memorized passage is worth more than
+  ten additional unmatched pages.
 - **Recension alt-references** for 2-3 rows (recitation fingerprint at scale).
 - **Agreement→accuracy calibration** on non-canonical rows only (consensus is NOT
   independent on canonical text — two models reciting agree while both misreport the
-  page). The corpus arm of this is now MEASURED — see "Corpus arm" below — but
-  calibration itself is still open: the corpus gives agreement and its factors, never
-  accuracy. Only the anchor rows can supply truth.
+  page). The corpus arm of this is now MEASURED (PR #3273) — see "Corpus arm" below —
+  but calibration itself is still open: the corpus gives agreement and its factors,
+  never accuracy. Only the anchor rows can supply truth.
+  The double-OCR supply is far larger than first thought: `page_revisions` snapshots
+  every OCR overwrite — **126,551 prior OCR versions across 100,992 distinct pages**,
+  full text with model + prompt_version on both sides (mostly flash→current and
+  lite→current transitions) — plus split-page parents, duplicate holdings, and
+  re-archive before/after pairs. Every page also carries `ocr.prompt_version` /
+  `prompt_name`, so prompt provenance is a corpus-wide covariate for free.
 - **Within-work canonicity gradient** (Derek, 2026-07-19) — the design upgrade the
   same-book contrasts approximate but do not achieve. Aeneid vs *Vita Vergilii* share
   a *binding*; they are still two texts, two genres, two typographic settings. The
@@ -270,7 +331,12 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Limitations to state plainly
 
-- n=23 pages, unbalanced cells; interaction estimates are hypotheses.
+- n=40 pages, unbalanced cells (12 canonical / 28 non-canonical, and only two books
+  hold both classes); interaction estimates are hypotheses, and the pooled
+  canonical-vs-non-canonical statistic is confounded by page mix in both directions.
+- The resolution and prompt arms ran on flash + lite only, 2–3 runs per cell; their
+  page-level effects are large but noisy, and both are mediated by truncation, so
+  they say more about output-budget behavior than about reading.
 - Scores are passage-scoped (free-skip): completeness and hallucinated additions
   outside the reference span are unmeasured.
 - "Published transcription" is never zero-exposure (First1K is on GitHub);

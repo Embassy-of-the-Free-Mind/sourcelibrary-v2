@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/track-event';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
+import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
 
 type ImageAccess = 'open' | 'nc-free' | 'blocked';
 
@@ -64,8 +65,6 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isImageFormat = (f: BookDownloadFormats) =>
-    f === 'images-zip' || f === 'epub-images' || f === 'epub-facsimile';
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
 
@@ -80,15 +79,16 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     // at the moment of the click and lets them choose to continue.
     if (!session?.user) {
       toast('Sign in to download', {
-        description: 'Members download every format. Sign in to get started.',
+        description: 'Text formats are free once you sign in. Premium formats (facsimiles, parallel text, scholarly editions) need purchase or membership.',
         action: { label: 'Sign in', onClick: goToSignIn },
       });
       return;
     }
 
-    // Signed-in but no purchase: NC-free image formats are free; everything
-    // else still routes through the paid flow.
-    if (accessChecked && !hasAccess && !isNcFreeFormat(format)) {
+    // Text formats are free for any signed-in user (subject to a daily cap
+    // enforced server-side). Only premium formats route through the paid
+    // flow — and NC-free image formats are exempt even there.
+    if (isPremiumFormat(format) && accessChecked && !hasAccess && !isNcFreeFormat(format)) {
       handlePurchase();
       return;
     }
@@ -105,6 +105,18 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       if (response.status === 402) {
         setDownloading(null);
         handlePurchase();
+        return;
+      }
+      if (response.status === 429) {
+        setDownloading(null);
+        let message = 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see /licensing.';
+        try {
+          const data = await response.json();
+          if (data?.error) message = data.error;
+        } catch {
+          // Fall back to the generic message above.
+        }
+        toast.error(message);
         return;
       }
       // Any other failure (500, gateway 504/524, …) must NOT be saved as the
@@ -124,7 +136,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');
       const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
-      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : 'txt';
+      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : format.startsWith('pdf-') ? 'pdf' : 'txt';
       const filename = filenameMatch ? filenameMatch[1] : `download-${format}.${defaultExt}`;
 
       const url = window.URL.createObjectURL(blob);
@@ -212,12 +224,14 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 Sign in to download
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; other formats may require a member account.' : 'Free for members.'}
+                {ncImagesFree ? 'Text formats and page scans are free once you sign in.' : 'Text formats are free once you sign in — premium formats (facsimiles, parallel text, scholarly editions) need a member account.'}
               </p>
             </div>
           )}
 
-          {/* Quiet purchase prompt for signed-in non-members */}
+          {/* Quiet purchase prompt for signed-in non-members — text formats
+              below are already free and download directly; this only unlocks
+              the premium (image/apparatus) formats. */}
           {needsPurchase && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
@@ -225,16 +239,17 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 disabled={purchasing}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
               >
-                {purchasing ? 'Redirecting...' : 'Download this book ($5)'}
+                {purchasing ? 'Redirecting...' : 'Unlock premium formats ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; other formats included with purchase.' : 'All formats included'}
+                {ncImagesFree ? 'Page scans are free; parallel-text and scholarly editions included with purchase.' : 'Text formats below are already free — this unlocks facsimiles, parallel text, and scholarly editions.'}
               </p>
             </div>
           )}
 
-          <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-b border-stone-100">
-            TXT
+          <div className="px-3 py-2 flex items-center justify-between border-b border-stone-100">
+            <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">TXT</span>
+            <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
           </div>
 
           {hasTranslations && (
@@ -250,6 +265,21 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
               icon={<Layers className="w-4 h-4 text-purple-600" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+
+          <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
+            PDF
+          </div>
+
+          {hasTranslations && hasImages && !imageRestricted && (
+            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Page scans + translation"
+              icon={<FileType className="w-4 h-4 text-emerald-700" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+          {hasTranslations && (
+            <FormatOption format="pdf-translation" label="English Translation (PDF)" desc="Translated text only"
+              icon={<FileType className="w-4 h-4 text-status-success" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 

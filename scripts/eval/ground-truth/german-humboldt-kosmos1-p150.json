@@ -1,0 +1,23 @@
+{
+  "work": "Humboldt, Kosmos Bd. 1 (1845) — meteor streams",
+  "book_id": "698fb77b6b95eeda7d2d1eaf",
+  "page_number": 151,
+  "script": "latin",
+  "language": "German",
+  "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+  "source_url": "https://www.deutschestextarchiv.de/book/view/humboldt_kosmos01_1845?p=150",
+  "edition": "Stuttgart u. Tübingen: J. G. Cotta, 1845 (1. Auflage)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "Die verschiedenen Meteorströme, jeder aus Myriaden kleiner Weltkörper zusammengesetzt, schneiden wahrscheinlich unsere Erdbahn, wie es der Comet von Biela thut. Die Sternschnuppen-Asteroiden würde man sich nach dieser Ansicht als einen geschlossenen Ring bildend und in demselben einerlei Bahn befolgend vorstellen können. Die sogenannten kleinen Planeten zwischen Mars und Jupiter bieten uns, mit Ausschluß der Pallas, in ihren so engverschlungenen Bahnen ein analoges Verhältniß dar. Ob Veränderungen in den Epochen, zu welchen der Strom uns sichtbar wird, ob Verspätungen der Erscheinungen, auf die ich schon lange aufmerksam gemacht habe, ein regelmäßiges Fortrücken oder Schwanken der Knoten (der Durchschnittspunkte der Erdbahn und der Ringe) andeuten, oder ob bei ungleicher Gruppirung und bei sehr ungleichen Abständen der kleinen Körper von einander die Zone eine so beträchtliche Breite hat, daß die Erde sie erst in mehreren Tagen durchschneiden kann; darüber ist jetzt noch nicht zu entscheiden.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_prose_with_running_header",
+    "density": "dense",
+    "type_size": "normal",
+    "typeface": "fraktur",
+    "classified_by": "visual audit of the scan, 2026-07-19 (sonnet hunt agent)",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

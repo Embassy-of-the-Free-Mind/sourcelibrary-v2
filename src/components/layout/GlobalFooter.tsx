@@ -36,6 +36,7 @@ const NAV_COLUMNS: ReadonlyArray<{
       { key: 'vision', href: '/vision' },
       { key: 'census', href: '/census' },
       { key: 'progress', href: '/about/progress' },
+      { key: 'research', href: '/research' },
       { key: 'researchNotes', href: '/blog' },
       { key: 'privacy', href: '/privacy' },
       { key: 'cookieSettings', href: '#cookie-settings' },

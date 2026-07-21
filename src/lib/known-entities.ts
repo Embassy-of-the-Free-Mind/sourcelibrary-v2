@@ -4,12 +4,13 @@ import type { Collection } from '@/lib/api-client/types/collections';
 /**
  * Known-entity search capture (issue #2790).
  *
- * Some queries name a *place in the library*, not a topic — "shwep" is the SHWEP
- * reading room, "internet archive" is a library partner, "alchemy" may be a
- * collection. Without this, the query is handed straight to the LLM, which guesses
- * (e.g. "shwep" → ancient-Egyptian "shwep-t"). matchKnownEntity() does a cheap,
- * exact, case-insensitive lookup against three registries and returns a direct
- * entry so the results page can surface a "go here" card above the AI narration.
+ * Some queries name a *place in the library*, not a topic — "internet archive" is
+ * a library partner, "alchemy" may be a collection. Without this, the query is
+ * handed straight to the LLM, which guesses at a topic. matchKnownEntity() does a
+ * cheap, exact, case-insensitive lookup against three registries and returns a
+ * direct entry so the results page can surface a "go here" card above the AI
+ * narration. BESPOKE_ENTITIES is empty today (it held the SHWEP reading room until
+ * that page was taken down); keep it for the next hand-maintained landing page.
  *
  * Matching is deliberately STRICT — only an exact normalized or slugified match
  * qualifies — so generic words ("history", "the") never resolve to a collection.
@@ -26,21 +27,7 @@ export interface KnownEntity {
 }
 
 /** Bespoke pages that aren't collections or library partners (hand-maintained). */
-const BESPOKE_ENTITIES: Array<KnownEntity & { aliases: string[] }> = [
-  {
-    aliases: [
-      'shwep',
-      'secret history of western esotericism',
-      'secret history of western esotericism podcast',
-    ],
-    title: 'SHWEP — Secret History of Western Esotericism',
-    description:
-      'Episode-by-episode reading lists cross-referencing the Secret History of Western Esotericism Podcast with the primary sources we hold.',
-    href: '/shwep',
-    kind: 'reading-room',
-    icon: '🎙️',
-  },
-];
+const BESPOKE_ENTITIES: Array<KnownEntity & { aliases: string[] }> = [];
 
 const norm = (s: string) => s.toLowerCase().trim().replace(/\s+/g, ' ');
 const slugify = (s: string) =>

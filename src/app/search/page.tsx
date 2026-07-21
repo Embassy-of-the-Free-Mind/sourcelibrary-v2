@@ -397,7 +397,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
     try {
       if (mode === 'unified') {
         // Check client-side cache first
-        const cacheKey = `unified:${q}:${language}:${category}:${hasTranslation}:${firstTranslation}:${library}`;
+        const cacheKey = `unified:${q}:${language}:${category}:${hasTranslation}:${firstTranslation}:${library}:${dateFrom}:${dateTo}`;
         const cached = searchCache.current.get(cacheKey);
         if (cached && Date.now() - cached.ts < CACHE_TTL) {
           setBookResults(cached.books);
@@ -418,6 +418,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             has_translation: hasTranslation ? 'true' : undefined,
             first_translation: firstTranslation ? 'true' : undefined,
             library: library || undefined,
+            date_from: dateFrom || undefined,
+            date_to: dateTo || undefined,
           };
           const data = await searchApi.unified(q, {
             limit: PREVIEW_BOOKS,
@@ -636,11 +638,21 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
         setBookTotal(data.total || 0);
         clickCtx.current = { query: q, ranking: (data as any).ranking || null, results: data.results || [], view: 'books', total: data.total || 0 };
       } else if (mode === 'index') {
-        const data = await searchApi.index(q, { type: indexType || undefined });
+        const data = await searchApi.index(q, {
+          type: indexType || undefined,
+          dateFrom: dateFrom || undefined,
+          dateTo: dateTo || undefined,
+        });
         setIndexResults(data.results || []);
         setIndexTotal(data.total || 0);
       } else if (mode === 'images') {
-        const data = await galleryApi.list({ query: q, limit: resultsPerPage, offset: pageOffset });
+        const data = await galleryApi.list({
+          query: q,
+          limit: resultsPerPage,
+          offset: pageOffset,
+          yearFrom: dateFrom ? parseInt(dateFrom, 10) || undefined : undefined,
+          yearTo: dateTo ? parseInt(dateTo, 10) || undefined : undefined,
+        });
         const items = data.items || [];
         // Merge any AI-supplemented images that arrived before gallery API responded
         const pending = pendingAiImages.current;
@@ -734,9 +746,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
   }, [viewMode, performSearch, updateUrl, startAiStream]);
 
   // Known-entity capture (#2790): a query that names a place in the library (a
-  // reading room like "shwep", a collection, a library partner) gets a direct
+  // collection, a library partner, a bespoke landing page) gets a direct
   // entry card above results instead of being left to the LLM's guess. Suppressed
-  // in embed/tenant mode — these hrefs (/shwep, /collections, /libraries) point
+  // in embed/tenant mode — these hrefs (/collections, /libraries) point
   // off-tenant and would leak past the subdomain lockdown.
   const knownEntity = useMemo(
     () => (embed ? null : matchKnownEntity(query, { collections: collectionsList })),

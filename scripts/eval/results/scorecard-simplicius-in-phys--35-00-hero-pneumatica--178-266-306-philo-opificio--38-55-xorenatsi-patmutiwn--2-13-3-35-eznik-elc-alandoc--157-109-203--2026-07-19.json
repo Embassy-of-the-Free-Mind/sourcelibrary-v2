@@ -1,0 +1,645 @@
+{
+  "date": "2026-07-19",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 3,
+  "only": "simplicius-in-phys-[35]00|hero-pneumatica-(178|266|306)|philo-opificio-(38|55)|xorenatsi-patmutiwn-(2-13|3-35)|eznik-elc-alandoc-(157|109|203)",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3526,
+      "charAccuracy": 0.9838343732274532,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 142-143 (those who curse Satan yet do his will, 1826 printed p.109)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 120,
+          "aligned": true,
+          "guard": 0.13157894736842105,
+          "cer": 0.038525963149078725,
+          "charAccuracy": 0.9614740368509213,
+          "refLen": 597,
+          "matched": 574,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.109",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik142.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.030945,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.966499162479062,
+              "cer": 0.03350083752093802
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0061800000000000015,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9597989949748744,
+              "cer": 0.04020100502512563
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0006992999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9631490787269682,
+              "cer": 0.03685092127303183
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.07258200000000001,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 168,
+          "aligned": true,
+          "guard": 0.10526315789473684,
+          "cer": 0.02356902356902357,
+          "charAccuracy": 0.9764309764309764,
+          "refLen": 594,
+          "matched": 580,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.030584999999999998,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9781144781144782,
+              "cer": 0.021885521885521887
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.006189,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9764309764309764,
+              "cer": 0.02356902356902357
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0006885,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9713804713804713,
+              "cer": 0.02861952861952862
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.083847,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 293 (against the pagan pantheon; mind, soul and the One, 1826 printed p.203)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 214,
+          "aligned": true,
+          "guard": 0.0660377358490566,
+          "cer": 0.015332197614991482,
+          "charAccuracy": 0.9846678023850085,
+          "refLen": 587,
+          "matched": 578,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.203",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik293.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.03084,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9880749574105622,
+              "cer": 0.01192504258943782
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00615,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9846678023850085,
+              "cer": 0.015332197614991482
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0006938999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9863713798977853,
+              "cer": 0.013628620102214651
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.076722,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.13 (Croesus and Artashes, printed p.125)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 192,
+          "aligned": true,
+          "guard": 0.031746031746031744,
+          "cer": 0.004010695187165776,
+          "charAccuracy": 0.9959893048128342,
+          "refLen": 748,
+          "matched": 745,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.125",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho049.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.085815,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9986631016042781,
+              "cer": 0.001336898395721925
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.016932000000000003,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9959893048128342,
+              "cer": 0.004010695187165776
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0017900999999999998,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9772727272727273,
+              "cer": 0.022727272727272728
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.134427,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' III.35 (fall of Artagers, deportations under Shapuh, printed p.300)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 367,
+          "aligned": true,
+          "guard": 0.041176470588235294,
+          "cer": 0.008,
+          "charAccuracy": 0.992,
+          "refLen": 1000,
+          "matched": 992,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.300",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho161.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.079755,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.993,
+              "cer": 0.007
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.015798,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.993,
+              "cer": 0.007
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0016767,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.984,
+              "cer": 0.016
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.13042499999999999,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.908,
+              "cer": 0.092
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 7,
+      "aligned": 7,
+      "refChars": 7152,
+      "charAccuracy": 0.9963646532438478,
+      "rows": [
+        {
+          "work": "Hero of Alexandria, Pneumatica I.38-39 transition (Teubner p.178, temple-door mechanisms)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 252,
+          "aligned": true,
+          "guard": 0.03664921465968586,
+          "cer": 0.021400778210116732,
+          "charAccuracy": 0.9785992217898832,
+          "refLen": 1028,
+          "matched": 1006,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.04194,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9892996108949417,
+              "cer": 0.010700389105058366
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.001647,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00096885,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9892996108949417,
+              "cer": 0.010700389105058366
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.105111,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9892996108949417,
+              "cer": 0.010700389105058366
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.266, self-feeding lamp construction)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 340,
+          "aligned": true,
+          "guard": 0.015789473684210527,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 966,
+          "matched": 966,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0369,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9130434782608696,
+              "cer": 0.08695652173913043
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.009552,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00103635,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.114291,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.306, boiler with blowing figure)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 380,
+          "aligned": true,
+          "guard": 0.02030456852791878,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 996,
+          "matched": 996,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.04548,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.009078,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00098955,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9969879518072289,
+              "cer": 0.0030120481927710845
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.110451,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 106-109 (Cohn p.38, hebdomad arithmology)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 162,
+          "aligned": true,
+          "guard": 0.009389671361502348,
+          "cer": 0.0018726591760299626,
+          "charAccuracy": 0.99812734082397,
+          "refLen": 1068,
+          "matched": 1066,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.07305,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0144,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0015237000000000002,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.15671999999999997,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 157-159 (Cohn p.55, the serpent as symbol of pleasure)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 179,
+          "aligned": true,
+          "guard": 0.01744186046511628,
+          "cer": 0.0009587727708533077,
+          "charAccuracy": 0.9990412272291467,
+          "refLen": 1043,
+          "matched": 1042,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.07573500000000001,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9990412272291467,
+              "cer": 0.0009587727708533077
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.014835000000000001,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9990412272291467,
+              "cer": 0.0009587727708533077
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0015588,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9932885906040269,
+              "cer": 0.006711409395973154
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.157875,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. II 2 ad 194a15 (CAG IX p.300, Empedocles/Democritus on form)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 336,
+          "aligned": true,
+          "guard": 0.009259259259259259,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 1063,
+          "matched": 1063,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.081585,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.016185,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0017046000000000001,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.167694,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. III 6 ad 206b33-207a18 (CAG IX p.500, on the infinite)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 536,
+          "aligned": true,
+          "guard": 0.025510204081632654,
+          "cer": 0.0010121457489878543,
+          "charAccuracy": 0.9989878542510121,
+          "refLen": 988,
+          "matched": 987,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.018015,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.015396,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9989878542510121,
+              "cer": 0.0010121457489878543
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0016245,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9979757085020243,
+              "cer": 0.0020242914979757085
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.16997400000000001,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9989878542510121,
+              "cer": 0.0010121457489878543
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

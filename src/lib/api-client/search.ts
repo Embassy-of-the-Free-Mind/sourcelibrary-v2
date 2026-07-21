@@ -30,10 +30,12 @@ export const search = {
   /**
    * Search book indexes (keywords, concepts, people, places, quotes)
    */
-  index: async (query: string, options?: { type?: string; bookId?: string }): Promise<IndexSearchResponse> => {
+  index: async (query: string, options?: { type?: string; bookId?: string; dateFrom?: string; dateTo?: string }): Promise<IndexSearchResponse> => {
     const params = new URLSearchParams({ q: query });
     if (options?.type) params.append('type', options.type);
     if (options?.bookId) params.append('book_id', options.bookId);
+    if (options?.dateFrom) params.append('date_from', options.dateFrom);
+    if (options?.dateTo) params.append('date_to', options.dateTo);
 
     return await apiClient.get(`/api/search/index?${params}`);
   },
@@ -50,6 +52,8 @@ export const search = {
     if (options?.filters?.has_translation) params.append('has_translation', options.filters.has_translation);
     if (options?.filters?.first_translation) params.append('first_translation', options.filters.first_translation);
     if (options?.filters?.library) params.append('library', options.filters.library);
+    if (options?.filters?.date_from) params.append('date_from', options.filters.date_from);
+    if (options?.filters?.date_to) params.append('date_to', options.filters.date_to);
 
     return await apiClient.get(`/api/search/unified?${params}`);
   },
