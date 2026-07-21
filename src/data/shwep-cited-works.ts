@@ -5501,8 +5501,30 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       75,
       76
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02c397e91e1768f68448",
+        "slug": "problemes-et-solutions-touchant-les-premiers-principes-avec-damascius",
+        "title": "Problems and Solutions Concerning the First Principles",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "69a99cef6c7545e2236e177c",
+        "slug": "problemes-et-solutions-touchant-les-premiers-principes-vol-1-damascius",
+        "title": "Problems and Solutions Concerning First Principles, Volume 1",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "69a99d006c7545e2236e1a79",
+        "slug": "problemes-et-solutions-touchant-les-premiers-principes-vol-3-damascius",
+        "title": "Problems and Solutions Concerning First Principles, Volume 3",
+        "language": "Greek",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "De principiis",
@@ -7717,8 +7739,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       148
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f01fe661123baf6fe996d",
+        "slug": "defixionum-tabellae-quotquot-innotuerunt-tam-in-graecis-audollent",
+        "title": "Curse Tablets",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Derveni Papyrus",
@@ -7863,8 +7893,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       159
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02d697e91e1768f68929",
+        "slug": "der-gnomon-des-idios-logos",
+        "title": "The Gnomon of the Idios Logos",
+        "language": "Greek",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Gospel of Judas",
@@ -9003,8 +9041,30 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       80
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ae937bdc57956f613332a6",
+        "slug": "pistis-sophia-opus-gnosticum-schwartze",
+        "title": "Pistis Sophia",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69bd9b8b46b01553e33be8d3",
+        "slug": "pistis-sophia-ein-gnostisches-originalwerk-des-3-ed",
+        "title": "Pistis Sophia: Ein Gnostisches Originalwerk des 3. Jahrhunderts",
+        "language": "Coptic",
+        "translated": true
+      },
+      {
+        "id": "6993574e83378b7aed7cf419",
+        "slug": "pistis-sophia-a-gnostic-gospel-trans",
+        "title": "Pistis Sophia: A Gnostic Gospel",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Yerushalmi Hagigah",
@@ -11838,8 +11898,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       202
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f031197e91e1768f6948d",
+        "slug": "die-canones-jacob-s-von-edessa-jacob",
+        "title": "The Canons of Jacob of Edessa",
+        "language": "German",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Against Rufinus",
@@ -12287,8 +12355,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       173
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02a897e91e1768f67d4d",
+        "slug": "john-of-nikiu-chronicle-1916-nikiu",
+        "title": "John Of Nikiu Chronicle 1916",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "In Analytica Posteriora",
@@ -16993,8 +17069,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       100
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6980941f1eb524781a7fdc0a",
+        "slug": "on-the-fourfold-life-champier",
+        "title": "Book on the Fourfold Life",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "De dono",
@@ -17222,8 +17306,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       194
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f032897e91e1768f697c2",
+        "slug": "zachariae-scholastici-dialogus-ammonius-quod-mundus-non-sit-scholasticus",
+        "title": "Ammonius, or That the World is Not Coeternal with God",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Paroemiographi Graeci",
