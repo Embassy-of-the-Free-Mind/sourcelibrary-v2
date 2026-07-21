@@ -1,6 +1,8 @@
 import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { SHWEP_CITED_WORKS } from '@/data/shwep-cited-works';
+import { SHWEP_WORK_LANGUAGES } from '@/data/shwep-work-languages';
+import { SHWEP_WORK_NOTES } from '@/data/shwep-work-notes';
 
 /**
  * Works cited in a SHWEP episode, rendered as a bibliography rather than as the
@@ -43,6 +45,10 @@ export interface CitedWorkEntry {
   work: string;
   author: string;
   era: string;
+  /** Language the work was composed in, where known. */
+  workLanguage?: string;
+  /** What this episode cites the work for, compressed from the episode's own works-cited prose. */
+  note?: string;
   held: boolean;
   /** The editions worth showing up front, already ordered. */
   editions: EditionRef[];
@@ -65,40 +71,64 @@ const CRITICAL = /critical[- ]edition|kritische|teubner|oxford classical text/i;
 const PRINCEPS = /editio[- ]princeps|aldine|incunabul/i;
 
 /**
- * We deliberately do NOT claim which language a work was composed in. `text_role` is
- * set to 'original' on Latin renderings of Greek works and `original_language` is
- * absent or wrong (a Greek De mysteriis records original_language: Latin), so any
- * "source text" badge derived from the book record would assert something false —
- * the same error as presenting Ficino's Latin as though it were Iamblichus. A
- * language is named; a claim about priority is left to the reader.
+ * Is this edition in the language the work was composed in? A book record cannot say —
+ * `text_role` is 'original' on Latin renderings of Greek works and `original_language`
+ * is absent or wrong (a Greek De mysteriis records original_language: Latin), so the
+ * work's composition language comes from SHWEP_WORK_LANGUAGES instead.
  *
- * The slug is matched alongside the title because an edition's scholarly character
- * often survives only there (Parthey's critical text is titled just "On the
- * Mysteries", and was ranked below three later Latin printings until we looked here).
+ * Bilingual editions ("Greek-Latin", "Arabic-Latin") count as source-language witnesses:
+ * the source text is present, facing the translation.
  */
-function classify(title: string, slug: string | null, language: string): { role: EditionRole; roleLabel: string } {
-  const hay = `${title} ${slug || ''}`;
-  const lang = (language || '').trim();
-  const isEnglish = /^english$/i.test(lang);
-  const langWord = lang && lang !== 'Unknown' ? lang : '';
-
-  if (CRITICAL.test(hay)) return { role: 'critical', roleLabel: `${langWord} critical edition`.trim() };
-  if (PRINCEPS.test(hay)) return { role: 'princeps', roleLabel: `${langWord} editio princeps`.trim() };
-  if (MANUSCRIPT.test(hay)) return { role: 'manuscript', roleLabel: `${langWord} manuscript`.trim() };
-  if (isEnglish) return { role: 'translation', roleLabel: 'English translation' };
-  return { role: 'edition', roleLabel: langWord ? `${langWord} edition` : 'Edition' };
+function isSourceLanguage(editionLanguage: string, workLanguage?: string): boolean {
+  if (!workLanguage || workLanguage === 'Unknown') return false;
+  const parts = (editionLanguage || '').split(/[-/,]| and /i).map(s => s.trim().toLowerCase());
+  return parts.includes(workLanguage.toLowerCase());
 }
 
 /**
- * An edited or hand-written witness outranks a later reprint; among plain printings the
- * earliest goes first. The reader still needs something they can actually read, so
- * `pickForDisplay` re-admits a translation below.
+ * The slug is matched alongside the title because an edition's scholarly character often
+ * survives only there — Parthey's critical text is titled just "On the Mysteries", and
+ * ranked below three later Latin printings until we looked here.
+ *
+ * A form badge (critical / princeps / manuscript) is only allowed to raise an edition
+ * that is IN THE SOURCE LANGUAGE. The 1497 Aldine De mysteriis is the editio princeps of
+ * *Ficino's Latin*, not of Iamblichus' Greek; badging it "editio princeps" lent a
+ * paraphrase the authority of the text, which is the error this page exists to avoid.
+ */
+function classify(
+  title: string,
+  slug: string | null,
+  language: string,
+  workLanguage?: string
+): { role: EditionRole; roleLabel: string } {
+  const hay = `${title} ${slug || ''}`;
+  const lang = (language || '').trim();
+  const langWord = lang && lang !== 'Unknown' ? lang : '';
+  const source = isSourceLanguage(lang, workLanguage);
+
+  if (source) {
+    if (CRITICAL.test(hay)) return { role: 'critical', roleLabel: `${langWord} critical edition` };
+    if (MANUSCRIPT.test(hay)) return { role: 'manuscript', roleLabel: `${langWord} manuscript` };
+    if (PRINCEPS.test(hay)) return { role: 'princeps', roleLabel: `${langWord} editio princeps` };
+    return { role: 'edition', roleLabel: `${langWord} text` };
+  }
+
+  // Not the source language: this is a rendering, whatever its typographic pedigree.
+  if (MANUSCRIPT.test(hay) && langWord) return { role: 'translation', roleLabel: `${langWord} manuscript translation` };
+  if (langWord) return { role: 'translation', roleLabel: `${langWord} translation` };
+  return { role: 'translation', roleLabel: 'Translation' };
+}
+
+/**
+ * Ad fontes: the text as written outranks any rendering of it, and among source-language
+ * witnesses an edited or hand-written one outranks a plain reprint. The reader still
+ * needs something they can actually read, so `pickForDisplay` re-admits a translation.
  */
 const ROLE_RANK: Record<EditionRole, number> = {
   critical: 100,
-  princeps: 90,
-  manuscript: 75,
-  edition: 55,
+  manuscript: 90,
+  princeps: 85,
+  edition: 70,
   translation: 30,
 };
 
@@ -172,6 +202,8 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
 
   const entries: CitedWorkEntry[] = [];
   for (const w of works) {
+    const workLanguage = SHWEP_WORK_LANGUAGES[`${w.author}|${w.work}`];
+    const note = SHWEP_WORK_NOTES[`${episodeNumber}|${w.author}|${w.work}`];
     const refs: EditionRef[] = [];
     for (const h of w.held) {
       const m = meta.get(h.id);
@@ -179,7 +211,7 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       const title = m.display_title || m.title || h.title;
       if (NOT_AN_EDITION.test(title)) continue;
       const language = m.language || h.language || 'Unknown';
-      const { role, roleLabel } = classify(title, h.slug, language);
+      const { role, roleLabel } = classify(title, h.slug, language, workLanguage);
       refs.push({
         id: h.id,
         title,
@@ -201,6 +233,8 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       work: w.work,
       author: w.author,
       era: w.era,
+      workLanguage: workLanguage && workLanguage !== 'Unknown' ? workLanguage : undefined,
+      note: note || undefined,
       held: editions.length > 0,
       editions,
       moreEditions,

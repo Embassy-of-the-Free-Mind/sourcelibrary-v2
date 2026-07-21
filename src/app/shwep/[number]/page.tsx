@@ -146,9 +146,19 @@ export default async function EpisodePage({ params }: Props) {
 
         {absentWorks.length > 0 && (
           <section className="mb-10">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500 mb-3">
-              Also cited, not yet in the library
+            {/* NOT "not in the library" — that claim is unsafe. Psellos' Epistle on
+                Chrysopoeia shows here while we hold it, because it sits inside a volume
+                titled "Catalogue des manuscrits alchimiques grecs, Vol. VI"; the matcher
+                searches work titles and never sees the container. Until a gap audit runs
+                against the full catalogue, say only what is true: we have not matched a
+                copy to this citation. */}
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-500 mb-1">
+              Also cited, no copy matched here yet
             </h2>
+            <p className="text-sm text-stone-500 mb-3">
+              We may still hold one of these inside a larger volume — collected works and
+              catalogues hide their contents from the matcher.
+            </p>
             <ul className="text-[15px] text-stone-600 leading-relaxed columns-1 sm:columns-2 gap-8">
               {absentWorks.map(w => (
                 <li key={`${w.author}-${w.work}`} className="break-inside-avoid mb-1.5">
@@ -287,7 +297,17 @@ function WorkEntry({ entry }: { entry: CitedWorkEntry }) {
         {entry.author && <span className="text-stone-600">{entry.author}, </span>}
         <em>{entry.work}</em>
       </h3>
-      <p className="text-xs uppercase tracking-wide text-stone-400 mt-0.5">{entry.era}</p>
+      <p className="text-xs uppercase tracking-wide text-stone-400 mt-0.5">
+        {entry.era}
+        {entry.workLanguage && ` · written in ${entry.workLanguage}`}
+      </p>
+
+      {/* Why this episode cites it. Without this an entry reads as an arbitrary match —
+          a Jacobean comedy on a Byzantine alchemy episode looks like a mistake until you
+          see what it was cited for. */}
+      {entry.note && (
+        <p className="text-[15px] text-stone-600 mt-2 leading-relaxed">{entry.note}</p>
+      )}
 
       <ul className="mt-3">
         {entry.editions.map(e => <EditionRow key={e.id} edition={e} />)}
