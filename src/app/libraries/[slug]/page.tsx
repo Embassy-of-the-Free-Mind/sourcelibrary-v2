@@ -95,7 +95,7 @@ async function fetchLibraryData(
   // Every query is independently guarded: one slow/failing catalog call must
   // degrade its own slice, never 500 the whole page.
   const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
-    try { return await fn(); } catch { return fallback; }
+    try { return await fn(); } catch (e) { console.error('[libpage] query failed:', e instanceof Error ? e.message : e); return fallback; }
   };
   type BrowseResult = Awaited<ReturnType<typeof browseBooks>>;
   const emptyResult: BrowseResult = { books: [], total: 0 };
@@ -136,6 +136,7 @@ async function fetchLibraryData(
   // heavy enough that running them concurrently starved/timed-out the grid query
   // and emptied the page. Books first, then the supporting data.
   const booksResult = await fetchGrid();
+  console.error(`[libpage] ${providerKey} sort=${chosenSort} offset=${offset} -> books=${booksResult.books.length} total=${booksResult.total}`);
   const [languages, sampleResult] = await Promise.all([
     safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
     fetchSample(),
