@@ -164,6 +164,75 @@ export const SHWEP_WORK_NOTES: Record<string, string> = ${JSON.stringify(out, nu
   console.log(`wrote ${Object.keys(out).length} notes across ${done} episodes`);
 }
 
+/**
+ * --titleforms : multilingual title variants for the works we appear not to hold.
+ *
+ * The gap audit retrieves lexically over the full catalogue. Given only an English work
+ * title it cannot find a volume catalogued in another language, and then reports a work
+ * as absent that we own — it called Psellos' Epistle on Chrysopoeia missing while we hold
+ * Bidez's "Catalogue des manuscrits alchimiques grecs VI: Michel Psellus, Épître sur la
+ * Chrysopée". Acquiring against that list would re-buy books we already have.
+ *
+ * Writes /tmp/shwep-cited/works-held.json (the audit's input) containing only the
+ * unmatched works, each carrying title_forms.
+ */
+async function runTitleForms() {
+  const works = readTsData('src/data/shwep-cited-works.ts', 'SHWEP_CITED_WORKS: ShwepCitedWork[] = ');
+  const acquire = works.filter(w => w.status === 'acquire');
+  const langs = fs.existsSync(path.join(ROOT, 'src/data/shwep-work-languages.ts'))
+    ? readTsData('src/data/shwep-work-languages.ts', 'SHWEP_WORK_LANGUAGES: Record<string, string> = ')
+    : {};
+
+  const forms = {};
+  const BATCH = 25;
+  for (let i = 0; i < acquire.length; i += BATCH) {
+    const slice = acquire.slice(i, i + BATCH);
+    const prompt = `For each historical work below, list the title forms a library catalogue might use.
+
+Include, where they exist and you are confident:
+- the title in the work's ORIGINAL language (transliterated in Latin script if the script differs)
+- the conventional LATIN title
+- the common ENGLISH title
+- the FRENCH, GERMAN or ITALIAN title if the standard scholarly edition is published under one
+  (e.g. Psellos' Epistle on Chrysopoeia appears as "Epitre sur la Chrysopee" in Bidez)
+
+Rules:
+- 2 to 6 forms per work. Distinctive substrings only — no subtitles, no editor names.
+- Each form must be a real catalogue title, not a description. Omit rather than guess.
+- Plain ASCII where possible; a catalogue search will not match accents reliably.
+
+Return JSON: [{"i": <index>, "forms": ["...", "..."]}]
+
+${slice.map((w, n) => `${n}. ${w.author || 'Anonymous'} — ${w.work}${langs[`${w.author}|${w.work}`] ? ` [composed in ${langs[`${w.author}|${w.work}`]}]` : ''}`).join('\n')}`;
+    try {
+      const res = await gemini(prompt);
+      for (const r of res) {
+        const w = slice[r.i];
+        if (w && Array.isArray(r.forms)) forms[`${w.author}|${w.work}`] = r.forms.filter(f => typeof f === 'string' && f.length >= 4);
+      }
+    } catch (e) {
+      console.error(`batch ${i}: ${e.message}`);
+    }
+    console.log(`title forms: ${Math.min(i + BATCH, acquire.length)}/${acquire.length}`);
+  }
+
+  const cache = '/tmp/shwep-cited';
+  fs.mkdirSync(cache, { recursive: true });
+  const out = acquire.map(w => ({
+    work: w.work,
+    author: w.author,
+    era: w.era,
+    episodes: w.episodes,
+    held: [],
+    status: 'extant',
+    title_forms: [w.work, ...(forms[`${w.author}|${w.work}`] || [])].slice(0, 6),
+  }));
+  fs.writeFileSync(path.join(cache, 'works-held.json'), JSON.stringify(out));
+  const enriched = out.filter(w => w.title_forms.length > 1).length;
+  console.log(`wrote ${out.length} unmatched works to ${cache}/works-held.json (${enriched} with extra title forms)`);
+}
+
 if (has('--languages')) await runLanguages();
 else if (has('--notes')) await runNotes();
-else { console.error('pass --languages or --notes'); process.exit(1); }
+else if (has('--titleforms')) await runTitleForms();
+else { console.error('pass --languages, --notes or --titleforms'); process.exit(1); }

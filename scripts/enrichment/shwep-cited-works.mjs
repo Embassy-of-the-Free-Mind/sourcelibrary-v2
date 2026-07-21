@@ -763,6 +763,22 @@ export const SHWEP_SUPPLEMENTARY_WORKS: Record<number, ShwepSupplementaryWork[]>
 //   absent           — genuinely not in the catalog (acquire)
 // Read-only: writes /tmp/shwep-cited/gap-audit.{json,md}; touches no .ts data files.
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * Accent-folding for lexical retrieval. A Mongo regex is case-insensitive but not
+ * accent-insensitive, so an ASCII title form cannot match an accented catalogue title:
+ * "Epitre sur la Chrysopee" missed Bidez's "Épître sur la Chrysopée" and the audit
+ * reported Psellos' Epistle on Chrysopoeia as absent while we hold it. Expanding each
+ * letter to its accented variants makes the two directions meet.
+ */
+const ACCENTS = {
+  a: 'aàáâãäåāăą', c: 'cçćč', e: 'eèéêëēĕėęě', i: 'iìíîïĩīĭ',
+  n: 'nñńň', o: 'oòóôõöøōŏ', s: 'sśşš', u: 'uùúûüũūŭ', y: 'yýÿ', z: 'zźżž',
+};
+const foldRx = s => reEsc(s).replace(/[a-z]/gi, ch => {
+  const set = ACCENTS[ch.toLowerCase()];
+  return set ? `[${set}]` : ch;
+});
 async function stageGapAudit() {
   console.log('Stage 6 GAP AUDIT (full catalog, read-only)');
   const works = readJSON('works-held.json', []);
@@ -780,7 +796,7 @@ async function stageGapAudit() {
     const forms = (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]).slice(0, 6);
     const author = w.author || '';
     // lexical retrieval over the FULL catalog (no visible filter) — title forms (≥4 chars) ∪ author
-    const titleRx = forms.filter(f => f && f.length >= 4).map(reEsc).join('|');
+    const titleRx = forms.filter(f => f && f.length >= 4).map(foldRx).join('|');
     const orClauses = [];
     if (titleRx) { orClauses.push({ title: { $regex: titleRx, $options: 'i' } }, { display_title: { $regex: titleRx, $options: 'i' } }); }
     const authToks = !/anonymous|various|unknown|attributed/i.test(author) ? authTokens(author).filter(t => t.length >= 4) : [];
