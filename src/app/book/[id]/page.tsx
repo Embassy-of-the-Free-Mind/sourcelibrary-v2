@@ -8,7 +8,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
+import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
@@ -50,6 +50,8 @@ import HeroVariants from '@/components/book/HeroVariants';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
+import BookLibrarySection, { type LibrarySectionData } from '@/components/book/BookLibrarySection';
+import { getPartnerByProvider } from '@/lib/library-partners';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -847,6 +849,43 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         })()
       : [] as CatalogBook[];
     const hasRelated = tagRelated.length > 0;
+
+    // "Part of the collection" section — the contributing digital library/source
+    // this book came from (Biblioteca Philosophica Hermetica, Internet Archive,
+    // …), with its own stats. Resolved from image_source.provider via the static
+    // LIBRARY_PARTNERS registry; skipped in embed/tenant views.
+    const librarySection: LibrarySectionData | null = await (async () => {
+      const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
+      const partner = provider ? getPartnerByProvider(provider) : undefined;
+      if (!partner || !embedPolicy.showBookRelatedBooks) return null;
+      try {
+        const [all, translated, languages] = await Promise.all([
+          browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12, exactCount: true } as Parameters<typeof browseBooks>[0]),
+          browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]).catch(() => ({ total: 0, books: [] })),
+          getLanguageCounts({ provider: partner.providerKey }).catch(() => [] as Array<{ lang: string; count: number }>),
+        ]);
+        if (all.total < 2) return null; // not worth a "collection" callout for a lone book
+        const covers = all.books
+          .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
+          .slice(0, 12)
+          .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
+        const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
+        return {
+          slug: partner.slug,
+          name: partner.name,
+          shortName: partner.shortName,
+          url: partner.url,
+          description: partner.description,
+          color: partner.color,
+          image,
+          stats: { books: all.total, languages: languages.length, translated: translated.total },
+          covers,
+        };
+      } catch {
+        return null;
+      }
+    })();
+
     const impressum = (() => {
       const place = book.place_published?.trim();
       const publisher = book.publisher?.trim();
@@ -1278,6 +1317,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </section>
         )}
 
+
+        {/* ===================== PART OF THE COLLECTION (library/source) ===================== */}
+        {librarySection && <BookLibrarySection data={librarySection} />}
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
