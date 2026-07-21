@@ -407,14 +407,19 @@ export default function NgramViewer() {
                 fill="var(--text-faint)"
                 opacity={0.16}
               />
-              {/* Band ceiling — gives the grey a number so it isn't a scaleless smear */}
+              {/* Band ceiling — gives the grey a number so it isn't a scaleless
+                  smear. Long dashes so it doesn't read as one of the y-gridlines
+                  (which are 2,4); the label carries a surface-colored halo so it
+                  stays legible where a curve crosses this height. */}
               <line
                 x1={0} y1={plotH * BACKDROP_TOP} x2={plotW} y2={plotH * BACKDROP_TOP}
-                stroke="var(--text-faint)" strokeDasharray="2,5" opacity={0.4}
+                stroke="var(--text-faint)" strokeDasharray="7,5" opacity={0.45}
               />
               <text
-                x={plotW - 2} y={plotH * BACKDROP_TOP - 4}
+                x={plotW - 2} y={plotH * BACKDROP_TOP - 5}
                 fontSize={10} fill="var(--text-faint)" textAnchor="end"
+                stroke="var(--surface-primary, #fdfcf8)" strokeWidth={3}
+                paintOrder="stroke"
               >
                 {compactNumber(tokenBand.top)} tokens/yr
                 {tokenBand.clipped > 0 && ' (peaks clipped)'}
