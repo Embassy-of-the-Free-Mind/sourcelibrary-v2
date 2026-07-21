@@ -1,4 +1,5 @@
 import type { ImageSourceProvider } from '@/lib/types/image-source';
+import { BPH_LOGO } from '@/lib/library-logos';
 
 export interface LibraryPartner {
   slug: string;
@@ -88,6 +89,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Embassy of the Free Mind in Amsterdam houses the Bibliotheca Philosophica Hermetica, one of the world\'s foremost collections of Hermetic, alchemical, mystical, and esoteric texts from the Renaissance to the present day.',
     color: 'gold',
     heroImageOverride: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/200.jpg',
+    logo: BPH_LOGO,
   },
   'e-rara': {
     slug: 'e-rara',
