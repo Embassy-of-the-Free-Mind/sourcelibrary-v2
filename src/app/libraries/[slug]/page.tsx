@@ -99,26 +99,42 @@ async function fetchLibraryData(
   };
   type BrowseResult = Awaited<ReturnType<typeof browseBooks>>;
   const emptyResult: BrowseResult = { books: [], total: 0 };
+  const chosenSort = (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular';
+  // Show ALL of the library's holdings (not only translated ones — that hid
+  // every book for untranslated collections). Query with the default
+  // pages_count>0 first (fast + safe, even over huge providers); only if that
+  // yields NOTHING (e.g. an art-only provider like the Met, whose single-object
+  // items have pages_count:0) fall back to including page-less artworks. Never
+  // exactCount (it times out over big providers and empties the page).
+  const fetchGrid = async (): Promise<BrowseResult> => {
+    const paged = await safe(() => browseBooks({
+      provider: providerKey,
+      language: language || undefined,
+      search: q && q.length >= 2 ? q : undefined,
+      sort: chosenSort,
+      offset,
+      limit: PER_PAGE_LOCAL,
+    }), emptyResult);
+    if (paged.books.length > 0) return paged;
+    return safe(() => browseBooks({
+      provider: providerKey,
+      language: language || undefined,
+      search: q && q.length >= 2 ? q : undefined,
+      sort: chosenSort,
+      offset,
+      limit: PER_PAGE_LOCAL,
+      hasPages: false,
+    }), paged);
+  };
+  const fetchSample = async (): Promise<BrowseResult> => {
+    const paged = await safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50 }), emptyResult);
+    if (paged.books.length > 0) return paged;
+    return safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50, hasPages: false }), paged);
+  };
   const [booksResult, languages, sampleResult] = await Promise.all([
-    // Main grid — show ALL of the library's holdings (not only translated ones,
-    // which hid every book for art/untranslated collections like the Met),
-    // including artworks (hasPages:false, since single-object items have
-    // pages_count:0). NOT exactCount (an exact count over a big provider times
-    // out). If the full query fails, retry a minimal provider-only query.
-    safe(
-      () => browseBooks({
-        provider: providerKey,
-        language: language || undefined,
-        hasPages: false,
-        search: q && q.length >= 2 ? q : undefined,
-        sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
-        offset,
-        limit: PER_PAGE_LOCAL,
-      }),
-      undefined as unknown as BrowseResult,
-    ).then(r => r ?? safe(() => browseBooks({ provider: providerKey, hasPages: false, offset, limit: PER_PAGE_LOCAL }), emptyResult)),
+    fetchGrid(),
     safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
-    safe(() => browseBooks({ provider: providerKey, hasPages: false, sort: 'popular', limit: 50 }), emptyResult),
+    fetchSample(),
   ]);
 
   const sampleBookIds = sampleResult.books.map(b => b.id);
