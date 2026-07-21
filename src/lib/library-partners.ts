@@ -68,6 +68,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digital.bodleian.ox.ac.uk',
     description: 'The Bodleian Libraries at the University of Oxford form the largest university library system in the United Kingdom. Their Digital Bodleian platform provides access to rare books, manuscripts, and special collections spanning nearly a millennium.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Bodleian_libraries_logo_june2015.png',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/699067d3249ce014347d422a/0014.jpg',
   },
   'cambridge': {
@@ -130,6 +131,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digi.vatlib.it',
     description: 'The Biblioteca Apostolica Vaticana is one of the oldest and most significant libraries in the world. DigiVatLib provides free access to digitized manuscripts, incunabula, and rare printed books from the Vatican\'s extraordinary collections.',
     color: 'violet',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Vatican_Library_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5e476006a4098422172b0/0443.jpg',
   },
   'google-books': {
@@ -258,6 +260,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.loc.gov',
     description: 'The Library of Congress is the largest library in the world, with millions of items in its collections including books, recordings, photographs, newspapers, maps, and manuscripts spanning the history of human knowledge.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Logo_of_the_United_States_Library_of_Congress.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6992f3d4dc69844b023ff228/0179.jpg',
   },
   'british-library': {
@@ -384,6 +387,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.metmuseum.org',
     description: 'The Metropolitan Museum of Art in New York provides open access to its encyclopedic collection spanning 5,000 years, including Egyptian papyri, Islamic manuscripts, medieval art, and Asian calligraphy.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/7/73/The_Metropolitan_Museum_of_Art_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/hero/met-book-of-dead.jpg',
   },
   'ndl': {
@@ -414,6 +418,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.vam.ac.uk',
     description: 'The Victoria and Albert Museum in London is the world\'s leading museum of art, design, and performance. Its collections include Leonardo da Vinci\'s notebooks (Codex Forster), Islamic art, and medieval manuscripts.',
     color: 'violet',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Victoria_and_Albert_Museum_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6991e70cebc7adff9a0b21e6/0003.jpg',
   },
   'tu-delft': {
