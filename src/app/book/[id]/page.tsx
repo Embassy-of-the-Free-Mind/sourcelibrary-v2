@@ -52,6 +52,7 @@ import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
 import BookLibrarySection, { type LibrarySectionData } from '@/components/book/BookLibrarySection';
 import { getPartnerByProvider } from '@/lib/library-partners';
+import { getRelatedBooks } from '@/lib/related-books';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -818,35 +819,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return readPage ? `/book/${bookSlug}/page/${readPage.id}` : null;
     })();
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
-    // Related books: a cover slider via the indexed Supabase catalog — books in the same
-    // collection (or category) as this one. `subject_keywords` is unindexed in
-    // Mongo and a $in scan times out, so we use the thematic collection instead.
-    const relCollection = (book as unknown as { collections?: string[] }).collections?.find(Boolean);
-    const relCategory = book.categories?.find(Boolean);
-    // The rail only shows books with a CSP-renderable cover (rehosted to R2 /
-    // blob / Wikimedia); archive.org covers are blocked and would render broken.
-    // Many books' catalog thumbnails aren't rehosted yet, so a single query can
-    // come back all-filtered-out. Widen the net: collection → category →
-    // language, keeping the first set that yields renderable covers.
+    // The related rail only shows books with a CSP-renderable cover (rehosted to
+    // R2 / blob / Wikimedia); archive.org covers are blocked and render broken.
     const renderableCover = (u?: string | null) => /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(u || ''));
-    const relLanguage = book.language?.trim() || undefined;
-    // Always a cover slider (never the pre-computed text list), via the indexed
-    // catalog: collection → category → language.
-    const tagRelated: CatalogBook[] = (embedPolicy.showBookRelatedBooks && (relCollection || relCategory || relLanguage))
-      ? await (async () => {
-          const queries: Array<Record<string, unknown>> = [];
-          if (relCollection) queries.push({ collection: relCollection });
-          if (relCategory) queries.push({ category: relCategory });
-          if (relLanguage) queries.push({ language: relLanguage });
-          for (const q of queries) {
-            try {
-              const r = await browseBooks({ ...q, sort: 'popular', limit: 24, skipCount: true } as Parameters<typeof browseBooks>[0]);
-              const filtered = r.books.filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail)).slice(0, 12);
-              if (filtered.length > 0) return filtered;
-            } catch { /* try next query */ }
-          }
-          return [] as CatalogBook[];
-        })()
+    // Related books: a weighted, multi-signal recommender — author + subject +
+    // location × time-period lead, a shared collection is only a minor nudge
+    // (it used to dominate). See src/lib/related-books.ts.
+    const relatedYear = Number(String(book.published ?? '').match(/\d{3,4}/)?.[0])
+      || (book as unknown as { year_published?: number }).year_published
+      || null;
+    const tagRelated: CatalogBook[] = embedPolicy.showBookRelatedBooks
+      ? await getRelatedBooks({
+          id: book.id,
+          author: book.author,
+          categories: book.categories,
+          collections: (book as unknown as { collections?: string[] }).collections,
+          language: book.language,
+          year: relatedYear,
+          place: book.place_published,
+        }, renderableCover, 12).catch(() => [] as CatalogBook[])
       : [] as CatalogBook[];
     const hasRelated = tagRelated.length > 0;
 
@@ -1333,7 +1324,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <section id="related" style={{ background: '#f5f0e8' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
-              <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>Other volumes that share this book&rsquo;s collection, subject, author, or language.</p>
+              <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>Other volumes close to this one by author, subject, place, and period.</p>
               <BookSlider books={tagRelated as unknown as MiniBook[]} />
             </div>
           </section>
