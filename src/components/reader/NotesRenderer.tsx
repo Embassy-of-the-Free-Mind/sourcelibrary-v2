@@ -9,6 +9,7 @@ import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
+import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
 
 // Page types where the entire "translation" is AI-generated description (no original text)
 const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'frontispiece', 'illustration', 'cover', 'map', 'diagram', 'musical-score', 'table']);
@@ -802,23 +803,30 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
 
-  // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
-  // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
-  // treat the page as description-only when no genuine transcribed text survives outside the
-  // annotation tags (title pages keep their real title/author/imprint text). See #feedback.
-  const isDescriptionOnly =
-    (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
-      DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
-    !hasBodyTextOutsideNotes(cleanText);
-
   // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
   // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to
   // readable text BEFORE any markdown/annotation preprocessing. Superscript
   // spans ($^{n}$) are left for preprocessLatexSuperscripts below.
   const withArtifacts = useMemo(() => cleanOcrArtifacts(cleanText), [cleanText]);
   const withBracketTags = useMemo(() => preprocessBracketTags(withArtifacts, showNotes), [withArtifacts, showNotes]);
+  // Rewrite annotation spans into balanced, non-nested, single-paragraph tag
+  // pairs (#2709). Multi-paragraph <note> blocks otherwise lose their highlight
+  // at the first blank line (CommonMark ends raw-HTML blocks there), and nested
+  // notes break every lazy pairing regex below — AI description then renders
+  // indistinguishable from the book's own text. Must run before any helper that
+  // pairs tags with `<note>[\s\S]*?<\/note>`-style regexes.
+  const withNormalizedSpans = useMemo(() => normalizeAnnotationSpans(withBracketTags), [withBracketTags]);
+  // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
+  // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
+  // treat the page as description-only when no genuine transcribed text survives outside the
+  // annotation tags (title pages keep their real title/author/imprint text). Runs on the
+  // NORMALIZED spans so multi-paragraph/nested note content isn't miscounted as body text.
+  const isDescriptionOnly =
+    (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
+      DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
+    !hasBodyTextOutsideNotes(withNormalizedSpans);
   // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
-  const withTerms = useMemo(() => preprocessTerms(withBracketTags, showNotes), [withBracketTags, showNotes]);
+  const withTerms = useMemo(() => preprocessTerms(withNormalizedSpans, showNotes), [withNormalizedSpans, showNotes]);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
   const withDescription = useMemo(
     () => (isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withTerms) : withTerms),
