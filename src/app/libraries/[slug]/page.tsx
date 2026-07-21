@@ -131,8 +131,12 @@ async function fetchLibraryData(
     if (paged.books.length > 0) return paged;
     return safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50, hasPages: false }), paged);
   };
-  const [booksResult, languages, sampleResult] = await Promise.all([
-    fetchGrid(),
+  // The grid query is the critical one — run it FIRST and alone. The aux queries
+  // (especially getLanguageCounts, which scans every row for the provider) are
+  // heavy enough that running them concurrently starved/timed-out the grid query
+  // and emptied the page. Books first, then the supporting data.
+  const booksResult = await fetchGrid();
+  const [languages, sampleResult] = await Promise.all([
     safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
     fetchSample(),
   ]);
