@@ -108,7 +108,26 @@ is the likely resolution.
 
 ## Results (n=40 pages, 1,077 observations; rebuilt 2026-07-19 evening)
 
-> **RE-DERIVATION PENDING (2026-07-21).** Every accuracy number below is computed on
+> **RE-DERIVED 2026-07-21 — and the result is a CONFOUND, not a correction.**
+> Observations now carry `char_accuracy_windowed` + `bracket_width` alongside the
+> free-skip score. Pooled, the subsidy drops for every model under the windowed
+> metric, mostly going negative (−3 to −22pp). That is NOT evidence the subsidy was
+> a scoring artifact. Bracket width (non-reference material inside the passage span)
+> is **10.4pp on canonical pages vs 1.8pp on non-canonical** — the widest are
+> canonical pages whose layout interleaves commentary (Zhuangzi interlinear 45.5pp,
+> Aeneid verse-in-commentary 13.6pp, Analects text+translation+commentary 12.7pp).
+> The mechanism is structural: **canonicity CAUSES commentary**. Canonical texts are
+> exactly the ones that attract glosses, interlinear translation and apparatus. So
+> the windowed metric overcharges canonical pages for a non-memorization reason,
+> just as free-skip overcredits verbose output for a non-reading reason. **Both
+> bounds are differentially biased with respect to the contrast, in opposite
+> directions — the bracket does not bracket the subsidy.**
+> On layout-clean pages the two metrics largely agree (sonnet5 +8.8/+8.3pp, flash
+> +2.3/+0.6pp, lite +1.8/+1.7pp; pro-preview the outlier at −9.7/−23.9pp), but that
+> subset is 4 canonical pages vs 28 non-canonical with residual bracket asymmetry —
+> an indication, not an estimate. **Quote no pooled subsidy figure.**
+>
+> _Superseded note (kept for provenance):_ **RE-DERIVATION PENDING (2026-07-21).** Every accuracy number below is computed on
 > `char_accuracy`, the free-skip subsequence score, now known to be an UPPER bound
 > whose inflation scales with output verbosity — measured at 12.9pp for Tesseract vs
 > 5.7pp for Gemini on these same pages, so the bias does NOT cancel when engines or
@@ -361,6 +380,14 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   canonicity claim is a two-cell contrast, not a dose-response.
 - The corpus arm (n=109,953) has no ground truth and its regression queue is
   unverified — cite it for agreement structure and factor effects, never for accuracy.
+- **The canonical/non-canonical contrast is confounded with LAYOUT, and no metric
+  fixes it.** Canonical texts attract commentary, so canonical pages carry more
+  interleaved apparatus (bracket width 10.4pp vs 1.8pp). Free-skip scoring ignores
+  that material (crediting verbosity); windowed scoring charges for it (penalising
+  canonical pages). The two bounds are biased in OPPOSITE directions with respect to
+  the contrast being measured. This is why the within-work gradient is a
+  prerequisite and not a refinement: only same-work, same-edition, same-layout pages
+  hold the confound constant.
 - Passage-scoped accuracy is BRACKETED, not point-estimated: free-skip is an upper
   bound (flatters noisy output), windowed is a lower bound (charges legitimate page
   material interleaved inside the passage — marginal cross-references between verses
