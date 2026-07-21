@@ -9,6 +9,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -483,39 +484,10 @@ async function updateParentJobProgress(db, parentJobId) {
 }
 
 async function updateBookCounts(db, bookId) {
-  const [counts] = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId } },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        with_ocr: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] }
-              ]},
-              1, 0
-            ]
-          }
-        },
-        with_translation: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] }
-              ]},
-              1, 0
-            ]
-          }
-        },
-      },
-    },
-  ]).toArray();
+  // Count VISIBLE pages only (page_number > 0) — see scripts/lib/page-counts.mjs
+  // and issue #3293. Soft-hidden pages never render and must not inflate counts.
+  const [counts] = await db.collection('pages')
+    .aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
 
   if (counts) {
     await db.collection('books').updateOne(

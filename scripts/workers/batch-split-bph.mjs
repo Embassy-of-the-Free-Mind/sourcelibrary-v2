@@ -30,6 +30,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
 import { parseArgs } from 'util';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 
 // --- Config ---
 const ASPECT_RATIO_THRESHOLD = 1.2; // w/h > 1.2 = spread
@@ -455,13 +456,19 @@ async function processBook(r2, db, book) {
     await pagesCol.bulkWrite(renumberOps);
   }
 
-  // Update book
+  // Update book — count VISIBLE pages only (page_number > 0). Soft-hidden pages
+  // never render, so counting them corrupts the visible-only read-path convention
+  // (issue #3293). The renumber above reassigns every page to a positive number,
+  // so allPages.length is already the visible count; the countDocuments filters
+  // keep the convention correct regardless.
   const ocrCount = await pagesCol.countDocuments({
     book_id: book.id,
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $ne: '' },
   });
   const translateCount = await pagesCol.countDocuments({
     book_id: book.id,
+    ...VISIBLE_PAGE_MATCH,
     'translation.data': { $exists: true, $ne: '' },
   });
 
