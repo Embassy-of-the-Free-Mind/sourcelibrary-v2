@@ -99,23 +99,34 @@ async function fetchLibraryData(
   offset: number,
   q?: string
 ): Promise<Pick<SharedLibraryViewProps, 'books' | 'total' | 'topBooks' | 'languages' | 'galleryImages' | 'contributingLibraries'>> {
+  // Every query is independently guarded: one slow/failing catalog call must
+  // degrade its own slice, never 500 the whole page. (revalidate above lets a
+  // degraded render self-heal on the next background regeneration.)
+  const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
+    try { return await fn(); } catch { return fallback; }
+  };
+  type BrowseResult = Awaited<ReturnType<typeof browseBooks>>;
+  const emptyResult: BrowseResult = { books: [], total: 0 };
   const [booksResult, languages, sampleResult] = await Promise.all([
-    browseBooks({
-      provider: providerKey,
-      language: language || undefined,
-      // Show ALL of the library's holdings — not only translated ones (that
-      // hid every book for art/untranslated collections like the Met). Include
-      // artworks (hasPages:false, since single-object items have pages_count:0).
-      hasPages: false,
-      search: q && q.length >= 2 ? q : undefined,
-      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
-      offset,
-      limit: PER_PAGE_LOCAL,
-      // NOT exactCount: an exact count over a big provider times out and returns
-      // an empty page (see revalidate note above). Estimated is fast + safe.
-    }),
-    getLanguageCounts({ provider: providerKey }),
-    browseBooks({ provider: providerKey, hasPages: false, sort: 'popular', limit: 50 }),
+    // Main grid — show ALL of the library's holdings (not only translated ones,
+    // which hid every book for art/untranslated collections like the Met),
+    // including artworks (hasPages:false, since single-object items have
+    // pages_count:0). NOT exactCount (an exact count over a big provider times
+    // out). If the full query fails, retry a minimal provider-only query.
+    safe(
+      () => browseBooks({
+        provider: providerKey,
+        language: language || undefined,
+        hasPages: false,
+        search: q && q.length >= 2 ? q : undefined,
+        sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+        offset,
+        limit: PER_PAGE_LOCAL,
+      }),
+      undefined as unknown as BrowseResult,
+    ).then(r => r ?? safe(() => browseBooks({ provider: providerKey, hasPages: false, offset, limit: PER_PAGE_LOCAL }), emptyResult)),
+    safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
+    safe(() => browseBooks({ provider: providerKey, hasPages: false, sort: 'popular', limit: 50 }), emptyResult),
   ]);
 
   const sampleBookIds = sampleResult.books.map(b => b.id);
@@ -148,14 +159,17 @@ async function fetchLibraryData(
     .filter((img): img is Record<string, unknown> => !!img && typeof img === 'object')
     .map((img) => sanitizeGalleryImageDoc(img));
 
-  const { data: contribData } = await supabase
-    .from('books_catalog')
-    .select('contributing_library')
-    .eq('visible', true)
-    .eq('image_source_provider', providerKey)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0)
-    .not('contributing_library', 'is', null);
+  const contribData = await safe(async () => {
+    const { data } = await supabase
+      .from('books_catalog')
+      .select('contributing_library')
+      .eq('visible', true)
+      .eq('image_source_provider', providerKey)
+      .gt('pages_count', 0)
+      .gt('pages_translated', 0)
+      .not('contributing_library', 'is', null);
+    return data;
+  }, null as { contributing_library: string | null }[] | null);
 
   const contribCounts = new Map<string, number>();
   for (const row of (contribData || [])) {
