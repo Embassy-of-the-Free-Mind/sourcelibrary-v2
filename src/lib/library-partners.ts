@@ -10,6 +10,9 @@ export interface LibraryPartner {
   color: 'rust' | 'sage' | 'violet' | 'gold';
   /** Hand-picked hero image URL — takes priority over auto-selected gallery images */
   heroImageOverride?: string;
+  /** Institution logo (wordmark preferred — it carries the name). Must be on a
+   *  CSP-allowed img host (archive.org, upload.wikimedia.org, images.sourcelibrary.org). */
+  logo?: string;
   /** Has a BPH-style "Books | Catalogue" tab structure driven by a Supabase
    *  bibliographic export (library_catalog_records). When true, the tenant
    *  page renders <UnifiedCatalogue> instead of the plain books grid. The
@@ -33,6 +36,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Internet Archive is a non-profit digital library offering free access to millions of books, movies, and web pages. Their Open Library and book scanning initiatives have digitized millions of volumes from partner libraries worldwide.',
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69d0065c73df40dce83db54c/0006.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Internet_Archive_logo_and_wordmark.svg',
   },
   'gallica': {
     slug: 'gallica',
@@ -43,6 +47,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'Gallica is the digital library of the Bibliothèque nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
     color: 'violet',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5ef41bfd8cafd91e44049/0022.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Gallica_logo.svg',
   },
   'bavarian-state-library': {
     slug: 'bavarian-state-library',
@@ -103,6 +108,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'Wellcome Collection in London is a free museum and library exploring health, life, and our place in the world. Their digital collections include medical manuscripts, alchemical texts, and works on the history of science and medicine.',
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6991d8978c1030b12444c035/0047.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Wellcome_Collection_logo.svg',
   },
   'hab-wolfenbuettel': {
     slug: 'hab-wolfenbuettel',

@@ -882,6 +882,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         description: partner.description,
         color: partner.color,
         image,
+        logo: partner.logo,
         stats: { books: all.total, languages: languages.length, translated: translated.total },
         covers,
       };
