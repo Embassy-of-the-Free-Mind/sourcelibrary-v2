@@ -863,12 +863,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // never nulls the whole section — we degrade a stat, not the feature.
       const guard = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
         Promise.race([p, new Promise<T>((res) => setTimeout(() => res(fallback), 3500))]).catch(() => fallback);
-      const [all, translated, languages] = await Promise.all([
-        guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12 }), { books: [] as CatalogBook[], total: 0 }),
-        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1 }), { total: 0, books: [] as CatalogBook[] }),
+      // Sample (fast, estimated) gates the section and gives cover art. Exact
+      // counts are fetched separately and fall back to the estimate if slow — so
+      // the numbers are real (not the planner's round "1,001" estimate) without
+      // ever hiding the section on a big provider.
+      const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 12 }), { books: [] as CatalogBook[], total: 0 });
+      if (all.total < 2) return null; // not worth a "collection" callout for a lone book
+      const [exactBooks, translated, languages] = await Promise.all([
+        guard(browseBooks({ provider: partner.providerKey, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: all.total, books: [] as CatalogBook[] }),
+        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: 0, books: [] as CatalogBook[] }),
         guard(getLanguageCounts({ provider: partner.providerKey }), [] as Array<{ lang: string; count: number }>),
       ]);
-      if (all.total < 2) return null; // not worth a "collection" callout for a lone book
       const covers = all.books
         .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
         .slice(0, 12)
@@ -883,7 +888,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         color: partner.color,
         image,
         logo: partner.logo,
-        stats: { books: all.total, languages: languages.length, translated: translated.total },
+        stats: { books: exactBooks.total || all.total, languages: languages.length, translated: translated.total },
         covers,
       };
     })();
