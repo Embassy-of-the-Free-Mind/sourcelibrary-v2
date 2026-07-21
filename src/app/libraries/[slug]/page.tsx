@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
-import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
+import { getPartnerBySlug } from '@/lib/library-partners';
 import SharedLibraryView, { PER_PAGE, type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import LibrarySchema from '@/components/seo/LibrarySchema';
 
@@ -47,14 +47,18 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 // ---------- Static params ----------
 
 // Self-heal window. Without a numeric revalidate, a generateStaticParams page is
-// baked ONCE at build time — and if the build-time catalog query flaked (an
-// exactCount timeout over a big provider returns an EMPTY result, not a throw),
-// the empty grid froze into the static page forever (the anti-pattern CLAUDE.md
-// warns about). ISR re-renders in the background so the grid recovers.
+// baked ONCE at build time — and if the build-time catalog query flaked (a big
+// provider's count/list returns an EMPTY result under concurrent build load,
+// not a throw), the empty grid froze into the static page (the anti-pattern
+// CLAUDE.md warns about). ISR re-renders in the background so the grid recovers.
 export const revalidate = 3600;
+// Render on demand (first request), NOT at build time. Pre-building all 44
+// library pages concurrently hammered Supabase and baked empty grids; the same
+// query succeeds fine when the page renders one-at-a-time at request time.
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return getAllPartnerSlugs().map(slug => ({ slug }));
+  return [];
 }
 
 // ---------- Metadata ----------
