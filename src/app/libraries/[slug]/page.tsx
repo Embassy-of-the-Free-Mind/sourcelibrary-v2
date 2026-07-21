@@ -46,20 +46,13 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 
 // ---------- Static params ----------
 
-// Self-heal window. Without a numeric revalidate, a generateStaticParams page is
-// baked ONCE at build time — and if the build-time catalog query flaked (a big
-// provider's count/list returns an EMPTY result under concurrent build load,
-// not a throw), the empty grid froze into the static page (the anti-pattern
-// CLAUDE.md warns about). ISR re-renders in the background so the grid recovers.
-export const revalidate = 3600;
-// Render on demand (first request), NOT at build time. Pre-building all 44
-// library pages concurrently hammered Supabase and baked empty grids; the same
-// query succeeds fine when the page renders one-at-a-time at request time.
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  return [];
-}
+// This page reads searchParams (sort / language / offset / search), so it is
+// inherently per-request DYNAMIC — it cannot be statically generated or ISR
+// cached. Pre-baking it (generateStaticParams + no revalidate) is what froze an
+// empty grid in: a build-time catalog query flaked and the empty result was
+// cached. And adding `revalidate` on top of searchParams throws
+// DYNAMIC_SERVER_USAGE. So: render on demand, every request.
+export const dynamic = 'force-dynamic';
 
 // ---------- Metadata ----------
 
@@ -100,8 +93,7 @@ async function fetchLibraryData(
   q?: string
 ): Promise<Pick<SharedLibraryViewProps, 'books' | 'total' | 'topBooks' | 'languages' | 'galleryImages' | 'contributingLibraries'>> {
   // Every query is independently guarded: one slow/failing catalog call must
-  // degrade its own slice, never 500 the whole page. (revalidate above lets a
-  // degraded render self-heal on the next background regeneration.)
+  // degrade its own slice, never 500 the whole page.
   const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
     try { return await fn(); } catch { return fallback; }
   };
