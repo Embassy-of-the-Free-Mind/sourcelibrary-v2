@@ -29,7 +29,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   const hasCovers = covers.length >= 4;
 
   const stats = [
-    { label: 'books on Source Library', short: 'books', value: fmt(data.stats.books) },
+    { label: 'books in the Source Library', short: 'books', value: fmt(data.stats.books) },
     data.stats.translated > 0 ? { label: 'translated', short: 'translated', value: fmt(data.stats.translated) } : null,
     data.stats.languages > 1 ? { label: 'languages', short: 'languages', value: fmt(data.stats.languages) } : null,
   ].filter(Boolean) as Array<{ label: string; short: string; value: string }>;

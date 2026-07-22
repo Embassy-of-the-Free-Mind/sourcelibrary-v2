@@ -1250,17 +1250,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           mosaicUrl={`/api/books/${book.id}/hero-mosaic`}
           actions={(
             /* Mobile-only: pinned to the foot of the hero (desktop keeps these
-               inline in the meta below). */
-            <div className="flex items-center gap-2.5">
+               inline in the meta below). Read sits under the text; the icon bar
+               is pushed into the last 1/3 so it lines up under the cover. */
+            <div className="flex items-center">
               {embedPolicy.showBookReadCta && readHref && (
                 <Link href={readHref} className="inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
                   <BookOpen className="w-4 h-4" />Read this book
                 </Link>
               )}
-              <div className="flex items-center gap-1 px-1.5 py-1 rounded" style={{ background: 'rgba(12,9,6,0.55)', border: '1px solid rgba(245,240,232,0.2)' }}>
-                <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />
-                <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />
-                <LikeButton targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />
+              <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
+                {[
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
+                  <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
+                ].map((el, i) => (
+                  <div key={i} className="h-10 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
+                ))}
               </div>
             </div>
           )}
