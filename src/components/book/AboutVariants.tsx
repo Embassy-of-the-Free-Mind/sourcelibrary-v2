@@ -40,7 +40,7 @@ export default function AboutVariants({
           <div className="order-2 md:order-1 md:col-span-3">
             {content != null && (
               <>
-                <h2 className="font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
+                <h2 className="hidden md:block font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
                 <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
                 {tagRow}
               </>

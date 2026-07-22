@@ -29,10 +29,10 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   const hasCovers = covers.length >= 4;
 
   const stats = [
-    { label: 'books on Source Library', value: fmt(data.stats.books) },
-    data.stats.translated > 0 ? { label: 'translated', value: fmt(data.stats.translated) } : null,
-    data.stats.languages > 1 ? { label: 'languages', value: fmt(data.stats.languages) } : null,
-  ].filter(Boolean) as Array<{ label: string; value: string }>;
+    { label: 'books on Source Library', short: 'books', value: fmt(data.stats.books) },
+    data.stats.translated > 0 ? { label: 'translated', short: 'translated', value: fmt(data.stats.translated) } : null,
+    data.stats.languages > 1 ? { label: 'languages', short: 'languages', value: fmt(data.stats.languages) } : null,
+  ].filter(Boolean) as Array<{ label: string; short: string; value: string }>;
 
   const CoversStrip = ({ className = '' }: { className?: string }) => (
     <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-px-6 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] ${className}`}>
@@ -60,11 +60,16 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
             <h2 className="font-display font-medium text-[26px] md:text-[34px] leading-[1.08] mb-4" style={{ color: '#2b2620' }}>{data.name}</h2>
             <p className="text-[14.5px] md:text-[15.5px] leading-relaxed mb-6 max-w-[54ch]" style={{ color: '#5c5546' }}>{data.description}</p>
 
-            <div className="flex flex-wrap gap-x-7 gap-y-2 mb-8">
+            {/* Mobile: all stats on one row (value stacked over a short label);
+                desktop: inline with the full label. */}
+            <div className="flex justify-between gap-3 md:flex-wrap md:justify-start md:gap-x-7 md:gap-y-2 mb-8">
               {stats.map((s) => (
-                <span key={s.label} className="inline-flex items-baseline gap-1.5">
-                  <span className="font-display font-medium text-[21px] md:text-[24px]" style={{ color: '#2b2620' }}>{s.value}</span>
-                  <span className="text-[12.5px] md:text-[13px]" style={{ color: '#8a8170' }}>{s.label}</span>
+                <span key={s.label} className="flex flex-col md:flex-row md:items-baseline md:gap-1.5 min-w-0">
+                  <span className="font-display font-medium text-[19px] md:text-[24px] leading-none" style={{ color: '#2b2620' }}>{s.value}</span>
+                  <span className="text-[11px] md:text-[13px] mt-0.5 md:mt-0 leading-tight" style={{ color: '#8a8170' }}>
+                    <span className="md:hidden">{s.short}</span>
+                    <span className="hidden md:inline">{s.label}</span>
+                  </span>
                 </span>
               ))}
             </div>

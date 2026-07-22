@@ -17,6 +17,7 @@ import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
 import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
+import BookTimeline, { type TimelineEvent } from '@/components/book/BookTimeline';
 import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
@@ -965,6 +966,45 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // right under the text + tags, not in a separate row.
     const readingGuideText = bookSummaryObj?.detailed || readingSummary || '';
     const hasReadingGuide = !!readingGuideText.trim();
+
+    // ---- Book history timeline: the meaningful dates we actually hold. ----
+    const fmtMonthYear = (d: string | Date) => {
+      const dt = new Date(d);
+      return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    };
+    const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
+    // Original (historical) publication — always first.
+    if (book.published) {
+      const place = [book.place_published, book.publisher].filter(Boolean).join(' · ');
+      rawTimeline.push({ ts: -1, key: 'published', dateText: String(book.published), label: 'Published', detail: place || undefined });
+    }
+    // English editions / translations published on Source Library.
+    ((book.editions as TranslationEdition[] | undefined) || [])
+      .filter((e) => e.status === 'published' && e.published_at)
+      .sort((a, b) => +new Date(a.published_at!) - +new Date(b.published_at!))
+      .forEach((e, i) => {
+        const my = fmtMonthYear(e.published_at!);
+        if (!my) return;
+        rawTimeline.push({
+          ts: +new Date(e.published_at!),
+          key: `edition-${i}`,
+          dateText: my,
+          label: i === 0
+            ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
+            : 'New edition published',
+          detail: e.version ? `Version ${e.version}` : undefined,
+        });
+      });
+    // Joined Source Library.
+    if (book.created_at) {
+      const my = fmtMonthYear(book.created_at);
+      const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+      if (my) rawTimeline.push({ ts: +new Date(book.created_at), key: 'added', dateText: my, label: 'Added to Source Library', detail: digitizer ? `Digitized by ${digitizer}` : undefined });
+    }
+    const timelineEvents: TimelineEvent[] = rawTimeline
+      .sort((a, b) => a.ts - b.ts)
+      .map(({ ts: _ts, ...e }) => e);
+
     const readingDropdowns = (
       <>
         {hasReadingGuide && (
@@ -1101,6 +1141,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </details>
           );
         })()}
+
+        {/* Book history — a public timeline of the book's meaningful dates. */}
+        <BookTimeline events={timelineEvents} />
 
         {/* Book history — staff-only processing log; its own self-contained collapsible. */}
         <AuthCheck role="inner_circle">
