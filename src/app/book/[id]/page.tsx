@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
@@ -233,7 +234,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? formatAuthor(byline.displayName).name || byline.displayName
     : formatAuthor(book.author).name || book.author;
   const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
-  const year = book.published ? ` (${book.published})` : '';
+  // `published` is free text and 23% of it is not a year — QuickStatements
+  // noise, "Unknown", century labels. Never interpolate it raw into a headline.
+  const displayYear = displayPublished(book.published);
+  const year = displayYear ? ` (${displayYear})` : '';
   // Build description front-loading title+byline+date, truncated to 155 chars for SEO
   let description = `${title} by ${bylineLabel}${year} — read the full English translation online.`;
   if (description.length > 155) {
@@ -263,7 +267,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'citation_author': bylineLabel,
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
   };
-  if (book.published) scholarMeta['citation_publication_date'] = book.published;
+  // Only a bare year may be asserted here. A century or range is real knowledge
+  // but not a publication date, and this field cannot express the hedge —
+  // emitting nothing beats fabricating a precision the source never had.
+  const citeYear = citationYear(book.published);
+  if (citeYear) scholarMeta['citation_publication_date'] = citeYear;
   if (book.language) scholarMeta['citation_language'] = book.language;
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
