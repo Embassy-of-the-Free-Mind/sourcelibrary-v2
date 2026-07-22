@@ -53,6 +53,11 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 // cached. And adding `revalidate` on top of searchParams throws
 // DYNAMIC_SERVER_USAGE. So: render on demand, every request.
 export const dynamic = 'force-dynamic';
+// force-dynamic alone still let Next's Data Cache serve a STALE fetch response
+// for the Supabase catalog GETs (an empty result baked at build time with the
+// placeholder anon key), so the render got count-but-no-rows. Bypass the fetch
+// cache entirely so every catalog query hits the live DB.
+export const fetchCache = 'force-no-store';
 
 // ---------- Metadata ----------
 
