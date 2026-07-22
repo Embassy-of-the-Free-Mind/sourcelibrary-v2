@@ -241,8 +241,42 @@ export default async function EpisodePage({ params }: Props) {
           </section>
         )}
 
+        {/* Provenance. A reader cannot otherwise tell whose voice is whose on a page
+            headed with someone else's name, and several fields here are machine-derived.
+            Saying so plainly is the difference between a citation and an assertion. */}
+        <section className="mt-12 pt-8 border-t border-stone-200">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-2">
+            What is on this page, and whose it is
+          </h2>
+          <div className="text-sm text-stone-500 space-y-1.5 max-w-3xl">
+            <p>
+              <strong className="text-stone-700 font-medium">Earl Fontainelle&rsquo;s, quoted:</strong>{' '}
+              the reading list and every sentence in quotation marks, verbatim from{' '}
+              <a href={episode.url} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">
+                this episode&rsquo;s page on shwep.net
+              </a>
+              . We have not paraphrased or edited his words.
+            </p>
+            <p>
+              <strong className="text-stone-700 font-medium">Ours:</strong> which editions Source Library
+              holds, and the links to read them.
+            </p>
+            <p>
+              <strong className="text-stone-700 font-medium">Machine-derived, and therefore fallible:</strong>{' '}
+              which works this episode cites, each work&rsquo;s date and composition language, how each
+              edition is labelled, and which page a citation points to. A passage link says{' '}
+              &ldquo;read the cited passage&rdquo; only where a mark printed on the page itself places it
+              at his locus; otherwise it says only that the page treats the same matter.
+            </p>
+            <p className="pt-1">
+              His citations index the editions <em>he</em> names, not ours &mdash; a fragment or page
+              number will not carry across. Where he names an edition, it is shown beside ours.
+            </p>
+          </div>
+        </section>
+
         {/* Back link */}
-        <div className="mt-12 pt-8 border-t border-stone-200">
+        <div className="mt-10 pt-8 border-t border-stone-200">
           <Link href="/shwep" className="text-sm text-stone-500 hover:text-stone-700 transition-colors">
             &larr; Back to all episodes
           </Link>
@@ -302,23 +336,47 @@ function WorkEntry({ entry }: { entry: CitedWorkEntry }) {
         {entry.workLanguage && ` · written in ${entry.workLanguage}`}
       </p>
 
-      {/* Why this episode cites it. Without this an entry reads as an arbitrary match —
-          a Jacobean comedy on a Byzantine alchemy episode looks like a mistake until you
-          see what it was cited for. */}
-      {entry.note && (
-        <p className="text-[15px] text-stone-600 mt-2 leading-relaxed">{entry.note}</p>
+      {/* HIS words, quoted — never our summary of them. Without this an entry reads as an
+          arbitrary match: a Jacobean comedy on a Byzantine alchemy episode looks like a
+          mistake until you see the sentence that cites it. */}
+      {entry.quote && (
+        <blockquote className="mt-3 pl-3 border-l-2 border-stone-200">
+          <p className="text-[15px] text-stone-700 leading-relaxed">&ldquo;{entry.quote}&rdquo;</p>
+          <cite className="block not-italic text-xs text-stone-400 mt-1">
+            Earl Fontainelle, SHWEP
+            {entry.quoteSharedWith?.length ? ` — cited here alongside ${entry.quoteSharedWith.join('; ')}` : ''}
+          </cite>
+        </blockquote>
+      )}
+      {entry.quoteEchoOf && (
+        <p className="text-sm text-stone-400 mt-2">Cited in the same sentence as {entry.quoteEchoOf}, above.</p>
       )}
 
-      {/* The point of the whole page: land on the passage, not the front of a folio.
-          Only present when a second pass confirmed this page's own text holds it. */}
+      {/* His locus indexes HIS edition. Saying so is the only honest way to offer ours:
+          "frr. 153-4" is Des Places/Majercik and finds nothing in our Patrizi. */}
+      {entry.citedEdition && (
+        <p className="text-sm text-stone-500 mt-2">
+          <span className="text-stone-400">He cites:</span> {entry.citedEdition}
+          {entry.editions[0] && (
+            <>
+              {' '}<span className="text-stone-400">· we hold:</span> {entry.editions[0].title}
+            </>
+          )}
+        </p>
+      )}
+
+      {/* Land on the passage, not the front of a folio — but claim only what was checked.
+          "confirmed" means a mark on the page itself places it at his locus; otherwise the
+          page merely discusses the matter and the wording must not imply more. */}
       {entry.passage && (
         <Link
           href={entry.passage.url}
-          className="group inline-flex items-baseline gap-1.5 mt-2 text-[15px] text-accent-rust font-medium hover:underline underline-offset-2"
+          className="group inline-flex flex-wrap items-baseline gap-x-1.5 mt-2 text-[15px] text-accent-rust font-medium hover:underline underline-offset-2"
         >
-          Read the cited passage
+          {entry.passage.locus === 'confirmed' ? 'Read the cited passage' : 'A page on this in our copy'}
           <span className="text-sm font-normal text-stone-500 group-hover:text-stone-600">
             p.{entry.passage.pageNumber} · {entry.passage.edition}
+            {entry.passage.locus === 'confirmed' && entry.passage.mark ? ` · ${entry.passage.mark}` : ''}
           </span>
         </Link>
       )}

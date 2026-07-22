@@ -16,6 +16,10 @@ export interface ShwepResolvedLocus {
   pageNumber: number;
   similarity: number;
   why: string;
+  /** "confirmed" = a structural mark on the page places it at the cited locus. */
+  locus?: "confirmed" | "subject";
+  /** The mark used to confirm, e.g. a running header. */
+  mark?: string;
 }
 export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
   "7|Plato|Republic": {
@@ -25,7 +29,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961c06",
     "pageNumber": 367,
     "similarity": 0.797,
-    "why": "The text explicitly discusses rational soul in sleep."
+    "why": "The text explicitly discusses rational soul in sleep.",
+    "locus": "subject"
   },
   "7|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -34,7 +39,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf08",
     "pageNumber": 113,
     "similarity": 0.738,
-    "why": "The text explicitly discusses signs of true dreams."
+    "why": "The text explicitly discusses signs of true dreams.",
+    "locus": "subject"
   },
   "7|Homer|Odyssey": {
     "bookId": "69e7478d85f786e884a48a87",
@@ -43,7 +49,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69e7478d85f786e884a48cc6",
     "pageNumber": 575,
     "similarity": 0.736,
-    "why": "The text explicitly describes the two dream gates."
+    "why": "The text explicitly describes the two dream gates.",
+    "locus": "confirmed",
+    "mark": "BOOK T"
   },
   "7|Marcus Tullius Cicero|De divinatione": {
     "bookId": "69ac9be7dc7bbeb920621588",
@@ -52,7 +60,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69ac9be7dc7bbeb9206216bb",
     "pageNumber": 307,
     "similarity": 0.809,
-    "why": "The text explicitly discusses Posidonius's dream theories."
+    "why": "The text explicitly discusses Posidonius's dream theories.",
+    "locus": "confirmed",
+    "mark": "I. xxx 63-65"
   },
   "18|Diogenes Laërtius|Lives of the Eminent Philosophers": {
     "bookId": "6993882874305116d72cf9f3",
@@ -61,7 +71,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6993882874305116d72cfb1c",
     "pageNumber": 297,
     "similarity": 0.796,
-    "why": "Page explicitly mentions Aristoxenus and Pythagorean doctrin"
+    "why": "Page explicitly mentions Aristoxenus and Pythagorean doctrin",
+    "locus": "subject"
   },
   "67|Apuleius|Metamorphoses": {
     "bookId": "69af21d07c27d4b637feddd1",
@@ -70,7 +81,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af21d07c27d4b637fede12",
     "pageNumber": 65,
     "similarity": 0.74,
-    "why": "The text explicitly identifies Lucius as relative."
+    "why": "The text explicitly identifies Lucius as relative.",
+    "locus": "confirmed",
+    "mark": "CAP. I—III"
   },
   "69|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -79,7 +92,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad76745",
     "pageNumber": 81,
     "similarity": 0.715,
-    "why": "The text mentions her soul in the moon."
+    "why": "The text mentions her soul in the moon.",
+    "locus": "confirmed",
+    "mark": "15"
   },
   "70|Valerius Maximus|Facta et Dicta Memorabilia": {
     "bookId": "69af2390285bd73604374574",
@@ -88,7 +103,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af2390285bd736043745bd",
     "pageNumber": 73,
     "similarity": 0.787,
-    "why": "The text explicitly describes summoning Aesculapius for plag"
+    "why": "The text explicitly describes summoning Aesculapius for plag",
+    "locus": "confirmed",
+    "mark": "VIII, § 1. 2."
   },
   "71|Aristotle|Parva naturalia": {
     "bookId": "69b21bb5429e087c6f862f05",
@@ -97,7 +114,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b21bb5429e087c6f86313a",
     "pageNumber": 565,
     "similarity": 0.717,
-    "why": "Page discusses dream mechanisms and sensory perception."
+    "why": "Page discusses dream mechanisms and sensory perception.",
+    "locus": "subject"
   },
   "71|Juvenal|Satires": {
     "bookId": "69b2210656715b0e3247421f",
@@ -106,7 +124,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b2210656715b0e3247425c",
     "pageNumber": 61,
     "similarity": 0.705,
-    "why": "The text explicitly mentions Jewish dream-selling women."
+    "why": "The text explicitly mentions Jewish dream-selling women.",
+    "locus": "subject"
   },
   "73|Apuleius|Metamorphoses": {
     "bookId": "69af21d07c27d4b637feddd1",
@@ -115,7 +134,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af21d07c27d4b637fedf33",
     "pageNumber": 354,
     "similarity": 0.788,
-    "why": "The text describes Lucius' initiation into Isis."
+    "why": "The text describes Lucius' initiation into Isis.",
+    "locus": "subject"
   },
   "74|Plato|Timaeus": {
     "bookId": "69905f1140bc3a0478efa1d3",
@@ -124,7 +144,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69905f1140bc3a0478efa236",
     "pageNumber": 99,
     "similarity": 0.581,
-    "why": "The page contains the cited passage text."
+    "why": "The page contains the cited passage text.",
+    "locus": "subject"
   },
   "74|Plato|Phaedrus": {
     "bookId": "6953cee877f38f6761be5dd8",
@@ -133,7 +154,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953cee977f38f6761be6014",
     "pageNumber": 572,
     "similarity": 0.755,
-    "why": "Page contains 271a-b, part of the cited range."
+    "why": "Page contains 271a-b, part of the cited range.",
+    "locus": "confirmed",
+    "mark": "271"
   },
   "74|Apuleius|Apologia": {
     "bookId": "69af217f7c27d4b637fed9e0",
@@ -142,7 +165,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af217f7c27d4b637feda81",
     "pageNumber": 161,
     "similarity": 0.74,
-    "why": "Page contains 93.3-5 regarding Pudentilla's wealth."
+    "why": "Page contains 93.3-5 regarding Pudentilla's wealth.",
+    "locus": "confirmed",
+    "mark": "93"
   },
   "74|Apuleius|Florida": {
     "bookId": "6953c6fe77f38f6761bda5c2",
@@ -151,7 +176,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953c6fe77f38f6761bda74f",
     "pageNumber": 397,
     "similarity": 0.709,
-    "why": "The text describes the proconsul's binding sentence."
+    "why": "The text describes the proconsul's binding sentence.",
+    "locus": "subject"
   },
   "76|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -160,7 +186,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf2c",
     "pageNumber": 149,
     "similarity": 0.802,
-    "why": "Page discusses animating statues and divine inspiration."
+    "why": "Page discusses animating statues and divine inspiration.",
+    "locus": "subject"
   },
   "76|Augustine of Hippo|City of God": {
     "bookId": "699062f5ef12272ffdc8e9d5",
@@ -169,7 +196,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699062f5ef12272ffdc8eace",
     "pageNumber": 249,
     "similarity": 0.765,
-    "why": "The text explicitly discusses theurgy and magicians."
+    "why": "The text explicitly discusses theurgy and magicians.",
+    "locus": "subject"
   },
   "76|Anonymous|Chaldaean Oracles": {
     "bookId": "69924f2a09c5da0cf50d7063",
@@ -178,7 +206,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69924f2b09c5da0cf50d70b6",
     "pageNumber": 83,
     "similarity": 0.779,
-    "why": "Page explicitly discusses the herd and fate."
+    "why": "Page explicitly discusses the herd and fate.",
+    "locus": "subject"
   },
   "78|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -187,7 +216,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e419af",
     "pageNumber": 283,
     "similarity": 0.737,
-    "why": "The text explicitly discusses Numenius's three gods."
+    "why": "The text explicitly discusses Numenius's three gods.",
+    "locus": "subject"
   },
   "78|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -196,7 +226,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad76775",
     "pageNumber": 129,
     "similarity": 0.746,
-    "why": "The page explicitly quotes Numenius at 150.4."
+    "why": "The page explicitly quotes Numenius at 150.4.",
+    "locus": "confirmed",
+    "mark": "150, 4"
   },
   "78|Origen|Contra Celsum": {
     "bookId": "69942a87045dfc482ad77805",
@@ -205,7 +237,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a87045dfc482ad77836",
     "pageNumber": 49,
     "similarity": 0.772,
-    "why": "The page explicitly cites Celsus I.15 and Numenius."
+    "why": "The page explicitly cites Celsus I.15 and Numenius.",
+    "locus": "confirmed",
+    "mark": "15"
   },
   "79|Plotinus|Enneads": {
     "bookId": "69a5e5d91d73f9668388ef2b",
@@ -214,7 +248,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5d91d73f9668388f17c",
     "pageNumber": 593,
     "similarity": 0.732,
-    "why": "The text discusses the One's act of thinking."
+    "why": "The text discusses the One's act of thinking.",
+    "locus": "subject"
   },
   "79|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -223,7 +258,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e419af",
     "pageNumber": 283,
     "similarity": 0.759,
-    "why": "The text explicitly discusses Numenius' three gods."
+    "why": "The text explicitly discusses Numenius' three gods.",
+    "locus": "subject"
   },
   "83|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -232,7 +268,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad767c7",
     "pageNumber": 211,
     "similarity": 0.643,
-    "why": "The page contains the soul-inn passage."
+    "why": "The page contains the soul-inn passage.",
+    "locus": "confirmed",
+    "mark": "115, 1"
   },
   "84|Origen|Commentary on Romans": {
     "bookId": "69942b2ad607f8e57e4b70c5",
@@ -241,7 +279,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942b2bd607f8e57e4b7300",
     "pageNumber": 571,
     "similarity": 0.712,
-    "why": "The text matches the cited commentary passage."
+    "why": "The text matches the cited commentary passage.",
+    "locus": "subject"
   },
   "89|Claudius Ptolemy|Tetrabiblos": {
     "bookId": "6990532bd7712f78163cd522",
@@ -250,7 +289,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6990532bd7712f78163cd53c",
     "pageNumber": 26,
     "similarity": 0.736,
-    "why": "Text discusses preventative art and medical-astrological uti"
+    "why": "Text discusses preventative art and medical-astrological uti",
+    "locus": "subject"
   },
   "93|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -259,7 +299,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad76892",
     "pageNumber": 414,
     "similarity": 0.781,
-    "why": "Page contains V.79.1 and discusses God's ineffability."
+    "why": "Page contains V.79.1 and discusses God's ineffability.",
+    "locus": "confirmed",
+    "mark": "79, 1"
   },
   "93|Photius|Bibliotheca": {
     "bookId": "6955801057e3b773024f5030",
@@ -268,7 +310,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6955801057e3b773024f5095",
     "pageNumber": 101,
     "similarity": 0.784,
-    "why": "Page explicitly discusses Clement's subordinationist Hypotyp"
+    "why": "Page explicitly discusses Clement's subordinationist Hypotyp",
+    "locus": "subject"
   },
   "96|Hippolytus of Rome|Adversus haereses": {
     "bookId": "69ac9bbf99d9a0170d090df4",
@@ -277,7 +320,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69ac9bbf99d9a0170d090e3a",
     "pageNumber": 70,
     "similarity": 0.772,
-    "why": "Page discusses Basilides' system and Sonhood."
+    "why": "Page discusses Basilides' system and Sonhood.",
+    "locus": "subject"
   },
   "96|Apuleius|De deo Socratis": {
     "bookId": "6990633bef12272ffdc90769",
@@ -286,7 +330,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6990633bef12272ffdc90777",
     "pageNumber": 14,
     "similarity": 0.789,
-    "why": "The text explicitly discusses the ineffable parent."
+    "why": "The text explicitly discusses the ineffable parent.",
+    "locus": "confirmed",
+    "mark": "124"
   },
   "99|Pliny the Elder|Natural History": {
     "bookId": "69afd0df775a23a98ee93a30",
@@ -295,7 +341,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69afd0df775a23a98ee93be0",
     "pageNumber": 432,
     "similarity": 0.661,
-    "why": "The text explicitly mentions Moses and magic."
+    "why": "The text explicitly mentions Moses and magic.",
+    "locus": "subject"
   },
   "99|Origen|Homilies on Joshua": {
     "bookId": "69942b2ad607f8e57e4b70c5",
@@ -304,7 +351,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942b2bd607f8e57e4b7296",
     "pageNumber": 465,
     "similarity": 0.698,
-    "why": "The text explicitly discusses innate power of names."
+    "why": "The text explicitly discusses innate power of names.",
+    "locus": "subject"
   },
   "100|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -313,7 +361,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad768d9",
     "pageNumber": 485,
     "similarity": 0.789,
-    "why": "The text explicitly mentions forty-two books of Hermes."
+    "why": "The text explicitly mentions forty-two books of Hermes.",
+    "locus": "confirmed",
+    "mark": "Stromata VI. Chapter IV. 37, 3"
   },
   "100|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -322,7 +372,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf68",
     "pageNumber": 209,
     "similarity": 0.718,
-    "why": "The text explicitly cites Seleucus and Manetho."
+    "why": "The text explicitly cites Seleucus and Manetho.",
+    "locus": "confirmed",
+    "mark": "SECTION VIII. CHAPTER I."
   },
   "100|Homer|Iliad": {
     "bookId": "69e7478285f786e884a487d4",
@@ -331,7 +383,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69e7478385f786e884a48a6b",
     "pageNumber": 663,
     "similarity": 0.766,
-    "why": "The page contains the cited passage."
+    "why": "The page contains the cited passage.",
+    "locus": "subject"
   },
   "101|Anonymous|Mithras Liturgy": {
     "bookId": "6992541959cdabeb78f1bd06",
@@ -340,7 +393,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6992541a59cdabeb78f1bdf7",
     "pageNumber": 240,
     "similarity": 0.753,
-    "why": "Discusses the Mithras liturgy and scholarly debate."
+    "why": "Discusses the Mithras liturgy and scholarly debate.",
+    "locus": "subject"
   },
   "101|Paul the Apostle|Second Epistle to the Corinthians": {
     "bookId": "69938976ce15387065946e02",
@@ -349,7 +403,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69938976ce15387065946fc1",
     "pageNumber": 447,
     "similarity": 0.783,
-    "why": "The text explicitly quotes 2 Corinthians 12:2-4."
+    "why": "The text explicitly quotes 2 Corinthians 12:2-4.",
+    "locus": "confirmed",
+    "mark": "10 / NB"
   },
   "107|Plato|Theaetetus": {
     "bookId": "6953ce9577f38f6761be535d",
@@ -358,7 +414,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953ce9577f38f6761be53e6",
     "pageNumber": 137,
     "similarity": 0.756,
-    "why": "The page explicitly discusses assimilation to God."
+    "why": "The page explicitly discusses assimilation to God.",
+    "locus": "subject"
   },
   "110|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -367,7 +424,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad76745",
     "pageNumber": 81,
     "similarity": 0.715,
-    "why": "The text mentions her soul in the moon."
+    "why": "The text mentions her soul in the moon.",
+    "locus": "confirmed",
+    "mark": "15"
   },
   "110|Plato|Phaedrus": {
     "bookId": "6953cee877f38f6761be5dd8",
@@ -376,7 +435,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953cee977f38f6761be5fc0",
     "pageNumber": 488,
     "similarity": 0.768,
-    "why": "The text discusses divine madness and prophecy."
+    "why": "The text discusses divine madness and prophecy.",
+    "locus": "subject"
   },
   "112|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -385,7 +445,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e41c97",
     "pageNumber": 1027,
     "similarity": 0.73,
-    "why": "Page discusses the undescended soul and Plotinus."
+    "why": "Page discusses the undescended soul and Plotinus.",
+    "locus": "subject"
   },
   "114|Plato|Theaetetus": {
     "bookId": "6953ce9577f38f6761be535d",
@@ -394,7 +455,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953ce9577f38f6761be53e6",
     "pageNumber": 137,
     "similarity": 0.753,
-    "why": "The text explicitly mentions assimilation to God."
+    "why": "The text explicitly mentions assimilation to God.",
+    "locus": "subject"
   },
   "115|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -403,7 +465,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961bad",
     "pageNumber": 278,
     "similarity": 0.762,
-    "why": "The text discusses the Good at 505e-506b."
+    "why": "The text discusses the Good at 505e-506b.",
+    "locus": "subject"
   },
   "115|Plato|Phaedrus": {
     "bookId": "6953cee877f38f6761be5dd8",
@@ -412,7 +475,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953cee977f38f6761be6026",
     "pageNumber": 590,
     "similarity": 0.758,
-    "why": "The text explicitly discusses writing and dialectic."
+    "why": "The text explicitly discusses writing and dialectic.",
+    "locus": "confirmed",
+    "mark": "277"
   },
   "115|Plato|Symposium": {
     "bookId": "69a976a1e12635ded71c4fd9",
@@ -421,7 +486,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a976a1e12635ded71c5044",
     "pageNumber": 107,
     "similarity": 0.786,
-    "why": "The text explicitly discusses two Aphrodites."
+    "why": "The text explicitly discusses two Aphrodites.",
+    "locus": "confirmed",
+    "mark": "181 A"
   },
   "116|Plotinus|Enneads": {
     "bookId": "69a5e5d91d73f9668388ef2b",
@@ -430,7 +497,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5d91d73f9668388ef90",
     "pageNumber": 101,
     "similarity": 0.774,
-    "why": "The text discusses matter, necessity, and evil."
+    "why": "The text discusses matter, necessity, and evil.",
+    "locus": "subject"
   },
   "120|Gregory of Nazianzus|Orations": {
     "bookId": "69b2222608069e96e8432997",
@@ -439,7 +507,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b2222608069e96e8432a6e",
     "pageNumber": 215,
     "similarity": 0.729,
-    "why": "The text describes Julian's initiation into mysteries."
+    "why": "The text describes Julian's initiation into mysteries.",
+    "locus": "subject"
   },
   "120|Nonnos of Panopolis|Dionysiaka": {
     "bookId": "69938d615d28b693146cee47",
@@ -448,7 +517,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69938d615d28b693146cf2a0",
     "pageNumber": 1113,
     "similarity": 0.778,
-    "why": "The text explicitly mentions Mithras and Phaethon."
+    "why": "The text explicitly mentions Mithras and Phaethon.",
+    "locus": "confirmed",
+    "mark": "LIBER XL"
   },
   "122|Marinus of Neapolis|Life of Proclus": {
     "bookId": "6952ca6e77f38f6761bc3fb2",
@@ -457,7 +528,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6952ca6e77f38f6761bc401e",
     "pageNumber": 108,
     "similarity": 0.803,
-    "why": "The text explicitly mentions Proclus viewing Hecate."
+    "why": "The text explicitly mentions Proclus viewing Hecate.",
+    "locus": "confirmed",
+    "mark": "XXVIII"
   },
   "122|Hierocles of Alexandria|Commentary on the Golden Verses of Pythagoras": {
     "bookId": "699389a6ce15387065947dc0",
@@ -466,7 +539,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699389a7ce15387065947e7f",
     "pageNumber": 191,
     "similarity": 0.749,
-    "why": "The text explicitly discusses purification of the body."
+    "why": "The text explicitly discusses purification of the body.",
+    "locus": "subject"
   },
   "125|Eunapius|Lives of the Sophists": {
     "bookId": "699437c36879ff0184cb7381",
@@ -475,7 +549,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699437c36879ff0184cb73d4",
     "pageNumber": 83,
     "similarity": 0.771,
-    "why": "Page describes Porphyry's exorcism and fellow students."
+    "why": "Page describes Porphyry's exorcism and fellow students.",
+    "locus": "subject"
   },
   "125|Socrates of Constantinople|Ecclesiastical History": {
     "bookId": "69b21dca94025df5d2909ff2",
@@ -484,7 +559,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b21dca94025df5d290a028",
     "pageNumber": 54,
     "similarity": 0.741,
-    "why": "Page mentions Porphyry's infamy and Arius's comparison."
+    "why": "Page mentions Porphyry's infamy and Arius's comparison.",
+    "locus": "subject"
   },
   "126|Eunapius|Lives of the Sophists": {
     "bookId": "699437c36879ff0184cb7381",
@@ -493,7 +569,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699437c36879ff0184cb73d3",
     "pageNumber": 82,
     "similarity": 0.709,
-    "why": "Page mentions Porphyry's early writings being contradicted."
+    "why": "Page mentions Porphyry's early writings being contradicted.",
+    "locus": "subject"
   },
   "126|Porphyry|De Abstinentia": {
     "bookId": "69906309e7b7642c081dddf5",
@@ -502,7 +579,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69906309e7b7642c081dde61",
     "pageNumber": 108,
     "similarity": 0.72,
-    "why": "Page discusses wicked powers and apotropaic sacrifices."
+    "why": "Page discusses wicked powers and apotropaic sacrifices.",
+    "locus": "subject"
   },
   "127|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -511,7 +589,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf74",
     "pageNumber": 221,
     "similarity": 0.765,
-    "why": "The text discusses the oikodespotes and the Spirit."
+    "why": "The text discusses the oikodespotes and the Spirit.",
+    "locus": "confirmed",
+    "mark": "10"
   },
   "128|Porphyry|De Abstinentia": {
     "bookId": "69906309e7b7642c081dddf5",
@@ -520,7 +600,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69906309e7b7642c081ddebb",
     "pageNumber": 198,
     "similarity": 0.764,
-    "why": "Page contains the cited Magoi metempsychosis passage."
+    "why": "Page contains the cited Magoi metempsychosis passage.",
+    "locus": "subject"
   },
   "131|Plato|Phaedrus": {
     "bookId": "6953cee877f38f6761be5dd8",
@@ -529,7 +610,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953cee977f38f6761be5fc6",
     "pageNumber": 494,
     "similarity": 0.839,
-    "why": "The text covers the soul's chariot allegory."
+    "why": "The text covers the soul's chariot allegory.",
+    "locus": "confirmed",
+    "mark": "C, D, E"
   },
   "131|Plato|Phaedo": {
     "bookId": "69937767b0a84a57639639fe",
@@ -538,7 +621,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69937767b0a84a5763963a4c",
     "pageNumber": 78,
     "similarity": 0.861,
-    "why": "The text explicitly discusses soul-body separation."
+    "why": "The text explicitly discusses soul-body separation.",
+    "locus": "subject"
   },
   "131|Synesius of Cyrene|De insomniis": {
     "bookId": "69942bfbb2f6748db4abc883",
@@ -547,7 +631,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942bfbb2f6748db4abc902",
     "pageNumber": 127,
     "similarity": 0.805,
-    "why": "Margin mentions Hecate and Chaldaean Oracles."
+    "why": "Margin mentions Hecate and Chaldaean Oracles.",
+    "locus": "subject"
   },
   "132|Origen|Contra Celsum": {
     "bookId": "69942a87045dfc482ad77805",
@@ -556,7 +641,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a87045dfc482ad778ed",
     "pageNumber": 232,
     "similarity": 0.755,
-    "why": "Page discusses luminous body and phantasms."
+    "why": "Page discusses luminous body and phantasms.",
+    "locus": "confirmed",
+    "mark": "60."
   },
   "133|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -565,7 +652,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf03",
     "pageNumber": 108,
     "similarity": 0.797,
-    "why": "Page contains Iamblichus Section II, specifically II.6."
+    "why": "Page contains Iamblichus Section II, specifically II.6.",
+    "locus": "confirmed",
+    "mark": "II."
   },
   "133|Augustine of Hippo|City of God": {
     "bookId": "699062f5ef12272ffdc8e9d5",
@@ -574,7 +663,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699062f5ef12272ffdc8eac3",
     "pageNumber": 238,
     "similarity": 0.816,
-    "why": "The text discusses Porphyry, demons, and magic."
+    "why": "The text discusses Porphyry, demons, and magic.",
+    "locus": "subject"
   },
   "136|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -583,7 +673,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e41a70",
     "pageNumber": 476,
     "similarity": 0.794,
-    "why": "The text explicitly discusses the spherical ochēma."
+    "why": "The text explicitly discusses the spherical ochēma.",
+    "locus": "subject"
   },
   "136|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -592,7 +683,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cefc",
     "pageNumber": 101,
     "similarity": 0.784,
-    "why": "Page explicitly discusses II.7 and daemonic hierarchies."
+    "why": "Page explicitly discusses II.7 and daemonic hierarchies.",
+    "locus": "confirmed",
+    "mark": "Sect. II. Chapter VII."
   },
   "138|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -601,7 +694,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e41c34",
     "pageNumber": 928,
     "similarity": 0.773,
-    "why": "Page discusses irrational soul, vehicle, and Iamblichus."
+    "why": "Page discusses irrational soul, vehicle, and Iamblichus.",
+    "locus": "subject"
   },
   "142|Aristotle|Metaphysics": {
     "bookId": "699388e374305116d72d0502",
@@ -610,7 +704,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699388e374305116d72d06d3",
     "pageNumber": 465,
     "similarity": 0.752,
-    "why": "The text explicitly discusses Pythagorean number principles."
+    "why": "The text explicitly discusses Pythagorean number principles.",
+    "locus": "subject"
   },
   "144|Eunapius|Lives of the Sophists": {
     "bookId": "699437c36879ff0184cb7381",
@@ -619,7 +714,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699437c36879ff0184cb73df",
     "pageNumber": 94,
     "similarity": 0.804,
-    "why": "Page describes Sopater's court influence and conspiracy."
+    "why": "Page describes Sopater's court influence and conspiracy.",
+    "locus": "subject"
   },
   "144|John Lydus|De mensibus": {
     "bookId": "69a9575c65ddd05bbcd3eb47",
@@ -628,7 +724,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a9575c65ddd05bbcd3ebf2",
     "pageNumber": 171,
     "similarity": 0.654,
-    "why": "Page mentions Sopater, Constantine, and city founding."
+    "why": "Page mentions Sopater, Constantine, and city founding.",
+    "locus": "subject"
   },
   "151|Anonymous|Testament of Solomon": {
     "bookId": "695936cf3b43cb6630c91ab8",
@@ -637,7 +734,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "695936d03b43cb6630c91b90",
     "pageNumber": 216,
     "similarity": 0.741,
-    "why": "Page contains verses 20.11-16 regarding multiple heavens."
+    "why": "Page contains verses 20.11-16 regarding multiple heavens.",
+    "locus": "confirmed",
+    "mark": "11—16"
   },
   "160|Origen|Philocalia": {
     "bookId": "6953a54f77f38f6761bcf8a6",
@@ -646,7 +745,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953a54f77f38f6761bcfab2",
     "pageNumber": 524,
     "similarity": 0.745,
-    "why": "The text discusses stars as signs, not causes."
+    "why": "The text discusses stars as signs, not causes.",
+    "locus": "confirmed",
+    "mark": "CHAPTER XXIII"
   },
   "162|Plato|Theaetetus": {
     "bookId": "6953ce9577f38f6761be535d",
@@ -655,7 +756,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953ce9577f38f6761be53e7",
     "pageNumber": 138,
     "similarity": 0.805,
-    "why": "The text explicitly mentions assimilation to God."
+    "why": "The text explicitly mentions assimilation to God.",
+    "locus": "subject"
   },
   "164|Clement of Alexandria|Stromata": {
     "bookId": "69942a51045dfc482ad766f4",
@@ -664,7 +766,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942a51045dfc482ad76892",
     "pageNumber": 414,
     "similarity": 0.786,
-    "why": "The page explicitly quotes the Moses passage."
+    "why": "The page explicitly quotes the Moses passage.",
+    "locus": "subject"
   },
   "167|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -673,7 +776,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961bb0",
     "pageNumber": 281,
     "similarity": 0.843,
-    "why": "The text covers the allegory of sun."
+    "why": "The text covers the allegory of sun.",
+    "locus": "confirmed",
+    "mark": "507 d"
   },
   "167|Plato|Phaedrus": {
     "bookId": "6953cee877f38f6761be5dd8",
@@ -682,7 +787,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953cee977f38f6761be5fcc",
     "pageNumber": 500,
     "similarity": 0.794,
-    "why": "The text covers the ascent-myth at 248a-e."
+    "why": "The text covers the ascent-myth at 248a-e.",
+    "locus": "subject"
   },
   "167|Anonymous|Codex Theodosianus": {
     "bookId": "69a97a0cdaf647306a73737d",
@@ -691,7 +797,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a97a0cdaf647306a73766a",
     "pageNumber": 749,
     "similarity": 0.735,
-    "why": "The text explicitly includes CTh.13.3.5."
+    "why": "The text explicitly includes CTh.13.3.5.",
+    "locus": "confirmed",
+    "mark": "XIII, 3, 5"
   },
   "167|Eusebius of Caesarea|Life of Constantine": {
     "bookId": "69ad6a635e7e0803b48e648e",
@@ -700,7 +808,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69ad6a635e7e0803b48e6686",
     "pageNumber": 504,
     "similarity": 0.794,
-    "why": "The text explicitly covers chapters 28 and 29."
+    "why": "The text explicitly covers chapters 28 and 29.",
+    "locus": "confirmed",
+    "mark": "CHAPTER XXVIII"
   },
   "167|Lactantius|De mortibus persecutorum": {
     "bookId": "69af22b6f98f6eff774cd317",
@@ -709,7 +819,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af22b6f98f6eff774cd472",
     "pageNumber": 347,
     "similarity": 0.79,
-    "why": "The text describes Constantine's vision and sign."
+    "why": "The text describes Constantine's vision and sign.",
+    "locus": "confirmed",
+    "mark": "44"
   },
   "169|Ammianus Marcellinus|Res Gestae": {
     "bookId": "69af4702b8e08960c7fbbbeb",
@@ -718,7 +830,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af4702b8e08960c7fbbe19",
     "pageNumber": 558,
     "similarity": 0.739,
-    "why": "Page describes Julian's excessive cattle sacrifices."
+    "why": "Page describes Julian's excessive cattle sacrifices.",
+    "locus": "subject"
   },
   "169|Macrobius|Saturnalia": {
     "bookId": "69942c37b2f6748db4abd178",
@@ -727,7 +840,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942c37b2f6748db4abd2b0",
     "pageNumber": 312,
     "similarity": 0.742,
-    "why": "Text discusses solar powers and divine conflation."
+    "why": "Text discusses solar powers and divine conflation.",
+    "locus": "subject"
   },
   "169|Sallustius|On the Gods and the World": {
     "bookId": "69924f515976b55115ffdece",
@@ -736,7 +850,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69924f515976b55115ffdf38",
     "pageNumber": 106,
     "similarity": 0.71,
-    "why": "Page discusses dæmons punishing souls for guilt."
+    "why": "Page discusses dæmons punishing souls for guilt.",
+    "locus": "subject"
   },
   "169|Julian|Letters": {
     "bookId": "69ad72e75953f4eff4f330c8",
@@ -745,7 +860,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69ad72e75953f4eff4f33276",
     "pageNumber": 430,
     "similarity": 0.731,
-    "why": "Page discusses national gods and Moses' god."
+    "why": "Page discusses national gods and Moses' god.",
+    "locus": "subject"
   },
   "172|Augustine of Hippo|City of God": {
     "bookId": "699062f5ef12272ffdc8e9d5",
@@ -754,7 +870,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699062f5ef12272ffdc8e9fa",
     "pageNumber": 37,
     "similarity": 0.755,
-    "why": "The text explicitly discusses I.7 and Alaric."
+    "why": "The text explicitly discusses I.7 and Alaric.",
+    "locus": "confirmed",
+    "mark": "Chapter 7"
   },
   "172|Orosius|Seven Books of History Against the Pagans": {
     "bookId": "69af2331d510291a0ec78a9e",
@@ -763,7 +881,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af2331d510291a0ec78be4",
     "pageNumber": 326,
     "similarity": 0.677,
-    "why": "The text explicitly discusses Alaric's selective clemency."
+    "why": "The text explicitly discusses Alaric's selective clemency.",
+    "locus": "subject"
   },
   "173|John Malalas|Chronographia": {
     "bookId": "69938d9dd5a98fd66f42dc60",
@@ -772,7 +891,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69938d9dd5a98fd66f42df19",
     "pageNumber": 697,
     "similarity": 0.754,
-    "why": "The page explicitly discusses Hypatia's murder."
+    "why": "The page explicitly discusses Hypatia's murder.",
+    "locus": "subject"
   },
   "173|Socrates of Constantinople|Ecclesiastical History": {
     "bookId": "69b21dca94025df5d2909ff2",
@@ -781,7 +901,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b21dca94025df5d290a004",
     "pageNumber": 18,
     "similarity": 0.799,
-    "why": "Page lists chapters 7.7, 7.13, 7.14, 7.15."
+    "why": "Page lists chapters 7.7, 7.13, 7.14, 7.15.",
+    "locus": "confirmed",
+    "mark": "BOOK VII"
   },
   "174|Anonymous|Codex Theodosianus": {
     "bookId": "69a97a0cdaf647306a73737d",
@@ -790,7 +912,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a97a0cdaf647306a737705",
     "pageNumber": 904,
     "similarity": 0.839,
-    "why": "The text explicitly contains CTh 16.10.10-12."
+    "why": "The text explicitly contains CTh 16.10.10-12.",
+    "locus": "confirmed",
+    "mark": "XVI 10 10-12"
   },
   "174|Socrates of Constantinople|Ecclesiastical History": {
     "bookId": "69b21dca94025df5d2909ff2",
@@ -799,7 +923,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b21dca94025df5d290a063",
     "pageNumber": 113,
     "similarity": 0.597,
-    "why": "The text explicitly contains chapter 15."
+    "why": "The text explicitly contains chapter 15.",
+    "locus": "confirmed",
+    "mark": "CAP. XV."
   },
   "180|Plotinus|Enneads": {
     "bookId": "69a5e5d91d73f9668388ef2b",
@@ -808,7 +934,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5d91d73f9668388f177",
     "pageNumber": 588,
     "similarity": 0.612,
-    "why": "The text contains the cited passage V.3.14."
+    "why": "The text contains the cited passage V.3.14.",
+    "locus": "subject"
   },
   "180|Augustine of Hippo|Epistulae": {
     "bookId": "69ac9bdedc7bbeb9206212f1",
@@ -817,7 +944,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69ac9bdedc7bbeb92062130b",
     "pageNumber": 26,
     "similarity": 0.742,
-    "why": "The text explicitly discusses the physician-argument."
+    "why": "The text explicitly discusses the physician-argument.",
+    "locus": "confirmed",
+    "mark": "CLXXXV"
   },
   "183|Marinus of Neapolis|Life of Proclus": {
     "bookId": "6952ca6e77f38f6761bc3fb2",
@@ -826,7 +955,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6952ca6e77f38f6761bc3ff3",
     "pageNumber": 65,
     "similarity": 0.731,
-    "why": "Page 12 discusses students and teaching."
+    "why": "Page 12 discusses students and teaching.",
+    "locus": "confirmed",
+    "mark": "12"
   },
   "184|Hierocles of Alexandria|Commentary on the Golden Verses of Pythagoras": {
     "bookId": "699389a6ce15387065947dc0",
@@ -835,7 +966,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699389a7ce15387065947e7f",
     "pageNumber": 191,
     "similarity": 0.772,
-    "why": "Page discusses purification of the soul's vehicle."
+    "why": "Page discusses purification of the soul's vehicle.",
+    "locus": "subject"
   },
   "186|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -844,7 +976,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e418a5",
     "pageNumber": 17,
     "similarity": 0.762,
-    "why": "Page discusses the Creator and creative Intellect."
+    "why": "Page discusses the Creator and creative Intellect.",
+    "locus": "subject"
   },
   "186|Apuleius|Metamorphoses": {
     "bookId": "69af21d07c27d4b637feddd1",
@@ -853,7 +986,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af21d07c27d4b637fedf28",
     "pageNumber": 343,
     "similarity": 0.673,
-    "why": "The text explicitly mentions the Pythagorean bath."
+    "why": "The text explicitly mentions the Pythagorean bath.",
+    "locus": "confirmed",
+    "mark": "I."
   },
   "186|Plato|Philebus": {
     "bookId": "69b21d42ddb4fa7c305b4693",
@@ -862,7 +997,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b21d42ddb4fa7c305b46b0",
     "pageNumber": 29,
     "similarity": 0.599,
-    "why": "Page contains the 16c-d discussion of One/Many."
+    "why": "Page contains the 16c-d discussion of One/Many.",
+    "locus": "confirmed",
+    "mark": "A, C"
   },
   "187|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -871,7 +1008,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961b0d",
     "pageNumber": 118,
     "similarity": 0.791,
-    "why": "The text contains the passage at 378d."
+    "why": "The text contains the passage at 378d.",
+    "locus": "confirmed",
+    "mark": "d"
   },
   "189|Aristotle|Metaphysics": {
     "bookId": "699388e374305116d72d0502",
@@ -880,7 +1019,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699388e374305116d72d06d9",
     "pageNumber": 471,
     "similarity": 0.761,
-    "why": "The text discusses arguments regarding the Forms."
+    "why": "The text discusses arguments regarding the Forms.",
+    "locus": "subject"
   },
   "190|John Malalas|Chronographia": {
     "bookId": "69938d9dd5a98fd66f42dc60",
@@ -889,7 +1029,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69938d9dd5a98fd66f42de74",
     "pageNumber": 532,
     "similarity": 0.675,
-    "why": "The text explicitly mentions the Athenian edict."
+    "why": "The text explicitly mentions the Athenian edict.",
+    "locus": "subject"
   },
   "192|Homer|Iliad": {
     "bookId": "69e7478285f786e884a487d4",
@@ -898,7 +1039,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69e7478385f786e884a488f5",
     "pageNumber": 289,
     "similarity": 0.814,
-    "why": "The text explicitly contains the golden chain."
+    "why": "The text explicitly contains the golden chain.",
+    "locus": "subject"
   },
   "195|Agathias|Histories": {
     "bookId": "6953a55277f38f6761bcfb62",
@@ -907,7 +1049,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6953a55277f38f6761bcfbef",
     "pageNumber": 141,
     "similarity": 0.675,
-    "why": "The page contains the cited passage text."
+    "why": "The page contains the cited passage text.",
+    "locus": "subject"
   },
   "195|Zacharias Scholasticus|Life of Severus": {
     "bookId": "69a99d0a510aaf87d0635bfc",
@@ -916,7 +1059,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a99d0a510aaf87d0635c12",
     "pageNumber": 22,
     "similarity": 0.736,
-    "why": "The text explicitly defines and mentions Philoponoi."
+    "why": "The text explicitly defines and mentions Philoponoi.",
+    "locus": "subject"
   },
   "204|Plotinus|Enneads": {
     "bookId": "69a5e5d91d73f9668388ef2b",
@@ -925,7 +1069,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5d91d73f9668388f1b7",
     "pageNumber": 652,
     "similarity": 0.787,
-    "why": "Text mentions entering sanctuary and not speaking."
+    "why": "Text mentions entering sanctuary and not speaking.",
+    "locus": "confirmed",
+    "mark": "VI.9.11"
   },
   "237|Anonymous|Corpus Hermeticum": {
     "bookId": "69b51e1fcf111105c42975fb",
@@ -934,7 +1080,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69b51e1fcf111105c4297623",
     "pageNumber": 40,
     "similarity": 0.667,
-    "why": "The text explicitly lists the twelve tormentors."
+    "why": "The text explicitly lists the twelve tormentors.",
+    "locus": "confirmed",
+    "mark": "7"
   },
   "237|Porphyry|De Abstinentia": {
     "bookId": "69906309e7b7642c081dddf5",
@@ -943,7 +1091,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69906309e7b7642c081dde60",
     "pageNumber": 107,
     "similarity": 0.795,
-    "why": "Text discusses daemons consuming sacrifices and vapors."
+    "why": "Text discusses daemons consuming sacrifices and vapors.",
+    "locus": "subject"
   },
   "238|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -952,7 +1101,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf6c",
     "pageNumber": 213,
     "similarity": 0.68,
-    "why": "Page explicitly mentions Bitys and Hermes' teachings."
+    "why": "Page explicitly mentions Bitys and Hermes' teachings.",
+    "locus": "confirmed",
+    "mark": "CHAPTER V"
   },
   "238|Anonymous|Sibylline Oracles": {
     "bookId": "6953113877f38f6761bcc0d9",
@@ -961,7 +1112,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "695906f695a91542b28c0b6e",
     "pageNumber": 409,
     "similarity": 0.699,
-    "why": "The text explicitly discusses the Adam etymology."
+    "why": "The text explicitly discusses the Adam etymology.",
+    "locus": "confirmed",
+    "mark": "26"
   },
   "248|Ammianus Marcellinus|Res Gestae": {
     "bookId": "69af4702b8e08960c7fbbbeb",
@@ -970,7 +1123,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69af4702b8e08960c7fbbe14",
     "pageNumber": 553,
     "similarity": 0.788,
-    "why": "The text describes Julian's death and life."
+    "why": "The text describes Julian's death and life.",
+    "locus": "subject"
   },
   "266|Diogenes Laërtius|Lives of the Eminent Philosophers": {
     "bookId": "6993882874305116d72cf9f3",
@@ -979,7 +1133,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6993882874305116d72cfb6d",
     "pageNumber": 378,
     "similarity": 0.722,
-    "why": "Text discusses soul, pneuma, and perception."
+    "why": "Text discusses soul, pneuma, and perception.",
+    "locus": "subject"
   },
   "267|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -988,7 +1143,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961c46",
     "pageNumber": 431,
     "similarity": 0.764,
-    "why": "The text describes the rainbow-colored pillar."
+    "why": "The text describes the rainbow-colored pillar.",
+    "locus": "subject"
   },
   "267|Marcus Tullius Cicero|Tusculanae Disputationes": {
     "bookId": "69dbc97b1040d1d5e20a3743",
@@ -997,7 +1153,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69dbc97b1040d1d5e20a3765",
     "pageNumber": 34,
     "similarity": 0.717,
-    "why": "The text explicitly quotes Plato's Apology passage."
+    "why": "The text explicitly quotes Plato's Apology passage.",
+    "locus": "subject"
   },
   "270|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -1006,7 +1163,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961bb2",
     "pageNumber": 283,
     "similarity": 0.836,
-    "why": "The text explicitly mentions the Good beyond ousia."
+    "why": "The text explicitly mentions the Good beyond ousia.",
+    "locus": "confirmed",
+    "mark": "508 e"
   },
   "270|Macrobius|Saturnalia": {
     "bookId": "69942c37b2f6748db4abd178",
@@ -1015,7 +1174,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69942c37b2f6748db4abd25a",
     "pageNumber": 226,
     "similarity": 0.658,
-    "why": "The text explicitly discusses Timaeus and Socrates."
+    "why": "The text explicitly discusses Timaeus and Socrates.",
+    "locus": "subject"
   },
   "270|Plato|Gorgias": {
     "bookId": "69a5e5f385fa13e734e41e1f",
@@ -1024,7 +1184,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5f385fa13e734e41e9b",
     "pageNumber": 124,
     "similarity": 0.744,
-    "why": "The text describes the afterlife judgment myth."
+    "why": "The text describes the afterlife judgment myth.",
+    "locus": "subject"
   },
   "274|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -1033,7 +1194,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961ae6",
     "pageNumber": 79,
     "similarity": 0.736,
-    "why": "The text mentions begging priests and seers."
+    "why": "The text mentions begging priests and seers.",
+    "locus": "confirmed",
+    "mark": "364"
   },
   "274|Iamblichus|De mysteriis": {
     "bookId": "6991d8e18c1030b12444ce97",
@@ -1042,7 +1205,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "6991d8e18c1030b12444cf1c",
     "pageNumber": 133,
     "similarity": 0.73,
-    "why": "The page contains the cited III 11 passage."
+    "why": "The page contains the cited III 11 passage.",
+    "locus": "confirmed",
+    "mark": "15"
   },
   "280|Proclus|Commentary on Plato's Timaeus": {
     "bookId": "69a5e5e385fa13e734e41894",
@@ -1051,7 +1216,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69a5e5e385fa13e734e41926",
     "pageNumber": 146,
     "similarity": 0.796,
-    "why": "Page discusses the heptad and monad for Athena."
+    "why": "Page discusses the heptad and monad for Athena.",
+    "locus": "subject"
   },
   "302|Plato|Republic": {
     "bookId": "699376d2b0a84a5763961a97",
@@ -1060,7 +1226,9 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "699376d2b0a84a5763961bb2",
     "pageNumber": 283,
     "similarity": 0.811,
-    "why": "The text explicitly discusses the Good beyond ousia."
+    "why": "The text explicitly discusses the Good beyond ousia.",
+    "locus": "confirmed",
+    "mark": "509b"
   },
   "323|Pliny the Elder|Natural History": {
     "bookId": "69afd0df775a23a98ee93a30",
@@ -1069,6 +1237,8 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "pageId": "69afd0df775a23a98ee93ad0",
     "pageNumber": 160,
     "similarity": 0.689,
-    "why": "The text explicitly mentions Aeschylus' death."
+    "why": "The text explicitly mentions Aeschylus' death.",
+    "locus": "confirmed",
+    "mark": "Ch. iii."
   }
 };

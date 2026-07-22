@@ -2,8 +2,8 @@ import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { SHWEP_CITED_WORKS } from '@/data/shwep-cited-works';
 import { SHWEP_WORK_LANGUAGES } from '@/data/shwep-work-languages';
-import { SHWEP_WORK_NOTES } from '@/data/shwep-work-notes';
 import { SHWEP_RESOLVED_LOCI } from '@/data/shwep-resolved-loci';
+import { SHWEP_EARL_QUOTES } from '@/data/shwep-earl-quotes';
 
 /**
  * Works cited in a SHWEP episode, rendered as a bibliography rather than as the
@@ -48,14 +48,41 @@ export interface CitedWorkEntry {
   era: string;
   /** Language the work was composed in, where known. */
   workLanguage?: string;
-  /** What this episode cites the work for, compressed from the episode's own works-cited prose. */
-  note?: string;
+  /**
+   * The podcast author's OWN sentence about this work, verbatim. Render inside quotation
+   * marks and attribute it. This replaced a model-written paraphrase: he had already
+   * written the sentence, so summarising it in our voice under his name could only lose
+   * fidelity — and it split single observations of his ("Homer, echoed at Virgil…") into
+   * separate per-work claims he never made.
+   */
+  quote?: string;
+  /**
+   * The edition HE names, when he names one. His loci are edition-relative: "frr. 153-4"
+   * indexes Des Places/Majercik and means nothing in the Patrizi we hold, so naming both
+   * is the only honest presentation.
+   */
+  citedEdition?: string;
+  /** Other works his sentence cites alongside this one — shown once, on the first entry. */
+  quoteSharedWith?: string[];
+  /** Set when an earlier entry already displayed this shared sentence. */
+  quoteEchoOf?: string;
   /**
    * The page the citation points at, in an edition we hold — verified against the real
    * page text before being written. Absent when it could not be confirmed, in which case
    * the reader still gets the volume.
    */
-  passage?: { url: string; pageNumber: number; edition: string };
+  passage?: {
+    url: string;
+    pageNumber: number;
+    edition: string;
+    /**
+     * "confirmed" = a structural mark on the page (running header, chapter heading,
+     * marginal number) places it at the cited locus. "subject" = the page discusses the
+     * cited matter but nothing on it proves the locus, so the wording must not claim one.
+     */
+    locus: 'confirmed' | 'subject';
+    mark?: string;
+  };
   held: boolean;
   /** The editions worth showing up front, already ordered. */
   editions: EditionRef[];
@@ -210,7 +237,7 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
   const entries: CitedWorkEntry[] = [];
   for (const w of works) {
     const workLanguage = SHWEP_WORK_LANGUAGES[`${w.author}|${w.work}`];
-    const note = SHWEP_WORK_NOTES[`${episodeNumber}|${w.author}|${w.work}`];
+    const earl = SHWEP_EARL_QUOTES[`${episodeNumber}|${w.author}|${w.work}`];
     const loc = SHWEP_RESOLVED_LOCI[`${episodeNumber}|${w.author}|${w.work}`];
     const refs: EditionRef[] = [];
     for (const h of w.held) {
@@ -242,7 +269,8 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       author: w.author,
       era: w.era,
       workLanguage: workLanguage && workLanguage !== 'Unknown' ? workLanguage : undefined,
-      note: note || undefined,
+      quote: earl?.quote,
+      citedEdition: earl?.citedEdition,
       passage: loc
         ? {
             // The reader route takes a page ID, never a page number — a number renders a
@@ -250,6 +278,8 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
             url: `/book/${loc.slug || loc.bookId}/page/${loc.pageId}`,
             pageNumber: loc.pageNumber,
             edition: loc.title,
+            locus: loc.locus === 'confirmed' ? ('confirmed' as const) : ('subject' as const),
+            mark: loc.mark,
           }
         : undefined,
       held: editions.length > 0,
@@ -259,8 +289,24 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
   }
 
   // Held works first (they are the point of the page), then alphabetically by author.
-  return entries.sort((a, b) => {
+  entries.sort((a, b) => {
     if (a.held !== b.held) return a.held ? -1 : 1;
     return (a.author || '').localeCompare(b.author || '');
   });
+
+  // One sentence of his often cites several works together ("Homer Od. 19.560-567, echoed
+  // at Virgil Aen. 6.893-896; Hippocrates On Regimen…"). Show it once, naming the works it
+  // covers, rather than repeating it verbatim under each — repetition would read as four
+  // separate remarks where he made one.
+  const firstForQuote = new Map<string, CitedWorkEntry>();
+  for (const e of entries) {
+    if (!e.quote) continue;
+    const k = e.quote.toLowerCase();
+    const first = firstForQuote.get(k);
+    if (!first) { firstForQuote.set(k, e); continue; }
+    (first.quoteSharedWith ||= []).push(`${e.author}, ${e.work}`);
+    e.quoteEchoOf = `${first.author}, ${first.work}`;
+  }
+
+  return entries;
 }
