@@ -50,9 +50,9 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   );
 
   return (
-    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3', background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }}>
+    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3', background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-2 gap-9 md:gap-14 items-center">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] gap-9 md:gap-10 items-center">
           {/* Text side */}
           <div>
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>

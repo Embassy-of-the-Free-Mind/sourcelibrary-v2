@@ -1279,7 +1279,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         />
 
         {/* ===================== PAGES ===================== */}
-        <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }} className="pt-14 pb-16 scroll-mt-4">
+        <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="pt-14 pb-16 scroll-mt-4">
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
@@ -1298,7 +1298,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
         {galleryPlates.length > 0 && (
-          <section id="illustrations" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
+          <section id="illustrations" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Illustrations</h2>
               <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Plates, diagrams, and figures detected in the scanned pages.</p>
@@ -1321,7 +1321,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
-          <section id="related" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
+          <section id="related" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
             <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
               <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>Other volumes close to this one by author, subject, place, and period.</p>
