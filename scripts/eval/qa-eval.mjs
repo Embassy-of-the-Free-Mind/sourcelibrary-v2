@@ -508,6 +508,9 @@ async function cmdScorecard() {
         const outputs = [];
         let cost = 0, best = null, refused = 0;
         for (let i = 0; i < runs; i++) {
+          // --delay=MS throttles between model calls — free-tier endpoints
+          // (Gemma) drop consecutive rapid requests with bare fetch failures.
+          if (args.delay) await new Promise(r => setTimeout(r, parseInt(args.delay)));
           try {
             // Pass the source URL only when the buffer is unmodified — width-resized
             // arms must not leak the full-res URL to URL-preferring runners.
