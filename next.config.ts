@@ -10,14 +10,23 @@ const nextConfig: NextConfig = {
   experimental: {
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
+  // pdfkit must stay an unbundled runtime require: bundling it rewrites
+  // __dirname to a literal /ROOT/... path, so its constructor's
+  // readFileSync(__dirname + '/data/Helvetica.afm') throws ENOENT in
+  // production and every pdf-* download 500s ("Download failed", feedback
+  // 2026-07-21). Externalizing keeps the real node_modules/pdfkit on disk,
+  // .afm metrics and all. Local dev never catches this — node_modules is
+  // present there — so verify PDF downloads on a deploy after touching this.
+  serverExternalPackages: ['pdfkit'],
   // Belt-and-suspenders for the pdf-translation/pdf-facsimile download formats
   // (issue #3283): src/lib/pdf-fonts.ts reads the bundled Noto Serif TTFs via
   // a static `path.join(process.cwd(), 'src/assets/fonts/…')`, which Vercel's
   // build-time file tracer should already pick up automatically — this pins
-  // it explicitly in case static analysis ever misses it.
+  // it explicitly in case static analysis ever misses it. The pdfkit data pin
+  // is the same insurance for the externalized package's font metrics.
   outputFileTracingIncludes: {
-    '/api/books/[id]/download': ['./src/assets/fonts/**'],
-    '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**'],
+    '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
+    '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
