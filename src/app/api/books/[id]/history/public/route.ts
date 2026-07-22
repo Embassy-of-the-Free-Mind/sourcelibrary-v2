@@ -27,9 +27,10 @@ export async function GET(
     }
 
     // Internal/curatorial event types that aren't meaningful reader
-    // provenance — admin restores/hides and field-level edits (the latter leak
-    // internal schema field names like "image_thumb, cover_selected_at").
-    const HIDDEN_TYPES = new Set(['admin_action', 'admin_edit']);
+    // provenance — admin restores/hides, and field-level metadata changes
+    // (which leak internal schema field names like "image_thumb,
+    // cover_selected_at" and "AI enrichment: translation_verification").
+    const HIDDEN_TYPES = new Set(['admin_action', 'metadata_change']);
     const seen = new Set<string>();
     const full = await assembleBookHistory(db, result.book);
     const events = (full.events || [])
