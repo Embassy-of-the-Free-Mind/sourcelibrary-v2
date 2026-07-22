@@ -67,3 +67,20 @@ Only the pipeline is tracked here. Regenerating the data costs ~$3 in
 Two blockers before any of this is citable: **citations in the paper are
 unverified** (marked ⚠ on the page), and **classification has no second rater**,
 so there is no inter-rater agreement figure.
+
+## Citation status (2026-07-21)
+
+All references on the paper page were verified against the published literature.
+Two were wrong as first drafted:
+
+- **Lindahl et al. 2017** is "A **mixed-methods** study of meditation-related
+  challenges in Western Buddhists," *PLoS ONE* 12(5) e0176239 — not "a qualitative
+  study."
+- **Ñāṇamoli's Visuddhimagga** was first published 1956 by R. Ananda Semage,
+  Colombo. Buddhist Publication Society (Kandy) only from 1975; standard modern
+  citation is the 4th ed., BPS 2010.
+
+**Catalogue discrepancy worth fixing:** our record for the Ṣaṭcakranirūpaṇa
+(book `6991d46921124c9ad6944323`) is dated **1526**. The scholarly standard is
+**1577** — it is ch. 6 of Pūrṇānanda's *Śrītattvacintāmaṇi*, Śaka 1499. The 1526
+figure circulates in popular sources. Worth correcting in the catalogue.

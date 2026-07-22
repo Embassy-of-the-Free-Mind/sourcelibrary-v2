@@ -94,7 +94,7 @@
   <h1>Towards a Map of Conscious Experiences Across History</h1>
   <p class="sub">A first attempt, what it teaches about the requirements, and why the obvious version of the idea does not work</p>
   <p class="draftflag">
-    <b>Working draft, not for circulation.</b> Citations marked <sup class="warn">⚠</sup> are from background
+    <b>Working draft, not for circulation.</b> Citations marked  are from background
     knowledge and have <em>not</em> been verified against the literature. Classification is by a single
     language model with no human-validated subset, so no inter-rater agreement statistic is available.
     Both are blocking issues for submission.
@@ -154,8 +154,8 @@
 <p>
   A map of conscious experiences across history would do at least four things no existing resource does.
   It would let the perennialism–constructivism dispute — whether mystical experience has a common core
-  or is constituted by tradition, argued since Stace<sup class="warn">⚠</sup> and
-  Katz<sup class="warn">⚠</sup> — be posed as an empirical question over thousands of sources rather than
+  or is constituted by tradition, argued since Stace and
+  Katz — be posed as an empirical question over thousands of sources rather than
   a canon of exemplary figures. It would recover categories of experience that modern instruments have no
   items for, and that consequently go unstudied. It would let a person in a state they find frightening
   discover that it has been described before, by name, in five traditions. And it would give the
@@ -212,8 +212,8 @@
   topical vocabulary. Probes are embedded and matched by cosine similarity against page embeddings.
 </p>
 <p>
-  <strong>Instrument A</strong> takes 36 dimensions: twenty anchored to the MEQ30<sup class="warn">⚠</sup>,
-  5D-ASC<sup class="warn">⚠</sup> and Hood M-scale<sup class="warn">⚠</sup> so results stay comparable to
+  <strong>Instrument A</strong> takes 36 dimensions: twenty anchored to the MEQ30,
+  5D-ASC and Hood M-scale so results stay comparable to
   the psychometric literature, plus sixteen the modern scales have no items for but the record documents
   heavily — felt presence, sleep paralysis, near-death, apparitions of the dead, fever delirium, mystical
   eros, pain and childbirth, unsourced music, animal transformation, mesmeric trance, sensory deprivation,
@@ -567,17 +567,19 @@
   });
 
   document.getElementById('refs').innerHTML = [
-    'Barrett, F. S., Johnson, M. W., &amp; Griffiths, R. R. Validation of the Revised Mystical Experience Questionnaire (MEQ30).',
-    'Dittrich, A. The standardized psychometric assessment of altered states of consciousness (5D-ASC).',
-    'Hood, R. W. The construction and preliminary validation of a measure of reported mystical experience (M-Scale).',
-    'Katz, S. T. Language, Epistemology, and Mysticism. In <em>Mysticism and Philosophical Analysis</em>.',
-    'Klüver, H. <em>Mescal: The “Divine” Plant and its Psychological Effects</em>. (Held in the corpus; independently retrieved as the highest-yielding source for elementary imagery.)',
-    'Lindahl, J. R., Fisher, N. E., Cooper, D. J., Rosen, R. K., &amp; Britton, W. B. The varieties of contemplative experience.',
-    'Ñāṇamoli, Bhikkhu (trans.). <em>The Path of Purification (Visuddhimagga)</em>. (The copy used to derive Instrument B.)',
-    'Proudfoot, W. <em>Religious Experience</em>.',
-    'Sharf, R. H. Buddhist Modernism and the Rhetoric of Meditative Experience.',
-    'Stace, W. T. <em>Mysticism and Philosophy</em>.'
-  ].map(r => '<li>'+r+' <sup class="warn">⚠ unverified</sup></li>').join('');
+    'Barrett, F. S., Johnson, M. W., &amp; Griffiths, R. R. (2015). Validation of the revised Mystical Experience Questionnaire in experimental sessions with psilocybin. <em>Journal of Psychopharmacology</em> 29(11), 1182–1190.',
+    'Dittrich, A. (1998). The standardized psychometric assessment of altered states of consciousness (ASCs) in humans. <em>Pharmacopsychiatry</em> 31(Suppl. 2), 80–84.',
+    'Hood, R. W., Jr. (1975). The construction and preliminary validation of a measure of reported mystical experience. <em>Journal for the Scientific Study of Religion</em> 14(1), 29–41.',
+    'Katz, S. T. (1978). Language, epistemology, and mysticism. In S. T. Katz (ed.), <em>Mysticism and Philosophical Analysis</em>, 22–74. Sheldon Press / Oxford University Press.',
+    'Klüver, H. (1928). <em>Mescal: The “Divine” Plant and its Psychological Effects</em>. Kegan Paul, Trench, Trubner &amp; Co. (Held in the corpus; independently retrieved by our probes as the highest-yielding source for elementary imagery.)',
+    'Lindahl, J. R., Fisher, N. E., Cooper, D. J., Rosen, R. K., &amp; Britton, W. B. (2017). The varieties of contemplative experience: A mixed-methods study of meditation-related challenges in Western Buddhists. <em>PLoS ONE</em> 12(5), e0176239.',
+    'Lyon, A. (2026). Mystical entropy: an introduction to the psychedelic-kundalini thesis and the PEACE framework for contemplative research. <em>Philosophical Psychology</em> 39(5), 1691–1716.',
+    'Ñāṇamoli, Bhikkhu (trans.) (1956). <em>The Path of Purification (Visuddhimagga)</em>, by Bhadantācariya Buddhaghosa. R. Ananda Semage, Colombo. [4th ed., Buddhist Publication Society, Kandy, 2010.] The edition from which Instrument B was derived.',
+    'Proudfoot, W. (1985). <em>Religious Experience</em>. University of California Press.',
+    'Pūrṇānanda (1577). <em>Ṣaṭcakranirūpaṇa</em>, ch. 6 of <em>Śrītattvacintāmaṇi</em>. Translated by J. Woodroffe as <em>The Serpent Power</em> (1918).',
+    'Sharf, R. H. (1995). Buddhist modernism and the rhetoric of meditative experience. <em>Numen</em> 42(3), 228–283.',
+    'Stace, W. T. (1961). <em>Mysticism and Philosophy</em>. J. B. Lippincott.',
+  ].map(function(r){ return '<li>'+r+'</li>'; }).join('');
 
   document.getElementById('provenance').innerHTML =
     '<p><b>Provenance.</b> This draft was produced in a single working session by an AI system operating '+
