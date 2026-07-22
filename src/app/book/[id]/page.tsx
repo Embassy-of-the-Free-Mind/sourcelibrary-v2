@@ -1296,7 +1296,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
-                <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-2 md:mb-3" style={{ color: '#d98a72' }}>
+                <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
                     <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
@@ -1304,7 +1304,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
                 </div>
               )}
-              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-2 md:mb-3 break-words" style={{ color: '#f7f2ea' }}>
+              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
                 {book.display_title || book.title}
               </h1>
               {book.display_title && book.title !== book.display_title && (() => {
@@ -1312,7 +1312,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 if (!original) return null;
                 const latin = !isNonLatinScript(original);
                 return (
-                  <div className={`text-[12px] md:text-[15px] mb-1.5 md:mb-1.5 leading-snug ${latin ? 'italic' : ''}`} style={{ color: 'rgba(248,244,238,0.85)' }}>{original}</div>
+                  <div className={`text-[12px] md:text-[15px] mb-1 md:mb-1 leading-snug ${latin ? 'italic' : ''}`} style={{ color: 'rgba(248,244,238,0.85)' }}>{original}</div>
                 );
               })()}
               {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
@@ -1322,7 +1322,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 const chip = "inline-flex items-center gap-1.5 text-[10.5px] md:text-[13.5px]";
                 const chipIcon = "inline-block w-3.5 h-3.5 md:w-4 md:h-4 opacity-70";
                 return (
-                  <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3.5 md:mt-5 mb-1">
+                  <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3 md:mt-4">
                     {heroDate && (
                       <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }} title={`${heroDate.label} ${heroDate.value}`}>
                         <Calendar className={chipIcon} /><span style={{ opacity: 0.72 }}>{heroDate.label}</span>&nbsp;{heroDate.value}
@@ -1349,7 +1349,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   to the right of Translated (full history lives in Editions &
                   translations). */}
               {ocrPct > 0 && (
-                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[10.5px] md:text-[13.5px] font-medium">
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
