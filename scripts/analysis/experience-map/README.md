@@ -64,9 +64,9 @@ Only the pipeline is tracked here. Regenerating the data costs ~$3 in
 
 ## Status
 
-Two blockers before any of this is citable: **citations in the paper are
-unverified** (marked ⚠ on the page), and **classification has no second rater**,
-so there is no inter-rater agreement figure.
+One blocker before any of this is citable: **classification has no second rater**,
+so there is no inter-rater agreement figure. (References were verified 2026-07-21 —
+see below.)
 
 ## Citation status (2026-07-21)
 
