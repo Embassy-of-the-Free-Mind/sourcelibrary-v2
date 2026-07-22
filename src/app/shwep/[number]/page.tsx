@@ -4,7 +4,6 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
-import type { MatchedBook } from '../shwep-data';
 import { getWorksCitedForEpisode } from '../works-cited';
 import type { CitedWorkEntry, EditionRef } from '../works-cited';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -57,8 +56,8 @@ export default async function EpisodePage({ params }: Props) {
   ]);
   if (!episode) notFound();
 
-  const translatedCount = episode.books.filter(b => (b.pages_translated || 0) > 0).length;
   const heldWorks = citedWorks.filter(w => w.held);
+  const editionCount = heldWorks.reduce((n, w) => n + w.editions.length + w.moreEditions.length, 0);
   const absentWorks = citedWorks.filter(w => !w.held);
 
   return (
@@ -111,10 +110,10 @@ export default async function EpisodePage({ params }: Props) {
               </svg>
               Listen on SHWEP
             </a>
-            {episode.bookCount > 0 && (
+            {heldWorks.length > 0 && (
               <span className="text-sm text-stone-400">
-                {episode.bookCount} source{episode.bookCount !== 1 ? 's' : ''} in collection
-                {translatedCount > 0 && ` · ${translatedCount} translated`}
+                {heldWorks.length} cited work{heldWorks.length !== 1 ? 's' : ''} held here
+                {editionCount > 0 && ` · ${editionCount} edition${editionCount !== 1 ? 's' : ''}`}
               </span>
             )}
           </div>
@@ -131,7 +130,7 @@ export default async function EpisodePage({ params }: Props) {
             <h2 className="text-xl font-serif text-stone-800 mb-1">Works cited in this episode</h2>
             <p className="text-sm text-stone-500 mb-6">
               {heldWorks.length} work{heldWorks.length !== 1 ? 's' : ''} discussed in this episode {heldWorks.length !== 1 ? 'are' : 'is'} held here,
-              in {heldWorks.reduce((n, w) => n + w.editions.length + w.moreEditions.length, 0)} editions.
+              in {editionCount} editions.
               Where several editions survive they are listed together, because a manuscript, an early printing and a later translation are different objects.
             </p>
             <ul className="space-y-5">
@@ -171,8 +170,12 @@ export default async function EpisodePage({ params }: Props) {
           </section>
         )}
 
-        {/* Earl Fontainelle's reading list, scraped from the episode page on shwep.net */}
-        {(episode.linkedBibliography || episode.bibliography) && (
+        {/* His bibliography, reproduced as he published it. We used to splice our own
+            /book/ links into these sentences, which made his citation of one edition look
+            like a pointer to a different edition we happen to hold — his "frr. 153-4" is
+            Des Places/Majercik and finds nothing in our Patrizi. Our holdings belong in
+            our own section above, not inside his prose. */}
+        {episode.bibliography && (
           <section className="mb-10">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
               <h2 className="text-xl font-serif text-stone-800">Reading List</h2>
@@ -183,60 +186,11 @@ export default async function EpisodePage({ params }: Props) {
                 <a href={episode.url} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">view on shwep.net</a>
               </p>
             </div>
-            {episode.linkedBibliography && (
-              <p className="text-sm text-stone-500 mb-4">
-                The works <span className="text-accent-rust font-medium">underlined in rust</span> are in Source Library — click any to read the original.
-              </p>
-            )}
-            <div className="rounded-xl bg-white border border-stone-200 shadow-sm p-6 md:p-7">
-              <ReadingList markdown={episode.linkedBibliography || episode.bibliography!} />
-            </div>
-          </section>
-        )}
-
-        {/* When the bibliography has inline "read here" links, it IS the integrated experience —
-            skip the separate book list. Otherwise fall back to the matched-books list. */}
-        {!episode.linkedBibliography && (
-          episode.bookCount > 0 ? (
-            <>
-              <h2 className="text-xl font-serif text-stone-800 mb-1">
-                Read in Source Library
-              </h2>
-              <p className="text-sm text-stone-500 mb-6">
-                Primary sources from this episode that you can read here — {episode.bookCount} title{episode.bookCount !== 1 ? 's' : ''} in the collection.
-              </p>
-              <div className="space-y-4">
-                {episode.books.map(book => (
-                  <BookCard key={book.id} book={book} />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12 text-stone-500">
-              <p className="text-lg mb-2">None of this episode&rsquo;s sources are in the collection yet.</p>
-              <p className="text-sm">
-                <Link href="/contribute" className="text-accent-rust underline">Suggest a book</Link> to help expand coverage.
-              </p>
-            </div>
-          )
-        )}
-
-        {/* On an inline-linked episode, the reading list links the works named in Earl's
-            discussion. Some held works are cited only via a dated edition (we hold a
-            different edition) or aren't named in the text — surface those here so no held
-            primary source is hidden behind the linked bibliography. */}
-        {episode.linkedBibliography && episode.supplementaryBooks && episode.supplementaryBooks.length > 0 && (
-          <section className="mt-10">
-            <h2 className="text-xl font-serif text-stone-800 mb-1">
-              Also in Source Library
-            </h2>
-            <p className="text-sm text-stone-500 mb-6">
-              More primary sources from this episode you can read here — held in the collection but not linked in the reading list above.
+            <p className="text-sm text-stone-500 mb-4">
+              Reproduced as published, unedited. Any links in it are his own.
             </p>
-            <div className="space-y-4">
-              {episode.supplementaryBooks.map(book => (
-                <BookCard key={book.id} book={book} />
-              ))}
+            <div className="rounded-xl bg-white border border-stone-200 shadow-sm p-6 md:p-7">
+              <ReadingList markdown={episode.bibliography} />
             </div>
           </section>
         )}
@@ -255,7 +209,8 @@ export default async function EpisodePage({ params }: Props) {
               <a href={episode.url} target="_blank" rel="noopener noreferrer" className="text-accent-rust underline">
                 this episode&rsquo;s page on shwep.net
               </a>
-              . We have not paraphrased or edited his words.
+              . We have not paraphrased his words, and we no longer place our own links
+              inside his sentences.
             </p>
             <p>
               <strong className="text-stone-700 font-medium">Ours:</strong> which editions Source Library
@@ -453,81 +408,5 @@ function ReadingList({ markdown }: { markdown: string }) {
         {markdown}
       </ReactMarkdown>
     </div>
-  );
-}
-
-function BookCard({ book }: { book: MatchedBook }) {
-  const hasTranslation = (book.pages_translated || 0) > 0;
-  const hasOcr = (book.pages_ocr || 0) > 0;
-  const denom = Math.max((book.pages_count || 0) - (book.pages_blank || 0), 1);
-  const translationPct = book.pages_count && book.pages_translated
-    ? Math.round((book.pages_translated / denom) * 100)
-    : 0;
-
-  return (
-    <a
-      href={book.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex gap-5 p-5 rounded-xl bg-white border border-stone-200 shadow-sm hover:shadow-md hover:border-accent-rust/30 transition-all group"
-    >
-      {/* Thumbnail */}
-      {(book.thumbnail_blob || book.thumbnail) ? (
-        <img
-          src={book.thumbnail_blob || book.thumbnail}
-          alt=""
-          className="w-20 h-28 object-cover rounded-lg shadow-sm shrink-0 bg-stone-100 group-hover:shadow-md transition-shadow"
-          loading="lazy"
-        />
-      ) : (
-        <div className="w-20 h-28 rounded-lg bg-stone-100 shrink-0 flex items-center justify-center">
-          <svg className="w-8 h-8 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        </div>
-      )}
-
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-serif text-stone-800 group-hover:text-accent-rust transition-colors leading-snug">
-          {book.title}
-        </h3>
-
-        <div className="text-sm text-stone-500 mt-1">
-          {book.author}
-          {book.year ? ` · ${book.year}` : ''}
-          {' · '}{book.language}
-          {book.pages_count ? ` · ${book.pages_count} pages` : ''}
-        </div>
-
-        {/* Overview/description */}
-        {book.overview && (
-          <p className="text-sm text-stone-500 mt-2 leading-relaxed line-clamp-2">
-            {book.overview}
-          </p>
-        )}
-
-        {/* Status badges */}
-        <div className="flex items-center gap-2 mt-3">
-          {hasTranslation && (
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-              {translationPct >= 90 ? 'Fully translated' : `${translationPct}% translated`}
-            </span>
-          )}
-          {hasOcr && !hasTranslation && (
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
-              Text extracted (OCR)
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Arrow */}
-      <div className="self-center shrink-0">
-        <svg className="w-5 h-5 text-stone-300 group-hover:text-accent-rust transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </div>
-    </a>
   );
 }
