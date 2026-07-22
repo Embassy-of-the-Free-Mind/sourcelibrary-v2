@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 17; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 18; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -48,7 +48,7 @@ function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: 
 const TILE_W = 168; // fixed column width; height follows the page's true aspect
 const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a column
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
-const AVIF_QUALITY = 50; // AVIF quality for the composited bg
+const AVIF_QUALITY = 38; // AVIF quality — the bg sits under a heavy dark scrim, so it compresses hard with no visible loss
 const MAX_MOSAIC_W = 1920; // cap the output width — the hero never needs more
 const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
@@ -277,7 +277,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const composed = await sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(placements)
       .resize({ width: Math.min(width, MAX_MOSAIC_W), withoutEnlargement: true })
-      .avif({ quality: AVIF_QUALITY, effort: 4 })
+      .avif({ quality: AVIF_QUALITY, effort: 5 })
       .toBuffer();
 
     const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.avif`;
