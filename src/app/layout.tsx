@@ -40,6 +40,29 @@ import ScrollReveal from "@/components/layout/ScrollReveal";
 // Must mirror the detection in EmbedUserMenu.tsx.
 const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.hostname,p=location.pathname;var bph=/^bph\\./.test(h)||/^\\/embed\\/bph(\\/|$)/.test(p);var m=c.match(/(?:^|; )sl_hide_ai=([01])/);var v=m?m[1]:(bph?'d':null);if(v==='1')d.documentElement.dataset.slHideAi='1';else if(v==='d')d.documentElement.dataset.slHideAi='default';if(/(?:^|; )sl_hide_guide=1/.test(c))d.documentElement.dataset.slHideGuide='1';try{var emb=(window.self!==window.top)||/^\\/embed\\//.test(p)||(/\\.sourcelibrary\\.(org|com|net)$/.test(h)&&h.split('.').length>=3&&h.indexOf('www.')!==0);if(emb)d.documentElement.dataset.embedded='1';}catch(e){d.documentElement.dataset.embedded='1';}})();`;
 
+// Browser-translation crash guard. Chrome/Edge's built-in translator (and the
+// Google Translate widget) rewrites every text node into a nested <font> pair.
+// React still holds a reference to the ORIGINAL text node, so the next update —
+// turning a page in the reader, filtering a collection grid — calls
+// removeChild/insertBefore with a node that is no longer a child of its recorded
+// parent. The DOM throws NotFoundError, React re-throws it out of the commit
+// phase, and the nearest error boundary replaces the whole page. That is what
+// readers see as "reads a few pages, then it blocks" (reported in Italian,
+// 2026-07-22) — and it hit every browser-translating reader on every text-heavy
+// route, which is a large share of our non-English audience.
+//
+// The fix (React issue #11538): make those two DOM primitives no-ops when the
+// node has already been moved out from under React. React's virtual tree stays
+// authoritative and the next render re-syncs; the translator re-translates the
+// new text as it always does. Behaviour is unchanged for every call that would
+// have succeeded, so this only ever converts a hard crash into a normal update.
+//
+// Must be an inline <head> script: the translator can rewrite the DOM before the
+// React bundle has even parsed, so patching from a client component would be too
+// late for the hydration commit. `window.__slTranslateGuardHits` counts swallowed
+// calls for support triage.
+const TRANSLATION_DOM_GUARD_SCRIPT = `(function(){if(typeof Node!=='function'||!Node.prototype)return;window.__slTranslateGuardHits=0;var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){window.__slTranslateGuardHits++;return c;}return r.apply(this,arguments);};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){window.__slTranslateGuardHits++;return n;}return i.apply(this,arguments);};})();`;
+
 export const metadata: Metadata = {
   title: "Source Library — Ancient Texts Translated to English",
   description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
@@ -119,6 +142,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: TRANSLATION_DOM_GUARD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: VIEW_MODE_INIT_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
