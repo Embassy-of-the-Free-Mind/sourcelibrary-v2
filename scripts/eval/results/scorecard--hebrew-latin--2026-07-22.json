@@ -1,0 +1,246 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 3,
+  "only": "^(hebrew|latin)",
+  "summary": [
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 4,
+      "aligned": 4,
+      "refChars": 1922,
+      "charAccuracy": 0.9646201873048907,
+      "rows": [
+        {
+          "work": "Genesis 1:1-5 (Bereshit)",
+          "bookId": "6952e4bc77f38f6761bc7db1",
+          "pageNumber": 45,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 197,
+          "matched": 197,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Genesis.1",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Psalms 1 (Tehillim)",
+          "bookId": "69e7518610ee9075bcdcde12",
+          "pageNumber": 8,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 248,
+          "matched": 248,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Psalms.1",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Sefer HaYirah (Rabbenu Yonah) — blessings before enjoyment",
+          "bookId": "69b52593cced70d8e6d72941",
+          "pageNumber": 20,
+          "aligned": true,
+          "guard": 0.1686746987951807,
+          "cer": 0.037037037037037035,
+          "charAccuracy": 0.962962962962963,
+          "refLen": 324,
+          "matched": 312,
+          "source": "Sefaria, Sefer HaYirah 119-123",
+          "source_url": "https://www.sefaria.org/Sefer_HaYirah.119-123",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Sha'arei Orah (Gikatilla), Gate 2 — Yovel/El Chai discourse",
+          "bookId": "699ef9f2c2bcb75dbdbaad92",
+          "pageNumber": 60,
+          "aligned": true,
+          "guard": 0.14492753623188406,
+          "cer": 0.04856895056374675,
+          "charAccuracy": 0.9514310494362532,
+          "refLen": 1153,
+          "matched": 1097,
+          "source": "Sefaria, Sha'arei Orah, Second Gate, Ninth Sefirah 71-74",
+          "source_url": "https://www.sefaria.org/Sha'arei_Orah%2C_Second_Gate%2C_Ninth_Sefirah.71-74",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3261,
+      "charAccuracy": 0.9868138607789022,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hieronymus, Epistola ad Paulinum (Ep. 53), 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 16,
+          "aligned": true,
+          "guard": 0.034482758620689655,
+          "cer": 0.0021598272138228943,
+          "charAccuracy": 0.9978401727861771,
+          "refLen": 926,
+          "matched": 924,
+          "source": "Latin Wikisource, Vulgata Clementina — Hieronymus Paulino",
+          "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Hieronymus_Paulino",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hieronymus, Prologus Galeatus, 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 15,
+          "aligned": true,
+          "guard": 0.057692307692307696,
+          "cer": 0.005005005005005005,
+          "charAccuracy": 0.994994994994995,
+          "refLen": 999,
+          "matched": 994,
+          "source": "Latin Wikisource, Vulgata Clementina — Prologus Galeatus",
+          "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Prologus_Galeatus,_sive_in_libros_Regum_praefatio",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Vita Vergilii (Donatus auctus), 1580 Meyen Virgil",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 22,
+          "aligned": true,
+          "guard": 0.10067114093959731,
+          "cer": 0.038461538461538464,
+          "charAccuracy": 0.9615384615384616,
+          "refLen": 910,
+          "matched": 875,
+          "source": "Living Poets (Durham University), Donatus auctus critical text after Brugnoli–Stok, Vitae Vergilianae antiquae (1997)",
+          "source_url": "https://livingpoets.dur.ac.uk/w/index.php/Draft:Donatus_auctus",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.017543859649122806,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 282,
+          "matched": 282,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

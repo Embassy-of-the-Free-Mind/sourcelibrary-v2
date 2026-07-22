@@ -373,6 +373,63 @@ export async function runMuleRouter(model, imageBuffer, prompt, opts = {}) {
   };
 }
 
+// ── Run via Scaleway Generative APIs ───────────────────────────────
+
+// OpenAI-compatible serverless inference (EU-hosted). Model IDs are prefixed
+// `scw:` to disambiguate from the same open models served elsewhere (e.g.
+// gemma-3-27b-it exists on both Google's API and Scaleway); the prefix is
+// kept in the recorded model name so observations distinguish the serving
+// provider. Needs SCALEWAY_SECRET_KEY (secret-lover, makemode project).
+export function isScalewayModel(model) {
+  return model.startsWith('scw:');
+}
+
+export async function runScaleway(model, imageBuffer, prompt, opts = {}) {
+  const key = process.env.SCALEWAY_SECRET_KEY;
+  if (!key) throw new Error('SCALEWAY_SECRET_KEY not set');
+  // Scaleway hard-caps max_completion_tokens at 8192 (400s above it).
+  const { temperature = 0 } = opts;
+  const maxTokens = Math.min(opts.maxTokens ?? 8000, 8192);
+  // Scaleway 400s on large base64 data URIs — pass the remote source URL
+  // when available (absent only on width-resized arms, which stay inline).
+  const image = opts.imageUrl || `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
+
+  const start = Date.now();
+  const resp = await fetch('https://api.scaleway.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model: model.slice(4),
+      temperature,
+      max_tokens: maxTokens,
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'text', text: prompt },
+          { type: 'image_url', image_url: { url: image } },
+        ],
+      }],
+    }),
+  });
+  if (!resp.ok) throw new Error(`Scaleway ${resp.status}: ${(await resp.text()).slice(0, 200)}`);
+
+  const data = await resp.json();
+  const durationMs = Date.now() - start;
+  const text = data.choices?.[0]?.message?.content || '';
+  const inputTokens = data.usage?.prompt_tokens || 0;
+  const outputTokens = data.usage?.completion_tokens || 0;
+
+  return {
+    text,
+    model,
+    inputTokens,
+    outputTokens,
+    costUsd: calcCost(model, inputTokens, outputTokens),
+    durationMs,
+    finishReason: data.choices?.[0]?.finish_reason || 'unknown',
+  };
+}
+
 // ── Run DeepSeek-OCR via Replicate ─────────────────────────────────
 
 // Community cog port (lucataco/deepseek-ocr) of DeepSeek-OCR — a dedicated
@@ -473,6 +530,7 @@ export async function runModel(model, imageBuffer, prompt, opts = {}) {
   if (isMistralOcrModel(resolved)) return runMistralOcr(resolved, imageBuffer, prompt, opts);
   if (isMistralModel(resolved)) return runMistralChat(resolved, imageBuffer, prompt, opts);
   if (isReplicateOcrModel(resolved)) return runReplicateDeepSeekOcr(resolved, imageBuffer, prompt, opts);
+  if (isScalewayModel(resolved)) return runScaleway(resolved, imageBuffer, prompt, opts);
   if (isMuleModel(resolved)) return runMuleRouter(resolved, imageBuffer, prompt, opts);
   return runGemini(resolved, imageBuffer, prompt, opts);
 }
