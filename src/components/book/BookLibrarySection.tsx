@@ -43,6 +43,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" loading="lazy" />
             </div>
+            <div className="mt-1.5 text-[11.5px] leading-snug line-clamp-2 transition-colors group-hover:text-[#a5503d]" style={{ color: '#6b6456' }}>{c.title}</div>
           </Link>
         ))}
       </div>
