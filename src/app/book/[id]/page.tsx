@@ -1053,14 +1053,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         label: i === 0
           ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
           : 'New edition published',
-        detail: (e.version || doiHref) ? (
+        detail: (
           <>
-            {e.version ? `Version ${e.version}` : null}
-            {doiHref ? (
-              <>{e.version ? ' · ' : ''}<a href={doiHref} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>DOI ↗</a></>
-            ) : null}
+            An AI-assisted English translation of the original, produced and published by{' '}
+            <span style={{ color: '#2b2620', fontWeight: 500 }}>Source Library</span>.
+            {(e.version || doiHref) && (
+              <span className="block mt-1" style={{ color: '#948d80' }}>
+                {e.version ? `Version ${e.version}` : null}
+                {doiHref ? (
+                  <>{e.version ? ' · ' : ''}<a href={doiHref} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>DOI ↗</a></>
+                ) : null}
+              </span>
+            )}
           </>
-        ) : undefined,
+        ),
       });
     });
     // Digitized by the source library (Internet Archive, a partner, …) — its own
@@ -1324,7 +1330,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   translations). */}
               {ocrPct > 0 && (
                 <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
-                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
+                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#d8c6a8' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
                   {translatedPct > 0 && (
