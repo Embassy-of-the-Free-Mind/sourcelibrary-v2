@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 20; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 21; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -147,7 +147,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Fetches run through a small concurrency POOL, not all at once: firing 80+
     // outbound requests from one serverless function exhausts its sockets and
     // most fail, which used to starve the grid (and then wrongly negative-cache).
-    const fetchOne = async (url: string): Promise<Tile | null> => {
+    type Entry = { url: string; fallback?: string };
+    const fetchUrl = async (url: string): Promise<Tile | null> => {
       for (let attempt = 0; attempt < 2; attempt++) {
         try {
           const buf = await images.fetchBuffer(url, { timeout: 15000 });
@@ -155,12 +156,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           if (info.height <= MAX_TILE_H) return { data, height: info.height };
           const cropped = await sharp(data).extract({ left: 0, top: 0, width: info.width, height: MAX_TILE_H }).toBuffer();
           return { data: cropped, height: MAX_TILE_H };
-        } catch { if (attempt === 1) return null; }
+        } catch { if (attempt === 1) break; }
       }
       return null;
     };
-    const fetchTiles = async (urls: string[]): Promise<{ tiles: Tile[]; fetched: number }> => {
-      const list = urls.slice(0, CANDIDATE_LIMIT);
+    // Try the preferred (possibly large) source; if it can't be fetched, fall
+    // back to the page's thumbnail — so preferring a big source for few-page
+    // books can never starve the grid when that source is missing/unfetchable.
+    const fetchOne = async (e: Entry): Promise<Tile | null> => {
+      const t = await fetchUrl(e.url);
+      if (t) return t;
+      if (e.fallback && e.fallback !== e.url) return fetchUrl(e.fallback);
+      return null;
+    };
+    const fetchTiles = async (entries: Entry[]): Promise<{ tiles: Tile[]; fetched: number }> => {
+      const list = entries.slice(0, CANDIDATE_LIMIT);
       const raw: (Tile | null)[] = new Array(list.length).fill(null);
       let next = 0;
       const worker = async () => {
@@ -198,12 +208,16 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Few-page books tile to a handful of large cells → use bigger page images
     // so they don't look upscaled. Many-page books use the fast thumbnails.
     const preferLarge = pageDocs.length < FEW_PAGES;
-    const allPageUrls = Array.from(new Set(
-      pageDocs.map(p => absPageUrl(p as PageImageFields, preferLarge)).filter((u): u is string => !!u),
-    ));
-    const pageUrls = sampleEvenly(allPageUrls, CANDIDATE_LIMIT);
+    const byUrl = new Map<string, Entry>();
+    for (const p of pageDocs) {
+      const url = absPageUrl(p as PageImageFields, preferLarge);
+      if (!url || byUrl.has(url)) continue;
+      const thumb = preferLarge ? absPageUrl(p as PageImageFields, false) ?? undefined : undefined;
+      byUrl.set(url, { url, fallback: thumb && thumb !== url ? thumb : undefined });
+    }
+    const pageEntries = sampleEvenly([...byUrl.values()], CANDIDATE_LIMIT);
 
-    let distinct = (await fetchTiles(pageUrls)).tiles;
+    let distinct = (await fetchTiles(pageEntries)).tiles;
     let usingPlates = false;
     let plateUrlCount = 0;
 
@@ -215,8 +229,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // to plates — that's how a rich text book (e.g. the Compendium) wrongly
     // cached a plate grid. It instead builds from whatever pages it got, or 404s
     // to retry (below).
-    const pageStructural = pageUrls.length < MIN_TILES * 3;      // < ~12 distinct page URLs
-    const pageCoverFallback = pageUrls.length >= 12 && distinct.length <= 3; // collapsed to one image
+    const pageStructural = pageEntries.length < MIN_TILES * 3;      // < ~12 distinct page URLs
+    const pageCoverFallback = pageEntries.length >= 12 && distinct.length <= 3; // collapsed to one image
     if (distinct.length < MIN_TILES * 3 && (pageStructural || pageCoverFallback)) {
       const plates = await db.collection('gallery_images')
         .find(
@@ -231,7 +245,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       ));
       plateUrlCount = plateUrls.length;
       if (plateUrls.length) {
-        const plateTiles = (await fetchTiles(plateUrls)).tiles;
+        const plateTiles = (await fetchTiles(plateUrls.map(u => ({ url: u })))).tiles;
         if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
       }
     }
@@ -241,7 +255,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       // fetches flaked, 404 WITHOUT caching so the next request regenerates — never
       // lock a rich book to a dark hero. Only a structurally image-poor book (few
       // page URLs AND few plate URLs) caches a dark negative.
-      const structural = pageUrls.length < 12 && plateUrlCount < 12;
+      const structural = pageEntries.length < 12 && plateUrlCount < 12;
       return structural ? cacheNegative() : noMosaic();
     }
 
