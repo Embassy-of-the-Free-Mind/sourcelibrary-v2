@@ -112,5 +112,11 @@ export async function getRelatedBooks(
   });
 
   scored.sort((a, z) => z.s - a.s || (z.b.read_count || 0) - (a.b.read_count || 0));
-  return scored.filter((x) => x.s > 0).slice(0, limit).map((x) => x.b);
+  // Prefer genuinely-related books — a real signal (same author, shared
+  // subject, or same era/place), score >= 3 — over weak filler that merely
+  // shares a language (1) or a loose century (1). Only relax if too few clear
+  // matches exist, so the rail is never empty.
+  const strong = scored.filter((x) => x.s >= 3);
+  const chosen = strong.length >= 6 ? strong : scored.filter((x) => x.s >= 1);
+  return chosen.slice(0, limit).map((x) => x.b);
 }
