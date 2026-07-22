@@ -888,12 +888,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       };
     })();
 
+    // Publisher / place only — the DATE is surfaced separately as a labelled
+    // chip (heroDate) so it's clear, not buried at the end of the impressum.
     const impressum = (() => {
       const place = book.place_published?.trim();
       const publisher = book.publisher?.trim();
-      const year = book.published ? String(book.published).trim() : '';
-      const placePub = [place, publisher].filter(Boolean).join(': ');
-      return [placePub, year].filter(Boolean).join(', ');
+      return [place, publisher].filter(Boolean).join(': ');
     })();
     // Book author as a plain string (for de-duping the composition line below).
     const bookAuthorName = (() => {
@@ -902,12 +902,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       if (a && typeof a === 'object' && 'name' in a) return String((a as { name?: string }).name || '').trim();
       return '';
     })();
-    // Single hero meta line: impressum (publisher, year) + the source-work
-    // *composition* date (when the original was written — meaningful for
-    // translations / ancient texts, e.g. "Paul the Apostle 1st century AD").
-    // Suppress it when it just restates the impressum (same author AND the
-    // composition year is the printed year), which is the common case for a
-    // 19th-century original printed in its own year.
+    // The clearest single date for the hero, shown as its own labelled chip:
+    // the print/publication year when we have a real one, otherwise the
+    // composition ("written") date. Non-informative values ("Unknown", n.d.)
+    // are dropped rather than shown.
+    const compDateDisplay = book.source_work_dates?.find(l => l.type === 'composition')?.date_display?.trim();
+    const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
+    const heroDate = (() => {
+      const pub = book.published ? String(book.published).trim() : '';
+      if (pub && !NONINFO_DATE.test(pub)) return { label: 'Published', value: pub };
+      if (compDateDisplay) return { label: 'Written', value: compDateDisplay };
+      return null;
+    })();
+    // Meta line: publisher/place, plus the source-work line ONLY when its author
+    // differs from the byline (e.g. a translation crediting the original author
+    // + date). For same-author originals the date already lives in the chip.
     const heroMetaLine = (() => {
       const parts: string[] = [];
       if (impressum) parts.push(impressum);
@@ -915,12 +924,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
       if (comp) {
         const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
-        const sameYear = !!book.published && String(comp.date_display || '').includes(String(book.published));
-        if (!(sameAuthor && sameYear)) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+        if (!sameAuthor) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
       } else if (trans) {
         parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
       }
-      if (!impressum && book.published) parts.push(`published ${book.published}`);
       return parts.filter(Boolean).join(' · ');
     })();
     // Subject tags — moved out of the hero, shown below the About text.
@@ -1316,6 +1323,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 const chipIcon = "inline-block w-3.5 h-3.5 md:w-4 md:h-4 opacity-70";
                 return (
                   <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3.5 md:mt-5 mb-1">
+                    {heroDate && (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }} title={`${heroDate.label} ${heroDate.value}`}>
+                        <Calendar className={chipIcon} /><span style={{ opacity: 0.72 }}>{heroDate.label}</span>&nbsp;{heroDate.value}
+                      </span>
+                    )}
                     {book.language && (
                       <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }}>
                         <Globe className={chipIcon} />{book.language}
