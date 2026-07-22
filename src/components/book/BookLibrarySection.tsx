@@ -25,11 +25,8 @@ const fmt = (n: number) => n.toLocaleString('en-US');
  * (falling back to a single representative image).
  */
 export default function BookLibrarySection({ data }: { data: LibrarySectionData }) {
-  // 3 columns aligns each cover with the full-width 5-col Related grid below.
-  // 6 (3×2) keeps the block the same height as the text; 12 aligned covers would
-  // be 4 rows tall and leave a big empty column beside the text.
-  const covers = data.covers.filter((c) => c.thumbnail).slice(0, 6);
-  const hasCovers = covers.length >= 3;
+  const covers = data.covers.filter((c) => c.thumbnail).slice(0, 10);
+  const hasCovers = covers.length >= 4;
 
   const stats = [
     { label: 'books on Source Library', value: fmt(data.stats.books) },
@@ -39,7 +36,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
 
   const CoversStrip = ({ className = '' }: { className?: string }) => (
     <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible ${className}`}>
-      <div className="flex gap-3 md:grid md:grid-cols-3 md:gap-4">
+      <div className="flex gap-3 md:grid md:grid-cols-5">
         {covers.map((c) => (
           <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[84px] md:w-auto group">
             <div className="aspect-[3/4] overflow-hidden rounded border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
@@ -53,9 +50,9 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   );
 
   return (
-    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3' }}>
+    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3', background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-[minmax(0,1.7fr)_minmax(0,3fr)] gap-9 md:gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-9 md:gap-14 items-center">
           {/* Text side */}
           <div>
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>

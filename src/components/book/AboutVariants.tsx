@@ -33,7 +33,7 @@ export default function AboutVariants({
   ) : null;
 
   return (
-    <section id="about" className="relative pt-12 md:pt-16 pb-10 md:pb-14 scroll-mt-4">
+    <section id="about" className="relative pt-12 md:pt-16 pb-10 md:pb-14 scroll-mt-4" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f0e8db 100%)' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
         <div className={visual ? 'grid md:grid-cols-5 gap-10 md:gap-12 items-start' : ''}>
           {/* Text + tags + dropdowns: 3/5 on desktop (below the plate on mobile) */}
