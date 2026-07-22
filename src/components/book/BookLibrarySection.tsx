@@ -35,10 +35,10 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   ].filter(Boolean) as Array<{ label: string; value: string }>;
 
   const CoversStrip = ({ className = '' }: { className?: string }) => (
-    <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible ${className}`}>
+    <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-px-6 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] ${className}`}>
       <div className="flex gap-3 md:grid md:grid-cols-5">
         {covers.map((c) => (
-          <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[84px] md:w-auto group">
+          <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[104px] md:w-auto snap-start group">
             <div className="aspect-[3/4] overflow-hidden border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" loading="lazy" />

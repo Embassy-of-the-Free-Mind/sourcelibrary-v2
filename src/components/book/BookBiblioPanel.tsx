@@ -13,8 +13,8 @@ import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex gap-4 py-1.5">
-      <span className="w-28 flex-shrink-0 text-[13.5px]" style={{ color: '#948d80' }}>{label}</span>
-      <span className="flex-1 min-w-0 text-[14.5px]" style={{ color: '#2b2620' }}>{children}</span>
+      <span className="w-24 md:w-28 flex-shrink-0 text-[13.5px]" style={{ color: '#948d80' }}>{label}</span>
+      <span className="flex-1 min-w-0 text-[14.5px] [overflow-wrap:anywhere]" style={{ color: '#2b2620' }}>{children}</span>
     </div>
   );
 }
