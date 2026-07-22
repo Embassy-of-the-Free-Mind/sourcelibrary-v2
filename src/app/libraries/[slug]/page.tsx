@@ -4,10 +4,14 @@ import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug } from '@/lib/library-partners';
-import SharedLibraryView, { PER_PAGE, type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
+import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import LibrarySchema from '@/components/seo/LibrarySchema';
 
-const PER_PAGE_LOCAL = PER_PAGE;
+// Must be a plain server-side constant. Importing PER_PAGE from the (client)
+// SharedLibraryView gave the server a client-reference STUB (a function), so
+// `limit` became a function → range(0, NaN) → empty grid. This was the whole
+// "library pages show no books" bug.
+const PER_PAGE_LOCAL = 60;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -46,18 +50,9 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 
 // ---------- Static params ----------
 
-// This page reads searchParams (sort / language / offset / search), so it is
-// inherently per-request DYNAMIC — it cannot be statically generated or ISR
-// cached. Pre-baking it (generateStaticParams + no revalidate) is what froze an
-// empty grid in: a build-time catalog query flaked and the empty result was
-// cached. And adding `revalidate` on top of searchParams throws
-// DYNAMIC_SERVER_USAGE. So: render on demand, every request.
+// This page reads searchParams (sort / language / offset / search), so render it
+// per request rather than pre-baking it statically.
 export const dynamic = 'force-dynamic';
-// force-dynamic alone still let Next's Data Cache serve a STALE fetch response
-// for the Supabase catalog GETs (an empty result baked at build time with the
-// placeholder anon key), so the render got count-but-no-rows. Bypass the fetch
-// cache entirely so every catalog query hits the live DB.
-export const fetchCache = 'force-no-store';
 
 // ---------- Metadata ----------
 
@@ -100,7 +95,7 @@ async function fetchLibraryData(
   // Every query is independently guarded: one slow/failing catalog call must
   // degrade its own slice, never 500 the whole page.
   const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
-    try { return await fn(); } catch (e) { console.error('[libpage] query failed:', e instanceof Error ? e.message : e); return fallback; }
+    try { return await fn(); } catch { return fallback; }
   };
   type BrowseResult = Awaited<ReturnType<typeof browseBooks>>;
   const emptyResult: BrowseResult = { books: [], total: 0 };
@@ -141,7 +136,6 @@ async function fetchLibraryData(
   // heavy enough that running them concurrently starved/timed-out the grid query
   // and emptied the page. Books first, then the supporting data.
   const booksResult = await fetchGrid();
-  console.error(`[libpage] ${providerKey} sort=${chosenSort} offset=${offset} -> books=${booksResult.books.length} total=${booksResult.total}`);
   const [languages, sampleResult] = await Promise.all([
     safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
     fetchSample(),
