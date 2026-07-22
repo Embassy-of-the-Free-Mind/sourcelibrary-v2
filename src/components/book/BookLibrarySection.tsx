@@ -57,10 +57,6 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
           {/* Text side */}
           <div className="min-w-0">
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>
-            {data.logo && (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={data.logo} alt="" className="h-8 md:h-10 w-auto max-w-[260px] object-contain object-left mb-3" loading="lazy" />
-            )}
             <h2 className="font-display font-medium text-[26px] md:text-[34px] leading-[1.08] mb-4" style={{ color: '#2b2620' }}>{data.name}</h2>
             <p className="text-[14.5px] md:text-[15.5px] leading-relaxed mb-6 max-w-[54ch]" style={{ color: '#5c5546' }}>{data.description}</p>
 

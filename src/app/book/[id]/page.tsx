@@ -1194,20 +1194,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
               {/* Chips — borderless / padless inline items */}
               {(() => {
-                const chip = "inline-flex items-center gap-1.5 text-[11.5px] md:text-[13.5px]";
+                const chip = "inline-flex items-center gap-1.5 text-[10.5px] md:text-[13.5px]";
+                // Icons are hidden on mobile — the chips read as small plain
+                // labels there — and only appear from md up.
+                const chipIcon = "hidden md:inline-block w-4 h-4 opacity-70";
                 return (
-                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 md:mt-5 mb-1">
+                  <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3.5 md:mt-5 mb-1">
                     {book.language && (
-                      <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }}>
-                        <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{book.language}
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }}>
+                        <Globe className={chipIcon} />{book.language}
                       </span>
                     )}
-                    <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }} title="Scanned images, including covers and blanks.">
-                      <FileText className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{totalPages} scans
+                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title="Scanned images, including covers and blanks.">
+                      <FileText className={chipIcon} />{totalPages} scans
                     </span>
                     {imageCount > 0 && (
-                      <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.92)' }}>
-                        <Images className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />{imageCount} image{imageCount === 1 ? '' : 's'}
+                      <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.88)' }}>
+                        <Images className={chipIcon} />{imageCount} image{imageCount === 1 ? '' : 's'}
                       </Link>
                     )}
                   </div>
