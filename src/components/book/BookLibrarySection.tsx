@@ -62,11 +62,11 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
 
             {/* Mobile: all stats on one row (value stacked over a short label);
                 desktop: inline with the full label. */}
-            <div className="flex justify-between gap-3 md:flex-wrap md:justify-start md:gap-x-7 md:gap-y-2 mb-8">
+            <div className="flex flex-nowrap justify-between gap-2 md:flex-wrap md:justify-start md:gap-x-7 md:gap-y-2 mb-8">
               {stats.map((s) => (
                 <span key={s.label} className="flex flex-col md:flex-row md:items-baseline md:gap-1.5 min-w-0">
-                  <span className="font-display font-medium text-[19px] md:text-[24px] leading-none" style={{ color: '#2b2620' }}>{s.value}</span>
-                  <span className="text-[11px] md:text-[13px] mt-0.5 md:mt-0 leading-tight" style={{ color: '#8a8170' }}>
+                  <span className="font-display font-medium text-[15px] md:text-[24px] leading-none" style={{ color: '#2b2620' }}>{s.value}</span>
+                  <span className="text-[10.5px] md:text-[13px] mt-0.5 md:mt-0 leading-tight" style={{ color: '#8a8170' }}>
                     <span className="md:hidden">{s.short}</span>
                     <span className="hidden md:inline">{s.label}</span>
                   </span>
