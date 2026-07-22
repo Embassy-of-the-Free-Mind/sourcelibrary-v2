@@ -26,10 +26,21 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // Internal/curatorial event types that aren't meaningful reader
+    // provenance — admin restores/hides and field-level edits (the latter leak
+    // internal schema field names like "image_thumb, cover_selected_at").
+    const HIDDEN_TYPES = new Set(['admin_action', 'admin_edit']);
+    const seen = new Set<string>();
     const full = await assembleBookHistory(db, result.book);
     const events = (full.events || [])
-      // Admin actions are internal (restores, hides, manual overrides).
-      .filter((e) => e.type !== 'admin_action')
+      .filter((e) => !HIDDEN_TYPES.has(e.type))
+      // Collapse same-step duplicates on the same day (e.g. two enrichment runs).
+      .filter((e) => {
+        const k = `${e.type}|${e.description}|${String(e.timestamp).slice(0, 10)}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      })
       .map((e) => ({
         type: e.type,
         timestamp: e.timestamp,
