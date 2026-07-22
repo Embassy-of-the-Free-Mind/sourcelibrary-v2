@@ -85,7 +85,7 @@ export default function ShwepClient({ data }: { data: ShwepIndexData }) {
       {/* Hero with search */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-6">
-          <h1 className="text-4xl md:text-5xl mb-3">SHWEP Reading Room</h1>
+          <h1 className="text-4xl md:text-5xl mb-3">Sources discussed on the Secret History of Western Esotericism Podcast</h1>
           <p className="text-lg text-stone-300 max-w-2xl mb-8">
             Read the primary sources discussed on the{' '}
             <a href="https://shwep.net" target="_blank" rel="noopener noreferrer" className="text-accent-gold underline">

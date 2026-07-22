@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // No try/catch: letting a fetch failure throw here keeps ISR serving the
   // last good page instead of permanently caching noindex fallback metadata.
   const ep = await getEpisodeData(parseInt(number));
-  if (!ep) return { title: 'Episode Not Found - SHWEP Reading Room', robots: { index: false, follow: true } };
+  if (!ep) return { title: 'Episode Not Found - Source Library', robots: { index: false, follow: true } };
   return {
-    title: `${ep.title} - SHWEP Reading Room`,
+    title: `${ep.title} - sources in Source Library`,
     description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,
     // See the note in ../page.tsx: an alias domain does not inherit the preview
     // deployment's noindex, and this branch is shown privately pending the SHWEP's
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical: `/shwep/${ep.number}` },
     openGraph: {
       images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-      title: `${ep.title} - SHWEP Reading Room`,
+      title: `${ep.title} - sources in Source Library`,
       description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,
       url: `https://sourcelibrary.org/shwep/${ep.number}`,
     },
@@ -63,7 +63,7 @@ export default async function EpisodePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header */}
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'SHWEP Reading Room', href: '/shwep' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Sources discussed on SHWEP', href: '/shwep' }]} />
 
       {/* Caveat */}
       <div className="bg-stone-100 border-b border-stone-200">

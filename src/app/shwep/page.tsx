@@ -14,13 +14,13 @@ export const maxDuration = 60;
 // and serves the site's normal permissive robots.txt, so the guard has to live in the
 // page. Removing it would risk indexing the page again while its future is unsettled.
 export const metadata: Metadata = {
-  title: 'SHWEP Reading Room - Source Library',
+  title: 'Sources discussed on the Secret History of Western Esotericism Podcast - Source Library',
   description: 'Read the primary sources discussed on the Secret History of Western Esotericism Podcast. Browse episodes and access original texts in Latin, Greek, and other languages.',
   robots: { index: false, follow: false },
   alternates: { canonical: '/shwep' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'SHWEP Reading Room - Source Library',
+    title: 'Sources discussed on the Secret History of Western Esotericism Podcast - Source Library',
     description: 'Read the primary sources discussed on the Secret History of Western Esotericism Podcast.',
     url: 'https://sourcelibrary.org/shwep',
   },
