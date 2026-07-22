@@ -19,11 +19,15 @@ import { useState, useRef, useEffect, type ReactNode } from 'react';
 export default function HeroVariants({
   cover,
   meta,
+  actions,
   pageThumbs = [],
   mosaicUrl,
 }: {
   cover: ReactNode;
   meta: ReactNode;
+  /** Read / cite / download / like — pinned to the foot of the section on
+   *  mobile (on desktop these live inline in `meta`). */
+  actions?: ReactNode;
   pageThumbs?: string[];
   /** A single pre-composited tiled background image (preferred over pageThumbs). */
   mosaicUrl?: string;
@@ -87,26 +91,32 @@ export default function HeroVariants({
       </div>
 
       {/* ===================== Content ===================== */}
-      {/* DOM order is cover → meta: on desktop the grid puts the cover in the
-          left column; on mobile flex-row-reverse puts the cover on the right.
-          Mobile bottom-aligns (items-end) so the Read / cite / download / like
-          actions line up at the foot of the section. */}
+      {/* Mobile: a flex column that fills the panel — the text + cover sit at
+          the TOP (just under the gradient), top-aligned with each other, and
+          the actions are pinned to the BOTTOM. Desktop: a centred 2-col grid
+          (the inner row is `md:contents` so cover + meta become grid items),
+          and the actions live inline in `meta` instead. */}
       <div
         className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12
-          pt-[30vh] md:pt-16 pb-9 md:pb-16 md:min-h-[560px]
-          flex flex-row-reverse items-end gap-4
+          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[68vh] md:min-h-[560px]
+          flex flex-col justify-between gap-8
           md:grid md:gap-14 md:items-center md:grid-cols-[auto_minmax(0,1fr)]"
       >
-        {/* Cover: always 1/3 of the container on mobile (auto height); the large
-            left-hand cover on desktop. */}
-        <div className="w-1/3 md:w-auto flex-shrink-0
-          [&_img]:!w-full [&_img]:!h-auto [&_img]:!max-w-none [&_img]:!max-h-none
-          md:[&_img]:!w-auto md:[&_img]:!h-[420px] md:[&_img]:!max-h-none md:[&_img]:!max-w-[min(44vw,520px)]">
-          {cover}
+        {/* Top row: cover (right, 1/3 on mobile) + meta (left), top-aligned. */}
+        <div className="flex flex-row-reverse items-start gap-4 md:contents">
+          {/* Cover: 1/3 of the container on mobile (auto height); the large
+              left-hand cover on desktop. */}
+          <div className="w-1/3 md:w-auto flex-shrink-0
+            [&_img]:!w-full [&_img]:!h-auto [&_img]:!max-w-none [&_img]:!max-h-none
+            md:[&_img]:!w-auto md:[&_img]:!h-[420px] md:[&_img]:!max-h-none md:[&_img]:!max-w-[min(44vw,520px)]">
+            {cover}
+          </div>
+          <div className="min-w-0 flex-1 md:flex-none" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
+            {meta}
+          </div>
         </div>
-        <div className="min-w-0 flex-1 md:flex-none pb-1 md:pb-0" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
-          {meta}
-        </div>
+        {/* Actions: mobile only, pinned to the foot of the section. */}
+        {actions && <div className="md:hidden">{actions}</div>}
       </div>
     </section>
   );
