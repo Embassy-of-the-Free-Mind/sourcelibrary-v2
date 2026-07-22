@@ -117,10 +117,10 @@ export default function HeroVariants({
   ];
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-full overflow-x-clip">
       <div
         ref={scrollerRef}
-        className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
+        className="flex w-full max-w-full overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
       >
         {variants.map((v, i) => (
           <div key={v.key} className="w-full flex-shrink-0 snap-center">
