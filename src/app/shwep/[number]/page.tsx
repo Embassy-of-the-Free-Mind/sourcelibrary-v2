@@ -341,7 +341,23 @@ function WorkEntry({ entry }: { entry: CitedWorkEntry }) {
           mistake until you see the sentence that cites it. */}
       {entry.quote && (
         <blockquote className="mt-3 pl-3 border-l-2 border-stone-200">
-          <p className="text-[15px] text-stone-700 leading-relaxed">&ldquo;{entry.quote}&rdquo;</p>
+          {/* His emphasis is markdown in the scrape, and work titles carry meaning in a
+              bibliography — render it rather than printing literal asterisks. Formatting
+              only; the words are untouched. */}
+          <div className="text-[15px] text-stone-700 leading-relaxed">
+            &ldquo;
+            <ReactMarkdown
+              components={{
+                p: ({ children }) => <span>{children}</span>,
+                em: ({ children }) => <em className="italic">{children}</em>,
+                strong: ({ children }) => <em className="italic">{children}</em>,
+                a: ({ children }) => <>{children}</>,
+              }}
+            >
+              {entry.quote}
+            </ReactMarkdown>
+            &rdquo;
+          </div>
           <cite className="block not-italic text-xs text-stone-400 mt-1">
             Earl Fontainelle, SHWEP
             {entry.quoteSharedWith?.length ? ` — cited here alongside ${entry.quoteSharedWith.join('; ')}` : ''}
