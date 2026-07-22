@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 15; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 16; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -45,10 +45,10 @@ function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: 
   return { cols, rows, used: cols * rows };
 }
 
-const TILE_W = 168; // fixed column width; height follows the page's true aspect
-const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a column
+const TILE_W = 300; // fixed column width; height follows the page's true aspect
+const MAX_TILE_H = 600; // clamp very tall strips so one tile can't dominate a column
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
-const JPEG_QUALITY = 58;
+const JPEG_QUALITY = 62;
 const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
 

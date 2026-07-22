@@ -1330,7 +1330,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   translations). */}
               {ocrPct > 0 && (
                 <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
-                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#d8c6a8' }}>
+                  <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
                   {translatedPct > 0 && (
