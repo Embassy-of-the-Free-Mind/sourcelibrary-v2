@@ -39,7 +39,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
       <div className="flex gap-3 md:grid md:grid-cols-5">
         {covers.map((c) => (
           <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[84px] md:w-auto group">
-            <div className="aspect-[3/4] overflow-hidden rounded border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
+            <div className="aspect-[3/4] overflow-hidden border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" loading="lazy" />
             </div>
@@ -52,7 +52,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   return (
     <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3', background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] gap-9 md:gap-10 items-center">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_50%] gap-9 md:gap-10 items-center">
           {/* Text side */}
           <div>
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>
