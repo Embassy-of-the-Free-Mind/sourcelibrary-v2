@@ -973,10 +973,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
     };
     const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
-    // Original (historical) publication — always first.
-    if (book.published) {
-      const place = [book.place_published, book.publisher].filter(Boolean).join(' · ');
-      rawTimeline.push({ ts: -1, key: 'published', dateText: String(book.published), label: 'Published', detail: place || undefined });
+    // Original (historical) publication / composition — always first. Prefer the
+    // composition date_display (e.g. "c. 6th century CE") over the printed
+    // `published` field, and skip non-informative values ("Unknown", n.d., …).
+    const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
+    const histDate = (compDate || (book.published ? String(book.published) : '')).trim();
+    const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
+    if (histInformative) {
+      // Publisher/place only make sense for a printed impressum, not an ancient
+      // composition date.
+      const detail = compDate ? undefined : ([book.place_published, book.publisher].filter(Boolean).join(' · ') || undefined);
+      rawTimeline.push({ ts: -1, key: 'published', dateText: histDate, label: 'Published', detail });
     }
     // English editions / translations published on Source Library.
     ((book.editions as TranslationEdition[] | undefined) || [])
