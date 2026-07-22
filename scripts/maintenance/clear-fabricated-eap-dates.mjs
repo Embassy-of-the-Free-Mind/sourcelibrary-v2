@@ -72,6 +72,61 @@ const EAP_RANGE = {
 
 const projectOf = (url = '') => url.match(/archive-file\/(EAP\d+)/)?.[1] || null;
 
+/**
+ * Researched production-date ranges, keyed by `books.author` — which for this
+ * cohort holds the HOLDING COLLECTION, and maps 1:1 onto the EAP sub-collections.
+ *
+ * These come from the EAP project descriptions and the scholarship behind them
+ * (digitisation led by Dr Karma Phuntsho, Aris Trust Centre, Oxford), NOT from
+ * the item records, which carry only 300-800 year spans. Each entry cites its
+ * basis so a future reader can audit or improve it.
+ *
+ * `earliest`/`latest` are PRODUCTION-date bounds for the manuscript. Where only
+ * a founding date is known it is a floor, not a date — marked confidence 'low'.
+ * Where nothing usable was found, both are null and nothing is written.
+ *
+ * Deliberately NOT derived from the texts themselves: translation-derived dates
+ * in this corpus are unreliable (a "Female Fire Sheep year" in one translation
+ * turned out to have no ལུག/ལོ in the underlying Tibetan at all — see #3307).
+ */
+const COLLECTION_DATING = {
+  'Gangtey Monastery Collection': {
+    earliest: 1613, latest: 1699, confidence: 'medium',
+    basis: 'Monastery founded 1613 by Gyalse Pema Thinley; EAP039 states the collection was "mostly written in the 17th century as a funerary tribute to the founder"',
+    source: 'https://eap.bl.uk/project/EAP039',
+  },
+  'Neyphug Monastery': {
+    earliest: 1600, latest: 1699, confidence: 'medium',
+    basis: 'EAP310: Kanjur created in the 17th century during the time of the second Neyphug lama; monastery founded 1550 by gter ston Ngag dbang Grags pa (1525-1599)',
+    source: 'https://eap.bl.uk/project/EAP310',
+  },
+  'Tshamdrak Monastery': {
+    earliest: 1682, latest: 1799, confidence: 'medium',
+    basis: 'EAP310: Tshamdrak founded by Ngawang Drupa (1682-1748) — the collection cannot predate its founder',
+    source: 'https://eap.bl.uk/project/EAP310',
+  },
+  'Thadrak Temple': {
+    earliest: 1700, latest: 1799, confidence: 'medium',
+    basis: 'EAP item catalogue, "Dates of original material: probably 18th century" (uniform across the EAP310/1/1 Kanjur sub-collection)',
+    source: 'https://eap.bl.uk/archive-file/EAP310-1-1-1',
+  },
+  'Drametse Monastery Collection': {
+    earliest: 1511, latest: 1930, confidence: 'low',
+    basis: 'Monastery founded 1511 by Ani Choten Zangmo (granddaughter of Pema Lingpa, 1450-1521) — a FLOOR, not a production date. Upper bound from the EAP105 catalogue range ("Early 20th century")',
+    source: 'https://eap.bl.uk/project/EAP105',
+  },
+  'Ogyen Choling Collection': {
+    earliest: null, latest: null, confidence: 'none',
+    basis: 'No production date published. The EAP105 catalogue range (12th century - Early 20th century) is too wide to be worth recording as a bound',
+    source: 'https://eap.bl.uk/project/EAP105',
+  },
+  'Phurdrup Gonpa': {
+    earliest: null, latest: null, confidence: 'none',
+    basis: 'No founding or production date located. Contents are gter ma of Nyangral Nyi ma ’Od zer (1124-1192) and Sangye Lingpa (1340-1396) — composition dates, not production dates',
+    source: 'https://eap.bl.uk/project/EAP310',
+  },
+};
+
 async function main() {
   const uri = process.env.MONGODB_URI;
   if (!uri) { console.error('MONGODB_URI not set. Source .env.production.local first.'); process.exit(1); }
@@ -82,7 +137,7 @@ async function main() {
   if (REVERT) return revert(client, books);
 
   const docs = await books.find(FILTER, {
-    projection: { _id: 1, slug: 1, title: 1, published: 1, year: 1, visible: 1, 'image_source.source_url': 1 },
+    projection: { _id: 1, slug: 1, title: 1, author: 1, published: 1, year: 1, visible: 1, 'image_source.source_url': 1 },
   }).toArray();
 
   console.log(`Matched ${docs.length} books (tier=${TIER}, apply=${APPLY})`);
@@ -97,6 +152,25 @@ async function main() {
   console.log('  visible   :', docs.filter(d => d.visible).length);
   console.log('  distinct published values:',
     JSON.stringify([...new Set(docs.map(d => d.published))].slice(0, 5)));
+  // Researched production ranges, by holding collection.
+  const byCollection = {};
+  for (const d of docs) {
+    const k = d.author || '(none)';
+    byCollection[k] = (byCollection[k] || 0) + 1;
+  }
+  console.log('\nResearched date ranges to be written:');
+  let willRange = 0;
+  for (const [name, n] of Object.entries(byCollection).sort((a, b) => b[1] - a[1])) {
+    const dt = COLLECTION_DATING[name];
+    if (dt?.earliest != null && dt?.latest != null) {
+      willRange += n;
+      console.log(`  ${String(n).padStart(4)}  ${name.padEnd(30)} -> ${dt.earliest}-${dt.latest}  (${dt.confidence})`);
+    } else {
+      console.log(`  ${String(n).padStart(4)}  ${name.padEnd(30)} -> (no usable range; nothing written)`);
+    }
+  }
+  console.log(`  => ${willRange} of ${docs.length} books (${(willRange / docs.length * 100).toFixed(0)}%) get a researched range`);
+
   console.log('\nWill unset:', TIER === 'full' ? 'published, year' : 'published');
   console.log('Sample of affected pages:');
   for (const d of docs.slice(0, 3)) {
@@ -119,29 +193,39 @@ async function main() {
       docs: docs.map(d => ({ _id: String(d._id), published: d.published, year: d.year })) }, null, 1));
   console.log(`\nBackup written: ${backupPath}`);
 
-  let modified = 0;
+  let modified = 0, ranged = 0;
   for (const d of docs) {
     const proj = projectOf(d.image_source?.source_url);
+    const dating = COLLECTION_DATING[d.author] || null;
     const unset = TIER === 'full' ? { published: '', year: '' } : { published: '' };
-    const res = await books.updateOne({ _id: d._id }, {
-      $unset: unset,
-      $set: {
-        'field_provenance.year': {
-          source: 'import_placeholder_cleared',
-          method: 'eap_source_has_no_date',
-          previous_published: d.published ?? null,
-          previous_year: d.year ?? null,
-          eap_project: proj,
-          eap_creation_range: proj ? EAP_RANGE[proj] ?? null : null,
-          tier: TIER,
-          issue: 3307,
-          date: new Date().toISOString(),
-          script: 'clear-fabricated-eap-dates.mjs',
-        },
+    const set = {
+      'field_provenance.year': {
+        source: 'import_placeholder_cleared',
+        method: 'eap_source_has_no_date',
+        previous_published: d.published ?? null,
+        previous_year: d.year ?? null,
+        eap_project: proj,
+        eap_creation_range: proj ? EAP_RANGE[proj] ?? null : null,
+        collection: d.author ?? null,
+        range_basis: dating?.basis ?? null,
+        range_source: dating?.source ?? null,
+        range_confidence: dating?.confidence ?? 'none',
+        tier: TIER,
+        issue: 3307,
+        date: new Date().toISOString(),
+        script: 'clear-fabricated-eap-dates.mjs',
       },
-    });
+    };
+    // Only write bounds where research actually produced them.
+    if (dating?.earliest != null && dating?.latest != null) {
+      set.year_earliest = dating.earliest;
+      set.year_latest = dating.latest;
+      ranged++;
+    }
+    const res = await books.updateOne({ _id: d._id }, { $unset: unset, $set: set });
     modified += res.modifiedCount;
   }
+  console.log(`\nyear_earliest/year_latest written on: ${ranged}`);
   // Report what the driver actually observed, not what it hoped for.
   console.log(`\nmodifiedCount total: ${modified} of ${docs.length}`);
   const remaining = await books.countDocuments(FILTER);
