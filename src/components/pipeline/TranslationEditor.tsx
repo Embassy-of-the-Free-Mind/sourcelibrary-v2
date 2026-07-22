@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
+import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
 import RevisionHistory from '@/components/reader/RevisionHistory';
@@ -443,6 +444,13 @@ export default function TranslationEditor({
   const { data: sessionData } = useStableSession();
   const sessionEmail = (sessionData?.user as { email?: string } | undefined)?.email || null;
   const isEmbedded = useIsEmbedded();
+  // A browser translator (Chrome/Edge built-in, Google Translate widget) replaces
+  // every text node with its own <font> wrappers, which makes React's text updates
+  // land on nodes that are no longer in the document — turn a page and the words
+  // stay on the previous one. When one is active we remount the panels on each
+  // page instead of reconciling them (see the key on the panels container below);
+  // untranslated readers keep the cheaper in-place update.
+  const browserTranslated = useBrowserTranslation();
   // On tenant subdomains (bph.sourcelibrary.org), the proxy adds the tenant prefix,
   // so links should use /book/... not /bph/book/...
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
@@ -1510,6 +1518,13 @@ export default function TranslationEditor({
 
           return (
             <div
+              // Remount the panels per page while a browser translator is active,
+              // so each page builds fresh text nodes for it to translate instead
+              // of React trying to patch nodes the translator has already
+              // replaced. Undefined (no remount) otherwise — panel toggles, font
+              // size and trace mode live in this component's state, above the
+              // key, so they survive either way.
+              key={browserTranslated ? `translated-${page.id}` : undefined}
               className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden relative"
               data-reader-panels-container
               onTouchStart={handleTouchStart}
