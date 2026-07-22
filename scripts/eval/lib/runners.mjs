@@ -313,6 +313,123 @@ export async function runMistralChat(model, imageBuffer, prompt, opts = {}) {
   };
 }
 
+// ── Run via MuleRouter (OpenAI-compatible multi-provider router) ───
+
+// Routes Qwen/DeepSeek/GLM/Kimi/Grok/GPT models through api.mulerouter.ai.
+// Needs MULEROUTER_API_KEY (kept in secret-lover, global scope — not in
+// .env.production.local). Usage tokens come back OpenAI-style; cost falls
+// back to PRICING.default until per-model router prices are confirmed.
+const MULE_MODEL_RE = /^(qwen|deepseek|glm|kimi|grok|gpt)-?/;
+
+export function isMuleModel(model) {
+  return MULE_MODEL_RE.test(model);
+}
+
+export async function runMuleRouter(model, imageBuffer, prompt, opts = {}) {
+  const key = process.env.MULEROUTER_API_KEY;
+  if (!key) throw new Error('MULEROUTER_API_KEY not set');
+  const { temperature = 0, maxTokens = 8000 } = opts;
+  const b64 = imageBuffer.toString('base64');
+
+  const start = Date.now();
+  // NB: the documented /v1/chat/completions alias 404s on the current
+  // deployment — only the vendor-scoped path works (all models, all vendors).
+  const resp = await fetch('https://api.mulerouter.ai/vendors/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model,
+      temperature,
+      max_tokens: maxTokens,
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'text', text: prompt },
+          { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${b64}` } },
+        ],
+      }],
+    }),
+  });
+
+  if (!resp.ok) {
+    const errText = await resp.text();
+    throw new Error(`MuleRouter ${resp.status}: ${errText.slice(0, 200)}`);
+  }
+
+  const data = await resp.json();
+  const durationMs = Date.now() - start;
+  const text = data.choices?.[0]?.message?.content || '';
+  const inputTokens = data.usage?.prompt_tokens || 0;
+  const outputTokens = data.usage?.completion_tokens || 0;
+
+  return {
+    text,
+    model,
+    inputTokens,
+    outputTokens,
+    costUsd: calcCost(model, inputTokens, outputTokens),
+    durationMs,
+    finishReason: data.choices?.[0]?.finish_reason || 'unknown',
+  };
+}
+
+// ── Run DeepSeek-OCR via Replicate ─────────────────────────────────
+
+// Community cog port (lucataco/deepseek-ocr) of DeepSeek-OCR — a dedicated
+// OCR model like Mistral-OCR: the prompt is ignored. Billed per GPU-second,
+// so costUsd is estimated from wall time. Prefers opts.imageUrl (full-res
+// source) over uploading the buffer as a data URI.
+const REPLICATE_DEEPSEEK_OCR_VERSION = 'cb3b474fbfc56b1664c8c7841550bccecbe7b74c30e45ce938ffca1180b4dff5';
+const REPLICATE_L40S_USD_PER_SEC = 0.000975;
+
+export function isReplicateOcrModel(model) {
+  return model === 'deepseek-ocr-replicate';
+}
+
+export async function runReplicateDeepSeekOcr(_model, imageBuffer, _prompt, opts = {}) {
+  const key = process.env.REPLICATE_API_TOKEN;
+  if (!key) throw new Error('REPLICATE_API_TOKEN not set');
+  const image = opts.imageUrl || `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
+
+  const start = Date.now();
+  const resp = await fetch('https://api.replicate.com/v1/predictions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}`, Prefer: 'wait=60' },
+    body: JSON.stringify({
+      version: REPLICATE_DEEPSEEK_OCR_VERSION,
+      input: { image, task_type: 'Free OCR', resolution_size: 'Gundam (Recommended)' },
+    }),
+  });
+  if (!resp.ok) throw new Error(`Replicate ${resp.status}: ${(await resp.text()).slice(0, 200)}`);
+  let pred = await resp.json();
+
+  // Cold starts overrun the sync wait — poll until terminal.
+  const deadline = Date.now() + 8 * 60 * 1000;
+  while (!['succeeded', 'failed', 'canceled'].includes(pred.status)) {
+    if (Date.now() > deadline) throw new Error(`Replicate prediction ${pred.id} timed out (${pred.status})`);
+    await new Promise(r => setTimeout(r, 3000));
+    const poll = await fetch(`https://api.replicate.com/v1/predictions/${pred.id}`, {
+      headers: { Authorization: `Bearer ${key}` },
+    });
+    pred = await poll.json();
+  }
+  if (pred.status !== 'succeeded') throw new Error(`Replicate ${pred.status}: ${String(pred.error).slice(0, 200)}`);
+
+  const durationMs = Date.now() - start;
+  const text = Array.isArray(pred.output) ? pred.output.join('') : (pred.output || '');
+  const predictSec = pred.metrics?.predict_time ?? durationMs / 1000;
+
+  return {
+    text,
+    model: 'deepseek-ocr-replicate',
+    inputTokens: 0,
+    outputTokens: 0,
+    costUsd: predictSec * REPLICATE_L40S_USD_PER_SEC,
+    durationMs,
+    finishReason: text.trim() ? 'stop' : 'refusal',
+  };
+}
+
 // ── Unified runner ─────────────────────────────────────────────────
 
 const MODEL_ALIASES = {
@@ -355,6 +472,8 @@ export async function runModel(model, imageBuffer, prompt, opts = {}) {
   if (isClaudeModel(resolved)) return runClaude(resolved, imageBuffer, prompt, opts);
   if (isMistralOcrModel(resolved)) return runMistralOcr(resolved, imageBuffer, prompt, opts);
   if (isMistralModel(resolved)) return runMistralChat(resolved, imageBuffer, prompt, opts);
+  if (isReplicateOcrModel(resolved)) return runReplicateDeepSeekOcr(resolved, imageBuffer, prompt, opts);
+  if (isMuleModel(resolved)) return runMuleRouter(resolved, imageBuffer, prompt, opts);
   return runGemini(resolved, imageBuffer, prompt, opts);
 }
 
