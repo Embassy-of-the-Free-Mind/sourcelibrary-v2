@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import {
   CANONICAL_ENTITIES_COLLECTION,
   canonicalEntitiesReadpathEnabled,
@@ -381,6 +382,11 @@ export default async function TimelinePage() {
   return (
     <>
       <SiteHeader variant="light" />
+      {/* This page is itself a tab in ExploreTabBar but never rendered it, so
+          landing here was a dead end — no route to Map, Constellation or Ngrams. */}
+      <div className="max-w-7xl mx-auto px-4 pt-4">
+        <ExploreTabBar />
+      </div>
       <TimelineLoader entities={data.entities} stats={data.stats} />
     </>
   );
