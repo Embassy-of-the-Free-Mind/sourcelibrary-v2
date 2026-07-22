@@ -18,6 +18,7 @@ import EarlyAccessGate from '@/components/book/EarlyAccessGate';
 import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
 import BookTimeline, { type TimelineEvent } from '@/components/book/BookTimeline';
+import PublicBookHistory from '@/components/book/PublicBookHistory';
 import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
@@ -59,7 +60,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
-import type { PriorTranslationCredit } from '@/lib/types/book';
+import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -986,14 +987,24 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: 'Published', detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
+    // A verified `prior_translation` credit carries the richest info; otherwise
+    // fall back to the best piece of translation-verification evidence so the
+    // entry still gets a year + translator when we have them.
+    const yearTs = (y?: string | number | null) => {
+      const s = String(y ?? '').trim();
+      const m = s.match(/(\d{3,4})/);
+      return m ? Date.UTC(Number(m[1]), 0, 1) : -0.5;
+    };
     const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
-    const timelineExistingTranslation = !timelinePrior
-      && (book as unknown as { translation_verification?: { disposition?: string } }).translation_verification?.disposition === 'translation_found';
+    const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
+    const timelineExistingEvidence = !timelinePrior && timelineVerification?.disposition === 'translation_found'
+      ? (timelineVerification.validated_translations?.[0] || timelineVerification.translations_found?.[0] || timelineVerification.translations?.[0])
+      : undefined;
     if (timelinePrior) {
       rawTimeline.push({
-        ts: timelinePrior.year ? Date.UTC(Number(timelinePrior.year), 0, 1) : -0.5,
+        ts: yearTs(timelinePrior.year),
         key: 'prior-translation',
         dateText: timelinePrior.year ? String(timelinePrior.year) : 'Earlier',
         label: 'Earlier English translation',
@@ -1006,8 +1017,26 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </>
         ),
       });
-    } else if (timelineExistingTranslation) {
-      rawTimeline.push({ ts: -0.5, key: 'existing-translation', dateText: 'Earlier', label: 'An earlier English translation exists' });
+    } else if (timelineExistingEvidence) {
+      const ev = timelineExistingEvidence;
+      const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
+      const summary = ev.english_title
+        ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+        : (bits || 'An earlier English translation of this work has been published.');
+      rawTimeline.push({
+        ts: yearTs(ev.pub_year),
+        key: 'existing-translation',
+        dateText: ev.pub_year ? String(ev.pub_year) : 'Earlier',
+        label: 'Earlier English translation',
+        detail: (
+          <>
+            {summary}
+            {ev.url && embedPolicy.showExternalLinks && (
+              <>{' '}<a href={ev.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>View →</a></>
+            )}
+          </>
+        ),
+      });
     }
     // English editions / translations published on Source Library.
     const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
@@ -1034,25 +1063,48 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         ) : undefined,
       });
     });
-    // Joined Source Library. The full processing log + editions tooling live
-    // nested here (staff only) — this is what the "Editions & translations"
-    // block used to hold.
+    // Digitized by the source library (Internet Archive, a partner, …) — its own
+    // entry with the original scan/publication date when we captured it. This
+    // predates our own "Added to Source Library" moment.
+    const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+    const catalogMeta = (book as unknown as { catalog_metadata?: { scan_date?: string; public_date?: string } }).catalog_metadata;
+    const digitizedRaw = catalogMeta?.scan_date || catalogMeta?.public_date;
+    let hasDigitizedEntry = false;
+    if (digitizedRaw) {
+      const dd = new Date(digitizedRaw);
+      const my = isNaN(dd.getTime()) ? '' : fmtMonthYear(dd);
+      if (my) {
+        hasDigitizedEntry = true;
+        rawTimeline.push({
+          ts: +dd,
+          key: 'digitized',
+          dateText: my,
+          label: digitizer ? `Digitized by ${digitizer}` : 'Digitized',
+        });
+      }
+    }
+    // Joined Source Library. The trimmed public processing log sits here for
+    // everyone; the full cost/model-bearing log + editions tooling stay nested
+    // and staff-only.
     if (book.created_at) {
       const my = fmtMonthYear(book.created_at);
-      const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
       if (my) rawTimeline.push({
         ts: +new Date(book.created_at),
         key: 'added',
         dateText: my,
         label: 'Added to Source Library',
-        detail: digitizer ? `Digitized by ${digitizer}` : undefined,
+        // Only repeat the digitizer here if it didn't get its own dated entry.
+        detail: !hasDigitizedEntry && digitizer ? `Digitized by ${digitizer}` : undefined,
         extra: (
-          <AuthCheck role="inner_circle">
-            <div className="space-y-3">
-              {!!book.editions?.length && <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />}
-              <BookHistory bookId={book.id} />
-            </div>
-          </AuthCheck>
+          <div className="space-y-3">
+            <PublicBookHistory bookId={book.id} />
+            <AuthCheck role="inner_circle">
+              <div className="space-y-3">
+                {!!book.editions?.length && <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />}
+                <BookHistory bookId={book.id} />
+              </div>
+            </AuthCheck>
+          </div>
         ),
       });
     }
