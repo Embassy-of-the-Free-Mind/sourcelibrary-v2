@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 18; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 19; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -100,7 +100,10 @@ const UNSAFE_IMG = /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i;
  *  then the archived/display source — the route resizes it). Skips relative
  *  proxy URLs and non-decodable formats. */
 function absPageUrl(p: PageImageFields): string | null {
-  const cands = [p.image_thumb, p.archived_photo, p.display_photo, p.cropped_photo, p.enhanced_photo, p.photo_original, p.photo];
+  // Prefer a LARGER source (display/archived) over the ~150px `image_thumb`:
+  // a 150px thumb resized up to the 168px tile is visibly soft. We downscale
+  // whatever we fetch to TILE_W, so a bigger source only makes crisper tiles.
+  const cands = [p.display_photo, p.archived_photo, p.cropped_photo, p.enhanced_photo, p.image_thumb, p.photo_original, p.photo];
   for (const u of cands) {
     if (typeof u !== 'string' || UNSAFE_IMG.test(u)) continue;
     if (RENDERABLE.test(u) || IIIF_ABS.test(u)) return u;
