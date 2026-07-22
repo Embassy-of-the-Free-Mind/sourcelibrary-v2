@@ -91,15 +91,15 @@ export default function HeroVariants({
       </div>
 
       {/* ===================== Content ===================== */}
-      {/* Mobile: a flex column that fills the panel — the text + cover sit at
-          the TOP (just under the gradient), top-aligned with each other, and
-          the actions are pinned to the BOTTOM. Desktop: a centred 2-col grid
-          (the inner row is `md:contents` so cover + meta become grid items),
-          and the actions live inline in `meta` instead. */}
+      {/* Mobile: a flex column — the text + cover sit at the TOP (just under the
+          gradient), top-aligned with each other, and the actions follow
+          directly beneath the taller of the two (no bottom gap). Desktop: a
+          centred 2-col grid (the inner row is `md:contents` so cover + meta
+          become grid items), and the actions live inline in `meta` instead. */}
       <div
         className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12
-          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[68vh] md:min-h-[560px]
-          flex flex-col justify-between gap-8
+          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[60vh] md:min-h-[560px]
+          flex flex-col gap-6
           md:grid md:gap-14 md:items-center md:grid-cols-[auto_minmax(0,1fr)]"
       >
         {/* Top row: cover (right, 1/3 on mobile) + meta (left), top-aligned. */}

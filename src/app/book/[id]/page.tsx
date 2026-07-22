@@ -1308,9 +1308,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {/* Chips — borderless / padless inline items */}
               {(() => {
                 const chip = "inline-flex items-center gap-1.5 text-[10.5px] md:text-[13.5px]";
-                // Icons are hidden on mobile — the chips read as small plain
-                // labels there — and only appear from md up.
-                const chipIcon = "hidden md:inline-block w-4 h-4 opacity-70";
+                const chipIcon = "inline-block w-3.5 h-3.5 md:w-4 md:h-4 opacity-70";
                 return (
                   <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3.5 md:mt-5 mb-1">
                     {book.language && (
@@ -1334,7 +1332,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   to the right of Translated (full history lives in Editions &
                   translations). */}
               {ocrPct > 0 && (
-                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[11px] md:text-[13.5px] font-medium">
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-2.5 text-[10.5px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} OCR
                   </span>
