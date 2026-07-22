@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 19; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 20; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -51,6 +51,7 @@ const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const AVIF_QUALITY = 38; // AVIF quality — the bg sits under a heavy dark scrim, so it compresses hard with no visible loss
 const MAX_MOSAIC_W = 1920; // cap the output width — the hero never needs more
 const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
+const FEW_PAGES = 60; // below this the mosaic tiles are large enough that thumbnails look soft
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
 
 /** Pick `n` items evenly spread across `arr` (keeps order). Sampling ACROSS the
@@ -99,11 +100,15 @@ const UNSAFE_IMG = /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i;
 /** Best absolute, server-fetchable, per-page image URL (pre-sized thumb first,
  *  then the archived/display source — the route resizes it). Skips relative
  *  proxy URLs and non-decodable formats. */
-function absPageUrl(p: PageImageFields): string | null {
-  // Prefer a LARGER source (display/archived) over the ~150px `image_thumb`:
-  // a 150px thumb resized up to the 168px tile is visibly soft. We downscale
-  // whatever we fetch to TILE_W, so a bigger source only makes crisper tiles.
-  const cands = [p.display_photo, p.archived_photo, p.cropped_photo, p.enhanced_photo, p.image_thumb, p.photo_original, p.photo];
+function absPageUrl(p: PageImageFields, preferLarge = false): string | null {
+  // Many-page books tile to ~50 tiny cells where the ~150px `image_thumb` is
+  // plenty (and cheapest to fetch). FEW-page books tile to a handful of LARGE
+  // cells, where a 150px thumb resized up to the 168px tile is visibly soft —
+  // so those prefer a bigger source (display/archived), which we downscale to
+  // TILE_W for a crisp tile.
+  const cands = preferLarge
+    ? [p.display_photo, p.archived_photo, p.cropped_photo, p.enhanced_photo, p.image_thumb, p.photo_original, p.photo]
+    : [p.image_thumb, p.display_photo, p.archived_photo, p.cropped_photo, p.enhanced_photo, p.photo_original, p.photo];
   for (const u of cands) {
     if (typeof u !== 'string' || UNSAFE_IMG.test(u)) continue;
     if (RENDERABLE.test(u) || IIIF_ABS.test(u)) return u;
@@ -190,8 +195,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Distinct absolute URLs across the WHOLE book, then sample evenly to the
     // fetch budget — so a broken contiguous cluster (e.g. a run of pages sharing
     // one thumbnail) can't dominate, and the hero samples the whole book.
+    // Few-page books tile to a handful of large cells → use bigger page images
+    // so they don't look upscaled. Many-page books use the fast thumbnails.
+    const preferLarge = pageDocs.length < FEW_PAGES;
     const allPageUrls = Array.from(new Set(
-      pageDocs.map(p => absPageUrl(p as PageImageFields)).filter((u): u is string => !!u),
+      pageDocs.map(p => absPageUrl(p as PageImageFields, preferLarge)).filter((u): u is string => !!u),
     ));
     const pageUrls = sampleEvenly(allPageUrls, CANDIDATE_LIMIT);
 
