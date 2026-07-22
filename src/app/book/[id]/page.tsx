@@ -795,11 +795,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return midOf(pool.length ? pool : interiorCandidates);
     })();
     const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
-    // Fixed page-scan grid behind the hero (same across all hero treatments).
+    // Single page scans used as the hero background fallback when the tiled
+    // mosaic can't be built. 'display' (not 'thumb') so a single page blown up
+    // full-bleed stays crisp.
     const heroPageThumbs = pages
       .filter(p => p.page_type !== 'blank')
       .slice(0, 40)
-      .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'thumb'))
+      .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'display'))
       .filter((u): u is string => !!u);
     const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
