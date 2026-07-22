@@ -158,6 +158,9 @@ export async function browseBooks(opts: {
   query = query.range(offset, offset + limit - 1);
 
   const { data, count, error } = await query;
+  if (opts.provider && (data || []).length === 0 && (count || 0) > 0) {
+    console.error(`[browseBooks:anomaly] provider=${opts.provider} sort=${opts.sort} offset=${offset} limit=${limit} countMode=${countMode} -> rows=0 count=${count} errCode=${error ? (error as { code?: string }).code : 'none'} errMsg=${error ? (error as { message?: string }).message : 'none'}`);
+  }
   if (error) {
     // PostgREST returns 416 "Requested range not satisfiable" (PGRST103) when the
     // requested offset is past the end of the result set — e.g. a bot or a stale
