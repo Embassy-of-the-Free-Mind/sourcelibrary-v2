@@ -36,7 +36,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
 
   const CoversStrip = ({ className = '' }: { className?: string }) => (
     <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible ${className}`}>
-      <div className="flex gap-3 md:grid md:grid-cols-6">
+      <div className="flex gap-3 md:grid md:grid-cols-3 md:gap-4">
         {covers.map((c) => (
           <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[84px] md:w-auto group">
             <div className="aspect-[3/4] overflow-hidden rounded border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
@@ -50,9 +50,9 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
   );
 
   return (
-    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ background: '#fdfcf9', borderColor: '#e6e0d3' }}>
+    <section id="library-source" className="py-14 border-t scroll-mt-4" style={{ borderColor: '#e6e0d3' }}>
       <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-9 md:gap-14 items-center">
+        <div className="grid md:grid-cols-[minmax(0,1.7fr)_minmax(0,3fr)] gap-9 md:gap-16 items-start">
           {/* Text side */}
           <div>
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>
