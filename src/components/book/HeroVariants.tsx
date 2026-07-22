@@ -33,30 +33,28 @@ export default function HeroVariants({
   // page scan covering the background.
   const onBgError = () => { if (single && bgSrc !== single) setBgSrc(single); };
 
+  const Bg = () =>
+    bgSrc ? (
+      /* eslint-disable-next-line @next/next/no-img-element */
+      <img src={bgSrc} alt="" onError={onBgError} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+    ) : null;
+
   return (
     <section className="relative w-full max-w-full overflow-x-clip" style={{ background: '#14100c' }}>
-      {/* An off-screen probe that loads the mosaic and, if it 404s (too few
-          pages to tile), falls the background back to a single page scan. Both
-          backgrounds below read `bgSrc`. */}
-      {bgSrc && (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={bgSrc} alt="" aria-hidden onError={onBgError} style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }} />
-      )}
       {/* ===================== Background ===================== */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Desktop: full-bleed bg + dark scrim + left scrim + reddish glow. */}
         <div className="hidden md:block absolute inset-0">
-          {bgSrc && <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgSrc})` }} />}
+          <Bg />
           <div className="absolute inset-0" style={{ background: 'rgba(16,12,8,0.72)' }} />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.5) 0%, rgba(14,10,7,0.12) 60%, transparent 100%)' }} />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
         </div>
         {/* Mobile: a clean band of the bg up top, then a strong gradient that
             reaches solid dark before the content starts, so the author eyebrow
-            sits on the dark with full contrast. The bg is zoomed in (~5 tiles
-            wide) so the page scans read crisp instead of a mush of tiny tiles. */}
+            sits on the dark with full contrast. */}
         <div className="md:hidden absolute inset-x-0 top-0 h-[42vh] overflow-hidden">
-          {bgSrc && <div className="absolute inset-0 bg-no-repeat" style={{ backgroundImage: `url(${bgSrc})`, backgroundSize: '215% auto', backgroundPosition: 'center 22%' }} />}
+          <Bg />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,16,12,0) 8%, rgba(20,16,12,0.4) 34%, rgba(20,16,12,0.9) 56%, #14100c 70%)' }} />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 70% at 74% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
         </div>

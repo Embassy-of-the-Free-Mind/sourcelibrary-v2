@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 16; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 17; // bump to force-regenerate cached mosaics
 const MAX_TILES = 60;
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
@@ -45,10 +45,11 @@ function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: 
   return { cols, rows, used: cols * rows };
 }
 
-const TILE_W = 300; // fixed column width; height follows the page's true aspect
-const MAX_TILE_H = 600; // clamp very tall strips so one tile can't dominate a column
+const TILE_W = 168; // fixed column width; height follows the page's true aspect
+const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a column
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
-const JPEG_QUALITY = 62;
+const AVIF_QUALITY = 50; // AVIF quality for the composited bg
+const MAX_MOSAIC_W = 1920; // cap the output width — the hero never needs more
 const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
 
@@ -270,13 +271,17 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Every book with renderable page scans gets a grid (no dark-hero opt-out) —
     // even dark manuscripts and palm-leaf strips. The hero tint + text shadow
     // keep the overlaid text legible regardless of how dark the grid is.
+    // Composite the grid, cap the width (the hero bg never needs more than
+    // ~1920px), and encode as AVIF — a fraction of the JPEG bytes for the same
+    // look, so the hero background loads fast.
     const composed = await sharp({ create: { width, height, channels: 3, background: BG } })
       .composite(placements)
-      .jpeg({ quality: JPEG_QUALITY, progressive: true, mozjpeg: true })
+      .resize({ width: Math.min(width, MAX_MOSAIC_W), withoutEnlargement: true })
+      .avif({ quality: AVIF_QUALITY, effort: 4 })
       .toBuffer();
 
-    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.jpg`;
-    const uploaded = await storagePut(key, composed, { contentType: 'image/jpeg', allowOverwrite: true });
+    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.avif`;
+    const uploaded = await storagePut(key, composed, { contentType: 'image/avif', allowOverwrite: true });
 
     await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_at: new Date() } }).catch(() => {});
 
