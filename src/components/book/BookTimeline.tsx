@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import PlusToggle from './PlusToggle';
 
 export interface TimelineEvent {
@@ -6,8 +7,11 @@ export interface TimelineEvent {
   dateText: string;
   /** What happened. */
   label: string;
-  /** Optional supporting line (place, version, provider…). */
-  detail?: string;
+  /** Optional supporting line (place, version, provider, a DOI link…). */
+  detail?: ReactNode;
+  /** Optional nested content revealed under the entry (e.g. the full
+   *  processing log under "Added to Source Library"). */
+  extra?: ReactNode;
 }
 
 /**
@@ -37,6 +41,7 @@ export default function BookTimeline({ events }: { events: TimelineEvent[] }) {
               <div className="uppercase text-[11px] font-medium tracking-[0.08em]" style={{ color: '#a5503d' }}>{e.dateText}</div>
               <div className="text-[14.5px] md:text-[15px] font-medium mt-0.5 leading-snug" style={{ color: '#2b2620' }}>{e.label}</div>
               {e.detail && <div className="text-[13px] mt-0.5 leading-snug" style={{ color: '#7a7365' }}>{e.detail}</div>}
+              {e.extra && <div className="mt-3">{e.extra}</div>}
             </li>
           ))}
         </ol>

@@ -983,30 +983,78 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
       const detail = compDate ? undefined : ([book.place_published, book.publisher].filter(Boolean).join(' · ') || undefined);
-      rawTimeline.push({ ts: -1, key: 'published', dateText: histDate, label: 'Published', detail });
+      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: 'Published', detail });
+    }
+    // An earlier English translation published elsewhere (credit the scholar).
+    const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
+      ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
+      : null;
+    const timelineExistingTranslation = !timelinePrior
+      && (book as unknown as { translation_verification?: { disposition?: string } }).translation_verification?.disposition === 'translation_found';
+    if (timelinePrior) {
+      rawTimeline.push({
+        ts: timelinePrior.year ? Date.UTC(Number(timelinePrior.year), 0, 1) : -0.5,
+        key: 'prior-translation',
+        dateText: timelinePrior.year ? String(timelinePrior.year) : 'Earlier',
+        label: 'Earlier English translation',
+        detail: (
+          <>
+            {priorTranslationSentence(timelinePrior)}
+            {embedPolicy.showExternalLinks && (
+              <>{' '}<a href={timelinePrior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(timelinePrior)} →</a></>
+            )}
+          </>
+        ),
+      });
+    } else if (timelineExistingTranslation) {
+      rawTimeline.push({ ts: -0.5, key: 'existing-translation', dateText: 'Earlier', label: 'An earlier English translation exists' });
     }
     // English editions / translations published on Source Library.
-    ((book.editions as TranslationEdition[] | undefined) || [])
+    const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
       .filter((e) => e.status === 'published' && e.published_at)
-      .sort((a, b) => +new Date(a.published_at!) - +new Date(b.published_at!))
-      .forEach((e, i) => {
-        const my = fmtMonthYear(e.published_at!);
-        if (!my) return;
-        rawTimeline.push({
-          ts: +new Date(e.published_at!),
-          key: `edition-${i}`,
-          dateText: my,
-          label: i === 0
-            ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
-            : 'New edition published',
-          detail: e.version ? `Version ${e.version}` : undefined,
-        });
+      .sort((a, b) => +new Date(a.published_at!) - +new Date(b.published_at!));
+    publishedEditions.forEach((e, i) => {
+      const my = fmtMonthYear(e.published_at!);
+      if (!my) return;
+      const doiHref = e.doi ? (e.doi_url || `https://doi.org/${e.doi}`) : null;
+      rawTimeline.push({
+        ts: +new Date(e.published_at!),
+        key: `edition-${i}`,
+        dateText: my,
+        label: i === 0
+          ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
+          : 'New edition published',
+        detail: (e.version || doiHref) ? (
+          <>
+            {e.version ? `Version ${e.version}` : null}
+            {doiHref ? (
+              <>{e.version ? ' · ' : ''}<a href={doiHref} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>DOI ↗</a></>
+            ) : null}
+          </>
+        ) : undefined,
       });
-    // Joined Source Library.
+    });
+    // Joined Source Library. The full processing log + editions tooling live
+    // nested here (staff only) — this is what the "Editions & translations"
+    // block used to hold.
     if (book.created_at) {
       const my = fmtMonthYear(book.created_at);
       const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
-      if (my) rawTimeline.push({ ts: +new Date(book.created_at), key: 'added', dateText: my, label: 'Added to Source Library', detail: digitizer ? `Digitized by ${digitizer}` : undefined });
+      if (my) rawTimeline.push({
+        ts: +new Date(book.created_at),
+        key: 'added',
+        dateText: my,
+        label: 'Added to Source Library',
+        detail: digitizer ? `Digitized by ${digitizer}` : undefined,
+        extra: (
+          <AuthCheck role="inner_circle">
+            <div className="space-y-3">
+              {!!book.editions?.length && <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />}
+              <BookHistory bookId={book.id} />
+            </div>
+          </AuthCheck>
+        ),
+      });
     }
     const timelineEvents: TimelineEvent[] = rawTimeline
       .sort((a, b) => a.ts - b.ts)
@@ -1100,62 +1148,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           </div>
         </details>
 
-        {/* Editions & translations — our published editions and any EXISTING
-            English translation to credit. Shown only when there's real content:
-            not merely because a book is a first translation (that's in the hero)
-            or has some translated pages. Rendered light and expanded. */}
-        {(() => {
-          const hasEditions = !!book.editions?.length;
-          const prior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
-            ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
-            : null;
-          // A prior English translation exists (verdict not_first) — show it, but
-          // never for a first-translation verdict (that's already in the hero).
-          const disposition = (book as unknown as { translation_verification?: { disposition?: string } }).translation_verification?.disposition;
-          const existingTranslation = !prior && disposition === 'translation_found';
-          if (!hasEditions && !prior && !existingTranslation) return null;
-          return (
-            <details className="card group sl-collapse">
-              <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-                <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Editions &amp; translations</h3>
-                <PlusToggle />
-              </summary>
-              <div className="px-4 pb-4 md:px-6 md:pb-6">
-                {hasEditions && (
-                  <div>
-                    <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Published editions</div>
-                    <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />
-                  </div>
-                )}
-                {(prior || existingTranslation) && (
-                  <div className={hasEditions ? 'mt-5' : ''}>
-                    <div className="font-mono uppercase text-[11px] tracking-[0.14em] mb-2" style={{ color: '#a5503d' }}>Existing translation</div>
-                    <p className="text-[14.5px] leading-relaxed" style={{ color: '#2b2620' }}>
-                      {prior ? (
-                        <>
-                          {priorTranslationSentence(prior)}
-                          {embedPolicy.showExternalLinks && (
-                            <>{' '}<a href={prior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(prior)} →</a></>
-                          )}
-                        </>
-                      ) : (
-                        'An earlier English translation of this work has been published.'
-                      )}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </details>
-          );
-        })()}
-
-        {/* Book history — a public timeline of the book's meaningful dates. */}
+        {/* Book history — a single public timeline of the book's meaningful
+            dates. It now subsumes the old "Editions & translations" block
+            (editions + prior translations appear as timeline entries) and nests
+            the staff processing log + editions tooling under "Added to Source
+            Library". */}
         <BookTimeline events={timelineEvents} />
-
-        {/* Book history — staff-only processing log; its own self-contained collapsible. */}
-        <AuthCheck role="inner_circle">
-          <BookHistory bookId={book.id} />
-        </AuthCheck>
 
         {/* Search this book — styled like a dropdown card but always open; the
             card grows to show results (max-height + scroll) as you type. */}
