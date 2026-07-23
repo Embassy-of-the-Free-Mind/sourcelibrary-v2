@@ -7,7 +7,13 @@
  * doesn't exist yet.
  */
 
-import { supabase } from './supabase';
+import { supabase, supabaseAdmin } from './supabase';
+
+// The anon key cannot execute sync_health() — Postgres returns 42501
+// (permission denied for table gemini_usage), which silently forced the
+// fallback path (and its hardcoded 'warning') on every health check until
+// 2026-07-23. Server-side health checks must use the service-role client.
+const client = supabaseAdmin ?? supabase;
 
 interface SyncHealthResult {
   status: 'ok' | 'warning' | 'critical';
@@ -17,11 +23,14 @@ interface SyncHealthResult {
   lag_minutes?: Record<string, number | null>;
   checked_at?: string;
   error?: string;
+  note?: string;
 }
 
-export async function getSupabaseSyncHealth(): Promise<SyncHealthResult> {
+export async function getSupabaseSyncHealth(
+  opts: { pipelinePaused?: boolean } = {},
+): Promise<SyncHealthResult> {
   // Try the RPC function first (instant, uses pg_class)
-  const { data, error } = await supabase.rpc('sync_health');
+  const { data, error } = await client.rpc('sync_health');
 
   if (error) {
     // RPC doesn't exist yet — fall back to lightweight individual queries
@@ -57,7 +66,12 @@ export async function getSupabaseSyncHealth(): Promise<SyncHealthResult> {
   //     by design between hand-runs of sync-entities.mjs.
   // Both are still reported in `lag_minutes` for visibility but don't drive status.
   const liveLag = lag.gemini_usage ?? 0;
-  const status = liveLag > 360 ? 'critical'
+  // While the pipeline is deliberately paused, nothing writes gemini_usage —
+  // its lag measures the pause, not a sync outage. A paused system reporting
+  // stale gemini_usage is normal, not an incident.
+  const paused = opts.pipelinePaused === true;
+  const status = paused ? 'ok'
+    : liveLag > 360 ? 'critical'
     : liveLag > 60 ? 'warning'
     : 'ok';
 
@@ -68,6 +82,9 @@ export async function getSupabaseSyncHealth(): Promise<SyncHealthResult> {
     gemini_usage: result.gemini_usage,
     lag_minutes: lag,
     checked_at: result.checked_at,
+    ...(paused && liveLag > 60
+      ? { note: 'gemini_usage lag not escalated: pipeline is deliberately paused, so the source table is not being written' }
+      : {}),
   };
 }
 
@@ -77,7 +94,7 @@ async function getFallbackHealth(): Promise<SyncHealthResult> {
   const lag: Record<string, number | null> = {};
 
   // Entities — has an index on updated_at, should be fast
-  const { data: entityRow } = await supabase
+  const { data: entityRow } = await client
     .from('entities')
     .select('updated_at')
     .order('updated_at', { ascending: false })
@@ -92,7 +109,7 @@ async function getFallbackHealth(): Promise<SyncHealthResult> {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
-    const { data: pageRow } = await supabase
+    const { data: pageRow } = await client
       .from('pages')
       .select('updated_at')
       .order('updated_at', { ascending: false })
