@@ -335,6 +335,67 @@ its factors; it cannot say whether 87% agreement means 87% correct. The regressi
 queue derived from it is explicitly unverified (priors longer than a page can hold
 still rank at the top).
 
+### Calibration scorecard (2026-07-23/24, PRs #3336 + #3342) — agreement→accuracy, anchors → corpus
+
+Two sessions built this in parallel; the canonical implementation is
+`scripts/eval/calibration-scorecard.mjs` (PR #3336; offline, zero cost) →
+`results/calibration-scorecard-2026-07-23.{json,md}`. Per non-canonical anchor
+page: mean inter-model agreement paired with reference accuracy (both bounds);
+per-script OLS with bootstrap CIs over pages, n<5 scripts refused (never
+extrapolated); applied to the 109,953-pair revision corpus by stratum. The
+duplicate implementation (#3342, closed) differed by pairing at the cross-model
+PAIR level (2,023 pairs) and applying per-pair over `is_live` pairs only; its
+surviving contribution is the pair-level r addendum in result 18.
+
+17. **The scorecard answers the reader question, with flags carrying the real
+   information.** German ≈99.8% estimated accuracy, English ≈99.8% (cross-script
+   transfer), French ≈99.5%, Latin ≈97.0% (its per-script slope is not
+   significant, so Latin cells carry "trust magnitude, not cell ordering"),
+   16th-c Greek 94.8% estimated off median agreement of only 44.8% — flagged;
+   Tibetan and Chinese are UNCALIBRATED (space-less, zero non-canonical
+   anchors): 12.8% median agreement on 18th-c Tibetan is reported as a flag,
+   not laundered into an accuracy number. The zero-spaceless-anchor gap is a
+   finding — every Chinese anchor is a canonical classic, exactly the rows the
+   consensus-failure result disqualifies from fitting.
+18. **The r-split evidence for excluding canonical rows is MECHANISM, not this
+   dataset's correlations — say so plainly.** Page-level on the 44 pages, the
+   pooled split REVERSES the pilot (canon r=0.777 > noncanon 0.714): at n=12
+   canonical pages pooling six scripts, between-script separation inflates a
+   pooled r (Simpson-shaped artifact). Pair-level recomputation (2,023
+   cross-model pairs, #3342) lands in the pilot's direction — noncanon 0.688 vs
+   canon 0.516 — but decomposing it within script shows why neither number is
+   dispositive: each script's canonical cell is 1–2 pages, so per-script canon r
+   is computed on pairs from a single page (Greek: one Iliad page, r=0.709;
+   Armenian: one Zohrab page, r=0.493). Every level of the r comparison is
+   underpowered at 12 canonical pages. The exclusion decision rests on the
+   demonstrated recitation mechanism (results 9, 13–14), and the paper should
+   cite it that way rather than leaning on any r split.
+19. **Honesty rails on every estimate.** (a) Corpus pairs are mostly
+   within-Gemini-family transitions — self-agreement shares failure modes, so
+   calibrated numbers are conditional on the anchor fit transferring and lean
+   HIGH; anchor accuracy is additionally the free-skip upper bound. (b) The
+   curve's low end is soft: anchor disagreement is about NON-reference page
+   material (pairs below 0.3 agreement still average ~78% free-skip accuracy),
+   while corpus low-agreement pairs may be genuinely broken text — a failure
+   shape anchors never exhibit. Canon-heavy strata are flagged (recitation
+   inflates agreement without inflating accuracy). The scorecard is a calibrated
+   *estimate with flags*, not a measurement; the IA-OCR baseline supplies the
+   independent second reading it lacks.
+
+### IA-OCR corpus baseline — pilot (2026-07-23, PR #3341)
+
+`scripts/eval/ia-ocr-baseline.mjs` → `results/ia-ocr-baseline-pilot-2026-07-23.md`.
+200 sampled books with `ia_identifier`, IA's own non-generative OCR fetched and
+page-aligned by text probes: 115 books aligned, 2,276 page rows scored, zero AI
+cost. Chinese strata are EXPECTED-COLLAPSE controls (0–1 of 30 books aligned,
+per the Tesseract-typography lesson) and Greek/Hebrew 1500s mostly unalignable —
+those cells are unmeasurable, not model advantage. Where IA is competent
+(19th/20th-c roman type), ours-vs-IA disagreement is an upper bound on combined
+error from an independent reading with no memorization channel; 16th-c Latin
+agreement (27.2%) says the baseline collapses on ligatures, as predicted. The
+corpus-scale diff-in-diff (use (c) in the experiment entry) needs the full
+harvest, not this pilot.
+
 ## Related work — verified dossier (2026-07-19 sweep; every entry abstract-checked)
 
 ### Contamination / benchmark leakage
@@ -402,17 +463,22 @@ the reader question); (2) the IA-OCR corpus baseline (free, zero AI cost); (3) t
 degradation/occlusion membership pilot (~$2–5, validated against the pinned pages);
 (4) more pairs / the canonicity slope. Details below.
 
-- **Calibration scorecard — the reader-first deliverable (free).** Fit the
-  agreement→accuracy curve on NON-CANONICAL anchor rows only (pilot: r=0.75 noncanon
-  vs 0.49 canon — recitation fakes agreement), stratified by script and era; apply it
-  to the 109,953 revision pairs to produce a calibrated per-page accuracy *estimate*
-  corpus-wide at zero marginal model cost. Product form: a published per-script ×
-  per-century quality scorecard on /research ("our Latin print is ~99%, our Tibetan
-  is unreliable and flagged"), eventually a per-book/per-page confidence surface in
-  the reader. This is the paper's most useful contribution AND the answer to "how
-  good is Source Library's text" — it outranks new page-hunting.
+- ~~**Calibration scorecard — the reader-first deliverable (free).**~~ RUN
+  2026-07-23/24, twice in parallel (PR #3336 = canonical implementation, #3342
+  closed as duplicate; results 17–19 above). Fitted on non-canonical anchor
+  pages only, applied to the revision-pair corpus per stratum. Remaining from
+  the original plan: the **/research product page** (needs Derek's sign-off on
+  publishing the numbers), the per-book/per-page confidence surface in the
+  reader, and — the binding measurement gap — **non-canonical spaceless
+  anchors** (every Chinese anchor is a canonical classic, so no spaceless fit
+  exists and CJK/Tibetan cells get agreement flags only). Original notes: pilot
+  r=0.75 noncanon vs 0.49 canon — recitation fakes agreement; stratify by
+  script and era.
 
-- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** Most exportable
+- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** PILOT RUN
+  2026-07-23 (PR #3341; results section above): 200 books, 115 aligned, 2,276
+  page rows; full-corpus harvest + within-band diff-in-diff still open.
+  Original design: most exportable
   books carry an `ia_identifier`, and Internet Archive publishes its own OCR
   (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
   numbering mappable to ours. Three uses, in increasing strength: (a) a corpus-scale
