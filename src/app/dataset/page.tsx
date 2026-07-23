@@ -11,7 +11,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset — Source Library',
   description:
-    'Structured parallel-text training data from 10,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
+    'Structured parallel-text training data from 19,000+ historical texts in 200+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
@@ -33,7 +33,12 @@ async function fetchDatasetStats() {
   const db = await getReadDb();
 
   const books = db.collection('books');
-  const visible = { visible: true };
+  // Only texts with actual pages — the visible set also holds single-image
+  // artworks and unprocessed stubs, which aren't parallel-text training data.
+  const visible = { visible: true, pages_count: { $gt: 0 } };
+  // 'Visual' and 'No linguistic content' are language-field values for
+  // artwork/plate records, not languages of the text corpus.
+  const nonLanguages = ['Unknown', 'Visual', 'No linguistic content'];
   const maxTimeMS = 45000;
 
   const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([
@@ -53,7 +58,7 @@ async function fetchDatasetStats() {
       .toArray(),
     books
       .aggregate<{ _id: string; count: number; translated: number }>([
-        { $match: { ...visible, language: { $exists: true, $ne: 'Unknown' } } },
+        { $match: { ...visible, language: { $exists: true, $nin: nonLanguages } } },
         {
           $group: {
             _id: '$language',
@@ -231,9 +236,22 @@ export default async function DatasetPage() {
           ))}
         </div>
 
+        <p className="text-[#666] text-[15px] leading-[1.75] mt-6 max-w-2xl">
+          These subscriptions are the cooperative path to a training license:
+          non-exclusive, with attribution, delivered through the API rather than
+          crawling. Outside a subscription, our standing rate card applies —
+          at least $250 per book, or $200,000/year for full-corpus export with
+          quarterly refresh — and it is the basis on which unlicensed training
+          use is invoiced. See{' '}
+          <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
+            AI &amp; Data-Mining Licensing
+          </Link>{' '}
+          for the full policy.
+        </p>
+
         <div className="flex flex-wrap gap-4 mt-8">
           <a
-            href="mailto:data@sourcelibrary.org?subject=Dataset%20Access%20Request"
+            href="mailto:derek@sourcelibrary.org?subject=Dataset%20Access%20Request"
             className="px-6 py-3 bg-[#1a1a18] text-white rounded-full text-sm font-medium hover:bg-[#333] transition-colors"
           >
             Request access
@@ -265,6 +283,11 @@ export default async function DatasetPage() {
           Source texts are public domain. The curated compilation — OCR, translations,
           taxonomy, and metadata — is protected under the EU Database Directive (96/9/EC).
           Licenses are non-exclusive and cover training, fine-tuning, and evaluation.
+          Our full position — what&apos;s freely permitted, what&apos;s reserved, and the
+          standard training rate card — is at{' '}
+          <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
+            /licensing
+          </Link>.
         </p>
       </section>
 
@@ -277,8 +300,8 @@ export default async function DatasetPage() {
           <a href="/api/dataset/v1/stats" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
             Corpus stats (JSON)
           </a>
-          <a href="mailto:data@sourcelibrary.org" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
-            data@sourcelibrary.org
+          <a href="mailto:derek@sourcelibrary.org" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
+            derek@sourcelibrary.org
           </a>
         </div>
       </section>
