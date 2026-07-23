@@ -91,7 +91,9 @@ is the likely resolution.
 
 ## Dataset design (summary; datasheet in dataset README)
 
-- 40 pinned pages (12 canonical / 28 non-canonical; Armenian 8, Greek 12, Latin 5,
+- 44 pinned pages (12 canonical / 32 non-canonical; four within-work pairs added
+  2026-07-23 with `canonicity_grade` + `same_work_contrast` fields; Armenian 9,
+  Greek 13, Latin 7,
   Hebrew 4, German 5, Chinese 6), 4 scripts + CJK, print + manuscript
   + woodblock, visually audited `page_class` covariates, **measured image resolution
   (0.64–17.4 MP, 27× range)**.
@@ -105,7 +107,7 @@ is the likely resolution.
   proved recitation (a 1450 Mishnah MS; a Daxue Huowen page) — the incident that
   motivated the whole design.
 
-## Results (n=40 pages, 1,077 observations; rebuilt 2026-07-19 evening)
+## Results (n=44 pages, 980 reference-scored observations; rebuilt 2026-07-23 — results 1–8 quote the 2026-07-19 n=40 build)
 
 Reproduce with `report-canonical-gap.mjs` (main battery) and `report-arms.mjs`
 (resolution + prompt arms) over `observations/ocr-observations-2026-07-19.jsonl`.
@@ -167,6 +169,54 @@ Reproduce with `report-canonical-gap.mjs` (main battery) and `report-arms.mjs`
    on canonical Greek, while reaching 99.6% on non-canonical Greek. A specialist
    OCR system with no recitation channel is the natural control group for the
    subsidy argument, and its pooled gap is the most negative in the set (−1.95pp).
+
+### Within-work canonicity pairs (2026-07-23; PR #3320 rows, sweep in ocr-observations-2026-07-23.jsonl)
+
+Four pairs pin a hyper-canonical and a low-canonicity passage of the SAME work in the
+SAME held scan (edition, typeface, scan quality held constant by construction; rows
+carry `canonicity_grade` + `same_work_contrast`): Vulgate Genesis 1 ↔ Genesis 5
+begat-list (1566 Louvain), Aeneid I ↔ X.362-382 (1580 Meyen), Iliad I ↔ XIII.493-517
+(1555 MS Rouse 358), Zohrab John 1 ↔ 1 Chronicles 1 (1805). Sweep: pro, flash, lite,
+sonnet5, mistral-ocr ×2-3 + pipeline, ~$1.2 total. Per-pair aligned-mean accuracy
+(raw in parentheses where alignment failed):
+
+9. **The manuscript pair is the headline: the within-work gradient is real and large
+   where everything is held constant.** Same 1555 scribe, same page style, light
+   density both sides. Canonical Iliad I: pro/flash/lite all read **100.0%**, sonnet5
+   99.4% — perfect scores on 16th-c. Greek cursive, which the anti-recitation
+   protocol itself says to treat as recitation flags. Mid-poem Iliad XIII: pro 90.7%
+   (−9.3pp), lite 94.4% (−5.6), flash 97.2% (−2.8), sonnet5@w2000 94.8% (−4.6, width
+   caveat below), pipeline 99.1% (−0.9). On manuscript Greek the subsidy is 3–9pp
+   with page difficulty removed by construction.
+10. **On clean print the within-work gradient is small (0–2pp) — and the interesting
+   failure is behavioral, not character-level.** Vulgate pair (readers only): sonnet5
+   −1.1pp, lite −2.0pp, mistral-ocr −0.3pp, pipeline flat at 100/100. But pro and
+   flash *fail alignment* on the begat-list while reading Genesis 1 fine (flash raw
+   98.7% canon vs 46.4% noncanon; pro raw 93.9 vs 54.2): the repetitive genealogy
+   induces the truncation/scramble failure mode in exactly the models prone to it.
+   Aeneid pair: flat for every model (pro +0.3, sonnet5 +0.1, flash 0.0, lite −0.3,
+   mistral +0.5, pipeline −1.0) — consistent with commentary layout dominating and
+   with Aeneid X being only medium-low canonicity (it is still the Aeneid), and
+   measured against a cross-edition reference that undercounts the noncanon side
+   (~8 documented 1580-vs-modern divergences).
+11. **The Zohrab pair is a design lesson, not a subsidy estimate: within-work does
+   not mean within-difficulty.** The direction *inverts* — canonical John 1 scores
+   WORSE than the Chronicles genealogy for every engine (lite 92.9 vs 95.7; pro
+   1/3 aligned vs 2/3; flash raw 15.9 vs 97.5) — because 480 pages apart the NT
+   page is typographically harder. In a large composite volume, pair pages from the
+   same quire, not just the same work. Kept as a documented negative control.
+12. **Input caps are a failure mode of their own.** claude-sonnet-5 returned API
+   400s on the native-resolution Iliad XIII scan (5.8MB archived image > Anthropic's
+   5MB cap) — it cannot see the page at all at native res; its cell ran at
+   `@w2000` (2.1MB), which is also closer to the canonical page's 1.66MP. Echoes
+   result 6: above minimal legibility, model *behavior* (output budgets, input
+   caps), not optics, is the binding constraint. mistral-ocr failed alignment on
+   BOTH sides of the manuscript pair (raw 79.2 canon / 44.0 noncanon) — the
+   categorical-failure pattern of result 8 extends to manuscripts.
+
+Design note: pooled across the four pairs these effects would largely cancel
+(9.3pp manuscript gap, ~1pp print gaps, one inverted pair) — the within-work
+gradient must be reported per-pair, which is the point of pinning pairs.
 
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
@@ -289,7 +339,15 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   lite→current transitions) — plus split-page parents, duplicate holdings, and
   re-archive before/after pairs. Every page also carries `ocr.prompt_version` /
   `prompt_name`, so prompt provenance is a corpus-wide covariate for free.
-- **Within-work canonicity gradient** (Derek, 2026-07-19) — the design upgrade the
+- ~~**Within-work canonicity gradient**~~ — FIRST TRANCHE RUN 2026-07-23 (results
+  9–12): four pairs pinned (PR #3320), graded `canonicity_grade` + `same_work_contrast`
+  fields added, swept for ~$1.2. The manuscript pair delivers the clean 3–9pp gradient;
+  print pairs are 0–2pp; one pair inverts on page difficulty (design lesson: same
+  quire, not just same work). Remaining from the original design: more pairs
+  (especially manuscript + CJK — ctext works are hardcoded in
+  `build-ctext-groundtruth.mjs`, needs its own plumbing), and converting the two-cell
+  contrast into a graded per-passage canonicity *slope*. Original rationale (Derek,
+  2026-07-19) — the design upgrade the
   same-book contrasts approximate but do not achieve. Aeneid vs *Vita Vergilii* share
   a *binding*; they are still two texts, two genres, two typographic settings. The
   clean contrast is within ONE work and ONE scan: *Iliad* I (hyper-canonical, quoted
@@ -331,7 +389,8 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Limitations to state plainly
 
-- n=40 pages, unbalanced cells (12 canonical / 28 non-canonical, and only two books
+- n=44 pages, unbalanced cells (12 canonical / 32 non-canonical; four books now
+  carry within-work pairs, but each pair is still one page per side, and only two books
   hold both classes); interaction estimates are hypotheses, and the pooled
   canonical-vs-non-canonical statistic is confounded by page mix in both directions.
 - The resolution and prompt arms ran on flash + lite only, 2–3 runs per cell; their
