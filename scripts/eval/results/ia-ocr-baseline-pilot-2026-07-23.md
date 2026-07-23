@@ -22,41 +22,32 @@ ligatures and on CJK per the 2026-07-20 Tesseract-typography finding), the resul
 low agreement or high unalignable rate is **UNMEASURABLE, not evidence our OCR is
 better**. Those strata are called out explicitly below.
 
-## ⚠ This run was stopped early — 10 of 13 strata have ZERO data, not "collapse" data
-
-The fetch stage was interrupted for time before it reached most strata (sampling
-proceeds stratum-by-stratum in `STRATA` order: Latin → English → German → French →
-Greek → Hebrew → Chinese). Of 200 sampled books, only the first 41 were attempted —
-all in Latin (1500s, 1800s) and the start of English (1600s) — before the run was
-stopped. **English 1900s, both German strata, both French strata, both Greek strata,
-Hebrew, and both Chinese strata have exactly zero books attempted.** Their rows below
-read "skipped / not_fetched (15)" for a mundane reason (ran out of wall-clock), NOT
-because IA's OCR collapsed on them. In particular: **the Chinese (CJK) stratum —
-this design's expected-collapse control — was never actually fetched in this run, so
-the "expected collapse" claim below is the pre-registered PREDICTION from the
-2026-07-20 Tesseract-typography finding, not something this run confirmed.** Treat
-every stratum with 0 aligned + 0 unalignable + all-skipped as UNSTARTED, distinct
-from a genuine collapse (fetched, but the baseline had nothing readable to compare).
-
 ## Book counts
 
 - sampled: **200**
-- aligned (probes matched, scored): **35**
-- unalignable (fetched OK, page-align failed): **2**
-- skipped (never fetched — no djvu.txt, HTTP error, etc.): **163**
-- page rows scored: **696**
+- aligned (probes matched, scored): **115**
+- unalignable (fetched OK, page-align failed): **61**
+- skipped (never fetched — no djvu.txt, HTTP error, etc.): **24**
+- page rows scored: **2276**
 
 ### Top skip/unalignable reasons
 
 | reason | books |
 |---|---:|
-| not_fetched | 159 |
+| only_0_of_5_probes_matched | 44 |
+| no_djvu_xml (404) | 14 |
+| only_2_of_5_probes_matched | 10 |
+| only_1_of_5_probes_matched | 4 |
+| timeout_after_120000ms_twice | 3 |
+| djvu_xml_too_large_48MB | 2 |
 | djvu_xml_too_large_69MB | 1 |
-| only_2_of_5_probes_matched | 1 |
-| timeout_after_120000ms_twice | 1 |
-| no_djvu_xml (404) | 1 |
 | djvu_xml_too_large_62MB | 1 |
-| only_0_of_5_probes_matched | 1 |
+| djvu_xml_too_large_56MB | 1 |
+| inconsistent_offsets_across_probes | 1 |
+| djvu_xml_too_large_71MB | 1 |
+| djvu_xml_too_large_84MB | 1 |
+| insufficient_probe_text | 1 |
+| only_0_of_4_probes_matched | 1 |
 
 ### Per-stratum book outcomes
 
@@ -64,72 +55,39 @@ from a genuine collapse (fetched, but the baseline had nothing readable to compa
 |---|---:|---:|---:|---|
 | Latin 1500s (early print, ligatures) | 18 | 1 | 1 | djvu_xml_too_large_69MB (1) |
 | Latin 1800s (roman type) | 14 | 0 | 1 | timeout_after_120000ms_twice (1) |
-| English 1600s (early modern) — **partially run, cut off mid-stratum** | 3 | 1 | 11 | not_fetched (9) |
-| English 1900s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| German 1600s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| German 1900s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| French 1600s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| French 1800s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| Greek 1500s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| Greek 1800s — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| Hebrew (pooled) — **UNSTARTED (0 books attempted)** | 0 | 0 | 15 | not_fetched (15) |
-| Chinese 1600s (expected-collapse control) — **UNSTARTED, not confirmed this run** | 0 | 0 | 15 | not_fetched (15) |
-| Chinese 1800s (expected-collapse control) — **UNSTARTED, not confirmed this run** | 0 | 0 | 15 | not_fetched (15) |
+| English 1600s (early modern) | 10 | 1 | 4 | no_djvu_xml (404) (2) |
+| English 1900s (modern roman) | 12 | 1 | 2 | no_djvu_xml (404) (2) |
+| German 1600s (Fraktur likely) | 9 | 5 | 1 | only_2_of_5_probes_matched (2) |
+| German 1900s (Fraktur/roman mix) | 11 | 1 | 3 | no_djvu_xml (404) (3) |
+| French 1600s | 14 | 1 | 0 | inconsistent_offsets_across_probes (1) |
+| French 1800s | 12 | 1 | 2 | no_djvu_xml (404) (2) |
+| Greek 1500s (polytonic print) | 2 | 11 | 2 | only_0_of_5_probes_matched (8) |
+| Greek 1800s | 10 | 2 | 3 | djvu_xml_too_large_48MB (2) |
+| Hebrew (all centuries, pooled — sparse corpus) | 2 | 8 | 5 | only_0_of_5_probes_matched (5) |
+| Chinese 1600s — EXPECTED-COLLAPSE control **[EXPECTED-COLLAPSE CONTROL]** | 0 | 15 | 0 | only_0_of_5_probes_matched (15) |
+| Chinese 1800s — EXPECTED-COLLAPSE control **[EXPECTED-COLLAPSE CONTROL]** | 1 | 14 | 0 | only_0_of_5_probes_matched (12) |
 
 ## Script × century agreement (ours vs IA)
 
 Only pages with **no screens tripped** on either side (not image-only, not
 degenerate/repetition-looping, not entity-padded) enter this table — see the JSONL
-for the full row-level detail including screened-out pages. Covers only the three
-strata that got any data (see caveat above) — this is NOT the full script × century
-matrix the brief called for.
+for the full row-level detail including screened-out pages.
 
 | script class | language | century | n pages | mean agreement |
 |---|---|---:|---:|---:|
 | spaced | Latin | 1500s | 348 | 27.2% |
-| spaced | English | 1600s | 57 | 64.9% |
+| spaced | Greek | 1500s | 39 | 39.6% |
+| spaced | Hebrew | 1500s | 18 | 38.3% |
+| spaced | English | 1600s | 195 | 56.6% |
+| spaced | German | 1600s | 169 | 47.7% |
+| spaced | French | 1600s | 272 | 59.0% |
 | spaced | Latin | 1800s | 268 | 60.6% |
-
-Reading these three honestly: Latin 1500s (early print, ligatures) at 27.2% is
-consistent with the Tesseract-typography lesson — ligatures and long-s hurt a
-non-generative baseline. Latin 1800s at 60.6% (clean roman type, where the lesson
-predicts IA should be strong) is lower than expected; row-level inspection during
-validation found at least one contributing book is a bilingual Greek/Latin critical
-edition (Hultsch's Hero of Alexandria) where individual pages are tagged
-`<language>Ancient Greek</language>` at the page level despite the book's `language`
-field reading "Latin" — IA's OCR reads the embedded polytonic Greek badly, dragging
-down a stratum whose book-level label doesn't reflect its actual per-page script
-mix. This is a genuine, useful finding (book-level language ≠ page-level script in
-bilingual critical editions) but means the 60.6% figure is a mix of two typographic
-regimes, not a clean roman-type number — the full run should screen for this by
-checking `pages.ocr.language`, not just `books.language`, when assembling the
-Latin/Greek strata.
-
-## Row-count verification (dedup check)
-
-696 JSONL rows = 35 aligned books × up to 20 pages each (some books contributed
-fewer than 20 because not every predicted page fell inside IA's page range or had
-≥80 chars of our own OCR text). Verified by deduping on `(book_id, page_id)`:
-**696 rows, 696 unique keys, 0 duplicates** — no re-append bug, no double-write.
-
-## Full-corpus run estimate (from THIS run's real throughput)
-
-The fetch stage attempted 41 books in ~16 minutes of wall-clock before being
-stopped (≈23s/book average, dominated by download time — see below, not the 2s
-politeness delay). Extrapolating:
-- **Finishing this 200-book pilot:** ~159 books remaining × ~23s ≈ **60–65 more
-  minutes** of fetch time, then a few seconds of scoring.
-- **A corpus-scale run** (all ~22,936 `bookstore.books` docs with `ia_identifier`
-  set and `pages_ocr > 0`, per the Mongo count taken at sample time): 22,936 × 23s
-  ≈ 527,000s ≈ **~6 days of continuous single-threaded polite fetching**. This is
-  fetch-bound, not compute-bound — scoring is local and fast (696 pages scored in
-  well under a second). Real accelerants for a corpus-scale run: (a) modest fetch
-  concurrency (a handful of parallel connections — still well within "polite" for
-  a public archive, just not literally one-at-a-time), (b) dropping the per-item
-  size cap lower to skip more outliers faster, (c) accepting a stratified SAMPLE
-  (a few hundred books/stratum) rather than the full corpus, which is almost
-  certainly the right call for the calibration use case this experiment serves.
-- **Cost: $0** either way — no model calls, only Mongo reads and archive.org GETs.
+| spaced | French | 1800s | 209 | 80.5% |
+| spaced | Greek | 1800s | 191 | 63.3% |
+| spaced | Hebrew | 1800s | 18 | 51.9% |
+| spaced | Chinese | 1800s | 14 | 73.3% ⚠ UNMEASURABLE (expected baseline collapse) |
+| spaced | English | 1900s | 222 | 87.4% |
+| spaced | German | 1900s | 208 | 55.3% |
 
 ## What the full run needs
 
@@ -137,10 +95,6 @@ politeness delay). Extrapolating:
   random books per stratum; to grow the corpus, raise each stratum's `n` in
   `STRATA` (or add new language/century strata) and diff `book_id` against the
   existing `ia-ocr-baseline-sample-spec-2026-07-23.json` so already-fetched books aren't re-downloaded.
-- **Resume this exact run first** — 10 of 13 strata are UNSTARTED (see caveat
-  above), not collapsed. Re-running `--stage=fetch` against the existing sample
-  spec picks up exactly where the manifest left off (already-cached books are
-  skipped) and would reach German/French/Greek/Hebrew/Chinese with no new sampling.
 - **Download time dominates wall-clock more than the 2s politeness delay.**
   `_djvu.xml` (word-boxed, page-indexed — see script header) runs 1-40MB per book
   in this sample, some derivatives well over that for multi-volume works; a 200-book

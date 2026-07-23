@@ -456,10 +456,26 @@ async function stageScore() {
   const spec = JSON.parse(fs.readFileSync(SAMPLE_SPEC, 'utf8'));
   const manifest = fs.existsSync(FETCH_MANIFEST) ? JSON.parse(fs.readFileSync(FETCH_MANIFEST, 'utf8')) : {};
 
-  const client = new MongoClient(process.env.MONGODB_URI);
+  let client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
-  const db = client.db(process.env.MONGODB_DB || 'bookstore');
-  const pagesCol = db.collection('pages');
+  let pagesCol = client.db(process.env.MONGODB_DB || 'bookstore').collection('pages');
+  // Atlas drops long-idle connections during the compute-heavy per-book scoring
+  // (ECONNRESET killed two full runs) — retry each book's read on a fresh client.
+  const findPagesWithRetry = async (query, options) => {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await pagesCol.find(query, options).sort({ page_number: 1 }).toArray();
+      } catch (e) {
+        if (attempt >= 3) throw e;
+        console.log(`  ! mongo read failed (${e.code || e.message.slice(0, 40)}), reconnecting (attempt ${attempt})`);
+        try { await client.close(); } catch { /* ignore */ }
+        await new Promise(r => setTimeout(r, 2000 * attempt));
+        client = new MongoClient(process.env.MONGODB_URI);
+        await client.connect();
+        pagesCol = client.db(process.env.MONGODB_DB || 'bookstore').collection('pages');
+      }
+    }
+  };
 
   const out = fs.createWriteStream(JSONL_OUT, { flags: 'w' });
   const bookOutcomes = []; // per-book: stratum, aligned/unalignable/skipped + reason
@@ -480,10 +496,10 @@ async function stageScore() {
     const iaRaw = fs.readFileSync(cacheFile, 'utf8');
     const iaPages = parseDjvuXmlPages(iaRaw);
 
-    const ourPagesDocs = await pagesCol.find(
+    const ourPagesDocs = await findPagesWithRetry(
       { book_id: b.book_id, 'ocr.data': { $type: 'string', $ne: '' } },
       { projection: { id: 1, page_number: 1, 'ocr.data': 1 } },
-    ).sort({ page_number: 1 }).toArray();
+    );
     const ourPages = ourPagesDocs
       .map(p => ({ id: p.id, page_number: p.page_number, text: p.ocr.data }))
       .filter(p => stripEditorialWrappers(p.text).replace(/\s+/g, ' ').trim().length >= 80);

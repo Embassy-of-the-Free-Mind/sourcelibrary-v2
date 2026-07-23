@@ -2,10 +2,10 @@
  "summary": {
   "date": "2026-07-23",
   "books_total": 200,
-  "books_aligned": 35,
-  "books_unalignable": 2,
-  "books_skipped": 163,
-  "page_rows": 696,
+  "books_aligned": 115,
+  "books_unalignable": 61,
+  "books_skipped": 24,
+  "page_rows": 2276,
   "by_stratum": {
    "Latin 1500s (early print, ligatures)": {
     "aligned": 18,
@@ -25,94 +25,114 @@
     }
    },
    "English 1600s (early modern)": {
-    "aligned": 3,
+    "aligned": 10,
     "unalignable": 1,
-    "skipped": 11,
+    "skipped": 4,
     "reasons": {
-     "no_djvu_xml (404)": 1,
+     "no_djvu_xml (404)": 2,
      "djvu_xml_too_large_62MB": 1,
      "only_0_of_5_probes_matched": 1,
-     "not_fetched": 9
+     "djvu_xml_too_large_56MB": 1
     }
    },
    "English 1900s (modern roman)": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 12,
+    "unalignable": 1,
+    "skipped": 2,
     "reasons": {
-     "not_fetched": 15
+     "no_djvu_xml (404)": 2,
+     "only_2_of_5_probes_matched": 1
     }
    },
    "German 1600s (Fraktur likely)": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 9,
+    "unalignable": 5,
+    "skipped": 1,
     "reasons": {
-     "not_fetched": 15
+     "only_2_of_5_probes_matched": 2,
+     "only_0_of_5_probes_matched": 2,
+     "no_djvu_xml (404)": 1,
+     "only_1_of_5_probes_matched": 1
     }
    },
    "German 1900s (Fraktur/roman mix)": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 11,
+    "unalignable": 1,
+    "skipped": 3,
     "reasons": {
-     "not_fetched": 15
+     "no_djvu_xml (404)": 3,
+     "only_2_of_5_probes_matched": 1
     }
    },
    "French 1600s": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 14,
+    "unalignable": 1,
+    "skipped": 0,
     "reasons": {
-     "not_fetched": 15
+     "inconsistent_offsets_across_probes": 1
     }
    },
    "French 1800s": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 12,
+    "unalignable": 1,
+    "skipped": 2,
     "reasons": {
-     "not_fetched": 15
+     "only_2_of_5_probes_matched": 1,
+     "no_djvu_xml (404)": 2
     }
    },
    "Greek 1500s (polytonic print)": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 2,
+    "unalignable": 11,
+    "skipped": 2,
     "reasons": {
-     "not_fetched": 15
+     "only_0_of_5_probes_matched": 8,
+     "timeout_after_120000ms_twice": 1,
+     "only_1_of_5_probes_matched": 2,
+     "only_2_of_5_probes_matched": 1,
+     "no_djvu_xml (404)": 1
     }
    },
    "Greek 1800s": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 10,
+    "unalignable": 2,
+    "skipped": 3,
     "reasons": {
-     "not_fetched": 15
+     "djvu_xml_too_large_71MB": 1,
+     "djvu_xml_too_large_48MB": 2,
+     "only_0_of_5_probes_matched": 1,
+     "only_2_of_5_probes_matched": 1
     }
    },
    "Hebrew (all centuries, pooled — sparse corpus)": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 2,
+    "unalignable": 8,
+    "skipped": 5,
     "reasons": {
-     "not_fetched": 15
+     "timeout_after_120000ms_twice": 1,
+     "only_2_of_5_probes_matched": 2,
+     "djvu_xml_too_large_84MB": 1,
+     "only_0_of_5_probes_matched": 5,
+     "no_djvu_xml (404)": 3,
+     "only_1_of_5_probes_matched": 1
     }
    },
    "Chinese 1600s — EXPECTED-COLLAPSE control": {
     "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "unalignable": 15,
+    "skipped": 0,
     "reasons": {
-     "not_fetched": 15
+     "only_0_of_5_probes_matched": 15
     }
    },
    "Chinese 1800s — EXPECTED-COLLAPSE control": {
-    "aligned": 0,
-    "unalignable": 0,
-    "skipped": 15,
+    "aligned": 1,
+    "unalignable": 14,
+    "skipped": 0,
     "reasons": {
-     "not_fetched": 15
+     "only_0_of_5_probes_matched": 12,
+     "insufficient_probe_text": 1,
+     "only_0_of_4_probes_matched": 1
     }
    }
   },
@@ -126,12 +146,44 @@
     "mean_agreement": 0.27217308155666825
    },
    {
-    "n": 57,
-    "sum": 37.008598164157924,
+    "n": 39,
+    "sum": 15.454145973383811,
+    "script": "spaced",
+    "language": "Greek",
+    "century": 1500,
+    "mean_agreement": 0.39626015316368746
+   },
+   {
+    "n": 18,
+    "sum": 6.887085308958374,
+    "script": "spaced",
+    "language": "Hebrew",
+    "century": 1500,
+    "mean_agreement": 0.3826158504976875
+   },
+   {
+    "n": 195,
+    "sum": 110.4001894548423,
     "script": "spaced",
     "language": "English",
     "century": 1600,
-    "mean_agreement": 0.6492736520027705
+    "mean_agreement": 0.56615481771714
+   },
+   {
+    "n": 169,
+    "sum": 80.62281242256243,
+    "script": "spaced",
+    "language": "German",
+    "century": 1600,
+    "mean_agreement": 0.47705806167196707
+   },
+   {
+    "n": 272,
+    "sum": 160.34715004547803,
+    "script": "spaced",
+    "language": "French",
+    "century": 1600,
+    "mean_agreement": 0.5895115810495516
    },
    {
     "n": 268,
@@ -140,6 +192,54 @@
     "language": "Latin",
     "century": 1800,
     "mean_agreement": 0.6055453052904781
+   },
+   {
+    "n": 209,
+    "sum": 168.3242736099669,
+    "script": "spaced",
+    "language": "French",
+    "century": 1800,
+    "mean_agreement": 0.8053792995692196
+   },
+   {
+    "n": 191,
+    "sum": 120.83762465797506,
+    "script": "spaced",
+    "language": "Greek",
+    "century": 1800,
+    "mean_agreement": 0.6326577207223825
+   },
+   {
+    "n": 18,
+    "sum": 9.34647421017269,
+    "script": "spaced",
+    "language": "Hebrew",
+    "century": 1800,
+    "mean_agreement": 0.5192485672318161
+   },
+   {
+    "n": 14,
+    "sum": 10.258543517281431,
+    "script": "spaced",
+    "language": "Chinese",
+    "century": 1800,
+    "mean_agreement": 0.732753108377245
+   },
+   {
+    "n": 222,
+    "sum": 194.0177222670866,
+    "script": "spaced",
+    "language": "English",
+    "century": 1900,
+    "mean_agreement": 0.8739537039057955
+   },
+   {
+    "n": 208,
+    "sum": 114.96576726626171,
+    "script": "spaced",
+    "language": "German",
+    "century": 1900,
+    "mean_agreement": 0.5527200349339505
    }
   ]
  },
@@ -985,8 +1085,12 @@
    "pages_ocr": 498,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a08ddd950bd891addfb471d",
@@ -999,8 +1103,12 @@
    "pages_ocr": 250,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aec1f00767ad23dd0affb0",
@@ -1014,7 +1122,7 @@
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69b18619c4be2cdd0edc524e",
@@ -1027,8 +1135,12 @@
    "pages_ocr": 25,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6990612f322e01b1349a3d7f",
@@ -1041,8 +1153,12 @@
    "pages_ocr": 281,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69ae955b14ec9b78c4cede73",
@@ -1056,7 +1172,7 @@
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "djvu_xml_too_large_56MB"
   },
   {
    "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
@@ -1069,8 +1185,12 @@
    "pages_ocr": 241,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a08fd2625e3a402b23b3b5c",
@@ -1083,8 +1203,12 @@
    "pages_ocr": 108,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6991d8d68c1030b12444cd57",
@@ -1097,8 +1221,12 @@
    "pages_ocr": 318,
    "text_role": "original",
    "stratum": "English 1600s (early modern)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69ef3d5172c1376fdf2b0031",
@@ -1111,8 +1239,12 @@
    "pages_ocr": 832,
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "699258978812793469fdc49f",
@@ -1126,7 +1258,7 @@
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69920092768b426600239d31",
@@ -1139,8 +1271,12 @@
    "pages_ocr": 36,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "695591f67bd6d2cd1d619b1d",
@@ -1153,8 +1289,12 @@
    "pages_ocr": 178,
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69af4164b0838bf65cdffe93",
@@ -1167,8 +1307,12 @@
    "pages_ocr": 521,
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e533e0d48480a38696480e",
@@ -1181,8 +1325,12 @@
    "pages_ocr": 426,
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -7,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 18
   },
   {
    "book_id": "69907c555f855ec553e7475d",
@@ -1195,8 +1343,12 @@
    "pages_ocr": 646,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "699065ce3dc2ed39a49f279b",
@@ -1209,8 +1361,12 @@
    "pages_ocr": 175,
    "text_role": "modern-translation",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6953efe61479a63c110887b0",
@@ -1223,8 +1379,12 @@
    "pages_ocr": 401,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6991bd3e70254d38471e34ce",
@@ -1238,7 +1398,7 @@
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69b99dc21f30176bf4d3751e",
@@ -1251,8 +1411,12 @@
    "pages_ocr": 100,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69a97a40f3f3d2fb7de2736a",
@@ -1265,8 +1429,62 @@
    "pages_ocr": 629,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 62,
+     "pos": 66,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 371,
+      "score": 0.010752688172043001,
+      "jac": 0.016853932584269662
+     }
+    },
+    {
+     "rank": 185,
+     "pos": 190,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 411,
+      "score": 0.010928961748633892,
+      "jac": 0.01818181818181818
+     }
+    },
+    {
+     "rank": 309,
+     "pos": 314,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 435,
+      "score": 0.011494252873563204,
+      "jac": 0.01818181818181818
+     }
+    },
+    {
+     "rank": 433,
+     "pos": 439,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 438,
+     "score": 0.804
+    },
+    {
+     "rank": 556,
+     "pos": 563,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 562,
+     "score": 0.898
+    }
+   ]
   },
   {
    "book_id": "6991bd12879c23a0fef522cb",
@@ -1279,8 +1497,12 @@
    "pages_ocr": 246,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69ef2f8972c1376fdf2af9df",
@@ -1293,8 +1515,12 @@
    "pages_ocr": 294,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "69bf6118065df5d87d77927b",
@@ -1307,8 +1533,12 @@
    "pages_ocr": 278,
    "text_role": "original",
    "stratum": "English 1900s (modern roman)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b52c5fa2d71b015aa97e16",
@@ -1321,8 +1551,62 @@
    "pages_ocr": 58,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 3,
+     "pos": 16,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 15,
+     "score": 0.388
+    },
+    {
+     "rank": 8,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 20,
+     "score": 0.414
+    },
+    {
+     "rank": 14,
+     "pos": 27,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.06896551724137934,
+      "jac": 0.038461538461538464
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 36,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.02030456852791873,
+      "jac": 0.017094017094017096
+     }
+    },
+    {
+     "rank": 25,
+     "pos": 48,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.0444444444444444,
+      "jac": 0.0410958904109589
+     }
+    }
+   ]
   },
   {
    "book_id": "6a0b50411615109dc53b2628",
@@ -1335,8 +1619,62 @@
    "pages_ocr": 25,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 2,
+     "pos": 6,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 262,
+      "score": 0.013333333333333308,
+      "jac": 0.0045871559633027525
+     }
+    },
+    {
+     "rank": 6,
+     "pos": 10,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 282,
+      "score": 0.013937282229965153,
+      "jac": 0.014778325123152709
+     }
+    },
+    {
+     "rank": 11,
+     "pos": 15,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 14,
+     "score": 0.133
+    },
+    {
+     "rank": 15,
+     "pos": 19,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 18,
+     "score": 0.227
+    },
+    {
+     "rank": 19,
+     "pos": 23,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 238,
+      "score": 0.033333333333333326,
+      "jac": 0.06726457399103139
+     }
+    }
+   ]
   },
   {
    "book_id": "6da19aeb-aec0-411c-b890-73035c92273d",
@@ -1349,8 +1687,12 @@
    "pages_ocr": 152,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69482af9914d007380634cf1",
@@ -1363,8 +1705,12 @@
    "pages_ocr": 54,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "695592ca7bd6d2cd1d61b2d0",
@@ -1377,8 +1723,12 @@
    "pages_ocr": 1158,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "69b1cb49a282e3475aab4b79",
@@ -1391,8 +1741,70 @@
    "pages_ocr": 970,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 96,
+     "pos": 106,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 64,
+      "score": 0.01666666666666672,
+      "jac": 0.0625
+     }
+    },
+    {
+     "rank": 287,
+     "pos": 297,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 64,
+      "score": 0.010000000000000009,
+      "jac": 0.0821256038647343
+     }
+    },
+    {
+     "rank": 479,
+     "pos": 489,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 488,
+      "score": 0.050000000000000044,
+      "jac": 0.06912442396313365
+     }
+    },
+    {
+     "rank": 670,
+     "pos": 682,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 904,
+      "score": 0.01666666666666672,
+      "jac": 0.06976744186046512
+     }
+    },
+    {
+     "rank": 861,
+     "pos": 881,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 880,
+      "score": 0.07999999999999996,
+      "jac": 0.10194174757281553
+     }
+    }
+   ]
   },
   {
    "book_id": "695286feab34727b1f04cf28",
@@ -1405,8 +1817,12 @@
    "pages_ocr": 155,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6952603cab34727b1f04647b",
@@ -1419,8 +1835,12 @@
    "pages_ocr": 409,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69528702ab34727b1f04cf65",
@@ -1433,8 +1853,12 @@
    "pages_ocr": 279,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -4.2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "71f68423-2c87-47d3-87fa-a744688d3370",
@@ -1447,8 +1871,12 @@
    "pages_ocr": 152,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a209d5c89e8715c5947a6ac",
@@ -1462,7 +1890,7 @@
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69b302af3613a84e6806788a",
@@ -1475,8 +1903,70 @@
    "pages_ocr": 399,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 37,
+     "pos": 49,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 255,
+      "score": 0.020134228187919434,
+      "jac": 0.028455284552845527
+     }
+    },
+    {
+     "rank": 112,
+     "pos": 129,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 233,
+      "score": 0.026666666666666616,
+      "jac": 0.03056768558951965
+     }
+    },
+    {
+     "rank": 186,
+     "pos": 206,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0.01666666666666672,
+      "jac": 0.03319502074688797
+     }
+    },
+    {
+     "rank": 260,
+     "pos": 284,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 283,
+      "score": 0.02166064981949456,
+      "jac": 0.035856573705179286
+     }
+    },
+    {
+     "rank": 335,
+     "pos": 359,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 191,
+      "score": 0.02491103202846978,
+      "jac": 0.03643724696356275
+     }
+    }
+   ]
   },
   {
    "book_id": "6a21984bf11c08f10b202651",
@@ -1489,8 +1979,12 @@
    "pages_ocr": 1049,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "69a5f6b11cf742c360413d42",
@@ -1503,8 +1997,66 @@
    "pages_ocr": 372,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 10,
+     "score": 0.203
+    },
+    {
+     "rank": 19,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 23,
+      "score": 0.020000000000000018,
+      "jac": 0.052132701421800945
+     }
+    },
+    {
+     "rank": 32,
+     "pos": 37,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 19,
+      "score": 0.00666666666666671,
+      "jac": 0.06532663316582915
+     }
+    },
+    {
+     "rank": 45,
+     "pos": 50,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 35,
+      "score": 0.01666666666666672,
+      "jac": 0.06532663316582915
+     }
+    },
+    {
+     "rank": 55,
+     "pos": 60,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 37,
+      "score": 0.026666666666666616,
+      "jac": 0.04741379310344827
+     }
+    }
+   ]
   },
   {
    "book_id": "6991d67e8c1030b12444b708",
@@ -1517,8 +2069,12 @@
    "pages_ocr": 206,
    "text_role": "original",
    "stratum": "German 1600s (Fraktur likely)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aebae86059efb05d4fcce8",
@@ -1531,8 +2087,12 @@
    "pages_ocr": 319,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69ae8ff346eb64441c6ff7b2",
@@ -1545,8 +2105,12 @@
    "pages_ocr": 455,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aebc7a0b218b96da7285d7",
@@ -1559,8 +2123,12 @@
    "pages_ocr": 684,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -4.4,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "69ae8f1b4cc1ca54f8f13fb7",
@@ -1573,8 +2141,12 @@
    "pages_ocr": 224,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6992543f59cdabeb78f1d1b3",
@@ -1587,8 +2159,12 @@
    "pages_ocr": 290,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "6953e36a77f38f6761becbcd",
@@ -1601,8 +2177,12 @@
    "pages_ocr": 660,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aea4c53f91570550876d41",
@@ -1615,8 +2195,12 @@
    "pages_ocr": 739,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a22d6e168f6a1498e2ffe6a",
@@ -1629,8 +2213,12 @@
    "pages_ocr": 251,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aebb386059efb05d4fd2a6",
@@ -1643,8 +2231,12 @@
    "pages_ocr": 329,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aeaadb67e6731bc136545b",
@@ -1657,8 +2249,12 @@
    "pages_ocr": 180,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aebb806e076d07213e87d8",
@@ -1672,7 +2268,7 @@
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69935b5f2afc33235052333b",
@@ -1686,7 +2282,7 @@
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "9f2fd808-7d15-40c2-a333-885c67ff3cb5",
@@ -1699,8 +2295,12 @@
    "pages_ocr": 428,
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aebb506059efb05d4fd50c",
@@ -1713,8 +2313,62 @@
    "pages_ocr": 411,
    "text_role": null,
    "stratum": "German 1900s (Fraktur/roman mix)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 40,
+     "pos": 51,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 123,
+      "score": 0.023333333333333317,
+      "jac": 0.10152284263959391
+     }
+    },
+    {
+     "rank": 119,
+     "pos": 134,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 69,
+     "score": 0.227
+    },
+    {
+     "rank": 199,
+     "pos": 215,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 104,
+      "score": 0.020000000000000018,
+      "jac": 0.09950248756218906
+     }
+    },
+    {
+     "rank": 279,
+     "pos": 297,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 111,
+      "score": 0.020000000000000018,
+      "jac": 0.09004739336492891
+     }
+    },
+    {
+     "rank": 358,
+     "pos": 378,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 191,
+     "score": 0.18
+    }
+   ]
   },
   {
    "book_id": "69aebb846e076d07213e8a4a",
@@ -1728,7 +2382,7 @@
    "text_role": "original",
    "stratum": "German 1900s (Fraktur/roman mix)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69b2ffca5545150b61b49b4d",
@@ -1741,8 +2395,12 @@
    "pages_ocr": 324,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e7540f095c302d3fddcd7d",
@@ -1755,8 +2413,12 @@
    "pages_ocr": 1046,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69906488ef12272ffdc93bda",
@@ -1769,8 +2431,12 @@
    "pages_ocr": 201,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "695593107bd6d2cd1d61bb03",
@@ -1783,8 +2449,12 @@
    "pages_ocr": 254,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b303cd5facc83a9a3daf2a",
@@ -1797,8 +2467,12 @@
    "pages_ocr": 440,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e7541d095c302d3fddd1b3",
@@ -1811,8 +2485,12 @@
    "pages_ocr": 1035,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69906485ef12272ffdc93acc",
@@ -1825,8 +2503,12 @@
    "pages_ocr": 268,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b30369983e01f74b986d4b",
@@ -1839,8 +2521,12 @@
    "pages_ocr": 711,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69a5d90456c52e433d70a3af",
@@ -1853,8 +2539,50 @@
    "pages_ocr": 74,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "inconsistent_offsets_across_probes",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 9,
+     "score": 0.777
+    },
+    {
+     "rank": 19,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 23,
+     "score": 0.803
+    },
+    {
+     "rank": 32,
+     "pos": 39,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 63,
+     "score": 0.091
+    },
+    {
+     "rank": 44,
+     "pos": 51,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 50,
+     "score": 0.624
+    },
+    {
+     "rank": 57,
+     "pos": 64,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 63,
+     "score": 0.648
+    }
+   ]
   },
   {
    "book_id": "6a09fb01bd8d6455220a0e4c",
@@ -1867,8 +2595,12 @@
    "pages_ocr": 25,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "695592437bd6d2cd1d619fd1",
@@ -1881,8 +2613,12 @@
    "pages_ocr": 108,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b1cb52b7da27b8f120c07e",
@@ -1895,8 +2631,12 @@
    "pages_ocr": 525,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6991e19f339ebc850994a406",
@@ -1909,8 +2649,12 @@
    "pages_ocr": 308,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b303231997044693a1f4f9",
@@ -1923,8 +2667,12 @@
    "pages_ocr": 286,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b1cae4a282e3475aab3aa6",
@@ -1937,8 +2685,12 @@
    "pages_ocr": 638,
    "text_role": "original",
    "stratum": "French 1600s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69a979e9daf647306a736c91",
@@ -1951,8 +2703,12 @@
    "pages_ocr": 432,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a3f031e97e91e1768f69575",
@@ -1965,8 +2721,12 @@
    "pages_ocr": 26,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 15
   },
   {
    "book_id": "69de11bd86e6d59321ba120e",
@@ -1979,8 +2739,12 @@
    "pages_ocr": 223,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a08f5a050bd891addfb9333",
@@ -1993,8 +2757,12 @@
    "pages_ocr": 25,
    "text_role": null,
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "6a08f55d50bd891addfb8662",
@@ -2007,8 +2775,12 @@
    "pages_ocr": 25,
    "text_role": null,
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69de1c5fd10d4b0d3f6f1fcf",
@@ -2021,8 +2793,12 @@
    "pages_ocr": 590,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e41f03d0364cb0bcf79e41",
@@ -2035,8 +2811,12 @@
    "pages_ocr": 528,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e41a2e8a8dae1074c5335f",
@@ -2049,8 +2829,12 @@
    "pages_ocr": 260,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "695aa9bfbe4023bd34bd6d81",
@@ -2063,8 +2847,62 @@
    "pages_ocr": 218,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 19,
+     "pos": 70,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 69,
+     "score": 0.831
+    },
+    {
+     "rank": 58,
+     "pos": 153,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 152,
+     "score": 0.878
+    },
+    {
+     "rank": 97,
+     "pos": 231,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 79,
+      "score": 0,
+      "jac": 0.008620689655172414
+     }
+    },
+    {
+     "rank": 135,
+     "pos": 269,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 1,
+      "score": 0.00666666666666671,
+      "jac": 0.005235602094240838
+     }
+    },
+    {
+     "rank": 174,
+     "pos": 308,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 305,
+      "score": 0.02564102564102566,
+      "jac": 0.006711409395973154
+     }
+    }
+   ]
   },
   {
    "book_id": "6a08f5b550bd891addfb9658",
@@ -2077,8 +2915,12 @@
    "pages_ocr": 25,
    "text_role": null,
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e41eebd0364cb0bcf79aec",
@@ -2091,8 +2933,12 @@
    "pages_ocr": 142,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b00089ea029321151e51ba",
@@ -2105,8 +2951,12 @@
    "pages_ocr": 652,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e7927280b52390feb15ef5",
@@ -2119,8 +2969,12 @@
    "pages_ocr": 241,
    "text_role": "original",
    "stratum": "French 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a08f9029c1b82475e158ebe",
@@ -2134,7 +2988,7 @@
    "text_role": "original",
    "stratum": "French 1800s",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "6994495a185a84ef595ac2f5",
@@ -2148,7 +3002,7 @@
    "text_role": "original",
    "stratum": "French 1800s",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69b2f4300e2f024dfbfbbc64",
@@ -2161,8 +3015,45 @@
    "pages_ocr": 209,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 20,
+     "pos": 24,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 63,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 99,
+     "pos": 103,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 139,
+     "pos": 144,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 178,
+     "pos": 184,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69b2f434f9f1ad2b3b15154a",
@@ -2175,8 +3066,12 @@
    "pages_ocr": 292,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -3.8,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b2222608069e96e8432997",
@@ -2189,8 +3084,65 @@
    "pages_ocr": 656,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 64,
+     "pos": 74,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 125,
+      "score": 0.0043290043290042934,
+      "jac": 0.004149377593360996
+     }
+    },
+    {
+     "rank": 193,
+     "pos": 203,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 125,
+      "score": 0.0043290043290042934,
+      "jac": 0.0040650406504065045
+     }
+    },
+    {
+     "rank": 322,
+     "pos": 332,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 399,
+      "score": 0.004366812227074246,
+      "jac": 0.004166666666666667
+     }
+    },
+    {
+     "rank": 450,
+     "pos": 460,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 399,
+      "score": 0.004366812227074246,
+      "jac": 0.00411522633744856
+     }
+    },
+    {
+     "rank": 579,
+     "pos": 589,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69b2ff7be5d6d64d8e1968f0",
@@ -2204,7 +3156,7 @@
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "timeout_after_120000ms_twice"
   },
   {
    "book_id": "69b2f354a9a500a45e5e7db1",
@@ -2217,8 +3169,12 @@
    "pages_ocr": 380,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6a09ecd6b4da373307f15964",
@@ -2231,8 +3187,70 @@
    "pages_ocr": 651,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 65,
+     "pos": 68,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.004016064257028112
+     }
+    },
+    {
+     "rank": 194,
+     "pos": 197,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.00390625
+     }
+    },
+    {
+     "rank": 324,
+     "pos": 327,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.0038910505836575876
+     }
+    },
+    {
+     "rank": 453,
+     "pos": 456,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 585,
+      "score": 0,
+      "jac": 0.007874015748031496
+     }
+    },
+    {
+     "rank": 582,
+     "pos": 585,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.00392156862745098
+     }
+    }
+   ]
   },
   {
    "book_id": "69b2f4200e2f024dfbfbb576",
@@ -2245,8 +3263,55 @@
    "pages_ocr": 102,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 11,
+      "score": 0.006849315068493178,
+      "jac": 0.0053475935828877
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 32,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 52,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 70,
+     "pos": 72,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 71,
+      "score": 0.00347222222222221,
+      "jac": 0.0038022813688212928
+     }
+    },
+    {
+     "rank": 90,
+     "pos": 92,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69942ebab2f6748db4abfa24",
@@ -2259,8 +3324,50 @@
    "pages_ocr": 294,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 29,
+     "pos": 30,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 88,
+     "pos": 89,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 147,
+     "pos": 148,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 205,
+     "pos": 206,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 171,
+      "score": 0,
+      "jac": 0.004016064257028112
+     }
+    },
+    {
+     "rank": 264,
+     "pos": 265,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69b2ffbce5d6d64d8e19757b",
@@ -2273,8 +3380,50 @@
    "pages_ocr": 324,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 31,
+     "pos": 35,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 94,
+     "pos": 98,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 157,
+     "pos": 161,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 219,
+     "pos": 223,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 204,
+      "score": 0.0033333333333332993,
+      "jac": 0.003937007874015748
+     }
+    },
+    {
+     "rank": 282,
+     "pos": 286,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6a084f8c15c643eb1af4516a",
@@ -2287,8 +3436,46 @@
    "pages_ocr": 343,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 34,
+     "pos": 38,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 101,
+     "pos": 106,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 169,
+     "pos": 174,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 237,
+     "pos": 244,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 304,
+     "pos": 311,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 309,
+     "score": 0.2
+    }
+   ]
   },
   {
    "book_id": "69b2f443f9f1ad2b3b152090",
@@ -2301,8 +3488,70 @@
    "pages_ocr": 211,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 20,
+     "pos": 23,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.0037174721189591076
+     }
+    },
+    {
+     "rank": 61,
+     "pos": 64,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    },
+    {
+     "rank": 101,
+     "pos": 104,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.007547169811320755
+     }
+    },
+    {
+     "rank": 141,
+     "pos": 144,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.007692307692307693
+     }
+    },
+    {
+     "rank": 182,
+     "pos": 185,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 160,
+      "score": 0,
+      "jac": 0.004830917874396135
+     }
+    }
+   ]
   },
   {
    "book_id": "6a085ab149638a50931c9f35",
@@ -2315,8 +3564,66 @@
    "pages_ocr": 72,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 7,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0.07954545454545459,
+      "jac": 0.16666666666666666
+     }
+    },
+    {
+     "rank": 18,
+     "pos": 25,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0,
+      "jac": 0.1206896551724138
+     }
+    },
+    {
+     "rank": 31,
+     "pos": 38,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0,
+      "jac": 0.11666666666666667
+     }
+    },
+    {
+     "rank": 43,
+     "pos": 50,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 49,
+     "score": 0.171
+    },
+    {
+     "rank": 55,
+     "pos": 62,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 36,
+      "score": 0.041353383458646586,
+      "jac": 0.023715415019762844
+     }
+    }
+   ]
   },
   {
    "book_id": "69b222ed56715b0e32475a8c",
@@ -2329,8 +3636,62 @@
    "pages_ocr": 592,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 58,
+     "pos": 64,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 63,
+      "score": 0.06542056074766356,
+      "jac": 0.04597701149425287
+     }
+    },
+    {
+     "rank": 174,
+     "pos": 180,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 179,
+      "score": 0.052631578947368474,
+      "jac": 0.03361344537815126
+     }
+    },
+    {
+     "rank": 290,
+     "pos": 296,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 295,
+     "score": 0.105
+    },
+    {
+     "rank": 406,
+     "pos": 412,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 411,
+     "score": 0.147
+    },
+    {
+     "rank": 522,
+     "pos": 528,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 527,
+      "score": 0.0714285714285714,
+      "jac": 0.09274193548387097
+     }
+    }
+   ]
   },
   {
    "book_id": "69b2f439f9f1ad2b3b151af5",
@@ -2343,8 +3704,70 @@
    "pages_ocr": 534,
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 53,
+     "pos": 54,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.0037735849056603774
+     }
+    },
+    {
+     "rank": 160,
+     "pos": 161,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    },
+    {
+     "rank": 267,
+     "pos": 268,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003745318352059925
+     }
+    },
+    {
+     "rank": 373,
+     "pos": 374,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 321,
+      "score": 0,
+      "jac": 0.00390625
+     }
+    },
+    {
+     "rank": 480,
+     "pos": 481,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    }
+   ]
   },
   {
    "book_id": "6952c9c777f38f6761bc2ffd",
@@ -2358,7 +3781,7 @@
    "text_role": "original",
    "stratum": "Greek 1500s (polytonic print)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69a979d2f3f3d2fb7de269cb",
@@ -2371,8 +3794,12 @@
    "pages_ocr": 380,
    "text_role": "modern-translation",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b21f05a66227125eb06acb",
@@ -2385,8 +3812,12 @@
    "pages_ocr": 362,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aea3113d57a11fc021c0eb",
@@ -2399,8 +3830,12 @@
    "pages_ocr": 641,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69aec0f0dd3c98abc0da80ce",
@@ -2413,8 +3848,12 @@
    "pages_ocr": 905,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69afe65fda5fa12b664a75a2",
@@ -2428,7 +3867,7 @@
    "text_role": "original",
    "stratum": "Greek 1800s",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "djvu_xml_too_large_71MB"
   },
   {
    "book_id": "69af1315edb4389041037d06",
@@ -2441,8 +3880,12 @@
    "pages_ocr": 500,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69c10d9a42741c656896364d",
@@ -2456,7 +3899,7 @@
    "text_role": "original",
    "stratum": "Greek 1800s",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "djvu_xml_too_large_48MB"
   },
   {
    "book_id": "69942e58d607f8e57e4b8659",
@@ -2469,8 +3912,12 @@
    "pages_ocr": 927,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "6953c68777f38f6761bd9e16",
@@ -2483,8 +3930,12 @@
    "pages_ocr": 201,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69937944b0a84a5763964389",
@@ -2497,8 +3948,12 @@
    "pages_ocr": 311,
    "text_role": null,
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b1de9cca46fa60ea1edeed",
@@ -2511,8 +3966,70 @@
    "pages_ocr": 521,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 50,
+     "pos": 61,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.0196078431372549
+     }
+    },
+    {
+     "rank": 150,
+     "pos": 161,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.022727272727272728
+     }
+    },
+    {
+     "rank": 251,
+     "pos": 262,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.02197802197802198
+     }
+    },
+    {
+     "rank": 351,
+     "pos": 362,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 368,
+      "score": 0.023333333333333317,
+      "jac": 0.029045643153526972
+     }
+    },
+    {
+     "rank": 451,
+     "pos": 466,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 465,
+      "score": 0.02651515151515149,
+      "jac": 0.022556390977443608
+     }
+    }
+   ]
   },
   {
    "book_id": "6964bfcbd00c6d84781505ff",
@@ -2525,8 +4042,62 @@
    "pages_ocr": 189,
    "text_role": "original",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 27,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 26,
+     "score": 0.727
+    },
+    {
+     "rank": 52,
+     "pos": 62,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 61,
+     "score": 0.68
+    },
+    {
+     "rank": 87,
+     "pos": 97,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 44,
+      "score": 0,
+      "jac": 0.004219409282700422
+     }
+    },
+    {
+     "rank": 121,
+     "pos": 132,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 44,
+      "score": 0.0033333333333332993,
+      "jac": 0.00411522633744856
+     }
+    },
+    {
+     "rank": 156,
+     "pos": 167,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 166,
+      "score": 0.06432748538011701,
+      "jac": 0.044534412955465584
+     }
+    }
+   ]
   },
   {
    "book_id": "6992542459cdabeb78f1c389",
@@ -2539,8 +4110,12 @@
    "pages_ocr": 182,
    "text_role": "modern-translation",
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
   },
   {
    "book_id": "6952e4b477f38f6761bc7d4c",
@@ -2554,7 +4129,7 @@
    "text_role": "original",
    "stratum": "Greek 1800s",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "djvu_xml_too_large_48MB"
   },
   {
    "book_id": "6a08a7b650cb4ea746a094ec",
@@ -2567,8 +4142,12 @@
    "pages_ocr": 24,
    "text_role": null,
    "stratum": "Greek 1800s",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69b2f4a2f9f1ad2b3b1548b3",
@@ -2581,8 +4160,12 @@
    "pages_ocr": 1635,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "69e9617a2beefe2f6f72ba14",
@@ -2595,8 +4178,12 @@
    "pages_ocr": 319,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
   },
   {
    "book_id": "699243ebbc722ec0ee80a9d1",
@@ -2610,7 +4197,7 @@
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "timeout_after_120000ms_twice"
   },
   {
    "book_id": "6992540a59cdabeb78f1b209",
@@ -2623,8 +4210,62 @@
    "pages_ocr": 678,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 67,
+     "pos": 72,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 200,
+     "pos": 205,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 204,
+     "score": 0.959
+    },
+    {
+     "rank": 333,
+     "pos": 338,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 547,
+      "score": 0.01980198019801982,
+      "jac": 0.0425531914893617
+     }
+    },
+    {
+     "rank": 465,
+     "pos": 470,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 475,
+     "score": 0.147
+    },
+    {
+     "rank": 599,
+     "pos": 604,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 643,
+      "score": 0.0561797752808989,
+      "jac": 0.04918032786885246
+     }
+    }
+   ]
   },
   {
    "book_id": "69b2f3b821208ea9dc278c50",
@@ -2637,8 +4278,62 @@
    "pages_ocr": 341,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 32,
+     "pos": 37,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 36,
+      "score": 0.06000000000000005,
+      "jac": 0.084070796460177
+     }
+    },
+    {
+     "rank": 95,
+     "pos": 103,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 102,
+     "score": 0.097
+    },
+    {
+     "rank": 159,
+     "pos": 170,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 169,
+      "score": 0.040000000000000036,
+      "jac": 0.07692307692307693
+     }
+    },
+    {
+     "rank": 222,
+     "pos": 237,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 236,
+     "score": 0.15
+    },
+    {
+     "rank": 285,
+     "pos": 302,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 301,
+      "score": 0.053333333333333344,
+      "jac": 0.06896551724137931
+     }
+    }
+   ]
   },
   {
    "book_id": "69d5aca44dc55b8478dddf51",
@@ -2652,7 +4347,7 @@
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "djvu_xml_too_large_84MB"
   },
   {
    "book_id": "6990633def12272ffdc907b0",
@@ -2665,8 +4360,70 @@
    "pages_ocr": 612,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 61,
+     "pos": 62,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 233,
+      "score": 0.0033333333333332993,
+      "jac": 0.011627906976744186
+     }
+    },
+    {
+     "rank": 183,
+     "pos": 184,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 215,
+      "score": 0,
+      "jac": 0.020080321285140562
+     }
+    },
+    {
+     "rank": 305,
+     "pos": 306,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 63,
+      "score": 0.0033333333333332993,
+      "jac": 0.01593625498007968
+     }
+    },
+    {
+     "rank": 426,
+     "pos": 427,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 405,
+      "score": 0.0033333333333332993,
+      "jac": 0.007936507936507936
+     }
+    },
+    {
+     "rank": 548,
+     "pos": 549,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 544,
+      "score": 0.0033333333333332993,
+      "jac": 0.011627906976744186
+     }
+    }
+   ]
   },
   {
    "book_id": "699243fabc722ec0ee80b251",
@@ -2680,7 +4437,7 @@
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "695285cdab34727b1f04c25a",
@@ -2693,8 +4450,66 @@
    "pages_ocr": 192,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 18,
+     "pos": 22,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 21,
+     "score": 0.893
+    },
+    {
+     "rank": 55,
+     "pos": 60,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 116,
+      "score": 0,
+      "jac": 0.006622516556291391
+     }
+    },
+    {
+     "rank": 91,
+     "pos": 96,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 26,
+      "score": 0.01666666666666672,
+      "jac": 0.01702127659574468
+     }
+    },
+    {
+     "rank": 127,
+     "pos": 132,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 116,
+      "score": 0,
+      "jac": 0.004807692307692308
+     }
+    },
+    {
+     "rank": 164,
+     "pos": 169,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 11,
+      "score": 0.013333333333333308,
+      "jac": 0.01556420233463035
+     }
+    }
+   ]
   },
   {
    "book_id": "69924401bc722ec0ee80b312",
@@ -2708,7 +4523,7 @@
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "69920bb1e0a548a13d884da7",
@@ -2722,7 +4537,7 @@
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
    "status": "skipped",
-   "reason": "not_fetched"
+   "reason": "no_djvu_xml (404)"
   },
   {
    "book_id": "6990630be7b7642c081de08b",
@@ -2735,8 +4550,70 @@
    "pages_ocr": 548,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 55,
+     "pos": 56,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 172,
+      "score": 0.0033333333333332993,
+      "jac": 0.008064516129032258
+     }
+    },
+    {
+     "rank": 164,
+     "pos": 165,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 164,
+      "score": 0,
+      "jac": 0.03404255319148936
+     }
+    },
+    {
+     "rank": 274,
+     "pos": 275,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 322,
+      "score": 0.0033333333333332993,
+      "jac": 0.00851063829787234
+     }
+    },
+    {
+     "rank": 383,
+     "pos": 384,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 383,
+      "score": 0,
+      "jac": 0.028455284552845527
+     }
+    },
+    {
+     "rank": 492,
+     "pos": 493,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 492,
+      "score": 0.0033333333333332993,
+      "jac": 0.024390243902439025
+     }
+    }
+   ]
   },
   {
    "book_id": "6a08e2eb50bd891addfb5666",
@@ -2749,8 +4626,70 @@
    "pages_ocr": 24,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 2,
+     "pos": 3,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 295,
+      "score": 0.010000000000000009,
+      "jac": 0.012396694214876033
+     }
+    },
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 181,
+      "score": 0.026717557251908386,
+      "jac": 0.013888888888888888
+     }
+    },
+    {
+     "rank": 12,
+     "pos": 13,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0.01666666666666672,
+      "jac": 0.011494252873563218
+     }
+    },
+    {
+     "rank": 16,
+     "pos": 17,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 182,
+      "score": 0.020000000000000018,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 21,
+     "pos": 23,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 88,
+      "score": 0.01666666666666672,
+      "jac": 0.013574660633484163
+     }
+    }
+   ]
   },
   {
    "book_id": "695591d17bd6d2cd1d619a70",
@@ -2763,8 +4702,65 @@
    "pages_ocr": 172,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 20,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 107,
+      "score": 0.010000000000000009,
+      "jac": 0.006289308176100629
+     }
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 42,
+      "score": 0.003816793893129722,
+      "jac": 0.0072992700729927005
+     }
+    },
+    {
+     "rank": 84,
+     "pos": 87,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 89,
+      "score": 0.00666666666666671,
+      "jac": 0.0078125
+     }
+    },
+    {
+     "rank": 117,
+     "pos": 120,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 150,
+     "pos": 153,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 110,
+      "score": 0.00666666666666671,
+      "jac": 0.00909090909090909
+     }
+    }
+   ]
   },
   {
    "book_id": "69d5ac8c4dc55b8478dddcab",
@@ -2777,8 +4773,70 @@
    "pages_ocr": 267,
    "text_role": "original",
    "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 27,
+     "pos": 28,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 234,
+      "score": 0,
+      "jac": 0.026200873362445413
+     }
+    },
+    {
+     "rank": 80,
+     "pos": 111,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 109,
+      "score": 0,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 133,
+     "pos": 194,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 119,
+      "score": 0.0033333333333332993,
+      "jac": 0.023622047244094488
+     }
+    },
+    {
+     "rank": 186,
+     "pos": 262,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0,
+      "jac": 0.01937984496124031
+     }
+    },
+    {
+     "rank": 239,
+     "pos": 332,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 317,
+      "score": 0,
+      "jac": 0.030837004405286344
+     }
+    }
+   ]
   },
   {
    "book_id": "6992cefeb2ff9ac7391f7c60",
@@ -2791,8 +4849,50 @@
    "pages_ocr": 107,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 28,
+     "pos": 30,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 53,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.02127659574468085
+     }
+    },
+    {
+     "rank": 67,
+     "pos": 76,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 96,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cdb543713c66ea63818d",
@@ -2805,8 +4905,50 @@
    "pages_ocr": 75,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 9,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 21,
+     "pos": 23,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 36,
+     "pos": 39,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 48,
+      "score": 0,
+      "jac": 0.012195121951219513
+     }
+    },
+    {
+     "rank": 64,
+     "pos": 68,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992ce83673ee1e40e320d58",
@@ -2819,8 +4961,60 @@
    "pages_ocr": 79,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 8,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.010526315789473717,
+      "jac": 0.0136986301369863
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 26,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.013698630136986356,
+      "jac": 0.015625
+     }
+    },
+    {
+     "rank": 39,
+     "pos": 42,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 53,
+     "pos": 56,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.014925373134328401,
+      "jac": 0.015873015873015872
+     }
+    },
+    {
+     "rank": 68,
+     "pos": 71,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992ce63673ee1e40e320633",
@@ -2833,8 +5027,50 @@
    "pages_ocr": 100,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 19,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 14,
+     "pos": 34,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 23,
+     "pos": 56,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 74,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 97,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0,
+      "jac": 0.017857142857142856
+     }
+    }
+   ]
   },
   {
    "book_id": "6992cda043713c66ea637aa0",
@@ -2847,8 +5083,60 @@
    "pages_ocr": 69,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.027027027027026973,
+      "jac": 0.027777777777777776
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 34,
+     "pos": 36,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.007575757575757569,
+      "jac": 0.0125
+     }
+    },
+    {
+     "rank": 47,
+     "pos": 49,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.07692307692307687,
+      "jac": 0.08333333333333333
+     }
+    },
+    {
+     "rank": 60,
+     "pos": 62,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cdab43713c66ea637d67",
@@ -2861,8 +5149,45 @@
    "pages_ocr": 97,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 50,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 67,
+     "pos": 69,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 88,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cdea81c9d7efb84d0bee",
@@ -2875,8 +5200,45 @@
    "pages_ocr": 113,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 26,
+     "pos": 40,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 44,
+     "pos": 61,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 61,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 78,
+     "pos": 96,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cd7543713c66ea63699e",
@@ -2889,8 +5251,50 @@
    "pages_ocr": 113,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 18,
+     "pos": 33,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 40,
+      "score": 0,
+      "jac": 0.037037037037037035
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 57,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 41,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 103,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992ce8a673ee1e40e320f60",
@@ -2903,8 +5307,60 @@
    "pages_ocr": 97,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.015151515151515138,
+      "jac": 0.018518518518518517
+     }
+    },
+    {
+     "rank": 28,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 47,
+     "pos": 48,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.01666666666666672,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 66,
+     "pos": 68,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.011363636363636354,
+      "jac": 0.014084507042253521
+     }
+    },
+    {
+     "rank": 86,
+     "pos": 88,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69dea80051267905f92aadfe",
@@ -2917,8 +5373,60 @@
    "pages_ocr": 61,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 7,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 57,
+      "score": 0.006172839506172867,
+      "jac": 0.00980392156862745
+     }
+    },
+    {
+     "rank": 18,
+     "pos": 19,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 17,
+      "score": 0.00877192982456143,
+      "jac": 0.010309278350515464
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 31,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 42,
+     "pos": 43,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 55,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 57,
+      "score": 0.01538461538461533,
+      "jac": 0.015384615384615385
+     }
+    }
+   ]
   },
   {
    "book_id": "6992ce492960dc4e5cea8efb",
@@ -2931,8 +5439,45 @@
    "pages_ocr": 128,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 34,
+     "pos": 38,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 56,
+     "pos": 69,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 80,
+     "pos": 93,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 104,
+     "pos": 118,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cdbc43713c66ea6383f4",
@@ -2945,8 +5490,45 @@
    "pages_ocr": 91,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 26,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 44,
+     "pos": 48,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 61,
+     "pos": 65,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 78,
+     "pos": 82,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cd6343713c66ea636262",
@@ -2959,8 +5541,50 @@
    "pages_ocr": 108,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 8,
+     "pos": 27,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 97,
+      "score": 0,
+      "jac": 0.014285714285714285
+     }
+    },
+    {
+     "rank": 16,
+     "pos": 37,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 66,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 45,
+     "pos": 89,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 58,
+     "pos": 102,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf29f5b4f75c1a4c8238",
@@ -2973,8 +5597,45 @@
    "pages_ocr": 98,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 30,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 49,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 67,
+     "pos": 68,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 87,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992ce7d673ee1e40e320b97",
@@ -2987,8 +5648,45 @@
    "pages_ocr": 78,
    "text_role": "original",
    "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 23,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 38,
+     "pos": 41,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 57,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 68,
+     "pos": 71,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69e7288aa409200ea79f009f",
@@ -3001,8 +5699,45 @@
    "pages_ocr": 172,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 19,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 52,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 84,
+     "pos": 86,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 117,
+     "pos": 119,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 150,
+     "pos": 152,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cff9f5b4f75c1a4c9d91",
@@ -3015,8 +5750,45 @@
    "pages_ocr": 104,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 27,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 46,
+     "pos": 49,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 64,
+     "pos": 72,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 82,
+     "pos": 93,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf0af7519cdd65044cd3",
@@ -3029,8 +5801,9 @@
    "pages_ocr": 141,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "insufficient_probe_text",
+   "debug": null
   },
   {
    "book_id": "6992cf3cf5b4f75c1a4c8518",
@@ -3043,8 +5816,70 @@
    "pages_ocr": 84,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 59,
+      "score": 0.0078125,
+      "jac": 0.00980392156862745
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 27,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.010869565217391353,
+      "jac": 0.012195121951219513
+     }
+    },
+    {
+     "rank": 40,
+     "pos": 43,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.007042253521126751,
+      "jac": 0.011764705882352941
+     }
+    },
+    {
+     "rank": 56,
+     "pos": 60,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.008849557522123908,
+      "jac": 0.012658227848101266
+     }
+    },
+    {
+     "rank": 72,
+     "pos": 76,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.008695652173912993,
+      "jac": 0.009615384615384616
+     }
+    }
+   ]
   },
   {
    "book_id": "69e7494885f786e884a4e57a",
@@ -3057,8 +5892,50 @@
    "pages_ocr": 68,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.013333333333333334
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 33,
+     "pos": 34,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 46,
+     "pos": 47,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 60,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6a09f78bec7a5a72f8daad08",
@@ -3071,8 +5948,12 @@
    "pages_ocr": 25,
    "text_role": null,
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 16
   },
   {
    "book_id": "6992cf4cf5b4f75c1a4c887b",
@@ -3085,8 +5966,45 @@
    "pages_ocr": 160,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 13,
+     "pos": 22,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 15,
+     "pos": 25,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 55,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 134,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 149,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cfa9f5b4f75c1a4c9628",
@@ -3099,8 +6017,60 @@
    "pages_ocr": 99,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.02040816326530612
+     }
+    },
+    {
+     "rank": 29,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 49,
+     "pos": 51,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 68,
+     "pos": 70,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.02040816326530612
+     }
+    },
+    {
+     "rank": 87,
+     "pos": 89,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf93f5b4f75c1a4c9383",
@@ -3113,8 +6083,55 @@
    "pages_ocr": 86,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0,
+      "jac": 0.012658227848101266
+     }
+    },
+    {
+     "rank": 26,
+     "pos": 27,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 44,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 48,
+      "score": 0,
+      "jac": 0.022727272727272728
+     }
+    },
+    {
+     "rank": 59,
+     "pos": 60,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 77,
+     "pos": 78,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "69e72885a409200ea79efff6",
@@ -3127,8 +6144,45 @@
    "pages_ocr": 166,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 16,
+     "pos": 18,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 49,
+     "pos": 51,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 82,
+     "pos": 84,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 114,
+     "pos": 116,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 147,
+     "pos": 149,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf1c70ab3737555459c6",
@@ -3141,8 +6195,38 @@
    "pages_ocr": 113,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_4_probes_matched",
+   "debug": [
+    {
+     "rank": 4,
+     "pos": 9,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 20,
+     "pos": 45,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 69,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 89,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf6ef5b4f75c1a4c8e2c",
@@ -3155,8 +6239,50 @@
    "pages_ocr": 99,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 24,
+      "score": 0.009708737864077666,
+      "jac": 0.013157894736842105
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 40,
+     "pos": 52,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 56,
+     "pos": 71,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 72,
+     "pos": 90,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cfb1f5b4f75c1a4c968d",
@@ -3169,8 +6295,45 @@
    "pages_ocr": 113,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 33,
+     "pos": 36,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 55,
+     "pos": 58,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 76,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 98,
+     "pos": 101,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf72f5b4f75c1a4c8e92",
@@ -3183,8 +6346,45 @@
    "pages_ocr": 103,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 13,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 30,
+     "pos": 33,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 70,
+     "pos": 73,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 90,
+     "pos": 93,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
   },
   {
    "book_id": "6992cf3527dcac3f8ca1b732",
@@ -3197,8 +6397,70 @@
    "pages_ocr": 117,
    "text_role": "original",
    "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
-   "status": "skipped",
-   "reason": "not_fetched"
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.03703703703703709,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 32,
+     "pos": 38,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.06666666666666665,
+      "jac": 0.043478260869565216
+     }
+    },
+    {
+     "rank": 54,
+     "pos": 61,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0,
+      "jac": 0.047619047619047616
+     }
+    },
+    {
+     "rank": 76,
+     "pos": 83,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0,
+      "jac": 0.0625
+     }
+    },
+    {
+     "rank": 97,
+     "pos": 104,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.03125,
+      "jac": 0.01694915254237288
+     }
+    }
+   ]
   }
  ]
 }
