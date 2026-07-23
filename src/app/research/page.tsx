@@ -334,6 +334,71 @@ export default function ResearchProgrammePage() {
           </ul>
         </Section>
 
+        <Section kicker="Outputs" title="Papers, datasets, code">
+          <p className="mb-6">
+            The questions above produce citable artifacts. Everything listed here is public now, in
+            the repository, ahead of any formal venue.
+          </p>
+          <ul className="space-y-5">
+            <li>
+              <div className="font-serif text-lg text-stone-900">
+                Reading or Reciting? Measuring the Memorization Subsidy in Vision-Language-Model OCR
+                of Historical Documents
+              </div>
+              <div className="text-base text-stone-600 mt-1">
+                Working paper, in preparation. The full plan, running results, and a verified
+                related-work dossier are maintained in the open in{' '}
+                <a
+                  href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/.claude/docs/ocr-memorization-paper.md"
+                  className="text-amber-800 hover:underline"
+                >
+                  the repository
+                </a>
+                , so the draft can be audited while it is still wrong.
+              </div>
+            </li>
+            <li>
+              <div className="font-serif text-lg text-stone-900">Source Library OCR-Eval Dataset</div>
+              <div className="text-base text-stone-600 mt-1">
+                v0.2: 40 visually audited pages across 5 scripts with canonical/non-canonical labels,
+                measured image resolution, 921 scored model runs with raw outputs, and license-gated
+                reference texts (checksums where a source forbids redistribution).{' '}
+                <a
+                  href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval/dataset"
+                  className="text-amber-800 hover:underline"
+                >
+                  Download from the repository
+                </a>
+                . A DOI-minted archival release is planned.
+              </div>
+            </li>
+            <li>
+              <div className="font-serif text-lg text-stone-900">Evaluation harness</div>
+              <div className="text-base text-stone-600 mt-1">
+                The scoring code, the observation builder, and the reference-passage pins live in{' '}
+                <a
+                  href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval"
+                  className="text-amber-800 hover:underline"
+                >
+                  scripts/eval
+                </a>{' '}
+                under the AGPL. Scores in the dataset are re-derived from raw outputs at build time,
+                so a different metric is one script away.
+              </div>
+            </li>
+            <li>
+              <div className="font-serif text-lg text-stone-900">Research notes</div>
+              <div className="text-base text-stone-600 mt-1">
+                Shorter findings publish continuously as{' '}
+                <Link href="/blog" className="text-amber-800 hover:underline">
+                  research notes
+                </Link>{' '}
+                — the write-ups linked throughout this page.
+              </div>
+            </li>
+          </ul>
+        </Section>
+
         <Section kicker="Method" title="How to check us">
           <p className="mb-4">
             Everything here is reproducible on purpose. The site and the evaluation code are open
@@ -356,6 +421,35 @@ export default function ResearchProgrammePage() {
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues" className="text-amber-800 hover:underline">
               public issues
             </a>.
+          </p>
+        </Section>
+
+        <Section kicker="The lab" title="Who does this work">
+          <p className="mb-4">
+            Source Library is a project of{' '}
+            <a href="https://wisdomfrontiers.org" className="text-amber-800 hover:underline">
+              Wisdom Frontiers
+            </a>
+            , a nonprofit devoted to human wisdom in the age of AI. The research programme is run by
+            the same small team that runs the library, because the library is the instrument: a
+            production digitization pipeline over tens of thousands of historical books, with full
+            revision history and prompt provenance on every page, is a laboratory that cannot be
+            assembled any other way.
+          </p>
+          <p className="mb-4">
+            To cite this programme or a specific result, cite the research note or dataset version
+            it comes from, e.g.:{' '}
+            <span className="text-stone-500">
+              Source Library (2026). Source Library OCR-Eval Dataset v0.2. Wisdom Frontiers.
+              https://sourcelibrary.org/research
+            </span>
+          </p>
+          <p>
+            For collaboration, data access beyond the public API, or scholar residencies, write to{' '}
+            <a href="mailto:derek@sourcelibrary.org" className="text-amber-800 hover:underline">
+              derek@sourcelibrary.org
+            </a>
+            .
           </p>
         </Section>
 
