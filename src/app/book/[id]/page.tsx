@@ -951,7 +951,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // through to a real interior page rather than showing a bookplate.
       const plate = galleryImages.find(g => isRepresentativePlate(g.description) && notCover(g.thumbnail_url || g.extracted_url || g.image_url));
       if (plate) {
-        const src = plate.thumbnail_url || plate.extracted_url || plate.image_url;
+        // Hi-res first: the extracted crop / full image, not the small thumbnail.
+        const src = plate.extracted_url || plate.image_url || plate.thumbnail_url;
         if (src) {
           const pageId = plate.id.match(/^(.+)[:\-]\d+$/)?.[1];
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
