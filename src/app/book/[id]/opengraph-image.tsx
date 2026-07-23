@@ -51,7 +51,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const book = data?.book;
   const bg = data?.bg;
 
-  const title = clamp(book?.display_title || book?.title || 'Untitled', 66);
+  const title = clamp(book?.display_title || book?.title || 'Untitled', 56);
   const author = book?.author ? clamp(String(book.author), 46) : '';
   const cover = book?.thumbnail || (book as { image_display?: string } | undefined)?.image_display;
   const original = book?.display_title && book.title && book.display_title !== book.title ? clamp(book.title, 64) : '';
@@ -62,7 +62,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const chips = [book?.language, book?.pages_count ? `${book.pages_count} scans` : '', dateChip].filter(Boolean) as string[];
 
   // Title fits ~2 lines: scale the font by length, and hard-cap the height.
-  const titleFont = title.length > 52 ? 36 : title.length > 38 ? 40 : title.length > 22 ? 46 : 56;
+  const titleFont = title.length > 48 ? 32 : title.length > 30 ? 38 : title.length > 18 ? 44 : 54;
 
   return new ImageResponse(
     (
@@ -81,7 +81,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
         <div style={{ position: 'relative', display: 'flex', width: '100%', height: '100%', alignItems: 'center', gap: 52, padding: '54px 64px' }}>
           {cover ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={cover} alt="" style={{ maxWidth: '50%', maxHeight: 500, objectFit: 'contain', filter: 'drop-shadow(0 24px 44px rgba(0,0,0,0.62))' }} />
+            <img src={cover} alt="" style={{ maxWidth: '42%', maxHeight: 480, objectFit: 'contain', filter: 'drop-shadow(0 24px 44px rgba(0,0,0,0.62))' }} />
           ) : null}
 
           {/* Meta — no action buttons */}
