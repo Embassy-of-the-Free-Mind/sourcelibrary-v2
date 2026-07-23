@@ -46,6 +46,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { once } from 'node:events';
+import readline from 'node:readline';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { stripEditorialWrappers } from '../lib/strip-editorial-wrappers.mjs';
 
@@ -110,6 +111,23 @@ function extractAnnotations(raw, tags) {
   return Object.keys(out).length ? out : null;
 }
 
+// Streaming file helpers — shards exceed Node's 2 GiB readFileSync cap (the
+// Latin shard alone is 4 GB gzipped; the first full build crashed at the
+// checksum step after 11 hours of clean building).
+function sha256Stream(p) {
+  return new Promise((resolve, reject) => {
+    const h = crypto.createHash('sha256');
+    fs.createReadStream(p).on('data', d => h.update(d)).on('end', () => resolve(h.digest('hex'))).on('error', reject);
+  });
+}
+async function* shardLines(p) {
+  const rl = readline.createInterface({
+    input: fs.createReadStream(p).pipe(zlib.createGunzip()),
+    crlfDelay: Infinity,
+  });
+  for await (const line of rl) if (line) yield line;
+}
+
 const ZWC_RE = /[​‌‍⁠﻿]/;
 const WRAPPER_TAG_RE = /<\/?(?:meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc)>/i;
 
@@ -126,21 +144,8 @@ function bookFilter() {
   };
 }
 
-async function build() {
-  fs.mkdirSync(DIR, { recursive: true });
-  const excluded = EXCLUDE_FILE
-    ? new Set(JSON.parse(fs.readFileSync(EXCLUDE_FILE, 'utf8')))
-    : new Set();
-
-  const { client, db } = await getScriptClient({ noTimeout: true });
-
-  // Excluded-with-reason accounting for the manifest — "covered everything"
-  // must never be implied by silence.
-  const baseCount = await db.collection('books').countDocuments({
-    visible: true, pages_count: { $gt: 0 },
-    ...(LANGUAGE ? { language: LANGUAGE } : {}),
-  });
-  const exclusions = {
+async function computeExclusions(db) {
+  return {
     artwork: await db.collection('books').countDocuments({
       visible: true, pages_count: { $gt: 0 }, content_type: 'artwork',
       ...(LANGUAGE ? { language: LANGUAGE } : {}),
@@ -161,6 +166,96 @@ async function build() {
     }),
     exclude_file: 0, // counted during the walk
   };
+}
+
+function buildManifest({ exclusions, counts, shardEntries }) {
+  return {
+    dataset: 'Source Library corpus snapshot',
+    version: VERSION,
+    created: new Date().toISOString(),
+    license: CONTENT_LICENSE,
+    provenance_marks: 'none — text is delivered clean; Trithemian zero-width provenance marks exist only on public serve surfaces, never in licensed exports',
+    living_corpus: 'texts are continuously improved (new models, human revision, scholarship); the corpus subscription includes refreshed snapshots and a delta manifest between versions',
+    eligibility: {
+      filter: 'visible books with processed pages, non-artwork, numeric publication year <= max_year',
+      max_year: MAX_YEAR,
+      ...(LANGUAGE ? { language: LANGUAGE } : {}),
+      ...(LIMIT ? { limit: LIMIT, note: 'VALIDATION BUILD — not a licensable snapshot' } : {}),
+    },
+    excluded: exclusions,
+    counts,
+    word_count_note: 'whitespace tokens over cleaned text; undercounts space-less scripts (Chinese, Tibetan, …) — see per-shard chars',
+    quality_flags: {
+      oversize: `text over ${MAX_PAGE_CHARS} chars`,
+      entity_padding: 'more than 50 HTML entities (degenerate OCR padding, issue #3273)',
+      low_ttr: 'type/token ratio < 0.15 over 120+ words (repetition loop, issue #3273)',
+    },
+    shards: shardEntries.sort((a, b) => b.words - a.words),
+  };
+}
+
+// Rebuild the manifest + run verify from an existing --dir of shards, without
+// re-reading Mongo page data. Recovery path for a completed build that died
+// in finalization (the 2 GiB readFileSync crash), and the basis for future
+// resume logic. Counts are recomputed by streaming the actual shard bytes —
+// the numbers describe the artifact itself, not the build's memory of it.
+async function finalizeOnly() {
+  const files = fs.readdirSync(DIR).filter(f => /^books-.*\.jsonl\.gz$/.test(f)).sort();
+  if (!files.length) { console.error(`[finalize] no shards in ${DIR}`); process.exit(1); }
+  const { client, db } = await getScriptClient({ noTimeout: true });
+  const exclusions = await computeExclusions(db);
+
+  let nBooks = 0, nPages = 0, nWords = 0, nFlagged = 0;
+  const shardEntries = [];
+  for (const file of files) {
+    const p = path.join(DIR, file);
+    const s = { file, language: file.replace(/^books-|\.jsonl\.gz$/g, ''), books: 0, pages: 0, words: 0, chars: 0 };
+    for await (const line of shardLines(p)) {
+      const book = JSON.parse(line);
+      s.books++;
+      for (const pg of book.pages) {
+        s.pages++;
+        if (pg.ocr_flags?.length || pg.translation_flags?.length) nFlagged++;
+        for (const text of [pg.ocr, pg.translation]) {
+          if (!text) continue;
+          s.words += text.replace(/&[a-z]+;/g, ' ').split(/\s+/).filter(Boolean).length;
+          s.chars += text.length;
+        }
+      }
+    }
+    s.sha256 = await sha256Stream(p);
+    s.bytes = fs.statSync(p).size;
+    nBooks += s.books; nPages += s.pages; nWords += s.words;
+    shardEntries.push(s);
+    console.log(`[finalize] ${file}: ${s.books} books, ${s.pages.toLocaleString()} pages, ${s.words.toLocaleString()} words`);
+  }
+
+  const manifest = buildManifest({
+    exclusions,
+    counts: { books: nBooks, pages: nPages, words: nWords, flagged_pages: nFlagged },
+    shardEntries,
+  });
+  fs.writeFileSync(path.join(DIR, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  console.log(`[finalize] done: ${nBooks.toLocaleString()} books, ${nPages.toLocaleString()} pages, ${nWords.toLocaleString()} words, ${files.length} shards`);
+  if (!SKIP_VERIFY) await verify(db, manifest);
+  await client.close();
+}
+
+async function build() {
+  fs.mkdirSync(DIR, { recursive: true });
+  const excluded = EXCLUDE_FILE
+    ? new Set(JSON.parse(fs.readFileSync(EXCLUDE_FILE, 'utf8')))
+    : new Set();
+
+  const { client, db } = await getScriptClient({ noTimeout: true });
+
+  // Excluded-with-reason accounting for the manifest — "covered everything"
+  // must never be implied by silence.
+  const baseCount = await db.collection('books').countDocuments({
+    visible: true, pages_count: { $gt: 0 },
+    ...(LANGUAGE ? { language: LANGUAGE } : {}),
+  });
+  const exclusions = await computeExclusions(db);
 
   const books = await db.collection('books')
     .find(bookFilter())
@@ -285,36 +380,18 @@ async function build() {
     s.gz.end();
   })));
 
-  const sha256 = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
-  const manifest = {
-    dataset: 'Source Library corpus snapshot',
-    version: VERSION,
-    created: new Date().toISOString(),
-    license: CONTENT_LICENSE,
-    provenance_marks: 'none — text is delivered clean; Trithemian zero-width provenance marks exist only on public serve surfaces, never in licensed exports',
-    living_corpus: 'texts are continuously improved (new models, human revision, scholarship); the corpus subscription includes refreshed snapshots and a delta manifest between versions',
-    eligibility: {
-      filter: 'visible books with processed pages, non-artwork, numeric publication year <= max_year',
-      max_year: MAX_YEAR,
-      ...(LANGUAGE ? { language: LANGUAGE } : {}),
-      ...(LIMIT ? { limit: LIMIT, note: 'VALIDATION BUILD — not a licensable snapshot' } : {}),
-    },
-    excluded: exclusions,
+  const shardEntries = await Promise.all([...shards.values()].map(async s => ({
+    file: path.basename(s.path),
+    language: s.lang,
+    books: s.books, pages: s.pages, words: s.words, chars: s.chars,
+    sha256: await sha256Stream(s.path),
+    bytes: fs.statSync(s.path).size,
+  })));
+  const manifest = buildManifest({
+    exclusions,
     counts: { books: nBooks, pages: nPages, words: nWords, flagged_pages: nFlagged },
-    word_count_note: 'whitespace tokens over cleaned text; undercounts space-less scripts (Chinese, Tibetan, …) — see per-shard chars',
-    quality_flags: {
-      oversize: `text over ${MAX_PAGE_CHARS} chars`,
-      entity_padding: 'more than 50 HTML entities (degenerate OCR padding, issue #3273)',
-      low_ttr: 'type/token ratio < 0.15 over 120+ words (repetition loop, issue #3273)',
-    },
-    shards: [...shards.values()].map(s => ({
-      file: path.basename(s.path),
-      language: s.lang,
-      books: s.books, pages: s.pages, words: s.words, chars: s.chars,
-      sha256: sha256(s.path),
-      bytes: fs.statSync(s.path).size,
-    })).sort((a, b) => b.words - a.words),
-  };
+    shardEntries,
+  });
   fs.writeFileSync(path.join(DIR, 'manifest.json'), JSON.stringify(manifest, null, 2));
   console.log(`[build] done: ${nBooks.toLocaleString()} books, ${nPages.toLocaleString()} pages, ${nWords.toLocaleString()} words, ${shards.size} shards`);
 
@@ -340,8 +417,7 @@ async function verify(db, manifest) {
   let sampled = 0, seen = 0;
   const sample = [];
   for (const s of manifest.shards) {
-    const lines = zlib.gunzipSync(fs.readFileSync(path.join(DIR, s.file))).toString('utf8').split('\n').filter(Boolean);
-    for (const line of lines) {
+    for await (const line of shardLines(path.join(DIR, s.file))) {
       const book = JSON.parse(line);
       for (const p of book.pages) {
         seen++;
@@ -371,4 +447,5 @@ async function verify(db, manifest) {
   }
 }
 
-build().catch(err => { console.error(err); process.exit(1); });
+(has('--finalize-only') ? finalizeOnly() : build())
+  .catch(err => { console.error(err); process.exit(1); });
