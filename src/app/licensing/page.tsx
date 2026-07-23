@@ -138,6 +138,15 @@ export default function LicensingPage() {
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4 mb-4">
+            These are the standard terms for training use — and the rates at which
+            unlicensed use is invoiced. Scoped subscriptions at lower annual rates
+            — a single language corpus, one scholarly domain, or the full
+            collection delivered through our streaming dataset API — are available
+            to partners who take the data cooperatively; see{' '}
+            <Link href="/dataset" className="text-accent-rust hover:underline">the Dataset page</Link>{' '}
+            for plans and a free evaluation tier.
+          </p>
+          <p className="text-secondary leading-relaxed mb-4">
             The license covers training, fine-tuning, and embedding-index use of our
             translations, transcriptions, and editorial content, with attribution.
             What you&rsquo;re licensing is unique: billions of words of <em>aligned
