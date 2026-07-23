@@ -442,6 +442,64 @@ export function greedySpanStats(R, O) {
   };
 }
 
+/**
+ * WINDOWED error rate — the cross-engine-fair companion to subsequenceErrorRate.
+ *
+ * Free skips are correct at PAGE level: a real page carries headers, marginalia
+ * and commentary the reference passage does not, and charging for them would
+ * punish an engine for transcribing the page it was given. But free skips must
+ * not be free INSIDE the matched span, and that is where the passage-scoped
+ * scorer breaks down as an engine comparison.
+ *
+ * Measured on the anchor pages (2026-07-21): Tesseract scored 91.0% on the
+ * Aeneid I page under free-skip scoring while rendering `arma uirumque cano` as
+ * `mrmay uiritqcanoya` and `profugus lauiniaque` as `p m imi k`. It emitted 11.8x
+ * the reference length; the scorer threaded the surviving correct words through
+ * the junk at zero cost. The inflation rose monotonically with output/reference
+ * ratio across every anchor page, so it does NOT cancel when two engines are
+ * differenced — the noisier engine is flattered more.
+ *
+ * This measure keeps skips free OUTSIDE the matched span (finding the passage on
+ * a busy page) and charges for insertions INSIDE it (junk between the passage's
+ * own characters). Window bounds come from greedy in-order matching, which can
+ * mis-anchor on common units, so treat the window as a good estimate rather than
+ * an exact alignment.
+ */
+export function windowedErrorRate(refNorm, outNorm) {
+  const R = [...(refNorm || '').replace(/ /g, '')];
+  const O = [...(outNorm || '').replace(/ /g, '')];
+  if (!R.length) return { windowedCer: 0, windowUnits: 0, anchored: true };
+  if (!O.length) return { windowedCer: 1, windowUnits: 0, anchored: false };
+
+  // FITTING ALIGNMENT (approximate substring match). Leading and trailing
+  // insertions are free — a real page carries headers, apparatus and neighbouring
+  // text the reference passage does not, and charging for them would punish an
+  // engine for transcribing the page it was given. Interior insertions ARE
+  // charged: junk between the passage's own characters is OCR noise.
+  //
+  // dp[0][j] = 0 lets the match start anywhere; min over the last row lets it end
+  // anywhere. No anchor heuristics: head/tail string anchors fail exactly where
+  // this matters, because reference tails recur in repetitive text (Genesis 1's
+  // "et uidit deus quod esset bonum" matched a later verse and swallowed verses
+  // 6-13, scoring a correct transcription at 34%).
+  let prev = new Array(O.length + 1).fill(0);
+  let cur = new Array(O.length + 1);
+  for (let i = 1; i <= R.length; i++) {
+    cur[0] = i;                                   // O exhausted: delete rest of R
+    const ri = R[i - 1];
+    for (let j = 1; j <= O.length; j++) {
+      const sub = prev[j - 1] + (ri === O[j - 1] ? 0 : 1);
+      const del = prev[j] + 1;                    // reference char missing
+      const ins = cur[j - 1] + 1;                 // interior junk — CHARGED
+      cur[j] = sub < del ? (sub < ins ? sub : ins) : (del < ins ? del : ins);
+    }
+    [prev, cur] = [cur, prev];
+  }
+  let d = Infinity;
+  for (let j = 0; j <= O.length; j++) if (prev[j] < d) d = prev[j];
+  return { windowedCer: Math.min(1, d / R.length), windowUnits: R.length, anchored: true };
+}
+
 // Guard thresholds: measured separation is wide on both sides (right page ~0%,
 // wrong text 88%+ at word level; ctext baseline uses 0.30 at char level).
 export const GUARD_THRESHOLDS = { cjk: 0.30, word: 0.35 };
@@ -452,12 +510,35 @@ export const GUARD_THRESHOLDS = { cjk: 0.30, word: 0.35 };
  * `aligned:false` means the reference is not cleanly present (wrong book/page,
  * divergent recension, or a translation decoy) — NOT an OCR failure; such pages
  * must be excluded from accuracy roll-ups, never averaged in.
+ *
+ * TWO accuracy numbers are returned and they BRACKET the truth; quote both:
+ *   charAccuracy         — free-skip subsequence. UPPER bound. Junk between
+ *                          reference characters is free, so it flatters noisy
+ *                          engines (measured 12.9pp inflation for Tesseract vs
+ *                          5.7pp for Gemini on the anchor pages — the noisier
+ *                          engine gained 2.3x more, so the bias does NOT cancel
+ *                          when two engines are differenced).
+ *   charAccuracyWindowed — fitting alignment. LOWER bound. Charges interior
+ *                          insertions, which correctly penalises OCR noise but
+ *                          also charges for legitimate page material interleaved
+ *                          inside the passage (marginal cross-references sitting
+ *                          between verses take a correct Vulgate transcription
+ *                          from 100% to 65%).
+ * The bracket is tight on clean single-column pages (Gemini: 100.0/100.0) and
+ * wide where apparatus interleaves — and its WIDTH is itself a useful signal,
+ * measuring how much non-reference material sits inside the passage span.
+ * For cross-engine comparison use the windowed number, or report both.
  */
 export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds = GUARD_THRESHOLDS) {
   if (script === 'cjk') {
     const r = subsequenceCER(reference, ocr);
-    const span = greedySpanStats([...normalizeCJK(reference)], [...normalizeCJK(ocr)]);
-    return { aligned: r.cer <= thresholds.cjk, guard: { type: 'char', value: r.cer }, ...r, charAccuracy: 1 - r.cer, spanDispersion: span.spanDispersion };
+    const Rc = [...normalizeCJK(reference)], Oc = [...normalizeCJK(ocr)];
+    const span = greedySpanStats(Rc, Oc);
+    const w = windowedErrorRate(normalizeCJK(reference), normalizeCJK(ocr));
+    return { aligned: r.cer <= thresholds.cjk, guard: { type: 'char', value: r.cer }, ...r,
+      charAccuracy: 1 - r.cer,
+      charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
+      spanDispersion: span.spanDispersion };
   }
   const guard = subsequenceWER(reference, ocr, script);
   const aligned = guard.wer <= thresholds.word;
@@ -465,5 +546,9 @@ export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds
   const R = [...normalizeForScript(reference, script).replace(/ /g, '')];
   const O = [...normalizeForScript(ocr, script).replace(/ /g, '')];
   const r = subsequenceErrorRate(R, O, 12);
-  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r, charAccuracy: 1 - r.cer, spanDispersion: guard.spanDispersion };
+  const w = windowedErrorRate(normalizeForScript(reference, script), normalizeForScript(ocr, script));
+  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r,
+    charAccuracy: 1 - r.cer,
+    charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
+    spanDispersion: guard.spanDispersion };
 }

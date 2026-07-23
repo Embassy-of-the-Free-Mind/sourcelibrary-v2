@@ -29,6 +29,7 @@ import { saveResults, loadLatestResults, listResults, generateConsistencyReport,
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -507,8 +508,13 @@ async function cmdScorecard() {
         const outputs = [];
         let cost = 0, best = null, refused = 0;
         for (let i = 0; i < runs; i++) {
+          // --delay=MS throttles between model calls — free-tier endpoints
+          // (Gemma) drop consecutive rapid requests with bare fetch failures.
+          if (args.delay) await new Promise(r => setTimeout(r, parseInt(args.delay)));
           try {
-            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000 });
+            // Pass the source URL only when the buffer is unmodified — width-resized
+            // arms must not leak the full-res URL to URL-preferring runners.
+            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000, ...(args.width ? {} : { imageUrl }) });
             cost += res.costUsd;
             // Raw outputs are dumped so runs can be RE-scored offline when
             // normalization improves — model calls are the expensive part.
@@ -575,7 +581,17 @@ async function cmdScorecard() {
 
   // Scoped runs save under their own name — saveResults keys the filename on
   // kind+date alone, so an --only run would otherwise clobber the full scorecard.
-  saveResults(only ? `scorecard-${only.replace(/[^a-z0-9._-]+/gi, '-')}` : 'scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
+  // Long --only regexes must be truncated (a many-slug alternation once blew
+  // past NAME_MAX and ENAMETOOLONG'd after all paid calls had completed); a
+  // short hash keeps distinct scopes from colliding. The full regex is still
+  // recorded in the JSON body's `only` field.
+  let scope = '';
+  if (only) {
+    const slug = only.replace(/[^a-z0-9._-]+/gi, '-');
+    const hash = createHash('sha256').update(only).digest('hex').slice(0, 8);
+    scope = `-${slug.length > 60 ? `${slug.slice(0, 60)}-${hash}` : slug}`;
+  }
+  saveResults(`scorecard${scope}`, { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────

@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 1,
+  "only": "german-hegel-logik",
+  "summary": [
+    {
+      "language": "German",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 403,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+          "bookId": "69afe356cf56258c93891081",
+          "pageNumber": 148,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 403,
+          "matched": 403,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
