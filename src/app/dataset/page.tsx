@@ -219,7 +219,7 @@ export default async function DatasetPage() {
             { name: 'Single Language', price: '$4,990/yr', scope: 'One language corpus, unlimited', note: 'or $499/mo' },
             { name: 'Domain', price: '$14,990/yr', scope: 'One scholarly domain, unlimited', note: 'or $1,499/mo' },
             { name: 'Full Collection', price: '$49,990/yr', scope: 'All languages, all domains', note: 'or $4,999/mo' },
-            { name: 'Enterprise', price: 'Custom', scope: 'Parquet exports, exclusivity, SLA', note: null },
+            { name: 'Enterprise', price: 'Custom', scope: 'Parquet exports, custom scopes, SLA', note: null },
           ].map((tier) => (
             <div key={tier.name} className="flex items-baseline justify-between gap-4 px-5 py-4 bg-white">
               <div className="flex-1">
@@ -247,6 +247,16 @@ export default async function DatasetPage() {
             AI &amp; Data-Mining Licensing
           </Link>{' '}
           for the full policy.
+        </p>
+
+        <p className="text-[#666] text-[15px] leading-[1.75] mt-4 max-w-2xl">
+          Building a retrieval or RAG product rather than training? Grounding
+          with attribution is permitted under our content signals; a{' '}
+          <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
+            Grounding API subscription
+          </Link>{' '}
+          ($499/mo, or $1,999/mo with SLA) removes the daily page budgets for
+          retrieval at scale.
         </p>
 
         <div className="flex flex-wrap gap-4 mt-8">
