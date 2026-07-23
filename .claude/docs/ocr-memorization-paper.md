@@ -285,6 +285,42 @@ its factors; it cannot say whether 87% agreement means 87% correct. The regressi
 queue derived from it is explicitly unverified (priors longer than a page can hold
 still rank at the top).
 
+### Calibration scorecard (2026-07-24) — agreement→accuracy, anchors → corpus
+
+`scripts/eval/calibration-scorecard.mjs` (offline, zero cost; rebuildable) →
+`results/calibration-scorecard-2026-07-23.{json,md}`. Step 1 pairs every native
+(non-arm) model output against every other on the 44 anchor pages — 2,023
+cross-model pairs, 11 models — computing the corpus agreement metric per pair and
+free-skip accuracy vs the published transcription per side. Step 2 pushes the
+87,235 `is_live` eligible revision pairs through an isotonic fit (non-canonical
+pairs only) into a per-language × per-century scorecard.
+
+13. **The consensus-failure r split reproduces at scale.** r(agreement, accuracy)
+   = 0.688 on non-canonical pairs (0.749 windowed) vs 0.516 on canonical (0.415
+   on canonical spaceless — the recitation-heavy cell). Same direction as the
+   pilot (0.75/0.49), now on 14× the pairs. Agreement predicts accuracy only
+   where models cannot recite; this is the empirical license for fitting on
+   non-canonical rows only, and contribution 2's failure condition measured as a
+   correlation collapse.
+14. **The scorecard answers the reader question, with era gradients intact.**
+   Anchored cells: German 99.1% estimated accuracy (n=20,667 pairs), Latin 96.9%
+   (n=29,309; 16th-c 96.2% → 18th-c 99.0%), Greek 95.3% overall but 16th-c Greek
+   is flagged unstable (median agreement 46.6%, 55% of pairs below 0.5), Hebrew
+   unstable at (89.3%)* with 17.8% of pairs flagged broken. Extrapolated (†)
+   cells: English 99.2%, French 98.5%, Dutch 98.3%. Tibetan gets NO estimate:
+   57.3% of its live pairs have a degenerate/commentary side and median agreement
+   is 27.5% — "unreliable and flagged" is the scorecard entry itself.
+15. **Two honesty rails matter more than the point estimates.** (a) The curve's
+   low end is soft: anchor pairs below 0.3 agreement still average ~78% free-skip
+   accuracy (models disagree about NON-reference page material), while corpus
+   low-agreement pairs may be genuinely broken text — a failure shape anchors
+   never exhibit — so cells with >25% low-agreement pairs carry an unstable
+   marker instead of a quotable rating. (b) Estimates lean HIGH twice over:
+   corpus pairs are within-Gemini-family (self-agreement shares failure modes)
+   and anchor accuracy is the free-skip upper bound. The scorecard is a
+   calibrated *estimate with flags*, not a measurement; the IA-OCR baseline arm
+   supplies the independent second reading it lacks.
+
 ## Related work — verified dossier (2026-07-19 sweep; every entry abstract-checked)
 
 ### Contamination / benchmark leakage
@@ -352,15 +388,17 @@ the reader question); (2) the IA-OCR corpus baseline (free, zero AI cost); (3) t
 degradation/occlusion membership pilot (~$2–5, validated against the pinned pages);
 (4) more pairs / the canonicity slope. Details below.
 
-- **Calibration scorecard — the reader-first deliverable (free).** Fit the
-  agreement→accuracy curve on NON-CANONICAL anchor rows only (pilot: r=0.75 noncanon
-  vs 0.49 canon — recitation fakes agreement), stratified by script and era; apply it
-  to the 109,953 revision pairs to produce a calibrated per-page accuracy *estimate*
-  corpus-wide at zero marginal model cost. Product form: a published per-script ×
-  per-century quality scorecard on /research ("our Latin print is ~99%, our Tibetan
-  is unreliable and flagged"), eventually a per-book/per-page confidence surface in
-  the reader. This is the paper's most useful contribution AND the answer to "how
-  good is Source Library's text" — it outranks new page-hunting.
+- ~~**Calibration scorecard — the reader-first deliverable (free).**~~ RUN
+  2026-07-24 (`scripts/eval/calibration-scorecard.mjs` →
+  `results/calibration-scorecard-*.{json,md}`; results 13–15 below). Fitted on
+  non-canonical anchor pairs only, applied to the 87,235 live-side eligible
+  revision pairs. Remaining from the original plan: the **/research product
+  page** (needs Derek's sign-off on publishing the numbers), the per-book/
+  per-page confidence surface in the reader, and — the binding measurement gap —
+  **non-canonical spaceless anchors** (every Chinese anchor is a canonical
+  classic, so no spaceless fit exists and CJK/Tibetan cells get agreement only).
+  Original notes: pilot r=0.75 noncanon vs 0.49 canon — recitation fakes
+  agreement; stratify by script and era.
 
 - **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** Most exportable
   books carry an `ia_identifier`, and Internet Archive publishes its own OCR
