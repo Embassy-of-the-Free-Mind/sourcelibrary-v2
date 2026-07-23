@@ -99,7 +99,10 @@ const OCR_ANNOTATION_TAGS = ['language', 'script', 'page-type', 'columns', 'scan
 function extractAnnotations(raw, tags) {
   const out = {};
   for (const tag of tags) {
-    const m = raw.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+    // Interior bounded: an unclosed tag on a degenerate page turns a lazy
+    // unbounded interior into an O(n²) scan (wedged the first full build for
+    // an hour at 100% CPU — same failure family as #3195).
+    const m = raw.match(new RegExp(`<${tag}>([\\s\\S]{0,20000}?)<\\/${tag}>`, 'i'));
     if (!m) continue;
     const content = m[1].replace(/<[^>]{1,60}>/g, ' ').replace(/\s+/g, ' ').trim();
     if (content) out[tag.replace(/-/g, '_')] = content;
@@ -198,8 +201,11 @@ async function build() {
 
   let nBooks = 0, nPages = 0, nWords = 0, nFlagged = 0;
   let nextPages = workList.length ? fetchPages(workList[0].id) : null;
+  const statusPath = path.join(DIR, 'current-book.txt');
   for (let b = 0; b < workList.length; b++) {
     const book = workList[b];
+    // Breadcrumb for wedge diagnosis: if the process stalls, this names the book.
+    fs.writeFileSync(statusPath, `${b} ${book.id} ${book.slug} lang=${book.language || '?'}\n`);
     const pages = await nextPages;
     if (b + 1 < workList.length) nextPages = fetchPages(workList[b + 1].id);
     if (excluded.has(book.id)) { exclusions.exclude_file++; continue; }
@@ -208,6 +214,15 @@ async function build() {
     const outPages = [];
     for (const page of pages) {
       const rec = { id: page.id, n: page.page_number };
+      // Length-guard BEFORE any regex work (#3195): monster junk pages are
+      // flagged and skipped whole, never fed to the strip/extract pipeline.
+      for (const key of ['ocr', 'translation']) {
+        if ((page[key]?.data?.length ?? 0) > MAX_PAGE_CHARS) {
+          rec[`${key}_flags`] = ['oversize'];
+          page[key] = undefined;
+          nFlagged++;
+        }
+      }
       if (page.translation?.data) {
         const a = extractAnnotations(page.translation.data, TRANSLATION_ANNOTATION_TAGS);
         if (a) rec.annotations = a;
