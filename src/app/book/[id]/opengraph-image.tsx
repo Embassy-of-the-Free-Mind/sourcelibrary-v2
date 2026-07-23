@@ -51,7 +51,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const book = data?.book;
   const bg = data?.bg;
 
-  const title = clamp(book?.display_title || book?.title || 'Untitled', 78);
+  const title = clamp(book?.display_title || book?.title || 'Untitled', 66);
   const author = book?.author ? clamp(String(book.author), 46) : '';
   const cover = book?.thumbnail || (book as { image_display?: string } | undefined)?.image_display;
   const original = book?.display_title && book.title && book.display_title !== book.title ? clamp(book.title, 64) : '';
@@ -62,7 +62,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const chips = [book?.language, book?.pages_count ? `${book.pages_count} scans` : '', dateChip].filter(Boolean) as string[];
 
   // Title fits ~2 lines: scale the font by length, and hard-cap the height.
-  const titleFont = title.length > 58 ? 42 : title.length > 36 ? 50 : 60;
+  const titleFont = title.length > 52 ? 36 : title.length > 38 ? 40 : title.length > 22 ? 46 : 56;
 
   return new ImageResponse(
     (
