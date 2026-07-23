@@ -226,6 +226,65 @@ export default function ResearchProgrammePage() {
           <Notes slugs={['ocr-consistency', 'translation-collapse']} />
         </Section>
 
+        <Section kicker="Scorecard" title="So how accurate is our text?">
+          <p className="mb-4">
+            Honest answer, by script and century. These estimates come from calibrating
+            agreement between independent machine readings of the same pages against pages where
+            a published scholarly transcription lets us measure accuracy directly — fitted only on
+            passages the models have <em>not</em> memorised, for the reason Question 01 explains:
+            on famous texts, models reciting the same memorised passage agree with each other
+            while both misreport the page.
+          </p>
+          <div className="overflow-x-auto my-6">
+            <table className="w-full text-base border border-stone-200">
+              <thead>
+                <tr className="bg-stone-50 text-left font-body text-sm text-stone-500">
+                  <th className="px-4 py-2 font-semibold">Language, era</th>
+                  <th className="px-4 py-2 font-semibold text-right">Estimated character accuracy</th>
+                  <th className="px-4 py-2 font-semibold text-right">Independent double-readings</th>
+                </tr>
+              </thead>
+              <tbody className="font-body">
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">German, 1600–1900</td><td className="px-4 py-2 text-right">≈99.8%</td><td className="px-4 py-2 text-right">26,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">English, 1800–1900+</td><td className="px-4 py-2 text-right">≈99.8%</td><td className="px-4 py-2 text-right">12,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Latin, 1500–1800</td><td className="px-4 py-2 text-right">≈97%</td><td className="px-4 py-2 text-right">31,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Greek (polytonic print)</td><td className="px-4 py-2 text-right">≈93–100% per page</td><td className="px-4 py-2 text-right">12 reference pages</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Armenian (grabar)</td><td className="px-4 py-2 text-right">≈94–99% per page</td><td className="px-4 py-2 text-right">8 reference pages</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Hebrew</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">2 reference pages — too few</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Chinese, Japanese, Tibetan</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">no unmemorised reference pages exist yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mb-4">
+            Two honesty notes. The high-agreement estimates are conditional on the calibration
+            transferring from our reference pages to the wider corpus, and most double-readings
+            come from successive models in the same family, which are not fully independent.
+            And where the table says <em>not yet calibrated</em>, that is a statement about our
+            measurement, not about the text: Tibetan in particular we already know to be
+            unreliable and flag in the reader.
+          </p>
+          <p>
+            A second, fully independent check: Internet Archive&apos;s own OCR of the same scans
+            (a non-AI engine that cannot recite anything) agrees with our text at 87% on modern
+            English print and 81% on 19th-century French — an upper bound on combined error
+            that anyone can reproduce from public files. The full scorecard with fit quality,
+            confidence intervals, and every caveat is in{' '}
+            <a
+              href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/results/calibration-scorecard-2026-07-23.md"
+              className="text-amber-800 hover:underline"
+            >
+              the repository
+            </a>
+            .
+          </p>
+          <Open>
+            The anchor set is small (32 unmemorised reference pages), so most per-script fits
+            carry wide uncertainty, and the scripts we most need to certify — Hebrew, Chinese,
+            Tibetan — are exactly the ones without unmemorised reference pages yet. Growing that
+            set is the current work.
+          </Open>
+        </Section>
+
         <Section kicker="Question 05" title="How much of the historical record has never been translated?">
           <p className="mb-4">
             This is the question the library was founded on, and it is harder to answer than it sounds,
