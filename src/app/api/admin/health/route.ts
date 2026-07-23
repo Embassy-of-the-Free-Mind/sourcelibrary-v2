@@ -81,12 +81,17 @@ export const GET = withAdminAuth(async () => {
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
   const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
 
+  // Fetched ahead of the parallel batch: the supabase-sync check needs the
+  // pause flag to avoid alarming on gemini_usage lag while the pipeline is
+  // deliberately paused (nothing writes the table then).
+  const systemConfig = await db.collection('system_config')
+    .findOne({ _id: 'processing_control' as any });
+
   const [
     activeJobs,
     activeBatchJobs,
     errorRate,
     stalledBooks,
-    systemConfig,
     sqsDepths,
     recentCronRuns,
     supabaseSync,
@@ -148,9 +153,6 @@ export const GET = withAdminAuth(async () => {
       { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
     ]).toArray(),
 
-    // System config (pause flag)
-    db.collection('system_config').findOne({ _id: 'processing_control' as any }),
-
     // SQS queue depths (all queues in parallel)
     getQueueDepths(),
 
@@ -165,8 +167,8 @@ export const GET = withAdminAuth(async () => {
       }},
     ]).toArray(),
 
-    // Supabase sync health
-    getSupabaseSyncHealth().catch(() => null),
+    // Supabase sync health (pause-aware — see supabase-health.ts)
+    getSupabaseSyncHealth({ pipelinePaused: systemConfig?.paused === true }).catch(() => null),
 
     // 404 reports: last 24h vs previous 24h, plus top URL buckets.
     // not_found_reports is otherwise write-only — the provider-prefix strip
@@ -205,7 +207,11 @@ export const GET = withAdminAuth(async () => {
     // write-only until 2026-06-10.
     db.collection('embassy_errors').aggregate([
       { $match: { createdAt: { $gte: oneDayAgo } } },
-      { $group: { _id: '$kind', count: { $sum: 1 } } },
+      { $group: {
+        _id: '$kind',
+        count: { $sum: 1 },
+        unrepaired: { $sum: { $size: { $ifNull: ['$unrepaired', []] } } },
+      } },
     ], { maxTimeMS: 10000 }).toArray().catch(() => null),
 
     // Librarian turns + token usage (last 24h) — usage is persisted per AI
@@ -346,8 +352,10 @@ export const GET = withAdminAuth(async () => {
   // --- 11. Librarian (embassy chat) errors + usage (last 24h) ---
   {
     const errByKind: Record<string, number> = {};
-    for (const e of (librarianErrors || []) as Array<{ _id: string; count: number }>) {
+    let unrepairedCitations = 0;
+    for (const e of (librarianErrors || []) as Array<{ _id: string; count: number; unrepaired?: number }>) {
       errByKind[e._id || 'unknown'] = e.count;
+      if (e._id === 'broken_citation') unrepairedCitations = e.unrepaired || 0;
     }
     const totalLibErrors = Object.values(errByKind).reduce((a, b) => a + b, 0);
     const turns = (librarianTurns?.[0] || null) as {
@@ -355,12 +363,18 @@ export const GET = withAdminAuth(async () => {
       cachedTokens: number; turnsWithUsage: number;
     } | null;
     const turnCount = turns?.turns || 0;
+    // broken_citation rows are the citation guard CATCHING (and usually
+    // repairing) fabricated links (#3114) — the guard working, not a
+    // reader-facing failure. Only unrepaired links (the reader gets a
+    // dead-link disclaimer) count toward status; catches stay visible as info.
+    const effectiveErrors = (totalLibErrors - (errByKind['broken_citation'] || 0)) + unrepairedCitations;
     checks.librarian = {
       // Errors on a meaningful share of turns = something is broken for
       // real readers, not a one-off.
-      status: totalLibErrors > Math.max(5, turnCount * 0.2) ? 'warning' : 'ok',
+      status: effectiveErrors > Math.max(5, turnCount * 0.2) ? 'warning' : 'ok',
       errors_24h: totalLibErrors,
       errors_by_kind: errByKind,
+      citation_unrepaired_24h: unrepairedCitations,
       turns_24h: turnCount,
       ...(turns && turns.turnsWithUsage > 0 ? {
         avg_prompt_tokens: Math.round(turns.promptTokens / turns.turnsWithUsage),
