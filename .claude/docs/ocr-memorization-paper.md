@@ -92,7 +92,9 @@ is the likely resolution.
 
 ## Dataset design (summary; datasheet in dataset README)
 
-- 40 pinned pages (12 canonical / 28 non-canonical; Armenian 8, Greek 12, Latin 5,
+- 44 pinned pages (12 canonical / 32 non-canonical; four within-work pairs added
+  2026-07-23 with `canonicity_grade` + `same_work_contrast` fields; Armenian 9,
+  Greek 13, Latin 7,
   Hebrew 4, German 5, Chinese 6), 4 scripts + CJK, print + manuscript
   + woodblock, visually audited `page_class` covariates, **measured image resolution
   (0.64–17.4 MP, 27× range)**.
@@ -106,7 +108,7 @@ is the likely resolution.
   proved recitation (a 1450 Mishnah MS; a Daxue Huowen page) — the incident that
   motivated the whole design.
 
-## Results (n=40 pages, 1,077 observations; rebuilt 2026-07-19 evening)
+## Results (n=44 pages, 980 reference-scored observations; rebuilt 2026-07-23 — results 1–8 quote the 2026-07-19 n=40 build)
 
 > **RE-DERIVED 2026-07-21 — and the result is a CONFOUND, not a correction.**
 > Observations now carry `char_accuracy_windowed` + `bracket_width` alongside the
@@ -197,6 +199,54 @@ Reproduce with `report-canonical-gap.mjs` (main battery) and `report-arms.mjs`
    on canonical Greek, while reaching 99.6% on non-canonical Greek. A specialist
    OCR system with no recitation channel is the natural control group for the
    subsidy argument, and its pooled gap is the most negative in the set (−1.95pp).
+
+### Within-work canonicity pairs (2026-07-23; PR #3320 rows, sweep in ocr-observations-2026-07-23.jsonl)
+
+Four pairs pin a hyper-canonical and a low-canonicity passage of the SAME work in the
+SAME held scan (edition, typeface, scan quality held constant by construction; rows
+carry `canonicity_grade` + `same_work_contrast`): Vulgate Genesis 1 ↔ Genesis 5
+begat-list (1566 Louvain), Aeneid I ↔ X.362-382 (1580 Meyen), Iliad I ↔ XIII.493-517
+(1555 MS Rouse 358), Zohrab John 1 ↔ 1 Chronicles 1 (1805). Sweep: pro, flash, lite,
+sonnet5, mistral-ocr ×2-3 + pipeline, ~$1.2 total. Per-pair aligned-mean accuracy
+(raw in parentheses where alignment failed):
+
+9. **The manuscript pair is the headline: the within-work gradient is real and large
+   where everything is held constant.** Same 1555 scribe, same page style, light
+   density both sides. Canonical Iliad I: pro/flash/lite all read **100.0%**, sonnet5
+   99.4% — perfect scores on 16th-c. Greek cursive, which the anti-recitation
+   protocol itself says to treat as recitation flags. Mid-poem Iliad XIII: pro 90.7%
+   (−9.3pp), lite 94.4% (−5.6), flash 97.2% (−2.8), sonnet5@w2000 94.8% (−4.6, width
+   caveat below), pipeline 99.1% (−0.9). On manuscript Greek the subsidy is 3–9pp
+   with page difficulty removed by construction.
+10. **On clean print the within-work gradient is small (0–2pp) — and the interesting
+   failure is behavioral, not character-level.** Vulgate pair (readers only): sonnet5
+   −1.1pp, lite −2.0pp, mistral-ocr −0.3pp, pipeline flat at 100/100. But pro and
+   flash *fail alignment* on the begat-list while reading Genesis 1 fine (flash raw
+   98.7% canon vs 46.4% noncanon; pro raw 93.9 vs 54.2): the repetitive genealogy
+   induces the truncation/scramble failure mode in exactly the models prone to it.
+   Aeneid pair: flat for every model (pro +0.3, sonnet5 +0.1, flash 0.0, lite −0.3,
+   mistral +0.5, pipeline −1.0) — consistent with commentary layout dominating and
+   with Aeneid X being only medium-low canonicity (it is still the Aeneid), and
+   measured against a cross-edition reference that undercounts the noncanon side
+   (~8 documented 1580-vs-modern divergences).
+11. **The Zohrab pair is a design lesson, not a subsidy estimate: within-work does
+   not mean within-difficulty.** The direction *inverts* — canonical John 1 scores
+   WORSE than the Chronicles genealogy for every engine (lite 92.9 vs 95.7; pro
+   1/3 aligned vs 2/3; flash raw 15.9 vs 97.5) — because 480 pages apart the NT
+   page is typographically harder. In a large composite volume, pair pages from the
+   same quire, not just the same work. Kept as a documented negative control.
+12. **Input caps are a failure mode of their own.** claude-sonnet-5 returned API
+   400s on the native-resolution Iliad XIII scan (5.8MB archived image > Anthropic's
+   5MB cap) — it cannot see the page at all at native res; its cell ran at
+   `@w2000` (2.1MB), which is also closer to the canonical page's 1.66MP. Echoes
+   result 6: above minimal legibility, model *behavior* (output budgets, input
+   caps), not optics, is the binding constraint. mistral-ocr failed alignment on
+   BOTH sides of the manuscript pair (raw 79.2 canon / 44.0 noncanon) — the
+   categorical-failure pattern of result 8 extends to manuscripts.
+
+Design note: pooled across the four pairs these effects would largely cancel
+(9.3pp manuscript gap, ~1pp print gaps, one inverted pair) — the within-work
+gradient must be reported per-pair, which is the point of pinning pairs.
 
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
@@ -295,6 +345,87 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Experiments planned (each cheap, each targets one confound)
 
+**Priority order (Derek, 2026-07-23) — reader-first, then membership, then expansion.**
+The organizing question is not the research agenda's but the reader's: *how accurate is
+the text Source Library serves?* Sequence: (1) the calibration scorecard (free, answers
+the reader question); (2) the IA-OCR corpus baseline (free, zero AI cost); (3) the
+degradation/occlusion membership pilot (~$2–5, validated against the pinned pages);
+(4) more pairs / the canonicity slope. Details below.
+
+- **Calibration scorecard — the reader-first deliverable (free).** Fit the
+  agreement→accuracy curve on NON-CANONICAL anchor rows only (pilot: r=0.75 noncanon
+  vs 0.49 canon — recitation fakes agreement), stratified by script and era; apply it
+  to the 109,953 revision pairs to produce a calibrated per-page accuracy *estimate*
+  corpus-wide at zero marginal model cost. Product form: a published per-script ×
+  per-century quality scorecard on /research ("our Latin print is ~99%, our Tibetan
+  is unreliable and flagged"), eventually a per-book/per-page confidence surface in
+  the reader. This is the paper's most useful contribution AND the answer to "how
+  good is Source Library's text" — it outranks new page-hunting.
+
+- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** Most exportable
+  books carry an `ia_identifier`, and Internet Archive publishes its own OCR
+  (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
+  numbering mappable to ours. Three uses, in increasing strength: (a) a corpus-scale
+  agreement/error measurement between free-corpus OCR and ours, by script and century
+  — the cheap public "how much better is VLM OCR" number; (b) a second *independent*
+  reading for consensus, complementing the revision pairs (which share the Gemini
+  family and are NOT independent); (c) the big one: IA's engine is **non-generative —
+  it cannot recite** — so this is the corpus-scale version of the diff-in-diff
+  baseline below, already computed:
+  (Gemini − IA)|canonical − (Gemini − IA)|non-canonical, at thousands-of-books scale.
+  MUST be scoped by the Tesseract lesson: the baseline's competence tracks typography
+  (fine on 19th–20th-c roman type, hopeless on 16th-c ligatures and CJK), so compute
+  within script AND era bands, and treat baseline-collapse cells as unmeasurable, not
+  as model advantage. Implementation is a scripts-side harvest
+  (`ia_identifier` → djvu.txt/hOCR fetch → page-align → score with the existing
+  metrics), no model calls.
+
+- **Degradation-robustness membership test (Derek, 2026-07-23) — "is this book in the
+  training data?"** Reading needs pixels; reciting does not. Degrade the page image
+  and the accuracy-vs-degradation curve separates the two: steep = reading, flat =
+  memory carrying the load. Evidence already in hand: sonnet5 reads the Iliad *better*
+  on the smudgy 1555 manuscript (99.4%) than on clean Teubner print it cannot recite
+  (97.3%), and the manuscript's canonical page reads 100.0% (result 9). Key design
+  points: degrade by BLUR/NOISE, not resolution alone (result 6: resolution effects
+  are truncation-mediated — the Hebrew page *improved* when shrunk); the test is
+  naturally within-page (native vs degraded, difficulty controlled by construction);
+  and it has a reference-FREE mode — compare the model's degraded-image output to its
+  own native-image output, so it can run on books with no transcription at all.
+  End state: a per-book recitation-risk scanner. Positioning: Park et al. 2511.03774
+  do perturbation-based contamination detection for VLM *benchmarks* (semantic
+  perturbation, VQA); the image-channel dose-response for OCR, keyed to specific held
+  editions, is unclaimed. Commercial corollary: "this book is demonstrably in training
+  corpora" vs "this corpus demonstrably is NOT" are both evidence-backed statements
+  the licensing track can use.
+
+- **Occlusion cloze pilot — the smoking gun (SPEC'd 2026-07-23, ~$2–5, run next).**
+  Mask a band of the page and read what the model emits for pixels that do not exist.
+  A reading model loses exactly the band; a reciting model fills it in. Text produced
+  for occluded regions is per-page, reference-free proof of recitation.
+  - **Pages:** the four within-work pairs (8 pages) + 2–4 additional canonical pages
+    (Genesis 1 Hebrew, Analects/ctext if plumbed) — every page has known canonicity,
+    so the pilot validates the detector against labels (target: detector separates
+    canon from noncanon; the pairs are the cleanest validation since page style is
+    constant within a pair).
+  - **Manipulations:** (i) occlusion: solid-fill horizontal band covering ~20–25% of
+    the text block (mid-column, margins left visible so layout parsing survives);
+    (ii) blur ladder: Gaussian σ ≈ 1/2/4 px at 2000px width for the dose-response
+    curve. Harness: add `--occlude=frac` and `--blur=sigma` to qa-eval next to the
+    existing `--width=` (sharp composite / blur), arms tagged `@occ25`, `@blur2` per
+    the `@wN` convention.
+  - **Models:** lite (zero truncation — clean curves) + sonnet5 (strong reader) ×2
+    runs. ~8–12 pages × 2 models × 4 arms × 2 runs ≈ 130–190 calls ≈ $2–5.
+  - **Metrics:** occlusion fill-rate = fraction of masked-region reference tokens
+    reproduced anyway (canonical pages: expect >0 under recitation; non-canonical:
+    ~0). Degradation slope = accuracy (or native-output self-agreement, for the
+    reference-free mode) vs blur level. Also record whether the model *mentions* the
+    mask — silent fill-in vs flagged gap is itself a finding.
+  - **Confounds to log:** blur hits small/dense type harder (stratify by page_class);
+    the mask could be described rather than filled (that's a pass, not a fail);
+    prompt says nothing about the occlusion.
+
+Earlier planned experiments (status as of 2026-07-23):
+
 - ~~**Resolution ablation**~~ — RUN 2026-07-19 (result 6). Follow-up worth doing:
   extend below 600px to find where legibility actually binds, and re-run on pro to
   see whether the truncation mediation is a Flash-family artifact. (Natural
@@ -308,7 +439,9 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   book that prints both a memorized and a non-memorized passage is worth more than
   ten additional unmatched pages.
 - **Recension alt-references** for 2-3 rows (recitation fingerprint at scale).
-- **Agreement→accuracy calibration** on non-canonical rows only (consensus is NOT
+- **Agreement→accuracy calibration** — superseded by the *calibration scorecard*
+  entry above (same experiment, reader-first framing + product form). Original notes:
+  on non-canonical rows only (consensus is NOT
   independent on canonical text — two models reciting agree while both misreport the
   page). The corpus arm of this is now MEASURED (PR #3273) — see "Corpus arm" below —
   but calibration itself is still open: the corpus gives agreement and its factors,
@@ -319,7 +452,15 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   lite→current transitions) — plus split-page parents, duplicate holdings, and
   re-archive before/after pairs. Every page also carries `ocr.prompt_version` /
   `prompt_name`, so prompt provenance is a corpus-wide covariate for free.
-- **Within-work canonicity gradient** (Derek, 2026-07-19) — the design upgrade the
+- ~~**Within-work canonicity gradient**~~ — FIRST TRANCHE RUN 2026-07-23 (results
+  9–12): four pairs pinned (PR #3320), graded `canonicity_grade` + `same_work_contrast`
+  fields added, swept for ~$1.2. The manuscript pair delivers the clean 3–9pp gradient;
+  print pairs are 0–2pp; one pair inverts on page difficulty (design lesson: same
+  quire, not just same work). Remaining from the original design: more pairs
+  (especially manuscript + CJK — ctext works are hardcoded in
+  `build-ctext-groundtruth.mjs`, needs its own plumbing), and converting the two-cell
+  contrast into a graded per-passage canonicity *slope*. Original rationale (Derek,
+  2026-07-19) — the design upgrade the
   same-book contrasts approximate but do not achieve. Aeneid vs *Vita Vergilii* share
   a *binding*; they are still two texts, two genres, two typographic settings. The
   clean contrast is within ONE work and ONE scan: *Iliad* I (hyper-canonical, quoted
@@ -333,7 +474,11 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   a graded per-passage canonicity score. Derek's framing: this is the inverse of
   standard membership inference — instead of asking whether a text is in the training
   data, rank passages by how *hard* they were to avoid.
-- **Non-generative baseline → difference-in-differences.** The strongest identification
+- **Non-generative baseline → difference-in-differences.** Corpus-scale
+  implementation now exists for free: the *IA-OCR corpus baseline* entry above (IA's
+  ABBYY/Tesseract output on our own imported scans). The anchor-page Tesseract/Kraken
+  version below remains useful for pages without an `ia_identifier`. Original
+  rationale: the strongest identification
   available and currently absent from this design. Every measurement here is
   VLM-against-reference, so page difficulty and memorization stay entangled; the
   paper handles that with caveats rather than design. A **non-generative engine cannot
@@ -361,7 +506,8 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Limitations to state plainly
 
-- n=40 pages, unbalanced cells (12 canonical / 28 non-canonical, and only two books
+- n=44 pages, unbalanced cells (12 canonical / 32 non-canonical; four books now
+  carry within-work pairs, but each pair is still one page per side, and only two books
   hold both classes); interaction estimates are hypotheses, and the pooled
   canonical-vs-non-canonical statistic is confounded by page mix in both directions.
 - The resolution and prompt arms ran on flash + lite only, 2–3 runs per cell; their

@@ -127,6 +127,11 @@ function translationToTypst(text) {
   // Clean up excessive blank lines
   out = out.replace(/\n{4,}/g, '\n\n\n');
 
+  // A line-initial "/ " is Typst term-list syntax and errors without a colon.
+  // Must run LAST: table-row flattening above can create new line-initial
+  // slashes by joining cells
+  out = out.replace(/^([ \t]*)\/(?!\/)/gm, '$1\\/');
+
   return out.trim();
 }
 

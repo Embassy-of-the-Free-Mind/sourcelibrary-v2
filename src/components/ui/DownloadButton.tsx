@@ -303,9 +303,14 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
-            <FormatOption format="epub-parallel" label="Parallel Text" desc="Facing pages"
-              icon={<Columns className="w-4 h-4 text-accent-rust" />}
+            <FormatOption format="epub-parallel" label="Parallel Text" desc="Original + translation, page by page — works in all readers"
+              icon={<Layers className="w-4 h-4 text-accent-rust" />}
               onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
+          )}
+          {hasTranslations && hasOcr && (
+            <FormatOption format="epub-parallel-fxl" label="Facing Pages" desc="Fixed layout — Apple Books & similar"
+              icon={<Columns className="w-4 h-4 text-accent-rust" />}
+              onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
@@ -318,7 +323,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
-            <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
+            <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
               icon={<Image className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
@@ -334,7 +339,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
-              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book"
+              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book (fixed layout)"
                 icon={<BookOpen className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>

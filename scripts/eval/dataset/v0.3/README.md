@@ -14,8 +14,15 @@ Build tooling and provenance: `scripts/eval/` in the
 
 ## What changed since v0.2
 
-- **1,678 scored runs, up from 921.** Same 40 pinned pages (12 canonical /
-  28 non-canonical); the growth is model breadth.
+- **1,737 scored runs (up from 921) on 44 pages (up from 40).** Growth on two
+  axes from two parallel workstreams: model breadth (below) and four
+  **within-work canonicity pairs** (PR #3320) — hyper-canonical vs
+  low-canonicity passages of the SAME work in the SAME scan (Vulgate Genesis
+  1 ↔ 5, Aeneid I ↔ X, Iliad I ↔ XIII on a 1555 manuscript, Zohrab John 1 ↔
+  1 Chronicles 1), with new per-row `canonicity_grade` and
+  `same_work_contrast` fields. The manuscript pair shows a 3–9pp within-work
+  memorization gradient with edition/typeface/scan held constant by
+  construction.
 - **Six new model arms across three serving providers**, all run 2026-07-21..23:
   - `gemini-3.5-flash-lite` and `gemini-3.6-flash` — Google's July 2026 releases,
     run within a week of announcement.
@@ -42,9 +49,9 @@ Build tooling and provenance: `scripts/eval/` in the
 
 ## Files
 
-Same schema as v0.2 (see that README for field-level docs): `pages.jsonl` (40),
-`references.jsonl` (40, text included only where the source license permits),
-`runs.jsonl` (1,678), `checksums.txt`.
+Same schema as v0.2 (see that README for field-level docs): `pages.jsonl` (44),
+`references.jsonl` (44, text included only where the source license permits),
+`runs.jsonl` (1,737), `checksums.txt`.
 
 ## Headline observations (2026-07-23, paired stats vs gemini-3.5-flash-lite)
 

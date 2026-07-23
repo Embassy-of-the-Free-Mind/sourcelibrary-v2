@@ -1,0 +1,64 @@
+{
+  "date": "2026-07-23",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+  ],
+  "runs": 3,
+  "only": "aeneid-10-pallas",
+  "summary": [
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 773,
+      "charAccuracy": 0.9831824062095731,
+      "rows": [
+        {
+          "work": "Aeneid X.362-382 (Pallas rallies the Arcadians), 1580 Meyen Virgil",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 890,
+          "aligned": true,
+          "guard": 0.0979020979020979,
+          "cer": 0.016817593790426907,
+          "charAccuracy": 0.9831824062095731,
+          "refLen": 773,
+          "matched": 760,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_X",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0009582750000000001,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9689521345407504,
+              "cer": 0.031047865459249677
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.097131,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9715394566623544,
+              "cer": 0.028460543337645538
+            },
+            "mistral-ocr-latest": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.012,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9702457956015524,
+              "cer": 0.029754204398447608
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

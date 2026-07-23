@@ -36,6 +36,7 @@ export const FREE_TEXT_FORMATS = [
 export const PREMIUM_FORMATS = [
   'pdf-facsimile',
   'epub-parallel',
+  'epub-parallel-fxl',
   'epub-scholarly',
   'epub-bilingual',
   'epub-facsimile',

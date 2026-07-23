@@ -92,8 +92,9 @@ export default function NineModelsFortyPagesPage() {
           historical text on the previous generation, so instead of reading the benchmarks in the press
           release, we ran our own: the same forty pages of blackletter, Fraktur, polytonic Greek,
           pointed Hebrew, classical Chinese, and 19th-century Armenian type, against every OCR-capable
-          model we could reach. Two days and about thirteen dollars later we had 1,678 scored
-          transcriptions across nine models from five labs, served three different ways. The most
+          model we could reach. Two days and about thirteen dollars later, our reference dataset
+          held 1,737 scored transcriptions across models from five labs, served three different
+          ways. The most
           newsworthy result was the one we least expected: <em>on historical documents, Google&rsquo;s
           newest budget model is slightly &mdash; but systematically &mdash; worse than the model it
           replaces.</em>
@@ -264,8 +265,9 @@ export default function NineModelsFortyPagesPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Dataset v0.3 &mdash; forty pages, forty licensed-or-hashed references, 1,678 raw
-          transcriptions with re-derivable scores, and the statistics tooling &mdash; is{' '}
+          Dataset v0.3 &mdash; forty-four pages (including four within-work canonicity pairs from
+          a parallel workstream), licensed-or-hashed references, 1,737 raw transcriptions with
+          re-derivable scores, and the statistics tooling &mdash; is{' '}
           <a
             href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval/dataset/v0.3"
             className="text-accent hover:underline"

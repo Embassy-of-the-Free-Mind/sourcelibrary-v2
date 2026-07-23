@@ -31,6 +31,7 @@ const EXPECTED_FREE_TEXT_FORMATS: BookDownloadFormats[] = [
 const EXPECTED_PREMIUM_FORMATS: BookDownloadFormats[] = [
   'pdf-facsimile',
   'epub-parallel',
+  'epub-parallel-fxl',
   'epub-scholarly',
   'epub-bilingual',
   'epub-facsimile',
