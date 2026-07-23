@@ -16,7 +16,12 @@
 //
 // Eligibility (rights-critical — encoded here, not convention):
 //   - visible: true && pages_count > 0
-//   - no hidden_reason (belt and braces; hidden books are visible:false)
+//   - no RIGHTS-class hidden_reason (copyright/takedown/dmca). NOTE: ~6.3K
+//     visible books carry a stale hidden_reason ("launch_curation",
+//     "unprocessed", …) left by old hide/unhide sweeps that flipped `visible`
+//     without unsetting the field — visible:true is the operative state, so
+//     only rights-flavored reasons exclude (a bare $exists check silently
+//     dropped a third of the corpus on the first full build, 2026-07-23)
 //   - content_type != 'artwork' (single-image records; no text product)
 //   - numeric year <= --max-year (default 1930: published-1930 works entered
 //     US public domain Jan 1 2026). Books with no numeric year can't be
@@ -88,11 +93,13 @@ function qualityFlags(text) {
 const ZWC_RE = /[​‌‍⁠﻿]/;
 const WRAPPER_TAG_RE = /<\/?(?:meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc)>/i;
 
+const RIGHTS_REASON_RE = /copyright|takedown|dmca|rights/i;
+
 function bookFilter() {
   return {
     visible: true,
     pages_count: { $gt: 0 },
-    hidden_reason: { $exists: false },
+    hidden_reason: { $not: RIGHTS_REASON_RE },
     content_type: { $ne: 'artwork' },
     year: { $type: 'number', $lte: MAX_YEAR },
     ...(LANGUAGE ? { language: LANGUAGE } : {}),
@@ -126,6 +133,10 @@ async function build() {
     year_after_cutoff: await db.collection('books').countDocuments({
       visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' },
       year: { $type: 'number', $gt: MAX_YEAR },
+      ...(LANGUAGE ? { language: LANGUAGE } : {}),
+    }),
+    rights_hidden_reason: await db.collection('books').countDocuments({
+      visible: true, pages_count: { $gt: 0 }, hidden_reason: RIGHTS_REASON_RE,
       ...(LANGUAGE ? { language: LANGUAGE } : {}),
     }),
     exclude_file: 0, // counted during the walk
