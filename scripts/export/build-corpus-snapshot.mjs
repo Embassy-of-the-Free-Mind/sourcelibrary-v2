@@ -90,6 +90,23 @@ function qualityFlags(text) {
   return { flags, words: words.length };
 }
 
+// Editorial apparatus, exported as labeled annotation fields (issue #3327):
+// the same wrapper blocks that must NEVER ship inline as source text are
+// themselves licensable data when clearly labeled. Extracted from the RAW
+// text before stripping. Tag content gets any nested tags flattened.
+const TRANSLATION_ANNOTATION_TAGS = ['meta', 'summary', 'keywords', 'vocab'];
+const OCR_ANNOTATION_TAGS = ['language', 'script', 'page-type', 'columns', 'scan-quality', 'warning'];
+function extractAnnotations(raw, tags) {
+  const out = {};
+  for (const tag of tags) {
+    const m = raw.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+    if (!m) continue;
+    const content = m[1].replace(/<[^>]{1,60}>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (content) out[tag.replace(/-/g, '_')] = content;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 const ZWC_RE = /[​‌‍⁠﻿]/;
 const WRAPPER_TAG_RE = /<\/?(?:meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc)>/i;
 
@@ -149,6 +166,7 @@ async function build() {
       published: 1, language: 1, text_role: 1, work_id: 1,
       is_first_translation: 1, pages_translated: 1, ia_identifier: 1,
       'image_source.provider': 1, 'image_source.source_url': 1, doi: 1,
+      summary: 1, chapters: 1,
     })
     .sort({ language: 1, id: 1 })
     .toArray();
@@ -190,6 +208,14 @@ async function build() {
     const outPages = [];
     for (const page of pages) {
       const rec = { id: page.id, n: page.page_number };
+      if (page.translation?.data) {
+        const a = extractAnnotations(page.translation.data, TRANSLATION_ANNOTATION_TAGS);
+        if (a) rec.annotations = a;
+      }
+      if (page.ocr?.data) {
+        const s = extractAnnotations(page.ocr.data, OCR_ANNOTATION_TAGS);
+        if (s) rec.scan = s;
+      }
       for (const [key, raw] of [['ocr', page.ocr?.data], ['translation', page.translation?.data]]) {
         if (!raw) continue;
         const text = stripEditorialWrappers(raw).trim();
@@ -227,6 +253,11 @@ async function build() {
         source_url: book.image_source?.source_url ?? null,
       },
       license: CONTENT_LICENSE.spdx,
+      // Book-level editorial apparatus (AI-generated; labeled, never inline)
+      summary: typeof book.summary === 'string' ? book.summary : null,
+      chapters: Array.isArray(book.chapters)
+        ? book.chapters.map(c => ({ page: c.pageNumber ?? c.page ?? null, title: c.title ?? null }))
+        : null,
       pages: outPages,
     };
     if (!shard.gz.write(JSON.stringify(record) + '\n')) await once(shard.gz, 'drain');
