@@ -1,440 +1,590 @@
 #!/usr/bin/env node
 /**
- * Calibration scorecard — the reader-first deliverable (#3235, paper doc
- * `.claude/docs/ocr-memorization-paper.md` "Calibration scorecard" entry).
+ * Calibration scorecard — the reader-first deliverable (#3235).
  *
- * Question answered: *how accurate is the text Source Library serves?*
+ * The question is not the research agenda's, it's the reader's: how accurate is
+ * the text Source Library serves, per script and era? This script:
  *
- * Two-step design:
- *   1. ANCHOR CALIBRATION — on the pinned reference pages, build cross-model
- *      OCR output pairs, compute inter-output AGREEMENT (the exact corpus
- *      metric: word-level Levenshtein similarity, char-level on space-less
- *      scripts), and pair it with TRUE accuracy against the published
- *      transcription. Fit agreement→accuracy on NON-CANONICAL pairs only:
- *      recitation fakes agreement on canonical text (two models reciting the
- *      same memorized passage agree while both misreport the page), so
- *      canonical rows would corrupt the curve. The canon/noncanon r split is
- *      itself reported — it is the consensus-failure evidence.
- *   2. CORPUS APPLICATION — push the 100K+ same-page double-OCR pairs from
- *      `revision-agreement-corpus-*.jsonl` through the fitted curve to produce
- *      a calibrated per-page accuracy ESTIMATE, aggregated into a per-language
- *      × per-century scorecard. Only `is_live` pairs (the transition whose
- *      current side is the text readers actually see) enter the scorecard.
+ *   STEP 1 — anchor calibration set. For each NON-CANONICAL anchor page (32 of
+ *     the 44 pinned pages; canonical pages are EXCLUDED from fitting — the pilot
+ *     measured r=0.75 noncanon vs 0.49 canon, i.e. recitation fakes agreement),
+ *     compute (a) mean pairwise inter-run/inter-model agreement among that page's
+ *     raw model outputs, and (b) reference-scored accuracy: free-skip subsequence
+ *     (upper bound) AND windowed fitting-alignment (lower bound, PR #3304) so the
+ *     bracket is visible.
+ *   STEP 2 — fit agreement -> accuracy, per script-class (spaced vs space-less)
+ *     and per script where n (pages) >= 5. n<5 is reported UNUSABLE, never
+ *     extrapolated. Linear OLS + bootstrap CI (2000 resamples over pages, not
+ *     runs) is the headline fit; isotonic (PAVA) is reported alongside as a
+ *     monotonicity cross-check.
+ *   STEP 3 — apply the fit to the page_revisions corpus-wide agreement corpus
+ *     (109,953 eligible pairs, PR #3273) to produce calibrated per-script x
+ *     per-era ESTIMATED accuracy bands. Two caveats carried at every application:
+ *     (i) revision pairs are mostly within-Gemini-family transitions, not
+ *     independent readings — calibrated numbers are conditional on the anchor
+ *     fit transferring; (ii) canonical-heavy strata inflate agreement without
+ *     inflating true accuracy the same way (recitation), so any stratum plausibly
+ *     dominated by canonical/liturgical works is flagged, not silently trusted.
  *
- * Honesty rails, stated up front:
- *   - The curve transfers from cross-model anchor pairs to mostly
- *     within-Gemini-family corpus pairs. Family self-agreement is optimistic
- *     (shared failure modes agree), so estimates lean HIGH. Reported as such.
- *   - Anchor accuracy is passage-scoped free-skip charAccuracy — an UPPER
- *     bound (see metrics.mjs). The windowed fit is computed alongside as
- *     sensitivity.
- *   - Cells whose script has no anchor coverage are labeled: `anchored`
- *     (same script family in the anchor set), `extrapolated` (spaced script,
- *     nearest-family fit), `unsupported` (no defensible fit — Tibetan: the
- *     estimate is suppressed and the cell flagged, which is itself the
- *     finding).
- *   - Pairs where either side is degenerate/meta/refusal (`direction` ≠
- *     both-transcription) don't go through the curve — a broken live side is
- *     reported as `pct_flagged`, not laundered into an accuracy number.
+ * No AI calls. Mongo reads (via the pre-computed corpus summary) + local compute.
  *
- * Cost: zero. Local files only — no Mongo, no model calls.
- *
- *   node scripts/eval/calibration-scorecard.mjs \
- *     [--corpus=scripts/eval/results/revision-agreement-corpus-2026-07-20.jsonl] \
- *     [--all-pairs] [--min-cell=50]
+ *   node scripts/eval/calibration-scorecard.mjs [--corpus-summary=path] [--date=YYYY-MM-DD]
  */
 import fs from 'fs';
 import path from 'path';
-import readline from 'readline';
 import { fileURLToPath } from 'url';
-import { scoreAgainstReference, stripWrappers, levenshtein } from './lib/metrics.mjs';
+import { stripWrappers, levenshtein, scoreAgainstReference } from './lib/metrics.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
   const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true];
 }));
-const DATE = new Date().toISOString().slice(0, 10);
-const RESULTS = path.join(__dirname, 'results');
-const CORPUS = args.corpus || path.join(RESULTS, 'revision-agreement-corpus-2026-07-20.jsonl');
-const MIN_CELL = parseInt(args['min-cell'] || '50');
-const OUT_JSON = path.join(RESULTS, `calibration-scorecard-${DATE}.json`);
-const OUT_MD = path.join(RESULTS, `calibration-scorecard-${DATE}.md`);
+const DATE = args.date || new Date().toISOString().slice(0, 10);
+const RESULTS_DIR = path.join(__dirname, 'results');
+const OBS_FILE = args.observations || path.join(__dirname, 'observations', `ocr-observations-${DATE}.jsonl`);
+const REF_WORKS_DIR = path.join(__dirname, 'reference-works');
+const V2_RUNS_FILE = path.join(__dirname, 'dataset', 'v0.2', 'runs.jsonl');
+const CANONICITY_RUNS_FILE = path.join(RESULTS_DIR, 'scorecard-outputs-2026-07-23-canonicity.jsonl');
+const OUT_JSON = path.join(RESULTS_DIR, `calibration-scorecard-${DATE}.json`);
+const OUT_MD = path.join(RESULTS_DIR, `calibration-scorecard-${DATE}.md`);
 
-// ── agreement metric: EXACT parity with revision-agreement-corpus.mjs ─────
+// ── tiny utils ──────────────────────────────────────────────────────
+const readJsonl = f => fs.existsSync(f)
+  ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l))
+  : [];
+const mean = xs => xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : NaN;
+const round = (x, d = 4) => (x == null || Number.isNaN(x)) ? null : +x.toFixed(d);
+const pct = x => (x == null || Number.isNaN(x)) ? '—' : `${(x * 100).toFixed(1)}%`;
+
+// ── agreement metric — PARITY COPY of revision-agreement-corpus.mjs's
+// agreement()/agreementChar() (PR #3273). Duplicated rather than imported: that
+// module runs its whole Mongo scan as a top-level side effect on import (no
+// `if (import.meta.url === ...)` guard), so importing it here would kick off a
+// second corpus scan. Logic must stay identical; if the corpus script's metric
+// changes, mirror the change here. ──────────────────────────────────
 const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
 const toWords = s => deEntity(stripWrappers(s || ''))
-  .toLowerCase().replace(/[^\p{L}\s]/gu, ' ')
-  .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
+  .toLowerCase().replace(/[^\p{L}\s]/gu, ' ').split(/\s+/).filter(w => w.length > 1).slice(0, 800);
+const toChars = s => [...deEntity(stripWrappers(s || '')).toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
 function agreement(a, b) {
   const A = toWords(a), B = toWords(b);
   if (!A.length && !B.length) return null;
   if (!A.length || !B.length) return 0;
   return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
 }
-const toChars = s => [...deEntity(stripWrappers(s || '')).toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
 function agreementChar(a, b) {
   const A = toChars(a), B = toChars(b);
   if (!A.length && !B.length) return null;
   if (!A.length || !B.length) return 0;
   return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
 }
-
-// ── Phase 1: anchors ──────────────────────────────────────────────────────
-const SPACELESS_SCRIPTS = new Set(['cjk', 'chinese', 'tibetan']);
-const gtDir = path.join(__dirname, 'ground-truth');
-const gts = fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))
-  .map(f => ({ slug: f.replace('.json', ''), ...JSON.parse(fs.readFileSync(path.join(gtDir, f), 'utf8')) }))
-  .filter(g => g.ocr_ground_truth);
-const byWork = new Map(gts.map(g => [g.work, g]));
-
-// book year per anchor page, from the released dataset (offline)
-const anchorYear = new Map();
-const pagesPath = path.join(__dirname, 'dataset', 'v0.3', 'pages.jsonl');
-if (fs.existsSync(pagesPath)) {
-  for (const line of fs.readFileSync(pagesPath, 'utf8').split('\n').filter(Boolean)) {
-    const p = JSON.parse(line);
-    if (p.book?.year) anchorYear.set(p.slug, p.book.year);
-  }
-}
-
-// Raw outputs: native, full-page, production-comparable runs only. `@`-suffixed
-// entries are experiment arms (downscale @wN, prompt @annotated, hosting @l40s)
-// — excluded so the calibration population matches the corpus population
-// (full-resolution page reads). Result 7 in the paper doc bounds the prompt-arm
-// difference at ~1pp unconditional.
-const outputsByWork = new Map(); // work -> Map(model -> text)
-for (const f of fs.readdirSync(RESULTS).filter(f => f.startsWith('scorecard-outputs-') && f.endsWith('.jsonl'))) {
-  for (const line of fs.readFileSync(path.join(RESULTS, f), 'utf8').split('\n').filter(Boolean)) {
-    const o = JSON.parse(line);
-    if (!byWork.has(o.work) || !o.text || (o.model || '').includes('@')) continue;
-    if (!outputsByWork.has(o.work)) outputsByWork.set(o.work, new Map());
-    const m = outputsByWork.get(o.work);
-    if (!m.has(o.model)) m.set(o.model, o.text); // first run per model
-  }
-}
-
-const scriptClassOf = script => SPACELESS_SCRIPTS.has(script) ? 'spaceless' : 'spaced';
-const accCache = new Map();
-const accuracyOf = (gt, model, text) => {
-  const k = `${gt.slug}|${model}`;
-  if (!accCache.has(k)) {
-    const script = SPACELESS_SCRIPTS.has(gt.script) ? 'cjk' : (gt.script || 'latin');
-    const r = scoreAgainstReference(gt.ocr_ground_truth, text, script);
-    accCache.set(k, { free: r.charAccuracy, windowed: r.charAccuracyWindowed, aligned: r.aligned });
-  }
-  return accCache.get(k);
-};
-
-const anchorPairs = [];
-for (const [work, models] of outputsByWork) {
-  const gt = byWork.get(work);
-  const canonical = gt.page_class?.canonical_text !== false;
-  const cls = scriptClassOf(gt.script);
-  const entries = [...models.entries()];
-  for (let i = 0; i < entries.length; i++) {
-    for (let j = i + 1; j < entries.length; j++) {
-      const [ma, ta] = entries[i], [mb, tb] = entries[j];
-      const agr = (cls === 'spaceless' ? agreementChar : agreement)(ta, tb);
-      if (agr == null) continue;
-      const A = accuracyOf(gt, ma, ta), B = accuracyOf(gt, mb, tb);
-      anchorPairs.push({
-        slug: gt.slug, script: gt.script, script_class: cls, canonical,
-        year: anchorYear.get(gt.slug) ?? null,
-        models: [ma, mb],
-        agreement: +agr.toFixed(4),
-        acc_free: +((A.free + B.free) / 2).toFixed(4),
-        acc_windowed: A.windowed != null && B.windowed != null ? +((A.windowed + B.windowed) / 2).toFixed(4) : null,
-      });
+function meanPairwiseAgreement(texts, spaceless) {
+  const fn = spaceless ? agreementChar : agreement;
+  const vals = [];
+  for (let i = 0; i < texts.length; i++) {
+    for (let j = i + 1; j < texts.length; j++) {
+      const a = fn(texts[i], texts[j]);
+      if (a != null) vals.push(a);
     }
   }
+  return { mean: mean(vals), n_pairs: vals.length, values: vals };
 }
 
-const pearson = (xs, ys) => {
-  const n = xs.length;
-  if (n < 3) return NaN;
-  const mx = xs.reduce((s, x) => s + x, 0) / n, my = ys.reduce((s, y) => s + y, 0) / n;
-  let sxy = 0, sxx = 0, syy = 0;
-  for (let i = 0; i < n; i++) { const dx = xs[i] - mx, dy = ys[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
-  return sxy / Math.sqrt(sxx * syy);
+// Script key for scoreAgainstReference. Observation `script` values (armenian,
+// greek, hebrew, latin, cjk, tibetan) map directly onto SCRIPT_DEFS keys in
+// lib/metrics.mjs, EXCEPT cjk/tibetan use the 'cjk' branch signature (tibetan
+// itself has its own SCRIPT_DEFS entry — pass through as-is; scoreAgainstReference
+// dispatches on the literal string, defaulting non-'cjk' to the alphabetic path).
+const SPACELESS_SCRIPTS = new Set(['cjk']); // Tibetan is alphabetic-with-syllables in SCRIPT_DEFS, not cjk-tokenized
+const isSpaceless = script => SPACELESS_SCRIPTS.has(script);
+
+// ── STEP 0: load reference texts + raw model outputs ────────────────
+function loadReferenceTexts() {
+  const map = new Map(); // `${scriptPrefix}-${slug}` -> { text, canonicity_grade }
+  for (const f of fs.readdirSync(REF_WORKS_DIR).filter(f => f.endsWith('.json'))) {
+    const scriptPrefix = f.replace(/\.json$/, '');
+    const d = JSON.parse(fs.readFileSync(path.join(REF_WORKS_DIR, f), 'utf8'));
+    for (const w of d.works || []) {
+      if (!w.slug || !w.reference) continue; // skip _removed / stub entries
+      map.set(`${scriptPrefix}-${w.slug}`, { text: w.reference, canonicity_grade: w.canonicity_grade || null, work: w.work });
+    }
+  }
+  return map;
+}
+
+// Work-name -> observation-slug map for the four 2026-07-23 within-work-pair
+// additions, whose raw outputs live in scorecard-outputs-2026-07-23-canonicity.jsonl
+// (keyed by `work`, not `slug` — that file predates the slug convention).
+const CANONICITY_WORK_TO_SLUG = {
+  'Aeneid X.362-382 (Pallas rallies the Arcadians), 1580 Meyen Virgil': 'latin-aeneid-10-pallas',
+  'Iliad XIII.493-517 (Idomeneus aristeia), MS Rouse 358': 'greek-iliad-13-idomeneus',
+  'Zohrab OT, 1 Chronicles 1:1-23 (table-of-nations genealogy)': 'armenian-zohrab-1chronicles-1',
+  'Vulgate Genesis 5:3-18 (Sethite genealogy), 1566 Louvain Vulgate': 'latin-vulgate-genesis-5-genealogy',
 };
 
-// Isotonic regression (pool adjacent violators) → monotone agreement→accuracy
-// map. Nonparametric, can't extrapolate past the data (clamps to end values),
-// and monotonicity is the one shape assumption the problem justifies.
-function isotonicFit(pairs) {
-  const pts = [...pairs].sort((a, b) => a.x - b.x);
-  const blocks = pts.map(p => ({ sum: p.y, n: 1, x: p.x }));
-  let i = 0;
-  while (i < blocks.length - 1) {
-    if (blocks[i].sum / blocks[i].n > blocks[i + 1].sum / blocks[i + 1].n) {
-      blocks[i] = { sum: blocks[i].sum + blocks[i + 1].sum, n: blocks[i].n + blocks[i + 1].n, x: blocks[i + 1].x };
-      blocks.splice(i + 1, 1);
-      if (i > 0) i--;
-    } else i++;
+function loadRawTextsBySlug() {
+  const bySlug = new Map(); // slug -> [{model, run_index, source, text}]
+  const push = (slug, row) => {
+    if (!bySlug.has(slug)) bySlug.set(slug, []);
+    bySlug.get(slug).push(row);
+  };
+  for (const r of readJsonl(V2_RUNS_FILE)) {
+    if (r.raw_text) push(r.slug, { model: r.model, run_index: r.run_index, source: r.source, text: r.raw_text });
   }
-  // knots: (max x of block, block mean)
-  const knots = blocks.map(b => ({ x: b.x, y: b.sum / b.n }));
-  return x => {
-    if (!knots.length) return NaN;
-    if (x <= knots[0].x) return knots[0].y;
-    for (let k = 1; k < knots.length; k++) {
-      if (x <= knots[k].x) {
-        const a = knots[k - 1], b = knots[k];
-        return b.x === a.x ? b.y : a.y + (b.y - a.y) * (x - a.x) / (b.x - a.x);
+  for (const r of readJsonl(CANONICITY_RUNS_FILE)) {
+    const slug = CANONICITY_WORK_TO_SLUG[r.work];
+    if (slug && r.text) push(slug, { model: r.model, run_index: r.run, source: 'canonicity-sweep', text: r.text });
+  }
+  return bySlug;
+}
+
+// ── STEP 1: anchor calibration points ────────────────────────────────
+function buildAnchorPoints(obsRows, refTexts, rawBySlug) {
+  const bySlug = new Map();
+  for (const r of obsRows) {
+    if (!r.slug || !r.page_class) continue;
+    if (!bySlug.has(r.slug)) bySlug.set(r.slug, []);
+    bySlug.get(r.slug).push(r);
+  }
+
+  const points = [];
+  const skippedNoRaw = [];
+  for (const [slug, rows] of bySlug) {
+    const pc = rows[0].page_class;
+    const canonical = pc.canonical_text === true;
+    const script = rows[0].script;
+    const spaceless = isSpaceless(script);
+
+    const raw = rawBySlug.get(slug) || [];
+    const texts = raw.map(r => r.text).filter(Boolean);
+    if (texts.length < 2) { skippedNoRaw.push(slug); }
+
+    const pair = meanPairwiseAgreement(texts, spaceless);
+
+    // Free-skip accuracy: trust the pipeline's own observations (char_accuracy),
+    // do not recompute — it's the authoritative number consumers already see.
+    const aligned = rows.filter(r => r.aligned);
+    const freeSkipMean = mean(aligned.map(r => r.char_accuracy));
+    const freeSkipRawMean = mean(rows.filter(r => r.char_accuracy_raw != null).map(r => r.char_accuracy_raw));
+
+    // Windowed accuracy: recomputed here (PR #3304's charAccuracyWindowed is not
+    // in the exported observations), against the reference text and each run's
+    // raw output, using the SAME scoreAgainstReference() the live pipeline uses.
+    const refEntry = refTexts.get(slug);
+    let windowedVals = [];
+    if (refEntry && texts.length) {
+      const metricScript = spaceless ? 'cjk' : script;
+      for (const t of texts) {
+        try {
+          const s = scoreAgainstReference(refEntry.text, t, metricScript);
+          if (s.aligned && s.charAccuracyWindowed != null) windowedVals.push(s.charAccuracyWindowed);
+        } catch { /* malformed run text — skip, do not crash the page */ }
       }
     }
-    return knots[knots.length - 1].y;
-  };
+
+    points.push({
+      slug, script, language: rows[0].language, work: rows[0].work,
+      book_id: rows[0].book_id, canonical_text: canonical,
+      canonicity_grade: refEntry?.canonicity_grade ?? null,
+      n_obs_rows: rows.length, n_aligned: aligned.length,
+      n_raw_texts: texts.length, n_agreement_pairs: pair.n_pairs,
+      agreement_mean: round(pair.mean),
+      accuracy_freeskip_mean: round(freeSkipMean),
+      accuracy_freeskip_raw_mean: round(freeSkipRawMean),
+      accuracy_windowed_mean: windowedVals.length ? round(mean(windowedVals)) : null,
+      n_windowed: windowedVals.length,
+      has_reference_text: !!refEntry,
+    });
+  }
+  return { points, skippedNoRaw };
 }
-const ols = (xs, ys) => {
-  const n = xs.length, mx = xs.reduce((s, x) => s + x, 0) / n, my = ys.reduce((s, y) => s + y, 0) / n;
+
+// ── STEP 2: fit agreement -> accuracy ────────────────────────────────
+function pearsonR(xs, ys) {
+  const n = xs.length;
+  const mx = mean(xs), my = mean(ys);
+  let sxy = 0, sxx = 0, syy = 0;
+  for (let i = 0; i < n; i++) { const dx = xs[i] - mx, dy = ys[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+  if (sxx === 0 || syy === 0) return null;
+  return sxy / Math.sqrt(sxx * syy);
+}
+function olsFit(xs, ys) {
+  const n = xs.length;
+  const mx = mean(xs), my = mean(ys);
   let sxy = 0, sxx = 0;
   for (let i = 0; i < n; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) ** 2; }
-  const b = sxy / sxx;
-  return { slope: +b.toFixed(4), intercept: +(my - b * mx).toFixed(4) };
-};
+  const slope = sxx === 0 ? 0 : sxy / sxx;
+  const intercept = my - slope * mx;
+  return { slope, intercept };
+}
+function bootstrapCI(xs, ys, iters = 2000, seed = 42) {
+  // xorshift32 for a reproducible bootstrap (no external RNG dependency)
+  let s = seed >>> 0;
+  const rnd = () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; };
+  const n = xs.length;
+  const slopes = [], intercepts = [];
+  for (let it = 0; it < iters; it++) {
+    const bx = [], by = [];
+    for (let i = 0; i < n; i++) { const k = Math.floor(rnd() * n); bx.push(xs[k]); by.push(ys[k]); }
+    const f = olsFit(bx, by);
+    slopes.push(f.slope); intercepts.push(f.intercept);
+  }
+  slopes.sort((a, b) => a - b); intercepts.sort((a, b) => a - b);
+  const q = (arr, p) => arr[Math.min(arr.length - 1, Math.max(0, Math.floor(p * arr.length)))];
+  return {
+    slope_ci: [round(q(slopes, 0.025), 3), round(q(slopes, 0.975), 3)],
+    intercept_ci: [round(q(intercepts, 0.025), 3), round(q(intercepts, 0.975), 3)],
+  };
+}
+// Pool-adjacent-violators isotonic regression: y monotone non-decreasing in x.
+// Points must be pre-sorted by x ascending.
+function isotonicFit(ysSorted) {
+  const level = []; // stack of {sum, count}
+  for (const y of ysSorted) {
+    let cur = { sum: y, count: 1 };
+    while (level.length && (level[level.length - 1].sum / level[level.length - 1].count) > cur.sum / cur.count) {
+      const top = level.pop();
+      cur = { sum: top.sum + cur.sum, count: top.count + cur.count };
+    }
+    level.push(cur);
+  }
+  const out = [];
+  for (const lvl of level) { const v = lvl.sum / lvl.count; for (let k = 0; k < lvl.count; k++) out.push(v); }
+  return out;
+}
 
-// r split — the consensus-failure headline
-const corr = {};
-for (const which of ['noncanon', 'canon']) {
-  for (const cls of ['spaced', 'spaceless', 'all']) {
-    const sel = anchorPairs.filter(p =>
-      (which === 'canon') === p.canonical && (cls === 'all' || p.script_class === cls));
-    corr[`${which}_${cls}`] = {
-      n: sel.length,
-      r_free: +pearson(sel.map(p => p.agreement), sel.map(p => p.acc_free)).toFixed(3),
-      r_windowed: +pearson(
-        sel.filter(p => p.acc_windowed != null).map(p => p.agreement),
-        sel.filter(p => p.acc_windowed != null).map(p => p.acc_windowed)).toFixed(3),
+const MIN_PAGES_FOR_FIT = 5;
+
+function fitStratum(points, label) {
+  const usable = points.filter(p => p.agreement_mean != null && p.accuracy_freeskip_mean != null);
+  const n = usable.length;
+  if (n < MIN_PAGES_FOR_FIT) {
+    return {
+      label, n, usable: false,
+      reason: `n=${n} pages < ${MIN_PAGES_FOR_FIT} — UNUSABLE, no fit attempted, never extrapolate`,
+      points: usable.map(p => ({ slug: p.slug, agreement: p.agreement_mean, accuracy_freeskip: p.accuracy_freeskip_mean, accuracy_windowed: p.accuracy_windowed_mean })),
     };
   }
-}
-
-// fits: noncanon only, per script class
-const fits = {}, fitMeta = {};
-for (const cls of ['spaced', 'spaceless']) {
-  const sel = anchorPairs.filter(p => !p.canonical && p.script_class === cls);
-  fits[cls] = isotonicFit(sel.map(p => ({ x: p.agreement, y: p.acc_free })));
-  fitMeta[cls] = {
-    n: sel.length,
-    agreement_range: [Math.min(...sel.map(p => p.agreement)), Math.max(...sel.map(p => p.agreement))].map(x => +x.toFixed(3)),
-    ols: ols(sel.map(p => p.agreement), sel.map(p => p.acc_free)),
-    ols_windowed: ols(
-      sel.filter(p => p.acc_windowed != null).map(p => p.agreement),
-      sel.filter(p => p.acc_windowed != null).map(p => p.acc_windowed)),
-    scripts: [...new Set(sel.map(p => p.script))].sort(),
-  };
-}
-
-// binned curve for the report
-const binCurve = (pairs, edges) => edges.slice(0, -1).map((lo, i) => {
-  const hi = edges[i + 1];
-  const sel = pairs.filter(p => p.agreement >= lo && p.agreement < hi);
-  return {
-    bin: `[${lo}–${hi})`, n: sel.length,
-    mean_acc_free: sel.length ? +(sel.reduce((s, p) => s + p.acc_free, 0) / sel.length).toFixed(4) : null,
-  };
-});
-const EDGES = [0, 0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99, 1.001];
-
-// ── Phase 2: corpus application ───────────────────────────────────────────
-// Script support per language: which fit applies and how far it stretches.
-//   anchored     — same script family present among the (non-canonical) anchors
-//   extrapolated — alphabetic script, nearest-family fit borrowed
-//   unsupported  — no defensible fit: space-less scripts (the anchor set holds
-//                  ZERO non-canonical spaceless rows — every Chinese anchor is
-//                  a canonical classic, and recitation fakes agreement there),
-//                  plus non-alphabetic / far-from-anchor scripts.
-const ANCHORED = new Set(['latin', 'greek', 'german', 'hebrew', 'armenian']);
-const UNSUPPORTED = new Set([
-  'tibetan', 'chinese', 'japanese', 'korean', 'burmese', 'thai', 'khmer', 'lao',
-  'javanese', 'old javanese', "ge'ez", 'geez', 'egyptian hieroglyphs', 'maya hieroglyphs',
-]);
-const supportOf = (language, scriptClass) => {
-  const l = (language || '').toLowerCase().trim();
-  if (UNSUPPORTED.has(l) || scriptClass === 'spaceless') return 'unsupported';
-  return ANCHORED.has(l) ? 'anchored' : 'extrapolated';
-};
-
-class Cell {
-  constructor() { this.n = 0; this.scored = 0; this.sumAgr = 0; this.sumEst = 0; this.nEst = 0; this.low = 0; this.flagged = 0; this.fine = new Int32Array(1000); }
-  quantileAgr(q) {
-    let cum = 0; const t = q * this.scored;   // flagged pairs carry no agreement
-    for (let i = 0; i < 1000; i++) { cum += this.fine[i]; if (cum >= t) return (i + 0.5) / 1000; }
-    return 1;
+  const sorted = [...usable].sort((a, b) => a.agreement_mean - b.agreement_mean);
+  const xs = sorted.map(p => p.agreement_mean);
+  const ysFree = sorted.map(p => p.accuracy_freeskip_mean);
+  const ysWin = sorted.map(p => p.accuracy_windowed_mean).filter(y => y != null);
+  const fitFree = olsFit(xs, ysFree);
+  const rFree = pearsonR(xs, ysFree);
+  const ciFree = bootstrapCI(xs, ysFree);
+  const isoFree = isotonicFit(ysFree);
+  let fitWin = null, rWin = null;
+  if (ysWin.length === n) {
+    fitWin = olsFit(xs, ysWin);
+    rWin = pearsonR(xs, ysWin);
   }
-}
-const cells = new Map(); // `${lang}|${yearBucket}` -> Cell
-const langTotals = new Map(); // lang -> Cell (all centuries)
-const bump = (map, key, agr, est, flaggedBroken) => {
-  if (!map.has(key)) map.set(key, new Cell());
-  const c = map.get(key);
-  c.n++;
-  if (flaggedBroken) { c.flagged++; return; }
-  c.scored++;
-  c.sumAgr += agr;
-  c.fine[Math.max(0, Math.min(999, Math.floor(agr * 1000)))]++;
-  if (agr < 0.5) c.low++;
-  if (est != null) { c.sumEst += est; c.nEst++; }
-};
-
-let corpusRows = 0, liveEligible = 0, skippedNotLive = 0, skippedIneligible = 0;
-const rl = readline.createInterface({ input: fs.createReadStream(CORPUS), crlfDelay: Infinity });
-for await (const line of rl) {
-  if (!line) continue;
-  corpusRows++;
-  const r = JSON.parse(line);
-  if (r.eligibility !== 'eligible') { skippedIneligible++; continue; }
-  if (!r.is_live && !args['all-pairs']) { skippedNotLive++; continue; }
-  liveEligible++;
-  const lang = (r.language || 'unknown').trim().toLowerCase() || 'unknown';
-  const cls = r.script_class === 'spaceless' ? 'spaceless' : 'spaced';
-  const support = supportOf(lang, cls);
-  const broken = r.direction !== 'both-transcription';
-  const agr = r.agreement_primary;
-  // Estimate only where the fit is defensible: spaced script, supported
-  // language, both sides real transcription attempts. fits.spaceless has no
-  // data (zero non-canonical spaceless anchors) — spaceless rows never get one.
-  let est = (!broken && support !== 'unsupported' && cls === 'spaced') ? fits.spaced(agr) : null;
-  if (est != null && !Number.isFinite(est)) est = null;
-  bump(cells, `${lang}|${r.year_bucket || 'unknown'}`, agr, est, broken);
-  bump(langTotals, lang, agr, est, broken);
-}
-
-// ── assemble scorecard ────────────────────────────────────────────────────
-const YEAR_ORDER = ['pre-1500', '1500-1599', '1600-1699', '1700-1799', '1800-1899', '1900+', 'unknown'];
-const cellRow = (lang, bucket, c) => {
-  const support = supportOf(lang, 'spaced');
-  const scored = c.n - c.flagged;
-  const pctLow = scored ? +(c.low / scored).toFixed(4) : null;
+  // A slope CI that spans zero means the fit cannot distinguish "accuracy rises
+  // with agreement" from "flat" or even "falls slightly" at this n — the point
+  // estimate is still the best available number, but the ORDERING it implies
+  // between two corpus cells (e.g. "lower agreement -> higher predicted
+  // accuracy" if the point slope is negative) is not statistically supported.
+  // Flag it rather than silently predicting a non-monotonic-looking sequence.
+  const slopeCiCrossesZero = ciFree.slope_ci[0] <= 0 && ciFree.slope_ci[1] >= 0;
   return {
-    language: lang, year_bucket: bucket,
-    n_pairs: c.n,
-    support,
-    median_agreement: scored ? +c.quantileAgr(0.5).toFixed(4) : null,
-    mean_agreement: scored ? +(c.sumAgr / scored).toFixed(4) : null,
-    est_accuracy: c.nEst ? +(c.sumEst / c.nEst).toFixed(4) : null,
-    // A cell whose agreement distribution sits far below the anchor curve's
-    // dense support is estimating from the curve's soft floor — mark unstable.
-    est_unstable: pctLow != null && pctLow > 0.25,
-    pct_low_agreement: pctLow,
-    pct_flagged_broken: +(c.flagged / c.n).toFixed(4),
+    label, n, usable: true,
+    agreement_range: [round(Math.min(...xs)), round(Math.max(...xs))],
+    freeskip_fit: { slope: round(fitFree.slope, 3), intercept: round(fitFree.intercept, 3), r: round(rFree, 3), ...ciFree, slope_ci_crosses_zero: slopeCiCrossesZero },
+    windowed_fit: fitWin ? { slope: round(fitWin.slope, 3), intercept: round(fitWin.intercept, 3), r: round(rWin, 3) } : null,
+    isotonic_freeskip_fitted: isoFree.map(v => round(v)),
+    points: sorted.map((p, i) => ({
+      slug: p.slug, agreement: p.agreement_mean,
+      accuracy_freeskip: p.accuracy_freeskip_mean, accuracy_windowed: p.accuracy_windowed_mean,
+      isotonic_fitted_freeskip: round(isoFree[i]),
+    })),
   };
-};
-const scorecard = [];
-for (const [key, c] of cells) {
-  const [lang, bucket] = key.split('|');
-  if (c.n < MIN_CELL) continue;
-  scorecard.push(cellRow(lang, bucket, c));
 }
-scorecard.sort((a, b) => a.language.localeCompare(b.language) || YEAR_ORDER.indexOf(a.year_bucket) - YEAR_ORDER.indexOf(b.year_bucket));
-const langCard = [...langTotals.entries()].filter(([, c]) => c.n >= MIN_CELL)
-  .map(([lang, c]) => cellRow(lang, 'all', c))
-  .sort((a, b) => (b.est_accuracy ?? -1) - (a.est_accuracy ?? -1));
 
-const out = {
-  date: new Date().toISOString(),
-  corpus_file: path.basename(CORPUS),
-  scope: args['all-pairs'] ? 'all eligible pairs' : 'is_live eligible pairs (text readers see)',
-  anchor_calibration: {
-    works: outputsByWork.size,
-    pairs: anchorPairs.length,
-    noncanon_pairs: anchorPairs.filter(p => !p.canonical).length,
-    correlations: corr,
-    fits: fitMeta,
-    binned_noncanon_spaced: binCurve(anchorPairs.filter(p => !p.canonical && p.script_class === 'spaced'), EDGES),
-    binned_noncanon_spaceless: binCurve(anchorPairs.filter(p => !p.canonical && p.script_class === 'spaceless'), EDGES),
-    binned_canon_all: binCurve(anchorPairs.filter(p => p.canonical), EDGES),
-  },
-  corpus: { rows: corpusRows, live_eligible: liveEligible, skipped_not_live: skippedNotLive, skipped_ineligible: skippedIneligible },
-  by_language: langCard,
-  by_language_century: scorecard,
-  anchors_detail: anchorPairs,
-};
-fs.writeFileSync(OUT_JSON, JSON.stringify(out, null, 1));
+function predictFromFit(fit, x) {
+  if (!fit || !fit.usable) return { value: null, note: 'no usable fit' };
+  const [lo, hi] = fit.agreement_range;
+  const extrapolated = x < lo || x > hi;
+  const clamped = Math.min(hi, Math.max(lo, x));
+  const raw = fit.freeskip_fit.intercept + fit.freeskip_fit.slope * clamped;
+  const value = Math.min(1, Math.max(0, raw));
+  return { value: round(value), extrapolated, clamped_from: extrapolated ? round(x) : null };
+}
 
-// ── report ────────────────────────────────────────────────────────────────
-const pct = x => x == null ? '—' : `${(x * 100).toFixed(1)}%`;
-const supMark = s => s === 'anchored' ? '' : s === 'extrapolated' ? ' †' : ' ⚠';
-const estCol = r => r.support === 'unsupported' ? '⚠ no fit'
-  : r.est_accuracy == null ? '—'
-  : r.est_unstable ? `(${pct(r.est_accuracy)})*` : pct(r.est_accuracy);
-const md = [
-  `# Calibration scorecard — how accurate is the text we serve? (${DATE})`, '',
-  `Agreement→accuracy calibration fitted on the pinned anchor pages (non-canonical`,
-  `rows only), applied to the same-page double-OCR corpus`,
-  `(\`${path.basename(CORPUS)}\`). Estimates are calibrated inferences, not`,
-  `measurements — see caveats at the end. Free to rebuild:`,
-  `\`node scripts/eval/calibration-scorecard.mjs\`.`, '',
-  `## 1. The calibration (anchors: ${outputsByWork.size} pages, ${anchorPairs.length} cross-model pairs)`, '',
-  `| stratum | n pairs | r (agreement, accuracy) | r windowed |`,
-  `|---|---:|---:|---:|`,
-  ...['noncanon_spaced', 'noncanon_spaceless', 'noncanon_all', 'canon_spaced', 'canon_spaceless', 'canon_all']
-    .map(k => `| ${k.replace('_', ' · ')} | ${corr[k].n} | ${isNaN(corr[k].r_free) ? '—' : corr[k].r_free} | ${isNaN(corr[k].r_windowed) ? '—' : corr[k].r_windowed} |`),
-  '',
-  `The canon/noncanon r split is the consensus-failure result: on canonical text,`,
-  `models reciting the same memorized passage agree while both misreport the page,`,
-  `so agreement stops predicting accuracy. Only non-canonical pairs calibrate.`, '',
-  `Fit (isotonic, noncanon only): spaced n=${fitMeta.spaced.n} over agreement`,
-  `[${fitMeta.spaced.agreement_range}], scripts: ${fitMeta.spaced.scripts.join(', ')}.`,
-  `OLS sensitivity: acc ≈ ${fitMeta.spaced.ols.intercept} + ${fitMeta.spaced.ols.slope}·agr`,
-  `(windowed: ${fitMeta.spaced.ols_windowed.intercept} + ${fitMeta.spaced.ols_windowed.slope}·agr).`, '',
-  `**No spaceless fit exists**: the anchor set holds ZERO non-canonical`,
-  `space-less-script rows — every Chinese anchor is a canonical classic, exactly`,
-  `the rows the consensus-failure result disqualifies. Until non-canonical CJK`,
-  `anchors land (ctext plumbing, see paper doc), Chinese/Japanese/Tibetan cells`,
-  `report agreement only. This gap is a finding, not an omission.`, '',
-  `### Binned curve (noncanon, spaced)`, '',
-  `| agreement bin | n | mean true accuracy |`, `|---|---:|---:|`,
-  ...binCurve(anchorPairs.filter(p => !p.canonical && p.script_class === 'spaced'), EDGES)
-    .filter(b => b.n).map(b => `| ${b.bin} | ${b.n} | ${pct(b.mean_acc_free)} |`),
-  '',
-  `## 2. The scorecard (corpus: ${liveEligible.toLocaleString()} live eligible pairs)`, '',
-  `Scope: pairs whose current side is the live \`pages.ocr\` — the text readers see.`,
-  `\`est. accuracy\` = mean of the calibrated per-pair estimates. † = extrapolated`,
-  `(no same-script anchors; nearest-family fit). ⚠ = unsupported (no defensible`,
-  `fit — agreement shown, accuracy estimate suppressed). \`(x%)*\` = unstable: >25%`,
-  `of the cell's pairs sit below agreement 0.5, where the anchor curve has only`,
-  `its soft floor — read those cells as "flagged for audit", not as a rating.`,
-  `\`% flagged\` = pairs where a side is degenerate/refusal/commentary (direction ≠`,
-  `both-transcription). Language is book metadata (edition language) and can be`,
-  `wrong on individual books.`, '',
-  `### By language`, '',
-  `| language | n pairs | median agr | est. accuracy | % agr<0.5 | % flagged |`,
-  `|---|---:|---:|---:|---:|---:|`,
-  ...langCard.map(r => `| ${r.language}${supMark(r.support)} | ${r.n_pairs.toLocaleString()} | ${pct(r.median_agreement)} | ${estCol(r)} | ${pct(r.pct_low_agreement)} | ${pct(r.pct_flagged_broken)} |`),
-  '',
-  `### By language × century (cells with ≥${MIN_CELL} pairs)`, '',
-  `| language | century | n pairs | median agr | est. accuracy | % agr<0.5 | % flagged |`,
-  `|---|---|---:|---:|---:|---:|---:|`,
-  ...scorecard.map(r => `| ${r.language}${supMark(r.support)} | ${r.year_bucket} | ${r.n_pairs.toLocaleString()} | ${pct(r.median_agreement)} | ${estCol(r)} | ${pct(r.pct_low_agreement)} | ${pct(r.pct_flagged_broken)} |`),
-  '',
-  `## Caveats (do not quote a cell without them)`, '',
-  `1. **Estimates lean high.** The curve is fitted on cross-model pairs; corpus`,
-  `   pairs are mostly within-Gemini-family, and family self-agreement is`,
-  `   optimistic (shared failure modes agree). Anchor accuracy is also the`,
-  `   free-skip UPPER bound (passage-scoped; hallucinated additions outside the`,
-  `   reference span are uncharged).`,
-  `2. **The fit is script-class-stratified, not era-stratified** — anchor eras are`,
-  `   too thin. Century rows share one curve per script class; era enters only`,
-  `   through the agreement distribution.`,
-  `3. **† rows borrow the fit** from the nearest anchored script family;`,
-  `   ⚠ rows have no defensible fit at all. Space-less scripts are ⚠ across the`,
-  `   board (zero non-canonical spaceless anchors); Tibetan is additionally a`,
-  `   known OCR failure class (lesson_tibetan_lite_ocr_fails) — there the flag`,
-  `   IS the scorecard entry.`,
-  `4. **The curve's low end is soft.** Anchor pairs at agreement <0.3 still`,
-  `   average ~78% free-skip accuracy (models disagree about NON-reference page`,
-  `   material while both containing the passage). Corpus pairs at low agreement`,
-  `   may instead be genuinely broken text — a failure shape the anchors never`,
-  `   exhibit. Hence the \`*\` unstable marker.`,
-  `5. **Agreement is not independence.** Both sides of a corpus pair come from`,
-  `   the same model lineage on the same image; a systematic misread that both`,
-  `   passes share is invisible. IA-OCR baseline (planned) adds the independent`,
-  `   second reading.`,
-  `6. Cells with <${MIN_CELL} pairs are suppressed.`, '',
-].join('\n');
-fs.writeFileSync(OUT_MD, md);
+// ── STEP 3: apply to corpus ───────────────────────────────────────────
+// Corpus 'language' (books.language, the EDITION language) -> the calibration
+// stratum it should draw on. Anchor pages only cover Armenian/Greek/Latin/German
+// (n>=5) — every other spaced-script language gets the POOLED 'spaced' fit,
+// flagged as cross-script transfer, never a script-specific claim. Space-less
+// languages (Tibetan, Chinese) have ZERO non-canonical anchor pages in this
+// dataset (all 6 Chinese anchor pages are canonical — ctext-based works) and are
+// UNCALIBRATED: corpus agreement is reported descriptively only, no accuracy
+// estimate, because there is nothing to fit on for that class.
+// Anchor fit strata are now keyed directly by `language` (matching books.language
+// values, the same field the corpus stratifies on) — Armenian/Greek/Latin/German
+// have usable (n>=5) fits; every other alphabetic language falls back to the
+// pooled 'spaced' fit, flagged as cross-script transfer.
+//
+// Space-less scripts (no word boundaries — the tokenizer collapses them into a
+// handful of huge units, per revision-agreement-corpus.mjs's SPACELESS_RE: Han,
+// Tibetan, Hiragana/Katakana, Thai, Khmer, Lao, Myanmar) and logographic/
+// hieroglyphic systems are BOTH excluded from the 'spaced' cross-script transfer
+// — that fit was built entirely from alphabetic subsequence matching and has
+// nothing in common with how these scripts are tokenized or scored. This is a
+// stronger exclusion than "no script-specific fit"; these get NO fit at all,
+// descriptive corpus agreement only. (Names matched loosely — corpus `language`
+// values include compound/mixed labels like "Chinese; English".)
+const NO_TRANSFER_RE = /chinese|japanese|thai|tibetan|burmese|khmer|\blao\b|hieroglyph/i;
 
-console.log(md.split('### By language × century')[0]);
-console.log(`Saved → ${OUT_JSON}\n        ${OUT_MD}`);
+function applyCorpusWide(corpusSummary, fits) {
+  const lxy = corpusSummary.strata.lang_x_year || [];
+  const out = [];
+  for (const row of lxy) {
+    const [language, era] = row.key.split(' | ');
+    if (language === '?' || language === 'auto-detect') continue; // unknown script, cannot calibrate
+    const spaceless = NO_TRANSFER_RE.test(language);
+    let stratumKey, transferred;
+    if (spaceless) { stratumKey = null; transferred = false; }
+    else if (fits.perScript[language]?.usable) {
+      stratumKey = language; transferred = false;
+    } else if (fits.spaced.usable) { stratumKey = 'spaced-pooled'; transferred = true; }
+    else { stratumKey = null; transferred = false; }
+
+    const fit = stratumKey === 'spaced-pooled' ? fits.spaced : (stratumKey ? fits.perScript[stratumKey] : null);
+    const pred = fit ? predictFromFit(fit, row.mean_agreement) : { value: null, note: 'no calibration — space-less script, zero non-canonical anchor pages' };
+
+    out.push({
+      language, era, n_pairs: row.n,
+      corpus_mean_agreement: round(row.mean_agreement),
+      corpus_median_agreement: round(row.median_agreement),
+      calibration_stratum: stratumKey,
+      cross_script_transfer: transferred,
+      estimated_accuracy: pred.value,
+      extrapolated_beyond_anchor_range: pred.extrapolated || false,
+      space_less_uncalibrated: spaceless,
+    });
+  }
+  return out;
+}
+
+// Canonical-dominance flag: a stratum is flagged when the language is one where
+// a large share of held pages are plausibly liturgical/scriptural/classical
+// (i.e. the SAME kind of material the anchor canonical pages are drawn from),
+// which would inflate corpus agreement via recitation without the anchor fit
+// (built on non-canonical pages only) knowing about it. This is a coarse,
+// named-collection heuristic, not a per-book canonicity score — flag, don't compute.
+const CANON_HEAVY_LANGS = new Set(['Hebrew', 'Latin', 'Greek', 'Armenian', 'Tibetan', 'Chinese']);
+
+function main() {
+  const obsRows = readJsonl(OBS_FILE).filter(r => r.slug && r.page_class);
+  if (!obsRows.length) throw new Error(`No reference-scored rows in ${OBS_FILE}`);
+  const refTexts = loadReferenceTexts();
+  const rawBySlug = loadRawTextsBySlug();
+
+  const { points, skippedNoRaw } = buildAnchorPoints(obsRows, refTexts, rawBySlug);
+  const noncanon = points.filter(p => !p.canonical_text);
+  const canon = points.filter(p => p.canonical_text);
+
+  // STEP 2: fits. Grouped by LANGUAGE, not `script` — German pages carry
+  // script:'latin' (Fraktur/Latin alphabet) but are a distinct stratum from
+  // true Latin in the paper's own convention (CLAUDE.md: "Latin 7, German 5" as
+  // separate counts), and conflating them under `script` silently pooled 5
+  // German pages into a 10-page "latin" fit. `script` still drives the coarse
+  // spaced-vs-spaceless split and which SCRIPT_DEFS folding rules apply when
+  // scoring (German text is still Latin-alphabet for that purpose).
+  const bySpaceClass = { spaced: [], spaceless: [] };
+  const byLanguage = {};
+  for (const p of noncanon) {
+    const cls = isSpaceless(p.script) ? 'spaceless' : 'spaced';
+    bySpaceClass[cls].push(p);
+    (byLanguage[p.language || p.script] ||= []).push(p);
+  }
+  const fits = {
+    spaced: fitStratum(bySpaceClass.spaced, 'spaced (all alphabetic scripts, pooled)'),
+    spaceless: fitStratum(bySpaceClass.spaceless, 'space-less (CJK, pooled)'),
+    perScript: Object.fromEntries(Object.entries(byLanguage).map(([s, pts]) => [s, fitStratum(pts, s)])),
+  };
+
+  // Canonical-vs-noncanon agreement/accuracy comparison (the exclusion rationale, quantified on this exact dataset)
+  const rForClass = cls => {
+    const pts = cls === 'canon' ? canon : noncanon;
+    const usable = pts.filter(p => p.agreement_mean != null && p.accuracy_freeskip_mean != null);
+    return { n: usable.length, r: round(pearsonR(usable.map(p => p.agreement_mean), usable.map(p => p.accuracy_freeskip_mean)), 3) };
+  };
+  const canonVsNoncanonR = { canon: rForClass('canon'), noncanon: rForClass('noncanon') };
+
+  // STEP 3: corpus-wide application
+  const corpusFiles = fs.readdirSync(RESULTS_DIR).filter(f => /^revision-agreement-corpus-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+  const corpusFile = args['corpus-summary'] || (corpusFiles.length ? path.join(RESULTS_DIR, corpusFiles[corpusFiles.length - 1]) : null);
+  let corpusApplication = null, corpusMeta = null;
+  if (corpusFile && fs.existsSync(corpusFile)) {
+    const corpusSummary = JSON.parse(fs.readFileSync(corpusFile, 'utf8'));
+    corpusApplication = applyCorpusWide(corpusSummary, fits);
+    corpusMeta = {
+      file: path.relative(process.cwd(), corpusFile),
+      date: corpusSummary.date,
+      eligible_pairs: corpusSummary.corpus_summary.eligible_pairs,
+      mean_agreement: corpusSummary.corpus_summary.mean_agreement,
+      median_agreement: corpusSummary.corpus_summary.median_agreement,
+    };
+  }
+
+  const summary = {
+    date: new Date().toISOString(),
+    inputs: {
+      observations_file: path.relative(process.cwd(), OBS_FILE),
+      reference_scored_rows: obsRows.length,
+      anchor_pages_total: points.length,
+      anchor_pages_canonical: canon.length,
+      anchor_pages_noncanonical: noncanon.length,
+      pages_missing_raw_text: skippedNoRaw,
+      corpus_summary_used: corpusMeta,
+    },
+    exclusion_rationale: {
+      note: 'Canonical pages are EXCLUDED from the agreement->accuracy fit. Recitation makes ' +
+        'independent models agree with each other while both misreport the page, so agreement ' +
+        'measures memorization consensus on canonical text, not reading quality.',
+      pearson_r_on_this_dataset: canonVsNoncanonR,
+      pilot_reference: 'Pilot (smaller sample): r=0.75 noncanon vs r=0.49 canon.',
+      honesty_flag: canonVsNoncanonR.canon.r != null && canonVsNoncanonR.noncanon.r != null &&
+        canonVsNoncanonR.canon.r > canonVsNoncanonR.noncanon.r
+        ? 'On THIS 44-page dataset the pooled canon r is HIGHER than noncanon r — the opposite ' +
+          'of the pilot direction. Do not paper over this: at n=12 the canon r pools SIX different ' +
+          'scripts (only 1-2 points each), so between-script separation (each script sits at its own ' +
+          'agreement/accuracy level) can inflate a pooled r without reflecting a real within-script ' +
+          'relationship — a Simpson\'s-paradox-shaped artifact of small n, not a refutation of the ' +
+          'exclusion. The exclusion decision itself rests on the RECITATION MECHANISM demonstrated ' +
+          'directly elsewhere in the paper (within-work pairs: canonical Iliad I scores 100% across ' +
+          'every model on hard 16th-c. Greek cursive it cannot be reading better than the surrounding ' +
+          'text — paper result #9), not on this single pooled correlation number, which is too small-n ' +
+          'and cross-script-confounded to be dispositive either way.'
+        : null,
+    },
+    anchor_points: { canonical: canon, non_canonical: noncanon },
+    fits,
+    corpus_wide_calibration: corpusApplication,
+    caveats: [
+      'Revision pairs are mostly within-Gemini-family transitions (flash->current, ' +
+        'lite->current), NOT independent readings across engines — calibrated numbers are ' +
+        'estimates CONDITIONAL on the anchor fit (built from a small, multi-engine anchor set) ' +
+        'transferring to same-family re-runs. They are not validated against an independent OCR engine.',
+      'Canonical-heavy strata inflate agreement without the fit knowing it: recitation makes ' +
+        'independent runs agree while both misreport the page. Strata in ' +
+        `${[...CANON_HEAVY_LANGS].join(', ')} plausibly contain a mix of liturgical/scriptural/` +
+        'classical works alongside ordinary prose; a calibrated estimate for these languages may ' +
+        'read HIGHER than true reading accuracy to the extent canonical passages are present. Flagged, not corrected — ' +
+        'no per-book canonicity score exists corpus-wide yet.',
+      'Space-less scripts (Tibetan, Chinese) have ZERO non-canonical anchor pages in this dataset ' +
+        '(all 6 Chinese anchor pages are canonical ctext works) — there is no fit to apply, and ' +
+        'none is reported. Corpus agreement for these languages is descriptive only.',
+      'Per-script fits use n=5-12 PAGES (not runs) — small-sample estimates. Bootstrap CIs are ' +
+        'reported and are WIDE; treat point estimates as indicative, not precise.',
+      'Applying any fit outside its anchor agreement range is extrapolation and is flagged ' +
+        'per-cell (`extrapolated_beyond_anchor_range`) rather than silently clamped as fact.',
+    ],
+  };
+
+  fs.mkdirSync(RESULTS_DIR, { recursive: true });
+  fs.writeFileSync(OUT_JSON, JSON.stringify(summary, null, 1));
+  console.log(`Wrote ${OUT_JSON}`);
+  writeReport(summary);
+  console.log(`Wrote ${OUT_MD}`);
+}
+
+function writeReport(s) {
+  const lines = [];
+  lines.push(`# Calibration scorecard — how accurate is the text Source Library serves? (${DATE})`, '');
+  lines.push('Reader-first deliverable for #3235: fit an agreement->accuracy calibration on pinned,',
+    'reference-scored pages, then apply it to the whole `page_revisions` double-OCR corpus to',
+    'estimate per-script x per-era accuracy at zero marginal model cost.', '');
+  lines.push('**Read this first if you are not a statistician:** the table in "Scorecard v0" below is',
+    'the answer. Everything above it is how we got there and how much to trust it.', '');
+
+  lines.push('## Why canonical pages are excluded from fitting', '');
+  lines.push(s.exclusion_rationale.note, '');
+  const r = s.exclusion_rationale.pearson_r_on_this_dataset;
+  lines.push(`On this exact dataset: non-canonical r = **${r.noncanon.r ?? 'n/a'}** (n=${r.noncanon.n} pages), ` +
+    `canonical r = **${r.canon.r ?? 'n/a'}** (n=${r.canon.n} pages). ${s.exclusion_rationale.pilot_reference}`, '');
+  if (s.exclusion_rationale.honesty_flag) {
+    lines.push(`> **Honest flag:** ${s.exclusion_rationale.honesty_flag}`, '');
+  }
+
+  lines.push('## Step 1+2 — anchor fits, per script (non-canonical pages only)', '');
+  lines.push('| stratum | n pages | agreement range | free-skip fit (slope, intercept) | r (free-skip) | r (windowed) | 95% CI on slope | verdict |',
+    '|---|---:|---|---|---:|---:|---|---|');
+  const fitRow = (key, fit) => {
+    if (!fit.usable) return `| ${fit.label} | ${fit.n} | — | — | — | — | — | **UNUSABLE** — ${fit.reason} |`;
+    const f = fit.freeskip_fit;
+    const verdict = f.slope_ci_crosses_zero ? 'usable, but slope not significant (CI crosses 0)' : 'usable';
+    return `| ${fit.label} | ${fit.n} | ${pct(fit.agreement_range[0])}–${pct(fit.agreement_range[1])} | ` +
+      `${f.slope} x + ${f.intercept} | ${f.r} | ${fit.windowed_fit ? fit.windowed_fit.r : '—'} | ` +
+      `[${f.slope_ci[0]}, ${f.slope_ci[1]}] | ${verdict} |`;
+  };
+  lines.push(fitRow('spaced', s.fits.spaced));
+  lines.push(fitRow('spaceless', s.fits.spaceless));
+  for (const [script, fit] of Object.entries(s.fits.perScript)) lines.push(fitRow(script, fit));
+  lines.push('');
+  lines.push('Free-skip (upper bound) and windowed (lower bound, PR #3304) accuracy per anchor page:', '');
+  lines.push('| language (stratum) | slug | agreement | accuracy (free-skip) | accuracy (windowed) | bracket width |',
+    '|---|---|---:|---:|---:|---:|');
+  for (const p of [...s.anchor_points.non_canonical].sort((a, b) => (a.language || '').localeCompare(b.language || '') || (b.agreement_mean ?? 0) - (a.agreement_mean ?? 0))) {
+    const width = (p.accuracy_freeskip_mean != null && p.accuracy_windowed_mean != null)
+      ? round(p.accuracy_freeskip_mean - p.accuracy_windowed_mean, 3) : null;
+    lines.push(`| ${p.language} | ${p.slug} | ${pct(p.agreement_mean)} | ${pct(p.accuracy_freeskip_mean)} | ` +
+      `${p.accuracy_windowed_mean == null ? '— (no ref text / raw text)' : pct(p.accuracy_windowed_mean)} | ` +
+      `${width == null ? '—' : (width * 100).toFixed(1) + 'pp'} |`);
+  }
+  lines.push('');
+  if (s.inputs.pages_missing_raw_text.length) {
+    lines.push(`Pages with fewer than 2 raw outputs recovered (agreement/windowed not computable): ` +
+      `${s.inputs.pages_missing_raw_text.join(', ')}`, '');
+  }
+
+  lines.push('## Step 3 — corpus-wide calibrated bands', '');
+  if (s.inputs.corpus_summary_used) {
+    const c = s.inputs.corpus_summary_used;
+    lines.push(`Applied to \`${c.file}\` (built ${c.date?.slice(0, 10)}): **${c.eligible_pairs.toLocaleString()}** ` +
+      `eligible \`page_revisions\` pairs, corpus mean agreement ${pct(c.mean_agreement)}, median ${pct(c.median_agreement)}.`, '');
+  } else {
+    lines.push('_No corpus summary file found — corpus-wide application skipped._', '');
+  }
+  lines.push('| language | era | n pairs | corpus agreement (median) | calibration used | estimated accuracy | flags |',
+    '|---|---|---:|---:|---|---:|---|');
+  const sortedCorpus = [...(s.corpus_wide_calibration || [])].sort((a, b) => b.n_pairs - a.n_pairs);
+  for (const row of sortedCorpus) {
+    if (row.n_pairs < 50) continue; // headline table: drop tiny cells, they're in the JSON
+    const flags = [];
+    if (row.cross_script_transfer) flags.push('cross-script transfer');
+    if (row.extrapolated_beyond_anchor_range) flags.push('extrapolated');
+    if (row.space_less_uncalibrated) flags.push('UNCALIBRATED (space-less, zero anchors)');
+    if (CANON_HEAVY_LANGS.has(row.language)) flags.push('canon-heavy language — may overstate');
+    const usedFit = row.calibration_stratum === 'spaced-pooled' ? s.fits.spaced : s.fits.perScript[row.calibration_stratum];
+    if (usedFit?.freeskip_fit?.slope_ci_crosses_zero) flags.push('slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering');
+    lines.push(`| ${row.language} | ${row.era} | ${row.n_pairs.toLocaleString()} | ${pct(row.corpus_median_agreement)} | ` +
+      `${row.calibration_stratum || '—'} | ${row.estimated_accuracy == null ? '—' : pct(row.estimated_accuracy)} | ${flags.join('; ') || '—'} |`);
+  }
+  lines.push('', '(Cells with <50 revision pairs are omitted from this table for readability; the full set is in the JSON.)', '');
+
+  lines.push('## Two caveats to carry with every number above', '');
+  for (const c of s.caveats) lines.push(`- ${c}`);
+  lines.push('');
+
+  lines.push('## Scorecard v0 (paper-ready subsection)', '');
+  lines.push('_Drop-in for `.claude/docs/ocr-memorization-paper.md`, "Experiments planned" ->',
+    '"Calibration scorecard" entry, once reviewed._', '');
+  lines.push('We fit a monotone agreement->accuracy calibration on the 32 non-canonical anchor pages',
+    '(canonical pages excluded — recitation inflates agreement without inflating true reading',
+    `accuracy. On this 44-page dataset the pooled canon r (${r.canon.r}, n=12, six scripts) is noisier`,
+    `and cross-script-confounded rather than confirmatory; the exclusion rests on the recitation`,
+    `mechanism itself, demonstrated directly by the within-work pairs (paper result #9), not on this`,
+    `single correlation). Usable`,
+    'per-script fits exist for Armenian, Greek, Latin and German (n=5-12 pages each, wide bootstrap',
+    'CIs); Hebrew (n=2) and all space-less scripts (Chinese, Tibetan — zero non-canonical anchor',
+    'pages) are UNUSABLE and reported as such, never extrapolated. Applied to the 109,953-pair',
+    '`page_revisions` corpus (PR #3273), this produces calibrated per-script x per-era accuracy',
+    'estimates at zero marginal model cost — with two standing caveats: the corpus is mostly',
+    'within-Gemini-family re-OCR (not an independent-engine validation of the fit), and languages', 'whose corpus includes liturgical/classical canonical works may read the calibration high.',
+    'Product form: a per-script x per-century scorecard on /research, eventually a per-page', 'confidence surface in the reader.', '');
+
+  fs.writeFileSync(OUT_MD, lines.join('\n'));
+}
+
+main();

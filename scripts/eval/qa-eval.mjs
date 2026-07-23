@@ -503,6 +503,39 @@ async function cmdScorecard() {
         armSuffix = `@w${width}${armSuffix}`;
         console.log(`  resized to ${Math.min(width, meta.width)}px wide (native ${meta.width}) → ${imageBuffer.length} bytes`);
       }
+      // --blur=SIGMA gaussian-blurs the (possibly resized) image — degradation-
+      // robustness arm: reading needs pixels, reciting does not, so accuracy that
+      // survives blur is a memory signature. Apply AFTER --width so sigma is
+      // comparable across pages at a fixed pixel scale.
+      if (args.blur) {
+        const sigma = parseFloat(args.blur);
+        const sharp = (await import('sharp')).default;
+        imageBuffer = await sharp(imageBuffer).blur(sigma).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@blur${sigma}${armSuffix}`;
+        console.log(`  blurred σ=${sigma} → ${imageBuffer.length} bytes`);
+      }
+      // --occlude=FRAC masks a horizontal band (FRAC of image height, centered
+      // vertically, margins left visible so layout parsing survives). Text the
+      // model emits for the masked band is reference-free evidence of recitation
+      // (occlusion cloze — see ocr-memorization-paper.md).
+      if (args.occlude) {
+        const frac = parseFloat(args.occlude);
+        const sharp = (await import('sharp')).default;
+        const meta = await sharp(imageBuffer).metadata();
+        const bandH = Math.round(meta.height * frac);
+        const top = Math.round(meta.height / 2 - bandH / 2);
+        const left = Math.round(meta.width * 0.10);
+        const bandW = Math.round(meta.width * 0.80);
+        const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+        imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@occ${Math.round(frac * 100)}${armSuffix}`;
+        console.log(`  occluded ${bandW}×${bandH} band at y=${top} → ${imageBuffer.length} bytes`);
+      }
+      // --save-image=DIR dumps the manipulated image for visual audit of arm placement.
+      if (args['save-image']) {
+        const name = (gt.work || 'page').replace(/\W+/g, '_').slice(0, 60) + armSuffix.replace(/@/g, '_') + '.jpg';
+        fs.writeFileSync(path.join(args['save-image'], name), imageBuffer);
+      }
       row.models = {};
       for (const model of models) {
         const outputs = [];

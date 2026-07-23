@@ -248,6 +248,56 @@ Design note: pooled across the four pairs these effects would largely cancel
 (9.3pp manuscript gap, ~1pp print gaps, one inverted pair) — the within-work
 gradient must be reported per-pair, which is the point of pinning pairs.
 
+### Occlusion/degradation pilot (2026-07-23; 140 runs, 0 errors, ~$4; harness `--occlude`/`--blur`/`--save-image` in qa-eval, analysis `report-occlusion.mjs`)
+
+Ten pages (the four pairs + two Hebrew controls), lite + sonnet5 ×2, all arms on a
+2000px base: baseline, @occ25 (mid-page band masking 25% of height), @blur2/@blur4.
+Every occluded image was visually audited afterward; the audit changed the analysis.
+
+13. **Silent fill-in is the default behavior, and it is now measured per passage.**
+    Of 28 occluded runs, exactly ONE mentioned the mask — models otherwise
+    transcribe straight through a 25%-of-page gray band without comment. After
+    normalizing for how much of the reference each mask actually covered
+    (`fill-in excess` = occluded-run reference coverage − visually audited visible
+    share), the excess column reads as a **graded retrievability score**:
+    Iliad I **+32pp** (both models, on the 1555 MANUSCRIPT), 1 Chr (Armenian)
+    +18/+28, Aeneid I +21/+22, Vulgate Genesis 5 +16/+21, Aeneid X +16/+17,
+    Iliad XIII **−13/−16** (the one true negative — occlusion also scrambles
+    reading order, so a pure reader goes slightly negative). This ordering is the
+    first empirical **canonicity slope** — the graded instrument the within-work
+    plan called for — and its sharpest point: models reconstruct hyper-canonical
+    text through a mask even on a manuscript page, in a hand they are reading, not
+    reciting from print.
+14. **Blur is the geometry-free twin, and it confirms the manuscript result.**
+    Under σ=4 blur the canonical Iliad I holds 100.0%/99.8% (Δ 0.0pp) while
+    non-canonical Iliad XIII on the SAME manuscript collapses −32/−48pp.
+    Degradation robustness on the memorized passage only — page style, hand, and
+    blur level identical by construction. On clean print blur4 barely binds
+    (±1-3pp both classes), so the blur detector needs degradation strong enough to
+    impair *reading* before memory's robustness shows; occlusion works everywhere
+    but needs geometry audit. The two are complementary arms of one test.
+15. **The predictability confound, found by the audit.** "Low-canonicity" print
+    passages showed positive fill-in too — and each case is explainable:
+    Aeneid X is still the Aeneid (reference = the memorized Wikisource text);
+    the Armenian 1 Chronicles genealogy is a name-chain reconstructable from
+    CROSS-LINGUAL memory (Adam→Seth→Enos in Armenian orthography, +28pp) where
+    the Latin Genesis 5 begat-list with its unpredictable lifespan numbers filled
+    in less. The cloze measures **retrievability = memorization + structural
+    predictability**, not verbatim edition memory alone — the right control for
+    the membership test is text that is unpredictable AND unpublished, which
+    (reflexively, again) reference-bearing pages can never fully be.
+16. **Pilot design corrections for v2** (both found by the image audit, neither
+    visible in the score table alone): (a) the fixed mid-page mask MISSED the
+    reference passage entirely on two of five canonical pages (Vulgate Genesis 1 —
+    it masked the woodcut; Hebrew Genesis 1 — band sat below vv.1-5), silently
+    producing flat Δocc that looks like recitation; v2 masks must be
+    passage-targeted per page. (b) Raw Δocc conflates mask-passage overlap with
+    fill-in — the visible-share normalization is mandatory, and eyeballed shares
+    carry ±10-15pp, so v2 should compute overlap from line coordinates or
+    per-token masked-region scoring. Also recorded: sonnet5 under blur4 on
+    Armenian returns 0.0% both classes (model breakdown, not signal), and the
+    single mask mention was sonnet5 on the Zohrab John page.
+
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
 Free, reference-free, and complementary: `page_revisions` stores the text each
@@ -285,41 +335,66 @@ its factors; it cannot say whether 87% agreement means 87% correct. The regressi
 queue derived from it is explicitly unverified (priors longer than a page can hold
 still rank at the top).
 
-### Calibration scorecard (2026-07-24) — agreement→accuracy, anchors → corpus
+### Calibration scorecard (2026-07-23/24, PRs #3336 + #3342) — agreement→accuracy, anchors → corpus
 
-`scripts/eval/calibration-scorecard.mjs` (offline, zero cost; rebuildable) →
-`results/calibration-scorecard-2026-07-23.{json,md}`. Step 1 pairs every native
-(non-arm) model output against every other on the 44 anchor pages — 2,023
-cross-model pairs, 11 models — computing the corpus agreement metric per pair and
-free-skip accuracy vs the published transcription per side. Step 2 pushes the
-87,235 `is_live` eligible revision pairs through an isotonic fit (non-canonical
-pairs only) into a per-language × per-century scorecard.
+Two sessions built this in parallel; the canonical implementation is
+`scripts/eval/calibration-scorecard.mjs` (PR #3336; offline, zero cost) →
+`results/calibration-scorecard-2026-07-23.{json,md}`. Per non-canonical anchor
+page: mean inter-model agreement paired with reference accuracy (both bounds);
+per-script OLS with bootstrap CIs over pages, n<5 scripts refused (never
+extrapolated); applied to the 109,953-pair revision corpus by stratum. The
+duplicate implementation (#3342, closed) differed by pairing at the cross-model
+PAIR level (2,023 pairs) and applying per-pair over `is_live` pairs only; its
+surviving contribution is the pair-level r addendum in result 18.
 
-13. **The consensus-failure r split reproduces at scale.** r(agreement, accuracy)
-   = 0.688 on non-canonical pairs (0.749 windowed) vs 0.516 on canonical (0.415
-   on canonical spaceless — the recitation-heavy cell). Same direction as the
-   pilot (0.75/0.49), now on 14× the pairs. Agreement predicts accuracy only
-   where models cannot recite; this is the empirical license for fitting on
-   non-canonical rows only, and contribution 2's failure condition measured as a
-   correlation collapse.
-14. **The scorecard answers the reader question, with era gradients intact.**
-   Anchored cells: German 99.1% estimated accuracy (n=20,667 pairs), Latin 96.9%
-   (n=29,309; 16th-c 96.2% → 18th-c 99.0%), Greek 95.3% overall but 16th-c Greek
-   is flagged unstable (median agreement 46.6%, 55% of pairs below 0.5), Hebrew
-   unstable at (89.3%)* with 17.8% of pairs flagged broken. Extrapolated (†)
-   cells: English 99.2%, French 98.5%, Dutch 98.3%. Tibetan gets NO estimate:
-   57.3% of its live pairs have a degenerate/commentary side and median agreement
-   is 27.5% — "unreliable and flagged" is the scorecard entry itself.
-15. **Two honesty rails matter more than the point estimates.** (a) The curve's
-   low end is soft: anchor pairs below 0.3 agreement still average ~78% free-skip
-   accuracy (models disagree about NON-reference page material), while corpus
-   low-agreement pairs may be genuinely broken text — a failure shape anchors
-   never exhibit — so cells with >25% low-agreement pairs carry an unstable
-   marker instead of a quotable rating. (b) Estimates lean HIGH twice over:
-   corpus pairs are within-Gemini-family (self-agreement shares failure modes)
-   and anchor accuracy is the free-skip upper bound. The scorecard is a
-   calibrated *estimate with flags*, not a measurement; the IA-OCR baseline arm
-   supplies the independent second reading it lacks.
+17. **The scorecard answers the reader question, with flags carrying the real
+   information.** German ≈99.8% estimated accuracy, English ≈99.8% (cross-script
+   transfer), French ≈99.5%, Latin ≈97.0% (its per-script slope is not
+   significant, so Latin cells carry "trust magnitude, not cell ordering"),
+   16th-c Greek 94.8% estimated off median agreement of only 44.8% — flagged;
+   Tibetan and Chinese are UNCALIBRATED (space-less, zero non-canonical
+   anchors): 12.8% median agreement on 18th-c Tibetan is reported as a flag,
+   not laundered into an accuracy number. The zero-spaceless-anchor gap is a
+   finding — every Chinese anchor is a canonical classic, exactly the rows the
+   consensus-failure result disqualifies from fitting.
+18. **The r-split evidence for excluding canonical rows is MECHANISM, not this
+   dataset's correlations — say so plainly.** Page-level on the 44 pages, the
+   pooled split REVERSES the pilot (canon r=0.777 > noncanon 0.714): at n=12
+   canonical pages pooling six scripts, between-script separation inflates a
+   pooled r (Simpson-shaped artifact). Pair-level recomputation (2,023
+   cross-model pairs, #3342) lands in the pilot's direction — noncanon 0.688 vs
+   canon 0.516 — but decomposing it within script shows why neither number is
+   dispositive: each script's canonical cell is 1–2 pages, so per-script canon r
+   is computed on pairs from a single page (Greek: one Iliad page, r=0.709;
+   Armenian: one Zohrab page, r=0.493). Every level of the r comparison is
+   underpowered at 12 canonical pages. The exclusion decision rests on the
+   demonstrated recitation mechanism (results 9, 13–14), and the paper should
+   cite it that way rather than leaning on any r split.
+19. **Honesty rails on every estimate.** (a) Corpus pairs are mostly
+   within-Gemini-family transitions — self-agreement shares failure modes, so
+   calibrated numbers are conditional on the anchor fit transferring and lean
+   HIGH; anchor accuracy is additionally the free-skip upper bound. (b) The
+   curve's low end is soft: anchor disagreement is about NON-reference page
+   material (pairs below 0.3 agreement still average ~78% free-skip accuracy),
+   while corpus low-agreement pairs may be genuinely broken text — a failure
+   shape anchors never exhibit. Canon-heavy strata are flagged (recitation
+   inflates agreement without inflating accuracy). The scorecard is a calibrated
+   *estimate with flags*, not a measurement; the IA-OCR baseline supplies the
+   independent second reading it lacks.
+
+### IA-OCR corpus baseline — pilot (2026-07-23, PR #3341)
+
+`scripts/eval/ia-ocr-baseline.mjs` → `results/ia-ocr-baseline-pilot-2026-07-23.md`.
+200 sampled books with `ia_identifier`, IA's own non-generative OCR fetched and
+page-aligned by text probes: 115 books aligned, 2,276 page rows scored, zero AI
+cost. Chinese strata are EXPECTED-COLLAPSE controls (0–1 of 30 books aligned,
+per the Tesseract-typography lesson) and Greek/Hebrew 1500s mostly unalignable —
+those cells are unmeasurable, not model advantage. Where IA is competent
+(19th/20th-c roman type), ours-vs-IA disagreement is an upper bound on combined
+error from an independent reading with no memorization channel; 16th-c Latin
+agreement (27.2%) says the baseline collapses on ligatures, as predicted. The
+corpus-scale diff-in-diff (use (c) in the experiment entry) needs the full
+harvest, not this pilot.
 
 ## Related work — verified dossier (2026-07-19 sweep; every entry abstract-checked)
 
@@ -389,18 +464,21 @@ degradation/occlusion membership pilot (~$2–5, validated against the pinned pa
 (4) more pairs / the canonicity slope. Details below.
 
 - ~~**Calibration scorecard — the reader-first deliverable (free).**~~ RUN
-  2026-07-24 (`scripts/eval/calibration-scorecard.mjs` →
-  `results/calibration-scorecard-*.{json,md}`; results 13–15 below). Fitted on
-  non-canonical anchor pairs only, applied to the 87,235 live-side eligible
-  revision pairs. Remaining from the original plan: the **/research product
-  page** (needs Derek's sign-off on publishing the numbers), the per-book/
-  per-page confidence surface in the reader, and — the binding measurement gap —
-  **non-canonical spaceless anchors** (every Chinese anchor is a canonical
-  classic, so no spaceless fit exists and CJK/Tibetan cells get agreement only).
-  Original notes: pilot r=0.75 noncanon vs 0.49 canon — recitation fakes
-  agreement; stratify by script and era.
+  2026-07-23/24, twice in parallel (PR #3336 = canonical implementation, #3342
+  closed as duplicate; results 17–19 above). Fitted on non-canonical anchor
+  pages only, applied to the revision-pair corpus per stratum. Remaining from
+  the original plan: the **/research product page** (needs Derek's sign-off on
+  publishing the numbers), the per-book/per-page confidence surface in the
+  reader, and — the binding measurement gap — **non-canonical spaceless
+  anchors** (every Chinese anchor is a canonical classic, so no spaceless fit
+  exists and CJK/Tibetan cells get agreement flags only). Original notes: pilot
+  r=0.75 noncanon vs 0.49 canon — recitation fakes agreement; stratify by
+  script and era.
 
-- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** Most exportable
+- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** PILOT RUN
+  2026-07-23 (PR #3341; results section above): 200 books, 115 aligned, 2,276
+  page rows; full-corpus harvest + within-band diff-in-diff still open.
+  Original design: most exportable
   books carry an `ia_identifier`, and Internet Archive publishes its own OCR
   (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
   numbering mappable to ours. Three uses, in increasing strength: (a) a corpus-scale
@@ -436,7 +514,10 @@ degradation/occlusion membership pilot (~$2–5, validated against the pinned pa
   corpora" vs "this corpus demonstrably is NOT" are both evidence-backed statements
   the licensing track can use.
 
-- **Occlusion cloze pilot — the smoking gun (SPEC'd 2026-07-23, ~$2–5, run next).**
+- ~~**Occlusion cloze pilot**~~ — RUN 2026-07-23 (results 13–16): silent fill-in
+  confirmed and graded per passage (the first canonicity-slope data); blur arm
+  delivers a geometry-free manuscript confirmation; v2 needs passage-targeted
+  masks + computed overlap. Original spec follows.
   Mask a band of the page and read what the model emits for pixels that do not exist.
   A reading model loses exactly the band; a reciting model fills it in. Text produced
   for occluded regions is per-page, reference-free proof of recitation.

@@ -1,198 +1,170 @@
-# Calibration scorecard — how accurate is the text we serve? (2026-07-23)
+# Calibration scorecard — how accurate is the text Source Library serves? (2026-07-23)
 
-Agreement→accuracy calibration fitted on the pinned anchor pages (non-canonical
-rows only), applied to the same-page double-OCR corpus
-(`revision-agreement-corpus-2026-07-20.jsonl`). Estimates are calibrated inferences, not
-measurements — see caveats at the end. Free to rebuild:
-`node scripts/eval/calibration-scorecard.mjs`.
+Reader-first deliverable for #3235: fit an agreement->accuracy calibration on pinned,
+reference-scored pages, then apply it to the whole `page_revisions` double-OCR corpus to
+estimate per-script x per-era accuracy at zero marginal model cost.
 
-## 1. The calibration (anchors: 44 pages, 2023 cross-model pairs)
+**Read this first if you are not a statistician:** the table in "Scorecard v0" below is
+the answer. Everything above it is how we got there and how much to trust it.
 
-| stratum | n pairs | r (agreement, accuracy) | r windowed |
-|---|---:|---:|---:|
-| noncanon · spaced | 1421 | 0.688 | 0.749 |
-| noncanon · spaceless | 0 | — | — |
-| noncanon · all | 1421 | 0.688 | 0.749 |
-| canon · spaced | 301 | 0.618 | 0.646 |
-| canon · spaceless | 301 | 0.415 | 0.582 |
-| canon · all | 602 | 0.516 | 0.569 |
+## Why canonical pages are excluded from fitting
 
-The canon/noncanon r split is the consensus-failure result: on canonical text,
-models reciting the same memorized passage agree while both misreport the page,
-so agreement stops predicting accuracy. Only non-canonical pairs calibrate.
+Canonical pages are EXCLUDED from the agreement->accuracy fit. Recitation makes independent models agree with each other while both misreport the page, so agreement measures memorization consensus on canonical text, not reading quality.
 
-Fit (isotonic, noncanon only): spaced n=1421 over agreement
-[0,1], scripts: armenian, greek, hebrew, latin.
-OLS sensitivity: acc ≈ 0.7504 + 0.2763·agr
-(windowed: 0.6684 + 0.3624·agr).
+On this exact dataset: non-canonical r = **0.714** (n=32 pages), canonical r = **0.777** (n=12 pages). Pilot (smaller sample): r=0.75 noncanon vs r=0.49 canon.
 
-**No spaceless fit exists**: the anchor set holds ZERO non-canonical
-space-less-script rows — every Chinese anchor is a canonical classic, exactly
-the rows the consensus-failure result disqualifies. Until non-canonical CJK
-anchors land (ctext plumbing, see paper doc), Chinese/Japanese/Tibetan cells
-report agreement only. This gap is a finding, not an omission.
+> **Honest flag:** On THIS 44-page dataset the pooled canon r is HIGHER than noncanon r — the opposite of the pilot direction. Do not paper over this: at n=12 the canon r pools SIX different scripts (only 1-2 points each), so between-script separation (each script sits at its own agreement/accuracy level) can inflate a pooled r without reflecting a real within-script relationship — a Simpson's-paradox-shaped artifact of small n, not a refutation of the exclusion. The exclusion decision itself rests on the RECITATION MECHANISM demonstrated directly elsewhere in the paper (within-work pairs: canonical Iliad I scores 100% across every model on hard 16th-c. Greek cursive it cannot be reading better than the surrounding text — paper result #9), not on this single pooled correlation number, which is too small-n and cross-script-confounded to be dispositive either way.
 
-### Binned curve (noncanon, spaced)
+## Step 1+2 — anchor fits, per script (non-canonical pages only)
 
-| agreement bin | n | mean true accuracy |
-|---|---:|---:|
-| [0–0.3) | 438 | 77.8% |
-| [0.3–0.5) | 190 | 89.8% |
-| [0.5–0.7) | 121 | 93.3% |
-| [0.7–0.8) | 121 | 96.3% |
-| [0.8–0.9) | 114 | 98.1% |
-| [0.9–0.95) | 182 | 99.1% |
-| [0.95–0.99) | 172 | 99.6% |
-| [0.99–1.001) | 83 | 99.9% |
+| stratum | n pages | agreement range | free-skip fit (slope, intercept) | r (free-skip) | r (windowed) | 95% CI on slope | verdict |
+|---|---:|---|---|---:|---:|---|---|
+| spaced (all alphabetic scripts, pooled) | 32 | 35.3%–97.8% | 0.082 x + 0.918 | 0.714 | 0.647 | [0.051, 0.109] | usable |
+| space-less (CJK, pooled) | 0 | — | — | — | — | — | **UNUSABLE** — n=0 pages < 5 — UNUSABLE, no fit attempted, never extrapolate |
+| Armenian | 8 | 37.0%–74.3% | 0.044 x + 0.943 | 0.329 | 0.519 | [-0.078, 0.175] | usable, but slope not significant (CI crosses 0) |
+| German | 5 | 83.7%–97.8% | 0.053 x + 0.948 | 0.975 | 0.979 | [-0.055, 0.093] | usable, but slope not significant (CI crosses 0) |
+| Greek | 12 | 38.0%–97.6% | 0.103 x + 0.901 | 0.852 | 0.791 | [0.014, 0.133] | usable |
+| Hebrew | 2 | — | — | — | — | — | **UNUSABLE** — n=2 pages < 5 — UNUSABLE, no fit attempted, never extrapolate |
+| Latin | 5 | 40.2%–72.5% | -0.039 x + 0.998 | -0.321 | -0.369 | [-0.198, 0.509] | usable, but slope not significant (CI crosses 0) |
 
-## 2. The scorecard (corpus: 87,235 live eligible pairs)
+Free-skip (upper bound) and windowed (lower bound, PR #3304) accuracy per anchor page:
 
-Scope: pairs whose current side is the live `pages.ocr` — the text readers see.
-`est. accuracy` = mean of the calibrated per-pair estimates. † = extrapolated
-(no same-script anchors; nearest-family fit). ⚠ = unsupported (no defensible
-fit — agreement shown, accuracy estimate suppressed). `(x%)*` = unstable: >25%
-of the cell's pairs sit below agreement 0.5, where the anchor curve has only
-its soft floor — read those cells as "flagged for audit", not as a rating.
-`% flagged` = pairs where a side is degenerate/refusal/commentary (direction ≠
-both-transcription). Language is book metadata (edition language) and can be
-wrong on individual books.
+| language (stratum) | slug | agreement | accuracy (free-skip) | accuracy (windowed) | bracket width |
+|---|---|---:|---:|---:|---:|
+| Armenian | armenian-eznik-elc-alandoc-157 | 74.3% | 97.0% | 96.4% | 0.6pp |
+| Armenian | armenian-eznik-elc-alandoc-70 | 70.7% | 97.0% | 96.4% | 0.7pp |
+| Armenian | armenian-eznik-elc-alandoc-109 | 70.0% | 96.2% | 95.9% | 0.3pp |
+| Armenian | armenian-xorenatsi-patmutiwn-2-60 | 68.4% | 98.8% | 98.5% | 0.3pp |
+| Armenian | armenian-eznik-elc-alandoc-203 | 65.0% | 98.5% | 98.3% | 0.2pp |
+| Armenian | armenian-xorenatsi-patmutiwn-3-35 | 51.0% | 93.5% | 93.2% | 0.4pp |
+| Armenian | armenian-xorenatsi-patmutiwn-2-13 | 46.6% | 98.6% | 98.1% | 0.5pp |
+| Armenian | armenian-zohrab-1chronicles-1 | 37.0% | 95.6% | 93.0% | 2.6pp |
+| German | german-humboldt-kosmos1-p150 | 97.8% | 100.0% | 100.0% | 0.0pp |
+| German | german-boltzmann-gastheorie2-p128 | 96.9% | 100.0% | 100.0% | 0.0pp |
+| German | german-hegel-phaenomenologie-p351 | 96.9% | 99.9% | 99.9% | 0.0pp |
+| German | german-hegel-logik-p148 | 95.5% | 100.0% | 100.0% | 0.0pp |
+| German | german-herder-sprache-p44 | 83.7% | 99.3% | 99.1% | 0.1pp |
+| Greek | greek-simplicius-in-phys-300 | 97.6% | 100.0% | 100.0% | 0.0pp |
+| Greek | greek-hero-pneumatica-60 | 97.3% | 100.0% | 99.2% | 0.8pp |
+| Greek | greek-hero-pneumatica-306 | 95.7% | 99.8% | 99.8% | 0.0pp |
+| Greek | greek-philo-opificio-38 | 95.6% | 100.0% | 100.0% | 0.0pp |
+| Greek | greek-philo-opificio-45 | 94.9% | 99.9% | 99.8% | 0.1pp |
+| Greek | greek-philo-opificio-55 | 88.0% | 98.8% | 98.8% | 0.0pp |
+| Greek | greek-hero-pneumatica-266 | 86.0% | 97.3% | 97.0% | 0.3pp |
+| Greek | greek-hero-pneumatica-178 | 80.5% | 98.8% | 98.8% | 0.0pp |
+| Greek | greek-simplicius-in-phys-500 | 68.0% | 98.5% | 98.3% | 0.2pp |
+| Greek | greek-simplicius-in-phys-150 | 64.8% | 100.0% | 100.0% | 0.0pp |
+| Greek | greek-iliad-13-idomeneus | 45.1% | 94.7% | 93.0% | 1.7pp |
+| Greek | greek-dioscorides-ruel-106 | 38.0% | 92.0% | 80.5% | 11.5pp |
+| Hebrew | hebrew-shaarei-orah-gate2-yovel | 68.7% | 93.6% | 92.3% | 1.3pp |
+| Hebrew | hebrew-sefer-hayirah-blessings | 35.3% | 93.1% | 73.0% | 20.1pp |
+| Latin | latin-hieronymus-prologus-galeatus | 72.5% | 98.8% | 98.1% | 0.7pp |
+| Latin | latin-vita-vergilii-donatus-auctus | 67.2% | 94.9% | 91.7% | 3.1pp |
+| Latin | latin-aeneid-10-pallas | 67.1% | 97.1% | 86.9% | 10.2pp |
+| Latin | latin-hieronymus-epistola-ad-paulinum | 51.2% | 98.8% | 98.4% | 0.4pp |
+| Latin | latin-vulgate-genesis-5-genealogy | 40.2% | 98.1% | 96.2% | 1.8pp |
 
-### By language
+## Step 3 — corpus-wide calibrated bands
 
-| language | n pairs | median agr | est. accuracy | % agr<0.5 | % flagged |
-|---|---:|---:|---:|---:|---:|
-| occitan † | 137 | 100.0% | 99.9% | 0.0% | 0.0% |
-| polish † | 308 | 99.5% | 99.6% | 0.7% | 0.0% |
-| zulu † | 54 | 100.0% | 99.3% | 1.8% | 0.0% |
-| yoruba † | 133 | 98.8% | 99.3% | 0.8% | 0.8% |
-| english † | 14,614 | 100.0% | 99.2% | 1.8% | 1.4% |
-| auto-detect † | 1,985 | 98.0% | 99.2% | 0.3% | 0.1% |
-| german | 20,667 | 98.9% | 99.1% | 1.2% | 0.4% |
-| hausa † | 129 | 99.2% | 99.1% | 4.7% | 0.0% |
-| lb † | 491 | 93.2% | 98.7% | 0.4% | 0.0% |
-| multiple † | 143 | 94.0% | 98.7% | 0.7% | 0.0% |
-| armenian | 236 | 99.8% | 98.6% | 3.0% | 0.0% |
-| french † | 4,277 | 97.5% | 98.5% | 2.3% | 1.1% |
-| dutch † | 1,184 | 92.5% | 98.3% | 3.3% | 0.7% |
-| russian † | 219 | 94.2% | 98.2% | 2.7% | 0.0% |
-| middle english † | 442 | 95.5% | 97.5% | 7.5% | 0.0% |
-| latin | 29,309 | 91.6% | 96.9% | 10.1% | 0.8% |
-| english; chinese † | 57 | 99.1% | 96.7% | 12.3% | 0.0% |
-| sanskrit † | 399 | 90.3% | 96.7% | 14.4% | 2.8% |
-| persian † | 541 | 79.7% | 96.2% | 8.1% | 1.5% |
-| nahuatl † | 124 | 80.0% | 95.6% | 17.7% | 0.0% |
-| arabic † | 430 | 72.3% | 95.3% | 15.7% | 2.3% |
-| greek | 5,322 | 86.1% | 95.3% | 23.0% | 1.7% |
-| italian † | 1,273 | 59.4% | (91.1%)* | 45.0% | 2.4% |
-| hebrew | 325 | 49.0% | (89.3%)* | 50.6% | 17.8% |
-| unknown † | 1,135 | 0.9% | (70.4%)* | 74.2% | 0.7% |
-| chinese ⚠ | 686 | 93.5% | ⚠ no fit | 9.1% | 17.9% |
-| ge'ez ⚠ | 65 | 100.0% | ⚠ no fit | 15.6% | 30.8% |
-| maya hieroglyphs ⚠ | 119 | 30.3% | ⚠ no fit | 85.6% | 0.8% |
-| tibetan ⚠ | 1,343 | 27.5% | ⚠ no fit | 76.5% | 57.3% |
-| korean ⚠ | 95 | 72.0% | ⚠ no fit | 28.4% | 7.4% |
-| burmese ⚠ | 127 | 99.7% | ⚠ no fit | 0.0% | 0.0% |
-| javanese ⚠ | 203 | 37.8% | ⚠ no fit | 54.1% | 58.1% |
-| old javanese ⚠ | 64 | 100.0% | ⚠ no fit | 0.0% | 1.6% |
-| egyptian hieroglyphs ⚠ | 55 | 100.0% | ⚠ no fit | 2.6% | 29.1% |
+Applied to `scripts/eval/results/revision-agreement-corpus-2026-07-23.json` (built 2026-07-23): **109,953** eligible `page_revisions` pairs, corpus mean agreement 87.0%, median 98.2%.
 
-### By language × century (cells with ≥50 pairs)
+| language | era | n pairs | corpus agreement (median) | calibration used | estimated accuracy | flags |
+|---|---|---:|---:|---|---:|---|
+| German | 1700-1799 | 15,859 | 99.5% | German | 99.8% | slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Latin | 1600-1699 | 15,311 | 92.3% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Latin | 1500-1599 | 11,465 | 90.8% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| German | 1600-1699 | 6,910 | 99.1% | German | 99.9% | slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| English | 1800-1899 | 6,446 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| English | 1900+ | 6,216 | 100.0% | spaced-pooled | 99.8% | cross-script transfer |
+| Latin | 1700-1799 | 4,351 | 98.9% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| German | 1800-1899 | 3,609 | 99.7% | German | 99.8% | slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| English | 1600-1699 | 2,653 | 98.7% | spaced-pooled | 99.2% | cross-script transfer |
+| German | 1500-1599 | 2,595 | 98.4% | German | 99.8% | slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| French | 1700-1799 | 2,493 | 99.4% | spaced-pooled | 99.6% | cross-script transfer |
+| Greek | 1800-1899 | 1,891 | 98.0% | Greek | 99.6% | canon-heavy language — may overstate |
+| Latin | pre-1500 | 1,864 | 77.8% | Latin | 97.2% | canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| English | 1700-1799 | 1,761 | 99.5% | spaced-pooled | 99.3% | cross-script transfer |
+| French | 1600-1699 | 1,644 | 99.1% | spaced-pooled | 99.5% | cross-script transfer |
+| Greek | 1500-1599 | 1,340 | 44.8% | Greek | 94.8% | canon-heavy language — may overstate |
+| French | 1500-1599 | 1,335 | 90.0% | spaced-pooled | 98.8% | cross-script transfer |
+| German | 1900+ | 1,170 | 100.0% | German | 100.0% | extrapolated; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Latin | 1800-1899 | 1,009 | 99.5% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Tibetan | 1700-1799 | 998 | 12.8% | — | — | UNCALIBRATED (space-less, zero anchors); canon-heavy language — may overstate |
+| Dutch | 1500-1599 | 910 | 87.2% | spaced-pooled | 98.4% | cross-script transfer |
+| Italian | pre-1500 | 869 | 17.3% | spaced-pooled | 94.7% | cross-script transfer; extrapolated |
+| Greek | 1900+ | 835 | 98.8% | Greek | 99.8% | canon-heavy language — may overstate |
+| Greek | pre-1500 | 817 | 59.6% | Greek | 96.0% | canon-heavy language — may overstate |
+| Dutch | 1600-1699 | 675 | 99.4% | spaced-pooled | 99.7% | cross-script transfer |
+| French | 1800-1899 | 616 | 99.8% | spaced-pooled | 99.6% | cross-script transfer |
+| Latin | 1900+ | 550 | 99.7% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| English | unknown | 544 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| English | 1500-1599 | 524 | 97.0% | spaced-pooled | 98.9% | cross-script transfer |
+| Lb | unknown | 491 | 93.2% | spaced-pooled | 99.2% | cross-script transfer |
+| Persian | pre-1500 | 485 | 79.1% | spaced-pooled | 98.0% | cross-script transfer |
+| Greek | unknown | 389 | 51.1% | Greek | 95.0% | canon-heavy language — may overstate |
+| Polish | 1800-1899 | 388 | 99.5% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| Chinese | 1900+ | 387 | 94.0% | — | — | UNCALIBRATED (space-less, zero anchors); canon-heavy language — may overstate |
+| Armenian | 1800-1899 | 369 | 55.5% | Armenian | 96.5% | canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Tibetan | pre-1500 | 322 | 43.0% | — | — | UNCALIBRATED (space-less, zero anchors); canon-heavy language — may overstate |
+| Multiple | 1700-1799 | 311 | 98.7% | spaced-pooled | 99.5% | cross-script transfer |
+| Italian | 1600-1699 | 294 | 98.5% | spaced-pooled | 99.6% | cross-script transfer |
+| Arabic | pre-1500 | 282 | 64.6% | spaced-pooled | 96.9% | cross-script transfer |
+| Hebrew | 1600-1699 | 262 | 63.8% | spaced-pooled | 96.9% | cross-script transfer; canon-heavy language — may overstate |
+| Middle English | 1800-1899 | 257 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| French | 1900+ | 229 | 91.8% | spaced-pooled | 98.6% | cross-script transfer |
+| Hebrew | 1500-1599 | 223 | 62.1% | spaced-pooled | 96.7% | cross-script transfer; canon-heavy language — may overstate |
+| Russian | 1800-1899 | 219 | 94.2% | spaced-pooled | 99.0% | cross-script transfer |
+| Dutch | 1700-1799 | 215 | 94.5% | spaced-pooled | 99.3% | cross-script transfer |
+| Javanese | 1800-1899 | 203 | 5.9% | spaced-pooled | 94.7% | cross-script transfer; extrapolated |
+| Sanskrit | 1900+ | 200 | 96.5% | spaced-pooled | 99.4% | cross-script transfer |
+| Chinese | pre-1500 | 188 | 14.1% | — | — | UNCALIBRATED (space-less, zero anchors); canon-heavy language — may overstate |
+| Latin | unknown | 185 | 100.0% | Latin | 97.0% | extrapolated; canon-heavy language — may overstate; slope not distinguishable from flat (n too small) — trust magnitude, not cell ordering |
+| Middle English | pre-1500 | 185 | 68.3% | spaced-pooled | 97.3% | cross-script transfer |
+| Italian | 1500-1599 | 180 | 89.3% | spaced-pooled | 98.8% | cross-script transfer |
+| English | pre-1500 | 138 | 83.4% | spaced-pooled | 98.2% | cross-script transfer |
+| Occitan | 1800-1899 | 137 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| Yoruba | 1800-1899 | 133 | 98.8% | spaced-pooled | 99.7% | cross-script transfer |
+| Nahuatl | 1500-1599 | 124 | 80.0% | spaced-pooled | 97.7% | cross-script transfer |
+| Sanskrit | 1800-1899 | 120 | 73.4% | spaced-pooled | 97.1% | cross-script transfer |
+| Maya hieroglyphs | pre-1500 | 119 | 30.3% | — | — | UNCALIBRATED (space-less, zero anchors) |
+| Burmese | 1800-1899 | 118 | 99.7% | — | — | UNCALIBRATED (space-less, zero anchors) |
+| Arabic | 1800-1899 | 98 | 99.7% | spaced-pooled | 99.6% | cross-script transfer |
+| Hausa | 1800-1899 | 98 | 98.7% | spaced-pooled | 99.4% | cross-script transfer |
+| Chinese | 1800-1899 | 86 | 92.2% | — | — | UNCALIBRATED (space-less, zero anchors); canon-heavy language — may overstate |
+| Korean | 1700-1799 | 67 | 63.0% | spaced-pooled | 95.8% | cross-script transfer |
+| Unknown | 1700-1799 | 66 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| Old Javanese | pre-1500 | 64 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| English; Chinese | 1800-1899 | 57 | 99.1% | — | — | UNCALIBRATED (space-less, zero anchors) |
+| Zulu | 1800-1899 | 56 | 100.0% | spaced-pooled | 99.8% | cross-script transfer; extrapolated |
+| Dutch | 1800-1899 | 55 | 90.1% | spaced-pooled | 99.1% | cross-script transfer |
 
-| language | century | n pairs | median agr | est. accuracy | % agr<0.5 | % flagged |
-|---|---|---:|---:|---:|---:|---:|
-| arabic † | pre-1500 | 275 | 65.3% | 93.7% | 20.4% | 0.4% |
-| arabic † | 1800-1899 | 98 | 99.7% | 99.4% | 1.0% | 1.0% |
-| armenian | 1800-1899 | 197 | 100.0% | 99.0% | 3.0% | 0.0% |
-| auto-detect † | 1500-1599 | 109 | 97.9% | 99.4% | 0.0% | 0.0% |
-| auto-detect † | 1600-1699 | 965 | 99.3% | 99.5% | 0.2% | 0.0% |
-| auto-detect † | 1700-1799 | 911 | 94.8% | 98.8% | 0.4% | 0.1% |
-| burmese ⚠ | 1800-1899 | 106 | 99.7% | ⚠ no fit | 0.0% | 0.0% |
-| chinese ⚠ | pre-1500 | 188 | 53.8% | ⚠ no fit | 39.5% | 59.6% |
-| chinese ⚠ | 1800-1899 | 86 | 93.5% | ⚠ no fit | 9.6% | 3.5% |
-| chinese ⚠ | 1900+ | 387 | 94.0% | ⚠ no fit | 1.8% | 1.3% |
-| dutch † | 1500-1599 | 536 | 87.3% | 97.3% | 6.6% | 1.3% |
-| dutch † | 1600-1699 | 378 | 99.0% | 99.4% | 0.3% | 0.0% |
-| dutch † | 1700-1799 | 215 | 94.3% | 98.6% | 1.4% | 0.5% |
-| dutch † | 1800-1899 | 55 | 90.1% | 98.4% | 0.0% | 0.0% |
-| english † | pre-1500 | 138 | 83.4% | 96.7% | 11.8% | 1.5% |
-| english † | 1500-1599 | 461 | 96.2% | 97.0% | 9.6% | 0.7% |
-| english † | 1600-1699 | 2,029 | 97.5% | 98.0% | 4.0% | 1.7% |
-| english † | 1700-1799 | 1,063 | 99.0% | 99.1% | 2.1% | 4.2% |
-| english † | 1800-1899 | 5,129 | 100.0% | 99.6% | 0.6% | 1.3% |
-| english † | 1900+ | 5,250 | 100.0% | 99.5% | 1.2% | 0.8% |
-| english † | unknown | 544 | 100.0% | 99.7% | 0.2% | 2.9% |
-| english; chinese † | 1800-1899 | 57 | 99.1% | 96.7% | 12.3% | 0.0% |
-| french † | 1500-1599 | 932 | 86.0% | 97.2% | 4.3% | 3.3% |
-| french † | 1600-1699 | 1,230 | 97.8% | 98.7% | 1.6% | 0.6% |
-| french † | 1700-1799 | 1,624 | 98.9% | 99.2% | 0.7% | 0.2% |
-| french † | 1800-1899 | 363 | 99.6% | 98.9% | 3.6% | 1.1% |
-| french † | 1900+ | 101 | 89.8% | 97.1% | 12.1% | 2.0% |
-| german | 1500-1599 | 1,626 | 97.0% | 98.9% | 1.5% | 0.0% |
-| german | 1600-1699 | 3,909 | 98.5% | 99.3% | 0.4% | 0.4% |
-| german | 1700-1799 | 11,678 | 98.9% | 99.1% | 1.2% | 0.3% |
-| german | 1800-1899 | 2,609 | 99.7% | 99.1% | 2.1% | 1.7% |
-| german | 1900+ | 819 | 100.0% | 99.8% | 0.2% | 0.1% |
-| greek | pre-1500 | 817 | 60.2% | (92.9%)* | 31.9% | 4.2% |
-| greek | 1500-1599 | 1,340 | 46.6% | (90.6%)* | 54.6% | 3.7% |
-| greek | 1800-1899 | 1,891 | 98.0% | 98.7% | 2.6% | 0.1% |
-| greek | 1900+ | 835 | 98.8% | 99.0% | 2.8% | 0.0% |
-| greek | unknown | 389 | 51.1% | (90.3%)* | 44.9% | 0.3% |
-| hausa † | 1800-1899 | 98 | 98.7% | 98.8% | 6.1% | 0.0% |
-| hebrew | 1500-1599 | 139 | 47.3% | (87.2%)* | 53.7% | 13.0% |
-| hebrew | 1600-1699 | 123 | 56.6% | (91.5%)* | 39.6% | 13.8% |
-| italian † | pre-1500 | 869 | 17.9% | (87.6%)* | 65.6% | 3.2% |
-| italian † | 1500-1599 | 180 | 89.3% | 97.8% | 3.4% | 0.6% |
-| italian † | 1600-1699 | 196 | 96.7% | 99.0% | 0.5% | 0.0% |
-| javanese ⚠ | 1800-1899 | 203 | 37.8% | ⚠ no fit | 54.1% | 58.1% |
-| korean ⚠ | 1700-1799 | 67 | 64.5% | ⚠ no fit | 37.1% | 7.5% |
-| latin | pre-1500 | 1,849 | 80.3% | (94.7%)* | 26.8% | 3.5% |
-| latin | 1500-1599 | 9,260 | 87.5% | 96.2% | 9.4% | 0.4% |
-| latin | 1600-1699 | 13,078 | 90.3% | 96.8% | 11.5% | 0.8% |
-| latin | 1700-1799 | 3,491 | 98.2% | 99.0% | 1.0% | 0.3% |
-| latin | 1800-1899 | 896 | 99.2% | 98.3% | 6.4% | 0.6% |
-| latin | 1900+ | 550 | 99.7% | 99.6% | 0.4% | 0.0% |
-| latin | unknown | 185 | 100.0% | 99.7% | 0.0% | 0.0% |
-| lb † | unknown | 491 | 93.2% | 98.7% | 0.4% | 0.0% |
-| maya hieroglyphs ⚠ | pre-1500 | 119 | 30.3% | ⚠ no fit | 85.6% | 0.8% |
-| middle english † | pre-1500 | 185 | 68.3% | 94.5% | 17.8% | 0.0% |
-| middle english † | 1800-1899 | 257 | 100.0% | 99.7% | 0.0% | 0.0% |
-| multiple † | 1700-1799 | 143 | 94.0% | 98.7% | 0.7% | 0.0% |
-| nahuatl † | 1500-1599 | 124 | 80.0% | 95.6% | 17.7% | 0.0% |
-| occitan † | 1800-1899 | 137 | 100.0% | 99.9% | 0.0% | 0.0% |
-| old javanese ⚠ | pre-1500 | 64 | 100.0% | ⚠ no fit | 0.0% | 1.6% |
-| persian † | pre-1500 | 484 | 79.3% | 96.3% | 6.0% | 0.6% |
-| polish † | 1800-1899 | 308 | 99.5% | 99.6% | 0.7% | 0.0% |
-| russian † | 1800-1899 | 219 | 94.2% | 98.2% | 2.7% | 0.0% |
-| sanskrit † | 1800-1899 | 120 | 73.4% | (94.1%)* | 36.7% | 0.0% |
-| sanskrit † | 1900+ | 200 | 96.5% | 99.0% | 1.0% | 0.0% |
-| tibetan ⚠ | pre-1500 | 322 | 51.7% | ⚠ no fit | 48.0% | 22.4% |
-| tibetan ⚠ | 1700-1799 | 995 | 10.3% | ⚠ no fit | 99.1% | 68.0% |
-| unknown † | 1700-1799 | 66 | 100.0% | 99.8% | 0.0% | 0.0% |
-| unknown † | unknown | 1,069 | 0.8% | (68.6%)* | 78.8% | 0.8% |
-| yoruba † | 1800-1899 | 133 | 98.8% | 99.3% | 0.8% | 0.8% |
+(Cells with <50 revision pairs are omitted from this table for readability; the full set is in the JSON.)
 
-## Caveats (do not quote a cell without them)
+## Two caveats to carry with every number above
 
-1. **Estimates lean high.** The curve is fitted on cross-model pairs; corpus
-   pairs are mostly within-Gemini-family, and family self-agreement is
-   optimistic (shared failure modes agree). Anchor accuracy is also the
-   free-skip UPPER bound (passage-scoped; hallucinated additions outside the
-   reference span are uncharged).
-2. **The fit is script-class-stratified, not era-stratified** — anchor eras are
-   too thin. Century rows share one curve per script class; era enters only
-   through the agreement distribution.
-3. **† rows borrow the fit** from the nearest anchored script family;
-   ⚠ rows have no defensible fit at all. Space-less scripts are ⚠ across the
-   board (zero non-canonical spaceless anchors); Tibetan is additionally a
-   known OCR failure class (lesson_tibetan_lite_ocr_fails) — there the flag
-   IS the scorecard entry.
-4. **The curve's low end is soft.** Anchor pairs at agreement <0.3 still
-   average ~78% free-skip accuracy (models disagree about NON-reference page
-   material while both containing the passage). Corpus pairs at low agreement
-   may instead be genuinely broken text — a failure shape the anchors never
-   exhibit. Hence the `*` unstable marker.
-5. **Agreement is not independence.** Both sides of a corpus pair come from
-   the same model lineage on the same image; a systematic misread that both
-   passes share is invisible. IA-OCR baseline (planned) adds the independent
-   second reading.
-6. Cells with <50 pairs are suppressed.
+- Revision pairs are mostly within-Gemini-family transitions (flash->current, lite->current), NOT independent readings across engines — calibrated numbers are estimates CONDITIONAL on the anchor fit (built from a small, multi-engine anchor set) transferring to same-family re-runs. They are not validated against an independent OCR engine.
+- Canonical-heavy strata inflate agreement without the fit knowing it: recitation makes independent runs agree while both misreport the page. Strata in Hebrew, Latin, Greek, Armenian, Tibetan, Chinese plausibly contain a mix of liturgical/scriptural/classical works alongside ordinary prose; a calibrated estimate for these languages may read HIGHER than true reading accuracy to the extent canonical passages are present. Flagged, not corrected — no per-book canonicity score exists corpus-wide yet.
+- Space-less scripts (Tibetan, Chinese) have ZERO non-canonical anchor pages in this dataset (all 6 Chinese anchor pages are canonical ctext works) — there is no fit to apply, and none is reported. Corpus agreement for these languages is descriptive only.
+- Per-script fits use n=5-12 PAGES (not runs) — small-sample estimates. Bootstrap CIs are reported and are WIDE; treat point estimates as indicative, not precise.
+- Applying any fit outside its anchor agreement range is extrapolation and is flagged per-cell (`extrapolated_beyond_anchor_range`) rather than silently clamped as fact.
+
+## Scorecard v0 (paper-ready subsection)
+
+_Drop-in for `.claude/docs/ocr-memorization-paper.md`, "Experiments planned" ->
+"Calibration scorecard" entry, once reviewed._
+
+We fit a monotone agreement->accuracy calibration on the 32 non-canonical anchor pages
+(canonical pages excluded — recitation inflates agreement without inflating true reading
+accuracy. On this 44-page dataset the pooled canon r (0.777, n=12, six scripts) is noisier
+and cross-script-confounded rather than confirmatory; the exclusion rests on the recitation
+mechanism itself, demonstrated directly by the within-work pairs (paper result #9), not on this
+single correlation). Usable
+per-script fits exist for Armenian, Greek, Latin and German (n=5-12 pages each, wide bootstrap
+CIs); Hebrew (n=2) and all space-less scripts (Chinese, Tibetan — zero non-canonical anchor
+pages) are UNUSABLE and reported as such, never extrapolated. Applied to the 109,953-pair
+`page_revisions` corpus (PR #3273), this produces calibrated per-script x per-era accuracy
+estimates at zero marginal model cost — with two standing caveats: the corpus is mostly
+within-Gemini-family re-OCR (not an independent-engine validation of the fit), and languages
+whose corpus includes liturgical/classical canonical works may read the calibration high.
+Product form: a per-script x per-century scorecard on /research, eventually a per-page
+confidence surface in the reader.
