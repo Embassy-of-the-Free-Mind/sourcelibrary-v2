@@ -1,4 +1,4 @@
-import { BASE_URL, getLicenseUrl } from './schema-utils';
+import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 
 interface GalleryImageSchemaProps {
@@ -82,7 +82,8 @@ export default function GalleryImageSchema({
       creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author },
     }),
     ...(book?.published && { dateCreated: book.published }),
-    ...(license && { license: getLicenseUrl(license) }),
+    license: license ? getLicenseUrl(license) : PUBLIC_DOMAIN_MARK_URL,
+    usageInfo: `${BASE_URL}/licensing`,
     creditText: book?.image_source?.attribution || `Digitized by ${book?.image_source?.provider || 'Internet Archive'}`,
     copyrightNotice: `Public domain. Original published ${book?.published || 'before 1900'}.`,
     acquireLicensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
