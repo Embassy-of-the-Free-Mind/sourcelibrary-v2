@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'nine-models-forty-pages',
+    title: 'Nine Models, Forty Pages',
+    subtitle:
+      "We benchmarked every OCR-capable model we could reach — Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU — against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
+    date: '23 July 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg',
+    imageAlt:
+      "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models could not read.",
+  },
+  {
     slug: 'playable-page',
     title: 'The Playable Page',
     subtitle:
