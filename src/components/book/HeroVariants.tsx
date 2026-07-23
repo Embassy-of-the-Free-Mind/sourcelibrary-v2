@@ -98,7 +98,7 @@ export default function HeroVariants({
           become grid items), and the actions live inline in `meta` instead. */}
       <div
         className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12
-          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[60vh] md:min-h-[560px]
+          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[60vh] md:min-h-[75vh]
           flex flex-col gap-6
           md:grid md:gap-14 md:items-center md:grid-cols-[auto_minmax(0,1fr)]"
       >

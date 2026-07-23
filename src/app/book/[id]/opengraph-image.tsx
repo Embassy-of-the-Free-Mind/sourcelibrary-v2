@@ -70,12 +70,12 @@ export default async function Image({ params }: { params: Promise<{ id: string }
         {/* Page-scan mosaic (same as the hero) */}
         {bg ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={bg} alt="" width={1200} height={630} style={{ position: 'absolute', inset: 0, objectFit: 'cover' }} />
+          <img src={bg} alt="" width={1200} height={630} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         ) : null}
         {/* Scrim + left wash + reddish glow — matches the hero */}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(16,12,8,0.72)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(14,10,7,0.6) 0%, rgba(14,10,7,0.14) 58%, rgba(14,10,7,0) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 80% 20%, rgba(165,80,61,0.26) 0%, rgba(165,80,61,0) 55%)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(16,12,8,0.72)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(90deg, rgba(14,10,7,0.6) 0%, rgba(14,10,7,0.14) 58%, rgba(14,10,7,0) 100%)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle at 80% 20%, rgba(165,80,61,0.26) 0%, rgba(165,80,61,0) 55%)' }} />
 
         {/* Content */}
         <div style={{ position: 'relative', display: 'flex', width: '100%', height: '100%', alignItems: 'center', gap: 52, padding: '54px 64px' }}>
