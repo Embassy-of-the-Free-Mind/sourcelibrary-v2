@@ -618,6 +618,16 @@ export default function TranslationEditor({
   // than testing touchStartX === 0) means a touch that genuinely begins at the
   // extreme left edge (clientX === 0) is no longer mistaken for "no swipe".
   const swipeActive = useRef<boolean>(false);
+  // Axis lock: a touch is classified ONCE as horizontal (page-turn candidate)
+  // or vertical (scroll) after its first few px of movement, and keeps that
+  // identity for the rest of the gesture. A scroll that drifts sideways can
+  // never become a page turn.
+  const swipeAxis = useRef<'h' | 'v' | null>(null);
+  // Real finger position at the latest touchmove — the flip decision at
+  // lift-off reads this, never a stale mid-gesture offset.
+  const lastTouchX = useRef<number>(0);
+  // Recent (x, timestamp) samples within ~100ms, for flick velocity.
+  const velocitySamples = useRef<Array<{ x: number; t: number }>>([]);
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
@@ -886,16 +896,34 @@ export default function TranslationEditor({
     }
   }, [previousPage, nextPage]);
 
-  // Swipe navigation handlers (mobile only)
-  const SWIPE_THRESHOLD = 50;
+  // Swipe navigation handlers (mobile only).
+  //
+  // Gesture identity is decided once per touch (axis lock, see swipeAxis), and
+  // the flip decision at lift-off is distance-OR-flick over the finger's REAL
+  // final position. The previous version re-derived the delta from the last
+  // touchmove that happened to look horizontal, so a scroll whose opening arc
+  // drifted sideways kept that stale offset and turned the page at lift-off —
+  // the "flips when I don't want it to" bug.
+  const AXIS_LOCK_SLOP = 10; // px of movement before the gesture is classified
+  const AXIS_LOCK_BIAS = 1.5; // horizontal must dominate by this ratio; ties scroll
+  const FLICK_VELOCITY = 0.4; // px/ms over the trailing ~100ms of movement
+  const FLICK_MIN_DISTANCE = 40; // px — even a fast flick needs real displacement
+  const VELOCITY_WINDOW_MS = 100;
+
+  const resetSwipe = () => {
+    swipeActive.current = false;
+    swipeAxis.current = null;
+    velocitySamples.current = [];
+    setSwipeOffset(0);
+    setIsSwiping(false);
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
     // Two fingers = pinch (the scan zooms in place), never a page swipe. Also
     // cancels a swipe already in progress when the second finger lands, so a
     // pinch whose first finger drifted sideways can't turn the page.
     if (e.touches.length > 1) {
-      swipeActive.current = false;
-      setSwipeOffset(0);
-      setIsSwiping(false);
+      resetSwipe();
       return;
     }
 
@@ -909,55 +937,92 @@ export default function TranslationEditor({
 
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    lastTouchX.current = e.touches[0].clientX;
+    velocitySamples.current = [{ x: e.touches[0].clientX, t: e.timeStamp }];
+    swipeAxis.current = null;
     swipeActive.current = true;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (e.touches.length > 1) {
-      swipeActive.current = false;
-      setSwipeOffset(0);
-      setIsSwiping(false);
+      resetSwipe();
       return;
     }
     if (!swipeActive.current) return;
 
-    const deltaX = e.touches[0].clientX - touchStartX.current;
+    const x = e.touches[0].clientX;
+    const deltaX = x - touchStartX.current;
     const deltaY = e.touches[0].clientY - touchStartY.current;
 
-    // Only track horizontal swipes (ignore vertical scrolling)
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
-      setIsSwiping(true);
-      // Clamp the offset for visual feedback
-      const maxOffset = 100;
-      setSwipeOffset(Math.max(-maxOffset, Math.min(maxOffset, deltaX * 0.5)));
+    lastTouchX.current = x;
+    const samples = velocitySamples.current;
+    samples.push({ x, t: e.timeStamp });
+    while (samples.length > 1 && samples[0].t < e.timeStamp - VELOCITY_WINDOW_MS) {
+      samples.shift();
     }
+
+    if (swipeAxis.current === null) {
+      if (Math.hypot(deltaX, deltaY) < AXIS_LOCK_SLOP) return;
+      if (Math.abs(deltaX) > Math.abs(deltaY) * AXIS_LOCK_BIAS) {
+        swipeAxis.current = 'h';
+      } else {
+        // Locked as a scroll: this touch can never become a page turn.
+        swipeAxis.current = 'v';
+        swipeActive.current = false;
+        return;
+      }
+    }
+
+    setIsSwiping(true);
+    // Clamp the offset for visual feedback
+    const maxOffset = 100;
+    setSwipeOffset(Math.max(-maxOffset, Math.min(maxOffset, deltaX * 0.5)));
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const wasHorizontalSwipe = swipeActive.current && swipeAxis.current === 'h';
     // If a selection is active at lift-off, the gesture was a highlight, not
     // a swipe — bail before navigation but still reset transient state.
     const hasSelection =
       typeof window !== 'undefined' && !!window.getSelection()?.toString().length;
 
-    const deltaX = swipeOffset * 2; // Reverse the 0.5 multiplier
+    if (wasHorizontalSwipe && !hasSelection) {
+      const deltaX = lastTouchX.current - touchStartX.current;
 
-    if (!hasSelection && Math.abs(deltaX) > SWIPE_THRESHOLD) {
-      // A swipe always lands at the top of the new page. The section-preserving
-      // scroll (keep the reader in the OCR/translation panel across a flip) is
-      // for button/keyboard nav; on a swipe it read as "lands mid-page" (#3085).
-      if (deltaX > 0 && previousPage) {
-        onNavigate(previousPage.id, { toTop: true });
-      } else if (deltaX < 0 && nextPage) {
-        onNavigate(nextPage.id, { toTop: true });
+      // Commit: dragged far enough that the intent is unambiguous.
+      const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 400;
+      const commitDistance = Math.max(80, viewportWidth * 0.3);
+      const isCommit = Math.abs(deltaX) >= commitDistance;
+
+      // Flick: fast trailing velocity in the same direction as the drag. A
+      // drag that pauses before lift-off has stale samples — treat as v=0.
+      const samples = velocitySamples.current;
+      const first = samples[0];
+      const last = samples[samples.length - 1];
+      const stale = !last || e.timeStamp - last.t > VELOCITY_WINDOW_MS;
+      const velocity =
+        !stale && samples.length > 1 && last.t > first.t
+          ? (last.x - first.x) / (last.t - first.t)
+          : 0;
+      const isFlick =
+        Math.abs(deltaX) >= FLICK_MIN_DISTANCE &&
+        Math.abs(velocity) >= FLICK_VELOCITY &&
+        Math.sign(velocity) === Math.sign(deltaX);
+
+      if (isCommit || isFlick) {
+        // A swipe always lands at the top of the new page. The section-preserving
+        // scroll (keep the reader in the OCR/translation panel across a flip) is
+        // for button/keyboard nav; on a swipe it read as "lands mid-page" (#3085).
+        if (deltaX > 0 && previousPage) {
+          onNavigate(previousPage.id, { toTop: true });
+        } else if (deltaX < 0 && nextPage) {
+          onNavigate(nextPage.id, { toTop: true });
+        }
       }
     }
 
-    // Reset swipe state
-    swipeActive.current = false;
-    touchStartX.current = 0;
-    touchStartY.current = 0;
-    setSwipeOffset(0);
-    setIsSwiping(false);
+    // Reset swipe state; a half-swipe snaps back via the container transition.
+    resetSwipe();
   };
 
   // Update state when page changes
@@ -1530,6 +1595,7 @@ export default function TranslationEditor({
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onTouchCancel={resetSwipe}
               style={{
                 transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
                 transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
