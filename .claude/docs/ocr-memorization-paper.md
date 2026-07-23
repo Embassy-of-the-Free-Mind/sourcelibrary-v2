@@ -248,6 +248,56 @@ Design note: pooled across the four pairs these effects would largely cancel
 (9.3pp manuscript gap, ~1pp print gaps, one inverted pair) — the within-work
 gradient must be reported per-pair, which is the point of pinning pairs.
 
+### Occlusion/degradation pilot (2026-07-23; 140 runs, 0 errors, ~$4; harness `--occlude`/`--blur`/`--save-image` in qa-eval, analysis `report-occlusion.mjs`)
+
+Ten pages (the four pairs + two Hebrew controls), lite + sonnet5 ×2, all arms on a
+2000px base: baseline, @occ25 (mid-page band masking 25% of height), @blur2/@blur4.
+Every occluded image was visually audited afterward; the audit changed the analysis.
+
+13. **Silent fill-in is the default behavior, and it is now measured per passage.**
+    Of 28 occluded runs, exactly ONE mentioned the mask — models otherwise
+    transcribe straight through a 25%-of-page gray band without comment. After
+    normalizing for how much of the reference each mask actually covered
+    (`fill-in excess` = occluded-run reference coverage − visually audited visible
+    share), the excess column reads as a **graded retrievability score**:
+    Iliad I **+32pp** (both models, on the 1555 MANUSCRIPT), 1 Chr (Armenian)
+    +18/+28, Aeneid I +21/+22, Vulgate Genesis 5 +16/+21, Aeneid X +16/+17,
+    Iliad XIII **−13/−16** (the one true negative — occlusion also scrambles
+    reading order, so a pure reader goes slightly negative). This ordering is the
+    first empirical **canonicity slope** — the graded instrument the within-work
+    plan called for — and its sharpest point: models reconstruct hyper-canonical
+    text through a mask even on a manuscript page, in a hand they are reading, not
+    reciting from print.
+14. **Blur is the geometry-free twin, and it confirms the manuscript result.**
+    Under σ=4 blur the canonical Iliad I holds 100.0%/99.8% (Δ 0.0pp) while
+    non-canonical Iliad XIII on the SAME manuscript collapses −32/−48pp.
+    Degradation robustness on the memorized passage only — page style, hand, and
+    blur level identical by construction. On clean print blur4 barely binds
+    (±1-3pp both classes), so the blur detector needs degradation strong enough to
+    impair *reading* before memory's robustness shows; occlusion works everywhere
+    but needs geometry audit. The two are complementary arms of one test.
+15. **The predictability confound, found by the audit.** "Low-canonicity" print
+    passages showed positive fill-in too — and each case is explainable:
+    Aeneid X is still the Aeneid (reference = the memorized Wikisource text);
+    the Armenian 1 Chronicles genealogy is a name-chain reconstructable from
+    CROSS-LINGUAL memory (Adam→Seth→Enos in Armenian orthography, +28pp) where
+    the Latin Genesis 5 begat-list with its unpredictable lifespan numbers filled
+    in less. The cloze measures **retrievability = memorization + structural
+    predictability**, not verbatim edition memory alone — the right control for
+    the membership test is text that is unpredictable AND unpublished, which
+    (reflexively, again) reference-bearing pages can never fully be.
+16. **Pilot design corrections for v2** (both found by the image audit, neither
+    visible in the score table alone): (a) the fixed mid-page mask MISSED the
+    reference passage entirely on two of five canonical pages (Vulgate Genesis 1 —
+    it masked the woodcut; Hebrew Genesis 1 — band sat below vv.1-5), silently
+    producing flat Δocc that looks like recitation; v2 masks must be
+    passage-targeted per page. (b) Raw Δocc conflates mask-passage overlap with
+    fill-in — the visible-share normalization is mandatory, and eyeballed shares
+    carry ±10-15pp, so v2 should compute overlap from line coordinates or
+    per-token masked-region scoring. Also recorded: sonnet5 under blur4 on
+    Armenian returns 0.0% both classes (model breakdown, not signal), and the
+    single mask mention was sonnet5 on the Zohrab John page.
+
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
 Free, reference-free, and complementary: `page_revisions` stores the text each
@@ -398,7 +448,10 @@ degradation/occlusion membership pilot (~$2–5, validated against the pinned pa
   corpora" vs "this corpus demonstrably is NOT" are both evidence-backed statements
   the licensing track can use.
 
-- **Occlusion cloze pilot — the smoking gun (SPEC'd 2026-07-23, ~$2–5, run next).**
+- ~~**Occlusion cloze pilot**~~ — RUN 2026-07-23 (results 13–16): silent fill-in
+  confirmed and graded per passage (the first canonicity-slope data); blur arm
+  delivers a geometry-free manuscript confirmation; v2 needs passage-targeted
+  masks + computed overlap. Original spec follows.
   Mask a band of the page and read what the model emits for pixels that do not exist.
   A reading model loses exactly the band; a reciting model fills it in. Text produced
   for occluded regions is per-page, reference-free proof of recitation.
