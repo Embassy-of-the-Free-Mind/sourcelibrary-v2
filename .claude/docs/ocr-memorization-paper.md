@@ -315,6 +315,87 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
 
 ## Experiments planned (each cheap, each targets one confound)
 
+**Priority order (Derek, 2026-07-23) — reader-first, then membership, then expansion.**
+The organizing question is not the research agenda's but the reader's: *how accurate is
+the text Source Library serves?* Sequence: (1) the calibration scorecard (free, answers
+the reader question); (2) the IA-OCR corpus baseline (free, zero AI cost); (3) the
+degradation/occlusion membership pilot (~$2–5, validated against the pinned pages);
+(4) more pairs / the canonicity slope. Details below.
+
+- **Calibration scorecard — the reader-first deliverable (free).** Fit the
+  agreement→accuracy curve on NON-CANONICAL anchor rows only (pilot: r=0.75 noncanon
+  vs 0.49 canon — recitation fakes agreement), stratified by script and era; apply it
+  to the 109,953 revision pairs to produce a calibrated per-page accuracy *estimate*
+  corpus-wide at zero marginal model cost. Product form: a published per-script ×
+  per-century quality scorecard on /research ("our Latin print is ~99%, our Tibetan
+  is unreliable and flagged"), eventually a per-book/per-page confidence surface in
+  the reader. This is the paper's most useful contribution AND the answer to "how
+  good is Source Library's text" — it outranks new page-hunting.
+
+- **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** Most exportable
+  books carry an `ia_identifier`, and Internet Archive publishes its own OCR
+  (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
+  numbering mappable to ours. Three uses, in increasing strength: (a) a corpus-scale
+  agreement/error measurement between free-corpus OCR and ours, by script and century
+  — the cheap public "how much better is VLM OCR" number; (b) a second *independent*
+  reading for consensus, complementing the revision pairs (which share the Gemini
+  family and are NOT independent); (c) the big one: IA's engine is **non-generative —
+  it cannot recite** — so this is the corpus-scale version of the diff-in-diff
+  baseline below, already computed:
+  (Gemini − IA)|canonical − (Gemini − IA)|non-canonical, at thousands-of-books scale.
+  MUST be scoped by the Tesseract lesson: the baseline's competence tracks typography
+  (fine on 19th–20th-c roman type, hopeless on 16th-c ligatures and CJK), so compute
+  within script AND era bands, and treat baseline-collapse cells as unmeasurable, not
+  as model advantage. Implementation is a scripts-side harvest
+  (`ia_identifier` → djvu.txt/hOCR fetch → page-align → score with the existing
+  metrics), no model calls.
+
+- **Degradation-robustness membership test (Derek, 2026-07-23) — "is this book in the
+  training data?"** Reading needs pixels; reciting does not. Degrade the page image
+  and the accuracy-vs-degradation curve separates the two: steep = reading, flat =
+  memory carrying the load. Evidence already in hand: sonnet5 reads the Iliad *better*
+  on the smudgy 1555 manuscript (99.4%) than on clean Teubner print it cannot recite
+  (97.3%), and the manuscript's canonical page reads 100.0% (result 9). Key design
+  points: degrade by BLUR/NOISE, not resolution alone (result 6: resolution effects
+  are truncation-mediated — the Hebrew page *improved* when shrunk); the test is
+  naturally within-page (native vs degraded, difficulty controlled by construction);
+  and it has a reference-FREE mode — compare the model's degraded-image output to its
+  own native-image output, so it can run on books with no transcription at all.
+  End state: a per-book recitation-risk scanner. Positioning: Park et al. 2511.03774
+  do perturbation-based contamination detection for VLM *benchmarks* (semantic
+  perturbation, VQA); the image-channel dose-response for OCR, keyed to specific held
+  editions, is unclaimed. Commercial corollary: "this book is demonstrably in training
+  corpora" vs "this corpus demonstrably is NOT" are both evidence-backed statements
+  the licensing track can use.
+
+- **Occlusion cloze pilot — the smoking gun (SPEC'd 2026-07-23, ~$2–5, run next).**
+  Mask a band of the page and read what the model emits for pixels that do not exist.
+  A reading model loses exactly the band; a reciting model fills it in. Text produced
+  for occluded regions is per-page, reference-free proof of recitation.
+  - **Pages:** the four within-work pairs (8 pages) + 2–4 additional canonical pages
+    (Genesis 1 Hebrew, Analects/ctext if plumbed) — every page has known canonicity,
+    so the pilot validates the detector against labels (target: detector separates
+    canon from noncanon; the pairs are the cleanest validation since page style is
+    constant within a pair).
+  - **Manipulations:** (i) occlusion: solid-fill horizontal band covering ~20–25% of
+    the text block (mid-column, margins left visible so layout parsing survives);
+    (ii) blur ladder: Gaussian σ ≈ 1/2/4 px at 2000px width for the dose-response
+    curve. Harness: add `--occlude=frac` and `--blur=sigma` to qa-eval next to the
+    existing `--width=` (sharp composite / blur), arms tagged `@occ25`, `@blur2` per
+    the `@wN` convention.
+  - **Models:** lite (zero truncation — clean curves) + sonnet5 (strong reader) ×2
+    runs. ~8–12 pages × 2 models × 4 arms × 2 runs ≈ 130–190 calls ≈ $2–5.
+  - **Metrics:** occlusion fill-rate = fraction of masked-region reference tokens
+    reproduced anyway (canonical pages: expect >0 under recitation; non-canonical:
+    ~0). Degradation slope = accuracy (or native-output self-agreement, for the
+    reference-free mode) vs blur level. Also record whether the model *mentions* the
+    mask — silent fill-in vs flagged gap is itself a finding.
+  - **Confounds to log:** blur hits small/dense type harder (stratify by page_class);
+    the mask could be described rather than filled (that's a pass, not a fail);
+    prompt says nothing about the occlusion.
+
+Earlier planned experiments (status as of 2026-07-23):
+
 - ~~**Resolution ablation**~~ — RUN 2026-07-19 (result 6). Follow-up worth doing:
   extend below 600px to find where legibility actually binds, and re-run on pro to
   see whether the truncation mediation is a Flash-family artifact. (Natural
@@ -328,7 +409,9 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   book that prints both a memorized and a non-memorized passage is worth more than
   ten additional unmatched pages.
 - **Recension alt-references** for 2-3 rows (recitation fingerprint at scale).
-- **Agreement→accuracy calibration** on non-canonical rows only (consensus is NOT
+- **Agreement→accuracy calibration** — superseded by the *calibration scorecard*
+  entry above (same experiment, reader-first framing + product form). Original notes:
+  on non-canonical rows only (consensus is NOT
   independent on canonical text — two models reciting agree while both misreport the
   page). The corpus arm of this is now MEASURED (PR #3273) — see "Corpus arm" below —
   but calibration itself is still open: the corpus gives agreement and its factors,
@@ -361,7 +444,11 @@ Karamolegkou/Angleraud/Sagot/Clérice (most likely to add canonicity next); Aker
   a graded per-passage canonicity score. Derek's framing: this is the inverse of
   standard membership inference — instead of asking whether a text is in the training
   data, rank passages by how *hard* they were to avoid.
-- **Non-generative baseline → difference-in-differences.** The strongest identification
+- **Non-generative baseline → difference-in-differences.** Corpus-scale
+  implementation now exists for free: the *IA-OCR corpus baseline* entry above (IA's
+  ABBYY/Tesseract output on our own imported scans). The anchor-page Tesseract/Kraken
+  version below remains useful for pages without an `ia_identifier`. Original
+  rationale: the strongest identification
   available and currently absent from this design. Every measurement here is
   VLM-against-reference, so page difficulty and memorization stay entangled; the
   paper handles that with caveats rather than design. A **non-generative engine cannot
