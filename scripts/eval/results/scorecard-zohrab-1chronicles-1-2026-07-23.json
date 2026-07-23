@@ -1,0 +1,84 @@
+{
+  "date": "2026-07-23",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+  ],
+  "runs": 3,
+  "only": "zohrab-1chronicles-1",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1020,
+      "charAccuracy": 0.9715686274509804,
+      "rows": [
+        {
+          "work": "Zohrab OT, 1 Chronicles 1:1-23 (table-of-nations genealogy)",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 267,
+          "aligned": true,
+          "guard": 0.16908212560386474,
+          "cer": 0.028431372549019607,
+          "charAccuracy": 0.9715686274509804,
+          "refLen": 1020,
+          "matched": 991,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armat/armat339.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.13722,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9852941176470589,
+              "cer": 0.014705882352941176
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.037689,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9784313725490196,
+              "cer": 0.021568627450980392
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0036594,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9568627450980393,
+              "cer": 0.043137254901960784
+            },
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.26929499999999995,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9274509803921569,
+              "cer": 0.07254901960784314
+            },
+            "mistral-ocr-latest": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.012,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
