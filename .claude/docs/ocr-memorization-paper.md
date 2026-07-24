@@ -690,6 +690,43 @@ Earlier planned experiments (status as of 2026-07-23):
   type with long-s and ligatures. A baseline arm must be scoped to material the
   baseline can actually read, or its collapse is misread as model advantage.
 
+## CHR 2027 outline (2026-07-24; draft master: `paper/reading-or-reciting-chr2027.md`)
+
+Long paper, 6,000 words excl. references/tables (tables are free space — push detail
+there), ACH LaTeX template, double-blind until Oct 23 notification (arXiv preprint
+permitted; the submitted PDF must not link named repos — review copy uses an
+anonymized dataset mirror and refers to "a digital library of historical sources").
+
+1. Introduction (~700w) — the 100.0%-on-a-1555-manuscript hook; ground-truth supply
+   = contamination; contributions.
+2. Related work (~650w) — contamination/memorization; OCR eval tradition; consensus
+   methods; generous ¶ differentiating 2605.27750 (deliberate title echo).
+3. Dataset & design (~900w) — 44 pages, covariates, anti-recitation protocol told
+   via the deleted-rows incident, within-work pairs, license-gated references,
+   outcome battery.
+4. Measuring the subsidy (~1,000w) — within-work pairs (manuscript 3–9pp, print
+   0–2pp, behavioral collapse on repetitive text, Zohrab inversion as design
+   lesson); same-book Virgil; pooled-statistic instability AS the point.
+5. Reference-free detection (~1,000w) — occlusion cloze (27/28 silent fill-in;
+   excess = graded canonicity slope +37→−6; v1→v2 correction told honestly); blur
+   as geometry-free twin; predictability confound. Star figure: masked page +
+   recited output.
+6. Consequences for evaluation practice (~800w) — consensus non-independence
+   (r 0.75 vs ~0.5; 110K-pair structure); conditional/unconditional ranking
+   inversion; IA non-generative baseline (replicated ±9pp) + diff-in-diff frame;
+   prescription: canonicity labels on historical-OCR benchmarks.
+7. A library certifying itself (~450w) — the calibration scorecard as deployed
+   practice; uncalibratable strata stated as such; the library is the instrument.
+8. Limitations (~350w). 9. Conclusion (~200w) — the certificate framing.
+
+Tables: T1 within-work pairs / T2 fill-in excess / T3 IA script×century (both
+samples) / T4 outcome inversion. Figures: F1 masked-Aeneid + recited output, F2
+blur curves. Appendix: prompts, mask rects, 9-model comparison, ablations.
+
+Timeline: full draft Aug 4 → number verification vs JSONLs Aug 5–8 → Derek read +
+freeze Aug 10–11 → anonymize + submit Aug 12–13 (AoE buffer). Notification Oct 23;
+camera-ready Nov 13; Manchester Jan 6–8.
+
 ## Venue / form — DECIDED 2026-07-24
 
 - **Venue: CHR 2027** (Computational Humanities Research, Manchester, 5–8 Jan 2027).
