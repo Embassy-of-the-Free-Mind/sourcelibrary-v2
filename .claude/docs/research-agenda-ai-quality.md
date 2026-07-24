@@ -1,239 +1,214 @@
 # Source Library Research Agenda — AI Quality (v1)
 
-_Finalized 2026-07-24. This is the purpose-driven map of our quality research: what we are trying to
-find out, for whom, and what each program delivers. Methods live in
-`ocr-translation-eval-landscape.md` (the field survey); this doc is the agenda that survey serves.
-Status lines reference the issues/PRs where work already exists — check them before starting anything._
+_Finalized 2026-07-24. What we're trying to find out about the quality of our AI-generated text,
+for whom, and what each line of work delivers. How-to-measure details live in
+`ocr-translation-eval-landscape.md` (the field survey); this doc is the plan that survey serves.
+Status lines point at the issues/PRs where work already exists — check them before starting._
 
-## Why we do quality research at all
+## Why this research exists
 
-Source Library's promise is that a reader can **read and verbatim-quote a historical primary
-source** they could not otherwise access. Every AI layer we run — OCR, translation, notes,
-summaries, search, the librarian — either keeps that promise or quietly breaks it. We will never
-have human ground truth for 75K books, so every quality claim we make rests on proxies. The
-research program exists to answer one meta-question:
+Source Library promises that a reader can **read and quote a historical source** they couldn't
+otherwise access. Every AI layer — OCR, translation, notes, summaries, search, the librarian —
+either keeps that promise or quietly breaks it. We can't proofread 75K books, so every quality
+claim we make rests on indirect signals (models agreeing with each other, embedding similarity,
+AI judges). The whole program boils down to one question:
 
-> **Can we estimate the accuracy of AI-generated text at corpus scale without ground truth — and
-> know when our estimates are lying to us?**
+> **Can we tell how accurate our AI text is without checking it by hand — and can we tell when
+> our own measurements are fooling us?**
 
-The unifying stance is **calibration, not scoring**. Anyone can publish an agreement percentage.
-Our contribution — with a multi-era, multi-script, partly-canonical corpus and paired revision
-data — is showing *when the standard proxies are trustworthy and when they are confounded*, and
-tying thresholds to real reader uses.
+Anyone can publish an accuracy percentage. What we're positioned to show — with a corpus spanning
+many eras and scripts, some of it famous enough to be in training data — is **when the standard
+measurements can be trusted and when they can't**. That's the contribution.
 
-## The ladder of interpretive distance
+## The four layers, one metric each
 
-All programs sit on one ladder. Each rung is further from the page; the "right answer" gets less
-well-defined, fabrication gets easier and harder to detect, and verification shifts from
-*comparison against the page* to *grounding in retrievable evidence*.
+Each AI layer is one step further from the physical page. With each step, "correct" gets fuzzier,
+making things up gets easier, and catching it gets harder. Each layer gets one headline number
+tied to a concrete promise:
 
-| Rung | Layer | Reader promise | Headline metric |
-|---|---|---|---|
-| 1 | Transcription (OCR) | The words shown are the words on the page | **Quote Integrity Rate** — P(a served quote is verbatim-correct vs the page image), per script × era |
-| 2 | Translation | The English says what the original says — nothing added | **Fidelity-without-invention rate** — translation errors split into OCR-inherited vs translation-native vs fabricated |
-| 3 | Annotation (notes, summaries, keywords, image descriptions) | Claims about the page are supported by the page | **Claim-support rate** — fraction of factual claims verifiable against source or evidence |
-| 4 | Synthesis (librarian, search, generated editorial) | Answers cite real, correct sources | **Citation validity rate** — links resolve, quotes are verbatim, claims trace to retrieved evidence |
+| Layer | Promise to the reader | The number we report |
+|---|---|---|
+| OCR | The words shown are the words on the page | **Quote integrity** — if you quote us, what are the odds the quote is exactly right? |
+| Translation | The English says what the original says — nothing added | **Nothing-invented rate** — errors split into "inherited from bad OCR" vs "the translator made it up" |
+| Notes & summaries | Claims about the page are actually supported by the page | **Claim-support rate** — what fraction of stated facts check out? |
+| Librarian & search | Answers cite real sources, correctly | **Citation validity** — links work, quotes are verbatim, claims trace to a real page |
 
-One metric per rung, each tied to a promise. These four numbers are the scorecard the whole
-program reports against (public face: `/research`).
+These four numbers are the scorecard. Public face: `/research`.
 
 ---
 
-## Program A — Transcription: trusting text we cannot proofread
+## Program A — OCR: trusting text nobody proofread
 
-**Who it serves:** every reader of every page; downstream, every layer built on the OCR.
+**For:** every reader of every page, and every layer built on top of the OCR.
 
-### A1. Calibrating agreement as an accuracy proxy
-- **Question:** When is model agreement (revision pairs, cross-model, re-runs) a measure of
-  accuracy, and when a measure of shared blind spots or shared memory? Consistency ≠ accuracy —
-  high agreement can be identically wrong (the Javanese 100%-MCR case).
-- **Method:** stratified human/strong-judge gold anchors per script; regress agreement against
-  gold CER; report *where the proxy tracks truth and where it decouples*. Inclusion criteria
-  stated before analysis (the five disagreement populations from #3273: editorial notes,
-  tokenization artifacts, image-only pages, commentary-as-transcription, degeneration).
-- **Status:** revision-agreement corpus built (109,953 pairs, #3235/#3273); calibration scorecard
-  landed (#3336); published on `/research` (#3344).
+### A1. When does "the models agree" actually mean "it's right"?
+Our main quality signal is agreement — between revisions, between models, between runs. But two
+models can agree because the page is easy, or because they share a blind spot, or because they
+both memorized the text. We check agreement against pages where we *know* the right answer, and
+map where the signal tracks truth and where it breaks.
+_Status: the 110K-pair revision corpus is built (#3235/#3273), the calibration work landed
+(#3336), and it's published on `/research` (#3344)._
 
-### A2. Memorization vs perception (the canonicity confound)
-- **Question:** When a model "OCRs" a canonical text, is it reading the scan or reciting training
-  data? Canonical scores are memory-assisted upper bounds ([[project_noncanon_eval_rows]]); a
-  *perfect* score on a canonical page is a hallucination flag (Gemini RECITATION lesson).
-- **Method:** non-canonical holdouts as the unsubsidized baseline; perturbation probes (does the
-  model transcribe a deliberately altered canonical page as printed, or as remembered?); quantify
-  the memorization subsidy per tradition. Marginalia (57% agreement) vs body text (87%) is the
-  within-page version of the same decomposition.
-- **Status:** confound identified and measured on the 9-model campaign (dataset v0.3, PR #3304);
-  perturbation probes not yet run — the novel experiment.
+### A2. Is the model reading the page, or reciting it from memory?
+Famous texts (Plato, the Aeneid, Genesis) are in the training data. A model can score perfectly
+on a canonical page without reading the scan at all — which makes our best-looking scores the
+least trustworthy ones. The clean experiment we haven't run: alter a word on a famous page and
+see whether the model transcribes what's printed or what it remembers.
+_Status: the problem is identified and partly measured (PR #3304); the alter-a-word probe is the
+next new experiment._
 
-### A3. Catastrophic failure taxonomy
-- **Question:** What are the base rates, per model generation, of failures that are wrong *in
-  kind* — refusals, repetition loops, reasoning-as-transcription, entity padding, descriptions
-  instead of text? Do cheap detectors (type/token ratio < 0.15, `&[a-z]+;` runs, length anomalies)
-  catch them reliably?
-- **Method:** extend the #3273 degenerate-output census into a maintained taxonomy + detector
-  suite; track prevalence across model generations (do new models reduce them or reshape them?).
-- **Status:** ~1.3% of revision pairs have a degenerate side; detectors exist read-time
-  (`stripLeadingAiPreamble`, degeneracy screens) — the *longitudinal tracking* is the open work.
+### A3. How often does OCR fail catastrophically, and can we catch it cheaply?
+Some pages aren't slightly wrong — they're not transcriptions at all: refusals, one phrase
+repeated 8,000 times, the model's reasoning written out as if it were page text, thousands of
+characters of `&nbsp;`. About 1.3% of revision pairs have one of these. We have cheap detectors;
+the open work is tracking whether new model generations reduce these failures or just change
+their shape.
+_Status: taxonomy and detectors exist (#3273); tracking over time doesn't._
 
-### A4. Script equity — and metric equity
-- **Question:** What is the true per-script quality gap once metrics stop punishing space-less
-  scripts (Chinese: 36.7% word-agreement vs 72.7% character-agreement for the same text)? Where is
-  the gap in the model vs in the scan supply (microfilm-heavy traditions, Tibetan lite failures)?
-- **Method:** character-level, script-aware metrics everywhere (CER > WER); per-script gold
-  anchors; decompose gap into model capability vs scan quality using `scan_quality` classes.
-- **Status:** metric problem demonstrated (#3273); Tibetan lite untrustworthiness known
-  (#3244/#3252); systematic per-script decomposition not yet done.
+### A4. Are some scripts getting worse quality — and are we even measuring them fairly?
+Word-based scoring punishes Chinese and Tibetan: one wrong glyph sinks a whole "word," so the
+same quality reads as 37% by word and 73% by character. Separately, some traditions mostly exist
+as microfilm. So: measure the real quality gap per script with fair (character-level) metrics,
+then split the gap into "the model is worse at this script" vs "the scans are worse."
+_Status: the metric problem is demonstrated (#3273); Tibetan failures known (#3244/#3252); the
+systematic per-script breakdown hasn't been done._
 
-### A5. Quote integrity (the headline)
-- **Question:** What is P(a randomly served quote is verbatim-correct against the page image),
-  per script and era — and is it above the threshold where citation is responsible?
-- **Method:** stratified sample of served quotes → judge/human check against page images →
-  published rate with confidence intervals. Nobody in the field publishes this number.
-- **Status:** not yet measured. Highest-leverage single study on this list — it is *the* promise.
+### A5. If you quote us, what are the odds the quote is exactly right?
+The headline. Take a random sample of quotes as the site actually serves them, check each against
+the page image, publish the rate by script and era. Nobody in this field publishes that number.
+_Status: not measured. Highest-leverage single study on this list — it's the promise itself._
 
 ---
 
-## Program B — Translation: fidelity without invention
+## Program B — Translation: faithful, with nothing made up
 
-**Who it serves:** readers who cannot read the original — the people least able to catch errors,
-reading 6,000+ texts that have never been translated before (no reference exists, by definition).
+**For:** readers who can't read the original — the people least able to catch errors, reading
+6,000+ texts that have never been translated before. No prior translation exists to compare
+against, which is exactly why this needs care.
 
-### B1. Error propagation: absorbed, amplified, or invented
-- **Question:** What fraction of translation errors are OCR-inherited vs translation-native? Does
-  the translator silently repair OCR noise (good), gloss lacunae with fluent invention
-  (catastrophic for us), or omit hard passages?
-- **Method:** paired studies on pages with known OCR quality; alignment + embedding checks for
-  omission/fabrication; catastrophic failures tracked *separately* from scalar quality (terminology
-  rarity predicts them — a single score hides hallucinated terms).
-- **Status:** not yet studied systematically; trace-alignment machinery (84%/67%, #3125) is a
-  reusable instrument.
+### B1. When OCR is bad, what does the translator do with it?
+Three possibilities, very different stakes: it quietly fixes the noise (good), it skips the hard
+part (bad), or it fills the gap with fluent invention (worst — the reader can't tell). Measure
+the split: of translation errors, how many were inherited from bad OCR, and how many did the
+translator introduce? Track made-up passages separately from overall quality — an average score
+hides them.
+_Status: not yet studied; the trace-alignment tooling (#3125) is a ready instrument._
 
-### B2. Reference-free judging, calibrated
-- **Question:** Does GEMBA-style reference-free LLM-judging track expert raters on *our* corpus
-  (classical/low-resource registers where learned metrics like COMET are known not to transfer)?
-- **Method:** cross-family judge (Opus judging Gemini — never self-judge); calibrate against a
-  small expert-rated set per language (target Cohen's κ ≥ 0.6); MITRA-zh-eval / Mitrasaṃgraha are
-  the validated precedents. Build only at the scale translation eval actually needs.
-- **Status:** not built (qa-eval does NOT do GEMBA — never claim it externally); landscape doc has
-  the full method survey.
+### B2. Can an AI judge grade our translations, and can we trust its grades?
+With no reference translation, the validated approach is asking a strong model to grade the
+translation against the original. Two rules from the field: the judge must be from a different
+model family than the translator (models favor their own), and the judge itself must be checked
+against a small set of expert-graded pages per language before we trust it.
+_Status: not built. Note our eval tooling does NOT do this today — never claim it externally._
 
 ---
 
-## Program C — Annotation: claims about the page
+## Program C — Notes and summaries: claims about the page
 
-**Who it serves:** readers who trust our notes and summaries as scholarly apparatus; search users
-whose queries are answered by this layer; scholars who might cite generated claims.
+**For:** readers who trust our notes as scholarly apparatus; search users, since search reads
+this layer; scholars who might cite a generated claim.
 
-The epistemic shift: OCR has a right answer on the page; an annotation is an *authored claim
-about* the page. The failure mode shifts from inaccuracy to **fabrication**, and readers are far
-less able to detect it.
+The key shift: OCR has a right answer sitting on the page. A note is the AI *saying something
+about* the page — and the failure mode isn't being slightly off, it's **making things up**,
+which a reader has almost no way to detect.
 
-### C1. Fabrication rates and taxonomy per annotation type
-- **Question:** What is the fabrication rate for each generated type (notes, glosses, page
-  summaries, keywords, chapter titles, book summaries, image descriptions), and what shape does it
-  take — invented content, misattributed content (real but from an adjacent page), anachronistic
-  framing, or over-confident interpretation of a genuine ambiguity?
-- **Method:** typed claim extraction → per-type verification (string match for quotations,
-  alignment for paraphrase, entity lookup for external facts) → per-type base rates.
-- **Status:** anchor finding exists — **12.2% candidate fabrication in original-phrase notes**
-  (#3308, Phase 0 done; paid verification lane awaits approval). Extend the same design to the
-  other types.
+### C1. How often do our notes and summaries make things up, and in what way?
+We have one hard number: roughly **12% of "original phrase" notes contain a suspect fabrication**
+(#3308). Extend that audit to every generated type — summaries, keywords, chapter titles, image
+descriptions — and classify what kind of wrong: invented outright, real but from the wrong page,
+a modern idea projected onto an old text, or a stated fact that's just false.
+_Status: notes audit Phase 0 done, sample drawn, paid verification lane waiting on Derek._
 
-### C2. Verifiability as a generation constraint
-- **Question:** Can every factual claim in a generated annotation be *typed* at generation time
-  (quotation / paraphrase / interpretation / external fact), each type carrying its own
-  verification path — and should claims that cannot be grounded be structurally marked as
-  interpretation, or not generated at all?
-- **Method:** prompt-contract + output-schema experiments; measure fabrication rate with vs
-  without the constraint. This is a publishable design idea, not just hygiene.
-- **Status:** not started; #3308's fabrication typology is the input.
+### C2. Can we force notes to be checkable at the moment they're written?
+A note that quotes the page can be string-checked automatically — that's how we caught the 12%.
+The experiment: make the generator label every claim (quote / paraphrase / interpretation /
+outside fact), auto-verify the checkable kinds, and either clearly mark or refuse to emit the
+rest. Then measure whether the fabrication rate drops. If it works, this is a publishable design,
+not just cleanup.
+_Status: not started; the #3308 findings are the input._
 
-### C3. Discovery bias from the generated layer
-- **Question:** How much does search read Gemini's habits rather than the corpus? Summaries,
-  keywords, and embeddings are what retrieval actually consumes; baked-in editorial prose already
-  contaminated the embedding vectors once. Are n-grams counting the corpus or the model?
-- **Method:** retrieval experiments contrasting source-text-only vs annotation-inclusive indexes;
-  topic-frequency comparison between generated keywords and source text.
-- **Status:** contamination mechanism known and read-path guarded (#2232 lineage); the *bias
-  measurement* is unstudied.
+### C3. Is search reading the corpus, or reading Gemini's habits?
+Search runs on summaries, keywords, and embeddings — all AI-written. If the AI over-uses certain
+themes, search is biased before anyone types a query, and our n-gram counts may partly count the
+model's tics rather than the corpus. Test: compare retrieval using source text only vs source
+text plus the generated layer, and compare topic frequencies between the two.
+_Status: we know contamination happens (the editorial-prose-in-embeddings incident); the size of
+the bias is unmeasured._
 
-### C4. Bibliographic claim accuracy
-- **Question:** For each AI-generated claim *about the corpus* — first-translation badges, author
-  identity, work clustering, language/date assignment — what is the error rate under independent
-  verification, and which claim types must require verification *before* publication?
-- **Method:** the ft-verify pattern (independent agents + evidence capture in
-  `first_translation_attempts`) generalized to other claim types; external anchors (VIAF,
-  Wikidata, catalogs).
-- **Status:** FT verification flow exists (#2932, ft-verify skill); author/work layers have
-  known error modes (editor-as-author, language mistags) but no measured rates.
+### C4. How accurate are our claims *about* the books?
+First-translation badges, author identities, work groupings, dates, languages — all
+AI-asserted, all citable by scholars, all with known past errors (editors credited as authors,
+mistagged languages, badges set before verification). Measure the error rate per claim type
+against outside evidence (VIAF, Wikidata, catalogs), and decide which claim types must be
+verified *before* they're published rather than after.
+_Status: first-translation claims already have a verification flow (ft-verify, #2932); the other
+claim types have known error modes but no measured rates._
 
 ---
 
-## Program D — Synthesis: answers built from the layers below
+## Program D — The librarian: answers built from everything below
 
-**Who it serves:** readers using the librarian, AI clients on the MCP surface, and anyone
-downstream of generated editorial prose. Also: our institutional credibility — a fabricated
-citation in a synthesized answer is indistinguishable, to the reader, from a fabricated source.
+**For:** readers using the chat librarian and AI clients on the MCP surface. Also our
+credibility: a made-up citation in a librarian answer looks identical, to the reader, to a real
+one.
 
-### D1. Compositional fidelity of the librarian
-- **Question:** If notes are ~88% clean and summaries are X% clean, what is the fidelity of an
-  answer synthesized from five of them? Does grounding-at-generation (assert only what a tool call
-  returned) beat verification-after?
-- **Method:** citation-validity audits of librarian transcripts (links resolve, quotes verbatim,
-  claims trace to retrieved evidence); A/B the two grounding designs. Known failure to build on:
-  the librarian invents slugs and image URLs when unconstrained (#3114).
-- **Status:** link-integrity lesson exists; systematic citation-validity rate not measured.
+### D1. When the librarian combines five sources, how much truth survives?
+The librarian composes answers from notes, summaries, and search results — each imperfect. Audit
+real librarian transcripts: do the links resolve, are the quotes verbatim, does each claim trace
+to something actually retrieved? Then test the design question: is it better to only let the
+librarian assert what a tool call returned, or to check its answers afterward?
+_Status: we know it invents book slugs and image URLs when unconstrained (#3114); the systematic
+audit hasn't been done._
 
-### D2. Voice separation and reader trust (the HCI question)
-- **Question:** The site has three voices — the historical author, the AI translator, the AI
-  annotator. Can readers tell which they are hearing, and does marking machine annotation
-  calibrate trust without destroying reading flow? For a library whose pitch is "read the
-  original," voice confusion is close to existential.
-- **Method:** interface experiments + reader studies; measure misattribution (do readers quote AI
-  notes as source text?). The wrapper-leak incidents (#2232, #2420) are what happens when the
-  voices blur *in the pipeline*; this program is about the *reader-facing* boundary.
-- **Status:** pipeline hygiene done; the reader-side question untouched. (`<note>` still conflates
-  AI vs source on quote/embed — #3298 fixed rendering only.)
+### D2. Can readers tell who's talking?
+Every page has three voices: the historical author, the AI translator, and the AI annotator.
+If readers can't tell them apart, they'll quote our commentary as if it were the source — the
+same failure as the old wrapper leaks, but in the reader's head instead of the pipeline. Test
+interface treatments for marking AI text and measure whether people still misattribute it. For a
+site whose pitch is "read the original," this question is close to existential.
+_Status: the pipeline side is fixed; the reader-facing side is untouched (`<note>` still blurs
+AI vs source on quote/embed — #3298 fixed rendering only)._
 
 ---
 
-## Cross-cutting program — the economics of quality
+## Program E — Spending wisely (cross-cutting)
 
-**Who it serves:** the mission's sustainability. Quality measurement should be an economic
-instrument, not a report card: the marginal dollar goes where it changes the outcome.
+**For:** sustainability. Quality measurement should decide where money goes, not just fill a
+report.
 
-- **E1. Predictive routing:** can scan class, script, date, typeface, layout predict quality well
-  enough to route work ex ante — cheap model / strong model / human review? (Status: 3.1-lite vs
-  3.5-lite result exists, p=8.6e-4, PR #3304; routing model not built.)
-- **E2. Re-processing pays?:** when a new model generation arrives, which pages improve enough to
-  justify re-OCR — and can old-vs-new revision agreement *identify* them, given that a shorter
-  disagreeing re-OCR of a degenerate prior is a fix, not a regression? (Status: the direction-
-  inversion trap is documented (#3273); the longitudinal decision rule is the open work.)
-- **E3. Threshold-setting:** per use (search / reading / quotation), what accuracy suffices? Ties
-  every program's metric to a go/no-go decision instead of a number in a table.
+- **E1. Predict quality before paying.** Can scan type, script, and date predict how well OCR
+  will go — well enough to route each book to the cheap model, the strong model, or a human?
+  _(We already showed the cheaper model beats a pricier one on this corpus, p=8.6e-4, PR #3304 —
+  routing on that kind of evidence is the goal.)_
+- **E2. When a new model comes out, which pages are worth re-doing?** Can comparing old vs new
+  output identify the pages that improved — remembering that on a garbage prior, a *shorter,
+  disagreeing* re-OCR is the fix, not the regression (#3273)?
+- **E3. How good is good enough?** Search tolerates a lot of error; reading some; quotation
+  almost none. Set the threshold per use, so every measurement ends in a decision instead of a
+  number in a table.
 
 ---
 
-## Priorities (as of 2026-07-24)
+## Priorities (2026-07-24)
 
-1. **A5 Quote Integrity** — the promise itself, unmeasured, and a publishable first.
-2. **C1 note fabrication Phase 2** — sample drawn, blocked only on approval (#3308).
-3. **A2 perturbation probes** — the novel experiment on the memorization confound; upgrades the
-   already-published calibration work from "confound noted" to "confound measured."
-4. **E2 re-processing decision rule** — directly gates real spend as new models land.
-5. **B1 error propagation** — the biggest unstudied surface; needed before any translation-quality
-   public claim.
+1. **A5 — measure quote integrity.** The promise itself, unmeasured, and a publishable first.
+2. **C1 — unblock the notes-fabrication audit** (Phase 2 of #3308, waiting on approval).
+3. **A2 — run the alter-a-word probe** on famous pages; upgrades the published calibration work
+   from "memorization is a concern" to "memorization is measured."
+4. **E2 — the re-OCR decision rule**; directly gates real spend as new models land.
+5. **B1 — OCR-error propagation into translation**; needed before any public claim about
+   translation quality.
 
 Everything else queues behind these. When a program produces a number fit for the public
-scorecard, it goes on `/research` next to the OCR calibration work — the scorecard *is* the
-program's public face.
+scorecard, it goes on `/research`.
 
-## Standing cautions (carried from hard-won lessons)
+## Standing cautions (from hard-won lessons)
 
-- State inclusion criteria **before** any disagreement analysis; count what each excluded class
+- Decide what counts as a valid comparison **before** running it, and report what each exclusion
   removes (#3273).
-- Never self-judge (judge ≠ generator family); never trust a judge that can't read the script.
-- Canonical-text scores are upper bounds, subsidized by memory; perfect scores are suspect.
-- Screen for degenerate output before computing any metric over page text.
-- Word-level metrics lie about space-less scripts; use character-level.
-- qa-eval does not do GEMBA; don't claim it in funder-facing material.
+- Never let a model judge its own family's output; never trust a judge that can't read the script.
+- Scores on famous texts are inflated by memorization; a perfect score is a red flag, not a win.
+- Screen out degenerate pages (loops, padding, refusals) before computing any statistic.
+- Use character-level metrics for Chinese/Tibetan/etc.; word-level ones lie.
+- Our eval tooling does not do LLM-judge translation grading today; don't claim it in
+  funder-facing material.
