@@ -52,7 +52,7 @@ export async function POST(
     const cleaned = pages.map(({ _id, ...rest }) => rest);
 
     return NextResponse.json({ pages: cleaned }, {
-      headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
     });
   } catch (error) {
     console.error('Batch pages error:', error);

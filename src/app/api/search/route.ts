@@ -904,7 +904,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       },
     }, {
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
       },
     });
   } catch (error) {
@@ -920,7 +920,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     }, {
       status: 500,
       headers: {
-        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+        'Cache-Control': 'public, max-age=0, s-maxage=10, stale-while-revalidate=30',
       },
     });
   }

@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
     }).catch(() => {});
 
     const response = NextResponse.json({ query, total: results.length, byType, results });
-    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     return response;
   } catch (error) {
     console.error('Index search error:', error);

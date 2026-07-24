@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     return response;
   } catch (error) {
     console.error('Search error:', error instanceof Error ? error.message : error);
