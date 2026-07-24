@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
     const total_books = languages.reduce((sum, l) => sum + l.book_count, 0);
 
     return NextResponse.json({ languages, total_books }, {
-      headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1800' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=600, stale-while-revalidate=1800' },
     });
   } catch (error) {
     console.error('Error fetching languages:', error);

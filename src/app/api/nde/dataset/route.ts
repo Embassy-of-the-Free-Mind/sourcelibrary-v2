@@ -148,7 +148,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/ld+json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600',
+      'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600',
     },
   });
 }

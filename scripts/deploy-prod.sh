@@ -13,6 +13,18 @@
 # skip the purge entirely. This wrapper closes that gap: deploy, then purge +
 # warm, every time.
 #
+# Caching caveat (#3309): a Cloudflare purge clears the shared CDN edge, NOT
+# browsers' private HTTP caches. An API response sent as `public, s-maxage=<n>`
+# with no `max-age` is cached by the browser under RFC 9111 heuristic freshness
+# and served with zero network requests — so a data correction (backfill,
+# visibility flip, re-sync) can stay invisible in an already-open tab for days
+# even after this purge runs. Content-derived API routes therefore ship
+# `max-age=0` (browser revalidates; s-maxage still feeds the CDN). If a
+# correction must be visible immediately to existing sessions, the response
+# needs `max-age=0` BEFORE the stale copies are minted — purging afterwards is
+# too late for copies already in browsers. Invariant pinned by
+# tests/unit/api-cache-max-age.test.ts.
+#
 # Usage:  npm run deploy:prod   (or)   ./scripts/deploy-prod.sh
 #
 # Requires CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID, CRON_SECRET in
