@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const obsFile = process.argv[2] ||
-  path.join(__dirname, 'observations', 'ocr-observations-2026-07-23.jsonl');
+  path.join(__dirname, 'observations', 'ocr-observations-2026-07-24.jsonl');
 
 const PAIRS = [
   { book: 'Vulgate (1566 Louvain)', canon: 'latin-vulgate-genesis-1', noncanon: 'latin-vulgate-genesis-5-genealogy' },
@@ -142,3 +142,59 @@ console.log('\nReading: a READER drops under occlusion by ≈ the masked share o
 console.log('and degrades under blur; a RECITER stays flat on both. Compare canon vs');
 console.log('noncanon WITHIN a pair (page style constant). Mask mentions distinguish');
 console.log('flagged gaps (honest) from silent fill-in (recitation).');
+
+// ── v2 pilot correction (2026-07-24, PR follow-up to #3235 result 16) ──────
+//
+// v1's fixed mid-page band (a) missed the reference passage entirely on 2 of
+// 5 canonical pages, and (b) conflated mask-passage overlap with fill-in
+// because the visible share was only eyeballed. v2 replaces the fixed band
+// with a PASSAGE-TARGETED rect per page (audited against the reference text
+// itself — masked_ref_share below is computed from exact GT-substring char
+// offsets where the passage text could be cleanly located, or from a
+// verified print-line count where verse/line boundaries don't map 1:1 to the
+// GT sentence split; see scripts/eval/results/occlusion-v2-masks-2026-07-24.json
+// for the audit trail per page). The v2 arm tag is `@occR<areaPct>@w2000`
+// (area = % of PAGE masked, not of the passage — distinct from v1's
+// `@occ25@w2000` height-fraction tag, so old and new runs never collide).
+const MASKS_V2 = JSON.parse(fs.readFileSync(
+  path.join(__dirname, 'results', 'occlusion-v2-masks-2026-07-24.json'), 'utf8')).masks;
+const maskedShare = Object.fromEntries(MASKS_V2.map(m => [m.slug, m.masked_ref_share]));
+
+const occ2ArmOf = m => { const mm = /@occR\d+@w2000$/.exec(m); return mm ? mm[0] : null; };
+const cell2 = new Map();
+for (const r of rows) {
+  const arm = occ2ArmOf(r.model);
+  if (!arm) continue;
+  const k = `${r.slug}|${baseModel(r.model)}`;
+  if (!cell2.has(k)) cell2.set(k, []);
+  cell2.get(k).push(r);
+}
+const stat2 = (slug, model) => {
+  const xs = cell2.get(`${slug}|${model}`);
+  if (!xs || !xs.length) return null;
+  return { n: xs.length, raw: xs.reduce((s, r) => s + (r.char_accuracy_raw ?? 0), 0) / xs.length };
+};
+
+console.log('\n\n=== v2 pilot: passage-targeted occlusion (audited masked_ref_share, no fixed-band miss) ===');
+for (const pair of PAIRS) {
+  console.log(`\n== ${pair.book}`);
+  for (const model of ['lite', 'sonnet5']) {
+    for (const [label, slug] of [['canon   ', pair.canon], ['noncanon', pair.noncanon]]) {
+      const base = stat(slug, model, '@w2000');
+      const occ2 = stat2(slug, model);
+      if (!base && !occ2) continue;
+      const d = (a, b) => (a && b) ? ((b.raw - a.raw) * 100).toFixed(1).padStart(6) + 'pp' : '      —';
+      const share = maskedShare[slug];
+      const visible = share == null ? null : 1 - share;
+      const excess = (occ2 && visible != null)
+        ? ` fill-in ${((occ2.raw - visible) * 100).toFixed(0).padStart(3)}pp (masked ${(share * 100).toFixed(0)}%)`
+        : ' [no audited share]';
+      console.log(`  ${model.padEnd(8)} ${label} base ${pc(base?.raw)}  occ2 ${pc(occ2?.raw)} (Δ${d(base, occ2)})${excess}`);
+    }
+  }
+}
+console.log('\nv2 reading: same logic as v1 (fill-in excess = occluded-run coverage minus');
+console.log('the audited VISIBLE share, i.e. 1 − masked_ref_share) but every mask is now');
+console.log('verified to actually cover its reference passage, at a consistent 30-50%');
+console.log('interior share, never touching the first or last line — so no page is');
+console.log('excluded and no excess figure is inflated by a mask that missed its target.');

@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^hebrew-shaarei-orah-gate2-yovel\\.json$",
+  "summary": [
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1153,
+      "charAccuracy": 0.9514310494362532,
+      "rows": [
+        {
+          "work": "Sha'arei Orah (Gikatilla), Gate 2 — Yovel/El Chai discourse",
+          "bookId": "699ef9f2c2bcb75dbdbaad92",
+          "pageNumber": 60,
+          "aligned": true,
+          "guard": 0.14492753623188406,
+          "cer": 0.04856895056374675,
+          "charAccuracy": 0.9514310494362532,
+          "refLen": 1153,
+          "matched": 1097,
+          "source": "Sefaria, Sha'arei Orah, Second Gate, Ninth Sefirah 71-74",
+          "source_url": "https://www.sefaria.org/Sha'arei_Orah%2C_Second_Gate%2C_Ninth_Sefirah.71-74",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0008879999999999999,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.083676,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

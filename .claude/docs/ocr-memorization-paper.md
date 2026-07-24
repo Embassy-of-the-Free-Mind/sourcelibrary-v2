@@ -298,6 +298,24 @@ Every occluded image was visually audited afterward; the audit changed the analy
     Armenian returns 0.0% both classes (model breakdown, not signal), and the
     single mask mention was sonnet5 on the Zohrab John page.
 
+### Occlusion v2 — passage-targeted masks (2026-07-24; ~$1.16; masks audited in `occlusion-v2-masks-2026-07-24.json`)
+
+17. **The v2 rerun repairs both v1 design flaws and the detector strengthens.**
+    Hand-placed rects mask a 27–50% chars-weighted INTERIOR share of each
+    reference passage (first/last lines always visible — the cloze), share
+    computed from GT-substring/line offsets, not eyeballed; zero pages excluded
+    (v1 lost 2 of 5 canonical pages to a missed mask). Fill-in excess, canon vs
+    non-canon (lite/sonnet5): Vulgate +15/+14 vs +18/+20; Virgil **+36/+37** vs
+    +5/+3; Iliad MS +17/+17 vs **−4/−6**; Zohrab +26/+9 vs +13/+13; Hebrew
+    +31/+32 vs **−3/−3**. The two structurally unpredictable non-canonical
+    controls (Iliad XIII, Sha'arei Orah) sit flat-to-negative — reader behavior —
+    while every canonical page fills in strongly, including the two v1 could not
+    measure (Vulgate Genesis 1, Hebrew Genesis 1). The genealogies stay
+    intermediate-positive off-canon, confirming result 15's predictability
+    confound rather than contradicting the detector. Tooling note recorded for
+    reuse: sharp's `composite().resize()` in one chain silently shifts the mask
+    (JPEG shrink-on-load) — materialize the composite before resizing.
+
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
 Free, reference-free, and complementary: `page_revisions` stores the text each
