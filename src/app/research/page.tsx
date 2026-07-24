@@ -164,6 +164,56 @@ export default function ResearchProgrammePage() {
           ))}
         </ol>
 
+        <div className="py-8 border-b border-stone-200">
+          <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-2">Scorecard</div>
+          <h2 className="font-serif text-xl md:text-2xl text-stone-900 tracking-tight mb-3">
+            So how accurate is our text?
+          </h2>
+          <p className="text-base leading-relaxed mb-4">
+            Estimates by script and era, from calibrating agreement between independent machine
+            readings of the same pages against pages where a published scholarly transcription
+            lets us measure accuracy directly — fitted only on passages the models have{' '}
+            <em>not</em> memorised, for the reason question 01 explains.
+          </p>
+          <div className="overflow-x-auto my-4">
+            <table className="w-full text-base border border-stone-200">
+              <thead>
+                <tr className="bg-stone-50 text-left font-body text-sm text-stone-500">
+                  <th className="px-4 py-2 font-semibold">Language, era</th>
+                  <th className="px-4 py-2 font-semibold text-right">Estimated character accuracy</th>
+                  <th className="px-4 py-2 font-semibold text-right">Independent double-readings</th>
+                </tr>
+              </thead>
+              <tbody className="font-body">
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">German, 1600–1900</td><td className="px-4 py-2 text-right">≈99.8%</td><td className="px-4 py-2 text-right">26,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">English, 1800–1900+</td><td className="px-4 py-2 text-right">≈99.8%</td><td className="px-4 py-2 text-right">12,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Latin, 1500–1800</td><td className="px-4 py-2 text-right">≈97%</td><td className="px-4 py-2 text-right">31,000+</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Greek (polytonic print)</td><td className="px-4 py-2 text-right">≈93–100% per page</td><td className="px-4 py-2 text-right">12 reference pages</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Armenian (grabar)</td><td className="px-4 py-2 text-right">≈94–99% per page</td><td className="px-4 py-2 text-right">8 reference pages</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Hebrew</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">2 reference pages — too few</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Chinese, Japanese, Tibetan</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">no unmemorised reference pages exist yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-sm text-stone-500 leading-relaxed">
+            Honest notes: the estimates are conditional on the calibration transferring from our
+            reference pages to the wider corpus, and most double-readings come from successive
+            models in the same family, which are not fully independent. <em>Not yet calibrated</em>{' '}
+            is a statement about our measurement, not the text — Tibetan we already know to be
+            unreliable and flag in the reader. A fully independent check, reproducible from public
+            files: Internet Archive&apos;s own non-AI OCR of the same scans agrees with our text at
+            87% on modern English print and 81% on 19th-century French. Full scorecard with fit
+            quality, confidence intervals, and every caveat:{' '}
+            <a
+              href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/results/calibration-scorecard-2026-07-23.md"
+              className="text-amber-800 hover:underline"
+            >
+              in the repository
+            </a>
+            .
+          </p>
+        </div>
+
         <div className="py-8 text-base text-stone-600 space-y-3">
           <p>
             <span className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mr-3">Outputs</span>
