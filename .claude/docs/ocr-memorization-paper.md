@@ -495,7 +495,15 @@ degradation/occlusion membership pilot (~$2–5, validated against the pinned pa
 
 - **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** PILOT RUN
   2026-07-23 (PR #3341; results section above): 200 books, 115 aligned, 2,276
-  page rows; full-corpus harvest + within-band diff-in-diff still open.
+  page rows. REPLICATED 2026-07-24 on Hetzner with a fresh independent 200-book
+  sample (100 aligned, 1,971 rows — `ia-ocr-baseline-pilot-2026-07-24.*`):
+  identical stratum rank ordering, per-stratum agreement within ±9pp (Latin
+  1500s 33.7 vs 27.2; English 1900s 83.6 vs 87.4; French 1800s 82.1 vs 80.5;
+  German 1600s 47.3 vs 47.7) — the table is stable across samples, not a
+  sampling artifact. Combined evidence: ~4,200 pages / ~215 aligned books.
+  Still open: the true full-corpus harvest needs a `--per-stratum` flag
+  (the sample stage's built-in stratum caps ignore `--total`), and the
+  within-band diff-in-diff.
   Original design: most exportable
   books carry an `ia_identifier`, and Internet Archive publishes its own OCR
   (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
