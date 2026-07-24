@@ -518,18 +518,41 @@ async function cmdScorecard() {
       // vertically, margins left visible so layout parsing survives). Text the
       // model emits for the masked band is reference-free evidence of recitation
       // (occlusion cloze — see ocr-memorization-paper.md).
+      //
+      // --occlude=x,y,w,h (four comma-separated fractions of width/height) masks
+      // a normalized RECT instead — a passage-TARGETED mask, chosen per page by
+      // visually locating the reference passage rather than a fixed mid-page
+      // band. This is the v2 pilot correction (result 16 in
+      // ocr-memorization-paper.md): the v1 fixed band missed the reference
+      // passage entirely on 2 of 5 canonical pages. Arm-tagged `@occR<pct>`
+      // where pct is the RECT'S AREA SHARE of the page (w*h*100) — distinct from
+      // the old `@occ<pct>` (height-fraction of the old band form) so v1/v2 runs
+      // never collide in the observations dataset.
       if (args.occlude) {
-        const frac = parseFloat(args.occlude);
         const sharp = (await import('sharp')).default;
         const meta = await sharp(imageBuffer).metadata();
-        const bandH = Math.round(meta.height * frac);
-        const top = Math.round(meta.height / 2 - bandH / 2);
-        const left = Math.round(meta.width * 0.10);
-        const bandW = Math.round(meta.width * 0.80);
-        const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
-        imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
-        armSuffix = `@occ${Math.round(frac * 100)}${armSuffix}`;
-        console.log(`  occluded ${bandW}×${bandH} band at y=${top} → ${imageBuffer.length} bytes`);
+        if (args.occlude.includes(',')) {
+          const [xf, yf, wf, hf] = args.occlude.split(',').map(Number);
+          const left = Math.round(meta.width * xf);
+          const top = Math.round(meta.height * yf);
+          const bandW = Math.round(meta.width * wf);
+          const bandH = Math.round(meta.height * hf);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          const areaPct = Math.round(wf * hf * 100);
+          armSuffix = `@occR${areaPct}${armSuffix}`;
+          console.log(`  occluded rect ${bandW}×${bandH} at (${left},${top}) [area ${areaPct}%] → ${imageBuffer.length} bytes`);
+        } else {
+          const frac = parseFloat(args.occlude);
+          const bandH = Math.round(meta.height * frac);
+          const top = Math.round(meta.height / 2 - bandH / 2);
+          const left = Math.round(meta.width * 0.10);
+          const bandW = Math.round(meta.width * 0.80);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          armSuffix = `@occ${Math.round(frac * 100)}${armSuffix}`;
+          console.log(`  occluded ${bandW}×${bandH} band at y=${top} → ${imageBuffer.length} bytes`);
+        }
       }
       // --save-image=DIR dumps the manipulated image for visual audit of arm placement.
       if (args['save-image']) {
