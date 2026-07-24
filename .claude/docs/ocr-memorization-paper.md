@@ -682,9 +682,22 @@ Earlier planned experiments (status as of 2026-07-23):
   type with long-s and ligatures. A baseline arm must be scoped to material the
   baseline can actually read, or its collapse is misread as model advantage.
 
-## Venue / form
+## Venue / form — DECIDED 2026-07-24
 
-Candidates: (a) blog-post research note first (house pattern, citable, fast) →
-(b) workshop/conference paper (NLP4DH / LM4DH / DH venue; or an eval-focused ML
-venue). Dataset DOI via Zenodo at submission time. Both pending Derek's call on
-naming and hosting.
+- **Venue: CHR 2027** (Computational Humanities Research, Manchester, 5–8 Jan 2027).
+  **Submission deadline: 2026-08-14 AoE** — three weeks from decision date; the
+  deadline is the schedule. Rationale: exact audience (computational methods for
+  cultural heritage / the people running digitization pipelines), archival
+  proceedings, and the only strong venue whose window lands inside the scoop
+  horizon (NLP4DH 2026 already ran in July; its next deadline is ~Mar 2027).
+- **At submission time**: arXiv preprint + blog research note (house pattern) go up
+  the same week for dated priority.
+- **Title: keep "Reading or Reciting?"** as the deliberate, cited echo of
+  "Reading or Guessing?" (2605.27750) — recitation vs guessing IS the distinction
+  between the papers; say so in the related-work paragraph.
+- **Dataset: Hugging Face** (Derek, 2026-07-24), named
+  **`sourcelibrary/reading-or-reciting`** (namespace verified unclaimed
+  2026-07-24). Card + publish script: `scripts/eval/dataset/hf/` — one-time HF
+  org/token setup is Derek's, then `publish.sh v0.3`. Zenodo remains available
+  later if a DOI is wanted for the paper's camera-ready; HF revision tags carry
+  versioning until then.
