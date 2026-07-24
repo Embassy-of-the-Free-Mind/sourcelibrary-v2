@@ -128,7 +128,11 @@ async function* shardLines(p) {
   for await (const line of rl) if (line) yield line;
 }
 
-const ZWC_RE = /[​‌‍⁠﻿]/;
+// A provenance mark is a structured RUN of zero-width chars (≥9 consecutive
+// per payload byte — see src/lib/steganographia.ts). Isolated ZWNJ/ZWJ are
+// legitimate letters in Persian/Indic scripts (Rumi's Masnavi false-positived
+// the first full verify with 8 linguistic ZWNJs), so flag runs only.
+const ZWC_RE = /[​‌‍⁠﻿]{8,}/;
 const WRAPPER_TAG_RE = /<\/?(?:meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc)>/i;
 
 const RIGHTS_REASON_RE = /copyright|takedown|dmca|rights/i;
