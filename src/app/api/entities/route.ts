@@ -4,6 +4,13 @@ import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { buildEntityListJsonLd } from '@/lib/jsonld';
+import {
+  dedupeEntityBooks,
+  entityCounters,
+  normalizeEntityBook,
+  type EntityBookRef,
+  type EntityPagePrecision,
+} from '@/lib/entity-books';
 
 export interface Entity {
   _id?: string;
@@ -12,12 +19,7 @@ export interface Entity {
   aliases?: string[];
   description?: string;
   wikipedia_url?: string;
-  books: Array<{
-    book_id: string;
-    book_title: string;
-    book_author: string;
-    pages: number[];
-  }>;
+  books: EntityBookRef[];
   total_mentions: number;
   book_count: number;
   created_at: Date;
@@ -166,7 +168,7 @@ export const POST = withAuth(async (request, session) => {
       name: string;
       type: Entity['type'];
       variantNames: Set<string>;
-      books: Map<string, { book_id: string; book_title: string; book_author: string; pages: number[] }>;
+      books: Map<string, EntityBookRef>;
     }>();
 
     const addToEntityMap = (
@@ -175,7 +177,12 @@ export const POST = withAuth(async (request, session) => {
       bookId: string,
       bookTitle: string,
       bookAuthor: string,
-      pages: number[]
+      pages: number[],
+      // Carried through from the book's index. An index entry written before
+      // #3361 has no marker and an unverified (batch-smeared) page array —
+      // normalizeEntityBook demotes those to section precision rather than
+      // letting this route launder them back into page citations.
+      indexEntry?: { page_precision?: EntityPagePrecision; page_range?: { start: number; end: number } }
     ) => {
       // Resolve alias to canonical name
       const canonicalName = aliasResolver.resolve(term, type);
@@ -195,13 +202,19 @@ export const POST = withAuth(async (request, session) => {
         entity.variantNames.add(term);
       }
       // Merge book data — combine pages if same book appears via different variants
+      const incoming = normalizeEntityBook({
+        book_id: bookId,
+        book_title: bookTitle,
+        book_author: bookAuthor,
+        pages,
+        page_precision: indexEntry?.page_precision,
+        page_range: indexEntry?.page_range,
+      });
       const existing = entity.books.get(bookId);
-      if (existing) {
-        const allPages = [...new Set([...existing.pages, ...pages])].sort((a, b) => a - b);
-        entity.books.set(bookId, { ...existing, pages: allPages });
-      } else {
-        entity.books.set(bookId, { book_id: bookId, book_title: bookTitle, book_author: bookAuthor, pages });
-      }
+      entity.books.set(
+        bookId,
+        existing ? dedupeEntityBooks([existing, incoming])[0] : incoming
+      );
     };
 
     for (const book of books) {
@@ -211,17 +224,17 @@ export const POST = withAuth(async (request, session) => {
 
       for (const person of (book.index?.people || [])) {
         if (!person.term) continue;
-        addToEntityMap(person.term, 'person', bookId, bookTitle, bookAuthor, person.pages || []);
+        addToEntityMap(person.term, 'person', bookId, bookTitle, bookAuthor, person.pages || [], person);
       }
 
       for (const place of (book.index?.places || [])) {
         if (!place.term) continue;
-        addToEntityMap(place.term, 'place', bookId, bookTitle, bookAuthor, place.pages || []);
+        addToEntityMap(place.term, 'place', bookId, bookTitle, bookAuthor, place.pages || [], place);
       }
 
       for (const concept of (book.index?.concepts || [])) {
         if (!concept.term) continue;
-        addToEntityMap(concept.term, 'concept', bookId, bookTitle, bookAuthor, concept.pages || []);
+        addToEntityMap(concept.term, 'concept', bookId, bookTitle, bookAuthor, concept.pages || [], concept);
       }
     }
 
@@ -233,15 +246,13 @@ export const POST = withAuth(async (request, session) => {
     let merged = 0;
     for (const [key, data] of entityMap) {
       const booksArray = Array.from(data.books.values());
-      const totalMentions = booksArray.reduce((sum, b) => sum + b.pages.length, 0);
 
       // Build update — merge variant names into aliases without overwriting manual aliases
       const updateSet: Record<string, unknown> = {
         name: data.name,
         type: data.type,
         books: booksArray,
-        total_mentions: totalMentions,
-        book_count: booksArray.length,
+        ...entityCounters(booksArray),
         updated_at: now,
       };
 
