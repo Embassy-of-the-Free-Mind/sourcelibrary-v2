@@ -48,7 +48,6 @@ import fs from 'fs';
 import {
   buildPageTexts,
   attributeEntityPages,
-  entityCounters,
 } from '../lib/entity-page-match.mjs';
 
 const args = process.argv.slice(2);
@@ -80,6 +79,7 @@ const stats = {
   entriesNowPagePrecision: 0,
   entriesNowSection: 0,
   entriesUnchanged: 0,
+  entriesNoWindow: 0,
   duplicateEntriesCollapsed: 0,
   pagesClaimedBefore: 0,
   pagesClaimedAfter: 0,
@@ -109,9 +109,27 @@ for await (const book of bookCursor) {
   stats.booksScanned++;
 
   // Every entity that claims this book. If none, there is nothing to repair.
-  const entities = await db.collection('entities')
-    .find({ 'books.book_id': book.id }, { projection: { name: 1, type: 1, books: 1 } })
-    .toArray();
+  //
+  // Project ONLY this book's entries via $filter, never the whole `books` array.
+  // A popular book is referenced by ~900 entities, and a common concept carries
+  // hundreds of book entries, so `projection: { books: 1 }` ships megabytes per
+  // book and pins the sweep at 0.3% CPU waiting on the wire — measured at under
+  // one book per minute before this change.
+  const entities = await db.collection('entities').aggregate([
+    { $match: { 'books.book_id': book.id } },
+    {
+      $project: {
+        name: 1,
+        type: 1,
+        books: {
+          $filter: {
+            input: { $ifNull: ['$books', []] },
+            cond: { $eq: ['$$this.book_id', book.id] },
+          },
+        },
+      },
+    },
+  ]).toArray();
   if (entities.length === 0) continue;
 
   const pages = await db.collection('pages')
@@ -136,16 +154,38 @@ for await (const book of bookCursor) {
     if (ownEntries.length > 1) stats.duplicateEntriesCollapsed += ownEntries.length - 1;
     stats.entityEntriesExamined++;
 
-    // Candidate window = the union of pages the old entry claimed, which is the
+    // Candidate window = the pages this entry already points at, which is the
     // batch range Gemini actually read. Staying inside it means we never invent
-    // a location in a section the model never saw. Fall back to the whole book
-    // only when the claim is empty (nothing to narrow from).
+    // a location in a section the model never saw.
+    //
+    // A section-precision entry has an EMPTY `pages` array, so its window has to
+    // come from `page_range`. Falling back to the whole book here is what made
+    // the first version non-idempotent: on a second pass, every section entry
+    // got re-scanned across all pages and converted back to page precision with
+    // matches the model never saw — a re-run that ADDED 8% more citations. If
+    // there is no window at all, leave the entry alone.
     const claimed = [...new Set(ownEntries.flatMap(e => e.pages || []))].sort((a, b) => a - b);
     stats.pagesClaimedBefore += claimed.length;
 
-    const candidates = claimed.length > 0
-      ? claimed.map(n => pageTextsByNumber.get(n)).filter(Boolean)
-      : pageTexts;
+    let window = claimed;
+    if (window.length === 0) {
+      const ranges = ownEntries.map(e => e.page_range).filter(Boolean);
+      if (ranges.length > 0) {
+        const start = Math.min(...ranges.map(r => r.start));
+        const end = Math.max(...ranges.map(r => r.end));
+        window = [];
+        for (let n = start; n <= end; n++) window.push(n);
+      }
+    }
+
+    if (window.length === 0) {
+      // Nothing claimed and no range — no evidence to re-verify against.
+      stats.entriesNoWindow++;
+      stats.entriesUnchanged++;
+      continue;
+    }
+
+    const candidates = window.map(n => pageTextsByNumber.get(n)).filter(Boolean);
 
     // If the claimed pages no longer exist (book re-split/renumbered), we cannot
     // verify anything — mark section over the claimed span and move on.
@@ -159,9 +199,9 @@ for await (const book of bookCursor) {
         ...(base.book_year ? { book_year: base.book_year } : {}),
         pages: [],
         page_precision: 'section',
-        ...(claimed.length > 0
-          ? { page_range: { start: claimed[0], end: claimed[claimed.length - 1] } }
-          : {}),
+        // Keep the span from the window (claimed pages, or an existing
+        // page_range) so a re-run still has something to narrow from.
+        page_range: { start: window[0], end: window[window.length - 1] },
       };
       queueEntry(ops, entity, book.id, repaired);
       continue;
@@ -196,8 +236,9 @@ for await (const book of bookCursor) {
   }
 
   if (ops.length > 0) {
-    // Ordered: each entity's $pull must land before its $push.
-    await db.collection('entities').bulkWrite(ops, { ordered: true });
+    // One self-contained op per entity, so order doesn't matter and the server
+    // is free to parallelize.
+    await db.collection('entities').bulkWrite(ops, { ordered: false });
   }
 
   logProgress({ book_id: book.id, entities: entities.length, ops: ops.length, at: new Date().toISOString() });
@@ -213,37 +254,59 @@ for await (const book of bookCursor) {
 
 /**
  * Queue the replacement of one entity's entry for one book. Ops are collected
- * per book and flushed as a single bulkWrite — three round trips per entity
- * (pull, push, recount) put the full 19.6K-book sweep in the multi-day range.
+ * per book and flushed as a single bulkWrite.
  *
- * Uses $pull + $push rather than $set-ing the whole `books` array, so a
- * concurrent writer touching a DIFFERENT book on the same entity isn't
- * clobbered. Counters are computed from the known post-state, which is exact
- * while the enrich pipeline is paused and self-corrects on the next re-run
- * otherwise.
+ * Expressed as an aggregation-pipeline update so the whole operation runs
+ * server-side and the `books` array never crosses the wire in either direction:
+ * drop every entry for this book (collapsing duplicates), append the repaired
+ * one, then recount from the result. Shipping the array back to recompute
+ * counters in JS is what made the first attempt I/O-bound.
+ *
+ * Rebuilding `books` in one pipeline also means a concurrent writer touching a
+ * DIFFERENT book on the same entity is preserved — $filter keeps every entry
+ * whose book_id isn't ours, whatever it looks like.
  */
 function queueEntry(ops, entity, bookId, repaired) {
   stats.entitiesTouched.add(entity._id.toString());
   if (DRY_RUN) return;
 
-  const postState = [
-    ...(entity.books || []).filter(b => b.book_id !== bookId),
-    repaired,
-  ];
-
   ops.push({
     updateOne: {
       filter: { _id: entity._id },
-      update: { $pull: { books: { book_id: bookId } } },
-    },
-  });
-  ops.push({
-    updateOne: {
-      filter: { _id: entity._id },
-      update: {
-        $push: { books: repaired },
-        $set: { ...entityCounters(postState), updated_at: new Date() },
-      },
+      update: [
+        {
+          $set: {
+            books: {
+              $concatArrays: [
+                {
+                  $filter: {
+                    input: { $ifNull: ['$books', []] },
+                    cond: { $ne: ['$$this.book_id', bookId] },
+                  },
+                },
+                [repaired],
+              ],
+            },
+          },
+        },
+        {
+          $set: {
+            // Mirrors entityCounters() in scripts/lib/entity-page-match.mjs:
+            // distinct books (one entry each after the rebuild above) and
+            // VERIFIED page references only.
+            book_count: { $size: '$books' },
+            total_mentions: {
+              $sum: {
+                $map: {
+                  input: '$books',
+                  in: { $size: { $ifNull: ['$$this.pages', []] } },
+                },
+              },
+            },
+            updated_at: new Date(),
+          },
+        },
+      ],
     },
   });
 }
