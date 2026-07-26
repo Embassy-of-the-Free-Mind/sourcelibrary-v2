@@ -21,27 +21,30 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 21; // bump to force-regenerate cached mosaics
-const MAX_TILES = 60;
+const MOSAIC_VERSION = 22; // bump to force-regenerate cached mosaics
+const MAX_ROWS = 4; // the hero crop (desktop rows 2-4, mobile rows 1-3) never shows a 5th row
+const MAX_TILES = 10 * MAX_ROWS; // 10 cols × 4 rows = 40 — the most that can ever be seen
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
 const FETCH_CONCURRENCY = 10; // outbound image fetches in flight at once (socket safety)
-const TARGET_ASPECT = 1.6; // mosaic width:height — a 10×5 of portrait pages; the
+const TARGET_ASPECT = 1.6; // mosaic width:height — a 10×4 of portrait pages; the
                            // hero shows it via background-cover (never repeated)
 
 /**
  * Grid shape for `n` tiles of median height `mh`. Columns/rows are chosen so the
  * composited mosaic lands near TARGET_ASPECT — this is what keeps SHORT tiles
  * (palm-leaf strips, wide scans) from producing a 1-row, wildly-wide block. A
- * book of tall portrait pages naturally lands ~10×5; short strips get fewer
- * columns and more rows. Only whole rows are used, so the bottom is never ragged.
+ * book of tall portrait pages with ≥40 tiles lands 10×4 (= MAX_TILES); short
+ * strips get fewer columns. Rows are HARD-capped at 4 — a 5th row is always
+ * cropped out of the hero (proven), so it would only be wasted tiles. Only whole
+ * rows are used, so the bottom is never ragged.
  */
 function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: number } {
   const ratio = (TARGET_ASPECT * mh) / TILE_W; // = cols/rows to hit the aspect
   let cols = Math.round(Math.sqrt(n * ratio));
   cols = Math.max(3, Math.min(10, cols, n));
-  let rows = Math.max(1, Math.floor(n / cols));
+  let rows = Math.min(MAX_ROWS, Math.max(1, Math.floor(n / cols)));
   // Prefer ≥2 rows when we have the tiles — a single row cover-crops badly.
-  if (rows < 2 && n >= 6) { cols = Math.max(2, Math.floor(n / 2)); rows = Math.floor(n / cols); }
+  if (rows < 2 && n >= 6) { cols = Math.max(2, Math.floor(n / 2)); rows = Math.min(MAX_ROWS, Math.floor(n / cols)); }
   return { cols, rows, used: cols * rows };
 }
 
@@ -50,7 +53,7 @@ const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a c
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const AVIF_QUALITY = 38; // AVIF quality — the bg sits under a heavy dark scrim, so it compresses hard with no visible loss
 const MAX_MOSAIC_W = 1920; // cap the output width — the hero never needs more
-const CANDIDATE_LIMIT = 80; // fetch extra so outlier-height filtering still leaves ~50
+const CANDIDATE_LIMIT = 54; // fetch a bit extra so dedup + outlier-height filtering still leaves ~40 (10×4)
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
 
 /** Pick `n` items evenly spread across `arr` (keeps order). Sampling ACROSS the
