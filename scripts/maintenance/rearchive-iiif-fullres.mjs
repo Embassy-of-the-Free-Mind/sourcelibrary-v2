@@ -40,6 +40,18 @@
  *   --provider <name>          e.g. allard_pierson
  *   --crisis-only              books with spread_translation_crisis: true
  *
+ * Consistency guard (#3186, ON by default):
+ *   Before overwriting any archive, perceptual-hash a sample of pages to confirm
+ *   fetched(photo_original) IS the same image as the current archived_photo.
+ *   - aligned  → upgrade proceeds
+ *   - shift+1  → photo_original is a one-page-offset sequence (the e-rara PDF-cover
+ *                defect): book is SKIPPED, flagged books.rearchive_blocked + a
+ *                book_events{type:'rearchive_blocked'} record. NOT overwritten.
+ *   - ambiguous→ skipped + flagged for manual review.
+ *   --no-guard                 disable the guard (ONLY for a provider already
+ *                              audited aligned; never blanket — this is the incident switch)
+ *   Note: --recover-split does NOT run the guard; don't point it at unaudited providers.
+ *
  * Other:
  *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
  *                              (resume flag for long interruptible runs; the stamp is
@@ -95,6 +107,10 @@ const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 const SKIP_UPGRADED = FLAG('--skip-upgraded');
+// The consistency guard is ON by default and cannot be silently skipped — it is
+// the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
+// explicit, audited one-offs on a provider already proven aligned.
+const NO_GUARD = FLAG('--no-guard');
 
 // ── Setup ──
 
@@ -149,6 +165,77 @@ async function jpegDims(buf) {
   } catch {
     return null;
   }
+}
+
+// ── Consistency guard (issue #3186) ──
+//
+// The e-rara off-by-one incident: for PDF-sourced imports, `archived_photo` was
+// rasterized from the e-rara PDF (which prepends a cover sheet) while
+// `photo_original` was recorded as the IIIF image URL (no cover) — a parallel,
+// one-page-offset sequence. Refetching from `photo_original` and overwriting
+// `archived_photo` silently slid every image one page against its OCR/translation.
+//
+// The load-bearing false assumption was: "photo_original is the same image as
+// archived_photo, just higher-res." This guard verifies that per-book with a
+// perceptual hash (dHash) BEFORE any overwrite. Verdicts:
+//   aligned   — fetched(photo_original[N]) ≈ archived[N]  → safe to upgrade
+//   shift+1   — fetched(photo_original[N]) ≈ archived[N+1] → PDF-cover defect; skip+flag
+//   ambiguous — neither holds consistently → skip+flag for manual review
+// Measured Hamming separation on real data: same-image ≤12, different ≥16.
+
+const HASH_MATCH = 12;   // ≤ this Hamming distance = same image
+const HASH_DIFF = 16;    // ≥ this = clearly different image
+
+async function dhash(buf) {
+  const px = await sharp(buf).greyscale().resize(9, 8, { fit: 'fill' }).raw().toBuffer();
+  let h = 0n, bit = 0n;
+  for (let r = 0; r < 8; r++) for (let col = 0; col < 8; col++) {
+    if (px[r * 9 + col] > px[r * 9 + col + 1]) h |= (1n << bit);
+    bit++;
+  }
+  return h;
+}
+function hamming(a, b) { let x = a ^ b, n = 0; while (x) { n += Number(x & 1n); x >>= 1n; } return n; }
+async function hashUrl(url) {
+  const r = await rateLimitedFetch(url, { timeout: 30_000 });
+  return dhash(r);
+}
+
+/**
+ * Compare fetched photo_original against the current (pre-overwrite) archived
+ * image for a sample of interior pages. Returns { verdict, offset, detail }.
+ * verdict ∈ 'aligned' | 'shift+1' | 'ambiguous' | 'unknown'.
+ */
+async function checkAlignment(pages) {
+  // Sample interior pages that carry both an IIIF photo_original and an archived
+  // image; skip page 1 (cover/title special-casing lives there).
+  const usable = pages.filter(p => isIiifUrl(p.photo_original || p.photo) && isUsableArchive(p.archived_photo) && p.page_number >= 2);
+  if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages' };
+  const byNum = new Map(pages.map(p => [p.page_number, p]));
+  const samples = [usable[Math.floor(usable.length * 0.25)], usable[Math.floor(usable.length * 0.5)], usable[Math.floor(usable.length * 0.75)]]
+    .filter((p, i, a) => p && a.indexOf(p) === i);
+
+  let alignedVotes = 0, shiftVotes = 0, checked = 0;
+  for (const p of samples) {
+    try {
+      const oh = await hashUrl(upgradeToFullRes(p.photo_original || p.photo));
+      const same = byNum.get(p.page_number)?.archived_photo;
+      const next = byNum.get(p.page_number + 1)?.archived_photo;
+      const dSame = isUsableArchive(same) ? hamming(oh, await hashUrl(same)) : 99;
+      const dNext = isUsableArchive(next) ? hamming(oh, await hashUrl(next)) : 99;
+      checked++;
+      if (dSame <= HASH_MATCH && dSame < dNext) alignedVotes++;
+      else if (dNext <= HASH_MATCH && dNext < dSame) shiftVotes++;
+    } catch { /* count as no-vote */ }
+  }
+  if (checked === 0) return { verdict: 'unknown', detail: 'all-hash-fetches-failed' };
+  if (alignedVotes === checked) return { verdict: 'aligned', detail: `${alignedVotes}/${checked}` };
+  if (shiftVotes === checked) return { verdict: 'shift+1', offset: 1, detail: `${shiftVotes}/${checked}` };
+  return { verdict: 'ambiguous', detail: `aligned=${alignedVotes} shift=${shiftVotes} of ${checked}` };
+}
+
+function isUsableArchive(url) {
+  return typeof url === 'string' && /^https?:\/\//.test(url) && !/archive[_-]?fail|unavailable/i.test(url);
 }
 
 /**
@@ -291,6 +378,28 @@ async function refetchOne(book) {
   const cap = getIiifSizeCap(sourceUrl);
   if (!cap || info.width / cap < MIN_UPGRADE_RATIO) {
     return { skipped: `not-low-res (cap=${cap || 'full'}, master=${info.width})` };
+  }
+
+  // ── Consistency guard: never overwrite an archive whose photo_original is a
+  // different image than what we hold (the e-rara off-by-one class, #3186). ──
+  if (!NO_GUARD) {
+    const align = await checkAlignment(pages);
+    if (align.verdict !== 'aligned') {
+      if (!DRY_RUN) {
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: {
+            rearchive_blocked: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, at: new Date() },
+            updated_at: new Date(),
+          } },
+        );
+        await db.collection('book_events').insertOne({
+          book_id: book.id, type: 'rearchive_blocked', at: new Date(), source: 'rearchive-iiif-fullres',
+          details: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, reason: 'photo_original != archived content (#3186 guard)' },
+        });
+      }
+      return { skipped: `guard:${align.verdict} (${align.detail})` };
+    }
   }
 
   console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${cap}→${info.width}px (${pages.length} pages)`);
