@@ -1083,12 +1083,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
     const catalogMeta = (book as unknown as { catalog_metadata?: { scan_date?: string; public_date?: string } }).catalog_metadata;
     const digitizedRaw = catalogMeta?.scan_date || catalogMeta?.public_date;
-    let hasDigitizedEntry = false;
     if (digitizedRaw) {
       const dd = new Date(digitizedRaw);
       const my = isNaN(dd.getTime()) ? '' : fmtMonthYear(dd);
       if (my) {
-        hasDigitizedEntry = true;
         rawTimeline.push({
           ts: +dd,
           key: 'digitized',
@@ -1107,8 +1105,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         key: 'added',
         dateText: my,
         label: 'Added to Source Library',
-        // Only repeat the digitizer here if it didn't get its own dated entry.
-        detail: !hasDigitizedEntry && digitizer ? `Digitized by ${digitizer}` : undefined,
+        // No digitizer sub-line here — without a digitization DATE it reads as if
+        // the item was digitized on the "added" date, which is wrong. The
+        // digitizer is credited in the Bibliographic panel + Pages subtitle.
+        detail: undefined,
         extra: (
           <div className="space-y-3">
             <PublicBookHistory bookId={book.id} />
