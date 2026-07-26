@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CONTACT_EMAIL = 'partners@sourcelibrary.org';
+const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 export default function ForLibrariesPage() {
   return (

@@ -204,7 +204,7 @@ export default function DonationIntentionForm() {
         {/* Error */}
         {state === 'error' && (
           <div className="bg-red-50 text-red-700 text-sm rounded-lg px-4 py-3">
-            {errorMsg || 'Something went wrong. Please try again or email derek@sourcelibrary.org directly.'}
+            {errorMsg || 'Something went wrong. Please try again or email team@sourcelibrary.org directly.'}
           </div>
         )}
 

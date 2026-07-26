@@ -775,8 +775,8 @@ export default function IIIFPage() {
             lightning talk at the{' '}
             <a href="https://iiif.io/event/2026/leiden/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF 2026 Annual Conference &amp; Showcase</a>{' '}
             in Leiden and The Hague. Corrections and feedback are welcome &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>
             .
           </p>
