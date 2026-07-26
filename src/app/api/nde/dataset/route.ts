@@ -43,7 +43,7 @@ export async function GET() {
     '@type': 'ContactPoint',
     name: { '@language': 'en', '@value': 'Source Library general inquiries' },
     url: 'https://sourcelibrary.org/about',
-    email: 'derek@sourcelibrary.org',
+    email: 'team@sourcelibrary.org',
   };
 
   const dataset = {

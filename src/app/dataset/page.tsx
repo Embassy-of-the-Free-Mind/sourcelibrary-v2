@@ -261,7 +261,7 @@ export default async function DatasetPage() {
 
         <div className="flex flex-wrap gap-4 mt-8">
           <a
-            href="mailto:derek@sourcelibrary.org?subject=Dataset%20Access%20Request"
+            href="mailto:team@sourcelibrary.org?subject=Dataset%20Access%20Request"
             className="px-6 py-3 bg-[#1a1a18] text-white rounded-full text-sm font-medium hover:bg-[#333] transition-colors"
           >
             Request access
@@ -310,8 +310,8 @@ export default async function DatasetPage() {
           <a href="/api/dataset/v1/stats" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
             Corpus stats (JSON)
           </a>
-          <a href="mailto:derek@sourcelibrary.org" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
-            derek@sourcelibrary.org
+          <a href="mailto:team@sourcelibrary.org" className="text-sm text-[#666] hover:text-[#1a1a18] transition-colors">
+            team@sourcelibrary.org
           </a>
         </div>
       </section>

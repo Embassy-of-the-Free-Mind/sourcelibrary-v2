@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
-const CONTACT_EMAIL = 'derek@sourcelibrary.org';
+const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Three pecha leaves on a dark ground — the manuscript story at a glance.
 const HERO_IMAGE = 'https://images.sourcelibrary.org/pages/69e787904a6785cfd60cc297/0095.jpg';

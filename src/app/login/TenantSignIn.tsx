@@ -154,7 +154,7 @@ export function TenantSignIn({
             <p style={{ fontSize: 14, color: '#8b949e', marginBottom: 24 }}>
               <strong style={{ color: '#e6edf3' }}>{tenantName}</strong> is by invitation only.
               {' '}
-              <a href="mailto:contact@sourcelibrary.org" style={{ color: '#58a6ff', textDecoration: 'none' }}>
+              <a href="mailto:team@sourcelibrary.org" style={{ color: '#58a6ff', textDecoration: 'none' }}>
                 Contact the administrator
               </a>
               {' '}

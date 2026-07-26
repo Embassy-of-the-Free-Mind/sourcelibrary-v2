@@ -90,7 +90,7 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Contact</h2>
           <p>
             Privacy questions? Contact us at{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </main>

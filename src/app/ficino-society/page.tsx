@@ -321,7 +321,7 @@ function FicinoSocietyContent() {
           )}
           <p className="mt-6 text-[12px] text-[#8a8480] font-body">
             Any amount welcome &mdash;{' '}
-            <a href="mailto:hello@sourcelibrary.org" className="underline">hello@sourcelibrary.org</a>
+            <a href="mailto:team@sourcelibrary.org" className="underline">team@sourcelibrary.org</a>
           </p>
         </div>
       </section>

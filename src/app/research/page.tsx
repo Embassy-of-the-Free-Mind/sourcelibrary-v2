@@ -239,7 +239,7 @@ export default function ResearchProgrammePage() {
             <Link href="/blog/mcp-server" className="text-amber-800 hover:underline">MCP server</Link>. A project of{' '}
             <a href="https://wisdomfrontiers.org" className="text-amber-800 hover:underline">Wisdom Frontiers</a>;
             collaboration and data access:{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-amber-800 hover:underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-amber-800 hover:underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </div>

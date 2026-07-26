@@ -96,7 +96,7 @@ ability to shape what gets digitized next.
 Previous texts in our collection have been cited in academic
 papers, museum exhibitions, and AI research.
 
-  Contact: derek@sourcelibrary.org
+  Contact: team@sourcelibrary.org
   Subject: "AI Partnership — [Your Company]"
   Website: https://sourcelibrary.org
   API docs: https://sourcelibrary.org/llms.txt

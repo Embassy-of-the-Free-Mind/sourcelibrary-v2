@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://sourcelibrary.org/api/oai';
 const REPO_NAME = 'Source Library';
-const ADMIN_EMAIL = 'derek@sourcelibrary.org';
+const ADMIN_EMAIL = 'team@sourcelibrary.org';
 const PAGE_SIZE = 100;
 
 // ─── XML helpers ───
