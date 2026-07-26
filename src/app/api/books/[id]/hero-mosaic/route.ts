@@ -21,7 +21,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 22; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = 23; // bump to force-regenerate cached mosaics
 const MAX_ROWS = 4; // the hero crop (desktop rows 2-4, mobile rows 1-3) never shows a 5th row
 const MAX_TILES = 10 * MAX_ROWS; // 10 cols × 4 rows = 40 — the most that can ever be seen
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching
@@ -39,8 +39,14 @@ const TARGET_ASPECT = 1.6; // mosaic width:height — a 10×4 of portrait pages;
  * rows are used, so the bottom is never ragged.
  */
 function chooseGrid(n: number, mh: number): { cols: number; rows: number; used: number } {
-  const ratio = (TARGET_ASPECT * mh) / TILE_W; // = cols/rows to hit the aspect
-  let cols = Math.round(Math.sqrt(n * ratio));
+  // Portrait-ish pages (taller than the fixed 168px column) always use a full
+  // 10 columns — that's what fills the wide desktop hero (object-cover fills
+  // width, so every column shows). Short/WIDE strips (palm-leaf, landscape
+  // scans) keep the aspect-based fewer-columns fallback so they don't become a
+  // 1-row ribbon.
+  let cols = mh >= TILE_W
+    ? Math.min(10, n)
+    : Math.round(Math.sqrt(n * ((TARGET_ASPECT * mh) / TILE_W)));
   cols = Math.max(3, Math.min(10, cols, n));
   let rows = Math.min(MAX_ROWS, Math.max(1, Math.floor(n / cols)));
   // Prefer ≥2 rows when we have the tiles — a single row cover-crops badly.
@@ -53,7 +59,7 @@ const MAX_TILE_H = 340; // clamp very tall strips so one tile can't dominate a c
 const GAP = 6; // thin gap between tiles (shows the dark bg through)
 const AVIF_QUALITY = 38; // AVIF quality — the bg sits under a heavy dark scrim, so it compresses hard with no visible loss
 const MAX_MOSAIC_W = 1920; // cap the output width — the hero never needs more
-const CANDIDATE_LIMIT = 54; // fetch a bit extra so dedup + outlier-height filtering still leaves ~40 (10×4)
+const CANDIDATE_LIMIT = 64; // fetch extra so dedup + outlier-height filtering reliably leaves ≥40 to fill 10×4
 const PAGE_DOC_LIMIT = 800; // page docs to scan before sampling candidates across the book
 
 /** Pick `n` items evenly spread across `arr` (keeps order). Sampling ACROSS the
