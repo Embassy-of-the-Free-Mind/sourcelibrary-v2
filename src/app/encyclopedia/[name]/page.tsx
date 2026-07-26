@@ -47,19 +47,8 @@ export default async function EntityDetailPage({
     notFound();
   }
 
-  // Deduplicate books by book_id and merge page arrays
-  const booksMap = new Map<string, typeof entity.books[0]>();
-  for (const book of entity.books) {
-    if (booksMap.has(book.book_id)) {
-      const existing = booksMap.get(book.book_id)!;
-      // Merge page arrays (deduplicate page numbers too)
-      const mergedPages = Array.from(new Set([...existing.pages, ...book.pages])).sort((a, b) => a - b);
-      booksMap.set(book.book_id, { ...existing, pages: mergedPages });
-    } else {
-      booksMap.set(book.book_id, book);
-    }
-  }
-  const deduplicatedBooks = Array.from(booksMap.values());
+  // Already deduped and normalized in getEntity (src/lib/entity-books.ts).
+  const deduplicatedBooks = entity.books;
 
   const Icon = TYPE_ICONS[entity.type];
   const connections = await getSharedBooks(decodedName);
@@ -92,10 +81,24 @@ export default async function EntityDetailPage({
                   {formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date)}
                 </p>
               )}
+              {/*
+                Counts come from the deduped book list, so this row can't
+                contradict the "Appears in N Books" heading below. "Total
+                mentions" used to sum the smeared page arrays, which is how this
+                page came to advertise five-figure mention counts (#3361) — it
+                now counts page references we actually verified, and is omitted
+                when there are none rather than reading as a hard zero.
+              */}
               <div className="flex items-center gap-4 mt-4 text-sm text-stone-400">
                 <span>{entity.book_count} book{entity.book_count !== 1 ? 's' : ''}</span>
-                <span>&middot;</span>
-                <span>{entity.total_mentions} total mention{entity.total_mentions !== 1 ? 's' : ''}</span>
+                {entity.total_mentions > 0 && (
+                  <>
+                    <span>&middot;</span>
+                    <span>
+                      {entity.total_mentions} verified page reference{entity.total_mentions !== 1 ? 's' : ''}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -214,22 +217,40 @@ export default async function EntityDetailPage({
                   {book.book_title}
                 </Link>
                 <p className="text-sm text-stone-500 mt-0.5">{book.book_author}</p>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {book.pages.slice(0, 10).map((page) => (
+                {/*
+                  Page pills are citations, so only verified pages get one. A
+                  'section' entry means we know which stretch of the book
+                  discusses this entity but not the page — it links to the start
+                  of the range and says so, rather than minting a pill per page
+                  in the range (which is what made these pages ~78% wrong, #3361).
+                */}
+                {book.page_precision === 'page' && book.pages.length > 0 ? (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {book.pages.slice(0, 10).map((page) => (
+                      <Link
+                        key={page}
+                        href={`/book/${book.book_id}/page-number/${page}`}
+                        className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
+                      >
+                        p. {page}
+                      </Link>
+                    ))}
+                    {book.pages.length > 10 && (
+                      <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
+                        +{book.pages.length - 10} more pages
+                      </span>
+                    )}
+                  </div>
+                ) : book.page_range ? (
+                  <div className="mt-2">
                     <Link
-                      key={page}
-                      href={`/book/${book.book_id}/page-number/${page}`}
-                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
+                      href={`/book/${book.book_id}/page-number/${book.page_range.start}`}
+                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-500 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
                     >
-                      p. {page}
+                      discussed in pp. {book.page_range.start}–{book.page_range.end}
                     </Link>
-                  ))}
-                  {book.pages.length > 10 && (
-                    <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
-                      +{book.pages.length - 10} more pages
-                    </span>
-                  )}
-                </div>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

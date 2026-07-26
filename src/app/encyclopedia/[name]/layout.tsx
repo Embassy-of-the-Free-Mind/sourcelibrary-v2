@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
+import {
+  dedupeEntityBooks,
+  entityCounters,
+  normalizeEntityBook,
+  type EntityBookRef,
+} from '@/lib/entity-books';
 
 // ISR: 24h background revalidation
 export const revalidate = 86400;
@@ -107,6 +113,10 @@ export const getEntity = cache(async (name: string) => {
     const birthDate = entity.wikidata_birth_date as string | undefined;
     const deathDate = entity.wikidata_death_date as string | undefined;
 
+    const books = dedupeEntityBooks(
+      ((entity.books || []) as EntityBookRef[]).map(normalizeEntityBook)
+    );
+
     // Fetch related entities (same books)
     const bookIds = entity.books?.map((b: { book_id: string }) => b.book_id) || [];
     const related = bookIds.length > 0
@@ -132,9 +142,13 @@ export const getEntity = cache(async (name: string) => {
       wikidata_birth_date: birthDate,
       wikidata_death_date: deathDate,
       wikidata_coordinates: entity.wikidata_coordinates as { lat: number; lng: number } | undefined,
-      books: (entity.books || []) as Array<{ book_id: string; book_title: string; book_author: string; pages: number[] }>,
-      total_mentions: (entity.total_mentions || 0) as number,
-      book_count: (entity.book_count || 0) as number,
+      // Dedupe + normalize on read. Legacy rows have duplicate entries per book
+      // and an unverified `pages` array (the old smeared batch range), so both
+      // the list and the counters are derived here rather than trusted from the
+      // stored fields — otherwise the hero count contradicts the body heading
+      // and the page renders fabricated `p. N` citations (#3361).
+      books,
+      ...entityCounters(books),
       related: related.map(r => ({
         _id: (r._id as ObjectId).toString(),
         name: r.name as string,
