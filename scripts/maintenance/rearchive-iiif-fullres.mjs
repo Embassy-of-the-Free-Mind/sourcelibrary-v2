@@ -83,6 +83,7 @@ import { dirname, resolve } from 'path';
 
 import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -412,6 +413,7 @@ async function refetchOne(book) {
     if (result.skipped) { skipped++; return; }
 
     const key = `archived/${book.id}/${page.page_number}.jpg`;
+    assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres');
     if (DRY_RUN) {
       updated++;
       return;
@@ -576,6 +578,7 @@ async function recoverOne(book) {
       return;
     }
     const key = `archived/${book.id}/${newPageNum}.jpg`;
+    assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres:split');
     if (DRY_RUN) {
       refetchedUrls.set(entry.sourceUrl, { key, dims: result.dims, newPageNum });
       refetched++;

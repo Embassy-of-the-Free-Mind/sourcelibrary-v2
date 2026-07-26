@@ -27,6 +27,7 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const bookIdx = process.argv.indexOf('--book');
@@ -117,6 +118,7 @@ async function main() {
         const buf = await fetchBuf(src);
         const thumb = await sharp(buf).resize(THUMB_WIDTH).jpeg({ quality: THUMB_QUALITY }).toBuffer();
         const key = `pages/${p.book_id}/gen-${p.id}-thumb.jpg`;
+        assertBookScopedKey(key, p.book_id, 'generate-missing-page-thumbs');
         const url = await uploadThumb(key, thumb);
         await pages.updateOne({ _id: p._id }, { $set: { image_thumb: url, thumbnail_blob: url, updated_at: new Date() } });
         generated++;

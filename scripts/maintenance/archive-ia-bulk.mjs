@@ -29,6 +29,7 @@ import * as os from 'os';
 import { pipeline } from 'stream/promises';
 import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -315,6 +316,9 @@ async function processBook(book, db) {
 
         // Upload to R2
         const key = `archived/${page.book_id}/${page.page_number}.jpg`;
+        // This exact line shipped the #3362 incident: `book_id` was missing from
+        // the pages projection, so the key became `archived/undefined/<N>.jpg`.
+        assertBookScopedKey(key, page.book_id, 'archive-ia-bulk');
         const url = await uploadToR2(key, jpegBuffer);
         stats.bytesUploaded += jpegBuffer.length;
 
