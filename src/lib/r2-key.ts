@@ -44,7 +44,18 @@ export function assertBookScopedKey(key: string, bookId: string, context = ''): 
 /** Read-side twin, for audits over existing stored URLs. */
 export function isBookScopedUrl(url: string | null | undefined, bookId: string): boolean {
   if (typeof url !== 'string' || !url.startsWith('http')) return true;
+  // A shared-key segment is always wrong, under any prefix.
   if (/\/(undefined|null|NaN)\//.test(url)) return false;
-  if (!/\/(archived|pages)\//.test(url)) return true;
-  return url.split(/[/?]/).includes(bookId);
+  // Only judge our own page-image prefixes; other assets are not book-scoped.
+  if (!/\/(archived|pages|thumbnails)\//.test(url)) return true;
+  if (!bookId) return false;
+  // Both `archived/<bookId>/<N>.jpg` and `archived/<bookId>-<NNNN>.jpg` are real,
+  // book-scoped conventions here. Require the id to sit between delimiters rather
+  // than splitting on them — book ids are sometimes UUIDs, which contain hyphens.
+  return new RegExp(`/${escapeRegExp(bookId)}(?=[/._-]|$)`).test(url);
+}
+
+/** Escape a string for literal use inside a RegExp. */
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

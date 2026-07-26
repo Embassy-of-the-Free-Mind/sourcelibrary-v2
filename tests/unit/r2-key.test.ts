@@ -63,6 +63,37 @@ describe('isBookScopedUrl (read-side audit helper)', () => {
     expect(isBookScopedUrl(`${base}/pages/${BOOK}/0031.jpg`, BOOK)).toBe(true);
   });
 
+  // The corpus has several key conventions across eras. A hyphen-delimited id is
+  // just as book-scoped as a slash-delimited one — measured at ~194 per 120k pages
+  // sampled, so treating it as a violation would drown the real signal in noise.
+  it('accepts the legacy hyphen-delimited convention', () => {
+    expect(isBookScopedUrl(`${base}/archived/${BOOK}-0104.jpg`, BOOK)).toBe(true);
+    expect(isBookScopedUrl(`${base}/pages/${BOOK}_0104.jpg`, BOOK)).toBe(true);
+  });
+
+  it('still flags a hyphen-delimited key belonging to another book', () => {
+    expect(isBookScopedUrl(`${base}/archived/69b220f356715b0e32473bd0-0104.jpg`, BOOK)).toBe(false);
+  });
+
+  it('flags the shared key under any prefix', () => {
+    expect(isBookScopedUrl(`${base}/thumbnails/undefined/144.jpg`, BOOK)).toBe(false);
+  });
+
+  // Book ids are sometimes UUIDs, which contain hyphens. An earlier version of this
+  // helper split the URL on "-" to find the id, which made every UUID-keyed page
+  // (split-page books) report as a violation.
+  it('handles UUID book ids, which contain hyphens', () => {
+    const uuid = '023f2b73-5a9f-4ada-92c2-258a408d89c2';
+    expect(isBookScopedUrl(`${base}/pages/${uuid}/sp9wzb-0208.jpg`, uuid)).toBe(true);
+    expect(isBookScopedUrl(`${base}/pages/${uuid}/sp9wzb-0208-thumb.jpg`, uuid)).toBe(true);
+    expect(isBookScopedUrl(`${base}/archived/${uuid}-0104.jpg`, uuid)).toBe(true);
+    expect(isBookScopedUrl(`${base}/pages/d850a255-4633-43d5-8383-7c67a7e55144/x.jpg`, uuid)).toBe(false);
+  });
+
+  it('does not match an id that is only a prefix of a longer id', () => {
+    expect(isBookScopedUrl(`${base}/archived/${BOOK}deadbeef/31.jpg`, BOOK)).toBe(false);
+  });
+
   it('flags the shared undefined key', () => {
     expect(isBookScopedUrl(`${base}/archived/undefined/31.jpg`, BOOK)).toBe(false);
     expect(isBookScopedUrl(`${base}/pages/undefined/0031.jpg`, BOOK)).toBe(false);

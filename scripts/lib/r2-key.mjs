@@ -85,8 +85,19 @@ export function assertBookScopedKey(key, bookId, context = '') {
  */
 export function isBookScopedUrl(url, bookId) {
   if (typeof url !== 'string' || !url.startsWith('http')) return true; // not our concern
+  // A shared-key segment is always wrong, under any prefix.
   if (/\/(undefined|null|NaN)\//.test(url)) return false;
-  // Only judge keys under the page-image prefixes; other assets are not book-scoped.
-  if (!/\/(archived|pages)\//.test(url)) return true;
-  return url.split(/[/?]/).includes(bookId);
+  // Only judge our own page-image prefixes; other assets are not book-scoped.
+  if (!/\/(archived|pages|thumbnails)\//.test(url)) return true;
+  if (!bookId) return false;
+  // The corpus carries several key conventions across eras (see src/lib/storage.ts):
+  // `archived/<bookId>/<N>.jpg` and `archived/<bookId>-<NNNN>.jpg` are both real and
+  // both book-scoped. Require the id to sit between delimiters rather than splitting
+  // on them — book ids are sometimes UUIDs, which contain hyphens themselves.
+  return new RegExp(`/${escapeRegExp(bookId)}(?=[/._-]|$)`).test(url);
+}
+
+/** Escape a string for literal use inside a RegExp. */
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
