@@ -120,16 +120,50 @@ const logProgress = (row) => {
   fs.appendFileSync(PROGRESS_FILE, JSON.stringify(row) + '\n');
 };
 
-const bookFilter = ONLY_BOOK
-  ? { id: ONLY_BOOK }
-  : { index: { $exists: true }, ...(RESUME_FROM ? { id: { $gt: RESUME_FROM } } : {}) };
+/**
+ * Book iteration is KEYSET PAGINATION, not a cursor.
+ *
+ * A single `find().sort({id:1})` cursor over 19.6K books dies mid-sweep with
+ * `CursorNotFound` (code 43): each fetched batch takes far longer than Mongo's
+ * 10-minute cursor idle timeout to process (~3s per book × a batch of hundreds),
+ * so the server reaps it while we're still working through the batch. Killing the
+ * run after ~1,900 books. `noCursorTimeout` would paper over it by leaking a
+ * server-side cursor for hours; fetching one page of ids at a time removes the
+ * long-lived cursor entirely and reuses the same `id > last` ordering that
+ * `--resume-from` already relies on.
+ */
+const BOOK_PAGE_SIZE = Number(getArg('--page-size') || 200);
 
-const bookCursor = db.collection('books')
-  .find(bookFilter, { projection: { id: 1, title: 1, display_title: 1 } })
-  .sort({ id: 1 });
+async function* iterateBooks() {
+  if (ONLY_BOOK) {
+    const one = await db.collection('books').findOne(
+      { id: ONLY_BOOK },
+      { projection: { id: 1, title: 1, display_title: 1 } }
+    );
+    if (one) yield one;
+    return;
+  }
+
+  let after = RESUME_FROM || null;
+  for (;;) {
+    const page = await withRetry(`page of books after ${after ?? 'start'}`, () =>
+      db.collection('books')
+        .find(
+          { index: { $exists: true }, ...(after ? { id: { $gt: after } } : {}) },
+          { projection: { id: 1, title: 1, display_title: 1 } }
+        )
+        .sort({ id: 1 })
+        .limit(BOOK_PAGE_SIZE)
+        .toArray()
+    );
+    if (page.length === 0) return;
+    for (const b of page) yield b;
+    after = page[page.length - 1].id;
+  }
+}
 
 let processed = 0;
-for await (const book of bookCursor) {
+for await (const book of iterateBooks()) {
   if (LIMIT && processed >= LIMIT) break;
   processed++;
   stats.booksScanned++;
