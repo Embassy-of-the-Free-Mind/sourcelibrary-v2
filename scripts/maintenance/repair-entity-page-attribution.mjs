@@ -72,7 +72,33 @@ const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db('bookstore');
 
+/**
+ * Retry a Mongo op through transient network faults. A multi-hour sweep against
+ * Atlas will hit `read ECONNRESET` sooner or later — the first full run died on
+ * one after 250 books, losing nothing but needing a manual resume. Only retries
+ * transient transport errors; a genuine write error still throws.
+ */
+async function withRetry(label, fn, attempts = 5) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      const msg = String(err?.message || err);
+      const transient = /ECONNRESET|ETIMEDOUT|EPIPE|socket hang up|connection .* closed|MongoNetworkError|not primary|PoolClearedError/i.test(msg);
+      if (!transient || i === attempts - 1) throw err;
+      const backoffMs = 1000 * 2 ** i;
+      console.warn(`  transient error on ${label} (attempt ${i + 1}/${attempts}): ${msg.slice(0, 120)} — retrying in ${backoffMs}ms`);
+      stats.transientRetries++;
+      await new Promise(r => setTimeout(r, backoffMs));
+    }
+  }
+  throw lastErr;
+}
+
 const stats = {
+  transientRetries: 0,
   booksScanned: 0,
   booksWithNoPages: 0,
   entityEntriesExamined: 0,
@@ -115,7 +141,7 @@ for await (const book of bookCursor) {
   // hundreds of book entries, so `projection: { books: 1 }` ships megabytes per
   // book and pins the sweep at 0.3% CPU waiting on the wire — measured at under
   // one book per minute before this change.
-  const entities = await db.collection('entities').aggregate([
+  const entities = await withRetry(`read entities for ${book.id}`, () => db.collection('entities').aggregate([
     { $match: { 'books.book_id': book.id } },
     {
       $project: {
@@ -129,12 +155,12 @@ for await (const book of bookCursor) {
         },
       },
     },
-  ]).toArray();
+  ]).toArray());
   if (entities.length === 0) continue;
 
-  const pages = await db.collection('pages')
+  const pages = await withRetry(`read pages for ${book.id}`, () => db.collection('pages')
     .find({ book_id: book.id }, { projection: { page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
-    .toArray();
+    .toArray());
 
   if (pages.length === 0) {
     stats.booksWithNoPages++;
@@ -237,8 +263,11 @@ for await (const book of bookCursor) {
 
   if (ops.length > 0) {
     // One self-contained op per entity, so order doesn't matter and the server
-    // is free to parallelize.
-    await db.collection('entities').bulkWrite(ops, { ordered: false });
+    // is free to parallelize. Each op is idempotent, so a retry after a partial
+    // failure re-applies safely.
+    await withRetry(`bulkWrite for ${book.id}`, () =>
+      db.collection('entities').bulkWrite(ops, { ordered: false })
+    );
   }
 
   logProgress({ book_id: book.id, entities: entities.length, ops: ops.length, at: new Date().toISOString() });
@@ -326,6 +355,7 @@ if (stats.pagesClaimedBefore > 0) {
   console.log(`unverifiable citations dropped: ${removed} (${(100 * removed / stats.pagesClaimedBefore).toFixed(1)}%)`);
 }
 console.log(`distinct entities touched:   ${stats.entitiesTouched.size}`);
+console.log(`transient errors retried:    ${stats.transientRetries}`);
 if (!DRY_RUN) console.log(`progress log: ${PROGRESS_FILE}`);
 
 await client.close();

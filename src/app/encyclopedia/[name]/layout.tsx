@@ -87,6 +87,104 @@ export const getSharedBooks = cache(async (name: string): Promise<SharedConnecti
   }
 });
 
+export interface AuthoredWork {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  year?: number;
+  published?: string;
+  language?: string;
+  pages_count?: number;
+  thumbnail?: string | null;
+  thumbnail_blob?: string | null;
+  image_display?: string | null;
+  image_thumb?: string | null;
+}
+
+/**
+ * Books this person WROTE that the library holds — distinct from the books that
+ * merely mention them, which is what the rest of this page is about.
+ *
+ * The page previously showed "Appears in 117 Books" for Matthiolus and none of
+ * the 4 editions of his own Dioscorides commentary that we hold, with no link to
+ * his author page. A reader arriving on a famous author's entry expects his
+ * works first (#3361).
+ *
+ * Resolution is by FOREIGN KEY only — `books.author_id` → `authors._id` (the
+ * canonical thesaurus, see CLAUDE.md) and the transitional
+ * `books.author_entity_id`. Deliberately NOT by name or alias: books store
+ * "Pietro Andrea Mattioli" while the entity is named "Matthiolus", so a name
+ * match returns nothing here, and matching the alias list would attach wrong
+ * books to an author — the same false-claim shape as a fabricated page cite,
+ * since `entity_aliases` carries generic epithets.
+ */
+export const getAuthoredWorks = cache(async (
+  entityId: string,
+  wikidataId?: string,
+  entityName?: string
+): Promise<{ works: AuthoredWork[]; total: number; authorSlug: string | null }> => {
+  try {
+    const db = await getReadDb();
+
+    const orClauses: Record<string, unknown>[] = [{ author_entity_id: entityId }];
+
+    // Canonical authors layer: match on a shared authority id, never on a name.
+    // `authors._id` is the canonical author SLUG (a string), not an ObjectId.
+    const authorDoc = await db.collection<{ _id: string; wikidata_id?: string }>('authors').findOne(
+      {
+        $or: [
+          ...(wikidataId ? [{ wikidata_id: wikidataId }] : []),
+          ...(entityName ? [{ _id: entityName.toLowerCase().replace(/\s+/g, '-') }] : []),
+        ],
+      },
+      { projection: { _id: 1 } }
+    );
+    // `authors._id` IS the canonical author slug, so it's the safe link target —
+    // deriving one from the entity name can point at a 404 (books here are filed
+    // under "Pietro Andrea Mattioli", the entity is "Matthiolus").
+    const authorSlug: string | null = typeof authorDoc?._id === 'string' ? authorDoc._id : null;
+    if (authorDoc?._id) orClauses.push({ author_id: authorDoc._id });
+
+    // Canonical "live" filter — same as every public surface.
+    const query = { $or: orClauses, visible: true, pages_count: { $gt: 0 } };
+
+    // Count separately from the capped fetch: the heading must state the real
+    // holding, not the size of the page's grid. Aristotle has more than the 24
+    // we render, and "24 works in the library" would be a made-up total.
+    const total = await db.collection('books').countDocuments(query);
+
+    const works = await db.collection('books')
+      .find(
+        query,
+        {
+          projection: {
+            id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+            published: 1, language: 1, pages_count: 1,
+            thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+          },
+        }
+      )
+      .sort({ year: 1 })
+      .limit(24)
+      .toArray();
+
+    // One book can match on both keys; dedupe on the public id.
+    const seen = new Set<string>();
+    const unique: AuthoredWork[] = [];
+    for (const w of works) {
+      const id = w.id as string;
+      if (!id || seen.has(id)) continue;
+      seen.add(id);
+      unique.push(w as unknown as AuthoredWork);
+    }
+    return { works: unique, total, authorSlug };
+  } catch {
+    return { works: [], total: 0, authorSlug: null };
+  }
+});
+
 // Shared cached fetch — used by both layout (metadata/schema) and page (rendering)
 export const getEntity = cache(async (name: string) => {
   try {

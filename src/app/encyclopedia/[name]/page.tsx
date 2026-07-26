@@ -1,10 +1,13 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { User, MapPin, Lightbulb, ExternalLink } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { getEntity, getSharedBooks } from './layout';
+import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEntity, getSharedBooks, getAuthoredWorks } from './layout';
 
 const TYPE_ICONS = {
   person: User,
@@ -52,6 +55,16 @@ export default async function EntityDetailPage({
 
   const Icon = TYPE_ICONS[entity.type];
   const connections = await getSharedBooks(decodedName);
+
+  // Books this person WROTE (vs the books that mention them, below). Only people
+  // can have authored works, so don't spend a query on places and concepts.
+  const {
+    works: authoredWorks,
+    total: authoredTotal,
+    authorSlug: canonicalAuthorSlug,
+  } = entity.type === 'person'
+    ? await getAuthoredWorks(entity._id, entity.wikidata_id, entity.name)
+    : { works: [], total: 0, authorSlug: null };
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -106,6 +119,68 @@ export default async function EntityDetailPage({
       </div>
 
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
+        {/*
+          Works BY this person come first. Everything below is about books that
+          mention them — for an author we actually hold, that was a confusing
+          lead (#3361).
+        */}
+        {authoredWorks.length > 0 && (
+          <div className="bg-white rounded-lg border border-stone-200 p-6">
+            <div className="flex items-baseline justify-between gap-4 mb-4">
+              <div>
+                <h2 className="text-lg font-semibold text-stone-900">
+                  {authoredTotal === 1
+                    ? `1 work by ${entity.name} in the library`
+                    : `${authoredTotal} works by ${entity.name} in the library`}
+                </h2>
+                {authoredTotal > authoredWorks.length && (
+                  <p className="text-sm text-stone-500 mt-0.5">
+                    Showing {authoredWorks.length} — see the author page for all {authoredTotal}.
+                  </p>
+                )}
+              </div>
+              {canonicalAuthorSlug && (
+                <Link
+                  href={`/author/${canonicalAuthorSlug}`}
+                  className="shrink-0 text-sm text-accent-rust hover:text-accent-gold-dark"
+                >
+                  Author page →
+                </Link>
+              )}
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {authoredWorks.map((work) => {
+                const thumb = getBookThumbnailUrl(work);
+                return (
+                  <Link key={work.id} href={bookUrl(work)} className="group block">
+                    <div className="relative w-full aspect-[3/4] rounded overflow-hidden bg-stone-100 border border-stone-200">
+                      {thumb ? (
+                        <Image
+                          src={thumb}
+                          alt={work.display_title || work.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, 22vw"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center p-2 text-center text-[10px] text-stone-400">
+                          {work.display_title || work.title}
+                        </div>
+                      )}
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-stone-900 line-clamp-2 group-hover:text-accent-rust transition-colors">
+                      {work.display_title || work.title}
+                    </p>
+                    <p className="text-xs text-stone-500 mt-0.5">
+                      {[work.year || work.published, work.language].filter(Boolean).join(' · ')}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Description */}
         {(entity.description || (entity.type === 'place' && entity.wikidata_coordinates)) && (
           <div className="bg-white rounded-lg border border-stone-200 p-6">
