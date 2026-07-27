@@ -7,6 +7,7 @@ import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
 import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 
 interface NavLink {
   label: string;
@@ -34,6 +35,25 @@ function buildNavLinks(t: NavStrings): NavLink[] {
     { label: t.librarian, href: '/librarian' },
     { label: t.podcast, href: '/podcast' },
   ];
+}
+
+/**
+ * True when rendering on a partner subdomain (bph.sourcelibrary.org, …) or
+ * inside an /embed/* view. Deliberately host-shaped rather than an allow-list of
+ * tenant slugs, so a new tenant subdomain is covered the day its DNS record
+ * exists. `false` during SSR and on the first client render, so the global
+ * site's static HTML is untouched.
+ */
+function useIsTenantHost(): boolean {
+  const [isTenant, setIsTenant] = useState(false);
+  useEffect(() => {
+    const h = window.location.hostname;
+    const parts = h.split('.');
+    const isSubdomain =
+      h.endsWith('.sourcelibrary.org') && parts.length > 2 && parts[0] !== 'www';
+    setIsTenant(isSubdomain || window.location.pathname.startsWith('/embed/'));
+  }, []);
+  return isTenant;
 }
 
 interface Breadcrumb {
@@ -73,7 +93,21 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
-  const NAV_LINKS = buildNavLinks(t);
+  // Corpus-wide surfaces 404 on partner subdomains (see GLOBAL_ONLY_TENANT_BLOCKED
+  // in src/proxy.ts, issue #3364), so the nav must not point at them there — "Map"
+  // would otherwise be a dead link in the tenant's own header.
+  //
+  // Detected from the hostname rather than passed down: this is a client
+  // component rendered by ~every page, so a prop would mean threading tenant
+  // context through all of them, and reading headers() server-side to provide it
+  // would force the ISR routes dynamic. Resolved after mount, so the static HTML
+  // (which the global site shares) is unchanged and only a tenant visitor sees
+  // the item drop — acceptable for a nav link, and it never removes anything on
+  // sourcelibrary.org itself.
+  const isTenantHost = useIsTenantHost();
+  const NAV_LINKS = buildNavLinks(t).filter(
+    link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
+  );
   // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
   // support) — the thin-i18n bargain (#2763). On deep English-only pages the
   // toggle is hidden, so clicking ES never bounces the reader to the `/es`
