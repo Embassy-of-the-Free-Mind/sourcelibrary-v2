@@ -9,6 +9,7 @@
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const CONCURRENCY = 10;
 const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
@@ -75,6 +76,7 @@ async function main() {
 
   const photoResults = await parallelMap(blobPhotos, async (page) => {
     const key = `archived/${page.book_id}/${String(page.page_number).padStart(4, '0')}.jpg`;
+    assertBookScopedKey(key, page.book_id, 'migrate-blob-stragglers');
     const { buffer, contentType } = await download(page.photo);
     const newUrl = await uploadR2(key, buffer, contentType);
     await pages.updateOne({ _id: page._id }, { $set: {
