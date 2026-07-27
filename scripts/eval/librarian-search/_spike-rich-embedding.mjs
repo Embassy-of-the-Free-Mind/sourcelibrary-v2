@@ -4,6 +4,13 @@
  *
  * Target: Della Porta's "De Humana Physiognomonia" (slug: de-humana-physiognomonia-libri-iv-porta).
  *
+ * NOTE: any results recorded from a run of this spike BEFORE 2026-07-27 compared
+ * two composers that both read `.name` on people/places/concepts (the extractor
+ * writes `.term`) and keyed topics on the near-absent `entries` field. Both arms
+ * were therefore missing every entity and term signal — the measured lift was
+ * between two degraded texts. Both composers are fixed below; re-run before
+ * citing any prior numbers.
+ *
  * Compares three embedding text compositions:
  *   1. CURRENT  — what enrich-worker writes today
  *   2. RICH     — + reading_summary + section summaries + section quotes + themes
@@ -26,6 +33,7 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenAI } from '@google/genai';
+import { composeBookEmbeddingText } from '../../lib/book-embedding-text.mjs';
 
 const TARGET_SLUG = 'de-humana-physiognomonia-libri-iv-porta';
 
@@ -88,27 +96,20 @@ function cosine(a, b) {
 
 // ── Text compositions ────────────────────────────────────────────────
 
-function composeCurrent(book, indexData) {
-  // Mirrors enrich-worker.mjs:composeBookEmbeddingText
-  const parts = [];
-  parts.push(`${book.display_title || book.title || 'Untitled'} by ${book.author || 'Unknown'}`);
-  if (book.language) parts.push(`Language: ${book.language}`);
-  if (book.published) parts.push(`Published: ${book.published}`);
-  if (indexData?.bookSummary?.detailed) parts.push(indexData.bookSummary.detailed);
-  else if (indexData?.bookSummary?.brief) parts.push(indexData.bookSummary.brief);
-  if (indexData?.sectionSummaries?.length > 0) {
-    const sections = indexData.sectionSummaries.map(s => s.title || s.summary).filter(Boolean).slice(0, 15);
-    if (sections.length > 0) parts.push(`Chapters: ${sections.join('; ')}`);
+// The CURRENT arm IS production — import it rather than re-typing it, so the
+// baseline can never drift from what the worker actually writes.
+const composeCurrent = composeBookEmbeddingText;
+
+/**
+ * Topic + entity lines for the RICH arm. Deliberately reuses production's
+ * composer for this block so the A/B measures the fields RICH adds
+ * (reading_summary, section text, quotes) and not a composer difference.
+ */
+function pushTermLines(parts, indexData) {
+  const shared = composeBookEmbeddingText({ title: '', author: '' }, indexData).split('\n');
+  for (const line of shared) {
+    if (/^(Topics|People|Places|Concepts): /.test(line)) parts.push(line);
   }
-  if (indexData?.entries?.length > 0) {
-    const terms = indexData.entries.sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0)).slice(0, 50).map(e => e.term);
-    parts.push(`Topics: ${terms.join(', ')}`);
-  }
-  if (indexData?.people?.length > 0) parts.push(`People: ${indexData.people.slice(0, 30).map(p => p.name).join(', ')}`);
-  if (indexData?.places?.length > 0) parts.push(`Places: ${indexData.places.slice(0, 20).map(p => p.name).join(', ')}`);
-  if (indexData?.concepts?.length > 0) parts.push(`Concepts: ${indexData.concepts.slice(0, 30).map(c => c.name).join(', ')}`);
-  if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
-  return parts.join('\n').slice(0, 8000);
 }
 
 function composeRich(book, indexData) {
@@ -145,13 +146,7 @@ function composeRich(book, indexData) {
     }
   }
 
-  if (indexData?.entries?.length > 0) {
-    const terms = indexData.entries.sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0)).slice(0, 50).map(e => e.term);
-    parts.push(`Topics: ${terms.join(', ')}`);
-  }
-  if (indexData?.people?.length > 0) parts.push(`People: ${indexData.people.slice(0, 30).map(p => p.name).join(', ')}`);
-  if (indexData?.places?.length > 0) parts.push(`Places: ${indexData.places.slice(0, 20).map(p => p.name).join(', ')}`);
-  if (indexData?.concepts?.length > 0) parts.push(`Concepts: ${indexData.concepts.slice(0, 30).map(c => c.name).join(', ')}`);
+  pushTermLines(parts, indexData);
   if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
   return parts.join('\n').slice(0, 8000);
 }
