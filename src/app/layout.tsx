@@ -11,7 +11,6 @@ import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
-import TenantAccountMenu from "@/components/embed/TenantAccountMenu";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 
 
@@ -163,12 +162,6 @@ export default async function RootLayout({
           <EmbedLinkInterceptor />
           <EmbedHostNavigationListener />
           <EmbedHistoryPatch />
-          {/* Tenant subdomains serve the global routes with the SiteHeader
-              stripped, which left signed-in readers with no way to reach their
-              account or sign out (#2150). Must sit inside <Providers> for the
-              session, and stays client-gated so the root layout never reads
-              headers() and the book page keeps its ISR cache. */}
-          <TenantAccountMenu />
           <div id="main-content" className="flex-1">
             {children}
           </div>
