@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
+import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -222,6 +223,12 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
   'bhutan.sourcelibrary.org': 'bhutan',
   // 'ritman.sourcelibrary.org': 'ritman',
 };
+
+// Global-only surfaces (the list, and why, live in src/lib/tenant-global-paths.ts).
+// Enforced here rather than in the pages because those routes are ISR
+// (`revalidate = 86400`); reading headers() in them to detect the host would
+// force dynamic rendering and drop the cache — same reasoning as the book-page
+// redirects further down.
 
 // --- Tenant resolution helpers (module-level) ---
 // Pulled out of proxy() so they can be reused by resolveTenantFromRequest and
@@ -676,6 +683,23 @@ export async function proxy(request: NextRequest) {
   // tenant context travels via the x-tenant-* headers stamped by the
   // resolution block lower in this file.
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
+
+  // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
+  // Checked before the rewrite block, which skips /api/* — the listed API twins
+  // are the unscoped data sources behind these pages and must be refused too.
+  if (tenant && isGlobalOnlyTenantPath(pathname)) {
+    return new NextResponse(
+      'Not found on this collection. This page indexes the whole Source Library; a partner reading room only serves its own holdings.',
+      {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+        },
+      }
+    );
+  }
+
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
     let needsRewrite = false;
