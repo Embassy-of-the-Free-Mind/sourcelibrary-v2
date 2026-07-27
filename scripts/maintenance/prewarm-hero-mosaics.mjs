@@ -24,6 +24,10 @@
  *   --concurrency=<n>   parallel requests (default 8)
  *   --limit=<n>         cap the number of books (for a test run)
  *   --version=<n>       expected MOSAIC_VERSION; already-warmed books at this version are skipped (default 23)
+ *   --timeout=<ms>      per-request client timeout (default 150000). Keep this ABOVE the
+ *                       route's real generation time — a client abort doesn't stop the
+ *                       server-side gen, it just frees the worker to fire another request,
+ *                       piling abandoned-but-running gens onto the function until it stalls.
  *   --dry-run           list what would be warmed, hit nothing
  */
 import { MongoClient } from 'mongodb';
@@ -40,6 +44,7 @@ const MIN_PAGES = parseInt(arg('min-pages', '4'), 10);
 const CONCURRENCY = parseInt(arg('concurrency', '8'), 10);
 const LIMIT = parseInt(arg('limit', '0'), 10);
 const VERSION = parseInt(arg('version', '23'), 10);
+const TIMEOUT = parseInt(arg('timeout', '150000'), 10);
 const DRY = flag('dry-run');
 
 const uri = process.env.MONGODB_URI;
@@ -77,7 +82,7 @@ async function warm(book) {
   try {
     // redirect: 'manual' — the route generates + stores server-side and returns
     // a 302 to the R2 URL; we don't follow it (no need to download the AVIF).
-    const res = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(60000) });
+    const res = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(TIMEOUT) });
     if (res.status === 302 || res.status === 200 || res.status === 204) ok++;
     else { fail++; if (fail <= 20) console.warn(`  ${res.status} ${book.id}`); }
   } catch (e) {
