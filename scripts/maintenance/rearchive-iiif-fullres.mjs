@@ -82,6 +82,7 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
 import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
+import { checkAlignment as checkAlignmentShared, hashBuffer } from '../lib/page-alignment.mjs';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -177,28 +178,13 @@ async function jpegDims(buf) {
 //
 // The load-bearing false assumption was: "photo_original is the same image as
 // archived_photo, just higher-res." This guard verifies that per-book with a
-// perceptual hash (dHash) BEFORE any overwrite. Verdicts:
-//   aligned   — fetched(photo_original[N]) ≈ archived[N]  → safe to upgrade
-//   shift+1   — fetched(photo_original[N]) ≈ archived[N+1] → PDF-cover defect; skip+flag
-//   ambiguous — neither holds consistently → skip+flag for manual review
-// Measured Hamming separation on real data: same-image ≤12, different ≥16.
+// perceptual hash (dHash) BEFORE any overwrite.
+//
+// The verdict logic lives in scripts/lib/page-alignment.mjs so the read-only
+// audit of the bulk-JP2 defect (#3368) uses the identical test.
 
-const HASH_MATCH = 12;   // ≤ this Hamming distance = same image
-const HASH_DIFF = 16;    // ≥ this = clearly different image
-
-async function dhash(buf) {
-  const px = await sharp(buf).greyscale().resize(9, 8, { fit: 'fill' }).raw().toBuffer();
-  let h = 0n, bit = 0n;
-  for (let r = 0; r < 8; r++) for (let col = 0; col < 8; col++) {
-    if (px[r * 9 + col] > px[r * 9 + col + 1]) h |= (1n << bit);
-    bit++;
-  }
-  return h;
-}
-function hamming(a, b) { let x = a ^ b, n = 0; while (x) { n += Number(x & 1n); x >>= 1n; } return n; }
 async function hashUrl(url) {
-  const r = await rateLimitedFetch(url, { timeout: 30_000 });
-  return dhash(r);
+  return hashBuffer(await rateLimitedFetch(url, { timeout: 30_000 }));
 }
 
 /**
@@ -206,36 +192,12 @@ async function hashUrl(url) {
  * image for a sample of interior pages. Returns { verdict, offset, detail }.
  * verdict ∈ 'aligned' | 'shift+1' | 'ambiguous' | 'unknown'.
  */
-async function checkAlignment(pages) {
-  // Sample interior pages that carry both an IIIF photo_original and an archived
-  // image; skip page 1 (cover/title special-casing lives there).
-  const usable = pages.filter(p => isIiifUrl(p.photo_original || p.photo) && isUsableArchive(p.archived_photo) && p.page_number >= 2);
-  if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages' };
-  const byNum = new Map(pages.map(p => [p.page_number, p]));
-  const samples = [usable[Math.floor(usable.length * 0.25)], usable[Math.floor(usable.length * 0.5)], usable[Math.floor(usable.length * 0.75)]]
-    .filter((p, i, a) => p && a.indexOf(p) === i);
-
-  let alignedVotes = 0, shiftVotes = 0, checked = 0;
-  for (const p of samples) {
-    try {
-      const oh = await hashUrl(upgradeToFullRes(p.photo_original || p.photo));
-      const same = byNum.get(p.page_number)?.archived_photo;
-      const next = byNum.get(p.page_number + 1)?.archived_photo;
-      const dSame = isUsableArchive(same) ? hamming(oh, await hashUrl(same)) : 99;
-      const dNext = isUsableArchive(next) ? hamming(oh, await hashUrl(next)) : 99;
-      checked++;
-      if (dSame <= HASH_MATCH && dSame < dNext) alignedVotes++;
-      else if (dNext <= HASH_MATCH && dNext < dSame) shiftVotes++;
-    } catch { /* count as no-vote */ }
-  }
-  if (checked === 0) return { verdict: 'unknown', detail: 'all-hash-fetches-failed' };
-  if (alignedVotes === checked) return { verdict: 'aligned', detail: `${alignedVotes}/${checked}` };
-  if (shiftVotes === checked) return { verdict: 'shift+1', offset: 1, detail: `${shiftVotes}/${checked}` };
-  return { verdict: 'ambiguous', detail: `aligned=${alignedVotes} shift=${shiftVotes} of ${checked}` };
-}
-
-function isUsableArchive(url) {
-  return typeof url === 'string' && /^https?:\/\//.test(url) && !/archive[_-]?fail|unavailable/i.test(url);
+function checkAlignment(pages) {
+  return checkAlignmentShared(pages, {
+    hashUrl,
+    sourceUrlFor: p => upgradeToFullRes(p.photo_original || p.photo),
+    isUsableSource: p => isIiifUrl(p.photo_original || p.photo),
+  });
 }
 
 /**
