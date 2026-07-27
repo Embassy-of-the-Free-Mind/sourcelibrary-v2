@@ -76,6 +76,40 @@ This was found because Derek searched the book for "dolphin" and saw repeated li
 3. **It works on most inputs.** Items without a leading excluded leaf map 1:1 — 1,309 aligned vs 524 shifted. Any spot check had a good chance of landing on a clean book.
 4. **A browser looks fine.** Both panes render plausible content. Only reading them *against each other* reveals it.
 
+## Deeper causes
+
+Beyond the wrong assumption, three systemic conditions let it run for four months.
+
+### 1. The signal arrived and had nowhere to aggregate
+
+Feedback search over all 327 rows finds **six** alignment/duplication-shaped reports, three of them this defect:
+
+| date | status | message |
+|---|---|---|
+| Jul 16 | read | "The page ocr and text of image do not appear to be aligned" |
+| Jul 16 | read | "This image doesn't correspond with this text." |
+| Jul 26 | unread | "This page has errors — not the same as image" |
+
+Two reports, **two different books, the same shape, the same day** — and ten days passed before anything happened. This is *not* a backlog failure: only 14 of 327 rows are unread and none predates 2026-07-01. Triage is healthy. The failure is that feedback is handled item-by-item, so each report read as a one-off defect in one book. **Nothing clusters feedback by symptom**, so "same complaint, different books" never surfaced as a pattern — which is exactly the shape that distinguishes a systemic bug from a bad scan.
+
+(An earlier report — 2026-03-11, "The text is repeated on this page from the former", on *Astronomiae Instauratae Mechanica* — predates `archive-bulk.mjs` by ten days, so it is probably a different cause. Noted, not claimed.)
+
+### 2. The layer that writes the corpus is the layer without tests
+
+60 unit test files in `tests/unit`. **Exactly one** references `scripts/workers` (`selective-unpause.test.ts`). Before this PR there was no test anywhere for image archiving.
+
+The risk allocation is inverted. A rendering bug is visible, reversible, and caught by looking. A corpus-write bug is invisible, and can be **unrecoverable** — printed page 200 of Pseudodoxia was never transcribed, and no amount of re-pairing brings that text back. The code with the least reversible failure mode has the least coverage.
+
+### 3. A near-miss with the defect on screen
+
+On 2026-04-04, `da1c221c` edited **this same function** to fix a different bug (`book_id` missing from a projection → every page written to `archived/undefined/N.jpg`, #3362). Whoever wrote that fix was reading the leaf-mapping lines directly and corrected only the symptom in front of them.
+
+That is the fix-the-instance-not-the-class pattern, and it had a second cost: #3362 also identified the OCR-before-archival **ordering hazard** and it was never enforced. That un-enforced ordering is precisely what turned a recoverable image shift into duplicated text and permanent gaps here.
+
+### 4. The archiver never inspected its own output
+
+`archive-bulk.mjs` counted skips (`skippedNoLeaf`, `skippedOutOfRange`, `skippedMissingFile`) and reported them — real diligence about *inputs it rejected*, none about *what it wrote*. Skip-counting feels like validation and isn't. A worker that writes derived artifacts needs at least one assertion about the artifact.
+
 ## What would NOT have caught it (a corrected claim)
 
 During the investigation I asserted that the `<page-num>` tag OCR writes would have caught this instantly. **That is wrong**, and the data says so:
