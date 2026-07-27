@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { existsSync } from 'fs';
 import path from 'path';
 
-// Unknown /book/<slug> and /collections/<slug> must return a REAL 404 status,
-// not a soft-404 (HTTP 200 + "Not Found" body). Crawlers index soft-404s as
-// junk/duplicate URLs and status-code link checks can't detect breakage (#3232).
+// Unknown detail-page slugs must return a REAL 404 status, not a soft-404
+// (HTTP 200 + "Not Found" body). Crawlers index soft-404s as junk/duplicate
+// URLs and status-code link checks can't detect breakage (#3232, #3376).
 //
 // The mechanism that broke it: a `loading.tsx` at (or above) a route wraps its
 // page in an automatic <Suspense> boundary, and Next.js flushes the 200 loading
@@ -27,9 +27,31 @@ const FORBIDDEN_LOADING_FILES = [
   // does not need a segment loading.tsx either.
   'src/app/collections/loading.tsx',
   'src/app/collections/[id]/loading.tsx',
+
+  // --- #3376: same shape, four more routes ---------------------------------
+  // /gallery/loading.tsx sat ABOVE gallery/image/[id]/layout.tsx, whose
+  // notFound() gate (#3049) was therefore never able to set a status. The
+  // /gallery index self-streams via its own inner <Suspense fallback={<GalleryShell/>}>,
+  // so removing the segment file costs it nothing.
+  // NOTE: gallery/image/[id]/loading.tsx is deliberately KEPT — it sits *below*
+  // that layout, so it cannot flush before the gate runs.
+  'src/app/gallery/loading.tsx',
+  // Above gallery/collections/[slug]/page.tsx's notFound(); the index is ISR
+  // (revalidate = 86400) and prerendered, so it has no runtime skeleton to lose.
+  'src/app/gallery/collections/loading.tsx',
+  'src/app/gallery/collections/[slug]/loading.tsx',
+  // Above artwork/[slug] and artwork/artist/[slug], both of which notFound() in
+  // the shell. The /artwork index is `revalidate = false` (fully static).
+  'src/app/artwork/loading.tsx',
+  'src/app/artwork/[slug]/loading.tsx',
+  'src/app/artwork/artist/[slug]/loading.tsx',
+  // /author/[name] resolves through the author thesaurus (variant slugs 301 to
+  // the canonical one) before its notFound(); that logic must stay in the page,
+  // so the segment simply cannot carry a loading.tsx.
+  'src/app/author/[name]/loading.tsx',
 ];
 
-describe('soft-404 guard: no loading.tsx above the book/collection existence checks (#3232)', () => {
+describe('soft-404 guard: no loading.tsx above a route existence check (#3232, #3376)', () => {
   for (const rel of FORBIDDEN_LOADING_FILES) {
     it(`does not reintroduce ${rel}`, () => {
       expect(existsSync(path.join(repoRoot, rel))).toBe(false);
