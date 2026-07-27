@@ -8,6 +8,7 @@ import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
 import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 interface NavLink {
   label: string;
@@ -35,25 +36,6 @@ function buildNavLinks(t: NavStrings): NavLink[] {
     { label: t.librarian, href: '/librarian' },
     { label: t.podcast, href: '/podcast' },
   ];
-}
-
-/**
- * True when rendering on a partner subdomain (bph.sourcelibrary.org, …) or
- * inside an /embed/* view. Deliberately host-shaped rather than an allow-list of
- * tenant slugs, so a new tenant subdomain is covered the day its DNS record
- * exists. `false` during SSR and on the first client render, so the global
- * site's static HTML is untouched.
- */
-function useIsTenantHost(): boolean {
-  const [isTenant, setIsTenant] = useState(false);
-  useEffect(() => {
-    const h = window.location.hostname;
-    const parts = h.split('.');
-    const isSubdomain =
-      h.endsWith('.sourcelibrary.org') && parts.length > 2 && parts[0] !== 'www';
-    setIsTenant(isSubdomain || window.location.pathname.startsWith('/embed/'));
-  }, []);
-  return isTenant;
 }
 
 interface Breadcrumb {
@@ -93,18 +75,22 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
-  // Corpus-wide surfaces 404 on partner subdomains (see GLOBAL_ONLY_TENANT_BLOCKED
-  // in src/proxy.ts, issue #3364), so the nav must not point at them there — "Map"
-  // would otherwise be a dead link in the tenant's own header.
+  // Global-only surfaces 404 on partner subdomains (the list and rationale live
+  // in src/lib/tenant-global-paths.ts — #3364, #3370), so the nav must not point
+  // at them there: "Map" → /explore/map would be a dead link in the tenant's own
+  // header.
   //
-  // Detected from the hostname rather than passed down: this is a client
-  // component rendered by ~every page, so a prop would mean threading tenant
-  // context through all of them, and reading headers() server-side to provide it
-  // would force the ISR routes dynamic. Resolved after mount, so the static HTML
-  // (which the global site shares) is unchanged and only a tenant visitor sees
-  // the item drop — acceptable for a nav link, and it never removes anything on
-  // sourcelibrary.org itself.
-  const isTenantHost = useIsTenantHost();
+  // Reuses the shared `useEmbedContext` signal (tenant subdomain, /embed/ route,
+  // or iframe) rather than a bespoke hostname check — #3367 added a second,
+  // narrower copy of this detection, which is exactly the drift the shared hook
+  // exists to prevent. Resolved after mount, so the static HTML the global site
+  // shares is unchanged and only a tenant visitor sees the item drop.
+  //
+  // Note most pages wrap this in ConditionalSiteHeader, which removes the whole
+  // header on a tenant host post-hydration. This filter is what protects the
+  // pages that render SiteHeader directly and stay reachable there (e.g.
+  // /author/[name]).
+  const isTenantHost = useIsEmbedded();
   const NAV_LINKS = buildNavLinks(t).filter(
     link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
   );

@@ -29,10 +29,49 @@
 
 /** Page routes. Also used to filter the site nav on tenant hosts. */
 export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
+  // Corpus-wide aggregations (#3364).
   '/encyclopedia',
   '/explore',
   '/ngrams',
   '/libraries',
+  // Source Library's own institutional pages (#3370). A partner reading room is
+  // not the place to tell Source Library's story, and these pages carry
+  // hardcoded links into the wider corpus: /about alone embeds a figure linking
+  // Michael Maier's Atalanta Fugiens plus four /q/ shortlinks to non-tenant
+  // books, which was the last foreign-book link the leak audit could find on
+  // bph.sourcelibrary.org. `/about` covers `/about/progress` by prefix.
+  '/about',
+  '/vision',
+  '/census',
+  '/research',
+  '/blog',
+  '/contribute',
+  '/support',
+  '/sponsors',
+] as const;
+
+/**
+ * Institutional pages that stay reachable on tenant hosts, deliberately.
+ *
+ * `/terms`, `/privacy`, `/dmca` and `/licensing` are legal and rights notices —
+ * a public site must serve them on whatever host it answers, and the first three
+ * plus `/developers` sit in the crawler-readable allow-lists that the
+ * three-layer AI-access gate depends on (`BOT_READABLE_PATHS` in src/proxy.ts,
+ * the path-scoped Cloudflare skip rule, and robots.txt DOCS_ONLY). Blocking them
+ * per-host would make the policy layer inconsistent for anything crawling a
+ * subdomain. `/in-memoriam` honours Joost Ritman, whose library IS the BPH
+ * collection — more apt on that subdomain than on the global site.
+ *
+ * Not enforced in code; recorded so the next person adding to the block list
+ * above knows these were considered and kept.
+ */
+export const TENANT_REACHABLE_INSTITUTIONAL_PATHS = [
+  '/terms',
+  '/privacy',
+  '/dmca',
+  '/licensing',
+  '/developers',
+  '/in-memoriam',
 ] as const;
 
 /**

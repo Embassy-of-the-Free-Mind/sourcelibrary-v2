@@ -27,6 +27,7 @@ import {
   GLOBAL_ONLY_TENANT_API_PATHS,
   isGlobalOnlyTenantPath,
   isGlobalOnlyNavHref,
+  TENANT_REACHABLE_INSTITUTIONAL_PATHS,
 } from '@/lib/tenant-global-paths';
 
 const repoRoot = path.resolve(__dirname, '../..');
@@ -118,6 +119,7 @@ describe('proxy behavior', () => {
     });
 
   it.each([
+    // corpus-wide aggregations (#3364)
     '/encyclopedia',
     '/encyclopedia/Matthiolus',
     '/explore/timeline',
@@ -126,10 +128,32 @@ describe('proxy behavior', () => {
     '/libraries',
     '/libraries/internet-archive',
     '/api/entities',
+    // Source Library's own institutional pages (#3370)
+    '/about',
+    '/about/progress',
+    '/vision',
+    '/census',
+    '/research',
+    '/blog',
+    '/contribute',
+    '/support',
+    '/sponsors',
   ])('404s %s on a tenant subdomain', async (p) => {
     const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
     expect(res?.status).toBe(404);
   });
+
+  it.each(TENANT_REACHABLE_INSTITUTIONAL_PATHS)(
+    'keeps the legal/policy page %s reachable on a tenant subdomain',
+    async (p) => {
+      // Rights notices must be served on whatever host answers, and
+      // /terms, /privacy, /dmca, /licensing and /developers sit in the
+      // crawler-readable allow-lists the three-layer AI-access gate depends on.
+      // /in-memoriam honours Joost Ritman, whose library IS the BPH collection.
+      const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
+      expect(res?.status).not.toBe(404);
+    }
+  );
 
   it.each(['/collections', '/gallery', '/browse', '/search'])(
     'leaves the correctly-scoped route %s reachable on a tenant subdomain',
@@ -146,6 +170,17 @@ describe('proxy behavior', () => {
       expect(res?.status).not.toBe(404);
     }
   );
+});
+
+describe('the block list and the carve-out cannot overlap', () => {
+  it('no institutional path is both blocked and declared reachable', () => {
+    for (const keep of TENANT_REACHABLE_INSTITUTIONAL_PATHS) {
+      expect(
+        isGlobalOnlyTenantPath(keep),
+        `${keep} is declared tenant-reachable but the proxy blocks it`
+      ).toBe(false);
+    }
+  });
 });
 
 describe('wiring', () => {
