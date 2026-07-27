@@ -57,6 +57,7 @@ const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '3'), 10));
 const OUT = resolve(REPO_ROOT, flag('out', 'scripts/output/bulk-archive-alignment.jsonl'));
 const ONLY_BOOKS = args.reduce((acc, a, i) => (a === '--book' ? [...acc, args[i + 1]] : acc), []);
 const MIN_BULK_PAGES = 10;
+const BOOK_BATCH = 500; // books fetched per range query (see the pagination note in main)
 
 // IA IIIF page URLs look like .../page/nN/full/pct:50/0/default.jpg — a small
 // render is plenty for a perceptual hash and far kinder to archive.org.
@@ -151,10 +152,6 @@ async function main() {
     ? { $expr: { $in: [{ $toString: '$_id' }, ONLY_BOOKS] } }
     : { 'image_source.provider': 'internet_archive', pages_count: { $gt: MIN_BULK_PAGES } };
 
-  const cursor = db.collection('books')
-    .find(query, { projection: { title: 1, ia_identifier: 1, visible: 1, pages_count: 1 } })
-    .sort({ _id: 1 });
-
   const tally = {};
   let audited = 0, scanned = 0;
   const inFlight = new Set();
@@ -170,19 +167,36 @@ async function main() {
     console.log(`[${audited}] ${tag.padEnd(30)} ${row.book_id} ${row.title}`);
   };
 
-  while (audited < LIMIT) {
-    const book = await cursor.next();
-    if (!book) break;
-    scanned++;
-    if (scanned % 250 === 0) console.log(`  … scanned ${scanned} IA books, ${audited} with bulk_jp2 so far`);
-    if (done.has(String(book._id))) continue;
+  // Paginate by _id rather than holding one cursor open. A single cursor sits
+  // idle for minutes at a time while we fetch and hash images, and Atlas
+  // reaps it — the first full-corpus run died at 701 books with CursorNotFound
+  // (code 43). Range queries are also naturally resumable.
+  let lastId = null;
+  let exhausted = false;
 
-    const task = auditBook(db, book)
-      .then(row => { if (row) record(row); })
-      .catch(err => console.log(`  [ERR] ${book._id}: ${err.message?.slice(0, 80)}`))
-      .finally(() => inFlight.delete(task));
-    inFlight.add(task);
-    if (inFlight.size >= CONCURRENCY) await Promise.race(inFlight);
+  while (audited < LIMIT && !exhausted) {
+    const batchQuery = lastId ? { $and: [query, { _id: { $gt: lastId } }] } : query;
+    const batch = await db.collection('books')
+      .find(batchQuery, { projection: { title: 1, ia_identifier: 1, visible: 1, pages_count: 1 } })
+      .sort({ _id: 1 })
+      .limit(BOOK_BATCH)
+      .toArray();
+    if (!batch.length) { exhausted = true; break; }
+    lastId = batch[batch.length - 1]._id;
+
+    for (const book of batch) {
+      if (audited >= LIMIT) break;
+      scanned++;
+      if (scanned % 250 === 0) console.log(`  … scanned ${scanned} IA books, ${audited} with bulk_jp2 so far`);
+      if (done.has(String(book._id))) continue;
+
+      const task = auditBook(db, book)
+        .then(row => { if (row) record(row); })
+        .catch(err => console.log(`  [ERR] ${book._id}: ${err.message?.slice(0, 80)}`))
+        .finally(() => inFlight.delete(task));
+      inFlight.add(task);
+      if (inFlight.size >= CONCURRENCY) await Promise.race(inFlight);
+    }
   }
   await Promise.all(inFlight);
 
