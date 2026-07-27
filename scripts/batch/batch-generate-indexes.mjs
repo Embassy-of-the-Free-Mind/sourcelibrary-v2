@@ -24,7 +24,11 @@ import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/ent
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-3-flash-preview';
+// Index extraction runs on flash-lite, matching the enrich-worker's Phase 6
+// (the other writer of this same index). The prompt returns bare name lists and
+// page attribution is done locally by attributeEntityPages(), so the preview
+// model bought nothing here and cost ~7x more.
+const MODEL = 'gemini-3.1-flash-lite';
 const TARGET_BATCH_CHARS = 50000; // ~12k tokens per batch
 const CONCURRENCY = 3; // Books processed concurrently (each book fires multiple parallel batches)
 const DELAY_BETWEEN_BOOKS_MS = 1000;
@@ -99,9 +103,12 @@ function getSummaryModel() {
 
 // ── Cost tracking ────────────────────────────────────────────────────
 
-// gemini-3-flash-preview pricing
-const INPUT_COST_PER_1M = 0.50;
-const OUTPUT_COST_PER_1M = 3.00;
+// gemini-3.1-flash-lite pricing. Must stay in step with MODEL above and with
+// the MODEL_COSTS table in scripts/workers/enrich-worker.mjs — these constants
+// are what lands in gemini_usage.cost_usd, so a stale rate silently misreports
+// every downstream spend estimate.
+const INPUT_COST_PER_1M = 0.075;
+const OUTPUT_COST_PER_1M = 0.30;
 
 function calculateCost(inputTokens, outputTokens) {
   return (inputTokens / 1_000_000) * INPUT_COST_PER_1M +
