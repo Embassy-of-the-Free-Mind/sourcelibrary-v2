@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 
 // Unknown detail-page slugs must return a REAL 404 status, not a soft-404
@@ -57,4 +57,38 @@ describe('soft-404 guard: no loading.tsx above a route existence check (#3232, #
       expect(existsSync(path.join(repoRoot, rel))).toBe(false);
     });
   }
+});
+
+// The reader takes the OTHER solution to the same problem, and needs its own
+// guard because "the loading.tsx is absent" cannot express it.
+//
+// `/book/[id]/page/[pageId]` is the one route where the skeleton genuinely
+// earns its keep — it shows on every page turn — so deleting its loading.tsx
+// would trade a status code for a visible regression. Instead the existence
+// check moved UP into the segment's layout.tsx, which renders above the
+// automatic <Suspense> that loading.tsx creates. Keep both halves: the layout
+// gate is what sets the status, the loading.tsx is what the reader sees.
+describe('soft-404 guard: the reader gates in its layout, above the boundary (#3376)', () => {
+  const readerDir = 'src/app/book/[id]/page/[pageId]';
+  const layout = readFileSync(path.join(repoRoot, readerDir, 'layout.tsx'), 'utf8');
+
+  it('keeps its loading.tsx — the skeleton is load-bearing on page turns', () => {
+    expect(existsSync(path.join(repoRoot, readerDir, 'loading.tsx'))).toBe(true);
+  });
+
+  it('calls notFound() from the layout shell, not only from page.tsx', () => {
+    expect(layout).toMatch(/from ['"]next\/navigation['"]/);
+    expect(layout).toMatch(/if \(!book \|\| !page\) notFound\(\);/);
+  });
+
+  it('dedupes the lookup so the gate costs no extra query', () => {
+    // generateMetadata and the layout shell both read it.
+    expect(layout).toMatch(/const getPageData = cache\(/);
+  });
+
+  it('does not gate on visibility — that would 404 the editor preview route', () => {
+    // page/[pageId]/preview renders hidden books for editors through this same
+    // layout (allowHidden). The hidden-book 404 belongs in page.tsx alone.
+    expect(layout).not.toMatch(/isHiddenBook/);
+  });
 });
