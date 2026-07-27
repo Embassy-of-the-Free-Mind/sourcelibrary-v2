@@ -26,6 +26,13 @@ import {
   entityCounters,
 } from '../../scripts/lib/entity-page-match.mjs';
 import {
+  normalizeForMatch as normalizeTs,
+  buildEntityMatcher as buildMatcherTs,
+  pageMatchesEntity as pageMatchesTs,
+  attributeEntityPages as attributeTs,
+  buildPageTexts as buildPageTextsTs,
+} from '../../src/lib/entity-page-match';
+import {
   dedupeEntityBooks as dedupeTs,
   entityCounters as countersTs,
   normalizeEntityBook,
@@ -220,5 +227,68 @@ describe('PARITY: scripts/lib/entity-page-match.mjs vs src/lib/entity-books.ts',
 
   it.each(FIXTURES.map((f, i) => [i, f] as const))('fixture %i counts identically', (_i, fixture) => {
     expect(countersTs(fixture)).toEqual(entityCounters(fixture));
+  });
+});
+
+
+describe('PARITY: entity-page-match .mjs vs .ts twin', () => {
+  // The batch writers use the .mjs; the /api/books/[id]/index route (a fourth
+  // writer of this same index) uses the .ts. If they drift, one writer starts
+  // attributing pages the other would reject.
+  const NAMES = [
+    'Matthiolus',
+    'Saint Perpetua',
+    'James Smart',
+    'Marcus Aurelius Antoninus',
+    'Job',
+    'Papus (Gérard Encausse)',
+    'Johannes Trithemius',
+    '',
+  ];
+  const TEXTS = [
+    'cuius exactissimus explanator est Matthiolus, huic Fuchsius',
+    'octaue of saint stephen and the passion of Perpetua',
+    'are smartly uibrated against the medium of our sight',
+    'nato duno lucio cesare & di aurelia romani',
+    'pseudonym of gerard encausse, a leading figure',
+    'Iohannes Trithemius abbas Spanheimensis',
+    'the book of Job',
+  ];
+
+  it.each(NAMES)('normalizeForMatch agrees for %j', (n) => {
+    expect(normalizeTs(n)).toBe(normalizeForMatch(n));
+  });
+
+  it.each(TEXTS)('normalizeForMatch agrees on page text %j', (t) => {
+    expect(normalizeTs(t)).toBe(normalizeForMatch(t));
+  });
+
+  it('pageMatchesEntity agrees across every name × text pair', () => {
+    for (const name of NAMES) {
+      const mjs = buildEntityMatcher(name);
+      const ts = buildMatcherTs(name);
+      expect(ts.stems.slice().sort()).toEqual(mjs.stems.slice().sort());
+      expect(ts.patterns.map(String).sort()).toEqual(mjs.patterns.map(String).sort());
+      for (const text of TEXTS) {
+        const norm = normalizeForMatch(text);
+        expect(
+          pageMatchesTs(ts, norm),
+          `${name} vs ${text}`
+        ).toBe(pageMatchesEntity(mjs, norm));
+      }
+    }
+  });
+
+  it('attributeEntityPages agrees, including the section fallback', () => {
+    const raw = [
+      { page_number: 47, ocr: { data: 'de arte medica nihil' }, translation: { data: '' } },
+      { page_number: 48, ocr: { data: 'explanator est Matthiolus' }, translation: { data: '' } },
+      { page_number: 49, ocr: { data: 'sequitur Fuchsius' }, translation: { data: '' } },
+    ];
+    expect(buildPageTextsTs(raw)).toEqual(buildPageTexts(raw));
+    for (const name of ['Matthiolus', 'Paracelsus', 'Job']) {
+      expect(attributeTs(name, buildPageTextsTs(raw)))
+        .toEqual(attributeEntityPages(name, buildPageTexts(raw)));
+    }
   });
 });
