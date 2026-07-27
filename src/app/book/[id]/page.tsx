@@ -47,6 +47,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
@@ -223,8 +224,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = book.display_title || book.title;
-  const ogTitle = book.published ? `${title} (${book.published})` : title;
   // Byline for citations / meta tags. Falls back to editor for edited volumes,
   // magazines and anthologies where the catalogue has no single author. Keep
   // formatAuthor() in the chain to strip bibliographic brackets etc.
@@ -233,12 +232,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? formatAuthor(byline.displayName).name || byline.displayName
     : formatAuthor(book.author).name || book.author;
   const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
-  const year = book.published ? ` (${book.published})` : '';
-  // Build description front-loading title+byline+date, truncated to 155 chars for SEO
-  let description = `${title} by ${bylineLabel}${year} — read the full English translation online.`;
-  if (description.length > 155) {
-    description = `${title} by ${bylineLabel}${year}`.slice(0, 152) + '...';
-  }
+
+  // SEO/AI-O title + description rules — see src/lib/book-seo.ts.
+  // Lead with the original-language title (book.title, the catalogue/citation
+  // standard); byline is already life-date-stripped by formatAuthor.
+  const seoTitle = buildSeoTitle({ originalTitle: book.title, authorLabel: bylineLabel, year: book.published });
+  const ogTitle = seoTitle;
+  // Unique description from the real per-book summary, with an HONEST translation
+  // claim (never the old blanket "English translation" that mislabelled originals).
+  const bookRec = book as unknown as { index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } | string };
+  const summaryText = bookRec.index?.bookSummary?.brief
+    || bookRec.reading_summary?.overview
+    || (typeof bookRec.summary === 'string' ? bookRec.summary : bookRec.summary?.data)
+    || null;
+  const description = buildSeoDescription({
+    originalTitle: book.title,
+    authorLabel: bylineLabel,
+    year: book.published,
+    language: book.language,
+    summary: summaryText,
+    isFirstTranslation: book.is_first_translation,
+    pagesTranslated: book.pages_translated,
+  });
   const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
@@ -283,7 +298,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     || (pagesOcr > 0 && (pagesTranslated ?? 0) > 0);
 
   return {
-    title: `${title} - Source Library`,
+    title: seoTitle,
     description,
     ...(!shouldIndex && { robots: { index: false, follow: true } }),
     alternates: {
