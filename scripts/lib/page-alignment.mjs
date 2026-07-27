@@ -54,19 +54,26 @@ export function isUsableArchive(url) {
  * Compare each sampled page's source image against the archived image at the
  * same index and at the next index.
  *
- * @param {Array} pages           page docs, ascending by page_number
+ * @param {Array} pages           ALL page docs, ascending by page_number. Used to
+ *                                resolve the N+1 neighbour, which may not itself
+ *                                be a candidate.
  * @param {object} opts
  * @param {(url:string)=>Promise<string>} opts.hashUrl        fetch + dHash a URL -> hex
  * @param {(page:object)=>string}         opts.sourceUrlFor   URL to hash for the source side
  * @param {(page:object)=>boolean}        opts.isUsableSource can this page's source be mapped to a leaf?
+ * @param {Array}                         [opts.candidates]   pages to SAMPLE from; defaults to all.
+ *   Pass the subset written by the writer under test. A book can have its pages
+ *   archived by several paths — e.g. 30 of 640 pages via bulk_jp2 and the rest
+ *   via per-page IIIF — and sampling the whole book then tests the wrong pages
+ *   and returns a false "aligned". This produced false negatives until fixed.
  * @param {number}                        [opts.samples=3]    interior pages to sample
  * @returns {Promise<{verdict:string, offset?:number, detail:string}>}
  */
-export async function checkAlignment(pages, { hashUrl, sourceUrlFor, isUsableSource, samples = 3 }) {
+export async function checkAlignment(pages, { hashUrl, sourceUrlFor, isUsableSource, candidates, samples = 3 }) {
   // Sample interior pages carrying both a usable source and a usable archive.
   // Skip page 1 — cover/title special-casing lives there and is legitimately
   // inserted or dropped by some providers.
-  const usable = pages.filter(p =>
+  const usable = (candidates ?? pages).filter(p =>
     isUsableSource(p) && isUsableArchive(p.archived_photo) && p.page_number >= 2);
   if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages' };
 

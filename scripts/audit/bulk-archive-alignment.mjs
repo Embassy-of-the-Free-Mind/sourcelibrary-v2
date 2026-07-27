@@ -96,6 +96,11 @@ async function auditBook(db, book) {
     hashUrl,
     sourceUrlFor: p => thumbnail(p.photo_original || p.photo),
     isUsableSource: p => IA_LEAF_RE.test(String(p.photo_original || p.photo)),
+    // Sample only the bulk_jp2 pages — the ones this defect can touch. Books
+    // are frequently archived by more than one path (e.g. 30 of 640 pages via
+    // bulk_jp2, the rest via per-page IIIF); sampling the whole book tests
+    // pages the bug never wrote and reports a false "aligned".
+    candidates: bulkPages,
   });
 
   const row = {
