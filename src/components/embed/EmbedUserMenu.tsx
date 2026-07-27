@@ -101,28 +101,7 @@ function writeCookie(name: string, on: boolean) {
   document.cookie = `${name}=${on ? '1' : '0'}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
 }
 
-export interface EmbedUserMenuProps {
-  /**
-   * `full` (default) — the partner landing/catalogue surface under
-   * `/embed/<tenant>/*`: view-options toggles, BPH catalogue search, and auth.
-   * Rendered to everyone, signed in or not.
-   *
-   * `account-only` — the global routes a tenant subdomain serves directly
-   * (`/book/*`, `/collections/*`, …). Renders NOTHING for anonymous visitors
-   * and only the auth affordance for signed-in ones (#2150).
-   *
-   * The split exists because those pages strip the SiteHeader entirely on a
-   * tenant host, which left signed-in visitors with no Account or Sign-out
-   * control anywhere on the subdomain. Restoring auth there is a bug fix;
-   * putting the view-options toggles back is a separate product decision
-   * (2026-05-28: BPH is deliberately "hidden, no toggle"), so this variant
-   * deliberately does not reopen it.
-   */
-  variant?: 'full' | 'account-only';
-}
-
-export default function EmbedUserMenu({ variant = 'full' }: EmbedUserMenuProps = {}) {
-  const accountOnly = variant === 'account-only';
+export default function EmbedUserMenu() {
   const { data: session, status } = useStableSession();
   const [isOpen, setIsOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -148,8 +127,8 @@ export default function EmbedUserMenu({ variant = 'full' }: EmbedUserMenuProps =
   useEffect(() => {
     setHideAi(readHideAi());
     setHideGuide(readCookie(COOKIE_HIDE_GUIDE));
-    setShowSearch(!accountOnly && isBphSurface());
-  }, [accountOnly]);
+    setShowSearch(isBphSurface());
+  }, []);
 
   // Focus the field as it expands.
   useEffect(() => {
@@ -167,11 +146,6 @@ export default function EmbedUserMenu({ variant = 'full' }: EmbedUserMenuProps =
   }, []);
 
   if (status === 'loading') return null;
-  // On a tenant subdomain's global routes the menu exists only to give a
-  // signed-in reader their Account / Sign out back. An anonymous visitor there
-  // gets no floating control at all — the partner reading room stays a
-  // sign-in-free surface and its pages look exactly as they do today.
-  if (accountOnly && !session) return null;
 
   // CSS-driven hiding: the inline script in embed/layout.tsx sets data
   // attributes on <html> at page-load time; the toggle handlers update them
@@ -289,29 +263,27 @@ export default function EmbedUserMenu({ variant = 'full' }: EmbedUserMenuProps =
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-64 rounded-md bg-white border border-border-light shadow-lg overflow-hidden">
-          {!accountOnly && (
-            <div className="px-3 py-2 border-b border-border-light/60">
-              <div className="text-xs text-muted mb-1.5">View</div>
-              <label className="flex items-start gap-2 py-1 cursor-pointer text-sm text-secondary hover:text-primary">
-                <input
-                  type="checkbox"
-                  checked={hideAi}
-                  onChange={toggleHideAi}
-                  className="mt-0.5"
-                />
-                <span>Hide AI introductions &amp; summaries</span>
-              </label>
-              <label className="flex items-start gap-2 py-1 cursor-pointer text-sm text-secondary hover:text-primary">
-                <input
-                  type="checkbox"
-                  checked={hideGuide}
-                  onChange={toggleHideGuide}
-                  className="mt-0.5"
-                />
-                <span>Hide reading guide &amp; pedagogical helpers</span>
-              </label>
-            </div>
-          )}
+          <div className="px-3 py-2 border-b border-border-light/60">
+            <div className="text-xs text-muted mb-1.5">View</div>
+            <label className="flex items-start gap-2 py-1 cursor-pointer text-sm text-secondary hover:text-primary">
+              <input
+                type="checkbox"
+                checked={hideAi}
+                onChange={toggleHideAi}
+                className="mt-0.5"
+              />
+              <span>Hide AI introductions &amp; summaries</span>
+            </label>
+            <label className="flex items-start gap-2 py-1 cursor-pointer text-sm text-secondary hover:text-primary">
+              <input
+                type="checkbox"
+                checked={hideGuide}
+                onChange={toggleHideGuide}
+                className="mt-0.5"
+              />
+              <span>Hide reading guide &amp; pedagogical helpers</span>
+            </label>
+          </div>
 
           {/* Signed-in users keep Account + Sign out. Anonymous visitors are
               shown no sign-in affordance in the embed — the menu is just the
