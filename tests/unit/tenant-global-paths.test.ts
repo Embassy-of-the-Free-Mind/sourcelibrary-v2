@@ -18,6 +18,9 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'fs';
 import path from 'path';
+import { NextRequest } from 'next/server';
+
+import { proxy } from '@/proxy';
 
 import {
   GLOBAL_ONLY_TENANT_PAGE_PATHS,
@@ -92,17 +95,62 @@ describe('isGlobalOnlyNavHref', () => {
   });
 });
 
+/**
+ * Behavioral tests against the real proxy.
+ *
+ * These exist because the obvious end-to-end check does NOT work: curling a
+ * Vercel PREVIEW url with `Host: bph.sourcelibrary.org` does not exercise the
+ * preview build at all — Vercel's router resolves the Host to the PRODUCTION
+ * deployment for that domain and serves it. During review that produced a
+ * convincing false negative (every blocked path answered 200, including a real
+ * BPH landing page at `/`) which looked exactly like a broken fix. Calling
+ * proxy() directly is the only deterministic check short of deploying.
+ */
+describe('proxy behavior', () => {
+  const req = (url: string, host: string) =>
+    new NextRequest(url, {
+      headers: {
+        host,
+        'user-agent': 'Mozilla/5.0 Chrome/124',
+        'accept-language': 'en',
+        'sec-fetch-mode': 'navigate',
+      },
+    });
+
+  it.each([
+    '/encyclopedia',
+    '/encyclopedia/Matthiolus',
+    '/explore/timeline',
+    '/explore/map',
+    '/ngrams',
+    '/libraries',
+    '/libraries/internet-archive',
+    '/api/entities',
+  ])('404s %s on a tenant subdomain', async (p) => {
+    const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
+    expect(res?.status).toBe(404);
+  });
+
+  it.each(['/collections', '/gallery', '/browse', '/search'])(
+    'leaves the correctly-scoped route %s reachable on a tenant subdomain',
+    async (p) => {
+      const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
+      expect(res?.status).not.toBe(404);
+    }
+  );
+
+  it.each(['/encyclopedia', '/encyclopedia/Matthiolus', '/explore/map', '/ngrams', '/libraries'])(
+    'leaves %s untouched on the global host',
+    async (p) => {
+      const res = await proxy(req(`https://sourcelibrary.org${p}`, 'sourcelibrary.org'));
+      expect(res?.status).not.toBe(404);
+    }
+  );
+});
+
 describe('wiring', () => {
-  it('proxy.ts blocks global-only paths on tenant subdomains with a 404', () => {
+  it('blocks before the tenant rewrite, or the page would be served first', () => {
     const src = read('src/proxy.ts');
-    expect(src, 'proxy must import the shared predicate').toContain(
-      "from '@/lib/tenant-global-paths'"
-    );
-    expect(src, 'proxy must gate on tenant + the predicate').toMatch(
-      /if\s*\(\s*tenant\s*&&\s*isGlobalOnlyTenantPath\(pathname\)\s*\)/
-    );
-    // The block must precede the subdomain rewrite, or /encyclopedia would be
-    // rewritten and served before it is ever refused.
     const blockAt = src.indexOf('isGlobalOnlyTenantPath(pathname)');
     const rewriteAt = src.indexOf("!pathname.startsWith('/embed/')");
     expect(blockAt).toBeGreaterThan(-1);
