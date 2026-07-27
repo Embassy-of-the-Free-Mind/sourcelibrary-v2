@@ -78,7 +78,7 @@ const db = client.db('bookstore');
  * one after 250 books, losing nothing but needing a manual resume. Only retries
  * transient transport errors; a genuine write error still throws.
  */
-async function withRetry(label, fn, attempts = 5) {
+async function withRetry(label, fn, attempts = 10) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
@@ -86,9 +86,15 @@ async function withRetry(label, fn, attempts = 5) {
     } catch (err) {
       lastErr = err;
       const msg = String(err?.message || err);
-      const transient = /ECONNRESET|ETIMEDOUT|EPIPE|socket hang up|connection .* closed|MongoNetworkError|not primary|PoolClearedError/i.test(msg);
+      // Includes DNS failures: a laptop that sleeps mid-run wakes to
+      // `getaddrinfo ENOTFOUND <shard>.mongodb.net`, which killed the overnight
+      // pass at 08:50 even though the connection recovered moments later.
+      const transient = /ECONNRESET|ETIMEDOUT|EPIPE|ECONNREFUSED|ENOTFOUND|EAI_AGAIN|getaddrinfo|socket hang up|connection .* closed|MongoNetworkError|ServerSelection|topology|not primary|PoolClearedError/i.test(msg);
       if (!transient || i === attempts - 1) throw err;
-      const backoffMs = 1000 * 2 ** i;
+      // Cap the backoff so ten attempts span ~8 minutes of outage tolerance —
+      // enough to ride out a sleep/wake or a WiFi handover, not so long that a
+      // genuinely dead connection stalls the run for an hour.
+      const backoffMs = Math.min(60_000, 1000 * 2 ** i);
       console.warn(`  transient error on ${label} (attempt ${i + 1}/${attempts}): ${msg.slice(0, 120)} — retrying in ${backoffMs}ms`);
       stats.transientRetries++;
       await new Promise(r => setTimeout(r, backoffMs));
