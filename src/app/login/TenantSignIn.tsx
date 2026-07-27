@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
 
 interface TenantSignInProps {
   tenantSlug: string;
@@ -25,6 +26,10 @@ export function TenantSignIn({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [inviteRequired, setInviteRequired] = useState(false);
+  // Same latent tripwire as the homepage hero: this form POSTs straight to
+  // /api/auth/signin/nodemailer, so without a Turnstile token every tenant
+  // sign-in would 403 the moment Turnstile is enabled. It is off today.
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const router = useRouter();
 
   // Check if email has a pending invitation (only matters if allowSignup is false)
@@ -63,12 +68,21 @@ export function TenantSignIn({
       const res = await fetch('/api/auth/signin/nodemailer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email, csrfToken, callbackUrl }),
+        body: new URLSearchParams({
+          email,
+          csrfToken,
+          callbackUrl,
+          'cf-turnstile-response': turnstileToken ?? '',
+        }),
         redirect: 'follow',
       });
 
       if (res.ok || res.redirected) {
         setEmailSent(true);
+      } else if (res.status === 429) {
+        setError(
+          'Too many sign-in requests from your network in the last hour. Wait a little and try again — this limit is shared by everyone on the same connection.',
+        );
       } else {
         setError('Could not send sign-in link. Please try again.');
       }
@@ -140,7 +154,7 @@ export function TenantSignIn({
             <p style={{ fontSize: 14, color: '#8b949e', marginBottom: 24 }}>
               <strong style={{ color: '#e6edf3' }}>{tenantName}</strong> is by invitation only.
               {' '}
-              <a href="mailto:contact@sourcelibrary.org" style={{ color: '#58a6ff', textDecoration: 'none' }}>
+              <a href="mailto:team@sourcelibrary.org" style={{ color: '#58a6ff', textDecoration: 'none' }}>
                 Contact the administrator
               </a>
               {' '}
@@ -215,9 +229,11 @@ export function TenantSignIn({
             style={inputStyle}
             disabled={loading}
           />
+          {/* Renders only when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set. */}
+          <TurnstileWidget onVerify={setTurnstileToken} />
           <button
             type="submit"
-            disabled={loading || !email}
+            disabled={loading || !email || (turnstileConfigured && !turnstileToken)}
             style={{ ...submitButtonStyle, opacity: loading || !email ? 0.5 : 1 }}
           >
             {loading ? 'Sending…' : 'Continue with Email'}

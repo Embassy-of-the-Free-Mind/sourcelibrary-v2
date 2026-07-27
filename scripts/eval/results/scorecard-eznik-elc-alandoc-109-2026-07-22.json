@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 1,
+  "only": "eznik-elc-alandoc-109",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 597,
+      "charAccuracy": 0.9614740368509213,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 142-143 (those who curse Satan yet do his will, 1826 printed p.109)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 120,
+          "aligned": true,
+          "guard": 0.13157894736842105,
+          "cer": 0.038525963149078725,
+          "charAccuracy": 0.9614740368509213,
+          "refLen": 597,
+          "matched": 574,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.109",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik142.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 1,
+              "refused": 0,
+              "costUsd": 0.001684,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

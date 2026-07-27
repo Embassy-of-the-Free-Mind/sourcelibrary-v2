@@ -28,6 +28,7 @@ export interface HomeStrings {
   google: string;
   googleBlockedNote: string;
   emailError: string;
+  didYouMean: (suggestion: string) => string;
   haveAccount: string;
   explore: string;
   langEnglish: string;
@@ -141,6 +142,7 @@ const en: HomeStrings = {
   google: 'Or continue with Google',
   googleBlockedNote: 'Google sign-in is usually blocked in in-app browsers — use email above, or open this page in Safari/Chrome.',
   emailError: 'Could not send the sign-in link. Please try again.',
+  didYouMean: (suggestion) => `Did you mean ${suggestion}?`,
   haveAccount: 'Already have an account?',
   explore: 'Explore the collection',
   langEnglish: 'English',
@@ -247,6 +249,7 @@ const es: HomeStrings = {
   google: 'O continúa con Google',
   googleBlockedNote: 'El acceso con Google suele estar bloqueado en navegadores internos — usa el correo de arriba, o abre esta página en Safari/Chrome.',
   emailError: 'No se pudo enviar el enlace de acceso. Inténtalo de nuevo.',
+  didYouMean: (suggestion) => `¿Quisiste decir ${suggestion}?`,
   haveAccount: '¿Ya tienes una cuenta?',
   explore: 'Explora la colección',
   langEnglish: 'English',
@@ -365,7 +368,6 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   literature: 'Literatura y poesía',
   herbalism: 'Herbolaria y botánica',
   'music-sound': 'Música y sonido',
-  shwep: 'Sala de lectura SHWEP',
 };
 
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {

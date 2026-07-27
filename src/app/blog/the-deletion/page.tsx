@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Deletion: How Claude Code accidentally deleted 4,758 books — Research Notes — Source Library',
   description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production. With primary sources — the actual prompts and the actual postmortem.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'The Deletion: How Claude Code accidentally deleted 4,758 books',
     description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/the-deletion',
@@ -399,7 +403,6 @@ Delta (published - supabase):  -5,594`}</code></pre>
           <em>&mdash; Derek</em>
         </p>
 
-        <BlogComments slug="the-deletion" />
       </article>
     </ContentPageLayout>
   );

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Many First Translations, Really? - Research Notes - Source Library',
@@ -12,6 +11,10 @@ export const metadata: Metadata = {
     description:
       'A two-sided census of Source Library\'s first-translation claim: measuring both false positives and missed firsts with stratified sampling and per-book AI adjudication.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg' }],
   },
   alternates: {
     canonical: '/blog/counting-first-translations',
@@ -161,7 +164,6 @@ Roughly <strong>5,700 genuine first English translations</strong> across the lib
         </p>
       </article>
 
-      <BlogComments slug="counting-first-translations" />
     </ContentPageLayout>
   );
 }

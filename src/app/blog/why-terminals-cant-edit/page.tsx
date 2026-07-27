@@ -1,15 +1,19 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Why You Can\'t Click to Place Your Cursor in a Terminal - Research Notes - Source Library',
   description:
     'Terminal emulators don\'t know what\'s on screen. They draw characters on a grid and forward keystrokes. That architectural decision from 1978 is why basic text editing feels broken in 2026.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Why You Can\'t Click to Place Your Cursor in a Terminal',
     description: 'The 1978 architecture decision that still shapes how 50 million developers work.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/why-terminals-cant-edit',
@@ -331,7 +335,6 @@ export default function WhyTerminalsCantEditPage() {
 
       <hr className="my-12 border-border-light" />
 
-      <BlogComments slug="why-terminals-cant-edit" />
     </ContentPageLayout>
   );
 }

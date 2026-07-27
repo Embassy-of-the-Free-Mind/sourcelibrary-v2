@@ -1,0 +1,237 @@
+{
+  "date": "2026-07-18",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 692,
+      "charAccuracy": 0.9176300578034682,
+      "rows": [
+        {
+          "work": "Zohrab NT, John 1:1-14",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 724,
+          "aligned": true,
+          "guard": 0.13548387096774195,
+          "cer": 0.08236994219653179,
+          "charAccuracy": 0.9176300578034682,
+          "refLen": 692,
+          "matched": 635,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm"
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "script": "cjk",
+      "passages": 7,
+      "aligned": 7,
+      "refChars": 392,
+      "charAccuracy": 0.9846938775510204,
+      "rows": [
+        {
+          "work": "Analects 1.1",
+          "bookId": "69e8b24d2ff2a8dc09e77295",
+          "pageNumber": 156,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 30,
+          "matched": 30,
+          "source": "ctext",
+          "source_url": "https://ctext.org/analects/xue-er/zh"
+        },
+        {
+          "work": "Daodejing ch.1",
+          "bookId": "69935b692c63944063133f67",
+          "pageNumber": 13,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 59,
+          "matched": 59,
+          "source": "ctext",
+          "source_url": "https://ctext.org/dao-de-jing/zh"
+        },
+        {
+          "work": "Han Feizi (Nan Yan)",
+          "bookId": "69e8b2742ff2a8dc09e77bdb",
+          "pageNumber": 549,
+          "aligned": true,
+          "guard": 0.08196721311475409,
+          "cer": 0.08196721311475409,
+          "charAccuracy": 0.9180327868852459,
+          "refLen": 61,
+          "matched": 56,
+          "source": "ctext",
+          "source_url": "https://ctext.org/hanfeizi/nan-yan/zh"
+        },
+        {
+          "work": "Book of Odes (Guan Ju)",
+          "bookId": "69d5ae594dc55b8478de1380",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0.0125,
+          "cer": 0.0125,
+          "charAccuracy": 0.9875,
+          "refLen": 80,
+          "matched": 79,
+          "source": "ctext",
+          "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh"
+        },
+        {
+          "work": "Xunzi (Quan Xue)",
+          "bookId": "69e8b26b2ff2a8dc09e77afc",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 50,
+          "matched": 50,
+          "source": "ctext",
+          "source_url": "https://ctext.org/xunzi/quan-xue/zh"
+        },
+        {
+          "work": "Doctrine of the Mean",
+          "bookId": "69aebb3439a4307877772f55",
+          "pageNumber": 50,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 55,
+          "matched": 55,
+          "source": "ctext",
+          "source_url": "https://ctext.org/liji/zhong-yong/zh"
+        },
+        {
+          "work": "Zhuangzi 1",
+          "bookId": "69e72c60a409200ea79f46f6",
+          "pageNumber": 46,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 57,
+          "matched": 57,
+          "source": "ctext",
+          "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh"
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 221,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Iliad I.1-7",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 221,
+          "matched": 221,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91"
+        }
+      ]
+    },
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 3,
+      "aligned": 3,
+      "refChars": 646,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Genesis 1:1-5 (Bereshit)",
+          "bookId": "6952e4bc77f38f6761bc7db1",
+          "pageNumber": 45,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 197,
+          "matched": 197,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Genesis.1"
+        },
+        {
+          "work": "Mishnah Berakhot 1:1",
+          "bookId": "69c1bab38522835be8459bf4",
+          "pageNumber": 176,
+          "aligned": true,
+          "guard": 0.04081632653061224,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 201,
+          "matched": 201,
+          "source": "Sefaria (Mishnah, Torat Emet)",
+          "source_url": "https://www.sefaria.org/Mishnah_Berakhot.1.1"
+        },
+        {
+          "work": "Psalms 1 (Tehillim)",
+          "bookId": "69e7518610ee9075bcdcde12",
+          "pageNumber": 8,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 248,
+          "matched": 248,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Psalms.1"
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 426,
+      "charAccuracy": 0.9741784037558685,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I"
+        },
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.14035087719298245,
+          "cer": 0.03546099290780142,
+          "charAccuracy": 0.9645390070921985,
+          "refLen": 282,
+          "matched": 272,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm"
+        }
+      ]
+    }
+  ]
+}

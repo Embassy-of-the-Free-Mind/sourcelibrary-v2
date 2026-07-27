@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Curated Collections | Gallery | Source Library',
   description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts: woodcuts, engravings, emblems, and diagrams spanning five centuries.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Curated Image Collections | Source Library',
     description: 'Thematic collections of illustrations from rare historical manuscripts.',
   },

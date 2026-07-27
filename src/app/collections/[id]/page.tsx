@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, cache } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -61,6 +61,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? String(collection.description).slice(0, 200)
       : `Browse the ${collection.name} collection on Source Library.`;
 
+    // Social-card image: the curated hero plate, falling back to the site
+    // default. Without an explicit entry this page ships no og:image at all —
+    // defining `openGraph` replaces the root layout's block, images included.
+    const cardImage = typeof collection.hero_image === 'string' && collection.hero_image
+      ? collection.hero_image
+      : 'https://sourcelibrary.org/og-image.jpg';
+
     return {
       title: `${collection.name} - Source Library`,
       description,
@@ -69,11 +76,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${collection.name} - Source Library`,
         description,
         type: 'website',
+        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${collection.name} - Source Library`,
         description,
+        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
       },
     };
   } catch {
@@ -334,6 +343,32 @@ const COMPACT_LIMIT = 14;
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
+// Lightweight, cached collection-existence lookup. Runs in the page SHELL (see
+// CollectionDetailPage) so a missing collection returns a REAL 404 status
+// instead of a soft-404 (HTTP 200 + "Not Found" body). #3232.
+//
+// React cache() dedupes this within a single request, so fetchCollectionData
+// reuses the same result — no extra DB round trip. It THROWS on DB error/timeout
+// (bubbles to error.tsx → 500) and returns null ONLY when the collection genuinely
+// doesn't exist, so a transient Atlas blip is never mistaken for a 404. The tenant
+// filter mirrors fetchCollectionData's exactly so the two can't disagree.
+const getCollectionDoc = cache(async (id: string, tenantId: string | null) => {
+  const db = await getReadDb();
+  return db.collection('collections').findOne(
+    tenantId
+      ? {
+        slug: id,
+        visible: { $ne: false },
+        $or: [
+          { tenantId },
+          { tenantId: { $exists: false } },
+        ],
+      }
+      : { slug: id, visible: { $ne: false } },
+    { maxTimeMS: 8000 },
+  );
+});
+
 async function fetchCollectionData(id: string, tenantId: string | null, provider?: string) {
   // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
@@ -341,22 +376,9 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   if (!db) throw new Error('DB connection timeout');
 
   // Only explicit visible:false hides a collection (takedowns, prelaunch);
-  // missing/undefined stays public — same convention as books.
-  const collection = await withTimeout(
-    db.collection('collections').findOne(
-      tenantId
-        ? {
-          slug: id,
-          visible: { $ne: false },
-          $or: [
-            { tenantId },
-            { tenantId: { $exists: false } },
-          ],
-        }
-        : { slug: id, visible: { $ne: false } }
-    ),
-    8000, null,
-  );
+  // missing/undefined stays public — same convention as books. Reuses the
+  // cache()'d shell lookup (getCollectionDoc), so this is free within a request.
+  const collection = await getCollectionDoc(id, tenantId);
   if (!collection) return null;
 
   const isArtCollection = collection.collection_type === 'visual_art';
@@ -625,7 +647,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     db.collection('collections')
       .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
       .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, featured_images: 1 })
       .toArray(),
     8000, [],
   );
@@ -741,7 +763,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     galleryTotalCount,
     exhibition: curationDraft?.curation ? JSON.parse(JSON.stringify(curationDraft.curation)) : null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
+    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; total_book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -749,6 +771,39 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
 
 // ---------- Page ----------
 
+// Skeleton shown while the heavy collection body streams in. Mirrors the old
+// collections/[id]/loading.tsx — moved into an INNER Suspense boundary so the
+// route's existence check can run in the shell and return a real 404. #3232.
+function CollectionDetailSkeleton() {
+  return (
+    <div className="min-h-screen bg-cream">
+      <ConditionalSiteHeader variant="light" />
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="h-4 w-32 bg-stone-200 rounded animate-pulse mb-6" />
+        <div className="mb-8">
+          <div className="h-10 w-2/3 bg-stone-200 rounded animate-pulse mb-3" />
+          <div className="h-5 w-full max-w-2xl bg-stone-100 rounded animate-pulse mb-2" />
+          <div className="h-5 w-4/5 max-w-2xl bg-stone-100 rounded animate-pulse" />
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div key={i} className="space-y-2">
+              <div className="aspect-[3/4] bg-stone-200 rounded-lg animate-pulse" />
+              <div className="h-3 w-3/4 bg-stone-200 rounded animate-pulse" />
+              <div className="h-3 w-1/2 bg-stone-100 rounded animate-pulse" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Shell: resolve params, honor redirects, and check existence BEFORE any Suspense
+// boundary. There is no loading.tsx above this route (both were removed in #3232),
+// so an await here blocks the streamed shell — letting notFound() commit a real 404
+// status. The heavy data fetch + render streams in via <Suspense> below, preserving
+// the loading skeleton users saw before.
 export default async function CollectionDetailPage({ params, provider }: Props & { provider?: string }) {
   const { id } = await params;
 
@@ -760,6 +815,20 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
   const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(await headers());
 
+  // Existence check in the shell — returns a real 404 for unknown slugs instead
+  // of a soft-404 (HTTP 200 + "Not Found" body). getCollectionDoc throws on DB
+  // failure (→ error.tsx / 500) and returns null only when genuinely absent.
+  const collectionDoc = await getCollectionDoc(id, tenantId);
+  if (!collectionDoc) notFound();
+
+  return (
+    <Suspense fallback={<CollectionDetailSkeleton />}>
+      <CollectionDetailContent id={id} tenantId={tenantId} tenantSlug={tenantSlug} provider={provider} />
+    </Suspense>
+  );
+}
+
+async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: { id: string; tenantId: string | null; tenantSlug: string | null; provider?: string }) {
   let data;
   try {
     data = await fetchCollectionData(id, tenantId, provider);
@@ -771,6 +840,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
     // incorrectly caching a notFound() response.
     throw err;
   }
+  // Defense-in-depth: the shell already 404'd truly-missing collections, but a
+  // tenant-scoped mismatch can still return null here.
   if (!data) notFound();
 
   const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
@@ -1029,9 +1100,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {child.book_count ? (
+                      {(child.total_book_count ?? child.book_count) ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {child.book_count.toLocaleString('en-US')} {itemLabel}
+                          {(child.total_book_count ?? child.book_count)!.toLocaleString('en-US')} {itemLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">

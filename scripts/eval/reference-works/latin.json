@@ -1,0 +1,115 @@
+{
+  "language": "Latin",
+  "script": "latin",
+  "db_languages": [
+    "Latin"
+  ],
+  "works": [
+    {
+      "work": "Aeneid I.1-7",
+      "slug": "aeneid-1",
+      "title_rx": "virgil|vergil|aenei|bucolica",
+      "source": "Wikisource (la), ed. with macrons; folded at compare time",
+      "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+      "canonicity_grade": "hyper",
+      "_note": "Lines 1-4 only — one-page rule: our 1580 editions print the poem embedded in commentary, ~4 verse lines per page; a longer passage spans the page boundary and fails the guard on honest word deletions.",
+      "reference": "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam, fātō profugus, Lāvīniaque vēnit lītora, multum ille et terrīs iactātus et altō vī superum saevae memorem Iūnōnis ob īram;",
+      "same_work_contrast": "aeneid-10-pallas"
+    },
+    {
+      "work": "Vulgate Genesis 1:1-5",
+      "slug": "vulgate-genesis-1",
+      "title_rx": "vulgat|biblia sacra|bibliorum",
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+      "canonicity_grade": "hyper",
+      "reference": "In principio creavit Deus caelum et terram. Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi : et spiritus Dei ferebatur super aquas. Dixitque Deus : Fiat lux. Et facta est lux. Et vidit Deus lucem quod esset bona : et divisit lucem a tenebris. Appellavitque lucem Diem, et tenebras Noctem : factumque est vespere et mane, dies unus.",
+      "same_work_contrast": "vulgate-genesis-5-genealogy"
+    },
+    {
+      "work": "Vulgate John 1:1-5",
+      "slug": "vulgate-john-1",
+      "title_rx": "vulgat|biblia sacra|evangelium|johannis|joannis",
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/50001.htm",
+      "reference": "In principio erat Verbum, et Verbum erat apud Deum, et Deus erat Verbum. Hoc erat in principio apud Deum. Omnia per ipsum facta sunt : et sine ipso factum est nihil, quod factum est. In ipso vita erat, et vita erat lux hominum : et lux in tenebris lucet, et tenebrae eam non comprehenderunt."
+    },
+    {
+      "work": "Vita Vergilii (Donatus auctus), 1580 Meyen Virgil",
+      "slug": "vita-vergilii-donatus-auctus",
+      "title_rx": "Buc\\.? ?Geor\\.? ?Aeneis|Meyen",
+      "source": "Living Poets (Durham University), Donatus auctus critical text after Brugnoli–Stok, Vitae Vergilianae antiquae (1997)",
+      "source_url": "https://livingpoets.dur.ac.uk/w/index.php/Draft:Donatus_auctus",
+      "edition": "Venice 1580 (Meyen)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "canonicity_grade": "low",
+      "_note": "Non-canonical row (#3235), SAME BOOK as the canonical Aeneid pin. Donatus AUCTUS recension confirmed on-page — the horse-divination anecdotes are 15th-c interpolations absent from the critical Vita Donatiana, so do NOT swap in the Wikisource 'Vita Vergiliana (Donatus)': memorized-Vita text would actively hurt here, which is the point. Passage starts mid-sentence because the page starts mid-word ('Nea-polim'). Guard-verified 2026-07-19 at 0.10, pipeline char accuracy 96.2%.",
+      "reference": "ubi, cum litteris et Graecis et Latinis uehementissimam operam dedisset, tandem omni cura omnique studio indulsit medicinae et mathematicis. quibus rebus cum ante alios eruditior peritiorque esset, se in urbem contulit statimque, magistri stabuli equorum Augusti amicitiam nactus, multos uariosque morbos incidentes equis curauit. at ille in mercedem singulis diebus panes Virgilio ut uni ex stabulariis dari iussit. interea a Crotoniatis pullus equi mirae pulchritudinis Caesari missus dono fuit, qui omnium iudicio spem portendebat uirtutis et celeritatis immensae. hunc cum aspexisset Maro, magistro stabuli dixit, natum esse ex morbosa equa et nec uiribus ualiturum nec celeritate, idque uerum fuisse inuentum est. quod cum magister stabuli Augusto recitasset, duplicari sibi in mercedem panes iussit. cum item ex Hispania Augusto canes dono mitterentur, et parentes eorum dixit Virgilius, et animum celeritatemque futuram. quo cognito mandat iterum augumentari Virgilio panes. dubitauit Augustus, Octauiine filius fuerit, an alterius, idque Maronem aperire posse arbitratus est,",
+      "book_id": "6a084d9715c643eb1af3f59e",
+      "page_number": 22
+    },
+    {
+      "work": "Hieronymus, Prologus Galeatus, 1566 Louvain Vulgate",
+      "slug": "hieronymus-prologus-galeatus",
+      "title_rx": "Vet[uv]stissima Exemplaria|Biblia",
+      "source": "Latin Wikisource, Vulgata Clementina — Prologus Galeatus",
+      "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Prologus_Galeatus,_sive_in_libros_Regum_praefatio",
+      "edition": "Louvain Vulgate (Hentenius), 1566",
+      "non_canonical": true,
+      "memorization_risk": "medium",
+      "_note": "Non-canonical row (#3235), SAME BOOK as the canonical Vulgate Genesis pin. Use the CLEMENTINE recension (descends from this very Louvain edition): the Stuttgart/Weber text a model would most likely have memorized scored guard 0.134 / charAcc 0.977 vs Clementine 0.058 / 0.995 on the same page — memorizing the wrong recension is measurable here. Guard-verified 2026-07-19.",
+      "reference": "Viginti et duas litteras esse apud Hebræos, Syrorum quoque lingua et Chaldæorum testatur, quæ Hebræa magna ex parte confinis est. Nam et ipsi vigintiduo elementa habent eodem sono, sed diversis characteribus. Samaritani etiam Pentateuchum Moysi totidem litteris scriptitant, figuris tantum et apicibus discrepantes. Certumque est Esdram scribam, legisque doctorem, post captam Jerosolymam et instaurationem templi sub Zorobabel, alias litteras reperisse quibus nunc utimur, cum ad illud usque tempus iidem Samaritanorum et Hebræorum characteres fuerint. In libro quoque Numerorum hæc eadem supputatio, sub Levitarum, ac sacerdotum censu, mystice ostenditur. Et nomen Domini tetragrammaton, in quibusdam Græcis voluminibus, usque hodie antiquis expressum litteris invenimus. Sed et psalmi, trigesimus sextus, et centesimus decimus, et centesimus undecimus, et centesimus decimus octavus, et centesimus quadragesimus quartus, quanquam diverso scribantur metro, tamen ejusdem numeri texuntur alphabeto. Et Jeremiæ lamentationes, et oratio ejus : Salomonis quoque in fine proverbia, ab eo loco in quo ait : Mulierem fortem quis inveniet ? iisdem alphabetis vel incisionibus supputantur.",
+      "book_id": "6a26b84361b3857ed05a5221",
+      "page_number": 15,
+      "canonicity_grade": "medium"
+    },
+    {
+      "work": "Hieronymus, Epistola ad Paulinum (Ep. 53), 1566 Louvain Vulgate",
+      "slug": "hieronymus-epistola-ad-paulinum",
+      "title_rx": "Vet[uv]stissima Exemplaria|Biblia",
+      "source": "Latin Wikisource, Vulgata Clementina — Hieronymus Paulino",
+      "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Hieronymus_Paulino",
+      "edition": "Louvain Vulgate (Hentenius), 1566",
+      "non_canonical": true,
+      "memorization_risk": "medium",
+      "_note": "Non-canonical row (#3235), same book as the canonical Vulgate Genesis pin. Discursive prose preface, not scripture; opens the Gutenberg Bible and many Vulgates (hence medium risk). Reference ends at 'major emente se fuit.' well before the page break (catchword 'vera-'); the hyper-memorized 'In principio erat Verbum' quotation near the page tail is deliberately excluded. Guard-verified 2026-07-19 at 0.03, pipeline char accuracy 99.8%.",
+      "reference": "Frater Ambrosius tua mihi munuscula perferens, detulit simul et suavissimas litteras, quæ a principio amicitiarum fidem probatæ jam fidei, et veteris amicitiæ præferebant. Vera enim illa necessitudo est, et Christi glutino copulata, quam non utilitas rei familiaris, non præsentia tantum corporum, non subdola et palpans adulatio : sed Dei timor, et Divinarum scripturarum studia conciliant. Legimus in veteribus historiis quosdam lustrasse provincias, novos adisse populos, maria transisse : ut eos quos ex libris noverant, coram quoque viderent. Sic Pythagoras Memphiticos vates, sic Plato Ægyptum, et Architam Tarentinum, eamque oram Italiæ, quæ quondam magna Græcia dicebatur, laboriosissime peragravit : ut qui Athenis magister erat, et potens, cujusque doctrinam Academiæ gymnasia personabant, fieret peregrinus atque discipulus : malens aliena verecunde discere, quam sua impudenter ingerere. Denique dum litteras quasi toto fugientes orbe persequitur, captus a piratis et venundatus, etiam tyranno crudelissimo paruit, captivus, vinctus, et servus ; tamen quia philosophus, major emente se fuit.",
+      "book_id": "6a26b84361b3857ed05a5221",
+      "page_number": 16,
+      "canonicity_grade": "medium"
+    },
+    {
+      "work": "Vulgate Genesis 5:3-18 (Sethite genealogy), 1566 Louvain Vulgate",
+      "slug": "vulgate-genesis-5-genealogy",
+      "title_rx": "Vet[uv]stissima Exemplaria|Biblia",
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/01005.htm",
+      "edition": "Louvain Vulgate (Hentenius), 1566",
+      "non_canonical": true,
+      "memorization_risk": "medium",
+      "canonicity_grade": "low",
+      "same_work_contrast": "vulgate-genesis-1",
+      "_note": "Within-WORK canonicity pair (#3235): Genesis 5 begat-list with lifespans vs the hyper-canonical Genesis 1 four scan pages earlier — same book of the Bible, same edition, same two-column type. Visually audited 2026-07-23: scan p.25 (printed p.3, sig A3) prints Gen 4:7-5:18, right column carries 5:1-18 ending exactly '...& genuit Henoch.' (catchword 'Et'), so the reference stops at v.18 per the one-page rule and starts at v.3 to skip the imago-Dei echo of 5:1-2. Only scan pp.1-25 of this copy have pipeline OCR, which is why the genealogy pin is Gen 5, not Gen 10/36. Known recension caveat: Clementine v.3 omits 'filium' which the 1566 print carries ('& genuit filium ad imaginem') — an OCR-side insertion the free-skip guard ignores. memorization_risk medium: the full Clementine text is common in training dumps, but this passage's quotation frequency is tiny next to Genesis 1. Guard-verified 2026-07-23 at 0.00, pipeline char accuracy 100.0%.",
+      "reference": "Vixit autem Adam centum triginta annis : et genuit ad imaginem et similitudinem suam, vocavitque nomen ejus Seth. Et facti sunt dies Adam, postquam genuit Seth, octingenti anni : genuitque filios et filias. Et factum est omne tempus quod vixit Adam, anni nongenti triginta, et mortuus est. Vixit quoque Seth centum quinque annis, et genuit Enos. Vixitque Seth, postquam genuit Enos, octingentis septem annis, genuitque filios et filias. Et facti sunt omnes dies Seth nongentorum duodecim annorum, et mortuus est. Vixit vero Enos nonaginta annis, et genuit Cainan. Post cujus ortum vixit octingentis quindecim annis, et genuit filios et filias. Factique sunt omnes dies Enos nongenti quinque anni, et mortuus est. Vixit quoque Cainan septuaginta annis, et genuit Malaleel. Et vixit Cainan, postquam genuit Malaleel, octingentis quadraginta annis, genuitque filios et filias. Et facti sunt omnes dies Cainan nongenti decem anni, et mortuus est. Vixit autem Malaleel sexaginta quinque annis, et genuit Jared. Et vixit Malaleel, postquam genuit Jared, octingentis triginta annis, et genuit filios et filias. Et facti sunt omnes dies Malaleel octingenti nonaginta quinque anni, et mortuus est. Vixitque Jared centum sexaginta duobus annis, et genuit Henoch.",
+      "book_id": "6a26b84361b3857ed05a5221",
+      "page_number": 25
+    },
+    {
+      "work": "Aeneid X.362-382 (Pallas rallies the Arcadians), 1580 Meyen Virgil",
+      "slug": "aeneid-10-pallas",
+      "title_rx": "Buc\\.? ?Geor\\.? ?Aeneis|Meyen",
+      "source": "Wikisource (la), ed. with macrons; folded at compare time",
+      "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_X",
+      "edition": "Venice 1580 (Meyen)",
+      "non_canonical": true,
+      "memorization_risk": "medium",
+      "canonicity_grade": "low",
+      "same_work_contrast": "aeneid-1",
+      "_note": "Within-WORK canonicity pair (#3235): mid-epic battle narrative (Pallas's exhortation, book X) vs the hyper-canonical Aeneid I.1-4 in the SAME 1580 commentary edition — same binding, same verse-embedded-in-commentary layout, ~21 verse lines on this page vs ~4 on the Aeneid I page. Visually audited 2026-07-23: scan p.890 (printed p.820) prints X.362-382 'At parte ex alta ... discrimina costis' (catchword 'Per'). Deliberately NOT book IV/VI or the Nisus-Euryalus episode (anthologized = still canonical). Recension fingerprint: the 1580 print diverges from the modern text at ~8 points a reciting model would get 'wrong-in-the-right-direction' — printed 'ex alta'/'Arcades...pedestres'/'Aspera quos'/'Speque mea...laudis'/'magno...obice' (margin note n even discusses the magna-obice variant)/'pelago Troiam ne petemus'/'magno uellit dum' vs Wikisource 'ex alia'/'Arcadas...pedestris'/'aspera quis'/'spemque meam...laudi'/'magna'/'pelagus Troiamne petamus'/'uellit magno dum'. These honest cross-edition mismatches (~14 of ~170 words) are the expected guard cost; char accuracy is a LOWER BOUND here, same caveat as the Dioscorides row in greek.json. Guard-verified 2026-07-23 at 0.10, pipeline char accuracy 98.3%.",
+      "reference": "At parte ex aliā, quā saxa rotantia lātē intulerat torrēns arbustaque dīruta rīpīs, Arcadas insuētōs aciēs īnferre pedestrīs ut uīdit Pallās Latiō dare terga sequācī, aspera quīs nātūra locī dīmittere quandō suāsit equōs, ūnum quod rēbus restat ēgēnīs, nunc prece, nunc dictīs uirtūtem accendit amārīs; Quō fugitis, sociī? Per uōs et fortia factā, per ducis Euandrī nōmen dēuictaque bella spemque meam, patriae quae nunc subit aemula laudī, fīdite nē pedibus. Ferrō rumpenda per hostīs est uia. Quā globus ille uirum dēnsissimus urget, hāc uōs et Pallanta ducem patria alta reposcit. Nūmina nūlla premunt, mortālī urgēmur ab hoste mortālēs; totidem nōbīs animaeque manūsque. Ecce maris magnā claudit nōs obice pontus, dēest iam terra fugae: pelagus Trōiamne petāmus? Haec ait, et medius dēnsōs prōrumpit in hostīs. Obuius huic prīmum fātīs adductus inīquīs fit Lagus. Hunc, uellit magnō dum pondere saxum, intortō fīgit tēlō, discrīmina costīs",
+      "book_id": "6a084d9715c643eb1af3f59e",
+      "page_number": 890
+    }
+  ]
+}

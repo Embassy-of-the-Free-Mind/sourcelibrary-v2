@@ -8,7 +8,19 @@ interface ExploreNavProps {
   };
 }
 
-const VIZ_CARDS = [
+interface VizCard {
+  href: string;
+  title: string;
+  description: string;
+  /** Omit to render the card without a stat line (e.g. stats that live in another store). */
+  statKey?: 'with_coordinates' | 'with_dates' | 'entities';
+  statLabel?: string;
+  icon: React.ReactNode;
+  color: string;
+  available: boolean;
+}
+
+const VIZ_CARDS: VizCard[] = [
   {
     href: '/explore/map',
     title: 'Map',
@@ -63,9 +75,22 @@ const VIZ_CARDS = [
     color: 'var(--accent-violet)',
     available: false,
   },
+  {
+    href: '/ngrams',
+    title: 'Ngrams',
+    description: 'How often words and phrases appear across five centuries of sources — click any trend to read the pages behind it.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
+        <polyline points="3,17 8,11 12,14 17,6 21,9" />
+        <line x1="3" y1="21" x2="21" y2="21" />
+      </svg>
+    ),
+    color: 'var(--accent-gold-dark)',
+    available: true,
+  },
 ];
 
-function CardContent({ card, count }: { card: typeof VIZ_CARDS[number]; count: number }) {
+function CardContent({ card, count }: { card: VizCard; count: number | null }) {
   return (
     <>
       <div className="flex items-start justify-between mb-3">
@@ -87,18 +112,20 @@ function CardContent({ card, count }: { card: typeof VIZ_CARDS[number]; count: n
       <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>
         {card.description}
       </p>
-      <div className="text-sm font-medium" style={{ color: card.color }}>
-        {count.toLocaleString('en-US')} {card.statLabel}
-      </div>
+      {count !== null && (
+        <div className="text-sm font-medium" style={{ color: card.color }}>
+          {count.toLocaleString('en-US')} {card.statLabel}
+        </div>
+      )}
     </>
   );
 }
 
 export default function ExploreNav({ totals }: ExploreNavProps) {
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {VIZ_CARDS.map((card) => {
-        const count = totals[card.statKey];
+        const count = card.statKey ? totals[card.statKey] : null;
         const sharedClass = `group rounded-xl p-6 transition-all ${
           card.available
             ? 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer'

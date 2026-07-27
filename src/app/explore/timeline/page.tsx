@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
+import SiteHeader from '@/components/layout/SiteHeader';
 import {
   CANONICAL_ENTITIES_COLLECTION,
   canonicalEntitiesReadpathEnabled,
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   description:
     'Interactive timeline of 2,900+ historical figures from the Western esoteric tradition, plotted by birth and death dates from Wikidata.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Timeline — Explore — Source Library',
     description:
       'Lifespans of historical figures — who was alive when, and how intellectual movements clustered.',
@@ -376,5 +378,10 @@ export default async function TimelinePage() {
   const data = canonicalEntitiesReadpathEnabled()
     ? await fetchTimelineDataCanonical()
     : await fetchTimelineData();
-  return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  return (
+    <>
+      <SiteHeader variant="light" />
+      <TimelineLoader entities={data.entities} stats={data.stats} />
+    </>
+  );
 }

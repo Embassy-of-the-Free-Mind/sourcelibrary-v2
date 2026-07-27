@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/sponsors' },
 };
 
-const PARTNERSHIP_EMAIL = 'derek@sourcelibrary.org';
+const PARTNERSHIP_EMAIL = 'team@sourcelibrary.org';
 const PARTNERSHIP_SUBJECT = 'Corporate%20partnership%20inquiry%20%E2%80%94%20Source%20Library';
 
 const MEMBERSHIP_INCLUDES = [

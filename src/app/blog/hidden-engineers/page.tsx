@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy - Source Library',
@@ -11,6 +10,10 @@ export const metadata: Metadata = {
     title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
     description: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy. The primary sources tell a stranger story than the textbooks.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/hidden-engineers',
@@ -829,7 +832,6 @@ export default function HiddenEngineersPage() {
         </div>
       </article>
 
-      <BlogComments slug="hidden-engineers" />
     </ContentPageLayout>
   );
 }

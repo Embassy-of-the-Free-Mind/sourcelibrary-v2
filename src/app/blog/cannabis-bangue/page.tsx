@@ -1,16 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: "Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis - Source Library",
   description:
     'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     description:
       'A sea-captain, a coffeehouse, and the Royal Society\'s first account of cannabis — and the two-thousand-year history it forgot. Sixty books, twelve languages.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
   },
   alternates: {
     canonical: '/blog/cannabis-bangue',
@@ -299,7 +303,6 @@ export default function CannabisBanguePage() {
           </ul>
         </section>
 
-        <BlogComments slug="cannabis-bangue" />
       </article>
     </ContentPageLayout>
   );

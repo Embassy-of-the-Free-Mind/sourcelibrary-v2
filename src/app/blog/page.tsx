@@ -26,6 +26,82 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'nine-models-forty-pages',
+    title: 'Nine Models, Forty Pages',
+    subtitle:
+      "We benchmarked every OCR-capable model we could reach — Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU — against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
+    date: '23 July 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg',
+    imageAlt:
+      "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models could not read.",
+  },
+  {
+    slug: 'playable-page',
+    title: 'The Playable Page',
+    subtitle:
+      'Old treatises are full of instruments diagrammed and silenced — monochord divisions, tetrachord arcs, string tables worked out to the integer. Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+    date: '19 July 2026',
+    readTime: '3 instruments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg',
+    imageAlt:
+      'A page of the Boethius manuscript: nested red arcs mapping the chromatic and enharmonic tetrachords, with string names and monochord numbers.',
+  },
+  {
+    slug: 'ngram-viewer',
+    title: 'Chart a Word, Then Read the Page',
+    subtitle:
+      'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science — with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
+    date: '19 July 2026',
+    readTime: '7 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg',
+    imageAlt: "Concentric rings of Latin, Greek, and Hebrew words — Heinrich Khunrath's 'The Four, the Three, the Two, and the One,' 1595.",
+  },
+  {
+    slug: 'sound-laboratory',
+    title: 'The Sound Laboratory',
+    subtitle:
+      'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
+    date: '16 July 2026',
+    readTime: '10 experiments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg',
+    imageAlt: "A smith at his anvil, hammer raised — Aegidius Sadeler's engraving, 1608.",
+  },
+  {
+    slug: 'nature-of-harmony',
+    title: 'The Nature of Harmony',
+    subtitle:
+      'For twenty-five centuries and across five civilizations, people said the world is built like music — and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
+    date: '15 July 2026',
+    readTime: '18 min read',
+    tag: 'History of Ideas',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
+    imageAlt:
+      "Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature chained to the divine name above and to the ape of Art below.",
+  },
+  {
+    slug: 'show-me-the-number',
+    title: 'Show Me the Number',
+    subtitle:
+      'We keep saying AI should be in "harmony" with us — aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
+    date: '15 July 2026',
+    readTime: '12 min read',
+    tag: 'Essay',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
+    imageAlt:
+      "Fludd's ape of Art at the centre of the cosmos, holding a gridded model of the world — the artificial imitator, four centuries early.",
+  },
+  {
     slug: 'fish-voiced-priest',
     title: 'The Fish-Voiced Priest',
     subtitle:
@@ -596,7 +672,13 @@ export default function BlogPage() {
           subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
           image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
-        />
+        >
+          <p className="text-stone-400 text-sm mt-4">
+            <Link href="/blog/how-these-are-made" className="hover:text-white underline decoration-stone-500 underline-offset-2 transition-colors">
+              How these notes are made
+            </Link>
+          </p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >

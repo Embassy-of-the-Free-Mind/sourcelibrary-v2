@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Claude Can Now Read Thousands of Rare Books - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'Claude Can Now Read Thousands of Rare Books',
     description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg' }],
   },
   alternates: {
     canonical: '/blog/mcp-server',
@@ -271,12 +274,11 @@ export default function McpServerPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
             Source Library is a project of the Embassy of the Free Mind. If you use it for research, we&apos;d love to hear about it &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="mcp-server" />
     </ContentPageLayout>
   );
 }

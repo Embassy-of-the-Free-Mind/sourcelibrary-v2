@@ -816,3 +816,10 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 [data-avatar="true"] {
   border-radius: 9999px !important;
 }
+
+/* Hymn player sing-along highlight (HymnPlayer.tsx) — the currently sounding
+   note and its lyric syllable, driven on the audio scheduler's clock */
+.hymn-now,
+.hymn-now * {
+  fill: var(--accent-rust) !important;
+}

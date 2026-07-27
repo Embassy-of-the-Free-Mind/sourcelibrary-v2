@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import MiniBoard, { MiniBoardPiece } from '@/components/rithmomachia/MiniBoard';
 import { Position } from '@/lib/rithmomachia/types';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia Visual Guide | Source Library',
@@ -91,7 +92,15 @@ function GuideSection({
 
 export default function RithmomachiaGuidePage() {
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <>
+      <SiteHeader
+        variant="light"
+        breadcrumbs={[
+          { label: 'Rithmomachia', href: '/rithmomachia' },
+          { label: 'Visual Guide', href: '/rithmomachia/guide' },
+        ]}
+      />
+      <div className="max-w-2xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
         <Link href="/rithmomachia" className="text-sm text-accent-rust hover:underline">
@@ -317,6 +326,7 @@ export default function RithmomachiaGuidePage() {
           Full rules with primary sources &rarr;
         </Link>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

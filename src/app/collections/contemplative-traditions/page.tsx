@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
@@ -220,18 +221,7 @@ export default async function ContemplativeTraditionsPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Nav */}
-      <header className="bg-gradient-to-r from-stone-800 via-stone-900 to-stone-800 border-b border-accent-gold-dark/30">
-        <div className="max-w-[1500px] mx-auto px-6 py-4">
-          <Link
-            href="/collections"
-            className="inline-flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors text-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Collections
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="dark" breadcrumbs={[{ label: 'Collections', href: '/collections' }]} />
 
       {/* Hero */}
       <div className="relative bg-gradient-to-br from-stone-800 via-stone-900 to-stone-800 text-white overflow-hidden">

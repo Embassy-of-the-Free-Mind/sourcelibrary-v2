@@ -269,6 +269,15 @@ export default function ImageDetailPage({
       setBookThumbnails(thumbs);
       const idx = ids.indexOf(imageId!);
       setCurrentIndex(idx >= 0 ? idx : 0);
+    }).catch((err) => {
+      if (cancelled) return;
+      // A missing/deleted collection (e.g. a stale ?gcollection= link that 404s) must
+      // not break the viewer. Drop to book scope so book-wide prev/next still works.
+      if (collectionScope && data?.book?.id) {
+        setCollectionScope(null);
+        return;
+      }
+      console.error('Failed to load gallery navigation:', err);
     });
 
     return () => { cancelled = true; };

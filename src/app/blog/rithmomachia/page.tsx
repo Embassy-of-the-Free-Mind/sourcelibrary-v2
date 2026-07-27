@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Research Notes - Source Library',
@@ -16,6 +15,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg' }],
   },
   alternates: {
     canonical: '/blog/rithmomachia',
@@ -1008,14 +1011,13 @@ export default function RithmomachiaPage() {
             Source Library is a digital library of rare philosophical, scientific, and esoteric texts,
             translated from their original languages using AI and available to read for free.
             Questions or corrections?{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="rithmomachia" />
     </ContentPageLayout>
   );
 }

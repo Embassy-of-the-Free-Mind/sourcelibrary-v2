@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const revalidate = 86400;
@@ -21,6 +20,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg' }],
   },
   alternates: {
     canonical: '/blog/10000-books',
@@ -385,14 +388,13 @@ export default function TenThousandBooksPage() {
           <p className="text-secondary text-sm leading-relaxed font-body">
             Source Library is a project of the Embassy of the Free Mind. If you have leads on
             untranslated texts that belong in the collection &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="10000-books" />
     </ContentPageLayout>
     </>
   );

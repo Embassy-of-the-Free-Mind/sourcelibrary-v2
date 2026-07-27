@@ -1,16 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: "Did an AI Write the Pope's AI Encyclical? - Research Notes - Source Library",
   description:
     "Detectors flagged Magnifica Humanitas as 46% AI-written; the headline was 127 em-dashes vs zero in a comparison encyclical. We re-ran the test locally against eight human encyclicals. The smoking gun is a baseline-selection artifact.",
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg', alt: 'Frontispiece of Athanasius Kircher\'s Turris Babel (1679): a draftsman sketches the half-built Tower of Babel on a tablet while a sage and a general look on, beneath a radiant divine eye — the encyclical\'s own central image.' }],
     title: "Did an AI Write the Pope's AI Encyclical?",
     description:
       'Detectors flagged Magnifica Humanitas as 46% AI-written. We re-ran the test against eight human encyclicals — and the evidence dissolves. A note on why baselines decide everything.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg', alt: 'Frontispiece of Athanasius Kircher\'s Turris Babel (1679): a draftsman sketches the half-built Tower of Babel on a tablet while a sage and a general look on, beneath a radiant divine eye — the encyclical\'s own central image.' }],
   },
   alternates: {
     canonical: '/blog/did-an-ai-write-the-encyclical',
@@ -257,7 +261,6 @@ export default function DidAnAiWriteTheEncyclicalPage() {
           <em>Full interactive data &mdash; every paragraph, both languages, all three methods &mdash; at <Link href="https://magnifica-ai-analysis.vercel.app" className="text-accent-rust hover:underline">magnifica-ai-analysis.vercel.app</Link>. The encyclical itself is on <Link href="https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html" className="text-accent-rust hover:underline">vatican.va</Link>. Detector: the <Link href="https://arxiv.org/abs/2401.12070" className="text-accent-rust hover:underline">Binoculars</Link> method (Hans et al., 2024).</em>
         </p>
 
-        <BlogComments slug="did-an-ai-write-the-encyclical" />
       </article>
     </ContentPageLayout>
   );

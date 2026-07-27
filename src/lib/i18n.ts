@@ -126,6 +126,7 @@ export interface FooterStrings {
   vision: string;
   census: string;
   progress: string;
+  research: string;
   researchNotes: string;
   privacy: string;
   cookieSettings: string;
@@ -158,6 +159,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Our Vision',
     census: 'Translation Census',
     progress: 'Progress',
+    research: 'Research',
     researchNotes: 'Research Notes',
     privacy: 'Privacy',
     cookieSettings: 'Cookie Settings',
@@ -187,6 +189,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
     progress: 'Progreso',
+    research: 'Investigación',
     researchNotes: 'Notas de investigación',
     privacy: 'Privacidad',
     cookieSettings: 'Preferencias de cookies',

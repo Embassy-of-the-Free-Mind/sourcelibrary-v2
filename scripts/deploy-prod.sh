@@ -13,6 +13,18 @@
 # skip the purge entirely. This wrapper closes that gap: deploy, then purge +
 # warm, every time.
 #
+# Caching caveat (#3309): a Cloudflare purge clears the shared CDN edge, NOT
+# browsers' private HTTP caches. An API response sent as `public, s-maxage=<n>`
+# with no `max-age` is cached by the browser under RFC 9111 heuristic freshness
+# and served with zero network requests — so a data correction (backfill,
+# visibility flip, re-sync) can stay invisible in an already-open tab for days
+# even after this purge runs. Content-derived API routes therefore ship
+# `max-age=0` (browser revalidates; s-maxage still feeds the CDN). If a
+# correction must be visible immediately to existing sessions, the response
+# needs `max-age=0` BEFORE the stale copies are minted — purging afterwards is
+# too late for copies already in browsers. Invariant pinned by
+# tests/unit/api-cache-max-age.test.ts.
+#
 # Usage:  npm run deploy:prod   (or)   ./scripts/deploy-prod.sh
 #
 # Requires CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID, CRON_SECRET in
@@ -48,11 +60,16 @@ for var in CLOUDFLARE_API_TOKEN CLOUDFLARE_ZONE_ID CRON_SECRET; do
   fi
 done
 
-# 3. Typecheck before burning a deploy cycle (the #1 source of wasted deploys).
+# 3. Refresh blog revision dates from git history ("Last revised …" in the
+#    note footer). Non-fatal: the committed JSON is a good-enough fallback.
+echo "▸ Refreshing blog revision dates…"
+node scripts/maintenance/generate-blog-revisions.mjs || echo "  (skipped — using committed blog-revisions.json)"
+
+# 4. Typecheck before burning a deploy cycle (the #1 source of wasted deploys).
 echo "▸ Typechecking (npx tsc --noEmit)…"
 npx tsc --noEmit
 
-# 4. Deploy to production.
+# 5. Deploy to production.
 #    Do NOT let a nonzero exit from the CLI abort the script before the purge:
 #    `vercel --prod` can deploy SUCCESSFULLY and then exit nonzero on a
 #    post-deploy status-poll timeout (ETIMEDOUT against api.vercel.com — bit us
@@ -76,7 +93,7 @@ if [ "$DEPLOY_EXIT" -ne 0 ]; then
   echo "  prod / responds: HTTP $PROD_OK — continuing to purge + warm regardless." >&2
 fi
 
-# 5. Purge the CDN so cached HTML can't outlive the assets it references.
+# 6. Purge the CDN so cached HTML can't outlive the assets it references.
 echo "▸ Purging Cloudflare cache (purge_everything)…"
 PURGE=$(curl -s -X POST \
   "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
@@ -91,7 +108,7 @@ else
   exit 1
 fi
 
-# 6. Re-warm top pages so the next visitor gets a fresh, styled page from cache.
+# 7. Re-warm top pages so the next visitor gets a fresh, styled page from cache.
 echo "▸ Warming caches (/api/deploy-warm)…"
 WARM_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   "https://sourcelibrary.org/api/deploy-warm" \

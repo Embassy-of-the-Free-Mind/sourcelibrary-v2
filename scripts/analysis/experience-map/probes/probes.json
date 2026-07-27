@@ -1,0 +1,206 @@
+{
+  "_note": "Phenomenological probe set for the consciousness-map feasibility pass. Dimensions are drawn from modern phenomenology instruments so the resulting map is comparable to psychometric structure: MEQ30 (Barrett/Griffiths mystical experience), 5D-ASC (Dittrich altered states), Hood M-scale, plus historically-attested categories the instruments miss (visionary encounter, possession, ascent, dream-incubation, melancholic states). Each probe is written as a FIRST-PERSON REPORT SENTENCE, not a topic label, because we retrieve against passages and want experiential register rather than doctrinal register.",
+  "dimensions": [
+    {
+      "id": "unity",
+      "label": "Unity / ego dissolution",
+      "source": "MEQ30 internal+external unity; 5D-ASC OBN",
+      "probes": [
+        "I felt myself dissolve and become one with everything around me",
+        "the boundary between myself and the world fell away entirely",
+        "I no longer knew whether I existed as a separate person",
+        "all things appeared to me as a single undivided whole"
+      ]
+    },
+    {
+      "id": "light",
+      "label": "Inner light / photism",
+      "source": "Hood M-scale; historically ubiquitous",
+      "probes": [
+        "a great light appeared to me though my eyes were closed",
+        "I was surrounded by a brightness clearer than the noonday sun",
+        "the darkness opened and a shining splendour poured in upon me"
+      ]
+    },
+    {
+      "id": "ineffability",
+      "label": "Ineffability",
+      "source": "MEQ30 ineffability factor",
+      "probes": [
+        "what I saw cannot be set down in any words of ours",
+        "no tongue could utter and no pen could write what was shown to me",
+        "I lack all speech to declare that which I then perceived"
+      ]
+    },
+    {
+      "id": "noetic",
+      "label": "Noetic quality / revealed knowing",
+      "source": "MEQ30 noetic quality",
+      "probes": [
+        "in that moment I knew with utter certainty, without being taught",
+        "the whole of it was made plain to me at once, as knowledge given not learned",
+        "I understood the secret in an instant and doubted it no more"
+      ]
+    },
+    {
+      "id": "time",
+      "label": "Time distortion / timelessness",
+      "source": "5D-ASC; MEQ30 transcendence of time and space",
+      "probes": [
+        "an hour seemed to me a hundred years",
+        "I was outside of time altogether and knew neither before nor after",
+        "the moment stretched without end and I could not measure its passing"
+      ]
+    },
+    {
+      "id": "sacred_awe",
+      "label": "Sacredness, awe, reverence",
+      "source": "MEQ30 sacredness; positive mood",
+      "probes": [
+        "a trembling reverence came over me and I fell upon my face",
+        "I was filled with an awe such as I had never known in my life",
+        "sweetness and joy beyond all earthly delight flooded my heart"
+      ]
+    },
+    {
+      "id": "dread",
+      "label": "Anxious ego dissolution / terror",
+      "source": "5D-ASC AED (the dark pole the MEQ under-samples)",
+      "probes": [
+        "a horror without cause seized me and I thought I should die",
+        "I was afraid though nothing was there to be afraid of",
+        "I felt myself falling into an abyss and could not cry out"
+      ]
+    },
+    {
+      "id": "vision_encounter",
+      "label": "Visionary encounter with a presence",
+      "source": "historical category; absent from modern instruments",
+      "probes": [
+        "there stood before me a figure whom I knew was not of this world",
+        "an angel appeared to me and spoke, and I heard the words plainly",
+        "I beheld a form of great beauty which addressed me by name"
+      ]
+    },
+    {
+      "id": "voice",
+      "label": "Heard voice / inner speech attributed elsewhere",
+      "source": "historical; clinically salient",
+      "probes": [
+        "I heard a voice within me that was not my own",
+        "words were spoken to me inwardly which I did not compose",
+        "a voice sounded in my ear, and yet no man was present"
+      ]
+    },
+    {
+      "id": "ascent",
+      "label": "Ascent / flight / celestial journey",
+      "source": "Hekhalot, Kabbalah, Hermetic ascent, shamanic flight",
+      "probes": [
+        "I was carried upward through the spheres and saw the heavens opened",
+        "my spirit was lifted out of my body and travelled far away",
+        "I passed through gate after gate rising ever higher"
+      ]
+    },
+    {
+      "id": "body_alienation",
+      "label": "Body dissolution / disembodiment",
+      "source": "5D-ASC; out-of-body report",
+      "probes": [
+        "I could no longer feel my limbs nor tell where my body ended",
+        "I saw my own body lying below me as if it belonged to another",
+        "my flesh became as if it were not mine at all"
+      ]
+    },
+    {
+      "id": "synesthesia",
+      "label": "Synesthesia / cross-modal perception",
+      "source": "5D-ASC; alchemical + musical sources",
+      "probes": [
+        "I saw the sounds as colours moving before me",
+        "the music appeared to me in shapes and figures",
+        "every colour had its own voice and sang to me"
+      ]
+    },
+    {
+      "id": "elementary_imagery",
+      "label": "Elementary geometric imagery",
+      "source": "5D-ASC elementary imagery; form constants",
+      "probes": [
+        "figures and patterns turned continually before my closed eyes",
+        "I saw wheels within wheels and circles of fire revolving",
+        "colours and geometrical shapes rose up unbidden before my sight"
+      ]
+    },
+    {
+      "id": "possession",
+      "label": "Possession / agency displacement",
+      "source": "historical; absent from modern instruments",
+      "probes": [
+        "another moved my hand and I only watched it write",
+        "a spirit entered into me and used my tongue to speak",
+        "I was no longer the one acting, though the deed was done through me"
+      ]
+    },
+    {
+      "id": "dream_incubation",
+      "label": "Dream / hypnagogic vision",
+      "source": "historical; incubation, oneiromancy",
+      "probes": [
+        "as I lay between sleeping and waking there came to me a vision",
+        "in a dream of the night it was shown to me plainly",
+        "I awoke and knew that what I had seen was no common dream"
+      ]
+    },
+    {
+      "id": "melancholy",
+      "label": "Melancholy, spiritual desolation, dark night",
+      "source": "historical; Burton, John of the Cross; the affective dark pole",
+      "probes": [
+        "a heaviness lay upon my soul and all light was withdrawn from me",
+        "I was left utterly dry and could find no comfort in anything",
+        "for many days I lived in a darkness of spirit without cause"
+      ]
+    },
+    {
+      "id": "substance",
+      "label": "Substance-induced states",
+      "source": "historical; opium, bangue/cannabis, wine, nightshades, tobacco",
+      "probes": [
+        "after taking the draught my senses were wholly altered",
+        "having eaten of it, I fell into a laughter I could not govern, and strange fancies rose in me",
+        "the smoke being taken, I was transported and knew not where I was"
+      ]
+    },
+    {
+      "id": "concentration",
+      "label": "Absorbed concentration / one-pointedness",
+      "source": "contemplative technique; jhana, dhyana, recollection",
+      "probes": [
+        "my mind became fixed upon one point and would not wander",
+        "I held the image steady before my inner eye without effort",
+        "thought grew still and quiet until nothing stirred in me"
+      ]
+    },
+    {
+      "id": "clarity_cessation",
+      "label": "Luminous emptiness / cessation",
+      "source": "Tibetan and Advaita registers the Western instruments miss",
+      "probes": [
+        "the mind rested in its own nature, empty and clear",
+        "there was awareness without any object of awareness",
+        "all appearance ceased and yet knowing remained"
+      ]
+    },
+    {
+      "id": "bodily_heat",
+      "label": "Bodily energetic phenomena",
+      "source": "kundalini, tummo, alchemical inner heat, mystical ardour",
+      "probes": [
+        "a heat rose up along my spine and filled my whole body",
+        "I felt a burning sweetness in my breast that was not a fever",
+        "a power moved within me from below upward like a flame"
+      ]
+    }
+  ]
+}

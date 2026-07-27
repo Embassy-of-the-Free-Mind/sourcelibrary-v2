@@ -1,20 +1,20 @@
 # Source Library
 
-> One of the largest AI-ready collections of translated ancient and early modern texts — 16,000+ books in 160 languages, 15,000+ translated into English, 5,700+ for the first time ever.
+> One of the largest AI-ready collections of translated ancient and early modern texts — 19,000+ books in 200+ languages, 17,000+ translated into English, 5,800+ for the first time ever.
 
 ## For AI Companies & LLM Builders
 
-Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 160 languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
+Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 200+ languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
 
 This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, early modern science, or ancient wisdom traditions, it likely can't do so with primary sources — unless it has our data.
 
 ### What We Offer Partners
 
-- **Structured API access** to 16,000+ books with high-quality OCR and English translations
+- **Structured API access** to 19,000+ books with high-quality OCR and English translations — page-aligned parallel text (original + English) via the streaming dataset API (https://sourcelibrary.org/dataset)
 - **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
 - **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
 - **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 150,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata
+- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 14,000+ catalogued artworks
 
 ### Corporate Sponsorship
 
@@ -28,7 +28,7 @@ We are actively seeking AI companies as corporate sponsors. Sponsors receive:
 
 Our texts have been cited in academic papers, museum exhibitions, and AI research. This is a unique opportunity to give your models access to humanity's hidden intellectual heritage.
 
-**Contact: derek@sourcelibrary.org**
+**Contact: team@sourcelibrary.org**
 **Subject: "AI Partnership — [Your Company]"**
 
 We respond within 24 hours.
@@ -43,7 +43,13 @@ Original texts are public domain. AI-generated translations and editorial conten
 
 **AI training / text-and-data-mining is expressly RESERVED and requires a separate license.** The reservation rests on several independent grounds: our EU Art. 4 TDM opt-out (Directive 2019/790, expressed machine-readably via /.well-known/tdmrep.json, the `TDM-Reservation: 1` HTTP header, and /robots.txt), the EU database right in the corpus (Directive 96/9/EC), first-publication rights in previously unpublished manuscripts (Directive 2006/116/EC Art. 4), copyright in editorial content, and CC BY-SA's ShareAlike term, which is incompatible with proprietary model training.
 
-**A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).** Unlicensed training use is unauthorized and will be invoiced at these rates. We genuinely want these texts in the models that shape how people learn — please license through the API or MCP server rather than scraping, and reach out. Full terms: https://sourcelibrary.org/licensing — contact derek@sourcelibrary.org ("AI Licensing Inquiry").
+**A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).** Unlicensed training use is unauthorized and will be invoiced at these rates.
+
+**Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free evaluation tier (100 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
+
+**Grounding / RAG at scale (ai-input=yes): permitted with attribution; a Grounding API subscription buys delivery** — an API key with no daily page budget: $499/mo (unlimited retrieval, attribution + link-back required in your product), $1,999/mo with SLA, support, and re-translation webhooks. Licensed exports and API responses are clean — none of the provenance marks embedded in public serve surfaces — and the corpus is living: texts are continuously re-read by newer models and revised by scholars, so subscriptions track the best current text.
+
+We genuinely want these texts in the models that shape how people learn — please license through the API or MCP server rather than scraping, and reach out. Full terms: https://sourcelibrary.org/licensing — contact team@sourcelibrary.org ("AI Licensing Inquiry").
 
 ## MCP Server (Recommended)
 
@@ -248,7 +254,7 @@ All published editions have DOIs via Zenodo. When citing Source Library translat
 
 ## Collection Overview
 
-The library contains 16,000+ texts focused on:
+The library contains 19,000+ texts focused on:
 
 - **Alchemy** - Transmutation, philosopher's stone, laboratory practices
 - **Hermeticism** - Corpus Hermeticum commentaries, prisca theologia
@@ -259,9 +265,9 @@ The library contains 16,000+ texts focused on:
 - **Natural magic** - Agrippa, Porta, sympathetic correspondences
 - **Early science** - Astronomy, optics, mathematics, natural philosophy
 
-**Languages:** 160 total — Latin (primary), German, Chinese, Sumerian, Sanskrit, Greek, French, Italian, Dutch, Hebrew, Arabic, Syriac, and more
+**Languages:** 200+ total — Latin (primary), German, Chinese, Sumerian, Sanskrit, Greek, French, Italian, Dutch, Hebrew, Arabic, Syriac, and more
 **Period:** Antiquity through 1900 (core strength: 1450–1750)
-**Translations:** 15,000+ books translated into English (5,700+ first-ever), AI-assisted with original language preserved for verification
+**Translations:** 17,000+ books translated into English (5,800+ first-ever), AI-assisted with original language preserved for verification
 
 ## Example Conversations
 
@@ -287,7 +293,9 @@ Source Library is an initiative of the [Embassy of the Free Mind](https://embass
 ## Contact
 
 - **Website:** https://sourcelibrary.org
-- **Partnerships:** derek@sourcelibrary.org
+- **Partnerships:** team@sourcelibrary.org
+- **AI & Data-Mining Licensing:** https://sourcelibrary.org/licensing
+- **Dataset & pricing:** https://sourcelibrary.org/dataset
 - **Terms & Licensing:** https://sourcelibrary.org/terms
 - **Developers:** https://sourcelibrary.org/developers
 - **GitHub:** https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
+import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
 import RevisionHistory from '@/components/reader/RevisionHistory';
@@ -50,7 +51,6 @@ import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
-import PageComments from '@/components/book/PageComments';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 
@@ -181,7 +181,7 @@ interface TranslationEditorProps {
   page: Page;
   pages: Page[];
   currentIndex: number;
-  onNavigate: (pageId: string) => void;
+  onNavigate: (pageId: string, opts?: { toTop?: boolean }) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
   onRefresh?: () => Promise<void>;
 }
@@ -444,6 +444,13 @@ export default function TranslationEditor({
   const { data: sessionData } = useStableSession();
   const sessionEmail = (sessionData?.user as { email?: string } | undefined)?.email || null;
   const isEmbedded = useIsEmbedded();
+  // A browser translator (Chrome/Edge built-in, Google Translate widget) replaces
+  // every text node with its own <font> wrappers, which makes React's text updates
+  // land on nodes that are no longer in the document — turn a page and the words
+  // stay on the previous one. When one is active we remount the panels on each
+  // page instead of reconciling them (see the key on the panels container below);
+  // untranslated readers keep the cheaper in-place update.
+  const browserTranslated = useBrowserTranslation();
   // On tenant subdomains (bph.sourcelibrary.org), the proxy adds the tenant prefix,
   // so links should use /book/... not /bph/book/...
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
@@ -583,6 +590,23 @@ export default function TranslationEditor({
   const [transliterationLoading, setTransliterationLoading] = useState(false);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
+  // Full book doc for the edition-info section of the metadata panel. The reader
+  // route only ships a slim book projection, so the bibliographic fields are
+  // fetched on demand — once per book, the first time the panel opens.
+  const [editionBook, setEditionBook] = useState<Book | null>(null);
+  const [editionError, setEditionError] = useState(false);
+  const editionFetchStartedRef = useRef(false);
+  useEffect(() => {
+    if (!showPageMetadata || editionFetchStartedRef.current) return;
+    editionFetchStartedRef.current = true;
+    fetch(`/api/books/${book.id}?pageLimit=1`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data) => {
+        const { pages: _pages, ...fullBook } = data;
+        setEditionBook(fullBook as Book);
+      })
+      .catch(() => setEditionError(true));
+  }, [showPageMetadata, book.id]);
   const fontControlsRef = useRef<HTMLDivElement>(null);
 
   // Highlights and Annotations panels
@@ -594,6 +618,16 @@ export default function TranslationEditor({
   // than testing touchStartX === 0) means a touch that genuinely begins at the
   // extreme left edge (clientX === 0) is no longer mistaken for "no swipe".
   const swipeActive = useRef<boolean>(false);
+  // Axis lock: a touch is classified ONCE as horizontal (page-turn candidate)
+  // or vertical (scroll) after its first few px of movement, and keeps that
+  // identity for the rest of the gesture. A scroll that drifts sideways can
+  // never become a page turn.
+  const swipeAxis = useRef<'h' | 'v' | null>(null);
+  // Real finger position at the latest touchmove — the flip decision at
+  // lift-off reads this, never a stale mid-gesture offset.
+  const lastTouchX = useRef<number>(0);
+  // Recent (x, timestamp) samples within ~100ms, for flick velocity.
+  const velocitySamples = useRef<Array<{ x: number; t: number }>>([]);
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
@@ -631,6 +665,9 @@ export default function TranslationEditor({
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
+  // Real hrefs on prev/next so crawlers can walk the page chain (#2266);
+  // onClick preventDefault keeps SPA navigation exactly as before.
+  const pageHref = (p: { id: string }) => `${tenantPrefix}/book/${bookSlugOrId}/page/${p.id}`;
 
   const commitJumpToPage = () => {
     const n = parseInt(pageInputValue, 10);
@@ -859,9 +896,37 @@ export default function TranslationEditor({
     }
   }, [previousPage, nextPage]);
 
-  // Swipe navigation handlers (mobile only)
-  const SWIPE_THRESHOLD = 50;
+  // Swipe navigation handlers (mobile only).
+  //
+  // Gesture identity is decided once per touch (axis lock, see swipeAxis), and
+  // the flip decision at lift-off is distance-OR-flick over the finger's REAL
+  // final position. The previous version re-derived the delta from the last
+  // touchmove that happened to look horizontal, so a scroll whose opening arc
+  // drifted sideways kept that stale offset and turned the page at lift-off —
+  // the "flips when I don't want it to" bug.
+  const AXIS_LOCK_SLOP = 10; // px of movement before the gesture is classified
+  const AXIS_LOCK_BIAS = 1.5; // horizontal must dominate by this ratio; ties scroll
+  const FLICK_VELOCITY = 0.4; // px/ms over the trailing ~100ms of movement
+  const FLICK_MIN_DISTANCE = 40; // px — even a fast flick needs real displacement
+  const VELOCITY_WINDOW_MS = 100;
+
+  const resetSwipe = () => {
+    swipeActive.current = false;
+    swipeAxis.current = null;
+    velocitySamples.current = [];
+    setSwipeOffset(0);
+    setIsSwiping(false);
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
+    // Two fingers = pinch (the scan zooms in place), never a page swipe. Also
+    // cancels a swipe already in progress when the second finger lands, so a
+    // pinch whose first finger drifted sideways can't turn the page.
+    if (e.touches.length > 1) {
+      resetSwipe();
+      return;
+    }
+
     // Don't track if touching a scrollable area or interactive element
     const target = e.target as HTMLElement;
     if (target.closest('textarea, input, button, a, [data-no-swipe]')) return;
@@ -872,46 +937,92 @@ export default function TranslationEditor({
 
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    lastTouchX.current = e.touches[0].clientX;
+    velocitySamples.current = [{ x: e.touches[0].clientX, t: e.timeStamp }];
+    swipeAxis.current = null;
     swipeActive.current = true;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) {
+      resetSwipe();
+      return;
+    }
     if (!swipeActive.current) return;
 
-    const deltaX = e.touches[0].clientX - touchStartX.current;
+    const x = e.touches[0].clientX;
+    const deltaX = x - touchStartX.current;
     const deltaY = e.touches[0].clientY - touchStartY.current;
 
-    // Only track horizontal swipes (ignore vertical scrolling)
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
-      setIsSwiping(true);
-      // Clamp the offset for visual feedback
-      const maxOffset = 100;
-      setSwipeOffset(Math.max(-maxOffset, Math.min(maxOffset, deltaX * 0.5)));
+    lastTouchX.current = x;
+    const samples = velocitySamples.current;
+    samples.push({ x, t: e.timeStamp });
+    while (samples.length > 1 && samples[0].t < e.timeStamp - VELOCITY_WINDOW_MS) {
+      samples.shift();
     }
+
+    if (swipeAxis.current === null) {
+      if (Math.hypot(deltaX, deltaY) < AXIS_LOCK_SLOP) return;
+      if (Math.abs(deltaX) > Math.abs(deltaY) * AXIS_LOCK_BIAS) {
+        swipeAxis.current = 'h';
+      } else {
+        // Locked as a scroll: this touch can never become a page turn.
+        swipeAxis.current = 'v';
+        swipeActive.current = false;
+        return;
+      }
+    }
+
+    setIsSwiping(true);
+    // Clamp the offset for visual feedback
+    const maxOffset = 100;
+    setSwipeOffset(Math.max(-maxOffset, Math.min(maxOffset, deltaX * 0.5)));
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const wasHorizontalSwipe = swipeActive.current && swipeAxis.current === 'h';
     // If a selection is active at lift-off, the gesture was a highlight, not
     // a swipe — bail before navigation but still reset transient state.
     const hasSelection =
       typeof window !== 'undefined' && !!window.getSelection()?.toString().length;
 
-    const deltaX = swipeOffset * 2; // Reverse the 0.5 multiplier
+    if (wasHorizontalSwipe && !hasSelection) {
+      const deltaX = lastTouchX.current - touchStartX.current;
 
-    if (!hasSelection && Math.abs(deltaX) > SWIPE_THRESHOLD) {
-      if (deltaX > 0 && previousPage) {
-        onNavigate(previousPage.id);
-      } else if (deltaX < 0 && nextPage) {
-        onNavigate(nextPage.id);
+      // Commit: dragged far enough that the intent is unambiguous.
+      const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 400;
+      const commitDistance = Math.max(80, viewportWidth * 0.3);
+      const isCommit = Math.abs(deltaX) >= commitDistance;
+
+      // Flick: fast trailing velocity in the same direction as the drag. A
+      // drag that pauses before lift-off has stale samples — treat as v=0.
+      const samples = velocitySamples.current;
+      const first = samples[0];
+      const last = samples[samples.length - 1];
+      const stale = !last || e.timeStamp - last.t > VELOCITY_WINDOW_MS;
+      const velocity =
+        !stale && samples.length > 1 && last.t > first.t
+          ? (last.x - first.x) / (last.t - first.t)
+          : 0;
+      const isFlick =
+        Math.abs(deltaX) >= FLICK_MIN_DISTANCE &&
+        Math.abs(velocity) >= FLICK_VELOCITY &&
+        Math.sign(velocity) === Math.sign(deltaX);
+
+      if (isCommit || isFlick) {
+        // A swipe always lands at the top of the new page. The section-preserving
+        // scroll (keep the reader in the OCR/translation panel across a flip) is
+        // for button/keyboard nav; on a swipe it read as "lands mid-page" (#3085).
+        if (deltaX > 0 && previousPage) {
+          onNavigate(previousPage.id, { toTop: true });
+        } else if (deltaX < 0 && nextPage) {
+          onNavigate(nextPage.id, { toTop: true });
+        }
       }
     }
 
-    // Reset swipe state
-    swipeActive.current = false;
-    touchStartX.current = 0;
-    touchStartY.current = 0;
-    setSwipeOffset(0);
-    setIsSwiping(false);
+    // Reset swipe state; a half-swipe snaps back via the container transition.
+    resetSwipe();
   };
 
   // Update state when page changes
@@ -1087,7 +1198,7 @@ export default function TranslationEditor({
               {/* Hide Source Library branding in embed mode */}
               {!isEmbedded && <Logo mini />}
               {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
-              <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              <a href={`${tenantPrefix}/book/${bookSlugOrId}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
@@ -1116,15 +1227,25 @@ export default function TranslationEditor({
 
             {/* Page Navigation */}
             <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
-              <button
-                onClick={() => previousPage && onNavigate(previousPage.id)}
-                disabled={!previousPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
-                aria-label="Previous page"
-              >
-                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-              </button>
+              {previousPage ? (
+                <a
+                  href={pageHref(previousPage)}
+                  onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
+                  className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <span
+                  className="p-1.5 sm:p-2 rounded-md opacity-30"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-hidden="true"
+                >
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                </span>
+              )}
               <div className="flex items-center px-1 sm:px-2">
                 {isEditingPage ? (
                   <form
@@ -1160,15 +1281,25 @@ export default function TranslationEditor({
                   </button>
                 )}
               </div>
-              <button
-                onClick={() => nextPage && onNavigate(nextPage.id)}
-                disabled={!nextPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
-                aria-label="Next page"
-              >
-                <ChevronRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+              {nextPage ? (
+                <a
+                  href={pageHref(nextPage)}
+                  onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
+                  className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <span
+                  className="p-1.5 sm:p-2 rounded-md opacity-30"
+                  style={{ color: 'var(--text-secondary)' }}
+                  aria-hidden="true"
+                >
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                </span>
+              )}
             </div>
           </div>
 
@@ -1452,11 +1583,19 @@ export default function TranslationEditor({
 
           return (
             <div
+              // Remount the panels per page while a browser translator is active,
+              // so each page builds fresh text nodes for it to translate instead
+              // of React trying to patch nodes the translator has already
+              // replaced. Undefined (no remount) otherwise — panel toggles, font
+              // size and trace mode live in this component's state, above the
+              // key, so they survive either way.
+              key={browserTranslated ? `translated-${page.id}` : undefined}
               className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden relative"
               data-reader-panels-container
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onTouchCancel={resetSwipe}
               style={{
                 transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
                 transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
@@ -1490,7 +1629,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
-                        <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
+                        <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable inlineZoomable />
                       ) : hasWitnessPhotos && currentWitness ? (
                         <ImageWithMagnifier
                           src={currentWitness.photo_url!}
@@ -1590,22 +1729,24 @@ export default function TranslationEditor({
                   </div>
                   {/* Floating page arrows on image panel edges */}
                   {previousPage && (
-                    <button
-                      onClick={() => onNavigate(previousPage.id)}
+                    <a
+                      href={pageHref(previousPage)}
+                      onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
                       className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                       aria-label="Previous page"
                     >
                       <ChevronLeft className="w-5 h-5" />
-                    </button>
+                    </a>
                   )}
                   {nextPage && (
-                    <button
-                      onClick={() => onNavigate(nextPage.id)}
+                    <a
+                      href={pageHref(nextPage)}
+                      onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
                       className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                       aria-label="Next page"
                     >
                       <ChevronRight className="w-5 h-5" />
-                    </button>
+                    </a>
                   )}
                 </div>
               )}
@@ -2099,17 +2240,6 @@ export default function TranslationEditor({
               showCount={true}
               label="Like this page"
             />
-            {!isEmbedded && (
-              <>
-                <span style={{ color: 'var(--border-light)' }}>·</span>
-                <PageComments
-                  key={`comments-${page.id}`}
-                  bookId={book.id}
-                  pageId={page.id}
-                  pageNumber={page.page_number}
-                />
-              </>
-            )}
           </div>
           {showNavHint && (
             <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
@@ -2128,6 +2258,10 @@ export default function TranslationEditor({
           <PageMetadataPanel
             page={page}
             onClose={() => setShowPageMetadata(false)}
+            editionBook={editionBook}
+            editionError={editionError}
+            bookHref={`${tenantPrefix}/book/${book.id}`}
+            isEmbedded={isEmbedded}
           />
         )}
 
@@ -2343,7 +2477,7 @@ export default function TranslationEditor({
                   <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
                 )}
                 {pageDisplayUrl ? (
-                  <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable />
+                  <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable inlineZoomable />
                 ) : hasWitnessPhotos && currentWitness ? (
                   <ImageWithMagnifier
                     src={currentWitness.photo_url!}
@@ -2717,6 +2851,10 @@ export default function TranslationEditor({
         <PageMetadataPanel
           page={page}
           onClose={() => setShowPageMetadata(false)}
+          editionBook={editionBook}
+          editionError={editionError}
+          bookHref={`${tenantPrefix}/book/${book.id}`}
+          isEmbedded={isEmbedded}
         />
       )}
 

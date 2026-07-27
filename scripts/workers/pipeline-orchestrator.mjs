@@ -25,6 +25,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -3334,9 +3335,11 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             await sleep(200);
           }
 
-          // Update book: mark preview done, sync OCR count
+          // Update book: mark preview done, sync OCR count. VISIBLE pages only
+          // (page_number > 0) — see scripts/lib/page-counts.mjs and issue #3293.
           const ocrCount = await db.collection('pages').countDocuments({
             book_id: book.id,
+            ...VISIBLE_PAGE_MATCH,
             'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
           });
           await db.collection('books').updateOne(

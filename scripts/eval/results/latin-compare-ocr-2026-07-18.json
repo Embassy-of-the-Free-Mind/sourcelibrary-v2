@@ -1,0 +1,31 @@
+{
+  "corpus": "latin",
+  "against": "ocr",
+  "results": [
+    {
+      "work": "Aeneid I.1-7",
+      "bookId": "6a084d9715c643eb1af3f59e",
+      "pageNumber": 203,
+      "cer": 0.006944444444444444,
+      "charAccuracy": 0.9930555555555556,
+      "refLen": 144,
+      "matched": 143,
+      "aligned": true,
+      "source": "Wikisource (la), ed. with macrons; folded at compare time",
+      "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I"
+    },
+    {
+      "work": "Vulgate Genesis 1:1-5",
+      "bookId": "6a26b84361b3857ed05a5221",
+      "pageNumber": 21,
+      "cer": 0.03546099290780142,
+      "charAccuracy": 0.9645390070921985,
+      "refLen": 282,
+      "matched": 272,
+      "aligned": true,
+      "source": "Clementine Vulgate (drbo.org)",
+      "source_url": "https://www.drbo.org/lvb/chapter/01001.htm"
+    }
+  ],
+  "date": "2026-07-18"
+}

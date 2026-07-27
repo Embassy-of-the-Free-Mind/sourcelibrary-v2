@@ -1,0 +1,23 @@
+{
+  "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.13 (Croesus and Artashes, printed p.125)",
+  "book_id": "69944861185a84ef595aae5b",
+  "page_number": 192,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.125",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho049.htm",
+  "edition": "Abełean-Yarut'iwnean, Tiflis 1913",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "զԿրիւսոս ի տապակի հրամայեաց կացուցանել ։ Վասն սորա եւ ոչ ուղխք զհետն ստուարացուցին , արբմամբն ի ձմեռնային նուազութիւն իջուցանելով . վասն զի եւ զթուոցն եցոյց տկար լինել ՝ բազմութեամբ զօրացն , մինչ զի չափոյ պէտք եղեն առաւել քան զհամարոյ ։ Նա ընդ այս ոչ հպարտացաւ , այլ արտասուեաց ասելով . \" Աւաղ փառացս անցաւորի \"։ Գրէ եւ Սկամադրոս այսպէս . \"Խաբկանք լինէին հպարտացելոյն Լիւդացւոց Կրիւսեայ ՝ Պիւթիայ հարցուկն պատասխանելով . \" Կրիւսոս անցեալ ընդ Ալիւս գետ ՝ քակեսցէ զիշխանութիւնս \"։ Զոր նորա զօտարաց կարծեցեալ ՝ զինքն քակէ . քանզի կալեալ զնա Պարթեւին Արտաշիսի հրամայեաց հանել յերկաթեղէն տապակ ։ Իսկ Կրիւսոսի յիշեալ զբանսն Սողոնի Աթենացւոյ , ասէ յիւր լեզուն . \"Ով Սողոն Սողոն , գեղեցիկս բարբառեցար , ոչ երանել զբարեբախտութիւն մարդոյ մինչեւ ի վախճան \"։ Եւ լուեալ որք մերձն կային ՝ պատմեցին Արտաշիսի , եթէ զնոր ոմն աստուած կարդայ Կրիւսոս ։ Եւ գթացեալ Արտաշիսի ՝ հրամայաց ածել . եւ հարցեալ եւ ուսեալ , թէ զինչ է որ աղաղակեացն ՝ հրամայեաց ներել զտանջանս",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  },
+  "_note": "Long-apparatus contrast to the existing p.189 pin: ~16 body lines above a two-column critical apparatus filling ~60% of the page. Body includes quoted oracles in guillemets. Reference stops before the apparatus siglum block (a stray 'Տն16' anchor in TITUS marks where we cut). Printed p.125 = scan 192 (offset +67 verified at p.189 and p.300). Guard-verified + visually audited 2026-07-19."
+}

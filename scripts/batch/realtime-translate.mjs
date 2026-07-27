@@ -25,6 +25,8 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -226,6 +228,10 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
 
       const translationMeta = extractTranslationMetadata(result.text);
 
+      // Retain existing translation as a revision before overwriting (#3240) —
+      // no-op on first translation, fires in --stale mode re-translations.
+      await saveRevisionBeforeOverwrite(db, page.id, 'translation', { reason: 'retranslate_stale' });
+
       await db.collection('pages').updateOne(
         { id: page.id },
         {
@@ -300,8 +306,10 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
   // Update book translation count
   if (bookCompleted > 0) {
     try {
+      // VISIBLE pages only (page_number > 0). Soft-hidden pages never render, so
+      // counting them corrupts the visible-only read-path convention (issue #3293).
       const translatedCount = await db.collection('pages').countDocuments({
-        book_id: book.id, 'translation.data': { $exists: true, $ne: '' }
+        book_id: book.id, ...VISIBLE_PAGE_MATCH, 'translation.data': { $exists: true, $ne: '' }
       });
       await db.collection('books').updateOne(
         { id: book.id },

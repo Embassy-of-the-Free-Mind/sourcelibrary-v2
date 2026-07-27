@@ -92,8 +92,8 @@ export default async function PressReleasesIndex({
 
       <div className="mt-12 bg-warm rounded-lg border border-border-light p-6 text-sm text-secondary">
         <strong className="text-stone-800">Media enquiries:</strong>{' '}
-        <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-          derek@sourcelibrary.org
+        <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+          team@sourcelibrary.org
         </a>{' '}
         · Embassy of the Free Mind, Keizersgracht 123, Amsterdam
       </div>

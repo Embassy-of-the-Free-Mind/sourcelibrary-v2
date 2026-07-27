@@ -194,8 +194,11 @@ export type BookDownloadFormats =
   'epub-ocr' |
   'epub-both' |
   'epub-parallel' |
+  'epub-parallel-fxl' |
   'epub-facsimile' |
   'epub-scholarly' |
   'epub-bilingual' |
   'epub-images' |
-  'images-zip'
+  'images-zip' |
+  'pdf-translation' |
+  'pdf-facsimile'

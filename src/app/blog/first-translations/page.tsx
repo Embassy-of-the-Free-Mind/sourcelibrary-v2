@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const metadata: Metadata = {
@@ -11,6 +10,10 @@ export const metadata: Metadata = {
     title: 'Nearly 2,000 First English Translations — Over 900 Now Complete',
     description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — over 900 now fully translated into English for the first time.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg' }],
   },
   alternates: {
     canonical: '/blog/first-translations',
@@ -451,12 +454,11 @@ export default function FirstTranslationsPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
             Source Library is a project of the Embassy of the Free Mind. If you are a scholar who can improve any of these translations, or if you know of a prior English translation we missed, please reach out &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="first-translations" />
     </ContentPageLayout>
     </>
   );

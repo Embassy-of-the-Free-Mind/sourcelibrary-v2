@@ -1,5 +1,6 @@
 import { Book, TranslationEdition } from '@/lib/types';
-import { BASE_URL, getLicenseUrl } from './schema-utils';
+import { CONTENT_LICENSE } from '@/lib/license-info';
+import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 
 interface SchemaOrgMetadataProps {
@@ -81,6 +82,8 @@ export default function SchemaOrgMetadata({
       about: book.categories.map(c => ({ '@type': 'Thing', name: c })),
     }),
     copyrightNotice: `Public domain. Original published ${book.published || 'before 1900'}.`,
+    license: PUBLIC_DOMAIN_MARK_URL,
+    usageInfo: `${baseUrl}/licensing`,
     acquireLicensePage: `${baseUrl}/book/${bookPath}`,
     creditText: book.image_source?.attribution || `Digitized by ${book.image_source?.provider_name || 'Internet Archive'}`,
   };
@@ -111,7 +114,6 @@ export default function SchemaOrgMetadata({
       datePublished: currentEdition.published_at
         ? new Date(currentEdition.published_at).toISOString().split('T')[0]
         : undefined,
-      license: getLicenseUrl(currentEdition.license),
       ...(currentEdition.doi && {
         identifier: {
           '@type': 'PropertyValue',
@@ -132,6 +134,12 @@ export default function SchemaOrgMetadata({
         }),
       })),
     }),
+    // Translations/OCR default to the site-wide CC BY-SA license; a published
+    // edition's own license (which may differ, e.g. CC0 on Zenodo) wins.
+    license:
+      (currentEdition?.license && getLicenseUrl(currentEdition.license)) ||
+      CONTENT_LICENSE.url,
+    usageInfo: `${baseUrl}/licensing`,
     provider: {
       '@type': 'Organization',
       name: 'Source Library',

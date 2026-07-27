@@ -1,0 +1,85 @@
+{
+  "_comment": "v2 occlusion pilot (#3235) — passage-targeted rects, replacing v1's fixed mid-page band. Each rect is x,y,w,h as fractions of page width/height, used as --occlude=x,y,w,h in qa-eval.mjs. masked_ref_share is a chars-weighted estimate (exact GT-substring char count where the passage text could be cleanly located; line-count proportion where verse/line boundaries in the print don't map 1:1 to GT sentence splits — noted per entry). Audited by viewing the downloaded page image and the rendered mask with sharp, per scripts/eval/_tmp_mask_preview.mjs.",
+  "masks": [
+    {
+      "slug": "latin-vulgate-genesis-1",
+      "rect": [0.235, 0.224, 0.205, 0.058],
+      "masked_lines": 4,
+      "total_ref_lines": 12,
+      "masked_ref_share": 0.27,
+      "notes": "Genesis 1:1-5, two-column page (v1-2 in a historiated-initial box, left column; v3-5 top of right column, same page-row height). Rect masks only the box's verse-2 lines 3-6 of 12 total print lines ('Terra autem erat inanis' through 'spiritus Domini fereba-'), leaving v1 (lines 1-2) and the tail of v2 ('tur super aquas', line 7) plus all of v3-5 (right column, lines 8-12) visible. Never touches first (line1) or last (line12) line. Share computed char-weighted from the 12 print lines (93/341 chars = 27.3%); line-count share is 33% (4/12) — recorded the more conservative char figure. v1's fixed band missed this passage entirely (masked the woodcut instead); this is the v2 fix."
+    },
+    {
+      "slug": "latin-vulgate-genesis-5-genealogy",
+      "rect": [0.47, 0.470, 0.43, 0.205],
+      "masked_lines": 7,
+      "total_ref_lines": 16,
+      "masked_ref_share": 0.387,
+      "notes": "Genesis 5:3-18 (16 verses, right column, single column of continuous text). Rect masks verse 7 (partially — only its first ~40% is caught, ~37 of 90 chars survive) through verse 13 (fully), leaving v3-6 visible above and v14-18 visible below. Char-weighted share = (90-37 + 75+50+79+68+58+101)/1252 = 484/1252 = 38.7%. Interior, not touching v3 (first) or v18 (last)."
+    },
+    {
+      "slug": "latin-aeneid-1",
+      "rect": [0.0, 0.308, 0.82, 0.064],
+      "masked_lines": 2,
+      "total_ref_lines": 4,
+      "masked_ref_share": 0.50,
+      "notes": "Aeneid I.1-7 abridged to 4 print lines only ('Arma virumque cano...' through '...ob iram'). Rect masks the middle two lines (2-3 of 4: 'Italiam, fato profugus...' and 'Litora: multum ille...'), leaving line 1 and line 4 fully visible. Char-weighted share: (41+47)/176 = 50.0% exactly — the tightest passage of the ten pages, interior masking of a 4-line passage necessarily lands at 50%."
+    },
+    {
+      "slug": "latin-aeneid-10-pallas",
+      "rect": [0.15, 0.256, 0.73, 0.192],
+      "masked_lines": 7,
+      "total_ref_lines": 21,
+      "masked_ref_share": 0.348,
+      "notes": "Aeneid X.362-382 (21 print lines, one verse per line, single column). Rect masks lines 8-14 ('Quo fugitis, socij...' through 'Numina nulla premunt...ab hoste'), leaving lines 1-7 and 15-21 visible. Char-weighted share = 329/946 = 34.8%. Interior, well clear of line 1 and line 21."
+    },
+    {
+      "slug": "greek-iliad-1",
+      "rect": [0.06, 0.3836, 0.56, 0.0771],
+      "masked_lines": 3,
+      "total_ref_lines": 7,
+      "masked_ref_share": 0.436,
+      "notes": "Iliad I.1-7, MS Rouse 358 (manuscript, one verse per line, 7 lines total). Rect masks lines 3-5 ('πολλὰς δ᾽ ἰφθίμους...' through 'οἰωνοῖσί τε πᾶσι...βουλή'), leaving lines 1-2 and 6-7 visible. Char-weighted share = 119/273 = 43.6%. v1 masked lines 3-7 (5 of 7, only 30% visible) — this is the canonical page with the biggest v1 excess (+32pp); v2's tighter interior mask should show whether the effect survives a less extreme mask."
+    },
+    {
+      "slug": "greek-iliad-13-idomeneus",
+      "rect": [0.054, 0.3439, 0.552, 0.2333],
+      "masked_lines": 9,
+      "total_ref_lines": 25,
+      "masked_ref_share": 0.36,
+      "notes": "Iliad XIII.493-517, same MS Rouse 358 manuscript/hand as the canonical Iliad I page (the within-work non-canonical control). 25 print lines, one verse per line. Rect masks lines 9-17 ('ἵεντ᾽ ἀλλήλων ταμέειν...' through 'Ἰδομενεὺς δ᾽ ἐκ μὲν νέκυος...'), leaving lines 1-8 and 18-25 visible. Share is line-count based (9/25 = 36%) — Homeric hexameter lines here are fairly uniform in length so line-count approximates char share; not individually re-verified per line due to time budget."
+    },
+    {
+      "slug": "armenian-zohrab-john-1",
+      "rect": [0.5517, 0.4235, 0.4197, 0.113],
+      "masked_lines": null,
+      "total_ref_lines": null,
+      "masked_ref_share": 0.498,
+      "notes": "John 1:1-14 (Zohrab 1805). Rect masks from mid-verse-4/5 ('Եւ լոյսն ի խաւարի անդ...') through mid-verse-12/GT-sentence-11 ('...ետ նոցա իշխանութիւն'), leaving verse 1-4(partial) visible above and verse 12(partial)-14 visible below. Char-weighted share computed directly from GT substring indices: 469/941 = 49.8% — at the upper edge of the 30-50% target but confirmed interior (verse 1 start and verse 14 end both fully clear). This is the one page where a v1 run mentioned the mask (sonnet5); v2's mask sits in a different part of the passage."
+    },
+    {
+      "slug": "armenian-zohrab-1chronicles-1",
+      "rect": [0.02, 0.2503, 0.42, 0.202],
+      "masked_lines": 12,
+      "total_ref_lines": 32,
+      "masked_ref_share": 0.375,
+      "notes": "1 Chronicles 1:1-23 (Zohrab 1805, genealogy/table-of-nations, left column). ~32 print lines for 23 verses (right-margin numerals). Rect masks lines 8-19 (verses ~9/10 through ~19/20, the Cush/Canaan/Shem genealogy block), leaving verses 1-7ish and 20-23 visible. Share is line-count based (12/32 = 37.5%) — genealogy name-lists have fairly uniform line density; not re-verified per exact verse-to-GT-sentence boundary due to time budget."
+    },
+    {
+      "slug": "hebrew-genesis-1",
+      "rect": [0.27, 0.2628, 0.58, 0.0752],
+      "masked_lines": 3,
+      "total_ref_lines": 7,
+      "masked_ref_share": 0.433,
+      "notes": "Genesis 1:1-5 (Biblia Hebraica, right-to-left, ~7 print lines for 5 verses since verses span/share lines). Rect masks the tail of v2 through the start of v5 ('אלהים מרחפת...' through '...וירא אלהים'), leaving v1 (line 1) and the end of v5 ('לאור יום...יום אחד:' + the פ paragraph marker) fully visible. Char-weighted share computed directly from GT substring: 195/450 = 43.3%. v1's fixed band sat below vv.1-5 entirely (0% overlap) — this is the direct v2 fix for that miss."
+    },
+    {
+      "slug": "hebrew-shaarei-orah-gate2-yovel",
+      "rect": [0.06, 0.370, 0.90, 0.1249],
+      "masked_lines": null,
+      "total_ref_lines": null,
+      "masked_ref_share": 0.338,
+      "notes": "Gikatilla, Sha'arei Orah, Gate 2 (Yovel/El Chai discourse) — continuous halakhic-kabbalistic prose, no verse structure, single column, non-canonical control page. Rect masks from 'ובכל ארץ אחוזתכם...' through '...ועתה דע והאמן' (before 'כי השבת'), leaving the opening ('וביאור העיקר הזה...') and closing ('...והתקן עצמך בפרוזדור כדי שתכנס לטרקלין') fully visible. Char-weighted share computed directly from GT substring indices: 505/1493 = 33.8%."
+    }
+  ]
+}

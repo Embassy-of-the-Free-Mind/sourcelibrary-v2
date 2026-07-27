@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description: 'Browse books by digital source and contributing institution — Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
   alternates: { canonical: '/libraries' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Libraries | Source Library',
     description: 'Browse books by digital source and contributing institution — Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
     type: 'website',

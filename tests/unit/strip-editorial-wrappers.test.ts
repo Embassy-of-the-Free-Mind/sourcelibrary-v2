@@ -61,6 +61,18 @@ describe('stripEditorialWrappers', () => {
     expect(out).toContain('<insert>OLIN BM 175</insert>');
   });
 
+  it('drops an <image-desc> AI plate description content-and-all', () => {
+    // Real leak: get_quote on Morestel 1621 p.39 served this AI description of a
+    // woodcut as quotable translation text. The word "enneagram" is the model's,
+    // not the author's — quoting it fabricates a citation. Strip content and tag.
+    const t = `The third section encompasses the relative predicates, the sign of which is T.\n\n<image-desc>A circular diagram... a complex nine-pointed star (enneagram) is formed by lines connecting each of the nine points.</image-desc>`;
+    const out = stripEditorialWrappers(t);
+    expect(out).not.toMatch(/enneagram/i);
+    expect(out).not.toMatch(/nine-pointed/i);
+    expect(out).not.toContain('<image-desc>');
+    expect(out).toContain('relative predicates'); // real translated body survives
+  });
+
   it('strips inline <language> switch markers without eating the body', () => {
     const t = `Lorem ipsum <language>Latin</language> dolor sit amet`;
     const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
@@ -238,5 +250,33 @@ describe('stripLeadingAiPreamble (via cleanOcrArtifacts)', () => {
     const refusal =
       'I cannot transcribe this image because it is completely blank (solid black).\n\nPlease provide a clear image of the manuscript page you would like me to transcribe.';
     expect(cleanOcrArtifacts(refusal)).toBe('');
+  });
+});
+
+// ReDoS guard (2026-07-18): the emphasis/centered-marker regexes originally
+// used unbounded lazy interiors; on a junk page with thousands of stray
+// asterisks each unpaired `*` scanned to end-of-line and the whole call went
+// quadratic (a 400KB page held the ngram build at 111% CPU for 2h; the same
+// text through a reader/quote route would spin that request). Interiors are
+// now capped at 300 chars and single-line. These tests pin both the bound and
+// the preserved behavior.
+describe('stripMarkdownMarkers ReDoS bound', () => {
+  it('survives a 400KB junk page riddled with unpaired asterisks', () => {
+    const junk = ('lorem ipsum * dolor ** sit -> amet '.repeat(20) + '\n').repeat(600);
+    expect(junk.length).toBeGreaterThan(400_000);
+    const t0 = Date.now();
+    stripEditorialWrappers(junk);
+    // Unbounded interiors take minutes-to-hours here; bounded takes ~tens of ms.
+    expect(Date.now() - t0).toBeLessThan(5_000);
+  });
+
+  it('still strips normal emphasis and centered markers', () => {
+    expect(stripEditorialWrappers('**B** and *italic* and ***both***')).toBe('B and italic and both');
+    expect(stripEditorialWrappers('->THE END.<-')).toBe('THE END.');
+  });
+
+  it('leaves markers literal on over-long spans instead of scanning', () => {
+    const long = '**' + 'a'.repeat(400) + '**';
+    expect(stripEditorialWrappers(long)).toBe(long);
   });
 });

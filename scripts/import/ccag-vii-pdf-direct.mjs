@@ -57,7 +57,6 @@ const BOOK_META = {
   notes: 'Vol. VII of the Catalogus Codicum Astrologorum Graecorum series (1898–1953). Catalogues Greek astrological manuscripts held in German libraries. Imported from a Wayback Machine mirror of hellenisticastrology.com, which itself derived from the University of Michigan copy (HathiTrust mdp.39015033004238). Cited in SHWEP ep 217 for the Book of Apollonios of Tyana (pp. 175–181).',
 };
 
-const SHWEP_EP_LINK = 217;
 
 function ensureDirs() {
   mkdirSync(WORK_DIR, { recursive: true });
@@ -319,7 +318,6 @@ async function main() {
 
   await client.close();
   console.log(`\n=== DONE: bookId=${bookIdStr}, ${pageCount} pages, ${(totalBytes / 1e6).toFixed(1)} MB on R2 ===`);
-  console.log(`Add ${bookIdStr} to SHWEP_BOOK_MATCHES[${SHWEP_EP_LINK}] in src/data/shwep-book-matches.ts`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

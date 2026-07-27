@@ -1,0 +1,19 @@
+{
+  "corpus": "greek",
+  "against": "ocr",
+  "results": [
+    {
+      "work": "Iliad I.1-7",
+      "bookId": "699382dd84cf5845c644b377",
+      "pageNumber": 9,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 221,
+      "matched": 221,
+      "aligned": true,
+      "source": "Wikisource (el)",
+      "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91"
+    }
+  ],
+  "date": "2026-07-18"
+}

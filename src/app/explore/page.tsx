@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description: 'Interactive visualizations of 12,500+ people, places, and concepts from the Western esoteric tradition. Century heatmaps, era highlights, and data source breakdowns.',
   alternates: { canonical: '/explore' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Explore — Source Library',
     description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',
   },

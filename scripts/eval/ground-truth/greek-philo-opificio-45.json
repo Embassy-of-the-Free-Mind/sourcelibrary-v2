@@ -1,0 +1,22 @@
+{
+  "work": "Philo, De opificio mundi 45-47 (Cohn p.15, first part)",
+  "book_id": "69944b491ba83513779056b0",
+  "page_number": 139,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896; our book is Cohn's 1889 editio minor, same editor's text)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+  "edition": "Cohn-Wendland 1896 (editio maior, vols 1-3)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "πρώτην τῶν ὅλων γένεσιν, ὅτε πρὸ ἡλίου καὶ σελήνης παντοῖα μὲν φυτά, παντοίους δὲ καρποὺς ἤνεγκεν ἡ γῆ, καὶ θεασάμενοι ταῖς διανοίαις ἐλπιζέτωσαν ὅτι καὶ αὖθις οἴσει κατὰ πρόσταξιν τοῦ πατρός, ὅταν αὐτῷ δοκῇ μὴ προσδεηθέντι τῶν κατ’ οὐρανὸν ἐκγόνων, οἷς δυνάμεις μὲν ἔδωκεν, οὐ μὴν αὐτοκρατεῖς· οἷα γὰρ ἡνίοχος ἡνιῶν ἢ κυβερνήτης οἰάκων ἐνειλημμένος ἄγει ᾗ ἂν ἐθέλῃ κατὰ νόμον καὶ δίκην ἕκαστα μηδενὸς προσδεόμενος ἄλλου· πάντα γὰρ θεῷ δυνατά. ἥδ’ ἐστὶν αἰτία δι’ ἣν προτέρα μὲν ἐβλάστησε καὶ ἐχλοηφόρησεν ἡ γῆ. ὁ δ’ οὐρανὸς διεκοσμεῖτο αὖθις ἐν ἀριθμῷ τελείῳ τετράδι, ἣν δεκάδος τῆς παντελείας οὐκ ἂν διαμάρτοι τις ἀφορμὴν εἶναι λέγων καὶ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "medium",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

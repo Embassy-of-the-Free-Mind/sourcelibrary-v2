@@ -6,7 +6,12 @@
  * only archives pages with NO `archived_photo`), this script targets
  * pages whose `archived_photo` IS set but where the source was imported
  * at a downsized IIIF resolution (e.g. `/full/1000,/`). It refetches at
- * `/full/full/` and overwrites the existing R2 archive.
+ * `/full/full/` and overwrites the existing R2 archive. When the server
+ * caps single-request output below the master size (e.g. Cambridge:
+ * maxWidth 2000 vs a 9718px master), it tile-stitches region requests to
+ * recover native resolution (via fetchIiifNativeRes). It also regenerates
+ * the pre-sized display/thumb R2 variants the reader serves directly —
+ * without that, the reader keeps showing the old low-res derivative.
  *
  * Three modes:
  *
@@ -35,7 +40,22 @@
  *   --provider <name>          e.g. allard_pierson
  *   --crisis-only              books with spread_translation_crisis: true
  *
+ * Consistency guard (#3186, ON by default):
+ *   Before overwriting any archive, perceptual-hash a sample of pages to confirm
+ *   fetched(photo_original) IS the same image as the current archived_photo.
+ *   - aligned  → upgrade proceeds
+ *   - shift+1  → photo_original is a one-page-offset sequence (the e-rara PDF-cover
+ *                defect): book is SKIPPED, flagged books.rearchive_blocked + a
+ *                book_events{type:'rearchive_blocked'} record. NOT overwritten.
+ *   - ambiguous→ skipped + flagged for manual review.
+ *   --no-guard                 disable the guard (ONLY for a provider already
+ *                              audited aligned; never blanket — this is the incident switch)
+ *   Note: --recover-split does NOT run the guard; don't point it at unaudited providers.
+ *
  * Other:
+ *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
+ *                              (resume flag for long interruptible runs; the stamp is
+ *                              only written when a book completes with zero failures)
  *   --concurrency N            books processed in parallel (default 2)
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
@@ -61,7 +81,8 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
-import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap } from '../lib/iiif-utils.mjs';
+import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
+import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -85,6 +106,11 @@ const LIMIT = parseInt(ARG('--limit', '0'));
 const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
+const SKIP_UPGRADED = FLAG('--skip-upgraded');
+// The consistency guard is ON by default and cannot be silently skipped — it is
+// the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
+// explicit, audited one-offs on a provider already proven aligned.
+const NO_GUARD = FLAG('--no-guard');
 
 // ── Setup ──
 
@@ -121,6 +147,10 @@ function buildBookQuery() {
   const q = {};
   if (PROVIDER) q['image_source.provider'] = PROVIDER;
   if (CRISIS_ONLY) q.spread_translation_crisis = true;
+  // Resume support for long interruptible runs: refetchOne stamps
+  // image_resolution_upgraded_at on success, so this makes re-runs converge
+  // on the remaining books instead of redoing finished ones.
+  if (SKIP_UPGRADED) q.image_resolution_upgraded_at = { $exists: false };
   return q;
 }
 
@@ -137,6 +167,77 @@ async function jpegDims(buf) {
   }
 }
 
+// ── Consistency guard (issue #3186) ──
+//
+// The e-rara off-by-one incident: for PDF-sourced imports, `archived_photo` was
+// rasterized from the e-rara PDF (which prepends a cover sheet) while
+// `photo_original` was recorded as the IIIF image URL (no cover) — a parallel,
+// one-page-offset sequence. Refetching from `photo_original` and overwriting
+// `archived_photo` silently slid every image one page against its OCR/translation.
+//
+// The load-bearing false assumption was: "photo_original is the same image as
+// archived_photo, just higher-res." This guard verifies that per-book with a
+// perceptual hash (dHash) BEFORE any overwrite. Verdicts:
+//   aligned   — fetched(photo_original[N]) ≈ archived[N]  → safe to upgrade
+//   shift+1   — fetched(photo_original[N]) ≈ archived[N+1] → PDF-cover defect; skip+flag
+//   ambiguous — neither holds consistently → skip+flag for manual review
+// Measured Hamming separation on real data: same-image ≤12, different ≥16.
+
+const HASH_MATCH = 12;   // ≤ this Hamming distance = same image
+const HASH_DIFF = 16;    // ≥ this = clearly different image
+
+async function dhash(buf) {
+  const px = await sharp(buf).greyscale().resize(9, 8, { fit: 'fill' }).raw().toBuffer();
+  let h = 0n, bit = 0n;
+  for (let r = 0; r < 8; r++) for (let col = 0; col < 8; col++) {
+    if (px[r * 9 + col] > px[r * 9 + col + 1]) h |= (1n << bit);
+    bit++;
+  }
+  return h;
+}
+function hamming(a, b) { let x = a ^ b, n = 0; while (x) { n += Number(x & 1n); x >>= 1n; } return n; }
+async function hashUrl(url) {
+  const r = await rateLimitedFetch(url, { timeout: 30_000 });
+  return dhash(r);
+}
+
+/**
+ * Compare fetched photo_original against the current (pre-overwrite) archived
+ * image for a sample of interior pages. Returns { verdict, offset, detail }.
+ * verdict ∈ 'aligned' | 'shift+1' | 'ambiguous' | 'unknown'.
+ */
+async function checkAlignment(pages) {
+  // Sample interior pages that carry both an IIIF photo_original and an archived
+  // image; skip page 1 (cover/title special-casing lives there).
+  const usable = pages.filter(p => isIiifUrl(p.photo_original || p.photo) && isUsableArchive(p.archived_photo) && p.page_number >= 2);
+  if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages' };
+  const byNum = new Map(pages.map(p => [p.page_number, p]));
+  const samples = [usable[Math.floor(usable.length * 0.25)], usable[Math.floor(usable.length * 0.5)], usable[Math.floor(usable.length * 0.75)]]
+    .filter((p, i, a) => p && a.indexOf(p) === i);
+
+  let alignedVotes = 0, shiftVotes = 0, checked = 0;
+  for (const p of samples) {
+    try {
+      const oh = await hashUrl(upgradeToFullRes(p.photo_original || p.photo));
+      const same = byNum.get(p.page_number)?.archived_photo;
+      const next = byNum.get(p.page_number + 1)?.archived_photo;
+      const dSame = isUsableArchive(same) ? hamming(oh, await hashUrl(same)) : 99;
+      const dNext = isUsableArchive(next) ? hamming(oh, await hashUrl(next)) : 99;
+      checked++;
+      if (dSame <= HASH_MATCH && dSame < dNext) alignedVotes++;
+      else if (dNext <= HASH_MATCH && dNext < dSame) shiftVotes++;
+    } catch { /* count as no-vote */ }
+  }
+  if (checked === 0) return { verdict: 'unknown', detail: 'all-hash-fetches-failed' };
+  if (alignedVotes === checked) return { verdict: 'aligned', detail: `${alignedVotes}/${checked}` };
+  if (shiftVotes === checked) return { verdict: 'shift+1', offset: 1, detail: `${shiftVotes}/${checked}` };
+  return { verdict: 'ambiguous', detail: `aligned=${alignedVotes} shift=${shiftVotes} of ${checked}` };
+}
+
+function isUsableArchive(url) {
+  return typeof url === 'string' && /^https?:\/\//.test(url) && !/archive[_-]?fail|unavailable/i.test(url);
+}
+
 /**
  * Process one source URL: upgrade, fetch, resize-cap, return buffer + dims.
  * Skips if the URL doesn't appear to be IIIF or upgrade is a no-op.
@@ -147,7 +248,16 @@ async function fetchUpgraded(url) {
   if (upgraded === url) return { skipped: 'no-upgrade-pattern', url };
   let raw;
   try {
-    raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
+    // Servers like Cambridge (maxWidth/maxHeight 2000) silently downscale
+    // /full/full/ below the master size — the only path to native pixels is
+    // region tiles. Per-page info.json: dimensions vary page to page.
+    const pageInfo = await fetchIiifInfo(url);
+    if (pageInfo && shouldTileStitch(pageInfo, url)) {
+      const maxChunk = Math.min(pageInfo.maxWidth || 2000, pageInfo.maxHeight || 2000, 2000);
+      ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
+    } else {
+      raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
+    }
   } catch (e) {
     return { skipped: 'fetch-fail', url: upgraded, error: e.message };
   }
@@ -230,12 +340,30 @@ async function audit() {
   }
 }
 
+/**
+ * Regenerate the pre-sized R2 display/thumb variants (the files the reader
+ * serves directly) from an upgraded master buffer, overwriting the SAME R2
+ * keys so no DB pointer changes. No-op for pages without R2-hosted variants.
+ */
+async function regenerateVariants(page, masterBuffer) {
+  const toKey = (url) =>
+    typeof url === 'string' && url.startsWith(`${R2_PUBLIC_URL}/`)
+      ? url.slice(R2_PUBLIC_URL.length + 1)
+      : null;
+  const displayKey = toKey(page.display_photo);
+  const thumbKey = toKey(page.image_thumb) || toKey(page.thumbnail_blob);
+  if (!displayKey && !thumbKey) return;
+  const { display, thumb } = await generateDisplayVariants(masterBuffer);
+  if (displayKey) await r2Put(displayKey, display);
+  if (thumbKey) await r2Put(thumbKey, thumb);
+}
+
 // ── Refetch mode (un-split books) ──
 
 async function refetchOne(book) {
   const pages = await db.collection('pages').find(
     { book_id: book.id },
-    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1 } },
+    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1 } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
@@ -250,6 +378,28 @@ async function refetchOne(book) {
   const cap = getIiifSizeCap(sourceUrl);
   if (!cap || info.width / cap < MIN_UPGRADE_RATIO) {
     return { skipped: `not-low-res (cap=${cap || 'full'}, master=${info.width})` };
+  }
+
+  // ── Consistency guard: never overwrite an archive whose photo_original is a
+  // different image than what we hold (the e-rara off-by-one class, #3186). ──
+  if (!NO_GUARD) {
+    const align = await checkAlignment(pages);
+    if (align.verdict !== 'aligned') {
+      if (!DRY_RUN) {
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: {
+            rearchive_blocked: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, at: new Date() },
+            updated_at: new Date(),
+          } },
+        );
+        await db.collection('book_events').insertOne({
+          book_id: book.id, type: 'rearchive_blocked', at: new Date(), source: 'rearchive-iiif-fullres',
+          details: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, reason: 'photo_original != archived content (#3186 guard)' },
+        });
+      }
+      return { skipped: `guard:${align.verdict} (${align.detail})` };
+    }
   }
 
   console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${cap}→${info.width}px (${pages.length} pages)`);
@@ -268,6 +418,10 @@ async function refetchOne(book) {
     }
     try {
       const newUrl = await r2Put(key, result.processed);
+      // Pre-sized R2 variants (display_photo / image_thumb) are what the reader
+      // actually serves — regenerate them from the upgraded master onto the SAME
+      // keys, else the reader keeps showing the old low-res derivative.
+      await regenerateVariants(page, result.processed);
       await db.collection('pages').updateOne(
         { _id: page._id || new ObjectId(page.id) },
         { $set: {
@@ -287,7 +441,9 @@ async function refetchOne(book) {
     }
   }, PAGE_CONCURRENCY);
 
-  if (!DRY_RUN && updated > 0) {
+  // Stamp only fully-clean books: a partial failure (e.g. laptop sleep killed
+  // in-flight fetches) must not look "done" to --skip-upgraded re-runs.
+  if (!DRY_RUN && updated > 0 && failed === 0) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
@@ -296,9 +452,61 @@ async function refetchOne(book) {
         updated_at: new Date(),
       } },
     );
+    await recordUpgradeEvent(book, { fromWidthCap: cap, toMasterWidth: info.width, pagesUpdated: updated });
   }
 
   return { updated, skipped, failed };
+}
+
+/**
+ * Provenance for the upgrade (issue #3186): one book_events record per upgraded
+ * book, plus a reocr_candidate flag when existing OCR was produced from the old
+ * low-res images. OCR always predates the upgrade here, so the OCR input width
+ * IS the old import cap — record it now, while that fact is still cheap to know.
+ */
+async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpdated }) {
+  const now = new Date();
+  const full = await db.collection('books').findOne(
+    { id: book.id },
+    { projection: { pages_ocr: 1, pages_translated: 1, 'image_source.provider': 1 } },
+  );
+  const ocrPage = await db.collection('pages').findOne(
+    { book_id: book.id, 'ocr.updated_at': { $exists: true } },
+    { projection: { 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1 } },
+  );
+  const hasOcr = (full?.pages_ocr ?? 0) > 0;
+  await db.collection('book_events').insertOne({
+    book_id: book.id,
+    type: 'image_resolution_upgrade',
+    at: now,
+    source: 'rearchive-iiif-fullres',
+    details: {
+      from_width_cap: fromWidthCap,
+      to_master_width: toMasterWidth,
+      pages_updated: pagesUpdated,
+      provider: full?.image_source?.provider ?? null,
+      // OCR provenance at upgrade time: existing OCR read the OLD images.
+      ocr_pages: full?.pages_ocr ?? 0,
+      ocr_input_width: hasOcr ? fromWidthCap : null,
+      ocr_model: ocrPage?.ocr?.model ?? null,
+      ocr_prompt_version: ocrPage?.ocr?.prompt_version ?? null,
+      ocr_updated_at: ocrPage?.ocr?.updated_at ?? null,
+    },
+  });
+  if (hasOcr) {
+    await db.collection('books').updateOne(
+      { id: book.id },
+      { $set: {
+        reocr_candidate: {
+          reason: 'resolution_upgrade',
+          flagged_at: now,
+          ocr_input_width: fromWidthCap,
+          new_width: toMasterWidth,
+          upgrade_ratio: Math.round((toMasterWidth / fromWidthCap) * 10) / 10,
+        },
+      } },
+    );
+  }
 }
 
 // ── Recovery mode (already-split books) ──

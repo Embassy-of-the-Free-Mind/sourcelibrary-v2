@@ -653,17 +653,22 @@ async function generateBookSummary(
     };
   }
 
-  // Compile all extracted information
-  const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))];
+  // Compile all extracted information. Cap the lists: on very large books
+  // (900+ pages → ~90 batches) the deduped entity sets and batch summaries can
+  // balloon the synthesis prompt/response past the model's limits, truncating
+  // the JSON and (previously) throwing → an empty summary. enrich-worker caps
+  // its equivalent inputs for the same reason; mirror that here.
+  const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))].slice(0, 30);
   const allQuotes = batchExtractions.flatMap(b => b.quotes);
-  const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))];
-  const allPlaces = [...new Set(batchExtractions.flatMap(b => b.places))];
-  const allConcepts = [...new Set(batchExtractions.flatMap(b => b.concepts))];
+  const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))].slice(0, 40);
+  const allPlaces = [...new Set(batchExtractions.flatMap(b => b.places))].slice(0, 30);
+  const allConcepts = [...new Set(batchExtractions.flatMap(b => b.concepts))].slice(0, 40);
 
-  // Build batch summaries section
+  // Build batch summaries section (bounded so the prompt stays within limits).
   const batchSummariesText = batchExtractions
     .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
-    .join('\n');
+    .join('\n')
+    .slice(0, 16000);
 
   // Build quotes section (limit to best 15)
   const quotesText = allQuotes.slice(0, 15)
@@ -777,13 +782,35 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     triggered_by: triggeredBy,
   }).catch(console.error); // Non-blocking
 
-  // Parse JSON from response
-  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse book summary JSON');
-  }
+  // Parse JSON from response — resilient to truncation. On large books the
+  // model can hit its output-token limit mid-JSON (the `sections` array cuts
+  // off), which used to throw and leave the whole summary empty. If the full
+  // object won't parse, salvage the top-level brief/abstract/detailed strings
+  // (they come first in the response) so the About summary still populates,
+  // dropping only the truncated sections.
+  const salvageField = (name: string): string => {
+    const m = responseText.match(new RegExp(`"${name}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+    if (!m) return '';
+    try { return JSON.parse(`"${m[1]}"`); } catch { return m[1]; }
+  };
 
-  const parsed = JSON.parse(jsonMatch[0]);
+  let parsed: { brief?: unknown; abstract?: unknown; detailed?: unknown; sections?: unknown };
+  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+  try {
+    if (!jsonMatch) throw new Error('no JSON object in response');
+    parsed = JSON.parse(jsonMatch[0]);
+  } catch {
+    parsed = {
+      brief: salvageField('brief'),
+      abstract: salvageField('abstract'),
+      detailed: salvageField('detailed'),
+      sections: [],
+    };
+    if (!parsed.brief && !parsed.abstract && !parsed.detailed) {
+      throw new Error('Failed to parse book summary JSON (nothing salvageable)');
+    }
+    console.warn(`generateBookSummary: response JSON was truncated/invalid for ${bookId}; salvaged scalar summary fields, dropped sections.`);
+  }
 
   // Ensure all fields are strings
   const ensureString = (val: unknown): string => {
@@ -1346,7 +1373,12 @@ export const POST = withAuth(async (request, session, context) => {
     // them via /admin/book-revisions even after the cache is cleared.
     await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
 
-    // Clear cached index and summary
+    // Clear cached index and summary. There are TWO stores: the dedicated
+    // `book_indexes` collection (what getBookIndex reads FIRST) and the legacy
+    // inline `book.index`. Clearing only the inline field left a stale
+    // `book_indexes` doc in place, so GET kept returning the old cached index
+    // and never regenerated. Clear both.
+    await db.collection('book_indexes').deleteOne({ book_id: id });
     await db.collection('books').updateOne(
       { id },
       { $unset: { index: '', summary: '', reading_summary: '' } }

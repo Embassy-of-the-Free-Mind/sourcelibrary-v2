@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'A History of Astrology Across Traditions - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'A History of Astrology Across Traditions',
     description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg' }],
   },
   alternates: {
     canonical: '/blog/history-of-astrology',
@@ -457,7 +460,6 @@ export default function HistoryOfAstrologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="history-of-astrology" />
     </ContentPageLayout>
   );
 }

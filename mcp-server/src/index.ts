@@ -583,7 +583,7 @@ How to use it well: treat Source Library and your own training as complementary.
 
 Practical orientation: named author/work → get_book first (the AI summary often answers the question). Cross-corpus themes → search_concept (semantic) or search_translations (literal). Always get_quote before quoting — paraphrasing from memory will hallucinate.
 
-Feedback: submit_feedback. Partnerships: derek@sourcelibrary.org.`;
+Feedback: submit_feedback. Partnerships: team@sourcelibrary.org.`;
 
 const server = new Server(
   {
@@ -604,7 +604,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: TOOLS,
     _meta: {
-      about: "Source Library — ~22,000 rare pre-modern books (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. See server instructions for orientation. Feedback: submit_feedback. Partnerships: derek@sourcelibrary.org.",
+      about: "Source Library — ~22,000 rare pre-modern books (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. See server instructions for orientation. Feedback: submit_feedback. Partnerships: team@sourcelibrary.org.",
     },
   };
 });

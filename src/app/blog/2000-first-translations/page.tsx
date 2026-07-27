@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 
 export const metadata: Metadata = {
@@ -20,6 +19,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.png' }],
   },
 };
 
@@ -978,7 +981,6 @@ export default function TwoThousandFirstTranslations() {
 
         {/* Comments */}
         <div className="mt-16">
-          <BlogComments slug="2000-first-translations" />
         </div>
       </div>
 

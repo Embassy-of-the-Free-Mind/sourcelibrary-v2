@@ -47,7 +47,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       { books: result.books, total: result.total, ...(languages ? { languages } : {}) },
-      { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30' } },
+      { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=30' } },
     );
   } catch (err) {
     console.error('Catalog browse error:', err);

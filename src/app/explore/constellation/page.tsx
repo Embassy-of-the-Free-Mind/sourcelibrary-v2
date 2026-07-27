@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     'Interactive semantic map of 33,000+ books and artworks. Explore how texts cluster by meaning, discover edition families, and navigate the knowledge landscape.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Constellation — Explore — Source Library',
     description:
       'A UMAP projection of the entire Source Library — 33,000 books plotted by semantic similarity.',

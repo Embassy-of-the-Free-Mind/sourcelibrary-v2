@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Where Source Library Came From - Research Notes - Source Library',
   description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations — the origin story of Source Library.',
   openGraph: {
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
     title: 'Where Source Library Came From',
     description: 'From a single untranslated Ficino manuscript to 5,000+ books — the origin story of Source Library.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
   },
   alternates: {
     canonical: '/blog/origin-story',
@@ -265,12 +269,11 @@ export default function OriginStoryPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
             Source Library is a project of the Embassy of the Free Mind. If you want to help translate the Renaissance, or if you have leads on untranslated texts that belong in the collection, reach out &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="origin-story" />
     </ContentPageLayout>
   );
 }

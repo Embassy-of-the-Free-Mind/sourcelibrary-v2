@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Sacred Texts That Were Never "Texts" - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'The Sacred Texts That Were Never "Texts"',
     description: '90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas.',
     images: [{ url: 'https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg' }],
   },
   alternates: {
     canonical: '/blog/indigenous-traditions',
@@ -480,7 +483,6 @@ export default function IndigenousTraditionsPage() {
         </div>
       </article>
 
-      <BlogComments slug="indigenous-traditions" />
     </ContentPageLayout>
   );
 }

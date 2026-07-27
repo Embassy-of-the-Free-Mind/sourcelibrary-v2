@@ -1,16 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Quality Control on Four Million Machine-Translated Pages - Research Notes - Source Library',
   description:
     'How we found, measured, and repaired "translation collapse" — pages where the AI returns a fragment instead of a translation — and the two times our measurement was wrong before the model was.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg', alt: 'A page from Henri Estienne\'s 1589 edition of the fragments of Dicaearchus' }],
     title: 'Quality Control on Four Million Machine-Translated Pages',
     description:
       'Detecting and repairing translation collapse across a 4.25-million-page corpus, and what it takes to check a generative system at scale.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg', alt: 'A page from Henri Estienne\'s 1589 edition of the fragments of Dicaearchus' }],
   },
   alternates: {
     canonical: '/blog/translation-collapse',
@@ -159,7 +163,6 @@ export default function TranslationCollapsePage() {
         </ul>
       </article>
 
-      <BlogComments slug="translation-collapse" />
     </ContentPageLayout>
   );
 }

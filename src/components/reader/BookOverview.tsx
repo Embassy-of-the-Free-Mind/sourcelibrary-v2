@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface OverviewPage {
+export interface OverviewPage {
   id: string;
   page_number: number;
   photo?: string;
@@ -15,6 +15,7 @@ interface OverviewPage {
   split_from_spread?: boolean;
   crop?: { xStart?: number; xEnd?: number };
   display_photo?: string;
+  has_illustration?: boolean;
 }
 
 interface BookOverviewProps {
@@ -22,14 +23,16 @@ interface BookOverviewProps {
   bookSlug?: string;
   bookTitle?: string;
   pages: OverviewPage[];
+  /** When provided, renders a "Contents" button that switches back to the grid view */
+  onShowContents?: () => void;
 }
 
-// Two-tier image URLs: fast thumbnail for overview, high-res for zoom.
+// Two-tier image URLs: fast thumbnail for overview, mid-res for zoom.
 // Split-page handling MUST come first — page.photo and page.archived_photo
 // both point at the full uncropped spread for split pages, so falling
 // through to them renders the wrong image. cropped_photo is the half-page
 // crop and is the canonical source for split pages.
-function getThumbUrl(page: OverviewPage): string | null {
+export function getThumbUrl(page: OverviewPage): string | null {
   if (page.split_from_spread || page.crop) {
     return page.thumbnail_blob || page.cropped_photo || null;
   }
@@ -40,31 +43,36 @@ function getThumbUrl(page: OverviewPage): string | null {
   return null;
 }
 
+// display_photo (the reader's display copy, a few hundred KB) comes first —
+// the archival master (archived_photo, multi-MB at native res) is overkill
+// for overview zoom and saturates bandwidth when several pages load at once.
 function getHiresUrl(page: OverviewPage): string | null {
   if (page.split_from_spread || page.crop) {
     return page.cropped_photo || page.photo || null;
   }
-  // Best available high-res: archived R2 > display > original > photo
-  if (page.archived_photo) return page.archived_photo;
   if (page.display_photo) return page.display_photo;
+  if (page.archived_photo) return page.archived_photo;
   if (page.cropped_photo) return page.cropped_photo;
   if (page.photo_original) return page.photo_original;
   if (page.photo) return page.photo;
   return null;
 }
 
-// Zoom threshold relative to home: above this, load high-res for visible pages
-const HIRES_ZOOM_THRESHOLD = 2;
-
 // Layout constants — world-space sizes (large so hi-res images render crisply when zoomed)
 const THUMB_W = 400;
 const THUMB_H = 560;
 const GAP = 24;
-const MIN_ZOOM = 0.03;
 const MAX_ZOOM = 2;
 const ZOOM_SPEED = 0.002;
 
-export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: BookOverviewProps) {
+// Hi-res loading policy: fetch only after the camera has settled, only for
+// cells that are actually large on screen, nearest-to-center first, a few at
+// a time, cancelling anything that is no longer relevant to the viewport.
+const HIRES_MIN_CELL_PX = 350; // on-screen cell width before hi-res is worth fetching
+const HIRES_SETTLE_MS = 150; // camera must be still this long before hi-res loads start
+const HIRES_CONCURRENCY = 3;
+
+export default function BookOverview({ bookId, bookSlug, bookTitle, pages, onShowContents }: BookOverviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -80,9 +88,16 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
   const [hoveredPage, setHoveredPage] = useState<number | null>(null);
   const [zoomPercent, setZoomPercent] = useState(100);
   const [loadedCount, setLoadedCount] = useState(0);
+  // Viewport aspect ratio drives the column count so the grid fills the screen
+  const [viewAspect, setViewAspect] = useState(1.5);
 
-  // Image cache — lazy loaded
+  // Image caches. imageCache holds finished loads; inflightHires holds
+  // cancellable in-progress hi-res requests; hiresQueue is center-out ordered.
   const imageCache = useRef<Map<string, HTMLImageElement | 'loading' | 'error'>>(new Map());
+  const inflightHires = useRef<Map<string, HTMLImageElement>>(new Map());
+  const hiresQueue = useRef<string[]>([]);
+  const lastCamMoveRef = useRef(0);
+  const hiresPlannedRef = useRef(false);
 
   // Filter pages with images
   const pagesWithImages = useMemo(() =>
@@ -90,37 +105,33 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     [pages],
   );
 
-  // Compute grid layout
+  // Compute grid layout — column count matches the viewport aspect so the
+  // fit-all view fills the screen instead of letterboxing.
   const layout = useMemo(() => {
     const count = pagesWithImages.length;
-    const cols = Math.min(Math.ceil(Math.sqrt(count * 1.5)), 20);
-    const rows = Math.ceil(count / cols);
     const cellW = THUMB_W + GAP;
     const cellH = THUMB_H + GAP;
+    const ideal = Math.round(Math.sqrt(count * viewAspect * (cellH / cellW)));
+    const cols = Math.max(1, Math.min(count, ideal));
+    const rows = Math.ceil(count / cols);
     const totalW = cols * cellW;
     const totalH = rows * cellH;
 
-    const positions = pagesWithImages.map((_, i) => ({
-      col: i % cols,
-      row: Math.floor(i / cols),
-      x: (i % cols) * cellW,
-      y: Math.floor(i / cols) * cellH,
-    }));
-
-    return { cols, rows, cellW, cellH, totalW, totalH, positions };
-  }, [pagesWithImages]);
+    return { cols, rows, cellW, cellH, totalW, totalH };
+  }, [pagesWithImages, viewAspect]);
 
   // Calculate initial zoom to fit all content
   const getHomeZoom = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return 1;
-    const scaleX = canvas.width / (layout.totalW + GAP * 2);
-    const scaleY = canvas.height / (layout.totalH + GAP * 2);
+    const dpr = window.devicePixelRatio || 1;
+    const scaleX = canvas.width / dpr / (layout.totalW + GAP * 2);
+    const scaleY = canvas.height / dpr / (layout.totalH + GAP * 2);
     return Math.min(scaleX, scaleY, 1);
   }, [layout]);
 
-  // Load an image lazily — only when it's in the viewport
-  const loadImage = useCallback((url: string) => {
+  // Load a thumbnail immediately — they're a few KB each.
+  const loadThumb = useCallback((url: string) => {
     if (imageCache.current.has(url)) return;
     imageCache.current.set(url, 'loading');
     const img = new Image();
@@ -136,14 +147,92 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     img.src = url;
   }, []);
 
+  // Start queued hi-res loads up to the concurrency cap.
+  const pumpHires = useCallback(() => {
+    while (inflightHires.current.size < HIRES_CONCURRENCY && hiresQueue.current.length > 0) {
+      const url = hiresQueue.current.shift()!;
+      if (imageCache.current.has(url) || inflightHires.current.has(url)) continue;
+      const img = new Image();
+      inflightHires.current.set(url, img);
+      img.onload = () => {
+        inflightHires.current.delete(url);
+        imageCache.current.set(url, img);
+        dirtyRef.current = true;
+        pumpHires();
+      };
+      img.onerror = () => {
+        inflightHires.current.delete(url);
+        imageCache.current.set(url, 'error');
+        pumpHires();
+      };
+      img.src = url;
+    }
+  }, []);
+
+  // Decide which hi-res images the settled viewport actually needs:
+  // visible cells above the size threshold, nearest to viewport center first.
+  // Cancels in-flight loads that no longer qualify.
+  const planHiresLoads = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const cam = camRef.current;
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.width / dpr;
+    const h = canvas.height / dpr;
+
+    const desired: { url: string; d: number }[] = [];
+    if (THUMB_W * cam.zoom >= HIRES_MIN_CELL_PX) {
+      const vpLeft = cam.x - w / (2 * cam.zoom);
+      const vpRight = cam.x + w / (2 * cam.zoom);
+      const vpTop = cam.y - h / (2 * cam.zoom);
+      const vpBottom = cam.y + h / (2 * cam.zoom);
+      const colStart = Math.max(0, Math.floor(vpLeft / layout.cellW));
+      const colEnd = Math.min(layout.cols - 1, Math.ceil(vpRight / layout.cellW));
+      const rowStart = Math.max(0, Math.floor(vpTop / layout.cellH));
+      const rowEnd = Math.min(layout.rows - 1, Math.ceil(vpBottom / layout.cellH));
+
+      for (let row = rowStart; row <= rowEnd; row++) {
+        for (let col = colStart; col <= colEnd; col++) {
+          const idx = row * layout.cols + col;
+          if (idx >= pagesWithImages.length) continue;
+          const page = pagesWithImages[idx];
+          const hiresUrl = getHiresUrl(page);
+          if (!hiresUrl || hiresUrl === getThumbUrl(page)) continue;
+          if (imageCache.current.has(hiresUrl)) continue;
+          const cx = col * layout.cellW + THUMB_W / 2;
+          const cy = row * layout.cellH + THUMB_H / 2;
+          const d = (cx - cam.x) ** 2 + (cy - cam.y) ** 2;
+          desired.push({ url: hiresUrl, d });
+        }
+      }
+    }
+
+    desired.sort((a, b) => a.d - b.d);
+    const desiredSet = new Set(desired.map(x => x.url));
+
+    // Abort in-flight loads the viewport no longer needs
+    for (const [url, img] of inflightHires.current) {
+      if (!desiredSet.has(url)) {
+        img.onload = null;
+        img.onerror = null;
+        img.src = '';
+        inflightHires.current.delete(url);
+      }
+    }
+
+    hiresQueue.current = desired.map(x => x.url).filter(u => !inflightHires.current.has(u));
+    pumpHires();
+  }, [layout, pagesWithImages, pumpHires]);
+
   // Hit test — which page index is at screen position (sx, sy)?
   const hitTest = useCallback((sx: number, sy: number): number => {
     const canvas = canvasRef.current;
     if (!canvas) return -1;
+    const dpr = window.devicePixelRatio || 1;
     const cam = camRef.current;
     // Screen → world coords
-    const wx = (sx - canvas.width / 2) / cam.zoom + cam.x;
-    const wy = (sy - canvas.height / 2) / cam.zoom + cam.y;
+    const wx = (sx - canvas.width / dpr / 2) / cam.zoom + cam.x;
+    const wy = (sy - canvas.height / dpr / 2) / cam.zoom + cam.y;
     // Which cell?
     const col = Math.floor(wx / layout.cellW);
     const row = Math.floor(wy / layout.cellH);
@@ -173,11 +262,14 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       canvas.style.height = `${container.clientHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       dirtyRef.current = true;
+      const a = container.clientWidth / Math.max(1, container.clientHeight);
+      setViewAspect(prev => (Math.abs(prev - a) > 0.05 ? a : prev));
     };
     resize();
 
     // Set initial camera to center the grid
     const homeZoom = getHomeZoom();
+    const minZoom = homeZoom * 0.9;
     camRef.current = {
       x: layout.totalW / 2,
       y: layout.totalH / 2,
@@ -185,7 +277,20 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     };
     setZoomPercent(100);
 
+    // Any camera movement defers hi-res loading until the view settles
+    const touchCamera = () => {
+      lastCamMoveRef.current = performance.now();
+      hiresPlannedRef.current = false;
+      dirtyRef.current = true;
+    };
+
     const render = () => {
+      // Settle detection runs every frame, even when nothing is dirty
+      if (!hiresPlannedRef.current && performance.now() - lastCamMoveRef.current > HIRES_SETTLE_MS) {
+        hiresPlannedRef.current = true;
+        planHiresLoads();
+      }
+
       if (!dirtyRef.current) {
         rafRef.current = requestAnimationFrame(render);
         return;
@@ -228,30 +333,26 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const py = row * layout.cellH;
           const thumbUrl = getThumbUrl(page)!;
           const hiresUrl = getHiresUrl(page);
-          const useHires = cam.zoom > homeZoom * HIRES_ZOOM_THRESHOLD && hiresUrl && hiresUrl !== thumbUrl;
 
           // Draw placeholder
           ctx.fillStyle = '#1a1a1a';
           ctx.fillRect(px, py, THUMB_W, THUMB_H);
 
-          // Determine best available image: prefer hires if zoomed in and loaded
+          // Thumbnails load eagerly (a few KB each); hi-res only ever loads
+          // via planHiresLoads after the camera settles — never from here.
           let drawImg: HTMLImageElement | null = null;
-
-          // Always ensure thumbnail is loading/loaded
           const thumbCached = imageCache.current.get(thumbUrl);
           if (!thumbCached) {
-            loadImage(thumbUrl);
+            loadThumb(thumbUrl);
           } else if (thumbCached instanceof HTMLImageElement) {
             drawImg = thumbCached;
           }
 
-          // If zoomed in enough, try to load and use high-res
-          if (useHires) {
-            const hiresCached = imageCache.current.get(hiresUrl!);
-            if (!hiresCached) {
-              loadImage(hiresUrl!);
-            } else if (hiresCached instanceof HTMLImageElement) {
-              drawImg = hiresCached; // Override thumbnail with high-res
+          // Use hi-res whenever it has already arrived
+          if (hiresUrl && hiresUrl !== thumbUrl) {
+            const hiresCached = imageCache.current.get(hiresUrl);
+            if (hiresCached instanceof HTMLImageElement) {
+              drawImg = hiresCached;
             }
           }
 
@@ -296,7 +397,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       e.preventDefault();
       const cam = camRef.current;
       const delta = -e.deltaY * ZOOM_SPEED;
-      const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, cam.zoom * (1 + delta)));
+      const newZoom = Math.min(MAX_ZOOM, Math.max(minZoom, cam.zoom * (1 + delta)));
 
       // Zoom toward cursor
       const rect = canvas.getBoundingClientRect();
@@ -310,7 +411,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       cam.zoom = newZoom;
 
       setZoomPercent(Math.round((newZoom / homeZoom) * 100));
-      dirtyRef.current = true;
+      touchCamera();
     };
 
     const onMouseDown = (e: MouseEvent) => {
@@ -320,8 +421,8 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const sx = (e.clientX - rect.left) * dpr;
-      const sy = (e.clientY - rect.top) * dpr;
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
 
       if (dragRef.current) {
         const cam = camRef.current;
@@ -329,10 +430,10 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         const dy = (e.clientY - dragRef.current.sy) / cam.zoom;
         cam.x = dragRef.current.cx - dx;
         cam.y = dragRef.current.cy - dy;
-        dirtyRef.current = true;
+        touchCamera();
       } else {
         // Hover detection
-        const idx = hitTest(sx / dpr, sy / dpr);
+        const idx = hitTest(sx, sy);
         if (idx >= 0) {
           setHoveredPage(pagesWithImages[idx].page_number);
           canvas.style.cursor = 'pointer';
@@ -394,16 +495,29 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         const dy = (t.clientY - dragRef.current.sy) / cam.zoom;
         cam.x = dragRef.current.cx - dx;
         cam.y = dragRef.current.cy - dy;
-        dirtyRef.current = true;
+        touchCamera();
       } else if (e.touches.length === 2) {
         const t0 = e.touches[0], t1 = e.touches[1];
         const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
-        const scale = dist / lastTouchDist;
+        const center = { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 };
         const cam = camRef.current;
-        cam.zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, cam.zoom * scale));
+        const newZoom = Math.min(MAX_ZOOM, Math.max(minZoom, cam.zoom * (dist / lastTouchDist)));
+
+        // Zoom toward the pinch center and follow two-finger pan —
+        // the world point between the fingers stays under them.
+        const rect = canvas.getBoundingClientRect();
+        const mx = center.x - rect.left;
+        const my = center.y - rect.top;
+        const wx = (mx - canvas.width / dpr / 2) / cam.zoom + cam.x;
+        const wy = (my - canvas.height / dpr / 2) / cam.zoom + cam.y;
+        cam.x = wx - (mx - canvas.width / dpr / 2) / newZoom - (center.x - lastTouchCenter.x) / newZoom;
+        cam.y = wy - (my - canvas.height / dpr / 2) / newZoom - (center.y - lastTouchCenter.y) / newZoom;
+        cam.zoom = newZoom;
+
         lastTouchDist = dist;
+        lastTouchCenter = center;
         setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
-        dirtyRef.current = true;
+        touchCamera();
       }
     };
 
@@ -438,6 +552,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     const resizeObs = new ResizeObserver(resize);
     resizeObs.observe(container);
 
+    const inflight = inflightHires.current;
     return () => {
       cancelAnimationFrame(rafRef.current);
       canvas.removeEventListener('wheel', onWheel);
@@ -449,23 +564,25 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       canvas.removeEventListener('touchmove', onTouchMove);
       canvas.removeEventListener('touchend', onTouchEnd);
       resizeObs.disconnect();
+      // Abort any in-flight hi-res loads
+      for (const [url, img] of inflight) {
+        img.onload = null;
+        img.onerror = null;
+        img.src = '';
+        inflight.delete(url);
+      }
+      hiresQueue.current = [];
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesWithImages, layout, getHomeZoom, hitTest, loadImage]);
+  }, [pagesWithImages, layout, getHomeZoom, hitTest, loadThumb, planHiresLoads]);
 
-  const handleZoomIn = () => {
+  const nudgeZoom = (factor: number) => {
     const cam = camRef.current;
-    cam.zoom = Math.min(MAX_ZOOM, cam.zoom * 1.5);
     const homeZoom = getHomeZoom();
+    cam.zoom = Math.min(MAX_ZOOM, Math.max(homeZoom * 0.9, cam.zoom * factor));
     setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
-    dirtyRef.current = true;
-  };
-
-  const handleZoomOut = () => {
-    const cam = camRef.current;
-    cam.zoom = Math.max(MIN_ZOOM, cam.zoom * 0.67);
-    const homeZoom = getHomeZoom();
-    setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
+    lastCamMoveRef.current = performance.now();
+    hiresPlannedRef.current = false;
     dirtyRef.current = true;
   };
 
@@ -473,50 +590,66 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     const homeZoom = getHomeZoom();
     camRef.current = { x: layout.totalW / 2, y: layout.totalH / 2, zoom: homeZoom };
     setZoomPercent(100);
+    lastCamMoveRef.current = performance.now();
+    hiresPlannedRef.current = false;
     dirtyRef.current = true;
   };
 
   const bookPath = `/book/${bookSlug || bookId}`;
 
   return (
-    <div ref={containerRef} className="relative w-full h-[calc(100vh-56px)] bg-[#0a0a0a]">
-      {/* Page count — top-left */}
-      <div className="absolute top-4 left-4 z-20 px-3 py-1.5 rounded-full
-        bg-black/60 backdrop-blur-md border border-white/10 text-white/70 text-sm
+    <div ref={containerRef} className="relative w-full h-dvh bg-[#0a0a0a]">
+      {/* Top bar: title + page count share one row so they can't overlap on mobile */}
+      <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between gap-2
         pointer-events-none select-none">
-        {pagesWithImages.length} pages
-        {loadedCount < pagesWithImages.length && (
-          <span className="text-white/40 ml-1.5">· {loadedCount} loaded</span>
-        )}
-      </div>
-
-      {/* Book title — top-center */}
-      {bookTitle && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-1.5 rounded-full
-          bg-black/60 backdrop-blur-md border border-white/10 text-white/80 text-sm
-          pointer-events-none select-none max-w-[60vw] truncate">
-          {bookTitle}
+        {bookTitle ? (
+          <div className="px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md
+            border border-white/10 text-white/80 text-sm truncate">
+            {bookTitle}
+          </div>
+        ) : <div />}
+        <div className="shrink-0 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md
+          border border-white/10 text-white/70 text-sm">
+          {pagesWithImages.length} pages
+          {loadedCount < pagesWithImages.length && (
+            <span className="text-white/40 ml-1.5">· {loadedCount} loaded</span>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Canvas */}
       <canvas ref={canvasRef} className="w-full h-full" style={{ cursor: 'grab' }} />
 
       {/* Hover tooltip */}
       {hoveredPage !== null && (
-        <div className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-full
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 px-3 py-1.5 rounded-full
           bg-black/60 backdrop-blur-md border border-white/10 text-white/80 text-sm
           pointer-events-none select-none">
           Page {hoveredPage}
         </div>
       )}
 
-      {/* Zoom controls — bottom-right pill */}
-      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-1
+      {/* Bottom-right controls */}
+      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
+      {onShowContents && (
+        <button
+          onClick={onShowContents}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
+            bg-black/60 backdrop-blur-md border border-white/10
+            text-white/70 hover:text-white text-sm transition-colors shadow-lg"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 3.5h10M2 7h10M2 10.5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          Contents
+        </button>
+      )}
+      {/* Zoom controls pill */}
+      <div className="flex items-center gap-1
         bg-black/60 backdrop-blur-md border border-white/10 rounded-full
         px-1 py-1 shadow-lg">
         <button
-          onClick={handleZoomOut}
+          onClick={() => nudgeZoom(0.67)}
           className="w-8 h-8 flex items-center justify-center rounded-full
             text-white/70 hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Zoom out"
@@ -531,7 +664,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         </span>
 
         <button
-          onClick={handleZoomIn}
+          onClick={() => nudgeZoom(1.5)}
           className="w-8 h-8 flex items-center justify-center rounded-full
             text-white/70 hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Zoom in"
@@ -554,6 +687,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
             <path d="M5 5h6v6H5z" stroke="currentColor" strokeWidth="1" strokeDasharray="2 1" />
           </svg>
         </button>
+      </div>
       </div>
 
       {/* Back link — bottom-left */}

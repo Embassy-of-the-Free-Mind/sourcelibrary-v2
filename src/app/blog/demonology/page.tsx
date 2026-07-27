@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
@@ -11,6 +10,10 @@ export const metadata: Metadata = {
     title: 'What Are Demons? Five Answers from the Primary Sources',
     description: 'The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel. Source Library holds the texts that document this extraordinary reversal.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg' }],
   },
   alternates: {
     canonical: '/blog/demonology',
@@ -605,7 +608,6 @@ export default function DemonologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="demonology" />
     </ContentPageLayout>
   );
 }

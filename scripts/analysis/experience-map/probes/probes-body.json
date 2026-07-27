@@ -1,0 +1,106 @@
+{
+  "_note": "Probe sets for reconstructing SUBTLE-BODY MAPS from the sources themselves. Ten systems that independently chart centres, channels or loci on the human body. Probes are written in each system's own idiom, not in a common comparative vocabulary, so that retrieval does not presuppose the alignment we want to test. Chinese channel-and-point medicine is included deliberately as a CONTROL: it is a therapeutic map of the same body, built without an experiential-ascent claim, so it shows what a body map looks like when nobody is reporting inner states from it.",
+  "systems": [
+    {
+      "id": "hindu_tantra", "label": "Hindu tantric cakras", "region": "South Asia",
+      "probes": [
+        "the lotus at the base of the spine has four petals, and above it the six-petalled lotus",
+        "at the heart is the lotus of twelve petals, and at the throat the lotus of sixteen",
+        "between the eyebrows is the two-petalled lotus, and above all the thousand-petalled",
+        "in the navel wheel resides the element of fire, with its seed-syllable and presiding deity",
+        "each lotus has its letters upon the petals, its element, and its colour",
+        "meditate upon the wheel at the base, red as the rising sun, four-petalled"
+      ]
+    },
+    {
+      "id": "kundalini_yoga", "label": "Yogic channels and the serpent power", "region": "South Asia",
+      "probes": [
+        "the serpent power sleeping at the base awoke and rose through the central channel",
+        "the breath passes through ida and pingala, and when it enters sushumna the mind grows still",
+        "piercing the knot, the power ascended and I felt heat rise along the spine",
+        "the moon nectar drips from above the palate and is consumed by the sun at the navel",
+        "when the power reaches the crown the yogin knows bliss and the body becomes as if dead"
+      ]
+    },
+    {
+      "id": "tibetan_tantra", "label": "Tibetan channels, winds and wheels", "region": "Tibet",
+      "probes": [
+        "the central channel with the right and left channels beside it, running from the crown to below the navel",
+        "the wheel at the navel with sixty-four spokes, and the wheel at the heart with eight",
+        "the winds are gathered into the central channel and the drops are brought to the heart",
+        "at the crown is the wheel of great bliss, and the white drop descends from it",
+        "inner heat blazed at the navel and melted the drop at the crown"
+      ]
+    },
+    {
+      "id": "sufi_lataif", "label": "Sufi subtle centres (laṭāʾif)", "region": "Islamic world",
+      "probes": [
+        "the subtle centre of the heart lies on the left of the chest, and the spirit on the right",
+        "above the heart is the secret, and above that the hidden, and the most hidden",
+        "the seeker recites the name upon the heart until the centre becomes luminous",
+        "the self commanding to evil, the self that blames, and the self at peace",
+        "each subtle centre has its colour and its prophet, and its light appears to the traveller"
+      ]
+    },
+    {
+      "id": "daoist_neidan", "label": "Daoist cinnabar fields and inner landscape", "region": "China",
+      "probes": [
+        "the lower cinnabar field lies below the navel, the middle at the heart, the upper in the palace of the mud pill",
+        "the breath rises along the spine through the three passes to the summit and descends through the front",
+        "the spirit is refined into emptiness in the upper field, and the infant is born",
+        "the yellow court lies within, and the palaces of the body each have their spirit",
+        "guarding the One, the practitioner concentrates the breath at the field below the navel"
+      ]
+    },
+    {
+      "id": "kabbalah_body", "label": "Kabbalistic sefirot on the body", "region": "Jewish"  ,
+      "probes": [
+        "the sefirot correspond to the members of the body, the crown above the head",
+        "wisdom and understanding are the two brains, mercy and severity the two arms",
+        "beauty is the trunk of the body, foundation the sign of the covenant, kingdom the feet",
+        "the supernal man, and the arrangement of the limbs in the divine image",
+        "the soul has levels, nefesh in the liver, ruach in the heart, neshamah in the brain"
+      ]
+    },
+    {
+      "id": "theosophical", "label": "Theosophical chakras", "region": "Modern Europe / America",
+      "probes": [
+        "the etheric centres appear as whirling vortices upon the surface of the etheric double",
+        "the force flows into the centre and radiates in spokes, giving it the appearance of a flower",
+        "the centre at the base of the spine glows with fiery orange-red, the splenic with all colours",
+        "each chakra corresponds to a plane and to a sense, and to a gland of the physical body",
+        "the awakening of these centres before purification is exceedingly dangerous"
+      ]
+    },
+    {
+      "id": "hesychast", "label": "Hesychast prayer of the heart", "region": "Eastern Christian",
+      "probes": [
+        "descend with the mind into the heart, and there call upon the name",
+        "keep the attention within the breast, at the place of the heart, and let the prayer rest there",
+        "the mind united with the heart, and warmth arose in that place",
+        "guard of the heart, and the return of the intellect into itself",
+        "with the breath draw the mind inward and hold it in the heart"
+      ]
+    },
+    {
+      "id": "boehme_western", "label": "Boehme's forms and the Western esoteric body", "region": "Western esoteric",
+      "probes": [
+        "the seven forms or fountain spirits in man, each with its own quality and planet",
+        "the astral body and the elemental body, and the planets which rule the members",
+        "the salt, the sulphur and the mercury within the microcosm of man",
+        "the inward man has his own senses, and a light which is not of this world",
+        "the centre of nature turns within the heart of man, and the flash of fire arises"
+      ]
+    },
+    {
+      "id": "chinese_medicine", "label": "Channels and points (control)", "region": "China",
+      "probes": [
+        "the vital breath circulates through the channels and collaterals, gathering at the points",
+        "needle the point three inches below the knee to treat disorders of the stomach",
+        "the lung channel begins in the middle burner and descends to the thumb",
+        "the points along the spine correspond to the organs within",
+        "when the breath is blocked in the channel, pain and disease arise in that part"
+      ]
+    }
+  ]
+}

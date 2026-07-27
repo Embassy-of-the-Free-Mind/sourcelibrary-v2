@@ -5,8 +5,10 @@ import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
+import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -75,8 +77,8 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
     notFound();
   }
 
-  // Step 2: Book lookup + nav pages in parallel (both can start now)
-  const [bookResult, navPages] = await Promise.all([
+  // Step 2: Book lookup + nav pages + music transcriptions in parallel
+  const [bookResult, navPages, musicTranscriptions] = await Promise.all([
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
@@ -89,6 +91,7 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
       }),
+    getTranscriptionsForPage(db, pageId),
   ]);
 
   if (!bookResult) {
@@ -131,6 +134,25 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         initialPage={serializedPage}
         initialPageList={serializedNavPages}
       />
+      {musicTranscriptions.length > 0 && (
+        <HymnPlayer transcriptions={musicTranscriptions} />
+      )}
+      {/* Server-rendered nav links so crawlers can walk book → pages even
+          when client-component SSR changes (#2266). Sits below the h-screen
+          reader; the in-reader controls remain the primary navigation. */}
+      {!(ctx?.isEmbedded) && (() => {
+        const idx = serializedNavPages.findIndex(p => p.id === pageId);
+        const prev = idx > 0 ? serializedNavPages[idx - 1] : null;
+        const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
+        return (
+          <nav aria-label="Page navigation" className="max-w-[1500px] mx-auto px-4 sm:px-6 py-4 text-sm text-stone-500 flex flex-wrap items-center gap-x-5 gap-y-1">
+            {prev && <a href={`/book/${bookPath}/page/${prev.id}`} className="hover:text-stone-700">← Page {prev.page_number}</a>}
+            <a href={`/book/${bookPath}`} className="hover:text-stone-700">{book.display_title || book.title}</a>
+            <a href={`/book/${bookPath}/overview`} className="hover:text-stone-700">All {serializedNavPages.length} pages</a>
+            {next && <a href={`/book/${bookPath}/page/${next.id}`} className="hover:text-stone-700">Page {next.page_number} →</a>}
+          </nav>
+        );
+      })()}
     </>
   );
 }

@@ -1,0 +1,186 @@
+{
+  "date": "2026-07-19",
+  "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "runs": 3,
+  "only": "german-",
+  "summary": [
+    {
+      "language": "German",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3028,
+      "charAccuracy": 0.9966974900924703,
+      "rows": [
+        {
+          "work": "Boltzmann, Vorlesungen über Gastheorie II (1898) — molecular limits",
+          "bookId": "6990540738e1fdee57b365c1",
+          "pageNumber": 128,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 576,
+          "matched": 576,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/boltzmann_gastheorie02_1898?p=130",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.006732,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0007569,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+          "bookId": "69afe356cf56258c93891081",
+          "pageNumber": 148,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 403,
+          "matched": 403,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0059745,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0006783749999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Hegel, Phänomenologie des Geistes — Ethical Order (duty to the dead), 1832 Werke printing",
+          "bookId": "69e8b2ee2ff2a8dc09e790fc",
+          "pageNumber": 351,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 306,
+          "matched": 306,
+          "source": "Deutsches Textarchiv TEI of the 1807 FIRST edition — our copy is the 1832 Werke edition (cross-edition reference)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_phaenomenologie_1807?p=500",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0066555,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.000748575,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Herder, Abhandlung über den Ursprung der Sprache (1772) — faculties of mind",
+          "bookId": "69ade7eeda7f32a00bedaa7c",
+          "pageNumber": 50,
+          "aligned": true,
+          "guard": 0.06875,
+          "cer": 0.011210762331838564,
+          "charAccuracy": 0.9887892376681614,
+          "refLen": 892,
+          "matched": 882,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/herder_abhandlung_1772?p=50",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0028380000000000002,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0005318999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9910313901345291,
+              "cer": 0.008968609865470852
+            }
+          }
+        },
+        {
+          "work": "Humboldt, Kosmos Bd. 1 (1845) — meteor streams",
+          "bookId": "698fb77b6b95eeda7d2d1eaf",
+          "pageNumber": 151,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 851,
+          "matched": 851,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/humboldt_kosmos01_1845?p=150",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0057195,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.000654975,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

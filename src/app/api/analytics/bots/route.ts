@@ -4,8 +4,14 @@ import { withAuth } from '@/lib/auth-helpers';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 
 const COLLECTION = 'analytics_bot_access';
+// Per-raw-UA samples for the opaque buckets (unknown-bot / other-bot / script),
+// so the 90%-of-volume "unknown" pile can be broken down by actual user-agent.
+const UNKNOWN_COLLECTION = 'bot_unknown_agents';
+// classifyBot categories that tell us nothing on their own — worth sampling.
+const OPAQUE_BUCKETS = new Set(['unknown-bot', 'other-bot', 'script']);
 const DB_TIMEOUT_MS = 3000;
 let indexEnsured = false;
+let unknownIndexEnsured = false;
 
 /**
  * POST /api/analytics/bots — fire-and-forget bot access logging
@@ -16,7 +22,7 @@ export async function POST(request: NextRequest) {
   try {
     // Only accept internal calls (no auth header needed, but check origin)
     const body = await request.json();
-    const { userAgent, path, action, ip: rawIp } = body;
+    const { userAgent, path, action, ip: rawIp, country } = body;
 
     if (!userAgent || !path) {
       return NextResponse.json({ success: true });
@@ -26,6 +32,7 @@ export async function POST(request: NextRequest) {
     const botName = classifyBot(userAgent);
     const pathPrefix = extractPathPrefix(path);
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const geo = typeof country === 'string' && country ? country.slice(0, 2).toUpperCase() : null;
 
     const dbWrite = (async () => {
       const db = await getDb();
@@ -51,6 +58,31 @@ export async function POST(request: NextRequest) {
         },
         { upsert: true }
       );
+
+      // For the opaque buckets, also record a per-raw-UA daily sample so the
+      // "unknown" pile can be identified. Keyed by the (truncated) UA string;
+      // a flood of singleton UAs is itself the signal (UA-randomizing scraper).
+      if (OPAQUE_BUCKETS.has(botName)) {
+        const ucol = db.collection(UNKNOWN_COLLECTION);
+        if (!unknownIndexEnsured) {
+          ucol.createIndex({ ua: 1, date: 1 }, { name: 'ua_daily_idx', background: true }).catch(() => {});
+          ucol.createIndex({ date: 1, hits: -1 }, { name: 'date_hits_idx', background: true }).catch(() => {});
+          unknownIndexEnsured = true;
+        }
+        await ucol.updateOne(
+          { ua: userAgent.substring(0, 200), date: today },
+          {
+            $inc: { hits: 1 },
+            $set: { bucket: botName, last_ip: ip },
+            $addToSet: {
+              paths: pathPrefix,
+              ...(geo ? { countries: geo } : {}),
+            },
+            $setOnInsert: { created_at: new Date() },
+          },
+          { upsert: true }
+        );
+      }
     })();
 
     const timeout = new Promise<'timeout'>((resolve) =>
@@ -149,6 +181,31 @@ export const GET = withAuth(async (request: NextRequest) => {
 
     const total = result?.total?.[0] || { hits: 0, unique_ips: [[]] };
 
+    // Break down the opaque buckets by actual user-agent.
+    const rawUnknown = await db.collection(UNKNOWN_COLLECTION).aggregate([
+      { $match: { date: { $gte: since } } },
+      {
+        $group: {
+          _id: '$ua',
+          hits: { $sum: '$hits' },
+          buckets: { $addToSet: '$bucket' },
+          countries: { $addToSet: '$countries' },
+          paths: { $addToSet: '$paths' },
+          last_seen: { $max: '$date' },
+        },
+      },
+      { $sort: { hits: -1 } },
+      { $limit: 40 },
+    ]).toArray();
+    const unknown_agents = rawUnknown.map((u: Record<string, unknown>) => ({
+      ua: u._id,
+      hits: u.hits,
+      buckets: u.buckets,
+      countries: [...new Set((u.countries as string[][] || []).flat())].filter(Boolean),
+      paths: [...new Set((u.paths as string[][] || []).flat())].filter(Boolean).slice(0, 8),
+      last_seen: u.last_seen,
+    }));
+
     return NextResponse.json({
       period: { since, days },
       total_hits: total.hits || 0,
@@ -157,6 +214,7 @@ export const GET = withAuth(async (request: NextRequest) => {
       by_day: result?.byDay || [],
       by_path: result?.byPath || [],
       by_action: result?.byAction || [],
+      unknown_agents,
     });
   } catch (error) {
     return NextResponse.json(

@@ -23,11 +23,13 @@
 
 import { loadEnv, samplePages, getPage, disconnect, loadCorpusRegistry } from './lib/sampling.mjs';
 import { runModel, resolveModel, fetchImage, estimateCost } from './lib/runners.mjs';
-import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER } from './lib/metrics.mjs';
+import { mcr, pairwiseMetrics, charSimilarity, syllableSimilarity, cleanText, cer, bleu4, rougeL, subsequenceCER, scoreAgainstReference, normalizeCJK, normalizeForScript } from './lib/metrics.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveResults, loadLatestResults, listResults, generateConsistencyReport, generateEmbeddingReport, generateMatrixReport, saveBlogPost } from './lib/report.mjs';
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -338,8 +340,14 @@ async function cmdCompare() {
   }
 
   // Scope ground truth to the corpus's script so a Chinese run ignores e.g. Tibetan GT.
+  // An unknown corpus must FAIL here: an undefined script would silently disable the
+  // filter and aggregate every language's ground truth into one bogus number.
   const registry = loadCorpusRegistry();
-  const corpusScript = registry[corpus]?.script;
+  if (!registry[corpus]) {
+    console.error(`Unknown corpus "${corpus}". Known: ${Object.keys(registry).join(', ')}`);
+    process.exit(1);
+  }
+  const corpusScript = registry[corpus].script;
   const entries = [];
   for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
     try {
@@ -373,8 +381,11 @@ async function cmdCompare() {
     const script = corpusScript || 'default';
 
     if (against === 'ocr' && gt.ocr_ground_truth && ocrText) {
-      const { cer: score, refLen, matched } = subsequenceCER(gt.ocr_ground_truth, ocrText);
-      const aligned = score <= DIVERGENCE;
+      // Script-aware two-stage scoring: word-level identity guard for alphabetic
+      // scripts, char-level for cjk; char-CER inside the verified window.
+      const r = scoreAgainstReference(gt.ocr_ground_truth, ocrText, gt.script || 'cjk',
+        { cjk: DIVERGENCE, word: parseFloat(args['word-threshold'] || '0.35') });
+      const { cer: score, refLen, matched, aligned } = r;
       results.push({
         work: label, bookId: gt.book_id, pageNumber: gt.page_number,
         cer: score, charAccuracy: 1 - score, refLen, matched, aligned,
@@ -416,6 +427,227 @@ async function cmdCompare() {
   }
 
   saveResults(`${corpus}-compare-${against}`, { corpus, against, results, date: new Date().toISOString().slice(0, 10) });
+}
+
+// ── Subcommand: scorecard (per-language OCR quality vs published texts) ──
+
+async function cmdScorecard() {
+  const gtDir = path.join(__dirname, 'ground-truth');
+  if (!fs.existsSync(gtDir)) { console.error(`No ground truth at ${gtDir}`); process.exit(1); }
+  // --only=<regex> restricts to matching ground-truth filenames (e.g.
+  // --only=tibetan, --only='eznik|vita-vergilii') so new-passage model runs —
+  // the paid part — don't re-spend on the whole set. Plain substrings work too.
+  const only = typeof args.only === 'string' ? args.only : null;
+  const onlyRx = only ? new RegExp(only, 'i') : null;
+  const entries = [];
+  for (const file of fs.readdirSync(gtDir).filter(f => f.endsWith('.json'))) {
+    if (onlyRx && !onlyRx.test(file)) continue;
+    try {
+      const gt = JSON.parse(fs.readFileSync(path.join(gtDir, file), 'utf8'));
+      if (gt.ocr_ground_truth) entries.push(gt);
+    } catch { /* skip */ }
+  }
+  if (!entries.length) { console.error(`No OCR ground-truth files${only ? ` matching --only=${only}` : ''}.`); process.exit(1); }
+
+  // Optional model comparison: re-OCR each pinned page with each model and score
+  // against the same reference. Costs API money — always honor --dry-run.
+  const models = args.models ? args.models.split(',').map(resolveModel) : [];
+  const runs = parseInt(args.runs || '1');
+  if (args['dry-run'] && models.length) {
+    console.log(`\nCost estimate: ${entries.length} pages × ${runs} run(s) each:`);
+    let total = 0;
+    for (const model of models) {
+      const est = estimateCost(model, runs, entries.length);
+      total += est.estimatedUsd;
+      console.log(`  ${model.padEnd(30)} ${est.calls} calls  ~$${est.estimatedUsd.toFixed(2)}`);
+    }
+    console.log(`  TOTAL ~$${total.toFixed(2)}`);
+    return;
+  }
+
+  console.log(`\nOCR Quality Scorecard — ${entries.length} reference passages vs published texts\n`);
+
+  const byLang = new Map();
+  for (const gt of entries) {
+    const page = await getPage(gt.book_id, gt.page_number);
+    const label = `${gt.language || gt.script}`;
+    if (!byLang.has(label)) byLang.set(label, { script: gt.script, rows: [] });
+    if (!page?.ocr?.data) {
+      byLang.get(label).rows.push({ work: gt.work, missing: true });
+      continue;
+    }
+    const r = scoreAgainstReference(gt.ocr_ground_truth, page.ocr.data, gt.script || 'cjk');
+    const row = {
+      work: gt.work, bookId: gt.book_id, pageNumber: gt.page_number,
+      aligned: r.aligned, guard: r.guard.value, cer: r.cer,
+      charAccuracy: r.charAccuracy, refLen: r.refLen, matched: r.matched,
+      source: gt.source, source_url: gt.source_url,
+    };
+    byLang.get(label).rows.push(row);
+
+    if (models.length) {
+      // Same image source the pipeline OCR'd (getPageSource handles split pages).
+      const imageUrl = getPageSource(page);
+      if (!imageUrl) { console.log(`  ! ${gt.work}: no usable page image, skipping model runs`); continue; }
+      let imageBuffer = await fetchImage(imageUrl);
+      // --width=N resizes the image before sending (resolution-ablation arm).
+      // --tag=STR labels an experimental arm (e.g. annotated-prompt). Both are
+      // recorded as a @suffix on the model field in the raw-outputs JSONL so
+      // build-observations keeps arms separate from baseline runs.
+      let armSuffix = typeof args.tag === 'string' ? `@${args.tag}` : '';
+      if (args.width) {
+        const width = parseInt(args.width);
+        const sharp = (await import('sharp')).default;
+        const meta = await sharp(imageBuffer).metadata();
+        if (meta.width > width) imageBuffer = await sharp(imageBuffer).resize({ width }).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@w${width}${armSuffix}`;
+        console.log(`  resized to ${Math.min(width, meta.width)}px wide (native ${meta.width}) → ${imageBuffer.length} bytes`);
+      }
+      // --blur=SIGMA gaussian-blurs the (possibly resized) image — degradation-
+      // robustness arm: reading needs pixels, reciting does not, so accuracy that
+      // survives blur is a memory signature. Apply AFTER --width so sigma is
+      // comparable across pages at a fixed pixel scale.
+      if (args.blur) {
+        const sigma = parseFloat(args.blur);
+        const sharp = (await import('sharp')).default;
+        imageBuffer = await sharp(imageBuffer).blur(sigma).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@blur${sigma}${armSuffix}`;
+        console.log(`  blurred σ=${sigma} → ${imageBuffer.length} bytes`);
+      }
+      // --occlude=FRAC masks a horizontal band (FRAC of image height, centered
+      // vertically, margins left visible so layout parsing survives). Text the
+      // model emits for the masked band is reference-free evidence of recitation
+      // (occlusion cloze — see ocr-memorization-paper.md).
+      //
+      // --occlude=x,y,w,h (four comma-separated fractions of width/height) masks
+      // a normalized RECT instead — a passage-TARGETED mask, chosen per page by
+      // visually locating the reference passage rather than a fixed mid-page
+      // band. This is the v2 pilot correction (result 16 in
+      // ocr-memorization-paper.md): the v1 fixed band missed the reference
+      // passage entirely on 2 of 5 canonical pages. Arm-tagged `@occR<pct>`
+      // where pct is the RECT'S AREA SHARE of the page (w*h*100) — distinct from
+      // the old `@occ<pct>` (height-fraction of the old band form) so v1/v2 runs
+      // never collide in the observations dataset.
+      if (args.occlude) {
+        const sharp = (await import('sharp')).default;
+        const meta = await sharp(imageBuffer).metadata();
+        if (args.occlude.includes(',')) {
+          const [xf, yf, wf, hf] = args.occlude.split(',').map(Number);
+          const left = Math.round(meta.width * xf);
+          const top = Math.round(meta.height * yf);
+          const bandW = Math.round(meta.width * wf);
+          const bandH = Math.round(meta.height * hf);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          const areaPct = Math.round(wf * hf * 100);
+          armSuffix = `@occR${areaPct}${armSuffix}`;
+          console.log(`  occluded rect ${bandW}×${bandH} at (${left},${top}) [area ${areaPct}%] → ${imageBuffer.length} bytes`);
+        } else {
+          const frac = parseFloat(args.occlude);
+          const bandH = Math.round(meta.height * frac);
+          const top = Math.round(meta.height / 2 - bandH / 2);
+          const left = Math.round(meta.width * 0.10);
+          const bandW = Math.round(meta.width * 0.80);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          armSuffix = `@occ${Math.round(frac * 100)}${armSuffix}`;
+          console.log(`  occluded ${bandW}×${bandH} band at y=${top} → ${imageBuffer.length} bytes`);
+        }
+      }
+      // --save-image=DIR dumps the manipulated image for visual audit of arm placement.
+      if (args['save-image']) {
+        const name = (gt.work || 'page').replace(/\W+/g, '_').slice(0, 60) + armSuffix.replace(/@/g, '_') + '.jpg';
+        fs.writeFileSync(path.join(args['save-image'], name), imageBuffer);
+      }
+      row.models = {};
+      for (const model of models) {
+        const outputs = [];
+        let cost = 0, best = null, refused = 0;
+        for (let i = 0; i < runs; i++) {
+          // --delay=MS throttles between model calls — free-tier endpoints
+          // (Gemma) drop consecutive rapid requests with bare fetch failures.
+          if (args.delay) await new Promise(r => setTimeout(r, parseInt(args.delay)));
+          try {
+            // Pass the source URL only when the buffer is unmodified — width-resized
+            // arms must not leak the full-res URL to URL-preferring runners.
+            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000, ...(args.width ? {} : { imageUrl }) });
+            cost += res.costUsd;
+            // Raw outputs are dumped so runs can be RE-scored offline when
+            // normalization improves — model calls are the expensive part.
+            fs.appendFileSync(path.join(__dirname, 'results', `scorecard-outputs-${new Date().toISOString().slice(0, 10)}.jsonl`),
+              JSON.stringify({ work: gt.work, model: model + armSuffix, run: i + 1, finishReason: res.finishReason, text: res.text }) + '\n');
+            if (res.finishReason === 'refusal') { refused++; continue; }
+            const score = scoreAgainstReference(gt.ocr_ground_truth, res.text, gt.script || 'cjk');
+            outputs.push({ text: res.text, score });
+            if (!best || score.cer < best.cer) best = score;
+          } catch (e) {
+            console.log(`  ! ${gt.work} × ${model} run ${i + 1}: ${e.message.slice(0, 120)}`);
+          }
+        }
+        // Consistency: MCR over normalized outputs (identical normalized text = same run).
+        const norm = t => gt.script === 'cjk' ? normalizeCJK(t) : normalizeForScript(t, gt.script);
+        const consistency = outputs.length > 1 ? mcr(outputs.map(o => norm(o.text))).rate : null;
+        row.models[model] = {
+          runs: outputs.length, refused, costUsd: cost, consistency,
+          aligned: best?.aligned ?? false,
+          charAccuracy: best?.aligned ? best.charAccuracy : null,
+          cer: best?.aligned ? best.cer : null,
+        };
+        const m = row.models[model];
+        console.log(`  ${gt.work.padEnd(28)} ${model.padEnd(28)} acc=${m.charAccuracy === null ? '  n/a' : (m.charAccuracy * 100).toFixed(1) + '%'}  ${consistency === null ? '' : `MCR=${(consistency * 100).toFixed(0)}%`}${refused ? `  refused=${refused}` : ''}  $${cost.toFixed(3)}`);
+      }
+    }
+  }
+
+  const summary = [];
+  console.log(`  ${'Language'.padEnd(12)} ${'Script'.padEnd(10)} ${'Passages'.padStart(8)} ${'Aligned'.padStart(7)} ${'Ref chars'.padStart(9)} ${'Accuracy'.padStart(9)}`);
+  console.log('  ' + '─'.repeat(60));
+  for (const [lang, { script, rows }] of [...byLang.entries()].sort()) {
+    const scored = rows.filter(r => !r.missing);
+    const aligned = scored.filter(r => r.aligned);
+    const totalRef = aligned.reduce((s, r) => s + r.refLen, 0);
+    const acc = totalRef ? aligned.reduce((s, r) => s + r.matched, 0) / totalRef : null;
+    summary.push({ language: lang, script, passages: scored.length, aligned: aligned.length, refChars: totalRef, charAccuracy: acc, rows });
+    console.log(`  ${lang.padEnd(12)} ${script.padEnd(10)} ${String(scored.length).padStart(8)} ${String(aligned.length).padStart(7)} ${String(totalRef).padStart(9)} ${acc === null ? '      n/a' : ((acc * 100).toFixed(1) + '%').padStart(9)}`);
+    for (const r of rows) {
+      if (r.missing) { console.log(`      - ${r.work}: page missing`); continue; }
+      if (!r.aligned) console.log(`      - ${r.work}: guard ${(r.guard * 100).toFixed(0)}% — excluded (not cleanly present; NOT an OCR failure)`);
+    }
+  }
+  if (models.length) {
+    console.log(`\n  Model comparison (best-of-${runs} char accuracy on aligned passages, vs stored pipeline OCR):`);
+    console.log(`  ${'Model'.padEnd(30)} ${'Aligned'.padStart(7)} ${'Accuracy'.padStart(9)} ${'Mean MCR'.padStart(9)} ${'Cost'.padStart(8)}`);
+    const allRows = [...byLang.values()].flatMap(l => l.rows).filter(r => r.models);
+    for (const model of models) {
+      const ms = allRows.map(r => r.models[model]).filter(Boolean);
+      const aligned = ms.filter(m => m.aligned);
+      const refTotal = allRows.filter(r => r.models[model]?.aligned).reduce((s, r) => s + r.refLen, 0);
+      const matched = allRows.filter(r => r.models[model]?.aligned).reduce((s, r) => s + r.refLen * r.models[model].charAccuracy, 0);
+      const cons = ms.map(m => m.consistency).filter(c => c !== null);
+      const cost = ms.reduce((s, m) => s + m.costUsd, 0);
+      console.log(`  ${model.padEnd(30)} ${`${aligned.length}/${ms.length}`.padStart(7)} ${refTotal ? ((matched / refTotal) * 100).toFixed(1) + '%' : 'n/a'.padStart(4)}`.padEnd(52)
+        + ` ${cons.length ? (cons.reduce((s, c) => s + c, 0) / cons.length * 100).toFixed(0) + '%' : 'n/a'}`.padStart(9)
+        + ` $${cost.toFixed(2)}`.padStart(8));
+    }
+  }
+
+  console.log(`\n  Coverage note: reference etexts exist for canonical texts — this measures OCR`);
+  console.log(`  on clean canonical pages. Manuscripts and rare works (the OCR frontier) are`);
+  console.log(`  covered by consistency/cross-model/embedding checks, not this scorecard.`);
+
+  // Scoped runs save under their own name — saveResults keys the filename on
+  // kind+date alone, so an --only run would otherwise clobber the full scorecard.
+  // Long --only regexes must be truncated (a many-slug alternation once blew
+  // past NAME_MAX and ENAMETOOLONG'd after all paid calls had completed); a
+  // short hash keeps distinct scopes from colliding. The full regex is still
+  // recorded in the JSON body's `only` field.
+  let scope = '';
+  if (only) {
+    const slug = only.replace(/[^a-z0-9._-]+/gi, '-');
+    const hash = createHash('sha256').update(only).digest('hex').slice(0, 8);
+    scope = `-${slug.length > 60 ? `${slug.slice(0, 60)}-${hash}` : slug}`;
+  }
+  saveResults(`scorecard${scope}`, { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────
@@ -555,6 +787,7 @@ const commands = {
   'cross-model': cmdConsistency, // cross-model is part of consistency when >1 model
   embedding: cmdEmbedding,
   compare: cmdCompare,
+  scorecard: cmdScorecard,
   matrix: cmdMatrix,
   readiness: cmdReadiness,
   report: cmdReport,
@@ -568,6 +801,7 @@ Subcommands:
   consistency   Run OCR N times per model, compute MCR and pairwise similarity
   embedding     Embedding-space evaluation (hallucination detection)
   compare       Compare against ground truth (CER, BLEU, ROUGE)
+  scorecard     Per-language OCR accuracy vs published reference texts (#3212)
   matrix        Show evaluation matrix across all registered corpora
   readiness     Quick corpus readiness score
   report        Show last results
@@ -579,6 +813,7 @@ Common options:
   --runs=N          OCR runs per model for consistency (default: 3)
   --delay=MS        Delay between API calls in ms (default: 2000)
   --dry-run         Estimate cost without running
+  --only=REGEX      scorecard: only ground-truth files whose filename matches
   --blog            Generate markdown blog post
   --book-id=ID      Evaluate a specific book
 

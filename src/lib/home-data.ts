@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
-import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import { sortCollections, withTimeout, coverOverride } from '@/lib/collections-utils';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
@@ -196,7 +196,12 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).thumbnail_url || (img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url))
     );
     // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
-    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
+    const featuredUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
+    // Honour the curated cover with the SAME precedence as the /collections card
+    // helper (cardImageCandidates): coverOverride → hero_image → featured_images.
+    // Without this the homepage grid ignored `hero_image` and showed a different
+    // image than /collections for every collection with a curated cover.
+    const heroUrl = coverOverride(rest.slug) || (rest.hero_image as string | undefined) || featuredUrl;
     const languageValues = Array.isArray(rest.languages)
       ? rest.languages
       : [];
@@ -217,6 +222,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       subtitle: rest.subtitle || '',
       description: rest.description || '',
       book_count: rest.book_count || 0,
+      total_book_count: rest.total_book_count,
       artwork_count: rest.artwork_count || 0,
       hero_image: heroUrl as string | null,
       languages,
@@ -530,7 +536,6 @@ const FALLBACK_COLLECTIONS: CollectionForGrid[] = [
   { slug: 'literature', name: 'Literature & Poetry', subtitle: 'From Gilgamesh to the Divine Comedy', description: '', book_count: 1588, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/a0461b95-c56a-463a-beed-a6a2fb11cec2/695004c2f426a210d1097f09-0.jpg', languages: ['Greek', 'English', 'Latin'] },
   { slug: 'herbalism', name: 'Herbalism & Botany', subtitle: 'Herbals, Materia Medica & the Science of Plants', description: '', book_count: 388, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958dec2cf7070242ed42151/100.jpg', languages: ['Italian', 'Chinese', 'Latin'] },
   { slug: 'music-sound', name: 'Music & Sound', subtitle: 'Pythagorean Harmonics to Baroque Music Theory', description: '', book_count: 320, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/e48a21de-4db2-4c94-a71a-e952b9fa5393/7.jpg', languages: ['Latin', 'Chinese', 'Greek'] },
-  { slug: 'shwep', name: 'SHWEP Reading Room', subtitle: 'Primary Sources from the Secret History of Western Esotericism Podcast', description: '', book_count: 1784, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/c87fadfa-1543-44b9-a138-573c144246e6/6959af9b1dfc1806c080b7e6-0.jpg', languages: ['Greek', 'Latin', 'English'] },
 ];
 
 // Hardcoded discover books — shown when getDiscoverBooks() times out during DB stress.

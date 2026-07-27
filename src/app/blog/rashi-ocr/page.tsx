@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew - Research Notes - Source Library',
@@ -11,6 +10,10 @@ export const metadata: Metadata = {
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
     description: 'AI reads Arabic and Sanskrit fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg', width: 1200, height: 1600 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg' }],
   },
   alternates: {
     canonical: '/blog/rashi-ocr',
@@ -360,7 +363,6 @@ export default function RashiOcrPage() {
 
       </article>
 
-      <BlogComments slug="rashi-ocr" />
 
     </ContentPageLayout>
   );

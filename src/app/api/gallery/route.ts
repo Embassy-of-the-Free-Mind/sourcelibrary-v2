@@ -238,55 +238,77 @@ export async function GET(request: NextRequest) {
       : Promise.resolve(new Map<string, number>());
 
     let textItems: any[] = [];
+    // Accurate total for the Atlas Search path. The old estimate
+    // (offset + items.length + 1) grew with every page — "ship" reported
+    // "Found 41", then "Found 61", and "Page X of X+1" forever, so a reader
+    // never saw the true page count (#3085). Run a parallel $count that mirrors
+    // the same $search + $match so pagination bounds are real.
+    let atlasSearchCount: Promise<number | null> | null = null;
 
     if (searchQuery) {
       // Primary: Atlas Search (gallery_search index) — searches description,
       // museum_description, subjects, figures. Same index used by unified search.
+      // Shared $search + $match stages so the count pipeline can't drift from
+      // the results pipeline.
+      const searchStage = {
+        $search: {
+          index: 'gallery_search',
+          compound: {
+            should: [
+              { autocomplete: { query: searchQuery, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              { text: { query: searchQuery, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              { text: { query: searchQuery, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              { text: { query: searchQuery, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+            ],
+            minimumShouldMatch: 1,
+            filter: [
+              { range: { path: 'gallery_quality', gte: minQuality } },
+            ],
+          },
+        },
+      };
+      const matchStage = {
+        $match: {
+          book_visible: true,
+          extracted_url: { $ne: null },
+          image_url: { $ne: null },
+          ...(!bookId && maxPerBook < 100 ? { book_rank: { $lte: maxPerBook } } : {}),
+          ...(bookId ? { book_id: bookId } : {}),
+          ...(collectionBookIds && libraryBookIds
+            ? { book_id: { $in: collectionBookIds.filter(id => libraryBookIds!.includes(id)) } }
+            : collectionBookIds ? { book_id: { $in: collectionBookIds } }
+            : libraryBookIds ? { book_id: { $in: libraryBookIds } }
+            : {}),
+          ...(imageType ? { type: imageType } : {}),
+          ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
+          ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
+          ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
+          ...(yearStart !== null || yearEnd !== null ? {
+            book_year: {
+              ...(yearStart !== null ? { $gte: yearStart } : {}),
+              ...(yearEnd !== null ? { $lte: yearEnd } : {}),
+            },
+          } : {}),
+        },
+      };
       try {
         textItems = await db.collection('gallery_images').aggregate([
-          {
-            $search: {
-              index: 'gallery_search',
-              compound: {
-                should: [
-                  { autocomplete: { query: searchQuery, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-                  { text: { query: searchQuery, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-                  { text: { query: searchQuery, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-                  { text: { query: searchQuery, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-                ],
-                minimumShouldMatch: 1,
-                filter: [
-                  { range: { path: 'gallery_quality', gte: minQuality } },
-                ],
-              },
-            },
-          },
-          { $match: {
-            book_visible: true,
-            extracted_url: { $ne: null },
-            image_url: { $ne: null },
-            ...(!bookId && maxPerBook < 100 ? { book_rank: { $lte: maxPerBook } } : {}),
-            ...(bookId ? { book_id: bookId } : {}),
-            ...(collectionBookIds && libraryBookIds
-              ? { book_id: { $in: collectionBookIds.filter(id => libraryBookIds!.includes(id)) } }
-              : collectionBookIds ? { book_id: { $in: collectionBookIds } }
-              : libraryBookIds ? { book_id: { $in: libraryBookIds } }
-              : {}),
-            ...(imageType ? { type: imageType } : {}),
-            ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
-            ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
-            ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
-            ...(yearStart !== null || yearEnd !== null ? {
-              book_year: {
-                ...(yearStart !== null ? { $gte: yearStart } : {}),
-                ...(yearEnd !== null ? { $lte: yearEnd } : {}),
-              },
-            } : {}),
-          }},
+          searchStage,
+          matchStage,
           { $project: { _id: 0 } },
           { $skip: offset },
           { $limit: limit + 1 },
         ], { maxTimeMS: 8000 }).toArray();
+        // Kick off the count in parallel (only meaningful when Atlas Search ran,
+        // not the $text fallback). Guarded so a slow/failed count degrades to the
+        // old estimate rather than breaking the request.
+        atlasSearchCount = db.collection('gallery_images').aggregate([
+          searchStage,
+          matchStage,
+          { $count: 'total' },
+        ], { maxTimeMS: 8000 }).toArray()
+          .then(r => (r[0]?.total as number | undefined) ?? null)
+          .catch(() => null);
       } catch {
         // Atlas Search index not ready — fall back to $text
       }
@@ -397,8 +419,12 @@ export async function GET(request: NextRequest) {
       // Filtered query — for Atlas Search queries, countDocuments can't replicate the
       // search pipeline, so estimate from result count. For $text queries, use countDocuments.
       if (searchQuery && !filter.$text) {
-        // Atlas Search was used — estimate total from what we have
-        total = offset + items.length + (hasMore ? 1 : 0);
+        // Atlas Search was used — prefer the accurate parallel $count; fall back
+        // to the (page-growing) estimate only if it failed/timed out.
+        const counted = atlasSearchCount ? await atlasSearchCount : null;
+        total = (counted != null && counted >= offset + items.length)
+          ? counted
+          : offset + items.length + (hasMore ? 1 : 0);
       } else {
         total = await db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }).catch(() => offset + items.length + 1);
       }

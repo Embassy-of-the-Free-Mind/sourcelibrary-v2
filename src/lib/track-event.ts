@@ -5,7 +5,22 @@
  * keepalive fetch. Never throws — analytics must not break an interaction.
  */
 export function trackEvent(
-  event: 'cite' | 'share' | 'quote_copy' | 'doi_view' | 'download' | 'signin_view' | 'signup_start',
+  event:
+    | 'cite'
+    | 'share'
+    | 'quote_copy'
+    | 'doi_view'
+    | 'download'
+    | 'signin_view'
+    | 'signup_start'
+    // Magic-link interstitial (/auth/confirm). `confirm_view` fires when someone
+    // opens the link from their email, `confirm_click` when they press through to
+    // the callback. The gap between them is the cost of the prefetch-safe second
+    // click, and until these existed it was pure guesswork — a token that is
+    // never consumed looks identical whether the mail was never opened, the
+    // interstitial was abandoned, or the link was mangled in transit.
+    | 'confirm_view'
+    | 'confirm_click',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;

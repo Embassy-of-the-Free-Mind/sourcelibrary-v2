@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'We Spent a Day Counting What Hasn\'t Been Translated - Research Notes - Source Library',
   description: 'We downloaded the entire Library of Congress catalog, scraped a Renaissance bibliography, and matched it all against 1.6 million early modern editions. Here\'s what happened.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg', alt: 'Tree of Knowledge of Good and Evil from Secret Symbols of the Rosicrucians, 1785' }],
     title: 'We Spent a Day Counting What Hasn\'t Been Translated',
     description: 'We downloaded the entire Library of Congress catalog, scraped a Renaissance bibliography, and matched it all against 1.6 million early modern editions.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg', alt: 'Tree of Knowledge of Good and Evil from Secret Symbols of the Rosicrucians, 1785' }],
   },
   alternates: {
     canonical: '/blog/counting-the-gap',
@@ -245,12 +249,11 @@ export default function CountingTheGapPage() {
             All data and code is open source at{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2" className="text-accent-rust hover:text-accent-rust underline">github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2</a>.
             If you know of a translation we missed, please reach out &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="counting-the-gap" />
     </ContentPageLayout>
   );
 }

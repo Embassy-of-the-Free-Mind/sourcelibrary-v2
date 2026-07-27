@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const revalidate = 86400;
@@ -21,6 +20,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg' }],
   },
   alternates: {
     canonical: '/blog/how-big-is-the-library',
@@ -317,7 +320,6 @@ export default function HowBigIsTheLibraryPage() {
           </section>
         </article>
 
-        <BlogComments slug="how-big-is-the-library" />
       </ContentPageLayout>
     </>
   );

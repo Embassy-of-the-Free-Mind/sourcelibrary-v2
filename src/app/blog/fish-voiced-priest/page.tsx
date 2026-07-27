@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Fish-Voiced Priest - Research Notes - Source Library',
@@ -18,6 +17,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg' }],
   },
   alternates: {
     canonical: '/blog/fish-voiced-priest',
@@ -357,7 +360,6 @@ export default function FishVoicedPriestPage() {
 
       </article>
 
-      <BlogComments slug="fish-voiced-priest" />
     </ContentPageLayout>
   );
 }

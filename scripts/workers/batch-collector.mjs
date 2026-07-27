@@ -23,6 +23,7 @@ import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -742,39 +743,10 @@ async function processOneJob(db, job) {
 // ── Post-processing ──
 
 async function updateBookCounts(db, bookId) {
-  const [counts] = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId } },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        with_ocr: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-              ]},
-              1, 0,
-            ],
-          },
-        },
-        with_translation: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ]},
-              1, 0,
-            ],
-          },
-        },
-      },
-    },
-  ]).toArray();
+  // Count VISIBLE pages only (page_number > 0) — see scripts/lib/page-counts.mjs
+  // and issue #3293. Soft-hidden pages never render and must not inflate counts.
+  const [counts] = await db.collection('pages')
+    .aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
 
   if (counts) {
     await db.collection('books').updateOne(

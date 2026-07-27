@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources - Source Library",
@@ -11,6 +10,10 @@ export const metadata: Metadata = {
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
     description: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg' }],
   },
   alternates: {
     canonical: '/blog/philosophers-stone',
@@ -727,7 +730,6 @@ export default function PhilosophersStonePage() {
         </div>
       </article>
 
-      <BlogComments slug="philosophers-stone" />
     </ContentPageLayout>
   );
 }

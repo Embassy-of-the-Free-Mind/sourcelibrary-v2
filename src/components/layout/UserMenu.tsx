@@ -180,7 +180,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             )}
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="w-full text-left px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              className="w-full text-left px-4 py-2 text-sm hover:opacity-70 transition-opacity cursor-pointer"
               style={{ color: 'var(--accent-rust)' }}
             >
               Sign Out

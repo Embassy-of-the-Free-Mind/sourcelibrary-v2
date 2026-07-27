@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import PassageComparison from '@/components/comparison/PassageComparison';
 
 export const metadata: Metadata = {
@@ -19,6 +18,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg' }],
   },
   alternates: {
     canonical: '/blog/translations-across-civilizations',
@@ -375,7 +378,6 @@ export default function TranslationsAcrossCivilizationsPage() {
           </p>
         </div>
 
-        <BlogComments slug="translations-across-civilizations" />
       </article>
     </ContentPageLayout>
   );

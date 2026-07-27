@@ -113,6 +113,8 @@
 30 5 * * * cd /root/sourcelibrary && [ -f scripts/enrichment/backfill-thesaurus-author-locations.mjs ] && flock -n /tmp/sl-thesaurus-loc.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/backfill-thesaurus-author-locations.mjs --write-books" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-newsletter-refresh.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/refresh-newsletter-audience.mjs" >> /var/log/sourcelibrary/newsletter-refresh.log 2>&1
 45 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-metrics-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-metrics.mjs" >> /var/log/sourcelibrary/metrics-snapshot.log 2>&1
+# Reading Register (external-only readers/agents/search) -> system_config.reading_register, read by /platform/admin/reading-register
+50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-reading-register.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-reading-register.mjs" >> /var/log/sourcelibrary/reading-register.log 2>&1
 # On-mission acquisition: daily bounded batch (USTC gap -> IA/e-rara -> verify -> import hidden)
 # e-rara IIIF catalog refresh: weekly
 0 2 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-erara.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/harvest-erara-catalog.mjs" >> /var/log/sourcelibrary/erara-harvest.log 2>&1

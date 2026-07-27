@@ -27,6 +27,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
+import TranslatedSiblingNotice from '@/components/book/TranslatedSiblingNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
@@ -1668,7 +1669,26 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </Suspense>
               )}
 
-              {/* Read this book — first chapter > endpaper-skip fallback */}
+              {/* Sibling-edition routing (#3033) — an effectively-untranslated
+                  edition of a work we hold translated should point the reader
+                  at the translated sibling, not read as a dead end. Skipped for
+                  books that are themselves English translations (they're
+                  already readable). Tenant-gated like RelatedEditions. */}
+              {embedPolicy.showRelatedEditions &&
+                (book as any).work_id &&
+                totalPages > 0 &&
+                translatedCount / totalPages < 0.05 &&
+                !['modern-translation', 'period-translation'].includes((book as any).text_role) && (
+                  <Suspense fallback={null}>
+                    <TranslatedSiblingNotice
+                      bookId={book.id}
+                      workId={(book as any).work_id}
+                      showCrossLink={embedPolicy.showRelatedEditions}
+                    />
+                  </Suspense>
+                )}
+
+              {/* Read This Book — first chapter > endpaper-skip fallback */}
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
@@ -2016,11 +2036,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
             return (
               <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
-                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+                <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
               </EarlyAccessGate>
             );
           }
-          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+          return <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
         <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />

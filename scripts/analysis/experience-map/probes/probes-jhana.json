@@ -1,0 +1,336 @@
+{
+  "_note": "Probe set derived FROM the Visuddhimagga itself (Ñāṇamoli trans., held in Source Library). Stage list and vocabulary are the tradition's, not the authors'. Built to test whether an indigenous taxonomy carves the corpus differently from the MEQ30/5D-ASC-derived probe set used in the main atlas.",
+  "source": {
+    "book_id": "69b63e9c2a1dde00d5a9f20a",
+    "title": "Visuddhimagga (The Path of Purification)"
+  },
+  "dimensions": [
+    {
+      "id": "access_concentration",
+      "label": "Access concentration",
+      "pali": "upacāra-samādhi",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I am focusing my mind on the object, feeling it draw near without yet fully merging into the deep stillness of absorption.",
+        "My mind is hovering close to the meditative object, maintaining a steady, unified attention that feels like a precursor to a more profound state.",
+        "I am exercising my concentration by keeping my awareness fixed on the object, sensing the power of serenity beginning to gather strength."
+      ]
+    },
+    {
+      "id": "jhana_1",
+      "label": "First jhāna",
+      "pali": "paṭhama-jhāna",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I dwell in this state where the field of false views is abandoned, experiencing the path as desireless and void.",
+        "The hindrances are suppressed and my mind is held in the state of actual absorption where applied thought and the like have ceased.",
+        "applied thought and the like are suppressed at the moment of actual absorption"
+      ]
+    },
+    {
+      "id": "jhana_2",
+      "label": "Second jhāna",
+      "pali": "dutiya-jhāna",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "My mind is unified and non-distracted, remaining steady without wavering because applied and sustained thought are absent.",
+        "does not waver on account of applied and sustained thought",
+        "I am experiencing a state where the verbal formations of applied and sustained thought have become completely tranquilized.",
+        "verbal formations consisting of applied and sustained thought are completely tranquilized"
+      ]
+    },
+    {
+      "id": "jhana_3",
+      "label": "Third jhāna",
+      "pali": "tatiya-jhāna",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "The turbulent waves of rapture have finally stilled, leaving me in a state of profound, steady equanimity.",
+        "I remain perfectly mindful and fully aware, resting in a calm clarity that does not waver.",
+        "A refined, pervasive bliss now permeates my entire physical frame, felt deeply throughout the body."
+      ]
+    },
+    {
+      "id": "jhana_4",
+      "label": "Fourth jhāna",
+      "pali": "catuttha-jhāna",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I have completely surmounted all perceptions of material form and am dwelling in the base consisting of boundless space.",
+        "complete surmounting of perceptions of material form",
+        "accompanied by the base consisting of boundless space",
+        "I have completely surmounted all perceptions of material form and am dwelling in the base consisting of boundless consciousness."
+      ]
+    },
+    {
+      "id": "base_space",
+      "label": "Base of boundless space",
+      "pali": "ākāsānañcāyatana",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I have completely surmounted all perceptions of material form and now dwell in a state where only the boundless space remains.",
+        "The physical world has fallen away entirely, leaving me in an expanse that is vast and without limit.",
+        "My awareness is no longer tethered to any material object, as I have transcended the perception of form to enter this boundless state."
+      ]
+    },
+    {
+      "id": "base_consciousness",
+      "label": "Base of boundless consciousness",
+      "pali": "viññāṇañcāyatana",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I have completely transcended the perception of material form and now dwell in a state where the focus is solely on the boundlessness of consciousness itself.",
+        "The sense of physical boundaries has fallen away, leaving me to experience a vast, infinite awareness that is no longer tethered to objects.",
+        "My attention is entirely occupied by the limitless nature of the mind, which has expanded beyond all spatial constraints."
+      ]
+    },
+    {
+      "id": "base_nothingness",
+      "label": "Base of nothingness",
+      "pali": "ākiñcaññāyatana",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I am dwelling in a state where there is absolutely nothing to be found, as if the very fabric of existence has been emptied out.",
+        "My awareness is no longer occupied by any object or formation; there is only the profound sense that there is nothing here at all.",
+        "I am resting in the stillness of this void, where the presence of any thing has completely vanished from my experience."
+      ]
+    },
+    {
+      "id": "base_neither",
+      "label": "Neither perception nor non-perception",
+      "pali": "nevasaññānāsaññāyatana",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "My mind is so subtle that it is as if I am neither perceiving nor failing to perceive the object of my focus.",
+        "I am dwelling in a state where the mental aggregates are present, yet they are so refined that they hover between the presence and absence of perception.",
+        "The consciousness here is so delicate that it is impossible to say whether I am actively perceiving or if perception has ceased altogether."
+      ]
+    },
+    {
+      "id": "cessation",
+      "label": "Attainment of cessation",
+      "pali": "nirodha-samāpatti",
+      "group": "concentration",
+      "source": "Visuddhimagga",
+      "probes": [
+        "All mental activity has completely ceased, leaving no trace of consciousness or its concomitants.",
+        "I am suspended in a state where the flow of mind and its mental factors have reached a total, progressive non-occurrence.",
+        "There is no experience of thought or perception, only the absolute stillness of a mind that has temporarily suspended all its functions."
+      ]
+    },
+    {
+      "id": "nana_01",
+      "label": "Discernment of mind and matter",
+      "pali": "nāma-rūpa-pariccheda",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I can clearly distinguish the bending of feeling, perception, and formations toward an object from the physical elements that support them.",
+        "It feels as though the four great primary elements and their derived materiality are distinct from the mental aggregates that arise alongside them.",
+        "I am observing how the physical basis and the mental states function as separate, yet mutually dependent, processes."
+      ]
+    },
+    {
+      "id": "nana_02",
+      "label": "Discerning conditions",
+      "pali": "paccaya-pariggaha",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I am now discerning the specific conditions that give rise to these phenomena.",
+        "I see that my current mental and physical states are not random, but are the direct result of past ignorance, craving, and volitional actions.",
+        "It is clear that the prior moment of consciousness breaks up and the subsequent one is born from it, with no gap between them and nothing passing over from one to the other.",
+        "I no longer wonder about my past or future existence, as I can see how these present aggregates are conditioned by the formations that preceded them."
+      ]
+    },
+    {
+      "id": "nana_03",
+      "label": "Comprehension by groups",
+      "pali": "sammasana",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I am looking at all my past, future, and present experiences—whether they are gross or subtle, near or far—and seeing them all as impermanent, painful, and lacking a core.",
+        "I am grouping everything I perceive into categories like feeling, perception, and consciousness, and defining them all as subject to destruction and terror.",
+        "I am no longer just noticing the specific characteristics of things, but am now actively applying the general labels of impermanence, suffering, and not-self to every single state I encounter."
+      ]
+    },
+    {
+      "id": "nana_04",
+      "label": "Knowledge of rise and fall",
+      "pali": "udayabbaya-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I am observing the present materiality and consciousness as they arise in their renewal and fall away in their destruction.",
+        "sees the characteristic of generation—the birth, the arising, the aspect of renewal—of born materiality, as 'rise'",
+        "sees its characteristic of change—its destruction, its dissolution—as 'fall'",
+        "I see that these mental and material states, not having been, are brought into being by conditions, and having been, they vanish without leaving any trace behind."
+      ]
+    },
+    {
+      "id": "nana_05",
+      "label": "Knowledge of dissolution",
+      "pali": "bhaṅga-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I no longer see things coming into being or staying, but only notice how everything is constantly breaking up and collapsing.",
+        "no longer focuses on their arising, their presence, their occurrence, or their superficial appearance",
+        "directs his mindfulness solely toward their cessation—as destruction, collapse, and breakup",
+        "I am observing only the breaking up and disappearance of all formations as they arise."
+      ]
+    },
+    {
+      "id": "nana_06",
+      "label": "Appearance as terror",
+      "pali": "bhaya-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "Seeing things as they truly are, I feel a sense of terror regarding these formations.",
+        "sees things as they are is terrified",
+        "I feel a profound sense of terror as I realize that these formations I once clung to are like a dangerous snake.",
+        "I see the aggregates as a burning house and feel a sense of fear at the danger of being consumed by them."
+      ]
+    },
+    {
+      "id": "nana_07",
+      "label": "Contemplation of danger",
+      "pali": "ādīnava-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I see terror in all forms of existence and find no reliance or support anywhere.",
+        "seeing of danger in all kinds of existences",
+        "Everywhere I look—at my own body, my thoughts, and the world—I see only a burning charcoal pit or a murderer with a raised weapon, and I feel there is no place left to hide or find safety.",
+        "no asylum, no shelter, no place to go to, and no refuge in any kind of becoming"
+      ]
+    },
+    {
+      "id": "nana_08",
+      "label": "Dispassion / disenchantment",
+      "pali": "nibbidā-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I feel a deep sense of revulsion and dispassion for these formations that I previously grasped as if they were a prize.",
+        "revulsion for what he had seized",
+        "I see that my thoughts and body are just like a marionette, void and soulless, moving only because of strings I didn't realize were there.",
+        "I no longer find any delight in these formations, as I see them as nothing more than suffering piled up like grass and sticks."
+      ]
+    },
+    {
+      "id": "nana_09",
+      "label": "Desire for deliverance",
+      "pali": "muñcitukamyatā-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I feel like a fish caught in a net, desperate to escape the entire field of formations because my mind can no longer find any delight or place to fasten itself.",
+        "mind no longer sticks fast, cleaves, or fastens on to any formations",
+        "desirous of being delivered from the whole field of formations and escaping from it",
+        "I feel like a fish caught in a net, desperate to escape from the entire field of conditioned processes because my mind no longer finds any delight or place to rest within them."
+      ]
+    },
+    {
+      "id": "nana_10",
+      "label": "Re-observation",
+      "pali": "paṭisaṅkhā-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "In my desire to be delivered, I am looking back at all formations and seeing them clearly as impermanent, painful, and foul, like a disease or a tumor that offers no refuge.",
+        "discerns those same formations, attributing to them the three characteristics",
+        "sees all formations as impermanent, painful, and foul",
+        "In order to find a way out, I am looking closely at these formations again and seeing them clearly as impermanent, painful, and foul."
+      ]
+    },
+    {
+      "id": "nana_11",
+      "label": "Equanimity about formations",
+      "pali": "saṅkhārupekkhā-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I feel completely neutral and indifferent toward all formations, as my heart naturally recoils from them and no longer seeks to claim anything as 'I' or 'mine'.",
+        "abandons both terror and delight",
+        "becomes indifferent and neutral",
+        "no longer takes them as 'I' or 'mine'"
+      ]
+    },
+    {
+      "id": "nana_12",
+      "label": "Conformity",
+      "pali": "anuloma-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I see these five aggregates as a festering boil and a dangerous dart that is constantly disintegrating, and I recognize that the only true refuge is the cessation of these aggregates in Nibbāna.",
+        "seeing the five aggregates as impermanent, painful, a disease, a boil, a dart, a calamity, an affliction, alien, disintegrating, a plague, a disaster, a terror, a menace, fickle, perishable, unenduring, no protection, no shelter, no refuge, empty, vain, void, not-self, a danger, subject to change, having no core, the root of calamity, murderous, due to be annihilated, subject to cankers, formed, Māra’s bait, subject to birth, ageing, illness, death, sorrow, lamentation, despair, and defilement",
+        "seeing that the cessation of the five aggregates is the permanent Nibbāna",
+        "My mind is now aligned and moving directly toward the cessation of these aggregates."
+      ]
+    },
+    {
+      "id": "nana_13",
+      "label": "Change-of-lineage",
+      "pali": "gotrabhū-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "At this moment, I am emerging from the sign of the aggregates and the occurrence of defilements, as my mind transitions into the path.",
+        "emerges externally from the objective basis interpreted as a sign",
+        "emerges internally from occurrence of defilement",
+        "I am looking beyond the conditioned world, poised to transition into the path."
+      ]
+    },
+    {
+      "id": "nana_14",
+      "label": "Path knowledge",
+      "pali": "magga-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I have taken flight, leaving the barren tree of the aggregates behind.",
+        "I have escaped the danger and am looking back at the path I have traversed.",
+        "standing and looking back at where he had come from after getting free from it",
+        "Without any pause, I am piercing and exploding the mass of greed, hate, and delusion as I make Nibbāna my object."
+      ]
+    },
+    {
+      "id": "nana_15",
+      "label": "Fruition knowledge",
+      "pali": "phala-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I have arrived and settled into the peace of a different state, free from the previous tree.",
+        "I am now standing in a place of safety, free from all fear.",
+        "standing in a place free from fear"
+      ]
+    },
+    {
+      "id": "nana_16",
+      "label": "Reviewing knowledge",
+      "pali": "paccavekkhaṇa-ñāṇa",
+      "group": "insight",
+      "source": "Visuddhimagga",
+      "probes": [
+        "I look back at the path I have traversed, the fruition I have attained, the defilements I have abandoned, those that still remain, and the deathless Nibbāna I have penetrated as an object.",
+        "reviews the path in this way: 'So this is the path I have come by.'",
+        "reviews the fruition that followed: 'This is the blessing I have obtained.'",
+        "reviews the defilements that have been abandoned: 'These are the defilements abandoned in me.'"
+      ]
+    }
+  ]
+}

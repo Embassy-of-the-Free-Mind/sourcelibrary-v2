@@ -403,6 +403,8 @@ export async function searchBooksCatalog(
     firstTranslation?: boolean;
     hasTranslation?: boolean;
     library?: string;
+    yearMin?: number;
+    yearMax?: number;
   }
 ): Promise<CatalogBookDetail[]> {
   const limit = opts?.limit || 20;
@@ -471,6 +473,10 @@ export async function searchBooksCatalog(
   if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
   if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts?.hasTranslation) query = query.gt('pages_translated', 0);
+  // Publication-year range. Rows with a null year drop out of a bounded range,
+  // same as listBooksCatalog — an undated edition can't satisfy "after 1600".
+  if (opts?.yearMin != null) query = query.gte('year', opts.yearMin);
+  if (opts?.yearMax != null) query = query.lte('year', opts.yearMax);
   if (opts?.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   else if (opts?.library) query = query.eq('image_source_provider', opts.library);
 

@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Ten Thousand Years of Tagging: A History of How Humans Organize Knowledge - Research Notes - Source Library',
   description: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have. Aristotle, Porphyry, Llull, Leibniz, Linnaeus, Ranganathan, and the system we built from all of them.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg', alt: 'Minerva in a library with putti studying a globe, from Chemical Library, 1727' }],
     title: 'Ten Thousand Years of Tagging',
     description: 'The history of knowledge classification, told through the books that invented it — most of which are in our collection.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg', alt: 'Minerva in a library with putti studying a globe, from Chemical Library, 1727' }],
   },
   alternates: {
     canonical: '/blog/history-of-classification',
@@ -720,7 +724,6 @@ export default function HistoryOfClassificationPage() {
 
       </article>
 
-      <BlogComments slug="history-of-classification" />
     </ContentPageLayout>
   );
 }

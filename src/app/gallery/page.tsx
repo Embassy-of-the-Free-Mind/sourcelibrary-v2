@@ -45,6 +45,7 @@ export const metadata: Metadata = {
     canonical: '/gallery',
   },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: GALLERY_TITLE,
     description: GALLERY_DESCRIPTION,
     type: 'website',

@@ -1,0 +1,565 @@
+{
+  "date": "2026-07-19",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "runs": 3,
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 692,
+      "charAccuracy": 0.9176300578034682,
+      "rows": [
+        {
+          "work": "Zohrab NT, John 1:1-14",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 724,
+          "aligned": true,
+          "guard": 0.13548387096774195,
+          "cer": 0.08236994219653179,
+          "charAccuracy": 0.9176300578034682,
+          "refLen": 692,
+          "matched": 635,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.537855,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9234104046242775,
+              "cer": 0.07658959537572255
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005484,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0020258999999999997,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9291907514450867,
+              "cer": 0.0708092485549133
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "script": "cjk",
+      "passages": 6,
+      "aligned": 6,
+      "refChars": 331,
+      "charAccuracy": 0.9969788519637462,
+      "rows": [
+        {
+          "work": "Analects 1.1",
+          "bookId": "69e8b24d2ff2a8dc09e77295",
+          "pageNumber": 156,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 30,
+          "matched": 30,
+          "source": "ctext",
+          "source_url": "https://ctext.org/analects/xue-er/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0464775,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0084375,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.000913275,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Daodejing ch.1",
+          "bookId": "69935b692c63944063133f67",
+          "pageNumber": 13,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 59,
+          "matched": 59,
+          "source": "ctext",
+          "source_url": "https://ctext.org/dao-de-jing/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0319875,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0065474999999999995,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0006995249999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9830508474576272,
+              "cer": 0.01694915254237288
+            }
+          }
+        },
+        {
+          "work": "Han Feizi (Nan Yan)",
+          "bookId": "69e8b2742ff2a8dc09e77bdb",
+          "pageNumber": 549,
+          "aligned": true,
+          "guard": 0.01639344262295082,
+          "cer": 0.01639344262295082,
+          "charAccuracy": 0.9836065573770492,
+          "refLen": 61,
+          "matched": 60,
+          "source": "ctext",
+          "source_url": "https://ctext.org/hanfeizi/nan-yan/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.02718,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9836065573770492,
+              "cer": 0.01639344262295082
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.006858,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0005147999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9836065573770492,
+              "cer": 0.01639344262295082
+            }
+          }
+        },
+        {
+          "work": "Book of Odes (Guan Ju)",
+          "bookId": "69d5ae594dc55b8478de1380",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 80,
+          "matched": 80,
+          "source": "ctext",
+          "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.06390000000000001,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.010251,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0009593999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.95,
+              "cer": 0.05
+            }
+          }
+        },
+        {
+          "work": "Xunzi (Quan Xue)",
+          "bookId": "69e8b26b2ff2a8dc09e77afc",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 50,
+          "matched": 50,
+          "source": "ctext",
+          "source_url": "https://ctext.org/xunzi/quan-xue/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.026729999999999997,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005405999999999999,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0005715,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Zhuangzi 1",
+          "bookId": "69e72c60a409200ea79f46f6",
+          "pageNumber": 46,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 51,
+          "matched": 51,
+          "source": "ctext",
+          "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.016717500000000003,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0034035,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00039757499999999995,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9803921568627451,
+              "cer": 0.0196078431372549
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 221,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Iliad I.1-7",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 221,
+          "matched": 221,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.039134999999999996,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.007385999999999999,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00084645,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 445,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Genesis 1:1-5 (Bereshit)",
+          "bookId": "6952e4bc77f38f6761bc7db1",
+          "pageNumber": 45,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 197,
+          "matched": 197,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Genesis.1",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0368625,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.007402499999999999,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.751269035532995,
+              "cer": 0.24873096446700507
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.001817775,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        },
+        {
+          "work": "Psalms 1 (Tehillim)",
+          "bookId": "69e7518610ee9075bcdcde12",
+          "pageNumber": 8,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 248,
+          "matched": 248,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Psalms.1",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0330525,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0066195,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.000732375,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 426,
+      "charAccuracy": 0.9976525821596244,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0508125,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9791666666666666,
+              "cer": 0.020833333333333332
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0083205,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9722222222222222,
+              "cer": 0.027777777777777776
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0011031749999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9722222222222222,
+              "cer": 0.027777777777777776
+            }
+          }
+        },
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.017543859649122806,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 282,
+          "matched": 282,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.04827,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3-flash-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.008205,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.9893617021276596,
+              "cer": 0.010638297872340425
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0010575,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9893617021276596,
+              "cer": 0.010638297872340425
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

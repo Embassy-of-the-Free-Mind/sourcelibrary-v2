@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Makes a Good Scan? - Research Notes - Source Library',
   description: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg', alt: 'Woodcut of Ramon Llull and disciples, with the alphabetum operis consequentis table beneath. Ars Inventiva Veritatis, 1515.' }],
     title: 'What Makes a Good Scan?',
     description: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg', alt: 'Woodcut of Ramon Llull and disciples, with the alphabetum operis consequentis table beneath. Ars Inventiva Veritatis, 1515.' }],
   },
   alternates: {
     canonical: '/blog/what-makes-a-good-scan',
@@ -378,7 +382,6 @@ export default function WhatMakesAGoodScanPage() {
           <em>The full design document (with schema, prompt, characteristics formulas, validation table, and the full eleven-sample spot-check) lives at <code>.claude/docs/automated-image-quality-system.md</code> in the repository. Phase 1 is tracked at GitHub issue <Link href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1810" className="text-accent-rust hover:underline">#1810</Link>.</em>
         </p>
 
-        <BlogComments slug="what-makes-a-good-scan" />
       </article>
     </ContentPageLayout>
   );

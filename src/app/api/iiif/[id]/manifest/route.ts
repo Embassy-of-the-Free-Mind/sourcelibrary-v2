@@ -389,9 +389,15 @@ export async function GET(
       book.reading_summary?.overview ||
       book.index?.bookSummary?.brief;
 
-    // Rights
+    // Rights. Books without a stored license value default to the Public
+    // Domain Mark: everything served here is a publicly readable facsimile of
+    // a pre-1900 original (copyright-held books are hidden and 404 above).
+    // The CC BY-SA claim on our OCR/translation layer lives in the License
+    // metadata row — IIIF `rights` takes exactly one URI, and the facsimile
+    // images are the manifest's primary content.
     const license = book.image_source?.license || book.license;
-    const rightsUri = resolveRights(license);
+    const rightsUri =
+      resolveRights(license) || 'http://creativecommons.org/publicdomain/mark/1.0/';
 
     // Attribution — always credit the digitizing institution. Prefer an explicit
     // attribution string when stored; otherwise build one from the institution

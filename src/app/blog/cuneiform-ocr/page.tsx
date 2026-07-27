@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'Can AI Read Cuneiform?',
     description: 'Eight experiments testing Gemini and Claude on cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg' }],
   },
   alternates: {
     canonical: '/blog/cuneiform-ocr',
@@ -2032,7 +2035,6 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
       </article>
 
-      <BlogComments slug="cuneiform-ocr" />
     </ContentPageLayout>
   );
 }

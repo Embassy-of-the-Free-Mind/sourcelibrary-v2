@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     'Of ~1.4 million early-modern works in the Universal Short Title Catalogue, how many have a known modern translation? A federated, authority-reconciled census. About one in a hundred.',
   alternates: { canonical: '/research/translation-gap' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'The Translation Gap',
     description:
       'Of ~1.4 million early-modern works, roughly 1% have a known modern translation. A federated census against the Universal Short Title Catalogue.',
@@ -213,7 +214,7 @@ export default function TranslationGapPage() {
               Download the data (CSV, 181 languages)
             </a>
             <a
-              href="mailto:derek@sourcelibrary.org?subject=The%20Translation%20Gap%20%E2%80%94%20collaboration"
+              href="mailto:team@sourcelibrary.org?subject=The%20Translation%20Gap%20%E2%80%94%20collaboration"
               className="font-body text-sm font-semibold border border-amber-800 text-amber-800 hover:bg-amber-50 px-6 py-3 rounded-sm transition-colors"
             >
               Get in touch
@@ -226,7 +227,7 @@ export default function TranslationGapPage() {
           Andrews); the ~1.39M distinct-work count is consistent with USTC&rsquo;s stated ~1.4 million distinct items for
           its expansion to 1700. Translation census federated from 30+ catalogues and publishers; author reconciliation via
           VIAF, Wikidata, GND, and CERL. Figures are conservative lower bounds and will be updated as sources are added.
-          Contact: <a className="text-amber-800 underline" href="mailto:derek@sourcelibrary.org">derek@sourcelibrary.org</a>.
+          Contact: <a className="text-amber-800 underline" href="mailto:team@sourcelibrary.org">team@sourcelibrary.org</a>.
         </p>
       </div>
     </ContentPageLayout>
