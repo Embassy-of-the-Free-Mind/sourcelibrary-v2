@@ -19,9 +19,11 @@ interface DownloadButtonProps {
   imageRestricted?: boolean;
   imageAccess?: ImageAccess;
   variant?: 'default' | 'header';
+  /** Hide the "Download" label + chevron — show only the icon. */
+  iconOnly?: boolean;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default' }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
@@ -207,19 +209,26 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         className={buttonClass}
       >
         <Download className="w-4 h-4" />
-        Download
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-stone-200 py-2 z-50">
+        <>
+        {/* Backdrop (mobile) — tap to dismiss */}
+        <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
+        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+          {/* Header with close (mobile bottom sheet) */}
+          <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
+            <span className="text-[15px] font-semibold text-stone-900">Download</span>
+            <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+          </div>
 
           {/* Sign-in wall — all downloads require an account */}
           {isAnonymous && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={goToSignIn}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors"
+                className="w-full min-h-[48px] px-4 py-3.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-[15px] font-semibold transition-colors"
               >
                 Sign in to download
               </button>
@@ -237,7 +246,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               <button
                 onClick={handlePurchase}
                 disabled={purchasing}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
               >
                 {purchasing ? 'Redirecting...' : 'Unlock premium formats ($5)'}
               </button>
@@ -252,21 +261,23 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="translation" label="English Translation" desc="Translated text only"
-              icon={<Languages className="w-4 h-4 text-status-success" />}
+              icon={<Languages className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
-              icon={<FileText className="w-4 h-4 text-blue-600" />}
+              icon={<FileText className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
-              icon={<Layers className="w-4 h-4 text-purple-600" />}
+              icon={<Layers className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          </div>
 
           <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
             PDF
@@ -287,19 +298,20 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             EPUB
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-status-success" />}
+              icon={<BookOpen className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-blue-600" />}
+              icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-both" label="Complete (Both)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-purple-600" />}
+              icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
@@ -314,12 +326,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           )}
           {hasTranslations && (
             <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-stone-700" />}
+              icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-bilingual" label="Bilingual Scholarly" desc="Original + translation with apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-accent-rust" />}
+              icon={<GraduationCap className="w-4 h-4 text-accent-rust shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
@@ -327,6 +339,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               icon={<Image className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          </div>
 
           {hasImages && !imageRestricted && (
             <>
@@ -357,7 +370,9 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               Downloads include source attribution and CC BY-SA 4.0 license.
             </p>
           </div>
+          <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
         </div>
+        </>
       )}
     </div>
   );
@@ -378,12 +393,12 @@ function FormatOption({
     <button
       onClick={() => onDownload(format)}
       disabled={downloading !== null}
-      className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50 ${className}`}
+      className={`w-full h-full min-h-[54px] sm:min-h-0 px-3.5 py-3 flex items-center justify-start gap-2.5 hover:bg-stone-50 active:bg-stone-100 transition-colors disabled:opacity-50 rounded-lg border border-stone-200 sm:border-0 sm:rounded-none text-left ${className}`}
     >
       {icon}
-      <div className="text-left">
-        <div className="text-sm font-medium text-stone-900">{label}</div>
-        <div className="text-xs text-stone-500">{desc}</div>
+      <div className="min-w-0">
+        <div className="text-[13px] sm:text-sm font-medium text-stone-900 leading-tight">{label}</div>
+        <div className="hidden sm:block text-xs text-stone-500">{desc}</div>
       </div>
       {downloading === format && (
         <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />

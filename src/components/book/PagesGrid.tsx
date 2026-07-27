@@ -1,26 +1,28 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
+import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, LayoutGrid } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useEmbedHref } from '@/lib/EmbedContext';
 
-function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+function PageImage({ src, alt, className, natural }: { src: string; alt: string; className?: string; natural?: boolean }) {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useCallback((img: HTMLImageElement | null) => {
     if (img?.complete && img.naturalWidth > 0) setLoaded(true);
   }, []);
   return (
     <>
+      {/* Placeholder reserves space. In `natural` mode it's a block (a 3:4
+          guess) so the grid has height before load; otherwise it fills the box. */}
       {!loaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+        <div className={`${natural ? 'w-full aspect-[3/4]' : 'absolute inset-0'} bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer`} />
       )}
       <img
         ref={imgRef}
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'} ${className || ''}`}
+        className={`w-full ${natural ? 'h-auto block' : 'h-full object-contain'} transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0 hidden'} ${className || ''}`}
         onLoad={() => setLoaded(true)}
       />
     </>
@@ -49,6 +51,8 @@ interface PagesGridProps {
   onDragEnd: () => void;
   onLoadMore: () => void;
   getImageUrl: (page: Page) => string | null;
+  overviewHref?: string;
+  subtitle?: string;
 }
 
 export default function PagesGrid({
@@ -71,6 +75,8 @@ export default function PagesGrid({
   onLoadMore,
   getImageUrl,
   totalCount,
+  overviewHref,
+  subtitle,
 }: PagesGridProps) {
   const embedHref = useEmbedHref();
   const displayTotal = totalCount || pages.length;
@@ -80,12 +86,13 @@ export default function PagesGrid({
     : undefined;
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Pages</h2>
-        <span className="text-sm text-stone-500">
-          Showing {Math.min(visibleCount, pages.length)} of {displayTotal}
+      <div className="flex items-baseline justify-between gap-4 mb-1">
+        <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>Pages</h2>
+        <span className="text-sm text-stone-500 whitespace-nowrap">
+          {Math.min(visibleCount, pages.length)} of {displayTotal}
         </span>
       </div>
+      {subtitle && <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{subtitle}</p>}
 
       {pages.length === 0 ? (
         <div className="text-center py-16 card">
@@ -96,7 +103,7 @@ export default function PagesGrid({
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-10 gap-2 sm:gap-2 items-start">
           {pages.slice(0, visibleCount).map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page);
@@ -176,18 +183,11 @@ export default function PagesGrid({
                 <a
                   href={embedHref(`/book/${bookPath || bookId}/page/${page.id}`)}
                 >
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
+                  <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
-                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="group-hover:scale-105 transition-transform duration-200" />
+                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} natural className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
-                    )}
-                    {(hasOcr || hasTranslation || hasSummary) && (
-                      <div className="absolute bottom-1 right-1 flex gap-0.5 bg-black/40 rounded-full px-1 py-0.5">
-                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-400" title="OCR" />}
-                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-400" title="Translated" />}
-                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-400" title="Summarized" />}
-                      </div>
+                      <div className="w-full aspect-[3/4] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
                   </div>
                 </a>
@@ -217,16 +217,27 @@ export default function PagesGrid({
         </div>
       )}
 
-      {/* Load More */}
-      {visibleCount < displayTotal && (
-        <div className="mt-6 text-center">
-          <button
-            onClick={onLoadMore}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Load more ({displayTotal - visibleCount} remaining)
-          </button>
+      {/* Load more, then Overview stacked below it — both white-on-black. */}
+      {(visibleCount < displayTotal || overviewHref) && (
+        <div className="mt-6 flex flex-col items-center gap-3">
+          {visibleCount < displayTotal && (
+            <button
+              onClick={onLoadMore}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Load more ({displayTotal - visibleCount} remaining)
+            </button>
+          )}
+          {overviewHref && (
+            <a
+              href={embedHref(overviewHref)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
+            >
+              <LayoutGrid className="w-4 h-4" />
+              Overview
+            </a>
+          )}
         </div>
       )}
     </div>
