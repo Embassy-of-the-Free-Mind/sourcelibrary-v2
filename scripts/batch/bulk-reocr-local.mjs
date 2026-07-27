@@ -29,7 +29,10 @@ const TARGET_MODEL = 'gemini-3-flash-preview';
 const TARGET_PROMPT = 'v5.2026-02';
 const SKIP_MODELS = ['manual', 'manual-correction'];
 const INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in HTTP body, ~20MB limit)
-const FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
+// Pages per file-based batch (JSONL uploaded to File API). Overridable via --batch-size:
+// full-res images can overflow V8's max string length at 150/batch, so the contamination
+// repair (#3362) uses a smaller size for high-resolution scans.
+const FILE_BATCH_SIZE = parseInt((process.argv.find(a => a.startsWith('--batch-size=')) || '').split('=')[1] || '150', 10);
 const IMAGE_CONCURRENCY = 20; // Parallel image downloads
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
@@ -48,6 +51,10 @@ const DRY_RUN = hasFlag('dry-run');
 const SINGLE_BOOK = getArg('book-id');
 const NEW_ONLY = hasFlag('new-only');
 const PROVIDER = getArg('provider');
+// Optional image-source override. 'ia-fullres' forces the IA native full-resolution
+// image (bypasses the possibly-downscaled archived R2 copy). Used by the batch-OCR
+// contamination repair (#3362) so re-OCR reads full-res, correct source images.
+const SOURCE = getArg('source');
 
 // --- Gemini API ---
 function getApiKey() {
@@ -186,6 +193,22 @@ async function createBatchJobInline(model, requests, displayName, retries = 3) {
 // --- Image helpers ---
 // getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
 
+// Derive the IA native full-resolution URL from an archive.org page URL (the display
+// size `pct:50`/`pct:NN` becomes `full`). Returns null for non-archive.org sources.
+function iaFullResUrl(page) {
+  const src = page.photo_original || page.photo;
+  if (typeof src === 'string' && /archive\.org\/download\//.test(src)) {
+    return src.replace(/\/full\/pct:\d+\//, '/full/full/');
+  }
+  return null;
+}
+
+// Resolve the image URL to submit for OCR, honoring the optional --source override.
+function resolveImageUrl(page) {
+  if (SOURCE === 'ia-fullres') return iaFullResUrl(page) || getPageImageUrl(page);
+  return getPageImageUrl(page);
+}
+
 async function fetchImageBase64(url) {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
@@ -207,7 +230,7 @@ async function downloadImagesParallel(pages, concurrency) {
     const chunk = pages.slice(i, i + concurrency);
     const settled = await Promise.allSettled(
       chunk.map(async (page) => {
-        const url = getPageImageUrl(page);
+        const url = resolveImageUrl(page);
         if (!url) return null;
         const image = await fetchImageBase64(url);
         if (!image) return null;
