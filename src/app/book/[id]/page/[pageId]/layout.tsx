@@ -1,4 +1,6 @@
+import { cache } from 'react';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -21,7 +23,9 @@ const PAGE_META_PROJECTION = {
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
 };
 
-async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
+// `cache()`d because both generateMetadata and the layout shell below read it;
+// without it a reader page would issue this book+page lookup twice per request.
+const getPageData = cache(async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
@@ -44,7 +48,7 @@ async function getPageData(bookId: string, pageId: string, tenantId?: string): P
   } catch {
     return { book: null, page: null };
   }
-}
+});
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { id, pageId } = await params;
@@ -116,6 +120,30 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default async function PageLayout({ children }: LayoutProps) {
+export default async function PageLayout({ children, params }: LayoutProps) {
+  // Resolve existence HERE, in the shell, rather than leaving it to page.tsx.
+  //
+  // This segment has a loading.tsx and deliberately keeps it — the reader is
+  // the one route where the skeleton earns its place, on every page turn. But
+  // a loading.tsx wraps its page.tsx in an automatic <Suspense>, so Next.js
+  // flushes the 200 shell the moment the page's data fetch suspends, before
+  // page.tsx's notFound() runs. The status is committed by then and notFound()
+  // can only swap the body — the soft-404 documented in CLAUDE.md and fixed on
+  // sibling routes in #3277 and #3376.
+  //
+  // A layout sits ABOVE that boundary, so awaiting here still sets a real 404
+  // and the skeleton is untouched.
+  //
+  // The condition is deliberately a strict SUBSET of page.tsx's four notFound()
+  // cases: missing page, missing book, and (inside getPageData) a page whose
+  // book_id doesn't match the book in the URL. The hidden-book gate stays in
+  // page.tsx alone — `findBookByIdOrSlug` does not filter on visibility, so the
+  // editor preview route (page/[pageId]/preview, allowHidden) still renders
+  // hidden books through this layout exactly as before.
+  const { id, pageId } = await params;
+  const ctx = await getTenantContext();
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  if (!book || !page) notFound();
+
   return children;
 }
