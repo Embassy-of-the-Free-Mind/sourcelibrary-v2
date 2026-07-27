@@ -71,6 +71,14 @@ async function hashUrl(url) {
 
 async function auditBook(db, book) {
   const bid = String(book._id);
+
+  // Cheap pre-check before pulling every page doc. Most IA books never went
+  // through the bulk archiver, and loading a 600-page book's docs just to
+  // discover that dominates the run.
+  const probe = await db.collection('pages')
+    .findOne({ book_id: bid, 'archive_metadata.source': 'bulk_jp2' }, { projection: { _id: 1 } });
+  if (!probe) return null;
+
   const pages = await db.collection('pages')
     .find({ book_id: bid })
     .project({
@@ -166,6 +174,7 @@ async function main() {
     const book = await cursor.next();
     if (!book) break;
     scanned++;
+    if (scanned % 250 === 0) console.log(`  … scanned ${scanned} IA books, ${audited} with bulk_jp2 so far`);
     if (done.has(String(book._id))) continue;
 
     const task = auditBook(db, book)
