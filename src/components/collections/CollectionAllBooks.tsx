@@ -8,6 +8,7 @@ import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import { bookTitle } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import TranslationSafe from '@/components/layout/TranslationSafe';
 
 const PER_PAGE = 60;
 
@@ -357,7 +358,14 @@ export default function CollectionAllBooks({
         )}
       </div>
 
-      {/* Books — Grid or List */}
+      {/* Books — Grid or List.
+          Wrapped in TranslationSafe: with a browser translator active, React
+          cannot reconcile this list (the translator has replaced every text
+          node), so it remounts instead. Identity covers everything that
+          changes the rendered set. The wrapper sits BELOW the controls on
+          purpose — sort/filter/query state lives in this component, above the
+          key, so remounting the list never resets them. */}
+      <TranslationSafe identity={`${viewMode}|${expanded}|${sort}|${language}|${query}|${safePage}`}>
       {viewMode === 'list' && expanded ? (
         <CollectionListView
           books={displayBooks}
@@ -504,6 +512,7 @@ export default function CollectionAllBooks({
           )}
         </div>
       )}
+      </TranslationSafe>
 
       {/* Pagination */}
       {expanded && (

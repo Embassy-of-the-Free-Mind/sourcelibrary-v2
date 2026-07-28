@@ -34,6 +34,7 @@ import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
+import TranslationSafe from '@/components/layout/TranslationSafe';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -1181,6 +1182,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
 
       {/* Results */}
       <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
+        {/* With a browser translator active React cannot reconcile these
+            result lists — the translator has replaced every text node — so we
+            remount them instead. Wraps only the results, never the search box
+            or filter state, which live above and must survive. See
+            TranslationSafe and #3314. */}
+        <TranslationSafe identity={`${query}|${viewMode}|${language}|${category}|${offset}|${resultsPerPage}`}>
         {/* Anonymous free-search wall — shown after 5 searches/hour */}
         {signInRequired && (
           <div className="text-center py-16 max-w-lg mx-auto">
@@ -1785,6 +1792,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
             </div>
           </section>
         )}
+      </TranslationSafe>
       </main>
 
     </div>
