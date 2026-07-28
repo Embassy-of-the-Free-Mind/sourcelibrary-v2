@@ -4,8 +4,9 @@ import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 describe('buildSeoTitle', () => {
   it('leads with the original title, adds byline and year, no em-dash', () => {
     const t = buildSeoTitle({ originalTitle: 'Utriusque Cosmi Historia', authorLabel: 'Robert Fludd', year: '1617' });
-    expect(t).toBe('Utriusque Cosmi Historia · Robert Fludd (1617)');
+    expect(t).toBe('Utriusque Cosmi Historia | Robert Fludd (1617)');
     expect(t).not.toContain('—');
+    expect(t).not.toContain('·');
     expect(t).not.toContain('Source Library');
   });
 

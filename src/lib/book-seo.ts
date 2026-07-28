@@ -7,7 +7,8 @@
  *  - Lead the <title> with the ORIGINAL-language title (book.title) — the
  *    catalogue/citation standard and the form scholars and AI actually query —
  *    plus the byline and year, degrading gracefully by length so long historical
- *    titles never mid-word-truncate. No em-dashes (a middle dot separates fields).
+ *    titles never mid-word-truncate. Fields separated by a vertical bar " | "
+ *    (no em-dashes / middle dots).
  *  - Build the description from the real per-book summary (unique per page), and
  *    state translation status HONESTLY: "First English translation" only when it
  *    truly is, plain "English translation" for later translations, and NOTHING on
@@ -49,7 +50,7 @@ export interface TitleInput {
 export function buildSeoTitle({ originalTitle, authorLabel, year }: TitleInput): string {
   const head = headOfTitle(originalTitle || 'Untitled');
   const yr = year ? ` (${year})` : '';
-  const author = authorLabel ? ` · ${authorLabel}` : '';
+  const author = authorLabel ? ` | ${authorLabel}` : '';
   const full = `${head}${author}${yr}`;
   if (full.length <= TITLE_MAX) return full;
   const noYear = `${head}${author}`;
