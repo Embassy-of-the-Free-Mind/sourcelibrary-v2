@@ -12,7 +12,10 @@
  */
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import PageEditorPage from '../page';
+// The public reader lives in the URL-neutral `(reader)` route group so its
+// visibility gate (that group's layout.tsx) does not apply to this route — see
+// #3385. This import reaches the same component it always did.
+import PageEditorPage from '../(reader)/page';
 import { isInnerCircle } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
