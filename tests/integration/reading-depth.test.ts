@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { getTestDb, cleanDb } from '../setup';
 // @ts-expect-error — plain .mjs analytics lib, no types
-import { computeReadingDepth } from '../../scripts/lib/reading-depth.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../../scripts/lib/reading-depth.mjs';
 
 /**
  * Reading depth has been wrong twice in two different ways (#3405 and the
@@ -108,5 +108,65 @@ describe('computeReadingDepth', () => {
     // The caller always has both numbers to compare, so "no exclusion applied"
     // is visible rather than implied by a missing field.
     expect(d.unfiltered.pairs).toBe(d.pairs);
+  });
+});
+
+describe('computeMemberReadingDepth', () => {
+  beforeEach(cleanDb);
+
+  const session = (user: string, book: string, pages: number, viewed?: number) => ({
+    user_id: user,
+    book_id: book,
+    pages_viewed: viewed ?? pages,
+    pages_read: Array.from({ length: pages }, (_, i) => ({ page_id: `${book}-p${i}`, page_number: i + 1 })),
+    updated_at: new Date(Date.now() - HOUR),
+    started_at: new Date(Date.now() - HOUR),
+  });
+
+  it('returns null rather than a zeroed shape when there is nothing to report', async () => {
+    expect(await computeMemberReadingDepth(getTestDb(), since())).toBeNull();
+  });
+
+  it('measures distinct pages, not page turns', async () => {
+    // 40 turns across 4 distinct pages — someone flipping back and forth.
+    // Depth must be 4; counting pages_viewed would claim a deep read.
+    await getTestDb().collection('reading_history').insertOne(session('u1', 'b1', 4, 40) as never);
+
+    const m = await computeMemberReadingDepth(getTestDb(), since());
+
+    expect(m.median).toBe(4);
+    expect(m.deep).toBe(0);
+  });
+
+  it('counts sessions, members, books and returning members separately', async () => {
+    await getTestDb().collection('reading_history').insertMany([
+      session('u1', 'b1', 30),
+      session('u1', 'b2', 12),   // same member, second book -> returning
+      session('u2', 'b1', 1),    // same book, different member
+      session('u3', 'b3', 60),
+    ] as never[]);
+
+    const m = await computeMemberReadingDepth(getTestDb(), since());
+
+    expect(m.sessions).toBe(4);
+    expect(m.users).toBe(3);
+    expect(m.books).toBe(3);
+    expect(m.returningUsers).toBe(1);
+    expect(m.deep).toBe(3);       // 30, 12, 60
+    expect(m.veryDeep).toBe(1);   // 60
+    expect(m.oneOnly).toBe(1);
+    expect(m.totalPages).toBe(103);
+  });
+
+  it('ignores sessions outside the window', async () => {
+    await getTestDb().collection('reading_history').insertMany([
+      session('u1', 'b1', 20),
+      { ...session('u2', 'b2', 99), updated_at: new Date(Date.now() - 90 * 24 * HOUR) },
+    ] as never[]);
+
+    const m = await computeMemberReadingDepth(getTestDb(), since());
+
+    expect(m.sessions).toBe(1);
+    expect(m.max).toBe(20);
   });
 });

@@ -42,6 +42,13 @@ interface MetricsSnapshot {
     // traffic_class and so can't be attributed to humans or crawlers.
     contaminated?: boolean; unclassified?: number; total?: number;
   } | null;
+  // From reading_history: signed-in members only, therefore crawler-free.
+  readingMembers?: {
+    sessions?: number; users?: number; books?: number;
+    median?: number; p75?: number; p90?: number; p99?: number; max?: number;
+    oneOnly?: number; shallow?: number; middling?: number; deep?: number; veryDeep?: number;
+    returningUsers?: number; totalPages?: number;
+  } | null;
   missionActions?: Record<string, number>;
   traffic?: {
     humanPvs?: number; botPvs?: number;
@@ -279,9 +286,37 @@ export default async function MetricsPage() {
         </>
       ) : null}
 
+      {s.readingMembers ? (
+        <>
+          <SectionHead
+            title="Reading depth — signed-in members"
+            sub={`${num(s.readingMembers.sessions)} sessions from ${num(s.readingMembers.users)} members across ${num(s.readingMembers.books)} books, last ${win} days. A session is one member on one book, activity within 30 minutes collapsed.`}
+          />
+          <div style={C.grid}>
+            <Stat value={String(s.readingMembers.median ?? 0)} label="Median pages / session"
+              sub={`p90 ${s.readingMembers.p90 ?? 0} · max ${num(s.readingMembers.max)}`}
+              def="Distinct pages a member reads in one sitting. Counted from reading_history, which is written only behind a session — no crawler can appear in it." />
+            <Stat value={pct(s.readingMembers.deep, s.readingMembers.sessions)} label="Deep read (10+ pages)"
+              sub={`${num(s.readingMembers.deep)} sessions · ${num(s.readingMembers.veryDeep)} read 50+`}
+              def="The engaged tail. This is the number the anonymous page_read metric got wrong by an order of magnitude before #3405." />
+            <Stat value={pct(s.readingMembers.oneOnly, s.readingMembers.sessions)} label="One page only"
+              def="Arrived from a search result or citation and left. Expected to be substantial for a reference library." />
+            <Stat value={pct(s.readingMembers.returningUsers, s.readingMembers.users)} label="Members who came back"
+              sub={`${num(s.readingMembers.returningUsers)} of ${num(s.readingMembers.users)} had >1 session`}
+              def="More than one reading session in the window — the closest thing we have to a retention signal for reading itself." />
+          </div>
+          <div style={{ ...C.card, marginBottom: 12, marginTop: 12, lineHeight: 1.5 }}>
+            <strong>A ceiling, not an average.</strong> Members are self-selected and read more than
+            a passer-by, so this answers &ldquo;do our members read?&rdquo; — not &ldquo;do visitors
+            read?&rdquo; The anonymous instrument below answers the second question, and only for
+            windows that sit entirely after the #3405 fix.
+          </div>
+        </>
+      ) : null}
+
       {s.reading?.contaminated ? (
         <>
-          <SectionHead title="Reading depth" sub="Not measurable for this window — see #3405." />
+          <SectionHead title="Reading depth — anonymous visitors" sub="Not measurable for this window — see #3405." />
           <div style={{ ...C.card, marginBottom: 12, lineHeight: 1.5 }}>
             {num(s.reading.unclassified)} of {num(s.reading.total)} page_read events in the last 7
             days were written before bot classification existed. They record no user-agent, so they
@@ -293,7 +328,7 @@ export default async function MetricsPage() {
         </>
       ) : s.reading ? (
         <>
-          <SectionHead title="Reading depth" sub="Human-classified page_read events, last 7 days. Median 1 page is normal for a reference library." />
+          <SectionHead title="Reading depth — anonymous visitors" sub="Human-classified page_read events, last 7 days. Keyed on a /24-truncated IP, so readers behind one NAT merge into one; treat it as coarser than the member figures above." />
           <div style={C.grid}>
             <Stat value={num(s.reading.opens)} label="Book opens" def="book_read events in the last 7 days." />
             <Stat value={String(s.reading.median ?? 0)} label="Median pages / book" sub={`p90 ${s.reading.p90 ?? 0}`}

@@ -17,7 +17,7 @@
 // Cron (Hetzner, daily): see scripts/workers/crontab.production.
 
 import { withMongo } from '../lib/mongo.mjs';
-import { computeReadingDepth } from '../lib/reading-depth.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const norm = (e) => (e || '').trim().toLowerCase();
@@ -148,9 +148,15 @@ await withMongo(async (db) => {
   // number that gets emailed.
   const ev = db.collection('analytics_events');
   let reading = null;
+  let readingMembers = null;
   try {
     reading = await computeReadingDepth(db, d7);
   } catch { /* events collection may be sparse */ }
+  // Signed-in twin over the full window — no crawler can be in it, so this is
+  // reportable today rather than after the anonymous instrument's window fills.
+  try {
+    readingMembers = await computeMemberReadingDepth(db, SINCE);
+  } catch { /* reading_history may be absent */ }
 
   // ─── MISSION ACTIONS ──────────────────────────────────────────────────────
   let missionActions = {};
@@ -311,6 +317,7 @@ await withMongo(async (db) => {
       returningVisitors: multiDay, returningTotal: totalFp,
     },
     reading,
+    readingMembers,
     missionActions,
     traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
     search,
