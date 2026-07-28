@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
+import { retiredCollectionMessage } from '@/lib/retired-collections';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -683,6 +684,22 @@ export async function proxy(request: NextRequest) {
   // tenant context travels via the x-tenant-* headers stamped by the
   // resolution block lower in this file.
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
+
+  // Withdrawn collections answer 410 Gone, not 404. Handled here rather than in
+  // the page because a Next.js page cannot set the status, and `notFound()`
+  // would keep telling crawlers to come back. Applies on every host — a
+  // withdrawal is a withdrawal in a partner reading room too.
+  const retired = retiredCollectionMessage(pathname);
+  if (retired) {
+    return new NextResponse(retired, {
+      status: 410,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  }
 
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
   // Checked before the rewrite block, which skips /api/* — the listed API twins
