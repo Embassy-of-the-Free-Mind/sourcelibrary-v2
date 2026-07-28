@@ -61,7 +61,7 @@ const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.
 // React bundle has even parsed, so patching from a client component would be too
 // late for the hydration commit. `window.__slTranslateGuardHits` counts swallowed
 // calls for support triage.
-const TRANSLATION_DOM_GUARD_SCRIPT = `(function(){if(typeof Node!=='function'||!Node.prototype)return;window.__slTranslateGuardHits=0;var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){window.__slTranslateGuardHits++;return c;}return r.apply(this,arguments);};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){window.__slTranslateGuardHits++;return n;}return i.apply(this,arguments);};})();`;
+const TRANSLATION_DOM_GUARD_SCRIPT = `(function(){if(typeof Node!=='function'||!Node.prototype)return;window.__slTranslateGuardHits=0;var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){window.__slTranslateGuardHits++;return c;}return r.apply(this,arguments);};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){window.__slTranslateGuardHits++;return n;}return i.apply(this,arguments);};})();(function(){window.__slStreamGuardHits=0;var K=['$RS','$RC','$RM','$RX','$RB','$RT'];for(var j=0;j<K.length;j++){(function(k){var v;try{Object.defineProperty(window,k,{configurable:true,get:function(){return v;},set:function(f){v=(typeof f==='function')?function(){try{return f.apply(this,arguments);}catch(e){window.__slStreamGuardHits++;}}:f;}});}catch(e){}})(K[j]);}})();`;
 
 export const metadata: Metadata = {
   title: "Source Library — Ancient Texts Translated to English",
