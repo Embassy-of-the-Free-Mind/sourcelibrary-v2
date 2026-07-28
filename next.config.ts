@@ -326,6 +326,16 @@ const nextConfig: NextConfig = {
         destination: '/support',
         permanent: false,
       },
+      // Fundraising outreach links to sourcelibrary.org/call so the emails carry
+      // an on-domain URL rather than a raw calendar.app.google one. Points at the
+      // 15-minute Google Calendar appointment schedule (the 30-minute page is
+      // linked directly from the few drafts that ask for longer). Temporary: the
+      // schedule can be rebuilt, which mints a new booking URL.
+      {
+        source: '/call',
+        destination: 'https://calendar.app.google/rh2H63a7JxPkcgR87',
+        permanent: false,
+      },
       // SHWEP reading room taken down (collection hidden). Keep inbound podcast
       // links off a 404 — temporary so it can be restored.
       {
