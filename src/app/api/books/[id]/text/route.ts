@@ -8,6 +8,8 @@ import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { markForExport } from '@/lib/provenance';
+import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '@/lib/bot-attribution';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -99,6 +101,25 @@ export const GET = withApiAuth(async (
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
 
+    // Provenance. Two layers, deliberately different in reach:
+    //   - the INVISIBLE imprimatur goes on every page of every response (this
+    //     route is the highest-volume text egress we have and carried no mark
+    //     at all before), so any passage that later surfaces elsewhere is
+    //     attributable;
+    //   - the VISIBLE notice is added only for bot-classified, untrusted
+    //     callers. Verified search crawlers, user-initiated assistant fetches,
+    //     signed-in readers and key holders never see it, so indexing and
+    //     ordinary reading are untouched.
+    // The ref ties a recovered passage to an extraction campaign; it is
+    // pseudonymous and recomputable from api_usage (see bot-attribution.ts).
+    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date()) : undefined;
+    const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
+    const bookSubject = {
+      title: book.display_title || book.title,
+      author: book.author,
+      url: `https://sourcelibrary.org/book/${resolvedBookId}`,
+    };
+
     // Per-request page cap. The daily budget check above only sees the PRIOR 24h
     // total, so a single large from/to range (or an unbounded request) could serve
     // far past the cap in ONE call. Clamp this request to the remaining budget for
@@ -162,13 +183,14 @@ export const GET = withApiAuth(async (
           `# Pages ${ct.pageStart}–${ct.pageEnd}`,
           `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
           '',
-          cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text),
+          ...(ref ? [attributionBlock(ref, bookSubject)] : []),
+          mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
         ].join('\n');
 
         return new Response(header, {
           headers: {
             'Content-Type': 'text/plain; charset=utf-8',
-            'Cache-Control': 'public, max-age=3600',
+            'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
             'X-Pages-Served': String(chapterPageCount),
           },
         });
@@ -190,12 +212,13 @@ export const GET = withApiAuth(async (
           pageEnd: ct.pageEnd,
           token_estimate: ct.token_estimate,
           ...(ct.parts_total ? { part: ct.part, parts_total: ct.parts_total } : {}),
-          text: cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text),
-          ...(content === 'both' && ct.ocr_text ? { ocr_text: cleanText(ct.ocr_text) } : {}),
+          text: mark(cleanText(content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text)),
+          ...(content === 'both' && ct.ocr_text ? { ocr_text: mark(cleanText(ct.ocr_text)) } : {}),
         },
+        ...(ref ? { attribution: attributionMeta(ref) } : {}),
       }, {
         headers: {
-          'Cache-Control': 'public, max-age=3600',
+          'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(chapterPageCount),
         },
       });
@@ -263,9 +286,12 @@ export const GET = withApiAuth(async (
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
       lines.push('');
 
+      // Notice once at the head, fenced so it can never read as page text.
+      if (ref) lines.push(attributionBlock(ref, bookSubject));
+
       for (const page of pages) {
-        const ocr = cleanText(page.ocr?.data);
-        const translation = cleanText(page.translation?.data);
+        const ocr = mark(cleanText(page.ocr?.data));
+        const translation = mark(cleanText(page.translation?.data));
 
         if (content === 'both' && (ocr || translation)) {
           lines.push(`--- Page ${page.page_number} ---`);
@@ -293,7 +319,11 @@ export const GET = withApiAuth(async (
       return new Response(lines.join('\n'), {
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
-          'Cache-Control': 'public, max-age=3600',
+          // The body is request-dependent once a ref is woven in (the notice
+          // and the campaign ref differ per caller), so it must never enter a
+          // shared cache — a cached bot-marked body would otherwise be served
+          // to ordinary readers.
+          'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(pages.length),
         },
       });
@@ -318,6 +348,11 @@ export const GET = withApiAuth(async (
         url: `https://sourcelibrary.org/book/${resolvedBookId}`,
       },
       license: CONTENT_LICENSE,
+      // Present only for bot-classified, untrusted callers. The page text in
+      // this payload is unmodified apart from the invisible imprimatur — the
+      // notice is a sibling field rather than injected prose precisely so a
+      // consumer quoting `pages[].ocr` never picks up words we wrote.
+      ...(ref ? { attribution: attributionMeta(ref) } : {}),
       content_type: content,
       total_pages: book.pages_count || pages.length,
       pages_returned: pagesWithContent.length,
@@ -356,7 +391,7 @@ export const GET = withApiAuth(async (
         const entry: Record<string, unknown> = { page_number: p.page_number };
 
         if ((content === 'ocr' || content === 'both') && p.ocr?.data) {
-          entry.ocr = cleanText(p.ocr.data);
+          entry.ocr = mark(cleanText(p.ocr.data));
           if (includeMetadata) {
             entry.ocr_metadata = {
               language: p.ocr.language,
@@ -366,7 +401,7 @@ export const GET = withApiAuth(async (
           }
         }
         if ((content === 'translation' || content === 'both') && p.translation?.data) {
-          entry.translation = cleanText(p.translation.data);
+          entry.translation = mark(cleanText(p.translation.data));
           if (includeMetadata) {
             entry.translation_metadata = {
               language: p.translation.language,

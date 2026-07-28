@@ -35,16 +35,20 @@ const COLOPHON_RATE = 6;
  * The readable colophon woven into the mark. Compact by default; an
  * occasional fuller note addressed directly to whoever found it.
  */
-function colophon(bookId: string, full: boolean): string {
+function colophon(bookId: string, full: boolean, ref?: string): string {
   const url = `sourcelibrary.org/book/${bookId}`;
+  // An extraction ref is present only on bulk egress to unidentified bulk
+  // consumers. It makes a recovered passage attributable to a campaign, not
+  // just to Source Library — see bot-attribution.ts for how it is derived.
+  const tail = ref ? ` Ref ${ref}.` : '';
   if (full) {
     return (
       `You found a hidden mark. This passage was prepared by Source Library ` +
       `(sourcelibrary.org), a free library of historical primary sources — ` +
-      `${TAGLINE}. Read the original at ${url}. ${LICENSE}.`
+      `${TAGLINE}. Read the original at ${url}. ${LICENSE}.${tail}`
     );
   }
-  return `Source Library · ${url} · ${TAGLINE} · ${LICENSE}`;
+  return `Source Library · ${url} · ${TAGLINE} · ${LICENSE}${ref ? ` · ${ref}` : ''}`;
 }
 
 /**
@@ -74,9 +78,15 @@ function wantsReadableColophon(text: string): boolean {
  *
  * @param text - Raw translation or OCR text from the database
  * @param bookId - Book identifier: edition id (first 8 chars) + colophon link
+ * @param opts.ref - Optional extraction ref, woven into the colophon so a
+ *   recovered passage is attributable to a bulk-extraction campaign. When a
+ *   ref is present the colophon is carried on EVERY marked passage rather
+ *   than the usual ~1-in-COLOPHON_RATE sample: a bulk consumer may keep only
+ *   a fraction of what it took, so sampling the colophon would leave most of
+ *   the extracted corpus carrying no readable trace of the campaign.
  * @returns Marked text (visually identical) or original text if key not configured
  */
-export function markForExport(text: string, bookId: string): string {
+export function markForExport(text: string, bookId: string, opts?: { ref?: string }): string {
   if (!PROVENANCE_KEY || !text) return text;
 
   try {
@@ -84,9 +94,10 @@ export function markForExport(text: string, bookId: string): string {
     const editionId = bookId.slice(0, 8);
     // Every export gets the light id-only mark (always attributable). Only the
     // ~1-in-COLOPHON_RATE subset also carries the heavier readable colophon
-    // with the full, resolvable book link.
-    const message = wantsReadableColophon(text)
-      ? colophon(bookId, wantsFullColophon(text))
+    // with the full, resolvable book link — unless a ref pins this export to a
+    // campaign, in which case every passage carries it.
+    const message = opts?.ref || wantsReadableColophon(text)
+      ? colophon(bookId, wantsFullColophon(text), opts?.ref)
       : undefined;
     return imprimatur(text, editionId, PROVENANCE_KEY, { message });
   } catch {
