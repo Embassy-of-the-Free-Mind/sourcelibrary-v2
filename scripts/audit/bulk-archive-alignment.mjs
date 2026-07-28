@@ -57,6 +57,7 @@ const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '3'), 10));
 const OUT = resolve(REPO_ROOT, flag('out', 'scripts/output/bulk-archive-alignment.jsonl'));
 const ONLY_BOOKS = args.reduce((acc, a, i) => (a === '--book' ? [...acc, args[i + 1]] : acc), []);
 const MIN_BULK_PAGES = 10;
+const SAMPLE = args.includes('--sample') ? parseInt(flag('sample', '50'), 10) : 0;
 const BOOK_BATCH = 500; // books fetched per range query (see the pagination note in main)
 
 // IA IIIF page URLs look like .../page/nN/full/pct:50/0/default.jpg — a small
@@ -171,6 +172,35 @@ async function main() {
       : row.verdict;
     console.log(`[${audited}] ${tag.padEnd(30)} ${row.book_id} ${row.title}`);
   };
+
+  // --sample N: random books instead of an _id walk. Intended for a recurring
+  // spot-check (a weekly run covers different books each time), which catches
+  // drift from ANY writer — including the archive paths that still have no
+  // write-time guard — rather than only the one this audit was built for.
+  if (SAMPLE) {
+    const picked = await db.collection('books').aggregate([
+      { $match: query },
+      { $sample: { size: SAMPLE } },
+      { $project: { title: 1, ia_identifier: 1, visible: 1, pages_count: 1 } },
+    ]).toArray();
+    console.log(`sampling ${picked.length} random IA books`);
+    for (const book of picked) {
+      scanned++;
+      const task = auditBook(db, book)
+        .then(row => { if (row) record(row); })
+        .catch(err => console.log(`  [ERR] ${book._id}: ${err.message?.slice(0, 80)}`))
+        .finally(() => inFlight.delete(task));
+      inFlight.add(task);
+      if (inFlight.size >= CONCURRENCY) await Promise.race(inFlight);
+    }
+    await Promise.all(inFlight);
+    out.end();
+    const shifted = Object.entries(tally).filter(([k]) => k === 'shift+1').map(([, v]) => v)[0] || 0;
+    console.log(`\nsampled ${scanned}, audited ${audited} with bulk_jp2 pages`);
+    console.log('TALLY:', JSON.stringify(tally));
+    await client.close();
+    process.exit(shifted > 0 ? 1 : 0); // non-zero so a scheduled run can alert
+  }
 
   // Paginate by _id rather than holding one cursor open. A single cursor sits
   // idle for minutes at a time while we fetch and hash images, and Atlas
