@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -27,7 +27,8 @@ import {
   ChevronRight,
   Download,
   Loader2,
-  Eye
+  Eye,
+  Search
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -37,6 +38,9 @@ import { gallery, views } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import type { GalleryImageDetail, GalleryItem, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
+// Deep zoom pulls in OpenSeadragon — lazy so its weight only lands when a
+// reader actually opens the tiled viewer (#2714).
+const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 
@@ -94,6 +98,7 @@ export default function ImageDetailPage({
   const [savingRotation, setSavingRotation] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
+  const [deepZoomOpen, setDeepZoomOpen] = useState(false);
   const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
   const [showInfo, setShowInfo] = useState(false);
 
@@ -871,6 +876,20 @@ export default function ImageDetailPage({
 
           {/* Brightness/contrast controls */}
           <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+            {/* Deep zoom (#2714) — only when the page has a tile pyramid AND the
+                detection could be located in the master's coordinate space. The
+                API withholds both fields together, so no focus means no button
+                and the lens magnifier stays the high-res path. */}
+            {data.deepzoom && data.focusBbox && (
+              <button
+                onClick={() => setDeepZoomOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/70 rounded-lg text-xs text-stone-300 hover:text-white transition-colors"
+                title="Deep zoom into this illustration"
+              >
+                <Search className="w-4 h-4" />
+                <span className="hidden sm:inline">Deep zoom</span>
+              </button>
+            )}
             {(brightness !== 100 || contrast !== 100) && (
               <button
                 onClick={() => { setBrightness(100); setContrast(100); }}
@@ -901,6 +920,18 @@ export default function ImageDetailPage({
               </div>
             </div>
           </div>
+
+          {deepZoomOpen && data.deepzoom && (
+            <Suspense fallback={null}>
+              <DeepZoomOverlay
+                manifest={data.deepzoom}
+                title={data.description}
+                caption={`${data.book.title}${data.book.year ? ` (${data.book.year})` : ''}, p.${data.pageNumber}`}
+                initialBounds={data.focusBbox}
+                onClose={() => setDeepZoomOpen(false)}
+              />
+            </Suspense>
+          )}
 
           {/* Navigation arrows */}
           {hasPrev && (
