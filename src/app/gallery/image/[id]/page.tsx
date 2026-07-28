@@ -43,6 +43,7 @@ import SimilarImages from '@/components/gallery/SimilarImages';
 const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
+import { trackEvent } from '@/lib/track-event';
 
 /** In-memory cache for prefetched gallery image API responses */
 const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
@@ -692,6 +693,7 @@ export default function ImageDetailPage({
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
       '_blank'
     );
+    trackEvent('share', { channel: 'twitter', url, surface: 'gallery_image' });
   };
 
   const shareToPinterest = () => {
@@ -704,6 +706,7 @@ export default function ImageDetailPage({
       '_blank',
       'width=750,height=550'
     );
+    trackEvent('share', { channel: 'pinterest', url: pageUrl, surface: 'gallery_image' });
   };
 
   const shareNative = async () => {
@@ -715,6 +718,8 @@ export default function ImageDetailPage({
         text: `From "${data.book.title}"${data.book.author && data.book.author !== 'Various' ? ` by ${data.book.author}` : ''}`,
         url,
       });
+      // Only counted once the share sheet resolves — a cancel throws and is not a share.
+      trackEvent('share', { channel: 'native', url, surface: 'gallery_image' });
     } catch {
       // User cancelled or not supported
     }

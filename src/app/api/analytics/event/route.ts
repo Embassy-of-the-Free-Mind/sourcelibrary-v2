@@ -29,6 +29,11 @@ const ALLOWED_EVENTS = new Set([
 // Only these prop keys are persisted; everything else is dropped.
 const ALLOWED_PROPS = new Set([
   'bookId', 'format', 'channel', 'page', 'title', 'url', 'hasDoi', 'edition', 'source', 'reason', 'method',
+  // surface: which UI emitted a share (book page / gallery_image /
+  // collection_anchor_bar). Share controls exist on several surfaces and until
+  // #3399 two of them emitted nothing at all, so an undifferentiated `share`
+  // count could not tell "nobody shares" from "that surface isn't wired up".
+  'surface',
   // safe: on confirm_view/confirm_click, whether the `next` callback parameter
   // survived transit — separates "changed their mind" from "the link broke".
   'safe',

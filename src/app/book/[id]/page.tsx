@@ -43,6 +43,7 @@ import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
+import { BookShare } from '@/components/ui/ShareButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -1412,6 +1413,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </AuthCheck>
                   <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
                     <BookAnalytics bookId={book.id} className="!text-stone-200" />
@@ -1806,6 +1808,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       imageRestricted={imageRestricted}
                       imageAccess={imageAccess}
                       variant="header"
+                    />
+                    <BookShare
+                      bookId={book.slug || book.id}
+                      title={book.display_title || book.title}
+                      author={book.author || ''}
+                      year={book.published}
+                      doi={book.doi}
+                      tenantSlug={tenantSlug || undefined}
+                      className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
                     <div className="flex items-center gap-2.5 px-2 py-1.5">
