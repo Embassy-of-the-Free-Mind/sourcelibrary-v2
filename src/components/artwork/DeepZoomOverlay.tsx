@@ -26,6 +26,13 @@ interface DeepZoomOverlayProps {
   title: string;
   caption?: string;
   onClose: () => void;
+  /**
+   * Open framed on a sub-region instead of the whole page (#2714) — used by the
+   * gallery to land on the illustration. Normalized 0-1 against the MASTER, not
+   * the page-source image; on a split scan those differ, so callers must pass
+   * the output of `remapBboxToMaster`, never a raw `gallery_images.bbox`.
+   */
+  initialBounds?: { x: number; y: number; width: number; height: number } | null;
 }
 
 // Inline DZI ("Deep Zoom Image") descriptor. OpenSeadragon's bundled types model
@@ -44,12 +51,66 @@ function tileSourceFor(m: DeepZoomManifest): any {
   };
 }
 
-export default function DeepZoomOverlay({ manifest, title, caption, onClose }: DeepZoomOverlayProps) {
+/**
+ * Breathing room left around a focused region, as a fraction of its size, so the
+ * illustration doesn't sit edge-to-edge against the viewport.
+ */
+const FOCUS_PADDING = 0.06;
+
+/**
+ * Frame a normalized sub-region of the master, padded. Returns false when there
+ * is nothing to focus, so callers can fall back to the whole-image home view.
+ *
+ * Converts via `imageToViewportRectangle` with PIXEL coordinates rather than by
+ * hand: OSD's viewport is normalized by image WIDTH, so feeding it normalized
+ * y/height directly is the classic silent vertical-offset bug.
+ *
+ * Module-level and pure so the viewer effect can call it without taking a
+ * changing function identity as a dependency.
+ */
+function fitToBounds(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+  immediate: boolean,
+): boolean {
+  if (!bounds || !viewer?.viewport || !OpenSeadragon?.Rect) return false;
+  const padX = bounds.width * FOCUS_PADDING;
+  const padY = bounds.height * FOCUS_PADDING;
+  const rect = viewer.viewport.imageToViewportRectangle(
+    new OpenSeadragon.Rect(
+      Math.max(0, bounds.x - padX) * manifest.width,
+      Math.max(0, bounds.y - padY) * manifest.height,
+      Math.min(1, bounds.width + padX * 2) * manifest.width,
+      Math.min(1, bounds.height + padY * 2) * manifest.height,
+    ),
+  );
+  viewer.viewport.fitBounds(rect, immediate);
+  return true;
+}
+
+export default function DeepZoomOverlay({
+  manifest,
+  title,
+  caption,
+  onClose,
+  initialBounds = null,
+}: DeepZoomOverlayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const viewerRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const osdRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  // Held in a ref, not an effect dep: callers build this object inline, so a new
+  // identity every render would tear down and rebuild the whole viewer.
+  const boundsRef = useRef(initialBounds);
+  boundsRef.current = initialBounds;
 
   useEffect(() => {
     let disposed = false;
@@ -86,7 +147,14 @@ export default function DeepZoomOverlay({ manifest, title, caption, onClose }: D
           immediateRender: false,
         });
         viewerRef.current = viewer;
-        viewer.addHandler('open', () => !disposed && setReady(true));
+        osdRef.current = OpenSeadragon;
+        viewer.addHandler('open', () => {
+          if (disposed) return;
+          // Frame the region before the first paint (immediate = no fly-in from
+          // the whole page), so the gallery lands on the illustration.
+          fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true);
+          setReady(true);
+        });
         viewer.addHandler('open-failed', () => !disposed && setFailed(true));
       })
       .catch(() => !disposed && setFailed(true));
@@ -122,7 +190,15 @@ export default function DeepZoomOverlay({ manifest, title, caption, onClose }: D
     v.viewport.zoomBy(factor);
     v.viewport.applyConstraints();
   };
-  const home = () => viewerRef.current?.viewport.goHome();
+  // "Home" means where the reader started. When the gallery opened us framed on
+  // an illustration, that's the illustration — not the whole page scan.
+  const home = () => {
+    const v = viewerRef.current;
+    if (!v) return;
+    if (!fitToBounds(v, osdRef.current, boundsRef.current, manifest, false)) {
+      v.viewport.goHome();
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[60] bg-[#0b0a09]">
