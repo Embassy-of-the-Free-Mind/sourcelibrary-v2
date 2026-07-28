@@ -826,12 +826,27 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // NOTE: this worker deliberately does NOT honor processing_control.paused.
+  //
+  // Every phase below is derived-data bookkeeping — page counts, collection
+  // counts, gallery materialization, author slugs, the analytics snapshot, and
+  // the gemini_usage_daily rollup. None of them call Gemini, archive a page, or
+  // otherwise spend money or advance a book through the pipeline, so the pause
+  // switch (a *spend* control, honored by archive-*/enrich/translate/orchestrator)
+  // has no reason to gate them.
+  //
+  // It used to. The pause set on 2026-06-08T22:55Z therefore froze all six
+  // outputs for seven weeks: gemini_usage_daily's last row was 2026-06-08 and
+  // system_config.analytics_usage / author_slugs were last written 2026-06-08
+  // 22:16 — the run immediately before the pause. Worse, the cost rollup reads
+  // $0.00 whether spend is genuinely zero or the aggregator is dead, so pausing
+  // the pipeline also silently blinded the instrument that would show anything
+  // bypassing the pause (bulk-reocr-local.mjs does). See #3408.
+  //
+  // If a phase here ever starts spending, gate that phase — not the worker.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (control?.paused) {
-    console.log(`[sync-worker] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
+    console.log('[sync-worker] Pipeline is paused; bookkeeping phases run anyway (no paid work here).');
   }
 
   let countsResult = {};
