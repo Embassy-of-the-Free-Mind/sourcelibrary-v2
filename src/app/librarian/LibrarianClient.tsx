@@ -397,6 +397,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const chatCardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -530,6 +531,18 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
       sources: [],
     };
     setMessages(prev => [...prev, emptyAssistant]);
+
+    // On a touch device the input sits below the fold (hero + tall chat panel
+    // push it down), so after submitting you'd be left staring at the text box
+    // while the Librarian works above it — you had to scroll up to see anything
+    // happening. Dismiss the keyboard and pull the conversation into view so the
+    // search steps and response are visible as they stream in.
+    if (typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)').matches) {
+      inputRef.current?.blur();
+      requestAnimationFrame(() => {
+        chatCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     const abort = new AbortController();
     abortRef.current = abort;
@@ -916,7 +929,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
             {/* Chat area */}
             <div className="flex-1 min-w-0">
-              <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
+              <div ref={chatCardRef} className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm scroll-mt-4">
                 {/* Messages */}
                 <div ref={chatContainerRef} className="min-h-[200px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
