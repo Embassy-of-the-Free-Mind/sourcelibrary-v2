@@ -118,7 +118,6 @@ export interface FooterStrings {
   browseAZ: string;
   gallery: string;
   collections: string;
-  explore: string;
   search: string;
   favorites: string;
   // About column
@@ -152,7 +151,6 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseAZ: 'Browse A–Z',
     gallery: 'Gallery',
     collections: 'Collections',
-    explore: 'Explore',
     search: 'Search',
     favorites: 'Favorites',
     about: 'About',
@@ -182,7 +180,6 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseAZ: 'Índice A–Z',
     gallery: 'Galería',
     collections: 'Colecciones',
-    explore: 'Descubrir',
     search: 'Buscar',
     favorites: 'Favoritos',
     about: 'Acerca de',

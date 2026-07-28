@@ -25,7 +25,6 @@ const NAV_COLUMNS: ReadonlyArray<{
       { key: 'browseAZ', href: '/browse' },
       { key: 'gallery', href: '/gallery' },
       { key: 'collections', href: '/collections' },
-      { key: 'explore', href: '/explore' },
       { key: 'search', href: '/search' },
     ],
   },

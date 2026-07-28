@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import NgramViewer from '@/components/ngrams/NgramViewer';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 
 const TITLE = 'Ngram Viewer — Source Library';
 const DESCRIPTION =
@@ -40,6 +41,12 @@ export default function NgramsPage() {
         Compare up to six terms, in English translation or in the original
         languages — and click any point on a curve to read the actual passages.
       </p>
+
+      {/* Ngrams sits outside /explore/* but is one of the explore tools —
+          carry the same tab bar so readers can move between them. */}
+      <div className="mb-6">
+        <ExploreTabBar />
+      </div>
 
       <Suspense fallback={null}>
         <NgramViewer />
