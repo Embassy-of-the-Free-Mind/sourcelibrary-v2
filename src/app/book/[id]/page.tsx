@@ -58,6 +58,7 @@ import { getPartnerByProvider } from '@/lib/library-partners';
 import { getRelatedBooks } from '@/lib/related-books';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
@@ -238,8 +239,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = book.display_title || book.title;
-  const ogTitle = book.published ? `${title} (${book.published})` : title;
   // Byline for citations / meta tags. Falls back to editor for edited volumes,
   // magazines and anthologies where the catalogue has no single author. Keep
   // formatAuthor() in the chain to strip bibliographic brackets etc.
@@ -248,12 +247,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? formatAuthor(byline.displayName).name || byline.displayName
     : formatAuthor(book.author).name || book.author;
   const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
-  const year = book.published ? ` (${book.published})` : '';
-  // Build description front-loading title+byline+date, truncated to 155 chars for SEO
-  let description = `${title} by ${bylineLabel}${year} — read the full English translation online.`;
-  if (description.length > 155) {
-    description = `${title} by ${bylineLabel}${year}`.slice(0, 152) + '...';
+
+  // SEO/AI-O title + description rules — see src/lib/book-seo.ts.
+  // Lead with the original-language title (book.title, the catalogue/citation
+  // standard); byline is already life-date-stripped by formatAuthor.
+  const seoTitle = buildSeoTitle({ originalTitle: book.title, authorLabel: bylineLabel, year: book.published });
+  const ogTitle = seoTitle;
+  // Unique description from the real per-book summary, with an HONEST translation
+  // claim (never the old blanket "English translation" that mislabelled originals).
+  // The cached lookup (esp. the Supabase catalog fast-path) doesn't carry the
+  // summary, so the description would fall back to a template. Read the summary
+  // fields directly from Atlas when they're absent so descriptions are unique.
+  const bookRec = book as unknown as { id?: string; index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } | string };
+  let summaryText: string | null = bookRec.index?.bookSummary?.brief
+    || bookRec.reading_summary?.overview
+    || (typeof bookRec.summary === 'string' ? bookRec.summary : bookRec.summary?.data)
+    || null;
+  if (!summaryText && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const s = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        { projection: { _id: 0, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1, 'summary.data': 1 } },
+      ) as { index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } } | null;
+      summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
+    } catch { /* keep null → factual template fallback */ }
   }
+  const description = buildSeoDescription({
+    originalTitle: book.title,
+    authorLabel: bylineLabel,
+    year: book.published,
+    language: book.language,
+    summary: summaryText,
+    isFirstTranslation: book.is_first_translation,
+    pagesTranslated: book.pages_translated,
+  });
   const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
@@ -298,7 +326,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     || (pagesOcr > 0 && (pagesTranslated ?? 0) > 0);
 
   return {
-    title: `${title} - Source Library`,
+    title: seoTitle,
     description,
     ...(!shouldIndex && { robots: { index: false, follow: true } }),
     alternates: {
