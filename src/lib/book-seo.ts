@@ -23,6 +23,12 @@ const DESC_MAX = 155;
 
 const isEnglish = (language?: string | null) => (language || '').trim().toLowerCase().startsWith('english');
 
+/** Strip a trailing life-date / floruit parenthetical from a byline so the
+ *  display name reads cleanly ("Anna Maria Hussey (1805-1853)" -> "Anna Maria
+ *  Hussey"). Only removes a final paren that contains a digit, so "(ed.)" and
+ *  "(attributed)" are kept. */
+const cleanByline = (name?: string | null) => (name || '').replace(/\s*\([^)]*\d[^)]*\)\s*$/, '').trim();
+
 /** Collapse an over-long historical title to its recognisable head without
  *  cutting a word — prefers a natural break (colon, then first clause) so e.g.
  *  "Les champignons de la France : histoire, description…" -> "Les champignons de la France". */
@@ -50,7 +56,7 @@ export interface TitleInput {
 export function buildSeoTitle({ originalTitle, authorLabel, year }: TitleInput): string {
   const head = headOfTitle(originalTitle || 'Untitled');
   const yr = year ? ` (${year})` : '';
-  const author = authorLabel ? ` | ${authorLabel}` : '';
+  const author = authorLabel ? ` | ${cleanByline(authorLabel)}` : '';
   const full = `${head}${author}${yr}`;
   if (full.length <= TITLE_MAX) return full;
   const noYear = `${head}${author}`;
@@ -84,7 +90,7 @@ export function buildSeoDescription(input: DescriptionInput): string {
 
   const core = (summary && summary.trim())
     ? summary.trim()
-    : `${originalTitle}${authorLabel ? ` by ${authorLabel}` : ''}${year ? ` (${year})` : ''}.`;
+    : `${originalTitle}${authorLabel ? ` by ${cleanByline(authorLabel)}` : ''}${year ? ` (${year})` : ''}.`;
 
   const alreadySaysTranslation = /translat/i.test(core.slice(0, 60));
   let prefix = '';

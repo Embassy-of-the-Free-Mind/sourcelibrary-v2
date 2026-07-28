@@ -20,6 +20,12 @@ describe('buildSeoTitle', () => {
     expect(t.length).toBeLessThanOrEqual(62);
   });
 
+  it('strips author life-dates from the byline', () => {
+    const t = buildSeoTitle({ originalTitle: 'Kinpu', authorLabel: 'Anna Maria Hussey (1805-1853)', year: '1847' });
+    expect(t).toBe('Kinpu | Anna Maria Hussey (1847)');
+    expect(t).not.toContain('1805');
+  });
+
   it('drops the year (then the author) before it will mid-word truncate', () => {
     const t = buildSeoTitle({ originalTitle: 'Amphitheatrum Sapientiae Aeternae', authorLabel: 'Heinrich Khunrath', year: '1609' });
     expect(t.length).toBeLessThanOrEqual(62);

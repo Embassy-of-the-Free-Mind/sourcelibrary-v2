@@ -240,11 +240,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogTitle = seoTitle;
   // Unique description from the real per-book summary, with an HONEST translation
   // claim (never the old blanket "English translation" that mislabelled originals).
-  const bookRec = book as unknown as { index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } | string };
-  const summaryText = bookRec.index?.bookSummary?.brief
+  // The cached lookup (esp. the Supabase catalog fast-path) doesn't carry the
+  // summary, so the description would fall back to a template. Read the summary
+  // fields directly from Atlas when they're absent so descriptions are unique.
+  const bookRec = book as unknown as { id?: string; index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } | string };
+  let summaryText: string | null = bookRec.index?.bookSummary?.brief
     || bookRec.reading_summary?.overview
     || (typeof bookRec.summary === 'string' ? bookRec.summary : bookRec.summary?.data)
     || null;
+  if (!summaryText && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const s = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        { projection: { _id: 0, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1, 'summary.data': 1 } },
+      ) as { index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } } | null;
+      summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
+    } catch { /* keep null → factual template fallback */ }
+  }
   const description = buildSeoDescription({
     originalTitle: book.title,
     authorLabel: bylineLabel,
