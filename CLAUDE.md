@@ -229,6 +229,24 @@ The policy across the whole site (open-access posture since 2026-07-05, #2963): 
 
 **Declaration layer (separate from enforcement):** `src/app/robots.txt/route.ts` (custom route — carries the CC0 Content Signals Policy preamble and `Content-Signal: search=yes, ai-input=yes, ai-train=no` on every UA group; pinned by `tests/unit/robots-content-signals.test.ts`), `/.well-known/tdmrep.json`, the `TDM-Reservation`/`TDM-Policy` headers (`next.config.ts`) plus `tdm-reservation` meta tags (root layout), `public/llms.txt`, `/licensing` (rate card + layered legal grounds), and the `CONTENT_LICENSE` block (`src/lib/license-info.ts`) embedded in content-API JSON. Prices appear ONLY on /licensing + llms.txt + /dataset (reconciled 2026-07-23: /licensing holds the standing rate card — $250/book, $200K/yr full corpus, the invoicing basis for unlicensed use; /dataset holds the lower-priced cooperative subscription tiers delivered via the streaming API; each page states the relationship and links the other — keep all three in sync when prices change). Keep all of these consistent with the enforcement layers when the policy changes.
 
+## A metric is a claim about an instrument before it is a claim about readers
+A usage review on 2026-07-28 produced six findings; **three were instrument failures, not product facts** — and each failed *silently*, in the direction that invited a confident conclusion. Full postmortem: `.claude/handoffs/2026-07-28-instruments-lied-translation-streaming-crash.md`.
+
+- PostHog reported traffic **tripling** over a month when human traffic **fell 4×** — it was counting a headless fleet (204,270 one-hit distinct_ids in 7d; an impossible 50/50 Chrome-Windows/Chrome-Mac split). Those loads never reach `/api/track`, so the server-side classifier never sees them to label.
+- "81% of readers read a single page" was a crawler: `analytics_events.page_read` has **no bot filter and stores no user-agent**, so it cannot be classified even retroactively (#3405).
+- "Nobody shares" was a **missing button** — the book page, 72% of pageviews, rendered no share control at all (#3410).
+- "Exceptions carry no detail" was the **wrong field name**: PostHog's singular `$exception_type`/`$exception_message` are always null; the data is in the plural `$exception_types`/`$exception_values`. That mistake buried a live crash for weeks.
+
+**Before treating a number as a fact about readers, ask what would have to be true of the instrument to produce it.** Concretely:
+
+- **Compare two independent instruments before quoting either.** Mongo (bot-filtered at write time) and PostHog (not) disagreed by *direction*. Where they agreed — multi-pageview users, ~3,200 vs 4,108 — the number was trustworthy; the divergence *was* the finding.
+- **Group by path SHAPE, never exact `$pathname`.** Reader URLs are unique per page (`/book/<slug>/page/<id>`), so exact grouping scatters reader traffic over thousands of rows and buries it while `/collections/x` aggregates into one. This alone produced a wrong "the reader is unaffected" conclusion.
+- **Report rates, not counts, and exclude bot traffic from every denominator.** Collection pages looked minor by volume and were running at ~0.96 crashes per pageview. A zh-CN "audience" of 200K is one actor.
+- **A silently-dropped field is the default failure.** `/api/analytics/event` drops prop keys not on its allowlist — no error, 200 response, field simply absent later. Adding a prop without allowlisting it reproduces the bug inside its own fix.
+- **Absence of data is a claim that needs its own evidence.** 88% of crash frames read as unresolvable because **our own bot gate 403s PostHog's symbolicator** (#3422), and Googlebot "vanishing" was bucket opacity, not absent crawling.
+
+Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 applied a real remedy for the wrong failure and was closed rather than merged once the actual cause was found.
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
