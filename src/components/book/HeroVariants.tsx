@@ -38,6 +38,13 @@ export default function HeroVariants({
   // page scan covering the background.
   const onBgError = () => { if (single && bgSrc !== single) setBgSrc(single); };
 
+  // Fade + sharpen the background in once it decodes, so the load reads as
+  // deliberate rather than a hard pop. `loaded` is shared by the desktop and
+  // mobile <img>s (only one is visible per breakpoint); the ref callback also
+  // catches the already-cached case where onLoad may not fire.
+  const [loaded, setLoaded] = useState(false);
+  const markLoaded = () => setLoaded(true);
+
   // Subtle scroll parallax — the bg + tint drift slower than the page.
   const sectionRef = useRef<HTMLElement>(null);
   const [parallax, setParallax] = useState(0);
@@ -62,7 +69,17 @@ export default function HeroVariants({
   const Bg = () =>
     bgSrc ? (
       /* eslint-disable-next-line @next/next/no-img-element */
-      <img src={bgSrc} alt="" onError={onBgError} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+      <img
+        ref={(el) => { if (el?.complete) setLoaded(true); }}
+        src={bgSrc}
+        alt=""
+        onLoad={markLoaded}
+        onError={onBgError}
+        loading="eager"
+        className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-[1100ms] ease-out will-change-[opacity,filter,transform] ${
+          loaded ? 'opacity-100 blur-0 scale-100' : 'opacity-0 blur-[14px] scale-[1.06]'
+        }`}
+      />
     ) : null;
 
   return (
