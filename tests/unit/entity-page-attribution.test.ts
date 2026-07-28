@@ -14,6 +14,9 @@
  * coarse true claim instead of a precise false one. Any change that lets
  * `pages` be populated without a text hit reintroduces fabricated citations.
  */
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { describe, it, expect } from 'vitest';
 
 import {
@@ -291,4 +294,65 @@ describe('PARITY: entity-page-match .mjs vs .ts twin', () => {
         .toEqual(attributeEntityPages(name, buildPageTexts(raw)));
     }
   });
+});
+
+/**
+ * The writer set.
+ *
+ * #3361 fixed four writers of `entities.books[]`. There were five — the tenant
+ * twin of the index route was missed, and it kept doing both of the things the
+ * fix removed: crediting every page of a Gemini batch to every entity in it,
+ * and `$addToSet`-ing a whole book subdocument (which compares the entire
+ * object, so a re-index appends a SECOND entry for the same book). CLAUDE.md's
+ * remedy was "grep for the writer set before declaring one fixed"; this does
+ * that grep on every run, so a sixth writer cannot arrive unnoticed.
+ */
+describe('entities.books[] writer set', () => {
+  const WRITERS = [
+    'scripts/workers/enrich-worker.mjs',
+    'scripts/batch/batch-generate-indexes.mjs',
+    'src/app/api/entities/route.ts',
+    'src/app/api/books/[id]/index/route.ts',
+    'src/app/api/[tenant]/books/[id]/index/route.ts',
+  ];
+
+  const read = (rel: string) => readFileSync(resolve(__dirname, '../..', rel), 'utf8');
+
+  it.each(WRITERS)('%s never $addToSet a whole book subdocument', (rel) => {
+    const src = read(rel);
+    // `$addToSet: { aliases: ... }` is fine — a set of strings is what it is for.
+    // `$addToSet: { books: {...} }` is the duplication bug.
+    expect(src).not.toMatch(/\$addToSet\s*:\s*\{[^}]*\bbooks\s*:/s);
+  });
+
+  it.each(WRITERS)('%s writes one entry per book, not an appended second', (rel) => {
+    const src = read(rel);
+    // Two legitimate shapes. Incremental writers (the extractors) remove this
+    // book's entry and push a fresh one. The rebuild route accumulates into a
+    // Map keyed by book_id and $sets the whole array, so it cannot duplicate.
+    const pullPush = /\$pull\s*:\s*\{\s*books\s*:/.test(src) && /\$push\s*:\s*\{\s*books\s*:/.test(src);
+    const wholeArrayReplace = /\bbooks:\s*booksArray\b/.test(src);
+    expect(pullPush || wholeArrayReplace).toBe(true);
+  });
+
+  it.each(WRITERS)('%s never claims a page it did not verify', (rel) => {
+    const src = read(rel);
+    // Extractors verify a name against that page's text via the shared matcher.
+    // The rebuild route has no page text — it carries the precision marker
+    // forward and normalizeEntityBook demotes any legacy row that lacks one,
+    // so it can't launder smeared pages back into citations either.
+    const verifies = src.includes('attributeEntityPages');
+    const carriesPrecision = src.includes('normalizeEntityBook');
+    expect(verifies || carriesPrecision).toBe(true);
+  });
+
+  it.each(WRITERS.filter(w => !w.includes('batch-generate')))(
+    '%s derives counters from the deduped array',
+    (rel) => {
+      // total_mentions must count VERIFIED references and book_count DISTINCT
+      // books; summing raw page-array lengths over duplicated entries is how one
+      // entity advertised "10,700 total mentions" of smeared page slots.
+      expect(read(rel)).toContain('entityCounters');
+    },
+  );
 });
