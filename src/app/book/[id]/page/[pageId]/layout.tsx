@@ -1,11 +1,11 @@
-import { cache } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
-import { Book, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+// `cache()`d in its own module: generateMetadata, the shell below, and the
+// (reader) group layout's visibility gate all read it, so one round trip
+// serves the whole request.
+import { getPageData } from './page-data';
 
 export const preferredRegion = 'fra1';
 
@@ -13,42 +13,6 @@ interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{ id: string; pageId: string }>;
 }
-
-// Only fetch the fields needed for metadata — skip index, reading_summary, etc.
-const BOOK_META_PROJECTION = {
-  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
-};
-const PAGE_META_PROJECTION = {
-  _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
-  'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
-};
-
-// `cache()`d because both generateMetadata and the layout shell below read it;
-// without it a reader page would issue this book+page lookup twice per request.
-const getPageData = cache(async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
-  try {
-    const db = await getReadDb();
-    const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId),
-      db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
-    ]);
-
-    const book = (bookResult?.book ?? null) as unknown as Book | null;
-    if (book && page) {
-      const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
-      if ((page as any).book_id && (page as any).book_id !== scopedBookId) {
-        return { book: null, page: null };
-      }
-    }
-
-    return {
-      book,
-      page: page as unknown as Page | null,
-    };
-  } catch {
-    return { book: null, page: null };
-  }
-});
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { id, pageId } = await params;
@@ -136,10 +100,12 @@ export default async function PageLayout({ children, params }: LayoutProps) {
   //
   // The condition is deliberately a strict SUBSET of page.tsx's four notFound()
   // cases: missing page, missing book, and (inside getPageData) a page whose
-  // book_id doesn't match the book in the URL. The hidden-book gate stays in
-  // page.tsx alone — `findBookByIdOrSlug` does not filter on visibility, so the
-  // editor preview route (page/[pageId]/preview, allowHidden) still renders
-  // hidden books through this layout exactly as before.
+  // book_id doesn't match the book in the URL. The hidden-book gate CANNOT live
+  // here — this layout also wraps page/[pageId]/preview, the auth-gated editor
+  // route that renders hidden books on purpose (allowHidden), and a layout gets
+  // no signal about which child segment is rendering. It lives one level down in
+  // (reader)/layout.tsx, a URL-neutral route group that /preview sits outside
+  // of (#3385).
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
