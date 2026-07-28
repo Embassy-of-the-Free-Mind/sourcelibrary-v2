@@ -433,6 +433,22 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+/* Smooth open/close for <details> dropdowns (progressive enhancement:
+ * animates in browsers that support ::details-content + interpolate-size,
+ * and is an instant show/hide everywhere else). Scoped to the dropdowns so
+ * keyword-size interpolation doesn't leak into the rest of the app. */
+details.sl-collapse {
+  interpolate-size: allow-keywords;
+}
+details.sl-collapse::details-content {
+  height: 0;
+  overflow: clip;
+  transition: height 0.32s ease, content-visibility 0.32s ease allow-discrete;
+}
+details.sl-collapse[open]::details-content {
+  height: auto;
+}
+
 /* Scrollbars: use the platform-native overlay scrollbar so it auto-hides and
  * only appears while scrolling (normal macOS behavior). Defining custom
  * ::-webkit-scrollbar rules opts out of the overlay/auto-hide and forces an
