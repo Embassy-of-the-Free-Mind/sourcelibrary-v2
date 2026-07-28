@@ -75,7 +75,7 @@ export async function checkAlignment(pages, { hashUrl, sourceUrlFor, isUsableSou
   // inserted or dropped by some providers.
   const usable = (candidates ?? pages).filter(p =>
     isUsableSource(p) && isUsableArchive(p.archived_photo) && p.page_number >= 2);
-  if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages' };
+  if (usable.length < 2) return { verdict: 'unknown', detail: 'too-few-usable-pages', votes: { aligned: 0, shift: 0, checked: 0 } };
 
   const byNum = new Map(pages.map(p => [p.page_number, p]));
   const picks = [];
@@ -98,10 +98,16 @@ export async function checkAlignment(pages, { hashUrl, sourceUrlFor, isUsableSou
     } catch { /* count as no-vote */ }
   }
 
-  if (checked === 0) return { verdict: 'unknown', detail: 'all-hash-fetches-failed' };
-  if (alignedVotes === checked) return { verdict: 'aligned', detail: `${alignedVotes}/${checked}` };
-  if (shiftVotes === checked) return { verdict: 'shift+1', offset: 1, detail: `${shiftVotes}/${checked}` };
-  return { verdict: 'ambiguous', detail: `aligned=${alignedVotes} shift=${shiftVotes} of ${checked}` };
+  // Callers get the raw votes, not just the verdict. The verdict demands
+  // unanimity, which is right for reporting but too brittle to gate a repair on:
+  // one flaky fetch turns a genuine shift+1 into `ambiguous` and the book is
+  // skipped. A repair caller can safely act on "some samples say shifted and
+  // NONE say aligned" — see repair-bulk-jp2-offset.mjs.
+  const votes = { aligned: alignedVotes, shift: shiftVotes, checked };
+  if (checked === 0) return { verdict: 'unknown', detail: 'all-hash-fetches-failed', votes };
+  if (alignedVotes === checked) return { verdict: 'aligned', detail: `${alignedVotes}/${checked}`, votes };
+  if (shiftVotes === checked) return { verdict: 'shift+1', offset: 1, detail: `${shiftVotes}/${checked}`, votes };
+  return { verdict: 'ambiguous', detail: `aligned=${alignedVotes} shift=${shiftVotes} of ${checked}`, votes };
 }
 
 /**

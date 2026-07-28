@@ -45,10 +45,14 @@ const REPO_ROOT = resolve(__dirname, '../..');
 dotenv.config({ path: resolve(REPO_ROOT, '.env.production.local') });
 
 const args = process.argv.slice(2);
+const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
 const APPLY = args.includes('--apply');
 const VERIFY_ONLY = args.includes('--verify-only');
+const FROM_AUDIT = flag('from-audit');       // JSONL from scripts/audit/bulk-archive-alignment.mjs
 const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a), []);
-const CONCURRENCY = 4;
+// Page fetches per book, against archive.org. Kept modest deliberately: this
+// sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
+const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '6'), 10));
 
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 const s3 = new S3Client({
@@ -71,10 +75,27 @@ const thumbnail = u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:12/');
 // Repair at a generous width; the archive is the full-res master the variants derive from.
 const fullRes = u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:100/');
 
-async function fetchBuf(url) {
-  const r = await fetch(url, { signal: AbortSignal.timeout(90_000) });
-  if (!r.ok) throw new Error(`http ${r.status}`);
-  return Buffer.from(await r.arrayBuffer());
+/**
+ * Fetch with backoff. A dropped page here is not cosmetic: it leaves ONE page
+ * of a book still holding its neighbour's scan, which is the exact defect we
+ * are repairing and is invisible afterwards. Retry rather than skip.
+ */
+async function fetchBuf(url, attempts = 4) {
+  let last;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const r = await fetch(url, { signal: AbortSignal.timeout(90_000) });
+      if (r.ok) return Buffer.from(await r.arrayBuffer());
+      last = new Error(`http ${r.status}`);
+      // Back off hard on rate limiting; 4xx other than 429 will not improve with retries.
+      if (r.status !== 429 && r.status < 500) throw last;
+    } catch (err) {
+      last = err;
+      if (err.message?.startsWith('http 4') && !err.message.includes('429')) throw err;
+    }
+    await new Promise(r => setTimeout(r, 1500 * 2 ** i));
+  }
+  throw last;
 }
 const hashUrl = async url => hashBuffer(await fetchBuf(url));
 
@@ -129,8 +150,16 @@ async function repairBook(db, bookId) {
     candidates: bulk,
   });
   console.log(`  pre-check: ${before.verdict} (${before.detail})`);
-  if (before.verdict !== 'shift+1') {
-    return console.log('  [REFUSE] not shift+1 — nothing to repair, and rewriting could cause harm');
+  // Gate on VOTES, not the verdict. The verdict wants unanimity, so one flaky
+  // archive.org fetch demotes a genuine shift+1 to `ambiguous` and the book is
+  // skipped — Magni Hippocratis (998 damaged pages, the worst in the corpus) was
+  // refused exactly this way on the first batch run. Requiring >=2 shift votes
+  // and ZERO aligned votes is still strictly safe: no sample said the archive
+  // was correct, so there is nothing to preserve by declining.
+  const v = before.votes || { aligned: 0, shift: 0, checked: 0 };
+  const shiftedEnough = v.shift >= 2 && v.aligned === 0;
+  if (!shiftedEnough) {
+    return console.log(`  [REFUSE] insufficient evidence of a shift (aligned=${v.aligned} shift=${v.shift} of ${v.checked}) — declining rather than risk rewriting a correct book`);
   }
 
   // Gate 2 — the independent witness must exist (see header).
@@ -205,10 +234,46 @@ async function recordOutcome(db, book, bulk, after, split, failed) {
 
 const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI not set'); process.exit(1); }
-if (!BOOKS.length) { console.error('pass at least one --book <id>'); process.exit(1); }
+
+let queue = BOOKS;
+if (FROM_AUDIT) {
+  const fs = await import('fs');
+  const rows = fs.readFileSync(FROM_AUDIT, 'utf8').trim().split('\n').map(l => JSON.parse(l));
+  // Only severity high/partial: those have pre-archival pages, i.e. the
+  // independent witness that says the archive is the wrong side. `none` books
+  // are shifted but self-consistent — repairing them would CREATE a defect.
+  queue = rows.filter(r => r.severity === 'high' || r.severity === 'partial').map(r => r.book_id);
+  // Worst first, so the most-read damage is fixed earliest.
+  const rank = new Map(rows.map(r => [r.book_id, r.reader_visible_pages || 0]));
+  queue.sort((a, b) => rank.get(b) - rank.get(a));
+  console.log(`from-audit: ${queue.length} books with severity high/partial`);
+}
+if (!queue.length) { console.error('nothing to do — pass --book <id> or --from-audit <jsonl>'); process.exit(1); }
+
 const client = new MongoClient(uri);
 await client.connect();
 const db = client.db('bookstore');
-console.log(APPLY ? '*** APPLY MODE — writing to R2 ***' : '--- dry run ---');
-for (const b of BOOKS) await repairBook(db, b);
+
+// Resume: skip books already repaired and verified in an earlier run.
+if (FROM_AUDIT && APPLY) {
+  const already = await db.collection('books').find(
+    { 'archive_metadata.jp2_offset_repaired': true },
+    { projection: { _id: 1 } },
+  ).toArray();
+  const doneIds = new Set(already.map(b => String(b._id)));
+  const before = queue.length;
+  queue = queue.filter(id => !doneIds.has(id));
+  if (before !== queue.length) console.log(`resume: skipping ${before - queue.length} already repaired`);
+}
+
+console.log(APPLY ? `*** APPLY MODE — writing to R2 *** (${queue.length} books, page concurrency ${CONCURRENCY})` : '--- dry run ---');
+let n = 0;
+for (const b of queue) {
+  n++;
+  console.log(`\n[book ${n}/${queue.length}]`);
+  try { await repairBook(db, b); }
+  catch (err) { console.log(`  [ERR] ${b}: ${err.message?.slice(0, 120)}`); }
+}
 await client.close();
+console.log('\nDONE. Purge Cloudflare so readers stop seeing pre-repair scans:');
+console.log(`  curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" --data '{"purge_everything":true}'`);
