@@ -58,8 +58,8 @@ function tileSourceFor(m: DeepZoomManifest): any {
 const FOCUS_PADDING = 0.06;
 
 /**
- * Frame a normalized sub-region of the master, padded. Returns false when there
- * is nothing to focus, so callers can fall back to the whole-image home view.
+ * The focused region as an OSD viewport rectangle, padded — or null when there
+ * is nothing to focus (whole-page usage, e.g. ArtworkHero).
  *
  * Converts via `imageToViewportRectangle` with PIXEL coordinates rather than by
  * hand: OSD's viewport is normalized by image WIDTH, so feeding it normalized
@@ -68,6 +68,29 @@ const FOCUS_PADDING = 0.06;
  * Module-level and pure so the viewer effect can call it without taking a
  * changing function identity as a dependency.
  */
+function focusRect(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any | null {
+  if (!bounds || !viewer?.viewport || !OpenSeadragon?.Rect) return null;
+  const padX = bounds.width * FOCUS_PADDING;
+  const padY = bounds.height * FOCUS_PADDING;
+  return viewer.viewport.imageToViewportRectangle(
+    new OpenSeadragon.Rect(
+      Math.max(0, bounds.x - padX) * manifest.width,
+      Math.max(0, bounds.y - padY) * manifest.height,
+      Math.min(1, bounds.width + padX * 2) * manifest.width,
+      Math.min(1, bounds.height + padY * 2) * manifest.height,
+    ),
+  );
+}
+
+/** Frame the focused region. False when there was nothing to focus. */
 function fitToBounds(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   viewer: any,
@@ -77,19 +100,54 @@ function fitToBounds(
   manifest: DeepZoomManifest,
   immediate: boolean,
 ): boolean {
-  if (!bounds || !viewer?.viewport || !OpenSeadragon?.Rect) return false;
-  const padX = bounds.width * FOCUS_PADDING;
-  const padY = bounds.height * FOCUS_PADDING;
-  const rect = viewer.viewport.imageToViewportRectangle(
-    new OpenSeadragon.Rect(
-      Math.max(0, bounds.x - padX) * manifest.width,
-      Math.max(0, bounds.y - padY) * manifest.height,
-      Math.min(1, bounds.width + padX * 2) * manifest.width,
-      Math.min(1, bounds.height + padY * 2) * manifest.height,
-    ),
-  );
+  const rect = focusRect(viewer, OpenSeadragon, bounds, manifest);
+  if (!rect) return false;
   viewer.viewport.fitBounds(rect, immediate);
   return true;
+}
+
+/**
+ * Keep the visible viewport inside the focused region.
+ *
+ * Pinning `minZoomLevel` alone is not enough: at the minimum zoom the viewport
+ * is exactly the size of the illustration, but nothing stops the reader panning
+ * that window across the rest of the page scan. The tile source is the whole
+ * PAGE (pyramids are built per page, never per illustration — see
+ * `deepzoom-tile-pages.mjs`), so without this the surrounding text is reachable.
+ *
+ * Pans rather than fits, so clamping can never alter the zoom and start a
+ * feedback loop with the zoom constraint.
+ */
+function clampPanToFocus(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+): void {
+  const rect = focusRect(viewer, OpenSeadragon, bounds, manifest);
+  if (!rect) return;
+  const vp = viewer.viewport;
+  const view = vp.getBounds();
+
+  // Allowed centre range per axis. When the view is wider than the region there
+  // is no room to move, so centre it.
+  const axis = (viewStart: number, viewSize: number, regionStart: number, regionSize: number) => {
+    const half = Math.min(viewSize, regionSize) / 2;
+    const lo = regionStart + half;
+    const hi = regionStart + regionSize - half;
+    const centre = viewStart + viewSize / 2;
+    if (lo > hi) return regionStart + regionSize / 2;
+    return Math.min(Math.max(centre, lo), hi);
+  };
+
+  const cx = axis(view.x, view.width, rect.x, rect.width);
+  const cy = axis(view.y, view.height, rect.y, rect.height);
+  const centre = vp.getCenter(true);
+  // Sub-pixel drift would thrash panTo on every frame.
+  if (Math.abs(cx - centre.x) < 1e-6 && Math.abs(cy - centre.y) < 1e-6) return;
+  vp.panTo(new OpenSeadragon.Point(cx, cy), true);
 }
 
 export default function DeepZoomOverlay({
@@ -152,7 +210,26 @@ export default function DeepZoomOverlay({
           if (disposed) return;
           // Frame the region before the first paint (immediate = no fly-in from
           // the whole page), so the gallery lands on the illustration.
-          fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true);
+          if (fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true)) {
+            // The illustration is now the OUTERMOST view: the pyramid covers the
+            // whole page scan, and without a floor the reader could zoom out to
+            // the surrounding text. `minZoomLevel` wins over `minZoomImageRatio`
+            // in OSD's getMinZoom(), so this supersedes the 0.8 set above.
+            viewer.viewport.minZoomLevel = viewer.viewport.getZoom(true);
+            viewer.addHandler('viewport-change', () => {
+              if (disposed) return;
+              clampPanToFocus(viewer, OpenSeadragon, boundsRef.current, manifest);
+            });
+            // The floor is an absolute zoom value, so a viewport resize would
+            // leave it stale (the region no longer fits at the old zoom).
+            viewer.addHandler('resize', () => {
+              if (disposed) return;
+              viewer.viewport.minZoomLevel = null;
+              if (fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true)) {
+                viewer.viewport.minZoomLevel = viewer.viewport.getZoom(true);
+              }
+            });
+          }
           setReady(true);
         });
         viewer.addHandler('open-failed', () => !disposed && setFailed(true));
