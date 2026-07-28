@@ -78,7 +78,7 @@ const db = client.db('bookstore');
  * one after 250 books, losing nothing but needing a manual resume. Only retries
  * transient transport errors; a genuine write error still throws.
  */
-async function withRetry(label, fn, attempts = 5) {
+async function withRetry(label, fn, attempts = 10) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
@@ -86,9 +86,15 @@ async function withRetry(label, fn, attempts = 5) {
     } catch (err) {
       lastErr = err;
       const msg = String(err?.message || err);
-      const transient = /ECONNRESET|ETIMEDOUT|EPIPE|socket hang up|connection .* closed|MongoNetworkError|not primary|PoolClearedError/i.test(msg);
+      // Includes DNS failures: a laptop that sleeps mid-run wakes to
+      // `getaddrinfo ENOTFOUND <shard>.mongodb.net`, which killed the overnight
+      // pass at 08:50 even though the connection recovered moments later.
+      const transient = /ECONNRESET|ETIMEDOUT|EPIPE|ECONNREFUSED|ENOTFOUND|EAI_AGAIN|getaddrinfo|socket hang up|connection .* closed|MongoNetworkError|ServerSelection|topology|not primary|PoolClearedError/i.test(msg);
       if (!transient || i === attempts - 1) throw err;
-      const backoffMs = 1000 * 2 ** i;
+      // Cap the backoff so ten attempts span ~8 minutes of outage tolerance —
+      // enough to ride out a sleep/wake or a WiFi handover, not so long that a
+      // genuinely dead connection stalls the run for an hour.
+      const backoffMs = Math.min(60_000, 1000 * 2 ** i);
       console.warn(`  transient error on ${label} (attempt ${i + 1}/${attempts}): ${msg.slice(0, 120)} — retrying in ${backoffMs}ms`);
       stats.transientRetries++;
       await new Promise(r => setTimeout(r, backoffMs));
@@ -120,16 +126,50 @@ const logProgress = (row) => {
   fs.appendFileSync(PROGRESS_FILE, JSON.stringify(row) + '\n');
 };
 
-const bookFilter = ONLY_BOOK
-  ? { id: ONLY_BOOK }
-  : { index: { $exists: true }, ...(RESUME_FROM ? { id: { $gt: RESUME_FROM } } : {}) };
+/**
+ * Book iteration is KEYSET PAGINATION, not a cursor.
+ *
+ * A single `find().sort({id:1})` cursor over 19.6K books dies mid-sweep with
+ * `CursorNotFound` (code 43): each fetched batch takes far longer than Mongo's
+ * 10-minute cursor idle timeout to process (~3s per book × a batch of hundreds),
+ * so the server reaps it while we're still working through the batch. Killing the
+ * run after ~1,900 books. `noCursorTimeout` would paper over it by leaking a
+ * server-side cursor for hours; fetching one page of ids at a time removes the
+ * long-lived cursor entirely and reuses the same `id > last` ordering that
+ * `--resume-from` already relies on.
+ */
+const BOOK_PAGE_SIZE = Number(getArg('--page-size') || 200);
 
-const bookCursor = db.collection('books')
-  .find(bookFilter, { projection: { id: 1, title: 1, display_title: 1 } })
-  .sort({ id: 1 });
+async function* iterateBooks() {
+  if (ONLY_BOOK) {
+    const one = await db.collection('books').findOne(
+      { id: ONLY_BOOK },
+      { projection: { id: 1, title: 1, display_title: 1 } }
+    );
+    if (one) yield one;
+    return;
+  }
+
+  let after = RESUME_FROM || null;
+  for (;;) {
+    const page = await withRetry(`page of books after ${after ?? 'start'}`, () =>
+      db.collection('books')
+        .find(
+          { index: { $exists: true }, ...(after ? { id: { $gt: after } } : {}) },
+          { projection: { id: 1, title: 1, display_title: 1 } }
+        )
+        .sort({ id: 1 })
+        .limit(BOOK_PAGE_SIZE)
+        .toArray()
+    );
+    if (page.length === 0) return;
+    for (const b of page) yield b;
+    after = page[page.length - 1].id;
+  }
+}
 
 let processed = 0;
-for await (const book of bookCursor) {
+for await (const book of iterateBooks()) {
   if (LIMIT && processed >= LIMIT) break;
   processed++;
   stats.booksScanned++;

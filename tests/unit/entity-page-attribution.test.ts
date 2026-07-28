@@ -14,6 +14,9 @@
  * coarse true claim instead of a precise false one. Any change that lets
  * `pages` be populated without a text hit reintroduces fabricated citations.
  */
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { describe, it, expect } from 'vitest';
 
 import {
@@ -25,6 +28,13 @@ import {
   dedupeEntityBooks,
   entityCounters,
 } from '../../scripts/lib/entity-page-match.mjs';
+import {
+  normalizeForMatch as normalizeTs,
+  buildEntityMatcher as buildMatcherTs,
+  pageMatchesEntity as pageMatchesTs,
+  attributeEntityPages as attributeTs,
+  buildPageTexts as buildPageTextsTs,
+} from '../../src/lib/entity-page-match';
 import {
   dedupeEntityBooks as dedupeTs,
   entityCounters as countersTs,
@@ -221,4 +231,128 @@ describe('PARITY: scripts/lib/entity-page-match.mjs vs src/lib/entity-books.ts',
   it.each(FIXTURES.map((f, i) => [i, f] as const))('fixture %i counts identically', (_i, fixture) => {
     expect(countersTs(fixture)).toEqual(entityCounters(fixture));
   });
+});
+
+
+describe('PARITY: entity-page-match .mjs vs .ts twin', () => {
+  // The batch writers use the .mjs; the /api/books/[id]/index route (a fourth
+  // writer of this same index) uses the .ts. If they drift, one writer starts
+  // attributing pages the other would reject.
+  const NAMES = [
+    'Matthiolus',
+    'Saint Perpetua',
+    'James Smart',
+    'Marcus Aurelius Antoninus',
+    'Job',
+    'Papus (Gérard Encausse)',
+    'Johannes Trithemius',
+    '',
+  ];
+  const TEXTS = [
+    'cuius exactissimus explanator est Matthiolus, huic Fuchsius',
+    'octaue of saint stephen and the passion of Perpetua',
+    'are smartly uibrated against the medium of our sight',
+    'nato duno lucio cesare & di aurelia romani',
+    'pseudonym of gerard encausse, a leading figure',
+    'Iohannes Trithemius abbas Spanheimensis',
+    'the book of Job',
+  ];
+
+  it.each(NAMES)('normalizeForMatch agrees for %j', (n) => {
+    expect(normalizeTs(n)).toBe(normalizeForMatch(n));
+  });
+
+  it.each(TEXTS)('normalizeForMatch agrees on page text %j', (t) => {
+    expect(normalizeTs(t)).toBe(normalizeForMatch(t));
+  });
+
+  it('pageMatchesEntity agrees across every name × text pair', () => {
+    for (const name of NAMES) {
+      const mjs = buildEntityMatcher(name);
+      const ts = buildMatcherTs(name);
+      expect(ts.stems.slice().sort()).toEqual(mjs.stems.slice().sort());
+      expect(ts.patterns.map(String).sort()).toEqual(mjs.patterns.map(String).sort());
+      for (const text of TEXTS) {
+        const norm = normalizeForMatch(text);
+        expect(
+          pageMatchesTs(ts, norm),
+          `${name} vs ${text}`
+        ).toBe(pageMatchesEntity(mjs, norm));
+      }
+    }
+  });
+
+  it('attributeEntityPages agrees, including the section fallback', () => {
+    const raw = [
+      { page_number: 47, ocr: { data: 'de arte medica nihil' }, translation: { data: '' } },
+      { page_number: 48, ocr: { data: 'explanator est Matthiolus' }, translation: { data: '' } },
+      { page_number: 49, ocr: { data: 'sequitur Fuchsius' }, translation: { data: '' } },
+    ];
+    expect(buildPageTextsTs(raw)).toEqual(buildPageTexts(raw));
+    for (const name of ['Matthiolus', 'Paracelsus', 'Job']) {
+      expect(attributeTs(name, buildPageTextsTs(raw)))
+        .toEqual(attributeEntityPages(name, buildPageTexts(raw)));
+    }
+  });
+});
+
+/**
+ * The writer set.
+ *
+ * #3361 fixed four writers of `entities.books[]`. There were five — the tenant
+ * twin of the index route was missed, and it kept doing both of the things the
+ * fix removed: crediting every page of a Gemini batch to every entity in it,
+ * and `$addToSet`-ing a whole book subdocument (which compares the entire
+ * object, so a re-index appends a SECOND entry for the same book). CLAUDE.md's
+ * remedy was "grep for the writer set before declaring one fixed"; this does
+ * that grep on every run, so a sixth writer cannot arrive unnoticed.
+ */
+describe('entities.books[] writer set', () => {
+  const WRITERS = [
+    'scripts/workers/enrich-worker.mjs',
+    'scripts/batch/batch-generate-indexes.mjs',
+    'src/app/api/entities/route.ts',
+    'src/app/api/books/[id]/index/route.ts',
+    'src/app/api/[tenant]/books/[id]/index/route.ts',
+  ];
+
+  const read = (rel: string) => readFileSync(resolve(__dirname, '../..', rel), 'utf8');
+
+  it.each(WRITERS)('%s never $addToSet a whole book subdocument', (rel) => {
+    const src = read(rel);
+    // `$addToSet: { aliases: ... }` is fine — a set of strings is what it is for.
+    // `$addToSet: { books: {...} }` is the duplication bug.
+    expect(src).not.toMatch(/\$addToSet\s*:\s*\{[^}]*\bbooks\s*:/s);
+  });
+
+  it.each(WRITERS)('%s writes one entry per book, not an appended second', (rel) => {
+    const src = read(rel);
+    // Two legitimate shapes. Incremental writers (the extractors) remove this
+    // book's entry and push a fresh one. The rebuild route accumulates into a
+    // Map keyed by book_id and $sets the whole array, so it cannot duplicate.
+    const pullPush = /\$pull\s*:\s*\{\s*books\s*:/.test(src) && /\$push\s*:\s*\{\s*books\s*:/.test(src);
+    const wholeArrayReplace = /\bbooks:\s*booksArray\b/.test(src);
+    expect(pullPush || wholeArrayReplace).toBe(true);
+  });
+
+  it.each(WRITERS)('%s never claims a page it did not verify', (rel) => {
+    const src = read(rel);
+    // Extractors verify a name against that page's text via the shared matcher.
+    // The rebuild route has no page text — it carries the precision marker
+    // forward and normalizeEntityBook demotes any legacy row that lacks one,
+    // so it can't launder smeared pages back into citations either.
+    const verifies = src.includes('attributeEntityPages');
+    const carriesPrecision = src.includes('normalizeEntityBook');
+    expect(verifies || carriesPrecision).toBe(true);
+  });
+
+  it.each(WRITERS.filter(w => !w.includes('batch-generate')))(
+    '%s derives counters from the deduped array',
+    (rel) => {
+      // total_mentions must count VERIFIED references and book_count DISTINCT
+      // books; summing raw page-array lengths over duplicated entries is how one
+      // entity advertised "10,700 total mentions" of smeared page slots.
+      expect(read(rel)).toContain('entityCounters');
+    },
+  );
 });

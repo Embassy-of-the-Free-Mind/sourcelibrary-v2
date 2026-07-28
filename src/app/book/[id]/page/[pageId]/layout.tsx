@@ -1,49 +1,17 @@
 import { Metadata } from 'next';
-import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { notFound } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
-import { Book, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+// `cache()`d in its own module: generateMetadata, the shell below, and the
+// (reader) group layout's visibility gate all read it, so one round trip
+// serves the whole request.
+import { getPageData } from './page-data';
 
 export const preferredRegion = 'fra1';
 
 interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{ id: string; pageId: string }>;
-}
-
-// Only fetch the fields needed for metadata — skip index, reading_summary, etc.
-const BOOK_META_PROJECTION = {
-  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
-};
-const PAGE_META_PROJECTION = {
-  _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
-  'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
-};
-
-async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
-  try {
-    const db = await getReadDb();
-    const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId),
-      db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
-    ]);
-
-    const book = (bookResult?.book ?? null) as unknown as Book | null;
-    if (book && page) {
-      const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
-      if ((page as any).book_id && (page as any).book_id !== scopedBookId) {
-        return { book: null, page: null };
-      }
-    }
-
-    return {
-      book,
-      page: page as unknown as Page | null,
-    };
-  } catch {
-    return { book: null, page: null };
-  }
 }
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
@@ -116,6 +84,32 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default async function PageLayout({ children }: LayoutProps) {
+export default async function PageLayout({ children, params }: LayoutProps) {
+  // Resolve existence HERE, in the shell, rather than leaving it to page.tsx.
+  //
+  // This segment has a loading.tsx and deliberately keeps it — the reader is
+  // the one route where the skeleton earns its place, on every page turn. But
+  // a loading.tsx wraps its page.tsx in an automatic <Suspense>, so Next.js
+  // flushes the 200 shell the moment the page's data fetch suspends, before
+  // page.tsx's notFound() runs. The status is committed by then and notFound()
+  // can only swap the body — the soft-404 documented in CLAUDE.md and fixed on
+  // sibling routes in #3277 and #3376.
+  //
+  // A layout sits ABOVE that boundary, so awaiting here still sets a real 404
+  // and the skeleton is untouched.
+  //
+  // The condition is deliberately a strict SUBSET of page.tsx's four notFound()
+  // cases: missing page, missing book, and (inside getPageData) a page whose
+  // book_id doesn't match the book in the URL. The hidden-book gate CANNOT live
+  // here — this layout also wraps page/[pageId]/preview, the auth-gated editor
+  // route that renders hidden books on purpose (allowHidden), and a layout gets
+  // no signal about which child segment is rendering. It lives one level down in
+  // (reader)/layout.tsx, a URL-neutral route group that /preview sits outside
+  // of (#3385).
+  const { id, pageId } = await params;
+  const ctx = await getTenantContext();
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  if (!book || !page) notFound();
+
   return children;
 }

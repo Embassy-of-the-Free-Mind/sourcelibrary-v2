@@ -933,6 +933,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                         {suggestions.map((suggestion) => (
                           <button
                             key={suggestion}
+                            // Stable hook for e2e: the chip SET is redrawn twice
+                            // after first paint (see pickSuggestions), so tests
+                            // cannot locate a chip by its wording (#3358).
+                            data-testid="suggestion-chip"
                             onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}
                             className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-[#f5f0e8] hover:text-[#444] transition-colors font-sans"
                           >

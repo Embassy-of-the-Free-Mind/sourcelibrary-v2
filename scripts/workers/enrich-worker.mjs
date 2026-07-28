@@ -42,6 +42,7 @@ import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
+import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
 // Empty {} in normal operation so the full enrich queue is unaffected.
@@ -186,55 +187,6 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
 const EMBED_MODEL = 'gemini-embedding-2-preview';
 const EMBED_DIMS = 768;
 
-function composeBookEmbeddingText(book, indexData) {
-  const parts = [];
-  parts.push(`${book.display_title || book.title || 'Untitled'} by ${book.author || 'Unknown'}`);
-  if (book.language) parts.push(`Language: ${book.language}`);
-  if (book.published) parts.push(`Published: ${book.published}`);
-
-  if (indexData?.bookSummary?.detailed) {
-    parts.push(indexData.bookSummary.detailed);
-  } else if (indexData?.bookSummary?.brief) {
-    parts.push(indexData.bookSummary.brief);
-  }
-
-  if (indexData?.sectionSummaries?.length > 0) {
-    const sections = indexData.sectionSummaries.map(s => s.title || s.summary).filter(Boolean).slice(0, 15);
-    if (sections.length > 0) parts.push(`Chapters: ${sections.join('; ')}`);
-  }
-
-  if (indexData?.entries?.length > 0) {
-    const terms = indexData.entries
-      .sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0))
-      .slice(0, 50).map(e => e.term);
-    parts.push(`Topics: ${terms.join(', ')}`);
-  }
-
-  if (indexData?.people?.length > 0) parts.push(`People: ${indexData.people.slice(0, 30).map(p => p.name).join(', ')}`);
-  if (indexData?.places?.length > 0) parts.push(`Places: ${indexData.places.slice(0, 20).map(p => p.name).join(', ')}`);
-  if (indexData?.concepts?.length > 0) parts.push(`Concepts: ${indexData.concepts.slice(0, 30).map(c => c.name).join(', ')}`);
-
-  if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
-
-  // Artwork-specific metadata
-  if (book.content_type === 'artwork') {
-    if (book.commons_description) parts.push(book.commons_description.slice(0, 500));
-    if (book.commons_categories) {
-      const cats = typeof book.commons_categories === 'string'
-        ? book.commons_categories.split('|').map(c => c.trim()).filter(Boolean).slice(0, 20)
-        : Array.isArray(book.commons_categories) ? book.commons_categories.slice(0, 20) : [];
-      if (cats.length > 0) parts.push(`Subjects: ${cats.join(', ')}`);
-    }
-    if (book.resource_type) parts.push(`Medium: ${book.resource_type}`);
-    if (book.medium) parts.push(`Material: ${book.medium}`);
-    if (book.collections?.length > 0) {
-      const collNames = book.collections.filter(c => c !== 'visual-art').map(c => c.replace(/-/g, ' '));
-      if (collNames.length > 0) parts.push(`Collections: ${collNames.join(', ')}`);
-    }
-  }
-
-  return parts.join('\n').slice(0, 8000);
-}
 
 async function upsertBookEmbedding(book, indexData) {
   if (!supabaseClient) return;
