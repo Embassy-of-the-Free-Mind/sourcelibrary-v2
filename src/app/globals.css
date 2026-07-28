@@ -823,3 +823,23 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 .hymn-now * {
   fill: var(--accent-rust) !important;
 }
+
+/* ── Section reveal-in (book page) ────────────────────────────────────────────
+   Sections fade + rise as they scroll into view. Pure CSS via a scroll-driven
+   view() timeline — no JS, no IntersectionObserver, no hydration flash.
+   Guarded by @supports so browsers without scroll-driven animations (and users
+   who prefer reduced motion) simply see the content in place, never hidden.
+   Content already in view on load resolves to the animation's end state. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-in {
+      animation: reveal-in-kf linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 36%;
+    }
+  }
+}
+@keyframes reveal-in-kf {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

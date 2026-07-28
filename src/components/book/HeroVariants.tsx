@@ -38,6 +38,17 @@ export default function HeroVariants({
   // page scan covering the background.
   const onBgError = () => { if (single && bgSrc !== single) setBgSrc(single); };
 
+  // Fade + focus the background in once it decodes, so the load reads as
+  // deliberate rather than a hard pop. Because warmed books load the mosaic
+  // straight from R2 (often instantly / from cache), we must PAINT the blurred
+  // state for a couple frames first — otherwise React flips to the sharp state
+  // in the same tick and the transition never plays. Two rAFs guarantee at
+  // least one painted frame in the blurred state before we resolve.
+  const [revealed, setRevealed] = useState(false);
+  const reveal = () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => setRevealed(true)));
+  };
+
   // Subtle scroll parallax — the bg + tint drift slower than the page.
   const sectionRef = useRef<HTMLElement>(null);
   const [parallax, setParallax] = useState(0);
@@ -62,7 +73,17 @@ export default function HeroVariants({
   const Bg = () =>
     bgSrc ? (
       /* eslint-disable-next-line @next/next/no-img-element */
-      <img src={bgSrc} alt="" onError={onBgError} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+      <img
+        ref={(el) => { if (el?.complete) reveal(); }}
+        src={bgSrc}
+        alt=""
+        onLoad={reveal}
+        onError={onBgError}
+        loading="eager"
+        className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-[1600ms] delay-150 ease-out will-change-[opacity,filter,transform] ${
+          revealed ? 'opacity-100 blur-0 scale-100' : 'opacity-0 blur-[26px] scale-[1.10]'
+        }`}
+      />
     ) : null;
 
   return (

@@ -8,6 +8,7 @@ import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
 import { type PageImageFields } from '@/lib/page-image-url';
+import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
 
 /**
  * GET /api/books/[id]/hero-mosaic
@@ -21,7 +22,7 @@ import { type PageImageFields } from '@/lib/page-image-url';
  * dark panel instead of a wall of identical tiles.
  */
 
-const MOSAIC_VERSION = 23; // bump to force-regenerate cached mosaics
+const MOSAIC_VERSION = HERO_MOSAIC_VERSION; // shared with the book page (cache-buster)
 const MAX_ROWS = 4; // the hero crop (desktop rows 2-4, mobile rows 1-3) never shows a 5th row
 const MAX_TILES = 10 * MAX_ROWS; // 10 cols × 4 rows = 40 — the most that can ever be seen
 const MIN_TILES = 4; // below this we can't make a grid that fills without stretching

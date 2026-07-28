@@ -51,6 +51,7 @@ import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
+import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
@@ -1159,7 +1160,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     const readingDropdowns = (
       <>
         {hasReadingGuide && (
-          <AISection kind="reading-guide" className="card">
+          <AISection kind="reading-guide" className="card reveal-in">
             <details className="group sl-collapse">
               <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
                 <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Reading guide</h3>
@@ -1173,7 +1174,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         )}
         {/* Book's own contents — only when there's a TOC scan or chapters */}
         {(!!book.chapters?.length || !!tocPage) && (
-        <details id="contents" className="card group scroll-mt-24 sl-collapse">
+        <details id="contents" className="card group scroll-mt-24 sl-collapse reveal-in">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Contents</h3>
             <PlusToggle />
@@ -1228,7 +1229,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         })()}
 
         {/* Bibliographic information — the source's own record only. */}
-        <details className="card group sl-collapse">
+        <details className="card group sl-collapse reveal-in">
           <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
             <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Bibliographic information</h3>
             <PlusToggle />
@@ -1249,11 +1250,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             (editions + prior translations appear as timeline entries) and nests
             the staff processing log + editions tooling under "Added to Source
             Library". */}
-        <BookTimeline events={timelineEvents} />
+        <div className="reveal-in"><BookTimeline events={timelineEvents} /></div>
 
         {/* Search this book — styled like a dropdown card but always open; the
             card grows to show results (max-height + scroll) as you type. */}
-        <div className="card p-4 md:p-6">
+        <div className="card p-4 md:p-6 reveal-in">
           <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>Search this book</h3>
           <SearchPanel bookId={book.id} inline theme="light" placeholder="Find a word, name, or phrase…" />
         </div>
@@ -1285,7 +1286,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== HERO ===================== */}
         <HeroVariants
           pageThumbs={heroPageThumbs}
-          mosaicUrl={`/api/books/${book.id}/hero-mosaic`}
+          /* Warmed books point straight at the cached R2 URL (fast CDN hit).
+             Only un-warmed books go through the API route, which lazily
+             composites + caches on first view. This skips a Vercel-function +
+             Mongo + 302 hop on every load of a popular book. */
+          mosaicUrl={
+            (book as unknown as { hero_mosaic_url?: string; hero_mosaic_version?: number }).hero_mosaic_url &&
+            (book as unknown as { hero_mosaic_version?: number }).hero_mosaic_version === HERO_MOSAIC_VERSION
+              ? (book as unknown as { hero_mosaic_url?: string }).hero_mosaic_url
+              : `/api/books/${book.id}/hero-mosaic`
+          }
           actions={(
             /* Mobile-only: pinned to the foot of the hero (desktop keeps these
                inline in the meta below). Read sits under the text; the icon bar
@@ -1435,16 +1445,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
         {/* Always render the two-column About section: prose (when present) + the
             dropdowns on the left, an interesting non-cover plate on the right. */}
-        <AboutVariants
-          content={hasSummary ? linkEntities(summaryText!, summaryEntities) : null}
-          visual={sideVisual}
-          tags={hasSummary ? subjectTags : []}
-          belowContent={readingDropdowns}
-        />
+        <div className="reveal-in">
+          <AboutVariants
+            content={hasSummary ? linkEntities(summaryText!, summaryEntities) : null}
+            visual={sideVisual}
+            tags={hasSummary ? subjectTags : []}
+            belowContent={readingDropdowns}
+          />
+        </div>
 
         {/* ===================== PAGES ===================== */}
         <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="pt-14 pb-16 scroll-mt-4">
-          <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+          <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
               const pagesSubtitle = digitizer
@@ -1463,7 +1475,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
         {galleryPlates.length > 0 && (
           <section id="illustrations" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Illustrations</h2>
               <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>Plates, diagrams, and figures detected in the scanned pages.</p>
               <GalleryMasonry plates={galleryPlates} />
@@ -1481,12 +1493,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
 
         {/* ===================== PART OF THE COLLECTION (library/source) ===================== */}
-        {librarySection && <BookLibrarySection data={librarySection} />}
+        {librarySection && <div className="reveal-in"><BookLibrarySection data={librarySection} /></div>}
 
         {/* ===================== RELATED BOOKS ===================== */}
         {hasRelated && (
           <section id="related" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
-            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>Related books</h2>
               <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>Other volumes close to this one by author, subject, place, and period.</p>
               <BookSlider books={tagRelated as unknown as MiniBook[]} />
