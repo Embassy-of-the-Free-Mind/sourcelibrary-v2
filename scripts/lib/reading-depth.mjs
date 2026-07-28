@@ -31,6 +31,24 @@
  * (`ip` is anonymized to a /24, so a large NAT or CGNAT range is many readers
  * sharing one key). Seeing both is what tells you whether the headline depends
  * on the heuristic.
+ *
+ * ── The second instrument: computeMemberReadingDepth ──────────────────────────
+ *
+ * `reading_history` answers the same question for signed-in readers and is
+ * **structurally immune to all of the above**: it is written only behind a
+ * session, so no crawler can appear in it, and it keys on `user_id` rather than
+ * an anonymized IP, so two readers behind one NAT stay two readers. It was
+ * sitting there, uncontaminated, the whole time the anonymous metric was being
+ * quoted — nobody thought to check it because the broken instrument answered
+ * confidently. When one instrument is compromised, look for a second one that
+ * measures the same thing by different means before declaring the question
+ * unanswerable.
+ *
+ * What it cannot do is speak for the whole audience: signed-in members are a
+ * self-selected minority (946 of 3,851 accounts active in a recent 30-day
+ * window) and are more engaged than a passer-by, so it is a CEILING, not an
+ * average. Both numbers are reported side by side, each labelled with its
+ * population, and neither is presented as "reading depth" unqualified.
  */
 
 // Distinct page_read events from one anonymized /24 over the window, above
@@ -122,5 +140,62 @@ export async function computeReadingDepth(db, since, opts = {}) {
     excludedTopIps: heavy.slice(0, 5).map((h) => ({ ip: h._id, events: h.n })),
     threshold,
     unfiltered,
+  };
+}
+
+/**
+ * Reading depth for SIGNED-IN members, from `reading_history`.
+ *
+ * One row is one reading session (the write path collapses activity on the same
+ * user+book within 30 minutes into a single row), and `pages_read` is an
+ * `$addToSet` of distinct pages — so its length is genuinely "how far into this
+ * book did this person get in this sitting", not a page-turn counter.
+ * `pages_viewed` counts every turn including re-reads, which is why the two are
+ * reported separately rather than averaged into one misleading figure.
+ *
+ * @param {import('mongodb').Db} db
+ * @param {Date} since
+ * @returns {Promise<object|null>} null when the collection is empty/absent
+ */
+export async function computeMemberReadingDepth(db, since) {
+  const rows = await db.collection('reading_history').aggregate([
+    { $match: { updated_at: { $gte: since } } },
+    {
+      $project: {
+        user_id: 1,
+        book_id: 1,
+        viewed: { $ifNull: ['$pages_viewed', 0] },
+        distinct: { $size: { $ifNull: ['$pages_read', []] } },
+      },
+    },
+  ], { allowDiskUse: true }).toArray();
+
+  if (!rows.length) return null;
+
+  const depths = rows.map((r) => r.distinct).sort((a, b) => a - b);
+  const n = depths.length;
+  const q = (p) => depths[Math.floor(n * p)] || 0;
+  const count = (fn) => rows.filter(fn).length;
+
+  const sessionsByUser = new Map();
+  for (const r of rows) sessionsByUser.set(r.user_id, (sessionsByUser.get(r.user_id) || 0) + 1);
+  const returning = [...sessionsByUser.values()].filter((v) => v > 1).length;
+
+  return {
+    sessions: n,
+    users: sessionsByUser.size,
+    books: new Set(rows.map((r) => r.book_id)).size,
+    median: q(0.5),
+    p75: q(0.75),
+    p90: q(0.9),
+    p99: q(0.99),
+    max: depths[n - 1] || 0,
+    oneOnly: count((r) => r.distinct === 1),
+    shallow: count((r) => r.distinct >= 2 && r.distinct <= 4),
+    middling: count((r) => r.distinct >= 5 && r.distinct <= 9),
+    deep: count((r) => r.distinct >= 10),
+    veryDeep: count((r) => r.distinct >= 50),
+    returningUsers: returning,
+    totalPages: rows.reduce((s, r) => s + r.distinct, 0),
   };
 }

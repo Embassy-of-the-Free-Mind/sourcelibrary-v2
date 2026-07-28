@@ -17,7 +17,7 @@
 //   7. Pipeline cost            (gemini_usage_daily)
 
 import { withMongo } from '../lib/mongo.mjs';
-import { computeReadingDepth } from '../lib/reading-depth.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const now = Date.now();
@@ -114,6 +114,27 @@ await withMongo(async (db) => {
       console.log(`  not of the data. The /24 anonymization means a large NAT can be excluded`);
       console.log(`  as a fleet — check the addresses above before trusting either figure.`);
     }
+  });
+
+  // ---- 2b. READING DEPTH, SIGNED-IN MEMBERS ----
+  await section(`2b. Reading depth — signed-in members (reading_history, last ${DAYS}d)`, async () => {
+    // The uncontaminated twin of section 2: written only behind a session, so no
+    // crawler can be in it, and keyed on user_id so a shared NAT stays several
+    // readers. Narrower population, much higher confidence.
+    const m = await computeMemberReadingDepth(db, SINCE);
+    if (!m) { console.log('no reading_history rows in window'); return; }
+    console.log(`reading sessions              ${m.sessions}   (one user+book sitting, 30min gap)`);
+    console.log(`distinct members / books      ${m.users} / ${m.books}`);
+    console.log(`pages read / session  median=${m.median}  p75=${m.p75}  p90=${m.p90}  p99=${m.p99}  max=${m.max}`);
+    console.log(`  1 page only                 ${m.oneOnly}  (${pct(m.oneOnly, m.sessions)})`);
+    console.log(`  2-4 pages                   ${m.shallow}  (${pct(m.shallow, m.sessions)})`);
+    console.log(`  5-9 pages                   ${m.middling}  (${pct(m.middling, m.sessions)})`);
+    console.log(`  10+ pages (deep read)       ${m.deep}  (${pct(m.deep, m.sessions)})`);
+    console.log(`  50+ pages                   ${m.veryDeep}  (${pct(m.veryDeep, m.sessions)})`);
+    console.log(`members with >1 session       ${m.returningUsers}  (${pct(m.returningUsers, m.users)})`);
+    console.log(`distinct pages read, total    ${m.totalPages}`);
+    console.log(`CEILING, not average: members are self-selected and more engaged than a`);
+    console.log(`passer-by. This answers "do our members read?", not "do visitors read?".`);
   });
 
   // ---- 3. MISSION ACTIONS ----
