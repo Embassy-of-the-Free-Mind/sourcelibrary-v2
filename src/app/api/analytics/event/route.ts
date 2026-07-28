@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { anonymizeIp } from '@/lib/anonymize-ip';
+import { classifyRequest } from '@/lib/analytics-ingest';
 
 /**
  * General-purpose analytics event sink for value-moment interactions that the
@@ -56,16 +56,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid event type' }, { status: 400 });
     }
 
-    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-      || request.headers.get('x-real-ip')
-      || 'unknown';
+    // Unlike the book/page sink, non-human traffic is STORED here (tagged), not
+    // dropped. These events are click-driven and low-volume, so crawlers can't
+    // swamp them — and for the confirm_view/confirm_click pair the bot share IS
+    // the finding: mail-security scanners fetch magic links, which is the whole
+    // reason the interstitial exists (#3305). Dropping them would hide a
+    // scanner-driven "drop-off" instead of explaining it. Read paths that want
+    // humans only filter on traffic_class. (#3405)
+    const { cls, userAgent, ip } = classifyRequest(request);
 
     const now = new Date();
     const doc = {
       event,
       ...sanitizeProps(body?.props),
       country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      ip: anonymizeIp(rawIp),
+      ip,
+      user_agent: userAgent,
+      traffic_class: cls,
       timestamp: now,
       created_at: now,
     };

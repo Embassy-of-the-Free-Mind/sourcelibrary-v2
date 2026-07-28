@@ -36,7 +36,12 @@ interface MetricsSnapshot {
     dwellMedianSec?: number; dwellMeanSec?: number; dwellSessions?: number;
   };
   conversion?: { uniqVisitors?: number; newSignups?: number; returningVisitors?: number; returningTotal?: number };
-  reading?: { pairs?: number; median?: number; p90?: number; oneOnly?: number; deep?: number; opens?: number } | null;
+  reading?: {
+    pairs?: number; median?: number; p90?: number; oneOnly?: number; deep?: number; opens?: number;
+    // Set when the 7d window is mostly pre-#3405 events, which carry no
+    // traffic_class and so can't be attributed to humans or crawlers.
+    contaminated?: boolean; unclassified?: number; total?: number;
+  } | null;
   missionActions?: Record<string, number>;
   traffic?: {
     humanPvs?: number; botPvs?: number;
@@ -274,9 +279,21 @@ export default async function MetricsPage() {
         </>
       ) : null}
 
-      {s.reading ? (
+      {s.reading?.contaminated ? (
         <>
-          <SectionHead title="Reading depth" sub="From page_read events, last 7 days. Median 1 page is normal for a reference library." />
+          <SectionHead title="Reading depth" sub="Not measurable for this window — see #3405." />
+          <div style={{ ...C.card, marginBottom: 12, lineHeight: 1.5 }}>
+            {num(s.reading.unclassified)} of {num(s.reading.total)} page_read events in the last 7
+            days were written before bot classification existed. They record no user-agent, so they
+            cannot be attributed to readers or crawlers after the fact — and the events that caused
+            this outnumbered real human book-page views 34 to 1. No depth figure is shown rather
+            than a confident wrong one. This resolves itself once a full 7-day window has elapsed
+            since the fix deployed.
+          </div>
+        </>
+      ) : s.reading ? (
+        <>
+          <SectionHead title="Reading depth" sub="Human-classified page_read events, last 7 days. Median 1 page is normal for a reference library." />
           <div style={C.grid}>
             <Stat value={num(s.reading.opens)} label="Book opens" def="book_read events in the last 7 days." />
             <Stat value={String(s.reading.median ?? 0)} label="Median pages / book" sub={`p90 ${s.reading.p90 ?? 0}`}

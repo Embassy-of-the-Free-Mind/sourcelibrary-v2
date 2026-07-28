@@ -144,8 +144,19 @@ await withMongo(async (db) => {
   const ev = db.collection('analytics_events');
   let reading = null;
   try {
+    // Human-classified events only (#3405). page_read had no bot filter and
+    // stored no user-agent, so the depth histogram this feeds — rendered on
+    // /platform/admin/metrics and carried in the weekly digest — was describing
+    // crawler traffic. Pre-fix events can never be classified, so a window
+    // dominated by them reports `contaminated` and the surfaces suppress the
+    // number rather than showing a confident wrong one.
+    const total = await ev.countDocuments({ event: 'page_read', timestamp: { $gt: d7 } });
+    const classified = await ev.countDocuments({ event: 'page_read', timestamp: { $gt: d7 }, traffic_class: { $exists: true } });
+    if (total > 0 && classified / total < 0.5) {
+      reading = { contaminated: true, unclassified: total - classified, total };
+    } else {
     const depth = await ev.aggregate([
-      { $match: { event: 'page_read', timestamp: { $gt: d7 }, book_id: { $ne: null } } },
+      { $match: { event: 'page_read', timestamp: { $gt: d7 }, book_id: { $ne: null }, traffic_class: 'human' } },
       { $group: { _id: { ip: '$ip', b: '$book_id' }, pages: { $addToSet: '$page_id' } } },
       { $project: { n: { $size: '$pages' } } },
       { $group: { _id: '$n', sessions: { $sum: 1 } } }, { $sort: { _id: 1 } },
@@ -159,8 +170,10 @@ await withMongo(async (db) => {
       p90: flat[Math.floor(rn * 0.9)] || 0,
       oneOnly: depth.find((d) => d._id === 1)?.sessions || 0,
       deep: depth.filter((d) => d._id >= 10).reduce((s, d) => s + d.sessions, 0),
-      opens: await ev.countDocuments({ event: 'book_read', timestamp: { $gt: d7 } }),
+      opens: await ev.countDocuments({ event: 'book_read', timestamp: { $gt: d7 }, traffic_class: 'human' }),
+      unclassified: total - classified,
     };
+    }
   } catch { /* events collection may be sparse */ }
 
   // ─── MISSION ACTIONS ──────────────────────────────────────────────────────
