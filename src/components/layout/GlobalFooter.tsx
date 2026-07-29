@@ -25,7 +25,6 @@ const NAV_COLUMNS: ReadonlyArray<{
       { key: 'browseAZ', href: '/browse' },
       { key: 'gallery', href: '/gallery' },
       { key: 'collections', href: '/collections' },
-      { key: 'explore', href: '/explore' },
       { key: 'search', href: '/search' },
     ],
   },
@@ -105,7 +104,7 @@ export default function GlobalFooter() {
               width={300}
               height={96}
               sizes="auto"
-              className="h-12 sm:h-16 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              className="h-16 sm:h-20 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               unoptimized
             />
           </Link>
@@ -114,10 +113,18 @@ export default function GlobalFooter() {
           </Link>
         </div>
 
-        {/* Zone 2: Navigation Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 py-10 border-b border-white/[0.08]">
+        {/* Zone 2: Navigation Columns. Mobile: 2 columns — Library + Participate
+            stacked on the left, About on the right. Desktop: the usual 3-up. */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8 sm:gap-12 py-10 border-b border-white/[0.08]">
           {NAV_COLUMNS.map((col) => (
-            <div key={col.titleKey}>
+            <div
+              key={col.titleKey}
+              className={
+                col.titleKey === 'colLibrary' ? 'col-start-1 row-start-1 sm:col-auto sm:row-auto'
+                : col.titleKey === 'colAbout' ? 'col-start-2 row-start-1 row-span-2 sm:col-auto sm:row-auto'
+                : 'col-start-1 row-start-2 sm:col-auto sm:row-auto'
+              }
+            >
               <h3 className="text-accent-gold text-xs font-semibold uppercase tracking-[0.15em] mb-4">
                 {t[col.titleKey]}
               </h3>

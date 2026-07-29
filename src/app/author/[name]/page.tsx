@@ -445,11 +445,15 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               </Link>
             )}
             {encyclopediaEntity && (
+              // Says where it goes. This page lists what the author WROTE; the
+              // encyclopedia entry lists books that mention them — a different
+              // frame, and "Encyclopedia entry" sitting beside "Artist page" read
+              // as more of the same, so readers clicked expecting works (#3361).
               <Link
                 href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
                 className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
               >
-                Encyclopedia entry
+                Mentions in other books
               </Link>
             )}
             {wikipediaUrl && (

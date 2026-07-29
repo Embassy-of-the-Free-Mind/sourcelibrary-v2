@@ -1,0 +1,366 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 3,
+  "only": "^(armenian|arabic|chinese)",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 8,
+      "aligned": 8,
+      "refChars": 5732,
+      "charAccuracy": 0.9766224703419399,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 142-143 (those who curse Satan yet do his will, 1826 printed p.109)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 120,
+          "aligned": true,
+          "guard": 0.13157894736842105,
+          "cer": 0.038525963149078725,
+          "charAccuracy": 0.9614740368509213,
+          "refLen": 597,
+          "matched": 574,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.109",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik142.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005004000000000001,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 168,
+          "aligned": true,
+          "guard": 0.10526315789473684,
+          "cer": 0.02356902356902357,
+          "charAccuracy": 0.9764309764309764,
+          "refLen": 594,
+          "matched": 580,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005151,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 293 (against the pagan pantheon; mind, soul and the One, 1826 printed p.203)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 214,
+          "aligned": true,
+          "guard": 0.0660377358490566,
+          "cer": 0.015332197614991482,
+          "charAccuracy": 0.9846678023850085,
+          "refLen": 587,
+          "matched": 578,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.203",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik293.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005013,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 70-71 (tamed-animals argument)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 80,
+          "aligned": true,
+          "guard": 0.16326530612244897,
+          "cer": 0.028428093645484948,
+          "charAccuracy": 0.9715719063545151,
+          "refLen": 598,
+          "matched": 581,
+          "source": "TITUS etext (Mariès–Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.69",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik070.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.028269,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.13 (Croesus and Artashes, printed p.125)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 192,
+          "aligned": true,
+          "guard": 0.031746031746031744,
+          "cer": 0.004010695187165776,
+          "charAccuracy": 0.9959893048128342,
+          "refLen": 748,
+          "matched": 745,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.125",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho049.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.049818,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.60 (death of Artashes / Bar Kokhba digression)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 256,
+          "aligned": true,
+          "guard": 0.03125,
+          "cer": 0.0032751091703056767,
+          "charAccuracy": 0.9967248908296943,
+          "refLen": 916,
+          "matched": 913,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean–Yarut'iwnean, Tiflis 1913); passage = printed p.189",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho095.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.011652,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' III.35 (fall of Artagers, deportations under Shapuh, printed p.300)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 367,
+          "aligned": true,
+          "guard": 0.041176470588235294,
+          "cer": 0.008,
+          "charAccuracy": 0.992,
+          "refLen": 1000,
+          "matched": 992,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.300",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho161.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.035244,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Zohrab NT, John 1:1-14",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 724,
+          "aligned": true,
+          "guard": 0.13548387096774195,
+          "cer": 0.08236994219653179,
+          "charAccuracy": 0.9176300578034682,
+          "refLen": 692,
+          "matched": 635,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.063222,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "script": "cjk",
+      "passages": 6,
+      "aligned": 6,
+      "refChars": 331,
+      "charAccuracy": 0.9969788519637462,
+      "rows": [
+        {
+          "work": "Analects 1.1",
+          "bookId": "69e8b24d2ff2a8dc09e77295",
+          "pageNumber": 156,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 30,
+          "matched": 30,
+          "source": "ctext",
+          "source_url": "https://ctext.org/analects/xue-er/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.006558000000000001,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Daodejing ch.1",
+          "bookId": "69935b692c63944063133f67",
+          "pageNumber": 13,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 59,
+          "matched": 59,
+          "source": "ctext",
+          "source_url": "https://ctext.org/dao-de-jing/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.002721,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.7796610169491526,
+              "cer": 0.22033898305084745
+            }
+          }
+        },
+        {
+          "work": "Han Feizi (Nan Yan)",
+          "bookId": "69e8b2742ff2a8dc09e77bdb",
+          "pageNumber": 549,
+          "aligned": true,
+          "guard": 0.01639344262295082,
+          "cer": 0.01639344262295082,
+          "charAccuracy": 0.9836065573770492,
+          "refLen": 61,
+          "matched": 60,
+          "source": "ctext",
+          "source_url": "https://ctext.org/hanfeizi/nan-yan/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.002889,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.7704918032786885,
+              "cer": 0.22950819672131148
+            }
+          }
+        },
+        {
+          "work": "Book of Odes (Guan Ju)",
+          "bookId": "69d5ae594dc55b8478de1380",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 80,
+          "matched": 80,
+          "source": "ctext",
+          "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.008271,
+              "consistency": 0.6666666666666666,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Xunzi (Quan Xue)",
+          "bookId": "69e8b26b2ff2a8dc09e77afc",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 50,
+          "matched": 50,
+          "source": "ctext",
+          "source_url": "https://ctext.org/xunzi/quan-xue/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0033720000000000004,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.8200000000000001,
+              "cer": 0.18
+            }
+          }
+        },
+        {
+          "work": "Zhuangzi 1",
+          "bookId": "69e72c60a409200ea79f46f6",
+          "pageNumber": 46,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 51,
+          "matched": 51,
+          "source": "ctext",
+          "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0017490000000000001,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 0.7058823529411764,
+              "cer": 0.29411764705882354
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

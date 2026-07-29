@@ -191,27 +191,33 @@ async function main() {
 
   print(`### Top 30 books visited`);
   const topBookSlugs = topN(bookHits, 30);
-  // URLs may use either slug or 24-char hex ObjectId — look up by both.
+  // URLs may use a slug, a 24-char hex Mongo _id, or the string `id` field
+  // (a DIFFERENT 24-hex value than _id) — look up hex keys by both.
   const { ObjectId } = await import('mongodb');
   const slugLike = [];
-  const idLike = [];
+  const hexLike = [];
   for (const [s] of topBookSlugs) {
     if (/^[a-f0-9]{24}$/i.test(s)) {
-      try { idLike.push(new ObjectId(s)); } catch {}
+      hexLike.push(s);
     } else {
       slugLike.push(s);
     }
   }
-  const proj = { projection: { slug: 1, title: 1, author: 1, language: 1, year_published: 1 } };
+  const idLike = hexLike.map((s) => { try { return new ObjectId(s); } catch { return null; } }).filter(Boolean);
+  const proj = { projection: { slug: 1, id: 1, title: 1, author: 1, language: 1, year_published: 1 } };
   const bySlug = slugLike.length
     ? await db.collection('books').find({ slug: { $in: slugLike } }, proj).toArray()
     : [];
   const byId = idLike.length
     ? await db.collection('books').find({ _id: { $in: idLike } }, proj).toArray()
     : [];
+  const byIdField = hexLike.length
+    ? await db.collection('books').find({ id: { $in: hexLike } }, proj).toArray()
+    : [];
   const bookMeta = new Map();
   for (const b of bySlug) bookMeta.set(b.slug, b);
   for (const b of byId) bookMeta.set(b._id.toString(), b);
+  for (const b of byIdField) { if (b.id) bookMeta.set(b.id, b); }
   print(table(
     topBookSlugs.map(([key, hits]) => {
       const m = bookMeta.get(key) || {};

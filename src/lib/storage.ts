@@ -13,6 +13,7 @@
  */
 
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { validateR2Key } from './r2-key';
 
 // --- R2 client (lazy singleton) ---
 
@@ -71,6 +72,12 @@ export async function storagePut(
   body: Buffer | Uint8Array | ReadableStream,
   options: StoragePutOptions = {}
 ): Promise<StoragePutResult> {
+  // Reject undefined/null/empty path segments before anything reaches the bucket.
+  // A missing interpolation (e.g. `pages/${page.book_id}/...` where book_id was
+  // dropped by a projection) produces ONE object shared by every book — see #3362,
+  // where that silently fed other books' page images to OCR for six days.
+  validateR2Key(pathname, 'storagePut');
+
   const r2 = getR2Client();
 
   if (r2) {

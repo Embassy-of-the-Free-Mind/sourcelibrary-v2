@@ -28,8 +28,13 @@
  * `published` means correcting the source field is sufficient to stop the claim.
  */
 
-/** Wikidata QuickStatements tail: everything from "date QS:" onward. */
-const QUICKSTATEMENTS_TAIL = /date\s*QS:.*$/is;
+/**
+ * Wikidata QuickStatements tail: everything from "date QS:" onward.
+ *
+ * `[\s\S]` rather than `.` with the `s` flag — tsconfig targets ES2017, where
+ * dotAll is not available (TS1501), and this file is imported by the book page.
+ */
+const QUICKSTATEMENTS_TAIL = /date\s*QS:[\s\S]*$/i;
 
 /** Values that assert "we do not know" — never worth showing or citing. */
 const NOT_A_DATE = /^(unknown(\s+date)?|undated|no\s+date|n\.?\s*d\.?|s\.?\s*d\.?|date\s+of\s+publication\s+not\s+identified|not\s+identified|none|null)$/i;

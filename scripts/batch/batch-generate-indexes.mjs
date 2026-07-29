@@ -20,10 +20,15 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-3-flash-preview';
+// Index extraction runs on flash-lite, matching the enrich-worker's Phase 6
+// (the other writer of this same index). The prompt returns bare name lists and
+// page attribution is done locally by attributeEntityPages(), so the preview
+// model bought nothing here and cost ~7x more.
+const MODEL = 'gemini-3.1-flash-lite';
 const TARGET_BATCH_CHARS = 50000; // ~12k tokens per batch
 const CONCURRENCY = 3; // Books processed concurrently (each book fires multiple parallel batches)
 const DELAY_BETWEEN_BOOKS_MS = 1000;
@@ -98,9 +103,12 @@ function getSummaryModel() {
 
 // ── Cost tracking ────────────────────────────────────────────────────
 
-// gemini-3-flash-preview pricing
-const INPUT_COST_PER_1M = 0.50;
-const OUTPUT_COST_PER_1M = 3.00;
+// gemini-3.1-flash-lite pricing. Must stay in step with MODEL above and with
+// the MODEL_COSTS table in scripts/workers/enrich-worker.mjs — these constants
+// are what lands in gemini_usage.cost_usd, so a stale rate silently misreports
+// every downstream spend estimate.
+const INPUT_COST_PER_1M = 0.075;
+const OUTPUT_COST_PER_1M = 0.30;
 
 function calculateCost(inputTokens, outputTokens) {
   return (inputTokens / 1_000_000) * INPUT_COST_PER_1M +
@@ -324,23 +332,43 @@ function buildConceptIndex(batches, pages) {
   const placesMap = new Map();
   const conceptsMap = new Map();
 
+  // Twin of buildConceptIndexFromBatches in scripts/workers/enrich-worker.mjs —
+  // keep both sides in step. Gemini names the entities in a ~50k-char batch but
+  // is never asked which page each sits on, so we verify against page text
+  // instead of crediting the whole batch range (#3361).
+  const pagesByNumber = new Map(pages.map(p => [p.page_number, p]));
+
+  const accumulate = (map, term, batchPageTexts) => {
+    if (!term) return;
+    const attribution = attributeEntityPages(term, batchPageTexts);
+    const prev = map.get(term);
+    if (!prev) {
+      map.set(term, attribution);
+      return;
+    }
+    const merged_pages = [...new Set([...prev.pages, ...attribution.pages])].sort((a, b) => a - b);
+    const ranges = [prev.page_range, attribution.page_range].filter(Boolean);
+    const merged = { pages: merged_pages, page_precision: merged_pages.length > 0 ? 'page' : 'section' };
+    if (merged.page_precision === 'section' && ranges.length > 0) {
+      merged.page_range = {
+        start: Math.min(...ranges.map(r => r.start)),
+        end: Math.max(...ranges.map(r => r.end)),
+      };
+    }
+    map.set(term, merged);
+  };
+
   for (const batch of batches) {
-    const pageNumbers = Array.from(
-      { length: batch.pageRange.end - batch.pageRange.start + 1 },
-      (_, i) => batch.pageRange.start + i
-    );
-    for (const person of batch.people) {
-      if (!peopleMap.has(person)) peopleMap.set(person, []);
-      peopleMap.get(person).push(...pageNumbers);
+    const batchPages = [];
+    for (let n = batch.pageRange.start; n <= batch.pageRange.end; n++) {
+      const p = pagesByNumber.get(n);
+      if (p) batchPages.push(p);
     }
-    for (const place of batch.places) {
-      if (!placesMap.has(place)) placesMap.set(place, []);
-      placesMap.get(place).push(...pageNumbers);
-    }
-    for (const concept of batch.concepts) {
-      if (!conceptsMap.has(concept)) conceptsMap.set(concept, []);
-      conceptsMap.get(concept).push(...pageNumbers);
-    }
+    const batchPageTexts = buildPageTexts(batchPages);
+
+    for (const person of batch.people) accumulate(peopleMap, person, batchPageTexts);
+    for (const place of batch.places) accumulate(placesMap, place, batchPageTexts);
+    for (const concept of batch.concepts) accumulate(conceptsMap, concept, batchPageTexts);
   }
 
   // Extract vocabulary/keywords from page tags
@@ -361,17 +389,24 @@ function buildConceptIndex(batches, pages) {
     }
   }
 
+  // vocabulary/keywords are extracted from per-page tags, so they were always
+  // page-exact.
   const mapToEntries = (map) =>
     Array.from(map.entries())
-      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b) }))
+      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b), page_precision: 'page' }))
+      .sort((a, b) => b.pages.length - a.pages.length);
+
+  const attributionToEntries = (map) =>
+    Array.from(map.entries())
+      .map(([term, attribution]) => ({ term, ...attribution }))
       .sort((a, b) => b.pages.length - a.pages.length);
 
   return {
     vocabulary: mapToEntries(vocabMap),
     keywords: mapToEntries(keywordMap),
-    people: mapToEntries(peopleMap),
-    places: mapToEntries(placesMap),
-    concepts: mapToEntries(conceptsMap),
+    people: attributionToEntries(peopleMap),
+    places: attributionToEntries(placesMap),
+    concepts: attributionToEntries(conceptsMap),
   };
 }
 
@@ -381,21 +416,30 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex)
   const now = new Date();
   const promises = [];
 
-  const syncEntity = async (term, type, pages) => {
+  const syncEntity = async (term, type, entry) => {
+    if (!term) return;
+    const bookEntry = {
+      book_id: bookId,
+      book_title: bookTitle,
+      book_author: bookAuthor,
+      pages: entry.pages || [],
+      page_precision: entry.page_precision || 'section',
+      ...(entry.page_range ? { page_range: entry.page_range } : {}),
+    };
+    // Replace this book's entry, don't append another. See the same fix in
+    // enrich-worker.mjs — `$addToSet` on a whole subdocument duplicated books.
     await db.collection('entities').updateOne(
       { name: term, type },
-      {
-        $set: { updated_at: now },
-        $setOnInsert: { name: term, type, created_at: now },
-        $addToSet: { books: { book_id: bookId, book_title: bookTitle, book_author: bookAuthor, pages } },
-      },
+      { $set: { updated_at: now }, $setOnInsert: { name: term, type, created_at: now } },
       { upsert: true }
     );
+    await db.collection('entities').updateOne({ name: term, type }, { $pull: { books: { book_id: bookId } } });
+    await db.collection('entities').updateOne({ name: term, type }, { $push: { books: bookEntry } });
   };
 
-  for (const p of conceptIndex.people) promises.push(syncEntity(p.term, 'person', p.pages));
-  for (const p of conceptIndex.places) promises.push(syncEntity(p.term, 'place', p.pages));
-  for (const c of conceptIndex.concepts) promises.push(syncEntity(c.term, 'concept', c.pages));
+  for (const p of conceptIndex.people) promises.push(syncEntity(p.term, 'person', p));
+  for (const p of conceptIndex.places) promises.push(syncEntity(p.term, 'place', p));
+  for (const c of conceptIndex.concepts) promises.push(syncEntity(c.term, 'concept', c));
 
   await Promise.all(promises);
 
@@ -406,11 +450,9 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex)
     ...conceptIndex.concepts.map(p => ({ name: p.term, type: 'concept' })),
   ];
   for (const { name, type } of allTerms) {
-    const entity = await db.collection('entities').findOne({ name, type });
+    const entity = await db.collection('entities').findOne({ name, type }, { projection: { books: 1 } });
     if (entity) {
-      const bookCount = entity.books?.length || 0;
-      const totalMentions = (entity.books || []).reduce((sum, b) => sum + (b.pages?.length || 0), 0);
-      await db.collection('entities').updateOne({ name, type }, { $set: { book_count: bookCount, total_mentions: totalMentions } });
+      await db.collection('entities').updateOne({ name, type }, { $set: entityCounters(entity.books) });
     }
   }
 }

@@ -125,7 +125,7 @@ export function botGateResponse(book: {
     mcp_install: 'claude mcp add source-library -- npx -y @source-library/mcp-server',
     summary: book.reading_summary || undefined,
     partnership: {
-      contact: 'derek@sourcelibrary.org',
+      contact: 'team@sourcelibrary.org',
       subject: 'AI Partnership — Full Corpus Access',
       info: 'https://sourcelibrary.org/llms.txt',
     },

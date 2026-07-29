@@ -40,6 +40,18 @@
  *   --provider <name>          e.g. allard_pierson
  *   --crisis-only              books with spread_translation_crisis: true
  *
+ * Consistency guard (#3186, ON by default):
+ *   Before overwriting any archive, perceptual-hash a sample of pages to confirm
+ *   fetched(photo_original) IS the same image as the current archived_photo.
+ *   - aligned  → upgrade proceeds
+ *   - shift+1  → photo_original is a one-page-offset sequence (the e-rara PDF-cover
+ *                defect): book is SKIPPED, flagged books.rearchive_blocked + a
+ *                book_events{type:'rearchive_blocked'} record. NOT overwritten.
+ *   - ambiguous→ skipped + flagged for manual review.
+ *   --no-guard                 disable the guard (ONLY for a provider already
+ *                              audited aligned; never blanket — this is the incident switch)
+ *   Note: --recover-split does NOT run the guard; don't point it at unaudited providers.
+ *
  * Other:
  *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
  *                              (resume flag for long interruptible runs; the stamp is
@@ -70,7 +82,9 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
 import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
+import { checkAlignment as checkAlignmentShared, hashBuffer } from '../lib/page-alignment.mjs';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../../.env.production.local') });
@@ -95,6 +109,10 @@ const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 const SKIP_UPGRADED = FLAG('--skip-upgraded');
+// The consistency guard is ON by default and cannot be silently skipped — it is
+// the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
+// explicit, audited one-offs on a provider already proven aligned.
+const NO_GUARD = FLAG('--no-guard');
 
 // ── Setup ──
 
@@ -149,6 +167,38 @@ async function jpegDims(buf) {
   } catch {
     return null;
   }
+}
+
+// ── Consistency guard (issue #3186) ──
+//
+// The e-rara off-by-one incident: for PDF-sourced imports, `archived_photo` was
+// rasterized from the e-rara PDF (which prepends a cover sheet) while
+// `photo_original` was recorded as the IIIF image URL (no cover) — a parallel,
+// one-page-offset sequence. Refetching from `photo_original` and overwriting
+// `archived_photo` silently slid every image one page against its OCR/translation.
+//
+// The load-bearing false assumption was: "photo_original is the same image as
+// archived_photo, just higher-res." This guard verifies that per-book with a
+// perceptual hash (dHash) BEFORE any overwrite.
+//
+// The verdict logic lives in scripts/lib/page-alignment.mjs so the read-only
+// audit of the bulk-JP2 defect (#3368) uses the identical test.
+
+async function hashUrl(url) {
+  return hashBuffer(await rateLimitedFetch(url, { timeout: 30_000 }));
+}
+
+/**
+ * Compare fetched photo_original against the current (pre-overwrite) archived
+ * image for a sample of interior pages. Returns { verdict, offset, detail }.
+ * verdict ∈ 'aligned' | 'shift+1' | 'ambiguous' | 'unknown'.
+ */
+function checkAlignment(pages) {
+  return checkAlignmentShared(pages, {
+    hashUrl,
+    sourceUrlFor: p => upgradeToFullRes(p.photo_original || p.photo),
+    isUsableSource: p => isIiifUrl(p.photo_original || p.photo),
+  });
 }
 
 /**
@@ -293,6 +343,28 @@ async function refetchOne(book) {
     return { skipped: `not-low-res (cap=${cap || 'full'}, master=${info.width})` };
   }
 
+  // ── Consistency guard: never overwrite an archive whose photo_original is a
+  // different image than what we hold (the e-rara off-by-one class, #3186). ──
+  if (!NO_GUARD) {
+    const align = await checkAlignment(pages);
+    if (align.verdict !== 'aligned') {
+      if (!DRY_RUN) {
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: {
+            rearchive_blocked: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, at: new Date() },
+            updated_at: new Date(),
+          } },
+        );
+        await db.collection('book_events').insertOne({
+          book_id: book.id, type: 'rearchive_blocked', at: new Date(), source: 'rearchive-iiif-fullres',
+          details: { verdict: align.verdict, offset: align.offset ?? null, detail: align.detail, reason: 'photo_original != archived content (#3186 guard)' },
+        });
+      }
+      return { skipped: `guard:${align.verdict} (${align.detail})` };
+    }
+  }
+
   console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${cap}→${info.width}px (${pages.length} pages)`);
 
   let updated = 0, skipped = 0, failed = 0;
@@ -303,6 +375,7 @@ async function refetchOne(book) {
     if (result.skipped) { skipped++; return; }
 
     const key = `archived/${book.id}/${page.page_number}.jpg`;
+    assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres');
     if (DRY_RUN) {
       updated++;
       return;
@@ -467,6 +540,7 @@ async function recoverOne(book) {
       return;
     }
     const key = `archived/${book.id}/${newPageNum}.jpg`;
+    assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres:split');
     if (DRY_RUN) {
       refetchedUrls.set(entry.sourceUrl, { key, dims: result.dims, newPageNum });
       refetched++;

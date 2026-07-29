@@ -4,6 +4,7 @@ import { generateGalleryImages } from '@/lib/gallery-image-gen';
 import { getSession } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { getPageImageUrl } from '@/lib/utils';
+import { remapBboxToMaster } from '@/lib/gallery-deepzoom-bbox';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -309,6 +310,18 @@ export async function GET(
     // wrong side of a spread. extracted_url is the authoritative crop.
     const croppedUrl = detection.extracted_url || detection.hires_url || cropUrl || imageUrl;
 
+    // Deep-zoom focus (#2714). When this page has a tile pyramid, the gallery
+    // can drop the reader into it zoomed onto the illustration instead of the
+    // lens magnifier — but only if we can place the bbox in the master's
+    // coordinate space. On a split-from-spread scan the bbox is fractions of
+    // the HALF while the master is the whole spread, so it needs remapping;
+    // `remapBboxToMaster` returns null whenever that can't be established, and
+    // we then omit the focus entirely and the client keeps the magnifier.
+    const deepzoom = pageData.deepzoom ?? null;
+    const focusBbox = deepzoom
+      ? remapBboxToMaster(detection.bbox, pageData, pageData.fullres_master ?? deepzoom)
+      : null;
+
     // Durable first-party view counter (written by POST /api/views; keyed the
     // same hyphen-form id as likes)
     const viewsDoc = await db.collection('views').findOne(
@@ -353,8 +366,14 @@ export async function GET(
       metadata: detection.metadata ?? null,
       museumDescription: detection.museum_description ?? null,
 
-      // Bounding box (normalized 0-1)
+      // Bounding box (normalized 0-1, in the page-source coordinate space)
       bbox: detection.bbox,
+
+      // Deep zoom (#2714) — `focusBbox` is the same rectangle translated into
+      // the master's space, so the viewer can open framed on the illustration.
+      // Present only when both the pyramid and a trustworthy remap exist.
+      deepzoom: focusBbox ? deepzoom : null,
+      focusBbox,
 
       // Source context
       book: {

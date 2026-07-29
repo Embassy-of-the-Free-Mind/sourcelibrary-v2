@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
         mode: 'semantic',
         level: 'page',
       }, {
-        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
       });
     } catch (error) {
       console.error('[semantic-search] page-level error:', error);
@@ -205,7 +205,7 @@ export async function GET(request: NextRequest) {
       total: results.length,
       mode,
     }, {
-      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     console.error('[semantic-search] Error:', error);

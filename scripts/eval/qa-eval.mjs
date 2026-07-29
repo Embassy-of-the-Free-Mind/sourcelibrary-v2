@@ -29,6 +29,7 @@ import { saveResults, loadLatestResults, listResults, generateConsistencyReport,
 import { evaluateCorpus, evaluateRunConsistency } from './lib/embedding-eval.mjs';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -502,13 +503,74 @@ async function cmdScorecard() {
         armSuffix = `@w${width}${armSuffix}`;
         console.log(`  resized to ${Math.min(width, meta.width)}px wide (native ${meta.width}) → ${imageBuffer.length} bytes`);
       }
+      // --blur=SIGMA gaussian-blurs the (possibly resized) image — degradation-
+      // robustness arm: reading needs pixels, reciting does not, so accuracy that
+      // survives blur is a memory signature. Apply AFTER --width so sigma is
+      // comparable across pages at a fixed pixel scale.
+      if (args.blur) {
+        const sigma = parseFloat(args.blur);
+        const sharp = (await import('sharp')).default;
+        imageBuffer = await sharp(imageBuffer).blur(sigma).jpeg({ quality: 90 }).toBuffer();
+        armSuffix = `@blur${sigma}${armSuffix}`;
+        console.log(`  blurred σ=${sigma} → ${imageBuffer.length} bytes`);
+      }
+      // --occlude=FRAC masks a horizontal band (FRAC of image height, centered
+      // vertically, margins left visible so layout parsing survives). Text the
+      // model emits for the masked band is reference-free evidence of recitation
+      // (occlusion cloze — see ocr-memorization-paper.md).
+      //
+      // --occlude=x,y,w,h (four comma-separated fractions of width/height) masks
+      // a normalized RECT instead — a passage-TARGETED mask, chosen per page by
+      // visually locating the reference passage rather than a fixed mid-page
+      // band. This is the v2 pilot correction (result 16 in
+      // ocr-memorization-paper.md): the v1 fixed band missed the reference
+      // passage entirely on 2 of 5 canonical pages. Arm-tagged `@occR<pct>`
+      // where pct is the RECT'S AREA SHARE of the page (w*h*100) — distinct from
+      // the old `@occ<pct>` (height-fraction of the old band form) so v1/v2 runs
+      // never collide in the observations dataset.
+      if (args.occlude) {
+        const sharp = (await import('sharp')).default;
+        const meta = await sharp(imageBuffer).metadata();
+        if (args.occlude.includes(',')) {
+          const [xf, yf, wf, hf] = args.occlude.split(',').map(Number);
+          const left = Math.round(meta.width * xf);
+          const top = Math.round(meta.height * yf);
+          const bandW = Math.round(meta.width * wf);
+          const bandH = Math.round(meta.height * hf);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          const areaPct = Math.round(wf * hf * 100);
+          armSuffix = `@occR${areaPct}${armSuffix}`;
+          console.log(`  occluded rect ${bandW}×${bandH} at (${left},${top}) [area ${areaPct}%] → ${imageBuffer.length} bytes`);
+        } else {
+          const frac = parseFloat(args.occlude);
+          const bandH = Math.round(meta.height * frac);
+          const top = Math.round(meta.height / 2 - bandH / 2);
+          const left = Math.round(meta.width * 0.10);
+          const bandW = Math.round(meta.width * 0.80);
+          const band = await sharp({ create: { width: bandW, height: bandH, channels: 3, background: { r: 120, g: 120, b: 120 } } }).jpeg().toBuffer();
+          imageBuffer = await sharp(imageBuffer).composite([{ input: band, top, left }]).jpeg({ quality: 90 }).toBuffer();
+          armSuffix = `@occ${Math.round(frac * 100)}${armSuffix}`;
+          console.log(`  occluded ${bandW}×${bandH} band at y=${top} → ${imageBuffer.length} bytes`);
+        }
+      }
+      // --save-image=DIR dumps the manipulated image for visual audit of arm placement.
+      if (args['save-image']) {
+        const name = (gt.work || 'page').replace(/\W+/g, '_').slice(0, 60) + armSuffix.replace(/@/g, '_') + '.jpg';
+        fs.writeFileSync(path.join(args['save-image'], name), imageBuffer);
+      }
       row.models = {};
       for (const model of models) {
         const outputs = [];
         let cost = 0, best = null, refused = 0;
         for (let i = 0; i < runs; i++) {
+          // --delay=MS throttles between model calls — free-tier endpoints
+          // (Gemma) drop consecutive rapid requests with bare fetch failures.
+          if (args.delay) await new Promise(r => setTimeout(r, parseInt(args.delay)));
           try {
-            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000 });
+            // Pass the source URL only when the buffer is unmodified — width-resized
+            // arms must not leak the full-res URL to URL-preferring runners.
+            const res = await runModel(model, imageBuffer, args.prompt || DEFAULT_PROMPT, { maxTokens: 16000, ...(args.width ? {} : { imageUrl }) });
             cost += res.costUsd;
             // Raw outputs are dumped so runs can be RE-scored offline when
             // normalization improves — model calls are the expensive part.
@@ -575,7 +637,17 @@ async function cmdScorecard() {
 
   // Scoped runs save under their own name — saveResults keys the filename on
   // kind+date alone, so an --only run would otherwise clobber the full scorecard.
-  saveResults(only ? `scorecard-${only.replace(/[^a-z0-9._-]+/gi, '-')}` : 'scorecard', { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
+  // Long --only regexes must be truncated (a many-slug alternation once blew
+  // past NAME_MAX and ENAMETOOLONG'd after all paid calls had completed); a
+  // short hash keeps distinct scopes from colliding. The full regex is still
+  // recorded in the JSON body's `only` field.
+  let scope = '';
+  if (only) {
+    const slug = only.replace(/[^a-z0-9._-]+/gi, '-');
+    const hash = createHash('sha256').update(only).digest('hex').slice(0, 8);
+    scope = `-${slug.length > 60 ? `${slug.slice(0, 60)}-${hash}` : slug}`;
+  }
+  saveResults(`scorecard${scope}`, { date: new Date().toISOString().slice(0, 10), models, runs: models.length ? runs : undefined, only: only || undefined, summary });
 }
 
 // ── Subcommand: readiness ──────────────────────────────────────────

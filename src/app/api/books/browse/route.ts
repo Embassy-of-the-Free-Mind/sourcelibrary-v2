@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       { books: booksWithTenantSlug, total: count || 0, skip, limit },
-      { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } }
+      { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' } }
     );
   } catch (error) {
     console.error('[books/browse] Error:', error);

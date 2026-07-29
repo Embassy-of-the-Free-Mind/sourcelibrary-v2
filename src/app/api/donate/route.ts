@@ -58,7 +58,7 @@ function buildDonorEmail(firstName: string, route: string): string {
       <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 24px 0; line-height: 1.8; font-size: 14px; color: #1a1612;">
         <strong>Your point of contact:</strong><br>
         Derek Lomas, Project Director<br>
-        <a href="mailto:derek@sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">derek@sourcelibrary.org</a><br><br>
+        <a href="mailto:team@sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">team@sourcelibrary.org</a><br><br>
         Derek can walk you through the donation process, answer questions about the project,
         or help with wire transfers and larger gifts. Don't hesitate to reach out directly.
       </div>

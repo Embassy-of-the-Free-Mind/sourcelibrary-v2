@@ -207,7 +207,14 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         });
         setData(json);
         setAllItems(json.items);
-        setCurrentOffset(json.items.length);
+        // Paginate by page boundary, NOT cumulative item count. The merged
+        // browse derives its page from `floor(offset / limit)`, so the next
+        // offset must be a clean multiple of `limit`. Tracking the running
+        // item count desynced whenever a page returned < limit items (e.g. a
+        // type filter where artworks don't contribute → 36/page), which made
+        // `floor(36/limit)` re-fetch page 0 → Load More showed duplicates or
+        // appeared to do nothing.
+        setCurrentOffset(limit);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
       } finally {
@@ -240,8 +247,15 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
         visitorId: identity.id || undefined,
       });
-      setAllItems(prev => [...prev, ...json.items]);
-      setCurrentOffset(prev => prev + json.items.length);
+      // Advance by a full page (see initial-fetch note). Dedup on append is a
+      // belt-and-suspenders guard against any residual overlap (e.g. the
+      // search path prepends one-off "lead" artworks on page 0).
+      setAllItems(prev => {
+        const seen = new Set(prev.map(it => `${it.pageId}-${it.detectionIndex}`));
+        const fresh = json.items.filter((it: GalleryItem) => !seen.has(`${it.pageId}-${it.detectionIndex}`));
+        return [...prev, ...fresh];
+      });
+      setCurrentOffset(prev => prev + limit);
       // Keep filters/total from the response
       if (json.total) {
         setData(prev => prev ? { ...prev, total: json.total } : json);
