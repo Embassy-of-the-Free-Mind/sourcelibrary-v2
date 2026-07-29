@@ -24,7 +24,12 @@ const SITE_HOST = 'sourcelibrary.org';
 
 /** Normalize the request host into a tenant-identifying key. */
 export function resolveHost(request: NextRequest): string {
-  const raw = (request.headers.get('x-forwarded-host') || request.headers.get('host') || SITE_HOST)
+  return resolveHostFromHeaders(request.headers);
+}
+
+/** Host key from a bare Headers bag (server contexts without a NextRequest). */
+export function resolveHostFromHeaders(headers: Headers): string {
+  const raw = (headers.get('x-forwarded-host') || headers.get('host') || SITE_HOST)
     .split(',')[0]
     .trim()
     .toLowerCase();
@@ -33,8 +38,13 @@ export function resolveHost(request: NextRequest): string {
 
 /** Anonymized client IP (last octet zeroed) from the proxy headers. */
 export function clientIp(request: NextRequest): string {
-  const raw = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || request.headers.get('x-real-ip')
+  return clientIpFromHeaders(request.headers);
+}
+
+/** Anonymized client IP from a bare Headers bag. */
+export function clientIpFromHeaders(headers: Headers): string {
+  const raw = headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    || headers.get('x-real-ip')
     || 'unknown';
   return anonymizeIp(raw);
 }
@@ -76,17 +86,31 @@ export interface ClassifiedRequest {
  * signals are folded in the same way `/api/track` folds them.
  */
 export function classifyRequest(request: NextRequest): ClassifiedRequest {
-  const userAgent = (request.headers.get('user-agent') || '').slice(0, 200);
-  const ip = clientIp(request);
-  const cfThreat = parseInt(request.headers.get('cf-threat-score') || '', 10);
+  return classifyHeaders(request.headers);
+}
+
+/**
+ * Same classification from a bare `Headers` bag, for server contexts that never
+ * see a `NextRequest` — notably the NextAuth `events`/`sendVerificationRequest`
+ * hooks, which receive no request object and can only reach the inbound headers
+ * via `await headers()`.
+ *
+ * Deliberately the SAME function rather than a second implementation: the whole
+ * point of this module is that there is one classifier, so a new write path
+ * cannot be born contaminated (#3405).
+ */
+export function classifyHeaders(headers: Headers): ClassifiedRequest {
+  const userAgent = (headers.get('user-agent') || '').slice(0, 200);
+  const ip = clientIpFromHeaders(headers);
+  const cfThreat = parseInt(headers.get('cf-threat-score') || '', 10);
 
   const cls = classifyTraffic(userAgent, {
-    verifiedBot: request.headers.get('cf-verified-bot') === 'true',
+    verifiedBot: headers.get('cf-verified-bot') === 'true',
     threatScore: Number.isFinite(cfThreat) ? cfThreat : undefined,
     rateCapped: exceedsEventCap(ip),
   });
 
-  return { cls, isHuman: cls === 'human', userAgent, ip, host: resolveHost(request) };
+  return { cls, isHuman: cls === 'human', userAgent, ip, host: resolveHostFromHeaders(headers) };
 }
 
 /**
