@@ -5,6 +5,7 @@ import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import { isHiddenBook } from '@/lib/book-access';
+import { pickArtworkRecord } from '@/lib/artwork-slug';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -18,12 +19,15 @@ interface PageProps {
 async function getArtwork(slug: string) {
   const db = await getReadDb();
 
-  // Try exact slug match, then with art- prefix
-  const slugsToTry = [slug, `art-${slug}`];
-  const artwork = await db.collection('books').findOne(
+  // Exact slug, or the legacy `art-` prefixed twin. Fetch BOTH and choose
+  // deliberately — a single findOne over an $in returns an arbitrary match, so
+  // a hidden duplicate twin could shadow the visible canonical and 404 a live
+  // artwork (see src/lib/artwork-slug.ts).
+  const candidates = await db.collection('books').find(
     // content_type:'book' wins: never render a textual book as artwork even via a direct /artwork/<slug> URL.
-    { slug: { $in: slugsToTry }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
-  );
+    { slug: { $in: [slug, `art-${slug}`] }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
+  ).toArray();
+  const artwork = pickArtworkRecord(candidates, slug);
   if (!artwork) return null;
   // Hidden (visible:false) artworks are not public — mirror the /book route's
   // gate. The main lookup above had no visibility filter, so a hidden artwork
