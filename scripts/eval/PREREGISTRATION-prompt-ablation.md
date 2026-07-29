@@ -240,6 +240,43 @@ Run the estimator before spending: `node scripts/eval/prompt-ablation.mjs --dry-
   Accuracy aggregates over ~44 passages of real length; a flag rate is 44 Bernoulli
   draws per cell. Treat rate differences under ~15pp as suggestive only.
 
+## Follow-up study (designed, not run): validating the vocabulary itself
+
+This study measures a **firing rate on a sample chosen for something else** — the 44
+pinned pages exist for reference-etext coverage. A firing rate tells you neither
+precision nor recall, and `marginalia` fired twice in the first 96 rows, so H8 has
+almost no power here. That is a sampling limitation, not a data limitation: a bounded
+sample of 6,000 OCR'd pages found **24.4% with at least one `<margin>` tag and 12.6%
+with three or more.**
+
+**The obvious positive sample is biased and must not be used naively.** `<margin>` in
+stored OCR is *itself model output*, so selecting on it selects pages where the model
+**already succeeded**. It can measure whether an intervention improves capture relative
+to what single-page OCR already found; it structurally cannot surface the pages where
+the model missed marginalia entirely — which is the failure that matters.
+
+**The revision corpus supplies an unbiased positive sample.** PR #3273 tracked
+marginalia across re-OCR revisions: **kept 19,696 / gained 6,235 / lost 2,477.** The
+6,235 *gained* pages are **proven false negatives** — a later pass found marginal text an
+earlier pass missed, so presence is established by evidence independent of the run being
+scored. The 2,477 *lost* are the mirror case and belong in the same sample as a
+stability check.
+
+Design, **reference-free throughout** (capture hypotheses need no ground truth — only
+the accuracy hypotheses do), therefore cheap:
+
+| condition | positive sample | negative sample |
+|---|---|---|
+| `marginalia` | the 6,235 revision-gained pages | pages both passes agree carry none |
+| `handwritten` | BPH manuscripts | printed books of the same era |
+| `obscured` | the synthetic masks already generated | the unmasked originals |
+| `non-latin-script` | known script-tagged books | Latin-script controls |
+
+Outcome is **precision and recall per vocabulary term**, not a firing rate. Terms that
+cannot be measured this way, or that score near chance, should be cut from the closed
+list before it ships — a vocabulary entry that fires unreliably is worse than its
+absence, because downstream consumers will treat it as a signal.
+
 ## Pre-committed reporting
 
 Every arm and every hypothesis gets reported **whether or not it supports shipping**,
