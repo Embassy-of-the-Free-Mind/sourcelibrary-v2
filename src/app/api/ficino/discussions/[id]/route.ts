@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * GET /api/ficino/discussions/[id] — get a thread and its replies
@@ -17,7 +18,7 @@ export async function GET(
 
   const db = await getReadDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { membership: 1 } }
   );
 

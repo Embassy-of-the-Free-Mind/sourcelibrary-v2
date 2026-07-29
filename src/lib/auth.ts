@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import { toUserId } from './user-id';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
 import { activatePendingMembership } from './memberships';
@@ -388,9 +389,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const client = await clientPromise;
           const db = client.db(dbName);
+          // token.id is the adapter's string form of the user _id, but the
+          // MongoDBAdapter stores _id as an ObjectId — querying with the raw
+          // string silently matches nothing. That made needsWelcome and
+          // membership permanently falsy (see the empty catch below, which hid
+          // it): 3,850 of 3,854 users never saw the welcome interstitial.
           const dbUser = await db.collection('users').findOne(
-            { _id: token.id as any },
-            { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
+            { _id: toUserId(token.id as string) as any },
+            { projection: { name: 1, 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
           );
           if (dbUser?.membership?.active) {
             token.membership = dbUser.membership.plan || 'ficino';
@@ -400,11 +406,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             token.membership = null;
           }
 
+          // Pick up a name saved after sign-in (magic-link users have none until
+          // they fill in /welcome) so the session greets them without a re-login.
+          if (dbUser?.name) token.name = dbUser.name;
+
           // needsWelcome is true only when welcomedAt is explicitly null (set on createUser).
           // Pre-feature users have no welcomedAt field at all — treat as already welcomed.
           (token as any).needsWelcome = dbUser && 'welcomedAt' in dbUser && dbUser.welcomedAt === null;
-        } catch {
-          // Don't block auth if membership check fails
+        } catch (error) {
+          // Don't block auth if the lookup fails — but never swallow it silently
+          // again; the previous bare catch is why the _id type mismatch above
+          // went unnoticed from the day it shipped.
+          console.error('[auth] User lookup failed (membership/needsWelcome):', error);
         }
       }
 

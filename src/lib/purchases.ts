@@ -1,4 +1,5 @@
 import { getDb } from './mongodb';
+import { toUserId } from './user-id';
 
 export const PRICES = {
   book: { amount: 500, label: '$5' },   // cents
@@ -101,7 +102,7 @@ export async function canDownload(userId: string | null, type: PurchaseType, ite
 
   // Check membership first (fast path)
   const user = await db.collection('users').findOne(
-    { _id: userId as any },
+    { _id: toUserId(userId) as any },
     { projection: { 'membership.active': 1 } }
   );
   if (user?.membership?.active) return true;

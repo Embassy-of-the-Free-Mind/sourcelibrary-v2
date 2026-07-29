@@ -7,6 +7,7 @@ import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/li
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { z } from 'zod';
+import { toUserId } from '@/lib/user-id';
 
 export const dynamic = 'force-dynamic';
 // 120s was killing real research turns mid-stream: the agentic loop routinely
@@ -115,7 +116,7 @@ export async function POST(request: NextRequest) {
   // Get user display name (anonymous visitors skip the lookup)
   const user = userId
     ? await db.collection('users').findOne(
-        { _id: userId as any },
+        { _id: toUserId(userId) as any },
         { projection: { name: 1, membership: 1 } },
       )
     : null;
