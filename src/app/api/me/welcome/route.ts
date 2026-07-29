@@ -4,9 +4,39 @@ import { auth, RESEND_AUDIENCE_ID } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { toUserId } from '@/lib/user-id';
 
+// GET /api/me/welcome — the same four fields back, so the reader profile editor
+// on /account can prefill them. The welcome page promises this information can be
+// changed later; without a read path that promise is only half true.
+export async function GET() {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const db = await getDb();
+    const user = await db.collection('users').findOne(
+      { _id: toUserId(session.user.id) as any },
+      { projection: { name: 1, profile: 1 } }
+    );
+
+    return NextResponse.json({
+      name: user?.name || '',
+      about_you: user?.profile?.aboutYou || '',
+      preferred_language: user?.profile?.preferredLanguage || '',
+      help_description: user?.profile?.helpDescription || '',
+    });
+  } catch (error) {
+    console.error('[welcome] read error:', error);
+    return NextResponse.json({ error: 'Failed to load' }, { status: 500 });
+  }
+}
+
 // POST /api/me/welcome — captures the first-fill of the user profile (name, who
 // they are and what draws them here, how they'd like to help) and marks the
-// welcome step done.
+// welcome step done. Also serves later edits from /account, where a field the
+// reader empties means "remove this", not "didn't answer" — which is why the
+// volunteers mirror below has to handle the all-blank case.
 //
 // Body: { name?: string, about_you?: string, help_description?: string, skip?: boolean }
 // Skipping still sets welcomedAt so the gate doesn't fire again.
@@ -98,6 +128,21 @@ export async function POST(request: NextRequest) {
           },
         } as Record<string, unknown>,
         { upsert: true }
+      );
+    } else if (!skip) {
+      // Everything cleared from the account editor. Don't create a row for a
+      // reader who never volunteered anything, but do clear one that exists —
+      // otherwise the outreach list keeps quoting prose they deleted.
+      await db.collection('volunteers').updateOne(
+        { email },
+        {
+          $set: {
+            about_you: '',
+            help_description: '',
+            preferred_language: '',
+            updated_at: now,
+          },
+        }
       );
     }
 

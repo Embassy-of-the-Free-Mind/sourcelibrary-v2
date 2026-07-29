@@ -19,7 +19,7 @@ function arrivalSource(): 'gate' | 'direct' {
 
 export default function WelcomeForm({ initialName = '' }: { initialName?: string }) {
   const router = useRouter();
-  const { update } = useSession();
+  const { data: session, update } = useSession();
   // Google sign-ins arrive with a name; magic-link sign-ins never do, and this
   // is the only place we ever ask. Prefill so Google users aren't retyping it.
   const [name, setName] = useState(initialName);
@@ -78,6 +78,17 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
       help_description: trimmed.help,
     });
   };
+
+  // Mirrors UserMenu's avatar so the glyph in the pointer below matches the one
+  // the reader will actually look for. Derived from the live name field, so it
+  // tracks what they type.
+  const initials =
+    name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || session?.user?.email?.[0]?.toUpperCase() || '?';
 
   const handleSkip = () => {
     trackEvent('welcome_skip', { source: arrivalSource() });
@@ -165,6 +176,24 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
           className="w-full px-3 py-2.5 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust resize-y"
         />
       </div>
+
+      {/* Nothing here is a one-shot. Skipping in particular reads as "this
+          question is now closed", which is why the pointer names the exact
+          control rather than just saying "later in your account" — the avatar
+          in the top right is on every page, including this one. Editor lives at
+          /account#reader-profile; if that card moves, fix this sentence too. */}
+      <p className="text-sm text-stone-500 border-t border-stone-200 pt-5 flex items-start gap-2">
+        <span
+          aria-hidden="true"
+          className="mt-0.5 shrink-0 w-5 h-5 rounded-full border-2 border-stone-300 bg-stone-100 flex items-center justify-center text-[9px] font-medium text-stone-500"
+        >
+          {initials}
+        </span>
+        <span>
+          You can add to or change all of this later on your reader profile — open this menu at the
+          top right of any page and choose <span className="text-stone-700 font-medium">Account</span>.
+        </span>
+      </p>
 
       <div className="flex items-center justify-between pt-1">
         <button
