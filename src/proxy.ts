@@ -4,6 +4,8 @@ import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
+import { shouldRedirectToCanonical, canonicalUrl } from '@/lib/alias-host-scope';
+import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -578,6 +580,21 @@ function pickOgVariantForToday(now: Date = new Date()): string {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Refused datacenter networks, checked before anything else so it applies on
+  // every hostname and every route. Cloudflare blocks the same ASN, but a
+  // Cloudflare rule covers one zone and this project also answers on hosts
+  // outside it — which is exactly where the fleet was reading from.
+  // See src/lib/blocked-networks.ts.
+  if (isBlockedNetwork(getClientIp(request))) {
+    return new NextResponse(BLOCKED_NETWORK_RESPONSE, {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+      },
+    });
+  }
+
   // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
   // Must come before any DB work since this fires on every OG crawl.
   if (pathname === '/og-image.jpg') {
@@ -620,6 +637,24 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.host = 'sourcelibrary.org';
     return NextResponse.redirect(url, 301);
+  }
+
+  // --- Alias-host scoping ---
+  // ficinosociety.org is an alias on this same project, and SOCIETY_DOMAINS
+  // below only ever ADDED routes to it (/ → /ficino-society, /discussions,
+  // /members). Everything else fell through, so the entire library was served
+  // from a hostname that resolves straight to Vercel with no Cloudflare in
+  // front — which is where the AS132203 fleet was actually reading (3,791 of
+  // ~6,276 page_read events, vs zero for the fleet on sourcelibrary.org).
+  //
+  // Runs BEFORE any library-specific routing, so an alias host is scoped once,
+  // up front, rather than after book/author/provider rules have had a go at it.
+  // See src/lib/alias-host-scope.ts.
+  if (
+    (host.includes('ficinosociety.org') || host.includes('ficino.sourcelibrary.org')) &&
+    shouldRedirectToCanonical(pathname)
+  ) {
+    return NextResponse.redirect(canonicalUrl(pathname, request.nextUrl.search), 308);
   }
 
   // --- Canonical author URL redirect (#2250) ---
@@ -906,6 +941,7 @@ export async function proxy(request: NextRequest) {
         return NextResponse.rewrite(url);
       }
     }
+
   }
 
   // --- Tenant slug resolution ---
