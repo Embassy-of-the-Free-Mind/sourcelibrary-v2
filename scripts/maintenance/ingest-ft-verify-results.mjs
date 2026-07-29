@@ -40,6 +40,7 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { buildCatalogDoc } from '../lib/translation-catalog-record.mjs';
 
 const file = process.argv.slice(2).find((a) => a.endsWith('.json'));
 const APPLY = process.argv.includes('--apply');
@@ -59,9 +60,10 @@ await c.connect();
 const db = c.db('bookstore');
 const attempts = db.collection('first_translation_attempts');
 const registry = db.collection('translation_catalogs');
+const quarantine = db.collection('translation_catalogs_quarantine');
 
 const FOUND = new Set(['confirmed_complete', 'confirmed_partial', 'complete_prior_found', 'only_partial_exists']);
-let aIns = 0, aSkip = 0, cIns = 0, cSkip = 0, badRows = 0;
+let aIns = 0, aSkip = 0, cIns = 0, cSkip = 0, cQuar = 0, badRows = 0;
 
 const completenessFor = (result) =>
   result === 'confirmed_complete' || result === 'complete_prior_found' ? 'complete'
@@ -148,12 +150,39 @@ for (const r of rows) {
     if (t.translator) dupQuery.translator = t.translator;
     const dup = await registry.findOne(dupQuery);
     if (dup) { cSkip++; continue; }
-    if (APPLY) {
-      await registry.insertOne({
+
+    // #3460: build through the shared builder rather than spreading the raw
+    // subagent object. Spreading stored `source_language` verbatim as a display
+    // name ("Sanskrit") — the matcher's SOURCE_LANG guard compares ISO buckets,
+    // so every such row was inert. buildCatalogDoc also derives author_surname /
+    // english_title_normalized / pub_year_int, which the raw spread never set.
+    let doc;
+    try {
+      doc = buildCatalogDoc({
         ...t,
         pub_year: String(t.pub_year),
-        author_normalized: (t.author ?? '').toLowerCase(),
         source: 'claude_subagent_verify',
+      });
+    } catch (err) {
+      // An unmappable source_language is a real verified prior we must not drop.
+      // Quarantine keeps the record (and the reason) rather than throwing it away.
+      cQuar++;
+      if (APPLY) {
+        await quarantine.insertOne({
+          ...t,
+          pub_year: String(t.pub_year),
+          source: 'claude_subagent_verify',
+          quarantine_reason: err.message,
+          quarantined_at: new Date(),
+          source_language_provenance: `ft-verify-${runDate}`,
+        });
+      }
+      continue;
+    }
+
+    if (APPLY) {
+      await registry.insertOne({
+        ...doc,
         source_language_provenance: `ft-verify-${runDate}`,
         imported_at: new Date(),
       });
@@ -164,7 +193,7 @@ for (const r of rows) {
 
 console.log(`${APPLY ? 'APPLIED' : 'DRY-RUN'} — ${rows.length} results from ${file}`);
 console.log(`  Sink A (attempts ledger): +${aIns} inserted, ${aSkip} already present`);
-console.log(`  Sink C (translation_catalogs): +${cIns} inserted, ${cSkip} deduped`);
+console.log(`  Sink C (translation_catalogs): +${cIns} inserted, ${cSkip} deduped, ${cQuar} quarantined`);
 if (badRows) console.log(`  WARNING: ${badRows} malformed rows/registry entries skipped`);
 console.log('  Sink B (verdict) deliberately untouched — run derive-ft-verdict-from-attempts.ts; the public flag stays behind the reconcile.');
 await c.close();
