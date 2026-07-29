@@ -67,6 +67,26 @@ describe('/api/analytics/event prop allowlist', () => {
     expect(inserted[0]).not.toHaveProperty('notAllowed');
   });
 
+  it('persists every welcome_save field flag, including hasLanguage', async () => {
+    // Each field on the welcome form contributes a flag here. A new field whose
+    // flag is not allowlisted looks fine at the call site and is simply missing
+    // from the data later — so the flags are asserted as a SET, and adding a
+    // form field without its flag should fail this rather than ship silently.
+    const { POST } = await import('@/app/api/analytics/event/route');
+    await POST(post({
+      event: 'welcome_save',
+      props: { source: 'gate', hasName: true, hasAbout: true, hasHelp: false, hasLanguage: true },
+    }));
+
+    expect(inserted).toHaveLength(1);
+    const doc = inserted[0];
+    expect(doc.hasName).toBe(true);
+    expect(doc.hasAbout).toBe(true);
+    // false must survive too — "left it blank" is the answer we most want to count.
+    expect(doc.hasHelp).toBe(false);
+    expect(doc.hasLanguage).toBe(true);
+  });
+
   it('rejects an event name that is not allowlisted', async () => {
     const { POST } = await import('@/app/api/analytics/event/route');
     const res = await POST(post({ event: 'not_a_real_event', props: { surface: 'book' } }));

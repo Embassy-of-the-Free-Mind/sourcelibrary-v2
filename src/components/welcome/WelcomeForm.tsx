@@ -1,8 +1,21 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { trackEvent } from '@/lib/track-event';
+import { returnDestination } from '@/lib/welcome-return';
+
+// Did the reader arrive because WelcomeGate redirected them (it appends ?from=),
+// or did they navigate to /welcome themselves? Those are different populations —
+// the ~3,850 backfilled users all arrive via the gate — and mixing them would
+// make the completion rate meaningless. Read from window.location rather than
+// useSearchParams: this component renders inside a page that already opts out of
+// static prerendering, but the hook would add a bailout boundary for no reason.
+function arrivalSource(): 'gate' | 'direct' {
+  if (typeof window === 'undefined') return 'direct';
+  return new URLSearchParams(window.location.search).has('from') ? 'gate' : 'direct';
+}
 
 export default function WelcomeForm({ initialName = '' }: { initialName?: string }) {
   const router = useRouter();
@@ -14,6 +27,16 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
   const [preferredLanguage, setPreferredLanguage] = useState('');
   const [helpDescription, setHelpDescription] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
+  const viewed = useRef(false);
+
+  // One view per mount. Without this the denominator does not exist, and a low
+  // completion rate reads identically to a page nobody can reach — the failure
+  // this form actually had.
+  useEffect(() => {
+    if (viewed.current) return;
+    viewed.current = true;
+    trackEvent('welcome_view', { source: arrivalSource() });
+  }, []);
 
   const send = async (payload: object) => {
     setStatus('submitting');
@@ -25,7 +48,11 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
       });
       if (!res.ok) throw new Error();
       await update();
-      router.push('/');
+      // Back to whatever they were reading when the gate interrupted them.
+      const from = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('from')
+        : null;
+      router.push(returnDestination(from));
       router.refresh();
     } catch {
       setStatus('error');
@@ -34,15 +61,28 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const trimmed = { name: name.trim(), about: aboutYou.trim(), help: helpDescription.trim(), language: preferredLanguage.trim() };
+    // Which boxes were filled, never their contents — the prose lives in
+    // users.profile, and an analytics row is the wrong place for it.
+    trackEvent('welcome_save', {
+      source: arrivalSource(),
+      hasName: Boolean(trimmed.name),
+      hasAbout: Boolean(trimmed.about),
+      hasHelp: Boolean(trimmed.help),
+      hasLanguage: Boolean(trimmed.language),
+    });
     send({
-      name: name.trim(),
-      about_you: aboutYou.trim(),
-      preferred_language: preferredLanguage.trim(),
-      help_description: helpDescription.trim(),
+      name: trimmed.name,
+      about_you: trimmed.about,
+      preferred_language: trimmed.language,
+      help_description: trimmed.help,
     });
   };
 
-  const handleSkip = () => send({ skip: true });
+  const handleSkip = () => {
+    trackEvent('welcome_skip', { source: arrivalSource() });
+    send({ skip: true });
+  };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm border border-stone-200 rounded-xl p-6 md:p-8 space-y-7 shadow-lg shadow-stone-900/5">
