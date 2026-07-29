@@ -10,6 +10,11 @@ import { recordAuthEvent } from './auth-events';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
 
+// The Resend audience every signed-up reader is added to. Exported so the
+// welcome form can backfill firstName/lastName on the same contact — magic-link
+// signups have no name at createUser time, which is when the contact is made.
+export const RESEND_AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
+
 /**
  * Inbound request headers, or null when there is no request scope.
  *
@@ -267,11 +272,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user.email && process.env.RESEND_API_KEY) {
         try {
           const resend = new Resend(process.env.RESEND_API_KEY);
-          const AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
 
           await Promise.allSettled([
             resend.contacts.create({
-              audienceId: AUDIENCE_ID,
+              audienceId: RESEND_AUDIENCE_ID,
               email: user.email,
               firstName: user.name?.split(' ')[0] || undefined,
               lastName: user.name?.split(' ').slice(1).join(' ') || undefined,

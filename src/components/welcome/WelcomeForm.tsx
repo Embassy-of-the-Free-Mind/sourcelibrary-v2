@@ -4,9 +4,12 @@ import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-export default function WelcomeForm() {
+export default function WelcomeForm({ initialName = '' }: { initialName?: string }) {
   const router = useRouter();
   const { update } = useSession();
+  // Google sign-ins arrive with a name; magic-link sign-ins never do, and this
+  // is the only place we ever ask. Prefill so Google users aren't retyping it.
+  const [name, setName] = useState(initialName);
   const [aboutYou, setAboutYou] = useState('');
   const [helpDescription, setHelpDescription] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
@@ -31,6 +34,7 @@ export default function WelcomeForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     send({
+      name: name.trim(),
       about_you: aboutYou.trim(),
       help_description: helpDescription.trim(),
     });
@@ -40,6 +44,23 @@ export default function WelcomeForm() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm border border-stone-200 rounded-xl p-6 md:p-8 space-y-7 shadow-lg shadow-stone-900/5">
+      <div>
+        <label htmlFor="welcome-name" className="block font-serif text-xl text-stone-900 mb-1">
+          What should we call you?
+          <span className="font-sans font-normal text-base text-stone-500 ml-2">optional</span>
+        </label>
+        <input
+          id="welcome-name"
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          autoComplete="name"
+          maxLength={100}
+          placeholder="Your name"
+          className="w-full px-3 py-2.5 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
+        />
+      </div>
+
       <div>
         <label htmlFor="about-you" className="block font-serif text-xl text-stone-900 mb-1">
           Who are you, and what interests you about Source Library?
