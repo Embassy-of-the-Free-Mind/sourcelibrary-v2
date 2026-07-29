@@ -259,6 +259,14 @@ A usage review on 2026-07-28 produced six findings; **three were instrument fail
 
 Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 applied a real remedy for the wrong failure and was closed rather than merged once the actual cause was found.
 
+**The replacement instrument needs the same audit as the one it replaced (#3453).** `reading_history` was the clean twin that rescued the reading-depth question from the scraper fleet — auth-gated, keyed on `user_id`, no crawler can be in it — and it was right about the thing it was checked on (26% of member sessions are 10+ pages, stable across every window and robust to dropping the heaviest accounts). Then it was quoted for two things nobody had checked, and both were wrong:
+
+- **A metric's name is a claim about its denominator.** "Members who came back: 62%" counted `sessions > 1`, and a session is one user + one **book** — so opening a second book in the same sitting scored as a return. The day-based figure is 30.9%, and 61.0% of members have their entire history inside a single hour. Before quoting a rate, say out loud what one row *is*; if the unit isn't the thing the label names, the number is measuring something else. Same trap as grouping by exact `$pathname` above.
+- **Auth-gated is not human-gated.** A session excludes anonymous crawlers, not a signed-in account bulk-fetching: 29.5% of member pages arrived faster than 20 pages/minute, and the top 1% of members are 39% of all pages. **Per-session shares survived it and totals did not** — which is the general rule, not a detail of this dataset. A rate whose denominator grows with the contamination is robust; a sum is not.
+- **Counting sessions put the weight in the wrong place.** One-page sessions are 43.7% of sessions and **2.8% of pages read**; 10+ page sessions are 26.5% of sessions and **88.3% of pages**. The shallow tail is loud in one denominator and nearly weightless in the other. Report both, or the tail reads as the story.
+
+And **a field nothing writes looks identical to a field nothing needs.** `reading_history.referrer` was accepted by both routes, plumbed through the API client, projected into the GET response — and never sent by the reader, so all 6,659 rows were empty and "how do members reach a book" was unanswerable without one line of client code. Before concluding a signal is absent, check that something is actually emitting it.
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
