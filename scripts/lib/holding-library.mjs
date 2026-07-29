@@ -85,6 +85,11 @@ const NOT_A_LIBRARY = [
   // Requiring an accompanying year keeps this off real institution names.
   /\b(?:gift|bequest)\s+of\b[^,]*,\s*(?:1[5-9]|20)\d{2}\b/i,
   /^museum\s+accession$/i,
+  // A few records store an OBJECT here; the old catalog sync shipped it into a
+  // text column, which stringified to this literal. The `typeof` guard in
+  // holdingLibraryName already stops the object itself — this catches any row
+  // where the stringified form was persisted.
+  /^\[object Object\]$/,
 ];
 
 /**

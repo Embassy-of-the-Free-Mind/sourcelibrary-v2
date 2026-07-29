@@ -155,6 +155,15 @@ describe('holdingLibraryName — details-panel rows', () => {
     );
   });
 
+  it('refuses a non-string value, and its stringified form', () => {
+    // Some records store an object here. The old catalog sync shipped it into a
+    // text column, so Supabase held the literal "[object Object]" for those
+    // books — which is why the page's old exclude list named that string.
+    expect(holdingLibraryName({ contributing_library: { name: 'X' } as unknown as string })).toBeNull();
+    expect(holdingLibraryName({ contributing_library: '[object Object]' })).toBeNull();
+    expect(holdingLibraryName({ contributing_library: 123 as unknown as string })).toBeNull();
+  });
+
   it('normalizes whitespace and trailing separators', () => {
     expect(holdingLibraryName(src({ contributing_library: '  Getty  Research   Institute , ' }))).toBe(
       'Getty Research Institute',
