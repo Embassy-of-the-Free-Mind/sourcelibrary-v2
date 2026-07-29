@@ -53,6 +53,24 @@ ground truth about what the model should notice.
 **Scoring parity:** all arms are scored after stripping annotation tags, so arm A
 (which emits none) and arm C (which emits many) are compared on the text alone.
 
+**Does this match production?** Yes, for OCR. Checked against `gemini_usage`
+(n=3,000 most recent OCR rows): **92.6% of calls are `page_count: 1`**, median input
+3,272 tokens — one image per call, which is what this harness sends. The large
+`page_count` values (40, 52, 60, 150) are all `mode: batch`, where the field is the
+**job** aggregate, not pages in one prompt; 150 pages in a single call would be
+~280K input tokens, not 3.3K. Two caveats recorded rather than assumed away:
+
+- **Realtime vs batch.** Production OCR is 2,773 realtime to 227 batch; this harness
+  uses realtime, matching the dominant lane. But `scripts/experiments/batch-size-experiment.mjs`
+  lists RECITATION rate among the things it measures, so batch-mode behaviour should
+  not be assumed identical. Out of scope here; do not generalize these results to the
+  batch lane without checking.
+- **Multi-page prompting is out of scope.** Translation genuinely batches
+  (`page_count: 8` at 6,677 input tokens — cheap because its input is text, not
+  images), and Ars Astronomica reports 4 pages optimal for printed books. But our OCR
+  does not do it, so testing it would measure something we do not ship. Separate
+  experiment if we ever want it.
+
 ## Hypotheses and decision rules — fixed in advance
 
 **H1 — required fields fire.** Arm C emits `<page-conditions>` on ≥95% of runs.
