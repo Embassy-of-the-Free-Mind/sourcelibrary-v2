@@ -24,6 +24,13 @@ const ALLOWED_EVENTS = new Set([
   // prefetch-safe second click; without them an unconsumed verification token
   // is indistinguishable from mail that was never opened at all.
   'confirm_view', 'confirm_click',
+  // welcome_view / welcome_save / welcome_skip: the onboarding form at /welcome.
+  // It shipped with no instrumentation at all, which is how it went unnoticed
+  // that the interstitial never fired and the form had captured 4 profiles in
+  // its lifetime (#3448). Without the view event a low completion rate and an
+  // unreachable page look identical. `source` separates gate-redirected users
+  // from people who navigated to /welcome themselves.
+  'welcome_view', 'welcome_save', 'welcome_skip',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
@@ -37,6 +44,12 @@ const ALLOWED_PROPS = new Set([
   // safe: on confirm_view/confirm_click, whether the `next` callback parameter
   // survived transit — separates "changed their mind" from "the link broke".
   'safe',
+  // hasName / hasAbout / hasHelp: on welcome_save, WHICH fields the reader
+  // actually filled — never their contents, which live in users.profile. A bare
+  // save count cannot tell "they answered everything" from "they typed a name
+  // and left the two essay boxes empty", and that distinction is the whole
+  // question about whether the form asks for the right things at the right time.
+  'hasName', 'hasAbout', 'hasHelp',
 ]);
 
 const DB_TIMEOUT_MS = 3000;
