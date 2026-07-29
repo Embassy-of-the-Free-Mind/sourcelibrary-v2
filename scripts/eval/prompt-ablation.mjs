@@ -74,6 +74,55 @@ function parseArgs(argv) {
 const args = parseArgs(process.argv);
 
 const PROMPT_DIR = path.join(__dirname, 'prompts', 'ablation');
+
+// ── Page grouping (factor 2) ─────────────────────────────────────────
+//
+// OCR sends ONE image per call in production (pipeline-orchestrator.mjs:1655);
+// the 20/1000/250 constants bundle REQUESTS into a batch job and never put two
+// pages in a prompt. Translation is the opposite — 8 pages per call plus the
+// previous page's translation for continuity. So OCR alone has no cross-page
+// context, and a marginal note running over a page break, a hyphenated word
+// split across a leaf, a continuing table, or a running header seen 200 times
+// are all invisible to it. Ars Astronomica groups 4 pages for exactly this
+// reason. This factor tests whether that helps.
+//
+// The target page goes LAST, preceded by its real predecessors from the same
+// book, so the model has the maximum prior context the mechanism could use.
+// The model transcribes ALL pages (the deployable form — cost amortizes) and
+// only the target is scored, so segmentation reliability becomes its own
+// outcome: if page boundaries can't be delimited, grouping is unusable
+// regardless of what it does to accuracy.
+const PAGE_DELIM = '<<<PAGE-BREAK>>>';
+
+// Only the prompt-factor arms are crossed with grouping. A (bare ceiling) and D
+// (two-call control) stay ungrouped so they mean the same thing in every cell.
+const FACTORIAL_ARMS = new Set(['B', 'C']);
+
+function groupPrefix(n) {
+  return `You are given ${n} consecutive page images from the same book, in reading order.
+Transcribe EVERY page, in the order given. Separate consecutive pages with a line
+containing exactly ${PAGE_DELIM} and nothing else. Emit exactly ${n - 1} such separator
+lines. Apply all instructions below to each page independently.
+
+Use the preceding pages only as context for reading the later ones — for a word broken
+across a page break, a running header you have already seen, a table continuing from
+the previous leaf, or a marginal note carried over. Never copy text from one page into
+another's transcription.
+
+`;
+}
+
+/**
+ * Split a grouped response into per-page segments and return the target (last).
+ * Returns null when the model did not produce the expected number of separators —
+ * a segmentation failure, recorded rather than silently patched, because a model
+ * that cannot delimit pages makes grouping unusable no matter how it scores.
+ */
+function extractTargetSegment(text, n) {
+  const parts = text.split(new RegExp(`^\\s*${PAGE_DELIM.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'gm'));
+  if (parts.length !== n) return { segment: null, segments: parts.length };
+  return { segment: parts[parts.length - 1].trim(), segments: parts.length };
+}
 const ARMS = {
   A: { label: 'transcribe-only', prompt: 'A-transcribe-only.txt' },
   B: { label: 'current', prompt: 'B-current.txt' },
@@ -158,6 +207,7 @@ async function main() {
   const models = (args.models || 'lite').split(',').map(resolveModel);
   const armKeys = (args.arms || 'A,B,C,D').split(',').map(s => s.trim().toUpperCase());
   const runs = parseInt(args.runs || '1');
+  const groupN = parseInt(args.group || '1');
 
   const prompts = {};
   for (const k of armKeys) {
@@ -166,8 +216,10 @@ async function main() {
     if (ARMS[k].second) prompts[`${k}2`] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].second), 'utf8');
   }
 
-  // Calls per page: one per arm, plus a second for any two-call arm.
-  const callsPerPageRun = armKeys.reduce((n, k) => n + (ARMS[k].second ? 2 : 1), 0);
+  // Calls per page: one per arm, plus a second for two-call arms, plus a grouped
+  // replicate for each factorial arm when --group is set.
+  const callsPerPageRun = armKeys.reduce((n, k) =>
+    n + (ARMS[k].second ? 2 : 1) + (groupN > 1 && FACTORIAL_ARMS.has(k) ? 1 : 0), 0);
   const totalCalls = entries.length * models.length * runs * callsPerPageRun;
 
   // Estimate from MEASURED medians rather than the library's generic 1500/2000
@@ -192,6 +244,13 @@ async function main() {
     for (const k of armKeys) {
       usd += entries.length * runs * (IN_TOK / 1e6 * p.input + OUT_TOK / 1e6 * p.output);
       if (ARMS[k].second) usd += entries.length * runs * (IN_TOK / 1e6 * p.input + OUT_TOK_CLASSIFY / 1e6 * p.output);
+      // A grouped call carries groupN images and transcribes groupN pages, so both
+      // sides scale. The prompt text is sent once either way; the image dominates.
+      if (groupN > 1 && FACTORIAL_ARMS.has(k)) {
+        const IMG_TOK = 1870; // measured: 3,272 total in − ~1,400 prompt tokens
+        usd += entries.length * runs * (
+          (IN_TOK + (groupN - 1) * IMG_TOK) / 1e6 * p.input + (OUT_TOK * groupN) / 1e6 * p.output);
+      }
     }
     grandTotal += usd;
     console.log(`  ${model.padEnd(26)} ~$${usd.toFixed(2)}`);
@@ -209,6 +268,22 @@ async function main() {
     if (!imageUrl) { console.log(`  ! ${gt.work}: no usable page image, skipping`); continue; }
     let imageBuffer = await fetchImage(imageUrl);
     let armSuffix = '';
+
+    // Fetch the target's real predecessors for the grouped arm. A page without
+    // enough predecessors is EXCLUDED from grouped arms rather than padded — a
+    // short group is a different treatment, and quietly mixing the two would
+    // confound the factor being tested.
+    let contextBuffers = [];
+    if (groupN > 1) {
+      for (let d = groupN - 1; d >= 1; d--) {
+        const prev = await getPage(gt.book_id, gt.page_number - d);
+        const prevUrl = prev && getPageSource(prev);
+        if (!prevUrl) { contextBuffers = null; break; }
+        try { contextBuffers.push(await fetchImage(prevUrl)); }
+        catch { contextBuffers = null; break; }
+      }
+      if (!contextBuffers) console.log(`  ~ ${gt.work}: fewer than ${groupN - 1} predecessors, grouped arms skipped`);
+    }
 
     // Image manipulations apply identically to every arm, so an arm difference is
     // never a difference in what the model was shown.
@@ -238,11 +313,32 @@ async function main() {
 
     for (const model of models) {
       for (const k of armKeys) {
+       // Grouping is crossed with the prompt factor only for the arms in the
+       // factorial (B, C). A and D are reference arms and stay ungrouped, so the
+       // ceiling and the two-call control mean the same thing in every cell.
+       const levels = (groupN > 1 && FACTORIAL_ARMS.has(k) && contextBuffers) ? [1, groupN] : [1];
+       for (const g of levels) {
         for (let i = 0; i < runs; i++) {
           if (args.delay) await new Promise(r => setTimeout(r, parseInt(args.delay)));
           try {
-            const res = await runModel(model, imageBuffer, prompts[k], { maxTokens: 16000 });
-            let signals = parseSignals(res.text);
+            const grouped = g > 1;
+            const images = grouped ? [...contextBuffers, imageBuffer] : imageBuffer;
+            const promptText = grouped ? groupPrefix(g) + prompts[k] : prompts[k];
+            const res = await runModel(model, images, promptText, { maxTokens: grouped ? 32000 : 16000 });
+
+            // Score only the TARGET page. A grouped response that cannot be
+            // segmented is recorded as such and scored on nothing — treating it
+            // as a low accuracy score would blame the reader for a formatting
+            // failure, and the two need to stay distinguishable.
+            let scoredText = res.text, segments = null, segmentationOk = true;
+            if (grouped) {
+              const seg = extractTargetSegment(res.text, g);
+              segments = seg.segments;
+              segmentationOk = seg.segment !== null;
+              scoredText = seg.segment ?? res.text;
+            }
+
+            let signals = parseSignals(scoredText);
             let cost = res.costUsd, secondText = null;
 
             // Arm D: the transcription call carries no metadata request at all, so
@@ -259,17 +355,22 @@ async function main() {
                           insertTags: signals.insertTags, noteTags: signals.noteTags };
             }
 
-            const score = scoreAgainstReference(gt.ocr_ground_truth, stripTagsForScoring(res.text), gt.script || 'cjk');
+            const score = scoreAgainstReference(gt.ocr_ground_truth, stripTagsForScoring(scoredText), gt.script || 'cjk');
             const row = {
               work: gt.work, slug: gt._file.replace(/\.json$/, ''), script: gt.script,
               canonical: gt.page_class?.canonical_text ?? null,
               model, arm: k, armLabel: ARMS[k].label, armSuffix, run: i + 1,
+              group: g, segments, segmentationOk,
               finishReason: res.finishReason,
               aligned: score.aligned,
               charAccuracy: score.aligned ? score.charAccuracy : null,
               cer: score.aligned ? score.cer : null,
               refChars: score.refLen,
+              // Grouped calls transcribe g pages for one scored observation, so
+              // report both: the call's cost, and its cost amortized per page —
+              // the number that matters if grouping were deployed.
               costUsd: cost,
+              costPerPageUsd: cost / g,
               ...signals,
             };
             rows.push(row);
@@ -277,13 +378,15 @@ async function main() {
 
             const acc = row.charAccuracy === null ? '  n/a' : (row.charAccuracy * 100).toFixed(1) + '%';
             const cond = signals.conditionsPresent
-              ? (signals.conditions.length ? signals.conditions.join('|').slice(0, 30) : 'none')
+              ? (signals.conditions.length ? signals.conditions.join('|').slice(0, 26) : 'none')
               : '\x1b[31mMISSING\x1b[0m';
-            console.log(`  ${gt.work.slice(0, 24).padEnd(24)} ${model.slice(0, 22).padEnd(22)} ${k} acc=${acc.padStart(6)}  cond=${cond}`);
+            const segFlag = grouped && !segmentationOk ? ` \x1b[33mSEG:${segments}/${g}\x1b[0m` : '';
+            console.log(`  ${gt.work.slice(0, 22).padEnd(22)} ${model.slice(0, 20).padEnd(20)} ${k}g${g} acc=${acc.padStart(6)}  cond=${cond}${segFlag}`);
           } catch (e) {
-            console.log(`  ! ${gt.work} × ${model} × ${k} run ${i + 1}: ${String(e.message).slice(0, 110)}`);
+            console.log(`  ! ${gt.work} × ${model} × ${k}g${g} run ${i + 1}: ${String(e.message).slice(0, 100)}`);
           }
         }
+       }
       }
     }
   }

@@ -32,16 +32,50 @@ a mask covering 25% of the page.** Models transcribe straight through it.
 All three signals are optional. The hypothesis is that optionality, not capability, is
 the binding constraint.
 
-## Design
+## Design — a 2×2 factorial, plus two reference arms
 
-Four arms, same pinned ground-truth passages, same image bytes per page:
+Two interventions are on the table and they are **crossed, not run separately**. A
+factorial costs the same as two one-factor-at-a-time experiments but additionally
+recovers the **interaction**, which is the question we would most regret not asking:
+*does the required metadata field cost more accuracy when the model is also juggling
+four pages?* Run apart, that is unanswerable.
 
-| arm | prompt | purpose |
+**Factor 1 — prompt:** B (live production) vs C (B + provenance grouping + **required**
+`<page-conditions>`).
+**Factor 2 — grouping:** 1 page vs 4 pages, target LAST, preceded by its three real
+predecessors from the same book.
+
+|  | 1 page | 4 pages |
 |---|---|---|
-| **A** | transcribe-only, no tags | accuracy ceiling |
-| **B** | the live production prompt | today's baseline |
-| **C** | B + provenance grouping + **required** `<page-conditions>` | the proposal |
-| **D** | A for text, then a second classify-only call | interference control |
+| **B** current | B·g1 | B·g4 |
+| **C** required | C·g1 | C·g4 |
+
+Reference arms, **outside** the factorial and always ungrouped so they mean the same
+thing in every cell: **A** (transcribe-only — accuracy ceiling) and **D** (A for text,
+then a separate classify call — the two-call interference control).
+
+### Why grouping is worth testing at all
+
+Production OCR sends **one image per call** and therefore has **no cross-page context**
+— so a marginal note running over a page break, a word hyphenated across a leaf, a table
+continuing overleaf, and a running header already seen 200 times are all invisible to
+it. Translation, by contrast, sends 8 pages per call *and* prepends the previous page's
+translation. Ars Astronomica groups 4 pages for printed books on the same reasoning.
+Given marginalia agreement sits at **56.9%** against 87.0% for body text, missing
+context is a live candidate explanation.
+
+### Grouped-arm mechanics
+
+The model transcribes **all four pages** (the deployable form — cost amortizes across
+pages) separated by an explicit `<<<PAGE-BREAK>>>` line, and **only the target page is
+scored**. A response that does not yield exactly four segments is recorded as a
+**segmentation failure and scored on nothing** — not as low accuracy. Those are
+different defects and collapsing them would blame the reader for a formatting fault.
+Segmentation reliability is therefore its own outcome: a model that cannot delimit
+pages makes grouping unusable regardless of what it does to accuracy.
+
+Pages with fewer than three real predecessors are **excluded from grouped arms rather
+than padded** — a short group is a different treatment.
 
 Models: `lite` (gemini-3.1-flash-lite, the bulk lane), `flash` (gemini-3-flash-preview,
 the BPH lane), and `lite35` (gemini-3.5-flash-lite) if budget allows. Two runs per cell.
@@ -107,6 +141,35 @@ answer is arm D (a second call) despite the ~63% input surcharge.*
 **H5 — required beats optional.** Arm C's marginalia flag rate exceeds arm B's
 `<script>`-style signal rate by a wide margin (B's baseline is 3.8–7.3%).
 
+### Grouping factor
+
+**H6 — segmentation is reliable.** Grouped runs yield exactly 4 segments on ≥95%.
+→ *Below that, grouping is unusable in production no matter what it does to accuracy,
+and H7/H8 are uninterpretable because the scored text is not reliably the target page.*
+This is the gate: check it first.
+
+**H7 — grouping does not hurt accuracy.** On segmented runs, `g4` accuracy ≥ `g1` − 1.0pp.
+→ *A model attending to four pages may transcribe each less carefully. If it does, that
+is the finding and grouping does not ship for accuracy's sake.*
+
+**H8 — grouping helps marginalia.** `g4` marginalia flag rate ≥ `g1`, and cross-page
+artifacts (a hyphenated word completed from the previous page, a running header
+correctly suppressed) appear more often. **This is the directional hypothesis with the
+weakest instrument** — 44 pinned pages were chosen for reference coverage, not for
+marginalia density, so a null here is weak evidence of absence and must be reported as
+such rather than as "grouping doesn't help."
+
+### Interaction — the reason to cross them
+
+**H9 — no interaction.** (C·g4 − B·g4) ≈ (C·g1 − B·g1), within 1.0pp.
+→ *If the required field costs more under grouping, the two interventions compete for
+the same attention budget and cannot be shipped together without re-testing. This is
+the effect that two separate experiments could not have detected, and the reason for
+the factorial.*
+
+**Analysis order is fixed:** H6 gates H7–H9. H1 gates H2 and H5. Report every
+hypothesis regardless of outcome.
+
 ## Cost
 
 Measured medians from `gemini_usage` (single-page OCR, n=1,500): **3,272 input / 444
@@ -148,6 +211,17 @@ Run the estimator before spending: `node scripts/eval/prompt-ablation.mjs --dry-
   lanes; treat any conclusion as scoped to the production models.
 - **The occluded replicate uses masks chosen for a different study.** They target
   reference passages, which is right for fill-in but arbitrary for flag firing.
+- **The grouped arm confounds context with position.** The target is always last, so
+  "grouping helped" could mean the model benefited from three pages of prior text, or
+  simply that its output for the final page differs systematically (recency, budget
+  exhaustion, drift). Distinguishing them needs a target-first replicate, which is not
+  in this run. Do not claim a *continuity* mechanism from a positive H8 alone.
+- **Marginalia density is not controlled.** The pinned set was assembled for
+  reference-etext coverage. If few of its pages carry marginal notes at all, H8 has
+  almost no power and its null says nothing.
+- **44 pages is enough for char-weighted accuracy contrasts, not for flag rates.**
+  Accuracy aggregates over ~44 passages of real length; a flag rate is 44 Bernoulli
+  draws per cell. Treat rate differences under ~15pp as suggestive only.
 
 ## Pre-committed reporting
 

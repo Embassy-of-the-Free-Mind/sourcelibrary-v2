@@ -41,7 +41,15 @@ function accuracyRaw(rs) {
   return rs.reduce((s, r) => s + r.refChars * (r.aligned ? r.charAccuracy : 0), 0) / refTotal;
 }
 const rate = (rs, f) => rs.length ? rs.filter(f).length / rs.length : null;
-const sel = (model, arm) => rows.filter(r => r.model === model && r.arm === arm);
+// Ungrouped rows only, unless a group level is named — so existing contrasts keep
+// meaning what they meant before the grouping factor existed.
+const sel = (model, arm, group = 1) =>
+  rows.filter(r => r.model === model && r.arm === arm && (r.group ?? 1) === group);
+const GROUPS = [...new Set(rows.map(r => r.group ?? 1))].sort((a, b) => a - b);
+// A grouped run whose output could not be split into exactly `group` segments was
+// scored on nothing meaningful; excluding it keeps a FORMATTING failure from
+// masquerading as a reading failure.
+const segOk = rs => rs.filter(r => (r.group ?? 1) === 1 || r.segmentationOk);
 
 console.log(`\n  ${path.basename(file)} — ${rows.length} scored runs\n`);
 
@@ -75,6 +83,64 @@ for (const model of models) {
     const d = (ay - ax) * 100;
     const flag = d < -1.0 ? ' \x1b[31m← exceeds −1.0pp tolerance\x1b[0m' : '';
     console.log(`  ${model.slice(0, 23).padEnd(24)} ${y} − ${x} = ${(d >= 0 ? '+' : '') + d.toFixed(2)}pp   ${why}${flag}`);
+  }
+}
+
+// ── 2b. Grouping factor + the interaction ────────────────────────────
+// H6 gates everything here: a run that could not be segmented was not scored on
+// the target page, so accuracy from it means nothing. Report the gate first.
+if (GROUPS.length > 1) {
+  const g = GROUPS[GROUPS.length - 1];
+  console.log(`\n  GROUPING FACTOR (g1 vs g${g})\n`);
+  console.log(`  H6 — segmentation reliability (gate; below 95% H7–H9 are uninterpretable)`);
+  for (const model of models) {
+    for (const arm of ['B', 'C']) {
+      const rs = sel(model, arm, g);
+      if (!rs.length) continue;
+      const ok = rate(rs, r => r.segmentationOk);
+      const flag = ok !== null && ok < 0.95 ? ' \x1b[31m← below 95%\x1b[0m' : '';
+      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}  ${pct(ok)} exact-${g}-segment  n=${rs.length}${flag}`);
+    }
+  }
+  console.log(`\n  H7 — accuracy under grouping (segmented runs only)`);
+  for (const model of models) {
+    for (const arm of ['B', 'C']) {
+      const a1 = accuracy(segOk(sel(model, arm, 1))), a4 = accuracy(segOk(sel(model, arm, g)));
+      if (a1 === null || a4 === null) continue;
+      const d = (a4 - a1) * 100;
+      const flag = d < -1.0 ? ' \x1b[31m← exceeds −1.0pp tolerance\x1b[0m' : '';
+      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}  g${g} − g1 = ${(d >= 0 ? '+' : '') + d.toFixed(2)}pp${flag}`);
+    }
+  }
+  console.log(`\n  H8 — marginalia flag rate under grouping`);
+  for (const model of models) {
+    for (const arm of ['B', 'C']) {
+      const r1 = rate(segOk(sel(model, arm, 1)), r => r.conditions?.includes('marginalia'));
+      const r4 = rate(segOk(sel(model, arm, g)), r => r.conditions?.includes('marginalia'));
+      if (r1 === null || r4 === null) continue;
+      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}  g1 ${pct(r1)} → g${g} ${pct(r4)}`);
+    }
+  }
+  console.log(`\n  H9 — INTERACTION: does the required field cost more under grouping?`);
+  console.log(`       (the effect two separate experiments could not have detected)`);
+  for (const model of models) {
+    const b1 = accuracy(segOk(sel(model, 'B', 1))), c1 = accuracy(segOk(sel(model, 'C', 1)));
+    const b4 = accuracy(segOk(sel(model, 'B', g))), c4 = accuracy(segOk(sel(model, 'C', g)));
+    if ([b1, c1, b4, c4].some(v => v === null)) continue;
+    const simple1 = (c1 - b1) * 100, simple4 = (c4 - b4) * 100;
+    const inter = simple4 - simple1;
+    const flag = Math.abs(inter) > 1.0 ? ' \x1b[31m← interaction exceeds 1.0pp\x1b[0m' : '';
+    console.log(`    ${model.slice(0, 23).padEnd(24)} (C−B)@g1 = ${simple1.toFixed(2)}pp   (C−B)@g${g} = ${simple4.toFixed(2)}pp   interaction = ${(inter >= 0 ? '+' : '') + inter.toFixed(2)}pp${flag}`);
+  }
+  console.log(`\n  Cost per SCORED page vs per transcribed page (grouping amortizes)`);
+  for (const model of models) {
+    for (const arm of ['B', 'C']) {
+      const rs = sel(model, arm, g);
+      if (!rs.length) continue;
+      const perCall = rs.reduce((s, r) => s + r.costUsd, 0) / rs.length;
+      const perPage = rs.reduce((s, r) => s + r.costPerPageUsd, 0) / rs.length;
+      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}g${g}  $${perCall.toFixed(5)}/call  $${perPage.toFixed(5)}/page`);
+    }
   }
 }
 
