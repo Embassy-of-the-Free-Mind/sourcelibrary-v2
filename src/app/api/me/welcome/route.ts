@@ -36,6 +36,14 @@ export async function POST(request: NextRequest) {
       ? body.help_description.trim().slice(0, 2000)
       : '';
 
+    // Free text, deliberately — a fixed list can only offer the languages we
+    // already thought of, and the point of asking is to learn the ones we
+    // didn't. Stored raw for display plus a lowercased key so demand can be
+    // grouped without a cleanup pass later.
+    const preferredLanguage = typeof body?.preferred_language === 'string'
+      ? body.preferred_language.trim().replace(/\s+/g, ' ').slice(0, 60)
+      : '';
+
     const name = typeof body?.name === 'string'
       ? body.name.trim().replace(/\s+/g, ' ').slice(0, 100)
       : '';
@@ -50,6 +58,8 @@ export async function POST(request: NextRequest) {
     if (!skip) {
       userUpdate['profile.aboutYou'] = aboutYou;
       userUpdate['profile.helpDescription'] = helpDescription;
+      userUpdate['profile.preferredLanguage'] = preferredLanguage;
+      userUpdate['profile.preferredLanguageKey'] = preferredLanguage.toLowerCase();
       userUpdate['profile.updatedAt'] = now;
       // Only ever set a name, never clear one: a blank field here means "didn't
       // answer", not "remove the name Google gave me".
@@ -63,7 +73,7 @@ export async function POST(request: NextRequest) {
 
     // Mirror into volunteers when the user shared anything — keeps the outreach
     // list usable without joining against users.
-    if (!skip && (aboutYou || helpDescription)) {
+    if (!skip && (aboutYou || helpDescription || preferredLanguage)) {
       await db.collection('volunteers').updateOne(
         { email },
         {
@@ -72,6 +82,7 @@ export async function POST(request: NextRequest) {
             name: name || session.user.name || null,
             about_you: aboutYou,
             help_description: helpDescription,
+            preferred_language: preferredLanguage,
             updated_at: now,
           },
           $setOnInsert: {

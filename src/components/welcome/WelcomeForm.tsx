@@ -24,6 +24,7 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
   // is the only place we ever ask. Prefill so Google users aren't retyping it.
   const [name, setName] = useState(initialName);
   const [aboutYou, setAboutYou] = useState('');
+  const [preferredLanguage, setPreferredLanguage] = useState('');
   const [helpDescription, setHelpDescription] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
   const viewed = useRef(false);
@@ -60,7 +61,7 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = { name: name.trim(), about: aboutYou.trim(), help: helpDescription.trim() };
+    const trimmed = { name: name.trim(), about: aboutYou.trim(), help: helpDescription.trim(), language: preferredLanguage.trim() };
     // Which boxes were filled, never their contents — the prose lives in
     // users.profile, and an analytics row is the wrong place for it.
     trackEvent('welcome_save', {
@@ -68,10 +69,12 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
       hasName: Boolean(trimmed.name),
       hasAbout: Boolean(trimmed.about),
       hasHelp: Boolean(trimmed.help),
+      hasLanguage: Boolean(trimmed.language),
     });
     send({
       name: trimmed.name,
       about_you: trimmed.about,
+      preferred_language: trimmed.language,
       help_description: trimmed.help,
     });
   };
@@ -84,10 +87,15 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
   return (
     <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm border border-stone-200 rounded-xl p-6 md:p-8 space-y-7 shadow-lg shadow-stone-900/5">
       <div>
+        {/* Was "What should we call you? optional" — a question with a bare
+            "optional" hanging off it. The page now says once, up top, that
+            everything is optional, so each field no longer has to repeat it. */}
         <label htmlFor="welcome-name" className="block font-serif text-xl text-stone-900 mb-1">
-          What should we call you?
-          <span className="font-sans font-normal text-base text-stone-500 ml-2">optional</span>
+          Your name
         </label>
+        <p className="text-sm text-stone-500 mb-3">
+          How we&rsquo;ll address you in emails and on your account.
+        </p>
         <input
           id="welcome-name"
           type="text"
@@ -114,6 +122,29 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
           onChange={e => setAboutYou(e.target.value)}
           placeholder="e.g. I&rsquo;m a graduate student in early modern history, working on Florentine Neoplatonism. I&rsquo;m here for Ficino, Pico, and anything that touches the Hermetica…"
           className="w-full px-3 py-2.5 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust resize-y"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="preferred-language" className="block font-serif text-xl text-stone-900 mb-1">
+          What language do you prefer to read in?
+        </label>
+        <p className="text-sm text-stone-500 mb-3">
+          We translate into English first. Knowing what else readers want helps us
+          decide what comes next.
+        </p>
+        {/* Free text rather than a fixed list: the point is to learn which
+            languages readers actually want, and a dropdown can only offer the
+            ones we already thought of. At this volume (thousands of users, not
+            millions) grouping on a lowercased trim is fine. */}
+        <input
+          id="preferred-language"
+          type="text"
+          value={preferredLanguage}
+          onChange={e => setPreferredLanguage(e.target.value)}
+          maxLength={60}
+          placeholder="e.g. English, Spanish, Portuguese, Chinese…"
+          className="w-full px-3 py-2.5 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
         />
       </div>
 

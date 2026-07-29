@@ -41,8 +41,15 @@ export default async function WelcomePage() {
 
       {/* Form pinned just below the header */}
       <div className="relative z-10 max-w-2xl mx-auto px-6 pt-6 md:pt-10 pb-24">
-        <p className="font-serif text-white text-xl md:text-2xl mb-4 px-2 drop-shadow-md">
+        <p className="font-serif text-white text-xl md:text-2xl mb-2 px-2 drop-shadow-md">
           {firstName ? `Welcome, ${firstName}.` : 'Welcome.'}
+        </p>
+        {/* Why we're asking. The form opened straight into three questions with
+            no reason given, which reads as data collection rather than an
+            introduction. Derek's wording — keep it verbatim. */}
+        <p className="text-white/90 text-base md:text-lg mb-4 px-2 drop-shadow-md max-w-xl">
+          We&rsquo;re a small team and it really helps us to know who we are building for.
+          Everything is optional.
         </p>
         <WelcomeForm initialName={session.user.name || ''} />
       </div>
