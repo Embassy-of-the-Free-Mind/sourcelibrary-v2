@@ -138,10 +138,10 @@ describe('computeMemberReadingDepth', () => {
     expect(m.deep).toBe(0);
   });
 
-  it('counts sessions, members, books and returning members separately', async () => {
+  it('counts sessions, members and books separately', async () => {
     await getTestDb().collection('reading_history').insertMany([
       session('u1', 'b1', 30),
-      session('u1', 'b2', 12),   // same member, second book -> returning
+      session('u1', 'b2', 12),   // same member, second book, SAME sitting
       session('u2', 'b1', 1),    // same book, different member
       session('u3', 'b3', 60),
     ] as never[]);
@@ -151,11 +151,63 @@ describe('computeMemberReadingDepth', () => {
     expect(m.sessions).toBe(4);
     expect(m.users).toBe(3);
     expect(m.books).toBe(3);
-    expect(m.returningUsers).toBe(1);
     expect(m.deep).toBe(3);       // 30, 12, 60
     expect(m.veryDeep).toBe(1);   // 60
     expect(m.oneOnly).toBe(1);
     expect(m.totalPages).toBe(103);
+
+    // u1 opened a second book an hour into the same sitting. That is breadth,
+    // not retention — and it is exactly what the old `returningUsers` counted,
+    // which is how "62% of members came back" got published when the day-based
+    // figure was half that. The comment on the u1/b2 row above used to read
+    // "-> returning"; the test asserted the bug and passed.
+    expect(m.multiSessionUsers).toBe(1);  // for comparison only
+    expect(m.multiBookUsers).toBe(1);
+    expect(m.multiDayUsers).toBe(0);      // nobody came back
+    expect(m.spanOver24hUsers).toBe(0);
+  });
+
+  it('counts a return only when a member reads on a later day', async () => {
+    const db = getTestDb();
+    await db.collection('reading_history').insertMany([
+      session('sameday', 'b1', 5),
+      session('sameday', 'b2', 5),
+      session('returner', 'b1', 5),
+      {
+        ...session('returner', 'b1', 5),
+        started_at: new Date(Date.now() - 72 * HOUR),
+        updated_at: new Date(Date.now() - 72 * HOUR),
+      },
+    ] as never[]);
+
+    // A 30-day window, not the 24h default the other cases use — a return has
+    // to be able to land on a different calendar day to be observable at all.
+    // 72h is a whole number of days, so the two dates always differ regardless
+    // of what time the suite happens to run.
+    const m = await computeMemberReadingDepth(db, new Date(Date.now() - 30 * 24 * HOUR));
+
+    expect(m.users).toBe(2);
+    expect(m.multiSessionUsers).toBe(2);  // both have >1 session
+    expect(m.multiDayUsers).toBe(1);      // only one actually came back
+    expect(m.spanOver24hUsers).toBe(1);
+  });
+
+  it('separates page mass from session counts', async () => {
+    // Nine drive-by single pages and one long sitting. The shallow tail is 90%
+    // of sessions and 10% of the reading; quoting sessions alone inverts it.
+    const db = getTestDb();
+    await db.collection('reading_history').insertMany([
+      ...Array.from({ length: 9 }, (_, i) => session(`drive${i}`, 'b1', 1)),
+      session('reader', 'b2', 90),
+    ] as never[]);
+
+    const m = await computeMemberReadingDepth(db, since());
+
+    expect(m.oneOnly).toBe(9);
+    expect(m.sessions).toBe(10);
+    expect(m.totalPages).toBe(99);
+    expect(m.pagesOneOnly).toBe(9);
+    expect(m.pagesDeep).toBe(90);
   });
 
   it('ignores sessions outside the window', async () => {
