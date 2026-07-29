@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { trackEvent } from '@/lib/track-event';
+import { returnDestination } from '@/lib/welcome-return';
 
 // Did the reader arrive because WelcomeGate redirected them (it appends ?from=),
 // or did they navigate to /welcome themselves? Those are different populations —
@@ -46,7 +47,11 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
       });
       if (!res.ok) throw new Error();
       await update();
-      router.push('/');
+      // Back to whatever they were reading when the gate interrupted them.
+      const from = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('from')
+        : null;
+      router.push(returnDestination(from));
       router.refresh();
     } catch {
       setStatus('error');
