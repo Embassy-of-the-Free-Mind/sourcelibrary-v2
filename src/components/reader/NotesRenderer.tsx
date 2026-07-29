@@ -272,13 +272,15 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, '');
 
   if (!showNotes) {
-    // Remove editorial notes when hidden, but keep terms
+    // Remove AI-authored editorial notes when hidden. Page marks (margin,
+    // gloss, insert, unclear) mark text that IS on the page — unwrap them so
+    // the transcription survives the toggle, minus the highlight chip.
     result = result
       .replace(/\[\[(notes?):\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[margin:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[gloss:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[insert:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '');
+      .replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, '$1');
   } else {
     // Convert bracket tags to XML tags (handlers already exist for these)
     result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, '<note>$2</note>');
@@ -298,13 +300,45 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
 // A trailing glossary entry is a <term> immediately followed by its defining <note>
 // (e.g. `<term>bite</term> <note>original: "morsus."</note>`). With notes off the
 // <note> renders as null, leaving the term chip dangling with no definition. Remove
-// the whole pair. Any remaining <term> is inline within running prose — unwrap it to
-// plain text so the sentence stays intact, just without the highlight chip.
+// the whole pair. A <term> followed by a <gloss> is the same shape inline in prose
+// (`(<term>feng hou</term> <gloss>beacon towers</gloss>)`) — there the term IS the
+// transcribed word, so keep it and drop only the AI's rendering of it, otherwise the
+// unwrapped gloss reads as a duplicate. Any remaining <term> is inline within running
+// prose — unwrap it to plain text so the sentence stays intact, minus the chip.
 function preprocessTerms(text: string, showNotes: boolean): string {
   if (showNotes) return text;
   return text
     .replace(/<term>[\s\S]*?<\/term>\s*<note>[\s\S]*?<\/note>/gi, '')
+    .replace(/(<term>[\s\S]*?<\/term>)\s*<gloss>[\s\S]*?<\/gloss>/gi, '$1')
     .replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
+}
+
+// Tags that mark text physically present on the page (a marginal note in the
+// original, a scribal insertion, an uncertain reading) as opposed to <note>/
+// <image-desc>, which are the AI's own commentary. Turning Notes off must never
+// delete a page mark's content — that is transcription, and on pages whose text
+// is mostly labels (maps, diagrams, plates) deleting it empties the page.
+// Unwrap them instead: the words stay, the highlight chip goes.
+const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
+
+function unwrapPageMarks(text: string, showNotes: boolean): string {
+  if (showNotes) return text;
+  return text.replace(
+    new RegExp(`<(${PAGE_MARK_TAGS})(?:\\s[^>]*)?>([\\s\\S]*?)<\\/\\1>`, 'gi'),
+    '$2'
+  );
+}
+
+// The AI's own commentary — the only thing the Notes toggle should hide.
+// Removed here rather than left to the component's `showNotes ? … : null`
+// branches so that one pass decides what "notes off" means: whatever survives
+// this function is page text. Runs after unwrapPageMarks, so a note nested
+// inside a page mark is already flattened into it by normalizeAnnotationSpans.
+function stripAiAnnotations(text: string, showNotes: boolean): string {
+  if (showNotes) return text;
+  return text
+    .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+    .replace(/\n{3,}/g, '\n\n');
 }
 
 // On description-only pages (illustrations, diagrams, etc.) the entire "translation"
@@ -323,13 +357,17 @@ function unwrapDescriptionNotes(text: string): string {
 // image description. Treating those as description-only mis-fires twice:
 //   1. unwrapDescriptionNotes() strips the highlight off real editorial notes, and
 //   2. with notes toggled off the whole page is hidden, taking the title text with it.
-// So a page counts as description-only ONLY when stripping every annotation tag
-// (and its content) leaves no meaningful body text behind.
+// So a page counts as description-only ONLY when stripping the AI's own commentary
+// (<note>/<image-desc>) leaves no meaningful body text behind. Page marks
+// (margin/gloss/insert/unclear) count AS body text — the model routinely wraps a
+// map's cartouche labels or a plate's caption in <insert>/<margin>, and treating
+// those as commentary made a fully transcribed map read as description-only,
+// which unwrapped the one genuine note and left every real label highlighted.
 function hasBodyTextOutsideNotes(text: string): boolean {
   const residual = text
-    // drop annotation tags AND their content (both XML and legacy bracket syntax)
-    .replace(/<(note|image-desc|margin|gloss|insert|unclear)>[\s\S]*?<\/\1>/gi, '')
-    .replace(/\[\[(notes?|margin|gloss|insert|unclear|image):\s*[\s\S]*?\]\]/gi, '')
+    // drop AI commentary tags AND their content (both XML and legacy bracket syntax)
+    .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+    .replace(/\[\[(notes?|image):\s*[\s\S]*?\]\]/gi, '')
     // drop any remaining tags, centering/formatting markers, and markdown emphasis
     .replace(/<[^>]+>/g, '')
     .replace(/->|<-|::/g, '')
@@ -432,13 +470,14 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
   let processed = text.replace(/\[\[image:\s*[\s\S]*?\]\]/gi, '');
 
   if (!showNotes) {
-    // Remove editorial note tags when hidden, but KEEP terms
+    // Remove AI-authored notes when hidden; unwrap page marks and KEEP terms
+    // (their content is transcription — see unwrapPageMarks).
     processed = processed
       .replace(/\[\[(notes?):\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[margin:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[gloss:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[insert:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '');
+      .replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, '$1')
+      .replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, '$1');
     // Process remaining text to render terms
     return processNoteTags(processed, true);
   }
@@ -763,26 +802,30 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
             {children}
           </span>
         ) : null,
+        // Page marks carry transcribed text. With notes off unwrapPageMarks has
+        // already stripped the tags, so these branches only run with notes on —
+        // but they render children rather than null either way, so no layer can
+        // delete transcription (map labels, marginalia) behind the toggle.
         margin: ({ children }: any) => showNotes ? (
           <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded mx-0.5`} title="Marginal note in original">
             {children}
           </span>
-        ) : null,
+        ) : <>{children}</>,
         gloss: ({ children }: any) => showNotes ? (
           <span className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded mx-0.5`} title="Gloss/annotation in original">
             {children}
           </span>
-        ) : null,
+        ) : <>{children}</>,
         insert: ({ children }: any) => showNotes ? (
           <span className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded mx-0.5`} title="Later insertion">
             {children}
           </span>
-        ) : null,
+        ) : <>{children}</>,
         unclear: ({ children }: any) => showNotes ? (
           <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded mx-0.5 italic" title="Unclear in original">
             {children}?
           </span>
-        ) : null,
+        ) : <>{children}</>,
         term: ({ children }: any) => (
           <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{children}</em>
@@ -800,53 +843,68 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
   );
 }
 
-export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
-  const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
+/**
+ * The full text pipeline, as a pure function so it can be exercised directly in
+ * tests (the reader itself needs a DOM; this does not). Returns the markdown
+ * string handed to the renderer, the extracted metadata panel content, and
+ * whether the page turned out to be pure AI description.
+ */
+export function prepareNotesMarkdown(
+  text: string,
+  { showNotes, pageType }: { showNotes: boolean; pageType?: string }
+): { processedText: string; metadata: ExtractedMetadata; isDescriptionOnly: boolean } {
+  const { cleanText, metadata } = extractMetadata(text);
 
   // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
   // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to
   // readable text BEFORE any markdown/annotation preprocessing. Superscript
   // spans ($^{n}$) are left for preprocessLatexSuperscripts below.
-  const withArtifacts = useMemo(() => cleanOcrArtifacts(cleanText), [cleanText]);
-  const withBracketTags = useMemo(() => preprocessBracketTags(withArtifacts, showNotes), [withArtifacts, showNotes]);
+  const withArtifacts = cleanOcrArtifacts(cleanText);
+  const withBracketTags = preprocessBracketTags(withArtifacts, showNotes);
   // Rewrite annotation spans into balanced, non-nested, single-paragraph tag
   // pairs (#2709). Multi-paragraph <note> blocks otherwise lose their highlight
   // at the first blank line (CommonMark ends raw-HTML blocks there), and nested
   // notes break every lazy pairing regex below — AI description then renders
   // indistinguishable from the book's own text. Must run before any helper that
   // pairs tags with `<note>[\s\S]*?<\/note>`-style regexes.
-  const withNormalizedSpans = useMemo(() => normalizeAnnotationSpans(withBracketTags), [withBracketTags]);
+  const withNormalizedSpans = normalizeAnnotationSpans(withBracketTags);
   // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
   // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
   // treat the page as description-only when no genuine transcribed text survives outside the
-  // annotation tags (title pages keep their real title/author/imprint text). Runs on the
-  // NORMALIZED spans so multi-paragraph/nested note content isn't miscounted as body text.
+  // AI's commentary (title pages keep their real title/author/imprint text; maps keep their
+  // labels). Runs on the NORMALIZED spans so multi-paragraph/nested note content isn't
+  // miscounted as body text.
   const isDescriptionOnly =
     (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
       DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
     !hasBodyTextOutsideNotes(withNormalizedSpans);
   // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
-  const withTerms = useMemo(() => preprocessTerms(withNormalizedSpans, showNotes), [withNormalizedSpans, showNotes]);
+  const withTerms = preprocessTerms(withNormalizedSpans, showNotes);
+  // Keep transcribed page marks when notes are off; drop only the AI's commentary.
+  const withPageMarks = stripAiAnnotations(unwrapPageMarks(withTerms, showNotes), showNotes);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
-  const withDescription = useMemo(
-    () => (isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withTerms) : withTerms),
-    [withTerms, isDescriptionOnly, showNotes]
-  );
-  const withGreek = useMemo(() => preprocessLatexGreek(withDescription), [withDescription]);
-  const withLatex = useMemo(() => preprocessLatexSuperscripts(withGreek), [withGreek]);
-  const withAnnotationMd = useMemo(() => preprocessAnnotationInlineMarkdown(withLatex), [withLatex]);
-  const withCentering = useMemo(() => preprocessCentering(withAnnotationMd), [withAnnotationMd]);
+  const withDescription = isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withPageMarks) : withPageMarks;
+  const withGreek = preprocessLatexGreek(withDescription);
+  const withLatex = preprocessLatexSuperscripts(withGreek);
+  const withAnnotationMd = preprocessAnnotationInlineMarkdown(withLatex);
+  const withCentering = preprocessCentering(withAnnotationMd);
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
   // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.
   // CommonMark spec: HTML blocks (type 6) end only at a blank line.
-  const processedText = useMemo(() => {
-    let t = withCentering;
-    // After closing block-level tags: ensure blank line follows
-    t = t.replace(/<\/(div|h[1-6]|margin|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
-    // Before opening block-level tags: ensure blank line precedes (unless at start of text)
-    t = t.replace(/([^\n])\n(<(?:div|h[1-6])\s)/gi, '$1\n\n$2');
-    return t;
-  }, [withCentering]);
+  let processedText = withCentering;
+  // After closing block-level tags: ensure blank line follows
+  processedText = processedText.replace(/<\/(div|h[1-6]|margin|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
+  // Before opening block-level tags: ensure blank line precedes (unless at start of text)
+  processedText = processedText.replace(/([^\n])\n(<(?:div|h[1-6])\s)/gi, '$1\n\n$2');
+
+  return { processedText, metadata, isDescriptionOnly };
+}
+
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
+  const { processedText, metadata, isDescriptionOnly } = useMemo(
+    () => prepareNotesMarkdown(text, { showNotes, pageType }),
+    [text, showNotes, pageType]
+  );
 
   // Split on <column-break/> for multi-column rendering, with paragraph-midpoint fallback
   const columnSegments = useMemo(() => {
