@@ -112,6 +112,38 @@ describe('/api/me/welcome name capture', () => {
     expect(volunteerUpdates[0].filter).toEqual({ email: 'reader@example.com' });
   });
 
+  it('persists preferred language, with a lowercased key for grouping', async () => {
+    // The failure mode this guards is silent: a field the form sends but the
+    // route never parses is dropped with a 200 and simply absent later — the
+    // shape of the analytics prop-allowlist bug (#3405/CLAUDE.md). The only way
+    // to catch it is to assert the round trip, not the form.
+    const { POST } = await import('@/app/api/me/welcome/route');
+    await POST(post({ name: 'X', preferred_language: '  Brazilian   Portuguese ' }));
+
+    const set = userUpdates[0].update.$set;
+    expect(set['profile.preferredLanguage']).toBe('Brazilian Portuguese');
+    expect(set['profile.preferredLanguageKey']).toBe('brazilian portuguese');
+  });
+
+  it('mirrors preferred language to volunteers even with no other answer', async () => {
+    // Language alone is a real signal (it tells us what to translate next), so
+    // it must not need `about_you` to ride along to be recorded.
+    const { POST } = await import('@/app/api/me/welcome/route');
+    await POST(post({ preferred_language: 'Spanish' }));
+
+    expect(volunteerUpdates).toHaveLength(1);
+    expect(volunteerUpdates[0].update.$set.preferred_language).toBe('Spanish');
+  });
+
+  it('records an empty language rather than omitting the field', async () => {
+    // Stored as '' so "asked and declined" is distinguishable from "never
+    // asked" — the pre-feature users have no key at all.
+    const { POST } = await import('@/app/api/me/welcome/route');
+    await POST(post({ name: 'X', about_you: 'y' }));
+
+    expect(userUpdates[0].update.$set).toHaveProperty('profile.preferredLanguage', '');
+  });
+
   it('rejects an unauthenticated caller', async () => {
     sessionUser = null;
     const { POST } = await import('@/app/api/me/welcome/route');
