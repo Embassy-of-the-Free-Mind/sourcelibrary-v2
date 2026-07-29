@@ -1,0 +1,19 @@
+You are inspecting a scanned page from a historical book. Do NOT transcribe it.
+
+Report only the following, each on its own line.
+
+<script>printed|handwritten|mixed</script>
+
+<page-conditions>X</page-conditions> — a comma-separated list naming every condition
+below that is present on this page, or exactly `none` if none of them are. Report what
+you SEE; do not judge whether it is severe enough to be worth mentioning.
+  handwritten, mixed-hand, fraktur, blackletter, rashi-script, non-latin-script,
+  faded-ink, bleed-through, stain, tear, worm-damage, water-damage,
+  gutter-loss, skew, obscured, overstamp, microfilm,
+  marginalia, tabular, multi-column
+
+Use `marginalia` whenever ANY text appears in the margins, between the lines, or in a
+later hand. Use `obscured` whenever any region of the page is masked, covered, or
+otherwise unreadable.
+
+Output nothing else — no transcription, no description, no commentary.
