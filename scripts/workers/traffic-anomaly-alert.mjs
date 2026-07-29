@@ -42,6 +42,27 @@
 
 import { MongoClient } from 'mongodb';
 
+// Same topic as uptime-monitor.mjs and daily-health-snapshot.mjs — the channel
+// Derek actually reads daily. Deliberately NOT email: `sync_worker_missing`
+// emailed itself every morning for seven weeks and was ignored, which is the
+// failure this detector exists to avoid repeating.
+const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
+const NO_PUSH = process.argv.includes('--no-push');
+
+async function pushNtfy(title, message, priority) {
+  if (NO_PUSH) { console.log('[traffic-anomaly] --no-push: skipping ntfy'); return; }
+  try {
+    await fetch(NTFY_TOPIC, {
+      method: 'POST',
+      headers: { Title: title, Priority: priority, Tags: 'rotating_light' },
+      body: message,
+    });
+    console.log('[traffic-anomaly] ntfy push sent');
+  } catch (err) {
+    console.error(`[traffic-anomaly] ntfy push failed: ${err.message}`);
+  }
+}
+
 // Checked inside run(), not at module scope: the pure predicates below are
 // imported by tests, and a module-level process.exit kills the test runner.
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -175,9 +196,29 @@ async function run() {
     for (const a of alerts) console.log(`\n[${a.level.toUpperCase()}] ${a.check}\n  ${a.message}`);
   }
 
+  // Push only when the set of firing checks CHANGES. A detector that repeats
+  // the same alert every hour trains you to swipe it away — which is exactly
+  // how the seven-week sync_worker_missing alarm became invisible.
+  const firing = alerts.filter((a) => a.level === 'critical').map((a) => a.check).sort();
+  const prev = await db.collection('system_config').findOne({ _id: 'traffic_anomaly_state' });
+  const prevFiring = (prev?.firing || []).slice().sort();
+  const changed = JSON.stringify(firing) !== JSON.stringify(prevFiring);
+
+  if (changed && firing.length) {
+    await pushNtfy(
+      `Traffic anomaly: ${firing.length} critical`,
+      alerts.filter((a) => a.level === 'critical').map((a) => `• ${a.message}`).join('\n\n').slice(0, 3500),
+      'high',
+    );
+  } else if (changed && !firing.length && prevFiring.length) {
+    await pushNtfy('Traffic anomaly cleared', `Resolved: ${prevFiring.join(', ')}. No anomalies in the last ${HOURS}h.`, 'default');
+  } else if (firing.length) {
+    console.log(`[traffic-anomaly] ${firing.length} critical still firing (unchanged) — no push`);
+  }
+
   await db.collection('system_config').updateOne(
     { _id: 'traffic_anomaly_state' },
-    { $set: { ...summary, checked_at: new Date() } },
+    { $set: { ...summary, firing, checked_at: new Date() } },
     { upsert: true },
   ).catch(() => {});
 
