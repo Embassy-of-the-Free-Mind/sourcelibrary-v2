@@ -22,15 +22,33 @@
  * tests/unit/holding-library-credit.test.ts). Using anything else here would
  * let the sweep and the page disagree about what counts as a custodian.
  *
+ * TWO MODES:
+ *   (default)  fill  — books with no usable custodian
+ *   --verify         — books that HAVE one, checked against IA and corrected
+ *
+ * Verify exists because a stored custodian can be confidently wrong. A batch
+ * import blanket-assigned "Biblioteca Nazionale Centrale di Firenze" to 955
+ * books; a 120-book random sample found 27.7% of them are actually held
+ * elsewhere (National Central Library of Rome, John Carter Brown, Boston
+ * Public…). Filling gaps while leaving those in place would ship ~265 confident
+ * misattributions — the exact failure this credit is meant to avoid.
+ *
+ * For a book we imported FROM Internet Archive, IA's own contributor field is
+ * the authority: it is where the value came from originally. Overwrites record
+ * the previous value in `holding_library_harvest.previous`, so the change is
+ * reversible.
+ *
  *   node scripts/maintenance/harvest-holding-libraries.mjs --dry-run
+ *   node scripts/maintenance/harvest-holding-libraries.mjs --verify --dry-run
  *   node scripts/maintenance/harvest-holding-libraries.mjs --limit 200
  *   node scripts/maintenance/harvest-holding-libraries.mjs --apply
+ *   node scripts/maintenance/harvest-holding-libraries.mjs --verify --apply
  *
  * Read-only by default: pass --apply to write.
  */
 
 import { MongoClient } from 'mongodb';
-import { holdingLibraryName, AGGREGATOR_PROVIDERS } from '../lib/holding-library.mjs';
+import { holdingLibraryName, canonicalHoldingLibrary, AGGREGATOR_PROVIDERS } from '../lib/holding-library.mjs';
 
 const args = process.argv.slice(2);
 const has = (f) => args.includes(f);
@@ -40,6 +58,7 @@ const val = (f, d) => {
 };
 
 const APPLY = has('--apply');
+const VERIFY = has('--verify');
 const LIMIT = Number(val('--limit', '0')) || Infinity;
 const CONCURRENCY = Math.max(1, Number(val('--concurrency', '4')));
 const SLEEP_MS = Number(val('--sleep', '250'));
@@ -70,18 +89,32 @@ async function fetchIaMetadata(identifier) {
   const md = json?.metadata || {};
   // IA returns either a string or an array for multi-valued fields.
   const first = (v) => (Array.isArray(v) ? v.find((x) => typeof x === 'string' && x.trim()) : v);
-  return {
-    contributor: typeof first(md.contributor) === 'string' ? first(md.contributor).trim() : null,
-    sponsor: typeof first(md.sponsor) === 'string' ? first(md.sponsor).trim() : null,
+  // …and sometimes an HTML anchor rather than a name:
+  //   <a href="https://archive.org/details/…">Bibliothèque interuniversitaire de santé (Paris)</a>
+  // Writing that raw would put markup in a field we render as text. Take the
+  // link text, which is the institution name.
+  const clean = (v) => {
+    const s = first(v);
+    if (typeof s !== 'string') return null;
+    const text = s
+      .replace(/<[^>]*>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+    return text || null;
   };
+  return { contributor: clean(md.contributor), sponsor: clean(md.sponsor) };
 }
 
 async function main() {
   const client = await MongoClient.connect(MONGODB_URI);
   const books = client.db('bookstore').collection('books');
 
-  console.log(`Mode: ${APPLY ? 'APPLY (writes)' : 'DRY RUN (no writes)'}`);
-  console.log('Scanning for books on aggregators without a usable custodian…\n');
+  console.log(`Mode: ${VERIFY ? 'VERIFY existing custodians' : 'FILL missing custodians'} — ${APPLY ? 'APPLY (writes)' : 'DRY RUN (no writes)'}`);
 
   // Only IA exposes a re-harvestable contributor field. e-codices items carry
   // no per-item custodian in our records and Google Books does not publish the
@@ -97,19 +130,21 @@ async function main() {
   for await (const b of cursor) {
     scanned++;
     if (!AGGREGATOR_PROVIDERS.has(b.image_source?.provider)) continue;
-    // Already renders a credit — leave it alone.
-    if (holdingLibraryName(b.image_source)) continue;
+    const current = holdingLibraryName(b.image_source);
+    // Fill mode wants the books with no credit; verify mode wants the rest.
+    if (VERIFY ? !current : !!current) continue;
     const identifier = b.ia_identifier || b.image_source?.identifier;
     if (!identifier) continue;
     todo.push({ _id: b._id, slug: b.slug, title: b.title, identifier, stored: b.image_source?.contributing_library ?? null });
     if (todo.length >= LIMIT) break;
   }
 
-  console.log(`Scanned ${scanned} IA books; ${todo.length} need a custodian and have an IA identifier.\n`);
+  console.log(`Scanned ${scanned} IA books; ${todo.length} ${VERIFY ? 'have a custodian to check' : 'need a custodian'} and have an IA identifier.\n`);
 
-  const stats = { recovered: 0, noContributor: 0, rejected: 0, fetchFailed: 0, written: 0 };
+  const stats = { recovered: 0, noContributor: 0, rejected: 0, fetchFailed: 0, written: 0, agreed: 0, corrected: 0 };
   const recoveredNames = new Map();
   const rejectedNames = new Map();
+  const corrections = new Map();
 
   let idx = 0;
   const worker = async () => {
@@ -125,9 +160,18 @@ async function main() {
           // site applies. Recording it would only re-create the original bug.
           stats.rejected++;
           rejectedNames.set(contributor, (rejectedNames.get(contributor) || 0) + 1);
+        } else if (VERIFY && canonicalHoldingLibrary(contributor) === canonicalHoldingLibrary(item.stored)) {
+          // Same institution, possibly a different spelling — nothing to do.
+          stats.agreed++;
         } else {
-          stats.recovered++;
-          recoveredNames.set(contributor, (recoveredNames.get(contributor) || 0) + 1);
+          if (VERIFY) {
+            stats.corrected++;
+            const k = `${canonicalHoldingLibrary(item.stored)}  ->  ${canonicalHoldingLibrary(contributor)}`;
+            corrections.set(k, (corrections.get(k) || 0) + 1);
+          } else {
+            stats.recovered++;
+            recoveredNames.set(contributor, (recoveredNames.get(contributor) || 0) + 1);
+          }
           if (APPLY) {
             const set = {
               'image_source.contributing_library': contributor,
@@ -139,7 +183,9 @@ async function main() {
             else console.warn(`  ! no write for ${item.slug} (modifiedCount=${r.modifiedCount})`);
           }
         }
-        if (n % 100 === 0) console.log(`  …${n}/${todo.length}  recovered=${stats.recovered} none=${stats.noContributor} rejected=${stats.rejected} failed=${stats.fetchFailed}`);
+        if (n % 100 === 0) console.log(VERIFY
+          ? `  …${n}/${todo.length}  agreed=${stats.agreed} corrected=${stats.corrected} none=${stats.noContributor} rejected=${stats.rejected} failed=${stats.fetchFailed}`
+          : `  …${n}/${todo.length}  recovered=${stats.recovered} none=${stats.noContributor} rejected=${stats.rejected} failed=${stats.fetchFailed}`);
       } catch (e) {
         stats.fetchFailed++;
         if (stats.fetchFailed <= 10) console.warn(`  ! ${item.identifier}: ${e.message}`);
@@ -152,6 +198,12 @@ async function main() {
 
   console.log('\n=== Result ===');
   console.log(`  candidates      ${todo.length}`);
+  if (VERIFY) {
+    console.log(`  agreed          ${stats.agreed}  (stored value matches IA)`);
+    console.log(`  CORRECTED       ${stats.corrected}  (stored value named a different institution)`);
+    const n = stats.agreed + stats.corrected;
+    if (n) console.log(`  error rate      ${(stats.corrected / n * 100).toFixed(1)}%  (n=${n})`);
+  }
   console.log(`  recovered       ${stats.recovered}`);
   console.log(`  no contributor  ${stats.noContributor}  (community uploads — legitimately uncredited)`);
   console.log(`  rejected        ${stats.rejected}  (upstream value is a placeholder / not a library)`);
@@ -162,6 +214,10 @@ async function main() {
   if (recoveredNames.size) {
     console.log(`\nTop recovered custodians (${recoveredNames.size} distinct):`);
     for (const [k, v] of top(recoveredNames, 25)) console.log(`  ${String(v).padStart(5)}  ${k}`);
+  }
+  if (corrections.size) {
+    console.log(`\nCorrections (${corrections.size} distinct):`);
+    for (const [k, v] of top(corrections, 30)) console.log(`  ${String(v).padStart(5)}  ${k}`);
   }
   if (rejectedNames.size) {
     console.log(`\nRejected upstream values (${rejectedNames.size} distinct):`);
