@@ -5,6 +5,7 @@ import { Library, ExternalLink, BookOpen, Globe } from 'lucide-react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
+import { canonicalHoldingLibrary } from '@/lib/holding-library';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -100,11 +101,15 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
       .range(offset, offset + limit - 1)
   );
 
-  const excludeNames = new Set(['[object Object]', 'IIIF Source', 'null', 'undefined']);
+  // Screen and merge through the shared resolver rather than an ad-hoc exclude
+  // list: the old one caught 'IIIF Source' but still listed "Internet Archive"
+  // (2,315 books), "unknown library", MET acquisition lines ("Rogers Fund,
+  // 1925") and Library Genesis as contributing institutions, and split
+  // "Bayerische Staatsbibliothek" across two spellings. See src/lib/holding-library.ts.
   const counts = new Map<string, number>();
   for (const row of allRows) {
-    const name = (row.contributing_library as string || '').trim();
-    if (!name || excludeNames.has(name)) continue;
+    const name = canonicalHoldingLibrary(row.contributing_library as string | null);
+    if (!name) continue;
     counts.set(name, (counts.get(name) || 0) + 1);
   }
 

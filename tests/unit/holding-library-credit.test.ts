@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { resolveSourceCredit, holdingLibraryName, AGGREGATOR_PROVIDERS } from '@/lib/holding-library';
+import { resolveSourceCredit, holdingLibraryName, canonicalHoldingLibrary, AGGREGATOR_PROVIDERS } from '@/lib/holding-library';
+import * as twin from '../../scripts/lib/holding-library.mjs';
+import corpusNames from '../fixtures/holding-library-names.json';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import type { ImageSource } from '@/lib/types/image-source';
 
@@ -160,6 +162,65 @@ describe('holdingLibraryName — details-panel rows', () => {
   });
 });
 
+describe('canonicalHoldingLibrary — grouping for /libraries', () => {
+  it('merges hand-verified spellings of one institution', () => {
+    expect(canonicalHoldingLibrary('Bayerische Staatsbibliothek, Munich')).toBe('Bayerische Staatsbibliothek (Munich)');
+    expect(canonicalHoldingLibrary('The Library of Congress')).toBe('Library of Congress');
+    expect(canonicalHoldingLibrary('The Wellcome Library, London')).toBe('Wellcome Collection');
+    expect(canonicalHoldingLibrary('University of Toronto - Kelly Library')).toBe('Kelly - University of Toronto');
+  });
+
+  it('never merges institutions that merely share words', () => {
+    // Substring containment pairs these two; they are 5,000 miles apart.
+    expect(canonicalHoldingLibrary('University of British Columbia Library')).toBe(
+      'University of British Columbia Library',
+    );
+    expect(canonicalHoldingLibrary('British Library')).toBe('British Library');
+    // ASCII-folding collapses both of these to the empty string.
+    expect(canonicalHoldingLibrary('北京大學圖書館')).toBe('北京大學圖書館');
+    expect(canonicalHoldingLibrary('浙江大学图书馆')).toBe('浙江大学图书馆');
+  });
+
+  it('keeps branch libraries distinct from their parent university', () => {
+    // The whole point of the credit is naming WHICH library holds the volume.
+    for (const branch of [
+      'Fisher - University of Toronto',
+      'Robarts - University of Toronto',
+      'Gerstein - University of Toronto',
+    ]) {
+      expect(canonicalHoldingLibrary(branch)).toBe(branch);
+    }
+  });
+
+  it('rejects museum acquisition credit lines, which name a donor not a holder', () => {
+    for (const line of [
+      'Rogers Fund, 1925',
+      'Gift of Theodore M. Davis, 1909',
+      'Purchase, Edward S. Harkness Gift, 1926',
+      'Theodore M. Davis Collection, Bequest of Theodore M. Davis, 1915',
+      'Harris Brisbane Dick Fund, 1957',
+      'Anonymous Gift, 1931',
+      'Museum Accession',
+    ]) {
+      expect(canonicalHoldingLibrary(line), line).toBeNull();
+    }
+  });
+
+  it('does not let the acquisition-line rule swallow real institutions', () => {
+    // "Fund"/"Gift" appear in legitimate names; the rule requires the donor
+    // shape (a year, or an explicit gift/bequest/exchange clause).
+    for (const name of [
+      'Getty Research Institute',
+      'Chicago Botanic Garden, Lenhardt Library',
+      'Missouri Botanical Garden',
+      'John Carter Brown Library',
+      'Wellcome Collection',
+    ]) {
+      expect(canonicalHoldingLibrary(name), name).toBe(name);
+    }
+  });
+});
+
 describe('AGGREGATOR_PROVIDERS', () => {
   it('names providers that actually exist as partners', () => {
     // A typo'd key would silently disable the credit for that provider.
@@ -167,5 +228,46 @@ describe('AGGREGATOR_PROVIDERS', () => {
     for (const provider of AGGREGATOR_PROVIDERS) {
       expect(known, `${provider} is not a providerKey in LIBRARY_PARTNERS`).toContain(provider);
     }
+  });
+});
+
+describe('PARITY: scripts/lib/holding-library.mjs vs src/lib/holding-library.ts', () => {
+  // The harvest sweep decides which books still lack a custodian using the .mjs
+  // twin; the site renders with the .ts original. If they disagree, the sweep
+  // re-harvests books that already show a credit, or skips books that don't.
+  // Checked over EVERY distinct custodian name in the corpus, not a sample.
+  const names = (corpusNames as { name: string; n: number }[]).map((r) => r.name);
+
+  it('covers the whole corpus fixture', () => {
+    expect(names.length).toBeGreaterThan(250);
+  });
+
+  it('agrees on holdingLibraryName for every name', () => {
+    const drift = names.filter(
+      (n) => holdingLibraryName({ contributing_library: n }) !== twin.holdingLibraryName({ contributing_library: n }),
+    );
+    expect(drift, `drifted: ${drift.slice(0, 5).join(' | ')}`).toEqual([]);
+  });
+
+  it('agrees on canonicalHoldingLibrary for every name', () => {
+    const drift = names.filter((n) => canonicalHoldingLibrary(n) !== twin.canonicalHoldingLibrary(n));
+    expect(drift, `drifted: ${drift.slice(0, 5).join(' | ')}`).toEqual([]);
+  });
+
+  it('agrees on resolveSourceCredit across providers', () => {
+    const providers = ['internet_archive', 'e-rara', 'bodleian', 'mdz', 'met', 'google_books'];
+    const drift: string[] = [];
+    for (const n of names) {
+      for (const p of providers) {
+        const s = { provider: p, contributing_library: n } as never;
+        if (JSON.stringify(resolveSourceCredit(s, 'X')) !== JSON.stringify(twin.resolveSourceCredit(s, 'X')))
+          drift.push(`${p}/${n}`);
+      }
+    }
+    expect(drift, `drifted: ${drift.slice(0, 5).join(' | ')}`).toEqual([]);
+  });
+
+  it('exposes the same aggregator set', () => {
+    expect([...twin.AGGREGATOR_PROVIDERS].sort()).toEqual([...AGGREGATOR_PROVIDERS].sort());
   });
 });

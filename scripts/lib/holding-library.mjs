@@ -1,4 +1,16 @@
-import type { ImageSource, ImageSourceProvider } from '@/lib/types/image-source';
+// Scripts-side twin of src/lib/holding-library.ts — keep the two in lockstep.
+// tests/unit/holding-library-credit.test.ts runs a parity check between this
+// file and the TS original over every distinct custodian name in the corpus
+// fixture; change one side without the other and that test fails.
+//
+// Why it exists: .mjs maintenance scripts can't import the TS module, and the
+// harvest sweep (scripts/maintenance/harvest-holding-libraries.mjs) must decide
+// which books still lack a custodian using EXACTLY the rules the site renders
+// with — otherwise it re-harvests books that already display a credit, or skips
+// books that don't.
+//
+// Regenerate after editing the TS side: python3 scripts/lib/regen-holding-twin.py
+
 
 /**
  * Who held the book, and who digitized it — two different institutions.
@@ -24,7 +36,7 @@ import type { ImageSource, ImageSourceProvider } from '@/lib/types/image-source'
  * Keyed on `providerKey`, not partner slug — that's what `image_source.provider`
  * carries. A provider absent here is treated as its own custodian.
  */
-export const AGGREGATOR_PROVIDERS: ReadonlySet<ImageSourceProvider> = new Set([
+export const AGGREGATOR_PROVIDERS = new Set([
   'internet_archive',
   'e-rara',
   'e-codices',
@@ -52,7 +64,7 @@ const PLACEHOLDER_HOLDER =
  * recurring shape in upstream metadata, not a one-off string, so new imports
  * with the same defect are caught too.
  */
-const NOT_A_LIBRARY: readonly RegExp[] = [
+const NOT_A_LIBRARY = [
   // Early-modern imprint statements landing in the contributor field:
   // "Sumptibus Autoris", "Basileae : Johannes Froben et Johannes Petri".
   /^(?:sumptibus|apud|ex\s+officina|typis|excudebat|impensis|prostat)\b/i,
@@ -93,7 +105,7 @@ const NOT_A_LIBRARY: readonly RegExp[] = [
  *
  * Keyed by lowercased name.
  */
-const HOLDING_LIBRARY_ALIASES: ReadonlyMap<string, string> = new Map(
+const HOLDING_LIBRARY_ALIASES = new Map(
   Object.entries({
     // Same library, four spellings (3,042 books). The native name wins because
     // it is what the overwhelming majority of records already use.
@@ -144,9 +156,7 @@ const HOLDING_LIBRARY_ALIASES: ReadonlyMap<string, string> = new Map(
  * /libraries directory, a per-provider breakdown); the un-canonicalized name is
  * fine for a single record's own credit line.
  */
-export function canonicalHoldingLibrary(
-  source: Pick<ImageSource, 'contributing_library'> | string | null | undefined,
-): string | null {
+export function canonicalHoldingLibrary(source) {
   const name =
     typeof source === 'string' ? holdingLibraryName({ contributing_library: source }) : holdingLibraryName(source);
   if (!name) return null;
@@ -154,7 +164,7 @@ export function canonicalHoldingLibrary(
 }
 
 /** Trim, collapse internal whitespace, drop trailing separators. */
-function cleanHolderName(raw: string): string {
+function cleanHolderName(raw) {
   return raw
     .replace(/\s+/g, ' ')
     .trim()
@@ -170,28 +180,12 @@ function cleanHolderName(raw: string): string {
  * Use this for labelled metadata rows; use `resolveSourceCredit` when the
  * question is whether a SECOND institution deserves separate credit.
  */
-export function holdingLibraryName(
-  source: Pick<ImageSource, 'contributing_library'> | null | undefined,
-): string | null {
+export function holdingLibraryName(source) {
   const raw = source?.contributing_library;
   if (typeof raw !== 'string') return null;
   const name = cleanHolderName(raw);
   if (!name || PLACEHOLDER_HOLDER.test(name)) return null;
   return NOT_A_LIBRARY.some((re) => re.test(name)) ? null : name;
-}
-
-export interface SourceCredit {
-  /**
-   * The institution holding the physical original, when we know it AND it is
-   * distinct from the provider. Null whenever we'd otherwise be guessing.
-   */
-  holder: string | null;
-  /**
-   * The platform that digitized and hosts the scans. Falls back to the
-   * provider's own name; never borrows `contributing_library`, which is
-   * documented as "NOT necessarily the digitizer".
-   */
-  digitizer: string | null;
 }
 
 /**
@@ -205,10 +199,7 @@ export interface SourceCredit {
  * `holder: null`, which callers must render as today's single-line credit
  * rather than inventing an attribution.
  */
-export function resolveSourceCredit(
-  source: Pick<ImageSource, 'provider' | 'provider_name' | 'contributing_library' | 'digitized_by'> | null | undefined,
-  providerName?: string,
-): SourceCredit {
+export function resolveSourceCredit(source, providerName) {
   const isAggregator = !!source?.provider && AGGREGATOR_PROVIDERS.has(source.provider);
   // Last resort only off an aggregator: there the custodian scanned its own
   // book, so `contributing_library` names the digitizer too. On an aggregator
@@ -224,7 +215,7 @@ export function resolveSourceCredit(
 
   // A custodian that just restates the host or the digitizer is not a second
   // credit — compare on letters only so punctuation/spacing variants collapse.
-  const key = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const key = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
   if (key(holder) === key(digitizer || '')) return { holder: null, digitizer };
 
   return { holder, digitizer };
