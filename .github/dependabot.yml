@@ -1,0 +1,60 @@
+version: 2
+
+# Nothing watched our dependencies until 2026-07-29. The only reason 3 criticals
+# in production deps were ever noticed is that CLAUDE.md's /reap-prs section tells
+# a human to run `npm audit --omit=dev` by hand during a PR sweep — and the one PR
+# that did act on it (#2946) sat 25 days and was then closed unmerged by a
+# stale-PR sweep. See #3427.
+#
+# Grouped deliberately. Ungrouped npm updates open ~15 PRs a week here, and this
+# repo's failure mode is a stale PR tail, not a shortage of PRs — a flood would be
+# swept closed the same way #2946 was. One security PR and one routine PR a week
+# is a queue a person can actually read.
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    groups:
+      # Security fixes travel alone so they are never held up by a routine bump
+      # that needs review.
+      security:
+        applies-to: security-updates
+        patterns: ['*']
+      production:
+        applies-to: version-updates
+        dependency-type: production
+        update-types: [minor, patch]
+      development:
+        applies-to: version-updates
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # Majors here are not mechanical — they touch image processing, CLIP
+      # embeddings and the auth surface, and each needs its own PR with real
+      # verification (see #3427). Dependabot proposing them weekly would train
+      # us to close them unread, which is how #2946 died.
+      - dependency-name: sharp
+        update-types: [version-update:semver-major]
+      - dependency-name: '@xenova/transformers'
+        update-types: [version-update:semver-major]
+      - dependency-name: next-auth
+        update-types: [version-update:semver-major]
+      # next-auth pins its own @auth/core; bumping it directly desynchronizes the
+      # pair and npm hoists whichever copy resolves first (this is exactly why the
+      # @auth/core critical survived a next-auth bump — see #3431).
+      - dependency-name: '@auth/core'
+      # next-auth's peer range caps nodemailer at ^8; a 9.x PR cannot be merged
+      # until that widens.
+      - dependency-name: nodemailer
+        update-types: [version-update:semver-major]
