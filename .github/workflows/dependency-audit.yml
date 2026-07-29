@@ -1,0 +1,107 @@
+name: Production dependency audit
+
+# Counts vulnerabilities in PRODUCTION dependencies (`--omit=dev`) and keeps a
+# single tracking issue in sync with the result.
+#
+# Why an issue rather than a required PR check: on 2026-07-29 this repo carried 3
+# criticals in production deps — including an Auth.js advisory where "configuration
+# errors can cause existence-based auth checks to fail open" — and nothing was
+# watching. The gap was never that a gate was missing; it was that no artifact
+# survived a session. A red X on an unrelated contributor's PR is the alarm that
+# gets ignored (see doc-staleness.yml for the same reasoning, and CLAUDE.md's
+# "An alarm nobody reads is not an instrument").
+#
+# The job DOES fail on a critical, so the Actions run goes red and the weekly
+# digest has something to point at — but it is not wired as a required check, so
+# it can never block unrelated work.
+#
+# --omit=dev is the whole point. The full audit is dominated by build tooling that
+# never runs in production; including it is how a real critical hides in a count
+# of 200. See #3427.
+
+on:
+  schedule:
+    # 07:00 UTC Mondays — lands before the weekly digest reads the week.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Audit production dependencies
+        id: audit
+        run: |
+          # npm audit exits non-zero whenever anything is found, so capture and
+          # decide ourselves rather than letting `set -e` end the job here.
+          npm audit --omit=dev --json > audit.json || true
+          node -e '
+            const a = require("./audit.json");
+            const m = a.metadata.vulnerabilities;
+            const bad = Object.entries(a.vulnerabilities)
+              .filter(([, v]) => v.severity === "critical" || v.severity === "high")
+              .sort(([, x], [, y]) => (x.severity === "critical" ? -1 : 1) - (y.severity === "critical" ? -1 : 1));
+            const rows = bad.map(([name, v]) => {
+              const titles = v.via.filter(x => typeof x === "object").map(x => x.title);
+              const fix = v.fixAvailable === true ? "yes"
+                : v.fixAvailable ? `${v.fixAvailable.name}@${v.fixAvailable.version}${v.fixAvailable.isSemVerMajor ? " (major)" : ""}`
+                : "none";
+              return `| ${v.severity} | \`${name}\` | ${(titles[0] || "").slice(0, 90)} | ${fix} |`;
+            });
+            const body = [
+              `**${m.critical} critical · ${m.high} high · ${m.moderate} moderate · ${m.low} low** in production dependencies.`,
+              "",
+              rows.length ? "| severity | package | advisory | fix |\n|---|---|---|---|" : "_Nothing at critical or high._",
+              ...rows,
+              "",
+              "Reproduce: `npm audit --omit=dev`. A major-version fix needs its own PR with real verification — do not batch it with patches.",
+            ].join("\n");
+            require("fs").writeFileSync("report.md", body);
+            const fs = require("fs");
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `critical=${m.critical}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `high=${m.high}\n`);
+          '
+          cat report.md
+
+      - name: Sync the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CRITICAL: ${{ steps.audit.outputs.critical }}
+          HIGH: ${{ steps.audit.outputs.high }}
+        run: |
+          TITLE="Production dependency vulnerabilities"
+          EXISTING=$(gh issue list --search "$TITLE in:title" --state open --json number --jq '.[0].number')
+
+          if [ "$CRITICAL" -eq 0 ] && [ "$HIGH" -eq 0 ]; then
+            if [ -n "$EXISTING" ]; then
+              gh issue comment "$EXISTING" --body "Production dependencies are clean at critical and high as of $(date -u +'%Y-%m-%d'). Closing."
+              gh issue close "$EXISTING"
+            fi
+            exit 0
+          fi
+
+          BODY=$(printf '%s\n\n_Updated by `.github/workflows/dependency-audit.yml` on %s._\n' \
+            "$(cat report.md)" "$(date -u +'%Y-%m-%d')")
+
+          if [ -n "$EXISTING" ]; then
+            # One issue, kept current — a new issue every week is a queue nobody reads.
+            gh issue edit "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label security
+          fi
+
+      - name: Fail on a critical
+        if: steps.audit.outputs.critical != '0'
+        run: |
+          echo "::error::${{ steps.audit.outputs.critical }} critical vulnerabilities in production dependencies"
+          exit 1
