@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { getDb } from '@/lib/mongodb';
+import { sanitizeReferrer } from '@/lib/reading-history-referrer';
 
 const DB_TIMEOUT_MS = 3000;
 const SESSION_GAP_MS = 30 * 60 * 1000; // 30 minutes
@@ -36,6 +37,7 @@ export async function POST(
 
     const userId = session.user.id;
     const now = new Date();
+    const cleanReferrer = sanitizeReferrer(referrer);
 
     const dbWork = (async () => {
       const db = await getDb();
@@ -79,7 +81,9 @@ export async function POST(
           started_at: now,
           updated_at: now,
           tenantId,
-          ...(referrer ? { referrer } : {}),
+          // Session-opening row only — see the global twin. Empty on every row
+          // written before 2026-07-29; the client never sent it until then.
+          ...(cleanReferrer ? { referrer: cleanReferrer } : {}),
         });
       }
     })();

@@ -234,10 +234,23 @@ export default function PageEditorClient({
     loadPage();
   }, [currentPageId, initialPage.id, currentPage.id, pageList, fetchPageData, prefetchAround]);
 
-  // Track reading progress (fire-and-forget, debounced)
+  // Track reading progress (fire-and-forget, debounced).
+  //
+  // `document.referrer` is the document-load referrer, so it survives every
+  // client-side page turn and keeps naming the surface the reader entered the
+  // book from (a search result, a collection, an external link). The API only
+  // stores it on the row that OPENS a session — later beacons in the same
+  // sitting update the existing row and drop it — so sending it each time is
+  // idempotent and records the entry point, not the last page turn.
+  //
+  // It was never sent until 2026-07-29, so every reading_history row written
+  // before that date has an empty `referrer` and we cannot say how members
+  // reached a book. Don't remove the argument again: the field looks unused
+  // precisely because nothing was filling it.
   useEffect(() => {
     if (!currentPage?.page_number) return;
-    readingHistory.record(book.id, currentPageId, currentPage.page_number);
+    const referrer = typeof document !== 'undefined' ? document.referrer : '';
+    readingHistory.record(book.id, currentPageId, currentPage.page_number, referrer || undefined);
   }, [book.id, currentPageId, currentPage?.page_number]);
 
   // Client-side navigation - update URL and current page
