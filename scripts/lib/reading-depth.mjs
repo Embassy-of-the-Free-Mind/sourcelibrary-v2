@@ -49,6 +49,32 @@
  * window) and are more engaged than a passer-by, so it is a CEILING, not an
  * average. Both numbers are reported side by side, each labelled with its
  * population, and neither is presented as "reading depth" unqualified.
+ *
+ * Two corrections from the 2026-07-29 audit of this instrument, both of which
+ * are the same mistake the anonymous metric made — a number that reads as one
+ * thing and counts another:
+ *
+ *  1. "Members who came back" was `sessions > 1`. A session is one user+book,
+ *     so opening a SECOND BOOK IN THE SAME SITTING scored as a return. That
+ *     read 62.2% over 30 days while only 30.8% of members read on more than one
+ *     calendar day and 61.0% had their entire history inside a single hour. The
+ *     return figure is now day-based; the session count is still reported, under
+ *     a name that says what it counts.
+ *
+ *  2. Auth-gating excludes anonymous crawlers, not a signed-in account doing
+ *     bulk work. The heaviest member read 14,342 pages across 208 books in 9
+ *     active days (~1,594/day, one 1,062-page sitting), and 30% of all member
+ *     pages arrived faster than 20 pages/minute. Per-SESSION shares barely move
+ *     when those accounts are dropped (26.4% deep with and without the heaviest
+ *     user), but any TOTAL is distorted — the top 1% of readers are 36.7% of
+ *     pages. So pace is measured and reported, never silently excluded, for the
+ *     same reason the heavy-IP rule above reports what it drops.
+ *
+ * A third framing that matters more than either: counting SESSIONS puts the
+ * weight in the wrong place. One-page sessions are 40.6% of sessions and 2.9%
+ * of pages read; 10+ page sessions are 26% of sessions and 87% of pages. Both
+ * denominators are returned so the shallow tail can't be quoted as if it were
+ * where the reading is.
  */
 
 // Distinct page_read events from one anonymized /24 over the window, above
@@ -143,6 +169,16 @@ export async function computeReadingDepth(db, since, opts = {}) {
   };
 }
 
+// Distinct pages per minute above which a session is not someone reading. A
+// facsimile page skimmed for its illustration is a couple of seconds, so this
+// is deliberately loose — it separates "moving through the book faster than a
+// page can be looked at" from "flipping", not "reading" from "skimming".
+export const MACHINE_PACE_PPM = 20;
+
+// Minimum session length before pace is meaningful. Below this the duration is
+// dominated by how the 30-minute collapse happened to bucket the beacons.
+const MIN_PACE_SECONDS = 12;
+
 /**
  * Reading depth for SIGNED-IN members, from `reading_history`.
  *
@@ -152,6 +188,10 @@ export async function computeReadingDepth(db, since, opts = {}) {
  * book did this person get in this sitting", not a page-turn counter.
  * `pages_viewed` counts every turn including re-reads, which is why the two are
  * reported separately rather than averaged into one misleading figure.
+ *
+ * Verified 2026-07-29: the beacon fires from PageEditorClient only on an actual
+ * page navigation — `prefetchAround` is a separate path and does not record —
+ * so these are pages a reader landed on, not pages the client warmed.
  *
  * @param {import('mongodb').Db} db
  * @param {Date} since
@@ -164,6 +204,8 @@ export async function computeMemberReadingDepth(db, since) {
       $project: {
         user_id: 1,
         book_id: 1,
+        started_at: 1,
+        updated_at: 1,
         viewed: { $ifNull: ['$pages_viewed', 0] },
         distinct: { $size: { $ifNull: ['$pages_read', []] } },
       },
@@ -176,14 +218,53 @@ export async function computeMemberReadingDepth(db, since) {
   const n = depths.length;
   const q = (p) => depths[Math.floor(n * p)] || 0;
   const count = (fn) => rows.filter(fn).length;
+  const pagesIn = (fn) => rows.filter(fn).reduce((s, r) => s + r.distinct, 0);
+  const totalPages = rows.reduce((s, r) => s + r.distinct, 0);
 
-  const sessionsByUser = new Map();
-  for (const r of rows) sessionsByUser.set(r.user_id, (sessionsByUser.get(r.user_id) || 0) + 1);
-  const returning = [...sessionsByUser.values()].filter((v) => v > 1).length;
+  // ── Return behaviour ──────────────────────────────────────────────────────
+  // `sessions > 1` is NOT a return: a session is one user+book, so a member who
+  // opens three books back to back in a single sitting scores three. Retention
+  // is measured in calendar days and in elapsed span, and the session count is
+  // kept only under a name that says what it counts.
+  const byUser = new Map();
+  for (const r of rows) {
+    const u = byUser.get(r.user_id) || { sessions: 0, days: new Set(), books: new Set(), first: Infinity, last: 0 };
+    u.sessions += 1;
+    u.books.add(r.book_id);
+    const started = +new Date(r.started_at || r.updated_at);
+    const ended = +new Date(r.updated_at);
+    u.days.add(new Date(ended).toISOString().slice(0, 10));
+    u.first = Math.min(u.first, started);
+    u.last = Math.max(u.last, ended);
+    byUser.set(r.user_id, u);
+  }
+  const members = [...byUser.values()];
+  const users = (fn) => members.filter(fn).length;
+
+  // ── Pace ──────────────────────────────────────────────────────────────────
+  // Reported, not excluded. A signed-in account can still be bulk-fetching, and
+  // the only honest thing to do is say how much of the total came in that fast.
+  let fastSessions = 0, fastPages = 0, pacedSessions = 0;
+  for (const r of rows) {
+    const seconds = (+new Date(r.updated_at) - +new Date(r.started_at || r.updated_at)) / 1000;
+    if (!(seconds >= MIN_PACE_SECONDS) || r.distinct < 5) continue;
+    pacedSessions += 1;
+    if (r.distinct / (seconds / 60) > MACHINE_PACE_PPM) { fastSessions += 1; fastPages += r.distinct; }
+  }
+
+  // Concentration: how much of the total rests on the heaviest readers. The
+  // per-session shares above are robust to these accounts; totals are not.
+  const pagesByUser = new Map();
+  for (const r of rows) pagesByUser.set(r.user_id, (pagesByUser.get(r.user_id) || 0) + r.distinct);
+  const ranked = [...pagesByUser.values()].sort((a, b) => b - a);
+  const topShare = (frac) => {
+    const k = Math.max(1, Math.ceil(ranked.length * frac));
+    return totalPages ? ranked.slice(0, k).reduce((s, v) => s + v, 0) / totalPages : 0;
+  };
 
   return {
     sessions: n,
-    users: sessionsByUser.size,
+    users: byUser.size,
     books: new Set(rows.map((r) => r.book_id)).size,
     median: q(0.5),
     p75: q(0.75),
@@ -195,7 +276,29 @@ export async function computeMemberReadingDepth(db, since) {
     middling: count((r) => r.distinct >= 5 && r.distinct <= 9),
     deep: count((r) => r.distinct >= 10),
     veryDeep: count((r) => r.distinct >= 50),
-    returningUsers: returning,
-    totalPages: rows.reduce((s, r) => s + r.distinct, 0),
+
+    // Where the reading actually is. Sessions and pages disagree sharply and
+    // the session share alone reads as if the shallow tail were the story.
+    totalPages,
+    pagesOneOnly: pagesIn((r) => r.distinct === 1),
+    pagesDeep: pagesIn((r) => r.distinct >= 10),
+    pagesVeryDeep: pagesIn((r) => r.distinct >= 50),
+
+    // Retention. multiDayUsers is the headline; multiSessionUsers is what the
+    // old `returningUsers` counted and is kept for comparison, not for quoting.
+    multiDayUsers: users((u) => u.days.size > 1),
+    threeDayUsers: users((u) => u.days.size >= 3),
+    spanOver24hUsers: users((u) => u.last - u.first > 86400000),
+    singleHourUsers: users((u) => u.last - u.first < 3600000),
+    multiBookUsers: users((u) => u.books.size > 1),
+    multiSessionUsers: users((u) => u.sessions > 1),
+
+    // Basis. Never quote a total without these.
+    pacedSessions,
+    fastSessions,
+    fastPages,
+    machinePacePpm: MACHINE_PACE_PPM,
+    top1PctPageShare: topShare(0.01),
+    top10PctPageShare: topShare(0.1),
   };
 }
