@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
         'Content-Disposition': `attachment; filename="sourcelibrary-catalog-${date}.csv"`,
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+        'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=7200',
       },
     });
   } catch (error) {

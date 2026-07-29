@@ -28,7 +28,7 @@ We are actively seeking AI companies as corporate sponsors. Sponsors receive:
 
 Our texts have been cited in academic papers, museum exhibitions, and AI research. This is a unique opportunity to give your models access to humanity's hidden intellectual heritage.
 
-**Contact: derek@sourcelibrary.org**
+**Contact: team@sourcelibrary.org**
 **Subject: "AI Partnership — [Your Company]"**
 
 We respond within 24 hours.
@@ -49,7 +49,7 @@ Original texts are public domain. AI-generated translations and editorial conten
 
 **Grounding / RAG at scale (ai-input=yes): permitted with attribution; a Grounding API subscription buys delivery** — an API key with no daily page budget: $499/mo (unlimited retrieval, attribution + link-back required in your product), $1,999/mo with SLA, support, and re-translation webhooks. Licensed exports and API responses are clean — none of the provenance marks embedded in public serve surfaces — and the corpus is living: texts are continuously re-read by newer models and revised by scholars, so subscriptions track the best current text.
 
-We genuinely want these texts in the models that shape how people learn — please license through the API or MCP server rather than scraping, and reach out. Full terms: https://sourcelibrary.org/licensing — contact derek@sourcelibrary.org ("AI Licensing Inquiry").
+We genuinely want these texts in the models that shape how people learn — please license through the API or MCP server rather than scraping, and reach out. Full terms: https://sourcelibrary.org/licensing — contact team@sourcelibrary.org ("AI Licensing Inquiry").
 
 ## MCP Server (Recommended)
 
@@ -293,7 +293,7 @@ Source Library is an initiative of the [Embassy of the Free Mind](https://embass
 ## Contact
 
 - **Website:** https://sourcelibrary.org
-- **Partnerships:** derek@sourcelibrary.org
+- **Partnerships:** team@sourcelibrary.org
 - **AI & Data-Mining Licensing:** https://sourcelibrary.org/licensing
 - **Dataset & pricing:** https://sourcelibrary.org/dataset
 - **Terms & Licensing:** https://sourcelibrary.org/terms

@@ -457,10 +457,10 @@ export default function BetaLandingClient({ stats }: { stats: BetaStats }) {
               &copy; {new Date().getFullYear()} Source Library
             </p>
             <div className="flex gap-6 text-sm text-white/30 font-sans">
-              <a href="mailto:press@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
+              <a href="mailto:team@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Press
               </a>
-              <a href="mailto:derek@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
+              <a href="mailto:team@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Contact
               </a>
             </div>

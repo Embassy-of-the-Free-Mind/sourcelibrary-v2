@@ -433,6 +433,22 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+/* Smooth open/close for <details> dropdowns (progressive enhancement:
+ * animates in browsers that support ::details-content + interpolate-size,
+ * and is an instant show/hide everywhere else). Scoped to the dropdowns so
+ * keyword-size interpolation doesn't leak into the rest of the app. */
+details.sl-collapse {
+  interpolate-size: allow-keywords;
+}
+details.sl-collapse::details-content {
+  height: 0;
+  overflow: clip;
+  transition: height 0.32s ease, content-visibility 0.32s ease allow-discrete;
+}
+details.sl-collapse[open]::details-content {
+  height: auto;
+}
+
 /* Scrollbars: use the platform-native overlay scrollbar so it auto-hides and
  * only appears while scrolling (normal macOS behavior). Defining custom
  * ::-webkit-scrollbar rules opts out of the overlay/auto-hide and forces an
@@ -806,4 +822,24 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 .hymn-now,
 .hymn-now * {
   fill: var(--accent-rust) !important;
+}
+
+/* ── Section reveal-in (book page) ────────────────────────────────────────────
+   Sections fade + rise as they scroll into view. Pure CSS via a scroll-driven
+   view() timeline — no JS, no IntersectionObserver, no hydration flash.
+   Guarded by @supports so browsers without scroll-driven animations (and users
+   who prefer reduced motion) simply see the content in place, never hidden.
+   Content already in view on load resolves to the animation's end state. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-in {
+      animation: reveal-in-kf linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 36%;
+    }
+  }
+}
+@keyframes reveal-in-kf {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

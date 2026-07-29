@@ -8,6 +8,8 @@ import { getTenantSlug } from '@/lib/api-client/client';
 interface BookAnalyticsProps {
   bookId: string;
   className?: string;
+  /** Show only the eye icon (hide the view count). */
+  iconOnly?: boolean;
 }
 
 interface BookStats {
@@ -15,7 +17,7 @@ interface BookStats {
   edits?: number;
 }
 
-export default function BookAnalytics({ bookId, className }: BookAnalyticsProps) {
+export default function BookAnalytics({ bookId, className, iconOnly = false }: BookAnalyticsProps) {
   const [stats, setStats] = useState<BookStats | null>(null);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
     <div className={`flex items-center gap-4 text-sm ${colorClass}`}>
       <div className="flex items-center gap-1.5" title="Times viewed">
         <Eye className="w-4 h-4" />
-        <span>{stats.reads}</span>
+        {!iconOnly && <span>{stats.reads}</span>}
       </div>
       {(stats.edits ?? 0) > 0 && (
         <div className="flex items-center gap-1.5" title="Edits made">

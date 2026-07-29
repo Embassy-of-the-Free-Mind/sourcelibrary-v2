@@ -1011,8 +1011,8 @@ export default function RithmomachiaPage() {
             Source Library is a digital library of rare philosophical, scientific, and esoteric texts,
             translated from their original languages using AI and available to read for free.
             Questions or corrections?{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>.
           </p>
         </div>

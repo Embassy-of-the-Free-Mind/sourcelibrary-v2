@@ -13,6 +13,18 @@
 # skip the purge entirely. This wrapper closes that gap: deploy, then purge +
 # warm, every time.
 #
+# Caching caveat (#3309): a Cloudflare purge clears the shared CDN edge, NOT
+# browsers' private HTTP caches. An API response sent as `public, s-maxage=<n>`
+# with no `max-age` is cached by the browser under RFC 9111 heuristic freshness
+# and served with zero network requests — so a data correction (backfill,
+# visibility flip, re-sync) can stay invisible in an already-open tab for days
+# even after this purge runs. Content-derived API routes therefore ship
+# `max-age=0` (browser revalidates; s-maxage still feeds the CDN). If a
+# correction must be visible immediately to existing sessions, the response
+# needs `max-age=0` BEFORE the stale copies are minted — purging afterwards is
+# too late for copies already in browsers. Invariant pinned by
+# tests/unit/api-cache-max-age.test.ts.
+#
 # Usage:  npm run deploy:prod   (or)   ./scripts/deploy-prod.sh
 #
 # Requires CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID, CRON_SECRET in
@@ -32,6 +44,46 @@ BRANCH="$(git branch --show-current)"
 if [ "$BRANCH" != "main" ]; then
   echo "✗ Refusing to deploy prod from branch '$BRANCH'. Switch the main directory to 'main' first." >&2
   exit 1
+fi
+
+# 1b. Guard: the branch must also be CURRENT, not merely named `main`.
+#
+#     Being on `main` says nothing about whether `main` is up to date. On
+#     2026-07-27 the shared main checkout sat 125 commits behind origin/main —
+#     it passed the branch check above cleanly, and `vercel --prod` ships what
+#     is on disk, so a deploy from it would have silently reverted months of
+#     merged work on the live site. Nothing in the deploy output would have
+#     said so: the build succeeds, the purge succeeds, the summary prints "✓".
+#
+#     This checkout is shared by ~10 concurrent sessions, so it goes stale
+#     without anyone doing anything wrong — no one session owns pulling it.
+#
+#     Override with ALLOW_STALE=1 for a deliberate rollback to an older commit.
+if [ "${ALLOW_STALE:-}" != "1" ]; then
+  echo "▸ Checking that main is current…"
+  if git fetch --quiet origin main 2>/dev/null; then
+    BEHIND="$(git rev-list --count HEAD..origin/main 2>/dev/null || echo 0)"
+    AHEAD="$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)"
+    if [ "$BEHIND" -gt 0 ]; then
+      echo "✗ Refusing to deploy: local main is $BEHIND commit(s) BEHIND origin/main." >&2
+      echo "  Those commits are merged but would NOT be on the live site." >&2
+      echo "  Fix:  git pull --ff-only origin main && npm install" >&2
+      echo "  (npm install matters — a merged package.json change leaves node_modules stale.)" >&2
+      echo "  Deliberate rollback to an older commit?  ALLOW_STALE=1 npm run deploy:prod" >&2
+      exit 1
+    fi
+    if [ "$AHEAD" -gt 0 ]; then
+      # Not fatal: `vercel --prod` deploys the working tree either way, so this
+      # is about telling the operator what they are actually shipping.
+      echo "  ⚠ local main is $AHEAD commit(s) AHEAD of origin/main — deploying unpushed work."
+    else
+      echo "  ✓ main is current with origin/main."
+    fi
+  else
+    # No network / no remote: warn, don't block. A deploy that can't reach
+    # GitHub can still be a legitimate emergency deploy.
+    echo "  ⚠ could not fetch origin — skipping the freshness check." >&2
+  fi
 fi
 
 # 2. Load production env (CF token, zone, cron secret). No secrets are hardcoded.

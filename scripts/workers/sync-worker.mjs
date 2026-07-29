@@ -12,6 +12,11 @@
  *   node scripts/workers/sync-worker.mjs --dry-run
  *   node scripts/workers/sync-worker.mjs --counts-only
  *   node scripts/workers/sync-worker.mjs --gallery-only
+ *   node scripts/workers/sync-worker.mjs --usage-only --usage-from 2026-06-09
+ *
+ * This worker does NOT honor the pipeline pause — see the note in run(). Its
+ * phases are bookkeeping, and gating them on a spend switch froze six derived
+ * outputs for seven weeks (#3408).
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
@@ -30,6 +35,14 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const COUNTS_ONLY = args.includes('--counts-only');
 const GALLERY_ONLY = args.includes('--gallery-only');
+// Repair flags for the usage rollup (#3408). --usage-only runs just that phase;
+// --usage-from YYYY-MM-DD widens its window from the default 3 days so a gap can
+// be refilled through the SAME Supabase-paginated path the live rollup uses.
+// scripts/maintenance/backfill-usage-daily.mjs aggregates Mongo instead, which
+// has undercounted spend ~10x on batch-heavy days since the source of truth
+// moved to Supabase (#567) — don't reach for it to fix a hole.
+const USAGE_ONLY = args.includes('--usage-only');
+const USAGE_FROM = args.includes('--usage-from') ? args[args.indexOf('--usage-from') + 1] : null;
 
 console.log(`[sync-worker] Dry run: ${DRY_RUN}${COUNTS_ONLY ? ' | Counts only' : ''}${GALLERY_ONLY ? ' | Gallery only' : ''}`);
 
@@ -778,11 +791,21 @@ async function syncUsageDaily(db) {
     console.log('  Source: Supabase gemini_usage (paginated)');
   }
 
-  // Aggregate today and the past 2 days (covers late-arriving records)
+  // Aggregate today and the past 2 days (covers late-arriving records), or back
+  // to --usage-from when refilling a gap.
   const now = new Date();
   let daysUpdated = 0;
 
-  for (let offset = 2; offset >= 0; offset--) {
+  let startOffset = 2;
+  if (USAGE_FROM) {
+    const from = new Date(USAGE_FROM + 'T00:00:00Z');
+    if (Number.isNaN(from.getTime())) throw new Error(`--usage-from: bad date "${USAGE_FROM}"`);
+    startOffset = Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) - from.getTime()) / 86400000);
+    if (startOffset < 0) throw new Error(`--usage-from ${USAGE_FROM} is in the future`);
+    console.log(`  Backfilling ${startOffset + 1} days from ${USAGE_FROM}`);
+  }
+
+  for (let offset = startOffset; offset >= 0; offset--) {
     const d = new Date(now);
     d.setUTCDate(d.getUTCDate() - offset);
     const dateStr = d.toISOString().slice(0, 10);
@@ -826,12 +849,27 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // NOTE: this worker deliberately does NOT honor processing_control.paused.
+  //
+  // Every phase below is derived-data bookkeeping — page counts, collection
+  // counts, gallery materialization, author slugs, the analytics snapshot, and
+  // the gemini_usage_daily rollup. None of them call Gemini, archive a page, or
+  // otherwise spend money or advance a book through the pipeline, so the pause
+  // switch (a *spend* control, honored by archive-*/enrich/translate/orchestrator)
+  // has no reason to gate them.
+  //
+  // It used to. The pause set on 2026-06-08T22:55Z therefore froze all six
+  // outputs for seven weeks: gemini_usage_daily's last row was 2026-06-08 and
+  // system_config.analytics_usage / author_slugs were last written 2026-06-08
+  // 22:16 — the run immediately before the pause. Worse, the cost rollup reads
+  // $0.00 whether spend is genuinely zero or the aggregator is dead, so pausing
+  // the pipeline also silently blinded the instrument that would show anything
+  // bypassing the pause (bulk-reocr-local.mjs does). See #3408.
+  //
+  // If a phase here ever starts spending, gate that phase — not the worker.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (control?.paused) {
-    console.log(`[sync-worker] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
+    console.log('[sync-worker] Pipeline is paused; bookkeeping phases run anyway (no paid work here).');
   }
 
   let countsResult = {};
@@ -839,7 +877,7 @@ async function run() {
   const phaseErrors = [];
   const phasesCompleted = [];
 
-  if (!GALLERY_ONLY) {
+  if (!GALLERY_ONLY && !USAGE_ONLY) {
     try {
       countsResult = await syncPageCounts(db);
       phasesCompleted.push('counts');
@@ -857,7 +895,7 @@ async function run() {
     }
   }
 
-  if (!COUNTS_ONLY) {
+  if (!COUNTS_ONLY && !USAGE_ONLY) {
     try {
       galleryResult = await syncGalleryImages(db);
       phasesCompleted.push('gallery');
@@ -868,7 +906,7 @@ async function run() {
   }
 
   // Always sync author slugs (fast, no flag needed)
-  try {
+  if (!USAGE_ONLY) try {
     await syncAuthorSlugs(db);
     phasesCompleted.push('author_slugs');
   } catch (err) {
@@ -877,7 +915,7 @@ async function run() {
   }
 
   // Refresh analytics snapshot (cursor-based, ~3 min)
-  if (!GALLERY_ONLY) {
+  if (!GALLERY_ONLY && !USAGE_ONLY) {
     try {
       await refreshAnalyticsSnapshot(db);
       phasesCompleted.push('analytics_snapshot');

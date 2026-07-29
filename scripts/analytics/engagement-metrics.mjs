@@ -17,6 +17,7 @@
 //   7. Pipeline cost            (gemini_usage_daily)
 
 import { withMongo } from '../lib/mongo.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const now = Date.now();
@@ -79,24 +80,61 @@ await withMongo(async (db) => {
 
   // ---- 2. READING DEPTH ----
   await section('2. Reading depth (page_read events, last 7d)', async () => {
-    // distinct pages read per (reader ip, book) — proxy for how far into a book a reader gets.
-    const depth = await ev.aggregate([
-      { $match: { event: 'page_read', timestamp: { $gt: D7 }, book_id: { $ne: null } } },
-      { $group: { _id: { ip: '$ip', b: '$book_id' }, pages: { $addToSet: '$page_id' } } },
-      { $project: { n: { $size: '$pages' } } },
-      { $group: { _id: '$n', sessions: { $sum: 1 } } }, { $sort: { _id: 1 } },
-    ], { allowDiskUse: true }).toArray();
-    const all = []; for (const d of depth) for (let i = 0; i < d.sessions; i++) all.push(d._id);
-    all.sort((a, b) => a - b);
-    const n = all.length, med = all[Math.floor(n / 2)] || 0, p90 = all[Math.floor(n * 0.9)] || 0;
-    const oneOnly = depth.find((d) => d._id === 1)?.sessions || 0;
-    const deep = depth.filter((d) => d._id >= 10).reduce((s, d) => s + d.sessions, 0);
-    console.log(`reader-book pairs (7d)        ${n}`);
-    console.log(`pages read / pair  median=${med}  p90=${p90}`);
-    console.log(`read only 1 page              ${oneOnly}  (${pct(oneOnly, n)})`);
-    console.log(`read 10+ pages (deep read)    ${deep}  (${pct(deep, n)})`);
-    const opens = await ev.countDocuments({ event: 'book_read', timestamp: { $gt: D7 } });
-    console.log(`book opens (book_read, 7d)    ${opens}`);
+    // Implementation lives in scripts/lib/reading-depth.mjs and is shared with
+    // snapshot-metrics.mjs — see the header there for both contaminations this
+    // has to survive (unclassifiable pre-#3405 rows, and a fleet that passes
+    // UA classification as human).
+    const d = await computeReadingDepth(db, D7);
+
+    if (d.contaminated) {
+      console.log(`page_read events (7d)         ${d.total}`);
+      console.log(`  classified (post-#3405)     ${d.classified}  (${pct(d.classified, d.total)})`);
+      console.log(`NOT REPORTED: ${d.unclassified} of these events predate write-time bot`);
+      console.log(`classification and cannot be attributed to humans or crawlers. Reading`);
+      console.log(`depth is unmeasurable over this window — do not quote a number for it.`);
+      console.log(`Re-run once a full 7d window sits after the #3405 deploy.`);
+      const opens = await ev.countDocuments({ event: 'book_read', timestamp: { $gt: D7 }, traffic_class: 'human' });
+      console.log(`book opens, human-only (7d)   ${opens}`);
+      return;
+    }
+
+    console.log(`reader-book pairs (7d)        ${d.pairs}`);
+    console.log(`pages read / pair  median=${d.median}  p90=${d.p90}`);
+    console.log(`read only 1 page              ${d.oneOnly}  (${pct(d.oneOnly, d.pairs)})`);
+    console.log(`read 10+ pages (deep read)    ${d.deep}  (${pct(d.deep, d.pairs)})`);
+    console.log(`book opens (book_read, 7d)    ${d.opens}`);
+    console.log(`\nbasis — read these before quoting anything above:`);
+    console.log(`  unclassified events dropped  ${d.unclassified}  (pre-#3405, unattributable)`);
+    console.log(`  heavy IPs excluded           ${d.excludedIps}  (>${d.threshold} events/7d from one /24)`);
+    console.log(`  their events                 ${d.excludedEvents}`);
+    for (const h of d.excludedTopIps) console.log(`      ${h.ip}  ${h.events}`);
+    if (d.excludedIps) {
+      console.log(`  WITHOUT that exclusion:      pairs=${d.unfiltered.pairs} median=${d.unfiltered.median} 1-page=${pct(d.unfiltered.oneOnly, d.unfiltered.pairs)}`);
+      console.log(`  If those two rows disagree, the headline is a product of the heuristic,`);
+      console.log(`  not of the data. The /24 anonymization means a large NAT can be excluded`);
+      console.log(`  as a fleet — check the addresses above before trusting either figure.`);
+    }
+  });
+
+  // ---- 2b. READING DEPTH, SIGNED-IN MEMBERS ----
+  await section(`2b. Reading depth — signed-in members (reading_history, last ${DAYS}d)`, async () => {
+    // The uncontaminated twin of section 2: written only behind a session, so no
+    // crawler can be in it, and keyed on user_id so a shared NAT stays several
+    // readers. Narrower population, much higher confidence.
+    const m = await computeMemberReadingDepth(db, SINCE);
+    if (!m) { console.log('no reading_history rows in window'); return; }
+    console.log(`reading sessions              ${m.sessions}   (one user+book sitting, 30min gap)`);
+    console.log(`distinct members / books      ${m.users} / ${m.books}`);
+    console.log(`pages read / session  median=${m.median}  p75=${m.p75}  p90=${m.p90}  p99=${m.p99}  max=${m.max}`);
+    console.log(`  1 page only                 ${m.oneOnly}  (${pct(m.oneOnly, m.sessions)})`);
+    console.log(`  2-4 pages                   ${m.shallow}  (${pct(m.shallow, m.sessions)})`);
+    console.log(`  5-9 pages                   ${m.middling}  (${pct(m.middling, m.sessions)})`);
+    console.log(`  10+ pages (deep read)       ${m.deep}  (${pct(m.deep, m.sessions)})`);
+    console.log(`  50+ pages                   ${m.veryDeep}  (${pct(m.veryDeep, m.sessions)})`);
+    console.log(`members with >1 session       ${m.returningUsers}  (${pct(m.returningUsers, m.users)})`);
+    console.log(`distinct pages read, total    ${m.totalPages}`);
+    console.log(`CEILING, not average: members are self-selected and more engaged than a`);
+    console.log(`passer-by. This answers "do our members read?", not "do visitors read?".`);
   });
 
   // ---- 3. MISSION ACTIONS ----

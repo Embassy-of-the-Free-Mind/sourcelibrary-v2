@@ -102,7 +102,7 @@ const MODEL_PRICING = {
 const BATCH_DISCOUNT = 0.5;
 
 function calculateCost(model, inputTokens, outputTokens) {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-2.5-flash'];
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-3-flash-preview'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input * BATCH_DISCOUNT;
   const outputCost = (outputTokens / 1_000_000) * pricing.output * BATCH_DISCOUNT;
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
@@ -1229,12 +1229,15 @@ async function run() {
   }
 
   // RECITATION recovery: mark affected books for retry with a different model.
-  // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
-  // texts. Three-tier escalation before a permanent block:
-  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-2.5-flash.
-  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3.1-flash-lite
-  //                        (proven to bypass RECITATION on famous texts where 2.5-flash also fails).
-  //   3. Third failure  -> recitation_blocked    -> permanently skip (all 3 models failed).
+  // The batch API triggers RECITATION on ubiquitous canonical texts. Escalation
+  // before a permanent block (never any model below v3 — see CLAUDE.md):
+  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-3.1-flash-lite.
+  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3-flash-preview.
+  //   3. Third failure  -> recitation_blocked    -> both Gemini tiers refuse.
+  //      Such a book is NOT hopeless: route it to the MinerU + grounded-correction
+  //      lane (mineru-ocr-worker.mjs, then ocr-correct-grounded.mjs — #3389), which
+  //      reads with an engine that has no recitation filter and then corrects the
+  //      result against the page image.
   if (recitationBooks.size > 0) {
     console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
     for (const bookId of recitationBooks) {
@@ -1261,9 +1264,9 @@ async function run() {
               $unset: { 'pipeline_auto.recitation_retry_lite': '' },
             }
           );
-          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (all 3 models failed)`);
+          console.log(`  RECITATION blocked on both Gemini tiers ${bookId} -> needs_attention (route to MinerU + grounded correction, #3389)`);
         } else if (retriedFallback) {
-          // Second RECITATION failure: gemini-2.5-flash also blocked. Escalate to gemini-3.1-flash-lite.
+          // Second RECITATION failure: gemini-3.1-flash-lite also blocked. Escalate to gemini-3-flash-preview.
           await db.collection('books').updateOne(
             { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
             {

@@ -298,6 +298,24 @@ Every occluded image was visually audited afterward; the audit changed the analy
     Armenian returns 0.0% both classes (model breakdown, not signal), and the
     single mask mention was sonnet5 on the Zohrab John page.
 
+### Occlusion v2 — passage-targeted masks (2026-07-24; ~$1.16; masks audited in `occlusion-v2-masks-2026-07-24.json`)
+
+17. **The v2 rerun repairs both v1 design flaws and the detector strengthens.**
+    Hand-placed rects mask a 27–50% chars-weighted INTERIOR share of each
+    reference passage (first/last lines always visible — the cloze), share
+    computed from GT-substring/line offsets, not eyeballed; zero pages excluded
+    (v1 lost 2 of 5 canonical pages to a missed mask). Fill-in excess, canon vs
+    non-canon (lite/sonnet5): Vulgate +15/+14 vs +18/+20; Virgil **+36/+37** vs
+    +5/+3; Iliad MS +17/+17 vs **−4/−6**; Zohrab +26/+9 vs +13/+13; Hebrew
+    +31/+32 vs **−3/−3**. The two structurally unpredictable non-canonical
+    controls (Iliad XIII, Sha'arei Orah) sit flat-to-negative — reader behavior —
+    while every canonical page fills in strongly, including the two v1 could not
+    measure (Vulgate Genesis 1, Hebrew Genesis 1). The genealogies stay
+    intermediate-positive off-canon, confirming result 15's predictability
+    confound rather than contradicting the detector. Tooling note recorded for
+    reuse: sharp's `composite().resize()` in one chain silently shifts the mask
+    (JPEG shrink-on-load) — materialize the composite before resizing.
+
 ### Corpus arm (PR #3273, 2026-07-19) — n=109,953 revision pairs
 
 Free, reference-free, and complementary: `page_revisions` stores the text each
@@ -477,7 +495,15 @@ degradation/occlusion membership pilot (~$2–5, validated against the pinned pa
 
 - **IA-OCR corpus baseline (Derek, 2026-07-23; free, zero AI cost).** PILOT RUN
   2026-07-23 (PR #3341; results section above): 200 books, 115 aligned, 2,276
-  page rows; full-corpus harvest + within-band diff-in-diff still open.
+  page rows. REPLICATED 2026-07-24 on Hetzner with a fresh independent 200-book
+  sample (100 aligned, 1,971 rows — `ia-ocr-baseline-pilot-2026-07-24.*`):
+  identical stratum rank ordering, per-stratum agreement within ±9pp (Latin
+  1500s 33.7 vs 27.2; English 1900s 83.6 vs 87.4; French 1800s 82.1 vs 80.5;
+  German 1600s 47.3 vs 47.7) — the table is stable across samples, not a
+  sampling artifact. Combined evidence: ~4,200 pages / ~215 aligned books.
+  Still open: the true full-corpus harvest needs a `--per-stratum` flag
+  (the sample stage's built-in stratum caps ignore `--total`), and the
+  within-band diff-in-diff.
   Original design: most exportable
   books carry an `ia_identifier`, and Internet Archive publishes its own OCR
   (ABBYY/Tesseract-class) for the same scans we imported — downloadable per book, page
@@ -664,9 +690,59 @@ Earlier planned experiments (status as of 2026-07-23):
   type with long-s and ligatures. A baseline arm must be scoped to material the
   baseline can actually read, or its collapse is misread as model advantage.
 
-## Venue / form
+## CHR 2027 outline (2026-07-24; draft master: `paper/reading-or-reciting-chr2027.md`)
 
-Candidates: (a) blog-post research note first (house pattern, citable, fast) →
-(b) workshop/conference paper (NLP4DH / LM4DH / DH venue; or an eval-focused ML
-venue). Dataset DOI via Zenodo at submission time. Both pending Derek's call on
-naming and hosting.
+Long paper, 6,000 words excl. references/tables (tables are free space — push detail
+there), ACH LaTeX template, double-blind until Oct 23 notification (arXiv preprint
+permitted; the submitted PDF must not link named repos — review copy uses an
+anonymized dataset mirror and refers to "a digital library of historical sources").
+
+1. Introduction (~700w) — the 100.0%-on-a-1555-manuscript hook; ground-truth supply
+   = contamination; contributions.
+2. Related work (~650w) — contamination/memorization; OCR eval tradition; consensus
+   methods; generous ¶ differentiating 2605.27750 (deliberate title echo).
+3. Dataset & design (~900w) — 44 pages, covariates, anti-recitation protocol told
+   via the deleted-rows incident, within-work pairs, license-gated references,
+   outcome battery.
+4. Measuring the subsidy (~1,000w) — within-work pairs (manuscript 3–9pp, print
+   0–2pp, behavioral collapse on repetitive text, Zohrab inversion as design
+   lesson); same-book Virgil; pooled-statistic instability AS the point.
+5. Reference-free detection (~1,000w) — occlusion cloze (27/28 silent fill-in;
+   excess = graded canonicity slope +37→−6; v1→v2 correction told honestly); blur
+   as geometry-free twin; predictability confound. Star figure: masked page +
+   recited output.
+6. Consequences for evaluation practice (~800w) — consensus non-independence
+   (r 0.75 vs ~0.5; 110K-pair structure); conditional/unconditional ranking
+   inversion; IA non-generative baseline (replicated ±9pp) + diff-in-diff frame;
+   prescription: canonicity labels on historical-OCR benchmarks.
+7. A library certifying itself (~450w) — the calibration scorecard as deployed
+   practice; uncalibratable strata stated as such; the library is the instrument.
+8. Limitations (~350w). 9. Conclusion (~200w) — the certificate framing.
+
+Tables: T1 within-work pairs / T2 fill-in excess / T3 IA script×century (both
+samples) / T4 outcome inversion. Figures: F1 masked-Aeneid + recited output, F2
+blur curves. Appendix: prompts, mask rects, 9-model comparison, ablations.
+
+Timeline: full draft Aug 4 → number verification vs JSONLs Aug 5–8 → Derek read +
+freeze Aug 10–11 → anonymize + submit Aug 12–13 (AoE buffer). Notification Oct 23;
+camera-ready Nov 13; Manchester Jan 6–8.
+
+## Venue / form — DECIDED 2026-07-24
+
+- **Venue: CHR 2027** (Computational Humanities Research, Manchester, 5–8 Jan 2027).
+  **Submission deadline: 2026-08-14 AoE** — three weeks from decision date; the
+  deadline is the schedule. Rationale: exact audience (computational methods for
+  cultural heritage / the people running digitization pipelines), archival
+  proceedings, and the only strong venue whose window lands inside the scoop
+  horizon (NLP4DH 2026 already ran in July; its next deadline is ~Mar 2027).
+- **At submission time**: arXiv preprint + blog research note (house pattern) go up
+  the same week for dated priority.
+- **Title: keep "Reading or Reciting?"** as the deliberate, cited echo of
+  "Reading or Guessing?" (2605.27750) — recitation vs guessing IS the distinction
+  between the papers; say so in the related-work paragraph.
+- **Dataset: Hugging Face** (Derek, 2026-07-24), named
+  **`sourcelibrary/reading-or-reciting`** (namespace verified unclaimed
+  2026-07-24). Card + publish script: `scripts/eval/dataset/hf/` — one-time HF
+  org/token setup is Derek's, then `publish.sh v0.3`. Zenodo remains available
+  later if a DOI is wanted for the paper's camera-ready; HF revision tags carry
+  versioning until then.

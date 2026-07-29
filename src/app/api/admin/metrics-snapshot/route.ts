@@ -30,6 +30,38 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     ? Math.min(Math.max(Math.trunc(historyParam), 1), 90)
     : 15;
 
+  // Declared AI crawlers hitting the licensing funnel over the last 7 days —
+  // these are warm licensing leads (#3327 Phase 2), not nuisance traffic.
+  // Names from classifyBot in /api/analytics/bots. Caveat: 'google'/'bing'
+  // lump search crawlers in with training tokens, so they're indicative only;
+  // the unambiguous training-side signals are openai/anthropic/bytedance/
+  // commoncrawl/meta/cohere.
+  const AI_CRAWLER_BOTS = [
+    'openai', 'anthropic', 'google', 'bing', 'perplexity',
+    'bytedance', 'cohere', 'meta', 'you.com', 'commoncrawl',
+  ];
+  const since = new Date(Date.now() - 7 * 86400_000).toISOString().slice(0, 10);
+  const aiCrawlersPromise = db.collection('analytics_bot_access').aggregate([
+    { $match: { bot: { $in: AI_CRAWLER_BOTS }, date: { $gte: since } } },
+    {
+      $group: {
+        _id: '$bot',
+        hits: { $sum: '$hits' },
+        path_prefixes: { $addToSet: '$path_prefix' },
+        actions: { $addToSet: '$actions' },
+      },
+    },
+    { $sort: { hits: -1 } },
+    {
+      $project: {
+        _id: 0, bot: '$_id', hits: 1, path_prefixes: 1,
+        actions: {
+          $reduce: { input: '$actions', initialValue: [], in: { $setUnion: ['$$value', '$$this'] } },
+        },
+      },
+    },
+  ]).toArray().catch(() => []);
+
   const config = db.collection('system_config');
   const [metrics, corpus, homepageStats, processingControl, batchHealth, history] =
     await Promise.all([
@@ -56,6 +88,11 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
       paused: processingControl?.paused ?? false,
       paused_phases: processingControl?.paused_phases ?? [],
       batch_health: batchHealth,
+    },
+    ai_crawlers: {
+      window_days: 7,
+      note: 'declared AI crawlers on the licensing funnel — warm leads, see /licensing rate card',
+      by_bot: await aiCrawlersPromise,
     },
   });
 });

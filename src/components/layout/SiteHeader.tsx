@@ -7,6 +7,8 @@ import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
 import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 interface NavLink {
   label: string;
@@ -73,7 +75,25 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
-  const NAV_LINKS = buildNavLinks(t);
+  // Global-only surfaces 404 on partner subdomains (the list and rationale live
+  // in src/lib/tenant-global-paths.ts — #3364, #3370), so the nav must not point
+  // at them there: "Map" → /explore/map would be a dead link in the tenant's own
+  // header.
+  //
+  // Reuses the shared `useEmbedContext` signal (tenant subdomain, /embed/ route,
+  // or iframe) rather than a bespoke hostname check — #3367 added a second,
+  // narrower copy of this detection, which is exactly the drift the shared hook
+  // exists to prevent. Resolved after mount, so the static HTML the global site
+  // shares is unchanged and only a tenant visitor sees the item drop.
+  //
+  // Note most pages wrap this in ConditionalSiteHeader, which removes the whole
+  // header on a tenant host post-hydration. This filter is what protects the
+  // pages that render SiteHeader directly and stay reachable there (e.g.
+  // /author/[name]).
+  const isTenantHost = useIsEmbedded();
+  const NAV_LINKS = buildNavLinks(t).filter(
+    link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
+  );
   // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
   // support) — the thin-i18n bargain (#2763). On deep English-only pages the
   // toggle is hidden, so clicking ES never bounces the reader to the `/es`

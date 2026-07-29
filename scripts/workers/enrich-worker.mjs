@@ -41,6 +41,8 @@ import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
+import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
 // Empty {} in normal operation so the full enrich queue is unaffected.
@@ -185,55 +187,6 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
 const EMBED_MODEL = 'gemini-embedding-2-preview';
 const EMBED_DIMS = 768;
 
-function composeBookEmbeddingText(book, indexData) {
-  const parts = [];
-  parts.push(`${book.display_title || book.title || 'Untitled'} by ${book.author || 'Unknown'}`);
-  if (book.language) parts.push(`Language: ${book.language}`);
-  if (book.published) parts.push(`Published: ${book.published}`);
-
-  if (indexData?.bookSummary?.detailed) {
-    parts.push(indexData.bookSummary.detailed);
-  } else if (indexData?.bookSummary?.brief) {
-    parts.push(indexData.bookSummary.brief);
-  }
-
-  if (indexData?.sectionSummaries?.length > 0) {
-    const sections = indexData.sectionSummaries.map(s => s.title || s.summary).filter(Boolean).slice(0, 15);
-    if (sections.length > 0) parts.push(`Chapters: ${sections.join('; ')}`);
-  }
-
-  if (indexData?.entries?.length > 0) {
-    const terms = indexData.entries
-      .sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0))
-      .slice(0, 50).map(e => e.term);
-    parts.push(`Topics: ${terms.join(', ')}`);
-  }
-
-  if (indexData?.people?.length > 0) parts.push(`People: ${indexData.people.slice(0, 30).map(p => p.name).join(', ')}`);
-  if (indexData?.places?.length > 0) parts.push(`Places: ${indexData.places.slice(0, 20).map(p => p.name).join(', ')}`);
-  if (indexData?.concepts?.length > 0) parts.push(`Concepts: ${indexData.concepts.slice(0, 30).map(c => c.name).join(', ')}`);
-
-  if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
-
-  // Artwork-specific metadata
-  if (book.content_type === 'artwork') {
-    if (book.commons_description) parts.push(book.commons_description.slice(0, 500));
-    if (book.commons_categories) {
-      const cats = typeof book.commons_categories === 'string'
-        ? book.commons_categories.split('|').map(c => c.trim()).filter(Boolean).slice(0, 20)
-        : Array.isArray(book.commons_categories) ? book.commons_categories.slice(0, 20) : [];
-      if (cats.length > 0) parts.push(`Subjects: ${cats.join(', ')}`);
-    }
-    if (book.resource_type) parts.push(`Medium: ${book.resource_type}`);
-    if (book.medium) parts.push(`Material: ${book.medium}`);
-    if (book.collections?.length > 0) {
-      const collNames = book.collections.filter(c => c !== 'visual-art').map(c => c.replace(/-/g, ' '));
-      if (collNames.length > 0) parts.push(`Collections: ${collNames.join(', ')}`);
-    }
-  }
-
-  return parts.join('\n').slice(0, 8000);
-}
 
 async function upsertBookEmbedding(book, indexData) {
   if (!supabaseClient) return;
@@ -538,23 +491,47 @@ function buildConceptIndexFromBatches(batches, pages) {
   const placesMap = new Map();
   const conceptsMap = new Map();
 
+  // Gemini returns bare name lists per batch — it is never asked WHERE in the
+  // batch each name occurs (only `quotes` carry a page). So the batch tells us
+  // which entities are in a section, and the page text tells us where. Crediting
+  // the whole batch range to every entity — the old behavior — fabricated page
+  // citations on /encyclopedia/[name] (#3361). Attribute per verified page, and
+  // fall back to a section range with NO page numbers when nothing matches.
+  const pagesByNumber = new Map(pages.map(p => [p.page_number, p]));
+
+  const accumulate = (map, term, batchPageTexts) => {
+    if (!term) return;
+    const attribution = attributeEntityPages(term, batchPageTexts);
+    const prev = map.get(term);
+    if (!prev) {
+      map.set(term, attribution);
+      return;
+    }
+    // Same entity in more than one batch: union verified pages; a section-only
+    // batch never contributes page numbers, but widens the fallback range.
+    const pages_ = [...new Set([...prev.pages, ...attribution.pages])].sort((a, b) => a - b);
+    const ranges = [prev.page_range, attribution.page_range].filter(Boolean);
+    const merged = { pages: pages_, page_precision: pages_.length > 0 ? 'page' : 'section' };
+    if (merged.page_precision === 'section' && ranges.length > 0) {
+      merged.page_range = {
+        start: Math.min(...ranges.map(r => r.start)),
+        end: Math.max(...ranges.map(r => r.end)),
+      };
+    }
+    map.set(term, merged);
+  };
+
   for (const batch of batches) {
-    const pageNumbers = Array.from(
-      { length: batch.pageRange.end - batch.pageRange.start + 1 },
-      (_, i) => batch.pageRange.start + i
-    );
-    for (const person of batch.people) {
-      if (!peopleMap.has(person)) peopleMap.set(person, []);
-      peopleMap.get(person).push(...pageNumbers);
+    const batchPages = [];
+    for (let n = batch.pageRange.start; n <= batch.pageRange.end; n++) {
+      const p = pagesByNumber.get(n);
+      if (p) batchPages.push(p);
     }
-    for (const place of batch.places) {
-      if (!placesMap.has(place)) placesMap.set(place, []);
-      placesMap.get(place).push(...pageNumbers);
-    }
-    for (const concept of batch.concepts) {
-      if (!conceptsMap.has(concept)) conceptsMap.set(concept, []);
-      conceptsMap.get(concept).push(...pageNumbers);
-    }
+    const batchPageTexts = buildPageTexts(batchPages);
+
+    for (const person of batch.people) accumulate(peopleMap, person, batchPageTexts);
+    for (const place of batch.places) accumulate(placesMap, place, batchPageTexts);
+    for (const concept of batch.concepts) accumulate(conceptsMap, concept, batchPageTexts);
   }
 
   // Vocabulary + keywords from page tags
@@ -576,17 +553,25 @@ function buildConceptIndexFromBatches(batches, pages) {
     }
   }
 
+  // vocabulary/keywords come straight from per-page tags, so their page numbers
+  // were always page-exact — no verification needed.
   const mapToEntries = (map) =>
     Array.from(map.entries())
-      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b) }))
+      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b), page_precision: 'page' }))
+      .sort((a, b) => b.pages.length - a.pages.length);
+
+  // people/places/concepts carry a verified attribution object.
+  const attributionToEntries = (map) =>
+    Array.from(map.entries())
+      .map(([term, attribution]) => ({ term, ...attribution }))
       .sort((a, b) => b.pages.length - a.pages.length);
 
   return {
     vocabulary: mapToEntries(vocabMap),
     keywords: mapToEntries(keywordMap),
-    people: mapToEntries(peopleMap),
-    places: mapToEntries(placesMap),
-    concepts: mapToEntries(conceptsMap),
+    people: attributionToEntries(peopleMap),
+    places: attributionToEntries(placesMap),
+    concepts: attributionToEntries(conceptsMap),
   };
 }
 
@@ -877,39 +862,54 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex,
 
   const now = new Date();
 
-  async function syncEntity(term, type, pages) {
+  async function syncEntity(term, type, entry) {
     const canonicalName = resolve(term, type);
-    const update = {
-      $set: { updated_at: now },
-      $setOnInsert: { name: canonicalName, type, created_at: now },
-      $addToSet: {
-        books: {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          ...(bookYear ? { book_year: bookYear } : {}),
-          pages,
-        },
-      },
+    const bookEntry = {
+      book_id: bookId,
+      book_title: bookTitle,
+      book_author: bookAuthor,
+      ...(bookYear ? { book_year: bookYear } : {}),
+      pages: entry.pages || [],
+      page_precision: entry.page_precision || 'section',
+      ...(entry.page_range ? { page_range: entry.page_range } : {}),
     };
-    if (term !== canonicalName) {
-      update.$addToSet.aliases = term;
-    }
-    await db.collection('entities').updateOne({ name: canonicalName, type }, update, { upsert: true });
+
+    // Replace this book's entry rather than adding one. `$addToSet` compares
+    // whole subdocuments, so re-running the index with a different page list
+    // appended a SECOND entry for the same book — Matthiolus accumulated 162
+    // entries for 117 distinct books, and the page's hero count (books.length)
+    // disagreed with its own deduped "Appears in N Books" heading (#3361).
+    await db.collection('entities').updateOne(
+      { name: canonicalName, type },
+      {
+        $set: { updated_at: now },
+        $setOnInsert: { name: canonicalName, type, created_at: now },
+        ...(term !== canonicalName ? { $addToSet: { aliases: term } } : {}),
+      },
+      { upsert: true }
+    );
+    await db.collection('entities').updateOne(
+      { name: canonicalName, type },
+      { $pull: { books: { book_id: bookId } } }
+    );
+    await db.collection('entities').updateOne(
+      { name: canonicalName, type },
+      { $push: { books: bookEntry } }
+    );
   }
 
   const promises = [];
   for (const person of conceptIndex.people) {
     if (!person.term) continue;
-    promises.push(syncEntity(person.term, 'person', person.pages));
+    promises.push(syncEntity(person.term, 'person', person));
   }
   for (const place of conceptIndex.places) {
     if (!place.term) continue;
-    promises.push(syncEntity(place.term, 'place', place.pages));
+    promises.push(syncEntity(place.term, 'place', place));
   }
   for (const concept of conceptIndex.concepts) {
     if (!concept.term) continue;
-    promises.push(syncEntity(concept.term, 'concept', concept.pages));
+    promises.push(syncEntity(concept.term, 'concept', concept));
   }
   await Promise.all(promises);
 
@@ -922,11 +922,15 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex,
   const uniqueTerms = [...new Map(allTerms.map(t => [`${t.type}:${t.name}`, t])).values()];
 
   for (const { name, type } of uniqueTerms) {
-    const entity = await db.collection('entities').findOne({ name, type });
+    const entity = await db.collection('entities').findOne({ name, type }, { projection: { books: 1 } });
     if (entity) {
-      const bookCount = entity.books?.length || 0;
-      const totalMentions = (entity.books || []).reduce((sum, b) => sum + (b.pages?.length || 0), 0);
-      await db.collection('entities').updateOne({ name, type }, { $set: { book_count: bookCount, total_mentions: totalMentions } });
+      // book_count counts DISTINCT books and total_mentions counts VERIFIED page
+      // references. Summing raw page-array lengths is how Matthiolus came to
+      // advertise "10,700 total mentions" of smeared page slots (#3361).
+      await db.collection('entities').updateOne(
+        { name, type },
+        { $set: entityCounters(entity.books) }
+      );
     }
   }
 

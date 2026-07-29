@@ -17,6 +17,7 @@
 // Cron (Hetzner, daily): see scripts/workers/crontab.production.
 
 import { withMongo } from '../lib/mongo.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const norm = (e) => (e || '').trim().toLowerCase();
@@ -141,27 +142,21 @@ await withMongo(async (db) => {
   const multiDay = byDays.filter((x) => x._id > 1).reduce((s, x) => s + x.n, 0);
 
   // ─── READING DEPTH (page_read events, 7d) ─────────────────────────────────
+  // Shared with engagement-metrics.mjs via scripts/lib/reading-depth.mjs so a
+  // correction can't land in one and miss the other. This snapshot feeds
+  // /platform/admin/metrics AND the weekly digest, so a wrong number here is a
+  // number that gets emailed.
   const ev = db.collection('analytics_events');
   let reading = null;
+  let readingMembers = null;
   try {
-    const depth = await ev.aggregate([
-      { $match: { event: 'page_read', timestamp: { $gt: d7 }, book_id: { $ne: null } } },
-      { $group: { _id: { ip: '$ip', b: '$book_id' }, pages: { $addToSet: '$page_id' } } },
-      { $project: { n: { $size: '$pages' } } },
-      { $group: { _id: '$n', sessions: { $sum: 1 } } }, { $sort: { _id: 1 } },
-    ], { allowDiskUse: true }).toArray();
-    const flat = []; for (const d of depth) for (let i = 0; i < d.sessions; i++) flat.push(d._id);
-    flat.sort((a, b) => a - b);
-    const rn = flat.length;
-    reading = {
-      pairs: rn,
-      median: flat[Math.floor(rn / 2)] || 0,
-      p90: flat[Math.floor(rn * 0.9)] || 0,
-      oneOnly: depth.find((d) => d._id === 1)?.sessions || 0,
-      deep: depth.filter((d) => d._id >= 10).reduce((s, d) => s + d.sessions, 0),
-      opens: await ev.countDocuments({ event: 'book_read', timestamp: { $gt: d7 } }),
-    };
+    reading = await computeReadingDepth(db, d7);
   } catch { /* events collection may be sparse */ }
+  // Signed-in twin over the full window — no crawler can be in it, so this is
+  // reportable today rather than after the anonymous instrument's window fills.
+  try {
+    readingMembers = await computeMemberReadingDepth(db, SINCE);
+  } catch { /* reading_history may be absent */ }
 
   // ─── MISSION ACTIONS ──────────────────────────────────────────────────────
   let missionActions = {};
@@ -322,6 +317,7 @@ await withMongo(async (db) => {
       returningVisitors: multiDay, returningTotal: totalFp,
     },
     reading,
+    readingMembers,
     missionActions,
     traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
     search,

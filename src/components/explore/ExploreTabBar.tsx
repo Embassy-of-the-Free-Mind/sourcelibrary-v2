@@ -3,11 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+// Every explore tool belongs here, including ones that live outside
+// /explore/* (Ngrams is a top-level route). A tool missing from this list is
+// reachable only from the /explore hub — landing on a sibling tool strands the
+// reader, since these pages have no other cross-navigation.
 const TABS = [
   { href: '/timeline', label: 'Timeline' },
   { href: '/explore/timeline', label: 'People' },
   { href: '/explore/map', label: 'Map' },
   { href: '/explore/constellation', label: 'Constellation' },
+  { href: '/ngrams', label: 'Ngrams' },
 ] as const;
 
 export default function ExploreTabBar() {

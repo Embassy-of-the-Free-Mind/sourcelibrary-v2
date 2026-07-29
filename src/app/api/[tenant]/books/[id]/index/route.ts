@@ -9,6 +9,14 @@ import { isBookReadable } from '@/lib/book-access';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
 import { resolveTenantId } from '@/lib/tenant-context';
+import {
+  attributeEntityPages,
+  buildPageTexts,
+  type NormalizedPage,
+  type PageAttribution,
+  type PagePrecision,
+} from '@/lib/entity-page-match';
+import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 
 export const maxDuration = 300;
 
@@ -326,31 +334,55 @@ function buildConceptIndexFromBatches(
   places: ConceptEntry[];
   concepts: ConceptEntry[];
 } {
-  // Aggregate from batches
-  const peopleMap = new Map<string, number[]>();
-  const placesMap = new Map<string, number[]>();
-  const conceptsMap = new Map<string, number[]>();
+  // Aggregate from batches.
+  //
+  // FIFTH writer of this index (with enrich-worker.mjs Phase 6,
+  // batch-generate-indexes.mjs, the /api/entities rebuild, and the global
+  // /api/books/[id]/index twin). #3361 fixed the other four and missed this
+  // one: Gemini returns bare name lists for a ~50k-char batch with no page
+  // numbers, and crediting EVERY page in the batch range to EVERY entity in it
+  // produced citations that were only ~22% real. Verify against page text
+  // instead, and fall back to a section range rather than guessing.
+  const peopleMap = new Map<string, PageAttribution>();
+  const placesMap = new Map<string, PageAttribution>();
+  const conceptsMap = new Map<string, PageAttribution>();
+
+  const pagesByNumber = new Map(pages.map(p => [p.page_number, p]));
+
+  const accumulate = (map: Map<string, PageAttribution>, term: string, batchPages: NormalizedPage[]) => {
+    if (!term) return;
+    const attribution = attributeEntityPages(term, batchPages);
+    const prev = map.get(term);
+    if (!prev) {
+      map.set(term, attribution);
+      return;
+    }
+    const merged = [...new Set([...prev.pages, ...attribution.pages])].sort((a, b) => a - b);
+    const ranges = [prev.page_range, attribution.page_range].filter(Boolean) as { start: number; end: number }[];
+    const next: PageAttribution = {
+      pages: merged,
+      page_precision: merged.length > 0 ? 'page' : 'section',
+    };
+    if (next.page_precision === 'section' && ranges.length > 0) {
+      next.page_range = {
+        start: Math.min(...ranges.map(r => r.start)),
+        end: Math.max(...ranges.map(r => r.end)),
+      };
+    }
+    map.set(term, next);
+  };
 
   for (const batch of batches) {
-    const pageNumbers = Array.from(
-      { length: batch.pageRange.end - batch.pageRange.start + 1 },
-      (_, i) => batch.pageRange.start + i
-    );
-
-    for (const person of batch.people) {
-      if (!peopleMap.has(person)) peopleMap.set(person, []);
-      peopleMap.get(person)!.push(...pageNumbers);
+    const batchPages: PageData[] = [];
+    for (let n = batch.pageRange.start; n <= batch.pageRange.end; n++) {
+      const p = pagesByNumber.get(n);
+      if (p) batchPages.push(p);
     }
+    const batchPageTexts = buildPageTexts(batchPages);
 
-    for (const place of batch.places) {
-      if (!placesMap.has(place)) placesMap.set(place, []);
-      placesMap.get(place)!.push(...pageNumbers);
-    }
-
-    for (const concept of batch.concepts) {
-      if (!conceptsMap.has(concept)) conceptsMap.set(concept, []);
-      conceptsMap.get(concept)!.push(...pageNumbers);
-    }
+    for (const person of batch.people) accumulate(peopleMap, person, batchPageTexts);
+    for (const place of batch.places) accumulate(placesMap, place, batchPageTexts);
+    for (const concept of batch.concepts) accumulate(conceptsMap, concept, batchPageTexts);
   }
 
   // Also extract vocabulary from OCR tags (existing approach)
@@ -377,23 +409,37 @@ function buildConceptIndexFromBatches(
     }
   }
 
+  // vocabulary/keywords come from per-page tags, so they were always page-exact.
   const mapToEntries = (map: Map<string, number[]>): ConceptEntry[] =>
     Array.from(map.entries())
-      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b) }))
+      .map(([term, pgs]) => ({
+        term,
+        pages: [...new Set(pgs)].sort((a, b) => a - b),
+        page_precision: 'page' as const,
+      }))
+      .sort((a, b) => b.pages.length - a.pages.length);
+
+  const attributionToEntries = (map: Map<string, PageAttribution>): ConceptEntry[] =>
+    Array.from(map.entries())
+      .map(([term, attribution]) => ({ term, ...attribution }))
       .sort((a, b) => b.pages.length - a.pages.length);
 
   return {
     vocabulary: mapToEntries(vocabMap),
     keywords: mapToEntries(keywordMap),
-    people: mapToEntries(peopleMap),
-    places: mapToEntries(placesMap),
-    concepts: mapToEntries(conceptsMap),
+    people: attributionToEntries(peopleMap),
+    places: attributionToEntries(placesMap),
+    concepts: attributionToEntries(conceptsMap),
   };
 }
 
 interface ConceptEntry {
   term: string;
   pages: number[];
+  /** 'page' — every number in `pages` was verified against that page's text.
+   *  'section' — only the span is known; `pages` is empty (#3361). */
+  page_precision?: PagePrecision;
+  page_range?: { start: number; end: number };
   context?: string; // Brief context from first occurrence
 }
 
@@ -1048,33 +1094,41 @@ async function syncBookEntities(
   // Load alias resolver to merge variant names into canonical entities
   const aliasResolver = await loadAliasResolver(db);
 
-  const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', pages: number[]) => {
+  const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', entry: ConceptEntry) => {
     // Resolve to canonical name
     const canonicalName = aliasResolver.resolve(term, type);
+
+    const bookEntry = {
+      book_id: bookId,
+      book_title: bookTitle,
+      book_author: bookAuthor,
+      ...(bookYear ? { book_year: bookYear } : {}),
+      pages: entry.pages || [],
+      page_precision: entry.page_precision || 'section',
+      ...(entry.page_range ? { page_range: entry.page_range } : {}),
+    };
 
     const update: Record<string, unknown> = {
       $set: { updated_at: now },
       $setOnInsert: { name: canonicalName, type, created_at: now },
-      $addToSet: {
-        books: {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          ...(bookYear ? { book_year: bookYear } : {}),
-          pages: pages
-        },
-      } as Record<string, unknown>,
     };
-
     // If this term is a variant, add it to aliases
     if (term !== canonicalName) {
-      (update.$addToSet as Record<string, unknown>).aliases = term;
+      update.$addToSet = { aliases: term };
     }
+    await db.collection('entities').updateOne({ name: canonicalName, type }, update, { upsert: true });
 
+    // Replace this book's entry instead of appending one. `$addToSet` compares
+    // whole subdocuments, so re-indexing a book with a different page list added
+    // a SECOND entry for it — one entity accumulated 162 entries for 117 books
+    // and its hero count disagreed with its own listing (#3361).
     await db.collection('entities').updateOne(
       { name: canonicalName, type },
-      update,
-      { upsert: true }
+      { $pull: { books: { book_id: bookId } } } as Record<string, unknown>
+    );
+    await db.collection('entities').updateOne(
+      { name: canonicalName, type },
+      { $push: { books: bookEntry } } as Record<string, unknown>
     );
   };
 
@@ -1083,17 +1137,17 @@ async function syncBookEntities(
 
   for (const person of conceptIndex.people) {
     if (!person.term) continue;
-    promises.push(syncEntity(person.term, 'person', person.pages));
+    promises.push(syncEntity(person.term, 'person', person));
   }
 
   for (const place of conceptIndex.places) {
     if (!place.term) continue;
-    promises.push(syncEntity(place.term, 'place', place.pages));
+    promises.push(syncEntity(place.term, 'place', place));
   }
 
   for (const concept of conceptIndex.concepts) {
     if (!concept.term) continue;
-    promises.push(syncEntity(concept.term, 'concept', concept.pages));
+    promises.push(syncEntity(concept.term, 'concept', concept));
   }
 
   await Promise.all(promises);
@@ -1110,16 +1164,14 @@ async function syncBookEntities(
   const uniqueTerms = [...new Map(allTerms.map(t => [`${t.type}:${t.name}`, t])).values()];
 
   for (const { name, type } of uniqueTerms) {
-    const entity = await db.collection('entities').findOne({ name, type });
+    const entity = await db.collection('entities').findOne({ name, type }, { projection: { books: 1 } });
     if (entity) {
-      const bookCount = entity.books?.length || 0;
-      const totalMentions = (entity.books || []).reduce(
-        (sum: number, b: { pages: number[] }) => sum + (b.pages?.length || 0),
-        0
-      );
+      // Distinct books, and VERIFIED page references only. Summing raw page-array
+      // lengths over duplicate entries is how one entity came to advertise
+      // "10,700 total mentions" of smeared page slots (#3361).
       await db.collection('entities').updateOne(
         { name, type },
-        { $set: { book_count: bookCount, total_mentions: totalMentions } }
+        { $set: entityCounters((entity.books || []) as EntityBookRef[]) }
       );
     }
   }
