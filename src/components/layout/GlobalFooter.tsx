@@ -8,52 +8,9 @@ import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import ReaderPresence from '@/components/presence/ReaderPresence';
 import { clearConsent } from '@/lib/consent';
-import { useLocale, FOOTER_STRINGS, type FooterStrings } from '@/lib/i18n';
-
-// Labels are resolved per-locale from FOOTER_STRINGS via `key`; hrefs are
-// constant and point at the English pages (deep pages have no `/es` route).
-type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colAbout' | 'colParticipate'>;
-
-const NAV_COLUMNS: ReadonlyArray<{
-  titleKey: keyof FooterStrings;
-  links: ReadonlyArray<{ key: FooterLinkKey; href: string }>;
-}> = [
-  {
-    titleKey: 'colLibrary',
-    links: [
-      { key: 'browseBooks', href: '/' },
-      { key: 'browseAZ', href: '/browse' },
-      { key: 'gallery', href: '/gallery' },
-      { key: 'collections', href: '/collections' },
-      { key: 'search', href: '/search' },
-    ],
-  },
-  {
-    titleKey: 'colAbout',
-    links: [
-      { key: 'about', href: '/about' },
-      { key: 'vision', href: '/vision' },
-      { key: 'census', href: '/census' },
-      { key: 'progress', href: '/about/progress' },
-      { key: 'research', href: '/research' },
-      { key: 'researchNotes', href: '/blog' },
-      { key: 'privacy', href: '/privacy' },
-      { key: 'cookieSettings', href: '#cookie-settings' },
-      { key: 'terms', href: '/terms' },
-      { key: 'copyright', href: '/dmca' },
-    ],
-  },
-  {
-    titleKey: 'colParticipate',
-    links: [
-      { key: 'libraries', href: '/libraries' },
-      { key: 'contribute', href: '/contribute' },
-      { key: 'support', href: '/support' },
-      { key: 'sponsorship', href: '/sponsors' },
-      { key: 'developers', href: '/developers' },
-    ],
-  },
-];
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { visibleFooterNavColumns } from '@/lib/footer-nav';
+import { useLocale, FOOTER_STRINGS } from '@/lib/i18n';
 
 type Partner = {
   name: string;
@@ -76,6 +33,19 @@ export default function GlobalFooter() {
   const pathname = usePathname();
   const t = FOOTER_STRINGS[useLocale()];
   const [hasFavorites, setHasFavorites] = useState(false);
+  // Global-only surfaces 404 on partner subdomains (the list and its rationale
+  // live in src/lib/tenant-global-paths.ts — #3364, #3370). SiteHeader has
+  // filtered on that list since #3364; the footer never did, so on
+  // bph.sourcelibrary.org it shipped ten links that all returned 404 —
+  // /about, /vision, /census, /research, /blog, /contribute, /support,
+  // /sponsors, /libraries and /about/progress. That is the failure the
+  // one-list rule exists to prevent: blocking a route the nav links to just
+  // moves the leak into a dead link.
+  //
+  // Same shared `useEmbedContext` signal the header uses, not a second
+  // hostname check (#3367). Resolved after mount, so the static HTML the
+  // global site serves is unchanged and only a tenant visitor sees links drop.
+  const navColumns = visibleFooterNavColumns(useIsEmbedded());
 
   useEffect(() => {
     try {
@@ -116,7 +86,7 @@ export default function GlobalFooter() {
         {/* Zone 2: Navigation Columns. Mobile: 2 columns — Library + Participate
             stacked on the left, About on the right. Desktop: the usual 3-up. */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8 sm:gap-12 py-10 border-b border-white/[0.08]">
-          {NAV_COLUMNS.map((col) => (
+          {navColumns.map((col) => (
             <div
               key={col.titleKey}
               className={
