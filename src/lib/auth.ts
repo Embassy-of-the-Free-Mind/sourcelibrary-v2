@@ -6,6 +6,7 @@ import { toUserId } from './user-id';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
 import { activatePendingMembership } from './memberships';
+import { recordAuthEvent } from './auth-events';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
 
@@ -13,6 +14,24 @@ const dbName = process.env.MONGODB_DB || 'bookstore';
 // welcome form can backfill firstName/lastName on the same contact — magic-link
 // signups have no name at createUser time, which is when the contact is made.
 export const RESEND_AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
+
+/**
+ * Inbound request headers, or null when there is no request scope.
+ *
+ * The NextAuth `events` and `sendVerificationRequest` hooks receive no request
+ * object, so `next/headers` is the only way to classify the caller. It throws
+ * outside a request (background invocation, tests) — hence the dynamic import
+ * and the swallow. Returning null is deliberate: `buildAuthEvent` then stores a
+ * null traffic_class rather than inventing one.
+ */
+async function safeHeaders(): Promise<Headers | null> {
+  try {
+    const { headers } = await import('next/headers');
+    return await headers();
+  } catch {
+    return null;
+  }
+}
 
 // --- Role system ---
 // Replaces the old admin | curator | inner_circle | reader system.
@@ -161,6 +180,20 @@ if (process.env.RESEND_API_KEY) {
             </div>
           `,
         });
+        // Record the SEND, not just the eventual sign-in. A `magic_link_sent`
+        // with no matching `signin` is the signature of a broken magic-link
+        // flow (a bad provider peer range, a dead SMTP key, prefetch burning
+        // the token) — and it is visible without anyone signing in by hand to
+        // check. That is precisely the question left open by #3431.
+        try {
+          const client = await clientPromise;
+          await recordAuthEvent(client.db(dbName), {
+            kind: 'magic_link_sent',
+            provider: 'nodemailer',
+            email,
+            headers: await safeHeaders(),
+          });
+        } catch { /* never let telemetry break a sign-in */ }
       } catch (error) {
         console.error('[auth] Failed to send verification email:', error);
         throw new Error('Failed to send verification email');
@@ -263,7 +296,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // not on every JWT validation / page load — so it measures returning
     // members who re-authenticate, e.g. after their session expires). Pairs
     // with createdAt so we can tell new sign-ups from returning ones.
-    async signIn({ user }) {
+    async signIn({ user, account, isNewUser }) {
       if (!user?.email) return;
       try {
         const client = await clientPromise;
@@ -272,6 +305,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           { email: user.email.toLowerCase() },
           { $set: { lastLogin: new Date() }, $inc: { loginCount: 1 } }
         );
+        // Append the event too. lastLogin is overwritten each time and records
+        // no provider, so it cannot answer "how many sign-ins today" or "did
+        // the magic-link path work" — see src/lib/auth-events.ts.
+        await recordAuthEvent(db, {
+          kind: 'signin',
+          provider: account?.provider,
+          email: user.email,
+          isNewUser,
+          headers: await safeHeaders(),
+        });
       } catch (error) {
         console.error('[auth] Failed to stamp lastLogin:', error);
       }
