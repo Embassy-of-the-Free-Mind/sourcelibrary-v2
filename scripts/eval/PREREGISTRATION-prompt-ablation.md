@@ -53,23 +53,39 @@ ground truth about what the model should notice.
 **Scoring parity:** all arms are scored after stripping annotation tags, so arm A
 (which emits none) and arm C (which emits many) are compared on the text alone.
 
-**Does this match production?** Yes, for OCR. Checked against `gemini_usage`
-(n=3,000 most recent OCR rows): **92.6% of calls are `page_count: 1`**, median input
-3,272 tokens — one image per call, which is what this harness sends. The large
-`page_count` values (40, 52, 60, 150) are all `mode: batch`, where the field is the
-**job** aggregate, not pages in one prompt; 150 pages in a single call would be
-~280K input tokens, not 3.3K. Two caveats recorded rather than assumed away:
+**Does this match production?** Yes for OCR — verified in the worker code, not
+inferred from usage rows. `scripts/workers/pipeline-orchestrator.mjs:1655` builds each
+request as `parts: [{ text: prompt }, { inlineData: image }]` — **one prompt, one
+image**. The constants `OCR_INLINE_BATCH_SIZE` (20), `OCR_FILE_BATCH_SIZE` (1000) and
+`CROSS_BOOK_BATCH_SIZE` (250) are how many *requests* are bundled into a Gemini **batch
+job**, never how many pages go into a prompt. So OCR grouping buys throughput and the
+50% batch discount, and **never context**.
 
-- **Realtime vs batch.** Production OCR is 2,773 realtime to 227 batch; this harness
-  uses realtime, matching the dominant lane. But `scripts/experiments/batch-size-experiment.mjs`
-  lists RECITATION rate among the things it measures, so batch-mode behaviour should
-  not be assumed identical. Out of scope here; do not generalize these results to the
-  batch lane without checking.
-- **Multi-page prompting is out of scope.** Translation genuinely batches
-  (`page_count: 8` at 6,677 input tokens — cheap because its input is text, not
-  images), and Ars Astronomica reports 4 pages optimal for printed books. But our OCR
-  does not do it, so testing it would measure something we do not ship. Separate
-  experiment if we ever want it.
+**Translation works differently, and the contrast matters.**
+`scripts/workers/translate-worker.mjs:44` sets `BATCH_SIZE` to 8 by default and sends
+all 8 pages in one call (`remaining.slice(0, batchSize)`), *plus* the previous page's
+translation prepended for continuity (line 301). The usage rows confirm real multi-page
+prompting: `page_count: 8` at 6,796 input tokens = **850 tokens/page against 2,224 for a
+single-page translation call — 2.6× cheaper per page.**
+
+**So OCR has no cross-page context at all, and translation does.** That asymmetry is a
+live question this ablation does NOT answer and must not be read as answering: a
+marginal note running across a page break, a hyphenated word split over a leaf, a table
+continuing overleaf, or a running header the model has seen 200 times are all invisible
+to a single-image OCR call. Ars Astronomica batches 4 pages for exactly this reason.
+**"Does OCR page-grouping improve accuracy or marginalia capture?" deserves its own
+experiment** — it is a different intervention from the metadata fields tested here, and
+confounding the two would make both uninterpretable.
+
+Remaining caveat: **realtime vs batch.** This harness uses realtime calls.
+`scripts/experiments/batch-size-experiment.mjs` lists RECITATION rate among the things
+it measures, so batch-mode behaviour should not be assumed identical — do not
+generalize these results to the batch lane without checking.
+
+**Metering caveat.** 6,960 batch-OCR rows covering 376,804 pages record
+`input_tokens: 0` and `cost_usd: 0.00`, while 5,454 batch rows do carry tokens. Any
+"what did OCR cost" figure drawn from `gemini_usage` is therefore an undercount, and the
+per-page cost table below is derived from **realtime** rows only. Tracked separately.
 
 ## Hypotheses and decision rules — fixed in advance
 
