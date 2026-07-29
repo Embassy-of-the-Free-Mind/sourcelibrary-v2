@@ -230,6 +230,33 @@ describe('canonicalHoldingLibrary — grouping for /libraries', () => {
   });
 });
 
+describe('the --verify sweep compares on canonical names', () => {
+  // harvest-holding-libraries.mjs --verify overwrites a stored custodian when
+  // it canonicalizes differently from IA's. That comparison has to be able to
+  // BOTH fire and stay quiet, or the sweep is either useless or destructive.
+
+  it('fires on two genuinely different institutions', () => {
+    // The real case: bub_gb_fgFLWoILS6YC is stored as Florence; IA says Rome.
+    expect(canonicalHoldingLibrary('Biblioteca Nazionale Centrale di Firenze')).not.toBe(
+      canonicalHoldingLibrary('National Central Library of Rome'),
+    );
+  });
+
+  it('stays quiet on a mere spelling or language variant', () => {
+    // Otherwise the sweep would "correct" thousands of records to a synonym,
+    // churning data and inventing a changelog of non-changes.
+    const pairs: [string, string][] = [
+      ['The Wellcome Library, London', 'Wellcome Library'],
+      ['Bayerische Staatsbibliothek, Munich', 'Bavarian State Library'],
+      ['The Library of Congress', 'Library of Congress'],
+      ['University of Toronto - Kelly Library', 'Kelly - University of Toronto'],
+    ];
+    for (const [a, b] of pairs) {
+      expect(canonicalHoldingLibrary(a), `${a} vs ${b}`).toBe(canonicalHoldingLibrary(b));
+    }
+  });
+});
+
 describe('AGGREGATOR_PROVIDERS', () => {
   it('names providers that actually exist as partners', () => {
     // A typo'd key would silently disable the credit for that provider.
