@@ -2,6 +2,7 @@ import { Book, TranslationEdition } from '@/lib/types';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
+import { resolveSourceCredit } from '@/lib/holding-library';
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -85,7 +86,14 @@ export default function SchemaOrgMetadata({
     license: PUBLIC_DOMAIN_MARK_URL,
     usageInfo: `${baseUrl}/licensing`,
     acquireLicensePage: `${baseUrl}/book/${bookPath}`,
-    creditText: book.image_source?.attribution || `Digitized by ${book.image_source?.provider_name || 'Internet Archive'}`,
+    // Credit the custodian of the physical volume alongside the digitizer —
+    // on an aggregator they are different institutions and only naming the
+    // host drops the library that made the book available.
+    creditText: book.image_source?.attribution || (() => {
+      const { holder, digitizer } = resolveSourceCredit(book.image_source);
+      const scannedBy = `Digitized by ${digitizer || 'Internet Archive'}`;
+      return holder ? `Held by ${holder}. ${scannedBy}.` : scannedBy;
+    })(),
   };
 
   // Extract translator info from edition contributors or default to AI

@@ -57,6 +57,7 @@ import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
 import BookLibrarySection, { type LibrarySectionData } from '@/components/book/BookLibrarySection';
 import { getPartnerByProvider } from '@/lib/library-partners';
+import { resolveSourceCredit } from '@/lib/holding-library';
 import { getRelatedBooks } from '@/lib/related-books';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
@@ -916,6 +917,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         logo: partner.logo,
         stats: { books: exactBooks.total || all.total, languages: languages.length, translated: translated.total },
         covers,
+        // On an aggregator (IA, e-rara, …) the physical volume belongs to some
+        // other library; credit it above the host. Null for the ~40 partners
+        // that scan their own holdings, which keeps their credit as it was.
+        holdingLibrary: resolveSourceCredit(book.image_source, partner.name).holder || undefined,
       };
     })();
 
@@ -1111,7 +1116,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Digitized by the source library (Internet Archive, a partner, …) — its own
     // entry with the original scan/publication date when we captured it. This
     // predates our own "Added to Source Library" moment.
-    const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+    // Who scanned it — NOT contributing_library, which names the institution
+    // that HOLDS the volume (documented on ImageSource, and on an aggregator
+    // the two differ: Fisher holds the book, Internet Archive scanned it).
+    const digitizer = resolveSourceCredit(book.image_source).digitizer;
     const catalogMeta = (book as unknown as { catalog_metadata?: { scan_date?: string; public_date?: string } }).catalog_metadata;
     const digitizedRaw = catalogMeta?.scan_date || catalogMeta?.public_date;
     if (digitizedRaw) {
@@ -1458,9 +1466,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="pt-14 pb-16 scroll-mt-4">
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
-              const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              const { holder, digitizer } = resolveSourceCredit(book.image_source);
               const pagesSubtitle = digitizer
-                ? `Every page scanned from the original, digitized by ${digitizer}.`
+                ? holder
+                  ? `Every page scanned from the original held by ${holder}, digitized by ${digitizer}.`
+                  : `Every page scanned from the original, digitized by ${digitizer}.`
                 : 'Every page of the original scan, in reading order.';
               const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;

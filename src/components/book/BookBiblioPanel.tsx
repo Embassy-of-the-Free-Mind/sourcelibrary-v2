@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
+import { holdingLibraryName } from '@/lib/holding-library';
 
 /**
  * Light-themed bibliographic panel for the book page's "Bibliographic
@@ -89,7 +90,7 @@ export default function BookBiblioPanel({
         </>
       )}
 
-      {src && (src.provider_name || src.source_url || src.contributing_library) && (
+      {src && (src.provider_name || src.source_url || holdingLibraryName(src)) && (
         <>
           <SectionLabel>Image Source</SectionLabel>
           <div className="divide-y" style={{ borderColor: '#ece6da' }}>
@@ -102,7 +103,7 @@ export default function BookBiblioPanel({
                 ) : (src.provider_name || '—')}
               </Row>
             )}
-            {src.contributing_library && <Row label="Provided by">{src.contributing_library}</Row>}
+            {holdingLibraryName(src) && <Row label="Held by">{holdingLibraryName(src)}</Row>}
             {src.digitized_by && <Row label="Digitized by">{src.digitized_by}</Row>}
             {src.shelfmark && <Row label="Shelfmark">{src.shelfmark}</Row>}
             {src.license && <Row label="License">{src.license}</Row>}
