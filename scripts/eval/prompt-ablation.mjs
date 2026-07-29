@@ -92,36 +92,75 @@ const PROMPT_DIR = path.join(__dirname, 'prompts', 'ablation');
 // only the target is scored, so segmentation reliability becomes its own
 // outcome: if page boundaries can't be delimited, grouping is unusable
 // regardless of what it does to accuracy.
-const PAGE_DELIM = '<<<PAGE-BREAK>>>';
+// Delimiting convention copied from the PRODUCTION translation batcher
+// (translate-worker.mjs:369) rather than invented here. It asks for LABELLED tags
+// — `<page n="491">…</page>` — not a bare separator, and the difference is a
+// correctness one: a bare delimiter can only count segments, so a model that
+// renumbers or REORDERS pages would have its wrong segment scored against the
+// target's ground truth with nothing to catch it. A labelled tag is
+// self-identifying, so the scorer can assert it holds the page it thinks it does.
+//
+// Two failure modes the translation batcher learned the hard way, both recorded
+// here as outcomes rather than silently repaired:
+//   1. Models renumber pages (emitting 1..N instead of the real page numbers) —
+//      production falls back to POSITION when the count matches exactly.
+//   2. Short pages make the model skip the tags altogether and emit garbage —
+//      production refuses to batch when the first page's OCR is under
+//      MIN_OCR_CHARS_FOR_BATCH.
+const PAGE_TAG_RE = /<page\s+n="(\d+)">([\s\S]*?)<\/page>/g;
 
 // Only the prompt-factor arms are crossed with grouping. A (bare ceiling) and D
 // (two-call control) stay ungrouped so they mean the same thing in every cell.
 const FACTORIAL_ARMS = new Set(['B', 'C']);
 
-function groupPrefix(n) {
-  return `You are given ${n} consecutive page images from the same book, in reading order.
-Transcribe EVERY page, in the order given. Separate consecutive pages with a line
-containing exactly ${PAGE_DELIM} and nothing else. Emit exactly ${n - 1} such separator
-lines. Apply all instructions below to each page independently.
+function groupPrefix(pageNumbers) {
+  const n = pageNumbers.length;
+  return `You are given ${n} consecutive page images from the same book, in reading order:\
+ pages ${pageNumbers.join(', ')}.
 
-Use the preceding pages only as context for reading the later ones — for a word broken
-across a page break, a running header you have already seen, a table continuing from
-the previous leaf, or a marginal note carried over. Never copy text from one page into
-another's transcription.
+Transcribe EVERY page. Wrap each page's transcription in a tag carrying its page number:
+${pageNumbers.map(p => `<page n="${p}">...transcription of page ${p}...</page>`).join('\n')}
+
+Use the earlier pages only as context for reading the later ones — a word broken across
+a page break, a running header you have already seen, a table continuing from the
+previous leaf, a marginal note carried over. Never copy text from one page into
+another's transcription. Apply all instructions below to each page independently.
 
 `;
 }
 
 /**
- * Split a grouped response into per-page segments and return the target (last).
- * Returns null when the model did not produce the expected number of separators —
- * a segmentation failure, recorded rather than silently patched, because a model
- * that cannot delimit pages makes grouping unusable no matter how it scores.
+ * Pull the TARGET page out of a grouped response.
+ *
+ * Mirrors the production translation batcher's parse (translate-worker.mjs:386):
+ * match labelled tags, then fall back to POSITION when the model renumbered but
+ * emitted the right count. Unlike production, which just needs a usable result,
+ * this records HOW the page was recovered — `byLabel`, `byPosition`, or not at
+ * all — because "the model renumbers pages" is itself a finding about whether
+ * grouping is deployable, not an inconvenience to paper over.
+ *
+ * Returns segment=null on failure; the caller scores it on nothing rather than
+ * counting a formatting fault as a reading fault.
  */
-function extractTargetSegment(text, n) {
-  const parts = text.split(new RegExp(`^\\s*${PAGE_DELIM.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'gm'));
-  if (parts.length !== n) return { segment: null, segments: parts.length };
-  return { segment: parts[parts.length - 1].trim(), segments: parts.length };
+function extractTargetSegment(text, pageNumbers) {
+  const target = pageNumbers[pageNumbers.length - 1];
+  const found = new Map();
+  const order = [];
+  PAGE_TAG_RE.lastIndex = 0;
+  let m;
+  while ((m = PAGE_TAG_RE.exec(text)) !== null) {
+    found.set(parseInt(m[1], 10), m[2].trim());
+    order.push(m[2].trim());
+  }
+  if (found.has(target)) {
+    return { segment: found.get(target), segments: found.size, recovery: 'byLabel' };
+  }
+  // Renumbering fallback — only when the count is exactly right, so position is
+  // unambiguous. Anything else is a genuine failure.
+  if (order.length === pageNumbers.length) {
+    return { segment: order[order.length - 1], segments: order.length, recovery: 'byPosition' };
+  }
+  return { segment: null, segments: order.length, recovery: null };
 }
 const ARMS = {
   A: { label: 'transcribe-only', prompt: 'A-transcribe-only.txt' },
@@ -274,15 +313,31 @@ async function main() {
     // short group is a different treatment, and quietly mixing the two would
     // confound the factor being tested.
     let contextBuffers = [];
+    let groupPageNumbers = [];
     if (groupN > 1) {
       for (let d = groupN - 1; d >= 1; d--) {
         const prev = await getPage(gt.book_id, gt.page_number - d);
         const prevUrl = prev && getPageSource(prev);
         if (!prevUrl) { contextBuffers = null; break; }
-        try { contextBuffers.push(await fetchImage(prevUrl)); }
+        // Production refuses to batch when a page's text is very short — short
+        // pages make the model skip the per-page tags and emit garbage
+        // (translate-worker.mjs MIN_OCR_CHARS_FOR_BATCH). Honour the same guard
+        // so a known-bad configuration isn't scored as if grouping had failed.
+        if ((prev.ocr?.data || '').length > 0 && (prev.ocr.data.length < 200)) {
+          contextBuffers = null;
+          console.log(`  ~ ${gt.work}: predecessor p${prev.page_number} too short to batch, grouped arms skipped`);
+          break;
+        }
+        try { contextBuffers.push(await fetchImage(prevUrl)); groupPageNumbers.push(prev.page_number); }
         catch { contextBuffers = null; break; }
       }
-      if (!contextBuffers) console.log(`  ~ ${gt.work}: fewer than ${groupN - 1} predecessors, grouped arms skipped`);
+      if (contextBuffers) groupPageNumbers.push(gt.page_number);
+      else if (groupPageNumbers.length !== 0 || contextBuffers === null) {
+        if (contextBuffers === null && groupPageNumbers.length === 0) {
+          console.log(`  ~ ${gt.work}: fewer than ${groupN - 1} predecessors, grouped arms skipped`);
+        }
+        groupPageNumbers = [];
+      }
     }
 
     // Image manipulations apply identically to every arm, so an arm difference is
@@ -323,17 +378,18 @@ async function main() {
           try {
             const grouped = g > 1;
             const images = grouped ? [...contextBuffers, imageBuffer] : imageBuffer;
-            const promptText = grouped ? groupPrefix(g) + prompts[k] : prompts[k];
+            const promptText = grouped ? groupPrefix(groupPageNumbers) + prompts[k] : prompts[k];
             const res = await runModel(model, images, promptText, { maxTokens: grouped ? 32000 : 16000 });
 
-            // Score only the TARGET page. A grouped response that cannot be
-            // segmented is recorded as such and scored on nothing — treating it
-            // as a low accuracy score would blame the reader for a formatting
-            // failure, and the two need to stay distinguishable.
-            let scoredText = res.text, segments = null, segmentationOk = true;
+            // Score only the TARGET page. A grouped response whose target cannot
+            // be recovered is scored on nothing — treating it as low accuracy
+            // would blame the reader for a formatting failure, and the two need
+            // to stay distinguishable.
+            let scoredText = res.text, segments = null, segmentationOk = true, recovery = null;
             if (grouped) {
-              const seg = extractTargetSegment(res.text, g);
+              const seg = extractTargetSegment(res.text, groupPageNumbers);
               segments = seg.segments;
+              recovery = seg.recovery;
               segmentationOk = seg.segment !== null;
               scoredText = seg.segment ?? res.text;
             }
@@ -360,7 +416,7 @@ async function main() {
               work: gt.work, slug: gt._file.replace(/\.json$/, ''), script: gt.script,
               canonical: gt.page_class?.canonical_text ?? null,
               model, arm: k, armLabel: ARMS[k].label, armSuffix, run: i + 1,
-              group: g, segments, segmentationOk,
+              group: g, segments, segmentationOk, recovery,
               finishReason: res.finishReason,
               aligned: score.aligned,
               charAccuracy: score.aligned ? score.charAccuracy : null,

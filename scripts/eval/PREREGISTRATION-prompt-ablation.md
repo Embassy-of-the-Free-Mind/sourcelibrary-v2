@@ -67,12 +67,29 @@ context is a live candidate explanation.
 ### Grouped-arm mechanics
 
 The model transcribes **all four pages** (the deployable form — cost amortizes across
-pages) separated by an explicit `<<<PAGE-BREAK>>>` line, and **only the target page is
-scored**. A response that does not yield exactly four segments is recorded as a
-**segmentation failure and scored on nothing** — not as low accuracy. Those are
-different defects and collapsing them would blame the reader for a formatting fault.
-Segmentation reliability is therefore its own outcome: a model that cannot delimit
-pages makes grouping unusable regardless of what it does to accuracy.
+pages) and **only the target page is scored**.
+
+**The delimiting convention is copied from the production translation batcher, not
+invented for this study.** `translate-worker.mjs:369` asks for **labelled** tags —
+`<translation page="491">…</translation>` — and this harness uses the same shape,
+`<page n="491">…</page>`. The difference from a bare separator is a correctness one:
+a bare delimiter can only *count* segments, so a model that **reorders** pages would
+have the wrong segment scored against the target's ground truth with nothing to catch
+it — the "paired artifacts must be verified, never assumed" failure, reproduced inside
+the instrument meant to detect it. A labelled tag lets the scorer assert that the
+segment it scores is the page it thinks it is.
+
+Two failure modes the translation batcher already learned, carried over as **recorded
+outcomes rather than silent repairs**:
+
+- **Models renumber pages** (emitting 1..N instead of the real numbers). Production
+  falls back to position when the count matches exactly; so does this harness, but it
+  records `recovery: byLabel | byPosition | null` per run, because "the model
+  renumbers" is a finding about deployability, not an inconvenience.
+- **Short pages make the model skip the tags entirely and emit garbage.** Production
+  refuses to batch below `MIN_OCR_CHARS_FOR_BATCH`; grouped arms here skip any page
+  whose predecessors are under 200 characters, so a known-bad configuration is not
+  scored as if grouping had failed on its merits.
 
 Pages with fewer than three real predecessors are **excluded from grouped arms rather
 than padded** — a short group is a different treatment.

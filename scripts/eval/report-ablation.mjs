@@ -93,13 +93,17 @@ if (GROUPS.length > 1) {
   const g = GROUPS[GROUPS.length - 1];
   console.log(`\n  GROUPING FACTOR (g1 vs g${g})\n`);
   console.log(`  H6 — segmentation reliability (gate; below 95% H7–H9 are uninterpretable)`);
+  console.log(`       byLabel = target found by its page number; byPosition = model RENUMBERED`);
+  console.log(`       (a high byPosition share means labels are unreliable even when parsing "works")`);
   for (const model of models) {
     for (const arm of ['B', 'C']) {
       const rs = sel(model, arm, g);
       if (!rs.length) continue;
       const ok = rate(rs, r => r.segmentationOk);
+      const byLabel = rate(rs, r => r.recovery === 'byLabel');
+      const byPos = rate(rs, r => r.recovery === 'byPosition');
       const flag = ok !== null && ok < 0.95 ? ' \x1b[31m← below 95%\x1b[0m' : '';
-      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}  ${pct(ok)} exact-${g}-segment  n=${rs.length}${flag}`);
+      console.log(`    ${model.slice(0, 23).padEnd(24)} ${arm}  recovered ${pct(ok)}  (byLabel ${pct(byLabel)} / byPosition ${pct(byPos)})  n=${rs.length}${flag}`);
     }
   }
   console.log(`\n  H7 — accuracy under grouping (segmented runs only)`);
