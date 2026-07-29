@@ -44,7 +44,7 @@ export default async function WelcomePage() {
         <p className="font-serif text-white text-xl md:text-2xl mb-4 px-2 drop-shadow-md">
           {firstName ? `Welcome, ${firstName}.` : 'Welcome.'}
         </p>
-        <WelcomeForm />
+        <WelcomeForm initialName={session.user.name || ''} />
       </div>
 
       {(hero.bookTitle || hero.bookYear) && (
