@@ -57,6 +57,7 @@ import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import readline from 'readline';
+import { spawnSync } from 'child_process';
 import { withMongo } from '../lib/mongo.mjs';
 
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
@@ -170,13 +171,48 @@ async function processPart(gzPath, outPath) {
   return { stats, originalLangTally };
 }
 
+/**
+ * Download one part, streaming to disk, with retry and resume.
+ *
+ * Deliberately curl rather than node's fetch: these are ~70MB files over a long
+ * connection, and `fetch` + `arrayBuffer()` buffers the whole part in memory and
+ * dies on any mid-transfer socket close ("TypeError: terminated" /
+ * UND_ERR_SOCKET). Observed failing on the very first part of a 43-part run.
+ * curl streams, resumes a partial file (-C -), and retries transport errors
+ * itself — which matters when a run is 3GB long and unattended.
+ *
+ * The gzip integrity check afterwards is the real guard: a truncated part would
+ * otherwise silently yield fewer records and quietly understate the reference
+ * set, which is the failure mode we can least afford here.
+ */
 async function download(url, dest) {
-  const res = await fetch(url, {
-    signal: AbortSignal.timeout(900_000),
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set build)' },
-  });
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-  await fs.promises.writeFile(dest, Buffer.from(await res.arrayBuffer()));
+  const MAX_ATTEMPTS = 4;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const res = spawnSync('curl', [
+      '--silent', '--show-error', '--location',
+      '--retry', '5', '--retry-delay', '3', '--retry-all-errors',
+      '--connect-timeout', '30', '--max-time', '1800',
+      '-C', '-', // resume a partial file rather than restarting 70MB
+      '--user-agent', 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set build)',
+      '-o', dest, url,
+    ], { encoding: 'utf8' });
+
+    // curl exit 33 = server does not support resume; drop the partial and retry clean.
+    if (res.status === 33) { fs.rmSync(dest, { force: true }); continue; }
+
+    if (res.status === 0) {
+      const check = spawnSync('gzip', ['-t', dest], { encoding: 'utf8' });
+      if (check.status === 0) return;
+      // Truncated or corrupt — discard and retry from scratch.
+      fs.rmSync(dest, { force: true });
+      if (attempt === MAX_ATTEMPTS) throw new Error(`gzip integrity check failed for ${url}`);
+      continue;
+    }
+
+    if (attempt === MAX_ATTEMPTS) {
+      throw new Error(`curl exit ${res.status} for ${url}: ${(res.stderr || '').trim()}`);
+    }
+  }
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -187,6 +223,7 @@ console.log(`LoC MDSConnect ${SNAPSHOT} — ${parts.length} part(s) → ${OUT_DI
 
 const totals = { records: 0, with_041h: 0, english_translations: 0, with_uniform_title: 0, with_lccn: 0 };
 const langTotals = {};
+const failedParts = [];
 
 for (const p of parts) {
   const pp = String(p).padStart(2, '0');
@@ -197,17 +234,28 @@ for (const p of parts) {
     console.log(`  part${pp}  already extracted, skipping`);
     continue;
   }
-  if (!fs.existsSync(gz)) {
-    process.stdout.write(`  part${pp}  downloading…`);
-    await download(`${BASE}.part${pp}.xml.gz`, gz);
-  }
-  process.stdout.write(`  part${pp}  extracting…`);
-  const { stats, originalLangTally } = await processPart(gz, jsonl);
-  if (!KEEP_GZ) fs.unlinkSync(gz);
+  // A 43-part run is ~3GB and unattended. One flaky part must not discard the
+  // 40 that worked — record it and carry on, then report the gap loudly at the
+  // end, because a silently short reference set understates coverage and that
+  // biases every negative it supports.
+  try {
+    if (!fs.existsSync(gz)) {
+      process.stdout.write(`  part${pp}  downloading…`);
+      await download(`${BASE}.part${pp}.xml.gz`, gz);
+    }
+    process.stdout.write(`  part${pp}  extracting…`);
+    const { stats, originalLangTally } = await processPart(gz, jsonl);
+    if (!KEEP_GZ) fs.rmSync(gz, { force: true });
 
-  for (const k of Object.keys(totals)) totals[k] += stats[k];
-  for (const [l, n] of Object.entries(originalLangTally)) langTotals[l] = (langTotals[l] || 0) + n;
-  console.log(` ${stats.records} records → ${stats.english_translations} English translations`);
+    for (const k of Object.keys(totals)) totals[k] += stats[k];
+    for (const [l, n] of Object.entries(originalLangTally)) langTotals[l] = (langTotals[l] || 0) + n;
+    console.log(` ${stats.records} records → ${stats.english_translations} English translations`);
+  } catch (err) {
+    failedParts.push({ part: pp, error: err.message });
+    fs.rmSync(gz, { force: true });
+    fs.rmSync(jsonl, { force: true }); // never leave a half-written extract behind
+    console.log(` FAILED — ${err.message}`);
+  }
 }
 
 console.log('\n─── Reference set ────────────────────────────────────────────');
@@ -228,6 +276,15 @@ for (const [l, n] of topLangs) console.log(`    ${l.padEnd(6)} ${String(n).padSt
 console.log('\n  BOUNDARY: this snapshot ends in 2016. A translation published after');
 console.log('  2016 is absent by construction, not by evidence. Any claim resting on');
 console.log('  this set must say so, and be topped up from the live SRU path.');
+
+const extractedParts = fs.readdirSync(OUT_DIR).filter((f) => /^eng-translations\.part\d+\.jsonl$/.test(f)).length;
+console.log(`\n  parts on disk: ${extractedParts} of 43`);
+if (failedParts.length) {
+  console.log(`\n  ⚠️  ${failedParts.length} PART(S) FAILED — the reference set is INCOMPLETE:`);
+  for (const f of failedParts) console.log(`      part${f.part}: ${f.error}`);
+  console.log('      Re-run the same command; completed parts are skipped.');
+  console.log('      Do NOT quote coverage numbers from this run until they land.');
+}
 
 if (LOAD) {
   console.log('\nLoading into Mongo `reference_translations`…');
