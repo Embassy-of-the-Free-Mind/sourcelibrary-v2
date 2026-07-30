@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { BookMarked, ExternalLink, BookOpen, Pencil, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
@@ -6,6 +7,7 @@ import { getReadDb, getDb } from '@/lib/mongodb';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
+import { buildSignInHref } from '@/lib/tenant-signin-url';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
@@ -382,6 +384,20 @@ export default async function CatalogEntryPage({ params }: Props) {
       />
     );
   }
+
+  // Sign-in link for signed-out visitors. Built from the REQUEST host, never
+  // from the public pathname: the proxy rewrites bph.sourcelibrary.org/catalog/X
+  // to /embed/bph/catalog/X internally, so the path we render under is not the
+  // one the visitor's browser shows. Sending them back to the internal path
+  // would strand them on a URL the tenant host doesn't serve. (Gating on
+  // usePathname() is the same mistake that broke #3383.)
+  const requestHeaders = await headers();
+  const requestHost = requestHeaders.get('host') || '';
+  const publicPath = `/catalog/${encodeURIComponent(work.ubn)}`;
+  const signInHref = buildSignInHref(
+    requestHost,
+    requestHost ? `https://${requestHost}${publicPath}` : publicPath
+  );
 
   const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
   const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
@@ -790,6 +806,21 @@ export default async function CatalogEntryPage({ params }: Props) {
                 {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}
               </a>
               .
+            </>
+          ) : null}
+          {/* Cataloguers arrive here signed out and, with the SiteHeader
+              stripped on tenant hosts, previously had nothing to click —
+              the record simply rendered read-only with no hint that editing
+              existed or that they needed a session (#3468). The gear menu
+              carries a Sign in item too, but nobody looking to catalogue
+              thinks to open a settings icon. */}
+          {!session ? (
+            <>
+              {' '}
+              <a href={signInHref} className="text-accent-rust hover:underline">
+                Sign in to edit
+              </a>
+              {' — for BPH cataloguers.'}
             </>
           ) : null}
         </p>

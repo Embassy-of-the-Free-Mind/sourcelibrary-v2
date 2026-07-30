@@ -7,6 +7,7 @@ import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
 import { activatePendingMembership } from './memberships';
 import { recordAuthEvent } from './auth-events';
+import { resolvePostSignInRedirect } from './auth-redirect';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
 
@@ -321,6 +322,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   callbacks: {
+    // Send people back where they started, including across the subdomain
+    // boundary. Sign-in exists only on the apex, so a BPH cataloguer signing
+    // in from bph.sourcelibrary.org needs a cross-origin return trip that
+    // NextAuth's default callback refuses. Restricted to *.sourcelibrary.org
+    // over https — see src/lib/auth-redirect.ts for the allowlist rationale.
+    async redirect({ url, baseUrl }) {
+      return resolvePostSignInRedirect(url, baseUrl);
+    },
     // Enforce signup restrictions based on tenant allowSignup setting
     async signIn({ user, account }) {
       if (!user?.email) return true;
