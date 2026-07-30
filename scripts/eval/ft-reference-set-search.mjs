@@ -50,7 +50,9 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const BULK_DIR = path.join(OUT_DIR, 'loc-bulk');
+const WIKIDATA_DIR = path.join(OUT_DIR, 'wikidata');
 const DATE = new Date().toISOString().slice(0, 10);
+const WIKIDATA_SNAPSHOT = DATE;
 
 const APPLY = process.argv.includes('--apply');
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
@@ -218,6 +220,9 @@ export function screenCandidate(book, row, identity) {
  * Same shape as the paired-artifact failures in CLAUDE.md: two producers, one
  * consumer, an assumed correspondence nobody checked.
  */
+// Applies to the LoC extract only. Wikidata rows are produced by a different
+// script with its own shape (no LCCN — the identifier is a Q-number), so the
+// guard would reject a perfectly good source.
 const REQUIRED_ROW_FIELDS = ['lccn', 'title', 'uniform_title', 'original_languages', 'item_language', 'added_entries'];
 
 function loadReferenceSet() {
@@ -248,6 +253,13 @@ function loadReferenceSet() {
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 const files = loadReferenceSet();
+// Second source. Presence in ANY catalogue proves a translation exists, so
+// breadth is worth having even where a source is thin — and Wikidata carries a
+// native-script work title on 44.7% of rows against LoC's 2.3%, which is the one
+// place it materially extends reach.
+const wikidataFiles = fs.existsSync(WIKIDATA_DIR)
+  ? fs.readdirSync(WIKIDATA_DIR).filter((f) => f.endsWith('.jsonl')).map((f) => path.join(WIKIDATA_DIR, f))
+  : [];
 const bySurname = new Map();
 // Title-token index. An anonymous work has no author access point, but its TITLE
 // is one — and 771 of the 991 books previously reported "not searchable" had a
@@ -257,12 +269,15 @@ const byTitleToken = new Map();
 const byCjkGram = new Map();
 let rowCount = 0;
 
-for (const file of files) {
+let wikidataRows = 0;
+for (const file of [...files, ...wikidataFiles]) {
+  const isWikidata = wikidataFiles.includes(file);
   const rl = readline.createInterface({ input: fs.createReadStream(file), crlfDelay: Infinity });
   for await (const line of rl) {
     if (!line.trim()) continue;
     const row = JSON.parse(line);
     rowCount++;
+    if (isWikidata) wikidataRows++;
     for (const name of [row.author, ...(row.added_entries || [])].filter(Boolean)) {
       const sn = surname(name);
       if (!sn || sn.length < 3) continue;
@@ -310,7 +325,23 @@ function titlePool(bookToks) {
 
 const REFERENCE_SET = {
   version: `loc-2016.p${files.length}.v1`,
-  sources: [{
+  sources: [
+  ...(wikidataFiles.length ? [{
+    id: 'wikidata',
+    name: 'Wikidata — English editions of non-English works (P629)',
+    endpoint: 'https://query.wikidata.org/sparql',
+    snapshot_date: WIKIDATA_SNAPSHOT,
+    record_count: 0, // set below, once counted
+    coverage: 'English editions linked by `edition or translation of` to a non-English work',
+    known_gaps: [
+      'the edition-of relation is essentially unpopulated outside Western literature: '
+        + 'Tibetan 0, Classical Chinese 0, Syriac 0, Sanskrit 29 against 4,493 Sanskrit works. '
+        + 'This source does NOT close the gaps LoC leaves.',
+      'Welsh is ~30% of rows from a bulk import and never matches this corpus',
+      'community-curated, so absence reflects modelling effort rather than the world',
+    ],
+  }] : []),
+  {
     id: 'loc',
     name: 'Library of Congress MDSConnect Books-All',
     endpoint: 'https://www.loc.gov/cds/products/MDSConnect-books_all.html',
@@ -339,6 +370,9 @@ const REFERENCE_SET = {
     ],
   }],
 };
+const WD = REFERENCE_SET.sources.find((s) => s.id === 'wikidata');
+if (WD) WD.record_count = wikidataRows;
+REFERENCE_SET.version = `loc-2016.p${files.length}${wikidataFiles.length ? `+wd-${WIKIDATA_SNAPSHOT}` : ''}.v2`;
 
 console.log(`Reference set ${REFERENCE_SET.version}: ${rowCount.toLocaleString()} English translations, `
   + `${bySurname.size.toLocaleString()} distinct surnames (${files.length}/43 parts)\n`);

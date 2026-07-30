@@ -166,13 +166,28 @@ export function displayTitleOverlap(bookToks, displayTitle) {
 /** Han, kana and hangul ranges — the scripts where romanized matching fails. */
 const CJK_RE = /[㐀-䶿一-鿿豈-﫿぀-ヿ가-힯]/;
 
-/** Contiguous runs of CJK characters, punctuation and Latin stripped. */
+/**
+ * CJK numerals and volume markers. A run made only of these is an ENUMERATION —
+ * "(三十九)" is volume 39 — not title content.
+ *
+ * Without this exclusion the volume number becomes the match key and pairs with
+ * numerals in any unrelated title: 三才圖會(三十九) matched *The Thirty-Nine Steps*
+ * and 武備志(一百二) matched *The 120 Days of Sodom*, because Wikidata carries
+ * Chinese labels for Buchan and Sade containing exactly those numerals. It is the
+ * same failure the Western VOLUME guard exists to catch, in a different script.
+ */
+const CJK_ENUMERATION_ONLY = /^[〇零一二三四五六七八九十百千万萬第卷冊册巻編编集號号輯辑]+$/;
+
+/**
+ * Contiguous runs of CJK characters, punctuation and Latin stripped.
+ * Pure enumerations are dropped — they identify a volume, never a work.
+ */
 export function cjkRuns(s) {
   if (!s) return [];
   return String(s)
     .replace(/[^㐀-䶿一-鿿豈-﫿぀-ヿ가-힯]+/g, ' ')
     .split(/\s+/)
-    .filter((r) => r.length >= 2);
+    .filter((r) => r.length >= 2 && !CJK_ENUMERATION_ONLY.test(r));
 }
 
 export const hasCjk = (s) => CJK_RE.test(String(s || ''));

@@ -289,3 +289,25 @@ describe('CJK original-script matching (MARC 880)', () => {
     expect(cjkRuns('皇極經世書 (Huangji Jingshi Shu, juan 13)')).toEqual(['皇極經世書']);
   });
 });
+
+describe('CJK volume enumerations are not work identity', () => {
+  // 三才圖會(三十九) matched "The Thirty-Nine Steps" and 武備志(一百二) matched
+  // "The 120 Days of Sodom" — the parenthetical is a VOLUME NUMBER, and Wikidata
+  // carries Chinese labels for Buchan and Sade containing those numerals. Same
+  // failure the Western VOLUME guard catches, in a different script.
+  it('drops a run that is only CJK numerals', () => {
+    expect(cjkRuns('三才圖會(三十九)')).toEqual(['三才圖會']);
+    expect(cjkRuns('武備志(一百二)')).toEqual(['武備志']);
+  });
+
+  it('keeps a real title that merely begins with a numeral character', () => {
+    // 三才圖會 starts with 三 (three) but is not an enumeration.
+    expect(cjkRuns('三才圖會')).toEqual(['三才圖會']);
+  });
+
+  it('no longer pairs a Chinese compendium with an English thriller', () => {
+    expect(vernacularContainment(['三才圖會(三十九)'], {
+      vernacular_uniform_title: '三十九級台階',
+    })).toBeNull();
+  });
+});
