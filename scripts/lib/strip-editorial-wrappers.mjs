@@ -83,8 +83,13 @@ export function stripEditorialWrappers(text) {
     stripMarkdownMarkers(
       flattenMarkdownTables(
         text
-          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+          // `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag — the OCR prompt emits
+          // `<image-desc size="..." type="..." significance="...">` on ~0.77% of
+          // page-fields, and a bare `<tag>` pattern never matched them, leaking the
+          // AI's plate descriptions into quotable text. Parity with the TS twin
+          // (src/lib/strip-editorial-wrappers.ts) — change both together.
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' '),
       ),
     ),
   );

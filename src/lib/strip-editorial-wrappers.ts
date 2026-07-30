@@ -202,9 +202,17 @@ export function stripEditorialWrappers(text: string): string {
         text
           // Paired blocks, content and all (multiline). Backreference keeps it from
           // swallowing text between two different wrapper types.
-          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          //
+          // The `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag. The OCR prompt
+          // emits them — `<image-desc size="medium" type="emblem" significance="high">`
+          // appears on 0.77% of page-fields — and without this the pair never matched:
+          // the AI's description of a plate survived as quotable text while the generic
+          // tag-strip below removed its closing tag, leaving editorial prose
+          // indistinguishable from the page's own words. That is the #2232 misquote
+          // class. Never tighten this back to a bare `<tag>`.
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
           // Any orphan opening/closing wrapper tag left by malformed AI output.
-          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' '),
       ),
     ),
   );
