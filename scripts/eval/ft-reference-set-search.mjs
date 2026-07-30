@@ -37,6 +37,13 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
 import { buildSearchEffort, SCREEN, VERDICT } from '../lib/search-effort.mjs';
+import {
+  titleTokens as toks,
+  bookTitleTokens,
+  matchWorkIdentity,
+  normaliseTitle as norm,
+  STRONG_WORK_IDENTITY as STRONG,
+} from '../lib/work-identity-match.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -53,52 +60,54 @@ const CODE_VERSION = (() => {
   catch { throw new Error('cannot resolve git SHA — an unpinned search effort is not reproducible'); }
 })();
 
-// ── Normalisation ────────────────────────────────────────────────────────────
+// ── Normalisation & work identity live in scripts/lib/work-identity-match.mjs ──
+// (pure, so the gold set in tests/unit/reference-set-work-identity.test.ts can
+//  exercise them without importing this script and triggering its main body).
 
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
-  .toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
-
-const STOP = new Set([
-  'the', 'and', 'with', 'from', 'that', 'this', 'for', 'des', 'der', 'die', 'und',
-  'liber', 'libri', 'opus', 'opera', 'book', 'books', 'volume', 'tractatus',
-  'english', 'translation', 'translated', 'works', 'text', 'new', 'notes',
-  'introduction', 'edition', 'edited', 'selected', 'sive', 'seu', 'cum',
-]);
-const toks = (s) => norm(s).split(/\s+/).filter((t) => t.length >= 4 && !STOP.has(t));
-
-const GENERIC_AUTHOR = /^(anonymous|anon\.?|unknown|various|various authors|multiple authors)$/i;
-function surname(a) {
-  if (!a || GENERIC_AUTHOR.test(a.trim())) return '';
-  let c = a.replace(/\([^)]*\)/g, '').replace(/\d{3,4}/g, '').split(';')[0].trim();
-  if (c.includes(',')) c = c.split(',')[0];
-  const w = norm(c).split(/\s+/).filter((x) => x.length > 1);
-  return w[w.length - 1] || '';
-}
+const GENERIC_AUTHOR = /^(anonymous|anon\.?|unknown|various|various authors|multiple authors|n\/a|—|-)$/i;
 
 /**
- * Work-identity score, measured in BOTH directions.
- *
- * LoC 240 uniform titles are deliberately terse ("Iliad."), while our titles
- * carry qualifiers ("Homer, Iliad with Scholia"). Scoring only how much of OUR
- * title the record covers makes an exact uniform-title hit look weak (1/3) —
- * measured 2026-07-29, fixing this direction moved strong matches from 8 to 74
- * over identical data.
+ * Collection/holding-institution names are not authors. Using one as an access
+ * point buckets hundreds of unrelated manuscripts under a single surname and
+ * produces pure noise.
  */
-function workIdentity(bookToks, candidateTitle) {
-  const rt = new Set(toks(candidateTitle));
-  if (!rt.size || !bookToks.length) return { score: 0, hits: 0 };
-  const hits = bookToks.filter((t) => rt.has(t)).length;
-  if (!hits) return { score: 0, hits: 0 };
-  return {
-    score: Math.max(hits / bookToks.length, hits / rt.size),
-    hits,
-    book_coverage: hits / bookToks.length,
-    record_coverage: hits / rt.size,
+const COLLECTION_AUTHOR = /\b(collection|monastery|library|archive|museum|temple|dzong)\b/i;
+
+/**
+ * Author surname for indexing, or '' when there is no usable access point.
+ *
+ * The parenthetical is where a romanized name often lives — `（宋）邵雍 (Shao Yong)`
+ * is a dynasty marker in CJK plus the *searchable* form in Latin script.
+ * Blindly stripping parentheticals (the ordinary case: dates, qualifiers) threw
+ * that away and left an unindexable CJK remnant, which is why 355 of 450 Chinese
+ * badged books reported as having no author at all.
+ */
+function surname(a) {
+  if (!a) return '';
+  const raw = a.trim();
+  if (GENERIC_AUTHOR.test(raw) || COLLECTION_AUTHOR.test(raw)) return '';
+
+  const fromMain = (s) => {
+    let c = s.replace(/\d{3,4}/g, '').split(';')[0].trim();
+    if (c.includes(',')) c = c.split(',')[0];
+    const w = norm(c).split(/\s+/).filter((x) => x.length > 1);
+    return w[w.length - 1] || '';
   };
+
+  // Prefer the name outside parentheses; fall back to a Latin-script
+  // parenthetical when what remains has no Latin content to index.
+  const outside = fromMain(raw.replace(/\([^)]*\)/g, ' '));
+  if (outside) return outside;
+  for (const m of raw.matchAll(/\(([^)]*)\)/g)) {
+    const inner = fromMain(m[1]);
+    if (inner) return inner;
+  }
+  return '';
 }
 
-const MIN_CANDIDATE = 0.34; // retrieve generously; screening is what rejects
-const STRONG = 0.6;
+// Retrieve generously; screening is what rejects. STRONG comes from the shared
+// lib so the gold set and the run agree on the same threshold by construction.
+const MIN_CANDIDATE = 0.34;
 
 // ── Mechanical screening ─────────────────────────────────────────────────────
 
@@ -238,6 +247,11 @@ function loadReferenceSet() {
 
 const files = loadReferenceSet();
 const bySurname = new Map();
+// Title-token index. An anonymous work has no author access point, but its TITLE
+// is one — and 771 of the 991 books previously reported "not searchable" had a
+// perfectly good title and merely lacked a usable author. Reporting those as
+// unaskable understated what the reference set could actually answer.
+const byTitleToken = new Map();
 let rowCount = 0;
 
 for (const file of files) {
@@ -252,7 +266,34 @@ for (const file of files) {
       if (!bySurname.has(sn)) bySurname.set(sn, []);
       bySurname.get(sn).push(row);
     }
+    for (const t of new Set([...toks(row.uniform_title), ...toks(row.title)])) {
+      if (!byTitleToken.has(t)) byTitleToken.set(t, []);
+      byTitleToken.get(t).push(row);
+    }
   }
+}
+
+/**
+ * Candidate pool for a book with no author access point: the rarest of its title
+ * tokens. Rarest keeps the pool small and specific — a common word like
+ * "geometrie" would drag in thousands of unrelated rows, while an unusual one
+ * ("itinerarium") lands on a handful. Pools above the cap are refused rather
+ * than truncated, because a silently truncated pool is a search that reports a
+ * negative it never actually performed.
+ */
+const MAX_TITLE_POOL = 4000;
+function titlePool(bookToks) {
+  let best = null;
+  for (const t of bookToks) {
+    const rows = byTitleToken.get(t);
+    if (!rows) continue;
+    if (!best || rows.length < best.rows.length) best = { token: t, rows };
+  }
+  if (!best) return { token: null, rows: [], refused: false };
+  if (best.rows.length > MAX_TITLE_POOL) {
+    return { token: best.token, rows: [], refused: true };
+  }
+  return { ...best, refused: false };
 }
 
 const REFERENCE_SET = {
@@ -270,7 +311,10 @@ const REFERENCE_SET = {
       'snapshot ends 2016 — later translations absent by construction, not by evidence',
       'European scholarly presses (Brill, Brepols) under-represented relative to US imprints',
       'journal-published and dissertation translations largely uncatalogued',
-      'Tibetan, Syriac, Chinese and Arabic source traditions have very thin representation',
+      'non-Latin traditions are reachable only via romanized 240 uniform titles, '
+        + 'so a differing romanization scheme (Wade-Giles vs pinyin, Wylie variants) hides a real match',
+      'the romanized generic-term stoplist was assembled without a specialist reader '
+        + 'and may exclude a genuine match',
       ...(files.length < 43 ? [`only ${files.length} of 43 catalogue parts ingested`] : []),
     ],
   }],
@@ -298,28 +342,47 @@ await withMongo(async (db) => {
     byTradition[lang] ??= { books: 0, searchable: 0, candidates: 0, unresolved: 0, prior: 0 };
     byTradition[lang].books++;
 
-    const bookToks = [...new Set([...toks(book.title), ...toks(book.work_title)])];
-    const searchable = Boolean(sn) && bookToks.length > 0;
+    const bookToks = bookTitleTokens(book.title, book.work_title);
 
+    // Two access points, tried in order of specificity. An author is the better
+    // one; a title is a real one, not a fallback to be skipped.
+    let pool = [];
     const queries = [];
     const candidates = [];
+    let refusedPool = false;
 
-    if (searchable) {
-      byTradition[lang].searchable++;
-      const pool = bySurname.get(sn) || [];
+    if (sn) {
+      pool = bySurname.get(sn) || [];
       queries.push({
         source: 'loc',
         query: `author_surname="${sn}" over ${REFERENCE_SET.version}`,
         result_count: pool.length,
       });
+    } else if (bookToks.length) {
+      const tp = titlePool(bookToks);
+      pool = tp.rows;
+      refusedPool = tp.refused;
+      queries.push({
+        source: 'loc',
+        query: tp.token
+          ? `title_token="${tp.token}" over ${REFERENCE_SET.version}`
+          : `no indexed title token over ${REFERENCE_SET.version}`,
+        result_count: tp.rows.length,
+        ...(tp.refused ? { refused: `pool exceeded ${MAX_TITLE_POOL} rows — token too common to search on` } : {}),
+      });
+    }
 
+    // Searchable means an access point existed AND we could actually run the
+    // query. A refused (over-large) pool is NOT a clean negative.
+    const searchable = queries.length > 0 && bookToks.length > 0 && !refusedPool;
+
+    if (searchable) {
+      byTradition[lang].searchable++;
       for (const row of pool) {
-        let best = { score: 0 };
-        for (const t of [row.uniform_title, row.title]) {
-          const id = workIdentity(bookToks, t);
-          if (id.score > best.score) best = id;
-        }
-        if (best.score < MIN_CANDIDATE) continue;
+        // Uniform-title containment first: it is the work-identity test. Fall
+        // back to display-title overlap only when there is no 240 to use.
+        const best = matchWorkIdentity(bookToks, row);
+        if (!best || best.score < MIN_CANDIDATE) continue;
         const { screen, reason } = screenCandidate(book, row, best);
         candidates.push({
           identifiers: { lccn: row.lccn },
