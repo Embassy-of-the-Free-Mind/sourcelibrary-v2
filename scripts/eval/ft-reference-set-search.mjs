@@ -43,6 +43,8 @@ import {
   matchWorkIdentity,
   normaliseTitle as norm,
   STRONG_WORK_IDENTITY as STRONG,
+  hasCjk,
+  cjkRuns,
 } from '../lib/work-identity-match.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -374,7 +376,10 @@ await withMongo(async (db) => {
 
     // Searchable means an access point existed AND we could actually run the
     // query. A refused (over-large) pool is NOT a clean negative.
-    const searchable = queries.length > 0 && bookToks.length > 0 && !refusedPool;
+    // A CJK title yields no Latin tokens but IS searchable via original script,
+    // so token emptiness alone must not mark a book unaskable.
+    const hasVernacular = [book.title, book.work_title].filter(Boolean).some(hasCjk);
+    const searchable = queries.length > 0 && (bookToks.length > 0 || hasVernacular) && !refusedPool;
 
     if (searchable) {
       byTradition[lang].searchable++;
@@ -382,6 +387,7 @@ await withMongo(async (db) => {
         // Uniform-title containment first: it is the work-identity test. Fall
         // back to display-title overlap only when there is no 240 to use.
         const best = matchWorkIdentity(bookToks, row, {
+          bookTitles: [book.title, book.work_title].filter(Boolean),
           bookAuthorSurname: sn || surname(book.author),
           recordAuthorSurnames: [row.author, ...(row.added_entries || [])]
             .filter(Boolean).map(surname).filter(Boolean),

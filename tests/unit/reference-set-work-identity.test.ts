@@ -39,6 +39,8 @@ import { describe, it, expect } from 'vitest';
 import {
   uniformTitleContainment,
   bookTitleTokens,
+  vernacularContainment,
+  cjkRuns,
 } from '../../scripts/lib/work-identity-match.mjs';
 
 type LocRow = {
@@ -240,5 +242,50 @@ describe('fixture integrity', () => {
   it('includes both positive and negative uniform titles', () => {
     expect(rows.some((r) => /^De officiis/i.test(r.uniform_title))).toBe(true);
     expect(rows.some((r) => /^Calice/i.test(r.uniform_title))).toBe(true);
+  });
+});
+
+describe('CJK original-script matching (MARC 880)', () => {
+  // Romanized matching is unusable for CJK: LoC mixes pinyin and Wade-Giles,
+  // pinyin is syllable-separated where our titles are joined, and most syllables
+  // fall under the token floor. Concatenate-and-substring was measured at ~2 real
+  // matches in 38 — "mingshi" sits inside "zhiwumingshitukao", matching a herbal
+  // to the Ming History. Han characters are morphemes with one spelling, so a
+  // shared run is strong evidence.
+  it('matches an exact vernacular uniform title', () => {
+    expect(vernacularContainment(['針灸大成 (Zhenjiu Dacheng)'], {
+      vernacular_uniform_title: '針灸大成',
+    })).not.toBeNull();
+  });
+
+  it('treats a contained run as a real related-work signal', () => {
+    // 本草綱目 inside 本草綱目拾遺 is the Bencao Gangmu within its own supplement —
+    // precisely the relation screening needs to see, not noise.
+    const r = vernacularContainment(['本草綱目拾遺(五)'], { vernacular_uniform_title: '本草綱目' });
+    expect(r).not.toBeNull();
+    expect(r.matched_run).toBe('本草綱目');
+    expect(r.exact).toBe(false);
+  });
+
+  it('rejects the romanized false positives it replaces', () => {
+    // 植物名實圖考 vs 明史 — no shared run, where "mingshi"/"zhiwumingshitukao"
+    // collided romanized.
+    expect(vernacularContainment(['植物名實圖考(一)'], { vernacular_uniform_title: '明史' })).toBeNull();
+    // 周易參同契發揮 vs 銅器 ("Tong qi" / bronze ware) — likewise.
+    expect(vernacularContainment(['周易參同契發揮'], { vernacular_uniform_title: '銅器' })).toBeNull();
+  });
+
+  it('ignores runs shorter than MIN_CJK_RUN', () => {
+    // Two characters is often a common bigram (中國, 大成); three is usually a title.
+    expect(vernacularContainment(['大成'], { vernacular_uniform_title: '大成' })).toBeNull();
+  });
+
+  it('returns null when either side has no CJK at all', () => {
+    expect(vernacularContainment(['De Officiis'], { vernacular_uniform_title: '針灸大成' })).toBeNull();
+    expect(vernacularContainment(['針灸大成'], { uniform_title: 'Zhen jiu da cheng.' })).toBeNull();
+  });
+
+  it('cjkRuns splits on Latin and punctuation', () => {
+    expect(cjkRuns('皇極經世書 (Huangji Jingshi Shu, juan 13)')).toEqual(['皇極經世書']);
   });
 });

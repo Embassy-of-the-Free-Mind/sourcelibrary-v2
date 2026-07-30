@@ -161,8 +161,84 @@ export function displayTitleOverlap(bookToks, displayTitle) {
   };
 }
 
-/** Best available work-identity signal for a book/row pair, or null. */
+// ── CJK / original-script matching ───────────────────────────────────────────
+
+/** Han, kana and hangul ranges — the scripts where romanized matching fails. */
+const CJK_RE = /[㐀-䶿一-鿿豈-﫿぀-ヿ가-힯]/;
+
+/** Contiguous runs of CJK characters, punctuation and Latin stripped. */
+export function cjkRuns(s) {
+  if (!s) return [];
+  return String(s)
+    .replace(/[^㐀-䶿一-鿿豈-﫿぀-ヿ가-힯]+/g, ' ')
+    .split(/\s+/)
+    .filter((r) => r.length >= 2);
+}
+
+export const hasCjk = (s) => CJK_RE.test(String(s || ''));
+
+/**
+ * ORIGINAL-SCRIPT CONTAINMENT — the work-identity test for CJK.
+ *
+ * Romanized matching is not merely weaker here, it is unusable. LoC mixes pinyin
+ * and Wade-Giles; pinyin is syllable-separated where our titles are joined
+ * ("Huang ji jing shi shu" vs "Huangji Jingshi Shu"); and most pinyin syllables
+ * fall under the token-length floor. Working around all of that by concatenating
+ * and substring-matching was measured at ~2 real matches in 38 — romanized
+ * Chinese is a dense syllable soup in which short keys collide by accident
+ * ("mingshi" sits inside "zhiwumingshitukao", matching a herbal to the *Ming
+ * History*).
+ *
+ * Han characters are morphemes and have exactly one spelling, so a shared run is
+ * strong evidence. `MIN_CJK_RUN` is 3: two characters is often a common bigram
+ * ("中國", "大成"), three is usually a title.
+ *
+ * A partial containment is a REAL and useful signal here rather than noise —
+ * 本草綱目 ⊂ 本草綱目拾遺 is the *Bencao Gangmu* inside its own supplement, which is
+ * exactly the related-work relation screening needs to see.
+ */
+export const MIN_CJK_RUN = 3;
+
+export function vernacularContainment(bookTitles, row) {
+  const bookRuns = bookTitles.flatMap(cjkRuns).filter((r) => r.length >= MIN_CJK_RUN);
+  if (!bookRuns.length) return null;
+
+  const candidates = [
+    ['vernacular_uniform_title', row.vernacular_uniform_title],
+    ['vernacular_title', row.vernacular_title],
+  ].filter(([, v]) => v && hasCjk(v));
+  if (!candidates.length) return null;
+
+  for (const [basis, value] of candidates) {
+    for (const recRun of cjkRuns(value).filter((r) => r.length >= MIN_CJK_RUN)) {
+      for (const bookRun of bookRuns) {
+        if (bookRun.includes(recRun) || recRun.includes(bookRun)) {
+          const shared = Math.min(bookRun.length, recRun.length);
+          return {
+            score: 1,
+            hits: shared,
+            basis: `cjk_${basis}`,
+            matched_run: recRun.length <= bookRun.length ? recRun : bookRun,
+            exact: bookRun === recRun,
+          };
+        }
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Best available work-identity signal for a book/row pair, or null.
+ *
+ * Original script first where both sides have it — it is the strongest signal
+ * available and immune to the romanization problems above.
+ */
 export function matchWorkIdentity(bookToks, row, opts = {}) {
+  if (opts.bookTitles?.length) {
+    const vern = vernacularContainment(opts.bookTitles, row);
+    if (vern) return vern;
+  }
   return uniformTitleContainment(bookToks, row.uniform_title, opts)
     ?? displayTitleOverlap(bookToks, row.title);
 }

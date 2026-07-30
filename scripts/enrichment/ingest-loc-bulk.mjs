@@ -106,6 +106,46 @@ const decode = (s) => (s || '')
   .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
   .replace(/&quot;/g, '"').replace(/&apos;/g, "'");
 
+/**
+ * Extract MARC 880 — the ORIGINAL-SCRIPT form of a field.
+ *
+ * This is the only workable access point for CJK works, and it took a failed
+ * attempt to establish why. Romanized matching cannot work here:
+ *   - LoC mixes schemes (pinyin "Dao de jing" and Wade-Giles "Li Chao-ji po shih")
+ *   - pinyin is syllable-SEPARATED while our titles use joined forms
+ *     ("Huangji Jingshi Shu" vs "Huang ji jing shi shu")
+ *   - most pinyin syllables are under the 4-character token floor
+ * Concatenating and substring-matching to work around all that produced almost
+ * pure noise — 38 matches of which ~2 were real, because romanized Chinese is a
+ * dense syllable soup where short keys collide by accident ("mingshi" sits inside
+ * "zhiwumingshitukao", matching a herbal to the *Ming History*).
+ *
+ * The original script has none of those problems: Han characters are morphemes,
+ * so a shared run of them is strong evidence, and there is exactly one spelling.
+ *
+ * `$6` links each 880 back to the field it duplicates ("245-02/$1" → tag 245), so
+ * the vernacular uniform title and display title are recoverable separately.
+ */
+function extractVernacular(rec) {
+  const out = {};
+  const dfRe = /<datafield tag="880"[^>]*>([\s\S]*?)<\/datafield>/g;
+  let df;
+  while ((df = dfRe.exec(rec))) {
+    const subs = [...df[1].matchAll(/<subfield code="(\w)">([\s\S]*?)<\/subfield>/g)]
+      .map((m) => ({ code: m[1], value: decode(m[2].trim()) }));
+    const link = subs.find((s) => s.code === '6')?.value ?? '';
+    const linkedTag = link.slice(0, 3);
+    if (linkedTag !== '240' && linkedTag !== '245') continue;
+    const text = subs.filter((s) => s.code === 'a' || s.code === 'b')
+      .map((s) => s.value).join(' ')
+      .replace(/\s+/g, ' ').replace(/\s*[\/:;,.]\s*$/, '').trim();
+    if (!text) continue;
+    if (linkedTag === '240') out.vernacular_uniform_title = text;
+    else if (!out.vernacular_title) out.vernacular_title = text;
+  }
+  return out;
+}
+
 /** Extract the reference-set row, or null if this record is not an English translation. */
 export function extractEnglishTranslation(rec) {
   if (!rec.includes('tag="041"')) return null;
@@ -121,6 +161,7 @@ export function extractEnglishTranslation(rec) {
     || f008.slice(7, 11)).match(/(\d{4})/) || [])[1] || '';
 
   return {
+    ...extractVernacular(rec),
     lccn: (subfieldValues(rec, '010', 'a')[0] || '').replace(/\s+/g, ''),
     author: decode(subfieldValues(rec, '100', 'a')[0] || subfieldValues(rec, '110', 'a')[0] || ''),
     added_entries: subfieldValues(rec, '700', 'a').map(decode),
