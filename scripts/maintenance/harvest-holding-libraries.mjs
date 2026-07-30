@@ -206,7 +206,12 @@ async function main() {
               confidence: 'high',
               previous_value: item.stored,
             });
-            const set = { 'image_source.contributing_library': contributor, ...prov.$set };
+            // Bump updated_at or this write never reaches the site: the
+            // books_catalog sync is incremental on `updated_at > lastSync`, and
+            // contributing_library is a synced column. Without this the corrected
+            // custodian sits in Mongo while /libraries keeps serving the old one
+            // indefinitely — the write succeeds and changes nothing a reader sees.
+            const set = { 'image_source.contributing_library': contributor, updated_at: new Date(), ...prov.$set };
             if (sponsor) set['image_source.sponsor'] = sponsor;
             const r = await books.updateOne(
               { _id: item._id },
