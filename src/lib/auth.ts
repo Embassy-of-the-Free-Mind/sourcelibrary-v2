@@ -468,6 +468,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+      // The welcome form has just saved and says so explicitly. The DB read
+      // above already reaches the same conclusion when it succeeds — this is the
+      // fallback for when it doesn't, because the cost of a stale true here is
+      // not a missing badge but a reader who cannot leave /welcome. Outside the
+      // try/catch on purpose: a failed lookup must not be able to re-trap them.
+      if (trigger === 'update' && (session as any)?.welcomed === true) {
+        (token as any).needsWelcome = false;
+      }
+
       // Phase 1: resolve tenant-scoped role when the client triggers a session update
       // with { _pendingTenantSlug }. Called from [tenant]/layout.tsx after sign-in.
       const pendingTenantSlug =

@@ -47,7 +47,14 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error();
-      await update();
+      // MUST pass a payload. `update()` with no argument issues a GET to
+      // /api/auth/session (next-auth/react's update() only builds a body when
+      // called with data, and lib/client.js only sets method:'POST' when a body
+      // exists). A GET does not run the jwt callback with trigger:'update', so
+      // the token kept needsWelcome:true even though welcomedAt had just been
+      // written — and WelcomeGate bounced the reader straight back to this form,
+      // forever. 36 readers were locked out of the site that way on 2026-07-29/30.
+      await update({ welcomed: true });
       // Back to whatever they were reading when the gate interrupted them.
       const from = typeof window !== 'undefined'
         ? new URLSearchParams(window.location.search).get('from')
