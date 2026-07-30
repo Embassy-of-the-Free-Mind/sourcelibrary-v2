@@ -12,7 +12,11 @@
  * recoverable contributor upstream.
  *
  * WHAT IT WRITES: `image_source.contributing_library` (and `image_source.sponsor`
- * when absent), plus a `holding_library_harvest` provenance stamp. It never
+ * when absent), stamping `field_provenance.contributing_library` in the SAME
+ * update via scripts/lib/field-provenance.mjs — plus an append-only
+ * `field_provenance_history` entry, because this sweep runs twice (fill, then
+ * verify) over overlapping books and a single-slot stamp would let the second
+ * pass erase the first pass's previous_value. It never
  * touches a book that already resolves to a usable custodian, and it never
  * writes a value the shared resolver would reject — so a run cannot introduce a
  * credit the site would refuse to render, and cannot make a good record worse.
@@ -49,6 +53,7 @@
 
 import { MongoClient } from 'mongodb';
 import { holdingLibraryName, canonicalHoldingLibrary, AGGREGATOR_PROVIDERS } from '../lib/holding-library.mjs';
+import { provenanceUpdate } from '../lib/field-provenance.mjs';
 
 const args = process.argv.slice(2);
 const has = (f) => args.includes(f);
@@ -62,6 +67,12 @@ const VERIFY = has('--verify');
 const LIMIT = Number(val('--limit', '0')) || Infinity;
 const CONCURRENCY = Math.max(1, Number(val('--concurrency', '4')));
 const SLEEP_MS = Number(val('--sleep', '250'));
+// Restrict to books whose stored custodian is exactly this value. Corrections
+// cluster by IMPORT BATCH, not evenly: every one of the 312 mismatches found in
+// the first full verify pass came from a single blanket-assigned name. Checking
+// that cohort alone is ~5x cheaper than re-walking the corpus, and archive.org
+// timeouts (32% at concurrency 8) make an unfocused re-run unreliable anyway.
+const STORED = val('--stored', null);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
@@ -107,7 +118,8 @@ async function fetchIaMetadata(identifier) {
       .trim();
     return text || null;
   };
-  return { contributor: clean(md.contributor), sponsor: clean(md.sponsor) };
+  const rawContributor = first(md.contributor);
+  return { contributor: clean(md.contributor), sponsor: clean(md.sponsor), rawContributor: typeof rawContributor === 'string' ? rawContributor : null };
 }
 
 async function main() {
@@ -121,9 +133,15 @@ async function main() {
   // holding library at all, so they are out of scope rather than silently
   // "attempted and failed".
   const cursor = books.find(
-    { visible: true, pages_count: { $gt: 0 }, 'image_source.provider': 'internet_archive' },
+    {
+      visible: true,
+      pages_count: { $gt: 0 },
+      'image_source.provider': 'internet_archive',
+      ...(STORED ? { 'image_source.contributing_library': STORED } : {}),
+    },
     { projection: { image_source: 1, ia_identifier: 1, slug: 1, title: 1 } },
   );
+  if (STORED) console.log(`Restricted to books stored as ${JSON.stringify(STORED)}.`);
 
   const todo = [];
   let scanned = 0;
@@ -152,7 +170,7 @@ async function main() {
       const item = todo[idx++];
       const n = idx;
       try {
-        const { contributor, sponsor } = await fetchIaMetadata(item.identifier);
+        const { contributor, sponsor, rawContributor } = await fetchIaMetadata(item.identifier);
         if (!contributor) {
           stats.noContributor++;
         } else if (!holdingLibraryName({ contributing_library: contributor })) {
@@ -173,12 +191,27 @@ async function main() {
             recoveredNames.set(contributor, (recoveredNames.get(contributor) || 0) + 1);
           }
           if (APPLY) {
-            const set = {
-              'image_source.contributing_library': contributor,
-              holding_library_harvest: { at: new Date(), source: 'archive.org/metadata', previous: item.stored },
-            };
+            // Stamp provenance in the SAME update that writes the value, so the
+            // two cannot diverge — the failure this sweep committed on its first
+            // run, leaving 833 values under stamps that still named a March
+            // provider_mapping pass. `raw_upstream` preserves IA's response
+            // before HTML-stripping so a disputed credit is auditable.
+            const prov = provenanceUpdate('contributing_library', {
+              source: 'ia_metadata_harvest',
+              script: 'scripts/maintenance/harvest-holding-libraries.mjs',
+              method: 'archive.org/metadata contributor',
+              mode: VERIFY ? 'verify' : 'fill',
+              ia_identifier: item.identifier,
+              raw_upstream: rawContributor,
+              confidence: 'high',
+              previous_value: item.stored,
+            });
+            const set = { 'image_source.contributing_library': contributor, ...prov.$set };
             if (sponsor) set['image_source.sponsor'] = sponsor;
-            const r = await books.updateOne({ _id: item._id }, { $set: set });
+            const r = await books.updateOne(
+              { _id: item._id },
+              { $set: set, $push: prov.$push, $unset: { holding_library_harvest: '' } },
+            );
             if (r.modifiedCount === 1) stats.written++;
             else console.warn(`  ! no write for ${item.slug} (modifiedCount=${r.modifiedCount})`);
           }
