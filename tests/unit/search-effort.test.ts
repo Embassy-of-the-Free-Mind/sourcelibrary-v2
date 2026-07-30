@@ -20,6 +20,7 @@ import {
   deriveVerdict,
   effortId,
   renderEffortSummary,
+  latestEffortPerBook,
   SCREEN,
   VERDICT,
 } from '../../scripts/lib/search-effort.mjs';
@@ -202,5 +203,26 @@ describe('renderEffortSummary — what a reader actually sees', () => {
   it('does not claim a clean negative while candidates are unscreened', () => {
     expect(renderEffortSummary(make([{ screen: SCREEN.UNRESOLVED, reason: 'could not decide' }])))
       .toMatch(/Inconclusive/);
+  });
+});
+
+describe('latestEffortPerBook — the collection is a history, not a state', () => {
+  it('keeps only the newest effort per book', () => {
+    // Efforts are immutable: a new code version or snapshot mints a new id
+    // instead of overwriting, which is what lets a stale negative be re-opened.
+    // The cost is that a naive read mixes generations — measured on the real
+    // collection, 265 "inconclusive" rows against a current generation of 75.
+    const efforts = [
+      { book_id: 'a', run_at: '2026-07-29T00:00:00Z', verdict: 'none_found' },
+      { book_id: 'a', run_at: '2026-07-30T00:00:00Z', verdict: 'inconclusive' },
+      { book_id: 'b', run_at: '2026-07-30T00:00:00Z', verdict: 'none_found' },
+    ];
+    const current = latestEffortPerBook(efforts);
+    expect(current).toHaveLength(2);
+    expect(current.find((e: any) => e.book_id === 'a').verdict).toBe('inconclusive');
+  });
+
+  it('ignores rows with no book_id rather than bucketing them together', () => {
+    expect(latestEffortPerBook([{ run_at: '2026-07-30T00:00:00Z' }])).toHaveLength(0);
   });
 });

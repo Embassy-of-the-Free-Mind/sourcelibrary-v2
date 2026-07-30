@@ -82,11 +82,50 @@ export function stem(t) {
  *   "Calice jusqu'à la lie."  ⊄ Tibetan ritual text                        ✗
  *   "ʼDod paʼi bstan bcos."   ⊄ "she bya rab tu gsal ba'I bstan bcos"      ✗
  */
-export function uniformTitleContainment(bookToks, uniformTitle) {
+export function uniformTitleContainment(bookToks, uniformTitle, opts = {}) {
   const ut = titleTokens(uniformTitle);
   if (!ut.length || !bookToks?.length) return null;
   const bookStems = new Set(bookToks.map(stem));
   if (ut.some((t) => !bookStems.has(stem(t)))) return null;
+
+  // GENERIC UNIFORM TITLES need author corroboration.
+  //
+  // A one- or two-word uniform title is frequently a whole GENRE rather than a
+  // work: "Annales.", "Itinerarium.", "Journal.", "Prodromus.". Containment
+  // alone then matches any book sharing that ordinary word, and it produced four
+  // absurd pairings in the full run — all with a DIFFERENT author:
+  //
+  //   "Annales mac[onniques]" (Masonic annals)  → Tacitus, *Annales*
+  //   "Itinerarium Portugallensium"             → Mandeville, *Itinerarium*
+  //   "Hermetisches Journal"                    → *Journal of Maurice de Guérin*
+  //   "Merckwürdiges Leben des ... Moritz W."   → Wilhelm Busch, *Max und Moritz*
+  //
+  // Every genuine match, by contrast, agrees on author: Cicero→Cicero,
+  // Homer→Homer, Euclid→Euclid, Della Porta→Della Porta, Jayadeva→Jayadeva. So
+  // require that agreement precisely where the title stops being distinctive,
+  // rather than raising a threshold and losing the one-token true positives
+  // ("De officiis.", "Moralia.", "Elements.", "Poetics.").
+  //
+  // Consequence worth stating: an ANONYMOUS work can only match on a long,
+  // distinctive uniform title. That is the conservative direction — it leaves a
+  // claim standing rather than demoting it on a coincidence.
+  if (ut.length <= GENERIC_UNIFORM_MAX_TOKENS) {
+    const { bookAuthorSurname, recordAuthorSurnames } = opts;
+    const agrees = Boolean(bookAuthorSurname)
+      && (recordAuthorSurnames ?? []).some((s) => s && s === bookAuthorSurname);
+    if (!agrees) {
+      return null;
+    }
+    return {
+      score: 1,
+      hits: ut.length,
+      basis: 'uniform_title_containment+author',
+      uniform_tokens: ut.length,
+      book_tokens: bookToks.length,
+      author_corroborated: true,
+    };
+  }
+
   return {
     score: 1,
     hits: ut.length,
@@ -95,6 +134,9 @@ export function uniformTitleContainment(bookToks, uniformTitle) {
     book_tokens: bookToks.length,
   };
 }
+
+/** At or below this many tokens, a uniform title is treated as possibly generic. */
+export const GENERIC_UNIFORM_MAX_TOKENS = 2;
 
 /**
  * FALLBACK — bag-of-tokens overlap against the 245 display title, for the ~32%
@@ -120,8 +162,8 @@ export function displayTitleOverlap(bookToks, displayTitle) {
 }
 
 /** Best available work-identity signal for a book/row pair, or null. */
-export function matchWorkIdentity(bookToks, row) {
-  return uniformTitleContainment(bookToks, row.uniform_title)
+export function matchWorkIdentity(bookToks, row, opts = {}) {
+  return uniformTitleContainment(bookToks, row.uniform_title, opts)
     ?? displayTitleOverlap(bookToks, row.title);
 }
 

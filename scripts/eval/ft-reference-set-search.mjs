@@ -381,7 +381,11 @@ await withMongo(async (db) => {
       for (const row of pool) {
         // Uniform-title containment first: it is the work-identity test. Fall
         // back to display-title overlap only when there is no 240 to use.
-        const best = matchWorkIdentity(bookToks, row);
+        const best = matchWorkIdentity(bookToks, row, {
+          bookAuthorSurname: sn || surname(book.author),
+          recordAuthorSurnames: [row.author, ...(row.added_entries || [])]
+            .filter(Boolean).map(surname).filter(Boolean),
+        });
         if (!best || best.score < MIN_CANDIDATE) continue;
         const { screen, reason } = screenCandidate(book, row, best);
         candidates.push({
@@ -391,6 +395,7 @@ await withMongo(async (db) => {
           year: row.year,
           original_languages: row.original_languages,
           publisher: row.publisher || undefined,
+          record_author: row.author || undefined,
           work_identity: best,
           screen,
           reason,

@@ -176,6 +176,32 @@ export function buildSearchEffort(p) {
 }
 
 /**
+ * Reduce a raw `search_efforts` read to the CURRENT generation: the latest
+ * effort per book.
+ *
+ * Efforts are immutable by design — a new code version or reference-set snapshot
+ * mints a new `effort_id` instead of overwriting, which is exactly what lets a
+ * previously-asserted negative be re-opened when the reference set grows. The
+ * cost is that the collection is a HISTORY, not a state, and a naive
+ * `find({verdict:'inconclusive'})` mixes verdicts produced by superseded,
+ * buggier matchers with current ones.
+ *
+ * That is not hypothetical: it returned 265 inconclusive efforts against a
+ * current generation of 75, i.e. 190 rows of stale judgement that would have been
+ * screened and reported as if live. Any consumer reading this collection must
+ * reduce through here first.
+ */
+export function latestEffortPerBook(efforts) {
+  const best = new Map();
+  for (const e of efforts) {
+    if (!e?.book_id) continue;
+    const prev = best.get(e.book_id);
+    if (!prev || new Date(e.run_at) > new Date(prev.run_at)) best.set(e.book_id, e);
+  }
+  return [...best.values()];
+}
+
+/**
  * One-line, reader-facing summary of an effort — what the badge renders instead
  * of an unprovable claim.
  */
