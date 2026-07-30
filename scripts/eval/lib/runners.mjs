@@ -104,10 +104,16 @@ function getAnthropic() {
 
 // ── Run Gemini ─────────────────────────────────────────────────────
 
+/**
+ * `imageBuffer` may be a single Buffer or an ARRAY of Buffers. An array sends
+ * several page images in one request, in order, after the prompt — used by the
+ * page-grouping arm of the prompt ablation (#3444), since production OCR sends
+ * one image per call and therefore has no cross-page context at all.
+ */
 export async function runGemini(model, imageBuffer, prompt, opts = {}) {
   const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution } = opts;
   const apiKey = getNextGeminiKey();
-  const b64 = imageBuffer.toString('base64');
+  const buffers = Array.isArray(imageBuffer) ? imageBuffer : [imageBuffer];
 
   const genConfig = { temperature, maxOutputTokens: maxTokens };
   if (mediaResolution) {
@@ -119,7 +125,7 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
     contents: [{
       parts: [
         { text: prompt },
-        { inline_data: { mime_type: 'image/jpeg', data: b64 } },
+        ...buffers.map(b => ({ inline_data: { mime_type: 'image/jpeg', data: b.toString('base64') } })),
       ],
     }],
     generationConfig: genConfig,

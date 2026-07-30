@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'reciting-not-reading',
+    title: 'Reciting, Not Reading',
+    subtitle:
+      'We covered four lines of Genesis with an opaque grey box. Our OCR transcribed them anyway — correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it, and the one thing that worked was not something we said.',
+    date: '30 July 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://sourcelibrary.org/blog/reciting-not-reading/mask-rect-zoom.jpg',
+    imageAlt:
+      'A 1566 Vulgate page with a grey rectangle covering four lines of Genesis 1:2, fragments of the covered lines still visible at the right edge.',
+  },
+  {
     slug: 'nine-models-forty-pages',
     title: 'Nine Models, Forty Pages',
     subtitle:
