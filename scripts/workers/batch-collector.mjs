@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
 import { GoogleGenAI } from '@google/genai';
-import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { completeBatchUsage, sumBatchResponseUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
@@ -258,6 +258,38 @@ async function extractResults(sdkJob, apiKey) {
   return inline || [];
 }
 
+/**
+ * Mark a batch's submit-time gemini_usage placeholder as finished with zero
+ * spend (#3452). Used when a job ends without ever producing results — Gemini
+ * failure/cancellation, generation-guard supersession, ghost/nameless jobs.
+ *
+ * Best-effort: a usage-meter write must never fail a collection run.
+ */
+async function closeUsagePlaceholder(db, job, reason, status = 'failed') {
+  const jobIdStr = job?.id || (job?._id && String(job._id));
+  if (!jobIdStr) return;
+  try {
+    await completeBatchUsage({
+      type: job.type || 'ocr',
+      mode: 'batch',
+      model: job.model,
+      book_id: job.book_id,
+      page_count: job.page_count || job.page_ids?.length || 0,
+      input_tokens: 0,
+      output_tokens: 0,
+      cost_usd: 0,
+      status,
+      error_message: reason,
+      batch_job_id: jobIdStr,
+      // No placeholder to close means the job predates the row or was already
+      // reconciled — don't manufacture a new zero row for it.
+      insertIfMissing: false,
+    }, db);
+  } catch (err) {
+    console.warn(`  Usage placeholder close failed (${jobIdStr}): ${err.message}`);
+  }
+}
+
 // ── Process one job ──
 
 async function processOneJob(db, job) {
@@ -299,6 +331,16 @@ async function processOneJob(db, job) {
           { _id: job._id },
           { $set: { status: 'superseded', error: `OCR generation advanced after submit (job gen ${job.ocr_generation})`, updated_at: new Date() } }
         );
+        // The job DID run, so Gemini billed for it — we just discard the
+        // output. We never read the result file here, so the tokens are
+        // genuinely unknown; record that rather than leaving the row 'submitted'
+        // (#3452). An unknown marked as such is recoverable; one that looks
+        // in-flight forever is not.
+        await closeUsagePlaceholder(
+          db, job,
+          'Superseded by generation guard — results discarded, tokens not read',
+          'superseded',
+        );
         console.log(`  SUPERSEDED (generation guard): ${jobName} (book: ${job.book_id})`);
         return { status: 'superseded', bookId: job.book_id };
       }
@@ -326,6 +368,11 @@ async function processOneJob(db, job) {
     let recitationCount = 0;
     const recitationPageIds = []; // Track page IDs for per-page recitation stamping (single-page path only)
 
+    // Job totals come from the RESPONSES, not from the pages we end up saving
+    // (#3452) — Gemini bills every response, including the ones we discard.
+    const { inputTokens: totalInputTokens, outputTokens: totalOutputTokens } =
+      sumBatchResponseUsage(responses);
+
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
         if (r.error) { failCount++; continue; }
@@ -333,10 +380,18 @@ async function processOneJob(db, job) {
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
-        const usage = r.response?.usageMetadata;
         const parsed = parseMultiPageOcr(text);
+        // One response covers N pages and reports one usageMetadata — split it
+        // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
+        // the whole request's tokens N times over.
+        const usage = r.response?.usageMetadata;
+        const share = parsed.length || 1;
+        const pageUsage = usage ? {
+          promptTokenCount: Math.round((usage.promptTokenCount || 0) / share),
+          candidatesTokenCount: Math.round((usage.candidatesTokenCount || 0) / share),
+        } : undefined;
         for (const [pageId, ocrText] of parsed) {
-          pageResults.push({ pageId, text: ocrText, usage });
+          pageResults.push({ pageId, text: ocrText, usage: pageUsage });
         }
       }
     } else {
@@ -423,8 +478,6 @@ async function processOneJob(db, job) {
 
     const bulkOps = [];
     let galleryDocs = null; // Populated by image_extraction jobs
-    let totalInputTokens = 0;
-    let totalOutputTokens = 0;
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
     // fetched + sent, recorded on the batch job at submit. Lets us stamp
@@ -437,10 +490,9 @@ async function processOneJob(db, job) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
+      // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
       const outputTokens = usage?.candidatesTokenCount || 0;
-      totalInputTokens += inputTokens;
-      totalOutputTokens += outputTokens;
 
       if (job.type === 'ocr') {
         const pageType = extractPageType(text);
@@ -651,10 +703,18 @@ async function processOneJob(db, job) {
       }
     );
 
-    // Log to Supabase gemini_usage (non-blocking).
+    // Close out the placeholder row this batch's submission wrote (#3452),
+    // rather than inserting a second row: the submit-time row is the one that
+    // reads $0.00 forever otherwise, and two rows per batch double-count pages
+    // in the dashboard_usage rollup. Falls back to an insert when there is no
+    // placeholder (re-collected or pre-#3452 batches).
     // page_count: prefer the batch's own page_count (always populated on batch_jobs).
     // successCount tracks DB matchedCount which is 0 for re-collected batches.
-    logUsageAsync({
+    // status mirrors the batch job's real outcome — reporting 'success' for a
+    // job where every page was blocked is how the meter learned to lie.
+    // Awaited, unlike the old fire-and-forget insert: the meter write is now
+    // the only record of this batch's spend, so it must not race the process.
+    await completeBatchUsage({
       type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
@@ -664,9 +724,10 @@ async function processOneJob(db, job) {
       input_tokens: totalInputTokens,
       output_tokens: totalOutputTokens,
       cost_usd: costUsd,
-      status: 'success',
+      status: finalStatus === 'saved' ? 'success' : 'failed',
+      error_message: errorDetail ?? null,
       batch_job_id: jobIdStr,
-    }, db);
+    }, db).catch(err => console.warn(`  Usage log failed: ${err.message}`));
 
     return {
       status: 'collected',
@@ -735,6 +796,10 @@ async function processOneJob(db, job) {
           updated_at: new Date(),
         } }
       );
+      // Close the submit-time usage placeholder — a job that never ran spent
+      // nothing, but the row must say so rather than sit at 'submitted'
+      // forever, indistinguishable from a batch still in flight (#3452).
+      await closeUsagePlaceholder(db, job, `Gemini state: ${state}`);
     }
     return { status: 'failed', state, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
   }
