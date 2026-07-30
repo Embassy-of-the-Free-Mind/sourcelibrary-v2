@@ -221,3 +221,21 @@ describe('uniform title (work identity — feeds #3258 / #2453)', () => {
     ] })).toBe('De voluptate');
   });
 });
+
+describe('a throttled response is not an empty result', () => {
+  // LoC rate-limits by serving an HTML interstitial with HTTP 200. Parsing that
+  // to zero records reads as "no prior translation exists" — a false negative
+  // manufactured by throttling, in a system whose whole job is avoiding those.
+  it('throws on the LoC IP access-request page rather than returning []', async () => {
+    const blockPage = '<!DOCTYPE html>\n<html lang="en"><head><title>LCCN Permalink - IP Access Request Form</title></head><body>ip access request</body></html>';
+    await expect(parseMarcXmlRecords(blockPage)).rejects.toThrow(/throttled|access-request/i);
+  });
+
+  it('throws on any HTML body where MARC was expected', async () => {
+    await expect(parseMarcXmlRecords('<html><body>maintenance</body></html>')).rejects.toThrow(/HTML document/);
+  });
+
+  it('still returns [] for genuinely empty input', async () => {
+    await expect(parseMarcXmlRecords('')).resolves.toEqual([]);
+  });
+});

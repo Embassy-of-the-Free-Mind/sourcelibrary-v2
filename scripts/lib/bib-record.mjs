@@ -57,15 +57,51 @@ import { parseStringPromise } from 'xml2js';
  * @param {string} xml
  * @returns {Promise<Array<{leader: string, controlfields: Record<string,string>, datafields: Array<{tag:string,ind1:string,ind2:string,subfields:Array<{code:string,value:string}>}>}>>}
  */
+/**
+ * LoC rate-limits by serving an HTML interstitial with HTTP **200**, so a status
+ * check passes while the body contains no MARC at all. Silently parsing that to
+ * zero records reads as "this work has no prior translation" — a false negative
+ * manufactured by throttling. Detect it and fail loudly instead.
+ */
+export function assertNotBlockPage(xml) {
+  if (typeof xml !== 'string') return;
+  const head = xml.slice(0, 400).toLowerCase();
+  if (head.includes('<!doctype html') || head.includes('<html')) {
+    const blocked = /ip access request|access request form|rate limit|too many requests/i.test(xml.slice(0, 4000));
+    throw new Error(
+      blocked
+        ? 'LoC served an IP access-request page (HTTP 200, HTML body) — the request was throttled, not answered. Back off and retry; do NOT treat this as "no records".'
+        : 'expected MARC-XML but received an HTML document',
+    );
+  }
+}
+
 export async function parseMarcXmlRecords(xml) {
   if (!xml || typeof xml !== 'string') return [];
-  const parsed = await parseStringPromise(xml, {
+  assertNotBlockPage(xml);
+  // Namespace prefixes vary by endpoint (`zs:`, `marc:`, none) — strip them so
+  // one code path handles lccn.loc.gov, the SRU gateway and HathiTrust alike.
+  const opts = {
     explicitArray: true,
-    // Namespace prefixes vary by endpoint (`zs:`, `marc:`, none) — strip them so
-    // one code path handles lccn.loc.gov, the SRU gateway and HathiTrust alike.
     tagNameProcessors: [(name) => name.replace(/^.*:/, '')],
     attrNameProcessors: [(name) => name.replace(/^.*:/, '')],
-  });
+  };
+
+  let parsed;
+  try {
+    parsed = await parseStringPromise(xml, opts);
+  } catch (strictError) {
+    // Real LoC records occasionally contain markup that strict SAX rejects
+    // outright ("Unexpected close tag" — hit on the live record for LCCN
+    // 96218515 while spot-checking). Losing a whole record to one stray tag is a
+    // silent false negative in a system whose entire job is avoiding those, so
+    // retry leniently. We only ever read a fixed set of fields from the result.
+    try {
+      parsed = await parseStringPromise(xml, { ...opts, strict: false });
+    } catch {
+      throw strictError;
+    }
+  }
 
   const records = [];
   collectRecords(parsed, records);
