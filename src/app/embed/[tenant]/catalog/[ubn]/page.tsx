@@ -11,6 +11,7 @@ import { buildSignInHref } from '@/lib/tenant-signin-url';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
+import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
@@ -82,6 +83,9 @@ interface BphWorkRow {
   // Memorix "Internal remarks" — cataloguers' working notes. Rendered ONLY
   // for editor+ roles; must never appear on the public page (José B., #3105).
   internal_remarks: string | null;
+  // Where this copy has been exhibited. Staff-only on the same terms as
+  // internal_remarks above (José B., 2026-07-29).
+  exhibition_history: string | null;
   number_of_copies: number | null;
   object_size_cm: string | null;
   bibliographic_format: string | null;
@@ -140,7 +144,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
-      bibliography, remarks, internal_remarks, number_of_copies, object_size_cm, bibliographic_format,
+      bibliography, remarks, internal_remarks, exhibition_history, number_of_copies, object_size_cm, bibliographic_format,
       binding, bound_with,
       provenance, collection, impressum_original, contributors,
       ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
@@ -151,7 +155,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   // then external-link columns, then author-authority columns. Each migration
   // runs independently per environment — the page renders if any are missing.
   const fallbackSelect = select
-    .replace('remarks, internal_remarks,', 'remarks,')
+    .replace('remarks, internal_remarks, exhibition_history,', 'remarks,')
     .replace('provenance, collection, impressum_original, contributors,', 'provenance,')
     .replace(
       'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
@@ -760,7 +764,7 @@ export default async function CatalogEntryPage({ params }: Props) {
         <Section title="Location at the BPH">
           <Field label="Present location" value={work.present_location} />
           <Field label="Shelf mark" value={work.shelf_mark} mono />
-          <Field label="State Collection shelf mark" value={work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark} mono />
+          <Field label="State Collection shelf mark" value={normalizeStateShelfMark(work.state_shelf_mark)} mono />
           <Field label="Provenance" value={work.provenance} />
           <Field label="Collection" value={work.collection} />
         </Section>
@@ -772,7 +776,10 @@ export default async function CatalogEntryPage({ params }: Props) {
               Safe to role-gate here: this page is fully dynamic (private,
               no-store), so an editor's render is never cached for others. */}
           {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] && (
-            <Field label="Internal remarks (staff only)" value={work.internal_remarks} />
+            <>
+              <Field label="Internal remarks (staff only)" value={work.internal_remarks} />
+              <Field label="Exhibition history (staff only)" value={work.exhibition_history} />
+            </>
           )}
         </Section>
 
