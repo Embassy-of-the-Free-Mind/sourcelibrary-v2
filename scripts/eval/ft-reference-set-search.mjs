@@ -254,6 +254,7 @@ const bySurname = new Map();
 // perfectly good title and merely lacked a usable author. Reporting those as
 // unaskable understated what the reference set could actually answer.
 const byTitleToken = new Map();
+const byCjkGram = new Map();
 let rowCount = 0;
 
 for (const file of files) {
@@ -271,6 +272,15 @@ for (const file of files) {
     for (const t of new Set([...toks(row.uniform_title), ...toks(row.title)])) {
       if (!byTitleToken.has(t)) byTitleToken.set(t, []);
       byTitleToken.get(t).push(row);
+    }
+    // Original-script index. Keyed on every 3-char window of each CJK run so a
+    // containment match is reachable by lookup rather than a full scan.
+    for (const run of cjkRuns(`${row.vernacular_uniform_title || ''} ${row.vernacular_title || ''}`)) {
+      for (let i = 0; i + 3 <= run.length; i++) {
+        const g = run.slice(i, i + 3);
+        if (!byCjkGram.has(g)) byCjkGram.set(g, []);
+        byCjkGram.get(g).push(row);
+      }
     }
   }
 }
@@ -313,8 +323,16 @@ const REFERENCE_SET = {
       'snapshot ends 2016 — later translations absent by construction, not by evidence',
       'European scholarly presses (Brill, Brepols) under-represented relative to US imprints',
       'journal-published and dissertation translations largely uncatalogued',
-      'non-Latin traditions are reachable only via romanized 240 uniform titles, '
-        + 'so a differing romanization scheme (Wade-Giles vs pinyin, Wylie variants) hides a real match',
+      // The most consequential gap in this set, stated first because a CJK
+      // `none_found` would otherwise read as evidence when it is nearly vacuous.
+      'CJK works are reachable ONLY via an original-script (MARC 880) title, and '
+        + 'LoC English-translation records almost never carry one: 205 of 8,774 '
+        + 'CJK-source rows (2.3%). Romanized matching is unusable (mixed '
+        + 'pinyin/Wade-Giles, differing syllable segmentation), so a `none_found` '
+        + 'for a Chinese, Japanese or Korean work is close to uninformative here '
+        + 'and needs a CJK-native catalogue or Wikidata before it means anything.',
+      'other non-Latin traditions are reachable only via romanized 240 uniform titles, '
+        + 'so a differing romanization scheme (Wylie variants) hides a real match',
       'the romanized generic-term stoplist was assembled without a specialist reader '
         + 'and may exclude a genuine match',
       ...(files.length < 43 ? [`only ${files.length} of 43 catalogue parts ingested`] : []),
@@ -358,6 +376,25 @@ await withMongo(async (db) => {
       queries.push({
         source: 'loc',
         query: `author_surname="${sn}" over ${REFERENCE_SET.version}`,
+        result_count: pool.length,
+      });
+    } else if (hasCjk(`${book.title} ${book.work_title || ''}`)) {
+      // Original-script access point: the only one available for a CJK title
+      // with no usable author and no Latin tokens.
+      const grams = new Set();
+      for (const run of cjkRuns(`${book.title} ${book.work_title || ''}`)) {
+        for (let i = 0; i + 3 <= run.length; i++) grams.add(run.slice(i, i + 3));
+      }
+      const seen = new Set();
+      for (const g of grams) {
+        for (const r of byCjkGram.get(g) || []) {
+          if (seen.has(r.lccn)) continue;
+          seen.add(r.lccn); pool.push(r);
+        }
+      }
+      queries.push({
+        source: 'loc',
+        query: `cjk_trigrams=[${[...grams].slice(0, 6).join(',')}] over ${REFERENCE_SET.version}`,
         result_count: pool.length,
       });
     } else if (bookToks.length) {
