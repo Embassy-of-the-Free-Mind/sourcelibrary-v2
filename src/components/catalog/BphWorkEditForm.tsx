@@ -125,6 +125,8 @@ const SECTIONS: Array<{
       // Memorix "Internal remarks" — staff working notes (José B.). Shown to
       // editors only; the public catalog page never renders this field.
       { name: 'internal_remarks', label: 'Internal remarks (staff only, never public)', type: 'textarea', editorOnly: true },
+      // Exhibition history — staff-only on the same terms (José B., 2026-07-29).
+      { name: 'exhibition_history', label: 'Exhibition history (staff only, never public)', type: 'textarea', editorOnly: true },
     ],
   },
   {

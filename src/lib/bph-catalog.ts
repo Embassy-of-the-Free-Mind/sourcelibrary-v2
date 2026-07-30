@@ -91,6 +91,10 @@ export const EDITABLE_BPH_FIELDS = [
   // Memorix "Internal remarks" — staff working notes. Editable/visible for
   // editor+ only; the public catalog entry page must never render it.
   'internal_remarks',
+  // Exhibition history — where this copy has been shown (José B., 2026-07-29).
+  // Staff-only on the same terms as internal_remarks. Unbounded TEXT: entries
+  // accumulate one line per exhibition over the life of a copy.
+  'exhibition_history',
   // Provenance (ownership history) + collection (named collection the copy
   // belongs to) — kept as two distinct fields per Paul D. (2026-06-24).
   'provenance',
@@ -347,32 +351,59 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
 }
 
 /**
- * Suggest the next Source-Library-originated UBN (`SL-000123`). New records
- * created in the editor get an `SL-` prefixed id rather than a numeric one so
- * they never collide with the BPH's authoritative numeric UBN namespace (the
- * Memorix sync upserts on numeric UBNs). Editors can override the suggestion
- * with a real BPH UBN if the record already has one — uniqueness is enforced
- * by the primary key and the create guard in applyWorkRevision.
+ * First UBN reserved for records created on Source Library. The BPH's own
+ * numbering is dense up to ~32,999, so 33,000 is the agreed start of the new
+ * range (José Bouman, 2026-07-15) — see UBN_ALLOCATION_START's usage below.
+ */
+export const UBN_ALLOCATION_START = 33000;
+
+/** How many ids to probe per round-trip when hunting for a free number. */
+const UBN_PROBE_WINDOW = 200;
+
+/** Give up after this many windows (covers 33,000 – 53,000). */
+const UBN_MAX_PROBES = 100;
+
+/**
+ * Suggest the next free numeric UBN, starting at 33,000.
  *
- * Best-effort: on any lookup failure we fall back to a timestamp-free random
- * suffix so the create page still renders a usable default.
+ * This used to hand out `SL-000123`. The prefix was there to keep new records
+ * out of the BPH's authoritative numeric namespace, but the BPH writes the UBN
+ * into the physical book by hand and the `SL-` was too easy to forget, so a
+ * shelf number and a catalogue number could silently diverge (José Bouman,
+ * feedback 2026-07-15). A reserved numeric range gives the same collision
+ * safety with nothing to forget. No `SL-` record was ever created, so there is
+ * no legacy id to migrate.
+ *
+ * Collision safety is not assumed — the allocator probes a window of ids and
+ * returns the lowest one that is actually free, so it stays correct as the
+ * range fills and against the ~20 stray numeric UBNs that already sit above
+ * 33,000 (39424, 40402, … 272622). Uniqueness is still enforced underneath by
+ * the primary key and the create guard in applyWorkRevision; this only picks a
+ * sensible default that the editor can overwrite with a real BPH UBN.
+ *
+ * Best-effort: on any lookup failure we fall back to the start of the range so
+ * the create page still renders a usable default.
  */
 export async function suggestNewUbn(): Promise<string> {
-  const pad = (n: number) => `SL-${String(n).padStart(6, '0')}`;
-  if (!supabaseAdmin) return pad(1);
+  if (!supabaseAdmin) return String(UBN_ALLOCATION_START);
   try {
-    const { data } = await supabaseAdmin
-      .from('bph_works')
-      .select('ubn')
-      .like('ubn', 'SL-%')
-      .order('ubn', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    const last = (data as { ubn?: string } | null)?.ubn;
-    const n = last ? parseInt(last.replace(/^SL-/, ''), 10) : 0;
-    return pad(Number.isFinite(n) ? n + 1 : 1);
+    for (let probe = 0; probe < UBN_MAX_PROBES; probe++) {
+      const base = UBN_ALLOCATION_START + probe * UBN_PROBE_WINDOW;
+      const window = Array.from({ length: UBN_PROBE_WINDOW }, (_, i) => String(base + i));
+      const { data, error } = await supabaseAdmin
+        .from('bph_works')
+        .select('ubn')
+        .in('ubn', window);
+      if (error) throw error;
+      const taken = new Set((data as { ubn: string }[] | null)?.map((r) => r.ubn) ?? []);
+      const free = window.find((candidate) => !taken.has(candidate));
+      if (free) return free;
+    }
+    // Every id in the probed range is taken — fall through to the range start
+    // rather than guessing past the window; the editor sets the UBN by hand.
+    return String(UBN_ALLOCATION_START);
   } catch {
-    return pad(1);
+    return String(UBN_ALLOCATION_START);
   }
 }
 
