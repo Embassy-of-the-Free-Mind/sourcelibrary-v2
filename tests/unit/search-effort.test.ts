@@ -25,6 +25,9 @@ import {
   VERDICT,
 } from '../../scripts/lib/search-effort.mjs';
 
+// @ts-expect-error — .mjs script module without type declarations
+import { englishFraction, ENGLISH_SOURCE_THRESHOLD } from '../../scripts/lib/english-source-detect.mjs';
+
 const refSet = {
   version: 'loc-2016.v1',
   sources: [{
@@ -224,5 +227,35 @@ describe('latestEffortPerBook — the collection is a history, not a state', () 
 
   it('ignores rows with no book_id rather than bucketing them together', () => {
     expect(latestEffortPerBook([{ run_at: '2026-07-30T00:00:00Z' }])).toHaveLength(0);
+  });
+});
+
+describe('english-source detection reads the SOURCE, not our own annotations', () => {
+  // pages.ocr.data embeds AI-written English annotation blocks (<meta>,
+  // <scan-quality>, <page-type>) describing the page in English whatever language
+  // the page is in. Stripping only the TAGS keeps that prose — the exact bug
+  // CLAUDE.md documents. It made a Greek Corpus Hermeticum score 0.26-0.36
+  // English on annotated pages while real Greek pages scored 0.00, and inflated
+  // the "already English" count from 1,410 to 2,349.
+  it('ignores English editorial wrappers around foreign text', () => {
+    const greekPage = '<scan-quality>Significant ink bleed-through from the verso page, and the page '
+      + 'features numerous red ink corrections or additions by a later hand</scan-quality>'
+      + '<meta>This page of the manuscript is written in a compact minuscule</meta>'
+      + ' τοῦ δὲ καταῤῥέοντος ὕδατος ὅτι πασῶν τριῶσαν ἐχυθῇ τὸ πνεῦμα καὶ ἡ ψυχή';
+    // With wrappers stripped there is essentially no Latin-script text left, so
+    // the page must not be judged English.
+    const f = englishFraction(greekPage, 5);
+    expect(f === null || f < ENGLISH_SOURCE_THRESHOLD).toBe(true);
+  });
+
+  it('still detects a genuinely English source page', () => {
+    const budge = 'the seven tablets of creation or the babylonian and assyrian legends concerning '
+      + 'the creation of the world and of mankind edited with transliterations and there is in the '
+      + 'text a great deal of that which we have from the earliest period of all these things';
+    expect(englishFraction(budge)).toBeGreaterThan(ENGLISH_SOURCE_THRESHOLD);
+  });
+
+  it('refuses to judge a page with too little text', () => {
+    expect(englishFraction('blank')).toBeNull();
   });
 });
