@@ -5,16 +5,24 @@ import { auth } from '@/lib/auth';
 import SiteHeader from '@/components/layout/SiteHeader';
 import WelcomeForm from '@/components/welcome/WelcomeForm';
 import { getWelcomeHero } from '@/lib/welcome-hero';
+import { welcomeSignInUrl } from '@/lib/welcome-return';
 
 export const metadata: Metadata = {
   title: 'Welcome — Source Library',
   robots: { index: false, follow: false },
 };
 
-export default async function WelcomePage() {
+export default async function WelcomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string | string[] }>;
+}) {
   const session = await auth();
   if (!session?.user?.id) {
-    redirect('/auth/signin?callbackUrl=%2Fwelcome');
+    // Carry the destination through sign-in. Without this the reader signs in
+    // and lands on the homepage, having lost the book they clicked.
+    const { from } = await searchParams;
+    redirect(welcomeSignInUrl(Array.isArray(from) ? from[0] : from));
   }
 
   const firstName = session.user.name?.split(' ')[0] || null;
