@@ -368,6 +368,22 @@ const REFERENCE_SET = {
       'snapshot ends 2016 — later translations absent by construction, not by evidence',
       'European scholarly presses (Brill, Brepols) under-represented relative to US imprints',
       'journal-published and dissertation translations largely uncatalogued',
+      // RECALL CEILING — stated first because it caps what any `none_found` here
+      // can mean. 35.2% of rows (41,678 of 118,352) carry no MARC 240 uniform
+      // title, and work identity is established by 240 containment; the 245
+      // display-title fallback is deliberately capped below the confirmation
+      // threshold to suppress noise. So over a third of the reference set is
+      // unreachable as a confirmed match and `none_found` is systematically
+      // OVER-reported in both cohorts.
+      'RECALL CEILING: 35.2% of rows have no 240 uniform title and cannot produce '
+        + 'a confirmed match, so `none_found` is over-reported by an unmeasured margin.',
+      // A second, related gap: scholarly editions that print an ancient text
+      // alongside its translation are frequently catalogued with NO 041 at all
+      // (Langdon\'s *Babylonian Liturgies* has none; 22 of 23 LoC records for
+      // Budge\'s *Book of the Dead* have none). The extraction filter requires
+      // 041$h, so that whole class is absent from the set by construction.
+      'scholarly editions printing a text WITH its translation often carry no 041 '
+        + 'and are therefore excluded from this set entirely',
       // The most consequential gap in this set, stated first because a CJK
       // `none_found` would otherwise read as evidence when it is nearly vacuous.
       'CJK works are reachable ONLY via an original-script (MARC 880) title, and '
