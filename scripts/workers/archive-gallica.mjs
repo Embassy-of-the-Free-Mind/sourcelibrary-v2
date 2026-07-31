@@ -17,6 +17,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -26,6 +27,10 @@ const PAGE_LIMIT = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
 const RATE_PER_SEC = parseFloat(getArg('rate') || '1');
 const DRY_RUN = hasFlag('dry-run');
+// Abort only when a connection goes QUIET for this long — never merely because
+// a file is big. Raising this does not slow healthy fetches; it only widens the
+// window a genuinely stalled socket gets before we give up on it.
+const FETCH_STALL_MS = parseInt(getArg('stall-timeout') || '60000', 10);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -82,15 +87,16 @@ function upgradeToFullRes(url) {
 
 async function downloadImage(url, maxRetries = 4) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60_000);
     try {
-      const res = await fetch(url, {
-        signal: controller.signal,
+      // Stall timeout, not a total-duration cap: a 21 MB double-page plate is
+      // slow because it is large, not because the connection is broken. The
+      // old 60s wall-clock abort failed 42 of this book's 45 engravings while
+      // every 6 MB text page succeeded. See scripts/lib/fetch-stall-timeout.mjs.
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: FETCH_STALL_MS,
         headers: { 'User-Agent': USER_AGENT },
       });
       if (res.status === 429) {
-        clearTimeout(timeout);
         // Exponential backoff: 5s, 10s, 20s, 40s
         const backoff = 5000 * Math.pow(2, attempt);
         if (attempt < maxRetries) {
@@ -100,10 +106,8 @@ async function downloadImage(url, maxRetries = 4) {
         throw new Error(`HTTP 429 after ${maxRetries + 1} attempts`);
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const buffer = Buffer.from(await res.arrayBuffer());
       return buffer;
     } catch (err) {
-      clearTimeout(timeout);
       if (attempt === maxRetries || !err.message?.includes('429')) throw err;
     }
   }
