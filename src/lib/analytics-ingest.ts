@@ -41,9 +41,32 @@ export function clientIp(request: NextRequest): string {
   return clientIpFromHeaders(request.headers);
 }
 
-/** Anonymized client IP from a bare Headers bag. */
+/**
+ * Anonymized client IP from a bare Headers bag.
+ *
+ * `cf-connecting-ip` FIRST, and this order is load-bearing. On the canonical
+ * host the chain is client → Cloudflare → Vercel, and Vercel rewrites
+ * `x-forwarded-for` with the address that connected to *it* — Cloudflare's
+ * edge node. Reading `x-forwarded-for` first therefore recorded a CDN address
+ * for every request that came through the front door: `analytics_pageviews`
+ * and `analytics_events` were full of 172.64.0.0/13, 104.16.0.0/13 and
+ * 162.158.0.0/15 rather than readers.
+ *
+ * The consequence was not cosmetic. Every IP-based defence downstream reads
+ * these fields, so a distributed fleet arriving via Cloudflare was invisible
+ * by construction — spread evenly across edge nodes, indistinguishable from
+ * organic traffic. The one fleet we ever caught (AS132203, nine weeks) was
+ * caught *because* it bypassed Cloudflare on an alias host, which is the only
+ * reason its real addresses were ever written down. The per-IP event cap below
+ * had the same blind spot: it was rate-limiting Cloudflare, not the caller.
+ *
+ * `src/lib/rate-limit.ts` has always had this order right; the analytics write
+ * paths did not. Keep the two in agreement.
+ */
 export function clientIpFromHeaders(headers: Headers): string {
-  const raw = headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+  const raw = headers.get('cf-connecting-ip')?.trim()
+    || headers.get('true-client-ip')?.trim()
+    || headers.get('x-forwarded-for')?.split(',')[0]?.trim()
     || headers.get('x-real-ip')
     || 'unknown';
   return anonymizeIp(raw);
