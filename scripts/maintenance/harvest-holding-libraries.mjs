@@ -52,6 +52,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { holdingLibraryName, canonicalHoldingLibrary, AGGREGATOR_PROVIDERS } from '../lib/holding-library.mjs';
 import { provenanceUpdate } from '../lib/field-provenance.mjs';
 
@@ -73,6 +74,11 @@ const SLEEP_MS = Number(val('--sleep', '250'));
 // that cohort alone is ~5x cheaper than re-walking the corpus, and archive.org
 // timeouts (32% at concurrency 8) make an unfocused re-run unreliable anyway.
 const STORED = val('--stored', null);
+// A sweep that silently skips 15% of its candidates reports a clean result it
+// did not earn. Failures are written here so the run's coverage is auditable
+// and the gap can be closed without re-walking the whole corpus.
+const FAILURES_OUT = val('--failures-out', '/tmp/harvest-failures.json');
+const RETRY_FAILURES = val('--retry-failures', null);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
@@ -90,12 +96,25 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * Community uploads legitimately have no contributor — those stay uncredited
  * rather than being backfilled with a guess.
  */
-async function fetchIaMetadata(identifier) {
-  const res = await fetch(`https://archive.org/metadata/${encodeURIComponent(identifier)}`, {
-    signal: AbortSignal.timeout(25_000),
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; holding-library harvest)' },
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+async function fetchIaMetadata(identifier, attempts = 3) {
+  // archive.org times out intermittently under sustained volume — a single-shot
+  // fetch lost 885 of 5,956 candidates (15%) on the 2026-07-30 full pass, which
+  // would have been reported as a clean sweep. Back off and retry instead.
+  let lastErr;
+  let res;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      res = await fetch(`https://archive.org/metadata/${encodeURIComponent(identifier)}`, {
+        signal: AbortSignal.timeout(25_000),
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; holding-library harvest)' },
+      });
+      if (res.ok) break;
+      lastErr = new Error(`HTTP ${res.status}`);
+      res = null;
+    } catch (e) { lastErr = e; res = null; }
+    if (i < attempts - 1) await sleep(1000 * 2 ** i);
+  }
+  if (!res) throw lastErr || new Error('fetch failed');
   const json = await res.json();
   const md = json?.metadata || {};
   // IA returns either a string or an array for multi-valued fields.
@@ -143,6 +162,13 @@ async function main() {
   );
   if (STORED) console.log(`Restricted to books stored as ${JSON.stringify(STORED)}.`);
 
+  let retrySet = null;
+  if (RETRY_FAILURES) {
+    if (!existsSync(RETRY_FAILURES)) { console.error(`no failure ledger at ${RETRY_FAILURES}`); process.exit(1); }
+    retrySet = new Set(JSON.parse(readFileSync(RETRY_FAILURES, 'utf8')));
+    console.log(`Retrying ${retrySet.size} identifiers from ${RETRY_FAILURES}.`);
+  }
+
   const todo = [];
   let scanned = 0;
   for await (const b of cursor) {
@@ -153,6 +179,7 @@ async function main() {
     if (VERIFY ? !current : !!current) continue;
     const identifier = b.ia_identifier || b.image_source?.identifier;
     if (!identifier) continue;
+    if (retrySet && !retrySet.has(identifier)) continue;
     todo.push({ _id: b._id, slug: b.slug, title: b.title, identifier, stored: b.image_source?.contributing_library ?? null });
     if (todo.length >= LIMIT) break;
   }
@@ -163,6 +190,7 @@ async function main() {
   const recoveredNames = new Map();
   const rejectedNames = new Map();
   const corrections = new Map();
+  const failedIdentifiers = [];
 
   let idx = 0;
   const worker = async () => {
@@ -226,6 +254,7 @@ async function main() {
           : `  …${n}/${todo.length}  recovered=${stats.recovered} none=${stats.noContributor} rejected=${stats.rejected} failed=${stats.fetchFailed}`);
       } catch (e) {
         stats.fetchFailed++;
+        failedIdentifiers.push(item.identifier);
         if (stats.fetchFailed <= 10) console.warn(`  ! ${item.identifier}: ${e.message}`);
       }
       if (SLEEP_MS) await sleep(SLEEP_MS);
