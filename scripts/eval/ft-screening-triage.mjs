@@ -142,6 +142,16 @@ for (const [work, reason] of NOT_A_PRIOR) SCREEN_FOR.set(work, { screen: SCREEN.
 
 await withMongo(async (db) => {
   const coll = db.collection('search_efforts');
+  // Screening decisions are DURABLE, stored separately from the effort they were
+  // first applied to. An effort is immutable and a new reference-set snapshot or
+  // code version mints a new one — so attaching judgements only to an effort
+  // means every re-run silently discards them. Observed: adding Wikidata created
+  // a new generation and dropped all 45 demote decisions on the floor.
+  //
+  // A judgement is about a (work, prior record) pair, not about a run, so it is
+  // keyed that way and re-applied by the search on every subsequent generation.
+  // That is what makes this a living, correctable census rather than a snapshot.
+  const decisions = db.collection('screening_decisions');
   const all = await coll.find({}, {
     projection: { effort_id: 1, book_id: 1, run_at: 1, verdict: 1, proposition: 1, candidates: 1, searchable: 1 },
   }).toArray();
@@ -201,6 +211,27 @@ await withMongo(async (db) => {
     console.log('REPORT ONLY — no screening written. Re-run with --apply.');
     return;
   }
+  // Persist the judgements first, so they survive the next re-run regardless of
+  // what happens to this generation's efforts.
+  await decisions.createIndex({ work: 1 }, { unique: true });
+  const decisionDocs = [...SCREEN_FOR.entries()].map(([work, d]) => ({
+    updateOne: {
+      filter: { work },
+      update: {
+        $set: {
+          work,
+          screen: d.screen,
+          reason: d.reason,
+          decided_at: new Date(),
+          decided_by: 'ft-screening-triage',
+        },
+      },
+      upsert: true,
+    },
+  }));
+  await decisions.bulkWrite(decisionDocs, { ordered: false });
+  console.log(`Persisted ${decisionDocs.length} durable screening decisions.`);
+
   let n = 0;
   for (let i = 0; i < updates.length; i += 500) {
     const res = await coll.bulkWrite(updates.slice(i, i + 500), { ordered: false });

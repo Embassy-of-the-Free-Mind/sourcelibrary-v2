@@ -378,6 +378,14 @@ console.log(`Reference set ${REFERENCE_SET.version}: ${rowCount.toLocaleString()
   + `${bySurname.size.toLocaleString()} distinct surnames (${files.length}/43 parts)\n`);
 
 await withMongo(async (db) => {
+  // Re-apply durable screening judgements. Without this, every new snapshot or
+  // code change resets all screening to `unresolved` and the human work is lost.
+  const decisionRows = await db.collection('screening_decisions').find({}).toArray();
+  const decisionByWork = new Map(decisionRows.map((d) => [d.work, d]));
+  if (decisionByWork.size) {
+    console.log(`Carrying forward ${decisionByWork.size} screening decision(s) from previous passes.\n`);
+  }
+
   const query = { is_first_translation: true, visible: true, ...(LANG ? { language: LANG } : {}) };
   let cursor = db.collection('books').find(query, {
     projection: { id: 1, title: 1, work_title: 1, author: 1, language: 1, original_language: 1, year: 1, work_id: 1 },
@@ -464,7 +472,14 @@ await withMongo(async (db) => {
             .filter(Boolean).map(surname).filter(Boolean),
         });
         if (!best || best.score < MIN_CANDIDATE) continue;
-        const { screen, reason } = screenCandidate(book, row, best);
+        let { screen, reason } = screenCandidate(book, row, best);
+        // A judgement already made about this work outranks the mechanical
+        // screen — it was made with the record in front of a human.
+        const prior = decisionByWork.get(book.work_title || book.title);
+        if (prior && screen === SCREEN.UNRESOLVED) {
+          screen = prior.screen;
+          reason = `[carried forward ${new Date(prior.decided_at).toISOString().slice(0, 10)}] ${prior.reason}`;
+        }
         candidates.push({
           identifiers: { lccn: row.lccn },
           title: row.title,
