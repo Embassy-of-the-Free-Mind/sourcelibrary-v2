@@ -13,6 +13,7 @@ import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 export const preferredRegion = 'fra1';
 
@@ -847,20 +848,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: results.length,
-      semantic_count: semanticDocs.length,
-      filters: { language, category, year, bookId, library, source: 'global' },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, resultsCount: results.length, source: 'global',
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length },
+    });
 
     logSearchQuery({
       request, identity, route: 'search', query,
