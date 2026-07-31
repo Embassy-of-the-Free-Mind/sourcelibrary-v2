@@ -384,6 +384,35 @@ filtered vs an impossible range (which must return 0). Check every lane in the
 response body, not just the first list. Same discipline as the three-layer
 crawler gate above: changing one layer alone is silently defeated by the others.
 
+**A searchable field is a readable field — never index a staff-only column.**
+Being able to search a field is a way of reading it: an attacker (or a curious
+visitor) can binary-search for the phrase it contains, one query at a time, and
+a hit is itself the disclosure. So the public search columns —
+`bph_works.search_norm`, `bph_works.search_tsv`, and any successor — must
+exclude `internal_remarks`, `exhibition_history`, `price`,
+`acquisition_source`/`_date`, the workflow flags, and `modified_by_*` (personal
+data). The exclusion list with per-field reasons lives in
+`scripts/migration/expand-bph-search-norm.sql`; keep it there rather than
+rediscovering it. This is the same shape as the tenant-lockdown rule above — ask
+what a surface *renders*, not only where it *links* — applied to the query side.
+
+**The inverse failure is just as real: a field nobody indexed is a field nobody
+can find.** `search_norm` covered 20 of ~40 populated columns, so searching a
+shelf location, a donor, a USTC number or a phrase from the remarks returned
+nothing — indistinguishable from "we don't hold it", and it took a librarian
+telling us in person to surface it (#3481). When adding a column that a human
+will later search by, add it to the search column in the same PR, or state why
+it is excluded.
+
+**Careful with generated search columns.** They cannot be altered in place —
+drop + recreate, which **also drops their indexes** (rebuild
+`idx_bph_search_norm_trgm` or every query becomes a seq scan), so wrap the whole
+thing in a transaction. And the expression must be IMMUTABLE: `concat_ws` is
+STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`.
+`add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
+deployed reality** — read `pg_get_expr` off the live column, not the migration
+file.
+
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
 

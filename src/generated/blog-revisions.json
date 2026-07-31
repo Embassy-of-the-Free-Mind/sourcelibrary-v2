@@ -293,6 +293,12 @@
     "revised": "2026-07-16T01:06:36+02:00",
     "revisions": 4
   },
+  "reciting-not-reading": {
+    "path": "src/app/blog/reciting-not-reading/page.tsx",
+    "published": "2026-07-30T15:35:23+02:00",
+    "revised": "2026-07-30T15:35:23+02:00",
+    "revisions": 1
+  },
   "rithmomachia": {
     "path": "src/app/blog/rithmomachia/page.tsx",
     "published": "2026-03-02T11:34:13+04:00",
