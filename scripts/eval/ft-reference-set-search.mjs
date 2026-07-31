@@ -58,6 +58,20 @@ const APPLY = process.argv.includes('--apply');
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
 const LANG = argOf('--lang');
 const LIMIT = argOf('--limit') ? parseInt(argOf('--limit'), 10) : null;
+/**
+ * Which population to search.
+ *
+ *   badged  (default) — books we already claim. A `none_found` here means our
+ *                       public claim survives the search.
+ *   inverse           — visible translated non-English books we do NOT badge.
+ *                       A `none_found` here means something entirely different:
+ *                       a work we may have translated first and never claimed.
+ *
+ * These must never be pooled. The same verdict string carries opposite meaning in
+ * the two cohorts — one is "our claim held", the other is "we may have a claim we
+ * never made" — so every effort records which cohort produced it.
+ */
+const COHORT = argOf('--cohort') ?? 'badged';
 
 const CODE_VERSION = (() => {
   try { return execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim(); }
@@ -386,7 +400,14 @@ await withMongo(async (db) => {
     console.log(`Carrying forward ${decisionByWork.size} screening decision(s) from previous passes.\n`);
   }
 
-  const query = { is_first_translation: true, visible: true, ...(LANG ? { language: LANG } : {}) };
+  const ELIGIBLE = {
+    visible: true,
+    pages_translated: { $gt: 0 },
+    language: { $nin: [null, 'English'] },
+  };
+  const query = COHORT === 'inverse'
+    ? { ...ELIGIBLE, is_first_translation: { $ne: true }, ...(LANG ? { language: LANG } : {}) }
+    : { is_first_translation: true, visible: true, ...(LANG ? { language: LANG } : {}) };
   let cursor = db.collection('books').find(query, {
     projection: { id: 1, title: 1, work_title: 1, author: 1, language: 1, original_language: 1, year: 1, work_id: 1 },
   });
@@ -508,6 +529,7 @@ await withMongo(async (db) => {
       codeVersion: CODE_VERSION,
     });
 
+    effort.cohort = COHORT;
     efforts.push(effort);
     verdictTally[effort.verdict] = (verdictTally[effort.verdict] || 0) + 1;
     byTradition[lang].candidates += candidates.length;
@@ -515,11 +537,16 @@ await withMongo(async (db) => {
     byTradition[lang].prior += candidates.filter((c) => c.screen === SCREEN.PRIOR).length;
   }
 
-  console.log('─── Verdicts ─────────────────────────────────────────────────');
+  console.log(`─── Verdicts (cohort: ${COHORT}) ──────────────────────────────`);
   for (const [v, n] of Object.entries(verdictTally).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${v.padEnd(22)} ${String(n).padStart(5)}`);
   }
-  console.log('\n  none_found means "nothing found in THIS set", never "we are first".');
+  console.log(COHORT === 'inverse'
+    ? '\n  INVERSE COHORT — these books carry NO badge. Here `none_found` does not\n'
+      + '  confirm a claim, it SURFACES a possible one: a work with no English\n'
+      + '  translation in the reference set that we have translated and never claimed.\n'
+      + '  It is a candidate for the first-translation pipeline, not a verdict.'
+    : '\n  none_found means "nothing found in THIS set", never "we are first".');
   console.log('  not_searchable means we could not ask — it is not a clean negative.');
   console.log('  inconclusive means a real candidate needs screening before any claim.');
 
@@ -534,7 +561,7 @@ await withMongo(async (db) => {
   console.log(`\n  ${needScreening.length} book(s) have candidates awaiting screening.`);
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const outPath = path.join(OUT_DIR, `ft-reference-set-search-${DATE}.json`);
+  const outPath = path.join(OUT_DIR, `ft-reference-set-search-${COHORT}-${DATE}.json`);
   fs.writeFileSync(outPath, JSON.stringify({
     reference_set: REFERENCE_SET,
     code_version: CODE_VERSION,
