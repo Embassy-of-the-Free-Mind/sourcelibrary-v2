@@ -851,6 +851,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
     logSearchEvent({
       request, db, query, resultsCount: results.length, source: 'global',
+      // `tenantId` is already resolved above for scoping the query itself.
+      // Omitting it here (as the first pass did) left every "global" search
+      // unattributable even though the value was sitting in scope — the same
+      // blind spot that made the pre-existing rows unsplittable.
+      tenantId,
       filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length },
     });
 
