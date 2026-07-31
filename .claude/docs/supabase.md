@@ -107,7 +107,7 @@ Audited 2026-05-14. Every Mongo→Supabase write path in the codebase:
 
 | # | Path | Trigger | Schedule | Fields | Status |
 |---|---|---|---|---|---|
-| 1 | MongoDB books → `books_catalog` | Hetzner `scripts/workers/sync-books-catalog.mjs` | every 5 min, last-10-min window | ~40 fields incl. `thumbnail`, `thumbnail_blob`, title, author, language, pages_count, pages_ocr/translated/blank, categories, collections, cover_image, summary_text, doi, published, place_published, publisher | ⚠️ window-only, no retry; **missing `held_by`, `image_display`, `image_thumb`** |
+| 1 | MongoDB books → `books_catalog` | Hetzner `scripts/workers/sync-books-catalog.mjs` | every 5 min, last-10-min window | ~40 fields incl. `thumbnail`, `thumbnail_blob`, title, author, language, pages_count, pages_ocr/translated/blank, categories, collections, cover_image, summary_text, doi, published, place_published, publisher, `contributing_library` | ⚠️ window-only, no retry; **missing `held_by`, `image_display`, `image_thumb`**. `contributing_library` prefers `image_source.contributing_library` (the institution holding the volume) over the legacy top-level field (usually the *provider*) — see #3445; a writer that only sets the legacy field ships the host as the custodian |
 | 2 | MongoDB books → `books_catalog` | PATCH `/api/books/[id]` → `mirrorBookToCatalog()` | on curator edit | ~11 fields: title, display_title, author, thumbnail, thumbnail_blob, language, published, categories, publisher, place_published, doi | ⚠️ **only fires from the PATCH route**; direct DB updates from `scripts/` bypass it |
 | 3 | MongoDB books → `bph_works.sl_book_id` | Vercel cron `/api/cron/sync-bph-sl-book-ids` | every 6h | `sl_book_id`, `sl_book_slug` | ✓ Honors `bph_catalog_link: false` opt-out (PR #1752, 2026-05-14) |
 | 4 | MongoDB pages → `pages_images` | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min, last-10-min window | id, book_id, page_number, archived_photo, display_photo, thumbnail_blob | ⚠️ window-only; no retry/backfill if a sync window misses a row |
@@ -126,6 +126,10 @@ These have bitten us before and will bite again. Documented so the next debugger
 Symptom: a curator clicks "set cover" and the BPH grid updates instantly (PATCH mirrors immediately). But `scripts/migration/foo.mjs` runs `db.books.updateOne(...)` directly — the same field change shows up in `books_catalog` only after the 5-min Hetzner sync, *if* the sync window catches it. If the sync misses it (see B), the BPH grid is stale indefinitely.
 
 Concrete example (2026-05-13/14): I fixed 10 BPH spread-cover URLs via a script that wrote MongoDB directly. 4 made it to Supabase within a sync window; 6 were stranded — the BPH home grid kept showing the old spread covers until I manually `UPDATE`d `books_catalog`.
+
+**The precondition nobody writes down: the script must bump `updated_at`.** Both sync paths select on it (`sync-books-catalog.mjs` uses `updated_at > lastSync`), so a sweep that writes a synced column *without* touching `updated_at` is not "maybe missed by a window" — it is **permanently invisible**, and no later sync will ever pick it up. A full sync is the only thing that recovers it.
+
+This failure is silent in the worst way: `updateOne` returns `modifiedCount: 1`, the value is correct in MongoDB, nothing throws, and no public page ever changes. **Verifying the write landed in MongoDB does not verify that anything propagated.** On 2026-07-30 (#3445) `harvest-holding-libraries.mjs` corrected the holding library on 1,415 books this way; they would have sat in MongoDB indefinitely while `/libraries` served the old values. Fix: put `updated_at: new Date()` in the *same* `$set` as the value, then verify at the destination (query `books_catalog`, or curl the page) — never just at the source.
 
 Mitigations to consider:
 - Extract `mirrorBookToCatalog` to a shared module any maintenance script can import.
