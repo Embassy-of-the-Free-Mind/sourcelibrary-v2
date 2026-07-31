@@ -13,6 +13,7 @@ import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -448,19 +449,13 @@ export async function GET(request: NextRequest) {
       filteredArtworks.total = filteredArtworks.results.length;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
-      filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, source: 'unified',
+      resultsCount: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
+      tenantId: tenantContext.id || null,
+      filters: { language, category, library },
+    });
 
     return NextResponse.json({
       query,

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 
@@ -86,19 +87,11 @@ export async function GET(request: NextRequest) {
       byType[r.type] = (byType[r.type] || 0) + 1;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: results.length,
-      filters: { type, source: 'index' },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, resultsCount: results.length, source: 'index',
+      filters: { type },
+    });
 
     const response = NextResponse.json({ query, total: results.length, byType, results });
     response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');

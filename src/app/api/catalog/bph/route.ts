@@ -3,6 +3,8 @@ import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 import { normalizeBphSearchText } from '@/lib/text-normalize';
 import { getReadDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { logSearchEvent } from '@/lib/search-event-log';
+import { resolveTenantId } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -443,9 +445,54 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  const total = isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0);
+
+  // Record the search. This route is the BPH reading room's front-page search
+  // box — the first thing a visitor sees — and until #3483 it logged nothing at
+  // all, which made "how much do readers search here?" unanswerable.
+  //
+  // Two deliberate exclusions, so the count means "searches" and not "requests":
+  //   - a request carrying no query and no advanced field is *browsing* the
+  //     catalogue (or paging through it), not searching;
+  //   - only `offset === 0` is logged, so paginating deeper into one result set
+  //     stays one search rather than N.
+  // Both matter because this number will be read as a rate against reading-room
+  // pageviews; inflating the numerator would repeat the error this fixes.
+  const advancedTerms = { author, title, place, printer, publisher, editor, keyword, shelfMark, provenance };
+  const hasSearchTerm = !!q || Object.values(advancedTerms).some(Boolean);
+  if (hasSearchTerm && offset === 0) {
+    // Resolved inside the fire-and-forget path so neither the tenant lookup
+    // (cached, but still async) nor the insert sits on the response path.
+    void resolveTenantId('bph')
+      .then((tenantId) => {
+        logSearchEvent({
+          request: req,
+          // The simple search box is `q`; an advanced-only search has no `q`,
+          // so fall back to the field that was actually filled in.
+          query: q || Object.values(advancedTerms).find(Boolean) || '',
+          resultsCount: total,
+          source: 'catalogue',
+          tenantId,
+          filters: {
+            ...Object.fromEntries(Object.entries(advancedTerms).filter(([, v]) => v)),
+            language: language || null,
+            yearFrom,
+            yearTo,
+            digitized,
+            first_translation: firstTranslation || null,
+            sort,
+            // Distinguishes "typed in the simple box" from "used the advanced
+            // form" — they are different behaviours and worth telling apart.
+            advanced: !q,
+          },
+        });
+      })
+      .catch(() => {});
+  }
+
   return NextResponse.json({
     works,
-    total: isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0),
+    total,
     offset,
     limit,
     schemaMode: schemaMode || 'unknown',
