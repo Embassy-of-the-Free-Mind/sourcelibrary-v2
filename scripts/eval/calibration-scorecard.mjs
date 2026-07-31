@@ -334,8 +334,8 @@ function predictFromFit(fit, x) {
 // values include compound/mixed labels like "Chinese; English".)
 const NO_TRANSFER_RE = /chinese|japanese|thai|tibetan|burmese|khmer|\blao\b|hieroglyph/i;
 
-function applyCorpusWide(corpusSummary, fits) {
-  const lxy = corpusSummary.strata.lang_x_year || [];
+function applyCorpusWide(strataObj, fits) {
+  const lxy = strataObj?.lang_x_year || [];
   const out = [];
   for (const row of lxy) {
     const [language, era] = row.key.split(' | ');
@@ -414,17 +414,42 @@ function main() {
   // STEP 3: corpus-wide application
   const corpusFiles = fs.readdirSync(RESULTS_DIR).filter(f => /^revision-agreement-corpus-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
   const corpusFile = args['corpus-summary'] || (corpusFiles.length ? path.join(RESULTS_DIR, corpusFiles[corpusFiles.length - 1]) : null);
-  let corpusApplication = null, corpusMeta = null;
+  let corpusApplication = null, corpusMeta = null, sameLeafApplication = null, leafComparison = null;
   if (corpusFile && fs.existsSync(corpusFile)) {
     const corpusSummary = JSON.parse(fs.readFileSync(corpusFile, 'utf8'));
-    corpusApplication = applyCorpusWide(corpusSummary, fits);
+    corpusApplication = applyCorpusWide(corpusSummary.strata, fits);
     corpusMeta = {
       file: path.relative(process.cwd(), corpusFile),
       date: corpusSummary.date,
       eligible_pairs: corpusSummary.corpus_summary.eligible_pairs,
       mean_agreement: corpusSummary.corpus_summary.mean_agreement,
       median_agreement: corpusSummary.corpus_summary.median_agreement,
+      leaf: corpusSummary.leaf || null,
     };
+    // #3473 — re-fit over pairs that demonstrably read the SAME LEAF. A pair
+    // whose two passes printed different page numbers looked at different
+    // images, so its "disagreement" is re-archiving, not reading difficulty,
+    // and feeding it to an agreement->accuracy fit measures image churn.
+    // Both applications are emitted; the delta is the finding, not either one.
+    if (corpusSummary.strata_same_leaf) {
+      sameLeafApplication = applyCorpusWide(corpusSummary.strata_same_leaf, fits);
+      const key = c => `${c.language} | ${c.era}`;
+      const byKey = new Map(sameLeafApplication.map(c => [key(c), c]));
+      leafComparison = corpusApplication.map(all => {
+        const same = byKey.get(key(all));
+        return {
+          language: all.language, era: all.era,
+          n_pairs_all: all.n_pairs, n_pairs_same_leaf: same?.n_pairs ?? 0,
+          same_leaf_retention: all.n_pairs ? round((same?.n_pairs ?? 0) / all.n_pairs, 3) : null,
+          mean_agreement_all: all.corpus_mean_agreement,
+          mean_agreement_same_leaf: same?.corpus_mean_agreement ?? null,
+          estimated_accuracy_all: all.estimated_accuracy,
+          estimated_accuracy_same_leaf: same?.estimated_accuracy ?? null,
+          accuracy_delta: (all.estimated_accuracy != null && same?.estimated_accuracy != null)
+            ? round(same.estimated_accuracy - all.estimated_accuracy, 4) : null,
+        };
+      }).sort((a, b) => b.n_pairs_all - a.n_pairs_all);
+    }
   }
 
   const summary = {
@@ -461,7 +486,20 @@ function main() {
     anchor_points: { canonical: canon, non_canonical: noncanon },
     fits,
     corpus_wide_calibration: corpusApplication,
+    corpus_wide_calibration_same_leaf: sameLeafApplication,
+    same_leaf_comparison: leafComparison,
     caveats: [
+      leafComparison
+        ? 'A large share of revision pairs did not read the same LEAF (#3473): the two passes ' +
+          'printed different page numbers, so their disagreement is re-archiving, not reading ' +
+          'difficulty. `corpus_wide_calibration_same_leaf` re-applies the fit to same-leaf pairs ' +
+          'only. Treat neither column as the answer on its own: the all-pairs column mixes image ' +
+          'churn into "illegibility", and the same-leaf column is a BIASED subpopulation — ' +
+          'requiring a printed page number on both sides selects pages legible enough to print ' +
+          'one twice. Read the delta, and read `same_leaf_retention` before trusting any cell.'
+        : 'Corpus summary predates the leaf-shift instrumentation (#3473) — it carries no ' +
+          '`strata_same_leaf`, so these bands are computed over ALL pairs including ones whose ' +
+          'two passes read different images. Regenerate with revision-agreement-corpus.mjs.',
       'Revision pairs are mostly within-Gemini-family transitions (flash->current, ' +
         'lite->current), NOT independent readings across engines — calibrated numbers are ' +
         'estimates CONDITIONAL on the anchor fit (built from a small, multi-engine anchor set) ' +
@@ -562,6 +600,64 @@ function writeReport(s) {
       `${row.calibration_stratum || '—'} | ${row.estimated_accuracy == null ? '—' : pct(row.estimated_accuracy)} | ${flags.join('; ') || '—'} |`);
   }
   lines.push('', '(Cells with <50 revision pairs are omitted from this table for readability; the full set is in the JSON.)', '');
+
+  if (s.same_leaf_comparison) {
+    const L = s.inputs.corpus_summary_used?.leaf;
+    lines.push('## Step 3b — the same-leaf re-fit (#3473)', '');
+    lines.push('The bands above assume both sides of a revision pair read the same page image. Often',
+      'they did not. The printed page number is transcribed *from the leaf the model was shown*, so',
+      'two passes printing different numbers looked at different leaves — their disagreement is',
+      're-archiving, not reading difficulty.', '');
+    if (L) {
+      lines.push(`Corpus-wide: **${(L.same_leaf_pairs || 0).toLocaleString()}** same-leaf pairs, ` +
+        `**${(L.shifted_pairs || 0).toLocaleString()}** shifted, ` +
+        `**${(L.unmeasurable_pairs || 0).toLocaleString()}** unmeasurable (no printed number on one side). ` +
+        `Median agreement ${pct(L.median_agreement_same_leaf)} same-leaf vs ${pct(L.median_agreement_shifted)} shifted.`, '');
+    }
+    lines.push('| language | era | n (all) | n (same leaf) | kept | agreement all → same | est. accuracy all → same | Δ |',
+      '|---|---|---:|---:|---:|---|---|---:|');
+    for (const c of s.same_leaf_comparison.slice(0, 30)) {
+      lines.push(`| ${c.language} | ${c.era} | ${c.n_pairs_all.toLocaleString()} | ${c.n_pairs_same_leaf.toLocaleString()} | ` +
+        `${c.same_leaf_retention == null ? '—' : (c.same_leaf_retention * 100).toFixed(0) + '%'} | ` +
+        `${pct(c.mean_agreement_all)} → ${pct(c.mean_agreement_same_leaf)} | ` +
+        `${pct(c.estimated_accuracy_all)} → ${pct(c.estimated_accuracy_same_leaf)} | ` +
+        `${c.accuracy_delta == null ? '—' : (c.accuracy_delta > 0 ? '+' : '') + (c.accuracy_delta * 100).toFixed(1) + 'pp'} |`);
+    }
+    lines.push('');
+    // The delta is the diagnostic. If a large swing in the INPUT produces almost
+    // no swing in the OUTPUT, the fit is reporting its intercept, and the leaf
+    // question is not what was wrong with the scorecard.
+    const both = s.same_leaf_comparison.filter(c => c.accuracy_delta != null);
+    if (both.length) {
+      const agrD = both.map(c => (c.mean_agreement_same_leaf - c.mean_agreement_all) * 100);
+      const accD = both.map(c => c.accuracy_delta * 100);
+      const span = a => `${Math.min(...a).toFixed(1)} to ${Math.max(...a).toFixed(1)}pp`;
+      lines.push('', `**Sensitivity check (${both.length} cells with both bands).** Excluding shifted pairs moves ` +
+        `mean agreement by **${span(agrD)}**, and moves estimated accuracy by **${span(accD)}**.`, '');
+      lines.push('That ratio is the finding. A calibration whose output barely responds to a large swing in',
+        'its own input is mostly reporting its intercept — the pooled spaced fit is',
+        `\`${s.fits.spaced.freeskip_fit.slope}·x + ${s.fits.spaced.freeskip_fit.intercept}\`, so the whole 0–100%`,
+        `agreement range spans only ${(s.fits.spaced.freeskip_fit.slope * 100).toFixed(1)} points of accuracy.`,
+        'Leaf contamination was real and worth removing, but it was not what was wrong here.', '');
+      const bad = Object.entries(s.fits.perScript)
+        .filter(([, f]) => f.usable && (f.freeskip_fit.slope <= 0 || f.freeskip_fit.slope_ci_crosses_zero));
+      if (bad.length) {
+        lines.push('Per-script fits that cannot carry a band, and why any number derived from them is not one:', '');
+        for (const [k, f] of bad) {
+          lines.push(`- **${k}** — slope \`${f.freeskip_fit.slope}\` (r ${f.freeskip_fit.r}, n=${f.n} pages)` +
+            `${f.freeskip_fit.slope <= 0 ? ', **negative**: higher agreement predicts LOWER accuracy' : ''}` +
+            `${f.freeskip_fit.slope_ci_crosses_zero ? ', 95% CI crosses zero' : ''}.`);
+        }
+        lines.push('', 'This is why some cells move *down* when contaminated pairs are removed: the sign of the',
+          'fit, not a property of the text.', '');
+      }
+    }
+    lines.push('**Neither column is the answer on its own.** The all-pairs column mixes image churn into',
+      '"illegibility". The same-leaf column is a *biased subpopulation*: requiring a printed page number',
+      'on both sides selects pages legible enough to print one twice. Read the delta and the `kept`',
+      'column together — a cell that kept 20% of its pairs is describing a different population, not a',
+      'cleaner measurement of the same one.', '');
+  }
 
   lines.push('## Two caveats to carry with every number above', '');
   for (const c of s.caveats) lines.push(`- ${c}`);
