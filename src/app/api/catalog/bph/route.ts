@@ -142,13 +142,26 @@ export async function GET(req: NextRequest) {
       // include the year, so "1545" otherwise returned nothing. Digits-only,
       // so it's safe to inline in an .or() string.
       const yearQ = /^\d{3,4}$/.test(q) ? q : null;
+      // UBN gets its own lane rather than living in `search_norm`. That column
+      // is matched with ILIKE '%q%' and UBNs are 1–5 digit numbers, so folding
+      // them in would make every year search also match the UBNs containing
+      // those digits (1545 would drag in 15450–15459, 11545, 21545, 31545…).
+      // Exact match for an all-digit query is what "search by UBN" means;
+      // non-numeric UBNs ("BPH 131", "PH144", "PH 2") still need a substring
+      // match. Reported by José Bouman (BPH) — searching a UBN returned nothing.
+      const digitsOnly = /^\d+$/.test(q);
+      const ubnLane = digitsOnly
+        ? `ubn.eq.${q}`
+        : `ubn.ilike.%${sanitizeFilterValue(q)}%`;
       if (mode === 'new' && hasNormalizedColumns !== false) {
         if (yearQ) {
-          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ}`);
+          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ},${ubnLane}`);
         } else {
           const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
           if (normQ.length > 0) {
-            query = query.ilike('search_norm', `%${normQ}%`);
+            query = query.or(`search_norm.ilike.%${normQ}%,${ubnLane}`);
+          } else {
+            query = query.or(ubnLane);
           }
         }
       } else if (mode === 'new') {
