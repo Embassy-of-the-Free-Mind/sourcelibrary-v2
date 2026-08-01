@@ -27,11 +27,30 @@ describe('classifyArchiveFailure', () => {
     }
   });
 
-  it('treats a provider block as transient — 403 is not "page absent"', () => {
-    // 93.5% of the 14,123 production markers. Getting this wrong strands them all.
+  it('does NOT auto-clear 403 — on this corpus it is in-copyright material', () => {
+    // 8,583 of 9,767 clearable markers were Internet Archive, and a sample
+    // resolved to `naghammadilibrar00jame` (Robinson, Nag Hammadi Library in
+    // English, 1981) which IA reports as access-restricted-item: true. That 403
+    // is IA correctly refusing to serve a copyrighted book. Clearing it
+    // re-queues a fetch that must never succeed.
     const r = classifyArchiveFailure('failed:HTTP 403');
     expect(r.isMarker).toBe(true);
-    expect(r.class).toBe(FAILURE_CLASS.TRANSIENT);
+    expect(r.class).toBe(FAILURE_CLASS.UNKNOWN);
+    expect(r.class).not.toBe(FAILURE_CLASS.TRANSIENT);
+  });
+
+  it('allows 403 to be cleared only via explicit opt-in', () => {
+    // Genuine rate-limit 403s exist, so the capability is preserved — but the
+    // caller must assert they checked the population.
+    expect(classifyArchiveFailure('failed:HTTP 403', { include403: true }).class)
+      .toBe(FAILURE_CLASS.TRANSIENT);
+  });
+
+  it('keeps a 403 out of the sweep even when the reason also names a timeout', () => {
+    // Rights-sensitive must beat transient, or a compound message smuggles a
+    // refusal in through the timeout pattern.
+    expect(classifyArchiveFailure('failed:HTTP 403 after timeout').class)
+      .toBe(FAILURE_CLASS.UNKNOWN);
   });
 
   it('treats broken transfers as transient', () => {
