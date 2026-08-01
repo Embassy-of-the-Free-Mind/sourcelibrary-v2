@@ -997,7 +997,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     //   3. A mid-book content page (skips front-matter calibration/blanks).
     // The cover is always excluded (handled by interiorCandidates / coverPage).
     const PROVENANCE_RE = /\b(book\s?plate|ex[\s-]?libris|from the library of|library of|armorial|ownership|owner'?s|stamp|inscription|donor|gift of|presented by|bequest|shelf\s?mark|call\s?number|barcode|catalog(?:ue)? card|colou?r\s?(?:card|chart|target|checker)|calibration)\b/i;
-    const isRepresentativePlate = (desc?: string) => !desc || !PROVENANCE_RE.test(desc);
+    // Decorative page ornaments — a tailpiece / headpiece / vignette / printer's
+    // device is never a good "About" feature (it's a page-edge ornament, not a
+    // content illustration). Excluding them also dodges a known pre-#2707
+    // hallucination class: the captioner reading organic shapes (e.g. a
+    // Sphaerocarpos liverwort plate) as an "allegorical tailpiece with putti".
+    const DECORATIVE_RE = /\b(tail-?piece|head-?piece|vignette|cul-de-lampe|scrollwork|acanthus scroll|grotesque mask|printer'?s (?:device|mark|ornament)|decorative (?:border|initial|element|motif|device|ornament)|ornamental (?:border|initial|device)|fleuron|colophon device)\b/i;
+    const isRepresentativePlate = (desc?: string) => !desc || (!PROVENANCE_RE.test(desc) && !DECORATIVE_RE.test(desc));
     // The side plate must never be the same image as the hero cover.
     const coverSrcKey = (coverDisplay || '').split('?')[0];
     const notCover = (src?: string | null) => !!src && src.split('?')[0] !== coverSrcKey;
