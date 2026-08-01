@@ -608,6 +608,18 @@ function resolveHostForAgentCount(request: NextRequest): string {
     .replace(/^www\./, '');
 }
 
+/**
+ * Does this /book/<segment> look like an id rather than a slug?
+ * Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
+ * Custom ids are shorter hex strings with at least one hex letter (a-f).
+ * Pure numeric strings (e.g. "13") are not valid ids and should 404 normally.
+ * Shared by the /book/<id> and /book/<id>/page/<pageId> canonical redirects.
+ */
+function looksLikeBookId(segment: string): boolean {
+  return /^[0-9a-f]{24}$/.test(segment)
+    || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -894,15 +906,11 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Non-slug IDs → redirect to canonical slug URL.
-    // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
-    // Custom IDs are shorter hex strings with at least one hex letter (a-f).
-    // Pure numeric strings (e.g. "13") are not valid IDs and should 404 normally.
+    // Non-slug IDs → redirect to canonical slug URL (see looksLikeBookId).
     // `ns=1` means the book-slug resolver already ran and decided there's no
     // redirect target (no-slug book or 404) — skip re-rewriting so /book/[id]
     // renders in place. Without this guard, bouncing back here would loop.
-    const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
-    if (looksLikeId && !request.nextUrl.searchParams.has('ns')) {
+    if (looksLikeBookId(segment) && !request.nextUrl.searchParams.has('ns')) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.search = '';
@@ -935,6 +943,30 @@ export async function proxy(request: NextRequest) {
     headers.set('x-redirect-book', segment);
     headers.set('x-redirect-page', pageNum);
     return NextResponse.rewrite(url, { request: { headers } });
+  }
+
+  // Reader page URLs that address the book by *id* instead of its slug
+  // (/book/6a58f512…/page/6a58f512…). Exactly the canonicalisation the
+  // /book/<id> block above already does, one level down: the reader route
+  // resolves either form, so these are not broken — they just publish an
+  // unreadable URL into citations, chat messages and the address bar for the
+  // rest of the book. Resolved through the same book-slug resolver, which now
+  // carries the /page/<pageId> tail and the query string (?highlight=, ?v=)
+  // through the 301. Runs AFTER the page-number block so /book/<id>/page/5
+  // still resolves number → page id in one hop.
+  const readerIdMatch = pathname.match(/^\/book\/([^/]+)\/page\/([^/]+)$/);
+  if (readerIdMatch && !request.nextUrl.searchParams.has('ns')) {
+    const [, segment, pageId] = readerIdMatch;
+    if (looksLikeBookId(segment)) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/api/redirect/book-slug';
+      url.search = '';
+      const headers = new Headers(request.headers);
+      headers.set('x-redirect-book', segment);
+      headers.set('x-redirect-page-id', pageId);
+      headers.set('x-redirect-search', request.nextUrl.search);
+      return NextResponse.rewrite(url, { request: { headers } });
+    }
   }
 
   // --- Bot rate limiting (soft) ---

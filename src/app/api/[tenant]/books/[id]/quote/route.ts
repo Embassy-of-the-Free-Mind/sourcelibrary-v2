@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
+import { readerPageUrl } from '@/lib/slugify';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
@@ -126,9 +127,15 @@ function generateCitations(
   // Direct URL to page in Source Library (pinned to edition version).
   // baseUrl is the request host so citations rendered on tenant subdomains
   // (e.g. bph.sourcelibrary.org) link back to the same subdomain.
+  //
+  // Built from the book's slug, not the requested id: this URL gets printed
+  // into papers and footnotes, so it has to say which book it is. Calling the
+  // API by id would otherwise mint a permanent citation to /book/<objectid>.
+  // Still a relative path joined to the request host, so it stays on the
+  // tenant subdomain (lockdown invariant 4/5).
   const editionVersion = edition?.version;
   const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `${baseUrl}/book/${bookId}/page/${pageId}${vParam}`;
+  const url = `${baseUrl}${readerPageUrl({ slug: book.slug, id: bookId }, pageId)}${vParam}`;
 
   // Short URL for sharing
   const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { BookOpen, X, Check, Loader2 } from 'lucide-react';
+import { BookOpen, X, Check, Loader2, Pencil } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
 import { buildCoverUpdate } from '@/lib/cover-fields';
@@ -22,9 +22,13 @@ interface CoverImagePickerProps {
   bookAuthor?: string | null;
   bookYear?: string | number | null;
   pages: Page[];
+  /** Optional custom cover element to render in place of the built-in
+   *  thumbnail (e.g. the large hero cover). Editors get a "Change cover"
+   *  hover affordance over it; everyone else sees it plain. */
+  trigger?: ReactNode;
 }
 
-export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, bookAuthor, bookYear, pages }: CoverImagePickerProps) {
+export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, bookAuthor, bookYear, pages, trigger }: CoverImagePickerProps) {
   const router = useRouter();
   // Placeholder cover is an embedded-reading-room feature; the main site keeps
   // the plain icon fallback.
@@ -88,60 +92,60 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
   return (
     <>
-      {/* Cover Image - Clickable for admin and inner circle */}
-      <AuthCheck role="inner_circle"
+      {/* Cover — editors (inner_circle) can click to change it; everyone else
+          sees it plain. When `trigger` is provided (e.g. the hero cover), it
+          renders in place of the built-in thumbnail. */}
+      <AuthCheck
+        role="inner_circle"
         fallback={
-          // Non-authenticated users see the cover image but cannot click
-          <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
+          trigger ?? (
+            // Non-authenticated users see the cover image but cannot click
+            <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
+              {displayThumbnail && !thumbnailError ? (
+                <Image src={displayThumbnail} alt={bookTitle} fill className="object-cover" sizes="(max-width: 640px) 128px, 192px" priority onError={handleThumbnailError} />
+              ) : embed ? (
+                <PlaceholderCover title={bookTitle} author={bookAuthor} year={bookYear} />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center"><BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" /></div>
+              )}
+            </div>
+          )
+        }
+      >
+        {trigger ? (
+          /* Custom trigger (hero cover): overlay a "Change cover" affordance */
+          <button
+            onClick={() => setIsOpen(true)}
+            className="group relative block w-full cursor-pointer text-left"
+            title="Change cover image"
+          >
+            {trigger}
+            <span
+              className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center gap-1.5 py-2.5 text-[12.5px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity"
+              style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.78), transparent)' }}
+            >
+              <Pencil className="w-3.5 h-3.5" aria-hidden="true" /> Change cover
+            </span>
+          </button>
+        ) : (
+          /* Built-in clickable thumbnail for authenticated users */
+          <button
+            onClick={() => setIsOpen(true)}
+            className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
+            title="Click to change cover image"
+          >
             {displayThumbnail && !thumbnailError ? (
-              <Image
-                src={displayThumbnail}
-                alt={bookTitle}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 128px, 192px"
-                priority
-                onError={handleThumbnailError}
-              />
+              <Image src={displayThumbnail} alt={bookTitle} fill className="object-cover group-hover:opacity-80 transition-opacity" sizes="(max-width: 640px) 128px, 192px" priority onError={handleThumbnailError} />
             ) : embed ? (
               <PlaceholderCover title={bookTitle} author={bookAuthor} year={bookYear} />
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
-              </div>
+              <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors"><BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" /></div>
             )}
-          </div>
-        }
-      >
-        {/* Clickable Cover Image for authenticated users */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
-          title="Click to change cover image"
-        >
-          {displayThumbnail && !thumbnailError ? (
-            <Image
-              src={displayThumbnail}
-              alt={bookTitle}
-              fill
-              className="object-cover group-hover:opacity-80 transition-opacity"
-              sizes="(max-width: 640px) 128px, 192px"
-              priority
-              onError={handleThumbnailError}
-            />
-          ) : embed ? (
-            <PlaceholderCover title={bookTitle} author={bookAuthor} year={bookYear} />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors">
-              <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
+              <span className="text-white text-sm font-medium px-2 py-1 bg-black/50 rounded">Change Cover</span>
             </div>
-          )}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
-            <span className="text-white text-sm font-medium px-2 py-1 bg-black/50 rounded">
-              Change Cover
-            </span>
-          </div>
-        </button>
+          </button>
+        )}
       </AuthCheck>
 
       {/* Picker Modal - Only rendered for authenticated users */}
@@ -173,7 +177,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
             {/* Pages Grid */}
             <div className="p-4 overflow-y-auto max-h-[calc(85vh-80px)]">
-              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                 {pages.map((page) => {
                   // Canonical resolver: always a size-bounded thumbnail (pre-sized
                   // R2 variant, IIIF resize, or /api/image proxy) — never the raw
@@ -189,7 +193,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                       key={page.id}
                       onClick={() => selectCover(page)}
                       disabled={isSaving}
-                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all hover:shadow-lg ${isCurrentCover
+                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 bg-stone-100 transition-all hover:shadow-lg ${isCurrentCover
                         ? 'border-accent-gold ring-2 ring-accent-gold/25'
                         : 'border-stone-200 hover:border-stone-400'
                         }`}
@@ -198,7 +202,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                         <img
                           src={imageUrl}
                           alt={`Page ${page.page_number}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                           decoding="async"
                         />
