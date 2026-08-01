@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { guardPublicSubmission } from '@/lib/public-submission-guard';
+import { getClientIp } from '@/lib/rate-limit';
 
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
   try {
+    const limited = await guardPublicSubmission(request, 'feedback');
+    if (limited) return limited;
+
     const body = await request.json();
     const { message, page, name, email, wantsToHelp } = body;
 
@@ -17,7 +22,10 @@ export async function POST(request: NextRequest) {
     }
 
     const db = await getDb();
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null;
+    // cf-connecting-ip first: behind the CDN, x-forwarded-for is a Cloudflare
+    // edge node, so reading it first filed every submission under ~15 shared
+    // addresses (#3491). Same helper the limiter above keys on.
+    const ip = getClientIp(request);
     const trimmedEmail = email?.trim()?.toLowerCase() || null;
     const wantsHelp = wantsToHelp === true;
 
