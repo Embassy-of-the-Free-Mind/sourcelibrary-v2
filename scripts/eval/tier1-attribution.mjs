@@ -122,38 +122,53 @@ async function main() {
   console.log(`  ${calls} model calls, ~$${usd.toFixed(2)}\n`);
   if (args['dry-run']) { console.log('  (dry run — no API calls made)\n'); return; }
 
+  // CHECKPOINT EVERY PAGE. This run costs real money, and the first attempt
+  // buffered everything in memory and wrote once at the end — it was killed at
+  // ~80/334 and every paid call was lost. Same shape as the 2026-07-19 incident
+  // that destroyed ~96 rows of paid eval output. Append as we go, and skip
+  // pages already present so a re-run resumes instead of re-buying them.
+  const stamp = new Date().toISOString().slice(0, 10);
+  const outPath = path.join(__dirname, `results/tier1-attribution-${stamp}.jsonl`);
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+
   const results = [];
-  let done = 0;
-  for (const page of pages) {
-    let buf;
-    try {
-      buf = await fetchImage(page.image.url);
-    } catch (e) {
-      results.push({ page, error: `image fetch failed: ${e.message}` });
-      continue;
-    }
-    const row = { page, arms: {} };
-    for (const k of armKeys) {
+  const alreadyDone = new Set();
+  if (fs.existsSync(outPath)) {
+    for (const line of fs.readFileSync(outPath, 'utf8').split('\n')) {
+      if (!line.trim()) continue;
       try {
-        const res = await runModel(model, buf, prompts[k], { maxTokens: 16000 });
-        const text = res.text || '';
-        row.arms[k] = { ...scoreUnattributed(text), body_chars: bodyChars(text), chars: text.length };
-      } catch (e) {
-        row.arms[k] = { error: e.message };
-      }
+        const r = JSON.parse(line);
+        results.push(r);
+        alreadyDone.add(r.page.page_id);
+      } catch { /* truncated final line from a kill — ignore it */ }
     }
+    if (alreadyDone.size) console.log(`  resuming: ${alreadyDone.size} page(s) already scored\n`);
+  }
+
+  let done = alreadyDone.size;
+  for (const page of pages) {
+    if (alreadyDone.has(page.page_id)) continue;
+    let row;
+    try {
+      const buf = await fetchImage(page.image.url);
+      row = { page, arms: {} };
+      for (const k of armKeys) {
+        try {
+          const res = await runModel(model, buf, prompts[k], { maxTokens: 16000 });
+          const text = res.text || '';
+          row.arms[k] = { ...scoreUnattributed(text), body_chars: bodyChars(text), chars: text.length };
+        } catch (e) {
+          row.arms[k] = { error: e.message };
+        }
+      }
+    } catch (e) {
+      row = { page, error: `image fetch failed: ${e.message}` };
+    }
+    fs.appendFileSync(outPath, JSON.stringify(row) + '\n');
     results.push(row);
     done++;
     if (done % 10 === 0) console.log(`    ${done}/${pages.length} pages`);
   }
-
-  const stamp = new Date().toISOString().slice(0, 10);
-  const outPath = path.join(__dirname, `results/tier1-attribution-${stamp}.json`);
-  fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify({
-    generated_at: new Date().toISOString(), model, arms: armKeys,
-    corpus: path.relative(process.cwd(), CORPUS), n_pages: pages.length, results,
-  }, null, 1));
 
   report(results, armKeys);
   console.log(`  raw output → ${path.relative(process.cwd(), outPath)}\n`);
