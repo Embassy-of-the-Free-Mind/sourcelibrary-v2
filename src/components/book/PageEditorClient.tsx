@@ -267,13 +267,22 @@ export default function PageEditorClient({
   // and adds no history entry, and it costs no server redirect on the site's
   // highest-volume URL set (the per-page route is ISR — a redirect there would
   // have to read searchParams and force it dynamic).
+  // Rewrites whatever sits in the book position, not just an ObjectId, so a
+  // stale slug from a rename (resolved via slug_aliases in findBookByIdOrSlug)
+  // lands on the current one too.
   useEffect(() => {
-    if (!book.slug || !book.id || book.slug === book.id) return;
-    const idSegment = `/book/${book.id}/`;
-    if (!window.location.pathname.includes(idSegment)) return;
-    const slugged = window.location.pathname.replace(idSegment, `/book/${book.slug}/`);
-    window.history.replaceState(null, '', `${slugged}${window.location.search}${window.location.hash}`);
-  }, [book.id, book.slug]);
+    const slug = book.slug;
+    if (!slug) return;
+    const segments = window.location.pathname.split('/');
+    const bookAt = segments.lastIndexOf('book') + 1;
+    if (bookAt === 0 || !segments[bookAt] || segments[bookAt] === slug) return;
+    segments[bookAt] = slug;
+    window.history.replaceState(
+      null,
+      '',
+      `${segments.join('/')}${window.location.search}${window.location.hash}`
+    );
+  }, [book.slug]);
 
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string, opts?: { toTop?: boolean }) => {
