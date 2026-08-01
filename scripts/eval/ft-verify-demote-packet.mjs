@@ -199,4 +199,10 @@ await withMongo(async (db) => {
   const out = path.join(OUT_DIR, `ft-demote-packet-${DATE}.json`);
   fs.writeFileSync(out, JSON.stringify({ date: DATE, tally, rows }, null, 2));
   console.log(`\nWrote ${out}`);
-});
+// This run is dominated by DELIBERATELY PACED live LoC fetches — 33 works x up
+// to 4 records x 1.5s — so it necessarily outlives the default script timeout.
+// Without this it force-exited at 300s having completed 31 of 33 works and
+// written nothing at all: every fetch discarded, and a non-zero exit that reads
+// like a network failure rather than "you ran out of clock". The Mongo
+// connection is idle throughout; the wall time is the rate limit we chose.
+}, { noTimeout: true });
