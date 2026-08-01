@@ -69,28 +69,41 @@ inherited page 50's object, while `page_revisions` snapshotted the displaced tex
 in July. So the ±1 slice is ONE administrative event replicated across thousands
 of pages, not thousands of independent re-readings.
 
-> **CORRECTION, 2026-08-01 — the timestamps do not prove this; the images do.**
-> This section originally argued the mechanism from an inverted timestamp
-> (revision created 2026-07-25, live `ocr.updated_at` 2026-04-04, i.e. OLDER),
-> calling that "impossible for a re-OCR." Measured across the corpus, **inversion
-> is the norm and proves nothing**: 83.8% of all revision-bearing pages invert,
-> 85.3% of pairs printing the SAME page number (where a move cannot be the
-> explanation), and **89.4% of pages whose live `ocr.model` differs from the
-> revision's model** — positive evidence a genuine re-OCR ran, inverting at the
-> same rate as everything else. `page_revisions.created_at` is a *sweep* clock,
-> not a reading clock (a single day, 2026-07-25, is 29.5% of all 191,221 OCR
-> revisions), and `pages.ocr.updated_at` is not re-stamped by the writers that
-> move or rewrite `ocr` — there is no `ocr.created_at` at all (0% of pages).
-> Neither timestamp orders a pair, so neither can classify one.
-> **The conclusion above still stands — it is carried entirely by the two scans
-> checked against their printed numbers.** Re-run: `node
-> scripts/audit/ocr-revision-provenance.mjs` (free, ~2 min).
+> **CORRECTION, 2026-08-01 — the mechanism was a stored field the whole time.**
+> `page_revisions.source` labels every row outright, and the label is
+> near-perfectly diagnostic against the independent printed-number instrument:
+>
+> | source | share of 191,221 | numbered pairs leaf-shifted |
+> |---|---|---|
+> | `batch_api` | 57.5% | 3.8% |
+> | `shift-repair-erara-2026-07` | **29.5%** | **99.0%** (89.9% of them +1) |
+> | `pipeline_preview` | 6.8% | 0.8% |
+> | `ai` | 4.5% | 0% |
+>
+> So the ±1 population is simply the rows that already say
+> `shift-repair-erara-2026-07`. No inference, no images, no clock needed — and
+> the label also covers the stratum the printed number cannot see: **21.5% of
+> pairs printing no number are shift-repair rows**, roughly 13,000 of the ~60,500
+> previously written off as unmeasurable.
+>
+> The original timestamp argument here was still unsound, but for a narrower
+> reason than first published. `created_at` is a **snapshot** clock — it records
+> when the row was written, so it is later than the live `ocr.updated_at` on
+> 84.4% of pairs, including 90% of pairs whose model demonstrably changed.
+> Inversion against it means nothing. What is *not* true is the sweeping version
+> this file briefly carried ("no clock can order a pair", "`ocr.updated_at` is not
+> maintained"): `page_revisions.original_date` exists on 91.8% of rows and orders
+> correctly — on proven re-OCRs it precedes the live `ocr.updated_at` **99.3%** of
+> the time. One field failing is not the category failing.
+>
+> Re-run: `node scripts/audit/ocr-revision-provenance.mjs` (free, ~2 min).
 
-**Still worth doing: stamp `ocr.updated_at` on every write that moves or rewrites
-`ocr`.** Not because it would have diagnosed this — it would not have — but
-because the corpus currently has *no* reliable write-time provenance on
-`pages.ocr`, which is why a plausible clock argument was available to be wrong
-about in the first place.
+**Corollary for the corpus filter.** `source` is categorical and complete where
+the printed page number is neither, so it is the better exclusion. The published
+same-leaf figures are unaffected — requiring equal printed numbers on both sides
+already drops ~99% of shift-repair rows, leaving ~0.3% residual — but any future
+selection should filter on `source` and keep the page number as the independent
+check on it, not as the primary.
 
 **Do not quote 87.3%.** A first attempt sorted `_id` desc, landed inside one
 affected book, and produced that number. Use `$sample`.

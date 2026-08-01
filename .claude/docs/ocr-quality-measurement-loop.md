@@ -9,10 +9,11 @@ re-measurement that can come back negative.
 **Quality signal:** two passes of the same model, same prompt, over the same
 leaf, disagreeing. 63,572 such pairs already exist in `page_revisions` at zero
 marginal cost. Isolating them requires removing pairs that read *different*
-leaves — 40% of the raw corpus, and **not re-reading** (#3473). Say only that
-much unless you have checked: the dominant ±1 slice (83.5% of the shifted pairs)
-is the #3357 shift *repair* moving `ocr` subdocuments between page docs, so the
-image never changed and the text did — the opposite of re-archiving.
+leaves — 40% of the raw corpus, and **not re-reading** (#3473). Those rows say so
+themselves: `page_revisions.source = 'shift-repair-erara-2026-07'` is 29.5% of
+the collection and 99% leaf-shifted. It is the #3357 shift *repair* moving `ocr`
+subdocuments between page docs — the image never changed and the text did, the
+opposite of re-archiving. Filter on `source`; see below.
 
 It measures **stability**, not accuracy, and the distinction is load-bearing:
 two passes that both recite the same memorised canonical text agree perfectly.
@@ -97,39 +98,47 @@ Cost is a few hundred pages of paid OCR. **Not run — it needs a spend decision
 and at 0.34% the honest recommendation is to bundle it with the next prompt
 revision rather than fund a run of its own.**
 
-## A negative result the loop produced: the timestamp is not a discriminator
+## Check whether the fact is stored before building an instrument to infer it
 
-Worth recording because it is what the loop is *for* — an instrument was
-proposed, tested, and thrown away before anything was built on it.
+The most expensive mistake in this work was not a wrong number. It was spending
+an audit inferring something the database already recorded.
 
-The question was whether `page_revisions` pairs could be sorted into re-OCR
-versus administrative text-move by their clocks, which would extend the
-page-number instrument to the **60,511 pairs that print no page number at all** —
-a population nearly as large as the measurable one, and one that agrees far worse
-(mean 0.541 vs 0.937). It cannot. `scripts/audit/ocr-revision-provenance.mjs`:
+`page_revisions.source` labels the mechanism of every row, and the label is
+near-perfectly diagnostic against the independent printed-number instrument
+(`scripts/audit/ocr-revision-provenance.mjs`, free, ~2 min):
 
 ```
-inverted (live ocr.updated_at OLDER than its own revision)
-  all pairs                              4694/5604 = 83.8%
-  SAME printed leaf (no move possible)   1757/2059 = 85.3%
-  MODEL CHANGED (a re-OCR certainly ran)  322/ 360 = 89.4%
+source                        share of 191,221    numbered pairs leaf-shifted
+batch_api                              57.5%                 3.8%
+shift-repair-erara-2026-07             29.5%                99.0%   (89.9% +1)
+pipeline_preview                        6.8%                 0.8%
+ai                                      4.5%                 0%
 ```
 
-The third row is the refutation. A live `ocr.model` different from the revision's
-model is positive evidence that a real re-OCR ran, and those pages invert at the
-same rate as everything else — so inversion is a property of the write path, not
-of relocation. `pages.ocr` carries **no `ocr.created_at` at all** (0%), and
-`page_revisions.created_at` is a *sweep* clock rather than a reading clock: one
-day, 2026-07-25, is **29.5% of all 191,221 OCR revisions**.
+The whole ±1 population that #3473 characterised by sampling, page-number
+arithmetic, per-book offset signatures and finally two scans opened by hand is
+just the rows that say `shift-repair-erara-2026-07`. And because the label does
+not depend on the page having printed a number, it reaches the stratum the
+instrument cannot: **21.5% of pairs printing no number are shift-repair rows**,
+about 13,000 of the ~60,500 that had been written off as unmeasurable.
 
-Two things follow. The corpus is not indicted — the 63,572 true repeats are
-selected on printed page number, model and prompt, never on a timestamp — but the
-clock cannot *audit* them, so "63,572 pairs exist" must not harden into "63,572
-independent readings." And the mechanism claim in
-`.claude/handoffs/2026-07-30-ocr-provenance-and-revision-corpus.md` had to be
-re-grounded: it was argued from this inversion, and survives only because two
-scans were also checked against their printed page numbers. The image was doing
-the work the clock appeared to be doing.
+**The near-miss worth recording.** Before finding `source`, this section argued
+the opposite conclusion — that no clock could order these pairs, so mechanism
+claims needed the image. That came from testing one field (`created_at`, a
+*snapshot* clock: it records when the row was written, so the live
+`ocr.updated_at` is older on 84.4% of pairs and 90% of pairs whose model
+demonstrably changed) and generalising from it to the category. Two fields over
+were `original_date` — present on 91.8% of rows, and on proven re-OCRs it
+precedes the live `ocr.updated_at` **99.3%** of the time — and `job_id`, on 57%.
+One field failing is not the category failing, and "I could not find it" is a
+claim about the search, not about the data.
+
+The corpus itself is unaffected: requiring equal printed numbers on both sides
+already drops ~99% of shift-repair rows, leaving ~0.3% residual in the 63,572.
+But `source` is categorical and complete where the page number is neither, so
+future selection should filter on it and keep the page number as the independent
+check *on* it rather than as the primary.
+
 
 ## Why the loop matters more than the fix
 
@@ -142,7 +151,8 @@ opening the artifact instead of reading the aggregate:
 | 15 independent difficulty categories | one category; 95% name a hand | 15 regexes over one sentence |
 | "passes disagree on column count", 8.4× | 588/600 are a tag on one side only | field name read as its contents |
 | plate fix "addresses 30%" | 0.34% of illustrated pages | bucket size read as effect size |
-| inverted timestamp proves a text move | 89.4% of proven re-OCRs invert too | signal never checked against a control cohort |
+| inverted timestamp proves a text move | 90% of proven re-OCRs invert too | signal never checked against a control cohort |
+| "no clock can classify these rows" | `source` labels every row; `original_date` orders 99.3% | one field's failure generalised to the category |
 
 Every one was a plausible aggregate over a broken instrument, and none would
 have been caught by a green test. That is the argument for keeping the metric

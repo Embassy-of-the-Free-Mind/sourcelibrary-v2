@@ -1,81 +1,135 @@
 {
-  "date": "2026-08-01T02:29:37.118Z",
-  "sample": 6000,
+  "date": "2026-08-01T10:05:35.519Z",
+  "sample": 8000,
   "revisions_total": 191221,
-  "revision_days": 73,
-  "top_days": [
+  "by_source": [
     {
-      "day": "2026-07-25",
+      "source": "batch_api",
+      "n": 109982,
+      "pct": 57.5
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
       "n": 56413,
       "pct": 29.5
     },
     {
-      "day": "2026-04-06",
-      "n": 33016,
-      "pct": 17.3
+      "source": "pipeline_preview",
+      "n": 12949,
+      "pct": 6.8
     },
     {
-      "day": "2026-04-05",
-      "n": 15829,
-      "pct": 8.3
+      "source": "ai",
+      "n": 8622,
+      "pct": 4.5
     },
     {
-      "day": "2026-06-19",
-      "n": 9820,
-      "pct": 5.1
+      "source": "unknown",
+      "n": 1979,
+      "pct": 1
     },
     {
-      "day": "2026-07-27",
-      "n": 7388,
-      "pct": 3.9
+      "source": null,
+      "n": 1263,
+      "pct": 0.7
     },
     {
-      "day": "2026-04-19",
-      "n": 6170,
-      "pct": 3.2
+      "source": "manual",
+      "n": 9,
+      "pct": 0
     },
     {
-      "day": "2026-04-12",
-      "n": 4176,
-      "pct": 2.2
+      "source": "reocr-download-failure-fix-2026-07",
+      "n": 2,
+      "pct": 0
     },
     {
-      "day": "2026-04-07",
-      "n": 3707,
-      "pct": 1.9
+      "source": "mineru",
+      "n": 1,
+      "pct": 0
     },
     {
-      "day": "2026-03-04",
-      "n": 2800,
-      "pct": 1.5
-    },
-    {
-      "day": "2026-04-13",
-      "n": 2652,
-      "pct": 1.4
+      "source": "system",
+      "n": 1,
+      "pct": 0
     }
   ],
-  "counts": {
-    "considered": 5604,
-    "missingPage": 396,
-    "hasUpdatedAt": 5604,
-    "hasCreatedAt": 0,
-    "noTimestamp": 0,
-    "identicalText": 283,
-    "inverted": 4694,
-    "modelChanged": 360,
-    "modelChangedInverted": 322,
-    "modelChangedSameLeaf": 65,
-    "modelChangedSameLeafInverted": 49,
-    "sameLeaf": 2059,
-    "sameLeafInverted": 1757
+  "numbered_by_source": [
+    {
+      "source": "batch_api",
+      "n": 2386,
+      "shifted_pct": 3.8,
+      "plus_one_pct_of_shifted": 8.8
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
+      "n": 1717,
+      "shifted_pct": 99,
+      "plus_one_pct_of_shifted": 89.9
+    },
+    {
+      "source": "pipeline_preview",
+      "n": 243,
+      "shifted_pct": 0.8,
+      "plus_one_pct_of_shifted": 0
+    },
+    {
+      "source": "ai",
+      "n": 120,
+      "shifted_pct": 0,
+      "plus_one_pct_of_shifted": null
+    },
+    {
+      "source": "(none)",
+      "n": 17,
+      "shifted_pct": 41.2,
+      "plus_one_pct_of_shifted": 0
+    }
+  ],
+  "unnumbered_by_source": [
+    {
+      "source": "batch_api",
+      "n": 1753,
+      "pct": 59
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
+      "n": 640,
+      "pct": 21.5
+    },
+    {
+      "source": "pipeline_preview",
+      "n": 298,
+      "pct": 10
+    },
+    {
+      "source": "ai",
+      "n": 167,
+      "pct": 5.6
+    },
+    {
+      "source": "unknown",
+      "n": 73,
+      "pct": 2.5
+    },
+    {
+      "source": "(none)",
+      "n": 41,
+      "pct": 1.4
+    },
+    {
+      "source": "manual",
+      "n": 1,
+      "pct": 0
+    }
+  ],
+  "unnumbered_shift_repair_pct": 21.5,
+  "clocks": {
+    "inverted_vs_created_at_pct": 84.4,
+    "inverted_vs_created_at_model_changed_pct": 90,
+    "has_original_date_pct": 91.8,
+    "original_date_orders_correctly_model_changed_pct": 99.3
   },
-  "rates": {
-    "inverted_all": 83.8,
-    "inverted_same_leaf": 85.3,
-    "inverted_model_changed": 89.4,
-    "inverted_model_changed_same_leaf": 75.4
-  },
-  "verdict": "TIMESTAMP IS NOT A DISCRIMINATOR — pages with a proven re-OCR invert at the same rate as everything else.",
-  "caveat": "Does NOT show the same-leaf true-repeat corpus is unsound — that corpus is selected on printed page number, model and prompt, never on a timestamp. It shows the clock cannot audit it."
+  "headline": "page_revisions.source labels the mechanism directly; shift-repair-erara-2026-07 is 99.4% leaf-shifted vs 3.8% for batch_api. No inference required.",
+  "caveat": "source says how a row was produced, not which side is correct. Which side is right was settled against the scans (handoff 2026-07-30)."
 }

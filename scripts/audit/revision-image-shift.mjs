@@ -34,16 +34,19 @@
  *   side is correct, and it does NOT say the IMAGE moved.
  *
  *   RESOLVED 2026-07-30/08-01 for the dominant class, and it is the opposite of
- *   what the header above guesses: the ±1 slice (83.5% of shifted pairs) is the
- *   #3357 REPAIR moving `ocr` subdocuments between page docs. The text moved and
- *   the image stayed put — verified against two e-rara scans whose printed
- *   numbers match the LIVE text, not the revision. So a ±1 shift here is one
- *   administrative event replicated across thousands of pages, not thousands of
- *   independent re-readings.
+ *   what the header above guesses: the ±1 slice is the #3357 REPAIR moving `ocr`
+ *   subdocuments between page docs. The text moved and the image stayed put —
+ *   verified against two e-rara scans whose printed numbers match the LIVE text,
+ *   not the revision. So a ±1 shift here is one administrative event replicated
+ *   across thousands of pages, not thousands of independent re-readings.
  *
- *   Do NOT try to separate these by timestamp. Inversion is corpus-wide and
- *   proves nothing — see `scripts/audit/ocr-revision-provenance.mjs`, which
- *   measures 89.4% inversion on pages whose model demonstrably changed.
+ *   AND YOU DO NOT NEED THIS SCRIPT TO KNOW THAT. `page_revisions.source` says
+ *   `shift-repair-erara-2026-07` on those rows outright — 29.5% of the
+ *   collection, 99% of them leaf-shifted, against 3.8% for `batch_api`. This
+ *   script remains useful as the INDEPENDENT check on that label (it reads the
+ *   page's own printed number, which no writer controls), but the label is the
+ *   cheaper primary and it also covers pairs that print no number at all.
+ *   See `scripts/audit/ocr-revision-provenance.mjs`.
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
