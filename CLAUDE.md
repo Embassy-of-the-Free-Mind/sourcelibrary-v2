@@ -381,6 +381,24 @@ Chrome/Edge's built-in translator replaces every text node with a nested `<font 
 
 **Verifying:** Chrome's built-in translator can't be driven from CDP and the Google Translate *widget* is blocked by our CSP (`translate-pa.googleapis.com` absent from `script-src`; the built-in translator is browser-level and unaffected, so real users are fine). Model it with a MutationObserver that wraps text nodes in `<font><font>` — but **apply the batches asynchronously**, never synchronously inside the observer callback: sync surgery lands inside React's commit, which no real translator does, and it manufactures staleness on correct builds. Always run the unfixed build through the same harness as a negative control; if the old code passes too, the harness proves nothing.
 
+## An absence claim is only as strong as the set it was asserted against — CRITICAL
+"First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
+
+That machinery is only honest if you know the set's **recall**, and ours is **22%** — four of five known prior translations are invisible to it (`scripts/eval/ft-reference-set-recall.mjs`, measured against the 2,231 attributed priors already sitting in `translation_classification`). So:
+
+- **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
+- **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
+- **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
+
+**Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
+
+Three specific traps, each of which cost real work:
+- **Threshold tuning does not converge — find the right instrument.** The work-identity matcher was tuned five times; pass four lost verified true positives (Cicero's *De Officiis*, Grimald 1556) while making the corpus look *cleaner*. The answer was not a threshold but MARC **240 uniform-title containment**, because 240 exists to name a work independently of how an edition titles it. Pinned by a gold set (`tests/unit/reference-set-work-identity.test.ts`) holding both the verified positives and the false-positive class each tuning pass produced.
+- **An immutable log is a history, not a state.** Efforts are immutable so a stale negative re-opens when the set improves — but adding a source mints a new generation and silently orphans prior judgement. Screening lives in `screening_decisions`, keyed on (work, prior), and is re-applied to every generation. Read `search_efforts` through `latestEffortPerBook()`.
+- **Provenance cannot tell you what you translated.** Re-hosted scholarly editions (Budge, Langdon) carry `translation.model` and `source:"ai"` exactly like our own work, because our pipeline OCR'd their printed *English* and re-rendered it. The signal that works is the OCR model's own declaration inside `ocr.data` (`<language>English</language>`) — `scripts/lib/english-source-detect.mjs`. The `pages.ocr.language` column is null on exactly the older ingests where it matters. And strip editorial wrappers before measuring any page text, or you measure our own annotations (that bug shipped here and inflated a count 6×).
+
+Full postmortem: private ops repo, `handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.
+
 ## Social-card metadata invariant
 Next.js merges page `metadata` shallowly per top-level key. Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):
 - A page that defines `openGraph` **replaces the root layout's entire openGraph object, images included** — title/description-only blocks ship NO `og:image` at all (blank share cards on FB/LinkedIn/Slack/iMessage).
