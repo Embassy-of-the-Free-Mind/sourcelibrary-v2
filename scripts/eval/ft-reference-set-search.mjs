@@ -67,10 +67,39 @@ const LIMIT = argOf('--limit') ? parseInt(argOf('--limit'), 10) : null;
  *   inverse           — visible translated non-English books we do NOT badge.
  *                       A `none_found` here means something entirely different:
  *                       a work we may have translated first and never claimed.
+ *   untranslated      — everything we HOLD in a non-English language and have
+ *                       NOT translated. Here `none_found` is neither a claim nor
+ *                       a missed claim: it is a WORK QUEUE. See below.
  *
- * These must never be pooled. The same verdict string carries opposite meaning in
- * the two cohorts — one is "our claim held", the other is "we may have a claim we
- * never made" — so every effort records which cohort produced it.
+ * These must never be pooled. The same verdict string carries a different meaning
+ * in each — "our claim held", "we may have a claim we never made", "nobody has
+ * done this yet" — so every effort records which cohort produced it.
+ *
+ * WHY `untranslated` IS THE COHORT THAT CAN TOLERATE 27% RECALL
+ * ------------------------------------------------------------
+ * The first two cohorts publish. A missed prior there becomes a false public
+ * claim, which is why low recall is disqualifying and why `none_found` must not
+ * be counted.
+ *
+ * Prioritisation publishes nothing. It ranks what to translate next, and the two
+ * error directions cost completely different things:
+ *
+ *   a MISSED prior (low recall)  → a book sits higher in the queue than it
+ *                                  deserves. Worst case we translate something
+ *                                  that already exists in English. Recoverable,
+ *                                  visible on reading, harms nobody.
+ *   a FALSE prior (low precision)→ we silently drop a genuinely untranslated work
+ *                                  off the queue and never revisit it.
+ *
+ * So prioritisation needs PRECISION on "already done", not recall — and precision
+ * is the direction this instrument is strong in: 32/32 live identity
+ * confirmations on the demote packet, and zero contradictions across the 399
+ * books an independent classifier calls never_translated. Every prior we DO find
+ * removes a book from the queue with high confidence; the ones we miss just leave
+ * the queue noisier than ideal.
+ *
+ * That is the same evidence, at the same 27% recall, doing a job it is actually
+ * fit for.
  */
 const COHORT = argOf('--cohort') ?? 'badged';
 
@@ -496,15 +525,42 @@ await withMongo(async (db) => {
     pages_translated: { $gt: 0 },
     language: { $nin: [null, 'English'] },
   };
+
+  /**
+   * Everything we hold in a non-English language with no English translation yet.
+   *
+   * Deliberately NOT gated on `visible`. 43,607 of these are held but
+   * unpublished, and 30,844 of those are already OCR'd — i.e. translation-ready
+   * today. Asking only about the visible shelf would hide the entire pool the
+   * question is about.
+   *
+   * Rights-class exclusions are absolute: a work we cannot publish must never
+   * reach a translation queue, however untranslated it is. The regex covers the
+   * standing classes plus the Kloss manuscript withdrawal, which is a removal at
+   * a partner's request and does not match the generic pattern.
+   */
+  const UNTRANSLATED = {
+    language: { $nin: [null, 'English'] },
+    pages_count: { $gt: 0 },
+    $or: [
+      { pages_translated: { $lte: 0 } },
+      { pages_translated: null },
+      { pages_translated: { $exists: false } },
+    ],
+    hidden_reason: { $not: /copyright|takedown|dmca|kloss_manuscripts_removed/i },
+  };
+
   const query = COHORT === 'inverse'
     ? { ...ELIGIBLE, is_first_translation: { $ne: true }, ...(LANG ? { language: LANG } : {}) }
-    : { is_first_translation: true, visible: true, ...(LANG ? { language: LANG } : {}) };
+    : COHORT === 'untranslated'
+      ? { ...UNTRANSLATED, ...(LANG ? { language: LANG } : {}) }
+      : { is_first_translation: true, visible: true, ...(LANG ? { language: LANG } : {}) };
   let cursor = db.collection('books').find(query, {
     projection: { id: 1, title: 1, work_title: 1, author: 1, language: 1, original_language: 1, year: 1, work_id: 1 },
   });
   if (LIMIT) cursor = cursor.limit(LIMIT);
   const books = await cursor.toArray();
-  console.log(`Badged visible books: ${books.length}\n`);
+  console.log(`Books in the ${COHORT} cohort: ${books.length}\n`);
 
   const efforts = [];
   const verdictTally = {};
@@ -690,12 +746,23 @@ await withMongo(async (db) => {
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const outPath = path.join(OUT_DIR, `ft-reference-set-search-${COHORT}-${DATE}.json`);
+  // The Mongo document is deliberately self-contained: every effort embeds the
+  // reference set and inherits its gaps, because a limitation named once in a
+  // manifest and never surfaced on the claim it undermines is not a disclosure.
+  //
+  // In the FILE that is pure duplication — the identical manifest is already the
+  // top-level `reference_set` key, and it is 87% of every effort's bytes (6,383
+  // of 7,346). At 57,764 untranslated books that is ~420MB of the same paragraph
+  // repeated. Strip it from the file only; what goes to Mongo is untouched.
   fs.writeFileSync(outPath, JSON.stringify({
     reference_set: REFERENCE_SET,
     code_version: CODE_VERSION,
+    note: 'per-effort `reference_set` and `limitations` are stripped here — they are '
+      + 'identical on every effort and are the top-level `reference_set` above. The '
+      + 'documents written to Mongo by --apply keep them.',
     verdicts: verdictTally,
     by_tradition: byTradition,
-    efforts,
+    efforts: efforts.map(({ reference_set, limitations, ...rest }) => rest),
   }, null, 2));
   console.log(`\nWrote ${outPath}`);
 
