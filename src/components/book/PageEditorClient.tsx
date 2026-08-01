@@ -64,6 +64,12 @@ export default function PageEditorClient({
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
   const isOnEmbedRoute = pathname?.startsWith('/embed/');
   const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
+  // Every reader URL this component writes uses the book's slug — the same
+  // human-readable segment the book page uses (/book/a-sacred-repository-…),
+  // never the raw ObjectId. The route resolves either (findBookByIdOrSlug) and
+  // the canonical <link> was already slug-based, but the address bar is what
+  // readers copy and share, so it has to be the readable one.
+  const bookPath = book.slug || book.id;
 
   // Version pinning: detect ?v= param for citation-pinned reading
   const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
@@ -253,6 +259,22 @@ export default function PageEditorClient({
     readingHistory.record(book.id, currentPageId, currentPage.page_number, referrer || undefined);
   }, [book.id, currentPageId, currentPage?.page_number]);
 
+  // Readers land on the ObjectId form of this URL from search results, quote
+  // links, shortlinks and old shares. The route serves it either way and the
+  // canonical <link> is already slug-based, but the address bar is what gets
+  // copied into a citation or a message — so swap the id segment for the slug
+  // once on mount. replaceState preserves the query string (?highlight=, ?v=)
+  // and adds no history entry, and it costs no server redirect on the site's
+  // highest-volume URL set (the per-page route is ISR — a redirect there would
+  // have to read searchParams and force it dynamic).
+  useEffect(() => {
+    if (!book.slug || !book.id || book.slug === book.id) return;
+    const idSegment = `/book/${book.id}/`;
+    if (!window.location.pathname.includes(idSegment)) return;
+    const slugged = window.location.pathname.replace(idSegment, `/book/${book.slug}/`);
+    window.history.replaceState(null, '', `${slugged}${window.location.search}${window.location.hash}`);
+  }, [book.id, book.slug]);
+
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string, opts?: { toTop?: boolean }) => {
     // On mobile the panels stack vertically (image, then OCR, then translation).
@@ -272,7 +294,7 @@ export default function PageEditorClient({
     const newParams = new URLSearchParams();
     if (pinnedVersion) newParams.set('v', pinnedVersion);
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
-    window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${suffix}`);
+    window.history.pushState(null, '', `${tenantPrefix}/book/${bookPath}/page/${newPageId}${suffix}`);
 
     if (isMobile && activeSection) {
       // Land on the same section the reader was in (image / OCR / translation),
@@ -298,11 +320,11 @@ export default function PageEditorClient({
     // Notify embed.js host frame (no-op when not in an iframe)
     if (window.self !== window.top) {
       window.parent.postMessage(
-        { type: 'sl-navigate', book: book.slug || book.id, page: newPageId },
+        { type: 'sl-navigate', book: bookPath, page: newPageId },
         '*'
       );
     }
-  }, [book.id, book.slug, pinnedVersion, tenantPrefix]);
+  }, [bookPath, pinnedVersion, tenantPrefix]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 
@@ -361,7 +383,7 @@ export default function PageEditorClient({
           isCurrentVersion={versionEdition.isCurrentVersion}
           doi={versionEdition.doi}
           doiUrl={versionEdition.doiUrl}
-          bookUrl={`${tenantPrefix}/book/${book.id}/page/${currentPageId}`}
+          bookUrl={`${tenantPrefix}/book/${bookPath}/page/${currentPageId}`}
         />
       )}
 
