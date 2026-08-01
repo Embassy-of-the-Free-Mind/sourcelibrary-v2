@@ -99,7 +99,15 @@ export function effortId({ bookId, referenceSetVersion, codeVersion }) {
  * exactly the false confidence this whole design exists to remove.
  */
 export function deriveVerdict({ candidates, searchable }) {
-  if (!searchable) return VERDICT.NOT_SEARCHABLE;
+  // `searchable` describes the CATALOGUES: did this book have an author, title or
+  // original-script access point we could query? A book can fail that and still
+  // produce candidates, because some sources are joined rather than searched —
+  // our own `translation_classification` is keyed on book id, so it answers for a
+  // book no catalogue index can reach. Returning NOT_SEARCHABLE there would
+  // discard a real prior lead in favour of "we could not ask", which is the
+  // confident-negative failure this design exists to prevent. No access point AND
+  // nothing retrieved is the only true "could not ask".
+  if (!searchable && !candidates.length) return VERDICT.NOT_SEARCHABLE;
   if (candidates.some((c) => DEFEATING.has(c.screen))) return VERDICT.PRIOR_FOUND;
   if (candidates.some((c) => c.screen === SCREEN.UNRESOLVED)) return VERDICT.INCONCLUSIVE;
   if (candidates.some((c) => c.screen === SCREEN.PARTIAL)) return VERDICT.ONLY_PARTIAL_FOUND;

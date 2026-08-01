@@ -46,6 +46,7 @@ import {
   hasCjk,
   cjkRuns,
 } from '../lib/work-identity-match.mjs';
+import { languageMismatch } from '../lib/source-language-match.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -135,22 +136,6 @@ const PARTIAL_RE = /\bselections?\b|\bexcerpts?\b|\babridg|\banthology\b|\bpassa
 const OUR_TRANSLATION_YEAR = new Date().getFullYear();
 
 /**
- * Language name → the MARC-21 language codes that can legitimately represent it.
- * Several have both a bibliographic and a historical variant in real records
- * (Greek appears as both `gre` and `grc`), so this maps to a SET, not a code.
- */
-const MARC3_CODES = {
-  latin: ['lat'],
-  greek: ['gre', 'grc'], 'ancient greek': ['gre', 'grc'], 'classical greek': ['gre', 'grc'],
-  german: ['ger'], french: ['fre'], italian: ['ita'], dutch: ['dut'], spanish: ['spa'],
-  hebrew: ['heb'], aramaic: ['arc'], arabic: ['ara'], persian: ['per'],
-  sanskrit: ['san'], pali: ['pli'], tamil: ['tam'],
-  chinese: ['chi'], 'classical chinese': ['chi'], japanese: ['jpn'], korean: ['kor'],
-  tibetan: ['tib'], syriac: ['syr'], armenian: ['arm'], russian: ['rus'],
-  egyptian: ['egy'], akkadian: ['akk'], sumerian: ['sux'],
-};
-
-/**
  * Screen ONE candidate. Structural rejections only.
  *
  * Anything requiring real bibliographic judgement returns `unresolved`, which
@@ -191,18 +176,15 @@ export function screenCandidate(book, row, identity) {
   // Source-language agreement. A Latin->English translation does not defeat a
   // Greek->English first claim.
   //
-  // Only applied when we actually know our source language: `books.language` is
-  // the EDITION language, not necessarily the language the work was composed in,
-  // so an absent `original_language` means "unknown", never "mismatch". Rejecting
-  // on a guess here would discard real priors.
-  const bookSrc = norm(book.original_language);
-  const expected = MARC3_CODES[bookSrc];
-  if (expected && row.original_languages?.length
-      && !row.original_languages.some((l) => expected.includes(l))) {
-    return {
-      screen: SCREEN.WRONG_LANGUAGE,
-      reason: `record translates from ${row.original_languages.join('/')}, our source is ${bookSrc} (${expected.join('/')})`,
-    };
+  // Applied only when BOTH sides resolve to a known language — see
+  // scripts/lib/source-language-match.mjs. `books.language` is the EDITION
+  // language, so an absent `original_language` means "unknown", never "mismatch",
+  // and the same is true of a catalogue identifier we cannot read. Rejecting on a
+  // guess here discards real priors: the previous MARC-code-only comparison did
+  // exactly that to every Wikidata row.
+  const langReason = languageMismatch(book.original_language, row);
+  if (langReason) {
+    return { screen: SCREEN.WRONG_LANGUAGE, reason: langReason };
   }
 
   // A strong work match, right language, not obviously partial, not later.
@@ -368,15 +350,20 @@ const REFERENCE_SET = {
       'snapshot ends 2016 — later translations absent by construction, not by evidence',
       'European scholarly presses (Brill, Brepols) under-represented relative to US imprints',
       'journal-published and dissertation translations largely uncatalogued',
-      // RECALL CEILING — stated first because it caps what any `none_found` here
-      // can mean. 35.2% of rows (41,678 of 118,352) carry no MARC 240 uniform
-      // title, and work identity is established by 240 containment; the 245
-      // display-title fallback is deliberately capped below the confirmation
-      // threshold to suppress noise. So over a third of the reference set is
-      // unreachable as a confirmed match and `none_found` is systematically
-      // OVER-reported in both cohorts.
-      'RECALL CEILING: 35.2% of rows have no 240 uniform title and cannot produce '
-        + 'a confirmed match, so `none_found` is over-reported by an unmeasured margin.',
+      // RECALL CEILING — the 35.2% of rows (41,678 of 118,352) with no MARC 240.
+      // These were unreachable as a confirmed match until 2026-08-01: work
+      // identity was established by 240 containment alone and the 245 fallback
+      // was capped below the confirmation threshold, so over a third of the set
+      // could only ever yield `none_found`. The 245 path can now confirm, but
+      // only under author corroboration, which leaves the residue named here.
+      'RECALL CEILING: 35.2% of rows carry no 240 uniform title. They are now '
+        + 'reachable through 245 display-title containment, but ONLY when an author '
+        + 'access point agrees — so for an anonymous work, or one of ours with no '
+        + 'usable author, a third of this set remains unconfirmable and `none_found` '
+        + 'is still over-reported there.',
+      'a 245 confirmation resting on a single generic container token ("letters", '
+        + '"writings", "complete") is weak work identity; those candidates are held '
+        + 'at `unresolved` for screening rather than counted either way',
       // A second, related gap: scholarly editions that print an ancient text
       // alongside its translation are frequently catalogued with NO 041 at all
       // (Langdon\'s *Babylonian Liturgies* has none; 22 of 23 LoC records for
@@ -415,6 +402,94 @@ await withMongo(async (db) => {
   if (decisionByWork.size) {
     console.log(`Carrying forward ${decisionByWork.size} screening decision(s) from previous passes.\n`);
   }
+
+  // ── Third source: our own translation_classification ───────────────────────
+  //
+  // 9,908 rows built Feb–Jul 2026, 2,755 of them asserting a prior or partial
+  // English translation and 2,564 naming a translator, title and publisher. It
+  // answered much of this question before the reference set was built, and was
+  // used only as the yardstick for measuring recall. That is backwards: a source
+  // that holds known priors belongs IN the set.
+  //
+  // It is not a catalogue, and it is not treated as one. Every row is a model's
+  // assertion, so no row here can produce `prior_found` on its own — see
+  // tcCandidate() below.
+  const tcRows = await db.collection('translation_classification').find(
+    { classification: { $in: ['previously_translated', 'partially_translated'] } },
+    { projection: { book_id: 1, classification: 1, known_translation: 1, reasoning: 1, model: 1, classified_at: 1, confidence: 1, title: 1 } },
+  ).toArray();
+
+  // Join by our own work clustering as well as by book id. A prior translation
+  // established for one edition of a work is established for every edition of it
+  // — `books.work_id` is the canonical work key (see CLAUDE.md), and it reaches
+  // 467 cohort books that were never classified themselves.
+  const tcBooks = await db.collection('books').find(
+    { id: { $in: tcRows.map((r) => r.book_id) } },
+    { projection: { id: 1, work_id: 1 } },
+  ).toArray();
+  const workIdOf = new Map(tcBooks.map((b) => [b.id, b.work_id]));
+  const tcByBookId = new Map();
+  const tcByWorkId = new Map();
+  for (const r of tcRows) {
+    tcByBookId.set(r.book_id, r);
+    const wid = workIdOf.get(r.book_id);
+    if (!wid) continue;
+    if (!tcByWorkId.has(wid)) tcByWorkId.set(wid, []);
+    tcByWorkId.get(wid).push(r);
+  }
+
+  REFERENCE_SET.sources.unshift({
+    id: 'translation_classification',
+    name: 'Source Library — internal translation classification (model-attributed priors)',
+    endpoint: 'mongodb://bookstore/translation_classification',
+    snapshot_date: DATE,
+    record_count: tcRows.length,
+    coverage: 'books in our own corpus classified as having a prior or partial English '
+      + 'translation, 2,564 of them naming a translator, title and publisher',
+    known_gaps: [
+      // Stated first because it caps what any candidate from this source can mean.
+      'NOT A CATALOGUE: every row is an assertion by gemini-2.5-flash or '
+        + 'gemini-3-flash-preview, unverified against any bibliographic record. An '
+        + 'attribution here is a LEAD to be checked, never a confirmed prior, so no '
+        + 'candidate from this source can close a question on its own.',
+      'covers only the 9,908 books that were classified — it cannot answer about a '
+        + 'book it never saw, and says nothing about the rest of the corpus',
+      'its `never_translated` rows are an absence claim by a model and are '
+        + 'deliberately NOT used as evidence of absence',
+      '1,984 of its 9,908 rows no longer resolve to a live books.id',
+    ],
+  });
+  REFERENCE_SET.version += `+tc-${DATE}`;
+  console.log(`Reference set now ${REFERENCE_SET.version} — added translation_classification `
+    + `(${tcRows.length.toLocaleString()} attributed priors, ${tcByWorkId.size.toLocaleString()} distinct works)\n`);
+
+  /**
+   * Build a candidate from a translation_classification row.
+   *
+   * ALWAYS `unresolved`, for both classifications. The mechanical screen rejects
+   * only on structural grounds and defers anything needing bibliographic
+   * judgement, and a model's attribution is exactly that — `Kessinger 2004` may
+   * be a real reprint or a hallucination, and only reading a record settles it.
+   *
+   * Marking these `prior_translation` would let an unverified model claim drive a
+   * `prior_found` verdict; marking `partial_translation` would let it drive
+   * `only_partial_found`, which reads as "no prior COMPLETE translation exists" —
+   * an absence claim we cannot support from this source either. `unresolved`
+   * blocks `none_found` and asserts nothing, which is the whole of what we know.
+   */
+  const tcCandidate = (row, basis) => ({
+    source: 'translation_classification',
+    identifiers: { book_id: row.book_id },
+    title: row.title,
+    year: null,
+    known_translation: row.known_translation || undefined,
+    work_identity: { score: 1, hits: 1, basis },
+    screen: SCREEN.UNRESOLVED,
+    reason: `[${row.classification}] ${row.known_translation || row.reasoning || 'no attribution recorded'} `
+      + `— asserted by ${row.model} on ${new Date(row.classified_at).toISOString().slice(0, 10)}`
+      + `${row.confidence != null ? ` (self-reported confidence ${row.confidence})` : ''}; `
+      + 'unverified against any catalogue, needs screening',
+  });
 
   const ELIGIBLE = {
     visible: true,
@@ -507,6 +582,9 @@ await withMongo(async (db) => {
           bookAuthorSurname: sn || surname(book.author),
           recordAuthorSurnames: [row.author, ...(row.added_entries || [])]
             .filter(Boolean).map(surname).filter(Boolean),
+          // Full name strings, so the 245 fallback can discount personal-name
+          // tokens sitting inside the titles themselves ("The Iliad of Homer").
+          authorNames: [book.author, row.author, ...(row.added_entries || [])].filter(Boolean),
         });
         if (!best || best.score < MIN_CANDIDATE) continue;
         let { screen, reason } = screenCandidate(book, row, best);
@@ -518,7 +596,13 @@ await withMongo(async (db) => {
           reason = `[carried forward ${new Date(prior.decided_at).toISOString().slice(0, 10)}] ${prior.reason}`;
         }
         candidates.push({
-          identifiers: { lccn: row.lccn },
+          // Which source retrieved this. Without it a candidate's provenance is
+          // unrecoverable — the two catalogues were distinguishable only by an
+          // empty LCCN, and recall cannot be measured per-source at all.
+          source: row.source,
+          identifiers: row.lccn
+            ? { lccn: row.lccn }
+            : { wikidata_edition: row.wikidata_edition, wikidata_work: row.wikidata_work },
           title: row.title,
           uniform_title: row.uniform_title || undefined,
           year: row.year,
@@ -530,6 +614,34 @@ await withMongo(async (db) => {
           reason,
         });
       }
+    }
+
+    // ── translation_classification lane ──────────────────────────────────────
+    //
+    // A JOIN, not a search: keyed on our own book id and work id, so it answers
+    // for books no catalogue index can reach and needs no access point. It runs
+    // regardless of `searchable` for exactly that reason.
+    const tcDirect = tcByBookId.get(book.id);
+    const tcViaWork = (book.work_id ? tcByWorkId.get(book.work_id) ?? [] : [])
+      .filter((r) => r.book_id !== book.id);
+    queries.push({
+      source: 'translation_classification',
+      query: `book_id="${book.id}"${book.work_id ? ` OR work_id="${book.work_id}"` : ''} over ${REFERENCE_SET.version}`,
+      result_count: (tcDirect ? 1 : 0) + tcViaWork.length,
+    });
+    for (const [row, basis] of [
+      ...(tcDirect ? [[tcDirect, 'same_book']] : []),
+      ...tcViaWork.map((r) => [r, 'shared_work_id']),
+    ]) {
+      const c = tcCandidate(row, basis);
+      // A human judgement about this work still outranks the lead, exactly as it
+      // does for a catalogue row.
+      const decided = decisionByWork.get(book.work_title || book.title);
+      if (decided) {
+        c.screen = decided.screen;
+        c.reason = `[carried forward ${new Date(decided.decided_at).toISOString().slice(0, 10)}] ${decided.reason}`;
+      }
+      candidates.push(c);
     }
 
     const effort = buildSearchEffort({
