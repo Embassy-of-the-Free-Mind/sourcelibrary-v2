@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { isBookReadable } from '@/lib/book-access';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -171,17 +172,12 @@ export async function GET(
       if (hasTranslation) translationPages++;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query: trimmedQuery,
-      results_count: results.length,
-      filters: { book_id: bookId, tenantId, source: 'book_search' },
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query: trimmedQuery, resultsCount: results.length, source: 'book_search',
       tenantId,
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+      filters: { book_id: bookId },
+    });
 
     return NextResponse.json({
       query: trimmedQuery,

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { stripe, MEMBERSHIP_PRICE, MEMBERSHIP_CURRENCY, MEMBERSHIP_NAME, MEMBERSHIP_DESCRIPTION } from '@/lib/stripe';
 import { getDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
 
 export async function POST(request: NextRequest) {
   if (!stripe) {
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
     // Reuse existing Stripe customer if we have one, otherwise create
     const db = await getDb();
     const user = await db.collection('users').findOne(
-      { _id: session.user.id as any },
+      { _id: toUserId(session.user.id) as any },
       { projection: { 'membership.stripeCustomerId': 1 } }
     );
 
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
 
       // Store the customer ID even before checkout completes
       await db.collection('users').updateOne(
-        { _id: session.user.id as any },
+        { _id: toUserId(session.user.id) as any },
         { $set: { 'membership.stripeCustomerId': customerId } }
       );
     }

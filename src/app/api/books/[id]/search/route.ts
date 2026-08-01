@@ -5,6 +5,7 @@ import { semanticPageSearchScoped } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBookReadable } from '@/lib/book-access';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -251,16 +252,12 @@ export async function GET(
       if (result.matches.some(m => m.field === 'translation')) translationPages++;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query: trimmedQuery,
-      results_count: results.length,
-      filters: { book_id: bookId, source: 'book_search', tenantId: tenantContext.id || null },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query: trimmedQuery, resultsCount: results.length, source: 'book_search',
+      tenantId: tenantContext.id || null,
+      filters: { book_id: bookId },
+    });
 
     return NextResponse.json({
       query: trimmedQuery,

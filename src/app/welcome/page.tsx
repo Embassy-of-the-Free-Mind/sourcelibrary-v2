@@ -5,16 +5,24 @@ import { auth } from '@/lib/auth';
 import SiteHeader from '@/components/layout/SiteHeader';
 import WelcomeForm from '@/components/welcome/WelcomeForm';
 import { getWelcomeHero } from '@/lib/welcome-hero';
+import { welcomeSignInUrl } from '@/lib/welcome-return';
 
 export const metadata: Metadata = {
   title: 'Welcome — Source Library',
   robots: { index: false, follow: false },
 };
 
-export default async function WelcomePage() {
+export default async function WelcomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string | string[] }>;
+}) {
   const session = await auth();
   if (!session?.user?.id) {
-    redirect('/auth/signin?callbackUrl=%2Fwelcome');
+    // Carry the destination through sign-in. Without this the reader signs in
+    // and lands on the homepage, having lost the book they clicked.
+    const { from } = await searchParams;
+    redirect(welcomeSignInUrl(Array.isArray(from) ? from[0] : from));
   }
 
   const firstName = session.user.name?.split(' ')[0] || null;
@@ -41,10 +49,17 @@ export default async function WelcomePage() {
 
       {/* Form pinned just below the header */}
       <div className="relative z-10 max-w-2xl mx-auto px-6 pt-6 md:pt-10 pb-24">
-        <p className="font-serif text-white text-xl md:text-2xl mb-4 px-2 drop-shadow-md">
+        <p className="font-serif text-white text-xl md:text-2xl mb-2 px-2 drop-shadow-md">
           {firstName ? `Welcome, ${firstName}.` : 'Welcome.'}
         </p>
-        <WelcomeForm />
+        {/* Why we're asking. The form opened straight into three questions with
+            no reason given, which reads as data collection rather than an
+            introduction. Derek's wording — keep it verbatim. */}
+        <p className="text-white/90 text-base md:text-lg mb-4 px-2 drop-shadow-md max-w-xl">
+          We&rsquo;re a small team and it really helps us to know who we are building for.
+          Everything is optional.
+        </p>
+        <WelcomeForm initialName={session.user.name || ''} />
       </div>
 
       {(hero.bookTitle || hero.bookYear) && (

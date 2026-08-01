@@ -10,8 +10,9 @@ import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
  * Create a new BPH catalogue record.
  *
  * Editor-only. Renders the same form as the editor, in 'create' mode: it
- * shows a UBN field (pre-filled with a safe SL-… id), starts every field
- * blank, and POSTs to /api/[tenant]/catalog/create. BPH-only in Phase 1.
+ * shows a UBN field (pre-filled with the next free id from the reserved
+ * 33,000+ range — see suggestNewUbn), starts every field blank, and POSTs to
+ * /api/[tenant]/catalog/create. BPH-only in Phase 1.
  *
  * Issue #1877.
  */

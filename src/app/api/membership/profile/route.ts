@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * GET: Fetch the current user's member profile.
@@ -14,7 +15,7 @@ export async function GET() {
 
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { 'membership.profile': 1 } }
   );
 
@@ -34,7 +35,7 @@ export async function PATCH(request: NextRequest) {
 
   const db = await getDb();
   await db.collection('users').updateOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     {
       $set: {
         'membership.profile': { displayName, bio, visible },

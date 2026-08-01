@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
+import { toUserId } from '@/lib/user-id';
 
 const messageSchema = z.object({
   content: z.string().min(1, 'Message cannot be empty').max(5000, 'Message too long'),
@@ -82,7 +83,7 @@ export async function POST(
   }
 
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { name: 1, image: 1, membership: 1 } },
   );
   const displayName = user?.membership?.profile?.displayName || user?.name || 'A visitor';

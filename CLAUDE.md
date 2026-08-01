@@ -259,12 +259,45 @@ A usage review on 2026-07-28 produced six findings; **three were instrument fail
 
 Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 applied a real remedy for the wrong failure and was closed rather than merged once the actual cause was found.
 
+**An alarm is an instrument too, and one sample is not an outage (#3478).** `/api/health/auth` emailed "[CRITICAL] Source Library sign-in is broken" off a **single** dropped Atlas TLS handshake at 00:00:01 UTC. Sign-in was fine — a sign-in link went out at 23:27, an account was created at 00:02:24 (two minutes *after* the page), and 2,013 of the preceding 2,016 probes were clean. Everything above about measuring readers applies verbatim to measuring ourselves:
+
+- **Confirm before paging.** A probe that alerts on its first failed sample is reporting its own connection, not the product. `src/lib/health-alerting.ts` `recordFailureStreaks()` requires N consecutive failures, counted **per check** so unrelated single blips never sum to a page, and **fails open** when the streak store is unreachable — a genuine Atlas outage still pages immediately. Match the guard to the cadence: a 10-min probe can afford a 2-probe streak (~20 min to page); an hourly one cannot, and gets `retryWithBackoff()` instead.
+- **A retry with no delay is not a retry.** Both routes looped twice back-to-back, so a fault lasting a couple of seconds exhausted every attempt and still read as "after retry" in the alert text.
+- **Cron convergence manufactures the fault.** Nine Hetzner schedules align at 00:00 UTC; the resulting pile of cold Vercel functions all dialling Atlas at once is what dropped the handshake, and it took out both DB-touching probes in the same second. Keep probes off `:00`.
+- **Word the alert as what was observed.** "Users cannot sign in" was an inference from one probe, and it was false. Say which check failed, how many consecutive probes it has failed, and tell the reader to confirm real user impact — for auth that means recent `users` inserts and `verification_tokens`, never another probe.
+- **Get the base rate before believing a pattern.** The Hetzner cron log (`/var/log/sourcelibrary/cron-caller.log*`, 14 days rotated) turns "the DB is flaky" into "3 failures in 2,016 probes, two of them an unrelated Resend outage" in one command.
+
+**The replacement instrument needs the same audit as the one it replaced (#3453).** `reading_history` was the clean twin that rescued the reading-depth question from the scraper fleet — auth-gated, keyed on `user_id`, no crawler can be in it — and it was right about the thing it was checked on (26% of member sessions are 10+ pages, stable across every window and robust to dropping the heaviest accounts). Then it was quoted for two things nobody had checked, and both were wrong:
+
+- **A metric's name is a claim about its denominator.** "Members who came back: 62%" counted `sessions > 1`, and a session is one user + one **book** — so opening a second book in the same sitting scored as a return. The day-based figure is 30.9%, and 61.0% of members have their entire history inside a single hour. Before quoting a rate, say out loud what one row *is*; if the unit isn't the thing the label names, the number is measuring something else. Same trap as grouping by exact `$pathname` above.
+- **Auth-gated is not human-gated.** A session excludes anonymous crawlers, not a signed-in account bulk-fetching: 29.5% of member pages arrived faster than 20 pages/minute, and the top 1% of members are 39% of all pages. **Per-session shares survived it and totals did not** — which is the general rule, not a detail of this dataset. A rate whose denominator grows with the contamination is robust; a sum is not.
+- **Counting sessions put the weight in the wrong place.** One-page sessions are 43.7% of sessions and **2.8% of pages read**; 10+ page sessions are 26.5% of sessions and **88.3% of pages**. The shallow tail is loud in one denominator and nearly weightless in the other. Report both, or the tail reads as the story.
+
+And **a field nothing writes looks identical to a field nothing needs.** `reading_history.referrer` was accepted by both routes, plumbed through the API client, projected into the GET response — and never sent by the reader, so all 6,659 rows were empty and "how do members reach a book" was unanswerable without one line of client code. Before concluding a signal is absent, check that something is actually emitting it.
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
 Source-shape assertions are legitimate for **absence** invariants, where deletion *is* the failure mode: `tests/unit/soft-404-loading-guard.test.ts` pins that certain `loading.tsx` files do not exist, and re-adding one genuinely reintroduces the soft-404. That test earns its keep; a shape test for *behaviour* does not.
 
 For behaviour, the assertion has to exercise the thing: render the component under the condition (a simulated tenant host), call the function (`proxy()` directly, per the tenant section above), or hit a deployed URL and check the response. **Before writing a guard, ask what code change would make it fail — if the answer is only "deleting this line", it is documentation with a green checkmark, not a test.**
+
+**Don't reason about that question — run it.** Delete the guarded line, watch the test go red, restore it. Two source-shape guards written in one session (#3484/#3488) both passed *with the code they guarded deleted*, and neither failure was visible by reading the test: one asserted `toContain('hasSearchTerm')` + `toContain('offset === 0')`, where both tokens occur elsewhere in the same file; the other asserted `/tenantId/` against a call body and was satisfied by the **explanatory comment sitting directly above `tenantId,`**. A source assertion matches the whole file, comments included — so scope it to a slice, strip comments before matching, or assert a composite string whose position relative to the call is checked. The negative control is the only thing that distinguishes a guard from a decoration.
+
+## Count the search BOXES, not the search logs
+Before quoting anything about what users search for, **enumerate the search boxes in the UI and verify each one writes a row.** A log tells you about the boxes that log; it is silent about the ones that don't, and silence reads as "nobody searches."
+
+On 2026-07-31 a partner usage report claimed "of 93,179 views in the BPH reading room, exactly four were searches" and concluded readers there don't search. Both wrong, in two stacked ways (#3484):
+
+- **Wrong instrument.** The 4 came from counting pageviews of a `/search` *page*. Site-wide there were 5,903 such pageviews against 43,980 actual searches — searching mostly never produces a `/search` pageview at all. The tell was available immediately: two numbers that should have been comparable differed 7×. Related: **`analytics_pageviews.path` strips query strings** (0 of 926K stored paths contain `?`), so any URL-param search is invisible there by construction.
+- **A whole box was unmeasured.** `/api/catalog/bph` — the reading room's front-page catalogue search, the first thing a visitor sees — had no analytics call of any kind. Four months, zero rows. The BPH searches that *did* exist came from in-book search and the site's unified search: different boxes.
+
+Six search entry points existed, each built at a different time, each hand-rolling its own `analytics_events` insert, so logging was something every new route had to remember — and forgetting produces silence, not an error. The five that logged had also drifted: **none stored `host`**, so all 94,442 rows are `host: null` and cannot be split by surface even retroactively. Same shape as the five `entities.books[]` writers above.
+
+- **`src/lib/search-event-log.ts` is the single writer** for `search_query` events; `src/lib/search-log.ts` is the twin for the `search_queries` latency log. Both derive `host` / tenant / traffic class **inside the writer** from request headers rather than accepting them from callers, so a new surface cannot be born unattributable. A new search route uses them or it is not measured — `tests/unit/search-event-instrumentation.test.ts` pins the route list, and a route added without being listed silently stops being covered.
+- **A route that resolves a tenant to scope its query must pass that tenant to the logger.** `/api/search` did the first and not the second, leaving every "global" search unattributable with the answer sitting in scope (#3488).
+- **Tenant, not host, is the discriminator.** The reading room is served at `sourcelibrary.org/embed/bph`, so host says "sourcelibrary.org" for both surfaces. Separately, a subdomain's `/search?q=…` is rewritten by `proxy.ts` to `/embed/<tenant>/search`, which **re-exports the main `SearchPage`** and lands in `/api/search` — so a "main site" search list silently contains partner searches unless the row carries a tenant.
+- **Don't instrument `/api/search/semantic` with a `search_query` event.** It fires on the same page-load as `/api/search` for one user query; adding one double-counts every search. It logs latency to `search_queries` only, and a guard pins that.
 
 ## `page_revisions` is not a clean double-OCR corpus
 It is used as one — 109,953 same-page pairs, and `scripts/eval/calibration-scorecard.mjs` fits agreement→accuracy on 32 anchor pages then applies it corpus-wide. **That inference assumes both sides read the same image, and ~40% of the time they did not.** Measured 2026-07-30 (`scripts/audit/revision-image-shift.mjs`, randomized n=3,339 pairs carrying a printed `<page-num>` on both sides): 40.2% report a *different printed page number*, i.e. a different leaf. Of 366 books with ≥3 comparable pairs, 112 shift on >50% of pairs and 88 of those systematically — one offset, almost always exactly **+1**.
@@ -276,6 +309,7 @@ It is used as one — 109,953 same-page pairs, and `scripts/eval/calibration-sco
 - **Mining the corpus for "hard to read" pages (#3469) must apply the same filter**, or the hard pages will mostly be re-archived ones. And note it is blind to the *fabrication* class by construction: two passes that both recite the same memorized verse agree perfectly (`/blog/reciting-not-reading`).
 - **Any shift-style repair must stamp `ocr.updated_at` on the write.** Leaving the moved object's original timestamp is precisely what made this take a day to diagnose, and the next such sweep will do it again.
 - Two further non-legibility causes in the same corpus: **truncation** (one pass transcribed a single column and stopped — 156 words vs 661 on the same page) and **normalization convention** (`nūc`→`nunc`, `q;`→`que`, `&`→`et`), which breaks exact-string alignment and cascades into fake substitutions. The *actual* early-modern glyph confusions — long-s ↔ f, ligatures, tildes — are ~1% of substitutions (`scripts/eval/disagreement-typology.mjs`).
+
 
 ## Static-prerender Suspense invariant (SEO-critical)
 Any client component that calls `useSearchParams()` (or another prerender-bailout hook) must wrap the consumer in its **own** `<Suspense fallback={null}>` inside the component — never rely on a page-level boundary catching it. On statically prerendered routes (the ISR book page is the canonical case: `revalidate = 86400`, never reads `headers()`), an unwrapped call throws a CSR bailout that the *nearest* Suspense boundary catches; when that's the page's main content boundary, the served HTML becomes the loading skeleton. Users never notice (the client re-renders from flight data), but crawlers get a content-free page — this silently blanked every `/book/<slug>` page for search engines from ~2026-05-27 to 2026-07-19 and was the real root cause of the "99% of pages orphaned" finding (#2266, fixed in PR #3231 via `EmbedNavigationReporter`). **Tell:** a `BAILOUT_TO_CLIENT_SIDE_RENDERING` template in served HTML above the content, and 0 content anchors while the flight-data scripts contain them. **Verify with `curl` + grep for real `<a href>` anchors** — a browser always looks fine, so eyeballing proves nothing. Dynamic routes (anything reading `headers()`, like collections and the reader) don't hit this, which makes the regression easy to miss in spot checks.
@@ -332,6 +366,10 @@ Lessons from the 2026-07-28 usage review (#3399, #3400, #3405, #3408, #3409). Fi
 - **A worker that bails before phase one writes no `cron_runs` record**, so "no record" and "never scheduled" are indistinguishable from the alert. Check the worker's own log on the box before blaming cron.
 - **Verify a metric's property names before reporting it missing.** #3409 reported 15,611 exceptions with null `$exception_type`/`$exception_message`. Those are posthog-js's *legacy* singular names — current versions send `$exception_list`, surfaced as `$exception_types`/`$exception_values`, and the data was fully populated. A null on a name you assumed is a query bug until proven otherwise.
 - **When an instrument is broken, say so instead of printing a number.** The read paths now report "not measurable, N unclassified events" rather than a plausible histogram. A number that looks authoritative and is wrong is worse than no number — it had already reached the weekly digest.
+- **A row written BEFORE the work happens must be closed out after it, by the same key — or it is a permanent zero.** Batch jobs log a `gemini_usage` row at submit time, when no tokens exist yet: `input_tokens: 0, cost_usd: 0.00`. Nothing reconciled them, and `batch-collector` inserted a *second* row with the real numbers, so one meter simultaneously read $0.00 over 376,804 pages of real spend **and** double-counted every completed batch's calls and pages in `dashboard_usage` (#3452). Writers close the placeholder via `completeBatchUsage()` (`scripts/workers/lib/supabase-usage-logger.mjs`), matched on `batch_job_id` + a placeholder status; `scripts/maintenance/reconcile-batch-usage.mjs` is the standing reconciler for every other terminator (ghost sweep, nameless reaper, generation guard) and derives their outcome from `batch_jobs` rather than asking each site to touch the meter. Three traps this class hides behind:
+  - **A reconciler that exists is not a reconciler that runs.** `logBatchResult()` in `src/lib/gemini-logger.ts` was written for exactly this job and matched `status = 'pending'` — while the orchestrator writes `'submitted'`, and nothing called it. Two spellings of one state is the same bug as no state; both are now in `PLACEHOLDER_STATUSES` and any sum must exclude them.
+  - **Bill per RESPONSE, not per saved page.** Gemini charges for responses we throw away (RECITATION blocks, empty candidates, over-length output, generation-guard drops), so a job where every page was blocked recorded $0.00; and in multi-page mode one response carries one `usageMetadata` for N pages, so per-page attribution multiplied it by N. `sumBatchResponseUsage()` is the shared summer.
+  - **`batch_job_id` holds two different identifiers** — `batch_jobs.id` from the orchestrator, the Gemini job name (`batches/v7zl…`) from the older `/api/books/[id]/batch-ocr-async` route. Joining on `id` alone reported 562 of the first 1,000 placeholders as orphans: missing-looking data that was merely keyed differently. Where a join can't resolve, the row is marked `unknown`, never `failed, $0` — an unmeasurable is not a zero.
 
 ## Search filters must be enforced in every lane
 Lessons from PRs #3267/#3268/#3269 (the "dates leak" report, 2026-07-19 — three
@@ -374,6 +412,35 @@ lights up. Proof is a **curl matrix against a deployed preview**: unfiltered vs
 filtered vs an impossible range (which must return 0). Check every lane in the
 response body, not just the first list. Same discipline as the three-layer
 crawler gate above: changing one layer alone is silently defeated by the others.
+
+**A searchable field is a readable field — never index a staff-only column.**
+Being able to search a field is a way of reading it: an attacker (or a curious
+visitor) can binary-search for the phrase it contains, one query at a time, and
+a hit is itself the disclosure. So the public search columns —
+`bph_works.search_norm`, `bph_works.search_tsv`, and any successor — must
+exclude `internal_remarks`, `exhibition_history`, `price`,
+`acquisition_source`/`_date`, the workflow flags, and `modified_by_*` (personal
+data). The exclusion list with per-field reasons lives in
+`scripts/migration/expand-bph-search-norm.sql`; keep it there rather than
+rediscovering it. This is the same shape as the tenant-lockdown rule above — ask
+what a surface *renders*, not only where it *links* — applied to the query side.
+
+**The inverse failure is just as real: a field nobody indexed is a field nobody
+can find.** `search_norm` covered 20 of ~40 populated columns, so searching a
+shelf location, a donor, a USTC number or a phrase from the remarks returned
+nothing — indistinguishable from "we don't hold it", and it took a librarian
+telling us in person to surface it (#3481). When adding a column that a human
+will later search by, add it to the search column in the same PR, or state why
+it is excluded.
+
+**Careful with generated search columns.** They cannot be altered in place —
+drop + recreate, which **also drops their indexes** (rebuild
+`idx_bph_search_norm_trgm` or every query becomes a seq scan), so wrap the whole
+thing in a transaction. And the expression must be IMMUTABLE: `concat_ws` is
+STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`.
+`add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
+deployed reality** — read `pg_get_expr` off the live column, not the migration
+file.
 
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).

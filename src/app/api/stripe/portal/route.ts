@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { stripe } from '@/lib/stripe';
 import { getDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * Creates a Stripe Billing Portal session for the current user.
@@ -19,7 +20,7 @@ export async function POST() {
 
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { 'membership.stripeCustomerId': 1 } }
   );
 

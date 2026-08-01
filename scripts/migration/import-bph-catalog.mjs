@@ -31,6 +31,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
 import { parseArgs } from 'util';
+import { normalizeStateShelfMark } from '../lib/bph-state-shelfmark.mjs';
 
 const { values: args } = parseArgs({
   options: {
@@ -164,7 +165,11 @@ async function main() {
       internal_remarks: get(r, 'Internal remarks'),
       number_of_copies: parseInt0(get(r, 'Number of copies')),
       work_status: get(r, 'Status'),
-      state_shelf_mark: get(r, 'BPH State Collection shelf mark'),
+      // Memorix answers this with a shelf mark OR with "neen" ("no") — the
+      // source field is really "on loan from the ICN?". Normalise at the write
+      // boundary so a re-import can't reintroduce the 19.9K bare "neen" rows
+      // that scripts/maintenance/clear-neen-state-shelfmark.mjs cleaned up.
+      state_shelf_mark: normalizeStateShelfMark(get(r, 'BPH State Collection shelf mark')),
       object_size_cm: get(r, 'Object size in cm'),
       provenance: get(r, 'Provenance'),
       binding: get(r, 'Binding'),

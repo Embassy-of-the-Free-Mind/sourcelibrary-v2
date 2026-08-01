@@ -20,7 +20,14 @@ export function trackEvent(
     // never consumed looks identical whether the mail was never opened, the
     // interstitial was abandoned, or the link was mangled in transit.
     | 'confirm_view'
-    | 'confirm_click',
+    | 'confirm_click'
+    // Onboarding form (/welcome). `welcome_view` on mount, then exactly one of
+    // `welcome_save` / `welcome_skip`. The form shipped with no instrumentation,
+    // so a completion rate of 4-in-3,854 was indistinguishable from a page
+    // nobody could reach — which is exactly what it turned out to be (#3448).
+    | 'welcome_view'
+    | 'welcome_save'
+    | 'welcome_skip',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;

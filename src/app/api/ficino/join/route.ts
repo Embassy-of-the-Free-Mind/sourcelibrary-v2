@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { sendSocietyWelcomeEmail } from '@/lib/membership-email';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * POST /api/ficino/join — Join the Ficino Society (free)
@@ -19,7 +20,7 @@ export async function POST() {
 
   // Check if already joined
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { 'membership.joined': 1 } }
   );
 
@@ -28,7 +29,7 @@ export async function POST() {
   }
 
   await db.collection('users').updateOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     {
       $set: {
         'membership.joined': true,

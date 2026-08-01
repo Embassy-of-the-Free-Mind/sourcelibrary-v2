@@ -2,8 +2,8 @@
   "10000-books": {
     "path": "src/app/blog/10000-books/page.tsx",
     "published": "2026-04-14T03:13:12+02:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 6
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 7
   },
   "2000-first-translations": {
     "path": "src/app/blog/2000-first-translations/page.tsx",
@@ -74,8 +74,8 @@
   "counting-the-gap": {
     "path": "src/app/blog/counting-the-gap/page.tsx",
     "published": "2026-03-15T15:09:55+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 7
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 8
   },
   "cuneiform-ocr": {
     "path": "src/app/blog/cuneiform-ocr/page.tsx",
@@ -122,14 +122,14 @@
   "first-translation-methodology": {
     "path": "src/app/blog/first-translation-methodology/page.tsx",
     "published": "2026-02-23T23:41:21+04:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 15
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 16
   },
   "first-translations": {
     "path": "src/app/blog/first-translations/page.tsx",
     "published": "2026-02-21T12:13:37+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 15
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 16
   },
   "fish-voiced-priest": {
     "path": "src/app/blog/fish-voiced-priest/page.tsx",
@@ -188,8 +188,8 @@
   "iiif": {
     "path": "src/app/blog/iiif/page.tsx",
     "published": "2026-06-02T10:16:29+02:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 7
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 8
   },
   "incunabula-knowledge-graph": {
     "path": "src/app/blog/incunabula-knowledge-graph/page.tsx",
@@ -224,8 +224,8 @@
   "mcp-server": {
     "path": "src/app/blog/mcp-server/page.tsx",
     "published": "2026-02-18T01:28:28+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 11
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 12
   },
   "naked-philosophers": {
     "path": "src/app/blog/naked-philosophers/page.tsx",
@@ -245,6 +245,12 @@
     "revised": "2026-07-19T03:50:50+02:00",
     "revisions": 1
   },
+  "nine-models-forty-pages": {
+    "path": "src/app/blog/nine-models-forty-pages/page.tsx",
+    "published": "2026-07-23T16:28:52+02:00",
+    "revised": "2026-07-23T16:28:52+02:00",
+    "revisions": 1
+  },
   "ocr-consistency": {
     "path": "src/app/blog/ocr-consistency/page.tsx",
     "published": "2026-03-07T10:39:44+03:00",
@@ -254,8 +260,8 @@
   "origin-story": {
     "path": "src/app/blog/origin-story/page.tsx",
     "published": "2026-03-15T00:21:22+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 7
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 8
   },
   "philosophers-stone": {
     "path": "src/app/blog/philosophers-stone/page.tsx",
@@ -287,11 +293,17 @@
     "revised": "2026-07-16T01:06:36+02:00",
     "revisions": 4
   },
+  "reciting-not-reading": {
+    "path": "src/app/blog/reciting-not-reading/page.tsx",
+    "published": "2026-07-30T15:35:23+02:00",
+    "revised": "2026-07-30T15:35:23+02:00",
+    "revisions": 1
+  },
   "rithmomachia": {
     "path": "src/app/blog/rithmomachia/page.tsx",
     "published": "2026-03-02T11:34:13+04:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 8
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 9
   },
   "show-me-the-number": {
     "path": "src/app/blog/show-me-the-number/page.tsx",
@@ -338,8 +350,8 @@
   "translation-rate": {
     "path": "src/app/blog/translation-rate/page.tsx",
     "published": "2026-03-21T21:58:41+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 6
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 7
   },
   "translations-across-civilizations": {
     "path": "src/app/blog/translations-across-civilizations/page.tsx",
@@ -350,8 +362,8 @@
   "untranslated-renaissance": {
     "path": "src/app/blog/untranslated-renaissance/page.tsx",
     "published": "2026-03-15T01:03:43+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 9
+    "revised": "2026-07-26T11:13:00+02:00",
+    "revisions": 10
   },
   "visualizing-classification": {
     "path": "src/app/blog/visualizing-classification/page.tsx",

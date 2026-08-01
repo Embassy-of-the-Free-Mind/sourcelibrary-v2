@@ -1,4 +1,5 @@
 import { getDb } from './mongodb';
+import { toUserId } from './user-id';
 
 export interface MembershipInfo {
   active: boolean;
@@ -13,7 +14,7 @@ export interface MembershipInfo {
 export async function getMembership(userId: string): Promise<MembershipInfo> {
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: userId as any },
+    { _id: toUserId(userId) as any },
     { projection: { membership: 1 } }
   );
 
@@ -26,7 +27,7 @@ export async function getMembership(userId: string): Promise<MembershipInfo> {
   // This is a safety net in case the cancellation webhook was missed.
   if (m.expiresAt && new Date(m.expiresAt) < new Date()) {
     await db.collection('users').updateOne(
-      { _id: userId as any },
+      { _id: toUserId(userId) as any },
       { $set: { 'membership.active': false } }
     );
     return { active: false, plan: m.plan, expiresAt: new Date(m.expiresAt), stripeCustomerId: m.stripeCustomerId };
@@ -53,7 +54,7 @@ export async function activateMembership(
   const db = await getDb();
 
   await db.collection('users').updateOne(
-    { _id: userId as any },
+    { _id: toUserId(userId) as any },
     {
       $set: {
         'membership.active': true,
@@ -77,7 +78,7 @@ export async function deactivateMembership(userId: string): Promise<void> {
   const db = await getDb();
 
   await db.collection('users').updateOne(
-    { _id: userId as any },
+    { _id: toUserId(userId) as any },
     {
       $set: {
         'membership.active': false,
