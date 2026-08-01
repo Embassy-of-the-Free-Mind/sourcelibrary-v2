@@ -835,16 +835,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     );
     const interiorCandidates = interiorCandidatesClean.length ? interiorCandidatesClean : interiorCandidatesByType;
     const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
+    // The text fallback must show a page of the WORK, not its apparatus. Blanks
+    // are already gone with KNOWN_JUNK_PAGE_TYPES; these are the front-matter
+    // types that survive it and read as "this book has nothing to show".
+    const APPARATUS_PAGE_TYPES = new Set(['title-page', 'toc', 'contents', 'table-of-contents']);
+    const textCandidates = interiorCandidates.filter(p => !APPARATUS_PAGE_TYPES.has(ptype(p)));
     const interiorTextPage = (() => {
-      const deep = interiorCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
+      const deep = textCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
       if (deep.length) return midOf(deep);
-      const anyText = interiorCandidates.filter(p => ptype(p) === 'text');
+      const anyText = textCandidates.filter(p => ptype(p) === 'text');
       if (anyText.length) return midOf(anyText);
       // No usable classification — take a page from the middle of the book,
       // skipping the first several scans where calibration/blank pages live.
-      const start = Math.min(8, Math.floor(interiorCandidates.length / 4));
-      const pool = interiorCandidates.slice(start);
-      return midOf(pool.length ? pool : interiorCandidates);
+      const start = Math.min(8, Math.floor(textCandidates.length / 4));
+      const pool = textCandidates.slice(start);
+      return midOf(pool.length ? pool : textCandidates);
     })();
     const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
     // Single page scans used as the hero background fallback when the tiled
@@ -1008,14 +1013,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      // Prefer a deep body-text page over a classified "illustration" page:
-      // genuine content illustrations already come through the gallery path
-      // above, so a leftover illustration here is usually front-matter — an
-      // owner's bookplate / frontispiece — which we don't want to feature.
-      // (The array order used to contradict that comment, putting the
-      // illustration first; that inversion is what surfaced the Internet
-      // Archive plate on the Gandhi book.)
-      for (const pg of [interiorTextPage, interiorIllusPage]) {
+      // Show a picture if the book has one WORTH showing, else a page of the
+      // text. An illustration only reaches this point after clearing
+      // `isJunkRepresentativePage`, which reads the page's own OCR and removes
+      // the class that made illustrations untrustworthy here: digitiser plates
+      // (the Internet Archive "funding from Microsoft" leaf, classified
+      // `frontispiece`), library bookplates, and photographs of the binding.
+      // With those gone a real frontispiece or plate is the better visual, and
+      // it is the only visual available to the ~6.2K books stalled in the
+      // paused pipeline, which have no extracted gallery images at all.
+      for (const pg of [interiorIllusPage, interiorTextPage]) {
         if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
         if (src && notCover(src)) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };
