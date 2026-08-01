@@ -1402,12 +1402,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               </div>
 
-              {/* Staff-only edit link (in-book search moved to the sub-nav + combo section) */}
-              <AuthCheck role="inner_circle">
-                <div className="mt-4 md:mt-5 text-[13.5px]">
-                  <Link href={`/book/${bookSlug}/edit`} className="transition-colors" style={{ color: '#d98a72' }}>✎ Edit</Link>
-                </div>
-              </AuthCheck>
+              {/* NOTE: the old staff-only "✎ Edit" link here pointed at
+                  /book/[id]/edit, which doesn't exist (dead 404), and popping in
+                  after the auth check re-centered the vertically-centred hero —
+                  the cover/title "jump". Removed. Editing is via the "Edit"
+                  button in the Bibliographic information panel (BookEditModal). */}
             </div>
           )}
         />

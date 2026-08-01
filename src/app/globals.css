@@ -832,16 +832,21 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
    instantly from R2. A named animation (not a Tailwind transition) guarantees
    the ~1.9s timing regardless of how fast the load fires. */
 .hero-focus-in {
-  animation: hero-focus-in 1900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-focus-in 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-focus-in { animation: none; opacity: 1; filter: none; transform: none; }
 }
+/* dark → recognizable-but-soft page scans (you can make out lines of text and
+   the coloured blobs of illustrations) → sharp. A light 11px start blur keeps
+   the tiles readable-as-pages the whole way — a heavier blur washed to a flat
+   light tone first, which read as "dark → light → pages". */
 @keyframes hero-focus-in {
-  0%   { opacity: 0; filter: blur(30px); transform: scale(1.12); }
-  28%  { opacity: 1; filter: blur(22px); transform: scale(1.08); }
+  0%   { opacity: 0; filter: blur(11px); transform: scale(1.03); }
+  45%  { opacity: 1; filter: blur(7px);  }
   100% { opacity: 1; filter: blur(0);    transform: scale(1); }
 }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* ── Section reveal-in (book page) ────────────────────────────────────────────
    Sections fade + rise as they scroll into view. Pure CSS via a scroll-driven
