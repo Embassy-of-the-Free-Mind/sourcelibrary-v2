@@ -42,6 +42,11 @@ const APPLY = args.includes('--apply');
 const BOOK_ID = getArg('book-id') || null;
 const MAX_PER_PROVIDER = parseInt(getArg('max-per-provider') || '0', 10) || Infinity;
 const LIMIT = parseInt(getArg('limit') || '0', 10) || Infinity;
+// Opt IN to clearing HTTP 403 markers. OFF by default: on this corpus 403 is
+// dominated by Internet Archive `access-restricted-item` books — IA correctly
+// refusing to serve in-copyright material. Only pass this after checking the
+// affected books are public domain.
+const INCLUDE_403 = args.includes('--include-403');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
@@ -54,6 +59,11 @@ async function main() {
   const query = { archived_photo: { $regex: '^failed:' } };
   if (BOOK_ID) query.book_id = BOOK_ID;
 
+  if (INCLUDE_403) {
+    console.log('[clear-failures] WARNING: --include-403 is ON. 403 on this corpus is dominated by');
+    console.log('                 IA access-restricted (in-copyright) books. Confirm the affected');
+    console.log('                 books are public domain before applying.');
+  }
   console.log(`[clear-failures] ${APPLY ? 'APPLY' : 'DRY RUN'}${BOOK_ID ? ` book=${BOOK_ID}` : ''}` +
     `${MAX_PER_PROVIDER !== Infinity ? ` max-per-provider=${MAX_PER_PROVIDER}` : ''}`);
 
@@ -93,7 +103,7 @@ async function main() {
       const secs = ((Date.now() - t0) / 1000).toFixed(0);
       process.stdout.write(`  …scanned ${scanned} markers (${secs}s)\n`);
     }
-    const { class: cls } = classifyArchiveFailure(page.archived_photo);
+    const { class: cls } = classifyArchiveFailure(page.archived_photo, { include403: INCLUDE_403 });
     byClass[cls] = (byClass[cls] || 0) + 1;
     const key = failureReasonKey(page.archived_photo);
     if (key) byReason[key] = (byReason[key] || 0) + 1;
