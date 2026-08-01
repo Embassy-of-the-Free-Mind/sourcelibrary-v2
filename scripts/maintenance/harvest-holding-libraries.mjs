@@ -291,6 +291,18 @@ async function main() {
     for (const [k, v] of top(rejectedNames, 15)) console.log(`  ${String(v).padStart(5)}  ${k}`);
   }
 
+  // Write the coverage ledger LAST, after every counter is final. A sweep that
+  // skips candidates and prints a clean result is claiming coverage it did not
+  // earn — so the run must end by saying which it was.
+  if (failedIdentifiers.length) {
+    writeFileSync(FAILURES_OUT, JSON.stringify(failedIdentifiers, null, 0));
+    console.log(`\n  COVERAGE INCOMPLETE — ${failedIdentifiers.length} of ${todo.length} candidates unchecked.`);
+    console.log(`  ledger: ${FAILURES_OUT}`);
+    console.log(`  close the gap with:  --retry-failures ${FAILURES_OUT}`);
+  } else {
+    console.log(`\n  coverage: all ${todo.length} candidates checked.`);
+  }
+
   await client.close();
 }
 
