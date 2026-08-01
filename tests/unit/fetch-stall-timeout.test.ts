@@ -107,6 +107,19 @@ describe('fetchWithStallTimeout', () => {
     expect(res.status).toBe(429);
   });
 
+  it('prefixes abort errors with "fetch aborted" — archivers match on this to retry', async () => {
+    // archive-ocr.mjs previously retried on `err.name === 'AbortError'`. Routing
+    // through this helper replaces that with a thrown Error, so the message
+    // prefix IS the contract now: if it changes, that worker silently loses a
+    // retry path it used to have and stalls become hard failures.
+    const url = await listen((_req, res) => {
+      res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+      res.write(Buffer.alloc(8, 1));
+    });
+
+    await expect(fetchWithStallTimeout(url, { stallMs: 100 })).rejects.toThrow(/^fetch aborted:/);
+  });
+
   it('enforces the absolute backstop against a connection that trickles forever', async () => {
     // Chunks forever, each inside the stall window — healthy by the stall test,
     // but it must not run unbounded.
