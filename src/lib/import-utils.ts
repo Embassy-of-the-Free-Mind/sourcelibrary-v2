@@ -7,7 +7,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
-import { resolveLanguage, resolveDate } from '@/lib/resolve-language';
+import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
 
@@ -381,6 +381,7 @@ export async function importBookFromIIIF(
     ...(lang.is_translation ? { is_translation: true } : {}),
     ...(lang.language_review ? { language_review: true } : {}),
     published: dateRes.published || 'Unknown',
+    ...(publishedToYear(dateRes.published) !== null ? { year: publishedToYear(dateRes.published)! } : {}),
     ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
     field_provenance: { language: lang.provenance },
     categories: config.categories || [],
