@@ -69,24 +69,33 @@ Closes with "what are you researching?", which is kept because it is a question
 rather than a commitment, it costs the reader one reply, and the answers feed
 acquisition directly. Absorbed by: Derek's inbox.
 
-### 2. Volunteer readers — DRAFTED, blocked
+### 2. Volunteer readers — READY once someone will answer
+
 `scripts/email/queued/volunteer-readers.body.html`
 
 Ask: **if you read a language we hold, review a text you already care about** —
-rate the translation, mark where it drifts, and proofread the blog posts.
+rate the translation, mark where it drifts, and read over the blog posts.
 
-Split out of letter 1 deliberately. It is the ask with real fulfilment cost:
-people who say yes expect to be given something specific, and right now
-`/welcome` collects who they are and what they read but nothing routes them to a
-text. Blocked on:
+Split out of letter 1 so it gets its own send, not because it needs building.
+An earlier version of this entry claimed it was blocked on routing volunteers to
+texts and on making blog posts editable. Both were wrong, and wrong in the same
+way — they assumed a volunteer needs to *edit*:
 
-- a way to hand a named volunteer a named book or blog post
-- deciding where their verdict goes (a rating on the book? a note? an issue?)
-- someone to reply to the 11 people who have *already* ticked "I'd like to help"
-  in the feedback widget and, as far as the data shows, heard nothing back
+- **They pick their own text.** The ask is "one you already care about", so
+  there is nothing to assign. No queue, no matching, no assignment UI.
+- **They give feedback, they do not edit.** The feedback widget is on every
+  blog post and every reader page (verified 2026-08-01 on
+  `/blog/reciting-not-reading`: two controls, and the row records the page), and
+  it already stores which page the note came from. The whole point of letter 1
+  is that this path works.
 
-Sending this before those exist would recruit people into silence, which costs
-more goodwill than never asking.
+So the 67 TSX blog posts are NOT a blocker here. Making them editable is a
+convenience for whoever *applies* the fix, not a precondition for receiving it.
+
+What remains is not infrastructure, it is a commitment: **somebody has to
+answer.** Eleven people have already ticked "I'd like to help" in the widget and
+appear to have heard nothing back. Reply to those eleven first — then this
+letter is honest, and can go.
 
 ### 3. Unwritten, worth considering
 - **What we got wrong and fixed** — the reader reports that found the leaf
@@ -121,7 +130,10 @@ descriptions, gallery image museum descriptions. Remaining candidates when they
 next hurt: catalogue notes (`BphWorkEditForm`), KDP descriptions, book-collection
 descriptions.
 
-**Still not editable anywhere: the 67 blog posts**, which are TSX files under
-`src/app/blog/`. Fixing a typo needs a code change and a deploy, which is why
-the volunteer letter cannot yet ask anyone to proofread them and hand back an
-edit. That is the next real gap, and it is a migration, not a component.
+**The 67 blog posts are TSX files** under `src/app/blog/`, so applying a fix
+needs a code change and a deploy. Worth improving eventually — but note this is
+a cost borne by whoever *applies* an edit, not by the reader reporting one. A
+volunteer proofreading a post uses the same feedback widget as everyone else,
+which is on every blog page and records which page the note came from. Do not
+let "the blog is not editable" become a reason to delay asking people to read
+it.
