@@ -25,6 +25,11 @@ export interface Book {
   // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)
   resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
 
+  // Editor-chosen "About" side plate/page. Overrides the auto-picked
+  // representative visual on the book page's About section. Stores the
+  // resolved image + link + caption (re-pickable if a URL ever goes stale).
+  about_visual?: { src: string; href: string; caption?: string } | null;
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
