@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { BookMarked, ExternalLink, BookOpen, Pencil, Search } from 'lucide-react';
+import { BookMarked, ExternalLink, BookOpen, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
 // tenantBookUrl removed - using inline URL construction with embed path
@@ -13,6 +13,8 @@ import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
 import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
@@ -323,43 +325,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: `${title} - BPH catalogue`, description };
 }
 
-function normalizeRoleSafe(role: unknown): Role {
-  if (
-    role === 'superadmin' ||
-    role === 'admin' ||
-    role === 'editor' ||
-    role === 'contributor' ||
-    role === 'reader'
-  ) {
-    return role;
-  }
-  if (role === 'inner_circle' || role === 'curator') return 'editor';
-  return 'reader';
-}
-
-async function effectiveCatalogRole(
-  email: string | null | undefined,
-  platformRole: Role,
-  tenantSlug: string,
-): Promise<Role> {
-  if (!email) return platformRole;
-  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
-  try {
-    const db = await getDb();
-    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
-    if (!tenant) return platformRole;
-    const membership = await db.collection('memberships').findOne({
-      email: email.toLowerCase(),
-      tenantId: tenant.id,
-      status: 'active',
-    });
-    const tenantRole = normalizeRoleSafe(membership?.role);
-    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL[platformRole] ? tenantRole : platformRole;
-  } catch {
-    return platformRole;
-  }
-}
-
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn: rawUbn } = await params;
   const ubn = normalizeUbn(rawUbn);
@@ -403,10 +368,9 @@ export default async function CatalogEntryPage({ params }: Props) {
     requestHost ? `https://${requestHost}${publicPath}` : publicPath
   );
 
-  const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
+  const platformRole = normalizeCatalogRole((session?.user as { role?: unknown } | undefined)?.role);
   const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
   const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
-  const showReviewLink = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
   const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
 
   // If the work has no BPH-native digitisation but does have a cross-provider
@@ -443,57 +407,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             New search
           </a>
         </div>
-        {showEditButton && (
-          <div className="flex justify-end flex-wrap gap-2 mb-2">
-            <a
-              href={`/catalog/${encodeURIComponent(work.ubn)}/history`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              History
-            </a>
-            {showReviewLink && (
-              <>
-                <a
-                  href="/catalog/workspace"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  My work
-                </a>
-                <a
-                  href="/catalog/new"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  + New record
-                </a>
-                <a
-                  href="/catalog/review"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  Review queue
-                </a>
-                <a
-                  href="/catalog/team"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  Team
-                </a>
-              </>
-            )}
-            <a
-              href="/catalog/help"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              Help
-            </a>
-            <a
-              href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              <Pencil className="w-3.5 h-3.5" />
-              {editLabel}
-            </a>
-          </div>
-        )}
+        <CatalogEditorNav role={role} ubn={work.ubn} editLabel={editLabel} />
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}

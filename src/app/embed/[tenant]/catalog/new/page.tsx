@@ -1,7 +1,8 @@
 import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { auth } from '@/lib/auth';
-import { ROLE_LEVEL, type Role } from '@/lib/auth';
+import { ROLE_LEVEL } from '@/lib/auth';
+import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { suggestNewUbn } from '@/lib/bph-catalog';
 import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
@@ -26,37 +27,6 @@ interface Props {
   params: Promise<{ tenant: string }>;
 }
 
-function normalizeRole(role: unknown): Role {
-  if (
-    role === 'superadmin' ||
-    role === 'admin' ||
-    role === 'editor' ||
-    role === 'contributor' ||
-    role === 'reader'
-  ) {
-    return role;
-  }
-  if (role === 'inner_circle' || role === 'curator') return 'editor';
-  return 'reader';
-}
-
-async function effectiveTenantRole(email: string | null | undefined, tenantSlug: string): Promise<Role> {
-  if (!email) return 'reader';
-  try {
-    const db = await getDb();
-    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
-    if (!tenant) return 'reader';
-    const membership = await db.collection('memberships').findOne({
-      email: email.toLowerCase(),
-      tenantId: tenant.id,
-      status: 'active',
-    });
-    return normalizeRole(membership?.role);
-  } catch {
-    return 'reader';
-  }
-}
-
 export default async function NewCatalogEntryPage({ params }: Props) {
   const { tenant } = await params;
   if (tenant !== 'bph') notFound();
@@ -66,8 +36,8 @@ export default async function NewCatalogEntryPage({ params }: Props) {
     redirect(`/${tenant}/login?callbackUrl=/catalog/new`);
   }
 
-  const platformRole = normalizeRole((session.user as { role?: unknown }).role);
-  const tenantRole = await effectiveTenantRole(session.user.email, tenant);
+  const platformRole = normalizeCatalogRole((session.user as { role?: unknown }).role);
+  const tenantRole = await effectiveCatalogRole(session.user.email, platformRole, tenant);
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
   // Creating new records is editor+ only (see the create API route).
