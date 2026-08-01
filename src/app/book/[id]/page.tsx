@@ -23,6 +23,8 @@ import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
+import EnsureCover from '@/components/book/EnsureCover';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -455,6 +457,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
+          // First 600 chars of the OCR — the metadata envelope plus the model's
+          // page description. Enough to recognise digitiser boilerplate and
+          // library/owner stamps that `page_type` misses (see
+          // `isJunkRepresentativePage`), without pulling whole pages of text.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
         },
         maxTimeMS: 5000,
       })
@@ -794,14 +801,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // back to the first non-blank page scan (the title page), which is rehosted
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
-    const coverRenderable = !!storedCover && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(storedCover);
+    const coverRenderable = isRenderableCoverUrl(storedCover);
     // Best cover-scan candidate: the actual title page, else a frontispiece,
-    // else the first non-blank page (avoids the Google/IA boilerplate + endpapers
-    // when a classified title page exists).
-    const coverPage = pages.find(p => p.page_type === 'title-page')
-      || pages.find(p => p.page_type === 'frontispiece')
-      || pages.find(p => p.page_type !== 'blank')
-      || pages[0];
+    // else the first non-junk page (avoids the Google/IA boilerplate, endpapers
+    // and scanner colour cards when a classified title page exists).
+    // `selectFallbackCoverPage` is shared with /api/books/[id]/ensure-cover so
+    // the page we SHOW here is the page that gets SAVED as the cover.
+    const coverPage = selectFallbackCoverPage(pages);
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
@@ -814,18 +820,36 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // aren't type-classified. Order: deep body text → a classified illustration
     // → a position-based mid-book page (skips the front-matter/calibration
     // cluster). Never the cover, never a known-junk type.
-    const interiorCandidates = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    // `isJunkRepresentativePage` additionally reads the page's own OCR, so a
+    // digitiser plate mistyped as `frontispiece` (the Internet Archive "funding
+    // from Microsoft" leaf) is excluded here rather than being promoted by the
+    // illustration branch below.
+    //
+    // If that leaves NOTHING, fall back to the type-filtered list rather than
+    // rendering no image: a single-leaf broadside whose one page carries a
+    // marginal shelfmark is still the work itself, and an empty column is worse
+    // than an imperfect page. (Measured: 1 book in 800 takes this branch.)
+    const interiorCandidatesByType = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    const interiorCandidatesClean = interiorCandidatesByType.filter(
+      p => !isJunkRepresentativePage(p as { page_type?: string | null; ocr_head?: string | null }),
+    );
+    const interiorCandidates = interiorCandidatesClean.length ? interiorCandidatesClean : interiorCandidatesByType;
     const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
+    // The text fallback must show a page of the WORK, not its apparatus. Blanks
+    // are already gone with KNOWN_JUNK_PAGE_TYPES; these are the front-matter
+    // types that survive it and read as "this book has nothing to show".
+    const APPARATUS_PAGE_TYPES = new Set(['title-page', 'toc', 'contents', 'table-of-contents']);
+    const textCandidates = interiorCandidates.filter(p => !APPARATUS_PAGE_TYPES.has(ptype(p)));
     const interiorTextPage = (() => {
-      const deep = interiorCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
+      const deep = textCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
       if (deep.length) return midOf(deep);
-      const anyText = interiorCandidates.filter(p => ptype(p) === 'text');
+      const anyText = textCandidates.filter(p => ptype(p) === 'text');
       if (anyText.length) return midOf(anyText);
       // No usable classification — take a page from the middle of the book,
       // skipping the first several scans where calibration/blank pages live.
-      const start = Math.min(8, Math.floor(interiorCandidates.length / 4));
-      const pool = interiorCandidates.slice(start);
-      return midOf(pool.length ? pool : interiorCandidates);
+      const start = Math.min(8, Math.floor(textCandidates.length / 4));
+      const pool = textCandidates.slice(start);
+      return midOf(pool.length ? pool : textCandidates);
     })();
     const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
     // Single page scans used as the hero background fallback when the tiled
@@ -993,10 +1017,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      // Prefer a deep body-text page over a classified "illustration" page:
-      // genuine content illustrations already come through the gallery path
-      // above, so a leftover illustration here is usually front-matter — an
-      // owner's bookplate / frontispiece — which we don't want to feature.
+      // Show a picture if the book has one WORTH showing, else a page of the
+      // text. An illustration only reaches this point after clearing
+      // `isJunkRepresentativePage`, which reads the page's own OCR and removes
+      // the class that made illustrations untrustworthy here: digitiser plates
+      // (the Internet Archive "funding from Microsoft" leaf, classified
+      // `frontispiece`), library bookplates, and photographs of the binding.
+      // With those gone a real frontispiece or plate is the better visual, and
+      // it is the only visual available to the ~6.2K books stalled in the
+      // paused pipeline, which have no extracted gallery images at all.
       for (const pg of [interiorIllusPage, interiorTextPage]) {
         if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
@@ -1286,6 +1315,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           doi={book.doi}
           ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
         />
+
+        {/* This book is showing a page-scan in place of a stored cover. Persist
+            that pick once, so the catalogue / sliders / search stop rendering a
+            blank placeholder for it. The route re-derives and verifies the URL
+            server-side, so it is safe to fire whenever we fell back. */}
+        {!coverRenderable && coverPage && <EnsureCover bookId={book.id} />}
 
         {/* ===================== HERO ===================== */}
         <HeroVariants
