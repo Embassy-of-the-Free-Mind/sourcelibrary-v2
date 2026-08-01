@@ -100,6 +100,40 @@ export function englishFraction(text, minWords = 25) {
 export const ENGLISH_SOURCE_THRESHOLD = 0.15;
 
 /**
+ * The OCR model DECLARES the page's language in its metadata envelope —
+ * `<language>English</language>` or `<lang>Latin</lang>` — as part of the
+ * page-level block CLAUDE.md documents (`<language>`, `<script>`,
+ * `<scan-quality>`, `<page-type>`).
+ *
+ * This is a direct assertion by the model that read the page, and it beats any
+ * frequency estimate. Budge's *Seven Tablets of Creation*, catalogued by us as
+ * Akkadian, declares `<language>English</language>` on its pages — because the
+ * printed page IS English. Our genuinely translated Latin book declares
+ * `<lang>Latin</lang>`.
+ *
+ * Note the field `pages.ocr.language` is NOT a substitute: it is null on exactly
+ * the older ingests where this matters, while the tag inside `ocr.data` is
+ * present. Read the declaration, not the column.
+ */
+const LANG_TAG_RE = /<lang(?:uage)?>\s*([^<]{1,40}?)\s*<\/lang(?:uage)?>/i;
+
+export function declaredPageLanguage(ocrData) {
+  const m = String(ocrData || '').match(LANG_TAG_RE);
+  if (!m) return null;
+  const v = m[1].trim().toLowerCase();
+  return v && v !== 'null' && v !== 'unknown' ? v : null;
+}
+
+const ENGLISH_DECLARATIONS = new Set(['english', 'eng', 'en', 'modern english', 'early modern english']);
+
+/** Is the declared language English? null when nothing was declared. */
+export function declaresEnglish(ocrData) {
+  const l = declaredPageLanguage(ocrData);
+  if (!l) return null;
+  return ENGLISH_DECLARATIONS.has(l);
+}
+
+/**
  * Classify a book from a sample of its OCR pages.
  *
  * @param {string[]} pageTexts - OCR text from sampled content pages
@@ -110,11 +144,26 @@ export const ENGLISH_SOURCE_THRESHOLD = 0.15;
  *   `undetermined`    not enough legible text to say
  */
 export function classifySourceLanguage(pageTexts) {
+  // Prefer the model's own declaration — a direct statement about the page beats
+  // a frequency estimate derived from it.
+  const declared = pageTexts.map((t) => declaresEnglish(t)).filter((d) => d !== null);
+  if (declared.length >= 2) {
+    const englishShare = declared.filter(Boolean).length / declared.length;
+    return {
+      verdict: englishShare >= 0.5 ? 'english_source' : 'foreign_source',
+      basis: 'declared_language',
+      english_share: englishShare,
+      pages_judged: declared.length,
+    };
+  }
+
+  // Fall back to function-word frequency only where nothing was declared.
   const fracs = pageTexts.map((t) => englishFraction(t)).filter((f) => f !== null);
-  if (!fracs.length) return { verdict: 'undetermined', mean: null, pages_judged: 0 };
+  if (!fracs.length) return { verdict: 'undetermined', basis: 'none', mean: null, pages_judged: 0 };
   const mean = fracs.reduce((a, b) => a + b, 0) / fracs.length;
   return {
     verdict: mean >= ENGLISH_SOURCE_THRESHOLD ? 'english_source' : 'foreign_source',
+    basis: 'function_word_frequency',
     mean,
     pages_judged: fracs.length,
   };
