@@ -122,3 +122,72 @@ describe('proxy() refuses blocked networks on every host', () => {
     expect(res?.status).not.toBe(403);
   });
 });
+
+/**
+ * The bare Vercel production alias is the last unguarded door of the same kind.
+ * `sourcelibrary-v2.vercel.app` resolves straight to Vercel — no cf-ray, so no
+ * edge layer — and answered the whole library; the traffic detector has flagged
+ * reader traffic on it every run since #3446.
+ *
+ * It could not simply 308 everything: scripts/uptime-monitor.mjs probes it and
+ * the Playwright suite defaults BASE_URL to it, so a catch-all would have
+ * silently repointed a page-crawler at production. These pin both halves — the
+ * library leaves, the operational probes stay.
+ */
+describe('bare Vercel production alias', () => {
+  const DEPLOY_HOST = 'https://sourcelibrary-v2.vercel.app';
+
+  it.each([
+    '/book/chymische-hochzeit-christiani-rosencreutz-andreae',
+    '/book/some-slug/page/abc123',
+    '/collections/hermetica',
+    '/gallery',
+    '/gallery/image/xyz',
+    '/author/paracelsus',
+    '/artwork/bembine-table-of-isis',
+    '/encyclopedia/Matthiolus',
+    '/api/books/abc/text',
+    '/api/books/abc/quote',
+    '/api/image',
+    '/embed/bph/book/some-slug',
+  ])('308s the reader surface: %s', async (path) => {
+    const res = await proxy(req(`${DEPLOY_HOST}${path}`));
+    expect(res?.status).toBe(308);
+    expect(res?.headers.get('location')).toBe(`https://sourcelibrary.org${path}`);
+  });
+
+  it.each([
+    '/api/health',
+    '/api/books',
+    '/embed/bph',
+    '/embed/ficino',
+    '/embed/bhutan',
+    '/_next/static/chunks/main.js',
+  ])('leaves the operational probes in place: %s', async (path) => {
+    const res = await proxy(req(`${DEPLOY_HOST}${path}`));
+    expect(res?.status).not.toBe(308);
+  });
+
+  it('preserves the query string when redirecting', async () => {
+    const res = await proxy(req(`${DEPLOY_HOST}/search?q=alchemy&page=2`));
+    expect(res?.headers.get('location')).toBe('https://sourcelibrary.org/search?q=alchemy&page=2');
+  });
+
+  it('does NOT scope preview deployments', async () => {
+    // Branch review depends on these serving the whole site. A
+    // host.includes('vercel.app') test here would take every preview out —
+    // which is why the deployment alias is matched exactly.
+    for (const host of [
+      'https://sourcelibrary-v2-git-fix-something.vercel.app',
+      'https://sourcelibrary-v2-32g32u0ho-dereklomas-projects.vercel.app',
+    ]) {
+      const res = await proxy(req(`${host}/book/some-slug`));
+      expect(res?.status, host).not.toBe(308);
+    }
+  });
+
+  it('does not touch the canonical host', async () => {
+    const res = await proxy(req('https://sourcelibrary.org/book/some-slug'));
+    expect(res?.status).not.toBe(308);
+  });
+});

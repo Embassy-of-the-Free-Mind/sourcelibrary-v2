@@ -31,7 +31,17 @@ const ROUTES = [
 ];
 
 export default async function globalSetup() {
-  const baseURL = process.env.BASE_URL || 'https://sourcelibrary-v2.vercel.app';
+  // No default. The reader surface on sourcelibrary-v2.vercel.app now 308s to
+  // production (src/lib/alias-host-scope.ts), so a fallback would quietly point
+  // this suite — crawl-all-pages.spec.ts above all — at the live site. Pass the
+  // branch's preview URL explicitly.
+  const baseURL = process.env.BASE_URL;
+  if (!baseURL) {
+    throw new Error(
+      'BASE_URL is required. Pass the preview deployment URL for the branch under test, '
+      + 'e.g. BASE_URL=https://sourcelibrary-v2-git-<branch>.vercel.app'
+    );
+  }
   const ctx = await request.newContext({
     baseURL,
     extraHTTPHeaders: { 'X-E2E-Test': 'sourcelibrary-warmup' },
