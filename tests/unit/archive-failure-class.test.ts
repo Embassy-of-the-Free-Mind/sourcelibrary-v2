@@ -75,8 +75,25 @@ describe('classifyArchiveFailure', () => {
       .toBe(FAILURE_CLASS.PERMANENT);
   });
 
-  it('collapses digits in the reporting key so counts aggregate', () => {
+  it('collapses incidental digits in the reporting key so counts aggregate', () => {
     expect(failureReasonKey('failed:source-not-found (gallica has only 45 pages)'))
       .toBe(failureReasonKey('failed:source-not-found (gallica has only 912 pages)'));
+  });
+
+  it('does NOT collapse HTTP status codes — 403 vs 404 is the whole decision', () => {
+    // Collapsing every digit printed "2438  HTTP N" in the dry-run report,
+    // merging retryable 403s with permanent 404s in the exact output an
+    // operator reads before running --apply.
+    expect(failureReasonKey('failed:HTTP 403')).toBe('HTTP 403');
+    expect(failureReasonKey('failed:HTTP 404')).toBe('HTTP 404');
+    expect(failureReasonKey('failed:HTTP 403'))
+      .not.toBe(failureReasonKey('failed:HTTP 404'));
+  });
+
+  it('preserves the status code while still collapsing surrounding noise', () => {
+    expect(failureReasonKey('failed:HTTP 403 after 5 attempts on page 214'))
+      .toBe(failureReasonKey('failed:HTTP 403 after 9 attempts on page 7'));
+    expect(failureReasonKey('failed:HTTP 403 after 5 attempts on page 214'))
+      .toContain('HTTP 403');
   });
 });

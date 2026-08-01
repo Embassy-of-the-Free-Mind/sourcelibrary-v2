@@ -78,9 +78,21 @@ async function main() {
     .find(query, { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1 } })
     .batchSize(500);
 
+  // `archived_photo` is unindexed, so this is a collection scan over ~18.9M
+  // pages and a full pass takes many minutes. Without a heartbeat the run is
+  // silent the whole time and looks hung — two earlier runs were killed for
+  // exactly that reason before producing any output.
+  const t0 = Date.now();
+  let nextTick = 500;
+
   for await (const page of cursor) {
     scanned++;
     if (scanned > LIMIT) break;
+    if (scanned >= nextTick) {
+      nextTick += 500;
+      const secs = ((Date.now() - t0) / 1000).toFixed(0);
+      process.stdout.write(`  …scanned ${scanned} markers (${secs}s)\n`);
+    }
     const { class: cls } = classifyArchiveFailure(page.archived_photo);
     byClass[cls] = (byClass[cls] || 0) + 1;
     const key = failureReasonKey(page.archived_photo);

@@ -69,9 +69,22 @@ export function classifyArchiveFailure(archivedPhoto) {
   return { isMarker: true, class: FAILURE_CLASS.UNKNOWN, reason };
 }
 
-/** Group key for reporting — digits collapsed so counts aggregate sensibly. */
+/**
+ * Group key for reporting — incidental digits collapsed so counts aggregate,
+ * but HTTP status codes PRESERVED.
+ *
+ * Collapsing every digit reported `2438  HTTP N`, merging 403 (retryable) with
+ * 404 (permanent) into one row — hiding the single distinction this whole
+ * module exists to make, in the very output an operator reads before running
+ * with --apply. Incidental counts ("gallica has only 45 pages") still collapse,
+ * because those genuinely are noise.
+ */
 export function failureReasonKey(archivedPhoto) {
   const { reason } = classifyArchiveFailure(archivedPhoto);
   if (!reason) return null;
-  return reason.replace(/\d+/g, 'N').slice(0, 60);
+  return reason
+    .split(/(HTTP \d{3})/)
+    .map(part => (/^HTTP \d{3}$/.test(part) ? part : part.replace(/\d+/g, 'N')))
+    .join('')
+    .slice(0, 60);
 }
