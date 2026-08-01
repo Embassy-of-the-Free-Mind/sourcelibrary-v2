@@ -832,7 +832,7 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
    instantly from R2. A named animation (not a Tailwind transition) guarantees
    the ~1.9s timing regardless of how fast the load fires. */
 .hero-focus-in {
-  animation: hero-focus-in 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-focus-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-focus-in { animation: none; opacity: 1; filter: none; transform: none; }
