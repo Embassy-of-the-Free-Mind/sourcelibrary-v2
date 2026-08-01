@@ -39,6 +39,7 @@ import readline from 'readline';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
 import { canonicalLanguage } from '../lib/source-language-match.mjs';
+import { classifySourceLanguage } from '../lib/english-source-detect.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -52,6 +53,16 @@ const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null
  */
 const MIN_DEPTH = parseInt(argOf('--min-depth') ?? '500', 10);
 const TOP = parseInt(argOf('--top') ?? '40', 10);
+
+/**
+ * `--visible` restricts to the PUBLIC shelf: books a reader can already reach.
+ *
+ * A different question from the full queue, and usually the more actionable one.
+ * The unpublished holdings are the larger opportunity but every one of them
+ * needs a curation decision before a translation is worth anything; a visible
+ * book is one a reader can hit today and find untranslated.
+ */
+const VISIBLE_ONLY = process.argv.includes('--visible');
 
 /**
  * Languages where DEPTH DOES NOT IMPLY ANSWERABILITY.
@@ -148,6 +159,7 @@ await withMongo(async (db) => {
   for (const e of run.efforts) {
     const b = byId.get(e.book_id);
     if (!b) continue;
+    if (VISIBLE_ONLY && b.visible !== true) continue;
     const canon = canonicalLanguage(b.original_language) ?? canonicalLanguage(b.language);
     rows.push({
       ...b,
@@ -246,8 +258,50 @@ await withMongo(async (db) => {
     // an enumeration, so the shortest is closest to the work's own name.
     if ((r.title || '').length < (w.title || '').length) { w.title = r.title; w.slug = r.slug; w.id = r.id; }
   }
-  const head = [...works.values()]
+  let head = [...works.values()]
     .sort((a, b) => b.editions - a.editions || b.volumes - a.volumes || b.pages - a.pages);
+
+  // ── Source-language screen ────────────────────────────────────────────────
+  //
+  // `books.language` records the language of the WORK, not of the pages we hold.
+  // A re-hosted scholarly edition prints the ancient text with an English
+  // translation, and some of our records are the translation itself: Ganguli's
+  // *Mahābhārata* is catalogued Sanskrit, Avalon's *Serpent Power* is catalogued
+  // Sanskrit, Boehme's *Works* (1781) is catalogued Latin. Every one of them is
+  // already English and needs no translation at all.
+  //
+  // Nothing upstream catches this — it is invisible to the catalogue search,
+  // which is asking a question about the WORK. Read the OCR model's own declared
+  // page language (see english-source-detect.mjs for why provenance and
+  // `pages.ocr.language` both fail here).
+  if (!process.argv.includes('--no-source-screen')) {
+    const pages = db.collection('pages');
+    const kept = [];
+    const alreadyEnglish = [];
+    let undetermined = 0;
+    for (const w of head) {
+      // Sample from the MIDDLE of the book. Front matter (title page, preface,
+      // editor's introduction) is routinely English even in a Latin edition, so
+      // sampling from the start reports the apparatus rather than the text.
+      const skip = Math.max(2, Math.floor((w.pages || 0) * 0.3));
+      const sample = await pages.find(
+        { book_id: w.id, 'ocr.data': { $exists: true, $ne: null } },
+        { projection: { 'ocr.data': 1 }, sort: { page_number: 1 }, skip, limit: 8 },
+      ).toArray();
+      const verdict = classifySourceLanguage(sample.map((p) => p.ocr?.data).filter(Boolean));
+      w.source_language = verdict;
+      if (verdict.verdict === 'english_source') alreadyEnglish.push(w);
+      else { if (verdict.verdict === 'undetermined') undetermined++; kept.push(w); }
+    }
+    head = kept;
+    console.log(`\n─── Source-language screen: ${alreadyEnglish.length} work(s) are ALREADY ENGLISH ───`);
+    console.log('  Catalogued under a foreign language, but the pages we hold are an English');
+    console.log('  edition. They need no translation and are removed from the queue.');
+    for (const w of alreadyEnglish) {
+      console.log(`  ${String(w.canon).padEnd(10)}${String(w.pages).padStart(6)}pp  ${(w.title || '').slice(0, 52).padEnd(54)}${w.source_language.basis}`);
+    }
+    if (undetermined) console.log(`  (${undetermined} work(s) undetermined — too little legible text; kept, flagged in the JSON)`);
+  }
 
   console.log(`\n─── Head of the queue: OCR-ready, no prior found, answerable language ───`);
   console.log(`  ${eligible.length.toLocaleString()} books collapse to ${head.length.toLocaleString()} distinct works.`);
@@ -260,7 +314,18 @@ await withMongo(async (db) => {
       + `${(w.title || '').slice(0, 50).padEnd(52)}${w.visible ? '' : '[hidden] '}${w.year || ''}`);
   }
 
-  const out = path.join(OUT_DIR, `ft-translation-queue-${new Date().toISOString().slice(0, 10)}.json`);
+  // Blocked on OCR, not on evidence. Same finding, different next action: these
+  // need a pipeline run before a translator or a model can touch them, so they
+  // belong on a separate list rather than buried in the queue's tail.
+  const needsOcr = rows.filter((r) => r.verdict === 'none_found' && !r.ocrReady
+    && r.depth >= MIN_DEPTH && !SCRIPT_UNREACHABLE.has(r.canon));
+  console.log(`\n─── Blocked on OCR first: ${needsOcr.length} book(s), no prior found, answerable language ───`);
+  for (const r of needsOcr.slice(0, 12)) {
+    console.log(`  ${String(r.canon).padEnd(11)}${String(r.pages_count ?? 0).padStart(6)}pp  ${(r.title || '').slice(0, 54).padEnd(56)}${r.year || ''}`);
+  }
+
+  const out = path.join(OUT_DIR,
+    `ft-translation-queue${VISIBLE_ONLY ? '-visible' : ''}-${new Date().toISOString().slice(0, 10)}.json`);
   fs.writeFileSync(out, JSON.stringify({
     min_depth: MIN_DEPTH,
     reference_depth: Object.fromEntries([...depth].sort((a, b) => b[1] - a[1])),
