@@ -177,6 +177,52 @@ were checked against the images rather than assumed.
 Three of three warnings were accurate; one of three category labels was not. The
 error was mine, in the layer that groups warnings, not the model's.
 
+## Signals that direct attention — what to spot-check, and why
+
+Agreement is one number and a mediocre triage signal on its own: 67% of
+"instability" is mild glyph variance. These are free, already in the data, and
+several separate the arms far more sharply. Sampled arms n=774 / n=741.
+
+| signal | unstable | stable | lift |
+|---|---:|---:|---:|
+| mean `<unclear>` spans per page | **3.97** | 0.02 | **198×** |
+| length asymmetry (shorter side < 80% of longer) | 11.8% | 0.7% | **17×** |
+| the two passes disagree on **column count** | 5.9% | 0.7% | 8.4× |
+| any `<unclear>` at all | 7.1% | 1.1% | 6.5× |
+| passes disagree on **page-type** | 1.8% | 0.4% | 4.5× |
+| passes disagree on **language tag** | 5.0% | 1.3% | 3.8× |
+| page carries an `<image-desc>` | 32.2% | 9.3% | 3.5× |
+| marginalia gained or lost between passes | 9.0% | 3.1% | 2.9× |
+| page carries a `<margin>` mark | 37.3% | 14.6% | 2.6× |
+
+Three groups, and they are **not** measuring the same thing — which is what makes
+them worth combining rather than picking a winner:
+
+1. **The model's own uncertainty.** `<unclear>` is a per-span "I could not read
+   this," and it is the sharpest signal available: 3.97 marks per unstable page
+   against 0.02 per stable one. It fires on few pages (7.1%) but when it fires it
+   fires hard, so it is a high-precision, low-recall flag — exactly what a
+   spot-check queue wants at the top.
+2. **Structural disagreement, which needs no text comparison at all.** When two
+   passes report different column counts, page types, or languages for one leaf,
+   they disagreed about what the page *is*. Reading the envelope tags is enough —
+   no diff, no Levenshtein. Column disagreement at 8.4× independently corroborates
+   the reordering class found by bag-vs-sequence.
+3. **Content that invites judgement.** Illustrations (3.5×) and marginalia (2.6×)
+   mark pages where "what counts as the text" is a decision, and two passes need
+   not decide alike.
+
+**On embeddings** — the honest answer is that we do not have them for this, and
+they would buy something real. `page_translations` holds embeddings of
+*translations*, not of each OCR pass, so pass-vs-pass semantic distance would
+need new (paid) embedding calls. What it would add is the one thing every metric
+here lacks: Levenshtein cannot distinguish `nūc → nunc` (no meaning change) from
+`hunc → hanc` (meaning change), and both score as one substitution. Embedding
+distance separates orthographic-policy variance from semantic error — the
+difference between a page that is *differently written* and one that is *wrong*.
+Scope it to the ~8% of pairs already classed as omission, divergent, or
+reordering, not to all 63,572.
+
 ## Caveats
 
 1. **The channels are not independent.** The `<warning>` tag is written by the
