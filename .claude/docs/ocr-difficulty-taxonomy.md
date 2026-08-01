@@ -187,7 +187,7 @@ several separate the arms far more sharply. Sampled arms n=774 / n=741.
 |---|---:|---:|---:|
 | mean `<unclear>` spans per page | **3.97** | 0.02 | **198×** |
 | length asymmetry (shorter side < 80% of longer) | 11.8% | 0.7% | **17×** |
-| the two passes disagree on **column count** | 5.9% | 0.7% | 8.4× |
+| a `<columns>` tag present on one side only | 5.9% | 0.7% | 8.4× |
 | any `<unclear>` at all | 7.1% | 1.1% | 6.5× |
 | passes disagree on **page-type** | 1.8% | 0.4% | 4.5× |
 | passes disagree on **language tag** | 5.0% | 1.3% | 3.8× |
@@ -204,10 +204,18 @@ them worth combining rather than picking a winner:
    fires hard, so it is a high-precision, low-recall flag — exactly what a
    spot-check queue wants at the top.
 2. **Structural disagreement, which needs no text comparison at all.** When two
-   passes report different column counts, page types, or languages for one leaf,
-   they disagreed about what the page *is*. Reading the envelope tags is enough —
-   no diff, no Levenshtein. Column disagreement at 8.4× independently corroborates
-   the reordering class found by bag-vs-sequence.
+   passes report different page types or languages for one leaf, they disagreed
+   about what the page *is*. Reading the envelope tags is enough — no diff, no
+   Levenshtein.
+
+   **Correction:** an earlier draft read the `columns_changed` flag as "the passes
+   counted columns differently" and claimed it corroborated the reordering class.
+   It does not. Decomposed, **588 of 600** flagged pairs are one side emitting a
+   `<columns>` tag while the other omits it; only **12 pairs — 0.15%** name
+   genuinely different counts. The signal is real but it measures *annotation
+   emission*, not layout disagreement. Reading a boolean's name as a claim about
+   its contents is the same error as reading a rate without its denominator, and
+   it is the third instance in this document.
 3. **Content that invites judgement.** Illustrations (3.5×) and marginalia (2.6×)
    mark pages where "what counts as the text" is a decision, and two passes need
    not decide alike.
@@ -222,6 +230,57 @@ distance separates orthographic-policy variance from semantic error — the
 difference between a page that is *differently written* and one that is *wrong*.
 Scope it to the ~8% of pairs already classed as omission, divergent, or
 reordering, not to all 63,572.
+
+## The triage queue, run — and a class it surfaced
+
+`node scripts/eval/ocr-triage.mjs <corpus.jsonl>` ranks the clean unstable pool
+into buckets and emits a worked example set with reader and image URLs:
+`scripts/eval/results/ocr-triage-2026-08-01.json`. Buckets are kept separate
+rather than blended into one score, because a blended rank cannot say *why* a
+page surfaced, and the reason is the whole point.
+
+On 2,398 hydrated unstable pages:
+
+| bucket | n | share |
+|---|---:|---:|
+| illustration on the page | 728 | 30.4% |
+| one pass produced far more text | 232 | 9.7% |
+| marginalia gained or lost | 204 | 8.5% |
+| model flagged spans it could not read | 162 | 6.8% |
+| passes disagreed on language | 107 | 4.5% |
+| passes disagreed on page type | 58 | 2.4% |
+| passes genuinely disagreed on column count | 1 | 0.04% |
+
+**The `<unclear>` bucket works as designed.** Its top three are manuscript hands
+and nothing else — Avicenna's *Canon*, 13th-c. Gothic textualis, **657** unclear
+marks; Bodleian MS Barocci 241, Greek minuscule, 531; a German Kurrent freemasonry
+history, 397. Ranking by that count puts pages the model itself says it failed on
+at the head of the queue, with no text comparison at all.
+
+### New class found by the queue: the plate/text classification flip
+
+Dozens of pairs read `words = [0, 269]` or `[231, 0]` — **one pass produced no
+body text whatever**, and agreement lands near 0.00. They concentrate in one
+place: Schott's illustrated mechanical treatises.
+
+*Mechanica Hydraulico-Pneumatica* p513, agreement **0.004**, words 231 vs 0 —
+a full-page engraving of a hydraulic organ automaton, captioned "Iconismus
+XXXIX. pag: 408", with label letters (V, X, Y, T, S, R, M, N, O, Q, L, P, H, A,
+F, Z) and the numbers 1–8 scattered across the figure. No prose anywhere.
+
+→ https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2164f
+
+One pass transcribed the caption and the scattered labels as page text. The other
+emitted an `<image-desc>` and stopped. **Neither is wrong.** Are the label letters
+on an engraving "text on the page" or part of the illustration? Nothing in the
+prompt decides it, so the two passes decided differently and the transcription
+went from 231 words to zero.
+
+This is the cleanest case in the corpus of the pattern the printed-page section
+predicted: **a specification gap, not a reading failure.** It also explains why
+"illustration on the page" is the largest bucket at 30.4% — where text meets
+image, the boundary of "the text" is undefined, and an undefined boundary is
+re-decided on every run. Unlike legibility, this one is fixable in the prompt.
 
 ## Caveats
 
