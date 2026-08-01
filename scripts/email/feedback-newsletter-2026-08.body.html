@@ -1,0 +1,183 @@
+<!--
+  Newsletter body — "How to tell us we got it wrong" (August 2026).
+
+  Paste this into /admin/email → Compose → Manual mode. It is written for the
+  520px shell in src/lib/email-templates.ts (wrapInEmailShell), which supplies
+  the logo, the <h1> from the subject line, and the unsubscribe footer — so
+  this file deliberately has no header, no title, and no footer of its own.
+
+  Full rendered preview (shell + body): feedback-newsletter-2026-08.html
+
+  SCREENSHOTS are served from public/email/feedback-2026-08/. They resolve only
+  after a prod deploy — check all three load before sending.
+
+  EVERY NUMBER AND QUOTE HERE WAS VERIFIED against live data on 2026-08-01:
+    6.1M pages / 4.9M translated  → sum over books{visible:true}
+    336 messages / 298 addressed  → feedback collection counts
+    49 pages translated on request→ feedback.addressed_action tally
+    261 books / ~105K pages / 2,262 audited
+                                  → .claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md
+    Matthiolus pp. 47-58 vs 44+100, ~80% unverifiable
+                                  → CLAUDE.md "Entity index & page attribution" (#3361)
+  All reader quotes are verbatim from the feedback collection, unattributed.
+  Do not adjust a figure without re-measuring; do not paraphrase a quote.
+-->
+
+<p style="margin: 0 0 20px;">
+  Every page in this library was read by a machine before it was read by a person.
+  Six million scanned pages, and nearly five million of them turned into English by
+  an AI model. Not one has been proofread by a human being. There aren&rsquo;t enough
+  human beings.
+</p>
+
+<p style="margin: 0 0 20px;">
+  Which means that when you open a page and actually look at it, there is a real
+  chance you are the first person ever to do so &mdash; and the only one who will
+  notice if something is wrong.
+</p>
+
+<p style="margin: 0 0 28px;">
+  Two of those noticings, from the last few weeks.
+</p>
+
+<!-- Story 1 -->
+<p style="margin: 0 0 14px; font-size: 17px; font-style: italic; color: #6b4a2f; line-height: 1.5;">
+  &ldquo;I&rsquo;m seeing chapter 4 on the image page and chapter 5 in the text&rdquo;
+</p>
+
+<p style="margin: 0 0 20px;">
+  Fourteen words, sent from a book page in July. It turned out that 261 books were
+  serving every scan one leaf behind its own text. The Internet Archive keeps scanner
+  calibration cards inside its raw archive files but strips them from the public
+  images; our importer counted one of those cards as page one and shifted everything
+  after it. Around 105,000 pages, wrong for four months.
+</p>
+
+<p style="margin: 0 0 28px;">
+  Every one of those pages looked completely fine on its own. The fault is only
+  visible if you read the scan <em>against</em> the translation &mdash; which is what
+  a reader does and a script doesn&rsquo;t. Someone had reported the same thing ten
+  days earlier, in eleven words: &ldquo;The page ocr and text of image do not appear
+  to be aligned.&rdquo; It took the second report before we connected them. Both
+  people were right, and we were slow.
+</p>
+
+<!-- Story 2 -->
+<p style="margin: 0 0 14px; font-size: 17px; font-style: italic; color: #6b4a2f; line-height: 1.5;">
+  &ldquo;What is this page about? Real?&rdquo;
+</p>
+
+<p style="margin: 0 0 20px;">
+  Four words, typed on our encyclopedia entry for the botanist Matthiolus. Fair
+  question. The page claimed he appeared on pages 47&ndash;58 of a book that names him
+  on pages 44 and 100. Our index had been crediting every page of a large extraction
+  batch with every name found anywhere in that batch, and roughly four out of five
+  page citations across the encyclopedia turned out to be unverifiable.
+</p>
+
+<p style="margin: 0 0 32px;">
+  They now read &ldquo;discussed in pp. X&ndash;Y&rdquo; wherever we can&rsquo;t pin a
+  page down. A coarse true claim is worth more than a precise false one, and the
+  reason we know that is a stranger who typed four words into a box.
+</p>
+
+<hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 32px;" />
+
+<p style="margin: 0 0 24px; font-size: 20px; font-family: Georgia, serif;">
+  Three ways to tell us
+</p>
+
+<!-- 1 -->
+<p style="margin: 0 0 14px;">
+  <strong>1. From the bottom of any page.</strong> Scroll down. It&rsquo;s there on
+  every page in the library.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/callout.jpg"
+     alt="A band at the foot of the page reading 'This library is built in the open — if you spot an error, have a suggestion, or just want to say hello, we'd love to hear from you', with a black Give Feedback button."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 18px; border: 1px solid #e8e4dc;" />
+
+<p style="margin: 0 0 14px;">
+  Click it and a box opens. Write whatever you noticed. It quietly records which page
+  you were standing on, so you never have to explain where you are.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/modal.jpg"
+     alt="The Send feedback dialog, with a message typed into it about a mistranslated Latin phrase, a checkbox offering to help with translations or research, and a Send button."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 32px; border: 1px solid #e8e4dc;" />
+
+<!-- 2 -->
+<p style="margin: 0 0 14px;">
+  <strong>2. From under a translation, while you&rsquo;re reading.</strong> There is a
+  faint line beneath the English text: <em>Notice a translation issue? Let us
+  know.</em> It carries the book and the page number with it, so a note as short as
+  &ldquo;wrong word in line three&rdquo; is enough to act on.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/reader.jpg"
+     alt="The reading view: Robert Fludd's 1617 engraved title page on the left, its English translation on the right, and an open feedback box beneath the translation reading 'What did you notice?'"
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 32px; border: 1px solid #e8e4dc;" />
+
+<!-- 3 -->
+<p style="margin: 0 0 32px;">
+  <strong>3. Ask us for something.</strong> A book we don&rsquo;t have. A translation
+  that doesn&rsquo;t exist yet. On an untranslated book the page offers
+  &ldquo;Request one&rdquo; &mdash; that is a real queue, not a suggestion box.
+  Forty-nine pages exist in English today because somebody clicked it.
+</p>
+
+<hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 32px;" />
+
+<p style="margin: 0 0 24px; font-size: 20px; font-family: Georgia, serif;">
+  What happens after you send it
+</p>
+
+<p style="margin: 0 0 20px;">
+  It lands in a queue that gets read. 336 messages so far; 298 of them are marked
+  handled &mdash; fixed, answered, or filed as a tracked issue. If you leave an email
+  address we write back when it&rsquo;s done. Some take an afternoon. The alignment
+  bug above took an audit of 2,262 books.
+</p>
+
+<p style="margin: 0 0 16px;">
+  None of it needs to be polished. Some of the most useful messages we have ever had
+  are four words long:
+</p>
+
+<div style="margin: 0 0 24px; padding: 4px 0 4px 18px; border-left: 2px solid #e7ddcc; color: #5c554d; font-size: 14px; line-height: 1.8;">
+  &ldquo;Not the original edition.&rdquo;<br />
+  &ldquo;Some books need cropping white or black space.&rdquo;<br />
+  &ldquo;This image doesn&rsquo;t correspond with this text.&rdquo;<br />
+  &ldquo;Opening the collection should put me at the top of the page. I landed in the
+  middle and it was confusing.&rdquo;
+</div>
+
+<p style="margin: 0 0 28px;">
+  Every one of those was acted on.
+</p>
+
+<hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 28px;" />
+
+<p style="margin: 0 0 20px;">
+  We put these books online so they could be read closely. Reading them closely is
+  also the only thing that finds what&rsquo;s broken in them. The two turn out to be
+  the same activity, which is a nice piece of luck for a library built in the open.
+</p>
+
+<p style="margin: 0 0 28px;">
+  If something looks wrong, it probably is. Tell us.
+</p>
+
+<p style="margin: 0 0 32px; text-align: center;">
+  <a href="https://sourcelibrary.org"
+     style="display: inline-block; background: #1a1612; color: #fdfcf9; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+    Open the library
+  </a>
+</p>
+
+<p style="margin: 0; color: #5c554d;">
+  &mdash; Derek
+</p>
