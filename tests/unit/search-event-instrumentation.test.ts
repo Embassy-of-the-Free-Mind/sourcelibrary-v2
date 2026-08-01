@@ -164,6 +164,48 @@ describe('search instrumentation coverage', () => {
     expect(offenders).toEqual([]);
   });
 
+  it('every tenant-aware search route passes its tenant to the logger', () => {
+    // A route that resolves a tenant in order to *scope* its query, but does
+    // not pass it to the logger, produces rows that cannot be attributed later
+    // — which is exactly how `search_queries` ended up with four months of
+    // unsplittable rows, and how `/api/search` shipped in the first pass of
+    // #3484. If a route knows its tenant, the log must know it too.
+    // Comments are stripped before matching. The first version of this test
+    // did not strip them, so the explanatory comment sitting directly above
+    // `tenantId,` satisfied the assertion and the test passed with the actual
+    // argument deleted — a check that could not fail.
+    const stripComments = (s: string) => s.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+
+    for (const route of SEARCH_ROUTES) {
+      const src = read(route);
+      const resolvesTenant = /getTenantContextFromRequest|resolveTenantId|const tenantId/.test(src);
+      if (!resolvesTenant) continue;
+      const call = src.slice(src.indexOf('logSearchEvent({'));
+      const callBody = stripComments(call.slice(0, call.indexOf('});') + 3));
+      expect(callBody, `${route} resolves a tenant but does not pass it to logSearchEvent`)
+        .toMatch(/\btenantId\b/);
+    }
+  });
+
+  it('the semantic lane logs latency but does NOT emit a second search_query event', () => {
+    // /api/search/semantic is fired by the same page-load as /api/search for a
+    // single user query. Adding a search_query event here would double-count
+    // every search. It logs to `search_queries` (latency/lane telemetry) only —
+    // which is why it is deliberately absent from SEARCH_ROUTES above.
+    const src = read('src/app/api/search/semantic/route.ts');
+    expect(src).toContain('logSearchQuery(');
+    expect(src).not.toContain('logSearchEvent(');
+  });
+
+  it('search_queries rows carry tenant and host so the log can be split later', () => {
+    const src = read('src/lib/search-log.ts');
+    // Derived inside the writer, not threaded through callers — a new caller
+    // must not be able to omit them.
+    expect(src).toContain('tenant_id:');
+    expect(src).toContain('host:');
+    expect(src).toContain('getTenantContextFromRequest');
+  });
+
   it('the BPH catalogue route only logs real searches, not catalogue browsing', () => {
     const src = read('src/app/api/catalog/bph/route.ts');
     // Guards the numerator: without this, every page of catalogue browsing and
