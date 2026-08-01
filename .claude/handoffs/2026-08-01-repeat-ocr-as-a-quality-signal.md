@@ -20,7 +20,8 @@ That reframed the corpus work as the foundation for it.
 
 - **63,572 true repeats** exist free in `page_revisions` — same leaf, same
   model, same prompt. Isolating them required removing the 40% of pairs that
-  read *different leaves* (re-archiving, #3473).
+  read *different leaves* — not re-archiving but the #3357 repair moving `ocr`
+  subdocuments between page docs (#3473).
 - **6,420 unstable** (<0.85); 93% carry no degenerate/refusal/commentary flag.
 - **It is not the scan.** Among pages the model rated, 491 of 497 unstable ones
   are rated a *good* scan; page-type is identical across arms.

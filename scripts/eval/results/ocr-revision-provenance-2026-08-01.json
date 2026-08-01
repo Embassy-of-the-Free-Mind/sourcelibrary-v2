@@ -1,0 +1,81 @@
+{
+  "date": "2026-08-01T02:29:37.118Z",
+  "sample": 6000,
+  "revisions_total": 191221,
+  "revision_days": 73,
+  "top_days": [
+    {
+      "day": "2026-07-25",
+      "n": 56413,
+      "pct": 29.5
+    },
+    {
+      "day": "2026-04-06",
+      "n": 33016,
+      "pct": 17.3
+    },
+    {
+      "day": "2026-04-05",
+      "n": 15829,
+      "pct": 8.3
+    },
+    {
+      "day": "2026-06-19",
+      "n": 9820,
+      "pct": 5.1
+    },
+    {
+      "day": "2026-07-27",
+      "n": 7388,
+      "pct": 3.9
+    },
+    {
+      "day": "2026-04-19",
+      "n": 6170,
+      "pct": 3.2
+    },
+    {
+      "day": "2026-04-12",
+      "n": 4176,
+      "pct": 2.2
+    },
+    {
+      "day": "2026-04-07",
+      "n": 3707,
+      "pct": 1.9
+    },
+    {
+      "day": "2026-03-04",
+      "n": 2800,
+      "pct": 1.5
+    },
+    {
+      "day": "2026-04-13",
+      "n": 2652,
+      "pct": 1.4
+    }
+  ],
+  "counts": {
+    "considered": 5604,
+    "missingPage": 396,
+    "hasUpdatedAt": 5604,
+    "hasCreatedAt": 0,
+    "noTimestamp": 0,
+    "identicalText": 283,
+    "inverted": 4694,
+    "modelChanged": 360,
+    "modelChangedInverted": 322,
+    "modelChangedSameLeaf": 65,
+    "modelChangedSameLeafInverted": 49,
+    "sameLeaf": 2059,
+    "sameLeafInverted": 1757
+  },
+  "rates": {
+    "inverted_all": 83.8,
+    "inverted_same_leaf": 85.3,
+    "inverted_model_changed": 89.4,
+    "inverted_model_changed_same_leaf": 75.4
+  },
+  "verdict": "TIMESTAMP IS NOT A DISCRIMINATOR — pages with a proven re-OCR invert at the same rate as everything else.",
+  "caveat": "Does NOT show the same-leaf true-repeat corpus is unsound — that corpus is selected on printed page number, model and prompt, never on a timestamp. It shows the clock cannot audit it."
+}

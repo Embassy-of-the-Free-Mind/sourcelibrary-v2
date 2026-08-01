@@ -63,18 +63,34 @@ shifted e-rara book (*Kabbala denudata*) checked against their scans: image `49.
 shows printed **5** (current OCR `5` correct, revision `4` wrong); `55.jpg` shows
 **11** (current `11` correct, revision `10` wrong). The live data is right.
 
-**Mechanism** — the timestamps are inverted (revision created 2026-07-25, current
-`ocr.updated_at` 2026-04-04, i.e. OLDER). Impossible for a re-OCR; exactly what a
-TEXT SHIFT does. #3357 is recorded as "323 text-shifted back": the sweep moved
+**Mechanism.** #3357 is recorded as "323 text-shifted back": the sweep moved
 existing `ocr` subdocuments between pages rather than re-transcribing, so page 49
-inherited page 50's object *and its April timestamp*, while `page_revisions`
-snapshotted the displaced text in July.
+inherited page 50's object, while `page_revisions` snapshotted the displaced text
+in July. So the ±1 slice is ONE administrative event replicated across thousands
+of pages, not thousands of independent re-readings.
 
-So the ±1 slice is ONE administrative event replicated across thousands of pages,
-not thousands of independent re-readings.
+> **CORRECTION, 2026-08-01 — the timestamps do not prove this; the images do.**
+> This section originally argued the mechanism from an inverted timestamp
+> (revision created 2026-07-25, live `ocr.updated_at` 2026-04-04, i.e. OLDER),
+> calling that "impossible for a re-OCR." Measured across the corpus, **inversion
+> is the norm and proves nothing**: 83.8% of all revision-bearing pages invert,
+> 85.3% of pairs printing the SAME page number (where a move cannot be the
+> explanation), and **89.4% of pages whose live `ocr.model` differs from the
+> revision's model** — positive evidence a genuine re-OCR ran, inverting at the
+> same rate as everything else. `page_revisions.created_at` is a *sweep* clock,
+> not a reading clock (a single day, 2026-07-25, is 29.5% of all 191,221 OCR
+> revisions), and `pages.ocr.updated_at` is not re-stamped by the writers that
+> move or rewrite `ocr` — there is no `ocr.created_at` at all (0% of pages).
+> Neither timestamp orders a pair, so neither can classify one.
+> **The conclusion above still stands — it is carried entirely by the two scans
+> checked against their printed numbers.** Re-run: `node
+> scripts/audit/ocr-revision-provenance.mjs` (free, ~2 min).
 
-**Fix for any future shift repair: stamp `ocr.updated_at` on the write.** Leaving the
-moved object's original timestamp is what made this hard to diagnose.
+**Still worth doing: stamp `ocr.updated_at` on every write that moves or rewrites
+`ocr`.** Not because it would have diagnosed this — it would not have — but
+because the corpus currently has *no* reliable write-time provenance on
+`pages.ocr`, which is why a plausible clock argument was available to be wrong
+about in the first place.
 
 **Do not quote 87.3%.** A first attempt sorted `_id` desc, landed inside one
 affected book, and produced that number. Use `$sample`.

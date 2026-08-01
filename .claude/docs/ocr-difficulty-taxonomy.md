@@ -11,8 +11,9 @@ running the same prompt, over the same leaf, twice, produced different text.**
 That population already exists and cost nothing: **63,572 true-repeat pairs** in
 `page_revisions` — same image, same model, same prompt. Isolating it required
 first removing pairs whose two passes read *different leaves* (40% of the
-corpus; re-archiving, not re-reading — see #3473) and pairs where either side is
-degenerate, a refusal, or commentary.
+corpus, and not re-reading — mostly the #3357 repair moving text between page
+docs, see #3473) and pairs where either side is degenerate, a refusal, or
+commentary.
 
 **6,420 pages are unstable** (agreement < 0.85), and 93% of them carry none of
 the known model-failure flags. They are ordinary pages the model cannot read the

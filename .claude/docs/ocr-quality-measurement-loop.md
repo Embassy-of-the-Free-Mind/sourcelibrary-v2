@@ -9,7 +9,10 @@ re-measurement that can come back negative.
 **Quality signal:** two passes of the same model, same prompt, over the same
 leaf, disagreeing. 63,572 such pairs already exist in `page_revisions` at zero
 marginal cost. Isolating them requires removing pairs that read *different*
-leaves — 40% of the raw corpus is re-archiving, not re-reading (#3473).
+leaves — 40% of the raw corpus, and **not re-reading** (#3473). Say only that
+much unless you have checked: the dominant ±1 slice (83.5% of the shifted pairs)
+is the #3357 shift *repair* moving `ocr` subdocuments between page docs, so the
+image never changed and the text did — the opposite of re-archiving.
 
 It measures **stability**, not accuracy, and the distinction is load-bearing:
 two passes that both recite the same memorised canonical text agree perfectly.
@@ -94,9 +97,43 @@ Cost is a few hundred pages of paid OCR. **Not run — it needs a spend decision
 and at 0.34% the honest recommendation is to bundle it with the next prompt
 revision rather than fund a run of its own.**
 
+## A negative result the loop produced: the timestamp is not a discriminator
+
+Worth recording because it is what the loop is *for* — an instrument was
+proposed, tested, and thrown away before anything was built on it.
+
+The question was whether `page_revisions` pairs could be sorted into re-OCR
+versus administrative text-move by their clocks, which would extend the
+page-number instrument to the **60,511 pairs that print no page number at all** —
+a population nearly as large as the measurable one, and one that agrees far worse
+(mean 0.541 vs 0.937). It cannot. `scripts/audit/ocr-revision-provenance.mjs`:
+
+```
+inverted (live ocr.updated_at OLDER than its own revision)
+  all pairs                              4694/5604 = 83.8%
+  SAME printed leaf (no move possible)   1757/2059 = 85.3%
+  MODEL CHANGED (a re-OCR certainly ran)  322/ 360 = 89.4%
+```
+
+The third row is the refutation. A live `ocr.model` different from the revision's
+model is positive evidence that a real re-OCR ran, and those pages invert at the
+same rate as everything else — so inversion is a property of the write path, not
+of relocation. `pages.ocr` carries **no `ocr.created_at` at all** (0%), and
+`page_revisions.created_at` is a *sweep* clock rather than a reading clock: one
+day, 2026-07-25, is **29.5% of all 191,221 OCR revisions**.
+
+Two things follow. The corpus is not indicted — the 63,572 true repeats are
+selected on printed page number, model and prompt, never on a timestamp — but the
+clock cannot *audit* them, so "63,572 pairs exist" must not harden into "63,572
+independent readings." And the mechanism claim in
+`.claude/handoffs/2026-07-30-ocr-provenance-and-revision-corpus.md` had to be
+re-grounded: it was argued from this inversion, and survives only because two
+scans were also checked against their printed page numbers. The image was doing
+the work the clock appeared to be doing.
+
 ## Why the loop matters more than the fix
 
-Four claims in this work were wrong and each was caught by the same move —
+Five claims in this work were wrong and each was caught by the same move —
 opening the artifact instead of reading the aggregate:
 
 | claim | reality | how it failed |
@@ -105,6 +142,7 @@ opening the artifact instead of reading the aggregate:
 | 15 independent difficulty categories | one category; 95% name a hand | 15 regexes over one sentence |
 | "passes disagree on column count", 8.4× | 588/600 are a tag on one side only | field name read as its contents |
 | plate fix "addresses 30%" | 0.34% of illustrated pages | bucket size read as effect size |
+| inverted timestamp proves a text move | 89.4% of proven re-OCRs invert too | signal never checked against a control cohort |
 
 Every one was a plausible aggregate over a broken instrument, and none would
 have been caught by a green test. That is the argument for keeping the metric

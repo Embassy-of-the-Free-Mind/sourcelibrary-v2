@@ -36,6 +36,13 @@ and needs no ground truth.
 - Population: eligible pairs, `leaf_shift === false` (same leaf — a shifted pair
   compares two different images and its disagreement is re-archiving, #3473),
   same model on both sides, same prompt on both sides.
+  > **Amendment, 2026-08-01 (rationale only — the rule is unchanged).** The
+  > parenthetical is wrong about the mechanism: the dominant ±1 slice is the
+  > #3357 *repair* moving `ocr` subdocuments between page docs, so the text moved
+  > and the image did not. `leaf_shift === false` still excludes exactly the same
+  > pairs for the same reason (the two sides do not describe one leaf), so no
+  > result changes. Recorded here rather than edited away, because a
+  > preregistration that is quietly rewritten stops being one.
 - Excluded: any pair flagged `prior_degenerate`, `current_degenerate`,
   `prior_refusal`, `current_refusal`, `prior_meta`, `current_meta`, or
   `near_zero_overlap`. Those are model failures, and including them would let
