@@ -20,16 +20,27 @@ same way twice.
 
 ## The headline: it is not the scan
 
+Sampled arms of n=867 each.
+
 | | unstable | stable |
 |---|---:|---:|
 | carries an OCR `<warning>` | **30.3%** | 4.7% |
-| `<scan-quality>` reads *good* | **491 of 497** | 354 of 354 |
+| carries a `<scan-quality>` tag at all | 57.3% (497) | 40.8% (354) |
+| …and of those, reads *good* | **491 of 497** | 354 of 354 |
 | `<page-type>` reads *text* | 810 | 813 |
 
-The model rates almost every unstable page a **good scan**, and page types are
-identical across arms. Whatever makes these pages hard is **on the page, not in
-the digitisation**. That kills the intuitive model — "bad OCR means bad scan" —
-for this population.
+Among pages the model rated at all, it rated almost every unstable page a **good
+scan**, and page types are identical across arms. Whatever makes these pages hard
+is **on the page, not in the digitisation** — which kills the intuitive "bad OCR
+means bad scan" model for this population.
+
+**Read the denominator, which an earlier draft of this table hid.** "491 of 497"
+is 491 of the *tagged* pages, not of the arm: **43% of unstable pages carry no
+`<scan-quality>` tag at all** and are silent, not good. And tag *presence* is
+itself arm-correlated — 57.3% unstable against 40.8% stable — so the model is
+measurably more likely to comment on a scan it will go on to read inconsistently.
+That is a real signal the table above discards; it is not evidence those pages
+are fine.
 
 ## Primary axis: manuscript hand
 
