@@ -102,7 +102,24 @@ And a fourth, in the tooling: the full verify pass reported **0 corrections over
 books** while silently dropping **885 candidates (15%)** to timeouts. A sweep that skips
 a sixth of its candidates and prints a clean result is claiming coverage it did not
 earn. Fixed with retry-with-backoff plus a failure ledger; the run now prints either
-"coverage: every candidate was checked" or the command to close the gap.
+"coverage: all N candidates checked" or the command to close the gap. Retries took
+failures from 885 to 38 (96%).
+
+**Then the fix itself did the same thing.** The commit adding that ledger anchored its
+patch on text that did not exist in the file, so the `writeFileSync` block was never
+inserted — and because that one replacement carried no assertion (unlike its siblings in
+the same patch script), the patcher printed "patched" and I believed it. The next full
+run reported 38 failures and wrote no ledger, which is the only reason it surfaced. The
+feature whose entire purpose was to stop a sweep from claiming unearned coverage had
+itself silently done nothing.
+
+The lesson is narrow and worth keeping: **assert on every replacement in a patch script,
+not just the ones you happen to think of** — a no-op `str.replace` is indistinguishable
+from a successful one. And verify a guarantee in **both** directions before trusting it.
+The ledger was re-added with a uniqueness assertion on its anchor and then proven: clean
+run → no file and "coverage: all N checked"; forced 1ms timeouts → "COVERAGE INCOMPLETE
+— 6 of 6 unchecked" with the 6 real identifiers; `--retry-failures` on that ledger → 6/6
+checked. Same discipline as the `--verify` positive control above.
 
 ## Method notes that paid off
 
@@ -122,7 +139,7 @@ earn. Fixed with retry-with-backoff plus a failure ledger; the run now prints ei
 
 ## State at handoff
 
-- **10 commits, CI green, 1,032 tests**, worktree clean.
+- **11 commits, CI green, 1,032 tests**, worktree clean.
 - A **full verify dry-run with retries** was still running at wrap-up
   (`/tmp/verify-full3.log`, ledger `/tmp/verify-failures.json`). Prior pass without
   retries: 5,057 agreed, **0 corrections outside Florence**, 885 unchecked. Re-run only
