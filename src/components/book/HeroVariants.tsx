@@ -80,8 +80,8 @@ export default function HeroVariants({
         onLoad={reveal}
         onError={onBgError}
         loading="eager"
-        className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-[1600ms] delay-150 ease-out will-change-[opacity,filter,transform] ${
-          revealed ? 'opacity-100 blur-0 scale-100' : 'opacity-0 blur-[26px] scale-[1.10]'
+        className={`absolute inset-0 w-full h-full object-cover will-change-[opacity,filter,transform] ${
+          revealed ? 'hero-focus-in' : 'opacity-0'
         }`}
       />
     ) : null;
