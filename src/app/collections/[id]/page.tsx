@@ -20,6 +20,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { isTranslationReadable } from '@/lib/first-translation/derive';
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
@@ -110,6 +111,7 @@ interface BookItem {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -136,6 +138,12 @@ interface CuratedHighlight {
   is_first_translation?: boolean;
   ft_disposition?: string;
   language?: string;
+  // Carried through the merge so the badge can be qualified when the
+  // translation is barely started (#3435).
+  pages_count?: number;
+  pages_ocr?: number;
+  pages_translated?: number;
+  pages_blank?: number;
   id: string;
 }
 
@@ -676,6 +684,10 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         is_first_translation: book.is_first_translation as boolean | undefined,
         ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
         language: book.language as string | undefined,
+        pages_count: book.pages_count as number | undefined,
+        pages_ocr: book.pages_ocr as number | undefined,
+        pages_translated: book.pages_translated as number | undefined,
+        pages_blank: book.pages_blank as number | undefined,
         id: h.book_id,
       };
     });
@@ -1165,7 +1177,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     )}
                     {b.is_first_translation && (b.pages_translated ?? 0) > 0 && (
                       <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                        {firstTranslationBadge(b.ft_disposition, b.language)}
+                        {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b))}
                       </span>
                     )}
                   </Link>
@@ -1225,7 +1237,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                       </p>
                     )}
                     <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                      {firstTranslationBadge(b.ft_disposition, b.language)}
+                      {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b))}
                     </span>
                   </Link>
                 );
@@ -1339,7 +1351,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     {featured.author}{featured.year ? `, ${featured.year}` : ''}
                     {featured.is_first_translation && (
                       <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                        {firstTranslationBadge(featured.ft_disposition, featured.language)}
+                        {firstTranslationBadge(featured.ft_disposition, featured.language, !isTranslationReadable(featured))}
                       </span>
                     )}
                   </p>
@@ -1513,7 +1525,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language)}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
                             </span>
                           )}
                         </p>
@@ -1566,7 +1578,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language)}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
                             </span>
                           )}
                         </p>
@@ -1618,7 +1630,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language)}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
                             </span>
                           )}
                         </p>

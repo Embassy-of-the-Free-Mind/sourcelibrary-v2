@@ -32,7 +32,12 @@ import {
   type FirstTranslationVerdict,
   type LegacyDisposition,
 } from '@/lib/first-translation/types';
-import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
+import { translationCoverage, isTranslationReadable } from '@/lib/first-translation/derive';
+import {
+  firstTranslationBadge,
+  firstTranslationDescription,
+  translationProgressNote,
+} from '@/lib/first-translation-labels';
 import type { PriorTranslationCredit } from '@/lib/types/book';
 import {
   hasPublishablePriorTranslation,
@@ -54,6 +59,10 @@ interface EvidenceBook {
   language?: string;
   is_first_translation?: boolean;
   pages_translated?: number | null;
+  // Coverage inputs (#3435) — see translationCoverage() for the denominator.
+  pages_ocr?: number | null;
+  pages_blank?: number | null;
+  pages_count?: number | null;
   prior_translation?: PriorTranslationCredit;
   first_translation?: {
     verdict?: FirstTranslationVerdict;
@@ -298,6 +307,11 @@ export default async function FirstTranslationEvidence({
   const isFirst = !!verdict && FIRST_FAMILY.has(verdict) && published;
   const isExisting = verdict === 'not_first';
 
+  // #3435: the claim can be true while the English edition is nowhere near
+  // readable. Keep the badge, qualify it — and say how far along it actually is.
+  const coverage = translationCoverage(book);
+  const inProgress = isFirst && !isTranslationReadable(book);
+
   // A verified, publishable prior-translation credit (#3026). Populated only on
   // non-first books whose prior edition resolved to a real record with a link.
   // It's the honest headline for a not_first book, so it shows even when the
@@ -375,13 +389,16 @@ export default async function FirstTranslationEvidence({
     <div className="mt-3">
       <details className="group">
         <summary className="inline-flex items-center gap-2 px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-          {firstTranslationBadge(dispForLabel, book.language)}
+          {firstTranslationBadge(dispForLabel, book.language, inProgress)}
         </summary>
         <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
           <div className="flex items-start justify-between gap-2">
             <p className="text-stone-300">{firstTranslationDescription(dispForLabel)}</p>
             <StrengthChip strength={effectiveStrength} preliminary={isPreliminary} />
           </div>
+          {inProgress && coverage !== null && (
+            <p className="text-stone-400">{translationProgressNote(coverage)}</p>
+          )}
           {legacy?.reasoning && <p className="text-stone-400">{legacy.reasoning}</p>}
           {sourceComparePrior && (
             <div className="space-y-1 pt-1 border-t border-stone-700/40">
