@@ -1318,21 +1318,35 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </div>
           )}
           cover={(
-            <div className="flex flex-col items-center md:items-start">
-              {coverDisplay ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={coverDisplay}
-                  alt={book.display_title || book.title}
-                  className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
-                  style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
-                />
-              ) : (
-                <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
-                  {book.display_title || book.title}
+            /* Editors (inner_circle) get a "Change cover" affordance over the
+               hero cover — opens the page picker + writes via buildCoverUpdate.
+               Everyone else just sees the cover. */
+            <CoverImagePicker
+              bookId={book.id}
+              currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+              currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
+              bookTitle={book.display_title || book.title}
+              bookAuthor={book.author}
+              bookYear={book.published}
+              pages={pages}
+              trigger={
+                <div className="flex flex-col items-center md:items-start">
+                  {coverDisplay ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={coverDisplay}
+                      alt={book.display_title || book.title}
+                      className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
+                      style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
+                    />
+                  ) : (
+                    <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
+                      {book.display_title || book.title}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              }
+            />
           )}
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
