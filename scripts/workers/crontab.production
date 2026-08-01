@@ -104,6 +104,10 @@
 50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-classify-text-role.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --only-missing" >> /var/log/sourcelibrary/classify-text-role.log 2>&1
 30 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-lang-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/audit-language-mismatch.mjs --flag" >> /var/log/sourcelibrary/lang-audit.log 2>&1
 0 4 * * * /root/sourcelibrary/scripts/workers/backup-bph-catalog.sh
+# Catalogue integrity: fingerprint every record and flag changes that no revision
+# and no known automation explains. Runs after the 04:00 backup and before restic
+# at 05:00, so a flagged night is preserved in that night's snapshot.
+30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-bph-integrity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/bph-integrity-check.mjs" >> /var/log/sourcelibrary/bph-integrity.log 2>&1
 30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
 # Refresh book locations[] (publication/author/tradition) before the map-cache rebuild at 05:45
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-geocode.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/geocode-publication-places.mjs && node scripts/enrichment/backfill-author-locations.mjs --write-books && node scripts/enrichment/geocode-origin-by-tradition.mjs" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
