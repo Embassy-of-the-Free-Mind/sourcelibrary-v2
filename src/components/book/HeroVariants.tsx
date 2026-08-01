@@ -127,7 +127,7 @@ export default function HeroVariants({
         <div className="flex flex-row-reverse items-start gap-4 md:contents">
           {/* Cover: 1/3 of the container on mobile (auto height); the large
               left-hand cover on desktop. */}
-          <div className="w-1/3 md:w-auto flex-shrink-0
+          <div className="hero-cover-in w-1/3 md:w-auto flex-shrink-0
             [&_img]:!w-full [&_img]:!h-auto [&_img]:!max-w-none [&_img]:!max-h-none
             md:[&_img]:!w-auto md:[&_img]:!h-[420px] md:[&_img]:!max-h-none md:[&_img]:!max-w-[min(44vw,520px)]">
             {cover}
