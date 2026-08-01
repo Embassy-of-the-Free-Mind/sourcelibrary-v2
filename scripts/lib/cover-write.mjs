@@ -98,3 +98,32 @@ export function buildCoverUpdate(page, opts) {
 
   return update;
 }
+
+/**
+ * Mirror of `isRenderableCoverUrl()` in src/lib/cover-fields.ts.
+ *
+ * Hosts whose images the browser will actually load. A raw source URL
+ * (archive.org, gallica, …) resolves fine with curl but the site CSP blocks it,
+ * so it must never be written as a cover — in the catalogue there is no
+ * page-scan fallback to cover for it.
+ */
+export const RENDERABLE_COVER_HOST_RE =
+  /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/;
+
+export function isRenderableCoverUrl(url) {
+  return RENDERABLE_COVER_HOST_RE.test(String(url || ''));
+}
+
+/** Mirror of `selectFallbackCoverPage()` in src/lib/cover-fields.ts. */
+const JUNK_COVER_PAGE_TYPES = new Set([
+  'blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata',
+  'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target',
+]);
+
+export function selectFallbackCoverPage(pages) {
+  const usable = pages.filter(p => !JUNK_COVER_PAGE_TYPES.has(String(p.page_type || '')));
+  return pages.find(p => p.page_type === 'title-page')
+    || pages.find(p => p.page_type === 'frontispiece')
+    || usable[0]
+    || pages[0];
+}

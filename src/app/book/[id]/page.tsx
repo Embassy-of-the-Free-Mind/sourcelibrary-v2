@@ -23,6 +23,8 @@ import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
+import EnsureCover from '@/components/book/EnsureCover';
+import { isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -794,14 +796,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // back to the first non-blank page scan (the title page), which is rehosted
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
-    const coverRenderable = !!storedCover && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(storedCover);
+    const coverRenderable = isRenderableCoverUrl(storedCover);
     // Best cover-scan candidate: the actual title page, else a frontispiece,
-    // else the first non-blank page (avoids the Google/IA boilerplate + endpapers
-    // when a classified title page exists).
-    const coverPage = pages.find(p => p.page_type === 'title-page')
-      || pages.find(p => p.page_type === 'frontispiece')
-      || pages.find(p => p.page_type !== 'blank')
-      || pages[0];
+    // else the first non-junk page (avoids the Google/IA boilerplate, endpapers
+    // and scanner colour cards when a classified title page exists).
+    // `selectFallbackCoverPage` is shared with /api/books/[id]/ensure-cover so
+    // the page we SHOW here is the page that gets SAVED as the cover.
+    const coverPage = selectFallbackCoverPage(pages);
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
@@ -1282,6 +1283,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           doi={book.doi}
           ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
         />
+
+        {/* This book is showing a page-scan in place of a stored cover. Persist
+            that pick once, so the catalogue / sliders / search stop rendering a
+            blank placeholder for it. The route re-derives and verifies the URL
+            server-side, so it is safe to fire whenever we fell back. */}
+        {!coverRenderable && coverPage && <EnsureCover bookId={book.id} />}
 
         {/* ===================== HERO ===================== */}
         <HeroVariants

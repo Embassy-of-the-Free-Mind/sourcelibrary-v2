@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildCoverUpdate, resolvePageCoverUrl, COVER_WRITE_FIELDS } from '@/lib/cover-fields';
+import { buildCoverUpdate, resolvePageCoverUrl, COVER_WRITE_FIELDS, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
 
 const SAMPLE_URL = 'https://images.sourcelibrary.org/cropped/abc/page-1.jpg';
 const SAMPLE_THUMB = 'https://images.sourcelibrary.org/thumbnails/abc/page-1-thumb.jpg';
@@ -68,5 +68,59 @@ describe('COVER_WRITE_FIELDS', () => {
     expect(COVER_WRITE_FIELDS).toContain('thumbnail');
     expect(COVER_WRITE_FIELDS).toContain('thumbnail_blob');
     expect(COVER_WRITE_FIELDS).toContain('thumbnail_source');
+  });
+});
+
+describe('isRenderableCoverUrl', () => {
+  it('accepts the hosts the site CSP allows', () => {
+    expect(isRenderableCoverUrl('https://images.sourcelibrary.org/archived/abc/8.jpg')).toBe(true);
+    expect(isRenderableCoverUrl('https://x.public.blob.vercel-storage.com/a.jpg')).toBe(true);
+    expect(isRenderableCoverUrl('https://upload.wikimedia.org/wikipedia/commons/a.jpg')).toBe(true);
+  });
+
+  // The whole point of the gate: these load fine with curl but the browser
+  // blocks them, so they must never be persisted as a cover.
+  it('rejects un-rehosted source hosts and empty values', () => {
+    expect(isRenderableCoverUrl('https://archive.org/download/abc/page1.jpg')).toBe(false);
+    expect(isRenderableCoverUrl('https://gallica.bnf.fr/ark:/12148/f1.highres')).toBe(false);
+    expect(isRenderableCoverUrl('https://dl.ndl.go.jp/api/iiif/123/full/full/0/default.jpg')).toBe(false);
+    expect(isRenderableCoverUrl(null)).toBe(false);
+    expect(isRenderableCoverUrl(undefined)).toBe(false);
+    expect(isRenderableCoverUrl('')).toBe(false);
+  });
+});
+
+describe('selectFallbackCoverPage', () => {
+  const p = (page_number: number, page_type?: string) => ({ page_number, page_type });
+
+  it('prefers a classified title page over anything earlier', () => {
+    const pages = [p(0, 'color-card'), p(1, 'blank'), p(2, 'frontispiece'), p(3, 'title-page'), p(4, 'text')];
+    expect(selectFallbackCoverPage(pages)?.page_number).toBe(3);
+  });
+
+  it('falls back to a frontispiece when there is no title page', () => {
+    const pages = [p(0, 'blank'), p(1, 'frontispiece'), p(2, 'text')];
+    expect(selectFallbackCoverPage(pages)?.page_number).toBe(1);
+  });
+
+  // The regression this exists to prevent: an un-curated scan opens with the
+  // digitizer's colour chart, which used to become the book's cover.
+  it('skips scanner junk and blanks when nothing is classified', () => {
+    const pages = [p(0, 'color-card'), p(1, 'scanner_metadata'), p(2, 'blank'), p(3, 'text')];
+    expect(selectFallbackCoverPage(pages)?.page_number).toBe(3);
+  });
+
+  it('keeps cover/frontcover leaves eligible — they are good covers, not junk', () => {
+    const pages = [p(0, 'frontcover'), p(1, 'text')];
+    expect(selectFallbackCoverPage(pages)?.page_number).toBe(0);
+  });
+
+  it('returns the first page rather than nothing when every leaf is junk', () => {
+    const pages = [p(0, 'color-card'), p(1, 'blank')];
+    expect(selectFallbackCoverPage(pages)?.page_number).toBe(0);
+  });
+
+  it('returns undefined for an empty book', () => {
+    expect(selectFallbackCoverPage([])).toBeUndefined();
   });
 });

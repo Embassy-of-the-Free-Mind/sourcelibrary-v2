@@ -136,6 +136,53 @@ export function buildCoverUpdate(
 }
 
 /**
+ * Hosts whose images the browser will actually load: our own R2, Vercel blob,
+ * and the Wikimedia CDN. A freshly-imported book often carries a raw source URL
+ * (archive.org, gallica, …) in `thumbnail` — it resolves fine with curl but the
+ * site CSP `img-src` blocks it, so the card renders empty. Anything outside this
+ * set must be treated as "no cover" by readers, and must never be *written* as
+ * one: persisting a blocked URL only launders the problem into the catalogue,
+ * where there is no page-scan fallback to cover for it.
+ */
+export const RENDERABLE_COVER_HOST_RE =
+  /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/;
+
+export function isRenderableCoverUrl(url?: string | null): boolean {
+  return RENDERABLE_COVER_HOST_RE.test(String(url || ''));
+}
+
+/**
+ * The page a book should fall back to when it has no usable stored cover:
+ * the printed title page, else a frontispiece, else the first non-blank leaf,
+ * else whatever came first. Junk leaves (scanner colour cards, calibration
+ * targets, digitizer inserts) are skipped — they are what makes an un-curated
+ * book show a grey colour chart as its cover. Note that `cover` / `frontcover`
+ * leaves are deliberately NOT skipped here: they are junk for the page-page's
+ * "representative interior page" pick, but they are exactly what we want for a
+ * cover.
+ *
+ * Shared deliberately: the book page renders from this and
+ * `/api/books/[id]/ensure-cover` persists from it, so the cover a reader sees
+ * and the cover the catalogue stores are the same page by construction rather
+ * than by two lists that agree today. Callers pass pages already sorted by
+ * `page_number`.
+ */
+const JUNK_COVER_PAGE_TYPES = new Set([
+  'blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata',
+  'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target',
+]);
+
+export function selectFallbackCoverPage<T extends { page_type?: string | null }>(
+  pages: ReadonlyArray<T>,
+): T | undefined {
+  const usable = pages.filter(p => !JUNK_COVER_PAGE_TYPES.has(String(p.page_type || '')));
+  return pages.find(p => p.page_type === 'title-page')
+    || pages.find(p => p.page_type === 'frontispiece')
+    || usable[0]
+    || pages[0];
+}
+
+/**
  * The four canonical write keys, exposed as a constant so the PATCH
  * allow-list can extend its base set without drifting from this module.
  *
