@@ -30,11 +30,12 @@
   are proposals in his voice and are his to cut or rewrite.
   ─────────────────────────────────────────────────────────────────────────────
 
-  OPEN QUESTION FOR DEREK — the book count. The letter says "20,000+ books".
-  Measured 2026-08-01: 34,040 books are visible, but only 19,420 have pages you
-  can actually read, and 19,420 is what the site's own stats show. "20,000+"
-  is true of visible books and slightly overstates readable ones. Left as
-  Derek wrote it; change to "19,000+" if you want it to match the homepage.
+  BOOK COUNT — resolved 2026-08-01. Derek chose 19,420, which is the figure the
+  homepage itself shows: books that are visible AND have readable pages. 34,040
+  are visible in total, but 14,620 of those have no pages yet, so the larger
+  number would have overstated what a reader can actually open. It is a literal
+  count, not a "20,000+" style claim, so it goes stale — re-measure before
+  reusing it in another letter.
 
   SCREENSHOTS live in public/email/feedback-2026-08/ and are already deployed
   (verified 200 on 2026-08-01). footer.jpg deliberately shows the callout
@@ -51,7 +52,7 @@
 
 <p style="margin: 0 0 20px;">
   I&rsquo;ve had the most fun time building the Source Library, but I haven&rsquo;t
-  had the time to read all of the 20,000+ books in there. If you come across something
+  had the time to read all of the 19,420 books in there. If you come across something
   that could be improved, no matter how small, please let me know. It might be in the
   UI or it might be the content of the translation or maybe some of our book data is
   wrong.
@@ -117,43 +118,21 @@
   means that if you don&rsquo;t trust the translation, you can do it again yourself!
 </p>
 
-<!-- ADDED BY CLAUDE — the volunteer ask Derek requested on 2026-08-01
-     (readers with language skills rating translation quality in texts they
-     already care about, plus proofreading blog posts). Written in his voice;
-     his to rewrite.
+<!-- ADDED BY CLAUDE — the "what are you researching" ask Derek requested on
+     2026-08-01. Written in his voice; his to rewrite. It invites replies to a
+     mailbox, so someone has to be reading them.
 
-     The destination is real and was checked before writing this: ticking
-     "I'd like to help" in the feedback dialog routes to /welcome, which asks
-     exactly the three things this paragraph asks for — who you are, which
-     language you read, and how you would like to help. /welcome returned 200
-     on 2026-08-01, and both of its recent defects are fixed: the redirect
-     loop (#3467) and the blank form that erased the answers behind it
-     (#3496). That mattered here, because this paragraph is what sends a few
-     thousand people through that door. -->
+     This is the letter's ONE secondary ask. The volunteer recruitment that
+     briefly sat above it has moved to
+     scripts/email/queued/volunteer-readers.body.html — see
+     .claude/docs/newsletter-queue.md. Three competing calls to action meant
+     the reader did the cheapest one or none; and unlike volunteering, a
+     question costs one reply and creates no obligation we cannot yet meet.
+     Do not add a third ask back. -->
 <hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 28px;" />
 
 <p style="margin: 0 0 20px;">
-  Which works far better with help. If you read Latin, or German, or Arabic, or
-  Chinese, or anything else we hold, I would love a second pair of eyes on a text you
-  already care about. Tell me how good the translation really is. Rate it, argue with
-  it, mark the places where it drifts away from the original. The same goes for the
-  blog posts, which I write quickly and which surely contain things only a specialist
-  would catch.
-</p>
-
-<p style="margin: 0 0 28px;">
-  You do not need credentials for this, just the language and the interest. Tick
-  &ldquo;I&rsquo;d like to help&rdquo; in that feedback box, or go to
-  <a href="https://sourcelibrary.org/welcome" style="color: #9e4a3a;">sourcelibrary.org/welcome</a>
-  and tell me what you read.
-</p>
-<!-- /ADDED BY CLAUDE -->
-
-<!-- ADDED BY CLAUDE — the "what are you researching" ask Derek requested on
-     2026-08-01. Written in his voice; his to rewrite. Note it invites replies
-     to a mailbox, so someone has to be reading them. -->
-<p style="margin: 0 0 20px;">
-  And one last thing, which is the part I am most curious about. What are you actually
+  One last thing, which is the part I am most curious about. What are you actually
   researching? I would love to know what brought you here, what you have been looking
   for and could not find, and what you would read tomorrow if somebody put it into
   English.
