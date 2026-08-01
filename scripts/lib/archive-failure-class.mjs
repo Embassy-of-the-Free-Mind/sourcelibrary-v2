@@ -1,0 +1,77 @@
+/**
+ * Classify a page-level `archived_photo: "failed:…"` marker.
+ *
+ * Why this matters more than it looks:
+ *
+ * Every archiver selects work with `archived_photo` missing/null/empty. Writing
+ * a `failed:` STRING into that same field therefore makes the page invisible to
+ * every future run — the write erases its own repair path (CLAUDE.md, Data
+ * Protection). Nothing in the codebase clears these: `archive-auto-unblock.mjs`
+ * only unsets book-level `archive_metadata.*`, never the page field. So a page
+ * marked on a transient blip stays unarchived forever.
+ *
+ * Measured 2026-08-01: 14,123 pages carry a marker; a 3,000-page sample was
+ * 93.5% `HTTP 403` (provider blocking — emphatically not a statement that the
+ * page is absent), with a small genuinely-transient tail.
+ *
+ * The split below is the whole point of the module: clearing a PERMANENT marker
+ * just re-queues work that will fail again and re-mark, burning provider
+ * goodwill on a loop. Clearing a TRANSIENT one recovers a page that is still
+ * there. When a reason is unrecognised we return UNKNOWN and callers must leave
+ * it alone — an unclassified marker is not evidence of recoverability.
+ */
+
+/** Retryable: the source blocked, timed out, or the transfer broke mid-flight. */
+const TRANSIENT = [
+  /HTTP 403/i,          // provider block / rate limit — not "page absent"
+  /HTTP 429/i,
+  /HTTP 5\d\d/,         // any 5xx
+  /timeout/i,
+  /terminated/i,
+  /aborted/i,           // incl. "fetch aborted: stalled …" from the stall timeout
+  /fetch failed/i,
+  /ECONNRESET|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN|socket hang up/i,
+  /premature end of JPEG|VipsJpeg|Input buffer contains unsupported image format/i,
+];
+
+/** Permanent: the source is telling us this page does not exist. Never clear. */
+const PERMANENT = [
+  /HTTP 404/i,
+  /HTTP 410/i,
+  /source-not-found/i,
+  /HTTP 401/i,          // needs credentials we do not have; retrying changes nothing
+];
+
+export const FAILURE_CLASS = {
+  TRANSIENT: 'transient',
+  PERMANENT: 'permanent',
+  UNKNOWN: 'unknown',
+};
+
+/**
+ * @param {string|null|undefined} archivedPhoto the raw field value
+ * @returns {{ isMarker: boolean, class: string, reason: string|null }}
+ */
+export function classifyArchiveFailure(archivedPhoto) {
+  if (typeof archivedPhoto !== 'string' || !archivedPhoto.startsWith('failed:')) {
+    return { isMarker: false, class: null, reason: null };
+  }
+  const reason = archivedPhoto.slice('failed:'.length).trim();
+
+  // Permanent wins on a tie: a marker naming both a 404 and a timeout is a page
+  // we should not keep asking for.
+  if (PERMANENT.some(re => re.test(reason))) {
+    return { isMarker: true, class: FAILURE_CLASS.PERMANENT, reason };
+  }
+  if (TRANSIENT.some(re => re.test(reason))) {
+    return { isMarker: true, class: FAILURE_CLASS.TRANSIENT, reason };
+  }
+  return { isMarker: true, class: FAILURE_CLASS.UNKNOWN, reason };
+}
+
+/** Group key for reporting — digits collapsed so counts aggregate sensibly. */
+export function failureReasonKey(archivedPhoto) {
+  const { reason } = classifyArchiveFailure(archivedPhoto);
+  if (!reason) return null;
+  return reason.replace(/\d+/g, 'N').slice(0, 60);
+}
