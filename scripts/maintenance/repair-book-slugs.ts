@@ -24,19 +24,31 @@
  * Every prior slug is also written to a timestamped JSON backup before the
  * first write, so the whole sweep is reversible from disk.
  *
+ * The write bumps `updated_at` as well as `slug`. /book/[id] reads the Supabase
+ * books_catalog mirror BEFORE Atlas, so that mirror is what decides the
+ * rendered canonical, and its incremental sync selects on
+ * `{ updated_at: { $gt: lastSync } }`. A slug written without the bump is
+ * invisible to it — the page keeps serving the OLD slug as canonical until the
+ * weekly --full rebuild. `--resync-catalog` repairs a sweep that already ran
+ * without it, by touching only the books named in the newest backup.
+ *
  * Usage:
  *   set -a; source .env.production.local; set +a
  *   npx tsx scripts/maintenance/repair-book-slugs.ts            # dry run (default)
  *   npx tsx scripts/maintenance/repair-book-slugs.ts --apply
  *   npx tsx scripts/maintenance/repair-book-slugs.ts --apply --include-hidden
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MongoClient, type Db } from 'mongodb';
 import { generateBookSlug, appendSlugSuffix, isPlaceholderSlug } from '@/lib/slugify';
 
 const APPLY = process.argv.includes('--apply');
 const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
+// One-off repair for the 2026-08-01 sweep, which wrote slugs before the
+// `updated_at` bump above existed. Reads the newest backup and touches only
+// those books, so the next incremental catalog sync picks them up.
+const RESYNC = process.argv.includes('--resync-catalog');
 const OUT_DIR = join(process.cwd(), 'scripts', 'output');
 
 interface BookRow {
@@ -78,6 +90,30 @@ async function reserveSlug(db: Db, base: string, taken: Set<string>): Promise<st
   return candidate;
 }
 
+async function resyncCatalog(db: Db) {
+  const backups = readdirSync(OUT_DIR)
+    .filter((f) => f.startsWith('book-slugs-backup-') && f.endsWith('.json'))
+    .sort();
+  if (backups.length === 0) {
+    console.error(`No book-slugs-backup-*.json in ${OUT_DIR} — nothing to resync.`);
+    return;
+  }
+  const backupPath = join(OUT_DIR, backups[backups.length - 1]);
+  const rows = JSON.parse(readFileSync(backupPath, 'utf8')) as Array<{ id: string; to: string }>;
+  console.log(`Resyncing ${rows.length} books from ${backups[backups.length - 1]}`);
+
+  let touched = 0;
+  for (const row of rows) {
+    const res = await db.collection('books').updateOne(
+      // Guard on the slug we wrote: if something changed it since, leave it.
+      { id: row.id, slug: row.to },
+      { $set: { updated_at: new Date() } },
+    );
+    touched += res.modifiedCount;
+  }
+  console.log(`Touched ${touched}/${rows.length}. The books_catalog sync runs at :45 every odd hour.`);
+}
+
 async function main() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
@@ -88,6 +124,12 @@ async function main() {
   const client = new MongoClient(uri);
   await client.connect();
   const db = client.db('bookstore');
+
+  if (RESYNC) {
+    await resyncCatalog(db);
+    await client.close();
+    return;
+  }
 
   const scope = INCLUDE_HIDDEN ? {} : { visible: true };
   const candidates = (await db.collection('books')
@@ -180,7 +222,13 @@ async function main() {
 
   let written = 0;
   for (const p of plan) {
-    const update: Record<string, unknown> = { $set: { slug: p.to } };
+    // `updated_at` matters as much as the slug here. The Supabase
+    // books_catalog mirror — which /book/[id] reads BEFORE Atlas, so it is
+    // what decides the rendered canonical — syncs incrementally on
+    // `{ updated_at: { $gt: lastSync } }` every two hours. A slug written
+    // without touching it is invisible to that sync, and the old slug keeps
+    // being served as canonical until the weekly --full rebuild.
+    const update: Record<string, unknown> = { $set: { slug: p.to, updated_at: new Date() } };
     // Only a real previous slug becomes an alias. A missing slug has no URL
     // to preserve, and a placeholder like "-10" is worth keeping too: it may
     // have been linked, and an alias costs one indexed field.
