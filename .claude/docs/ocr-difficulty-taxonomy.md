@@ -87,6 +87,37 @@ six levels of nested braces against three, a near-blank leaf whose only visible
 marks are show-through. Those are **reading-order and transcription-policy**
 ambiguities — what to include, in what sequence — not legibility.
 
+### A category the first pass mislabelled: the blank leaf read as text
+
+Found by spot-checking the examples against their images — the check every claim
+in this document needs and most published taxonomies never get.
+
+*De Dysenteria* (Pincier) p2 was filed here under **faded ink**. It is not faded.
+**It is blank.** Every mark on it is mirrored show-through from the title page on
+the other side of the leaf: "DE DYSENT…" reversed, the ornamental border
+reversed, a library stamp. The OCR's own warning was accurate — "only faint
+outlines of the title are visible" — and my category label was wrong.
+
+What makes it a category rather than an error:
+
+- Both passes emitted **56 and 51 body words** and both tagged it
+  `page-type: title-page`. The model read the ghost text as page content and
+  transcribed roughly fifty words of it — **twice, differently** (agreement 0.67).
+- Fifty words clears the ≥40-word eligibility floor, so the page entered the
+  analysis as ordinary text rather than being screened out as near-blank.
+- Pilot pair 11 (*Prince Starbeam*) is the same shape: a near-blank opening whose
+  only visible marks are verso ghost text, correctly picked as the unstable arm.
+
+**This has a quote-integrity edge, not just a metrics one.** That stored text
+renders to readers as the transcription of a page it is not on — the mirror image
+of the *facing* leaf. It is the #2232 misquote class arriving by a new route:
+words attributed to a page that were never printed on it.
+
+→ https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a
+
+A near-blank screen belongs upstream of eligibility — ink coverage, not word
+count, since ghost text produces real words.
+
 Real printed examples that did get flagged:
 
 - *Harmonia Reuchlini et Lutheri* — "fold-out plate with Hebrew characters within a diagram" (0.72); "paper overlays or flaps covering the primary illustration" (0.81)
@@ -95,6 +126,26 @@ Real printed examples that did get flagged:
   → https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528
 - *De Dysenteria* (Pincier) p2 — "extremely faded… only faint outlines of the title are visible" (0.67)
   → https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a
+
+## Spot check (2026-08-01) — what was verified, and against what
+
+Claims in a taxonomy are worth what their examples are worth, so the examples
+were checked against the images rather than assumed.
+
+- **All 7 reader URLs resolve**, verified by grepping the response body for a
+  not-found marker rather than trusting the status code — every Next.js dynamic
+  route returns 200 on a soft-404.
+- **Homer, MS Rouse 358 p524** — confirmed Greek minuscule cursive, heavily
+  ligatured, ruled in red, with a Latin marginal note in a second hand and the
+  facing page intruding at the right edge. Agreement 0.15 is credible.
+- **Harmonia Reuchlini p11** — confirmed exactly as warned: a fold-out plate
+  where Hebrew runs along a serpentine meander path, Tetragrammaton in the cloud
+  above, facing a printed Latin page. The clearest exemplar in the corpus of
+  reading-ORDER ambiguity as distinct from legibility.
+- **De Dysenteria p2** — warning accurate, **my category label wrong**. See above.
+
+Three of three warnings were accurate; one of three category labels was not. The
+error was mine, in the layer that groups warnings, not the model's.
 
 ## Caveats
 
