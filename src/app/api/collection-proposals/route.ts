@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { guardPublicSubmission } from '@/lib/public-submission-guard';
 
 /**
  * "Propose a collection" — a lightweight submission inbox, modeled on
@@ -21,6 +22,9 @@ const MAX_RATIONALE = 5000;
 // POST /api/collection-proposals — submit a proposal (anonymous, like feedback)
 export async function POST(request: NextRequest) {
   try {
+    const limited = await guardPublicSubmission(request, 'collection-proposals');
+    if (limited) return limited;
+
     const body = await request.json();
     const { title, rationale, book_ids, suggested_slug, name, email } = body as {
       title?: unknown;
