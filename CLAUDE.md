@@ -60,6 +60,55 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
 - **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
 
+## A fetch failure is a claim about the SOURCE, and it is usually wrong — CRITICAL
+Lessons from acquiring Thibault's *Académie de l'Espée* (2026-08-01). Full
+postmortem: `.claude/handoffs/2026-08-01-thibault-acquisition-and-archive-failure-classes.md`.
+Three failure classes, one shape: an archiver's error handling encoded a guess
+about the source as a durable fact, and every one of them failed *silently, in
+the direction that looks like success*.
+
+- **A total-duration fetch timeout is a file-size limit wearing a clock's
+  costume.** Aborting 60s after a fetch *starts* fires on the LARGEST page in a
+  book — always the foldout, the map, the plate — while ordinary text pages sail
+  through. It cost **42 of 45 double-page engravings** on one book, and the book
+  still reported hundreds of archived pages, so nothing looked wrong. Use
+  `fetchWithStallTimeout()` (`scripts/lib/fetch-stall-timeout.mjs`), which
+  re-arms per chunk so size stops mattering. **Never "fix" this by requesting a
+  smaller IIIF size** — that is the #3186 mistake and is doubly destructive on
+  exactly the wide plates it destroys. **Tell:** failures cluster on the widest
+  canvases; a lone fetch of the failing page succeeds. The abort surfaces as
+  `This operation was aborted`, which reads as rate limiting — backing the
+  request rate off makes it strictly worse, because the constraint is
+  per-request duration, not requests per second.
+- **HTTP 403 may be a rights refusal, not a block — never auto-retry it.** 88%
+  of this corpus's failure markers are Internet Archive, and they resolve to
+  `access-restricted-item: true` / `inlibrary` books: IA **correctly refusing to
+  serve in-copyright material**. Clearing such a marker re-queues a fetch that
+  must never succeed, and if one did we would mirror copyrighted pages into R2.
+  `classifyArchiveFailure()` treats bare 403 as `unknown` (reported, never
+  auto-cleared); `--include-403` is an explicit opt-in for a caller who has
+  confirmed the books are public domain. Check the IA item's
+  `access-restricted-item` before assuming a 403 is transient.
+- **Never write an error you did not attribute into `archived_photo`.** The
+  field doubles as the archiver's work queue, so any `failed:` string hides the
+  page from every future run — and a catch-all handler writes *our* failures
+  there too: a Mongo DNS blip and an R2 clock-skew error each permanently hid a
+  perfectly readable page. An infrastructure error says nothing about the
+  source. (Same class as the Data Protection rule below: a bad write erases its
+  own repair path.)
+- **Recovery must never be gated on the SPEND allowlist.** Phase 8.5 rolls a
+  stuck `*_submitted` status back, which submits nothing and costs nothing — but
+  it was confined to the selective-unpause scope (160 books of ~99.7K) and
+  skipped entirely on a paused run, so 8 books sat stuck 10–23 days and were
+  repaired by hand. Corollary of "the pause is a SPEND control": gate the phases
+  that spend, never the bookkeeping that heals.
+- **Sampling the head of a collection samples insertion order, not the
+  population.** A 2,500-page sample read 92.9% retryable; the full 14,123 read
+  69.2%. Validate a corpus sweep at corpus scale — and note that a *silent*
+  long-running script reads as a hang (two full scans were killed before
+  emitting a line). The fix is a heartbeat, not an index: indexing
+  `archived_photo` would add ~1.5 GB to a hot collection to serve a rare sweep.
+
 ## Paired artifacts must be verified, never assumed — CRITICAL
 Three incidents, one shape: #3362 (archiver wrote every page to a shared `archived/undefined/N.jpg` because `book_id` was missing from a projection), #3186/#3357 (e-rara PDF cover sheet made `photo_original` a one-page-offset sequence, and the re-archive sweep slid every image under its OCR), and #3368 (bulk archiver indexed the IA `*_jp2.zip` with the IIIF `/page/nN` number — IA keeps calibration/`Delete` leaves in the zip but strips them from the access derivatives, so a leading `Color Card` put **every** page's scan one leaf behind its text, on ~261 visible books / ~105K pages, undetected for four months).
 
