@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { clientIpFromHeaders } from '@/lib/analytics-ingest';
 
 /**
  * Log broken-image reports from the client.
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     // Cap at 20 per report to prevent abuse
     const capped = urls.slice(0, 20);
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const ip = clientIpFromHeaders(request.headers);
 
     const dbWork = (async () => {
       const db = await getDb();

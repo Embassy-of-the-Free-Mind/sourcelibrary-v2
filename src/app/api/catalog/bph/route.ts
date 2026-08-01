@@ -3,6 +3,8 @@ import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 import { normalizeBphSearchText } from '@/lib/text-normalize';
 import { getReadDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { logSearchEvent } from '@/lib/search-event-log';
+import { resolveTenantId } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -142,13 +144,26 @@ export async function GET(req: NextRequest) {
       // include the year, so "1545" otherwise returned nothing. Digits-only,
       // so it's safe to inline in an .or() string.
       const yearQ = /^\d{3,4}$/.test(q) ? q : null;
+      // UBN gets its own lane rather than living in `search_norm`. That column
+      // is matched with ILIKE '%q%' and UBNs are 1–5 digit numbers, so folding
+      // them in would make every year search also match the UBNs containing
+      // those digits (1545 would drag in 15450–15459, 11545, 21545, 31545…).
+      // Exact match for an all-digit query is what "search by UBN" means;
+      // non-numeric UBNs ("BPH 131", "PH144", "PH 2") still need a substring
+      // match. Reported by José Bouman (BPH) — searching a UBN returned nothing.
+      const digitsOnly = /^\d+$/.test(q);
+      const ubnLane = digitsOnly
+        ? `ubn.eq.${q}`
+        : `ubn.ilike.%${sanitizeFilterValue(q)}%`;
       if (mode === 'new' && hasNormalizedColumns !== false) {
         if (yearQ) {
-          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ}`);
+          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ},${ubnLane}`);
         } else {
           const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
           if (normQ.length > 0) {
-            query = query.ilike('search_norm', `%${normQ}%`);
+            query = query.or(`search_norm.ilike.%${normQ}%,${ubnLane}`);
+          } else {
+            query = query.or(ubnLane);
           }
         }
       } else if (mode === 'new') {
@@ -430,9 +445,54 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  const total = isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0);
+
+  // Record the search. This route is the BPH reading room's front-page search
+  // box — the first thing a visitor sees — and until #3483 it logged nothing at
+  // all, which made "how much do readers search here?" unanswerable.
+  //
+  // Two deliberate exclusions, so the count means "searches" and not "requests":
+  //   - a request carrying no query and no advanced field is *browsing* the
+  //     catalogue (or paging through it), not searching;
+  //   - only `offset === 0` is logged, so paginating deeper into one result set
+  //     stays one search rather than N.
+  // Both matter because this number will be read as a rate against reading-room
+  // pageviews; inflating the numerator would repeat the error this fixes.
+  const advancedTerms = { author, title, place, printer, publisher, editor, keyword, shelfMark, provenance };
+  const hasSearchTerm = !!q || Object.values(advancedTerms).some(Boolean);
+  if (hasSearchTerm && offset === 0) {
+    // Resolved inside the fire-and-forget path so neither the tenant lookup
+    // (cached, but still async) nor the insert sits on the response path.
+    void resolveTenantId('bph')
+      .then((tenantId) => {
+        logSearchEvent({
+          request: req,
+          // The simple search box is `q`; an advanced-only search has no `q`,
+          // so fall back to the field that was actually filled in.
+          query: q || Object.values(advancedTerms).find(Boolean) || '',
+          resultsCount: total,
+          source: 'catalogue',
+          tenantId,
+          filters: {
+            ...Object.fromEntries(Object.entries(advancedTerms).filter(([, v]) => v)),
+            language: language || null,
+            yearFrom,
+            yearTo,
+            digitized,
+            first_translation: firstTranslation || null,
+            sort,
+            // Distinguishes "typed in the simple box" from "used the advanced
+            // form" — they are different behaviours and worth telling apart.
+            advanced: !q,
+          },
+        });
+      })
+      .catch(() => {});
+  }
+
   return NextResponse.json({
     works,
-    total: isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0),
+    total,
     offset,
     limit,
     schemaMode: schemaMode || 'unknown',

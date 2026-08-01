@@ -59,6 +59,15 @@ const TITLE_NOT_AUTHOR = new Set([
   'splendor solis', 'philosophia reformata', 'theatrum sympatheticum', 'theatrum chemicum',
   'porta magia naturalis', 'magia naturalis', 'aurora consurgens', 'turba philosophorum',
   'mutus liber', 'rosarium philosophorum', 'musaeum hermeticum', 'atalanta fugiens',
+  // ── added by #3434 ─────────────────────────────────────────────────────────
+  // Surfaced by scripts/audit/author-attribution.mjs. These are the *search
+  // queries* of the 2026-03-14 BSB import run, stamped into `books.author`: note
+  // the "<author surname> <work keyword>" shape, which is nobody's name. Each is
+  // a work (or a work-plus-author query), verified individually — never a person.
+  'museum hermeticum', 'tripus aureus', 'fama fraternitatis', 'confessio fraternitatis',
+  'iamblichus de mysteriis', 'albertus secrets', 'fludd medicina', 'kabbala denudata',
+  'chaldaean oracles', 'viridarium chymicum', 'john dee monas',
+  'kircher oedipus', 'kircher ars magna', 'kircher musurgia', 'kircher mundus',
 ].map((s) => s.toLowerCase()));
 
 function classify(doc) {

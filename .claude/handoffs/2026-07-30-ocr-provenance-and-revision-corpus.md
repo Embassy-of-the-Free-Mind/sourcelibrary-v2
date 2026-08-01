@@ -58,10 +58,23 @@ Of 366 books with >=3 comparable pairs: **112 shift on >50% of pairs, 88 of thos
 SYSTEMATICALLY** (one offset explains >=80% of the book's shifts). The dominant
 offset is almost always **exactly +1** — the #3368 / #3357 leaf-offset signature.
 
-**Direction suggests REPAIR rather than damage.** A book whose scans sat one leaf
-behind would OCR a printed number one *lower* than truth; correcting it raises the
-number. `+1` is what a fix looks like. NOT confirmed — needs archive history
-(`batch_jobs.page_sources`, `archived_photo` provenance), not OCR text.
+**CONFIRMED REPAIR, verified against the images.** Two pages of a systematically
+shifted e-rara book (*Kabbala denudata*) checked against their scans: image `49.jpg`
+shows printed **5** (current OCR `5` correct, revision `4` wrong); `55.jpg` shows
+**11** (current `11` correct, revision `10` wrong). The live data is right.
+
+**Mechanism** — the timestamps are inverted (revision created 2026-07-25, current
+`ocr.updated_at` 2026-04-04, i.e. OLDER). Impossible for a re-OCR; exactly what a
+TEXT SHIFT does. #3357 is recorded as "323 text-shifted back": the sweep moved
+existing `ocr` subdocuments between pages rather than re-transcribing, so page 49
+inherited page 50's object *and its April timestamp*, while `page_revisions`
+snapshotted the displaced text in July.
+
+So the ±1 slice is ONE administrative event replicated across thousands of pages,
+not thousands of independent re-readings.
+
+**Fix for any future shift repair: stamp `ocr.updated_at` on the write.** Leaving the
+moved object's original timestamp is what made this hard to diagnose.
 
 **Do not quote 87.3%.** A first attempt sorted `_id` desc, landed inside one
 affected book, and produced that number. Use `$sample`.

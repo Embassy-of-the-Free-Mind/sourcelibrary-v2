@@ -89,6 +89,52 @@ export const EXPECTED_HOSTS = new Set([
 // that is supposed to be working is not.
 export const SHOULD_BE_BLOCKED = [{ label: 'AS132203 Tencent Cloud (43.172.0.0/15)', re: /^43\.17[23]\./ }];
 
+// Cloudflare's published IPv4 egress ranges. Present because the concentration
+// check below is only meaningful if the stored address belongs to the CALLER.
+// Until the cf-connecting-ip fix, the analytics write paths read
+// `x-forwarded-for` — which Vercel sets to whatever connected to Vercel, i.e.
+// Cloudflare — so every front-door request was recorded against an edge node.
+// The check then flagged 14 "networks each reading >2,000 pages" that were all
+// Cloudflare, and told the reader to add them to blocked-networks.ts. Following
+// that advice would have taken the site down. An alarm whose remediation is
+// self-harm is worse than no alarm, which is the whole point of this file.
+// Source: https://www.cloudflare.com/ips-v4
+export const CDN_EGRESS_CIDRS = [
+  '173.245.48.0/20', '103.21.244.0/22', '103.22.200.0/22', '103.31.4.0/22',
+  '141.101.64.0/18', '108.162.192.0/18', '190.93.240.0/20', '188.114.96.0/20',
+  '197.234.240.0/22', '198.41.128.0/17', '162.158.0.0/15', '104.16.0.0/13',
+  '104.24.0.0/14', '172.64.0.0/13', '131.0.72.0/22',
+];
+
+function ipv4ToInt(ip) {
+  const parts = String(ip).split('.');
+  if (parts.length !== 4) return null;
+  let n = 0;
+  for (const p of parts) {
+    const o = Number(p);
+    if (!Number.isInteger(o) || o < 0 || o > 255) return null;
+    n = n * 256 + o;
+  }
+  return n;
+}
+
+const CDN_RANGES = CDN_EGRESS_CIDRS.map((cidr) => {
+  const [base, bits] = cidr.split('/');
+  const size = 2 ** (32 - Number(bits));
+  const start = ipv4ToInt(base);
+  return { start, end: start + size - 1 };
+});
+
+/**
+ * Is this address a CDN edge node rather than a caller? Anonymized IPs (last
+ * octet zeroed) still fall inside their own /24, so truncation is harmless.
+ */
+export function isCdnEgress(ip) {
+  const n = ipv4ToInt(ip);
+  if (n === null) return false;
+  return CDN_RANGES.some((r) => n >= r.start && n <= r.end);
+}
+
 /** A hostname serving reader traffic that we did not expect. */
 export function isUnexpectedHost(host) {
   return Boolean(host) && !EXPECTED_HOSTS.has(host);
@@ -134,13 +180,31 @@ async function run() {
     { $limit: 20 },
   ], { allowDiskUse: true }).toArray();
 
-  if (heavy.length) {
-    const worst = heavy[0];
-    const sum = heavy.reduce((s, h) => s + h.n, 0);
+  // A CDN edge node is not an actor. Split before alerting: a heavy hitter that
+  // is really Cloudflare says the WRITE PATH is broken, not that a fleet is
+  // reading — and those two findings need opposite responses.
+  const heavyReal = heavy.filter((h) => !isCdnEgress(h._id));
+  const heavyCdn = heavy.filter((h) => isCdnEgress(h._id));
+
+  if (heavyReal.length) {
+    const worst = heavyReal[0];
+    const sum = heavyReal.reduce((s, h) => s + h.n, 0);
     alerts.push({
       level: 'critical',
       check: 'traffic_concentration',
-      message: `${heavy.length} network(s) each read >${CONCENTRATION_THRESHOLD} pages in ${HOURS}h while classified HUMAN — ${sum.toLocaleString()} events total. Worst: ${worst._id} with ${worst.n.toLocaleString()} reads across ${worst.books.toLocaleString()} books via ${(worst.hosts || []).join(',') || '?'}. A person does not read at this rate; a UA-based classifier cannot see a distributed fleet. Confirm with: whois -h whois.cymru.com " -v ${String(worst._id).replace(/0$/, '1')}" — then consider a network block in src/lib/blocked-networks.ts. Networks: ${heavy.slice(0, 8).map(h => `${h._id}(${h.n})`).join(' ')}`,
+      message: `${heavyReal.length} network(s) each read >${CONCENTRATION_THRESHOLD} pages in ${HOURS}h while classified HUMAN — ${sum.toLocaleString()} events total. Worst: ${worst._id} with ${worst.n.toLocaleString()} reads across ${worst.books.toLocaleString()} books via ${(worst.hosts || []).join(',') || '?'}. A person does not read at this rate; a UA-based classifier cannot see a distributed fleet. Confirm with: whois -h whois.cymru.com " -v ${String(worst._id).replace(/0$/, '1')}" — then consider a network block in src/lib/blocked-networks.ts. Networks: ${heavyReal.slice(0, 8).map(h => `${h._id}(${h.n})`).join(' ')}`,
+    });
+  }
+
+  // The instrument, not the readers. Fires when the top talkers are the CDN,
+  // which means the caller's address was never written down and concentration
+  // cannot be measured at all for front-door traffic.
+  if (heavyCdn.length && !heavyReal.length) {
+    const sum = heavyCdn.reduce((s, h) => s + h.n, 0);
+    alerts.push({
+      level: 'critical',
+      check: 'client_ip_not_recorded',
+      message: `${heavyCdn.length} of the top-reading "networks" in ${HOURS}h are CLOUDFLARE EDGE NODES (${heavyCdn.slice(0, 4).map(h => `${h._id}(${h.n})`).join(' ')}, ${sum.toLocaleString()} events). That is our own CDN, not a caller — do NOT block these. It means an analytics write path recorded x-forwarded-for (which Vercel sets to the Cloudflare edge) instead of cf-connecting-ip, so no front-door traffic can be attributed to a network and the concentration check above is blind. Fix at the source: clientIpFromHeaders() in src/lib/analytics-ingest.ts must read cf-connecting-ip first, and every analytics writer must use it (src/app/api/track/route.ts was the second one). Compare with src/lib/rate-limit.ts, which has always had the order right.`,
     });
   }
 

@@ -75,17 +75,30 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
 
   if (q.length >= 2) {
     const safe = sanitizeFilterValue(q);
-    query = query.or(
-      `title.ilike.%${safe}%,` +
-      `parallel_title.ilike.%${safe}%,` +
-      `uniform_title.ilike.%${safe}%,` +
-      `author.ilike.%${safe}%,` +
-      `variant_author.ilike.%${safe}%,` +
-      `pseudonym.ilike.%${safe}%,` +
-      `shelf_mark.ilike.%${safe}%,` +
-      `state_shelf_mark.ilike.%${safe}%,` +
-      `keywords.ilike.%${safe}%`,
-    );
+    // Every public field on the record, not just the title/author block. A
+    // librarian searching by catalogue number, shelf location or a phrase from
+    // the remarks got silence before — the same gap José Bouman hit on the BPH
+    // catalogue (see expand-bph-search-norm.sql for the equivalent there).
+    // `library_catalog_records` holds no staff-only columns, so "every field"
+    // is literally safe here; if one is ever added, it must NOT be listed.
+    // The table is ~1.6K rows, so the un-indexed ILIKE chain is cheap.
+    const searchCols = [
+      'catalog_id',
+      'title', 'parallel_title', 'uniform_title', 'series_title', 'volume_title',
+      'author', 'variant_author', 'pseudonym', 'editor', 'variant_editor',
+      'place', 'printer', 'publisher', 'variant_printer', 'variant_publisher',
+      'year_text',
+      'shelf_mark', 'state_shelf_mark', 'present_location', 'provenance',
+      'keywords', 'language',
+      'binding', 'bound_with', 'object_size_cm',
+      'bibliography', 'remarks',
+      'ia_identifier',
+    ];
+    const ors = searchCols.map((c) => `${c}.ilike.%${safe}%`);
+    // ustc_sn is an integer column — ILIKE would be a type error, so match it
+    // exactly and only when the query is all digits.
+    if (/^\d+$/.test(q)) ors.push(`ustc_sn.eq.${q}`);
+    query = query.or(ors.join(','));
   }
 
   const ilikeFilter = (val: string, columns: string[]) => {

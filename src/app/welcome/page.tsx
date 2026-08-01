@@ -5,20 +5,79 @@ import { auth } from '@/lib/auth';
 import SiteHeader from '@/components/layout/SiteHeader';
 import WelcomeForm from '@/components/welcome/WelcomeForm';
 import { getWelcomeHero } from '@/lib/welcome-hero';
+import { getDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
+import { welcomeSignInUrl } from '@/lib/welcome-return';
 
 export const metadata: Metadata = {
   title: 'Welcome — Source Library',
   robots: { index: false, follow: false },
 };
 
-export default async function WelcomePage() {
+export default async function WelcomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string | string[] }>;
+}) {
   const session = await auth();
   if (!session?.user?.id) {
-    redirect('/auth/signin?callbackUrl=%2Fwelcome');
+    // Carry the destination through sign-in. Without this the reader signs in
+    // and lands on the homepage, having lost the book they clicked.
+    const { from } = await searchParams;
+    redirect(welcomeSignInUrl(Array.isArray(from) ? from[0] : from));
   }
 
   const firstName = session.user.name?.split(' ')[0] || null;
+
+  // Prefill from what they already told us. This is a data-integrity fix, not a
+  // convenience: the form used to render blank every time, and saving it wrote
+  // those blanks over the stored answers. Anyone who reached /welcome twice
+  // therefore erased themselves — which is exactly what the redirect loop
+  // (#3467) made people do. Two readers lost their answers that way on
+  // 2026-07-30, recovered only because the `volunteers` mirror happens to keep a
+  // copy. With the fields prefilled, an empty box means "I cleared this", which
+  // is the only reading under which overwriting is correct.
+  //
+  // Server-side rather than a fetch on mount, so there is no window in which the
+  // form is mounted, empty, and submittable.
+  let initialProfile = { aboutYou: '', preferredLanguage: '', helpDescription: '' };
+  try {
+    const db = await getDb();
+    const user = await db.collection('users').findOne(
+      { _id: toUserId(session.user.id) as any },
+      { projection: { profile: 1 } }
+    );
+    initialProfile = {
+      aboutYou: user?.profile?.aboutYou || '',
+      preferredLanguage: user?.profile?.preferredLanguage || '',
+      helpDescription: user?.profile?.helpDescription || '',
+    };
+  } catch (error) {
+    // A failed read must not block the page — but it MUST NOT silently fall
+    // through to blank fields either, because a blank save would then wipe
+    // stored answers. WelcomeForm treats profileLoaded=false as "send only the
+    // fields the reader actually typed".
+    console.error('[welcome] profile prefill failed:', error);
+    return renderPage({ userName: session.user.name || "", firstName, hero: await getWelcomeHero(), initialProfile, profileLoaded: false });
+  }
+
   const hero = await getWelcomeHero();
+  return renderPage({ userName: session.user.name || "", firstName, hero, initialProfile, profileLoaded: true });
+}
+
+function renderPage({
+  userName,
+  firstName,
+  hero,
+  initialProfile,
+  profileLoaded,
+}: {
+  userName: string;
+  firstName: string | null;
+  hero: Awaited<ReturnType<typeof getWelcomeHero>>;
+  initialProfile: { aboutYou: string; preferredLanguage: string; helpDescription: string };
+  profileLoaded: boolean;
+}) {
 
   return (
     <div className="relative min-h-screen bg-stone-900">
@@ -51,7 +110,13 @@ export default async function WelcomePage() {
           We&rsquo;re a small team and it really helps us to know who we are building for.
           Everything is optional.
         </p>
-        <WelcomeForm initialName={session.user.name || ''} />
+        <WelcomeForm
+          initialName={userName}
+          initialAboutYou={initialProfile.aboutYou}
+          initialPreferredLanguage={initialProfile.preferredLanguage}
+          initialHelpDescription={initialProfile.helpDescription}
+          profileLoaded={profileLoaded}
+        />
       </div>
 
       {(hero.bookTitle || hero.bookYear) && (

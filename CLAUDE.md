@@ -172,6 +172,13 @@ encodes that:
 - **Don't render `authors.book_count`** — it's a stale build snapshot. The true count is the read-path union query.
 - **Build/enrich scripts:** `scripts/maintenance/build-authors-collection.mjs` writes the collection (deterministic name-key ∪ VIAF ∪ Wikidata, #2202); `reconcile-authors-grounded.mjs` anchors the tail to Wikidata/VIAF using each author's books as evidence (#2218). The similarly-named `build-canonical-authors.mjs` is a read-only sizer that does NOT write — don't run it to rebuild.
 - **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
+- **A SEARCH TERM IS NOT METADATA. Never write the query that found a record into a field of that record.** A 2026-03-14 BSB run imported 1,353 books and stamped its own search string into `books.author` — which is why values like `Albertus Secrets`, `Fludd Medicina`, `Kircher Oedipus`, `John Dee Monas` exist: they are `<surname> <work keyword>` queries, not names. It ran undetected for four months and the wrong names reached readers, `work_id` cluster keys (`local:a:heinrich-khunrath:…`) and book slugs. **The hits skew to catalogues by construction** — a full-text title search matches every bookseller/library catalogue that *lists* a copy, so those are the top results and the least likely to be spot-checked. Hence 14 catalogues and periodicals (1751–1810) attributed to Khunrath, who died in 1605, and 16 editions of the Augsburg Confession under `Confessio Fraternitatis`. Detector: `scripts/audit/author-attribution.mjs` (#3434).
+- **Three correct guards can still leave a gap; check the gap, not each guard.** Nothing caught the above, and no single piece was wrong: `qa-author-date-anachronisms.mjs` tests only the **birth** side (this is the death side); `quarantine-non-person-authors.mjs` fixes the `authors` thesaurus and never touches `books.author`, and its interlock rightly refuses to touch anchored real people — so **Khunrath was uncatchable there**, being a genuine VIAF-anchored author of other books we hold; and `author-date-window.mjs` deliberately refuses death-side exclusion because a 1925 Boethius is a reprint (he carries 55). The usable signal only exists in the **combination**: long-dead author **AND** reference-genre containing book (`posthumousMisattributionLikely()`). Neither half alone works — a person *can* compile a catalogue (Guanzelli's *Index librorum expurgandorum*, Bernardus de Lutzemburgo's *Catalogus haereticorum*), and death-side-alone flags every reprint in the corpus.
+- **`authors` carries no life dates** — 0 of 4,825 have a birth/death year, only `birth_place`/`death_place`. Death years come from `entities.wikidata_death_date` via `authors.entity_ids`, and only 1,229 of 3,253 entity-linked docs resolve one, so any date-based author check abstains on ~⅔ of the corpus. Don't read a clean result from one as coverage.
+- **`is_person: false` is a READ-PATH gate, and the read path is `classifyNonPersonAuthor` (`src/lib/non-person-author.ts`).** `quarantine-non-person-authors.mjs` set the flag on 59 docs and **nothing in `src/` read it for a year**, so every quarantined heading rendered with a portrait slot, life dates, an "Artist page" link and a schema.org **`Person`** node — telling search engines that `Theatrum Chemicum`, `British Museum` and `Anonymous` are human beings (#3483). The flag is **absent on 4,766 of 4,825 docs**, so consumers must test `=== false`; a truthiness check strips the person framing from every author on the site. A `merged_into` tombstone is not a non-person — the resolver follows it to its primary first. Institutions render as `Organization`; work titles and placeholders get **no entity node at all** and a `CollectionPage`, because there is no entity to point at. Don't "simplify" that to one non-person branch: a museum really does author its own catalogue, and a book title never authors anything.
+- **Quarantining a doc does not clear the byline, and clearing the byline retires the page.** The two layers are independent: `authors.is_person` governs *rendering*, `books.author` governs *existence* — an author page exists only while books point at it, so clearing a bogus `books.author` 404s the page with no code change. Decide which layer a given heading belongs to before writing anything. Roughly half of the 59 were the #3434 data defect (fix the books; the page retires itself) and half were legitimate corporate or anonymous headings (keep the books; drop the person framing).
+- **Enumerate author defects by the author STRING, never by the thesaurus doc.** A doc-keyed sweep walks `author_id` ∪ `author_entity_id` ∪ `variants` and silently misses any book whose string never joined — that gap hid `Kircher Oedipus` (6 periodicals), `Kircher Musurgia`, `Kircher Mundus` and `AnonymousUnknown author` from a sweep that believed it was exhaustive, and `scripts/audit/author-attribution.mjs` (which scans strings) found all of them afterwards. Corollary for repairs: **key the fix on whatever unit was actually verified.** #3434 keyed on book ids because the *name* was valid and only the pairing was wrong; #3483 keys on the string because the string itself is never a name (`S.n` is *sine nomine*), which makes string-matching self-limiting rather than a widening heuristic.
+- **A re-runnable repair must MERGE its backup, not overwrite it.** These scripts select by "still wearing the bad value", so a second run sees only the newly-found records — an overwriting backup would replace 770 restorable records with 15 and strand `--revert` for everything already fixed. Merge on id, and let the **earlier** `before` win: it is the true original.
 
 ## Work identity & "do we have the original?" (read before reasoning about gaps)
 **Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
@@ -239,7 +246,44 @@ Lessons from the AS132203 scraper fleet, 2026-07-29 (#3438, #3446). Full postmor
 - **An alias allowlist that only ADDS routes does not scope the domain.** `SOCIETY_DOMAINS` in `src/proxy.ts` rewrote `/` → `/ficino-society` and lifted `/discussions` and `/members`. It scoped three paths *onto* the domain and never restricted it, so the entire library was served there too — for months, invisibly, because the society pages themselves worked perfectly. A host allowlist must be **fail-shut**: `src/lib/alias-host-scope.ts` 308s anything outside the alias's own surface to the canonical domain, so a route added next year is scoped automatically.
 - **Put the durable control in the application.** A Cloudflare rule covers one zone; the app layer covers every hostname and every route. `src/lib/blocked-networks.ts` (checked at the top of `proxy()`) is where a network refusal belongs — it cannot be routed around by DNS. Edge controls are an optimisation; the app layer is the guarantee. Corollary of the three-layer gate rule above: changing one layer alone is silently defeated by the others.
 - **Per-IP rate limits cannot see a fleet.** 84 rotating /24s defeat every per-address cap; no single address looks abnormal while the aggregate runs 50,000/day. This is the third instance (quote-scrape, PostHog contamination, this). Rate caps are a floor, never the filter — which is why `traffic_class` is *stored* at write time rather than inferred later.
+- **Behind a CDN, an IP-based control measures the CDN — read `cf-connecting-ip` FIRST, everywhere (#3487/#3491).** The chain is client → Cloudflare → Vercel, and **Vercel rewrites `x-forwarded-for` with whatever connected to Vercel**, i.e. a Cloudflare edge node. So `x-forwarded-for` first silently files every front-door request under ~15 shared addresses in `172.64.0.0/13`, `104.16.0.0/13`, `162.158.0.0/15`. Three consequences, all observed: `analytics_pageviews`/`analytics_events` recorded the CDN rather than readers; the proxy's 10-req/60s bot bucket was keyed on those same addresses, so bots behind a busy edge node shared one bucket while a bot on a quiet node ran free; and `/api/views` deduped view increments per edge node, collapsing many readers into one — which matters because `books.read_count` orders the paid re-OCR queues. **This is why the only fleet ever caught is the one that bypassed Cloudflare**: going around the CDN is what caused its real addresses to be written down. A fleet arriving through the front door is invisible to every IP check by construction. Canonical helper: `clientIpFromHeaders()` in `src/lib/analytics-ingest.ts`; every analytics writer goes through it (pinned by `tests/unit/analytics-client-ip.test.ts`, which also fails a NEW `route.ts` under an `analytics/` or `track/` path that reads the header itself).
+- **A concentration alarm that doesn't know its own CDN will tell you to block it.** Before #3491 the detector's `traffic_concentration` check flagged 14–15 "networks each reading >2,000 pages" that were all Cloudflare, with remediation text naming `src/lib/blocked-networks.ts` — following it would have taken the site down. It now recognises the published egress ranges and raises `client_ip_not_recorded` instead, which states the instrument is broken rather than inventing a fleet. Generalisation of the "an alarm is an instrument too" rule below: **an alarm whose remediation is self-harm is worse than no alarm.**
+- **Scope an alias by an exact host match, never `host.includes('vercel.app')`.** Preview deployments (`*-git-*.vercel.app`, `*-<team>.vercel.app`) must keep serving the whole site or branch review stops working; the bare production alias must not. `DEPLOYMENT_ALIAS_HOSTS` in `src/lib/alias-host-scope.ts` is an exact-match set for that reason. And **check what points at an alias before scoping it** — `scripts/uptime-monitor.mjs` probes `sourcelibrary-v2.vercel.app`, and the Playwright suite defaulted `BASE_URL` to it, so a catch-all 308 would not merely have broken them: it would have silently repointed `e2e/crawl-all-pages.spec.ts` at production. Hence the allowlist's EXACT entries (`/api/books` yes, `/api/books/<id>/{text,quote}` no; the three `/embed/*` landing pages yes, the reading rooms beneath them no).
 - **Watch for it: `scripts/workers/traffic-anomaly-alert.mjs`** (hourly cron on Hetzner, pushes to `ntfy.sh/sourcelibrary-uptime` **on state change only** — a detector that repeats itself hourly trains you to ignore it). Three checks, one per failure above: volume concentration per /24, reader traffic on an unexpected hostname, and traffic still reaching the app from a network we believe is blocked. **Adding a new alias means adding it to `EXPECTED_HOSTS`** — the test pins that the allowlist stays small, because every host on it is a surface nobody is watching.
+
+## Session flags go stale, and blank forms erase — CRITICAL
+Lessons from the `/welcome` lockout, 2026-07-30 (#3467/#3496). Full postmortem:
+`.claude/handoffs/2026-08-01-welcome-gate-lockout-and-blank-form-overwrite.md`.
+Three bugs stacked: 42 readers could not leave the welcome page, and 2 had their
+answers erased.
+
+- **`useSession().update()` MUST be called with a payload.** With no argument it
+  issues a **GET** to `/api/auth/session` (next-auth's `update(data)` only builds a
+  body when given data; `lib/client.js` only sets `method:'POST'` when a body
+  exists), and a GET never runs the `jwt` callback with `trigger:'update'`. Since
+  the DB re-read in `src/lib/auth.ts` is gated on `(user || trigger === 'update')`,
+  every token field computed there stays frozen for the token's full 30-day life.
+  Mongo said `welcomedAt` was set; the session served `needsWelcome: true` for
+  hours. **Verify a session change by reading `/api/auth/session`, never by
+  trusting the write** — the disagreement between the two is the diagnosis.
+- **A mount-scoped `useRef` is not a redirect guard.** Every redirect is a
+  navigation and every navigation remounts, so the ref resets each time and a
+  stale flag becomes a lockout instead of a nuisance. Persist "already fired" in
+  `sessionStorage`. This is also the only thing that can heal a stale JWT, because
+  nothing server-side can force-refresh one.
+- **An ABSENT field means "leave this alone"; a PRESENT empty string means "the
+  reader cleared it".** Conflating them lets a form overwrite data it never showed
+  the reader — `/welcome` rendered blank on every visit, so the second save wiped
+  the first. Any surface that writes user-authored text must prefill (server-side,
+  so there is no mounted-and-empty window) or omit the key. Rule + tests:
+  `src/lib/welcome-profile-update.ts`. **Corollary:** a test asserting "record the
+  blank so declined ≠ never asked" encodes exactly this bug — keep the intent, move
+  the signal to the caller.
+- **A cohort keyed on an overwritten field drifts under you.** `users.welcomedAt`
+  is rewritten on every save, so a "who was affected in this window" query loses
+  anyone who came back and re-saved — a 42-person incident list became 40 within an
+  hour. Freeze an incident recipient list to a file (private ops repo — reader
+  addresses never go in this repo) and never re-derive it at send time.
 
 ## A metric is a claim about an instrument before it is a claim about readers
 A usage review on 2026-07-28 produced six findings; **three were instrument failures, not product facts** — and each failed *silently*, in the direction that invited a confident conclusion. Full postmortem: `.claude/handoffs/2026-07-28-instruments-lied-translation-streaming-crash.md`.
@@ -259,6 +303,14 @@ A usage review on 2026-07-28 produced six findings; **three were instrument fail
 
 Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 applied a real remedy for the wrong failure and was closed rather than merged once the actual cause was found.
 
+**An alarm is an instrument too, and one sample is not an outage (#3478).** `/api/health/auth` emailed "[CRITICAL] Source Library sign-in is broken" off a **single** dropped Atlas TLS handshake at 00:00:01 UTC. Sign-in was fine — a sign-in link went out at 23:27, an account was created at 00:02:24 (two minutes *after* the page), and 2,013 of the preceding 2,016 probes were clean. Everything above about measuring readers applies verbatim to measuring ourselves:
+
+- **Confirm before paging.** A probe that alerts on its first failed sample is reporting its own connection, not the product. `src/lib/health-alerting.ts` `recordFailureStreaks()` requires N consecutive failures, counted **per check** so unrelated single blips never sum to a page, and **fails open** when the streak store is unreachable — a genuine Atlas outage still pages immediately. Match the guard to the cadence: a 10-min probe can afford a 2-probe streak (~20 min to page); an hourly one cannot, and gets `retryWithBackoff()` instead.
+- **A retry with no delay is not a retry.** Both routes looped twice back-to-back, so a fault lasting a couple of seconds exhausted every attempt and still read as "after retry" in the alert text.
+- **Cron convergence manufactures the fault.** Nine Hetzner schedules align at 00:00 UTC; the resulting pile of cold Vercel functions all dialling Atlas at once is what dropped the handshake, and it took out both DB-touching probes in the same second. Keep probes off `:00`.
+- **Word the alert as what was observed.** "Users cannot sign in" was an inference from one probe, and it was false. Say which check failed, how many consecutive probes it has failed, and tell the reader to confirm real user impact — for auth that means recent `users` inserts and `verification_tokens`, never another probe.
+- **Get the base rate before believing a pattern.** The Hetzner cron log (`/var/log/sourcelibrary/cron-caller.log*`, 14 days rotated) turns "the DB is flaky" into "3 failures in 2,016 probes, two of them an unrelated Resend outage" in one command.
+
 **The replacement instrument needs the same audit as the one it replaced (#3453).** `reading_history` was the clean twin that rescued the reading-depth question from the scraper fleet — auth-gated, keyed on `user_id`, no crawler can be in it — and it was right about the thing it was checked on (26% of member sessions are 10+ pages, stable across every window and robust to dropping the heaviest accounts). Then it was quoted for two things nobody had checked, and both were wrong:
 
 - **A metric's name is a claim about its denominator.** "Members who came back: 62%" counted `sessions > 1`, and a session is one user + one **book** — so opening a second book in the same sitting scored as a return. The day-based figure is 30.9%, and 61.0% of members have their entire history inside a single hour. Before quoting a rate, say out loud what one row *is*; if the unit isn't the thing the label names, the number is measuring something else. Same trap as grouping by exact `$pathname` above.
@@ -273,6 +325,35 @@ A unit test whose every assertion is "this string appears in this file" can only
 Source-shape assertions are legitimate for **absence** invariants, where deletion *is* the failure mode: `tests/unit/soft-404-loading-guard.test.ts` pins that certain `loading.tsx` files do not exist, and re-adding one genuinely reintroduces the soft-404. That test earns its keep; a shape test for *behaviour* does not.
 
 For behaviour, the assertion has to exercise the thing: render the component under the condition (a simulated tenant host), call the function (`proxy()` directly, per the tenant section above), or hit a deployed URL and check the response. **Before writing a guard, ask what code change would make it fail — if the answer is only "deleting this line", it is documentation with a green checkmark, not a test.**
+
+**Don't reason about that question — run it.** Delete the guarded line, watch the test go red, restore it. Two source-shape guards written in one session (#3484/#3488) both passed *with the code they guarded deleted*, and neither failure was visible by reading the test: one asserted `toContain('hasSearchTerm')` + `toContain('offset === 0')`, where both tokens occur elsewhere in the same file; the other asserted `/tenantId/` against a call body and was satisfied by the **explanatory comment sitting directly above `tenantId,`**. A source assertion matches the whole file, comments included — so scope it to a slice, strip comments before matching, or assert a composite string whose position relative to the call is checked. The negative control is the only thing that distinguishes a guard from a decoration.
+
+## Count the search BOXES, not the search logs
+Before quoting anything about what users search for, **enumerate the search boxes in the UI and verify each one writes a row.** A log tells you about the boxes that log; it is silent about the ones that don't, and silence reads as "nobody searches."
+
+On 2026-07-31 a partner usage report claimed "of 93,179 views in the BPH reading room, exactly four were searches" and concluded readers there don't search. Both wrong, in two stacked ways (#3484):
+
+- **Wrong instrument.** The 4 came from counting pageviews of a `/search` *page*. Site-wide there were 5,903 such pageviews against 43,980 actual searches — searching mostly never produces a `/search` pageview at all. The tell was available immediately: two numbers that should have been comparable differed 7×. Related: **`analytics_pageviews.path` strips query strings** (0 of 926K stored paths contain `?`), so any URL-param search is invisible there by construction.
+- **A whole box was unmeasured.** `/api/catalog/bph` — the reading room's front-page catalogue search, the first thing a visitor sees — had no analytics call of any kind. Four months, zero rows. The BPH searches that *did* exist came from in-book search and the site's unified search: different boxes.
+
+Six search entry points existed, each built at a different time, each hand-rolling its own `analytics_events` insert, so logging was something every new route had to remember — and forgetting produces silence, not an error. The five that logged had also drifted: **none stored `host`**, so all 94,442 rows are `host: null` and cannot be split by surface even retroactively. Same shape as the five `entities.books[]` writers above.
+
+- **`src/lib/search-event-log.ts` is the single writer** for `search_query` events; `src/lib/search-log.ts` is the twin for the `search_queries` latency log. Both derive `host` / tenant / traffic class **inside the writer** from request headers rather than accepting them from callers, so a new surface cannot be born unattributable. A new search route uses them or it is not measured — `tests/unit/search-event-instrumentation.test.ts` pins the route list, and a route added without being listed silently stops being covered.
+- **A route that resolves a tenant to scope its query must pass that tenant to the logger.** `/api/search` did the first and not the second, leaving every "global" search unattributable with the answer sitting in scope (#3488).
+- **Tenant, not host, is the discriminator.** The reading room is served at `sourcelibrary.org/embed/bph`, so host says "sourcelibrary.org" for both surfaces. Separately, a subdomain's `/search?q=…` is rewritten by `proxy.ts` to `/embed/<tenant>/search`, which **re-exports the main `SearchPage`** and lands in `/api/search` — so a "main site" search list silently contains partner searches unless the row carries a tenant.
+- **Don't instrument `/api/search/semantic` with a `search_query` event.** It fires on the same page-load as `/api/search` for one user query; adding one double-counts every search. It logs latency to `search_queries` only, and a guard pins that.
+
+## `page_revisions` is not a clean double-OCR corpus
+It is used as one — 109,953 same-page pairs, and `scripts/eval/calibration-scorecard.mjs` fits agreement→accuracy on 32 anchor pages then applies it corpus-wide. **That inference assumes both sides read the same image, and ~40% of the time they did not.** Measured 2026-07-30 (`scripts/audit/revision-image-shift.mjs`, randomized n=3,339 pairs carrying a printed `<page-num>` on both sides): 40.2% report a *different printed page number*, i.e. a different leaf. Of 366 books with ≥3 comparable pairs, 112 shift on >50% of pairs and 88 of those systematically — one offset, almost always exactly **+1**.
+
+**Those are the #3357 e-rara repair, not fresh damage — the live data is correct** (verified against the scans: image `…974800b0/49.jpg` shows printed 5, current OCR says 5, the revision says 4). The tell was **inverted timestamps**: revision created 2026-07-25 while the current `ocr.updated_at` read 2026-04-04, i.e. *older than the text it supposedly replaced*. That is impossible for a re-OCR and diagnostic of a **text shift** — #3357 moved existing `ocr` subdocuments between pages rather than re-transcribing ("323 text-shifted back"), so each page inherited its neighbour's object *and that object's timestamp*, while `page_revisions` snapshotted the displaced text at repair time.
+
+- **Exclude pairs whose printed page numbers disagree before any corpus-wide fit.** One predicate removes both the repair artifact and genuine image swaps. Without it you are partly measuring one administrative event replicated across thousands of pages.
+- **This is why agreement is a weak accuracy proxy** — 63 points of agreement range map to ~5 points of accuracy in the anchor fit. Agreement is partly measuring image stability, not legibility.
+- **Mining the corpus for "hard to read" pages (#3469) must apply the same filter**, or the hard pages will mostly be re-archived ones. And note it is blind to the *fabrication* class by construction: two passes that both recite the same memorized verse agree perfectly (`/blog/reciting-not-reading`).
+- **Any shift-style repair must stamp `ocr.updated_at` on the write.** Leaving the moved object's original timestamp is precisely what made this take a day to diagnose, and the next such sweep will do it again.
+- Two further non-legibility causes in the same corpus: **truncation** (one pass transcribed a single column and stopped — 156 words vs 661 on the same page) and **normalization convention** (`nūc`→`nunc`, `q;`→`que`, `&`→`et`), which breaks exact-string alignment and cascades into fake substitutions. The *actual* early-modern glyph confusions — long-s ↔ f, ligatures, tildes — are ~1% of substitutions (`scripts/eval/disagreement-typology.mjs`).
+
 
 ## Static-prerender Suspense invariant (SEO-critical)
 Any client component that calls `useSearchParams()` (or another prerender-bailout hook) must wrap the consumer in its **own** `<Suspense fallback={null}>` inside the component — never rely on a page-level boundary catching it. On statically prerendered routes (the ISR book page is the canonical case: `revalidate = 86400`, never reads `headers()`), an unwrapped call throws a CSR bailout that the *nearest* Suspense boundary catches; when that's the page's main content boundary, the served HTML becomes the loading skeleton. Users never notice (the client re-renders from flight data), but crawlers get a content-free page — this silently blanked every `/book/<slug>` page for search engines from ~2026-05-27 to 2026-07-19 and was the real root cause of the "99% of pages orphaned" finding (#2266, fixed in PR #3231 via `EmbedNavigationReporter`). **Tell:** a `BAILOUT_TO_CLIENT_SIDE_RENDERING` template in served HTML above the content, and 0 content anchors while the flight-data scripts contain them. **Verify with `curl` + grep for real `<a href>` anchors** — a browser always looks fine, so eyeballing proves nothing. Dynamic routes (anything reading `headers()`, like collections and the reader) don't hit this, which makes the regression easy to miss in spot checks.
@@ -375,6 +456,35 @@ lights up. Proof is a **curl matrix against a deployed preview**: unfiltered vs
 filtered vs an impossible range (which must return 0). Check every lane in the
 response body, not just the first list. Same discipline as the three-layer
 crawler gate above: changing one layer alone is silently defeated by the others.
+
+**A searchable field is a readable field — never index a staff-only column.**
+Being able to search a field is a way of reading it: an attacker (or a curious
+visitor) can binary-search for the phrase it contains, one query at a time, and
+a hit is itself the disclosure. So the public search columns —
+`bph_works.search_norm`, `bph_works.search_tsv`, and any successor — must
+exclude `internal_remarks`, `exhibition_history`, `price`,
+`acquisition_source`/`_date`, the workflow flags, and `modified_by_*` (personal
+data). The exclusion list with per-field reasons lives in
+`scripts/migration/expand-bph-search-norm.sql`; keep it there rather than
+rediscovering it. This is the same shape as the tenant-lockdown rule above — ask
+what a surface *renders*, not only where it *links* — applied to the query side.
+
+**The inverse failure is just as real: a field nobody indexed is a field nobody
+can find.** `search_norm` covered 20 of ~40 populated columns, so searching a
+shelf location, a donor, a USTC number or a phrase from the remarks returned
+nothing — indistinguishable from "we don't hold it", and it took a librarian
+telling us in person to surface it (#3481). When adding a column that a human
+will later search by, add it to the search column in the same PR, or state why
+it is excluded.
+
+**Careful with generated search columns.** They cannot be altered in place —
+drop + recreate, which **also drops their indexes** (rebuild
+`idx_bph_search_norm_trgm` or every query becomes a seq scan), so wrap the whole
+thing in a transaction. And the expression must be IMMUTABLE: `concat_ws` is
+STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`.
+`add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
+deployed reality** — read `pg_get_expr` off the live column, not the migration
+file.
 
 ## Quote & snippet integrity — CRITICAL
 Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).

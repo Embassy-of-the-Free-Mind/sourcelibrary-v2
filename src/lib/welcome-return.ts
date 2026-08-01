@@ -34,3 +34,23 @@ export function returnDestination(rawFrom: string | null | undefined): string {
 
   return from;
 }
+
+/**
+ * Where to send a signed-OUT visitor who lands on /welcome?from=<path>.
+ *
+ * /welcome requires a session, so it bounces to sign-in — and it used to bounce
+ * to a bare `callbackUrl=/welcome`, dropping the destination on the floor. The
+ * reader signed in and arrived at the homepage instead of the book they clicked,
+ * which is the same lost-your-place failure `returnDestination` exists to prevent,
+ * one step earlier in the funnel.
+ *
+ * `from` is validated here rather than passed through, so nothing unvalidated is
+ * ever embedded in a redirect target — even though /welcome would validate it
+ * again on the way out. NextAuth additionally screens callbackUrl itself (see the
+ * redirect callback in src/lib/auth.ts).
+ */
+export function welcomeSignInUrl(rawFrom: string | null | undefined): string {
+  const dest = returnDestination(rawFrom);
+  const callback = dest === '/' ? '/welcome' : `/welcome?from=${encodeURIComponent(dest)}`;
+  return `/auth/signin?callbackUrl=${encodeURIComponent(callback)}`;
+}

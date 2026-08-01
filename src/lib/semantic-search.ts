@@ -2,6 +2,33 @@ import { supabase } from '@/lib/supabase';
 import { expandLanguages } from '@/lib/language-utils';
 
 /**
+ * Thrown when a semantic-search RPC fails. Do NOT swallow this into an empty
+ * result set.
+ *
+ * Why this class exists: every RPC here used to `console.error(...)` and
+ * `return []` on failure, which makes a database fault indistinguishable from
+ * "nothing matched". That is not hypothetical — it hid a completely undeployed
+ * `match_semantic` function for months (see the header of
+ * `scripts/migration/add-match-semantic-rpc.sql`: the lib "catches the error and
+ * returns []"), and in Aug 2026 it caused a language filter returning zero rows
+ * to be misdiagnosed as a filter bug when the filter was working correctly.
+ *
+ * An empty array is an *answer*. An error is not. Callers that genuinely want to
+ * degrade (multi-lane search, the librarian) already wrap these calls in
+ * try/catch and drop the lane; the API routes surface it as a 500. Both are
+ * correct — what was wrong was the callee deciding silently on their behalf.
+ *
+ * Note `getQueryEmbedding` returning null is NOT this case: Gemini being absent
+ * is a documented degrade to keyword-only search, and still returns [].
+ */
+export class SemanticSearchError extends Error {
+  constructor(public readonly rpc: string, message: string) {
+    super(`[semantic-search] ${rpc} failed: ${message}`);
+    this.name = 'SemanticSearchError';
+  }
+}
+
+/**
  * Generate query embedding via Gemini embedding-2-preview.
  * Must use the same model as the backfill (embed-gemini.mjs / backfill-book-embeddings.mjs).
  * Returns null if Gemini is unavailable (search degrades to keyword-only).
@@ -72,8 +99,7 @@ export async function semanticBookSearch(
   });
 
   if (error) {
-    console.error('[semantic-search] match_books_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_books_semantic', error.message);
   }
 
   return (data || []).map((row: any) => ({
@@ -169,8 +195,7 @@ export async function semanticArtworkSearch(
   });
 
   if (error) {
-    console.error('[semantic-search] match_artworks_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_artworks_semantic', error.message);
   }
 
   return (data || []).map((row: any) => ({
@@ -282,8 +307,7 @@ export async function semanticPageSearchGlobal(
   });
 
   if (error) {
-    console.error('[semantic-search] match_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_semantic', error.message);
   }
 
   let rows = (data || []) as any[];
@@ -356,8 +380,7 @@ export async function semanticPageSearchScoped(
   });
 
   if (error) {
-    console.error('[semantic-search] match_pages_in_books error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_pages_in_books', error.message);
   }
 
   return (data || []).map((row: any) => {

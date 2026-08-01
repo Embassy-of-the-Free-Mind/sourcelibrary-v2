@@ -12,6 +12,7 @@ import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
+import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -238,6 +239,7 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
   works: Book[];
   artworks: Book[];
   canonicalSlug: string;
+  nonPerson: NonPersonAuthor | null;
 } | null> {
   const resolved = await resolveCanonicalAuthor(db, slug, BOOK_PROJECTION);
   if (!resolved || resolved.books.length === 0) return null;
@@ -248,6 +250,9 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
     works,
     artworks,
     canonicalSlug: resolved.canonicalSlug,
+    // Only the thesaurus knows a heading is not a person; the legacy string
+    // path below has no such record, so it renders as before.
+    nonPerson: classifyNonPersonAuthor(resolved.doc),
   };
 }
 
@@ -293,6 +298,10 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // to the canonical slug. Falls back to the legacy entity/string path on a miss
   // so no author page regresses while the thesaurus tail is still being linked.
   let data: Awaited<ReturnType<typeof loadAuthorData>> = null;
+  // Non-person headings (institutions, work titles, "Anonymous") come only from
+  // the thesaurus, so this stays null on the legacy path — which is correct:
+  // without a thesaurus doc there is no evidence the heading is not a person.
+  let nonPerson: NonPersonAuthor | null = null;
   if (authorThesaurusReadpathEnabled()) {
     const canonical = await loadCanonicalAuthorData(db, name);
     if (canonical) {
@@ -300,6 +309,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         redirect(`/author/${canonical.canonicalSlug}`);
       }
       data = canonical;
+      nonPerson = canonical.nonPerson;
     }
   }
   if (!data) data = await loadAuthorData(db, name);
@@ -320,9 +330,12 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // Life dates + portrait are a static read of the entity. Enrichment from
   // Wikidata happens OFFLINE (cron + link hook, see wikidata-enrichment.ts) —
   // never on render, since these are immutable facts.
+  // A birth/death range is a claim about a human life. An entity row linked to a
+  // non-person heading can still carry one (they are matched by name), so this
+  // is gated on the thesaurus flag rather than on the dates being absent.
   const birthYear = entity?.wikidata_birth_date?.split('-')[0];
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
-  const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
+  const lifeDates = !nonPerson && birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
   // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
   const encyclopediaEntity = entity || await db.collection('entities').findOne(
@@ -334,7 +347,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   );
 
   // Portrait image — static read (enriched offline; CSP-safe CDN URL).
-  const portraitUrl = entity?.portrait_url ?? null;
+  // Never for a non-person: a portrait is the strongest visual assertion the
+  // page makes, and there is no face behind "Theatrum Chemicum".
+  const portraitUrl = nonPerson ? null : (entity?.portrait_url ?? null);
 
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url
@@ -352,8 +367,12 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // Artist-page link surfaces whenever there are visual works. Tracks the
   // /artist/[slug] route's own definition (resource_type-based) so the link
   // doesn't dangle on records that haven't been backfilled to content_type.
-  const hasVisualWorks = artworks.some(b => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type))
-    || artworks.length > 0;
+  // "Artist page" reads the heading as a person who made pictures, so it is
+  // suppressed for a non-person even when visual records are present.
+  const hasVisualWorks = !nonPerson && (
+    artworks.some(b => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type))
+    || artworks.length > 0
+  );
 
   // Language breakdown — texts only; artworks rarely carry a language and
   // the count would dilute the signal in the stats row.
@@ -376,6 +395,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         wikidataId={entity?.wikidata_id}
         viafId={entity?.viaf_id}
         portraitUrl={portraitUrl}
+        entityType={nonPerson ? nonPerson.schemaEntityType : 'Person'}
         workCount={works.length + artworks.length}
         sampleWorks={works.slice(0, 10).map(w => ({
           id: w.id,
@@ -404,11 +424,23 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
           </h1>
+          {nonPerson && (
+            <p className="text-stone-400 mt-2 text-sm">
+              <span
+                className="inline-block px-2 py-0.5 mr-2 rounded bg-stone-700/60 text-stone-300 text-xs uppercase tracking-wide"
+              >
+                {nonPerson.label}
+              </span>
+              {nonPerson.note}
+            </p>
+          )}
           {lifeDates && (
             <p className="text-stone-400 mt-1 text-lg">{lifeDates}</p>
           )}
+          {/* "fl." is floruit — a person's active years. A non-person gets the
+              plain span of the records instead. */}
           {!lifeDates && yearRange && (
-            <p className="text-stone-400 mt-1">fl. {yearRange}</p>
+            <p className="text-stone-400 mt-1">{nonPerson ? yearRange : `fl. ${yearRange}`}</p>
           )}
           {entity?.description && (
             <p className="text-stone-300 mt-3 text-sm max-w-2xl leading-relaxed">

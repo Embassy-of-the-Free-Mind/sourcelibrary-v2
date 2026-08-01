@@ -264,6 +264,13 @@ const phaseIdx = args.indexOf('--phase');
 const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
 const bookArg = args.find(a => a.startsWith('--book='));
 const BOOK_OVERRIDE = bookArg ? bookArg.split('=')[1] : null;
+// Phase 8.5 is RECOVERY, not production: it only rolls a stuck status back to
+// the phase before it. It submits nothing and spends nothing. A run limited to
+// it is therefore safe under a global pause — and must be allowed, because the
+// pause is a SPEND control and gating bookkeeping on it is how six derived
+// outputs froze for seven weeks (CLAUDE.md).
+const RECOVERY_ONLY = ONLY_PHASE === 8.5;
+
 if (BOOK_OVERRIDE && ONLY_PHASE === null) {
   console.error('--book requires --phase to be specified');
   process.exit(1);
@@ -2549,7 +2556,10 @@ async function run() {
   // a single --book override (existing behavior) or a config-driven allowlist.
   const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
 
-  if (!shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
+  if (RECOVERY_ONLY && !shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
+    console.log('[pipeline-orchestrator] PAUSED, but this is a recovery-only run (--phase 8.5): rolling back stuck statuses spends nothing, so it proceeds.');
+  }
+  if (!RECOVERY_ONLY && !shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
     console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by || 'unknown'}). Exiting.`);
     await db.collection('cron_runs').insertOne({
@@ -5289,7 +5299,14 @@ Rules:
         .project({ id: 1, title: 1, pipeline_auto: 1 })
         .limit(50)
         .toArray();
-      if (SCOPE_ACTIVE) staleBooks = await applyBookOverride(db, staleBooks, { id: 1, title: 1, pipeline_auto: 1 });
+      // Recovery is deliberately NOT confined to the selective-unpause scope.
+      // A rollback writes a status field and nothing else — no submission, no
+      // spend — while every phase that DOES spend stays scope-gated, so making
+      // a book eligible cannot leak paid work. Confining it here meant a book
+      // outside the 160-book allowlist could never self-heal: 8 books had to be
+      // repaired by hand (Thibault + 7 others, 10-23 days stuck) before this
+      // was noticed. An explicit --book override still narrows the run.
+      if (BOOK_OVERRIDE) staleBooks = await applyBookOverride(db, staleBooks, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Stale books: ${staleBooks.length}`);
 

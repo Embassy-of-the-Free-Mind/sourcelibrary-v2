@@ -135,13 +135,43 @@ describe('/api/me/welcome name capture', () => {
     expect(volunteerUpdates[0].update.$set.preferred_language).toBe('Spanish');
   });
 
-  it('records an empty language rather than omitting the field', async () => {
-    // Stored as '' so "asked and declined" is distinguishable from "never
-    // asked" — the pre-feature users have no key at all.
+  // "Asked and declined" must still be distinguishable from "never asked" — but
+  // the signal now comes from the caller SENDING the key, not from the route
+  // inventing an empty value for a key nobody sent. That inference was the
+  // data-loss bug: the welcome form rendered blank, so a save meant to record a
+  // name wrote '' over answers the reader had given earlier and could not see
+  // (two readers lost theirs on 2026-07-30). The form sends all four fields
+  // whenever it could prefill them, so the declined case is unchanged in
+  // production; it omits only what it could not show the reader.
+  it('records an empty language when the reader explicitly left it blank', async () => {
+    const { POST } = await import('@/app/api/me/welcome/route');
+    await POST(post({ name: 'X', about_you: 'y', preferred_language: '' }));
+
+    expect(userUpdates[0].update.$set).toHaveProperty('profile.preferredLanguage', '');
+    expect(userUpdates[0].update.$set).toHaveProperty('profile.preferredLanguageKey', '');
+  });
+
+  it('leaves a field alone when the caller omits it', async () => {
     const { POST } = await import('@/app/api/me/welcome/route');
     await POST(post({ name: 'X', about_you: 'y' }));
 
-    expect(userUpdates[0].update.$set).toHaveProperty('profile.preferredLanguage', '');
+    const set = userUpdates[0].update.$set;
+    expect(set).toHaveProperty('profile.aboutYou', 'y');
+    expect(set).not.toHaveProperty('profile.preferredLanguage');
+    expect(set).not.toHaveProperty('profile.helpDescription');
+  });
+
+  it('never lets an omitted field blank the volunteers copy of record', async () => {
+    // volunteers is the last-resort backup — it is the only reason the two
+    // blanked profiles were recoverable at all.
+    const { POST } = await import('@/app/api/me/welcome/route');
+    await POST(post({ name: 'X', about_you: 'still here' }));
+
+    expect(volunteerUpdates).toHaveLength(1);
+    const set = volunteerUpdates[0].update.$set;
+    expect(set).toHaveProperty('about_you', 'still here');
+    expect(set).not.toHaveProperty('help_description');
+    expect(set).not.toHaveProperty('preferred_language');
   });
 
   it('rejects an unauthenticated caller', async () => {
