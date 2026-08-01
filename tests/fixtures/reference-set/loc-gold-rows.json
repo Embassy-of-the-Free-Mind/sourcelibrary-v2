@@ -327,5 +327,263 @@
   ],
   "source": "loc_mdsconnect",
   "snapshot": "2016"
+ },
+ {
+  "lccn": "00699877",
+  "author": "",
+  "added_entries": [
+   "Plato.",
+   "West, Thomas G.,",
+   "West, Grace Starry,",
+   "Aristophanes."
+  ],
+  "uniform_title": "",
+  "title": "Four texts on Socrates :",
+  "subtitle": "Plato's Euthyphro, Apology, and Crito, and Aristophanes' Clouds /",
+  "year": "1998",
+  "extent": "190 p. ;",
+  "publisher": "Cornell University Press,",
+  "original_languages": [
+   "gre"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Socrates."
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "04014075",
+  "author": "Homer.",
+  "added_entries": [
+   "Lang, Andrew,",
+   "Leaf, Walter,",
+   "Myers, Ernest,"
+  ],
+  "uniform_title": "",
+  "title": "The Iliad of Homer,",
+  "subtitle": "",
+  "year": "1903",
+  "extent": "vii, [1], 506 p., 1 l.",
+  "publisher": "Macmillan and Co., limited;",
+  "original_languages": [
+   "gre"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Epic poetry, Greek",
+   "Achilles"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "08035961",
+  "author": "Petrie, W. M. Flinders",
+  "added_entries": [],
+  "uniform_title": "",
+  "title": "Egyptian tales translated from the papyri ...",
+  "subtitle": "",
+  "year": "1899",
+  "extent": "2 v.",
+  "publisher": "Methuen & co.,",
+  "original_languages": [
+   "egy"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Egyptian literature"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "25002874",
+  "author": "Villon, François,",
+  "added_entries": [
+   "Lepper, John Heron,",
+   "Payne, John,"
+  ],
+  "uniform_title": "",
+  "title": "The testaments of Francois Villon,",
+  "subtitle": "",
+  "year": "1924",
+  "extent": "xxxvi, 316 p., incl. front. (facsim.)",
+  "publisher": "Boni and Liveright,",
+  "original_languages": [
+   "und"
+  ],
+  "item_language": "eng",
+  "subjects": [],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "29025506",
+  "author": "Aristotle",
+  "added_entries": [
+   "Jebb, R. C.",
+   "Sandys, John Edwin,"
+  ],
+  "uniform_title": "",
+  "title": "The Rhetoric of Aristotle.",
+  "subtitle": "",
+  "year": "1908",
+  "extent": "207 p.",
+  "publisher": "Cambridge [Eng.] The University press",
+  "original_languages": [
+   "grc"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Rhetoric"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "52031409",
+  "author": "Chaucer, Geoffrey,",
+  "added_entries": [
+   "Coghill, Nevill,"
+  ],
+  "uniform_title": "",
+  "title": "The Canterbury tales /",
+  "subtitle": "",
+  "year": "1952",
+  "extent": "528 p. ;",
+  "publisher": "Penguin Books,",
+  "original_languages": [
+   "und"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Christian pilgrims and pilgrimages",
+   "Storytelling",
+   "Middle Ages"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "94017253",
+  "author": "Suetonius,",
+  "added_entries": [
+   "Kaster, Robert A."
+  ],
+  "uniform_title": "",
+  "title": "De grammaticis et rhetoribus /",
+  "subtitle": "",
+  "year": "1995",
+  "extent": "lx, 370 p. ;",
+  "publisher": "Clarendon Press ;",
+  "original_languages": [
+   "lat"
+  ],
+  "item_language": "englat",
+  "subjects": [
+   "Philologists"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "2006334798",
+  "author": "Bukhārī, Muḥammad ibn Ismāʻīl,",
+  "added_entries": [
+   "Ahmad, Aftab-ud-Din.",
+   "Bukhārī, Muḥammad ibn Ismāʻīl,",
+   "Bukhārī, Muḥammad ibn Ismāʻīl,"
+  ],
+  "uniform_title": "",
+  "title": "English translation of Sahih al-Bukhari  /",
+  "subtitle": "",
+  "year": "1973",
+  "extent": "Volumes <1-3> ;",
+  "publisher": "Ahmadiyya Anjuman Isha'at-i Islam,",
+  "original_languages": [
+   "ara"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Hadith"
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "2007358598",
+  "author": "",
+  "added_entries": [
+   "Hammurabi,",
+   "Viel, H.-Dieter."
+  ],
+  "uniform_title": "",
+  "title": "The complete code of Hammurabi /",
+  "subtitle": "",
+  "year": "2005",
+  "extent": "2 v. (799 p.) :",
+  "publisher": "LINCOM Europa,",
+  "original_languages": [
+   "ger",
+   "akk"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Law",
+   "Cuneiform inscriptions, Akkadian.",
+   "Cuneiform writing."
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "2011923762",
+  "author": "Littlewood, R. Joy.",
+  "added_entries": [
+   "Silius Italicus, Tiberius Catius."
+  ],
+  "uniform_title": "",
+  "title": "A commentary on Silius Italicus' Punica 7 :",
+  "subtitle": "edited with introduction and commentary /",
+  "year": "2011",
+  "extent": "xcix, 276 p. :",
+  "publisher": "Oxford University Press,",
+  "original_languages": [
+   "lat"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Epic poetry, Latin",
+   "Punic War, 2nd, 218-201 B.C.",
+   "Punic War, 2nd, 218-201 B.C.",
+   "Silius Italicus, Tiberius Catius."
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
+ },
+ {
+  "lccn": "2015303200",
+  "author": "Wittgenstein, Ludwig,",
+  "added_entries": [],
+  "uniform_title": "",
+  "title": "Tractatus logico-philosophicus /",
+  "subtitle": "",
+  "year": "2014",
+  "extent": "xxxvi, 106 pages :",
+  "publisher": "Routledge,",
+  "original_languages": [
+   "ger"
+  ],
+  "item_language": "eng",
+  "subjects": [
+   "Logic, Symbolic and mathematical.",
+   "Language and logic.",
+   "Language and logic.",
+   "Logic, Symbolic and mathematical."
+  ],
+  "source": "loc_mdsconnect",
+  "snapshot": "2016"
  }
 ]

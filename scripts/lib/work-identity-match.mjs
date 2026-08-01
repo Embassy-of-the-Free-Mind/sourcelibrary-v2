@@ -60,7 +60,13 @@ export const bookTitleTokens = (...titles) => [...new Set(titles.flatMap(titleTo
  * Deliberately shallow — it only has to bridge declension, not lemmatise.
  */
 export function stem(t) {
-  return t.replace(/(?:ibus|arum|orum|is|ae|am|um|us|os|as|es|em|i|o|a|e)$/, '');
+  const declined = t.replace(/(?:ibus|arum|orum|is|ae|am|um|us|os|as|es|em|i|o|a|e)$/, '');
+  if (declined !== t) return declined;
+  // English plural, applied only when no Latin ending matched. Our title is
+  // frequently the Latin ("Elementa") where the catalogue's 245 is the English
+  // ("Euclid's Elements") — without this the two never meet and Euclid's Elements
+  // reads as a different work from Euclid's Elements.
+  return /[^aeiou]s$/.test(t) && t.length > 4 ? t.slice(0, -1) : t;
 }
 
 /**
@@ -139,18 +145,62 @@ export function uniformTitleContainment(bookToks, uniformTitle, opts = {}) {
 export const GENERIC_UNIFORM_MAX_TOKENS = 2;
 
 /**
- * FALLBACK — bag-of-tokens overlap against the 245 display title, for the ~32%
- * of rows with no 240. Capped below the strong threshold so it can surface a
- * hint for screening but never assert a work match by itself.
+ * Tokens of a personal name, for discounting inside a TITLE.
+ *
+ * A 245 display title routinely contains the author: "The Iliad of Homer", "The
+ * thirteen books of Euclid's Elements", "The Rhetoric of Aristotle". Those tokens
+ * carry no work identity — an author's name is equally present in the titles of
+ * everything they wrote, which is exactly why it manufactures false matches
+ * between two different works by one person. This is the same job TITLE_STOP does
+ * for "liber" and "tractatus", except the filler is supplied per-pair.
  */
-export function displayTitleOverlap(bookToks, displayTitle) {
+export function personalNameTokens(names = []) {
+  return new Set(
+    names.filter(Boolean)
+      .flatMap((n) => titleTokens(String(n).replace(/\d{3,4}/g, ' ')))
+      .map(stem),
+  );
+}
+
+/**
+ * FALLBACK — the 245 display title, for the 35.2% of rows carrying no 240.
+ *
+ * TWO OUTCOMES, and the difference is the whole point:
+ *
+ *   a WEAK HINT (score ≤ 0.55, below STRONG_WORK_IDENTITY) — the default. The
+ *   candidate is retrieved and screened but cannot assert work identity. This is
+ *   what the function used to return unconditionally, which meant over a third of
+ *   the reference set could only ever yield `none_found`.
+ *
+ *   a CONFIRMATION (score 1) — when the author agrees AND, after discounting
+ *   personal-name tokens, one title's remaining content is CONTAINED in the
+ *   other's.
+ *
+ * Why containment rather than a raised ratio: a 245 is an edition's own line and
+ * carries apparatus a work title never has. "The thirteen books of Euclid's
+ * Elements" against our "Elementa" scores 0.50 on min-coverage and would be lost
+ * by any threshold above that, while "Historia animalium" against "De partibus
+ * animalium" — two different works — scores the same 0.50 and would be kept. A
+ * ratio cannot separate those; containment separates them for a reason. It is
+ * also the identical test the 240 path uses, so the two paths agree by
+ * construction instead of by tuning.
+ *
+ * Both directions count. Our title is sometimes the fuller one ("Sahih al-Bukhari
+ * (Complete)" ⊃ the record's "Sahih al-Bukhari") and sometimes the barer one
+ * ("Code of Hammurabi" ⊂ "The complete code of Hammurabi").
+ *
+ * Author agreement is REQUIRED and is not a threshold that can be relaxed. The
+ * title-token lane has no author access point, and a 245 match resting on words
+ * alone is precisely how "The cup to the dregs" matched a Tibetan ritual text.
+ */
+export function displayTitleOverlap(bookToks, displayTitle, opts = {}) {
   const rt = new Set(titleTokens(displayTitle));
   if (!rt.size || !bookToks?.length) return null;
   const hits = bookToks.filter((t) => rt.has(t)).length;
   if (!hits) return null;
   const bookCoverage = hits / bookToks.length;
   const recordCoverage = hits / rt.size;
-  return {
+  const weak = {
     score: Math.min(0.55, Math.min(bookCoverage, recordCoverage)),
     hits,
     basis: 'display_title_overlap',
@@ -158,6 +208,32 @@ export function displayTitleOverlap(bookToks, displayTitle) {
     record_coverage: recordCoverage,
     book_tokens: bookToks.length,
     record_tokens: rt.size,
+  };
+
+  const { bookAuthorSurname, recordAuthorSurnames, authorNames } = opts;
+  const agrees = Boolean(bookAuthorSurname)
+    && (recordAuthorSurnames ?? []).some((s) => s && s === bookAuthorSurname);
+  if (!agrees) return weak;
+
+  const names = personalNameTokens(authorNames ?? []);
+  const bookContent = [...new Set(bookToks.map(stem))].filter((t) => !names.has(t));
+  const recordContent = [...new Set([...rt].map(stem))].filter((t) => !names.has(t));
+  // A title that is nothing but the author's name identifies no work.
+  if (!bookContent.length || !recordContent.length) return weak;
+
+  const bookInRecord = bookContent.every((t) => recordContent.includes(t));
+  const recordInBook = recordContent.every((t) => bookContent.includes(t));
+  if (!bookInRecord && !recordInBook) return weak;
+
+  return {
+    score: 1,
+    hits: bookContent.filter((t) => recordContent.includes(t)).length,
+    basis: 'display_title_containment+author',
+    direction: bookInRecord ? 'book_in_record' : 'record_in_book',
+    book_content_tokens: bookContent.length,
+    record_content_tokens: recordContent.length,
+    discounted_name_tokens: [...names],
+    author_corroborated: true,
   };
 }
 
@@ -255,7 +331,11 @@ export function matchWorkIdentity(bookToks, row, opts = {}) {
     if (vern) return vern;
   }
   return uniformTitleContainment(bookToks, row.uniform_title, opts)
-    ?? displayTitleOverlap(bookToks, row.title);
+    // The subtitle is part of the same 245 field and often carries the work names
+    // the title proper omits ("Four texts on Socrates : Plato's Euthyphro,
+    // Apology, and Crito"). Dropping it discarded real content on the very rows
+    // that have no 240 to fall back on.
+    ?? displayTitleOverlap(bookToks, `${row.title || ''} ${row.subtitle || ''}`, opts);
 }
 
 /** Threshold at which a match is strong enough to require screening. */

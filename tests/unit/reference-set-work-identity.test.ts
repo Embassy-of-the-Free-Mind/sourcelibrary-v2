@@ -38,19 +38,28 @@ import { describe, it, expect } from 'vitest';
 // @ts-expect-error — .mjs script module without type declarations
 import {
   uniformTitleContainment,
+  displayTitleOverlap,
   bookTitleTokens,
   vernacularContainment,
   cjkRuns,
+  STRONG_WORK_IDENTITY,
 } from '../../scripts/lib/work-identity-match.mjs';
 
 type LocRow = {
-  lccn: string; title: string; uniform_title: string; year: string;
+  lccn: string; title: string; subtitle?: string; uniform_title: string; year: string;
+  author?: string; added_entries?: string[];
   original_languages: string[];
 };
 
 const rows: LocRow[] = JSON.parse(
   readFileSync(resolve(__dirname, '../fixtures/reference-set/loc-gold-rows.json'), 'utf8'),
 );
+
+const byTitle = (re: RegExp) => {
+  const hit = rows.find((r) => !r.uniform_title && re.test(r.title || ''));
+  if (!hit) throw new Error(`gold fixture missing a 240-less row with title matching ${re}`);
+  return hit;
+};
 
 const byUniform = (re: RegExp) => {
   const hit = rows.find((r) => re.test(r.uniform_title || ''));
@@ -78,6 +87,9 @@ const authorOpts = (row: LocRow & { author?: string; added_entries?: string[] },
   bookAuthorSurname: surname(bookAuthor),
   recordAuthorSurnames: [row.author, ...(row.added_entries || [])]
     .filter(Boolean).map(surname).filter(Boolean),
+  // Full name strings, so the 245 fallback can discount personal-name tokens that
+  // appear inside the titles themselves ("The Iliad of HOMER").
+  authorNames: [bookAuthor, row.author, ...(row.added_entries || [])].filter(Boolean),
 });
 
 describe('MUST MATCH — hand-verified prior English translations', () => {
@@ -230,6 +242,127 @@ describe('generic uniform titles need author corroboration', () => {
       { bookAuthorSurname: '', recordAuthorSurnames: [] },
     );
     expect(result).not.toBeNull();
+  });
+});
+
+/**
+ * THE 240 RECALL CEILING
+ * ----------------------
+ * 35.2% of reference-set rows carry no MARC 240 (41,678 of 118,352). Work
+ * identity is established by 240 containment, and the 245 display-title fallback
+ * was capped at 0.55 — below the 0.60 confirmation threshold — so over a third of
+ * the set could NEVER produce a confirmed match no matter how exactly it agreed.
+ * Every one of those rows could only ever yield `none_found`.
+ *
+ * The naive repair is to raise the cap. That is the ratio-tuning that failed five
+ * times, and it fails here for a nameable reason: on a 245 the overlap is
+ * frequently carried by THE AUTHOR'S OWN NAME. "Poetics" against "The Rhetoric of
+ * Aristotle." scores well while sharing no work content at all, because both
+ * titles say "Aristotle".
+ *
+ * So the instrument, not the threshold: discount personal-name tokens, then
+ * require SET CONTAINMENT of what remains in one direction or the other, plus
+ * author agreement. Containment is the same test the 240 path uses, for the same
+ * reason — an edition's 245 carries apparatus ("The thirteen books of…",
+ * "English translation of…") that a ratio punishes and containment tolerates.
+ *
+ * Every row below is real MARC from the 2016 dump with a genuinely empty 240, and
+ * every book is a real record in our corpus.
+ */
+describe('245 display-title fallback — MUST CONFIRM (the 240-less true positives)', () => {
+  const cases: Array<[string, RegExp, string[], string]> = [
+    ['Homer, Iliad → Lang/Leaf/Myers 1903', /^The Iliad of Homer,/,
+      ['The Iliad of Homer'], 'Homer'],
+    ['Euclid, Elements → Heath 1908 (record carries "thirteen books of")', /thirteen books of Euclid/,
+      ['Elementa (Euclid)', 'Στοιχεῖα (Elements)'], 'Euclid'],
+    ['Chaucer, Canterbury Tales → Coghill 1952', /^The Canterbury tales/,
+      ['The Canterbury Tales'], 'Geoffrey Chaucer'],
+    ['al-Bukhari, Sahih → 1973 (record is CONTAINED in our title)', /English translation of Sahih al-Bukhari/,
+      ['Sahih al-Bukhari (Complete)'], 'Imam al-Bukhari'],
+    ['Hammurabi, Code → Viel 2005', /^The complete code of Hammurabi/,
+      ['Code of Hammurabi'], 'Court scribe of Hammurabi'],
+    ['Petrie, Egyptian Tales → 1899', /^Egyptian tales translated from the papyri/,
+      ['Egyptian Tales Translated from the Papyri'], 'W. M. Flinders Petrie'],
+    ['Wittgenstein, Tractatus → 2014', /^Tractatus logico-philosophicus/,
+      ['Tractatus Logico-Philosophicus'], 'Ludwig Wittgenstein'],
+    ['Suetonius, De grammaticis → Kaster 1995', /^De grammaticis et rhetoribus/,
+      ['De grammaticis et rhetoribus'], 'Suetonius'],
+  ];
+
+  it.each(cases)('%s', (_label, titleRe, bookTitles, bookAuthor) => {
+    const row = byTitle(titleRe);
+    const result = displayTitleOverlap(
+      bookTokens(...bookTitles), `${row.title} ${row.subtitle ?? ''}`, authorOpts(row, bookAuthor),
+    );
+    expect(result, `"${row.title}" should confirm against ${JSON.stringify(bookTitles)}`).not.toBeNull();
+    expect(result.score).toBeGreaterThanOrEqual(STRONG_WORK_IDENTITY);
+  });
+});
+
+describe('245 display-title fallback — MUST NOT CONFIRM', () => {
+  // The whole reason a cap existed. Each of these agrees on AUTHOR and shares
+  // tokens; none of them is the same work.
+  it('rejects Poetics against "The Rhetoric of Aristotle" — the overlap IS the author', () => {
+    const row = byTitle(/^The Rhetoric of Aristotle\./);
+    const result = displayTitleOverlap(
+      bookTokens('Poetics'), `${row.title} ${row.subtitle ?? ''}`, authorOpts(row, 'Aristotle'),
+    );
+    expect(result?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+  });
+
+  it('rejects Phaedo against "Four texts on Socrates" (Euthyphro, Apology, Crito)', () => {
+    const row = byTitle(/^Four texts on Socrates/);
+    const result = displayTitleOverlap(
+      bookTokens('Phaedo'), `${row.title} ${row.subtitle ?? ''}`, authorOpts(row, 'Plato'),
+    );
+    expect(result?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+  });
+
+  it('rejects Villon\'s Oeuvres against his Testaments — a part is not the whole', () => {
+    const row = byTitle(/^The testaments of Francois Villon/);
+    const result = displayTitleOverlap(
+      bookTokens('Les Oeuvres de François Villon'), `${row.title} ${row.subtitle ?? ''}`,
+      authorOpts(row, 'François Villon'),
+    );
+    expect(result?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+  });
+
+  it('rejects two works of one author that share a single ordinary token', () => {
+    // Historia animalium vs De partibus animalium: "animalium" is shared, neither
+    // title is contained in the other. A min-coverage rule at 0.5 confirms this;
+    // containment does not.
+    const result = displayTitleOverlap(
+      bookTokens('Historia animalium'), 'De partibus animalium',
+      { bookAuthorSurname: 'aristotle', recordAuthorSurnames: ['aristotle'], authorNames: ['Aristotle'] },
+    );
+    expect(result?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+  });
+
+  it('NEVER confirms without author agreement, however exact the title', () => {
+    // The title-token lane has no author access point at all. A 245 match there
+    // rests on nothing but words, which is precisely how "The cup to the dregs"
+    // matched a Tibetan ritual text.
+    const row = byTitle(/^The Canterbury tales/);
+    const noAuthor = displayTitleOverlap(
+      bookTokens('The Canterbury Tales'), row.title,
+      { bookAuthorSurname: '', recordAuthorSurnames: [] },
+    );
+    expect(noAuthor?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+
+    const wrongAuthor = displayTitleOverlap(
+      bookTokens('The Canterbury Tales'), row.title,
+      authorOpts(row, 'Someone Else'),
+    );
+    expect(wrongAuthor?.score ?? 0).toBeLessThan(STRONG_WORK_IDENTITY);
+  });
+
+  it('still returns the weak hint rather than null, so screening can see it', () => {
+    // A rejected confirmation must not become an absence. The candidate is still
+    // retrieved and screened; it simply cannot assert work identity by itself.
+    const row = byTitle(/^The Rhetoric of Aristotle\./);
+    const result = displayTitleOverlap(bookTokens('Poetics of Aristotle'), row.title, authorOpts(row, 'Aristotle'));
+    expect(result).not.toBeNull();
+    expect(result.basis).toBe('display_title_overlap');
   });
 });
 
