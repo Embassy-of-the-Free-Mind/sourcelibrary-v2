@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import { auth, RESEND_AUDIENCE_ID } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { toUserId } from '@/lib/user-id';
+import { buildProfileUpdate } from '@/lib/welcome-profile-update';
 
 // GET /api/me/welcome — the same four fields back, so the reader profile editor
 // on /account can prefill them. The welcome page promises this information can be
@@ -86,11 +87,13 @@ export async function POST(request: NextRequest) {
       welcomedAt: now,
     };
     if (!skip) {
-      userUpdate['profile.aboutYou'] = aboutYou;
-      userUpdate['profile.helpDescription'] = helpDescription;
-      userUpdate['profile.preferredLanguage'] = preferredLanguage;
-      userUpdate['profile.preferredLanguageKey'] = preferredLanguage.toLowerCase();
-      userUpdate['profile.updatedAt'] = now;
+      // An ABSENT key means "leave this alone"; a present empty string means the
+      // reader cleared the box. The distinction is load-bearing — when the two
+      // were conflated, a form that rendered blank wrote those blanks over real
+      // answers, and two readers lost theirs on 2026-07-30. Callers that cannot
+      // show the reader their current value must omit the key. Rule lives in
+      // src/lib/welcome-profile-update.ts so a test can reach it.
+      Object.assign(userUpdate, buildProfileUpdate(body, now));
       // Only ever set a name, never clear one: a blank field here means "didn't
       // answer", not "remove the name Google gave me".
       if (name) userUpdate.name = name;
@@ -103,18 +106,24 @@ export async function POST(request: NextRequest) {
 
     // Mirror into volunteers when the user shared anything — keeps the outreach
     // list usable without joining against users.
+    //
+    // Same absent-vs-empty rule as above, and it matters more here: this mirror
+    // is the only reason the two blanked profiles were recoverable at all, so a
+    // field nobody sent must never overwrite the copy of record.
+    const mirror: Record<string, unknown> = {
+      email,
+      name: name || session.user.name || null,
+      updated_at: now,
+    };
+    if ('about_you' in (body || {})) mirror.about_you = aboutYou;
+    if ('help_description' in (body || {})) mirror.help_description = helpDescription;
+    if ('preferred_language' in (body || {})) mirror.preferred_language = preferredLanguage;
+
     if (!skip && (aboutYou || helpDescription || preferredLanguage)) {
       await db.collection('volunteers').updateOne(
         { email },
         {
-          $set: {
-            email,
-            name: name || session.user.name || null,
-            about_you: aboutYou,
-            help_description: helpDescription,
-            preferred_language: preferredLanguage,
-            updated_at: now,
-          },
+          $set: mirror,
           $setOnInsert: {
             source: 'welcome',
             created_at: now,
@@ -129,21 +138,12 @@ export async function POST(request: NextRequest) {
         } as Record<string, unknown>,
         { upsert: true }
       );
-    } else if (!skip) {
-      // Everything cleared from the account editor. Don't create a row for a
-      // reader who never volunteered anything, but do clear one that exists —
-      // otherwise the outreach list keeps quoting prose they deleted.
-      await db.collection('volunteers').updateOne(
-        { email },
-        {
-          $set: {
-            about_you: '',
-            help_description: '',
-            preferred_language: '',
-            updated_at: now,
-          },
-        }
-      );
+    } else if (!skip && ('about_you' in (body || {}) || 'help_description' in (body || {}) || 'preferred_language' in (body || {}))) {
+      // Everything the caller sent was explicitly cleared. Don't create a row for
+      // a reader who never volunteered anything, but do clear the fields they
+      // actually cleared on one that exists — otherwise the outreach list keeps
+      // quoting prose they deleted. Fields they did NOT send stay untouched.
+      await db.collection('volunteers').updateOne({ email }, { $set: mirror });
     }
 
     // Backfill the Resend contact. It was created at sign-up (events.createUser

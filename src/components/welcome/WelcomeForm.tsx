@@ -17,15 +17,35 @@ function arrivalSource(): 'gate' | 'direct' {
   return new URLSearchParams(window.location.search).has('from') ? 'gate' : 'direct';
 }
 
-export default function WelcomeForm({ initialName = '' }: { initialName?: string }) {
+export default function WelcomeForm({
+  initialName = '',
+  initialAboutYou = '',
+  initialPreferredLanguage = '',
+  initialHelpDescription = '',
+  profileLoaded = true,
+}: {
+  initialName?: string;
+  initialAboutYou?: string;
+  initialPreferredLanguage?: string;
+  initialHelpDescription?: string;
+  /**
+   * Did the server manage to read the stored profile? When false the fields are
+   * blank because we couldn't look them up, NOT because the reader cleared them
+   * — so a save must omit any field still untouched rather than write an empty
+   * string over a real answer.
+   */
+  profileLoaded?: boolean;
+}) {
   const router = useRouter();
   const { data: session, update } = useSession();
   // Google sign-ins arrive with a name; magic-link sign-ins never do, and this
   // is the only place we ever ask. Prefill so Google users aren't retyping it.
   const [name, setName] = useState(initialName);
-  const [aboutYou, setAboutYou] = useState('');
-  const [preferredLanguage, setPreferredLanguage] = useState('');
-  const [helpDescription, setHelpDescription] = useState('');
+  // Prefilled with what they already told us, so an empty box means "cleared"
+  // rather than "never rendered". See the note in src/app/welcome/page.tsx.
+  const [aboutYou, setAboutYou] = useState(initialAboutYou);
+  const [preferredLanguage, setPreferredLanguage] = useState(initialPreferredLanguage);
+  const [helpDescription, setHelpDescription] = useState(initialHelpDescription);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
   const viewed = useRef(false);
 
@@ -78,12 +98,14 @@ export default function WelcomeForm({ initialName = '' }: { initialName?: string
       hasHelp: Boolean(trimmed.help),
       hasLanguage: Boolean(trimmed.language),
     });
-    send({
-      name: trimmed.name,
-      about_you: trimmed.about,
-      preferred_language: trimmed.language,
-      help_description: trimmed.help,
-    });
+    // When the prefill read failed, a blank box carries no information — it may
+    // be a real answer we simply could not load. Omit those fields so the route
+    // leaves the stored value alone, rather than writing "" over it.
+    const payload: Record<string, string> = { name: trimmed.name };
+    if (profileLoaded || trimmed.about) payload.about_you = trimmed.about;
+    if (profileLoaded || trimmed.language) payload.preferred_language = trimmed.language;
+    if (profileLoaded || trimmed.help) payload.help_description = trimmed.help;
+    send(payload);
   };
 
   // Mirrors UserMenu's avatar so the glyph in the pointer below matches the one
