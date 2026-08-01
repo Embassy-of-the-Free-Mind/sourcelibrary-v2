@@ -824,6 +824,39 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   fill: var(--accent-rust) !important;
 }
 
+/* ── Hero mosaic focus-in ─────────────────────────────────────────────────────
+   The background mosaic fades in fast, then the blur resolves slowly — a
+   deliberate "come into focus" rather than a hard pop. Opacity and blur are
+   decoupled on the keyframe timeline (opacity done by ~28%, blur over the full
+   run) so the sharpening is clearly visible even though the image itself loads
+   instantly from R2. A named animation (not a Tailwind transition) guarantees
+   the ~1.9s timing regardless of how fast the load fires. */
+/* Mosaic background: a plain fade + subtle zoom (no blur), played once the
+   mosaic image has loaded (so on unseen books it waits for the composite). */
+.hero-focus-in {
+  animation: hero-focus-in 300ms ease-out both;
+}
+@keyframes hero-focus-in {
+  0%   { opacity: 0; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Cover: the SAME fade, but NO zoom — and it plays on page load, independent of
+   the mosaic, so the cover fades in straight away even on an unseen book whose
+   mosaic hasn't generated yet. */
+.hero-cover-in {
+  animation: hero-cover-in 300ms ease-out both;
+}
+@keyframes hero-cover-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-focus-in, .hero-cover-in { animation: none; opacity: 1; transform: none; }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 /* ── Section reveal-in (book page) ────────────────────────────────────────────
    Sections fade + rise as they scroll into view. Pure CSS via a scroll-driven
    view() timeline — no JS, no IntersectionObserver, no hydration flash.
