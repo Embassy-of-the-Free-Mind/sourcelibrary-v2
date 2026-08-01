@@ -602,12 +602,6 @@ export default function ProgressStudiesPage() {
                 internal: true,
               },
               {
-                href: '/press/origins-of-science',
-                title: 'The Mystic Who Discovered Planetary Motion',
-                detail: 'How Kepler\'s occult beliefs led to modern astronomy',
-                internal: true,
-              },
-              {
                 href: 'https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594946/',
                 title: 'We Need a New Science of Progress',
                 detail: 'Patrick Collison and Tyler Cowen, The Atlantic (2019)',

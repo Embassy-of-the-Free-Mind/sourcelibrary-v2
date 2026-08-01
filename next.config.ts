@@ -338,6 +338,19 @@ const nextConfig: NextConfig = {
         destination: '/collections',
         permanent: false,
       },
+      // The themed press pages were archived (src/app/_archived/press) when the
+      // press room moved to /press-releases, but nothing was left in their place
+      // — /press and all six /press/<theme> URLs 404 for inbound links.
+      {
+        source: '/press',
+        destination: '/press-releases',
+        permanent: true,
+      },
+      {
+        source: '/press/:path*',
+        destination: '/press-releases',
+        permanent: true,
+      },
       // Embassy → Reading Room → Librarian rename chain
       {
         source: '/embassy',
