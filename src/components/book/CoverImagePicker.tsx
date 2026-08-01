@@ -177,7 +177,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
             {/* Pages Grid */}
             <div className="p-4 overflow-y-auto max-h-[calc(85vh-80px)]">
-              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                 {pages.map((page) => {
                   // Canonical resolver: always a size-bounded thumbnail (pre-sized
                   // R2 variant, IIIF resize, or /api/image proxy) — never the raw
@@ -193,7 +193,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                       key={page.id}
                       onClick={() => selectCover(page)}
                       disabled={isSaving}
-                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all hover:shadow-lg ${isCurrentCover
+                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 bg-stone-100 transition-all hover:shadow-lg ${isCurrentCover
                         ? 'border-accent-gold ring-2 ring-accent-gold/25'
                         : 'border-stone-200 hover:border-stone-400'
                         }`}
@@ -202,7 +202,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                         <img
                           src={imageUrl}
                           alt={`Page ${page.page_number}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                           loading="lazy"
                           decoding="async"
                         />
