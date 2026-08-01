@@ -99,6 +99,46 @@ not restore error.
   `ERROR:` to a log file that nothing monitored, which is the failure mode described
   in CLAUDE.md: an alarm nobody reads is not an instrument.
 
+## Detecting distortion (not just loss)
+
+Backups answer "can we get it back". They do not answer **"would we know if
+something had been quietly altered?"** — the failure mode where nothing is
+missing, nothing errors, and the catalogue just says something slightly
+different than it did. Only the editor path writes `bph_works_revisions`; the
+sl_book_id sync, the NAS ingest, format derivation, dedupe and the backfills all
+write `bph_works` directly, and any of them could change a title or a shelf mark
+without leaving a trace.
+
+`scripts/workers/bph-integrity-check.mjs` (04:30 nightly, after the backup and
+before restic) fingerprints every record in five column groups — biblio,
+location, notes, identifiers, automation — and classifies every change:
+
+| Verdict | Meaning |
+|---|---|
+| `revision` | a matching `bph_works_revisions` row exists — accounted for |
+| `automation` | only automation-owned columns moved (sl_book_id sync, IA matching, Memorix bookkeeping) — expected churn |
+| `UNEXPLAINED` | anything else — pages a human via ntfy |
+
+Grouping is what makes this usable: a single whole-row hash would flag the
+6-hourly `sl_book_id` sync every night and train everyone to ignore it. The
+column→group mapping lives in `scripts/migration/add-bph-integrity-monitor.sql`
+— **a column not listed there defaults to `biblio`, so a new column fails loud
+(unexplained) rather than silently unwatched.**
+
+Every detection is appended to `bph_works_integrity_events` with a
+`reviewed_at`/`reviewed_by`/`note` workflow, so "we looked at it and here is why
+it was fine" is itself recorded. That table is the artifact to show anyone who
+asks how we would know if their work had been altered.
+
+**Verified by deliberate test, 2026-08-01.** A record's `remarks` was changed
+directly in the database, bypassing the editor path entirely; the next scan
+flagged it `changed / UNEXPLAINED / [notes]`. The revert was flagged too — any
+change is a change. Both events are in the table, marked reviewed. Re-run that
+test after changing the grouping.
+
+A scan that *fails to run* also alerts: a silent detector and an untouched
+catalogue look identical from outside.
+
 ## Re-drill periodically
 
 The point of a drill is that it decays. Re-run steps 1–3 above (scratch table, then
