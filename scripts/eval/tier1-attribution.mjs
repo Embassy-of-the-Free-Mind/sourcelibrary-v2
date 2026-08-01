@@ -156,7 +156,18 @@ async function main() {
         try {
           const res = await runModel(model, buf, prompts[k], { maxTokens: 16000 });
           const text = res.text || '';
-          row.arms[k] = { ...scoreUnattributed(text), body_chars: bodyChars(text), chars: text.length };
+          // KEEP THE RAW TEXT. The first version of this stored only derived
+          // scores, and the run then answered the wrong question: the metric
+          // counts AI prose emitted BARE, while the #3437 bug Tier 1 actually
+          // fixes is the opposite direction — page text wrongly placed INSIDE
+          // <note>, so the reader's Notes toggle deletes it. Re-scoring for
+          // that needed the artifact, which no longer existed, so the whole
+          // $0.25 had to be re-bought. prompt-ablation.mjs already says it:
+          // "scoring can be redone offline, model calls cannot."
+          row.arms[k] = {
+            ...scoreUnattributed(text), body_chars: bodyChars(text), chars: text.length,
+            text,
+          };
         } catch (e) {
           row.arms[k] = { error: e.message };
         }
