@@ -247,6 +247,40 @@ Lessons from the AS132203 scraper fleet, 2026-07-29 (#3438, #3446). Full postmor
 - **Scope an alias by an exact host match, never `host.includes('vercel.app')`.** Preview deployments (`*-git-*.vercel.app`, `*-<team>.vercel.app`) must keep serving the whole site or branch review stops working; the bare production alias must not. `DEPLOYMENT_ALIAS_HOSTS` in `src/lib/alias-host-scope.ts` is an exact-match set for that reason. And **check what points at an alias before scoping it** — `scripts/uptime-monitor.mjs` probes `sourcelibrary-v2.vercel.app`, and the Playwright suite defaulted `BASE_URL` to it, so a catch-all 308 would not merely have broken them: it would have silently repointed `e2e/crawl-all-pages.spec.ts` at production. Hence the allowlist's EXACT entries (`/api/books` yes, `/api/books/<id>/{text,quote}` no; the three `/embed/*` landing pages yes, the reading rooms beneath them no).
 - **Watch for it: `scripts/workers/traffic-anomaly-alert.mjs`** (hourly cron on Hetzner, pushes to `ntfy.sh/sourcelibrary-uptime` **on state change only** — a detector that repeats itself hourly trains you to ignore it). Three checks, one per failure above: volume concentration per /24, reader traffic on an unexpected hostname, and traffic still reaching the app from a network we believe is blocked. **Adding a new alias means adding it to `EXPECTED_HOSTS`** — the test pins that the allowlist stays small, because every host on it is a surface nobody is watching.
 
+## Session flags go stale, and blank forms erase — CRITICAL
+Lessons from the `/welcome` lockout, 2026-07-30 (#3467/#3496). Full postmortem:
+`.claude/handoffs/2026-08-01-welcome-gate-lockout-and-blank-form-overwrite.md`.
+Three bugs stacked: 42 readers could not leave the welcome page, and 2 had their
+answers erased.
+
+- **`useSession().update()` MUST be called with a payload.** With no argument it
+  issues a **GET** to `/api/auth/session` (next-auth's `update(data)` only builds a
+  body when given data; `lib/client.js` only sets `method:'POST'` when a body
+  exists), and a GET never runs the `jwt` callback with `trigger:'update'`. Since
+  the DB re-read in `src/lib/auth.ts` is gated on `(user || trigger === 'update')`,
+  every token field computed there stays frozen for the token's full 30-day life.
+  Mongo said `welcomedAt` was set; the session served `needsWelcome: true` for
+  hours. **Verify a session change by reading `/api/auth/session`, never by
+  trusting the write** — the disagreement between the two is the diagnosis.
+- **A mount-scoped `useRef` is not a redirect guard.** Every redirect is a
+  navigation and every navigation remounts, so the ref resets each time and a
+  stale flag becomes a lockout instead of a nuisance. Persist "already fired" in
+  `sessionStorage`. This is also the only thing that can heal a stale JWT, because
+  nothing server-side can force-refresh one.
+- **An ABSENT field means "leave this alone"; a PRESENT empty string means "the
+  reader cleared it".** Conflating them lets a form overwrite data it never showed
+  the reader — `/welcome` rendered blank on every visit, so the second save wiped
+  the first. Any surface that writes user-authored text must prefill (server-side,
+  so there is no mounted-and-empty window) or omit the key. Rule + tests:
+  `src/lib/welcome-profile-update.ts`. **Corollary:** a test asserting "record the
+  blank so declined ≠ never asked" encodes exactly this bug — keep the intent, move
+  the signal to the caller.
+- **A cohort keyed on an overwritten field drifts under you.** `users.welcomedAt`
+  is rewritten on every save, so a "who was affected in this window" query loses
+  anyone who came back and re-saved — a 42-person incident list became 40 within an
+  hour. Freeze an incident recipient list to a file (private ops repo — reader
+  addresses never go in this repo) and never re-derive it at send time.
+
 ## A metric is a claim about an instrument before it is a claim about readers
 A usage review on 2026-07-28 produced six findings; **three were instrument failures, not product facts** — and each failed *silently*, in the direction that invited a confident conclusion. Full postmortem: `.claude/handoffs/2026-07-28-instruments-lied-translation-streaming-crash.md`.
 
