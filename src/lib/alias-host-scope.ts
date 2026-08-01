@@ -61,14 +61,70 @@ const ALIAS_ALLOWED_PREFIXES = [
 const ALIAS_ALLOWED_EXACT = new Set(['/', '/favicon.ico', '/manifest.json', '/opensearch.xml']);
 
 /**
+ * The project's bare Vercel production alias is the SAME shape of hole.
+ *
+ * `sourcelibrary-v2.vercel.app` resolves straight to Vercel — no `cf-ray`, so
+ * none of the edge layer applies — and it answers the entire library. The
+ * traffic detector has flagged reader traffic on it every run since #3446. It
+ * is the last known unguarded door of the kind the AS132203 fleet walked
+ * through, and nobody reads books there on purpose.
+ *
+ * It cannot simply 308 everything, which is the trap here: `scripts/uptime-
+ * monitor.mjs` probes it, and the Playwright suite defaults its `BASE_URL` to
+ * it — `e2e/crawl-all-pages.spec.ts` in particular. A catch-all redirect would
+ * not merely break those; it would silently repoint a page-crawler at
+ * production. So the allowlist keeps exactly the operational paths those two
+ * consumers use, and nothing that serves a book.
+ *
+ * Note the EXACT matches: `/api/books` is the monitor's listing probe, while
+ * `/api/books/<id>/text` and `/quote` — the bulk-read routes — are deliberately
+ * not covered by it. Same for the three `/embed/*` landing pages, whose reading
+ * rooms below them still redirect.
+ */
+const DEPLOYMENT_ALLOWED_PREFIXES = ['/_next', '/static', '/api/health'];
+const DEPLOYMENT_ALLOWED_EXACT = new Set([
+  '/',
+  '/favicon.ico',
+  '/api/books',
+  '/embed/bph',
+  '/embed/ficino',
+  '/embed/bhutan',
+]);
+
+/**
+ * Matched EXACTLY, never by substring. Preview deployments
+ * (`sourcelibrary-v2-git-*.vercel.app`, `*-dereklomas-projects.vercel.app`)
+ * must keep serving the whole site or branch review stops working — they are a
+ * known, accepted exposure, and a `host.includes('vercel.app')` test here would
+ * take them all out.
+ */
+export const DEPLOYMENT_ALIAS_HOSTS = new Set(['sourcelibrary-v2.vercel.app']);
+
+export type AliasPolicy = 'society' | 'deployment';
+
+/** Which scoping policy applies to this host, if any. Ports are ignored. */
+export function aliasPolicyForHost(host: string): AliasPolicy | null {
+  const bare = (host || '').split(',')[0].trim().toLowerCase().replace(/:\d+$/, '');
+  if (!bare) return null;
+  if (DEPLOYMENT_ALIAS_HOSTS.has(bare)) return 'deployment';
+  if (bare.includes('ficinosociety.org') || bare.includes('ficino.sourcelibrary.org')) {
+    return 'society';
+  }
+  return null;
+}
+
+/**
  * Should this path be redirected off an alias host to the canonical domain?
  * Callers apply it only when the request is already known to be on an alias.
  */
-export function shouldRedirectToCanonical(pathname: string): boolean {
-  if (ALIAS_ALLOWED_EXACT.has(pathname)) return false;
-  return !ALIAS_ALLOWED_PREFIXES.some(
-    (p) => pathname === p || pathname.startsWith(p + '/')
-  );
+export function shouldRedirectToCanonical(
+  pathname: string,
+  policy: AliasPolicy = 'society'
+): boolean {
+  const exact = policy === 'deployment' ? DEPLOYMENT_ALLOWED_EXACT : ALIAS_ALLOWED_EXACT;
+  const prefixes = policy === 'deployment' ? DEPLOYMENT_ALLOWED_PREFIXES : ALIAS_ALLOWED_PREFIXES;
+  if (exact.has(pathname)) return false;
+  return !prefixes.some((p) => pathname === p || pathname.startsWith(p + '/'));
 }
 
 /** The canonical URL a redirected alias request should land on. */

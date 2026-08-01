@@ -403,7 +403,7 @@ test.describe('Link follower', () => {
 
     const baseUrl = (page as any)._browserContext._options?.baseURL
       || process.env.BASE_URL
-      || 'https://sourcelibrary-v2.vercel.app';
+      || '';
 
     const visited = new Set<string>();
     const discovered = new Set<string>();

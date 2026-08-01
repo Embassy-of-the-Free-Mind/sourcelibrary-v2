@@ -4,7 +4,7 @@ import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
-import { shouldRedirectToCanonical, canonicalUrl } from '@/lib/alias-host-scope';
+import { shouldRedirectToCanonical, canonicalUrl, aliasPolicyForHost } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
@@ -157,10 +157,16 @@ export function looksLikeBot(request: NextRequest): boolean {
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 function getClientIp(request: NextRequest): string {
+  // cf-connecting-ip FIRST. Vercel rewrites x-forwarded-for with whatever
+  // connected to Vercel, which behind the CDN is a Cloudflare edge node — so
+  // the old order keyed this limiter on ~15 shared addresses. Every bot behind
+  // one edge node drew from the same 10-req/60s bucket while a bot on a quiet
+  // node ran free: over-blocking and under-blocking at once, from one wrong
+  // header. Same defect as PR #3487, in the proxy's own limiter.
   return (
+    request.headers.get('cf-connecting-ip') ||
     (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
     request.headers.get('x-real-ip') ||
-    request.headers.get('cf-connecting-ip') ||
     'unknown'
   );
 }
@@ -650,10 +656,12 @@ export async function proxy(request: NextRequest) {
   // Runs BEFORE any library-specific routing, so an alias host is scoped once,
   // up front, rather than after book/author/provider rules have had a go at it.
   // See src/lib/alias-host-scope.ts.
-  if (
-    (host.includes('ficinosociety.org') || host.includes('ficino.sourcelibrary.org')) &&
-    shouldRedirectToCanonical(pathname)
-  ) {
+  //
+  // The bare Vercel production alias (`sourcelibrary-v2.vercel.app`) is the
+  // same hole and is scoped here too, with its own narrower allowlist — see
+  // alias-host-scope.ts for why it cannot just 308 everything.
+  const aliasPolicy = aliasPolicyForHost(host);
+  if (aliasPolicy && shouldRedirectToCanonical(pathname, aliasPolicy)) {
     return NextResponse.redirect(canonicalUrl(pathname, request.nextUrl.search), 308);
   }
 

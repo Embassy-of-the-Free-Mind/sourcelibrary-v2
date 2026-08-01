@@ -13,7 +13,7 @@ export default defineConfig({
   use: {
     // Use Vercel direct URL by default to avoid Cloudflare bot protection in CI.
     // Override with BASE_URL=https://sourcelibrary.org for local testing.
-    baseURL: process.env.BASE_URL || 'https://sourcelibrary-v2.vercel.app',
+    baseURL: process.env.BASE_URL,
     navigationTimeout: 20_000,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
