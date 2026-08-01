@@ -454,6 +454,12 @@ export default async function CatalogEntryPage({ params }: Props) {
             {showReviewLink && (
               <>
                 <a
+                  href="/catalog/workspace"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
+                >
+                  My work
+                </a>
+                <a
                   href="/catalog/new"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
                 >
