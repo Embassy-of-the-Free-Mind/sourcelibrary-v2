@@ -123,11 +123,18 @@ export default async function ParticipatePage() {
           The easiest way to start
         </h2>
         <div className="max-w-3xl">
+          {/* This section promised "an edit button on every page. No account needed."
+              No route has ever provided that: every page-text write is gated at
+              editor, and the Read/Edit toggle only renders for editors (#3511).
+              Flagging a problem really is open to everyone, so that is what it
+              now says. */}
           <p className="text-lg text-secondary leading-relaxed mb-4">
-            Open any book. Read the AI translation next to the original page image. If something is wrong, click edit and fix it. That&apos;s it.
+            Open any book. Read the AI translation next to the original page image. If something looks wrong, say so &mdash; every page has a &ldquo;Notice a translation issue?&rdquo; link that takes a note straight to us. No account needed.
           </p>
           <p className="text-secondary leading-relaxed mb-6">
-            Every book has an edit button on every page. No account needed. The languages we most need help with:{' '}
+            To correct the text yourself, write to{' '}
+            <a href="mailto:team@sourcelibrary.org?subject=Editing access" className="text-accent-rust hover:underline">team@sourcelibrary.org</a>
+            {' '}and we&apos;ll give your account editing access. The languages we most need help with:{' '}
             <span className="text-primary font-medium">Latin</span>,{' '}
             <span className="text-primary font-medium">German</span>,{' '}
             <span className="text-primary font-medium">Arabic</span>,{' '}

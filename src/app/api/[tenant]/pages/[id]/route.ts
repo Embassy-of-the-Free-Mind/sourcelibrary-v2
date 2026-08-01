@@ -88,11 +88,17 @@ export async function GET(
   }
 }
 
+/**
+ * PATCH /api/[tenant]/pages/[id] — replace a page's OCR / translation / summary.
+ *
+ * Gated at `editor` (#3511), matching both the UI gate and the global twin at
+ * /api/pages/[id]. This is the route the reader's editor actually calls.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { tenant, id } = await context.params;
     const db = await getDb();
-    
+
     // Resolve tenant slug to UUID
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
@@ -216,13 +222,20 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating page:', error);
     return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
+/**
+ * DELETE /api/[tenant]/pages/[id] — hard-delete a page and renumber the rest.
+ *
+ * Gated at `admin`, matching the global twin at /api/pages/[id] (#3511). This
+ * had drifted to the `withAuth` default of `reader`: unlike the text writes
+ * above it creates no revision, so a wrong call was unrecoverable.
+ */
 export const DELETE = withAuth(async (request, session, context) => {
   try {
     const { tenant, id } = await context.params;
     const db = await getDb();
-    
+
     // Resolve tenant slug to UUID
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
@@ -266,4 +279,4 @@ export const DELETE = withAuth(async (request, session, context) => {
     console.error('Error deleting page:', error);
     return NextResponse.json({ error: 'Failed to delete page' }, { status: 500 });
   }
-});
+}, { minRole: 'admin' });
