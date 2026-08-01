@@ -22,6 +22,18 @@ Hence the governing policy everywhere below:
 > merged later; a wrongly-fused pair is a false claim. *Under-cluster over
 > mis-cluster.*
 
+> ### ⚠️ Layer 5 (2026-08-01): the EVIDENCE layer — [`first-translation-reference-set.md`](./first-translation-reference-set.md)
+>
+> Everything below answers *"has this work been translated?"* by consulting
+> sources. A layer above it now asks the question this map does not: **how much is
+> a "no" from those sources actually worth?** It records the search itself
+> (`search_efforts`) and measures it.
+>
+> **Catalogue recall is 27%**, and a sampled positive predictive value of ~50% —
+> so **`none_found` is weak evidence and no count built on it should be quoted**,
+> anywhere in this stack. Positive findings are unaffected. Read that doc before
+> quoting any gap, census, or registry figure that rests on an absence.
+
 ## The layer stack (bottom → top)
 
 ```
