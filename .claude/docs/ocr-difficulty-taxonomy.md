@@ -109,25 +109,44 @@ the other side of the leaf: "DE DYSENT…" reversed, the ornamental border
 reversed, a library stamp. The OCR's own warning was accurate — "only faint
 outlines of the title are visible" — and my category label was wrong.
 
-What makes it a category rather than an error:
+What makes it a category rather than an error — read all three passes in order:
 
-- Both passes emitted **56 and 51 body words** and both tagged it
-  `page-type: title-page`. The model read the ghost text as page content and
-  transcribed roughly fifty words of it — **twice, differently** (agreement 0.67).
-- Fifty words clears the ≥40-word eligibility floor, so the page entered the
-  analysis as ordinary text rather than being screened out as near-blank.
-- Pilot pair 11 (*Prince Starbeam*) is the same shape: a near-blank opening whose
-  only visible marks are verso ghost text, correctly picked as the unstable arm.
+| pass | `scan-quality` | what it produced |
+|---|---|---|
+| Apr 14 2026 | **good** | the full title transcribed off the mirror — "DE DYSEN-TERIA THESES, Ad quas, Deo Opt. Max. auxiliante… IOHANNES PINCIERVS" |
+| Jul 25 2026 | **good** | the same, again |
+| live | **poor** | a `<warning>` naming the show-through, `<unclear>` tags, and "almost entirely illegible" |
 
-**This has a quote-integrity edge, not just a metrics one.** That stored text
-renders to readers as the transcription of a page it is not on — the mirror image
-of the *facing* leaf. It is the #2232 misquote class arriving by a new route:
-words attributed to a page that were never printed on it.
+Twice the model read ghost text as page content and rated the scan *good*. The
+third pass caught it and rated the same scan *poor*. Pilot pair 11 (*Prince
+Starbeam*) is the same shape — a near-blank opening whose only marks are verso
+ghost text — and was correctly picked as the unstable arm.
+
+**An earlier draft of this section claimed that text "renders to readers as the
+transcription of a page it is not on." That was wrong, and the correction
+matters more than the claim.** The ghost transcription lives in the *revision
+history*; the live pass handles the page correctly. Reading the stored pair and
+asserting a reader-facing harm, without checking what the live text actually
+says, is the same error as reading an aggregate without opening the artifact.
 
 → https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a
 
-A near-blank screen belongs upstream of eligibility — ink coverage, not word
-count, since ghost text produces real words.
+**Measured prevalence in the live corpus: 0.08%.** A page whose live OCR
+duplicates a neighbour's is the scalable signature of both ghost transcription
+and duplicate scans; across **9,067 adjacent page pairs in 120 visible books**,
+7 exceeded Jaccard 0.75. Most of those are legitimate repetition — Tibetan
+liturgy, Torah formulae, commentary. So the class is real, is caught by
+re-reading, and is **not** a live reader-facing problem at any scale worth a
+sweep.
+
+One flag is unresolved rather than cleared: Darwin, *Origin of Species* 6th ed,
+p12~p13 and p21~p22 at Jaccard 1.000 with matching word counts. The page records
+and images are distinct, so it is not duplicated rows; whether it is a repeated
+leaf needs an image comparison that has not been done.
+
+A near-blank screen still belongs upstream of eligibility, and must gate on ink
+coverage rather than word count — ghost text produces real words, and 50 of them
+cleared the ≥40-word floor here.
 
 Real printed examples that did get flagged:
 
