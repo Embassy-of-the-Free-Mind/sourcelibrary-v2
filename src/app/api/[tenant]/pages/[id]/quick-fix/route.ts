@@ -15,6 +15,10 @@ const quickFixSchema = z.object({
   }),
 });
 
+/**
+ * PATCH /api/[tenant]/pages/[id]/quick-fix — tenant-scoped twin of the above.
+ * Gated at `editor` (#3511); this is the one the QA page actually calls.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { tenant, id } = await context.params;
@@ -85,4 +89,4 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error applying quick fix:', error);
     return NextResponse.json({ error: 'Failed to apply fix' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
