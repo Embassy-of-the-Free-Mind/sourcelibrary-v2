@@ -1,0 +1,868 @@
+{
+ "date": "2026-08-01",
+ "source": "revision-agreement-corpus-2026-07-30.jsonl",
+ "population": {
+  "unstable_total": 6420,
+  "stable_total": 45788,
+  "sampled_per_arm": 867
+ },
+ "warning_rate": {
+  "unstable": 30.3,
+  "stable": 4.7
+ },
+ "scan_quality": {
+  "unstable": {
+   "good": 491,
+   "poor": 1,
+   "fair": 5
+  },
+  "stable": {
+   "good": 354
+  }
+ },
+ "caveat": "The <warning> tag is written by the same model whose run-to-run instability defines the arms. The channels are not independent; read lifts as corroboration, not external validation.",
+ "manuscript_split": {
+  "note": "95% of warning-bearing unstable pages name a hand. Treat manuscript-vs-print as the primary axis; the flat category list double-counts one sentence across several regexes.",
+  "unstable_manuscript_pct": 28.7,
+  "stable_manuscript_pct": 2.6,
+  "printed_unstable_n": 618,
+  "printed_stable_n": 809
+ },
+ "categories_all": [
+  {
+   "name": "handwriting / manuscript hand",
+   "why": "A hand rather than type. Letterforms vary within a page, so two passes segment strokes differently.",
+   "unstable_pct": 28.7,
+   "stable_pct": 2.6,
+   "lift": 11.3,
+   "examples": [
+    {
+     "book": "ortus-sanitatis-meydenbach",
+     "language": "English",
+     "year": 1491,
+     "page_number": 823,
+     "agreement": 0.7465,
+     "reader_url": "https://sourcelibrary.org/book/ortus-sanitatis-meydenbach/page/6958e850538549809db822cb",
+     "image_url": "https://images.sourcelibrary.org/pages/6958e84f538549809db81f94/0823.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten marginalia in Latin cursive script."
+    },
+    {
+     "book": "vat-lat-5953-ficino",
+     "language": "Latin",
+     "year": 1490,
+     "page_number": 827,
+     "agreement": 0.6926,
+     "reader_url": "https://sourcelibrary.org/book/vat-lat-5953-ficino/page/6990660aef12272ffdc9522b",
+     "image_url": "https://images.sourcelibrary.org/pages/6990660aef12272ffdc94ef0/0827.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten humanistic cursive script"
+    },
+    {
+     "book": "astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith",
+     "language": "Latin",
+     "year": 1330,
+     "page_number": 297,
+     "agreement": 0.1809,
+     "reader_url": "https://sourcelibrary.org/book/astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith/page/69906e658a353648e1ecf909",
+     "image_url": "https://images.sourcelibrary.org/pages/69906e648a353648e1ecf7df/0297.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Gothic cursive (textualis formata/cursiva hybrid). Faded ink in some areas, common abbreviations used throughout."
+    }
+   ]
+  },
+  {
+   "name": "mixed script or language",
+   "why": "More than one script on one page. Each switch is a decision point, and the passes need not switch at the same word.",
+   "unstable_pct": 7.4,
+   "stable_pct": 0.4,
+   "lift": 21.3,
+   "examples": [
+    {
+     "book": "homer-cambridge-christ-s-college-ms-rouse-358-homer",
+     "language": "Greek",
+     "year": 1555,
+     "page_number": 510,
+     "agreement": 0.7078,
+     "reader_url": "https://sourcelibrary.org/book/homer-cambridge-christ-s-college-ms-rouse-358-homer/page/699382dd84cf5845c644b575",
+     "image_url": "https://images.sourcelibrary.org/pages/699382dd84cf5845c644b377/0510.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Greek minuscule script"
+    },
+    {
+     "book": "homer-cambridge-christ-s-college-ms-rouse-358-homer",
+     "language": "Greek",
+     "year": 1555,
+     "page_number": 524,
+     "agreement": 0.1538,
+     "reader_url": "https://sourcelibrary.org/book/homer-cambridge-christ-s-college-ms-rouse-358-homer/page/699382dd84cf5845c644b583",
+     "image_url": "https://images.sourcelibrary.org/pages/699382dd84cf5845c644b377/0524.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Greek minuscule script"
+    },
+    {
+     "book": "vat-gr-244-aristotle",
+     "language": "Greek",
+     "year": 1250,
+     "page_number": 873,
+     "agreement": 0.1724,
+     "reader_url": "https://sourcelibrary.org/book/vat-gr-244-aristotle/page/6993838c50654cbbe291742e",
+     "image_url": "https://images.sourcelibrary.org/pages/6993838c50654cbbe29170c5/0873.jpg",
+     "scan_quality": "good",
+     "warning": "Handwritten Greek minuscule (13th century)"
+    }
+   ]
+  },
+  {
+   "name": "bleed-through from the verso",
+   "why": "Ink from the other side reads as faint text. Whether a pass transcribes it is a judgement call, so it flips between runs.",
+   "unstable_pct": 4,
+   "stable_pct": 0.6,
+   "lift": 7,
+   "examples": [
+    {
+     "book": "alchemical-collection-korndorffer-grossschedel-post-1627-aicha",
+     "language": "Latin",
+     "year": 1630,
+     "page_number": -59,
+     "agreement": 0.6859,
+     "reader_url": "https://sourcelibrary.org/book/alchemical-collection-korndorffer-grossschedel-post-1627-aicha/page/69b41884f1200e2ab53cfcf5",
+     "image_url": "https://images.sourcelibrary.org/pages/69b41884f1200e2ab53cfcba/0059.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Kurrent script, some ink bleed-through and marginal symbols."
+    },
+    {
+     "book": "alchemical-collection-korndorffer-grossschedel-post-1627-aicha",
+     "language": "Latin",
+     "year": 1630,
+     "page_number": -79,
+     "agreement": 0.4318,
+     "reader_url": "https://sourcelibrary.org/book/alchemical-collection-korndorffer-grossschedel-post-1627-aicha/page/69b41884f1200e2ab53cfd09",
+     "image_url": "https://images.sourcelibrary.org/pages/69b41884f1200e2ab53cfcba/0079.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Kurrent script, some ink bleed-through and fading."
+    },
+    {
+     "book": "flamel-bernard-of-trevisan-llull-alchemical-collection-18th-llull",
+     "language": "Multiple",
+     "year": 1740,
+     "page_number": -9,
+     "agreement": 0.581,
+     "reader_url": "https://sourcelibrary.org/book/flamel-bernard-of-trevisan-llull-alchemical-collection-18th-llull/page/69b418f82b0edf3eaa2de655",
+     "image_url": "https://images.sourcelibrary.org/pages/69b418f82b0edf3eaa2de64c/0009.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten French cursive script. Some ink bleed-through from reverse side."
+    }
+   ]
+  },
+  {
+   "name": "marginalia and annotation",
+   "why": "Printed text plus later hands. What counts as the page is genuinely ambiguous.",
+   "unstable_pct": 1.8,
+   "stable_pct": 0.1,
+   "lift": 16,
+   "examples": [
+    {
+     "book": "ortus-sanitatis-meydenbach",
+     "language": "English",
+     "year": 1491,
+     "page_number": 823,
+     "agreement": 0.7465,
+     "reader_url": "https://sourcelibrary.org/book/ortus-sanitatis-meydenbach/page/6958e850538549809db822cb",
+     "image_url": "https://images.sourcelibrary.org/pages/6958e84f538549809db81f94/0823.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten marginalia in Latin cursive script."
+    },
+    {
+     "book": "alchemical-collection-korndorffer-grossschedel-post-1627-aicha",
+     "language": "Latin",
+     "year": 1630,
+     "page_number": -59,
+     "agreement": 0.6859,
+     "reader_url": "https://sourcelibrary.org/book/alchemical-collection-korndorffer-grossschedel-post-1627-aicha/page/69b41884f1200e2ab53cfcf5",
+     "image_url": "https://images.sourcelibrary.org/pages/69b41884f1200e2ab53cfcba/0059.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Kurrent script, some ink bleed-through and marginal symbols."
+    },
+    {
+     "book": "alcorani-seu-legis-mahometi-et-evangelistarum-concordiae-postel",
+     "language": "Latin",
+     "year": 1543,
+     "page_number": 43,
+     "agreement": 0.8255,
+     "reader_url": "https://sourcelibrary.org/book/alcorani-seu-legis-mahometi-et-evangelistarum-concordiae-postel/page/69b51e37768235dc6598de82",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51e37768235dc6598de57/0043.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten marginalia in Latin"
+    }
+   ]
+  },
+  {
+   "name": "abbreviation and ligature",
+   "why": "Scribal and early-print contractions. Expanding or preserving them is a policy choice made per run.",
+   "unstable_pct": 1.4,
+   "stable_pct": 0.1,
+   "lift": 12,
+   "examples": [
+    {
+     "book": "astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith",
+     "language": "Latin",
+     "year": 1330,
+     "page_number": 297,
+     "agreement": 0.1809,
+     "reader_url": "https://sourcelibrary.org/book/astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith/page/69906e658a353648e1ecf909",
+     "image_url": "https://images.sourcelibrary.org/pages/69906e648a353648e1ecf7df/0297.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Gothic cursive (textualis formata/cursiva hybrid). Faded ink in some areas, common abbreviations used throughout."
+    },
+    {
+     "book": "sacred-art-of-the-philosophers-greek-alchemical-anthology-various",
+     "language": "Greek",
+     "year": 1495,
+     "page_number": 553,
+     "agreement": 0.6107,
+     "reader_url": "https://sourcelibrary.org/book/sacred-art-of-the-philosophers-greek-alchemical-anthology-various/page/69b4c04d978ca9526eda3620",
+     "image_url": "https://images.sourcelibrary.org/pages/69b4c04d978ca9526eda33f7/0553.jpg",
+     "scan_quality": "good",
+     "warning": "Handwritten Byzantine/Post-Byzantine Greek minuscule script with abbreviations"
+    },
+    {
+     "book": "bodleian-library-ms-barocci-3-anonymous",
+     "language": "Greek",
+     "year": 1598,
+     "page_number": 541,
+     "agreement": 0.2775,
+     "reader_url": "https://sourcelibrary.org/book/bodleian-library-ms-barocci-3-anonymous/page/69bfcccc8ab50eb88e8c6890",
+     "image_url": "https://images.sourcelibrary.org/pages/69bfcccc8ab50eb88e8c6673/0541.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Greek minuscule script. The text is dense and contains numerous ligatures and abbreviations characteristic of the period."
+    }
+   ]
+  },
+  {
+   "name": "faded or faint ink",
+   "why": "Low contrast against the paper — the classic legibility case, and rarer than expected.",
+   "unstable_pct": 0.7,
+   "stable_pct": 0.4,
+   "lift": 2,
+   "examples": [
+    {
+     "book": "astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith",
+     "language": "Latin",
+     "year": 1330,
+     "page_number": 297,
+     "agreement": 0.1809,
+     "reader_url": "https://sourcelibrary.org/book/astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith/page/69906e658a353648e1ecf909",
+     "image_url": "https://images.sourcelibrary.org/pages/69906e648a353648e1ecf7df/0297.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Gothic cursive (textualis formata/cursiva hybrid). Faded ink in some areas, common abbreviations used throughout."
+    },
+    {
+     "book": "generation-operation-of-the-great-work-early-20th-c-ms",
+     "language": "French",
+     "year": 1920,
+     "page_number": -26,
+     "agreement": 0.2277,
+     "reader_url": "https://sourcelibrary.org/book/generation-operation-of-the-great-work-early-20th-c-ms/page/69b419212b0edf3eaa2ded90",
+     "image_url": "https://images.sourcelibrary.org/pages/69b419212b0edf3eaa2ded76/0026.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten. This page is a bleed-through or \"ghost\" image from the reverse side of the leaf. The text and illustration are visible in reverse and very faded."
+    },
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "language": "Latin",
+     "year": 1758,
+     "page_number": 174,
+     "agreement": 0.6271,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg",
+     "scan_quality": null,
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read."
+    }
+   ]
+  },
+  {
+   "name": "illegible or obscured",
+   "why": "The model says outright it could not read part of the page.",
+   "unstable_pct": 0.6,
+   "stable_pct": 0.4,
+   "lift": 1.7,
+   "examples": [
+    {
+     "book": "short-treatise-on-the-kabbalistic-hearing-lull",
+     "language": "Latin",
+     "year": 1601,
+     "page_number": -59,
+     "agreement": 0.5941,
+     "reader_url": "https://sourcelibrary.org/book/short-treatise-on-the-kabbalistic-hearing-lull/page/69c55f992fd09fb58e9256c5",
+     "image_url": "https://images.sourcelibrary.org/pages/69c4ec33a3a4a7c546ee6125/0059.jpg",
+     "scan_quality": null,
+     "warning": "Ink bleed-through from the reverse side and facing page obscures some text in the center of the page."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": -10,
+     "agreement": 0.8131,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa466c6f3cc53c842a01",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0010.jpg",
+     "scan_quality": null,
+     "warning": "The page contains several paper overlays or flaps covering the primary illustration. The text on the right margin is partially obscured or cut off."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": -28,
+     "agreement": 0.7805,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa556c6f3cc53c842a3d",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0028.jpg",
+     "scan_quality": null,
+     "warning": "The left page contains a pasted-in or overlapping fragment of an illustration and text, obscuring the original page content. The text on the far left margin is cut off."
+    }
+   ]
+  },
+  {
+   "name": "stain, foxing, damage",
+   "why": "Physical loss or obscuring of the substrate.",
+   "unstable_pct": 0.5,
+   "stable_pct": 1.2,
+   "lift": 0.4,
+   "examples": [
+    {
+     "book": "revelation-of-divine-majesty-gutman",
+     "language": "German",
+     "year": 1619,
+     "page_number": 889,
+     "agreement": 0.84,
+     "reader_url": "https://sourcelibrary.org/book/revelation-of-divine-majesty-gutman/page/6984d5f3298d54233b6b836e",
+     "image_url": "https://images.sourcelibrary.org/uploads/698420e4e8a1d0539ce47e1d/6984d5c1298d54233b6b836c.jpg",
+     "scan_quality": null,
+     "warning": "Minor foxing and staining on the page."
+    },
+    {
+     "book": "reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner",
+     "language": "German",
+     "year": 1740,
+     "page_number": -75,
+     "agreement": 0.8084,
+     "reader_url": "https://sourcelibrary.org/book/reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner/page/69b4193d2b0edf3eaa2df207",
+     "image_url": "https://images.sourcelibrary.org/pages/69b4193d2b0edf3eaa2df1bc/0075.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten German Kurrent script. Paper is stained and foxed."
+    },
+    {
+     "book": "the-hermetic-philosophical-messenger-bringing-joyful-and-potier",
+     "language": "Latin",
+     "year": 1622,
+     "page_number": -50,
+     "agreement": 0.7955,
+     "reader_url": "https://sourcelibrary.org/book/the-hermetic-philosophical-messenger-bringing-joyful-and-potier/page/69c58b8f2cd78efa3f7e2a08",
+     "image_url": "https://images.sourcelibrary.org/pages/69c581e32e2f948a050a505c/0050.jpg",
+     "scan_quality": null,
+     "warning": "Water damage/staining throughout the center and bottom of the page, though text remains legible."
+    }
+   ]
+  },
+  {
+   "name": "complex layout",
+   "why": "Columns, tables, braced outlines. Reading ORDER is underdetermined, so the same words come out in different sequences.",
+   "unstable_pct": 0.5,
+   "stable_pct": 0,
+   "lift": null,
+   "examples": [
+    {
+     "book": "de-dysenteria-theses-pincier",
+     "language": "Latin",
+     "year": 1582,
+     "page_number": 2,
+     "agreement": 0.6731,
+     "reader_url": "https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a",
+     "image_url": "https://images.sourcelibrary.org/pages/69b65ce8b3f4fc0441515688/0002.jpg",
+     "scan_quality": "poor",
+     "warning": "The page is extremely faded, with text showing through from the verso (mirror image). Only faint outlines of the title are visible."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": 18,
+     "agreement": 0.7177,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa4d6c6f3cc53c842a1c",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0011.jpg",
+     "scan_quality": null,
+     "warning": "The right page is a fold-out plate with Hebrew characters within a diagram."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": 75,
+     "agreement": 0.7783,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa796c6f3cc53c842ab1",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0041.jpg",
+     "scan_quality": null,
+     "warning": "The illustration contains handwritten-style Hebrew characters integrated into the diagram."
+    }
+   ]
+  },
+  {
+   "name": "symbols",
+   "why": "Alchemical, astronomical and metrological signs with no stable transcription convention.",
+   "unstable_pct": 0.3,
+   "stable_pct": 0,
+   "lift": null,
+   "examples": [
+    {
+     "book": "alchemical-collection-korndorffer-grossschedel-post-1627-aicha",
+     "language": "Latin",
+     "year": 1630,
+     "page_number": -59,
+     "agreement": 0.6859,
+     "reader_url": "https://sourcelibrary.org/book/alchemical-collection-korndorffer-grossschedel-post-1627-aicha/page/69b41884f1200e2ab53cfcf5",
+     "image_url": "https://images.sourcelibrary.org/pages/69b41884f1200e2ab53cfcba/0059.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Kurrent script, some ink bleed-through and marginal symbols."
+    },
+    {
+     "book": "flamel-bernard-of-trevisan-llull-alchemical-collection-18th-llull",
+     "language": "Multiple",
+     "year": 1740,
+     "page_number": -120,
+     "agreement": 0.8284,
+     "reader_url": "https://sourcelibrary.org/book/flamel-bernard-of-trevisan-llull-alchemical-collection-18th-llull/page/69b418f82b0edf3eaa2de6c4",
+     "image_url": "https://images.sourcelibrary.org/pages/69b418f82b0edf3eaa2de64c/0120.jpg",
+     "scan_quality": null,
+     "warning": "Handwritten Latin cursive, likely 17th or 18th century. Contains alchemical symbols for air, salt, sun, moon, and mercury."
+    },
+    {
+     "book": "manly-p-hall-collection-box-4-ms-19-vol-2-collection",
+     "language": "English",
+     "year": 1500,
+     "page_number": 49,
+     "agreement": 0.7688,
+     "reader_url": "https://sourcelibrary.org/book/manly-p-hall-collection-box-4-ms-19-vol-2-collection/page/69b4c0af6248be021e01faa2",
+     "image_url": "https://images.sourcelibrary.org/pages/69b4c0af6248be021e01fa71/0049.jpg",
+     "scan_quality": "good",
+     "warning": "Handwritten German Kurrent script with alchemical symbols"
+    }
+   ]
+  },
+  {
+   "name": "dark, contrast, glare",
+   "why": "Capture-side exposure problems.",
+   "unstable_pct": 0.2,
+   "stable_pct": 0,
+   "lift": null,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "language": "Latin",
+     "year": 1758,
+     "page_number": 174,
+     "agreement": 0.6271,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg",
+     "scan_quality": null,
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read."
+    },
+    {
+     "book": "atashasrik-prajpramit-100000-line-perfection-of-wisdom",
+     "language": "Sanskrit",
+     "year": 1100,
+     "page_number": 215,
+     "agreement": 0.0078,
+     "reader_url": "https://sourcelibrary.org/book/atashasrik-prajpramit-100000-line-perfection-of-wisdom/page/69dfee7ace6bb8619e07eba0",
+     "image_url": "https://images.sourcelibrary.org/pages/69dfee7ace6bb8619e07eac9/0215.jpg",
+     "scan_quality": "fair",
+     "warning": "Handwritten Ranjana script (or similar North Indian/Tibetan-influenced script). The text is a palm-leaf manuscript with significant fading and low contrast in several areas."
+    }
+   ]
+  },
+  {
+   "name": "cropped or cut off",
+   "why": "Text runs past the edge of the image. Half a word invites two different guesses.",
+   "unstable_pct": 0.2,
+   "stable_pct": 0.1,
+   "lift": 2,
+   "examples": [
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": -10,
+     "agreement": 0.8131,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa466c6f3cc53c842a01",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0010.jpg",
+     "scan_quality": null,
+     "warning": "The page contains several paper overlays or flaps covering the primary illustration. The text on the right margin is partially obscured or cut off."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "language": "Latin",
+     "year": 1717,
+     "page_number": -28,
+     "agreement": 0.7805,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa556c6f3cc53c842a3d",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0028.jpg",
+     "scan_quality": null,
+     "warning": "The left page contains a pasted-in or overlapping fragment of an illustration and text, obscuring the original page content. The text on the far left margin is cut off."
+    }
+   ]
+  },
+  {
+   "name": "skew, curvature, gutter",
+   "why": "Geometry: the page is not flat or not square to the sensor.",
+   "unstable_pct": 0.1,
+   "stable_pct": 0.1,
+   "lift": 1,
+   "examples": [
+    {
+     "book": "compendium-of-chronicles-first-world-history-hamadani",
+     "language": "Persian",
+     "year": 1307,
+     "page_number": 485,
+     "agreement": 0.3936,
+     "reader_url": "https://sourcelibrary.org/book/compendium-of-chronicles-first-world-history-hamadani/page/69d5abb0f5e2a1273d90123d",
+     "image_url": "https://images.sourcelibrary.org/pages/69d5abb0f5e2a1273d900fd6/0485.jpg",
+     "scan_quality": "good",
+     "warning": "Handwritten Nasta'liq script. The main body of the page is blank, with a column of text visible on the far right edge (likely the gutter of the facing page)."
+    }
+   ]
+  },
+  {
+   "name": "blur or focus",
+   "why": "Capture-side focus problems.",
+   "unstable_pct": 0.1,
+   "stable_pct": 0,
+   "lift": null,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "language": "Latin",
+     "year": 1758,
+     "page_number": 350,
+     "agreement": 0.638,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d5d8",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0350.jpg",
+     "scan_quality": null,
+     "warning": "The image is significantly faded and blurry, making some text difficult to read with absolute certainty."
+    }
+   ]
+  },
+  {
+   "name": "microfilm or bitonal",
+   "why": "Digitised from film, or thresholded to 1-bit — strokes are lost before OCR ever runs.",
+   "unstable_pct": 0,
+   "stable_pct": 0,
+   "lift": 0,
+   "examples": []
+  }
+ ],
+ "categories_printed_only": [
+  {
+   "name": "bleed-through from the verso",
+   "why": "Ink from the other side reads as faint text. Whether a pass transcribes it is a judgement call, so it flips between runs.",
+   "unstable_pct": 0.81,
+   "stable_pct": 0.25,
+   "lift": 2.5,
+   "n_unstable": 5,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "page_number": 174,
+     "agreement": 0.6271,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg",
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read."
+    },
+    {
+     "book": "de-dysenteria-theses-pincier",
+     "page_number": 2,
+     "agreement": 0.6731,
+     "reader_url": "https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a",
+     "image_url": "https://images.sourcelibrary.org/pages/69b65ce8b3f4fc0441515688/0002.jpg",
+     "warning": "The page is extremely faded, with text showing through from the verso (mirror image). Only faint outlines of the title are visible."
+    },
+    {
+     "book": "short-treatise-on-the-kabbalistic-hearing-lull",
+     "page_number": -59,
+     "agreement": 0.5941,
+     "reader_url": "https://sourcelibrary.org/book/short-treatise-on-the-kabbalistic-hearing-lull/page/69c55f992fd09fb58e9256c5",
+     "image_url": "https://images.sourcelibrary.org/pages/69c4ec33a3a4a7c546ee6125/0059.jpg",
+     "warning": "Ink bleed-through from the reverse side and facing page obscures some text in the center of the page."
+    }
+   ]
+  },
+  {
+   "name": "mixed script or language",
+   "why": "More than one script on one page. Each switch is a decision point, and the passes need not switch at the same word.",
+   "unstable_pct": 0.49,
+   "stable_pct": 0.12,
+   "lift": 3,
+   "n_unstable": 3,
+   "examples": [
+    {
+     "book": "hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets",
+     "page_number": -17,
+     "agreement": 0.49,
+     "reader_url": "https://sourcelibrary.org/book/hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets/page/69c734846a0f3d112faf7566",
+     "image_url": "https://images.sourcelibrary.org/pages/69c734076a0f3d112faf750d/0017.jpg",
+     "warning": "The text is printed in a Rabbinic \"Rashi\" typeface, common in early modern Hebrew printing. Some ink bleed-through from the reverse page is visible."
+    },
+    {
+     "book": "hebrew-sefer-sha-arei-orah-gikatilla",
+     "page_number": -95,
+     "agreement": 0.49,
+     "reader_url": "https://sourcelibrary.org/book/hebrew-sefer-sha-arei-orah-gikatilla/page/69c7a0bf92b884e4f8173828",
+     "image_url": "https://images.sourcelibrary.org/pages/69c79fed92b884e4f817374f/0095.jpg",
+     "warning": "The text is in a Rabbinic Hebrew typeface (Rashi script)."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": 18,
+     "agreement": 0.7177,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa4d6c6f3cc53c842a1c",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0011.jpg",
+     "warning": "The right page is a fold-out plate with Hebrew characters within a diagram."
+    }
+   ]
+  },
+  {
+   "name": "faded or faint ink",
+   "why": "Low contrast against the paper — the classic legibility case, and rarer than expected.",
+   "unstable_pct": 0.49,
+   "stable_pct": 0.25,
+   "lift": 1.5,
+   "n_unstable": 3,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "page_number": 174,
+     "agreement": 0.6271,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg",
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read."
+    },
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "page_number": 350,
+     "agreement": 0.638,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d5d8",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0350.jpg",
+     "warning": "The image is significantly faded and blurry, making some text difficult to read with absolute certainty."
+    },
+    {
+     "book": "de-dysenteria-theses-pincier",
+     "page_number": 2,
+     "agreement": 0.6731,
+     "reader_url": "https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a",
+     "image_url": "https://images.sourcelibrary.org/pages/69b65ce8b3f4fc0441515688/0002.jpg",
+     "warning": "The page is extremely faded, with text showing through from the verso (mirror image). Only faint outlines of the title are visible."
+    }
+   ]
+  },
+  {
+   "name": "stain, foxing, damage",
+   "why": "Physical loss or obscuring of the substrate.",
+   "unstable_pct": 0.49,
+   "stable_pct": 1.24,
+   "lift": 0.3,
+   "n_unstable": 3,
+   "examples": [
+    {
+     "book": "revelation-of-divine-majesty-gutman",
+     "page_number": 889,
+     "agreement": 0.84,
+     "reader_url": "https://sourcelibrary.org/book/revelation-of-divine-majesty-gutman/page/6984d5f3298d54233b6b836e",
+     "image_url": "https://images.sourcelibrary.org/uploads/698420e4e8a1d0539ce47e1d/6984d5c1298d54233b6b836c.jpg",
+     "warning": "Minor foxing and staining on the page."
+    },
+    {
+     "book": "the-hermetic-philosophical-messenger-bringing-joyful-and-potier",
+     "page_number": -50,
+     "agreement": 0.7955,
+     "reader_url": "https://sourcelibrary.org/book/the-hermetic-philosophical-messenger-bringing-joyful-and-potier/page/69c58b8f2cd78efa3f7e2a08",
+     "image_url": "https://images.sourcelibrary.org/pages/69c581e32e2f948a050a505c/0050.jpg",
+     "warning": "Water damage/staining throughout the center and bottom of the page, though text remains legible."
+    },
+    {
+     "book": "hebrew-rashe-tevot-tractatus-continens-explicans-weigenmeier",
+     "page_number": -31,
+     "agreement": 0.797,
+     "reader_url": "https://sourcelibrary.org/book/hebrew-rashe-tevot-tractatus-continens-explicans-weigenmeier/page/69c7ae2e25ec2ba5ccd7f236",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7ad8825ec2ba5ccd7f1fa/0031.jpg",
+     "warning": "Slight foxing and bleed-through from reverse page."
+    }
+   ]
+  },
+  {
+   "name": "illegible or obscured",
+   "why": "The model says outright it could not read part of the page.",
+   "unstable_pct": 0.49,
+   "stable_pct": 0.37,
+   "lift": 1,
+   "n_unstable": 3,
+   "examples": [
+    {
+     "book": "short-treatise-on-the-kabbalistic-hearing-lull",
+     "page_number": -59,
+     "agreement": 0.5941,
+     "reader_url": "https://sourcelibrary.org/book/short-treatise-on-the-kabbalistic-hearing-lull/page/69c55f992fd09fb58e9256c5",
+     "image_url": "https://images.sourcelibrary.org/pages/69c4ec33a3a4a7c546ee6125/0059.jpg",
+     "warning": "Ink bleed-through from the reverse side and facing page obscures some text in the center of the page."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": -10,
+     "agreement": 0.8131,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa466c6f3cc53c842a01",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0010.jpg",
+     "warning": "The page contains several paper overlays or flaps covering the primary illustration. The text on the right margin is partially obscured or cut off."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": -28,
+     "agreement": 0.7805,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa556c6f3cc53c842a3d",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0028.jpg",
+     "warning": "The left page contains a pasted-in or overlapping fragment of an illustration and text, obscuring the original page content. The text on the far left margin is cut off."
+    }
+   ]
+  },
+  {
+   "name": "complex layout",
+   "why": "Columns, tables, braced outlines. Reading ORDER is underdetermined, so the same words come out in different sequences.",
+   "unstable_pct": 0.32,
+   "stable_pct": 0,
+   "lift": null,
+   "n_unstable": 2,
+   "examples": [
+    {
+     "book": "de-dysenteria-theses-pincier",
+     "page_number": 2,
+     "agreement": 0.6731,
+     "reader_url": "https://sourcelibrary.org/book/de-dysenteria-theses-pincier/page/69b65ce8b3f4fc044151568a",
+     "image_url": "https://images.sourcelibrary.org/pages/69b65ce8b3f4fc0441515688/0002.jpg",
+     "warning": "The page is extremely faded, with text showing through from the verso (mirror image). Only faint outlines of the title are visible."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": 18,
+     "agreement": 0.7177,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa4d6c6f3cc53c842a1c",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0011.jpg",
+     "warning": "The right page is a fold-out plate with Hebrew characters within a diagram."
+    }
+   ]
+  },
+  {
+   "name": "cropped or cut off",
+   "why": "Text runs past the edge of the image. Half a word invites two different guesses.",
+   "unstable_pct": 0.32,
+   "stable_pct": 0.12,
+   "lift": 2,
+   "n_unstable": 2,
+   "examples": [
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": -10,
+     "agreement": 0.8131,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa466c6f3cc53c842a01",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0010.jpg",
+     "warning": "The page contains several paper overlays or flaps covering the primary illustration. The text on the right margin is partially obscured or cut off."
+    },
+    {
+     "book": "harmonia-reuchlini-et-lutheri-a-mdxvii-hardt",
+     "page_number": -28,
+     "agreement": 0.7805,
+     "reader_url": "https://sourcelibrary.org/book/harmonia-reuchlini-et-lutheri-a-mdxvii-hardt/page/69c7fa556c6f3cc53c842a3d",
+     "image_url": "https://images.sourcelibrary.org/pages/69c7fa3f6c6f3cc53c8429ec/0028.jpg",
+     "warning": "The left page contains a pasted-in or overlapping fragment of an illustration and text, obscuring the original page content. The text on the far left margin is cut off."
+    }
+   ]
+  },
+  {
+   "name": "dark, contrast, glare",
+   "why": "Capture-side exposure problems.",
+   "unstable_pct": 0.16,
+   "stable_pct": 0,
+   "lift": null,
+   "n_unstable": 1,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "page_number": 174,
+     "agreement": 0.6271,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg",
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read."
+    }
+   ]
+  },
+  {
+   "name": "blur or focus",
+   "why": "Capture-side focus problems.",
+   "unstable_pct": 0.16,
+   "stable_pct": 0,
+   "lift": null,
+   "n_unstable": 1,
+   "examples": [
+    {
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "page_number": 350,
+     "agreement": 0.638,
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d5d8",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0350.jpg",
+     "warning": "The image is significantly faded and blurry, making some text difficult to read with absolute certainty."
+    }
+   ]
+  },
+  {
+   "name": "marginalia and annotation",
+   "why": "Printed text plus later hands. What counts as the page is genuinely ambiguous.",
+   "unstable_pct": 0,
+   "stable_pct": 0,
+   "lift": 0,
+   "n_unstable": 0,
+   "examples": []
+  },
+  {
+   "name": "abbreviation and ligature",
+   "why": "Scribal and early-print contractions. Expanding or preserving them is a policy choice made per run.",
+   "unstable_pct": 0,
+   "stable_pct": 0,
+   "lift": 0,
+   "n_unstable": 0,
+   "examples": []
+  },
+  {
+   "name": "symbols",
+   "why": "Alchemical, astronomical and metrological signs with no stable transcription convention.",
+   "unstable_pct": 0,
+   "stable_pct": 0,
+   "lift": 0,
+   "n_unstable": 0,
+   "examples": []
+  },
+  {
+   "name": "skew, curvature, gutter",
+   "why": "Geometry: the page is not flat or not square to the sensor.",
+   "unstable_pct": 0,
+   "stable_pct": 0.12,
+   "lift": 0,
+   "n_unstable": 0,
+   "examples": []
+  },
+  {
+   "name": "microfilm or bitonal",
+   "why": "Digitised from film, or thresholded to 1-bit — strokes are lost before OCR ever runs.",
+   "unstable_pct": 0,
+   "stable_pct": 0,
+   "lift": 0,
+   "n_unstable": 0,
+   "examples": []
+  }
+ ]
+}
