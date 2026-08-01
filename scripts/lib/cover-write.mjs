@@ -120,10 +120,25 @@ const JUNK_COVER_PAGE_TYPES = new Set([
   'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target',
 ]);
 
+/** Mirror of `isJunkRepresentativePage()` in src/lib/cover-fields.ts.
+ *  DIGITIZER_RE is deliberately narrow — a bare /digitized by/ matches the
+ *  `Digitized by Google` watermark carried on every leaf of a Google scan and
+ *  would disqualify real title pages. Keep in lock-step with the TS original. */
+const DIGITIZER_RE = /digital insertion|funding from|archive\.org\/details|this is a digital copy of a book/i;
+const OWNERSHIP_RE = /\bex[\s-]?libris\b|\bbook\s?plate\b|\bshelf\s?mark\b|\bcall number\b|\bbarcode\b|\baccession (?:number|no\b|label|stamp)|\bproperty of\b|\bpresented by\b|library (?:stamp|label|bookplate|identification|shelfmark)|\bcolou?r\s?(?:card|chart|target|checker)\b|\bcalibration\b/i;
+const BINDING_RE = /\b(?:front|back|exterior) cover\b|\bbook cover\b|\bcover or binding\b|\bbinding\/cover\b|\bleather[\s-]?bound\b|\b(?:leather|vellum|parchment|cloth|marbled|pasteboard|morocco) (?:binding|cover|boards?)\b|\bblind[\s-]tooled\b|\bgold[\s-]tooled\b|\bspine label\b/i;
+
+export function isJunkRepresentativePage(page) {
+  if (JUNK_COVER_PAGE_TYPES.has(String(page.page_type || ''))) return true;
+  const head = String(page.ocr_head || '');
+  if (!head) return false;
+  return DIGITIZER_RE.test(head) || OWNERSHIP_RE.test(head) || BINDING_RE.test(head);
+}
+
 export function selectFallbackCoverPage(pages) {
-  const usable = pages.filter(p => !JUNK_COVER_PAGE_TYPES.has(String(p.page_type || '')));
-  return pages.find(p => p.page_type === 'title-page')
-    || pages.find(p => p.page_type === 'frontispiece')
+  const usable = pages.filter(p => !isJunkRepresentativePage(p));
+  return usable.find(p => p.page_type === 'title-page')
+    || usable.find(p => p.page_type === 'frontispiece')
     || usable[0]
     || pages[0];
 }

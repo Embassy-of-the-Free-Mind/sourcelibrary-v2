@@ -24,7 +24,7 @@ import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import EnsureCover from '@/components/book/EnsureCover';
-import { isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -457,6 +457,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
+          // First 600 chars of the OCR — the metadata envelope plus the model's
+          // page description. Enough to recognise digitiser boilerplate and
+          // library/owner stamps that `page_type` misses (see
+          // `isJunkRepresentativePage`), without pulling whole pages of text.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
         },
         maxTimeMS: 5000,
       })
@@ -815,7 +820,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // aren't type-classified. Order: deep body text → a classified illustration
     // → a position-based mid-book page (skips the front-matter/calibration
     // cluster). Never the cover, never a known-junk type.
-    const interiorCandidates = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    // `isJunkRepresentativePage` additionally reads the page's own OCR, so a
+    // digitiser plate mistyped as `frontispiece` (the Internet Archive "funding
+    // from Microsoft" leaf) is excluded here rather than being promoted by the
+    // illustration branch below.
+    //
+    // If that leaves NOTHING, fall back to the type-filtered list rather than
+    // rendering no image: a single-leaf broadside whose one page carries a
+    // marginal shelfmark is still the work itself, and an empty column is worse
+    // than an imperfect page. (Measured: 1 book in 800 takes this branch.)
+    const interiorCandidatesByType = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    const interiorCandidatesClean = interiorCandidatesByType.filter(
+      p => !isJunkRepresentativePage(p as { page_type?: string | null; ocr_head?: string | null }),
+    );
+    const interiorCandidates = interiorCandidatesClean.length ? interiorCandidatesClean : interiorCandidatesByType;
     const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
     const interiorTextPage = (() => {
       const deep = interiorCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
@@ -994,7 +1012,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // genuine content illustrations already come through the gallery path
       // above, so a leftover illustration here is usually front-matter — an
       // owner's bookplate / frontispiece — which we don't want to feature.
-      for (const pg of [interiorIllusPage, interiorTextPage]) {
+      // (The array order used to contradict that comment, putting the
+      // illustration first; that inversion is what surfaced the Internet
+      // Archive plate on the Gandhi book.)
+      for (const pg of [interiorTextPage, interiorIllusPage]) {
         if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
         if (src && notCover(src)) return { src, href: `/book/${bookSlug}/page/${pg.id}`, caption: pg.page_number ? `p. ${pg.page_number}` : undefined };

@@ -58,10 +58,14 @@ const PAGE_PROJECTION = {
   thumbnail: 1,
   split_from_spread: 1,
   crop: 1,
+  // Lets `selectFallbackCoverPage` reject digitiser boilerplate and library
+  // stamps that `page_type` alone waves through. Must stay in step with the
+  // book page's projection or the two would pick different pages.
+  ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
 } as const;
 
 /** The projected page shape this route reasons about. */
-type CoverCandidatePage = Partial<Page> & { page_number?: number; page_type?: string | null };
+type CoverCandidatePage = Partial<Page> & { page_number?: number; page_type?: string | null; ocr_head?: string | null };
 
 type Result = { ok: boolean; reason: string; thumbnail?: string; cover_page?: number };
 
