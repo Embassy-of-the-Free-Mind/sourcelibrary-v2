@@ -253,6 +253,8 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
       ...COVER_WRITE_FIELDS,
+      // Editor-chosen About side plate/page (BookAboutPicker).
+      'about_visual',
       'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',

@@ -2,8 +2,11 @@
 
 import { type ReactNode } from 'react';
 import Link from 'next/link';
+import type { Page } from '@/lib/types';
+import BookAboutPicker from './BookAboutPicker';
 
 type Visual = { src: string; href: string; caption?: string };
+type PlateLite = { id: string; thumbnail_url?: string; extracted_url?: string; image_url?: string; description?: string };
 
 /**
  * "About this book" section: an eyebrow title over serif prose on the cream
@@ -15,6 +18,10 @@ export default function AboutVariants({
   visual,
   tags = [],
   belowContent,
+  bookId,
+  bookSlug,
+  pages,
+  plates,
 }: {
   /** About prose. When null, the heading + prose are omitted and only the
    *  dropdowns render in the left column (the plate still shows on the right). */
@@ -23,6 +30,11 @@ export default function AboutVariants({
   tags?: string[];
   /** Reading guide / Contents / etc. dropdowns, rendered under the text+tags. */
   belowContent?: ReactNode;
+  /** When provided, editors (inner_circle) can change the side visual. */
+  bookId?: string;
+  bookSlug?: string;
+  pages?: Page[];
+  plates?: PlateLite[];
 }) {
   const tagRow = tags.length > 0 ? (
     <div className="flex flex-wrap gap-1.5 md:gap-2 mt-6 md:mt-8">
@@ -49,8 +61,8 @@ export default function AboutVariants({
           </div>
           {/* Interesting page / plate: desktop only (hidden on mobile), 2/5 wide.
               No shadow — sits flush on the cream background. */}
-          {visual && (
-            <div className="hidden md:block order-1 md:order-2 md:col-span-2">
+          {visual && (() => {
+            const visualEl = (
               <Link href={visual.href} className="block group">
                 <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -58,8 +70,17 @@ export default function AboutVariants({
                 </div>
                 {visual.caption && <div className="mt-3 text-[13px] italic" style={{ color: '#948d80' }}>{visual.caption}</div>}
               </Link>
-            </div>
-          )}
+            );
+            return (
+              <div className="hidden md:block order-1 md:order-2 md:col-span-2">
+                {bookId ? (
+                  <BookAboutPicker bookId={bookId} bookSlug={bookSlug ?? ''} pages={pages ?? []} plates={plates ?? []} currentSrc={visual.src}>
+                    {visualEl}
+                  </BookAboutPicker>
+                ) : visualEl}
+              </div>
+            );
+          })()}
         </div>
       </div>
     </section>

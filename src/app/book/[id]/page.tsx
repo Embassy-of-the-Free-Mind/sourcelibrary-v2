@@ -977,7 +977,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The side plate must never be the same image as the hero cover.
     const coverSrcKey = (coverDisplay || '').split('?')[0];
     const notCover = (src?: string | null) => !!src && src.split('?')[0] !== coverSrcKey;
-    const sideVisual = (() => {
+    // An editor-chosen About visual (BookAboutPicker) overrides the auto-pick.
+    const aboutOverride = (book as unknown as { about_visual?: { src?: string; href?: string; caption?: string } | null }).about_visual;
+    const sideVisual = (aboutOverride && aboutOverride.src)
+      ? { src: aboutOverride.src, href: aboutOverride.href || `/book/${bookSlug}`, caption: aboutOverride.caption }
+      : (() => {
       // Only use a gallery plate if a non-provenance one exists; otherwise fall
       // through to a real interior page rather than showing a bookplate.
       const plate = galleryImages.find(g => isRepresentativePlate(g.description) && notCover(g.thumbnail_url || g.extracted_url || g.image_url));
@@ -1464,6 +1468,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             visual={sideVisual}
             tags={hasSummary ? subjectTags : []}
             belowContent={readingDropdowns}
+            bookId={book.id}
+            bookSlug={bookSlug}
+            pages={pages}
+            plates={galleryImages.map(p => ({ id: p.id, thumbnail_url: p.thumbnail_url, extracted_url: p.extracted_url, image_url: p.image_url, description: p.description }))}
           />
         </div>
 
