@@ -96,3 +96,32 @@ more goodwill than never asking.
 - **A first translation** — pick one book that had never been in English and
   tell its story. Ask: read it.
 - **What arrived this season** — acquisitions, with one good plate.
+
+## The editing primitive
+
+Added 2026-08-01, after asking why the newsletter got its own editor when every
+other authored-text field in the app had gone without one.
+
+The survey said something useful: **the newsletter is the only surface in the
+app that authors HTML.** Collection intros are `split('\n\n')` into paragraphs,
+museum descriptions and catalogue notes are plain fields. So a rich-text editor
+everywhere would have been the wrong generalisation — formatting marks typed
+into those fields reach the reader as literal angle brackets.
+
+What every surface *did* lack was the same four things: a word count, a way to
+see the text as the reader will, a signal that there are unsaved changes, and
+somewhere to say what the field is for. That is `src/components/ui/ProseField.tsx`.
+It supplies chrome and leaves the control and the Save button to the caller,
+which is what lets it drop into forms that already work. Autosave is opt-in via
+`onSave`, because converting a deliberate save into an automatic one changes
+what a half-finished edit means.
+
+Wired into: newsletter compose, newsletter draft editing, gallery collection
+descriptions, gallery image museum descriptions. Remaining candidates when they
+next hurt: catalogue notes (`BphWorkEditForm`), KDP descriptions, book-collection
+descriptions.
+
+**Still not editable anywhere: the 67 blog posts**, which are TSX files under
+`src/app/blog/`. Fixing a typo needs a code change and a deploy, which is why
+the volunteer letter cannot yet ask anyone to proofread them and hand back an
+edit. That is the next real gap, and it is a migration, not a component.

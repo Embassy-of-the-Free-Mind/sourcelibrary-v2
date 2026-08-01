@@ -21,6 +21,7 @@ import {
 
 import { email } from '@/lib/api-client';
 import RichEmailEditor from '@/components/admin/RichEmailEditor';
+import ProseField from '@/components/ui/ProseField';
 import type { EmailDraft, SubscriberStats } from '@/lib/api-client/types/email';
 
 // A half-written letter should survive a refresh or a misclick. The compose
@@ -366,19 +367,19 @@ export default function EmailAdminPage() {
                         className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm"
                       />
                     </div>
-                    <div>
-                      <label className="text-sm text-stone-400 block mb-1">Body</label>
+                    <ProseField
+                      label="Body"
+                      format="html"
+                      value={manualHtml}
+                      onChange={setManualHtml}
+                      help="Wrapped in the Source Library template — leave out the header, logo and footer."
+                    >
                       <RichEmailEditor
                         value={manualHtml}
                         onChange={setManualHtml}
                         idPrefix="compose"
                       />
-                      <p className="text-xs text-stone-500 mt-1">
-                        Edit as formatted text, or switch to HTML to paste a letter in.
-                        Either way it gets wrapped in the Source Library email template, so
-                        leave out the header, the logo and the footer.
-                      </p>
-                    </div>
+                    </ProseField>
                     <div className="flex gap-2">
                       <button
                         onClick={handlePreviewManual}
@@ -476,19 +477,20 @@ export default function EmailAdminPage() {
                       className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm"
                     />
                   </div>
-                  <div>
-                    <label className="text-sm text-stone-400 block mb-1">Body</label>
+                  <ProseField
+                    label="Body"
+                    format="html"
+                    value={editHtml}
+                    onChange={setEditHtml}
+                    help="A saved draft holds the FULL wrapped email, header and footer included."
+                  >
                     <RichEmailEditor
                       value={editHtml}
                       onChange={setEditHtml}
                       minHeight={520}
                       idPrefix="edit-draft"
                     />
-                    <p className="text-xs text-stone-500 mt-1">
-                      A saved draft holds the FULL wrapped email, so the shell&rsquo;s header
-                      and footer are part of what you are editing here.
-                    </p>
-                  </div>
+                  </ProseField>
                   <div className="flex gap-2">
                     <button
                       onClick={handleSaveEdit}
