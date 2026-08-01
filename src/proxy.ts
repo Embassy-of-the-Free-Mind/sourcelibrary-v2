@@ -6,6 +6,7 @@ import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
 import { shouldRedirectToCanonical, canonicalUrl, aliasPolicyForHost } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -583,6 +584,30 @@ function pickOgVariantForToday(now: Date = new Date()): string {
   return OG_VARIANTS[dayOfYear % OG_VARIANTS.length];
 }
 
+/**
+ * Fire-and-forget non-human request counter. Deliberately not awaited: a
+ * measurement must never delay or fail a page. `recordAgentRequest` swallows
+ * its own errors; the extra `.catch` guards the classify step too.
+ */
+function countAgentRequest(request: NextRequest, outcome: 'served' | 'refused'): void {
+  try {
+    const rec = classifyAgentRequest(request, outcome);
+    if (!rec) return; // human — already counted by the /api/track beacon
+    void recordAgentRequest(resolveHostForAgentCount(request), rec).catch(() => {});
+  } catch {
+    // never surfaces
+  }
+}
+
+function resolveHostForAgentCount(request: NextRequest): string {
+  return (request.headers.get('x-forwarded-host') || request.headers.get('host') || 'sourcelibrary.org')
+    .split(',')[0]
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, '')
+    .replace(/^www\./, '');
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -832,10 +857,17 @@ export async function proxy(request: NextRequest) {
   // --- Bot enforcement (before any other logic) ---
   const ua = request.headers.get('user-agent') || '';
 
+  // Count non-human traffic server-side. The `/api/track` beacon cannot see
+  // bots (they run no JavaScript), which is why `analytics_traffic_class` read
+  // `ai_agent: 2` over 30 days while OpenAI's agents were pulling whole books.
+  // Recorded here, at the only point where the evidence exists. #3519
+  countAgentRequest(request, 'served');
+
   // Hard block: bots explicitly forbidden in robots.txt — except on the
   // policy/licensing docs, which robots.txt grants to every reserved crawler.
   if (BLOCKED_BOT_RE.test(ua) && !isBotReadablePath(pathname)) {
     logBotAccess(request, 'blocked');
+    countAgentRequest(request, 'refused');
     return new NextResponse(BOT_RESPONSE, {
       status: 403,
       headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
