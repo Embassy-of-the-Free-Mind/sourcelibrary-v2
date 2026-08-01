@@ -71,8 +71,28 @@ async function fetchByLccn(lccn) {
 await withMongo(async (db) => {
   const all = await db.collection('search_efforts').find({}).toArray();
   const current = latestEffortPerBook(all);
-  const proposed = current.filter((e) => e.candidates?.some((c) => c.screen === SCREEN.PRIOR));
-  console.log(`Proposed demotes in the current generation: ${proposed.length}\n`);
+  const withPrior = current.filter((e) => e.candidates?.some((c) => c.screen === SCREEN.PRIOR));
+
+  // A DEMOTE presupposes a badge. `search_efforts` covers both cohorts, and the
+  // inverse cohort is by definition unbadged — finding a prior there is a normal,
+  // uninteresting result (we translated something that already existed in
+  // English), not a claim to retract. Unfiltered, 115 of 162 prior-bearing
+  // efforts were unbadged books, and because the packet groups by WORK and
+  // reports `books.size` as the number of badges affected, they inflated that
+  // count without changing the work list.
+  //
+  // Gate on `books.is_first_translation`, not on `effort.cohort`: the cohort is
+  // what the search believed when it ran, while the flag is the claim actually on
+  // the site right now. If a badge moved in between, the flag is right and the
+  // cohort is stale.
+  const badgedNow = new Set((await db.collection('books').find(
+    { id: { $in: withPrior.map((e) => e.book_id) }, is_first_translation: true },
+    { projection: { id: 1 } },
+  ).toArray()).map((b) => b.id));
+  const proposed = withPrior.filter((e) => badgedNow.has(e.book_id));
+  console.log(`Efforts with a screened prior: ${withPrior.length}`);
+  console.log(`  ...on a book that actually carries the badge: ${proposed.length}`);
+  console.log(`  ...unbadged, so nothing to demote: ${withPrior.length - proposed.length}\n`);
 
   // Group by WORK, not by record. The question is not "is this particular
   // edition complete" but "does at least one COMPLETE prior English rendering of
