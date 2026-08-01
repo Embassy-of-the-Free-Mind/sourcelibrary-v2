@@ -115,6 +115,16 @@ function entityPadRatio(t) {
   const ents = ((t || '').match(/&[a-z]+;/gi) || []).length;
   return ents * 6 / Math.max(1, (t || '').length);
 }
+/**
+ * The page's own OCR declares it blank. Uses the structured `<page-type>` tag
+ * rather than prose matching — a regex over the warning text misfires both ways
+ * ("significant bleed-through makes some text difficult to read" is a TRUE hard
+ * page that a naive `remains legible` pattern would drop).
+ */
+function isBlankPage(t) {
+  return /<page-type>\s*blank\s*<\/page-type>/i.test(t || '');
+}
+
 const LOOP_THRESHOLD = 0.5;
 function isDegenerate(t) {
   return loopCoverage(t) >= LOOP_THRESHOLD || entityPadRatio(t) > 0.5;
@@ -144,11 +154,27 @@ async function main() {
                   display_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, crop: 1 } },
   ], { allowDiskUse: true, maxTimeMS: 900000 }).toArray();
 
-  let ocrCount = 0;
+  let ocrCount = 0, blankCount = 0;
   for (const p of pages) {
     const t = p?.ocr?.data;
     if (!t) continue;
     ocrCount++;
+
+    // A BLANK page cannot exemplify a text-difficulty class, and the warning
+    // regexes happily match one: "the page is blank, save for text at the
+    // extreme left edge (the gutter) which belongs to the facing page" was
+    // selected as a `gutter_loss` exemplar. A spot check found 39 of 334 rows
+    // (11.7%) were declared blank by their own OCR — `gutter_loss` was 8/20.
+    //
+    // They are not discarded, because "does the model invent text on an empty
+    // page" is one of the few fabrication probes available without ground
+    // truth. They become their own class instead of contaminating nine others.
+    if (isBlankPage(t)) {
+      blankCount++;
+      add('blank_page', p, 'structural', 'OCR declares <page-type>blank</page-type>');
+      continue;
+    }
+
     const warn = (t.match(/<warning>([\s\S]*?)<\/warning>/gi) || []).join(' ');
     if (warn) {
       for (const [cls, re] of WARNING_CLASSES) {
@@ -169,6 +195,7 @@ async function main() {
     }
   }
   console.log(`    ${ocrCount.toLocaleString()} of ${pages.length.toLocaleString()} sampled pages carry OCR text`);
+  console.log(`    ${blankCount.toLocaleString()} declared blank → routed to blank_page, not to a damage class`);
 
   // ---------------------------------------------------------------- lane 2
   console.log(`  Lane 2 (proven_miss): ${REV_SAMPLE.toLocaleString()} revisions, with the #3473 shift filter…`);
