@@ -6,7 +6,12 @@ import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
+// The Netherland-America Foundation (NAF, EIN 13-2989216) runs TWO DonorPerfect forms for the
+// Embassy — see https://thenaf.org/friends-funds/embassy-of-the-free-mind/. `.../give/naf/
+// embassyofthefreemind` is GENERAL Embassy support (BPH preservation, exhibitions, the monument);
+// this one is the Source Library designation. A donor arriving from sourcelibrary.org means to
+// fund Source Library, so use this one. Don't "simplify" the two into the general form.
+const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/embassyofthefreemindsourcelibrary';
 const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Hand-coloured volvelle (perpetual calendar wheel) from the astrology collection.
