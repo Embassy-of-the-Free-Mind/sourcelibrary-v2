@@ -42,7 +42,7 @@ import path from 'path';
 import { createHash } from 'crypto';
 import { execSync } from 'child_process';
 import { withMongo } from '../lib/mongo.mjs';
-import { classifySourceLanguage } from '../lib/english-source-detect.mjs';
+import { classifySourceLanguage, samplePagesForLanguage } from '../lib/english-source-detect.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const ALL = process.argv.includes('--all');
@@ -81,66 +81,6 @@ try {
     CODE_VERSION = `${CODE_VERSION}-dirty+${h}`;
   }
 } catch { /* not a repo */ }
-
-/**
- * Scanner/library boilerplate. English by construction, on books in every
- * language, and it is bound into the scan rather than printed in the book — so a
- * page carrying it says nothing about the source language and must not vote.
- *
- * This is not hypothetical: the Zohrab Armenian New Testament was screened
- * `english_source` on three consecutive pages of the Google Books notice.
- */
-const BOILERPLATE_RE = /digital copy of a book that was preserved|make the world'?s books discoverable|public domain (?:book|work) is one that was never subject|google book search|digitized by (?:google|microsoft|the internet archive)/i;
-
-/**
- * Sample pages SPREAD ACROSS the middle of the book.
- *
- * Three things had to be got right here, and the obvious implementation gets all
- * three wrong. It was copied from `ft-translation-queue.mjs`, which still has
- * them (see the PR): both flagged books it reported as already-English were
- * false positives.
- *
- *  1. NEGATIVE PAGE NUMBERS ARE SOFT-HIDDEN PAGES. Sorting by `page_number`
- *     ascending starts in them, so "skip 30%" can land entirely inside the hidden
- *     range and never reach the book. The Armenian NT sampled pages -1378..-1376.
- *
- *  2. `skip` MUST BE AN OFFSET INTO THE OCR'd PAGES, NOT INTO `pages_count`.
- *     Sparse OCR makes the two diverge without any error.
- *
- *  3. EIGHT CONSECUTIVE PAGES ARE ONE PLACE IN THE BOOK. Nicholson's *Kitab
- *     al-Luma* is Arabic with an English glossary at the back; a consecutive
- *     sample that lands in the glossary reports the whole book as English. A
- *     spread sample lets the body outvote the apparatus.
- *
- * So: positive page numbers only, offsets computed over the OCR'd set, and the
- * sample spread evenly across the middle 60% (20%–80%) to clear front matter at
- * one end and index/glossary at the other.
- */
-const SAMPLE_SIZE = 10;
-
-async function samplePages(pages, bookId) {
-  const nums = await pages.find(
-    { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: null } },
-    { projection: { page_number: 1 }, sort: { page_number: 1 } },
-  ).toArray();
-  if (!nums.length) return { texts: [], available: 0 };
-
-  const lo = Math.floor(nums.length * 0.2);
-  const hi = Math.max(lo + 1, Math.floor(nums.length * 0.8));
-  const span = hi - lo;
-  const picks = [];
-  for (let i = 0; i < SAMPLE_SIZE; i++) {
-    const idx = lo + Math.floor((span * i) / SAMPLE_SIZE);
-    if (idx < nums.length && !picks.includes(nums[idx].page_number)) picks.push(nums[idx].page_number);
-  }
-
-  const rows = await pages.find(
-    { book_id: bookId, page_number: { $in: picks } },
-    { projection: { 'ocr.data': 1 } },
-  ).toArray();
-  const texts = rows.map((p) => p.ocr?.data).filter(Boolean).filter((t) => !BOILERPLATE_RE.test(t));
-  return { texts, available: nums.length };
-}
 
 await withMongo(async (db) => {
   const books = db.collection('books');
@@ -181,7 +121,7 @@ await withMongo(async (db) => {
   for await (const b of cursor) {
     if (LIMIT && seen >= LIMIT) break;
     seen++;
-    const { texts, available } = await samplePages(pages, b.id);
+    const { texts, available } = await samplePagesForLanguage(pages, b.id);
     // "We could not ask" is not "we asked and found nothing." A book with no OCR
     // is unscreenable, not undetermined — collapsing the two turns an unasked
     // question into a finding, which is the standing failure mode in this area.
@@ -238,4 +178,21 @@ await withMongo(async (db) => {
   }, null, 2));
   console.log(`\nReport: ${out}`);
   if (!APPLY) console.log('Dry run — nothing written. Re-run with --apply to persist.');
-});
+},
+/**
+ * `noTimeout` is REQUIRED, not a tuning choice.
+ *
+ * `withMongo` kills the process after 300s to stop zombie scripts. This sweep
+ * makes two `pages` queries per book across ~17,000 books and runs the better
+ * part of an hour, so the default watchdog fires mid-run. It has now done so
+ * twice — at 2,000 books on a laptop, then at 5,500 on the Hetzner box — with
+ * `[mongo] Script timeout after 300s — forcing exit`. Same failure that killed
+ * the demote packet at 31 of 33 works (CLAUDE.md, "Long paced runs need
+ * noTimeout").
+ *
+ * The run is resumable, since the driving query skips books that already carry a
+ * verdict, so a watchdog kill loses wall-clock rather than work. That is not a
+ * reason to tolerate it: a partial sweep reports partial counts and says nothing
+ * about being partial, which is how a 12%-complete screen gets read as a result.
+ */
+{ noTimeout: true });

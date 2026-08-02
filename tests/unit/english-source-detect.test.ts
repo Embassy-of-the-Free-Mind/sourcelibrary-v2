@@ -24,6 +24,7 @@ import {
   textWords,
   ENGLISH_SOURCE_THRESHOLD,
   MIN_PAGES_FOR_FREQUENCY_ENGLISH,
+  samplePagesForLanguage,
 } from '../../scripts/lib/english-source-detect.mjs';
 
 /** A page of real Latin body text — the control for "genuinely foreign". */
@@ -138,5 +139,83 @@ describe('the controls still hold', () => {
   it('no judgeable text is undetermined — never a verdict', () => {
     expect(classifySourceLanguage([]).verdict).toBe('undetermined');
     expect(classifySourceLanguage(['   ', '']).verdict).toBe('undetermined');
+  });
+});
+
+/**
+ * The SAMPLER — the code that lived in two places and was wrong in both.
+ *
+ * A fake `pages` collection, because the three hazards are all about WHICH pages
+ * get chosen, which is exactly what a mock can pin and a real database cannot
+ * pin cheaply.
+ */
+function fakePages(docs: Array<{ page_number: number; ocr?: { data: string } }>) {
+  return {
+    find(filter: any, opts: any = {}) {
+      let rows = docs.filter((d) => {
+        // NOTE: this mock honours `$gt` only if the caller passes it. That is
+      // deliberate — it is what lets the soft-hidden-page test actually fail when
+      // the filter is removed from the implementation.
+      if (filter.page_number?.$gt !== undefined && !(d.page_number > filter.page_number.$gt)) return false;
+        if (filter.page_number?.$in && !filter.page_number.$in.includes(d.page_number)) return false;
+        if (filter['ocr.data']?.$exists && !d.ocr?.data) return false;
+        return true;
+      });
+      if (opts.sort?.page_number === 1) rows = [...rows].sort((a, b) => a.page_number - b.page_number);
+      return { toArray: async () => rows };
+    },
+  };
+}
+
+describe('samplePagesForLanguage — the three sampling hazards', () => {
+  it('never samples a soft-hidden (negative) page number', async () => {
+    // The Zohrab Armenian NT: 400 soft-hidden scan-boilerplate pages numbered
+    // negatively, then the real book. Sorting ascending and skipping 30% of the
+    // page COUNT lands entirely inside the hidden range.
+    const docs = [
+      ...Array.from({ length: 400 }, (_, i) => ({ page_number: -1400 + i, ocr: { data: 'hidden english boilerplate page' } })),
+      ...Array.from({ length: 200 }, (_, i) => ({ page_number: i + 1, ocr: { data: 'ARMENIAN BODY TEXT' } })),
+    ];
+    const { texts } = await samplePagesForLanguage(fakePages(docs) as any, 'b1');
+    expect(texts.length).toBeGreaterThan(0);
+    expect(texts.every((t: string) => t === 'ARMENIAN BODY TEXT')).toBe(true);
+  });
+
+  it('spreads across the MIDDLE, so neither front nor back matter speaks for the book', async () => {
+    // Nicholson's *Kitab al-Luma*: an English preface, the Arabic body, an
+    // English glossary at the back.
+    //
+    // ⚠️ The fixture MUST have English at BOTH ends. An earlier version had only
+    // the back-matter glossary, and it passed with a deliberately broken
+    // front-sampling implementation — because the front of that fixture was the
+    // body, so sampling from page 1 got the right answer by accident. A fixture
+    // whose wrong strategy still scores correctly tests nothing.
+    const docs = [
+      ...Array.from({ length: 30 }, (_, i) => ({ page_number: i + 1, ocr: { data: 'ENGLISH_PREFACE' } })),
+      ...Array.from({ length: 140 }, (_, i) => ({ page_number: 31 + i, ocr: { data: 'ARABIC' } })),
+      ...Array.from({ length: 30 }, (_, i) => ({ page_number: 171 + i, ocr: { data: 'ENGLISH_GLOSSARY' } })),
+    ];
+    const { texts } = await samplePagesForLanguage(fakePages(docs) as any, 'b2');
+    const arabic = texts.filter((t: string) => t === 'ARABIC').length;
+    const english = texts.filter((t: string) => t !== 'ARABIC').length;
+    expect(arabic).toBeGreaterThan(english);
+    // And specifically: neither end may dominate the sample.
+    expect(texts.filter((t: string) => t === 'ENGLISH_PREFACE').length).toBeLessThan(arabic);
+    expect(texts.filter((t: string) => t === 'ENGLISH_GLOSSARY').length).toBeLessThan(arabic);
+  });
+
+  it('offsets over the OCRd pages, not over pages_count', async () => {
+    // Sparse OCR: 1,000 pages exist, 10 are OCR'd. An offset over `pages_count`
+    // skips past every one of them and returns nothing.
+    const docs = Array.from({ length: 10 }, (_, i) => ({ page_number: i * 100 + 1, ocr: { data: 'LATIN' } }));
+    const { texts, available } = await samplePagesForLanguage(fakePages(docs) as any, 'b3');
+    expect(available).toBe(10);
+    expect(texts.length).toBeGreaterThan(0);
+  });
+
+  it('reports zero available when nothing is OCRd — never an empty verdict', async () => {
+    const { texts, available } = await samplePagesForLanguage(fakePages([]) as any, 'b4');
+    expect(available).toBe(0);
+    expect(texts).toEqual([]);
   });
 });

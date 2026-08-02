@@ -39,7 +39,7 @@ import readline from 'readline';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
 import { canonicalLanguage } from '../lib/source-language-match.mjs';
-import { classifySourceLanguage } from '../lib/english-source-detect.mjs';
+import { classifySourceLanguage, samplePagesForLanguage } from '../lib/english-source-detect.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -283,12 +283,20 @@ await withMongo(async (db) => {
       // Sample from the MIDDLE of the book. Front matter (title page, preface,
       // editor's introduction) is routinely English even in a Latin edition, so
       // sampling from the start reports the apparatus rather than the text.
-      const skip = Math.max(2, Math.floor((w.pages || 0) * 0.3));
-      const sample = await pages.find(
-        { book_id: w.id, 'ocr.data': { $exists: true, $ne: null } },
-        { projection: { 'ocr.data': 1 }, sort: { page_number: 1 }, skip, limit: 8 },
-      ).toArray();
-      const verdict = classifySourceLanguage(sample.map((p) => p.ocr?.data).filter(Boolean));
+      // Sampling lives in `english-source-detect.mjs` and is imported, not
+      // reimplemented. The copy that used to sit here got all three of its
+      // hazards wrong — soft-hidden negative page numbers, an offset over
+      // `pages_count` rather than the OCR'd set, and eight CONSECUTIVE pages
+      // (which is one place in the book, so an English glossary at the back
+      // spoke for the whole of it). Every book it flagged as already-English was
+      // a false positive, and each false positive silently DROPPED a genuine
+      // translation candidate off this queue.
+      const { texts, available } = await samplePagesForLanguage(pages, w.id);
+      // "We could not ask" is not "we asked and found nothing": a work with no
+      // OCR is unscreenable, and must not be reported as undetermined evidence.
+      const verdict = available === 0
+        ? { verdict: 'no_ocr', basis: 'no_ocr_pages', pages_judged: 0 }
+        : classifySourceLanguage(texts);
       w.source_language = verdict;
       if (verdict.verdict === 'english_source') alreadyEnglish.push(w);
       else { if (verdict.verdict === 'undetermined') undetermined++; kept.push(w); }
