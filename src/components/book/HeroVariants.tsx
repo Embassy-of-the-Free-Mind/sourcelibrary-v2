@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, type ReactNode } from 'react';
+import HeroScrim from '@/components/HeroScrim';
 
 /**
  * Book-page hero.
@@ -95,9 +96,7 @@ export default function HeroVariants({
         <div className="hidden md:block absolute inset-0 overflow-hidden">
           <div className="absolute inset-x-0 -top-[12%] h-[124%] will-change-transform" style={drift}>
             <Bg />
-            <div className="absolute inset-0" style={{ background: 'rgba(16,12,8,0.72)' }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.5) 0%, rgba(14,10,7,0.12) 60%, transparent 100%)' }} />
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
+            <HeroScrim />
           </div>
         </div>
         {/* Mobile: a clean band of the bg up top (drifting), then a fixed strong
