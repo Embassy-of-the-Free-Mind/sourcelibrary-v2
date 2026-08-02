@@ -117,6 +117,11 @@ So before sending, two things:
   Spanish only to people who TOLD us Spanish — never inferred from a name or a
   mail domain.
 
+The programme those replies feed into is designed in
+`.claude/docs/community-quality-review-design.md`. Its Phase 0 is literally
+"reply to the nine and ask three of them for five pages each" — so answering
+them is not a prerequisite to the work, it IS the first step of it.
+
 Query for the current list (do not paste names or addresses into this repo — it
 is public):
 
