@@ -57,12 +57,15 @@ const LIMIT = args.limit ? parseInt(args.limit) : 0;       // 0 = whole corpus
 const BATCH = parseInt(args.batch || '500');               // page_ids per pages lookup
 const DATE = new Date().toISOString().slice(0, 10);
 const OUT_DIR = args['out-dir'] || path.join(__dirname, 'results');
-const OUT_JSONL = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.jsonl`);
-const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.json`);
-const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.md`);
-const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions-${DATE}.md`);
 const TOP_REGRESSIONS = parseInt(args['top'] || '200');
 const FIELD = args.field || 'ocr';                         // 'ocr' | 'translation'
+// Non-ocr runs get a field suffix. Without it a --field=translation run
+// overwrites the OCR corpus in place: same OUT_DIR, same DATE, same filename.
+const SUF = FIELD === 'ocr' ? '' : `-${FIELD}`;
+const OUT_JSONL = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.jsonl`);
+const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.json`);
+const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.md`);
+const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions${SUF}-${DATE}.md`);
 
 // ── Pair eligibility (stated up front, counted, never post-hoc) ───
 // A page's OCR text is only comparable if BOTH passes actually transcribed
