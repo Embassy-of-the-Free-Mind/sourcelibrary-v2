@@ -27,6 +27,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
+import { rowIsMaintenance } from './lib/revision-source.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('--')).map(a => {
   const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true];
@@ -55,6 +56,12 @@ async function main() {
   for await (const line of rl) {
     const x = JSON.parse(line);
     if (x.eligibility !== 'eligible') continue;
+    // A bulk maintenance sweep (e.g. shift-repair-erara-2026-07) writes a
+    // revision for every page it relocates, so the pair holds two DIFFERENT
+    // pages' text and nothing was re-read. The stored `source` label says so
+    // directly, and unlike `leaf_shift` it also classifies pairs that print no
+    // page number (#3473). Checked FIRST because it is the stronger test.
+    if (rowIsMaintenance(x)) continue;
     if (x.leaf_shift !== false) continue;                       // same leaf only
     if (!x.prior_model || x.prior_model !== x.current_model) continue;
     if (!x.prior_prompt || x.prior_prompt !== x.current_prompt) continue;

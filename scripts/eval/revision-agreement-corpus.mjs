@@ -45,6 +45,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { stripWrappers, levenshtein } from './lib/metrics.mjs';
+// Which `source` labels are readings vs bulk maintenance (#3473) — shared with
+// repeat-instability-draw.mjs and pinned by tests/unit/revision-source.test.ts.
+import { isMaintenanceSource } from './lib/revision-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -59,6 +62,8 @@ const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.json`)
 const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.md`);
 const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions-${DATE}.md`);
 const TOP_REGRESSIONS = parseInt(args['top'] || '200');
+const FIELD = args.field || 'ocr';                         // 'ocr' | 'translation'
+
 // ── Pair eligibility (stated up front, counted, never post-hoc) ───
 // A page's OCR text is only comparable if BOTH passes actually transcribed
 // something. Two thresholds on body-word count (annotation excluded) split the
@@ -93,10 +98,15 @@ const DEGENERATE = 0.15;
 // That makes it the one signal in this corpus that identifies WHICH IMAGE a pass
 // read, independently of how well it read it (#3473). Two passes reporting
 // different printed numbers did not look at the same leaf, so their disagreement
-// is image churn — re-archiving — and not a re-reading of one page.
+// is not a re-reading of one page.
 // Measured 2026-07-30 on a randomized n=3,339: 40.2% of pairs carrying a number
 // on both sides differ, and in 88 books one offset (usually exactly +1, the
 // #3368 / #3357 leaf-offset signature) explains ≥80% of the shifts.
+// RESOLVED (#3473): that is the #3357 REPAIR relocating text between page docs,
+// not re-archiving — the image never moved. It is labelled `source:
+// 'shift-repair-erara-2026-07'`, so `is_maintenance` above is the primary test
+// and this printed number is the independent check on it (no writer controls
+// what is printed on the leaf).
 const printedPageNum = t => {
   const m = (t || '').match(/<page-num>\s*([0-9]{1,4})\s*<\/page-num>/i);
   return m ? parseInt(m[1], 10) : null;
@@ -284,8 +294,19 @@ async function main() {
   const PAGES = db.collection('pages');
   const BOOKS = db.collection('books');
 
-  const total = await REVS.countDocuments({ field: 'ocr' });
-  console.log(`page_revisions field:'ocr' → ${total.toLocaleString()} revisions`);
+  const total = await REVS.countDocuments({ field: FIELD });
+  console.log(`page_revisions field:'${FIELD}' → ${total.toLocaleString()} revisions`);
+
+  // What each `source` label contributes, before any of it is averaged. A bulk
+  // maintenance sweep and a real model pass both land here and only this field
+  // tells them apart (#3473).
+  const srcCounts = await REVS.aggregate([
+    { $match: { field: FIELD } },
+    { $group: { _id: '$source', n: { $sum: 1 } } }, { $sort: { n: -1 } },
+  ], { allowDiskUse: true }).toArray();
+  console.log('  by source: ' + srcCounts.map(s => `${s._id}=${s.n.toLocaleString()}`).join('  '));
+  const sweep = srcCounts.filter(s => isMaintenanceSource(s._id)).reduce((t, s) => t + s.n, 0);
+  if (sweep) console.log(`  -> ${sweep.toLocaleString()} (${(100 * sweep / total).toFixed(1)}%) are MAINTENANCE sweeps, not readings; excluded from the true-repeat population.`);
 
   const out = fs.createWriteStream(OUT_JSONL, { flags: 'w' });
   const bookCache = new Map();
@@ -305,7 +326,7 @@ async function main() {
   // Sorted by page_id so a page's revisions arrive contiguously — served by the
   // {page_id:1, field:1, created_at:-1} index, no in-memory sort of 126K docs.
   const cursor = REVS.find(
-    { field: 'ocr', data: { $type: 'string', $ne: '' } },
+    { field: FIELD, data: { $type: 'string', $ne: '' } },
     { projection: { page_id: 1, book_id: 1, data: 1, model: 1, prompt_version: 1, source: 1, created_at: 1 } },
   ).sort({ page_id: 1, created_at: -1 }).batchSize(500);
 
@@ -317,7 +338,7 @@ async function main() {
     const ids = batch.map(b => b.page_id);
     const pageDocs = await PAGES.find(
       { id: { $in: ids } },
-      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.prompt_version': 1, 'ocr.language': 1 } },
+      { projection: { id: 1, book_id: 1, page_number: 1, [`${FIELD}.data`]: 1, [`${FIELD}.model`]: 1, [`${FIELD}.prompt_version`]: 1, [`${FIELD}.language`]: 1 } },
     ).toArray();
     const pageById = new Map(pageDocs.map(p => [p.id, p]));
 
@@ -347,10 +368,11 @@ async function main() {
       // chain: oldest prior → … → newest prior → live pages.ocr
       const chain = [...entry.revs].sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0))
         .map(r => ({ data: r.data, model: r.model || null, prompt: r.prompt_version == null ? null : String(r.prompt_version), source: r.source || null, at: r.created_at || null, live: false }));
-      if (pg?.ocr?.data) {
+      const liveField = pg?.[FIELD];
+      if (liveField?.data) {
         chain.push({
-          data: pg.ocr.data, model: pg.ocr.model || null,
-          prompt: pg.ocr.prompt_version == null ? null : String(pg.ocr.prompt_version),
+          data: liveField.data, model: liveField.model || null,
+          prompt: liveField.prompt_version == null ? null : String(liveField.prompt_version),
           source: 'live', at: null, live: true,
         });
       }
@@ -398,6 +420,11 @@ async function main() {
           current_prompt: current.prompt,
           prompt_transition: `${prior.prompt || '?'}→${current.prompt || '?'}`,
           prior_source: prior.source,
+          // TRUE when the prior side was written by a bulk maintenance sweep
+          // rather than a model pass — the pair is then two different pages'
+          // text, not two readings of one page. Emitted rather than dropped so
+          // the raw record stays complete; downstream selection must exclude it.
+          is_maintenance: isMaintenanceSource(prior.source),
           agreement: +agr.toFixed(4),
           agreement_char: agrChar == null ? null : +agrChar.toFixed(4),
           // The number to trust per row: character-level on space-less scripts,
@@ -485,6 +512,10 @@ async function main() {
         if (row.leaf_offset != null) offsets.set(row.leaf_offset, (offsets.get(row.leaf_offset) || 0) + 1);
         const b2 = (dim, key) => { bump(dim, key, a); if (sameLeaf) bumpSame(dim, key, a); };
         bump('leaf_shift', row.leaf_shift == null ? '(no printed number)' : String(row.leaf_shift), a);
+        // Report the mechanism label directly. It classifies EVERY pair, including
+        // the ones printing no page number that `leaf_shift` has to give up on.
+        bump('prior_source', row.prior_source || '(none)', a);
+        bump('is_maintenance', String(row.is_maintenance), a);
         b2('language', row.language || '(unknown)');
         b2('year_bucket', row.year_bucket);
         b2('model_pair', row.model_pair);
@@ -688,6 +719,8 @@ async function main() {
     'those pages agree far more than the unmeasurable remainder does — read the row for',
     '`(no printed number)` below against `false` before quoting either. The same-leaf',
     'bands are a ceiling on that subpopulation, not the corpus with noise removed.', '',
+    table('is_maintenance', 'Prior side written by a bulk maintenance sweep (NOT a reading)', 1),
+    table('prior_source', 'By `source` on the prior side — the stored mechanism label', 1),
     table('leaf_shift', 'By whether the passes read the same leaf', 1),
     '## Stratified agreement', '',
     table('position_bucket', 'By position in the book', 1),
