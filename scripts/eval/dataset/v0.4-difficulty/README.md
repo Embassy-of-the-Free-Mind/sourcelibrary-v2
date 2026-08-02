@@ -143,7 +143,7 @@ it. That is the honest composition of this draw; a wider `--sample` refills them
 |---|---|
 | `blur` `cropping` `degenerate_output` `handwriting` `microfilm` `multi_column` `spaceless_script` `tabular` (20 each) | `staining` 19 · `truncation` 19 · `marginalia_missed` 18 · `fading` 16 · `ink_blot` 16 · `bleed_through` 15 · `foxing` 13 · `gutter_loss` 12 · `skew` 12 · `image_only_labels` 10 · `corrupt_scan` 9 |
 
-`blank_page` holds 39 — larger than target because it absorbed the reclassified
+`blank_page` holds 38 — larger than target because it absorbed the reclassified
 rows rather than being drawn to quota.
 
 | lane | rows |
@@ -156,6 +156,24 @@ rows rather than being drawn to quota.
 Sampled 200,000 pages (149,834 carrying OCR text) and 14,000 revisions, of which
 4,746 pairs were comparable and **3,103 (39.5%) were dropped as page-number
 shifts** — matching the 40.2% documented for #3473.
+
+### Verified against the images, 2026-08-02
+
+The two pages that transcribed >50 characters in the blank-page study were
+opened and looked at. They are **not** the same kind of thing:
+
+- **Bhagvat Geeta, leaf 73** — genuinely mislabelled. The scan is a spread whose
+  right leaf is a fully printed NOTES page with a footnote table; only the left
+  leaf is blank. Relabelled `multi_column`, so `blank_page` now holds 38.
+- **Artis Cabalisticae, leaf 6** — correctly labelled `blank`. A title-page
+  verso carrying mirrored bleed-through plus two library stamps; nothing is
+  printed on that side. **Both** the production prompt and the Tier-2
+  bleed-through arm transcribed the show-through anyway. Kept as `blank_page`,
+  and it is the clearest single exemplar of the Tier-2 failure (#3444).
+
+The lesson generalises: a page flagged by this metric is a *question*, not a
+verdict. Of the first two, one was the corpus's fault and one the model's, and
+only opening the image told them apart.
 
 Two classes are short for reasons a bigger `--sample` cannot fix:
 **`corrupt_scan`** is limited by `scan_quality` coverage (~1.5% of pages), and
