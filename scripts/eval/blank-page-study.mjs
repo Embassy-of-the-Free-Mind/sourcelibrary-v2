@@ -37,6 +37,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { runModel, resolveModel, fetchImage } from './lib/runners.mjs';
+import { priceFor } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -85,7 +86,7 @@ async function main() {
   for (const k of armKeys) prompts[k] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].prompt), 'utf8');
 
   const calls = pages.length * armKeys.length;
-  const P = { 'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 } }[model] || { input: 0.5, output: 3 };
+  const P = priceFor(model);
   console.log(`\n  Blank-page study — ${pages.length} pages × ${armKeys.length} arms on ${model}`);
   console.log(`  ${calls} calls, ~$${(calls * (3272 / 1e6 * P.input + 444 / 1e6 * P.output)).toFixed(3)}\n`);
   for (const k of armKeys) console.log(`    ${k.padEnd(3)} ${ARMS[k].label}`);

@@ -59,6 +59,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { priceFor } from '../lib/model-pricing.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 loadEnv();
 
@@ -286,20 +288,13 @@ async function main() {
   // guess: gemini_usage single-page OCR runs 3,272 input / 444 output (median,
   // n=1500). Input is 7.4x output and the page image dominates it, which is
   // exactly why arm D is expensive.
-  const PRICING = {
-    'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-    'gemini-3.5-flash-lite': { input: 0.30, output: 2.50 },
-    'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
-    'gemini-3.6-flash': { input: 1.50, output: 7.50 },
-    'gemini-3.1-pro-preview': { input: 2.50, output: 15.00 },
-  };
   const IN_TOK = 3272, OUT_TOK = 444, OUT_TOK_CLASSIFY = 40;
 
   console.log(`\nPrompt ablation — ${entries.length} pinned passages × ${models.length} model(s) × arms [${armKeys.join(',')}] × ${runs} run(s)`);
   console.log(`  ${totalCalls} model calls total\n`);
   let grandTotal = 0;
   for (const model of models) {
-    const p = PRICING[model] || { input: 0.50, output: 3.00 };
+    const p = priceFor(model);
     let usd = 0;
     for (const k of armKeys) {
       usd += entries.length * runs * (IN_TOK / 1e6 * p.input + OUT_TOK / 1e6 * p.output);

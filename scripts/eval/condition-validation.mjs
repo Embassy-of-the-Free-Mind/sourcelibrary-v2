@@ -49,6 +49,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { priceFor } from '../lib/model-pricing.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 loadEnv();
 
@@ -131,16 +133,11 @@ async function main() {
   }
 
   const totalCalls = (pos.length + neg.length) * MODELS.length * RUNS;
-  const PRICING = {
-    'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-    'gemini-3.5-flash-lite': { input: 0.30, output: 2.50 },
-    'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
-  };
   const IN = 3272, OUT = ARM === 'D2' ? 40 : 444;
   let total = 0;
   console.log(`\n  ${totalCalls} calls (arm ${ARM}):`);
   for (const m of MODELS) {
-    const p = PRICING[m] || { input: 0.5, output: 3 };
+    const p = priceFor(m);
     const usd = (pos.length + neg.length) * RUNS * (IN / 1e6 * p.input + OUT / 1e6 * p.output);
     total += usd;
     console.log(`    ${m.padEnd(26)} ~$${usd.toFixed(3)}`);

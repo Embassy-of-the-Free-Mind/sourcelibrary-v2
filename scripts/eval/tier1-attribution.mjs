@@ -43,6 +43,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { runModel, resolveModel, fetchImage } from './lib/runners.mjs';
+import { priceFor } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -120,7 +121,7 @@ async function main() {
   const calls = pages.length * armKeys.length;
   // Measured medians from gemini_usage single-page OCR (n=1500), not the
   // library's generic guess: 3,272 input / 444 output.
-  const P = { 'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 } }[model] || { input: 0.5, output: 3 };
+  const P = priceFor(model);
   const usd = calls * (3272 / 1e6 * P.input + 444 / 1e6 * P.output);
   console.log(`\n  Tier-1 attribution study — ${pages.length} hard pages × ${armKeys.length} arms on ${model}`);
   console.log(`  ${calls} model calls, ~$${usd.toFixed(2)}\n`);
