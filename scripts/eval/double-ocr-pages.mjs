@@ -303,6 +303,11 @@ async function main() {
   };
   const mongoOps = [];
   const COL = db.collection(COLLECTION);
+  // BEFORE the upsert loop, not after. Every upsert filters on page_id, so without
+  // this index each one collection-scans a collection that grows to ~165K docs —
+  // quadratic, and it does not look like a failure: the job simply runs for hours
+  // while the log sits silent between its last progress line and the summary.
+  if (WRITE_COLLECTION) await retry(() => COL.createIndex({ page_id: 1 }), 'createIndex(page_id)');
   for await (const line of rl) {
     if (!line) continue;
     const row = JSON.parse(line);
