@@ -219,3 +219,63 @@ export function classifySourceLanguage(pageTexts) {
     pages_judged: fracs.length,
   };
 }
+
+/**
+ * Scanner/library boilerplate. English by construction, on books in every
+ * language, and it is bound into the scan rather than printed in the book — so a
+ * page carrying it says nothing about the source language and must not vote.
+ *
+ * This is not hypothetical: the Zohrab Armenian New Testament was screened
+ * `english_source` on three consecutive pages of the Google Books notice.
+ */
+export const BOILERPLATE_RE = /digital copy of a book that was preserved|make the world'?s books discoverable|public domain (?:book|work) is one that was never subject|google book search|digitized by (?:google|microsoft|the internet archive)/i;
+
+/**
+ * Sample pages SPREAD ACROSS the middle of the book.
+ *
+ * Three things had to be got right here, and the obvious implementation gets all
+ * three wrong. It lived in two places — this and `ft-translation-queue.mjs` — and
+ * the second copy still had every one of them, which is why it is now ONE
+ * function that both callers import.
+ *
+ *  1. NEGATIVE PAGE NUMBERS ARE SOFT-HIDDEN PAGES. Sorting by `page_number`
+ *     ascending starts in them, so "skip 30%" can land entirely inside the hidden
+ *     range and never reach the book. The Armenian NT sampled pages -1378..-1376.
+ *
+ *  2. `skip` MUST BE AN OFFSET INTO THE OCR'd PAGES, NOT INTO `pages_count`.
+ *     Sparse OCR makes the two diverge without any error.
+ *
+ *  3. EIGHT CONSECUTIVE PAGES ARE ONE PLACE IN THE BOOK. Nicholson's *Kitab
+ *     al-Luma* is Arabic with an English glossary at the back; a consecutive
+ *     sample that lands in the glossary reports the whole book as English. A
+ *     spread sample lets the body outvote the apparatus.
+ *
+ * So: positive page numbers only, offsets computed over the OCR'd set, and the
+ * sample spread evenly across the middle 60% (20%–80%) to clear front matter at
+ * one end and index/glossary at the other.
+ */
+export const SAMPLE_SIZE = 10;
+
+export async function samplePagesForLanguage(pages, bookId) {
+  const nums = await pages.find(
+    { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: null } },
+    { projection: { page_number: 1 }, sort: { page_number: 1 } },
+  ).toArray();
+  if (!nums.length) return { texts: [], available: 0 };
+
+  const lo = Math.floor(nums.length * 0.2);
+  const hi = Math.max(lo + 1, Math.floor(nums.length * 0.8));
+  const span = hi - lo;
+  const picks = [];
+  for (let i = 0; i < SAMPLE_SIZE; i++) {
+    const idx = lo + Math.floor((span * i) / SAMPLE_SIZE);
+    if (idx < nums.length && !picks.includes(nums[idx].page_number)) picks.push(nums[idx].page_number);
+  }
+
+  const rows = await pages.find(
+    { book_id: bookId, page_number: { $in: picks } },
+    { projection: { 'ocr.data': 1 } },
+  ).toArray();
+  const texts = rows.map((p) => p.ocr?.data).filter(Boolean).filter((t) => !BOILERPLATE_RE.test(t));
+  return { texts, available: nums.length };
+}
