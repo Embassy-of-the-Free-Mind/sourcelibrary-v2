@@ -80,7 +80,13 @@ So `none_found` is a **lead with a coin-flip hit rate**, not a finding. Caveats 
 that figure, both real: n=14, and it is biased, because only *famous* works can be
 verified quickly and famous works are likelier to have priors.
 
-### 2b. The cause is the CORPUS, not the matcher
+### 2b. The cause is the CORPUS, not the matcher — but read 2c before quoting 2b
+
+> **⚠️ Corrected 2026-08-02.** The table below is right: those priors are absent
+> from the set. The *explanation* first attached to it — "the extract is 1.04%
+> pre-1800 against an early-modern corpus" — was **wrong**, and §2c replaces it.
+> A prior English translation of a 1531 Latin work is normally a **modern**
+> imprint, so the set's date skew was never evidence of anything.
 
 Every one of those misses was checked against the full extract. **None is a
 matcher failure — the records are simply absent:**
@@ -93,18 +99,78 @@ matcher failure — the records are simply absent:**
 | *Rhetorica ad Herennium* | Caplan, Loeb | **0 rows.** |
 | ps-Albertus, *De secretis mulierum* | Lemay 1992 | 1 hit, an unrelated 1876 novel. Absent. |
 
-**The extract holds 1,230 pre-1800 imprints out of 118,352 — 1.04%.** Our corpus
-is overwhelmingly early-modern. We have been asking a *modern-imprint catalogue*
-about *early-modern translations*.
-
-> **Doctrine: a reference set's SIZE is not its COVERAGE. Before trusting a null,
-> ask what fraction of the set falls in the period, language and population you
-> are actually asking about.** 118,352 records looks authoritative and is 1%
-> relevant to the question.
-
 **Matcher/threshold work is finished.** The MARC 240 fix (§4) was the last
 available gain from matching and it is done and pinned. Further tuning is the trap
-this file exists to name. The next gain must come from **adding sources** — #3522.
+this file exists to name. The next gain must come from the corpus.
+
+### 2c. What the cause actually is — and how the first answer went wrong
+
+The first explanation was: *"the extract holds 1,230 pre-1800 imprints of 118,352
+— 1.04% — so we are asking a modern-imprint catalogue about early-modern
+translations."* True statistic, **false diagnosis**, and it was written into
+CLAUDE.md and a merged PR before anyone questioned it.
+
+**A prior English translation of a 1531 Latin work is normally a MODERN imprint** —
+Loeb, Penguin, SUNY, Cambridge. So the set *should* be mostly modern; that is where
+those translations live. Checked directly, the class is well covered:
+
+| imprint era of the 6,947 rows translating FROM Latin/Greek | share |
+|---|---|
+| 2000+ | 42.6% |
+| 1950–1999 | 38.2% |
+| 1900–1949 | 8.8% |
+| pre-1800 | 5.8% |
+| 1800–1899 | 4.2% |
+
+**80.8% post-1950.** The set's overall date skew was never evidence of anything,
+and two of the five misses (Caplan's Loeb 1954, Lemay's SUNY 1992) are themselves
+modern — which the "pre-1800" story cannot explain at all.
+
+**The real defect is one line in `ingest-loc-bulk.mjs`:**
+
+```js
+const itemLang = (subfieldValues(rec, '041', 'a')[0] || f008.slice(35, 38) || '')…
+if (!itemLang.startsWith('eng')) return null;
+```
+
+MARC lists a bilingual edition's languages **in order of predominance**. A
+facing-page scholarly edition — `041 $a lat $a eng $h lat`, or the concatenated
+`$a lateng` — puts the ancient language first because the ancient text is the
+primary content. **Both encodings are rejected outright.** That is exactly the
+Loeb / I Tatti / Dumbarton Oaks / Clay Sanskrit form, i.e. the dominant vehicle for
+scholarly English translations of classical works.
+
+The signature is visible in what survived: **4,622 rows passed with a
+multi-language item code (424 distinct forms: `engsan` 459, `engspa` 439,
+`englat` 386 …) purely because `eng` happened to be listed first.** The mirror
+population was dropped silently.
+
+**Fix:** test whether `eng` appears in *any* 041$a, not the first.
+Cost: one line, plus a ~15-minute free re-derivation of the extract.
+
+> ### The meta-lesson
+> **The artifact I measured was the one I had; the answer was in the one that was
+> missing.** Reading what the extract *contains* produced a plausible causal story.
+> The defect was in what the extractor *rejected* — and that population is
+> unmeasurable, because the raw dump is deleted after extraction.
+>
+> **When diagnosing a set's coverage, read the ingest filter, and keep or
+> re-derive the rejects. A filter's discards are the only place its blind spot is
+> visible.** This is the section's own principle turned on itself: an absence
+> claim is only as strong as the set it was asserted against — including an
+> absence claim *about that set*.
+
+### 2d. What each miss actually needs
+
+The five misses do **not** share one cause, and conflating them sent the fix in
+one direction when two are needed:
+
+| miss | why absent | fix |
+|---|---|---|
+| Sanford 1569, Hall 1654, Ellistone 1651 | early-modern **English imprints**; LoC's book catalogue barely holds them | **ESTC** (#3522) |
+| Caplan Loeb 1954, Lemay SUNY 1992 | modern, in LoC's period — excluded by the **041 item-language filter** | the one-line fix above |
+
+ESTC remains right for three of five. It was never going to recover the other two.
 
 ---
 
