@@ -45,6 +45,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { stripWrappers, levenshtein } from './lib/metrics.mjs';
+import { classifyPair } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -63,6 +64,13 @@ const TOP_REGRESSIONS = parseInt(args['top'] || '200');
 // A page's OCR text is only comparable if BOTH passes actually transcribed
 // something. Two thresholds on body-word count (annotation excluded) split the
 // population into three, each reported with its own n:
+//   not_comparable — the two sides are not two reads of one leaf at all (#3473):
+//                 the prior side came from the e-rara shift-repair sweep, which
+//                 MOVED text between pages rather than transcribing an image, or
+//                 the two sides print DIFFERENT page numbers, or the prior side is
+//                 a human edit. Checked first, because a pair that is not a double
+//                 read cannot be image_only or micro_text either. Filter lives in
+//                 scripts/lib/revision-pairs.mjs — do not re-implement it here.
 //   image_only  — max body < IMAGE_ONLY_MAX on both sides. Covers, endpapers,
 //                 plates: both texts are AI descriptions of the same picture,
 //                 so they disagree by construction with nothing transcribed.
@@ -270,6 +278,7 @@ async function main() {
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
   const flow = {}, margFate = {}, directionCount = {};
+  const notComparableReasons = {};
   let nearZero = 0, degenerate = 0;
   const margStat = new Stat();   // agreement on marginal text alone
   const t0 = Date.now();
@@ -352,6 +361,8 @@ async function main() {
         const degPrior = repPrior != null && repPrior < DEGENERATE;
         const degCurrent = repCurrent != null && repCurrent < DEGENERATE;
         const ep = envelope(prior.data), ec = envelope(current.data);
+        // #3473: is this a double READ at all, or one text filed against two pages?
+        const pairClass = classifyPair({ priorSource: prior.source, priorText: prior.data, currentText: current.data });
         const row = {
           page_id: entry.page_id,
           book_id: entry.revs[0].book_id,
@@ -381,8 +392,17 @@ async function main() {
           // Cover / endpaper / plate: nothing was transcribed on either side, so
           // the "disagreement" is two AI descriptions of the same image.
           image_only: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX,
-          eligibility: Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX ? 'image_only'
+          // Not-comparable is tested FIRST: a pair that is not two reads of one
+          // leaf has no meaningful body-word class to fall into.
+          eligibility: !pairClass.usable ? 'not_comparable'
+            : Math.max(bodyPrior, bodyCurrent) < IMAGE_ONLY_MAX ? 'image_only'
             : Math.max(bodyPrior, bodyCurrent) < ELIGIBLE_MIN ? 'micro_text' : 'eligible',
+          comparable: pairClass.usable,
+          not_comparable_reason: pairClass.usable ? null : pairClass.reason,
+          source_kind: pairClass.source_kind,
+          leaf: pairClass.leaf,
+          printed_leaf_prior: pairClass.printed.prior,
+          printed_leaf_current: pairClass.printed.current,
           position_bucket: positionBucket(pg?.page_number, bk?.pages_count),
           pages_count: bk?.pages_count ?? null,
           soft_hidden: typeof pg?.page_number === 'number' && pg.page_number < 0,
@@ -435,6 +455,9 @@ async function main() {
         flow[row.eligibility] = (flow[row.eligibility] || 0) + 1;
         bump('eligibility', row.eligibility, a);
         if (row.prior_refusal || row.current_refusal) refusals++;
+        if (!row.comparable) {
+          notComparableReasons[row.not_comparable_reason] = (notComparableReasons[row.not_comparable_reason] || 0) + 1;
+        }
         if (row.eligibility !== 'eligible') continue;  // pairs already counted
         overall.add(a);
         overallWord.add(row.agreement);
@@ -523,6 +546,7 @@ async function main() {
       usable: pairs,
       missing: missingPage,
       eligibility_flow: flow,
+      not_comparable_reasons: notComparableReasons,
       refusal_pairs: refusals,
       direction: directionCount,
       near_zero_overlap_pairs: nearZero,
@@ -573,14 +597,34 @@ async function main() {
     '*transcribed*. Every computable pair lands in exactly one class:', '',
     '| class | criterion | n | share | mean agreement |',
     '|---|---|---:|---:|---:|',
-    ...['eligible', 'micro_text', 'image_only'].filter(k => flow[k]).map(k => {
+    ...['eligible', 'micro_text', 'image_only', 'not_comparable'].filter(k => flow[k]).map(k => {
       const st = strata.eligibility?.get(k);
       const crit = k === 'eligible' ? `max body ≥ ${ELIGIBLE_MIN} words`
         : k === 'micro_text' ? `${IMAGE_ONLY_MAX}–${ELIGIBLE_MIN} words (title pages, colophons)`
-        : `< ${IMAGE_ONLY_MAX} words on both sides (covers, plates)`;
+        : k === 'image_only' ? `< ${IMAGE_ONLY_MAX} words on both sides (covers, plates)`
+        : 'not two reads of one leaf (#3473)';
       return `| ${k} | ${crit} | ${flow[k].toLocaleString()} | ${(flow[k] / pairs * 100).toFixed(1)}% | ${(st.mean * 100).toFixed(1)}% |`;
     }),
     '',
+    ...(flow.not_comparable ? [
+      '### Pairs that are not double reads (#3473)', '',
+      'A stored revision looks like "the same page transcribed twice" from inside the row,',
+      'and sometimes is not. The e-rara shift-repair sweep MOVED existing text between pages',
+      'rather than transcribing an image, so its revision is the neighbouring leaf verbatim —',
+      'same model, same prompt version, and the revision\'s `original_date` equals the live',
+      'text\'s `updated_at`, because the moved subdocument carried its own timestamp. Nothing',
+      'in the metadata distinguishes it; only the source label and the printed page number do.',
+      'These score as near-total disagreement and would read as OCR failure.', '',
+      '| reason | pairs |', '|---|---:|',
+      ...Object.entries(notComparableReasons).sort((a, b) => b[1] - a[1])
+        .map(([k, v]) => `| \`${k}\` | ${v.toLocaleString()} |`),
+      '',
+      'Filter: `scripts/lib/revision-pairs.mjs`. Note this script is single-pass and streams by',
+      '`page_id`, so it applies the PER-PAIR checks only. The per-BOOK shift verdict — which is',
+      'the only thing that reaches a uniform slide through unnumbered leaves — needs every page',
+      'of a book in hand and lives in `double-ocr-pages.mjs`. Pairs surviving here with',
+      '`leaf: "unverified"` are therefore weaker evidence than the count suggests.', '',
+    ] : []),
     `Only **eligible** pairs enter the headline, the strata and the regression queue.`,
     `\`image_only\` pairs disagree by construction: both sides are AI descriptions of the`,
     `same picture, so a low score there means two different sentences about one engraving,`,
