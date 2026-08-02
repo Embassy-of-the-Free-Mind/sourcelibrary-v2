@@ -52,7 +52,11 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 const CORPUS = args.corpus || path.join(__dirname, 'dataset/v0.4-difficulty/pages.jsonl');
 const PROMPT_DIR = path.join(__dirname, 'prompts/ablation');
 const ARMS = {
-  B: { prompt: 'B-current.txt', label: 'current production' },
+  // NOT production — a v10-era file. The 2026-08-01 run used it as the
+  // baseline and its results are therefore about a prompt we do not run.
+  // Use scripts/eval/blank-page-study.mjs's P arm, or arm P of
+  // prompt-ablation.mjs, for a live baseline.
+  B: { prompt: 'B-v10-legacy.txt', label: 'v10-legacy (NOT production)' },
   E: { prompt: 'E-tier1-provenance.txt', label: 'Tier 1 (provenance grouping + sharpened <insert>)' },
 };
 

@@ -50,7 +50,8 @@
  * artifact — scoring can be redone offline, model calls cannot.
  */
 
-import { loadEnv, getPage, disconnect } from './lib/sampling.mjs';
+import { loadEnv, getPage, disconnect, connect } from './lib/sampling.mjs';
+import { getProductionOcrPrompt } from './lib/production-prompt.mjs';
 import { runModel, resolveModel, fetchImage } from './lib/runners.mjs';
 import { scoreAgainstReference } from './lib/metrics.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
@@ -164,8 +165,14 @@ function extractTargetSegment(text, pageNumbers) {
 }
 const ARMS = {
   A: { label: 'transcribe-only', prompt: 'A-transcribe-only.txt' },
-  B: { label: 'current', prompt: 'B-current.txt' },
-  C: { label: 'required-conditions', prompt: 'C-required-conditions.txt' },
+  // P reads the LIVE prompt from Mongo — the same row the pipeline reads. Use
+  // it as the production baseline. B is the old file-pinned "current" arm and
+  // is NOT current: it is a v10-era reconstruction missing the entire Output
+  // contract block, which made it emit 47,813 looping characters on a blank
+  // page where the live prompt emits none. Kept so earlier runs reproduce.
+  P: { label: 'production (live, from DB)', fromDb: true },
+  B: { label: 'v10-legacy (NOT production)', prompt: 'B-v10-legacy.txt', legacy: true },
+  C: { label: 'required-conditions', prompt: 'C-required-conditions.txt', legacy: true },
   D: { label: 'two-call', prompt: 'A-transcribe-only.txt', second: 'D2-classify-only.txt' },
 };
 
@@ -249,10 +256,24 @@ async function main() {
   const groupN = parseInt(args.group || '1');
 
   const prompts = {};
+  let productionPromptMeta = null;
   for (const k of armKeys) {
     if (!ARMS[k]) { console.error(`Unknown arm ${k}`); process.exit(1); }
-    prompts[k] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].prompt), 'utf8');
-    if (ARMS[k].second) prompts[`${k}2`] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].second), 'utf8');
+    if (ARMS[k].fromDb) {
+      const { db } = await connect();
+      const p = await getProductionOcrPrompt(db);
+      prompts[k] = p.text;
+      productionPromptMeta = { version: p.version, name: p.name, content_hash: p.content_hash };
+      console.log(`  arm ${k}: live prompt "${p.name}" v${p.version} (${p.text.length} chars)`);
+    } else {
+      prompts[k] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].prompt), 'utf8');
+      if (ARMS[k].second) prompts[`${k}2`] = fs.readFileSync(path.join(PROMPT_DIR, ARMS[k].second), 'utf8');
+    }
+    // Say it every run. A stale baseline is invisible in the output otherwise,
+    // which is precisely how B-current.txt went unnoticed.
+    if (ARMS[k].legacy) {
+      console.warn(`  WARNING arm ${k} (${ARMS[k].prompt}) is a v10-era file, NOT the live prompt. Use arm P for a production baseline.`);
+    }
   }
 
   // Calls per page: one per arm, plus a second for two-call arms, plus a grouped
@@ -452,6 +473,10 @@ async function main() {
     date: new Date().toISOString(),
     models, arms: armKeys, runs, only: args.only || null,
     occlude: args.occlude || null, width: args.width || null,
+    // Which prompt the production arm actually ran. Without this a result file
+    // cannot be tied to a prompt, and "current production" becomes unfalsifiable
+    // — which is how B-current.txt stayed stale through an entire study series.
+    production_prompt: productionPromptMeta,
     rows,
   }, null, 2));
 
