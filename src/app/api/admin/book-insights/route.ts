@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { withInnerCircleAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { getReadDb } from '@/lib/mongodb';
 
 export const runtime = 'nodejs';
@@ -14,7 +14,7 @@ type Agg = Array<{ _id: string; [k: string]: unknown }>;
  * tracking only began 2026-07-28, #3405). Sources: books.read_count,
  * analytics_events (book_read / page_read / download / search_query), likes.
  */
-export const GET = withInnerCircleAuth(async () => {
+export const GET = withAdminAuth(async () => {
   const db = await getReadDb();
   const AE = db.collection('analytics_events');
   const B = db.collection('books');

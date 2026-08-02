@@ -70,7 +70,7 @@ export default function BooksTab() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/admin/book-insights').then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }).then(setD).catch((e) => setErr(e.message)).finally(() => setLoading(false));
+    fetch('/api/admin/book-insights').then((r) => { if (r.status === 403 || r.status === 401) throw new Error('This tab is admin-only.'); if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }).then(setD).catch((e) => setErr(e.message)).finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="py-12 text-center text-sm" style={{ color: 'var(--text-muted)' }}>Crunching reads, likes, downloads &amp; searches…</div>;
