@@ -92,10 +92,35 @@ way — they assumed a volunteer needs to *edit*:
 So the 67 TSX blog posts are NOT a blocker here. Making them editable is a
 convenience for whoever *applies* the fix, not a precondition for receiving it.
 
-What remains is not infrastructure, it is a commitment: **somebody has to
-answer.** Eleven people have already ticked "I'd like to help" in the widget and
-appear to have heard nothing back. Reply to those eleven first — then this
-letter is honest, and can go.
+What remains is a commitment rather than code, but it is smaller and more
+specific than an earlier version of this entry claimed. That version said eleven
+people had offered to help and "appear to have heard nothing back". Checked
+properly on 2026-08-01, that was wrong twice over: the eleven rows are **nine
+distinct people** (two filed twice), and **ten of the eleven rows were
+addressed**, several with shipped fixes — one of the repeat messages is the same
+person thanking us for a swift reply. Do not repeat the silence claim.
+
+The real finding is narrower and more useful: **they were answered about their
+bug, never about their offer.** Four went on to fill in `/welcome`, and three
+named precisely what this letter asks for (reviewing translations, suggesting
+books, annotating texts). One asked whether a contributors' forum exists.
+
+So before sending, two things:
+
+- **Reply to the standing offers**, not the bug reports — those are already
+  closed. It is a handful of people, and they self-selected for exactly this.
+- **Write it in Spanish too.** Five of the nine wrote in Spanish and one said
+  plainly that they do not read English. An English-only volunteer letter would
+  miss most of the people who have already raised their hand. The site has `/es`;
+  the send does not yet have a language split. Precedent for doing this properly
+  is in `scripts/maintenance/apologize-welcome-loop-2026-07.mjs`, which sends
+  Spanish only to people who TOLD us Spanish — never inferred from a name or a
+  mail domain.
+
+Query for the current list (do not paste names or addresses into this repo — it
+is public):
+
+    db.feedback.find({ wants_to_help: true }).sort({ created_at: 1 })
 
 ### 3. Unwritten, worth considering
 - **What we got wrong and fixed** — the reader reports that found the leaf
