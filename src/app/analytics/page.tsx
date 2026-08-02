@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
@@ -40,6 +41,16 @@ export default function AnalyticsPage() {
   const [pipelineHours, setPipelineHours] = useState(24);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // The "Books" tab is admin-only. Everyone reaching /analytics is editor+, so
+  // hide it (and switch off it) for non-admins; the API is also admin-gated.
+  const session = useStableSession();
+  const su = session.data?.user as { role?: string; tenantRole?: string } | undefined;
+  const isAdmin = ['admin', 'superadmin'].includes(su?.role || '') || ['admin', 'superadmin'].includes(su?.tenantRole || '');
+  useEffect(() => {
+    if (session.status === 'authenticated' && !isAdmin && activeTab === 'books') setActiveTab('usage');
+  }, [session.status, isAdmin, activeTab]);
+  const visibleTabs = TABS.filter(t => t.key !== 'books' || isAdmin);
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
@@ -63,7 +74,7 @@ export default function AnalyticsPage() {
           <div className="flex items-center gap-4">
             {/* Tab toggle */}
             <div className="flex rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
-              {TABS.map(tab => (
+              {visibleTabs.map(tab => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
@@ -135,7 +146,7 @@ export default function AnalyticsPage() {
       </header>
 
       <main className="max-w-[1500px] mx-auto px-6 py-8">
-        {activeTab === 'books' && <BooksTab key={refreshKey} />}
+        {activeTab === 'books' && isAdmin && <BooksTab key={refreshKey} />}
         {activeTab === 'usage' && <UsageTab key={refreshKey} days={days} />}
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}
