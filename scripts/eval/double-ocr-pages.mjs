@@ -274,9 +274,11 @@ async function main() {
   const bookPairs = new Map();
   const unknownSources = {};
   const reasons = {};
+  let rowsPass2a = 0;
   for await (const line of readline.createInterface({ input: fs.createReadStream(TMP_JSONL), crlfDelay: Infinity })) {
     if (!line) continue;
     const row = JSON.parse(line);
+    rowsPass2a++;
     for (const c of row.pass_chain || []) if (c.source_kind === 'unknown') inc(unknownSources, String(c.source));
     for (const p of row.pairs || []) {
       inc(reasons, p.reason);
@@ -293,8 +295,6 @@ async function main() {
   for (const [bookId, prs] of bookPairs) verdicts.set(bookId, bookShiftVerdict(prs));
   bookPairs.clear();
 
-  const finalOut = fs.createWriteStream(OUT_JSONL, { flags: 'w' });
-  const rl = readline.createInterface({ input: fs.createReadStream(TMP_JSONL), crlfDelay: Infinity });
   const stats = {
     pages: 0, double_ocr_pages: 0, pages_only_sweep: 0, usable_pairs: 0,
     by_reads: {}, by_language: {}, by_leaf_evidence: {}, by_model_pair: {},
@@ -303,11 +303,20 @@ async function main() {
   };
   const mongoOps = [];
   const COL = db.collection(COLLECTION);
-  // BEFORE the upsert loop, not after. Every upsert filters on page_id, so without
-  // this index each one collection-scans a collection that grows to ~165K docs —
-  // quadratic, and it does not look like a failure: the job simply runs for hours
-  // while the log sits silent between its last progress line and the summary.
+  // Index BEFORE the upsert loop: every upsert filters on page_id, so without it
+  // each one collection-scans a collection growing to ~165K docs — quadratic, and
+  // it reads as "the job is just large" rather than as a fault.
+  //
+  // And index before the READLINE INTERFACE EXISTS. A readline interface starts
+  // draining its input the moment it is constructed, so any await between
+  // construction and the `for await` silently discards the lines that arrive in
+  // that window. Building this index took seconds and ate 54% of the file: pass 2a
+  // counted 185,534 pairs over the full file while pass 2b wrote 75,759 of 163,495
+  // rows, from the same file, in the same process. Nothing errored.
   if (WRITE_COLLECTION) await retry(() => COL.createIndex({ page_id: 1 }), 'createIndex(page_id)');
+
+  const finalOut = fs.createWriteStream(OUT_JSONL, { flags: 'w' });
+  const rl = readline.createInterface({ input: fs.createReadStream(TMP_JSONL), crlfDelay: Infinity });
   for await (const line of rl) {
     if (!line) continue;
     const row = JSON.parse(line);
@@ -372,6 +381,16 @@ async function main() {
   if (WRITE_COLLECTION) {
     await COL.createIndex({ double_ocr: 1, leaf_evidence: 1 });
     await COL.createIndex({ book_id: 1 });
+  }
+  // FAIL LOUD ON A SHORT READ. Two passes over one file must see the same number
+  // of rows. When they did not, every downstream number still looked plausible —
+  // a smaller corpus, not a broken one — and the summary reported it without a
+  // murmur. This is the cheapest possible check for that whole class.
+  if (rowsPass2a !== stats.pages) {
+    throw new Error(
+      `short read: pass 2a saw ${rowsPass2a.toLocaleString()} rows, pass 2b wrote ${stats.pages.toLocaleString()}. ` +
+      `The pass-1 file is intact at ${TMP_JSONL} — do NOT trust ${path.basename(OUT_JSONL)}.`,
+    );
   }
   // Only now — while these exist, an interrupted run can resume instead of
   // re-reading the whole corpus.
