@@ -40,6 +40,12 @@ export const MOSAIC_MAX_UPGRADE_ATTEMPTS = 2;
 export const MOSAIC_UPGRADE_COOLDOWN_MS = 10 * 60 * 1000;
 
 /** Fields the book page and the upgrade path both read. */
+/** Which pool the stored mosaic was tiled from. `plates` means the generator
+ *  fell back to extracted illustrations because almost no PAGE images were
+ *  fetchable at the time — a state that outlives its cause, since the page
+ *  images usually land minutes or hours later. */
+export type MosaicSource = 'pages' | 'plates';
+
 export interface MosaicUpgradeState {
   /** cols × rows of the STORED mosaic. Undefined for mosaics built before the
    *  generator started recording it — treated as "unknown, worth measuring",
@@ -51,6 +57,8 @@ export interface MosaicUpgradeState {
   upgradeAt?: Date | string | null;
   /** Total pages on the book — a cheap upper bound on available tiles. */
   pagesCount?: number | null;
+  /** What the stored mosaic was tiled from. */
+  source?: MosaicSource | string | null;
 }
 
 /**
@@ -66,6 +74,13 @@ export function shouldOfferMosaicUpgrade(state: MosaicUpgradeState): boolean {
   // A book with fewer pages than a full grid can never fill one — and page
   // count is an UPPER bound, since blanks and scanner junk are filtered out.
   if ((state.pagesCount ?? 0) < MOSAIC_FULL_TILES) return false;
+  // A plate-tiled mosaic is worth retrying even at a FULL grid. The fallback
+  // fires only when almost no page image was fetchable in that one moment
+  // (Pal. lat. 1370: 322 pages, all fetchable today, tiled from 30 cropped
+  // diagrams on 26 July), and a book reads as its pages — plates are a last
+  // resort, not a better answer. Tile count alone would miss a plate mosaic
+  // that happens to fill 10x4.
+  if (state.source === 'plates') return true;
   if (typeof state.tiles === 'number' && state.tiles >= MOSAIC_FULL_TILES) return false;
   return true;
 }
@@ -94,9 +109,17 @@ export function nextUpgradeVerdict(
   before: number | null | undefined,
   after: number,
   attempts: number,
+  sources?: { before?: MosaicSource | string | null; after?: MosaicSource | string },
 ): { maxed: boolean; attempts: number } {
-  if (after >= MOSAIC_FULL_TILES) return { maxed: false, attempts: 0 };
-  const improved = typeof before === 'number' ? after > before : true;
+  // Swapping plates for real page scans is the win we were after, whatever it
+  // did to the tile count — a 10x3 of pages beats a 10x4 of cropped diagrams.
+  const switchedToPages = sources?.before === 'plates' && sources?.after === 'pages';
+  if (switchedToPages) return { maxed: false, attempts: 0 };
+  // Still on plates: the page images are evidently still unavailable, so this
+  // burns an attempt rather than retrying on every reader.
+  const stuckOnPlates = sources?.after === 'plates';
+  if (!stuckOnPlates && after >= MOSAIC_FULL_TILES) return { maxed: false, attempts: 0 };
+  const improved = !stuckOnPlates && (typeof before === 'number' ? after > before : true);
   const nextAttempts = improved ? attempts : attempts + 1;
   return { maxed: nextAttempts >= MOSAIC_MAX_UPGRADE_ATTEMPTS, attempts: nextAttempts };
 }

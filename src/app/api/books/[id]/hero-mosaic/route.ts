@@ -152,7 +152,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         projection: {
           _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1,
           hero_mosaic_tiles: 1, hero_mosaic_maxed: 1, hero_mosaic_upgrade_at: 1,
-          hero_mosaic_upgrade_attempts: 1,
+          hero_mosaic_upgrade_attempts: 1, hero_mosaic_source: 1,
         },
       },
     );
@@ -165,7 +165,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       // Refuse fast and cheaply — this endpoint is fired by every visitor to an
       // eligible book, so the no-op path must cost one indexed read.
       if (book.hero_mosaic_maxed) return upgradeSkipped('maxed');
-      if (priorTiles !== null && priorTiles >= MOSAIC_FULL_TILES) return upgradeSkipped('already-full');
+      const storedSource = book.hero_mosaic_source as string | undefined;
+      // A plate-tiled mosaic is never "already full": the book should be
+      // showing its pages, and those are usually fetchable by now.
+      if (storedSource !== 'plates' && priorTiles !== null && priorTiles >= MOSAIC_FULL_TILES) {
+        return upgradeSkipped('already-full');
+      }
       if (!mosaicUpgradeCooledDown(book.hero_mosaic_upgrade_at as Date | null, Date.now())) {
         return upgradeSkipped('cooldown');
       }
@@ -187,7 +192,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             { id: book.id },
             { $set: { hero_mosaic_tiles: measured } },
           ).catch(() => {});
-          if (measured >= MOSAIC_FULL_TILES) return upgradeSkipped('measured-full', measured);
+          // Only a page-tiled mosaic can be settled by its size alone. A stored
+          // mosaic with no recorded source predates the field; measuring can't
+          // tell pages from plates, so a full grid is accepted as done and the
+          // plate case is caught on the next build, which does record it.
+          if (measured >= MOSAIC_FULL_TILES && storedSource !== 'plates') {
+            return upgradeSkipped('measured-full', measured);
+          }
         }
       }
       // Fall through: rebuild below, then judge the result.
@@ -337,7 +348,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Shape the grid to the hero's aspect (never repeated, always background-cover
     // filled). Short tiles get more rows / fewer columns so the block is never a
     // 1-row wide strip. Rows are laid out top-aligned at true dimensions.
-    void usingPlates;
+    // Which pool we tiled from is recorded below: a plates fallback is a
+    // symptom of page images being briefly unfetchable, and it must be
+    // revisitable once they land. It used to be discarded here.
     const medH = kept.map(t => t.height).sort((a, b) => a - b)[Math.floor(kept.length / 2)] || MAX_TILE_H;
     const { cols: rowCols, rows: numRows } = chooseGrid(kept.length, medH);
     const used = kept.slice(0, rowCols * numRows);
@@ -385,9 +398,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       hero_mosaic_tiles: builtTiles,
       hero_mosaic_cols: rowCols,
       hero_mosaic_rows: numRows,
+      hero_mosaic_source: usingPlates ? 'plates' : 'pages',
     };
     if (upgrade) {
-      const verdict = nextUpgradeVerdict(priorTiles, builtTiles, attempts);
+      const verdict = nextUpgradeVerdict(priorTiles, builtTiles, attempts, {
+        before: book.hero_mosaic_source as string | undefined,
+        after: usingPlates ? 'plates' : 'pages',
+      });
       fields.hero_mosaic_maxed = verdict.maxed;
       fields.hero_mosaic_upgrade_attempts = verdict.attempts;
     }

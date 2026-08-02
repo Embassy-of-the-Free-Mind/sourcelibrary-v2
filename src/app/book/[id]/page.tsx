@@ -1356,6 +1356,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               tiles: (book as unknown as { hero_mosaic_tiles?: number }).hero_mosaic_tiles,
               maxed: (book as unknown as { hero_mosaic_maxed?: boolean }).hero_mosaic_maxed,
               pagesCount: (book as unknown as { pages_count?: number }).pages_count,
+              source: (book as unknown as { hero_mosaic_source?: string }).hero_mosaic_source,
             })
               ? `/api/books/${book.id}/hero-mosaic?upgrade=1`
               : undefined

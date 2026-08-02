@@ -117,3 +117,41 @@ describe('nextUpgradeVerdict', () => {
     expect(attempts).toBeLessThanOrEqual(10 + MOSAIC_MAX_UPGRADE_ATTEMPTS);
   });
 });
+
+describe('plate-tiled mosaics', () => {
+  // The generator falls back to extracted illustrations only when almost no
+  // PAGE image was fetchable in that moment. That state outlives its cause:
+  // Pal. lat. 1370 has 322 pages, every one fetchable today, yet its hero is 30
+  // cropped diagrams from 26 July. A book reads as its pages.
+  it('is offered even at a full grid, which tile count alone would miss', () => {
+    expect(shouldOfferMosaicUpgrade({ tiles: 40, pagesCount: 390, source: 'plates' })).toBe(true);
+  });
+
+  it('is offered when short, like Pal. lat. 1370 at 10x3', () => {
+    expect(shouldOfferMosaicUpgrade({ tiles: 30, pagesCount: 390, source: 'plates' })).toBe(true);
+  });
+
+  it('still respects maxed and the page-count floor', () => {
+    expect(shouldOfferMosaicUpgrade({ tiles: 30, pagesCount: 390, source: 'plates', maxed: true })).toBe(false);
+    expect(shouldOfferMosaicUpgrade({ tiles: 30, pagesCount: 12, source: 'plates' })).toBe(false);
+  });
+
+  it('leaves a full page-tiled mosaic alone', () => {
+    expect(shouldOfferMosaicUpgrade({ tiles: 40, pagesCount: 390, source: 'pages' })).toBe(false);
+  });
+
+  it('counts plates → pages as a win even if the grid got smaller', () => {
+    // A 10x3 of real page scans beats a 10x4 of cropped diagrams.
+    const v = nextUpgradeVerdict(40, 30, 1, { before: 'plates', after: 'pages' });
+    expect(v).toEqual({ maxed: false, attempts: 0 });
+  });
+
+  it('burns an attempt when the rebuild is still stuck on plates', () => {
+    // The page images are evidently still unfetchable; retrying on every reader
+    // would be a rebuild loop on the most expensive path there is.
+    const first = nextUpgradeVerdict(30, 30, 0, { before: 'plates', after: 'plates' });
+    expect(first).toEqual({ maxed: false, attempts: 1 });
+    const second = nextUpgradeVerdict(30, 40, first.attempts, { before: 'plates', after: 'plates' });
+    expect(second.maxed).toBe(true);
+  });
+});
