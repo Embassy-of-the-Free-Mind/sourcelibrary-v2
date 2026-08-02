@@ -1,0 +1,197 @@
+# The corpus dataset — flat tables for analysing the double-OCR corpus
+
+Builder: `scripts/eval/build-corpus-dataset.mjs`. Output: `scripts/output/corpus-dataset/`
+(scratch — not committed). Free: Mongo reads and local compute, no model calls.
+
+This doc is the thinking around the dataset, not a column list — the builder's
+header block and `manifest.json` carry that. Read this before doing analysis on
+it, because the two biggest facts about this corpus are both traps.
+
+---
+
+## 1. Three tables, three units of analysis
+
+Most wrong conclusions about this corpus come from analysing the wrong row. A
+metric's name is a claim about its denominator (see the `reading_history`
+lesson in `CLAUDE.md` — "62% of members came back" counted user+**book**
+sessions, not days).
+
+| table | one row is | n (scope=revised) |
+|---|---|---|
+| `books.csv` | a book | 2,139 |
+| `pages.csv` | a page — re-OCR'd **and** single-OCR | ~800K |
+| `revisions.csv` | one stored prior text | 191,221 |
+| `book_terms.csv` | a (book, term) TF-IDF pair | top 40/book |
+| `tfidf_vocab.csv` | a (corpus, term) doc-frequency | — |
+
+The existing pair-level table from `scripts/eval/revision-agreement-corpus.mjs`
+(one row per rewrite *transition*, carrying the agreement metrics) joins to
+these on `page_id` / `book_id`. This builder does not recompute agreement — that
+file's metric is the house standard and should stay the single definition.
+
+Note the unit differences that matter:
+
+- A **page** with 3 revisions contributes 1 row to `pages.csv` and 3 to
+  `revisions.csv`. Averaging agreement over revisions weights heavily-rewritten
+  pages more than pages; averaging over pages does not. Say which you meant.
+- 19,808 of 164,664 re-OCR'd pages have **more than one** revision. Treating the
+  corpus as "pairs" silently drops the later steps of those chains.
+- Books are wildly unequal: the top 200 books hold **50%** of all revisions,
+  median 25 revisions/book. Any per-revision statistic is dominated by a few
+  books. **Per-book shares survive this; sums do not.**
+
+## 2. The selection problem — read this before quoting any agreement number
+
+`page_revisions` is **not** a sample of "the same page read twice." It is a log
+of every time stored text was overwritten. The two largest contributors are
+data-repair sweeps in which **the image under the text changed**:
+
+| contributor | n | what it is |
+|---|---|---|
+| `source='shift-repair-erara-2026-07'` | 56,413 (29.5%) | #3186/#3357. `repair-erara-text-shift.mjs` **moved** text from p(N+1) to p(N). The "prior" side is the *neighbouring page's* transcription. |
+| `created_at` in Mar–Apr 2026 | 84,307 in April alone | The #3362 window, when `archive-bulk.mjs` wrote pages to a shared `archived/undefined/<n>.jpg` key and OCR read other books' images. |
+
+This is the measured cause of the warning in `CLAUDE.md` that ~40% of pairs
+report a different printed page number. It is not noise around the edges — it is
+roughly a third of the corpus, by construction, and it is **labelled**: nobody
+needed a heuristic, the `source` column said so all along.
+
+Columns provided for this:
+
+- `provenance_class` — `text_move_repair` | `human_edit` | `reocr`. Asserted only
+  from an explicit source label; everything unlabelled is `reocr`.
+- `printed_page_shift` / `shift_offset` — does the printed `<page-num>` the model
+  read *off the page* differ between the prior text and the live text. This is
+  the per-row version of `scripts/audit/revision-image-shift.mjs`, which
+  previously only ran on a sample.
+- `in_undefined_key_window` — a **hypothesis** column, not a verdict. The window
+  is necessary, not sufficient.
+
+**Minimum filter for any agreement claim:**
+`provenance_class == 'reocr' AND printed_page_shift != True`.
+
+### How much survives that filter (measured, n=63,905)
+
+Measured on the first 63,905 rows of `revisions.csv` (a partial build — the run
+died on a network timeout; source mix within ~4pp of the full corpus, so treat
+as indicative, not final):
+
+| step | n | share |
+|---|---:|---:|
+| all revisions | 63,905 | 100% |
+| − `text_move_repair` (source-labelled) | −19,712 | 30.8% |
+| = candidate re-OCR | 44,193 | |
+| − printed page number shifted | −822 | |
+| **= clean same-image re-OCR** | **43,371** | **67.9%** |
+| − also inside the #3362 window | −36,219 | |
+| = most conservative corpus | 7,152 | 11.2% |
+
+**The headline correction: once `text_move_repair` is removed by its source
+label, the residual leaf-shift rate is 3.7%, not ~40%.** `CLAUDE.md` and
+`revision-image-shift.mjs` report ~40.2% of pairs showing a different printed
+page number, measured on the raw corpus. Nearly all of that is the e-rara text
+move, which is *labelled* — so the corpus is far healthier than the raw figure
+suggests, provided the label is used. Caveat: the printed page number is
+readable on both sides of only **49.8%** of pairs, so this test abstains on half
+the corpus and the 3.7% is a rate among the testable half.
+
+**Do not routinely subtract the #3362 window as well.** It costs 84% of the
+remaining corpus, and it is a hypothesis flag: #3362 affected ~300 books /
+130,040 pages, not everything OCR'd in March–April 2026. Use the 7,152 figure
+only as a floor for a claim that must be unimpeachable.
+
+And the standing caveat from the audit script: a shift proves the image
+*changed*. It does **not** say which side is correct — #3357 was a repair, so
+some shifts are the fix rather than the damage. Separating those needs archive
+history (`batch_jobs.page_sources`, `archived_photo` provenance), not OCR text.
+
+## 3. Why `pages.csv` contains pages that were only OCR'd once
+
+Because otherwise nothing about the re-OCR'd population is testable. "Re-OCR'd
+pages are longer / later in the book / more marginal" is unfalsifiable against a
+table containing only re-OCR'd pages. The table therefore holds **every page of
+every scoped book**, flagged `is_double_ocr` / `n_revisions`, so the control is
+*within-book* — which also absorbs the book-level confounds (provider, scan
+quality, language, century) that would wreck a between-book comparison.
+
+Selection still operates at the book level: these 2,139 books were re-OCR'd for
+a reason. `books.csv` carries `provider`, `dominant_scan_class`, `quality_score`,
+`revision_sources` so that reason can be modelled rather than assumed.
+
+## 4. TF-IDF decisions
+
+- **IDF is computed within a language corpus**, never globally. A global IDF
+  would make language the dominant axis of every book vector — a fact about the
+  corpus mix, not about any book. Uses the ngram viewer's language-aware
+  tokenizer (`scripts/lib/ngram-normalize.mjs`: Latin u/v + i/j folding, Greek
+  polytonic folding, ligature expansion, line-break de-hyphenation).
+- Languages the ngram viewer doesn't model (Chinese, Tibetan, Arabic, Sanskrit…)
+  keep their **own name** as the corpus key rather than sharing an `other`
+  bucket — pooling them reintroduces exactly the problem above.
+- **Editorial wrappers are stripped before counting.** `<meta>`, `<summary>`,
+  `<keywords>` etc. are AI prose *about* the page that routinely names content
+  from adjacent pages. Counting them fabricates term frequencies the same way
+  quoting them fabricates citations (`CLAUDE.md`, quote integrity; #3175 applied
+  the same rule to the ngram build).
+- HTML entities are de-padded first. `&amp;` otherwise tokenizes as the word
+  "amp", which ranked **2nd** by TF-IDF in a Latin alchemical volume.
+- Pages are sampled **evenly through the book** (60/book), not the first N —
+  front matter vocabulary is nothing like the body block.
+- Single-letter terms are dropped by default (`--tfidf-min-len=1` restores
+  them). Genuinely lossy in one known case: Trithemius's *Polygraphy* is a
+  cipher manual whose ten strongest terms are all single letters.
+
+**Known weakness.** IDF suppresses function words only when a corpus has enough
+books. Early-modern orthographic variation splits one function word across many
+types (`vnd` / `vnnd` / `und`), keeping each individually rare and therefore
+high-IDF. Latin and English look clean; German is the worst case. `doc_freq`,
+`n_docs` and `tf` are all emitted so any other weighting can be recomputed
+downstream, and `--tfidf-max-df` exists if it bites.
+
+## 5. Questions this dataset can and cannot answer
+
+**Can:**
+- Does re-OCR recover text, on which strata (language, century, script class,
+  position in book, scan class, provider, model transition)?
+- Is marginalia recovery a sharper quality signal than bulk agreement?
+- What predicts a page being *selected* for re-OCR?
+- How much of the corpus's "disagreement" is image churn vs reading difficulty?
+- Do TF-IDF book vectors cluster by tradition, and do re-OCR'd books sit
+  anywhere unusual in that space?
+
+**Cannot, without more work:**
+- **Which side is correct.** Nothing here is ground truth. Agreement is a weak
+  accuracy proxy — 63 points of agreement range map to ~5 points of accuracy in
+  the anchor fit (`scripts/eval/calibration-scorecard.mjs`). Ground truth lives
+  in the eval dataset, not here.
+- **Fabrication.** Two passes that both recite the same memorised canonical text
+  agree perfectly (`/blog/reciting-not-reading`). Agreement is blind to this by
+  construction, and the effect is largest on exactly the famous texts.
+- **Anything about readers.** No traffic, no reading depth. `read_count` is on
+  `pages.csv` but is crawler-contaminated (see the measurement-layer section of
+  `CLAUDE.md`).
+
+## 6. Cleanup this surfaced
+
+- `books.year` is present on only **49,422 of 104,621** books (47%). Any
+  year-stratified claim abstains on half the corpus. Report the denominator.
+- `books.subject_keywords` exists on only **5,664** books (5.4%) — not usable as
+  a corpus-wide feature, which is the direct reason TF-IDF is computed from text
+  rather than read off that field.
+- `page_revisions.reason` is null on **93%** of rows. `source` is the usable
+  provenance field; `reason` is not. Writers calling
+  `saveRevisionsBeforeOverwrite` should pass `reason` — it is a documented
+  parameter that almost nothing supplies.
+- `book_id` appears as either `books.id` or `String(books._id)` depending on the
+  writer's vintage, in both `pages` and `page_revisions`. Every join here
+  resolves both keys; a join on one key alone silently drops rows.
+- **`revised_page_pct` can exceed 100%** — 8 books do, up to 139.6%. Not a bug in
+  the rollup: revisions **outlive the pages they point at**. All 8 have
+  `split_completed=1`, so the pre-split page docs were replaced while their
+  `page_revisions` rows remained. `revision-agreement-corpus.mjs` already
+  observes ~14% of revisions are orphaned this way. Consequence:
+  `n_revised_pages` and `pages_count` have different denominators and must not
+  be divided without excluding orphans — `revisions.csv` counts them
+  (`manifest.rows.revisions_orphan_pages`).
+- 4 of the 2,139 books in the revision rollup have **no surviving `books` doc**
+  at all (purged), so `books.csv` has 2,135 rows.
