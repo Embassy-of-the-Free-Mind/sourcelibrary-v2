@@ -178,4 +178,21 @@ await withMongo(async (db) => {
   }, null, 2));
   console.log(`\nReport: ${out}`);
   if (!APPLY) console.log('Dry run — nothing written. Re-run with --apply to persist.');
-});
+},
+/**
+ * `noTimeout` is REQUIRED, not a tuning choice.
+ *
+ * `withMongo` kills the process after 300s to stop zombie scripts. This sweep
+ * makes two `pages` queries per book across ~17,000 books and runs the better
+ * part of an hour, so the default watchdog fires mid-run. It has now done so
+ * twice — at 2,000 books on a laptop, then at 5,500 on the Hetzner box — with
+ * `[mongo] Script timeout after 300s — forcing exit`. Same failure that killed
+ * the demote packet at 31 of 33 works (CLAUDE.md, "Long paced runs need
+ * noTimeout").
+ *
+ * The run is resumable, since the driving query skips books that already carry a
+ * verdict, so a watchdog kill loses wall-clock rather than work. That is not a
+ * reason to tolerate it: a partial sweep reports partial counts and says nothing
+ * about being partial, which is how a 12%-complete screen gets read as a result.
+ */
+{ noTimeout: true });
