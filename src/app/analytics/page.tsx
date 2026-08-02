@@ -20,9 +20,11 @@ const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { s
 const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false, loading: LoadingBar });
 const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false, loading: LoadingBar });
 const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false, loading: LoadingBar });
-type Tab = 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
+const BooksTab = dynamic(() => import('@/components/analytics/tabs/BooksTab'), { ssr: false, loading: LoadingBar });
+type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: 'books', label: 'Books' },
   { key: 'usage', label: 'Usage' },
   { key: 'performance', label: 'Performance' },
   { key: 'logs', label: 'Logs' },
@@ -32,7 +34,7 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 export default function AnalyticsPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('usage');
+  const [activeTab, setActiveTab] = useState<Tab>('books');
   const [days, setDays] = useState(30);
   const [hours, setHours] = useState(24);
   const [pipelineHours, setPipelineHours] = useState(24);
@@ -133,6 +135,7 @@ export default function AnalyticsPage() {
       </header>
 
       <main className="max-w-[1500px] mx-auto px-6 py-8">
+        {activeTab === 'books' && <BooksTab key={refreshKey} />}
         {activeTab === 'usage' && <UsageTab key={refreshKey} days={days} />}
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}
