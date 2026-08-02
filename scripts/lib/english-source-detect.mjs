@@ -71,8 +71,34 @@ const ENGLISH_FUNCTION_WORDS = new Set(
  * a Hebrew Zohar scored 0.32 on an annotated page and 0.00 on real Hebrew. The
  * detector was reading our own annotations and calling the source English.
  */
+/**
+ * A SECOND wrapper family, from the epigraphy/artifact OCR schema.
+ *
+ * `stripEditorialWrappers` knows the codex families (`<meta>`, `<summary>`,
+ * `<scan-quality>`, …). Tablet, papyrus and manuscript-fragment records use a
+ * different one — `<condition>`, `<period>`, `<surface>`, `<genre>`, `<notes>`,
+ * `<confidence>` — and `<condition>` in particular is a paragraph of English
+ * prose describing the artifact:
+ *
+ *   <language>Akkadian</language>
+ *   <condition>The image shows multiple fragments (K.2421, K.2511, K.16765)
+ *   from the British Museum collection, joined to form...</condition>
+ *
+ * Left in, that prose IS the page as far as a word-frequency measure is
+ * concerned, and a Neo-Assyrian tablet screens as English. Same bug the header
+ * above describes for the codex wrappers, in a family nobody had enumerated.
+ *
+ * ⚠️ These tags are almost certainly also reaching the quote/search/ngram
+ * surfaces, which strip only the families `stripEditorialWrappers` knows — that
+ * is the #2232 class and a wider blast radius than this file. Fixed locally here;
+ * the global fix belongs in `strip-editorial-wrappers.{ts,mjs}` with its own
+ * verification across every snippet surface.
+ */
+const ARTIFACT_WRAPPER_RE = /<(condition|period|surface|genre|notes|confidence|provenance|material|dimensions)>[\s\S]*?<\/\1>/gi;
+
 export function textWords(s) {
   return String(stripEditorialWrappers(String(s || '')))
+    .replace(ARTIFACT_WRAPPER_RE, ' ')
     .replace(/<[^>]*>/g, ' ')
     .toLowerCase()
     .match(/[a-z']+/g) ?? [];
@@ -98,6 +124,13 @@ export function englishFraction(text, minWords = 25) {
  * real first-translation candidate, which is the costlier error.
  */
 export const ENGLISH_SOURCE_THRESHOLD = 0.15;
+
+/**
+ * Minimum judgeable pages before FREQUENCY alone may return `english_source`.
+ * See the asymmetry note in `classifySourceLanguage`. Does not apply to the
+ * model's declared language, which is direct evidence rather than an estimate.
+ */
+export const MIN_PAGES_FOR_FREQUENCY_ENGLISH = 3;
 
 /**
  * The OCR model DECLARES the page's language in its metadata envelope —
@@ -146,8 +179,16 @@ export function declaresEnglish(ocrData) {
 export function classifySourceLanguage(pageTexts) {
   // Prefer the model's own declaration — a direct statement about the page beats
   // a frequency estimate derived from it.
+  //
+  // ONE declaration is enough. The old floor of 2 meant a single-page record —
+  // a tablet, a papyrus, a manuscript leaf — could never use its own declaration
+  // and fell through to frequency, which then read the English artifact
+  // description and called an Akkadian tablet English. If the model that read the
+  // page named the language, that is the best evidence available at any count;
+  // requiring a second copy of it discards the only signal on exactly the records
+  // that have nothing else.
   const declared = pageTexts.map((t) => declaresEnglish(t)).filter((d) => d !== null);
-  if (declared.length >= 2) {
+  if (declared.length >= 1) {
     const englishShare = declared.filter(Boolean).length / declared.length;
     return {
       verdict: englishShare >= 0.5 ? 'english_source' : 'foreign_source',
@@ -161,8 +202,18 @@ export function classifySourceLanguage(pageTexts) {
   const fracs = pageTexts.map((t) => englishFraction(t)).filter((f) => f !== null);
   if (!fracs.length) return { verdict: 'undetermined', basis: 'none', mean: null, pages_judged: 0 };
   const mean = fracs.reduce((a, b) => a + b, 0) / fracs.length;
+  const english = mean >= ENGLISH_SOURCE_THRESHOLD;
+
+  // Asymmetric floor, deliberately. The two errors do not cost the same: calling a
+  // foreign book English silently DROPS a genuine first-translation candidate and
+  // nothing downstream will ever revisit it, while calling an English book foreign
+  // merely leaves a candidate to be caught later. So a frequency-based
+  // `english_source` needs corroboration across pages; `foreign_source` does not.
+  if (english && fracs.length < MIN_PAGES_FOR_FREQUENCY_ENGLISH) {
+    return { verdict: 'undetermined', basis: 'insufficient_pages_for_frequency', mean, pages_judged: fracs.length };
+  }
   return {
-    verdict: mean >= ENGLISH_SOURCE_THRESHOLD ? 'english_source' : 'foreign_source',
+    verdict: english ? 'english_source' : 'foreign_source',
     basis: 'function_word_frequency',
     mean,
     pages_judged: fracs.length,
