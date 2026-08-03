@@ -1,17 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { images } from '@/lib/api-client';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { withAuth } from '@/lib/auth-helpers';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const DETECT_SPLIT_MODEL = 'gemini-3-flash-preview';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ tenant: string; id: string }> }
-) {
+// Gated at `editor` (ops#6) — see the note on the unscoped twin.
+export const POST = withAuth(async (request, session, context) => {
+  const startTime = Date.now();
+
   try {
-    const { tenant, id } = await params;
+    const { tenant, id } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     
     // Resolve tenant slug to UUID
@@ -38,7 +43,7 @@ export async function POST(
 
     // Run Gemini detection (using fastest model)
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3-flash-preview',
+      model: DETECT_SPLIT_MODEL,
       generationConfig: {
         responseMimeType: 'application/json',
         responseSchema: {
@@ -100,6 +105,22 @@ Coordinates as 0-1000 scale.`,
       },
     ]);
 
+    // Bill per RESPONSE, not per saved page — see the unscoped twin.
+    logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
+      model: DETECT_SPLIT_MODEL,
+      book_id: page.book_id,
+      page_ids: [id],
+      input_tokens: result.response.usageMetadata?.promptTokenCount || 0,
+      output_tokens: result.response.usageMetadata?.candidatesTokenCount || 0,
+      status: 'success',
+      duration_ms: Date.now() - startTime,
+      prompt_version: 'detect-split-v1',
+      endpoint: '/api/[tenant]/pages/[id]/detect-split',
+      triggered_by: triggeredBy,
+    });
+
     const detection = JSON.parse(result.response.text());
 
     // Save detection result to page
@@ -116,4 +137,4 @@ Coordinates as 0-1000 scale.`,
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

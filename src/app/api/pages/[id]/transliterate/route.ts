@@ -53,7 +53,11 @@ export async function POST(
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = TRANSLITERATION_MODEL } = body;
+    // `model` is not read from the body (ops#6): nothing sends it, and a
+    // caller-chosen model on a paid call is not worth keeping for no consumer.
+    // This route's anonymous-access gate is PR 2, not this change.
+    const { regenerate = false } = body;
+    const model = TRANSLITERATION_MODEL;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id });

@@ -1,7 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
+import { withAuth } from '@/lib/auth-helpers';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -154,12 +157,19 @@ Please answer their question helpfully:
 
 Answer:`;
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Gated at `editor` (ops#6). Before this it was an unauthenticated proxy to
+// Gemini on our API key: uncached, and `customPrompt` let a caller supply the
+// prompt template verbatim. It also fans out to ~3 search + ~6 quote requests
+// against sourcelibrary.org per call, so it doubled as a request amplifier.
+//
+// `customPrompt` is no longer read from the body. Nothing sends it, and an
+// arbitrary-prompt path is not something to leave open behind any role.
+export const POST = withAuth(async (request, session, context) => {
+  const startTime = Date.now();
+
   try {
-    const { id: pageId } = await params;
+    const { id: pageId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const body = await request.json();
     const {
       question,
@@ -168,9 +178,6 @@ export async function POST(
       bookTitle,
       bookAuthor,
       pageNumber,
-      customPrompt,
-      authorSearchTerms,
-      personaName
     } = body;
 
     if (!question) {
@@ -208,11 +215,8 @@ export async function POST(
       authorSources = formatSourcesForPrompt(sources);
     }
 
-    // Use custom prompt if provided, otherwise use default
-    const promptTemplate = customPrompt || DEFAULT_PROMPT;
-
     // Replace variables in the prompt
-    const prompt = promptTemplate
+    const prompt = DEFAULT_PROMPT
       .replace('{page_number}', pageNumber || '?')
       .replace('{book_context}', bookContext)
       .replace('{page_text}', truncatedText)
@@ -228,6 +232,22 @@ export async function POST(
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+    // This route computed its cost and returned it to the caller but never
+    // recorded it, so its spend did not exist in `gemini_usage`.
+    logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
+      model: DEFAULT_MODEL,
+      page_ids: [pageId],
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      status: 'success',
+      duration_ms: Date.now() - startTime,
+      prompt_version: 'page-ask-v1',
+      endpoint: '/api/pages/[id]/ask',
+      triggered_by: triggeredBy,
+    });
 
     return NextResponse.json({
       answer,
@@ -247,4 +267,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

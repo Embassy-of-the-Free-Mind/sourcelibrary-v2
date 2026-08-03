@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performModernization } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Simple hash function to detect translation changes
 function hashString(str: string): string {
@@ -17,14 +18,14 @@ function hashString(str: string): string {
   return hash.toString(16);
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ tenant: string; id: string }> }
-) {
+// Gated at `editor` (ops#6) — see the note on the unscoped twin. Note that
+// `resolveTenantId` below is a slug->UUID lookup, not an authorization check;
+// it was the only thing in front of this route.
+export const POST = withAuth(async (request, session, context) => {
   const startTime = Date.now();
 
   try {
-    const { tenant, id } = await params;
+    const { tenant, id } = await context.params;
     const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     
@@ -36,7 +37,9 @@ export async function POST(
     
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = DEFAULT_MODEL } = body;
+    // `model` is no longer taken from the body — nothing sends it.
+    const { regenerate = false } = body;
+    const model = DEFAULT_MODEL;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id, tenantId });
@@ -134,4 +137,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

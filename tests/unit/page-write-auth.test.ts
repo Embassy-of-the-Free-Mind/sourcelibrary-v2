@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 /**
- * Every route that rewrites a page's text must be gated at `editor` (#3511).
+ * Every route that rewrites a page's stored state, or spends on Gemini, must be
+ * gated at `editor` (#3511, extended by ops#6).
  *
  * The UI has always gated editing correctly: the Read/Edit toggle in
  * TranslationEditor is wrapped in `<AuthCheck role="inner_circle">`, so a reader
@@ -10,6 +11,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
  * calling the route directly — and two of the routes (`quick-fix`, `restore`)
  * apply no tenant filter, so the reach was the whole corpus from the main
  * domain, not one tenant.
+ *
+ * ops#6 added the AI routes — `modernize`, `ask`, `detect-split` and their
+ * tenant twins — which had no wrapper at all rather than a drifted one. Two
+ * harms per route: an unauthenticated write to page state, and an
+ * unauthenticated paid Gemini call (`{ regenerate: true }` skips the cache).
+ * The db mock below returns no page, so none of them reaches Gemini here.
  *
  * This test runs the REAL `withAuth` against the REAL route modules. Only
  * `auth()` and the database are faked. Deleting the `{ minRole: 'editor' }`
@@ -141,6 +148,55 @@ const CASES: RouteCase[] = [
     params: { tenant: 'bph' },
     body: { splits: [{ pageId: 'page-1', splitPosition: 500 }] },
   },
+  // The AI routes (ops#6). Each of these writes page state and/or spends on
+  // Gemini, and each had no auth wrapper whatsoever before that issue.
+  {
+    name: 'POST /api/pages/[id]/modernize',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/pages/[id]/modernize/route'),
+    params: { id: 'page-1' },
+    body: { regenerate: true },
+  },
+  {
+    name: 'POST /api/[tenant]/pages/[id]/modernize',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/[tenant]/pages/[id]/modernize/route'),
+    params: { tenant: 'bph', id: 'page-1' },
+    body: { regenerate: true },
+  },
+  {
+    name: 'POST /api/pages/[id]/ask',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/pages/[id]/ask/route'),
+    params: { id: 'page-1' },
+    // Empty body: the handler answers 400 before reaching Gemini.
+    body: {},
+  },
+  {
+    name: 'POST /api/[tenant]/pages/[id]/ask',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/[tenant]/pages/[id]/ask/route'),
+    params: { tenant: 'bph', id: 'page-1' },
+    body: {},
+  },
+  {
+    name: 'POST /api/pages/[id]/detect-split',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/pages/[id]/detect-split/route'),
+    params: { id: 'page-1' },
+  },
+  {
+    name: 'POST /api/[tenant]/pages/[id]/detect-split',
+    method: 'POST',
+    minRole: 'editor',
+    load: () => import('@/app/api/[tenant]/pages/[id]/detect-split/route'),
+    params: { tenant: 'bph', id: 'page-1' },
+  },
 ];
 
 async function call(c: RouteCase, role: string) {
@@ -215,13 +271,18 @@ describe('the page-write route list stays complete', () => {
         }
         if (entry !== 'route.ts') continue;
         const src = readFileSync(p, 'utf8');
-        // Routes that assign client-supplied text into a page's stored fields,
-        // or remove a page outright. `modernize` and `transliterate` write only
-        // model output and take no text from the caller, so they are excluded.
+        // The criterion used to be "assigns client-supplied text into a page
+        // field", which excluded `modernize` and `transliterate` on the grounds
+        // that they write only model output. That reasoning holds for text
+        // integrity and misses cost entirely: an uncached call on either is a
+        // paid Gemini call an anonymous caller chose to make (ops#6). So the
+        // criterion is now "writes page state OR spends on Gemini".
         const writesPageText =
           /\[`?\$?\{?(?:revision\.)?field\}?`?\.data`?\]|['"](?:ocr|translation|summary)\.data['"]/.test(src);
+        const writesModelOutput =
+          /['"](?:modernized|transliteration)\.data['"]|\bsplit_detection:/.test(src);
         const deletesPage = /deleteOne\(\s*\{\s*id/.test(src);
-        if (writesPageText || deletesPage) found.push(p);
+        if (writesPageText || writesModelOutput || deletesPage) found.push(p);
       }
     };
 
@@ -238,6 +299,17 @@ describe('the page-write route list stays complete', () => {
       'src/app/api/pages/[id]/reset/route.ts',
       'src/app/api/pages/batch-split/route.ts',
       'src/app/api/[tenant]/pages/batch-split/route.ts',
+      'src/app/api/pages/[id]/modernize/route.ts',
+      'src/app/api/[tenant]/pages/[id]/modernize/route.ts',
+      'src/app/api/pages/[id]/detect-split/route.ts',
+      'src/app/api/[tenant]/pages/[id]/detect-split/route.ts',
+      // TODO(ops#6 PR 2): `transliterate` is the one route in this group with
+      // real anonymous reader traffic — TranslationEditor auto-fires it when
+      // the panel opens, outside every <AuthCheck>. Editor-gating it would
+      // break signed-out reading, so it gets `anonActionGate` on the
+      // cache-miss path instead and is covered by its own test, not by CASES.
+      'src/app/api/pages/[id]/transliterate/route.ts',
+      'src/app/api/[tenant]/pages/[id]/transliterate/route.ts',
     ]);
 
     const uncovered = found.filter((f) => !covered.has(f));

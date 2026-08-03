@@ -62,7 +62,9 @@ export async function POST(
 
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = TRANSLITERATION_MODEL } = body;
+    // `model` is not read from the body (ops#6) — see the unscoped twin.
+    const { regenerate = false } = body;
+    const model = TRANSLITERATION_MODEL;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id, tenantId });

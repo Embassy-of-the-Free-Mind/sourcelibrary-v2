@@ -1,8 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { withAuth } from '@/lib/auth-helpers';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -155,19 +158,21 @@ Please answer their question helpfully:
 
 Answer:`;
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ tenant: string; id: string }> }
-) {
+// Gated at `editor` (ops#6) — see the note on the unscoped twin. `customPrompt`
+// is no longer read from the body.
+export const POST = withAuth(async (request, session, context) => {
+  const startTime = Date.now();
+
   try {
-    const { tenant, id: pageId } = await params;
-    
+    const { tenant, id: pageId } = await context.params;
+    const triggeredBy = getTriggerSource(request);
+
     // Resolve tenant slug to UUID (for validation)
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    
+
     const body = await request.json();
     const {
       question,
@@ -176,9 +181,6 @@ export async function POST(
       bookTitle,
       bookAuthor,
       pageNumber,
-      customPrompt,
-      authorSearchTerms,
-      personaName
     } = body;
 
     if (!question) {
@@ -216,11 +218,8 @@ export async function POST(
       authorSources = formatSourcesForPrompt(sources);
     }
 
-    // Use custom prompt if provided, otherwise use default
-    const promptTemplate = customPrompt || DEFAULT_PROMPT;
-
     // Replace variables in the prompt
-    const prompt = promptTemplate
+    const prompt = DEFAULT_PROMPT
       .replace('{page_number}', pageNumber || '?')
       .replace('{book_context}', bookContext)
       .replace('{page_text}', truncatedText)
@@ -236,6 +235,21 @@ export async function POST(
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+    // Previously unlogged — see the unscoped twin.
+    logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
+      model: DEFAULT_MODEL,
+      page_ids: [pageId],
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      status: 'success',
+      duration_ms: Date.now() - startTime,
+      prompt_version: 'page-ask-v1',
+      endpoint: '/api/[tenant]/pages/[id]/ask',
+      triggered_by: triggeredBy,
+    });
 
     return NextResponse.json({
       answer,
@@ -255,4 +269,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

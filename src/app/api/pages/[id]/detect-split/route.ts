@@ -1,16 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTriggerSource } from '@/lib/cron-auth';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const DETECT_SPLIT_MODEL = 'gemini-3-flash-preview';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Gated at `editor` (ops#6). The worst of the group before this: an
+// unauthenticated, entirely uncached, image-input vision call that also writes
+// `pages.split_detection`. There is no cache to hit, so every request spent.
+export const POST = withAuth(async (request, session, context) => {
+  const startTime = Date.now();
+
   try {
-    const { id } = await params;
+    const { id } = await context.params;
+    const triggeredBy = getTriggerSource(request);
     const db = await getDb();
 
     // Get the page
@@ -31,7 +38,7 @@ export async function POST(
 
     // Run Gemini detection (using fastest model)
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3-flash-preview',
+      model: DETECT_SPLIT_MODEL,
       generationConfig: {
         responseMimeType: 'application/json',
         responseSchema: {
@@ -93,6 +100,25 @@ Coordinates as 0-1000 scale.`,
       },
     ]);
 
+    // Bill per RESPONSE, not per saved page: Gemini charges for this call even
+    // if the JSON below fails to parse, so log before touching the result.
+    // Until now this route called Gemini without logging at all, which is why
+    // its spend was invisible in `gemini_usage`.
+    logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
+      model: DETECT_SPLIT_MODEL,
+      book_id: page.book_id,
+      page_ids: [id],
+      input_tokens: result.response.usageMetadata?.promptTokenCount || 0,
+      output_tokens: result.response.usageMetadata?.candidatesTokenCount || 0,
+      status: 'success',
+      duration_ms: Date.now() - startTime,
+      prompt_version: 'detect-split-v1',
+      endpoint: '/api/pages/[id]/detect-split',
+      triggered_by: triggeredBy,
+    });
+
     const detection = JSON.parse(result.response.text());
 
     // Save detection result to page
@@ -109,4 +135,4 @@ Coordinates as 0-1000 scale.`,
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

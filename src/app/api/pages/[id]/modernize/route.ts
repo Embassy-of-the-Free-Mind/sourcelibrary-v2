@@ -4,6 +4,7 @@ import { performModernization } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Simple hash function to detect translation changes
 function hashString(str: string): string {
@@ -16,19 +17,25 @@ function hashString(str: string): string {
   return hash.toString(16);
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Gated at `editor` (ops#6). This writes `pages.modernized`, which renders to
+// readers, and every uncached call is a paid Gemini call — both were reachable
+// with no session, no API key and no anon gate. `{ regenerate: true }` skips
+// the cache, so an anonymous caller could spend without bound.
+//
+// `model` used to come from the request body. Nothing sends it (the api-client
+// posts no body at all), so it is fixed to DEFAULT_MODEL rather than left as a
+// caller-chosen route to an arbitrary model.
+export const POST = withAuth(async (request, session, context) => {
   const startTime = Date.now();
 
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = DEFAULT_MODEL } = body;
+    const { regenerate = false } = body;
+    const model = DEFAULT_MODEL;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id });
@@ -125,9 +132,10 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });
 
-// GET to retrieve existing modernized text without regenerating
+// GET to retrieve existing modernized text without regenerating. Deliberately
+// left open: it is a cached read that spends nothing and writes nothing.
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
