@@ -75,39 +75,11 @@ export async function POST(request: NextRequest) {
   };
 
   const { error } = await supabaseAdmin.from('volunteer_ratings').insert(row);
-  if (!error) return NextResponse.json({ ok: true });
 
-  /* COMPAT SHIM — remove once 20260802000000_volunteer_ratings_note.sql is
-     applied to production.
-     Merging a PR here does not deploy, and this DDL is applied by hand, so the
-     code and the schema can go live in either order. Without this branch, the
-     window between them fails EVERY submission — turning a feature addition
-     into an outage on the exact surface we are trying to revive.
-     The fallback keeps the note in `detail` (jsonb, already present) so no
-     volunteer's words are lost while the column is missing. A note-only
-     submission genuinely cannot be stored, because `rating` is still NOT NULL —
-     we say so rather than inventing a rating, which would corrupt the
-     distribution the ratings exist to measure. */
-  const missingColumn = error.code === 'PGRST204' || error.code === '42703';
-  if (missingColumn && note !== null) {
-    if (rating === null) {
-      console.error('[review/submit] note-only submission rejected — run the volunteer_ratings note migration');
-      return NextResponse.json(
-        { error: 'notes are not enabled yet — please include a rating' },
-        { status: 503 },
-      );
-    }
-    console.warn('[review/submit] `note` column missing — storing note in detail. Run the migration.');
-    const { error: retryError } = await supabaseAdmin.from('volunteer_ratings').insert({
-      ...row,
-      note: undefined,
-      detail: { ...(typeof detail === 'object' && detail !== null ? detail : {}), note },
-    });
-    if (!retryError) return NextResponse.json({ ok: true, noteStoredInDetail: true });
-    console.error('[review/submit] retry insert failed:', retryError);
+  if (error) {
+    console.error('[review/submit] insert failed:', error);
     return NextResponse.json({ error: 'insert failed' }, { status: 500 });
   }
 
-  console.error('[review/submit] insert failed:', error);
-  return NextResponse.json({ error: 'insert failed' }, { status: 500 });
+  return NextResponse.json({ ok: true });
 }
