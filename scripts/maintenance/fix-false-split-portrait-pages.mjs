@@ -111,28 +111,65 @@ async function mapLimit(items, concurrency, fn) {
   return out;
 }
 
-/**
- * Classify one page. `broken` means: the source leaf is portrait (a single
- * page) yet the image the reader materializes is substantially narrower.
- */
-async function classifyPage(page) {
+const median = (nums) => {
+  const s = [...nums].sort((a, b) => a - b);
+  return s[Math.floor(s.length / 2)];
+};
+
+const hasCrop = (p) => p.crop?.xStart !== undefined || !!p.cropped_photo;
+
+/** Measure a page's source and, if it carries a crop, its materialized image. */
+async function measure(page) {
   const source = page.archived_photo || page.photo_original;
-  const [src, shown] = await Promise.all([dims(source), dims(page.cropped_photo)]);
-  if (!src) return { page, verdict: 'unreadable-source', source };
+  const [src, shown] = await Promise.all([dims(source), hasCrop(page) ? dims(page.cropped_photo) : null]);
+  if (!src) return null;
+  return { page, src, shown, ar: src.w / src.h };
+}
 
-  const isSpread = src.w > src.h;
-  const rendered = shown || src;
-  // A half is ~50% of the source; 0.75 leaves room for gutter overlap and for
-  // the near-full-width legacy `cropped/<pageid>.jpg` files, which are fine.
-  const isHalved = rendered.w < src.w * 0.75;
+/**
+ * The aspect ratio of ONE leaf of this book.
+ *
+ * An absolute test cannot work: single-leaf and spread aspect ratios from
+ * different books overlap. A book with tall narrow leaves (1415x3106, ar 0.46)
+ * produces a genuine spread at 2780x3105 — ar 0.90, still taller than wide.
+ * A `w > h` test calls that spread "portrait" and flags all 543 of its
+ * correctly-split pages. So the reference must come from the book itself.
+ *
+ * Two independent references, and they must agree:
+ *   - uncropped pages, which are single leaves by definition;
+ *   - bimodality of the cropped pages' sources, whose two clusters (single
+ *     leaves and spreads) should sit a factor of ~2 apart.
+ * Returns null — abstain — when neither exists or they disagree. An
+ * unmeasurable is not a zero.
+ */
+function referenceLeafAspect(measured) {
+  const cropped = measured.filter((m) => hasCrop(m.page));
+  const uncropped = measured.filter((m) => !hasCrop(m.page));
 
-  if (isSpread) return { page, verdict: 'spread-ok', src, rendered };
-  if (!isHalved) return { page, verdict: 'ok', src, rendered };
-  return { page, verdict: 'broken', src, rendered, source };
+  const fromUncropped = uncropped.length >= 2 ? median(uncropped.map((m) => m.ar)) : null;
+
+  let fromBimodality = null;
+  const ars = cropped.map((m) => m.ar).sort((a, b) => a - b);
+  if (ars.length >= 6) {
+    const mid = median(ars);
+    const lo = median(ars.filter((a) => a < mid));
+    const hi = median(ars.filter((a) => a >= mid));
+    if (lo > 0 && hi / lo > 1.6 && hi / lo < 2.5) fromBimodality = lo;
+  }
+
+  if (fromUncropped !== null && fromBimodality !== null) {
+    if (Math.abs(fromBimodality - fromUncropped) / fromUncropped > 0.25) {
+      return { ref: null, how: 'uncropped and bimodal references disagree' };
+    }
+    return { ref: fromUncropped, how: `${uncropped.length} uncropped pages, bimodality agrees` };
+  }
+  if (fromUncropped !== null) return { ref: fromUncropped, how: `${uncropped.length} uncropped pages` };
+  if (fromBimodality !== null) return { ref: fromBimodality, how: `bimodal clusters` };
+  return { ref: null, how: 'no single-leaf reference' };
 }
 
 async function scanBook(db, book) {
-  const pages = (
+  const all = (
     await db
       .collection('pages')
       .find({ book_id: book.id })
@@ -151,16 +188,36 @@ async function scanBook(db, book) {
       .toArray()
   )
     // Negative page numbers are soft-hidden duplicates; they are not rendered.
-    .filter((p) => p.page_number > 0)
-    // Only pages carrying a crop can be falsely split.
-    .filter((p) => p.crop?.xStart !== undefined || p.cropped_photo);
+    .filter((p) => p.page_number > 0);
 
-  if (pages.length === 0) return { book, broken: [], checked: 0 };
+  const cropBearing = all.filter(hasCrop);
+  if (cropBearing.length === 0) return { book, broken: [], checked: 0 };
 
-  const results = await mapLimit(pages, PAGE_CONCURRENCY, classifyPage);
-  const broken = results.filter((r) => r.verdict === 'broken').sort((a, b) => a.page.page_number - b.page.page_number);
-  const unreadable = results.filter((r) => r.verdict === 'unreadable-source');
-  return { book, broken, unreadable, checked: pages.length };
+  // Measure every cropped page, plus a sample of uncropped ones for the
+  // reference — enough for a median without paying for a whole unsplit book.
+  const uncroppedSample = all.filter((p) => !hasCrop(p)).slice(0, 30);
+  const measured = (await mapLimit([...cropBearing, ...uncroppedSample], PAGE_CONCURRENCY, measure)).filter(Boolean);
+
+  const { ref, how } = referenceLeafAspect(measured);
+  if (ref === null) {
+    return { book, broken: [], checked: cropBearing.length, undetermined: how };
+  }
+
+  // A page is visibly broken only when BOTH hold. Either alone misleads:
+  // "source is one leaf" flags spurious-but-unmaterialized crops that render
+  // fine, and "rendered is a half" is true of every correct split too, since
+  // the crop always removes half the width.
+  const isSingleLeaf = (m) => Math.abs(m.ar - ref) < Math.abs(m.ar - 2 * ref);
+  const isHalved = (m) => m.shown && m.shown.w < m.src.w * 0.75;
+
+  const croppedMeasured = measured.filter((m) => hasCrop(m.page));
+  const broken = croppedMeasured
+    .filter((m) => isSingleLeaf(m) && isHalved(m))
+    .map((m) => ({ page: m.page, src: m.src, rendered: m.shown }))
+    .sort((a, b) => a.page.page_number - b.page.page_number);
+  const metadataOnly = croppedMeasured.filter((m) => isSingleLeaf(m) && !isHalved(m)).length;
+
+  return { book, broken, checked: cropBearing.length, ref, how, metadataOnly };
 }
 
 /**
@@ -229,8 +286,10 @@ async function main() {
   const started = Date.now();
   const report = REPORT ? fs.createWriteStream(REPORT, { flags: 'a' }) : null;
 
+  const undetermined = [];
+
   await mapLimit(books, BOOK_CONCURRENCY, async (book) => {
-    const { broken, unreadable, checked } = await scanBook(db, book);
+    const { broken, checked, undetermined: why, ref, how, metadataOnly } = await scanBook(db, book);
     done++;
     pagesChecked += checked;
 
@@ -244,21 +303,43 @@ async function main() {
     }
     if (checked === 0) return;
 
-    report?.write(JSON.stringify({ slug: book.slug, id: book.id, checked, broken: broken.length }) + '\n');
+    report?.write(
+      JSON.stringify({
+        slug: book.slug,
+        id: book.id,
+        checked,
+        broken: broken.length,
+        metadataOnly: metadataOnly ?? null,
+        ref: ref ?? null,
+        undetermined: why ?? null,
+      }) + '\n',
+    );
+
+    if (why) {
+      undetermined.push({ book, why });
+      if (books.length === 1) console.log(`${book.slug}: UNDETERMINED — ${why}; abstaining.`);
+      return;
+    }
 
     if (broken.length === 0) {
-      if (books.length === 1) console.log(`${book.slug}: ${checked} crop-bearing pages checked, none falsely split.`);
+      if (books.length === 1) {
+        console.log(
+          `${book.slug}: ${checked} crop-bearing pages checked against leaf AR ${ref.toFixed(3)} (${how}); ` +
+            `none visibly broken${metadataOnly ? `, ${metadataOnly} with a spurious crop that still renders full` : ''}.`,
+        );
+      }
       return;
     }
     console.log(`\n=== ${book.slug} (${book.id})`);
-    console.log(`    ${checked} crop-bearing pages checked, ${broken.length} falsely split:`);
+    console.log(`    leaf AR ${ref.toFixed(3)} (${how}); ${checked} crop-bearing pages checked`);
+    console.log(`    ${broken.length} VISIBLY broken (single leaf rendered as a half):`);
     for (const r of broken) {
       console.log(
         `      p${r.page.page_number}: single leaf ${r.src.w}x${r.src.h} rendered as ${r.rendered.w}x${r.rendered.h}` +
           `  crop=${JSON.stringify(r.page.crop)}`,
       );
     }
-    if (unreadable?.length) console.log(`    (${unreadable.length} pages whose source could not be read — skipped)`);
+    if (metadataOnly) console.log(`    (+${metadataOnly} spurious crops that still render full — not repaired here)`);
     allBroken.push({ book, broken });
   });
 
@@ -266,7 +347,12 @@ async function main() {
   allBroken.sort((a, b) => (a.book.slug || '').localeCompare(b.book.slug || ''));
 
   const total = allBroken.reduce((n, b) => n + b.broken.length, 0);
-  console.log(`\nTotal falsely split pages: ${total} across ${allBroken.length} book(s)`);
+  console.log(`\nTotal visibly broken pages: ${total} across ${allBroken.length} book(s)`);
+  if (undetermined.length) {
+    console.log(
+      `Undetermined (abstained, NOT counted as clean): ${undetermined.length} book(s) — no reliable single-leaf reference.`,
+    );
+  }
 
   if (!APPLY || total === 0) {
     if (total > 0) console.log('Re-run with --apply to repair.');
