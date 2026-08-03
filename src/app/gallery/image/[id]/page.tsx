@@ -10,6 +10,7 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProseField from '@/components/ui/ProseField';
 import {
   BookOpen,
   Share2,
@@ -1023,11 +1024,13 @@ export default function ImageDetailPage({
                   </div>
                   {isAdmin && editingDescription ? (
                     <div className="space-y-3">
-                      <textarea
+                      <ProseField
                         value={museumDescValue}
-                        onChange={(e) => setMuseumDescValue(e.target.value)}
-                        className="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
+                        onChange={setMuseumDescValue}
+                        savedValue={data.museumDescription || ''}
+                        help="Two or three sentences, in the museum voice."
                         placeholder="Write a 2-3 sentence museum-style description..."
+                        inputClassName="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
                       />
                       <div className="flex gap-2">
                         <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-2 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
