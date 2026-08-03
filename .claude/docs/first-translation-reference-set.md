@@ -83,11 +83,24 @@ Agrippa case does not belong in the sample at all — its efforts read `inconclu
 not `none_found`, so it is not evidence about what a null is worth. The other six
 named works stand.
 
-### 2b. The cause is mostly the CORPUS — but the first version of this table was wrong
+### 2b. The cause is the CORPUS, not the matcher — but read 2c before quoting 2b
 
-*Re-verified 2026-08-02 against the live `reference_translations` collection,
-querying `uniform_title`, `title` and `author`. Six of the seven works named in §2a
-are confirmed absent. One is not, and the original row for it was wrong.*
+> **⚠️ Corrected twice, 2026-08-02, by two independent passes. Both corrections
+> are below and neither supersedes the other.**
+>
+> 1. **The explanation was wrong.** "The extract is 1.04% pre-1800 against an
+>    early-modern corpus" is a true statistic and a false diagnosis — a prior
+>    English translation of a 1531 Latin work is normally a **modern** imprint, so
+>    the set's date skew was never evidence of anything. **§2c has the real cause**
+>    (an ingest filter), and it is the one to quote.
+> 2. **One row of the table was wrong.** Six of the seven works are confirmed
+>    absent; **Agrippa is present** and was never a miss at all. See immediately
+>    below.
+
+**The Agrippa correction.** Re-verified 2026-08-02 against the live
+`reference_translations` collection, querying `uniform_title`, `title` AND `author`
+— the original check used author alone. **Six of the seven works named in §2a are
+confirmed absent. Agrippa is not:**
 
 | work | verified prior | in the extract? |
 |---|---|---|
@@ -99,62 +112,102 @@ are confirmed absent. One is not, and the original row for it was wrong.*
 | *Confessio Augustana* | — | Absent (0 rows). |
 | Gregory of Nazianzus | — | Absent (0 rows). |
 
-**The Agrippa correction, and what it costs the argument.** A 1694 English
-translation of exactly that uniform title is in the set. The matcher *did* surface
-it — all four of our copies sit at `inconclusive` with 1–2 candidates, not
-`none_found`. So this was never a corpus absence and never a matcher miss: **it is
-an unscreened candidate**, and the answer has been sitting in the screening
-backlog. The original row ("12 Agrippa rows, all *De occulta philosophia*") came
-from an author-name search that missed the record; the uniform title finds it
-immediately.
+A 1694 English translation of exactly that uniform title is in the set, and the
+matcher *did* surface it — all four of our copies sit at `inconclusive` with 1–2
+candidates, never `none_found`. So Agrippa was **neither a corpus absence nor a
+matcher miss: it is an unscreened candidate**, and the answer has been sitting in
+the screening backlog. It follows that it does not belong in §2a's PPV sample
+either — an `inconclusive` says nothing about what a null is worth.
 
-Two lessons, both the file's own doctrine turned on itself:
-- **Query every field before writing "absent."** An author search and a uniform-title
-  search are different questions. (The first re-check of this table also probed a
-  field named `record_author`, which does not exist — the field is `author`. A
-  query against a non-existent field returns 0 and reads exactly like a real
-  absence. Same failure class as §7: *every bug in this area fails toward a
-  confident clean negative.*)
-- **§4 already says the 240 IS the join key.** The table was built by author.
+Two lessons, both this file's own doctrine turned on itself:
 
-### The "1.04% pre-1800" figure does not mean what it was used to mean
+- **Query every field before writing "absent."** An author search and a
+  uniform-title search are different questions, and §4 already says the 240 IS the
+  join key — yet the table was built by author. (The first re-check also probed a
+  field named `record_author`, which does not exist; the field is `author`. A query
+  against a non-existent field returns 0 and reads exactly like a real absence.
+  Same failure class as §7: *every bug in this area fails toward a confident clean
+  negative*.)
+- **A correction is not exempt from the standard it enforces.** This row survived
+  one round of correction because the re-check inherited the original's search
+  strategy.
 
-Imprint-year distribution of the 118,352 rows (measured 2026-08-02):
+**Consequence for "matcher work is finished":** it may still be true, but §2b no
+longer evidences it. The one case re-examined here lost its answer to **screening**,
+not to matching — which points at queue item 4 as much as at the corpus.
 
-| 2000+ | 1950–99 | 1900–49 | 1800–99 | pre-1800 | no year |
-|---|---|---|---|---|---|
-| 55,441 | 51,835 | 6,722 | 2,684 | 1,230 | 440 |
+**Matcher/threshold work is finished.** The MARC 240 fix (§4) was the last
+available gain from matching and it is done and pinned. Further tuning is the trap
+this file exists to name. The next gain must come from the corpus.
 
-**91% post-1950 — which is the correct shape for the question.** `year` here is
-when the *translation* was printed, not when the original was written, and the
-English translation of an early-modern Latin work is usually a modern imprint.
-Reading 1.04% as "1% relevant" conflates the two dates. A modern-imprint catalogue
-is the right instrument for defeating a first-translation claim; it is simply
-missing part of its range.
+### 2c. What the cause actually is — and how the first answer went wrong
 
-The real, narrower gaps behind the six confirmed absences:
-- **Early-modern English printing.** Sanford 1569, Ellistone 1651, Hall 1654 are
-  all pre-1800 English imprints, and 1,230 rows cannot carry that period. This is
-  exactly ESTC's range — which strengthens **#3522**, rather than resting it on the
-  1% figure.
-- **The `041$h` hard filter.** `ingest-loc-bulk.mjs` drops any record with no `041`
-  field at all. Facing-page scholarly editions routinely carry none, which is why
-  *Rhetorica ad Herennium* has zero rows despite Caplan's Loeb. Ours to fix, not the
-  catalogue's.
-- **Source-language depth against our holdings.** Latin is 3,878 rows against 6,506
-  visible Latin books; Greek 2,333 against 1,096. French (21,982) and German
-  (19,562) dominate a set our corpus does not.
+The first explanation was: *"the extract holds 1,230 pre-1800 imprints of 118,352
+— 1.04% — so we are asking a modern-imprint catalogue about early-modern
+translations."* True statistic, **false diagnosis**, and it was written into
+CLAUDE.md and a merged PR before anyone questioned it.
 
-> **Doctrine: a reference set's SIZE is not its COVERAGE — and a date column is not
-> the date you think it is.** Before trusting a null, ask what fraction of the set
-> falls in the period, language and population you are asking about, and check
-> which event the date field records.
+**A prior English translation of a 1531 Latin work is normally a MODERN imprint** —
+Loeb, Penguin, SUNY, Cambridge. So the set *should* be mostly modern; that is where
+those translations live. Checked directly, the class is well covered:
 
-**Matcher/threshold work is *probably* finished — but that claim is no longer
-evidenced by this table.** The MARC 240 fix (§4) was the last available gain from
-matching. The Agrippa row shows the remaining loss in that case was screening, not
-matching, which points at queue item 4 (screen the `inconclusive`) as much as at
-adding sources. Do not re-cite §2b as proof that only sources remain.
+| imprint era of the 6,947 rows translating FROM Latin/Greek | share |
+|---|---|
+| 2000+ | 42.6% |
+| 1950–1999 | 38.2% |
+| 1900–1949 | 8.8% |
+| pre-1800 | 5.8% |
+| 1800–1899 | 4.2% |
+
+**80.8% post-1950.** The set's overall date skew was never evidence of anything,
+and two of the five misses (Caplan's Loeb 1954, Lemay's SUNY 1992) are themselves
+modern — which the "pre-1800" story cannot explain at all.
+
+**The real defect is one line in `ingest-loc-bulk.mjs`:**
+
+```js
+const itemLang = (subfieldValues(rec, '041', 'a')[0] || f008.slice(35, 38) || '')…
+if (!itemLang.startsWith('eng')) return null;
+```
+
+MARC lists a bilingual edition's languages **in order of predominance**. A
+facing-page scholarly edition — `041 $a lat $a eng $h lat`, or the concatenated
+`$a lateng` — puts the ancient language first because the ancient text is the
+primary content. **Both encodings are rejected outright.** That is exactly the
+Loeb / I Tatti / Dumbarton Oaks / Clay Sanskrit form, i.e. the dominant vehicle for
+scholarly English translations of classical works.
+
+The signature is visible in what survived: **4,622 rows passed with a
+multi-language item code (424 distinct forms: `engsan` 459, `engspa` 439,
+`englat` 386 …) purely because `eng` happened to be listed first.** The mirror
+population was dropped silently.
+
+**Fix:** test whether `eng` appears in *any* 041$a, not the first.
+Cost: one line, plus a ~15-minute free re-derivation of the extract.
+
+> ### The meta-lesson
+> **The artifact I measured was the one I had; the answer was in the one that was
+> missing.** Reading what the extract *contains* produced a plausible causal story.
+> The defect was in what the extractor *rejected* — and that population is
+> unmeasurable, because the raw dump is deleted after extraction.
+>
+> **When diagnosing a set's coverage, read the ingest filter, and keep or
+> re-derive the rejects. A filter's discards are the only place its blind spot is
+> visible.** This is the section's own principle turned on itself: an absence
+> claim is only as strong as the set it was asserted against — including an
+> absence claim *about that set*.
+
+### 2d. What each miss actually needs
+
+The five misses do **not** share one cause, and conflating them sent the fix in
+one direction when two are needed:
+
+| miss | why absent | fix |
+|---|---|---|
+| Sanford 1569, Hall 1654, Ellistone 1651 | early-modern **English imprints**; LoC's book catalogue barely holds them | **ESTC** (#3522) |
+| Caplan Loeb 1954, Lemay SUNY 1992 | modern, in LoC's period — excluded by the **041 item-language filter** | the one-line fix above |
+
+ESTC remains right for three of five. It was never going to recover the other two.
 
 ---
 

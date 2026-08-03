@@ -7,6 +7,12 @@ import { withAuth } from '@/lib/auth-helpers';
  *
  * Restore a revision — writes the old content back to the page.
  * Creates a new revision of the current content first (nothing is lost).
+ *
+ * Gated at `editor` (#3511). Two reasons this one mattered most: the Restore
+ * button renders in the reader's *read* mode, so it was the only page-write
+ * affordance a non-editor could actually see; and `restoreRevision()` resolves
+ * the page from the revision document, ignoring the `[id]` in the path and
+ * applying no tenant filter — so any revision id rewrote its page, anywhere.
  */
 export const POST = withAuth(async (
   request: NextRequest,
@@ -32,4 +38,4 @@ export const POST = withAuth(async (
     console.error('Error restoring revision:', error);
     return NextResponse.json({ error: 'Failed to restore revision' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
@@ -20,9 +21,11 @@ const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { s
 const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false, loading: LoadingBar });
 const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false, loading: LoadingBar });
 const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false, loading: LoadingBar });
-type Tab = 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
+const BooksTab = dynamic(() => import('@/components/analytics/tabs/BooksTab'), { ssr: false, loading: LoadingBar });
+type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: 'books', label: 'Books' },
   { key: 'usage', label: 'Usage' },
   { key: 'performance', label: 'Performance' },
   { key: 'logs', label: 'Logs' },
@@ -32,11 +35,21 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 export default function AnalyticsPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('usage');
+  const [activeTab, setActiveTab] = useState<Tab>('books');
   const [days, setDays] = useState(30);
   const [hours, setHours] = useState(24);
   const [pipelineHours, setPipelineHours] = useState(24);
   const [refreshKey, setRefreshKey] = useState(0);
+
+  // The "Books" tab is admin-only. Everyone reaching /analytics is editor+, so
+  // hide it (and switch off it) for non-admins; the API is also admin-gated.
+  const session = useStableSession();
+  const su = session.data?.user as { role?: string; tenantRole?: string } | undefined;
+  const isAdmin = ['admin', 'superadmin'].includes(su?.role || '') || ['admin', 'superadmin'].includes(su?.tenantRole || '');
+  useEffect(() => {
+    if (session.status === 'authenticated' && !isAdmin && activeTab === 'books') setActiveTab('usage');
+  }, [session.status, isAdmin, activeTab]);
+  const visibleTabs = TABS.filter(t => t.key !== 'books' || isAdmin);
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -61,7 +74,7 @@ export default function AnalyticsPage() {
           <div className="flex items-center gap-4">
             {/* Tab toggle */}
             <div className="flex rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
-              {TABS.map(tab => (
+              {visibleTabs.map(tab => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
@@ -133,6 +146,7 @@ export default function AnalyticsPage() {
       </header>
 
       <main className="max-w-[1500px] mx-auto px-6 py-8">
+        {activeTab === 'books' && isAdmin && <BooksTab key={refreshKey} />}
         {activeTab === 'usage' && <UsageTab key={refreshKey} days={days} />}
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}

@@ -29,6 +29,14 @@
  *   --any-marker  widen the candidate test to ANY non-trivial <image-desc> tag,
  *                 including bare attribute-less tags from old OCR vintages
  *                 (issue #3165). Skips pages the vision model already examined.
+ *   --page-type-candidates
+ *                 ALSO accept pages whose `page_type` is already an illustration
+ *                 class (illustration/diagram/map/frontispiece/mixed/title-page)
+ *                 even when OCR left no <image-desc> marker at all — the
+ *                 production worker's own rule. Every marker-based gate above is
+ *                 blind to those pages, so they are never offered to the vision
+ *                 model and read as "extracted, empty" permanently. Also skips
+ *                 pages already examined.
  */
 
 import { MongoClient } from 'mongodb';
@@ -60,9 +68,14 @@ const RANDOM_BOOKS = parseInt(getArg('random-books', '0'));
 // <image-desc> whose type attribute is absent or non-trivial. Expect lower
 // yield than the default filter's measured ~63% (Qazwini pilot: 49%).
 const ANY_MARKER = args.includes('--any-marker');
+// Also accept pages the page-typer already called an illustration, whether or
+// not OCR left a marker behind — see pageIsWorkerCandidate() below.
+const PAGE_TYPE_CANDIDATES = args.includes('--page-type-candidates');
 
 const MODEL = 'gemini-3-flash-preview';
 const TRIVIAL = new Set(['symbol', 'stamp', 'ornament', 'blank', 'exlibris', 'bookplate', 'decorative', "printer's mark", 'photograph', 'photographic']);
+// Mirrors IMAGE_CANDIDATE_PAGE_TYPES in scripts/workers/image-extract-worker.mjs.
+const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
 // ── Reuse the production prompt verbatim (extract from the worker source) ──
 const workerSrc = readFileSync(new URL('../workers/image-extract-worker.mjs', import.meta.url), 'utf8');
@@ -121,8 +134,25 @@ function pageHasNonTrivialHighSigMarker(ocr) {
   });
 }
 
+// Every marker test above keys off OCR markup, so a page the page-typer called
+// an `illustration` but whose OCR emitted no <image-desc> tag is invisible to
+// this script — the vision model is never asked, and the page reads as
+// "extracted, nothing there" forever. That is a coverage hole, not a judgment:
+// the production worker (image-extract-worker.mjs) keeps a page whose
+// `page_type` is in its candidate list regardless of markup, and only consults
+// markup to decide about UNtyped pages. `--page-type-candidates` opts into that
+// same rule so this script can reach them.
+//
+// Kept opt-in because the default gate is deliberately narrow: it targets the
+// measured ~63%-yield "vision missed it" pattern, and widening it lowers yield.
+function pageIsWorkerCandidate(page) {
+  if (IMAGE_CANDIDATE_PAGE_TYPES.includes(page.page_type)) return true;
+  // Untyped/other pages still have to clear the markup test.
+  return pageHasNonTrivialHighSigMarker(page.ocr?.data);
+}
+
 async function main() {
-  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} keys=${API_KEYS.length}`);
+  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} pageTypeCandidates=${PAGE_TYPE_CANDIDATES} keys=${API_KEYS.length}`);
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
@@ -151,14 +181,21 @@ async function main() {
       miss_recheck_at: { $exists: false },
       // Default mode re-tests examined-but-empty pages (the vision-missed
       // pattern its high-significance marker is strong evidence for). The
-      // relaxed marker isn't — restrict to never-examined pages.
-      ...(ANY_MARKER ? { image_extraction_updated_at: { $exists: false } } : {}),
+      // relaxed marker isn't — restrict to never-examined pages. Same reasoning
+      // for --page-type-candidates: page_type alone is weaker evidence than a
+      // high-significance marker, so don't spend a second vision call on a page
+      // some earlier pass already looked at and found empty.
+      ...(ANY_MARKER || PAGE_TYPE_CANDIDATES ? { image_extraction_updated_at: { $exists: false } } : {}),
     }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, display_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } }).toArray();
     for (const p of pages) {
       // Require the high-significance non-trivial OCR marker — the precise
       // "genuine miss" signal the pilot measured at ~63% recovery. (page_type
-      // alone is a weaker signal and dilutes yield.)
-      if (!pageHasNonTrivialHighSigMarker(p.ocr?.data)) continue;
+      // alone is a weaker signal and dilutes yield.) --page-type-candidates
+      // trades that yield for coverage of typed pages OCR never marked up.
+      const accept = PAGE_TYPE_CANDIDATES
+        ? pageIsWorkerCandidate(p)
+        : pageHasNonTrivialHighSigMarker(p.ocr?.data);
+      if (!accept) continue;
       // Keep only the fields getPageSource() needs — drop ocr.data so a 56K-page
       // full sweep doesn't hold the entire OCR corpus in memory.
       candidates.push({

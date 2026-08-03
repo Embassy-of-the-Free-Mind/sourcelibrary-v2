@@ -20,7 +20,14 @@ import {
 } from 'lucide-react';
 
 import { email } from '@/lib/api-client';
+import RichEmailEditor from '@/components/admin/RichEmailEditor';
+import ProseField from '@/components/ui/ProseField';
 import type { EmailDraft, SubscriberStats } from '@/lib/api-client/types/email';
+
+// A half-written letter should survive a refresh or a misclick. The compose
+// buffer is mirrored to localStorage and restored on mount; it is cleared once
+// the draft is saved to the server, which is the real store.
+const COMPOSE_BUFFER_KEY = 'sl_email_compose_buffer';
 
 type TabId = 'compose' | 'drafts' | 'sent' | 'subscribers';
 
@@ -79,6 +86,42 @@ export default function EmailAdminPage() {
     loadDrafts();
     loadStats();
   }, [loadDrafts, loadStats]);
+
+  // Restore an unsaved compose buffer once, on mount. Runs before the user can
+  // type, so it cannot clobber live input.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(COMPOSE_BUFFER_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { subject?: string; html?: string };
+      if (saved.subject) setManualSubject(saved.subject);
+      if (saved.html) setManualHtml(saved.html);
+      if (saved.subject || saved.html) {
+        setComposeMode('manual');
+        toast('Restored your unsaved draft');
+      }
+    } catch {
+      /* a corrupt buffer must never block the page */
+    }
+  }, []);
+
+  // Mirror the buffer as it changes. Writing an empty buffer would wipe the
+  // restore point the moment the page loads with both fields blank, so only a
+  // non-empty compose is persisted, and clearing both removes the key.
+  useEffect(() => {
+    try {
+      if (manualSubject || manualHtml) {
+        localStorage.setItem(
+          COMPOSE_BUFFER_KEY,
+          JSON.stringify({ subject: manualSubject, html: manualHtml }),
+        );
+      } else {
+        localStorage.removeItem(COMPOSE_BUFFER_KEY);
+      }
+    } catch {
+      /* private mode / quota — autosave is a convenience, never a gate */
+    }
+  }, [manualSubject, manualHtml]);
 
   const handleGenerate = async () => {
     setGenerating(true);
@@ -324,19 +367,19 @@ export default function EmailAdminPage() {
                         className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm"
                       />
                     </div>
-                    <div>
-                      <label className="text-sm text-stone-400 block mb-1">Body (HTML)</label>
-                      <textarea
+                    <ProseField
+                      label="Body"
+                      format="html"
+                      value={manualHtml}
+                      onChange={setManualHtml}
+                      help="Wrapped in the Source Library template — leave out the header, logo and footer."
+                    >
+                      <RichEmailEditor
                         value={manualHtml}
-                        onChange={e => setManualHtml(e.target.value)}
-                        placeholder="<p>Your email content...</p>"
-                        rows={12}
-                        className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm font-mono"
+                        onChange={setManualHtml}
+                        idPrefix="compose"
                       />
-                      <p className="text-xs text-stone-500 mt-1">
-                        Will be wrapped in the Source Library email template. Use HTML tags for formatting.
-                      </p>
-                    </div>
+                    </ProseField>
                     <div className="flex gap-2">
                       <button
                         onClick={handlePreviewManual}
@@ -434,15 +477,20 @@ export default function EmailAdminPage() {
                       className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm"
                     />
                   </div>
-                  <div>
-                    <label className="text-sm text-stone-400 block mb-1">HTML</label>
-                    <textarea
+                  <ProseField
+                    label="Body"
+                    format="html"
+                    value={editHtml}
+                    onChange={setEditHtml}
+                    help="A saved draft holds the FULL wrapped email, header and footer included."
+                  >
+                    <RichEmailEditor
                       value={editHtml}
-                      onChange={e => setEditHtml(e.target.value)}
-                      rows={16}
-                      className="w-full bg-stone-800 border border-stone-700 rounded px-3 py-2 text-sm font-mono"
+                      onChange={setEditHtml}
+                      minHeight={520}
+                      idPrefix="edit-draft"
                     />
-                  </div>
+                  </ProseField>
                   <div className="flex gap-2">
                     <button
                       onClick={handleSaveEdit}

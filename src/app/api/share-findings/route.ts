@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { guardPublicSubmission } from '@/lib/public-submission-guard';
 
 /**
  * "Share back" — a lightweight submission inbox, modeled on /api/feedback.
@@ -25,6 +26,9 @@ const MAX_CITATIONS = 50;
 // POST /api/share-findings — submit a dossier (anonymous, like feedback)
 export async function POST(request: NextRequest) {
   try {
+    const limited = await guardPublicSubmission(request, 'share-findings');
+    if (limited) return limited;
+
     const body = await request.json();
     const { title, summary, citations, name, email } = body as {
       title?: unknown; summary?: unknown; citations?: unknown; name?: unknown; email?: unknown;

@@ -94,6 +94,10 @@ export default function HallucinationReview() {
       onRetry={() => q.fetchNext(q.volunteerId)}
       body={body}
       submitting={q.submitting}
+      note={q.note}
+      onNoteChange={q.setNote}
+      onNoteSubmit={q.submitNote}
+      noteSaved={q.noteSaved}
     />
   );
 }

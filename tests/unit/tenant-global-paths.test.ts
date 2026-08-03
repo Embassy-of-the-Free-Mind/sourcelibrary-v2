@@ -16,7 +16,7 @@
  *     link to a path the proxy 404s
  */
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync, type Dirent } from 'fs';
 import path from 'path';
 import { NextRequest } from 'next/server';
 
@@ -211,20 +211,24 @@ describe('wiring', () => {
   });
 
   it('every blocked API path is a real route handler', () => {
+    // A typo here would silently block nothing. Each entry must be a directory
+    // that holds a route handler, either directly or in a child segment —
+    // several blocked prefixes (/api/explore, /api/review) are parent segments
+    // whose children carry the handlers.
+    const hasRouteHandler = (dir: string): boolean => {
+      let entries: Dirent[];
+      try {
+        entries = readdirSync(dir, { withFileTypes: true });
+      } catch {
+        return false;
+      }
+      if (entries.some(e => e.isFile() && /^route\.tsx?$/.test(e.name))) return true;
+      return entries.some(e => e.isDirectory() && hasRouteHandler(path.join(dir, e.name)));
+    };
+
     for (const p of GLOBAL_ONLY_TENANT_API_PATHS) {
       const dir = path.join(repoRoot, 'src/app', p.replace(/^\//, ''));
-      let found = true;
-      try {
-        readFileSync(path.join(dir, 'route.ts'));
-      } catch {
-        // /api/explore is a parent segment whose children hold the handlers.
-        try {
-          readFileSync(path.join(dir, 'map', 'route.ts'));
-        } catch {
-          found = false;
-        }
-      }
-      expect(found, `${p} should resolve to a route handler`).toBe(true);
+      expect(hasRouteHandler(dir), `${p} should resolve to a route handler`).toBe(true);
     }
   });
 });

@@ -24,7 +24,9 @@ export const metadata: Metadata = {
 };
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
+// Source Library designation at NAF, not general Embassy support — see the note in
+// src/components/donate/SupportView.tsx.
+const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/embassyofthefreemindsourcelibrary';
 const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Three pecha leaves on a dark ground — the manuscript story at a glance.

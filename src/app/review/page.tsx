@@ -99,9 +99,10 @@ export default function ReviewLandingPage() {
           our filter rules and quality signals. Your ratings are stored only as a per-browser ID — no PII.
         </p>
         <p>
-          Built as an experiment in collaborative curation. Feedback?{' '}
-          <a href="mailto:derek@playpowerlabs.com" className="text-accent-rust hover:underline">
-            Email Derek
+          Every queue also has a free-text box: if you can see something the buttons can&apos;t
+          express, write it there. Those notes are read.{' '}
+          <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+            Or email us
           </a>
           .
         </p>
