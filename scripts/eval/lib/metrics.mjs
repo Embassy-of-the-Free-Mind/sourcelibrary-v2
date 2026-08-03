@@ -552,3 +552,26 @@ export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds
     charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
     spanDispersion: guard.spanDispersion };
 }
+
+// ── Revision-agreement metric (#3235 / #3473) ──────────────────────
+// The primary word-level agreement used by revision-agreement-corpus.mjs and
+// by reocr-pairing-check.mjs. Kept HERE, in one place, because two copies of a
+// metric drift and every number computed with either becomes uncomparable.
+//
+// HTML entities are not text: a prior revision on Kircher's Arithmologia p9 was
+// 24,692 chars of `&nbsp;` padding around 73 real words, and because `nbsp` is a
+// letter run it counted as 4,025 body words.
+export const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
+
+export const toAgreementWords = s => deEntity(stripWrappers(s || ''))
+  .toLowerCase()
+  .replace(/[^\p{L}\s]/gu, ' ')
+  .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
+
+/** Normalized word-level Levenshtein agreement, 0..1. null when both sides empty. */
+export function agreementWords(a, b) {
+  const A = toAgreementWords(a), B = toAgreementWords(b);
+  if (!A.length && !B.length) return null;
+  if (!A.length || !B.length) return 0;
+  return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
+}

@@ -44,7 +44,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { stripWrappers, levenshtein } from './lib/metrics.mjs';
+import { stripWrappers, levenshtein, deEntity, agreementWords } from './lib/metrics.mjs';
 // Which `source` labels are readings vs bulk maintenance (#3473) — shared with
 // repeat-instability-draw.mjs and pinned by tests/unit/revision-source.test.ts.
 import { isMaintenanceSource } from './lib/revision-source.mjs';
@@ -85,7 +85,7 @@ const SITE = 'https://sourcelibrary.org';
 // 24,692 chars of `&nbsp;` padding around 73 real words — and because `nbsp` is a
 // letter run, it counted as 4,025 body words and shot to the top of the
 // regression queue as "text that was lost".
-const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
+// deEntity now lives in ./lib/metrics.mjs -- one copy, so numbers stay comparable.
 
 // Degenerate output: the model looped. A Tibetan page carried 8,104 words with 40
 // unique (ratio 0.005, `तथा तथा तथा…`). Low type/token ratio on a long text means
@@ -116,17 +116,11 @@ const printedPageNum = t => {
 };
 
 // ── metric (parity with revision-agreement-pilot.mjs) ─────────────
-const toWords = s => deEntity(stripWrappers(s || ''))
-  .toLowerCase()
-  .replace(/[^\p{L}\s]/gu, ' ')
-  .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
-export function agreement(a, b) {
-  const A = toWords(a), B = toWords(b);
-  if (!A.length && !B.length) return null;
-  if (!A.length || !B.length) return 0;
-  const d = levenshtein(A, B);
-  return 1 - d / Math.max(A.length, B.length);
-}
+// The word metric and its tokenizer moved to ./lib/metrics.mjs
+// (`agreementWords` / `toAgreementWords`) so reocr-pairing-check.mjs uses the
+// SAME implementation. Two copies drift, and every number computed with either
+// then stops being comparable to the other.
+export const agreement = agreementWords;
 
 // Character-level twin of the same metric. REQUIRED for space-less scripts:
 // `toWords` splits on whitespace, so a page of Chinese or Tibetan collapses into
