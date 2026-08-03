@@ -332,7 +332,10 @@ async function build() {
       }
       for (const [key, raw] of [['ocr', page.ocr?.data], ['translation', page.translation?.data]]) {
         if (!raw) continue;
-        const text = stripEditorialWrappers(raw).trim();
+        // keepTables: the snapshot is the distributable corpus, not a snippet —
+        // flattening a GFM table preserves the cell values but loses the column
+        // each belonged to, baking that loss into every downstream consumer.
+        const text = stripEditorialWrappers(raw, { keepTables: true }).trim();
         if (!text) continue;
         // A page whose entire text is one bracketed marker ("[Blank page — no
         // translatable content]") is an AI annotation, not source text.

@@ -80,9 +80,128 @@ function flattenTagsForPdf(text: string): string {
  */
 export function cleanTranslationForPdf(raw: string, bookId: string): string {
   if (!raw) return '';
-  const stripped = stripEditorialWrappers(raw);
+  // keepTables — a downloaded edition is the whole text, not a snippet. The
+  // default flattening keeps every cell value but discards the column it
+  // belonged to; `writePdfBody()` below lays the surviving markup out as a real
+  // PDF table instead. (40% of pages in a manuscript like Kitab al-Bulhan are
+  // calendar/abjad tables, so this is not an edge case.)
+  const stripped = stripEditorialWrappers(raw, { keepTables: true });
   const marked = markForExport(stripped, bookId);
   return flattenTagsForPdf(marked);
+}
+
+/** A run of page text: either flowing prose or a GFM table. */
+export type PdfBlock =
+  | { kind: 'text'; text: string }
+  | { kind: 'table'; rows: string[][]; hasHeader: boolean };
+
+const TABLE_ROW_RE = /^[ \t]*\|(.+)\|[ \t]*$/;
+/** GFM alignment/separator row — cells are only dashes with optional colons. */
+const TABLE_SEPARATOR_RE = /^[ \t]*\|?[ \t]*:?-+:?[ \t]*(?:\|[ \t]*:?-+:?[ \t]*)+\|?[ \t]*$/;
+
+const splitRow = (line: string): string[] =>
+  (line.match(TABLE_ROW_RE)?.[1] ?? '').split('|').map(c => c.trim());
+
+/**
+ * Split cleaned page text into prose and table blocks so each can be laid out
+ * with the right pdfkit primitive. A table is a maximal run of consecutive
+ * pipe-delimited lines; its separator row marks the preceding row as a header.
+ *
+ * Exported for testing — `writePdfBody()` is the normal entry point.
+ */
+export function splitPdfBlocks(text: string): PdfBlock[] {
+  const blocks: PdfBlock[] = [];
+  let prose: string[] = [];
+  let rows: string[][] = [];
+  let hasHeader = false;
+
+  const flushProse = () => {
+    const t = prose.join('\n').trim();
+    if (t) blocks.push({ kind: 'text', text: t });
+    prose = [];
+  };
+  const flushTable = () => {
+    // Drop a fully-empty header row ("| | |") — common in OCR'd tables and it
+    // would render as a band of blank cells.
+    if (rows.length && rows[0].every(c => !c)) {
+      rows.shift();
+      hasHeader = false;
+    }
+    if (rows.length) blocks.push({ kind: 'table', rows, hasHeader });
+    rows = [];
+    hasHeader = false;
+  };
+
+  for (const line of text.split('\n')) {
+    if (TABLE_SEPARATOR_RE.test(line) && rows.length) {
+      // The row already collected is the header.
+      hasHeader = true;
+      continue;
+    }
+    if (TABLE_ROW_RE.test(line)) {
+      if (!rows.length) flushProse();
+      rows.push(splitRow(line));
+      continue;
+    }
+    if (rows.length) flushTable();
+    prose.push(line);
+  }
+  flushTable();
+  flushProse();
+  return blocks;
+}
+
+/**
+ * Render a page's cleaned text, laying GFM tables out as real PDF tables
+ * (pdfkit >= 0.16 `doc.table()`) rather than as flattened digit runs.
+ *
+ * Falls back to plain text if the installed pdfkit has no table support, so a
+ * version skew degrades the layout instead of 500ing the download.
+ */
+export function writePdfBody(
+  doc: PDFKit.PDFDocument,
+  fonts: PdfFontNames,
+  text: string,
+  opts: { fontSize: number; lineGap?: number },
+): void {
+  const { fontSize, lineGap = 3 } = opts;
+  const canTable = typeof (doc as { table?: unknown }).table === 'function';
+
+  for (const block of splitPdfBlocks(text)) {
+    if (block.kind === 'text') {
+      doc.font(fonts.regular).fontSize(fontSize).text(block.text, { lineGap });
+      continue;
+    }
+    if (!canTable) {
+      // Keep the pipes — unaligned, but the column each value belongs to is
+      // still recoverable, unlike a flattened run.
+      doc.font(fonts.regular).fontSize(fontSize).text(
+        block.rows.map(r => r.join(' | ')).join('\n'), { lineGap });
+      continue;
+    }
+    // Wide tables (some run 16-18 columns) need a smaller face to stay legible
+    // inside the A4 text block.
+    const cols = Math.max(...block.rows.map(r => r.length));
+    const cellSize = cols >= 12 ? 6.5 : cols >= 8 ? 7.5 : Math.min(fontSize, 9);
+    doc.moveDown(0.4);
+    // Set the face on the document so every cell inherits it; only the header
+    // row overrides, so a table never silently falls back to a Latin-only
+    // built-in face mid-way through.
+    doc.font(fonts.regular).fontSize(cellSize);
+    doc.table({
+      data: block.rows.map((row, i) => {
+        const isHeader = block.hasHeader && i === 0;
+        return row.map(cell => ({
+          text: cell,
+          type: (isHeader ? 'TH' : 'TD') as 'TH' | 'TD',
+          ...(isHeader ? { font: { src: fonts.bold, size: cellSize } } : {}),
+        }));
+      }),
+      defaultStyle: { border: 0.5, borderColor: '#cccccc', padding: 2 },
+    });
+    doc.moveDown(0.4);
+    doc.font(fonts.regular).fontSize(fontSize);
+  }
 }
 
 /** Minimal book shape the layout helpers need — kept structural so callers
