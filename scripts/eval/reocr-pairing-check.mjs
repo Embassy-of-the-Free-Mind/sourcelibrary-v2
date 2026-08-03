@@ -25,8 +25,9 @@
  *   SUSPECT  archive_metadata.archived_at  >  ocr.updated_at   (image re-archived
  *            after the text was written — the population under suspicion)
  *   CONTROL  archive_metadata.archived_at <=  ocr.updated_at
- * Both arms get an IDENTICAL prompt, model and temperature, so any difference
- * between them is attributable to the image and not to the harness. The absolute
+ * Both arms get an IDENTICAL prompt, model and temperature, AND are
+ * frequency-matched on language, so any difference between them is attributable
+ * to the image and not to the harness or the material. The absolute
  * agreement level may sit below the 0.973 corpus median if the stored text used
  * an older prompt; that shifts both arms equally and is recorded per page
  * (`prompt_matched`, `model_matched`) so it can be checked rather than assumed.
@@ -51,7 +52,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
-import { agreementWords } from './lib/metrics.mjs';
+import { agreementPrimary, scriptClassOf } from './lib/metrics.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('--')).map(a => {
@@ -110,16 +111,53 @@ async function main() {
     { $project: { id: 1, book_id: 1, page_number: 1, archive_metadata: 1, ocr: 1, archived_photo: 1, photo_original: 1, display_photo: 1, photo: 1, crop: 1 } },
   ], { allowDiskUse: true }).toArray();
 
-  const arms = { suspect: [], control: [] };
+  // Candidate pool, unmatched.
+  const cand = { suspect: [], control: [] };
   for (const p of pool) {
     const stored = p.ocr?.data;
     const at = p.archive_metadata?.archived_at, up = p.ocr?.updated_at;
     if (typeof stored !== 'string' || stored.trim().length < 200) continue;
     if (!at || !up) continue;
     if (!getPageSource(p)) continue;
-    const arm = new Date(at) > new Date(up) ? 'suspect' : 'control';
-    if (arms[arm].length < Math.floor(N / 2)) arms[arm].push(p);
+    cand[new Date(at) > new Date(up) ? 'suspect' : 'control'].push(p);
   }
+
+  // FREQUENCY-MATCH THE ARMS ON LANGUAGE. Without this the comparison is void:
+  // the first run of this script drew a suspect arm that was 76% Tibetan against
+  // a 7% control, because the May-2026 re-archiving campaign targeted the
+  // Tibetan collections. "Re-archived after OCR" was then very nearly a proxy
+  // for "is a Tibetan manuscript", and the arm gap measured script difficulty
+  // rather than image churn.
+  const bookIds = [...new Set([...cand.suspect, ...cand.control].map(p => p.book_id).filter(Boolean))];
+  const books = await db.collection('books').find(
+    { $or: [{ id: { $in: bookIds } }, { _id: { $in: bookIds } }] },
+    { projection: { id: 1, language: 1 } },
+  ).toArray();
+  const langOf = new Map();
+  for (const b of books) for (const k of [b.id, String(b._id)]) if (k) langOf.set(k, b.language || 'unknown');
+  for (const p of [...cand.suspect, ...cand.control]) p.__language = langOf.get(p.book_id) || 'unknown';
+
+  const byLang = arm => {
+    const m = new Map();
+    for (const p of cand[arm]) { const k = p.__language; if (!m.has(k)) m.set(k, []); m.get(k).push(p); }
+    return m;
+  };
+  const sMap = byLang('suspect'), cMap = byLang('control');
+  const perArm = Math.floor(N / 2);
+  const arms = { suspect: [], control: [] };
+  // Take equal counts per language, largest shared languages first.
+  const shared = [...sMap.keys()].filter(k => cMap.has(k))
+    .sort((a, b) => Math.min(cMap.get(b).length, sMap.get(b).length) - Math.min(cMap.get(a).length, sMap.get(a).length));
+  for (const lang of shared) {
+    if (arms.suspect.length >= perArm) break;
+    const take = Math.min(sMap.get(lang).length, cMap.get(lang).length, perArm - arms.suspect.length);
+    arms.suspect.push(...sMap.get(lang).slice(0, take));
+    arms.control.push(...cMap.get(lang).slice(0, take));
+  }
+  const dist = a => [...a.reduce((m, p) => m.set(p.__language, (m.get(p.__language) || 0) + 1), new Map())]
+    .sort((x, y) => y[1] - x[1]).slice(0, 5).map(([k, v]) => `${k}:${v}`).join(' ');
+  console.log(`  suspect languages: ${dist(arms.suspect)}`);
+  console.log(`  control languages: ${dist(arms.control)}`);
   const targets = [...arms.suspect, ...arms.control];
   console.log(`arms: suspect=${arms.suspect.length}  control=${arms.control.length}  total=${targets.length}`);
   console.log(`ESTIMATED COST: ${targets.length} pages x $${COST_PER_PAGE} = $${(targets.length * COST_PER_PAGE).toFixed(2)}`);
@@ -146,7 +184,9 @@ async function main() {
         spentPages++;
         results.push({
           page_id: p.id, book_id: p.book_id, page_number: p.page_number, arm,
-          agreement: agreementWords(p.ocr.data, r.text),
+          agreement: agreementPrimary(p.ocr.data, r.text),
+          script_class: scriptClassOf(p.ocr.data),
+          language: p.__language || null,
           stored_model: p.ocr.model || null, stored_prompt: p.ocr.prompt_version ?? null,
           model_matched: (p.ocr.model || null) === MODEL,
           prompt_matched: String(p.ocr.prompt_version ?? '') === String(prompt.version),
