@@ -21,7 +21,7 @@ const ROOT = path.resolve(__dirname, '../..');
  *
  * These are the PRODUCTION writers of `gemini_usage.cost_usd`. Migrating them
  * changes what the cost dashboard reports, so it is deliberate work under
- * #3379, not a drive-by refactor. They are listed individually so the set
+ * #3576, not a drive-by refactor. They are listed individually so the set
  * cannot grow silently — a new entry here is a decision, not an accident.
  *
  * They do not agree with each other today, which is the whole point:

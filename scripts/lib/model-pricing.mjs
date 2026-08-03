@@ -13,11 +13,11 @@
  * flash-lite rows) gives a mean relative error of 0.39 against 0.075/0.30 and
  * 1.83 against 0.25/1.50 — so recorded costs were computed with something near
  * the first pair, but neither pair fits cleanly. Cached-token pricing or a
- * third historical rate is the likely remainder. See #3379.
+ * third historical rate is the likely remainder. See #3576 (split out of the merged PR #3379).
  *
  * CONSEQUENCE, and the reason not to "just fix" it: `gemini_usage.cost_usd` is
  * COMPUTED from these constants, never billed. Changing a number here silently
- * rewrites what the cost dashboard reports. Do that deliberately, with #3379,
+ * rewrites what the cost dashboard reports. Do that deliberately, with #3576,
  * not as a drive-by.
  *
  * Reference: https://ai.google.dev/gemini-api/docs/pricing
