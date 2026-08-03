@@ -140,6 +140,50 @@ future selection should filter on it and keep the page number as the independent
 check *on* it rather than as the primary.
 
 
+## The metric does NOT transfer to translation (measured 2026-08-02)
+
+Pointing the corpus builder at `--field=translation` works mechanically and
+yields 50,768 pairs. It does not yield a quality signal, and the number should
+not be quoted as though it did.
+
+| | median agreement | below 0.85 ("unstable") | carries a printed `<page-num>` |
+|---|---|---|---|
+| OCR, same-leaf | 0.996 | 9.3% | 60.9% of rows |
+| OCR, rescued | 0.973 | 22.0% | — |
+| Translation, same-leaf | 0.685 | 89.4% | **2.0% of rows** |
+| Translation, rescued | 0.630 | 89.8% | — |
+
+**A threshold calibrated on OCR flags nine tenths of translation pairs**, and a
+signal that fires on 90% of a population discriminates nothing. The cause is not
+data quality, it is structural: OCR has ONE correct output — the glyphs on the
+page — so two passes agreeing is evidence. Translation has MANY correct outputs,
+so two passes differing is the expected case.
+
+Read three pairs at the median (0.55–0.72) to check that rather than assume it,
+and all three were the same text rendered twice with different wording: Pliny
+p353 "is like barley" / "similar to barley", "provided it is held" / "so that it
+is held"; Amuli p760 "similar to matter pus" / "resembles pus". Paraphrase
+variance, not error.
+
+But not *only* that — `songwonnok-yi` p103 renders one office as "Military
+officer and attendant" against "Official of Sacrificial Meats", and a career note
+as "Passed exam" against "Successor". Those are real disagreements about meaning,
+sitting at the same agreement score as pure synonym choice. **Word-level
+Levenshtein cannot separate them**, which is exactly why the lexical metric fails
+here rather than merely being noisy.
+
+A translation-quality signal therefore needs a SEMANTIC comparison (embedding
+cosine between the two renderings, flagging low-similarity pairs) rather than a
+lexical one. The embedding infrastructure already exists — `page_translations` in
+Supabase, see `.claude/docs/embeddings.md`. Not built; scoped here so the next
+attempt does not start by re-running the lexical metric and re-discovering this.
+
+**The `2.0%` column is also why translation was never measurable before.** The
+printed page number is transcribed by the OCR pass; a translation does not carry
+it. So `leaf_shift` is null on 98% of translation rows and the same-leaf filter
+reduced 130,049 rows to **331** usable pairs. The `source` label is the only
+mechanism filter that functions on this field at all.
+
 ## Why the loop matters more than the fix
 
 Five claims in this work were wrong and each was caught by the same move —
