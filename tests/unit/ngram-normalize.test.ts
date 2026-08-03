@@ -75,6 +75,48 @@ describe('wrapper-stripper parity (mjs twin vs src/lib original)', () => {
   });
 });
 
+/**
+ * The EPIGRAPHY/ARTIFACT wrapper family (#3524).
+ *
+ * Tablet and papyrus records use a schema the codex wrappers never covered, and
+ * `<condition>` holds a paragraph of English prose describing the OBJECT. Served
+ * as quotable text that is a fabricated citation — the #2232 class in a family
+ * nobody had enumerated.
+ *
+ * The distinction that matters: `<condition>` is ABOUT the artifact and goes;
+ * `<transliteration>` IS the artifact's text and stays. A stripper that took both
+ * would erase the only readable content these records have.
+ */
+describe('artifact wrappers: description goes, transliteration stays', () => {
+  const TABLET = [
+    '<surface>full-view</surface>',
+    '<language>Akkadian</language>',
+    '<period>ca. 668-631 BC (Library of Ashurbanipal)</period>',
+    '<condition>The image shows multiple fragments (K.2421, K.2511, K.16765) from',
+    'the British Museum collection, joined to form a substantial portion of a tablet.</condition>',
+    '<genre>literary</genre>',
+    '<transliteration>a-sar-ri ba-ni i-ne-mi sa-a-ti</transliteration>',
+  ].join('\n');
+
+  for (const [name, strip] of [['ts', stripTs], ['mjs', stripMjs]] as const) {
+    it(`${name}: drops the artifact DESCRIPTION`, () => {
+      const out = strip(TABLET);
+      expect(out).not.toMatch(/British Museum/);
+      expect(out).not.toMatch(/fragments/);
+      expect(out).not.toMatch(/Library of Ashurbanipal/);
+      expect(out).not.toMatch(/literary/);
+    });
+
+    it(`${name}: KEEPS the transliteration — it is the page's text`, () => {
+      expect(strip(TABLET)).toMatch(/a-sar-ri ba-ni/);
+    });
+  }
+
+  it('the two twins agree on the artifact fixture', () => {
+    expect(stripMjs(TABLET)).toEqual(stripTs(TABLET));
+  });
+});
+
 describe('normalizer behavior', () => {
   it('folds long s and ligatures', () => {
     expect(ts.tokenize('Chymiſtry æther ﬁre', 'en')).toEqual(['chymistry', 'aether', 'fire']);
