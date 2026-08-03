@@ -187,7 +187,7 @@ async function main() {
   for (let i = 0; i < revIds.length; i += 500) {
     const chunk = await db.collection('pages').find(
       { id: { $in: revIds.slice(i, i + 500) } },
-      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, scan_quality: 1,
+      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.source': 1, scan_quality: 1,
                       display_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, crop: 1 } }
     ).maxTimeMS(180000).toArray();
     for (const p of chunk) pageById.set(p.id, p);
@@ -203,7 +203,7 @@ async function main() {
     // printed leaf. The page-number half was inline here and the source half was
     // missing, so every shift-repair pair (a third of the OCR corpus) still
     // entered this lane whenever the moved text happened to print the same number.
-    const cls = classifyPair({ priorSource: rev.source, priorText: rev.data, currentText: now });
+    const cls = classifyPair({ priorSource: rev.source, currentSource: p?.ocr?.source, priorText: rev.data, currentText: now });
     if (!cls.usable) { dropped[cls.reason] = (dropped[cls.reason] || 0) + 1; continue; }
     // Stricter than `usable` on purpose: this lane claims a page is PROVABLY hard,
     // so an unverifiable pairing is not good enough evidence.

@@ -362,7 +362,7 @@ async function main() {
         const degCurrent = repCurrent != null && repCurrent < DEGENERATE;
         const ep = envelope(prior.data), ec = envelope(current.data);
         // #3473: is this a double READ at all, or one text filed against two pages?
-        const pairClass = classifyPair({ priorSource: prior.source, priorText: prior.data, currentText: current.data });
+        const pairClass = classifyPair({ priorSource: prior.source, currentSource: current.source, priorText: prior.data, currentText: current.data });
         const row = {
           page_id: entry.page_id,
           book_id: entry.revs[0].book_id,

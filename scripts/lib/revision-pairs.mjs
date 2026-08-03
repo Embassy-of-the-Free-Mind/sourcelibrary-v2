@@ -54,6 +54,24 @@ export const TEXT_MOVE_SOURCES = new Set([
 export const HUMAN_EDIT_SOURCES = new Set(['manual']);
 
 /**
+ * Writes that produced text WITHOUT reading the page: a mechanical transform of
+ * text that already existed, or a synthetic placeholder.
+ *
+ *   maintenance — repair scripts rewriting stored text (`fix-unclosed-note-tags.mjs`
+ *                 and friends). Prior and current are the same read, one tidied.
+ *   system      — the blank-page marker `[Blank page - no translatable content]`
+ *                 (`translation-processor-logic.ts`, `backfill-blank-page-markers.mjs`).
+ *                 Not a translation at all; pairing a real one against it scores as
+ *                 total disagreement while nothing was read twice.
+ *   skip        — a skip marker from the same family.
+ *
+ * Found by the unknown-source alarm on the first full run (1,516 + 1,593 + 96 pairs
+ * on the translation side). They were already refused as unrecognised; naming them
+ * turns "we do not know what this is" into "we know, and it is not a read".
+ */
+export const DERIVED_TEXT_SOURCES = new Set(['maintenance', 'system', 'skip']);
+
+/**
  * Sources known to be a model transcription pass. Present so an UNRECOGNISED
  * label surfaces loudly instead of silently joining the corpus.
  */
@@ -63,6 +81,7 @@ export const MODEL_PASS_SOURCES = new Set([
   'pipeline_preview',
   'realtime_api_sequential',
   'reocr-download-failure-fix-2026-07',
+  'batch_api_recovery',   // re-run of a failed batch: a real second pass
   'mineru',
   'live',            // the synthetic label consumers give the current pages.ocr
   'unknown',         // pre-labelling rows; genuine passes, provenance lost
@@ -84,6 +103,7 @@ export function sourceKind(source) {
   if (isTextMoveSource(source)) return 'text-move';
   const s = source == null || source === '' ? 'unknown' : String(source);
   if (HUMAN_EDIT_SOURCES.has(s)) return 'human';
+  if (DERIVED_TEXT_SOURCES.has(s)) return 'derived';
   if (MODEL_PASS_SOURCES.has(s)) return 'model';
   return 'unknown';
 }
@@ -125,17 +145,27 @@ export function leafVerdict(priorText, currentText) {
  * `usable` means: two independent model reads of the same leaf, i.e. the thing an
  * agreement metric assumes it is looking at. Everything else is returned with a
  * reason rather than dropped silently, so callers can report the flow.
+ *
+ * BOTH sides are judged. The first version of this checked only `priorSource`,
+ * which passes a pair whose CURRENT side is a synthetic blank-page marker
+ * (`source: 'system'`) sitting against a real earlier translation — scoring as
+ * total disagreement while nothing was read twice. `currentSource` is optional and
+ * defaults to a model pass, so a caller that cannot supply it is no worse off than
+ * before; supply it wherever the live subdocument's `source` is available.
  */
-export function classifyPair({ priorSource, priorText, currentText }) {
-  const kind = sourceKind(priorSource);
+export function classifyPair({ priorSource, currentSource, priorText, currentText }) {
+  const priorKind = sourceKind(priorSource);
+  const currentKind = currentSource === undefined ? 'model' : sourceKind(currentSource);
   const leaf = leafVerdict(priorText, currentText);
   const printed = { prior: printedLeaf(priorText), current: printedLeaf(currentText) };
-  const base = { source_kind: kind, leaf, printed };
+  const base = { source_kind: priorKind, current_source_kind: currentKind, leaf, printed };
+  const either = k => priorKind === k || currentKind === k;
 
   if (!priorText || !currentText) return { ...base, usable: false, reason: 'empty-side' };
-  if (kind === 'text-move') return { ...base, usable: false, reason: 'text-move-source' };
-  if (kind === 'human') return { ...base, usable: false, reason: 'human-edit' };
-  if (kind === 'unknown') return { ...base, usable: false, reason: 'unknown-source' };
+  if (either('text-move')) return { ...base, usable: false, reason: 'text-move-source' };
+  if (either('derived')) return { ...base, usable: false, reason: 'derived-text' };
+  if (either('human')) return { ...base, usable: false, reason: 'human-edit' };
+  if (either('unknown')) return { ...base, usable: false, reason: 'unknown-source' };
   if (leaf === 'different') return { ...base, usable: false, reason: 'different-leaf' };
   return { ...base, usable: true, reason: 'ok' };
 }

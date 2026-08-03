@@ -176,7 +176,7 @@ async function main() {
       const pairs = [];
       for (let i = 0; i < chain.length - 1; i++) {
         const prior = chain[i], current = chain[i + 1];
-        const v = classifyPair({ priorSource: prior.source, priorText: prior.data, currentText: current.data });
+        const v = classifyPair({ priorSource: prior.source, currentSource: current.source, priorText: prior.data, currentText: current.data });
         pairs.push({
           step: i,
           is_live: current.live,

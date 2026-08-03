@@ -172,7 +172,7 @@ async function main() {
     if (seen.has(r.page_id)) continue;   // newest revision per page only
     seen.add(r.page_id);
     if (pagesUsed >= SAMPLE) break;
-    const p = await pages.findOne({ id: r.page_id }, { projection: { 'ocr.data': 1, book_id: 1, page_number: 1 } });
+    const p = await pages.findOne({ id: r.page_id }, { projection: { 'ocr.data': 1, 'ocr.source': 1, book_id: 1, page_number: 1 } });
     const now = p?.ocr?.data; if (!now || !r.data) continue;
     // #3473: not every stored revision is a second READ. The e-rara repair sweep
     // moved text between pages, so its "prior" side is the neighbouring leaf. The
@@ -180,7 +180,7 @@ async function main() {
     // side-effect of measuring overlap, which means it would also silently accept
     // one whose neighbour happens to repeat (running heads, index columns).
     // Reject them by provenance, and count them separately from misalignment.
-    if (!classifyPair({ priorSource: r.source, priorText: r.data, currentText: now }).usable) {
+    if (!classifyPair({ priorSource: r.source, currentSource: p?.ocr?.source, priorText: r.data, currentText: now }).usable) {
       skippedNotComparable++; continue;
     }
     // Latin only, per the header rationale.

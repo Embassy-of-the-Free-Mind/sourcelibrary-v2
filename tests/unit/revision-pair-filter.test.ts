@@ -150,6 +150,41 @@ describe('classifyPair', () => {
     expect(v.leaf).toBe('unverified');
   });
 
+  it('rejects a pair whose CURRENT side is a synthetic blank-page marker', () => {
+    // The hole the first version had: only the prior source was checked, so a real
+    // translation replaced by `[Blank page — no translatable content]` passed as a
+    // double read and scored as total disagreement.
+    const v = classifyPair({
+      priorSource: 'ai',
+      currentSource: 'system',
+      priorText: P('12', 'a real translation of the page'),
+      currentText: '[Blank page — no translatable content]',
+    });
+    expect(v.usable).toBe(false);
+    expect(v.reason).toBe('derived-text');
+  });
+
+  it('rejects a mechanical text repair as a second read', () => {
+    // `maintenance` rewrites stored text (unclosed-tag repair). Prior and current
+    // are one read, one of them tidied.
+    const v = classifyPair({
+      priorSource: 'maintenance',
+      priorText: P('12', 'text with <note>an unclosed tag'),
+      currentText: P('12', 'text with <note>an unclosed tag</note>'),
+    });
+    expect(v.usable).toBe(false);
+    expect(v.reason).toBe('derived-text');
+  });
+
+  it('accepts a batch recovery re-run as a real pass', () => {
+    expect(sourceKind('batch_api_recovery')).toBe('model');
+  });
+
+  it('defaults currentSource to a model pass when the caller cannot supply it', () => {
+    const v = classifyPair({ priorSource: 'ai', priorText: P('3', 'x'), currentText: P('3', 'y') });
+    expect(v.usable).toBe(true);
+  });
+
   it('rejects an empty side', () => {
     expect(classifyPair({ priorSource: 'ai', priorText: '', currentText: P('1', 'x') }).reason)
       .toBe('empty-side');
