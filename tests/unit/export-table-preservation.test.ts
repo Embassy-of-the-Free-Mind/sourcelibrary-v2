@@ -14,7 +14,8 @@
  */
 import { describe, it, expect } from 'vitest';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { splitPdfBlocks, cleanTranslationForPdf } from '@/lib/pdf-export';
+import { splitPdfBlocks, cleanTranslationForPdf, splitScriptRuns } from '@/lib/pdf-export';
+import { loadPdfFonts } from '@/lib/pdf-fonts';
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 
 const TABLE = [
@@ -79,6 +80,24 @@ describe('splitPdfBlocks', () => {
     expect(blocks).toHaveLength(1);
     expect(blocks[0].kind).toBe('text');
   });
+
+  /**
+   * Regression: OCR'd tables are frequently RAGGED — a damaged or merged cell
+   * drops a pipe, so row lengths differ within one table. pdfkit sizes columns
+   * from the widest declared row and then throws "unsupported number:
+   * undefined" on any cell beyond it, killing the entire download. Found by
+   * rendering a real PDF (page 203 yields rows of 9, 10 and 11 cells); every
+   * rectangular fixture in this file passed straight over it.
+   */
+  it('pads ragged rows so the block is rectangular', () => {
+    const ragged = '| a | b | c |\n| 1 | 2 |\n| x | y | z | w |';
+    const blocks = splitPdfBlocks(ragged);
+    const table = blocks[0];
+    if (table.kind !== 'table') throw new Error('expected a table block');
+    expect(new Set(table.rows.map(r => r.length))).toEqual(new Set([4]));
+    expect(table.rows[1]).toEqual(['1', '2', '', '']);
+    expect(table.rows[2]).toEqual(['x', 'y', 'z', 'w']);
+  });
 });
 
 describe('cleanTranslationForPdf', () => {
@@ -86,6 +105,43 @@ describe('cleanTranslationForPdf', () => {
     const out = cleanTranslationForPdf(TABLE, 'test-book-id');
     const blocks = splitPdfBlocks(out);
     expect(blocks.some(b => b.kind === 'table')).toBe(true);
+  });
+});
+
+/**
+ * Noto Serif has no Arabic glyphs, so Arabic inside translation glosses
+ * rendered as .notdef boxes in every PDF (97 of 366 pages on Kitab al-Bulhan —
+ * confirmed by rasterising a real export). Noto Naskh Arabic has no Latin
+ * glyphs, so swapping the document font just inverts the problem; only per-run
+ * switching works.
+ */
+describe('mixed-script runs', () => {
+  it('bundles an Arabic face', () => {
+    expect(loadPdfFonts().arabic).toBeTruthy();
+  });
+
+  it('returns a single Latin run when there is no Arabic', () => {
+    expect(splitScriptRuns('plain english text')).toEqual([
+      { arabic: false, text: 'plain english text' },
+    ]);
+  });
+
+  it('splits an inline Arabic gloss out of surrounding English', () => {
+    const runs = splitScriptRuns('[original: "دري اللون" (durrī) – pearl-colored]');
+    expect(runs.filter(r => r.arabic).map(r => r.text.trim())).toEqual(['دري اللون']);
+    // Order is preserved and nothing is dropped.
+    expect(runs.map(r => r.text).join('')).toBe('[original: "دري اللون" (durrī) – pearl-colored]');
+  });
+
+  it('keeps the space inside a multi-word Arabic run', () => {
+    const runs = splitScriptRuns('x بسم الله الرحمن الرحيم y');
+    const ar = runs.find(r => r.arabic);
+    expect(ar?.text).toContain('بسم الله الرحمن الرحيم');
+  });
+
+  it('leaves a romanised transliteration on the Latin face', () => {
+    const runs = splitScriptRuns('durrī and al-Thurayyā');
+    expect(runs.every(r => !r.arabic)).toBe(true);
   });
 });
 

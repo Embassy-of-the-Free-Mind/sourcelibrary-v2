@@ -127,7 +127,17 @@ export function splitPdfBlocks(text: string): PdfBlock[] {
       rows.shift();
       hasHeader = false;
     }
-    if (rows.length) blocks.push({ kind: 'table', rows, hasHeader });
+    if (rows.length) {
+      // RECTANGULARIZE. OCR'd tables are frequently ragged — a damaged or
+      // merged cell drops a pipe, so row lengths vary within one table (a real
+      // page in Kitab al-Bulhan yields rows of 9, 10 and 11 cells). pdfkit sizes
+      // columns from the widest declared row and then throws
+      // "unsupported number: undefined" on any cell past that, killing the whole
+      // download. Pad short rows so the block invariant is "rectangular".
+      const width = Math.max(...rows.map(r => r.length));
+      rows = rows.map(r => (r.length === width ? r : [...r, ...Array(width - r.length).fill('')]));
+      blocks.push({ kind: 'table', rows, hasHeader });
+    }
     rows = [];
     hasHeader = false;
   };
@@ -152,6 +162,75 @@ export function splitPdfBlocks(text: string): PdfBlock[] {
 }
 
 /**
+ * Arabic-script range (incl. supplement, extended-A and the presentation forms).
+ * Deliberately does NOT include Latin, so a transliteration like "durrī" stays
+ * on the Latin face.
+ */
+const ARABIC_RE = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+/** A run is Arabic if it holds Arabic letters; adjacent spaces/punctuation ride along. */
+const ARABIC_RUN_RE =
+  /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿][؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿\s،؛؟]*/g;
+
+/** Split text into alternating Latin / Arabic runs, preserving order. */
+export function splitScriptRuns(text: string): Array<{ arabic: boolean; text: string }> {
+  if (!ARABIC_RE.test(text)) return [{ arabic: false, text }];
+  const runs: Array<{ arabic: boolean; text: string }> = [];
+  let last = 0;
+  for (const m of text.matchAll(ARABIC_RUN_RE)) {
+    const start = m.index ?? 0;
+    if (start > last) runs.push({ arabic: false, text: text.slice(last, start) });
+    runs.push({ arabic: true, text: m[0] });
+    last = start + m[0].length;
+  }
+  if (last < text.length) runs.push({ arabic: false, text: text.slice(last) });
+  return runs;
+}
+
+/**
+ * Write a string that may mix Latin and Arabic, switching face per run.
+ *
+ * Two facts force this, both verified by rendering (2026-08-03):
+ *  - Noto Serif has NO Arabic glyphs, so Arabic inside translation glosses
+ *    (`<note>original: "دري اللون"…`) rendered as .notdef boxes — 97 of 366
+ *    pages on Kitab al-Bulhan.
+ *  - Noto Naskh Arabic has no Latin glyphs, so simply swapping the document
+ *    font inverts the problem. Only per-run switching works.
+ *
+ * The `rtla` OpenType feature is REQUIRED on Arabic runs. Without it pdfkit
+ * shapes the letters and orders the words correctly but DROPS the inter-word
+ * spaces ("قارعت الاثنين" → "الاثنينقارعت"), which silently alters the text —
+ * unacceptable in an edition that gets cited. With it, spacing is correct.
+ */
+function writeScriptAwareText(
+  doc: PDFKit.PDFDocument,
+  fonts: PdfFontNames,
+  text: string,
+  opts: { fontSize: number; lineGap?: number },
+): void {
+  const { fontSize, lineGap = 3 } = opts;
+  const runs = splitScriptRuns(text);
+  // No Arabic, or no Arabic face bundled: one plain call. When the face is
+  // missing we deliberately keep the .notdef boxes rather than dropping the
+  // text — a visible gap is honest, silently-deleted source is not.
+  if (runs.length === 1 || !fonts.arabic) {
+    doc.font(fonts.regular).fontSize(fontSize).text(text, { lineGap });
+    return;
+  }
+  runs.forEach((run, i) => {
+    const isLast = i === runs.length - 1;
+    doc
+      .font(run.arabic ? fonts.arabic! : fonts.regular)
+      .fontSize(fontSize)
+      .text(run.text, {
+        lineGap,
+        continued: !isLast,
+        ...(run.arabic ? { features: ['rtla'] } : {}),
+      });
+  });
+  doc.font(fonts.regular).fontSize(fontSize);
+}
+
+/**
  * Render a page's cleaned text, laying GFM tables out as real PDF tables
  * (pdfkit >= 0.16 `doc.table()`) rather than as flattened digit runs.
  *
@@ -169,7 +248,7 @@ export function writePdfBody(
 
   for (const block of splitPdfBlocks(text)) {
     if (block.kind === 'text') {
-      doc.font(fonts.regular).fontSize(fontSize).text(block.text, { lineGap });
+      writeScriptAwareText(doc, fonts, block.text, { fontSize, lineGap });
       continue;
     }
     if (!canTable) {
@@ -191,11 +270,18 @@ export function writePdfBody(
     doc.table({
       data: block.rows.map((row, i) => {
         const isHeader = block.hasHeader && i === 0;
-        return row.map(cell => ({
-          text: cell,
-          type: (isHeader ? 'TH' : 'TD') as 'TH' | 'TD',
-          ...(isHeader ? { font: { src: fonts.bold, size: cellSize } } : {}),
-        }));
+        return row.map(cell => {
+          // A cell can be Arabic too (untranslated headings inside a table).
+          // Same rule as writeScriptAwareText: only switch when a face exists.
+          const face = fonts.arabic && ARABIC_RE.test(cell)
+            ? fonts.arabic
+            : isHeader ? fonts.bold : fonts.regular;
+          return {
+            text: cell,
+            type: (isHeader ? 'TH' : 'TD') as 'TH' | 'TD',
+            font: { src: face, size: cellSize },
+          };
+        });
       }),
       defaultStyle: { border: 0.5, borderColor: '#cccccc', padding: 2 },
     });
