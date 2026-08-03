@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { updateBookAfterUpload } from '@/lib/uploads/utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Update book metadata (thumbnail and page count)
@@ -17,14 +18,20 @@ import { updateBookAfterUpload } from '@/lib/uploads/utils';
  *
  * Can be called explicitly after batch uploads or by other scripts.
  *
+ * Auth: `editor` or above, or a `Bearer $CRON_SECRET` token for pipeline
+ * scripts. It writes `pages_count`, which feeds the canonical public filter
+ * (`visible: true && pages_count > 0`), so an unauthenticated caller could flip
+ * a book's visibility on every public surface.
+ *
  * Example:
  * ```bash
  * curl -X POST http://localhost:3000/api/upload/update-book \
  *   -H "Content-Type: application/json" \
+ *   -H "Authorization: Bearer $CRON_SECRET" \
  *   -d '{ "bookId": "book-123" }'
  * ```
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { bookId } = body;
@@ -68,4 +75,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });
