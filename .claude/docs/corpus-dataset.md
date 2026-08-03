@@ -70,35 +70,49 @@ Columns provided for this:
 **Minimum filter for any agreement claim:**
 `provenance_class == 'reocr' AND printed_page_shift != True`.
 
-### How much survives that filter (measured, n=63,905)
+### How much survives that filter
 
-Measured on the first 63,905 rows of `revisions.csv` (a partial build — the run
-died on a network timeout; source mix within ~4pp of the full corpus, so treat
-as indicative, not final):
+Full corpus, all 191,221 OCR revisions. Reproduce with
+`node scripts/eval/corpus-dataset-report.mjs` (offline, reads the CSVs only):
 
 | step | n | share |
 |---|---:|---:|
-| all revisions | 63,905 | 100% |
-| − `text_move_repair` (source-labelled) | −19,712 | 30.8% |
-| = candidate re-OCR | 44,193 | |
-| − printed page number shifted | −822 | |
-| **= clean same-image re-OCR** | **43,371** | **67.9%** |
-| − also inside the #3362 window | −36,219 | |
-| = most conservative corpus | 7,152 | 11.2% |
+| all OCR revisions | 191,221 | 100% |
+| − `text_move_repair` (source-labelled) | −56,413 | 29.5% |
+| = candidate re-OCR | 134,808 | |
+| − printed page number shifted | −2,843 | |
+| **= clean same-image re-OCR** | **131,965** | **69.0%** |
+| − also inside the #3362 window | −96,606 | |
+| = most conservative corpus | 35,359 | 18.5% |
 
 **The headline correction: once `text_move_repair` is removed by its source
-label, the residual leaf-shift rate is 3.7%, not ~40%.** `CLAUDE.md` and
+label, the residual leaf-shift rate is 4.2%, not ~40%.** `CLAUDE.md` and
 `revision-image-shift.mjs` report ~40.2% of pairs showing a different printed
 page number, measured on the raw corpus. Nearly all of that is the e-rara text
 move, which is *labelled* — so the corpus is far healthier than the raw figure
-suggests, provided the label is used. Caveat: the printed page number is
-readable on both sides of only **49.8%** of pairs, so this test abstains on half
-the corpus and the 3.7% is a rate among the testable half.
+suggests, provided the label is used.
 
-**Do not routinely subtract the #3362 window as well.** It costs 84% of the
+**But the shift test abstains on half the corpus.** A printed page number is
+readable on both sides of only **50.1%** of candidate pairs, so 4.2% is a rate
+among the testable half and therefore a **lower bound** on image churn, not a
+clean bill of health.
+
+**Do not routinely subtract the #3362 window as well.** It costs 73% of the
 remaining corpus, and it is a hypothesis flag: #3362 affected ~300 books /
-130,040 pages, not everything OCR'd in March–April 2026. Use the 7,152 figure
+130,040 pages, not everything OCR'd in March–April 2026. Use the 35,359 figure
 only as a floor for a claim that must be unimpeachable.
+
+### Words per page (clean corpus, n=119,222)
+
+```
+mean 344   p10 66  p25 167  p50 289  p75 428  p90 650  p99 1480  max 8139
+```
+
+Unimodal, mode at 300–399 (18.8%), long right tail. Stripping annotation moves
+the mean only 344 → 326, but the **zero bucket triples, 1.4% → 4.4%**: those are
+covers, endpapers and plates whose entire "text" is an AI image description.
+They disagree between passes by construction and must never be read as OCR
+losing text — `revision-agreement-corpus.mjs` calls this stratum `image_only`.
 
 And the standing caveat from the audit script: a shift proves the image
 *changed*. It does **not** say which side is correct — #3357 was a repair, so

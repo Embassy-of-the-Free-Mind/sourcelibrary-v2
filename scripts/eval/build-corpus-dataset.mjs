@@ -124,11 +124,26 @@ const csvEsc = v => {
   return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };
 class Csv {
-  constructor(file, cols) {
+  constructor(file, cols, append = false) {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     this.file = file; this.cols = cols; this.n = 0;
-    this.out = fs.createWriteStream(file);
-    this.out.write(cols.join(',') + '\n');
+    const resuming = append && fs.existsSync(file);
+    this.out = fs.createWriteStream(file, { flags: resuming ? 'a' : 'w' });
+    if (resuming) {
+      // Count what is already there so the manifest reports the true total, and
+      // drop a trailing partial line if the process died mid-write.
+      const buf = fs.readFileSync(file, 'utf8');
+      const complete = buf.endsWith('\n');
+      this.n = buf.trim().split('\n').length - 1;    // minus header
+      if (!complete) {
+        const keep = buf.slice(0, buf.lastIndexOf('\n') + 1);
+        fs.writeFileSync(file, keep);
+        this.n = keep.trim().split('\n').length - 1;
+        this.out = fs.createWriteStream(file, { flags: 'a' });
+      }
+    } else {
+      this.out.write(cols.join(',') + '\n');
+    }
   }
   async row(o) {
     this.n++;
@@ -218,10 +233,41 @@ const yearBucket = y => {
 
 const log = (...a) => console.log(`[${new Date().toISOString().slice(11, 19)}]`, ...a);
 
+// ── checkpoints ──────────────────────────────────────────────────
+// A dropped connection must cost the last chunk, not the whole phase. Each
+// resumable phase records how far it got; a re-run picks up from there and
+// APPENDS to the existing CSV. Delete the .checkpoint-*.json (or the CSV) to
+// force a clean rebuild.
+const ckptPath = phase => path.join(OUT_DIR, `.checkpoint-${phase}.json`);
+const readCkpt = (phase) => {
+  try {
+    const c = JSON.parse(fs.readFileSync(ckptPath(phase), 'utf8'));
+    return c.scope === SCOPE ? c : null;   // a scope change invalidates it
+  } catch { return null; }
+};
+const writeCkpt = (phase, data) => {
+  try {
+    fs.writeFileSync(ckptPath(phase), JSON.stringify({ scope: SCOPE, at: new Date().toISOString(), ...data }));
+  } catch { /* a lost checkpoint costs time, never correctness */ }
+};
+const clearCkpt = phase => { try { fs.unlinkSync(ckptPath(phase)); } catch { /* already gone */ } };
+
 // ── main ─────────────────────────────────────────────────────────
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const client = new MongoClient(process.env.MONGODB_URI);
+  // Tuned for a flaky link. The first full attempt died on
+  // PoolClearedOnNetworkError ("server monitor timeout") after 64K rows: the
+  // default 10s monitor heartbeat treats a slow link as a dead server, clears
+  // the pool, and kills every open cursor. Longer windows + retryReads let the
+  // job ride out a blip instead of losing the phase.
+  const client = new MongoClient(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 120000,
+    heartbeatFrequencyMS: 30000,
+    socketTimeoutMS: 0,
+    connectTimeoutMS: 60000,
+    retryReads: true,
+    maxPoolSize: 8,
+  });
   await client.connect();
   const db = client.db(process.env.MONGODB_DB || 'bookstore');
   const BOOKS = db.collection('books');
@@ -280,7 +326,9 @@ async function main() {
   const scoped = [];        // { keys:[...], doc }
   {
     const t0 = Date.now();
-    const cur = BOOKS.find(bookFilter, { projection: BOOK_PROJ }).batchSize(500);
+    // Sorted: the pages/tfidf phases resume by INDEX into this array, so the
+    // order must be identical across runs. An unsorted find() is not.
+    const cur = BOOKS.find(bookFilter, { projection: BOOK_PROJ }).sort({ _id: 1 }).batchSize(500);
     let n = 0;
     for await (const b of cur) {
       scoped.push(b);
@@ -356,6 +404,9 @@ async function main() {
   // testable.
   if (PHASES.includes('pages')) {
     const t0 = Date.now();
+    const ck = readCkpt('pages');
+    const startAt = ck?.next_book_index || 0;
+    if (startAt) log(`  resuming pages from book ${startAt.toLocaleString()}/${scoped.length.toLocaleString()} (appending)`);
     const csv = new Csv(path.join(OUT_DIR, 'pages.csv'), [
       'page_id', 'book_id', 'page_number', 'abs_page_number', 'soft_hidden', 'position_frac', 'position_bucket',
       'has_ocr', 'ocr_model', 'ocr_prompt_version', 'ocr_language', 'ocr_source', 'ocr_updated_at',
@@ -364,9 +415,9 @@ async function main() {
       'printed_page_num', 'printed_vs_index_delta', 'refusal', 'meta_prose',
       'has_translation', 'translation_chars', 'read_count',
       'n_revisions', 'is_double_ocr',
-    ]);
-    let done = 0, pagesOut = 0;
-    for (let i = 0; i < scoped.length; i += BOOK_CHUNK) {
+    ], startAt > 0);
+    let done = startAt, pagesOut = 0;
+    for (let i = startAt; i < scoped.length; i += BOOK_CHUNK) {
       const chunk = scoped.slice(i, i + BOOK_CHUNK);
       const keys = chunk.flatMap(keysOf);
       const pcByKey = new Map();
@@ -418,11 +469,15 @@ async function main() {
         pagesOut++;
       }
       done += chunk.length;
+      // Checkpoint AFTER the chunk's rows are written, never before — a
+      // checkpoint ahead of the data would silently skip those books on resume.
+      writeCkpt('pages', { next_book_index: i + BOOK_CHUNK });
       if (done % 200 < BOOK_CHUNK) {
         const rate = pagesOut / ((Date.now() - t0) / 1000);
         log(`  pages: ${done.toLocaleString()}/${scoped.length.toLocaleString()} books · ${pagesOut.toLocaleString()} pages · ${rate.toFixed(0)}/s`);
       }
     }
+    clearCkpt('pages');
     manifest.rows.pages = await csv.close();
     manifest.timings.pages = +((Date.now() - t0) / 1000).toFixed(1);
     log(`pages.csv → ${manifest.rows.pages.toLocaleString()} rows (${manifest.timings.pages}s)`);
@@ -433,6 +488,9 @@ async function main() {
   // whether a pair is a genuine re-read of the same image.
   if (PHASES.includes('revisions')) {
     const t0 = Date.now();
+    const ckR = readCkpt('revisions');
+    const afterPageId = ckR?.last_page_id || null;
+    if (afterPageId) log(`  resuming revisions after page_id ${afterPageId} (appending)`);
     const csv = new Csv(path.join(OUT_DIR, 'revisions.csv'), [
       'revision_id', 'page_id', 'book_id', 'created_at', 'original_date', 'reason', 'source', 'model',
       'prompt_version', 'job_id', 'language', 'edited_by',
@@ -444,12 +502,16 @@ async function main() {
       'live_model', 'live_prompt_version', 'live_words', 'live_body_words', 'words_delta',
       // provenance verdicts
       'provenance_class', 'in_undefined_key_window', 'rev_index_on_page', 'revs_on_page',
-    ]);
+    ], !!afterPageId);
 
     // Sorted by page_id so a page's revisions arrive contiguously (served by the
     // {page_id:1, field:1, created_at:-1} index — no in-memory sort of 191K docs).
+    // That ordering is also what makes the phase resumable: `page_id > last`
+    // picks up exactly where a dropped connection left off. The checkpoint
+    // records the last page whose revisions were FULLY written, so a page is
+    // never split across two runs.
     const cur = REVS.find(
-      { field: 'ocr', data: { $type: 'string', $ne: '' } },
+      { field: 'ocr', data: { $type: 'string', $ne: '' }, ...(afterPageId ? { page_id: { $gt: afterPageId } } : {}) },
       { projection: { id: 1, page_id: 1, book_id: 1, data: 1, model: 1, prompt_version: 1, source: 1, reason: 1, job_id: 1, language: 1, edited_by: 1, created_at: 1, original_date: 1 } },
     ).sort({ page_id: 1, created_at: -1 }).batchSize(400);
 
@@ -501,7 +563,11 @@ async function main() {
           out++;
         }
       }
+      // Every page in this batch is now fully written, so the highest page_id
+      // is a safe resume point. Batches arrive in page_id order.
+      const lastId = batch[batch.length - 1]?.page_id;
       batch = [];
+      if (lastId) writeCkpt('revisions', { last_page_id: lastId });
     };
 
     for await (const rv of cur) {
@@ -516,6 +582,7 @@ async function main() {
     }
     if (cur1) batch.push(cur1);
     await flush();
+    clearCkpt('revisions');
     manifest.rows.revisions = await csv.close();
     manifest.rows.revisions_orphan_pages = missing;
     manifest.timings.revisions = +((Date.now() - t0) / 1000).toFixed(1);
