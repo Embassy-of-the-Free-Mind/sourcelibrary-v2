@@ -6,7 +6,12 @@ import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
+// The Netherland-America Foundation (NAF, EIN 13-2989216) runs TWO DonorPerfect forms for the
+// Embassy — see https://thenaf.org/friends-funds/embassy-of-the-free-mind/. `.../give/naf/
+// embassyofthefreemind` is GENERAL Embassy support (BPH preservation, exhibitions, the monument);
+// this one is the Source Library designation. A donor arriving from sourcelibrary.org means to
+// fund Source Library, so use this one. Don't "simplify" the two into the general form.
+const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/embassyofthefreemindsourcelibrary';
 const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Hand-coloured volvelle (perpetual calendar wheel) from the astrology collection.
@@ -63,6 +68,7 @@ interface SupportStrings {
   intlLabel: string; intlTitle: string; intlSub: string;
   largeLabel: string;
   taxNote: string;
+  businessPre: string; businessLink: string; businessPost: string;
   whereTitle: string;
   where: { title: string; text: string }[];
   followTitle: string;
@@ -81,10 +87,11 @@ const STRINGS: Record<Locale, SupportStrings> = {
     statFirst: 'first-ever English translations',
     giveTitle: 'Make a Gift',
     giveLead: "Pick a route below to give now, or use the form and we'll follow up personally. Every gift, of any size, makes a difference.",
-    usLabel: 'US tax-deductible', usTitle: 'Donate via NAF', usSub: '501(c)(3) public charity',
+    usLabel: 'US tax-deductible', usTitle: 'Netherland-America Foundation', usSub: '501(c)(3) public charity',
     intlLabel: 'International', intlTitle: 'Donate via EFM', intlSub: 'ANBI-registered (NL)',
     largeLabel: 'Large gifts — wire, stock, or donor-advised fund',
-    taxNote: 'US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits. Receipts are issued automatically via Stripe or on request.',
+    taxNote: 'US donors giving through the Netherland-America Foundation (NAF) receive full 501(c)(3) tax benefits, with receipts issued by NAF. International gifts go to Stichting Het Wereldhart (Cultural ANBI), where Stripe issues the receipt automatically.',
+    businessPre: 'Business owners:', businessLink: 'giving through your company', businessPost: 'is usually cheaper than giving personally.',
     whereTitle: 'Where your support goes',
     where: [
       { title: 'Digitization', text: 'High-resolution scanning of fragile manuscripts and rare printed books.' },
@@ -107,10 +114,11 @@ const STRINGS: Record<Locale, SupportStrings> = {
     statFirst: 'primeras traducciones al inglés',
     giveTitle: 'Haz una donación',
     giveLead: 'Elige una opción abajo para donar ahora, o usa el formulario y te contactaremos personalmente. Cada donación, de cualquier tamaño, marca la diferencia.',
-    usLabel: 'Deducible en EE. UU.', usTitle: 'Donar vía NAF', usSub: 'Entidad benéfica 501(c)(3)',
+    usLabel: 'Deducible en EE. UU.', usTitle: 'Netherland-America Foundation', usSub: 'Entidad benéfica 501(c)(3)',
     intlLabel: 'Internacional', intlTitle: 'Donar vía EFM', intlSub: 'Registrada ANBI (NL)',
     largeLabel: 'Donaciones grandes — transferencia, acciones o fondo asesorado',
-    taxNote: 'Los donantes de EE. UU. que donan a través de la Netherland-America Foundation reciben beneficios fiscales 501(c)(3) completos. Los recibos se emiten automáticamente vía Stripe o a petición.',
+    taxNote: 'Los donantes de EE. UU. que donan a través de la Netherland-America Foundation (NAF) reciben beneficios fiscales 501(c)(3) completos, con recibos emitidos por la NAF. Las donaciones internacionales van a Stichting Het Wereldhart (ANBI Cultural), donde Stripe emite el recibo automáticamente.',
+    businessPre: 'Para empresas:', businessLink: 'donar a través de tu empresa', businessPost: 'suele ser más económico que donar personalmente.',
     whereTitle: 'Adónde va tu apoyo',
     where: [
       { title: 'Digitalización', text: 'Escaneo de alta resolución de manuscritos frágiles y libros impresos raros.' },
@@ -196,6 +204,13 @@ export default function SupportView({ stats, locale = 'en' }: { stats: SupportSt
               </div>
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
+              <p className="mt-2 text-xs text-stone-500 leading-relaxed">
+                <span className="font-semibold text-stone-600">{s.businessPre}</span>{' '}
+                <Link href="/support/business" className="text-accent-rust underline hover:text-accent-gold-dark">
+                  {s.businessLink}
+                </Link>{' '}
+                {s.businessPost}
+              </p>
             </div>
 
             <DonationIntentionForm />

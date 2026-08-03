@@ -48,6 +48,13 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/contribute',
   '/support',
   '/sponsors',
+  // Volunteer review queues. Items are drawn from `review_candidates`, a pool
+  // built across every visible book in the corpus, so a partner reading room
+  // would hand its visitors other libraries' pages to judge — the same content
+  // leak as /encyclopedia, in a surface that also invites people to act on it.
+  // A tenant-scoped review queue is a different feature, not a filter.
+  '/review',
+  '/volunteers',
 ] as const;
 
 /**
@@ -83,6 +90,10 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   '/api/entities',
   '/api/explore',
   '/api/ngrams',
+  // The queue pages render client-side and fetch their items from the host
+  // they were served on, so blocking only the page would leave the unscoped
+  // corpus reachable from a tenant subdomain.
+  '/api/review',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

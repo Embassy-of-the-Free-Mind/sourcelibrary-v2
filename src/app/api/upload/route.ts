@@ -15,6 +15,13 @@ import { withAuth } from '@/lib/auth-helpers';
 // Maximum file size: 20MB
 const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
 
+/**
+ * Upload page images to a book.
+ *
+ * Auth: `editor` or above, or a `Bearer $CRON_SECRET` token. This was on
+ * `withAuth`'s permissive `reader` default, which meant any signed-in account
+ * could append pages to any book — the same shape as #3511.
+ */
 export const POST = withAuth(async (request: NextRequest) => {
   try {
     const formData = await request.formData();
@@ -103,4 +110,4 @@ export const POST = withAuth(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

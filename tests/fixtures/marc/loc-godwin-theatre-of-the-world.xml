@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/"><zs:version>1.1</zs:version><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>marcxml</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>02590cam a2200469 a 4500</leader>
+  <controlfield tag="001">15665610</controlfield>
+  <controlfield tag="005">20250607030916.5</controlfield>
+  <controlfield tag="008">090318s2009    vtuabg   b    001 0beng  </controlfield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">15665610</subfield>
+  </datafield>
+  <datafield tag="906" ind1=" " ind2=" ">
+    <subfield code="a">7</subfield>
+    <subfield code="b">cbc</subfield>
+    <subfield code="c">orignew</subfield>
+    <subfield code="d">1</subfield>
+    <subfield code="e">ecip</subfield>
+    <subfield code="f">20</subfield>
+    <subfield code="g">y-gencatlg</subfield>
+  </datafield>
+  <datafield tag="925" ind1="0" ind2=" ">
+    <subfield code="a">acquire</subfield>
+    <subfield code="b">2 shelf copies</subfield>
+    <subfield code="x">policy default</subfield>
+    <subfield code="e">claim1  2010-02-19</subfield>
+  </datafield>
+  <datafield tag="955" ind1=" " ind2=" ">
+    <subfield code="a">rf14 2009-03-18</subfield>
+    <subfield code="c">rf14 2009-03-18</subfield>
+    <subfield code="d">rf14 2009-03-24 telework</subfield>
+    <subfield code="e">rf07 2009-03-26 (telework) to Dewey</subfield>
+    <subfield code="a">rd13 2009-03-26</subfield>
+    <subfield code="a">xe10 2010-05-18 1 copy rec'd., to CIP ver.</subfield>
+    <subfield code="f">rf17 2010-05-26 Z-CipVer</subfield>
+    <subfield code="t">xg22 2011-10-05 copy 2 added</subfield>
+  </datafield>
+  <datafield tag="955" ind1=" " ind2=" ">
+    <subfield code="a">LCAP batch update 2025-06-01-04:00: LCAPM-644, LCAPM-893</subfield>
+  </datafield>
+  <datafield tag="010" ind1=" " ind2=" ">
+    <subfield code="a">  2009011796</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9781594773297</subfield>
+    <subfield code="q">hardcover</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">1594773297</subfield>
+    <subfield code="q">hardcover</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)317361757</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DLC</subfield>
+    <subfield code="c">DLC</subfield>
+    <subfield code="d">BTCTA</subfield>
+    <subfield code="d">YDXCP</subfield>
+    <subfield code="d">C#P</subfield>
+    <subfield code="d">BWX</subfield>
+    <subfield code="d">DLC</subfield>
+  </datafield>
+  <datafield tag="043" ind1=" " ind2=" ">
+    <subfield code="a">e-gx---</subfield>
+  </datafield>
+  <datafield tag="050" ind1="0" ind2="0">
+    <subfield code="a">CT1098.K46</subfield>
+    <subfield code="b">G63 2009</subfield>
+  </datafield>
+  <datafield tag="082" ind1="0" ind2="0">
+    <subfield code="a">943/.04092</subfield>
+    <subfield code="a">B</subfield>
+    <subfield code="2">22</subfield>
+  </datafield>
+  <datafield tag="100" ind1="1" ind2=" ">
+    <subfield code="a">Godwin, Joscelyn.</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Athanasius Kircher's theatre of the world :</subfield>
+    <subfield code="b">the life and work of the last man to search for universal knowledge /</subfield>
+    <subfield code="c">Joscelyn Godwin.</subfield>
+  </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="a">Rochester, Vt. :</subfield>
+    <subfield code="b">Inner Traditions,</subfield>
+    <subfield code="c">c2009.</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">304 p. :</subfield>
+    <subfield code="b">ill., maps, music ;</subfield>
+    <subfield code="c">29 cm.</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="a">text</subfield>
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="a">unmediated</subfield>
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="a">volume</subfield>
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="504" ind1=" " ind2=" ">
+    <subfield code="a">Includes bibliographical references and index.</subfield>
+  </datafield>
+  <datafield tag="505" ind1="0" ind2=" ">
+    <subfield code="a">Prologue: Interesting times -- Kircher's life and work : an overview -- Frontispieces -- The illustration of Kircher's works -- Antiquity misread -- Antiquity preserved -- Antiquity imagined -- Naturalia : fire and water -- Naturalia : air and earth -- Music -- Machines of past and present -- Machines : magnetic and optical -- Maps and plans -- Exotica -- Images of the gods -- Didactic images -- Athanasius Kircher's writings.</subfield>
+  </datafield>
+  <datafield tag="520" ind1="2" ind2=" ">
+    <subfield code="a">"A major study of both the written and pictorial work of a neglected genius whose breadth of interest made him the last Renaissance man."--Provided by publisher.</subfield>
+  </datafield>
+  <datafield tag="600" ind1="1" ind2="0">
+    <subfield code="a">Kircher, Athanasius,</subfield>
+    <subfield code="d">1602-1680.</subfield>
+  </datafield>
+  <datafield tag="600" ind1="1" ind2="0">
+    <subfield code="a">Kircher, Athanasius,</subfield>
+    <subfield code="d">1602-1680</subfield>
+    <subfield code="x">Criticism and interpretation.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Renaissance</subfield>
+    <subfield code="z">Germany.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Renaissance</subfield>
+    <subfield code="v">Biography.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Scholars</subfield>
+    <subfield code="z">Germany</subfield>
+    <subfield code="v">Biography.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Illustrators</subfield>
+    <subfield code="z">Germany</subfield>
+    <subfield code="v">Biography.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Illustration of books</subfield>
+    <subfield code="z">Germany</subfield>
+    <subfield code="x">History</subfield>
+    <subfield code="y">17th century.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">Intellectuals</subfield>
+    <subfield code="z">Germany</subfield>
+    <subfield code="v">Biography.</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="0">
+    <subfield code="a">Germany</subfield>
+    <subfield code="v">Biography.</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="0">
+    <subfield code="a">Germany</subfield>
+    <subfield code="x">Intellectual life</subfield>
+    <subfield code="y">17th century.</subfield>
+  </datafield>
+  <datafield tag="655" ind1=" " ind2="7">
+    <subfield code="a">Biographies.</subfield>
+    <subfield code="2">lcgft</subfield>
+    <subfield code="0">https://id.loc.gov/authorities/genreForms/gf2014026049</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records><zs:echoedSearchRetrieveRequest><zs:version>1.1</zs:version><zs:query>bath.title="theatre of the world" and bath.author="godwin"</zs:query><zs:maximumRecords>5</zs:maximumRecords><zs:recordPacking>xml</zs:recordPacking><zs:recordSchema>marcxml</zs:recordSchema></zs:echoedSearchRetrieveRequest></zs:searchRetrieveResponse>

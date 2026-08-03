@@ -85,6 +85,15 @@ export async function GET(
   }
 }
 
+/**
+ * PATCH /api/pages/[id] — replace a page's OCR / translation / summary text.
+ *
+ * Gated at `editor`, matching the UI: the Read/Edit toggle in TranslationEditor
+ * is wrapped in `<AuthCheck role="inner_circle">` (= effective role >= editor),
+ * so this is the API gate for an affordance no reader can see. It defaulted to
+ * `reader` until #3511, which meant any signed-in account could overwrite a
+ * page's text by calling the route directly.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
@@ -212,7 +221,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating page:', error);
     return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 export const DELETE = withAdminAuth(async (request, session, context) => {
   try {

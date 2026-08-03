@@ -123,11 +123,18 @@ export default async function ParticipatePage() {
           The easiest way to start
         </h2>
         <div className="max-w-3xl">
+          {/* This section promised "an edit button on every page. No account needed."
+              No route has ever provided that: every page-text write is gated at
+              editor, and the Read/Edit toggle only renders for editors (#3511).
+              Flagging a problem really is open to everyone, so that is what it
+              now says. */}
           <p className="text-lg text-secondary leading-relaxed mb-4">
-            Open any book. Read the AI translation next to the original page image. If something is wrong, click edit and fix it. That&apos;s it.
+            Open any book. Read the AI translation next to the original page image. If something looks wrong, say so &mdash; every page has a &ldquo;Notice a translation issue?&rdquo; link that takes a note straight to us. No account needed.
           </p>
           <p className="text-secondary leading-relaxed mb-6">
-            Every book has an edit button on every page. No account needed. The languages we most need help with:{' '}
+            To correct the text yourself, write to{' '}
+            <a href="mailto:team@sourcelibrary.org?subject=Editing access" className="text-accent-rust hover:underline">team@sourcelibrary.org</a>
+            {' '}and we&apos;ll give your account editing access. The languages we most need help with:{' '}
             <span className="text-primary font-medium">Latin</span>,{' '}
             <span className="text-primary font-medium">German</span>,{' '}
             <span className="text-primary font-medium">Arabic</span>,{' '}
@@ -195,7 +202,11 @@ export default async function ParticipatePage() {
             </p>
           </Link>
 
-          <Link href="/gallery" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/40 hover:shadow-sm transition-all text-center">
+          {/* Points at the rating QUEUE, not the public gallery. This card
+              described /review/gallery-quality but linked to /gallery — which
+              has no rating control — so the one card on the site that pointed
+              at volunteer work sent people somewhere they could not do it. */}
+          <Link href="/review/gallery-quality" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/40 hover:shadow-sm transition-all text-center">
             <div className="w-9 h-9 mx-auto mb-2 rounded-lg bg-accent-rust/10 flex items-center justify-center">
               <svg className="w-5 h-5 text-accent-rust" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
@@ -203,7 +214,7 @@ export default async function ParticipatePage() {
             </div>
             <h3 className="text-sm font-semibold text-primary mb-0.5 group-hover:text-accent-rust transition-colors">Rate illustrations</h3>
             <p className="text-xs text-muted leading-snug">
-              Browse the gallery and rate image quality. Your ratings help curate the collection.
+              A few seconds each: does this plate belong in the gallery? Keyboard-driven, no signup.
             </p>
           </Link>
 

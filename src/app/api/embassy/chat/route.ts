@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { z } from 'zod';
+import { chatRequestSchema } from '@/lib/embassy/chat-request';
 import { toUserId } from '@/lib/user-id';
 
 export const dynamic = 'force-dynamic';
@@ -16,29 +16,6 @@ export const dynamic = 'force-dynamic';
 // "The Librarian seems to be away." 300 matches our other long-running routes.
 export const maxDuration = 300;
 
-const messageSchema = z.object({
-  role: z.enum(['user', 'assistant']),
-  // History is context, not content of record — clip rather than reject. The
-  // Librarian's own answers regularly exceed 10k chars, and the client sends
-  // them back verbatim as history; rejecting here made every follow-up in such
-  // a thread fail with a bare "Invalid request" (the thread looked dead to the
-  // reader). Allow empty for assistant messages (e.g., choices-only responses).
-  content: z.string().transform(s => s.slice(0, 10000)),
-});
-
-const chatRequestSchema = z.object({
-  threadId: z.string().nullable().optional(),
-  message: z.string()
-    .min(1, 'Message cannot be empty')
-    .max(5000, 'That message is too long for the Librarian — please keep it under 5,000 characters, or share the text a section at a time.'),
-  history: z.array(messageSchema).max(50).optional(),
-  visibility: z.enum(['public', 'private']).optional(),
-  stream: z.boolean().optional(),
-  // Optional collection slug/topic to weight the search toward. Set by the
-  // "Ask the Librarian" entry point on a collection page; the Librarian biases
-  // results toward this collection while still surfacing strong outside matches.
-  collection: z.string().max(120).nullable().optional(),
-});
 
 /**
  * POST /api/embassy/chat — Send a message to the Librarian.
@@ -110,7 +87,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { threadId, message, history = [], visibility = 'public', stream = false, collection = null } = parsed.data;
+  const { threadId, message, history = [], visibility, stream = false, collection = null } = parsed.data;
   const db = await getDb();
 
   // Get user display name (anonymous visitors skip the lookup)

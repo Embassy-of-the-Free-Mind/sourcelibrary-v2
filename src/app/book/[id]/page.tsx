@@ -23,6 +23,8 @@ import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
+import EnsureCover from '@/components/book/EnsureCover';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -455,6 +457,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
+          // First 600 chars of the OCR — the metadata envelope plus the model's
+          // page description. Enough to recognise digitiser boilerplate and
+          // library/owner stamps that `page_type` misses (see
+          // `isJunkRepresentativePage`), without pulling whole pages of text.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
         },
         maxTimeMS: 5000,
       })
@@ -794,14 +801,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // back to the first non-blank page scan (the title page), which is rehosted
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
-    const coverRenderable = !!storedCover && /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(storedCover);
+    const coverRenderable = isRenderableCoverUrl(storedCover);
     // Best cover-scan candidate: the actual title page, else a frontispiece,
-    // else the first non-blank page (avoids the Google/IA boilerplate + endpapers
-    // when a classified title page exists).
-    const coverPage = pages.find(p => p.page_type === 'title-page')
-      || pages.find(p => p.page_type === 'frontispiece')
-      || pages.find(p => p.page_type !== 'blank')
-      || pages[0];
+    // else the first non-junk page (avoids the Google/IA boilerplate, endpapers
+    // and scanner colour cards when a classified title page exists).
+    // `selectFallbackCoverPage` is shared with /api/books/[id]/ensure-cover so
+    // the page we SHOW here is the page that gets SAVED as the cover.
+    const coverPage = selectFallbackCoverPage(pages);
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
@@ -814,18 +820,36 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // aren't type-classified. Order: deep body text → a classified illustration
     // → a position-based mid-book page (skips the front-matter/calibration
     // cluster). Never the cover, never a known-junk type.
-    const interiorCandidates = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    // `isJunkRepresentativePage` additionally reads the page's own OCR, so a
+    // digitiser plate mistyped as `frontispiece` (the Internet Archive "funding
+    // from Microsoft" leaf) is excluded here rather than being promoted by the
+    // illustration branch below.
+    //
+    // If that leaves NOTHING, fall back to the type-filtered list rather than
+    // rendering no image: a single-leaf broadside whose one page carries a
+    // marginal shelfmark is still the work itself, and an empty column is worse
+    // than an imperfect page. (Measured: 1 book in 800 takes this branch.)
+    const interiorCandidatesByType = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    const interiorCandidatesClean = interiorCandidatesByType.filter(
+      p => !isJunkRepresentativePage(p as { page_type?: string | null; ocr_head?: string | null }),
+    );
+    const interiorCandidates = interiorCandidatesClean.length ? interiorCandidatesClean : interiorCandidatesByType;
     const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
+    // The text fallback must show a page of the WORK, not its apparatus. Blanks
+    // are already gone with KNOWN_JUNK_PAGE_TYPES; these are the front-matter
+    // types that survive it and read as "this book has nothing to show".
+    const APPARATUS_PAGE_TYPES = new Set(['title-page', 'toc', 'contents', 'table-of-contents']);
+    const textCandidates = interiorCandidates.filter(p => !APPARATUS_PAGE_TYPES.has(ptype(p)));
     const interiorTextPage = (() => {
-      const deep = interiorCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
+      const deep = textCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
       if (deep.length) return midOf(deep);
-      const anyText = interiorCandidates.filter(p => ptype(p) === 'text');
+      const anyText = textCandidates.filter(p => ptype(p) === 'text');
       if (anyText.length) return midOf(anyText);
       // No usable classification — take a page from the middle of the book,
       // skipping the first several scans where calibration/blank pages live.
-      const start = Math.min(8, Math.floor(interiorCandidates.length / 4));
-      const pool = interiorCandidates.slice(start);
-      return midOf(pool.length ? pool : interiorCandidates);
+      const start = Math.min(8, Math.floor(textCandidates.length / 4));
+      const pool = textCandidates.slice(start);
+      return midOf(pool.length ? pool : textCandidates);
     })();
     const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
     // Single page scans used as the hero background fallback when the tiled
@@ -973,11 +997,21 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     //   3. A mid-book content page (skips front-matter calibration/blanks).
     // The cover is always excluded (handled by interiorCandidates / coverPage).
     const PROVENANCE_RE = /\b(book\s?plate|ex[\s-]?libris|from the library of|library of|armorial|ownership|owner'?s|stamp|inscription|donor|gift of|presented by|bequest|shelf\s?mark|call\s?number|barcode|catalog(?:ue)? card|colou?r\s?(?:card|chart|target|checker)|calibration)\b/i;
-    const isRepresentativePlate = (desc?: string) => !desc || !PROVENANCE_RE.test(desc);
+    // Decorative page ornaments — a tailpiece / headpiece / vignette / printer's
+    // device is never a good "About" feature (it's a page-edge ornament, not a
+    // content illustration). Excluding them also dodges a known pre-#2707
+    // hallucination class: the captioner reading organic shapes (e.g. a
+    // Sphaerocarpos liverwort plate) as an "allegorical tailpiece with putti".
+    const DECORATIVE_RE = /\b(tail-?piece|head-?piece|vignette|cul-de-lampe|scrollwork|acanthus scroll|grotesque mask|printer'?s (?:device|mark|ornament)|decorative (?:border|initial|element|motif|device|ornament)|ornamental (?:border|initial|device)|fleuron|colophon device)\b/i;
+    const isRepresentativePlate = (desc?: string) => !desc || (!PROVENANCE_RE.test(desc) && !DECORATIVE_RE.test(desc));
     // The side plate must never be the same image as the hero cover.
     const coverSrcKey = (coverDisplay || '').split('?')[0];
     const notCover = (src?: string | null) => !!src && src.split('?')[0] !== coverSrcKey;
-    const sideVisual = (() => {
+    // An editor-chosen About visual (BookAboutPicker) overrides the auto-pick.
+    const aboutOverride = (book as unknown as { about_visual?: { src?: string; href?: string; caption?: string } | null }).about_visual;
+    const sideVisual = (aboutOverride && aboutOverride.src)
+      ? { src: aboutOverride.src, href: aboutOverride.href || `/book/${bookSlug}`, caption: aboutOverride.caption }
+      : (() => {
       // Only use a gallery plate if a non-provenance one exists; otherwise fall
       // through to a real interior page rather than showing a bookplate.
       const plate = galleryImages.find(g => isRepresentativePlate(g.description) && notCover(g.thumbnail_url || g.extracted_url || g.image_url));
@@ -989,10 +1023,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           return { src, href: pageId ? `/book/${bookSlug}/page/${pageId}` : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
-      // Prefer a deep body-text page over a classified "illustration" page:
-      // genuine content illustrations already come through the gallery path
-      // above, so a leftover illustration here is usually front-matter — an
-      // owner's bookplate / frontispiece — which we don't want to feature.
+      // Show a picture if the book has one WORTH showing, else a page of the
+      // text. An illustration only reaches this point after clearing
+      // `isJunkRepresentativePage`, which reads the page's own OCR and removes
+      // the class that made illustrations untrustworthy here: digitiser plates
+      // (the Internet Archive "funding from Microsoft" leaf, classified
+      // `frontispiece`), library bookplates, and photographs of the binding.
+      // With those gone a real frontispiece or plate is the better visual, and
+      // it is the only visual available to the ~6.2K books stalled in the
+      // paused pipeline, which have no extracted gallery images at all.
       for (const pg of [interiorIllusPage, interiorTextPage]) {
         if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
@@ -1283,6 +1322,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
         />
 
+        {/* This book is showing a page-scan in place of a stored cover. Persist
+            that pick once, so the catalogue / sliders / search stop rendering a
+            blank placeholder for it. The route re-derives and verifies the URL
+            server-side, so it is safe to fire whenever we fell back. */}
+        {!coverRenderable && coverPage && <EnsureCover bookId={book.id} />}
+
         {/* ===================== HERO ===================== */}
         <HeroVariants
           pageThumbs={heroPageThumbs}
@@ -1318,21 +1363,35 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             </div>
           )}
           cover={(
-            <div className="flex flex-col items-center md:items-start">
-              {coverDisplay ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={coverDisplay}
-                  alt={book.display_title || book.title}
-                  className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
-                  style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
-                />
-              ) : (
-                <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
-                  {book.display_title || book.title}
+            /* Editors (inner_circle) get a "Change cover" affordance over the
+               hero cover — opens the page picker + writes via buildCoverUpdate.
+               Everyone else just sees the cover. */
+            <CoverImagePicker
+              bookId={book.id}
+              currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+              currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
+              bookTitle={book.display_title || book.title}
+              bookAuthor={book.author}
+              bookYear={book.published}
+              pages={pages}
+              trigger={
+                <div className="flex flex-col items-center md:items-start">
+                  {coverDisplay ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={coverDisplay}
+                      alt={book.display_title || book.title}
+                      className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
+                      style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
+                    />
+                  ) : (
+                    <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
+                      {book.display_title || book.title}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              }
+            />
           )}
           meta={(
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
@@ -1432,12 +1491,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               </div>
 
-              {/* Staff-only edit link (in-book search moved to the sub-nav + combo section) */}
-              <AuthCheck role="inner_circle">
-                <div className="mt-4 md:mt-5 text-[13.5px]">
-                  <Link href={`/book/${bookSlug}/edit`} className="transition-colors" style={{ color: '#d98a72' }}>✎ Edit</Link>
-                </div>
-              </AuthCheck>
+              {/* NOTE: the old staff-only "✎ Edit" link here pointed at
+                  /book/[id]/edit, which doesn't exist (dead 404), and popping in
+                  after the auth check re-centered the vertically-centred hero —
+                  the cover/title "jump". Removed. Editing is via the "Edit"
+                  button in the Bibliographic information panel (BookEditModal). */}
             </div>
           )}
         />
@@ -1451,6 +1509,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             visual={sideVisual}
             tags={hasSummary ? subjectTags : []}
             belowContent={readingDropdowns}
+            bookId={book.id}
+            bookSlug={bookSlug}
+            pages={pages}
+            plates={galleryImages.map(p => ({ id: p.id, thumbnail_url: p.thumbnail_url, extracted_url: p.extracted_url, image_url: p.image_url, description: p.description }))}
           />
         </div>
 

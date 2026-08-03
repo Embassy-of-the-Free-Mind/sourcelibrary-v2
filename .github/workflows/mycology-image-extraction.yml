@@ -1,0 +1,97 @@
+name: Mycology image extraction sweep
+
+# Maintenance sweep: image-extract every book in the `mycology` collection that
+# still has unprocessed illustration-candidate pages.
+#
+# Runs on Hetzner because that is the only machine holding real Gemini API keys
+# (local checkouts and the Vercel env both carry an empty GEMINI_API_KEY).
+#
+# Launched detached with nohup so a dropped SSH connection cannot kill a long
+# sweep; progress is observable from the `pages` collection
+# (`image_extraction_updated_at`) and from the log path echoed below.
+#
+# Safe to re-run: reextract-missed-pages.mjs stamps `miss_recheck_at` on every
+# page it tests, so a second pass skips already-examined pages and spends nothing
+# on them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      extra_args:
+        description: 'Flags for reextract-missed-pages.mjs (e.g. --any-marker, --page-type-candidates)'
+        required: false
+        default: '--any-marker'
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Launch sweep on Hetzner
+        uses: appleboy/ssh-action@v1
+        env:
+          # Passed through as an env var rather than interpolated into the shell,
+          # so the input can never be spliced into the command itself.
+          EXTRA_ARGS: ${{ inputs.extra_args }}
+        with:
+          host: 46.224.122.120
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          envs: EXTRA_ARGS
+          script: |
+            set -e
+            cd /root/sourcelibrary
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p /var/log/sourcelibrary
+
+            # Only the documented flags are allowed through.
+            case "${EXTRA_ARGS}" in
+              *[!a-z\ -]*) echo "refusing unexpected characters in EXTRA_ARGS"; exit 1 ;;
+            esac
+
+            cat > /tmp/mycology-sweep.sh <<SWEEP
+            #!/usr/bin/env bash
+            set -uo pipefail
+            cd /root/sourcelibrary
+            EXTRA="${EXTRA_ARGS}"
+            SWEEP
+            cat >> /tmp/mycology-sweep.sh <<'SWEEP'
+            BOOKS="
+            6a4170cde906de1d7b3b9959 6a601adc744548430e8ee345 6a6025da495fb0f61871b7d8
+            6a6025ed495fb0f61871b96d 6a601ac7744548430e8ee1c2 6a602600495fb0f61871ba4e
+            6a602615495fb0f61871ba8d 6a500f7be39653852101ac86 6a503c562f6539fb38937848
+            6a503ddd12003aed574feaac 6a601af0744548430e8ee49c
+            69d8ca14a09828f83ddc9902 69d8c9f8a09828f83ddc9083 69d8c9fea09828f83ddc9371
+            69d8ca91a09828f83ddcb710 69b1dddc537bff0aca8a9709 69d8cab9a09828f83ddcc1bb
+            69d8ca06a09828f83ddc973a 69d8ca55a09828f83ddcaa26 69d8cabda09828f83ddcc2c9
+            69d8ca5aa09828f83ddcaabf 69d8ca6ea09828f83ddcaeb5 69d8ca4ea09828f83ddca72d
+            69d8ca0ba09828f83ddc97eb 69d8ca77a09828f83ddcb132 69d8ca85a09828f83ddcb69a
+            69d8ca66a09828f83ddcac68 69d8ca22a09828f83ddc9c7a 69d8ca3fa09828f83ddca25f
+            69d8cab3a09828f83ddcbe96 69d8ca0fa09828f83ddc9898 69d8ca29a09828f83ddc9e05
+            69d8ca46a09828f83ddca6c0 69d8ca97a09828f83ddcb957 69d8ca9ea09828f83ddcbad0
+            69d8caa6a09828f83ddcbbd5 69d8ca1ca09828f83ddc9a51 69d8ca32a09828f83ddca008
+            69d8ca5fa09828f83ddcabf9 69d8ca80a09828f83ddcb41b 69d8ca8aa09828f83ddcb70e
+            "
+            i=0
+            total=$(echo $BOOKS | wc -w)
+            for id in $BOOKS; do
+              i=$((i+1))
+              echo "== [$i/$total] $id =="
+              node --env-file=.env.production.local \
+                scripts/maintenance/reextract-missed-pages.mjs \
+                --book="$id" $EXTRA --apply --limit=2000 --concurrency=8 \
+                || echo "  !! failed: $id"
+            done
+            echo "== sweep finished =="
+            SWEEP
+
+            chmod +x /tmp/mycology-sweep.sh
+            # flock so a re-dispatch can't run two sweeps over the same pages
+            nohup flock -n /tmp/mycology-sweep.lock \
+              /tmp/mycology-sweep.sh \
+              > /var/log/sourcelibrary/mycology-sweep.log 2>&1 &
+            sleep 5
+            echo "--- launched with EXTRA_ARGS=${EXTRA_ARGS}; first lines of log ---"
+            head -20 /var/log/sourcelibrary/mycology-sweep.log || true

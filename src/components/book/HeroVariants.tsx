@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, type ReactNode } from 'react';
+import HeroScrim from '@/components/HeroScrim';
 
 /**
  * Book-page hero.
@@ -80,8 +81,8 @@ export default function HeroVariants({
         onLoad={reveal}
         onError={onBgError}
         loading="eager"
-        className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-[1600ms] delay-150 ease-out will-change-[opacity,filter,transform] ${
-          revealed ? 'opacity-100 blur-0 scale-100' : 'opacity-0 blur-[26px] scale-[1.10]'
+        className={`absolute inset-0 w-full h-full object-cover will-change-[opacity,filter,transform] ${
+          revealed ? 'hero-focus-in' : 'opacity-0'
         }`}
       />
     ) : null;
@@ -95,9 +96,7 @@ export default function HeroVariants({
         <div className="hidden md:block absolute inset-0 overflow-hidden">
           <div className="absolute inset-x-0 -top-[12%] h-[124%] will-change-transform" style={drift}>
             <Bg />
-            <div className="absolute inset-0" style={{ background: 'rgba(16,12,8,0.72)' }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.5) 0%, rgba(14,10,7,0.12) 60%, transparent 100%)' }} />
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
+            <HeroScrim />
           </div>
         </div>
         {/* Mobile: a clean band of the bg up top (drifting), then a fixed strong
@@ -127,7 +126,7 @@ export default function HeroVariants({
         <div className="flex flex-row-reverse items-start gap-4 md:contents">
           {/* Cover: 1/3 of the container on mobile (auto height); the large
               left-hand cover on desktop. */}
-          <div className="w-1/3 md:w-auto flex-shrink-0
+          <div className="hero-cover-in w-1/3 md:w-auto flex-shrink-0
             [&_img]:!w-full [&_img]:!h-auto [&_img]:!max-w-none [&_img]:!max-h-none
             md:[&_img]:!w-auto md:[&_img]:!h-[420px] md:[&_img]:!max-h-none md:[&_img]:!max-w-[min(44vw,520px)]">
             {cover}

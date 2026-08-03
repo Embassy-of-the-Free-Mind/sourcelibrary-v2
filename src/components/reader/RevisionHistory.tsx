@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { History, RotateCcw, X, ChevronDown, Pencil } from 'lucide-react';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import type { PageRevision } from '@/lib/page-revisions';
 
 interface RevisionHistoryProps {
@@ -238,15 +239,22 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                         <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
                           {rev.data.length.toLocaleString('en-US')} chars
                         </span>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
-                          disabled={restoring === rev.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-accent-gold/8"
-                          style={{ color: 'var(--accent-rust)' }}
-                        >
-                          <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />
-                          {restoring === rev.id ? 'Restoring...' : 'Restore'}
-                        </button>
+                        {/* Reading the history is open to everyone — it is provenance,
+                            and seeing how a page was corrected is part of the point.
+                            Restoring rewrites the page, so it matches the editor gate
+                            on the route behind it (#3511). Before this the button
+                            rendered for every visitor and simply failed on click. */}
+                        <AuthCheck role="inner_circle">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
+                            disabled={restoring === rev.id}
+                            className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-accent-gold/8"
+                            style={{ color: 'var(--accent-rust)' }}
+                          >
+                            <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />
+                            {restoring === rev.id ? 'Restoring...' : 'Restore'}
+                          </button>
+                        </AuthCheck>
                       </div>
                     </div>
                   )}

@@ -184,7 +184,7 @@ export async function GET(
             year: pageData.book?.published,
           },
           pageNumber: pageData.page_number,
-          readUrl: tenantPath(`/book/${pageData.book_id}/page/${pageId}`),
+          readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
           citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
           stale: true, // Signal that detection index is stale

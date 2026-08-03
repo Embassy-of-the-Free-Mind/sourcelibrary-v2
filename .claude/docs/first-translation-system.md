@@ -2,6 +2,25 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
+> ## ⚠️ 2026-08-01 — read [`first-translation-reference-set.md`](./first-translation-reference-set.md) before trusting any absence claim here
+>
+> An **evidence layer beneath this whole document** shipped in PR #3463 (#3459),
+> after everything below was written. It replaces the unprovable assertion with a
+> recorded, dated, reproducible **search** (`search_efforts`), and — crucially —
+> it *measures* what that search is worth. The headline:
+>
+> - **Catalogue recall is 27%.** Three of every four known prior English
+>   translations are invisible to the reference set. **`none_found` is weak
+>   evidence and no count built on it should be quoted.** Positive findings are
+>   unaffected.
+> - A sample of the queue puts `none_found`'s **positive predictive value at ~50%**.
+> - The cause is corpus, not matching: the extract is **1.04% pre-1800** against an
+>   early-modern corpus. **Matcher/threshold work is finished** — see #3522 (ESTC).
+>
+> Any statement in this doc of the form "N books are first translations" or "N have
+> no prior" was written without that measurement and should be re-derived. The
+> verdict model, the badge, and the writer topology below remain accurate.
+
 > **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
 
 **Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).

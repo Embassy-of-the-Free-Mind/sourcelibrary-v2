@@ -285,4 +285,4 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

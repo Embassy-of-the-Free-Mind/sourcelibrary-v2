@@ -60,6 +60,55 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
 - **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
 
+## A fetch failure is a claim about the SOURCE, and it is usually wrong — CRITICAL
+Lessons from acquiring Thibault's *Académie de l'Espée* (2026-08-01). Full
+postmortem: `.claude/handoffs/2026-08-01-thibault-acquisition-and-archive-failure-classes.md`.
+Three failure classes, one shape: an archiver's error handling encoded a guess
+about the source as a durable fact, and every one of them failed *silently, in
+the direction that looks like success*.
+
+- **A total-duration fetch timeout is a file-size limit wearing a clock's
+  costume.** Aborting 60s after a fetch *starts* fires on the LARGEST page in a
+  book — always the foldout, the map, the plate — while ordinary text pages sail
+  through. It cost **42 of 45 double-page engravings** on one book, and the book
+  still reported hundreds of archived pages, so nothing looked wrong. Use
+  `fetchWithStallTimeout()` (`scripts/lib/fetch-stall-timeout.mjs`), which
+  re-arms per chunk so size stops mattering. **Never "fix" this by requesting a
+  smaller IIIF size** — that is the #3186 mistake and is doubly destructive on
+  exactly the wide plates it destroys. **Tell:** failures cluster on the widest
+  canvases; a lone fetch of the failing page succeeds. The abort surfaces as
+  `This operation was aborted`, which reads as rate limiting — backing the
+  request rate off makes it strictly worse, because the constraint is
+  per-request duration, not requests per second.
+- **HTTP 403 may be a rights refusal, not a block — never auto-retry it.** 88%
+  of this corpus's failure markers are Internet Archive, and they resolve to
+  `access-restricted-item: true` / `inlibrary` books: IA **correctly refusing to
+  serve in-copyright material**. Clearing such a marker re-queues a fetch that
+  must never succeed, and if one did we would mirror copyrighted pages into R2.
+  `classifyArchiveFailure()` treats bare 403 as `unknown` (reported, never
+  auto-cleared); `--include-403` is an explicit opt-in for a caller who has
+  confirmed the books are public domain. Check the IA item's
+  `access-restricted-item` before assuming a 403 is transient.
+- **Never write an error you did not attribute into `archived_photo`.** The
+  field doubles as the archiver's work queue, so any `failed:` string hides the
+  page from every future run — and a catch-all handler writes *our* failures
+  there too: a Mongo DNS blip and an R2 clock-skew error each permanently hid a
+  perfectly readable page. An infrastructure error says nothing about the
+  source. (Same class as the Data Protection rule below: a bad write erases its
+  own repair path.)
+- **Recovery must never be gated on the SPEND allowlist.** Phase 8.5 rolls a
+  stuck `*_submitted` status back, which submits nothing and costs nothing — but
+  it was confined to the selective-unpause scope (160 books of ~99.7K) and
+  skipped entirely on a paused run, so 8 books sat stuck 10–23 days and were
+  repaired by hand. Corollary of "the pause is a SPEND control": gate the phases
+  that spend, never the bookkeeping that heals.
+- **Sampling the head of a collection samples insertion order, not the
+  population.** A 2,500-page sample read 92.9% retryable; the full 14,123 read
+  69.2%. Validate a corpus sweep at corpus scale — and note that a *silent*
+  long-running script reads as a hang (two full scans were killed before
+  emitting a line). The fix is a heartbeat, not an index: indexing
+  `archived_photo` would add ~1.5 GB to a hot collection to serve a rare sweep.
+
 ## Paired artifacts must be verified, never assumed — CRITICAL
 Three incidents, one shape: #3362 (archiver wrote every page to a shared `archived/undefined/N.jpg` because `book_id` was missing from a projection), #3186/#3357 (e-rara PDF cover sheet made `photo_original` a one-page-offset sequence, and the re-archive sweep slid every image under its OCR), and #3368 (bulk archiver indexed the IA `*_jp2.zip` with the IIIF `/page/nN` number — IA keeps calibration/`Delete` leaves in the zip but strips them from the access derivatives, so a leading `Color Card` put **every** page's scan one leaf behind its text, on ~261 visible books / ~105K pages, undetected for four months).
 
@@ -73,6 +122,14 @@ Each time, two artifacts produced by **different code at different times** were 
 - **Ordering matters as much as mapping.** OCR that runs *before* archival reads the source URL; OCR that runs *after* reads the archived image. If those disagree, a book OCR'd in two passes gets pages transcribed **twice** while their neighbours are never transcribed at all — real duplicate text and real gaps that re-archiving alone cannot repair (see #3362's ordering hazard).
 
 Full postmortem: `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`.
+
+## A request-path query must not scale with the corpus
+Two of the three volunteer review queues returned **504** for months (#3568): each picked one item by `$sample`-ing `pages` — **19.1M docs** — with a predicate no index can serve (a regex on `ocr.data`; `archived_photo: {$exists}`). That is a full collection scan per request, behind `maxDuration = 15`. It was never going to work at corpus scale and it degraded **quietly** as the corpus grew, because nothing alarms on "slower every month" and the client only ever showed "Network error".
+
+- **The tell is the query shape, not the timing:** an unindexed predicate on a collection whose size tracks the corpus. `pages` is 19.1M and growing; `gallery_images` is 207K. Confirm offline — the same aggregation also fails to return locally inside two minutes.
+- **Which one survived is the lesson.** `gallery-quality` worked only because `gallery_images` is a *materialized view* — and still cost 8.2s/item, its own kind of unusable. **Precompute a bounded pool** (`review_candidates`, built by `scripts/maintenance/build-review-candidates.mjs`, read via `src/lib/review-candidates.ts`) and the same work takes 23–61ms.
+- **A builder that feeds such a pool must cap items per book.** An unbounded draw lets one 900-page volume dominate and silently turns "quality of the corpus" into "quality of that book" — and write the `stratum` at build time, because a stratified draw cannot be reconstructed afterwards.
+- Same family as the `/explore` prerender timeout (#3373), where counts over `entities` sit close to `maxTimeMS`: a query that merely *fits* today is a deadline you have already scheduled.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
@@ -175,6 +232,10 @@ encodes that:
 - **A SEARCH TERM IS NOT METADATA. Never write the query that found a record into a field of that record.** A 2026-03-14 BSB run imported 1,353 books and stamped its own search string into `books.author` — which is why values like `Albertus Secrets`, `Fludd Medicina`, `Kircher Oedipus`, `John Dee Monas` exist: they are `<surname> <work keyword>` queries, not names. It ran undetected for four months and the wrong names reached readers, `work_id` cluster keys (`local:a:heinrich-khunrath:…`) and book slugs. **The hits skew to catalogues by construction** — a full-text title search matches every bookseller/library catalogue that *lists* a copy, so those are the top results and the least likely to be spot-checked. Hence 14 catalogues and periodicals (1751–1810) attributed to Khunrath, who died in 1605, and 16 editions of the Augsburg Confession under `Confessio Fraternitatis`. Detector: `scripts/audit/author-attribution.mjs` (#3434).
 - **Three correct guards can still leave a gap; check the gap, not each guard.** Nothing caught the above, and no single piece was wrong: `qa-author-date-anachronisms.mjs` tests only the **birth** side (this is the death side); `quarantine-non-person-authors.mjs` fixes the `authors` thesaurus and never touches `books.author`, and its interlock rightly refuses to touch anchored real people — so **Khunrath was uncatchable there**, being a genuine VIAF-anchored author of other books we hold; and `author-date-window.mjs` deliberately refuses death-side exclusion because a 1925 Boethius is a reprint (he carries 55). The usable signal only exists in the **combination**: long-dead author **AND** reference-genre containing book (`posthumousMisattributionLikely()`). Neither half alone works — a person *can* compile a catalogue (Guanzelli's *Index librorum expurgandorum*, Bernardus de Lutzemburgo's *Catalogus haereticorum*), and death-side-alone flags every reprint in the corpus.
 - **`authors` carries no life dates** — 0 of 4,825 have a birth/death year, only `birth_place`/`death_place`. Death years come from `entities.wikidata_death_date` via `authors.entity_ids`, and only 1,229 of 3,253 entity-linked docs resolve one, so any date-based author check abstains on ~⅔ of the corpus. Don't read a clean result from one as coverage.
+- **`is_person: false` is a READ-PATH gate, and the read path is `classifyNonPersonAuthor` (`src/lib/non-person-author.ts`).** `quarantine-non-person-authors.mjs` set the flag on 59 docs and **nothing in `src/` read it for a year**, so every quarantined heading rendered with a portrait slot, life dates, an "Artist page" link and a schema.org **`Person`** node — telling search engines that `Theatrum Chemicum`, `British Museum` and `Anonymous` are human beings (#3483). The flag is **absent on 4,766 of 4,825 docs**, so consumers must test `=== false`; a truthiness check strips the person framing from every author on the site. A `merged_into` tombstone is not a non-person — the resolver follows it to its primary first. Institutions render as `Organization`; work titles and placeholders get **no entity node at all** and a `CollectionPage`, because there is no entity to point at. Don't "simplify" that to one non-person branch: a museum really does author its own catalogue, and a book title never authors anything.
+- **Quarantining a doc does not clear the byline, and clearing the byline retires the page.** The two layers are independent: `authors.is_person` governs *rendering*, `books.author` governs *existence* — an author page exists only while books point at it, so clearing a bogus `books.author` 404s the page with no code change. Decide which layer a given heading belongs to before writing anything. Roughly half of the 59 were the #3434 data defect (fix the books; the page retires itself) and half were legitimate corporate or anonymous headings (keep the books; drop the person framing).
+- **Enumerate author defects by the author STRING, never by the thesaurus doc.** A doc-keyed sweep walks `author_id` ∪ `author_entity_id` ∪ `variants` and silently misses any book whose string never joined — that gap hid `Kircher Oedipus` (6 periodicals), `Kircher Musurgia`, `Kircher Mundus` and `AnonymousUnknown author` from a sweep that believed it was exhaustive, and `scripts/audit/author-attribution.mjs` (which scans strings) found all of them afterwards. Corollary for repairs: **key the fix on whatever unit was actually verified.** #3434 keyed on book ids because the *name* was valid and only the pairing was wrong; #3483 keys on the string because the string itself is never a name (`S.n` is *sine nomine*), which makes string-matching self-limiting rather than a widening heuristic.
+- **A re-runnable repair must MERGE its backup, not overwrite it.** These scripts select by "still wearing the bad value", so a second run sees only the newly-found records — an overwriting backup would replace 770 restorable records with 15 and strand `--revert` for everything already fixed. Merge on id, and let the **earlier** `before` win: it is the true original.
 
 ## Work identity & "do we have the original?" (read before reasoning about gaps)
 **Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
@@ -246,6 +307,7 @@ Lessons from the AS132203 scraper fleet, 2026-07-29 (#3438, #3446). Full postmor
 - **A concentration alarm that doesn't know its own CDN will tell you to block it.** Before #3491 the detector's `traffic_concentration` check flagged 14–15 "networks each reading >2,000 pages" that were all Cloudflare, with remediation text naming `src/lib/blocked-networks.ts` — following it would have taken the site down. It now recognises the published egress ranges and raises `client_ip_not_recorded` instead, which states the instrument is broken rather than inventing a fleet. Generalisation of the "an alarm is an instrument too" rule below: **an alarm whose remediation is self-harm is worse than no alarm.**
 - **Scope an alias by an exact host match, never `host.includes('vercel.app')`.** Preview deployments (`*-git-*.vercel.app`, `*-<team>.vercel.app`) must keep serving the whole site or branch review stops working; the bare production alias must not. `DEPLOYMENT_ALIAS_HOSTS` in `src/lib/alias-host-scope.ts` is an exact-match set for that reason. And **check what points at an alias before scoping it** — `scripts/uptime-monitor.mjs` probes `sourcelibrary-v2.vercel.app`, and the Playwright suite defaulted `BASE_URL` to it, so a catch-all 308 would not merely have broken them: it would have silently repointed `e2e/crawl-all-pages.spec.ts` at production. Hence the allowlist's EXACT entries (`/api/books` yes, `/api/books/<id>/{text,quote}` no; the three `/embed/*` landing pages yes, the reading rooms beneath them no).
 - **Watch for it: `scripts/workers/traffic-anomaly-alert.mjs`** (hourly cron on Hetzner, pushes to `ntfy.sh/sourcelibrary-uptime` **on state change only** — a detector that repeats itself hourly trains you to ignore it). Three checks, one per failure above: volume concentration per /24, reader traffic on an unexpected hostname, and traffic still reaching the app from a network we believe is blocked. **Adding a new alias means adding it to `EXPECTED_HOSTS`** — the test pins that the allowlist stays small, because every host on it is a surface nobody is watching.
+- **A suffix match is not a host match, and a redirect is a second request (#3508).** `/api/image` gated its server-side fetch on `hostname.endsWith(allowed)`, under which `evilarchive.org`, `xr2.dev` and `notamazonaws.com` all passed — registering a domain that *ends in* an allowlisted string was enough to own the proxy. Match on a dot boundary (`h === allowed || h.endsWith('.' + allowed)`), the way `api/auth/oidc/authorize` already did. And axios follows up to 5 redirects by default while re-checking nothing, so any allowlisted origin could hand us onto a private address: validate **every hop**, not the caller's URL. Shared policy lives in `src/lib/image-proxy-hosts.ts` (`refuseImageUrl`), which also refuses non-http protocols and RFC1918/loopback/link-local/CGNAT literals. Note the severity ceiling here is ours specifically — Vercel runs on Lambda, which has no EC2 metadata service, so `169.254.169.254` credential theft does not apply; on a normal EC2 host it would.
 
 ## Session flags go stale, and blank forms erase — CRITICAL
 Lessons from the `/welcome` lockout, 2026-07-30 (#3467/#3496). Full postmortem:
@@ -315,6 +377,26 @@ Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 appl
 
 And **a field nothing writes looks identical to a field nothing needs.** `reading_history.referrer` was accepted by both routes, plumbed through the API client, projected into the GET response — and never sent by the reader, so all 6,659 rows were empty and "how do members reach a book" was unanswerable without one line of client code. Before concluding a signal is absent, check that something is actually emitting it.
 
+## A default that publishes under someone's real name must be opt-in (CRITICAL)
+`POST /api/embassy/chat` defaulted `visibility` to `'public'` and the client toggle initialised to `'public'`, so every signed-in reader's Librarian conversation went into the public Recent feed carrying `creatorName` — their account name. **539 threads were public against 20 private**, which is the tell: nobody chose this, because nobody was asked. 14 named people, most with full first-and-last names, until a reader wrote in on 2026-07-30 asking why her questions showed her name (#3505).
+
+Every other gate around it was correct. `/api/embassy/threads/[id]` properly 404s a private thread to everyone but its creator; anonymous threads were already `'unlisted'`. **The entire leak was one default**, which is why no audit of the access-control code would have found it.
+
+- **A default is a decision you made on the user's behalf.** For anything that attaches a person's name, location, or words to a public surface, the safe value is the private one — and "the reader can toggle it" is not consent when the toggle starts on. Ask what happens to someone who never touches the control.
+- **A lopsided split IS the finding.** 539/20 is not a preference distribution, it is a default. Before concluding readers like a setting, check the ratio against what the code does when they say nothing. Same shape as the metric-denominator rules above: the number was real and measured the instrument, not the people.
+- **Say what publishing costs, at the point of publishing.** The toggle read "(visible to others)", which describes the thread and not the byline. It now reads "(shown in Recent, under your name)". If a control's label omits the part a reader would object to, the label is the bug.
+- **Retract the backlog, not just the default.** Fixing the default protects the next reader and nobody already exposed. `scripts/maintenance/unpublish-default-public-librarian-threads.mjs` writes the affected ids to a backup *before* the flip and carries a `--restore`, because retracting content a user might genuinely have wanted public has to be reversible in one command.
+- **The data fix and the code fix ship on different clocks.** The retraction took effect the moment it ran; the default stayed `'public'` in production until the PR merged and prod deployed. Between those two points the backlog was clean and the tap was still open. When remediating an active exposure, state which half is live.
+
+Corollary for review: this arrived as a user complaint, not from the security review being verified at the same time — the review checked the write routes and the auth wrappers, and a default is neither. **Readers see the product; audits see the code.**
+
+**`withAuth`'s default is `reader`, and omitting `minRole` does not look like a decision (#3511).** Same shape as the `visibility` default above, one layer down: `withAuth(handler)` reads as "this route is protected" and means "any signed-in account may call it." Eight routes that rewrite or destroy page text sat on it — including `DELETE /api/[tenant]/pages/[id]`, which hard-deletes a page and renumbers the book writing **no revision**, while its global twin was correctly `withAdminAuth`. **A wrapper with a permissive default is only as good as every call site remembering to override it; write the `minRole` explicitly even when it matches the default.**
+
+- **The UI gate is not the API gate, and they drift apart silently.** The Read/Edit toggle has always been wrapped in `<AuthCheck role="inner_circle">`, so no reader ever saw an edit button and nothing looked wrong for a year. An affordance nobody can see is not an access control — the only gate that counts is the one on the route. Ask of any protected UI: *what happens if someone calls the endpoint directly?*
+- **Enumerate the writers; the reported instance is never the class.** #3511 named one route and scoped it to "a tenant subdomain". There were eight, and the two broadest apply **no tenant filter at all** — `quick-fix` looks a page up by `id`, and `restoreRevision()` resolves its page from the revision document, *ignoring the `[id]` in the path*. Reach was the whole corpus from the main domain. Enumeration found five of the eight; reading the issue found one. Same lesson as the five `entities.books[]` writers, now with a test that fails when a ninth appears.
+- **A path parameter that the handler never reads is a scoping illusion.** `/api/pages/[id]/revisions/[revisionId]/restore` looks per-page and is not. If a route's identifier does not appear in its query, it is decoration — do not reason about blast radius from the URL shape.
+- **Check the twins.** Every one of these routes exists twice, `/api/x` and `/api/[tenant]/x`, and in two cases the pair disagreed about who may call it. Fixing one and shipping is how the identical bug shipped twice in the same week before (`da1c221c`, then `b2786b10`).
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
@@ -362,6 +444,46 @@ Chrome/Edge's built-in translator replaces every text node with a nested `<font 
 **Route-level `error.tsx` bypasses the global `ErrorReporter` boundary** (Next.js handles it first), so any route error page must call `reportError` itself or its failures are invisible in `application_errors` — that is why this bug ran for months unmeasured.
 
 **Verifying:** Chrome's built-in translator can't be driven from CDP and the Google Translate *widget* is blocked by our CSP (`translate-pa.googleapis.com` absent from `script-src`; the built-in translator is browser-level and unaffected, so real users are fine). Model it with a MutationObserver that wraps text nodes in `<font><font>` — but **apply the batches asynchronously**, never synchronously inside the observer callback: sync surgery lands inside React's commit, which no real translator does, and it manufactures staleness on correct builds. Always run the unfixed build through the same harness as a negative control; if the old code passes too, the harness proves nothing.
+
+## An absence claim is only as strong as the set it was asserted against — CRITICAL
+"First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
+
+**Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
+layer, its measured reliability, and the invariants below in detail.
+
+That machinery is only honest if you know the set's **recall**, and ours is **27%**
+(was 22%; `scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed
+priors in `translation_classification`) — three of four known prior translations are
+invisible to it. A sampled check of the queue puts `none_found`'s **positive
+predictive value at ~50%**: a coin flip. So:
+
+- **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
+- **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
+- **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
+
+**Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
+
+**A reference set's SIZE is not its COVERAGE — but measure the coverage that answers YOUR question, not a proxy for it.** Every miss checked in the 2026-08-01 sample was **absent from the set, not mis-matched** (Sanford's 1569 Agrippa, Hall's 1654 Maier, Ellistone's 1651 Böhme, Caplan's Loeb *Rhetorica ad Herennium* at zero rows) — so the limit is the corpus, not the matcher, and threshold work is finished.
+
+**The first explanation offered for that was wrong, and the way it was wrong is the lesson.** "The extract is 1.04% pre-1800 while our corpus is early-modern" is a true statistic and a false diagnosis: **a prior English translation of a 1531 Latin work is normally a MODERN imprint.** Checked properly, that class is well covered — of 6,947 rows translating from Latin/Greek, **80.8% are post-1950**. The set's overall date skew was never evidence of anything.
+
+The actual defect was one line in the extractor: `itemLang = subfieldValues(rec,'041','a')[0]` then `if (!itemLang.startsWith('eng')) return null`. MARC lists a bilingual edition's languages **in order of predominance**, so a facing-page scholarly edition — `$a lat $a eng`, or the concatenated `$a lateng` — puts the ancient language first and is **rejected outright**. Both encodings fail. 4,622 rows survived only because `eng` happened to be listed first (424 distinct multi-language codes); the mirror population was dropped silently, and it is precisely the Loeb / I Tatti / facing-page class that carries translations of classical works. Fix: test whether `eng` appears in **any** 041$a, not the first.
+
+**The meta-lesson: I measured the artifact I had instead of the one that was missing.** Reading what the extract *contains* produced a plausible story; the answer was in what the extractor *rejected*, and the rejected population was unmeasurable because the raw dump is deleted after extraction. **When diagnosing a set's coverage, read the ingest filter and keep (or re-derive) the rejects — a filter's discards are the only place its blind spot is visible.** Same shape as the section this sits in: an absence claim is only as strong as the set it was asserted against, and that applies to claims about the set itself.
+
+Related but genuinely separate: **depth is not reachability** — Chinese looks deep at 3,868 rows and is unanswerable anyway, because CJK is reachable only via MARC 880 (2.3% of rows).
+
+**A yardstick inside the set it measures reads 100%.** `translation_classification` became both a *source* and the recall test set, and the combined figure came out at exactly 100.0%. Quote **catalogue-only** recall. Adding it raised *coverage*, not recall, and structurally could not raise recall — it is a join on our own ids, so it resolves the books we already had an answer for and reaches nothing beyond them. (Same family as a metric's name being a claim about its denominator.)
+
+Three specific traps, each of which cost real work:
+- **Threshold tuning does not converge — find the right instrument.** The work-identity matcher was tuned five times; pass four lost verified true positives (Cicero's *De Officiis*, Grimald 1556) while making the corpus look *cleaner*. The answer was not a threshold but MARC **240 uniform-title containment**, because 240 exists to name a work independently of how an edition titles it. The same move fixed the 245 fallback that left 35.2% of rows unconfirmable: the overlap there is usually carried by **the author's own name** ("Poetics" vs "The Rhetoric of Aristotle"), so discount personal-name tokens and require containment plus author agreement — never a higher cap. Pinned by a gold set (`tests/unit/reference-set-work-identity.test.ts`) holding both the verified positives and the false-positive class each tuning pass produced.
+- **An immutable log is a history, not a state.** Efforts are immutable so a stale negative re-opens when the set improves — but adding a source mints a new generation and silently orphans prior judgement. Screening lives in `screening_decisions`, keyed on (work, prior), and is re-applied to every generation. Read `search_efforts` through `latestEffortPerBook()`.
+- **Provenance cannot tell you what you translated.** Re-hosted scholarly editions (Budge, Langdon) carry `translation.model` and `source:"ai"` exactly like our own work, because our pipeline OCR'd their printed *English* and re-rendered it. The signal that works is the OCR model's own declaration inside `ocr.data` (`<language>English</language>`) — `scripts/lib/english-source-detect.mjs`. The `pages.ocr.language` column is null on exactly the older ingests where it matters. And strip editorial wrappers before measuring any page text, or you measure our own annotations (that bug shipped here and inflated a count 6×).
+
+- **UNKNOWN must never read as MISMATCH.** The source-language screen compared MARC codes against Wikidata **Q-numbers** (`['gre','grc'].includes('Q35497')` is false), so it rejected every Wikidata row whose language it knew — 228 real priors, including Xenophon's *Symposium* and all six *Rubáiyát*. Reject only when **both** sides resolve to a known value and disagree; an unreadable identifier is unknown (`scripts/lib/source-language-match.mjs`). Deliberately no QID table — a hand-written list of unverifiable assertions reproduces the bug on its first wrong entry.
+- **`books.language` is the language of the WORK, not of the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition.
+
+Full postmortem: private ops repo, `handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.
 
 ## Social-card metadata invariant
 Next.js merges page `metadata` shallowly per top-level key. Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):

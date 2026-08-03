@@ -389,7 +389,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   useEffect(() => {
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
-  const [visibility, setVisibility] = useState<'public' | 'private'>('public');
+  // Private until the reader says otherwise — the toggle beneath the composer
+  // publishes the thread under their account name, so it must be opt-in.
+  const [visibility, setVisibility] = useState<'public' | 'private'>('private');
   // Research notebook accumulated live across the thread (from notebook_update).
   const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
   const [notebookTopic, setNotebookTopic] = useState<string | undefined>();
@@ -1181,7 +1183,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
                         >
                           <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                          <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
+                          <span className="text-[9px]">{visibility === 'public' ? '(shown in Recent, under your name)' : '(only you)'}</span>
                         </button>
                       )}
                       <span className="text-[9px] text-[#c0b8b0] font-mono">v5</span>
