@@ -12,10 +12,23 @@
  *   the individually-shot leaves in half. The reader then renders half a
  *   frontispiece, and the download button hands out that same half.
  *
- * The discriminator is the SOURCE image's own aspect ratio, read from the
- * bytes on R2 — not any stored flag:
- *   - landscape source (w > h)  -> a real spread; the split is correct.
- *   - portrait source  (w <= h) -> a single leaf; any half-width crop is wrong.
+ * The discriminator is the SOURCE image's aspect ratio measured against THIS
+ * BOOK'S OWN leaf ratio, read from the bytes on R2 — not any stored flag, and
+ * not an absolute threshold. Absolute tests fail: single-leaf and spread aspect
+ * ratios from different books overlap, so `w > h` flagged all 543 correctly
+ * split pages of a book whose leaves are tall and narrow. See
+ * referenceLeafAspect() below.
+ *
+ * Two conditions must BOTH hold before a page counts as broken, because either
+ * alone misleads in a different direction:
+ *   - the source sits at ~1x the book's leaf ratio (it is one leaf, not two);
+ *   - the materialized image is actually about half the source width.
+ * Sources between 1.25x and 1.75x are ambiguous and are abstained on, never
+ * guessed: spot checks found real spreads at 1.32x and 1.40x.
+ *
+ * Note raw pixel width does NOT work in place of aspect ratio — scan resolution
+ * varies within a book (one book references leaves at 3290px and crops sources
+ * at 2000px), so widths are not comparable across pages. Aspect ratio is.
  *
  * Nothing was destroyed by the bad split: `archived_photo` still holds the
  * complete leaf, and the canonical `pages/{book}/{NNNN}.jpg` / `-thumb.jpg`
@@ -207,7 +220,34 @@ async function scanBook(db, book) {
   // "source is one leaf" flags spurious-but-unmaterialized crops that render
   // fine, and "rendered is a half" is true of every correct split too, since
   // the crop always removes half the width.
-  const isSingleLeaf = (m) => Math.abs(m.ar - ref) < Math.abs(m.ar - 2 * ref);
+  //
+  // Nearest-neighbour between 1x and 2x is NOT good enough: a source at 1.3-1.4x
+  // the leaf ratio is closer to 1x, so it gets called a single leaf, but spot
+  // checks showed those are real spreads (irregular openings, fold-out plates,
+  // or an unrepresentative reference drawn from few uncropped pages). Grick p74
+  // at 1.40x and Cooke p57 at 1.32x are both visibly two facing pages. Every
+  // verified true positive sits at 0.91-1.08x. So require a decisive 1x and
+  // abstain in the dead zone rather than guess.
+  //
+  // The per-book reference is necessary but NOT sufficient, because "uncropped
+  // pages are single leaves" is false: in a partly-split book the unsplit pages
+  // may themselves be spreads nobody got to. Sabbathier draws its reference from
+  // 24 uncropped pages that are all spreads (bookplate on the left leaf, shelf
+  // marks on the right), yielding ref 1.631 — a SPREAD ratio — against which its
+  // real spreads at 1.598 read as "single leaves", flagging all 70 pages.
+  //
+  // So gate on an absolute ceiling too. Book leaves are portrait or near-square
+  // in overwhelming majority; a source wider than 1.2 is a spread in practice.
+  // Oblong-format books do exist, so this can miss a genuine break in one — an
+  // accepted false negative, since missing a repair is recoverable and a wrong
+  // write is not.
+  const LEAF_AR_CEILING = 1.2;
+  const SINGLE_MAX = 1.25;
+  const SPREAD_MIN = 1.75;
+  const ratio = (m) => m.ar / ref;
+  const isSingleLeaf = (m) => ratio(m) <= SINGLE_MAX && m.ar < LEAF_AR_CEILING;
+  const isAmbiguous = (m) =>
+    m.ar < LEAF_AR_CEILING && ratio(m) > SINGLE_MAX && ratio(m) < SPREAD_MIN;
   const isHalved = (m) => m.shown && m.shown.w < m.src.w * 0.75;
 
   const croppedMeasured = measured.filter((m) => hasCrop(m.page));
@@ -216,8 +256,9 @@ async function scanBook(db, book) {
     .map((m) => ({ page: m.page, src: m.src, rendered: m.shown }))
     .sort((a, b) => a.page.page_number - b.page.page_number);
   const metadataOnly = croppedMeasured.filter((m) => isSingleLeaf(m) && !isHalved(m)).length;
+  const ambiguous = croppedMeasured.filter((m) => isAmbiguous(m) && isHalved(m)).length;
 
-  return { book, broken, checked: cropBearing.length, ref, how, metadataOnly };
+  return { book, broken, checked: cropBearing.length, ref, how, metadataOnly, ambiguous };
 }
 
 /**
@@ -289,7 +330,7 @@ async function main() {
   const undetermined = [];
 
   await mapLimit(books, BOOK_CONCURRENCY, async (book) => {
-    const { broken, checked, undetermined: why, ref, how, metadataOnly } = await scanBook(db, book);
+    const { broken, checked, undetermined: why, ref, how, metadataOnly, ambiguous } = await scanBook(db, book);
     done++;
     pagesChecked += checked;
 
@@ -310,6 +351,7 @@ async function main() {
         checked,
         broken: broken.length,
         metadataOnly: metadataOnly ?? null,
+        ambiguous: ambiguous ?? null,
         ref: ref ?? null,
         undetermined: why ?? null,
       }) + '\n',
@@ -340,6 +382,7 @@ async function main() {
       );
     }
     if (metadataOnly) console.log(`    (+${metadataOnly} spurious crops that still render full — not repaired here)`);
+    if (ambiguous) console.log(`    (+${ambiguous} ambiguous, source between 1x and 2x the leaf ratio — abstained)`);
     allBroken.push({ book, broken });
   });
 
