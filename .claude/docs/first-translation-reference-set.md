@@ -77,27 +77,64 @@ prior English translation the search missed** — Agrippa's *De incertitudine*
 *Rhetorica ad Herennium* (Caplan, Loeb), Gregory of Nazianzus.
 
 So `none_found` is a **lead with a coin-flip hit rate**, not a finding. Caveats on
-that figure, both real: n=14, and it is biased, because only *famous* works can be
-verified quickly and famous works are likelier to have priors.
+that figure, now three: n=14; it is biased, because only *famous* works can be
+verified quickly and famous works are likelier to have priors; and per §2b the
+Agrippa case does not belong in the sample at all — its efforts read `inconclusive`,
+not `none_found`, so it is not evidence about what a null is worth. The other six
+named works stand.
 
 ### 2b. The cause is the CORPUS, not the matcher — but read 2c before quoting 2b
 
-> **⚠️ Corrected 2026-08-02.** The table below is right: those priors are absent
-> from the set. The *explanation* first attached to it — "the extract is 1.04%
-> pre-1800 against an early-modern corpus" — was **wrong**, and §2c replaces it.
-> A prior English translation of a 1531 Latin work is normally a **modern**
-> imprint, so the set's date skew was never evidence of anything.
+> **⚠️ Corrected twice, 2026-08-02, by two independent passes. Both corrections
+> are below and neither supersedes the other.**
+>
+> 1. **The explanation was wrong.** "The extract is 1.04% pre-1800 against an
+>    early-modern corpus" is a true statistic and a false diagnosis — a prior
+>    English translation of a 1531 Latin work is normally a **modern** imprint, so
+>    the set's date skew was never evidence of anything. **§2c has the real cause**
+>    (an ingest filter), and it is the one to quote.
+> 2. **One row of the table was wrong.** Six of the seven works are confirmed
+>    absent; **Agrippa is present** and was never a miss at all. See immediately
+>    below.
 
-Every one of those misses was checked against the full extract. **None is a
-matcher failure — the records are simply absent:**
+**The Agrippa correction.** Re-verified 2026-08-02 against the live
+`reference_translations` collection, querying `uniform_title`, `title` AND `author`
+— the original check used author alone. **Six of the seven works named in §2a are
+confirmed absent. Agrippa is not:**
 
 | work | verified prior | in the extract? |
 |---|---|---|
-| Agrippa, *De incertitudine* | Sanford 1569 | 12 Agrippa rows, all *De occulta philosophia*. Absent. |
-| Maier, *Lusus Serius* | Hall 1654 | 44 "Maier/Mayer" rows, none the alchemist. Absent. |
-| Böhme, *De Signatura Rerum* | Ellistone 1651 | 10 rows incl. "Works.", "Clavis.". Absent. |
-| *Rhetorica ad Herennium* | Caplan, Loeb | **0 rows.** |
-| ps-Albertus, *De secretis mulierum* | Lemay 1992 | 1 hit, an unrelated 1876 novel. Absent. |
+| Agrippa, *De incertitudine* | Sanford 1569 | ✅ **PRESENT.** LCCN 92246639 — *The vanity of arts and sciences*, 1694, `240 = De incertitudine et vanitate scientiarum.`, `eng` ← `lat`. |
+| Maier, *Lusus Serius* | Hall 1654 | Absent (0 rows). |
+| Böhme, *De Signatura Rerum* | Ellistone 1651 | Absent (0 rows). The only `Signatura rerum` row is **Agamben's** 2008 book, ← `ita`. |
+| *Rhetorica ad Herennium* | Caplan, Loeb | Absent (0 rows). |
+| ps-Albertus, *De secretis mulierum* | Lemay 1992 | Absent (0 rows). |
+| *Confessio Augustana* | — | Absent (0 rows). |
+| Gregory of Nazianzus | — | Absent (0 rows). |
+
+A 1694 English translation of exactly that uniform title is in the set, and the
+matcher *did* surface it — all four of our copies sit at `inconclusive` with 1–2
+candidates, never `none_found`. So Agrippa was **neither a corpus absence nor a
+matcher miss: it is an unscreened candidate**, and the answer has been sitting in
+the screening backlog. It follows that it does not belong in §2a's PPV sample
+either — an `inconclusive` says nothing about what a null is worth.
+
+Two lessons, both this file's own doctrine turned on itself:
+
+- **Query every field before writing "absent."** An author search and a
+  uniform-title search are different questions, and §4 already says the 240 IS the
+  join key — yet the table was built by author. (The first re-check also probed a
+  field named `record_author`, which does not exist; the field is `author`. A query
+  against a non-existent field returns 0 and reads exactly like a real absence.
+  Same failure class as §7: *every bug in this area fails toward a confident clean
+  negative*.)
+- **A correction is not exempt from the standard it enforces.** This row survived
+  one round of correction because the re-check inherited the original's search
+  strategy.
+
+**Consequence for "matcher work is finished":** it may still be true, but §2b no
+longer evidences it. The one case re-examined here lost its answer to **screening**,
+not to matching — which points at queue item 4 as much as at the corpus.
 
 **Matcher/threshold work is finished.** The MARC 240 fix (§4) was the last
 available gain from matching and it is done and pinned. Further tuning is the trap
@@ -183,6 +220,8 @@ ESTC remains right for three of five. It was never going to recover the other tw
 | `scripts/output/wikidata/` | 14,924 rows, 105 languages, 44.7% with native-script titles |
 | `search_efforts` (Mongo) | one doc per book per generation: proposition, dated reference set with declared gaps, queries, every candidate with its screening reason, git SHA |
 | `screening_decisions` (Mongo) | durable human judgements, re-applied to every future generation |
+| `translation_catalogs` (Mongo) | 24,061 asserted prior English translations (UNESCO Index Translationum, LoC MARC, OpenLibrary, HathiTrust, Loeb, publishers). ⚠️ **carries no resolvable identifier** — see below |
+| `translation_classification` (Mongo) | 9,908 model verdicts; 2,755 assert a prior. Prose citation only, no identifier. A lead, never a prior — see §3's third source |
 | `bib_records` (Mongo) | raw MARC kept whole, keyed `source:identifier` |
 
 Pipeline order:
@@ -197,6 +236,34 @@ measurement: ft-reference-set-recall.mjs
 ```
 
 All free: bulk downloads, local indexes, free endpoints. Zero API spend.
+
+### Only one layer can produce a citation
+
+Measured 2026-08-02. Three collections assert that a prior English translation
+exists, and they are not interchangeable:
+
+| layer | rows | book/work link | resolvable identifier | can it be cited? |
+|---|---|---|---|---|
+| `reference_translations` | 118,352 | via the matcher, per effort | **LCCN on 100%** → `catalog.loc.gov` | **yes** |
+| `translation_catalogs` | 24,061 | **0 rows carry `book_id` or `work_id`** | **0 rows carry LCCN / OCLC / ISBN / URL** | no |
+| `translation_classification` | 2,755 asserting a prior | `book_id` | **0 rows carry a URL**; 2,563 carry a prose sentence | no |
+
+`translation_catalogs` is joined to books by **normalised title and author strings
+at query time** (`english_title_normalized`, `canonical_author_normalized`) — it is
+a matching table, not a set of records. A reader asking "which prior translation?"
+cannot be answered from it, and neither can a reviewer.
+
+This is the gap under the whole evidence layer: **where we assert a prior, we can
+usually name it but rarely link it.** #3455 (`bib_records` — keep the whole
+bibliographic record) and #3428 (resolve every claim to an authority record) are
+the fix; until they land, only `reference_translations` findings belong in
+reader-facing evidence.
+
+⚠️ **Live contradiction, 2026-08-02:** 158 books are badged
+`is_first_translation: true` while `translation_classification` names a prior
+translation for them (883 of those 2,755 books are live and visible). The
+classifier is a lead and not authority — but 158 unreviewed contradictions of our
+own public claim is a screening queue, not a rounding error.
 
 ### The three sources, and why the third is not a catalogue
 
@@ -388,7 +455,11 @@ Tibetan monastery items where no access point exists at all.
    + `$l English` (the key the matcher already uses). ⚠️ deep paging dies at
    `from=10000` with **HTTP 200 and no rows**. Pair with relaxing the `041$h`
    filter.
-4. **Screen the ~2,415 `inconclusive`** — cheaper once the set covers our period.
+4. **Screen the ~2,415 `inconclusive`** — cheaper once the set covers our period,
+   and no longer only a tail task: the Agrippa case (§2b) shows a verified prior
+   already sitting in this queue, unread. Start with the **158 books badged while
+   `translation_classification` names a prior** (§3) — those contradict a live
+   public claim and the lead is already written down.
 5. **Tibetan/Chinese reference sets** — 84000/BDRC, CBETA/ctext. 795 + 450 badges
    rest on catalogues that structurally cannot answer.
 6. **A Tibetanist** should review the romanized generic-term stoplist.
