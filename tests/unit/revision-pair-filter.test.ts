@@ -185,6 +185,39 @@ describe('classifyPair', () => {
     expect(v.usable).toBe(true);
   });
 
+  it('rejects a pair whose two sides are in different writing systems', () => {
+    // #3362: the archiver wrote pages to a shared key, so OCR transcribed another
+    // book's page into this one. Verified on rasaratnasamuccaya-vagbhata p27 — a
+    // Devanagari table of contents whose stored OCR was a Latin index.
+    const v = classifyPair({
+      priorSource: 'batch_api',
+      priorText: 'erigeron. 98.10. erymanthus. 339.9. erynnies. 550.35. eryngium. 559.34. eris. 550.35.',
+      currentText: 'अपस्मारहरणरसम् ५०७ अपस्मारहरी योगः उन्मादचिकित्सा एकाङ्गवातचिकित्सा विविधवातव्याधिचिकित्सा',
+    });
+    expect(v.usable).toBe(false);
+    expect(v.reason).toBe('different-script');
+  });
+
+  it('does not fire on a page that merely quotes another script', () => {
+    // Greek quoted inside a Latin page is normal in these books and must not be
+    // mistaken for a different page. Dominance, not presence.
+    const v = classifyPair({
+      priorSource: 'batch_api',
+      priorText: P('12', 'Quod Plato in Timaeo dicit, ὁ κόσμος, de mundo intelligendum est, et cetera quae sequuntur in libro'),
+      currentText: P('12', 'Quod Plato in Timaeo dicit, ὁ κόσμος, de mundo intelligendum est, et cetera quae secuntur in libro'),
+    });
+    expect(v.usable).toBe(true);
+  });
+
+  it('abstains when a side is too short to have a dominant script', () => {
+    const v = classifyPair({
+      priorSource: 'batch_api',
+      priorText: P('12', 'iv'),
+      currentText: P('12', 'iv'),
+    });
+    expect(v.usable).toBe(true);
+  });
+
   it('rejects an empty side', () => {
     expect(classifyPair({ priorSource: 'ai', priorText: '', currentText: P('1', 'x') }).reason)
       .toBe('empty-side');

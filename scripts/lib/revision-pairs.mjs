@@ -125,6 +125,36 @@ export function printedLeaf(text) {
 }
 
 /**
+ * The dominant writing system of a text, or null when there is too little to say.
+ *
+ * Format-independent on purpose. The obvious test — do the two sides declare
+ * different `<language>` tags — is not usable, because the tag VOCABULARY changed
+ * between prompt versions (`<lang>sa</lang>` in v3 against
+ * `<language>Sanskrit</language>` in v5), so it partly measures the prompt. The
+ * actual characters do not lie.
+ */
+const SCRIPT_BLOCKS = [
+  ['latin', 0x0041, 0x024F], ['greek', 0x0370, 0x03FF], ['cyrillic', 0x0400, 0x04FF],
+  ['armenian', 0x0530, 0x058F], ['hebrew', 0x0590, 0x05FF], ['arabic', 0x0600, 0x06FF],
+  ['devanagari', 0x0900, 0x097F], ['bengali', 0x0980, 0x09FF], ['tamil', 0x0B80, 0x0BFF],
+  ['tibetan', 0x0F00, 0x0FFF], ['georgian', 0x10A0, 0x10FF], ['ethiopic', 0x1200, 0x137F],
+  ['kana', 0x3040, 0x30FF], ['han', 0x4E00, 0x9FFF],
+];
+const MIN_SCRIPT_CHARS = 20;
+export function dominantScript(text) {
+  const t = (text || '').replace(/<[^>]+>/g, ' ').slice(0, 6000);
+  const counts = {};
+  for (const ch of t) {
+    const cp = ch.codePointAt(0);
+    for (const [name, lo, hi] of SCRIPT_BLOCKS) {
+      if (cp >= lo && cp <= hi) { counts[name] = (counts[name] || 0) + 1; break; }
+    }
+  }
+  const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  return ranked.length && ranked[0][1] >= MIN_SCRIPT_CHARS ? ranked[0][0] : null;
+}
+
+/**
  * Did these two texts come off the same leaf?
  *   'same'        — both printed numbers present and equal
  *   'different'   — both present and unequal (the two passes read different leaves)
@@ -158,7 +188,10 @@ export function classifyPair({ priorSource, currentSource, priorText, currentTex
   const currentKind = currentSource === undefined ? 'model' : sourceKind(currentSource);
   const leaf = leafVerdict(priorText, currentText);
   const printed = { prior: printedLeaf(priorText), current: printedLeaf(currentText) };
-  const base = { source_kind: priorKind, current_source_kind: currentKind, leaf, printed };
+  const base = {
+    source_kind: priorKind, current_source_kind: currentKind, leaf, printed,
+    script: { prior: dominantScript(priorText), current: dominantScript(currentText) },
+  };
   const either = k => priorKind === k || currentKind === k;
 
   if (!priorText || !currentText) return { ...base, usable: false, reason: 'empty-side' };
@@ -166,6 +199,18 @@ export function classifyPair({ priorSource, currentSource, priorText, currentTex
   if (either('derived')) return { ...base, usable: false, reason: 'derived-text' };
   if (either('human')) return { ...base, usable: false, reason: 'human-edit' };
   if (either('unknown')) return { ...base, usable: false, reason: 'unknown-source' };
+  // Two texts in different writing systems are not two reads of one page. This is
+  // the #3362 cross-book signature: the archiver wrote pages to a shared
+  // `archived/undefined/<n>.jpg` key, OCR transcribed ANOTHER BOOK's page into
+  // this one, and the later re-OCR of the correct image disagrees completely.
+  // Verified against the scan on `rasaratnasamuccaya-vagbhata` p27 — a Devanagari
+  // table of contents whose stored OCR was a Latin index (`erigeron`, `eryngium`).
+  // Measured across the whole near-zero-agreement tail: 27.6% of those pairs are
+  // cross-script, 539 of them latin->devanagari. They are not hard pages, and a
+  // corpus that keeps them ranks the affected strata as the worst in the library.
+  if (base.script.prior && base.script.current && base.script.prior !== base.script.current) {
+    return { ...base, usable: false, reason: 'different-script' };
+  }
   if (leaf === 'different') return { ...base, usable: false, reason: 'different-leaf' };
   return { ...base, usable: true, reason: 'ok' };
 }
