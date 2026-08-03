@@ -4,6 +4,19 @@ import { performTransliteration } from '@/lib/ai';
 const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
+
+/**
+ * Hourly per-IP cap on GENERATED transliterations for anonymous readers.
+ *
+ * Deliberately generous. TranslationEditor auto-fires this route when the
+ * transliteration panel opens, so one uncached page read == one call: a reader
+ * working through a Tibetan or Arabic book at 60 pages an hour is an ordinary
+ * session, not abuse. A university reading room behind NAT is also a single
+ * `cf-connecting-ip` sharing one bucket. Tighten this off `gate_hit` data in
+ * analytics_events, never up front.
+ */
+const ANON_TRANSLITERATION_LIMIT = 200;
 
 // Simple hash function to detect OCR changes
 function hashString(str: string): string {
@@ -89,6 +102,25 @@ export async function POST(
         script: page.transliteration.script,
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 }
       });
+    }
+
+    // Past this point the request costs money, so anonymous volume is metered
+    // (ops#6). Everything above — including the cache hit — stays free, which
+    // is the majority of real reader traffic. Signed-in users, verified
+    // crawlers and warm pings are exempt inside the gate.
+    const gate = await anonActionGate(request, {
+      name: 'transliterate',
+      limit: ANON_TRANSLITERATION_LIMIT,
+    });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: `You've used your ${ANON_TRANSLITERATION_LIMIT} free transliterations this hour. Sign in (free) to keep reading.`,
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+        },
+        { status: 401, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : {} },
+      );
     }
 
     // Perform transliteration

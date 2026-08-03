@@ -303,11 +303,13 @@ describe('the page-write route list stays complete', () => {
       'src/app/api/[tenant]/pages/[id]/modernize/route.ts',
       'src/app/api/pages/[id]/detect-split/route.ts',
       'src/app/api/[tenant]/pages/[id]/detect-split/route.ts',
-      // TODO(ops#6 PR 2): `transliterate` is the one route in this group with
-      // real anonymous reader traffic — TranslationEditor auto-fires it when
-      // the panel opens, outside every <AuthCheck>. Editor-gating it would
-      // break signed-out reading, so it gets `anonActionGate` on the
-      // cache-miss path instead and is covered by its own test, not by CASES.
+      // `transliterate` is the one route in this group with real anonymous
+      // reader traffic — TranslationEditor auto-fires it when the panel opens,
+      // outside every <AuthCheck>. Editor-gating it would break signed-out
+      // reading, so it is metered by `anonActionGate` on the cache-miss path
+      // instead of walled. It belongs in this covered set but NOT in CASES,
+      // which asserts role behaviour. Its own guard is
+      // tests/unit/transliterate-anon-gate.test.ts.
       'src/app/api/pages/[id]/transliterate/route.ts',
       'src/app/api/[tenant]/pages/[id]/transliterate/route.ts',
     ]);

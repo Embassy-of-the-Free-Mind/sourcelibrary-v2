@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
@@ -44,6 +45,7 @@ import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import ShareButton from '@/components/ui/ShareButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
+import type { ApiClientError } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import { getPageDisplayUrl, getPageThumbUrl, isUsableImageUrl } from '@/lib/utils';
@@ -65,6 +67,27 @@ const NON_LATIN_LANGUAGES = new Set([
 function hasNonLatinScript(language?: string): boolean {
   if (!language) return false;
   return NON_LATIN_LANGUAGES.has(language.toLowerCase());
+}
+
+type TransliterationGate = { message: string; signIn: string } | null;
+
+/**
+ * Both transliteration call sites — the panel's auto-fire effect and the
+ * explicit button — share this. Generating a transliteration is a paid Gemini
+ * call, so anonymous volume is capped per hour and the route answers 401 with
+ * `code: 'SIGNIN_REQUIRED'` at the cap (ops#6). That is a prompt, not a
+ * failure: it renders a sign-in CTA rather than an error toast, and nothing
+ * retries. Any other error keeps the existing toast.
+ */
+function handleTransliterationError(
+  err: ApiClientError,
+  setGate: (gate: TransliterationGate) => void,
+): void {
+  if (err?.code === 'SIGNIN_REQUIRED') {
+    setGate({ message: err.message, signIn: err.signIn || '/auth/signin' });
+    return;
+  }
+  toast.error(`Transliteration failed: ${err?.message || 'Unknown error'}`);
 }
 
 // Helper to format edit source info
@@ -588,6 +611,11 @@ export default function TranslationEditor({
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
   const [transliterationLoading, setTransliterationLoading] = useState(false);
+  // Set when the anon-gate walls a signed-out reader (ops#6). Generating a
+  // transliteration is a paid call, so anonymous volume is capped per hour;
+  // hitting the cap is a sign-in prompt, not a failure, and must not retry.
+  const [transliterationGate, setTransliterationGate] =
+    useState<{ message: string; signIn: string } | null>(null);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
   // Full book doc for the edition-info section of the metadata panel. The reader
@@ -827,12 +855,13 @@ export default function TranslationEditor({
     }
     let cancelled = false;
     setTransliterationLoading(true);
+    setTransliterationGate(null);
     pagesApi.transliterate(page.id)
       .then((res) => {
         if (!cancelled) setTransliterationText(res.transliteration || '');
       })
-      .catch((err) => {
-        if (!cancelled) toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`);
+      .catch((err: ApiClientError) => {
+        if (!cancelled) handleTransliterationError(err, setTransliterationGate);
       })
       .finally(() => {
         if (!cancelled) setTransliterationLoading(false);
@@ -1879,6 +1908,22 @@ export default function TranslationEditor({
                         <Loader2 className="w-8 h-8 animate-spin mb-3" style={{ color: 'var(--accent-rust)' }} />
                         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Generating transliteration...</p>
                       </div>
+                    ) : transliterationGate ? (
+                      // Anon-gate wall (ops#6). Not an error state: the reader
+                      // has done nothing wrong and nothing is retried.
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
+                        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+                          {transliterationGate.message}
+                        </p>
+                        <Link
+                          href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname)}&reason=limit`}
+                          className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-rust)' }}
+                        >
+                          Sign in — free
+                        </Link>
+                      </div>
                     ) : transliterationText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
                         <NotesRenderer text={cleanTransliteration} showNotes={false} showMetadata={false} columns={effectiveColumns} />
@@ -1892,9 +1937,10 @@ export default function TranslationEditor({
                         <button
                           onClick={() => {
                             setTransliterationLoading(true);
+                            setTransliterationGate(null);
                             pagesApi.transliterate(page.id)
                               .then((res) => setTransliterationText(res.transliteration || ''))
-                              .catch((err) => toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`))
+                              .catch((err: ApiClientError) => handleTransliterationError(err, setTransliterationGate))
                               .finally(() => setTransliterationLoading(false));
                           }}
                           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"

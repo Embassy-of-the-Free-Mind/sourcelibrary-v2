@@ -108,10 +108,28 @@ apiClient.interceptors.response.use(
     }
 
     // Extract error message from response
-    const message = (error.response?.data as any)?.error || error.message || 'Request failed';
-    throw new Error(message);
+    const data = error.response?.data as { error?: string; code?: string; sign_in?: string } | undefined;
+    const message = data?.error || error.message || 'Request failed';
+
+    // Carry the machine-readable fields through instead of collapsing the
+    // response to a prose string. Anon-gate walls answer 401 with
+    // `code: 'SIGNIN_REQUIRED'`, and a caller that can only see `err.message`
+    // has to regex the copy to recognise one — which `/search` currently does,
+    // and which breaks the moment the wording changes.
+    throw Object.assign(new Error(message), {
+      status: error.response?.status,
+      code: data?.code,
+      signIn: data?.sign_in,
+    });
   }
 );
+
+/** Shape of the error thrown by the response interceptor above. */
+export interface ApiClientError extends Error {
+  status?: number;
+  code?: string;
+  signIn?: string;
+}
 
 /**
  * Streaming request helper that applies interceptor logic

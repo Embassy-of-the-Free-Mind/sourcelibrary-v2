@@ -6,6 +6,10 @@ import { resolveTenantId } from '@/lib/tenant-context';
 const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
+
+/** See the unscoped twin for why this is deliberately generous. */
+const ANON_TRANSLITERATION_LIMIT = 200;
 
 // Simple hash function to detect OCR changes
 function hashString(str: string): string {
@@ -96,6 +100,22 @@ export async function POST(
         script: page.transliteration.script,
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 }
       });
+    }
+
+    // Past this point the request costs money — see the unscoped twin (ops#6).
+    const gate = await anonActionGate(request, {
+      name: 'transliterate',
+      limit: ANON_TRANSLITERATION_LIMIT,
+    });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: `You've used your ${ANON_TRANSLITERATION_LIMIT} free transliterations this hour. Sign in (free) to keep reading.`,
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+        },
+        { status: 401, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : {} },
+      );
     }
 
     // Perform transliteration
