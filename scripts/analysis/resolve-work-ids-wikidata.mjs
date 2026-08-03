@@ -17,7 +17,7 @@ import fs from 'fs';
 const APPLY = process.argv.includes('--apply');
 const LANG = (process.argv.find(a=>a.startsWith('--lang='))||'--lang=greek').split('=')[1].toLowerCase();
 const BOOKLANGS = { greek:['Greek','Ancient Greek'], latin:['Latin'], pali:['Pali','Pāli'] }[LANG] || [LANG[0].toUpperCase()+LANG.slice(1)];
-const UA = 'SourceLibrary-work-resolver/1.0 (https://sourcelibrary.org; derek@playpowerlabs.com)';
+const UA = 'SourceLibrary-work-resolver/1.0 (https://sourcelibrary.org; team@sourcelibrary.org)';
 const deacc = s => (s||'').normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase();
 // apparatus words only. NOT container words (fragments/works/opera) — those must
 // survive tokenization so the container-skip can see and reject them; they live
