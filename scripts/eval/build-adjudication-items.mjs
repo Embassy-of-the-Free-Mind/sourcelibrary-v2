@@ -53,7 +53,7 @@ import path from 'path';
 import readline from 'readline';
 import { fileURLToPath } from 'url';
 import { stripWrappers } from './lib/metrics.mjs';
-import { classifyPair } from '../lib/revision-pairs.mjs';
+import { dominantScript } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -76,7 +76,29 @@ const SITE = 'https://sourcelibrary.org';
 let _s = SEED >>> 0;
 const rand = () => (((_s = (_s * 1664525 + 1013904223) >>> 0)) / 4294967296);
 
-const words = s => stripWrappers(s || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+// stripWrappers does NOT remove <image-desc>: it is not an OCR envelope block. But
+// it is AI-written prose ABOUT a picture, and a preview run duly produced the item
+// "does the page say `beginning` or `start`?" from inside one. Nothing on the page
+// says either. Remove it and its sibling before tokenising.
+const words = s => stripWrappers((s || '')
+  .replace(/<(image-desc|detected-images)[^>]*>[\s\S]*?<\/\1>/gi, ' '))
+  .replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+
+// A word-level task needs word boundaries. In Han, kana, Tibetan and Thai a page is
+// ~22 whitespace tokens against ~310 for Latin, so a "substitution" pairs whole
+// clauses against fragments — the preview produced a 40-character run opposite two
+// characters. Those scripts need a character-level task, which this is not.
+const SPACED_SCRIPTS = new Set(['latin', 'greek', 'cyrillic', 'hebrew', 'arabic', 'armenian', 'georgian', 'devanagari']);
+
+// Reject alignment artifacts rather than asking a human to judge them: a real
+// substitution is one word read two ways, so the candidates should be comparable in
+// length. `T` against `TABLEAU` is the aligner slipping, not a reading.
+const plausibleSpan = (a, b) => {
+  if (!a || !b) return false;
+  const la = [...a].length, lb = [...b].length;
+  if (la > 30 || lb > 30) return false;
+  return Math.max(la, lb) <= 3 * Math.min(la, lb) + 2;
+};
 
 /** Degenerate: the model looped. Low type/token ratio over a long text. */
 const isDegenerate = t => {
@@ -148,7 +170,8 @@ async function main() {
   console.log(`${pool.length.toLocaleString()} distinct books in the pool`);
 
   const items = [], key = [];
-  let pagesUsed = 0, goldCount = 0;
+  let pagesUsed = 0, goldCount = 0, skippedScript = 0, skippedSpan = 0;
+  const seenSpan = new Set();
   for (const r of pool) {
     if (items.length >= WANT) break;
     const pg = await db.collection('pages').findOne({ id: r.page_id },
@@ -166,6 +189,9 @@ async function main() {
     const goldSide = (degPrior || metaPrior) && !(degCurr || metaCurr) ? 'current'
       : (degCurr || metaCurr) && !(degPrior || metaPrior) ? 'prior' : null;
 
+    const script = dominantScript(pg.ocr.data) || dominantScript(rev.data);
+    if (script && !SPACED_SCRIPTS.has(script)) { skippedScript++; continue; }
+
     const A = words(rev.data), B = words(pg.ocr.data);
     const subs = substitutions(A, B);
     if (!subs.length) continue;
@@ -176,6 +202,12 @@ async function main() {
       if (taken >= PER_PAGE || items.length >= WANT) break;
       // Skip pure punctuation/number noise — nothing to judge.
       if (!/\p{L}/u.test(s.a) && !/\p{L}/u.test(s.b)) continue;
+      if (!plausibleSpan(s.a, s.b)) { skippedSpan++; continue; }
+      // The same disputed word often recurs on a page (a running head, a repeated
+      // phrase). Asking the same question five times wastes the volunteer.
+      const spanKey = `${r.page_id}|${s.a}|${s.b}`;
+      if (seenSpan.has(spanKey)) continue;
+      seenSpan.add(spanKey);
       const before = B.slice(Math.max(0, s.bi - CONTEXT), s.bi).join(' ');
       const after = B.slice(s.bi + 1, s.bi + 1 + CONTEXT).join(' ');
       const flip = rand() < 0.5;                      // blind: randomise presentation
@@ -245,6 +277,13 @@ async function main() {
     '  number and the calibration is against noise.',
     `- the answer key is written to a SEPARATE file (\`${path.basename(OUT_KEY)}\`) so the task`,
     '  file can be handed out without leaking which option is the live text.', '',
+    '## Rejected before a human sees them', '',
+    `- ${skippedScript} pages in space-less scripts (Han, kana, Tibetan, Thai): a word-level task`,
+    '  cannot pose a sensible question there, and they need a character-level variant',
+    `- ${skippedSpan} spans whose two candidates were too dissimilar in length to be one word read`,
+    '  two ways — the aligner slipping, not a reading',
+    '- `<image-desc>` blocks, which are AI prose about a picture: a preview run asked whether',
+    '  the page said "beginning" or "start" when nothing on the page said either', '',
     '## Coverage', '', '| language | items |', '|---|---:|',
     ...Object.entries(langs).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`),
     '',
