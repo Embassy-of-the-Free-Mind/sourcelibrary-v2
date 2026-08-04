@@ -86,10 +86,26 @@ function nonLatinShare(s) {
   return nonLatin / sample.length;
 }
 
-/** Strip HTML entities before tokenising — `&nbsp;` padding inflates every
- *  word-count metric (CLAUDE.md, degenerate-output class). */
+/**
+ * Strip HTML entities before tokenising — `&nbsp;` padding inflates every
+ * word-count metric (CLAUDE.md, degenerate-output class) — then FOLD
+ * DIACRITICS.
+ *
+ * The folding is not cosmetic. Without it the corpus run produced a false
+ * positive on *Ikhwan al-Safa*: the printed title page reads "Ikhwánu-s safá"
+ * and our record reads "Ikhwan al-Safa", so a byte-wise prefix match saw no
+ * hit and the detector proposed replacing a perfectly correct cover.
+ * Transliterated titles disagree with their own title pages about accents as a
+ * matter of course, so an unfolded comparison is measuring the transliteration
+ * convention rather than the binding.
+ */
 function normalise(s) {
-  return String(s || '').replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+  return String(s || '')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
 }
 
 /** Repetition-loop screen: a page of `तथा तथा तथा…` is not evidence of anything. */
@@ -99,9 +115,11 @@ function isDegenerate(text) {
   return new Set(words).size / words.length < 0.15;
 }
 
+/** Diacritics folded here too, or "Ikhwán" tokenises to the sub-floor "ikhw"
+ *  and the record can never match its own title page. Same reason as normalise(). */
 function titleTokens(title) {
   return [...new Set(
-    String(title || '').toLowerCase()
+    String(title || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
       .replace(/[^a-z0-9\s]/g, ' ')
       .split(/\s+/)
       .filter(w => w.length >= MIN_TOKEN_LEN && !STOP.has(w) && !/^\d+$/.test(w)),
@@ -113,7 +131,7 @@ function authorSurname(author) {
   const a = String(author || '').trim();
   if (!a) return null;
   const surname = a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop();
-  const s = String(surname || '').toLowerCase().replace(/[^a-z]/g, '');
+  const s = String(surname || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
   return s.length >= 4 ? s : null;
 }
 
@@ -192,14 +210,35 @@ const CONTROL_TITLE_PAGES = [
   { page_number: 55, text: 'Magia Adamica: Or, The Antiquitie of Magic, &c. Coelum Terrae, &c. That I should professe Magic in this Discourse, and Justifie the Professors of it withall.' },
 ];
 
+// Regression control for the diacritic fold, from the real corpus run. This
+// cover is CORRECT — p.5 is a title page reading "IKHWÁNU-S SAFÁ" against a
+// record reading "Ikhwan al-Safa" — and the unfolded detector called it a
+// suspect, because it matched neither `ikhwan` (accents) nor `brethren` (the
+// page says "BROTHERS") while p.7 carried `purity` + `dowson`.
+//
+// The page text below is COPIED FROM THE DATABASE, not written by hand. The
+// first draft of this control was hand-written and silently included the word
+// "Translated" on p.5 — which matched the title's own `translation` token and
+// made the control pass with the fold deliberately removed. A control whose
+// text you invent is a control you have tuned to pass.
+const DIACRITIC_TITLE = 'Ikhwan al-Safa (Brethren of Purity) - Dowson Translation';
+const DIACRITIC_AUTHOR = 'Ikhwan al-Safa; tr. John Dowson';
+const DIACRITIC_TITLE_PAGES = [
+  { page_number: 5, text: '<lang>Hindustani</lang>\n<page-type>title-page</page-type>\n<warning>Minor foxing and staining throughout the page.</warning>\n\n# IKHWÁNU-S SAFÁ.\n\n<vocab>Ikhwánu-s Safá</vocab>' },
+  { page_number: 7, text: '<lang>English</lang>\n<page-type>title-page</page-type>\n\n# IKHWÁNU-S SAFÁ;\n\n->OR,<-\n\n# BROTHERS OF PURITY.\n\n->*TRANSLATED FROM THE HINDUSTÁNÍ,*<-\n\n->BY<-\n\n->PROFESSOR JOHN DOWSON, M.R.A.S.,<-' },
+];
+
 function runControl() {
   const bad = judge({ title: CONTROL_TITLE, author: CONTROL_AUTHOR, coverPage: 7, titlePages: CONTROL_TITLE_PAGES });
   const good = judge({ title: CONTROL_TITLE, author: CONTROL_AUTHOR, coverPage: 55, titlePages: CONTROL_TITLE_PAGES });
+  const dia = judge({ title: DIACRITIC_TITLE, author: DIACRITIC_AUTHOR, coverPage: 5, titlePages: DIACRITIC_TITLE_PAGES });
   const okBad = bad.verdict === 'SUSPECT' && bad.suggestedCoverPage === 55;
   const okGood = good.verdict === 'CLEAR';
+  const okDia = dia.verdict === 'CLEAR';
   console.log(`control: pre-fix cover p.7  -> ${bad.verdict} ${bad.suggestedCoverPage ? `(suggests p.${bad.suggestedCoverPage})` : ''}  ${okBad ? 'PASS' : 'FAIL — expected SUSPECT suggesting p.55'}`);
   console.log(`control: post-fix cover p.55 -> ${good.verdict}  ${okGood ? 'PASS' : 'FAIL — expected CLEAR'}`);
-  return okBad && okGood;
+  console.log(`control: diacritic cover p.5 -> ${dia.verdict}  ${okDia ? 'PASS' : 'FAIL — expected CLEAR (diacritic fold regressed)'}`);
+  return okBad && okGood && okDia;
 }
 
 if (CONTROL_ONLY) {
