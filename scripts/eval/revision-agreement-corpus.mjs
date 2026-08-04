@@ -45,7 +45,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { stripWrappers, levenshtein, foldOrthography } from './lib/metrics.mjs';
-import { classifyPair } from '../lib/revision-pairs.mjs';
+import { classifyPair, dominantScript } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -125,6 +125,15 @@ export function agreementFolded(a, b) {
   // into the comparison. That made the folded score come out BELOW the raw score,
   // which is impossible for a fold: mapping two texts through the same many-to-one
   // function cannot make them less similar. The negative gap was the tell.
+  // LATIN ONLY. foldOrthography encodes Latin scribal convention, and its final
+  // NFD step strips combining marks — which in Tibetan, Devanagari, Arabic and
+  // Hebrew are the VOWELS, not decoration. Applied there it deletes the script and
+  // the "folded" score drops: Tibetan read -9.7 points, 1,159 of the 1,789 pairs
+  // the fold-regression counter flagged. A fold that cannot help a script must
+  // abstain on it rather than damage it, so those pairs report null and the strata
+  // show no folded column instead of a wrong one.
+  const sa = dominantScript(a), sb = dominantScript(b);
+  if ((sa && sa !== 'latin') || (sb && sb !== 'latin')) return null;
   return agreement(foldOrthography(stripWrappers(a)), foldOrthography(stripWrappers(b)));
 }
 

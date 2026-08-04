@@ -84,3 +84,17 @@ describe('folding must never reduce similarity', () => {
     expect(stripWrappers(withTag).trim()).toBe('horam eclypticam quae erit');
   });
 });
+
+describe('the fold is Latin-only and must abstain elsewhere', () => {
+  it('destroys Tibetan if applied to it — which is why the caller gates on script', () => {
+    // Tibetan vowel signs are combining marks, so the fold's NFD step deletes them.
+    // This asserts the DAMAGE, so nobody re-enables the fold for non-Latin scripts
+    // believing it is harmless.
+    const tibetan = 'ཆོས་དང་ཆོས་མ་ཡིན་པ་རྣམ་པར་འབྱེད་པ';
+    expect(foldOrthography(tibetan)).not.toBe(tibetan);
+  });
+
+  it('leaves Latin text improved rather than damaged', () => {
+    expect(foldOrthography('naturæ')).toBe(foldOrthography('naturae'));
+  });
+});
