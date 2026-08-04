@@ -1,0 +1,4172 @@
+{
+ "date": "2026-08-03T21:46:01.488Z",
+ "scope": "full page_revisions OCR corpus",
+ "revisions_read": 191221,
+ "pages_seen": 164664,
+ "pages_missing": 5185,
+ "pairs_skipped": 2011,
+ "corpus_summary": {
+  "usable": 184692,
+  "missing": 5185,
+  "eligibility_flow": {
+   "eligible": 108468,
+   "image_only": 7891,
+   "micro_text": 2485,
+   "not_comparable": 65848
+  },
+  "not_comparable_reasons": {
+   "human-edit": 10,
+   "different-leaf": 5325,
+   "different-script": 3809,
+   "text-move-source": 56703,
+   "derived-text": 1
+  },
+  "refusal_pairs": 59,
+  "direction": {
+   "both-transcription": 106458,
+   "repair": 643,
+   "degraded": 608,
+   "both-broken": 759
+  },
+  "near_zero_overlap_pairs": 2020,
+  "degenerate_pairs": 1362,
+  "marginalia_fate": {
+   "kept": 19055,
+   "none": 80158,
+   "lost": 2595,
+   "gained": 6660
+  },
+  "marginalia_mean_agreement": 0.5522,
+  "marginalia_pairs_scored": 25640,
+  "eligible_pairs": 108468,
+  "mean_agreement": 0.8657,
+  "median_agreement": 0.9825,
+  "p25_agreement": 0.8525,
+  "p75_agreement": 0.9995,
+  "mean_agreement_word_only": 0.8635,
+  "histogram": {
+   "0-0.5": 9710,
+   "0.5-0.7": 6275,
+   "0.7-0.85": 10838,
+   "0.85-0.95": 15268,
+   "0.95-1": 66377
+  },
+  "regressions": 872,
+  "regression_rate": 0.0047
+ },
+ "strata": {
+  "eligibility": [
+   {
+    "key": "eligible",
+    "n": 108468,
+    "mean_agreement": 0.8657,
+    "median_agreement": 0.9825,
+    "pct_low": 0.0895,
+    "pct_high": 0.612
+   },
+   {
+    "key": "not_comparable",
+    "n": 65848,
+    "mean_agreement": 0.0807,
+    "median_agreement": 0.0245,
+    "pct_low": 0.9434,
+    "pct_high": 0.0173
+   },
+   {
+    "key": "image_only",
+    "n": 7891,
+    "mean_agreement": 0.5976,
+    "median_agreement": 0.6065,
+    "pct_low": 0.4179,
+    "pct_high": 0.3291
+   },
+   {
+    "key": "micro_text",
+    "n": 2485,
+    "mean_agreement": 0.6672,
+    "median_agreement": 0.7505,
+    "pct_low": 0.305,
+    "pct_high": 0.3119
+   }
+  ],
+  "language": [
+   {
+    "key": "Latin",
+    "n": 35032,
+    "mean_agreement": 0.8212,
+    "median_agreement": 0.9285,
+    "pct_low": 0.1082,
+    "pct_high": 0.4504
+   },
+   {
+    "key": "German",
+    "n": 29738,
+    "mean_agreement": 0.9491,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0159,
+    "pct_high": 0.7797
+   },
+   {
+    "key": "English",
+    "n": 18497,
+    "mean_agreement": 0.941,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0354,
+    "pct_high": 0.8269
+   },
+   {
+    "key": "French",
+    "n": 5988,
+    "mean_agreement": 0.914,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0379,
+    "pct_high": 0.684
+   },
+   {
+    "key": "Greek",
+    "n": 5099,
+    "mean_agreement": 0.7251,
+    "median_agreement": 0.8575,
+    "pct_low": 0.2393,
+    "pct_high": 0.3836
+   },
+   {
+    "key": "auto-detect",
+    "n": 2412,
+    "mean_agreement": 0.9496,
+    "median_agreement": 0.9835,
+    "pct_low": 0.0037,
+    "pct_high": 0.6944
+   },
+   {
+    "key": "Dutch",
+    "n": 1866,
+    "mean_agreement": 0.8816,
+    "median_agreement": 0.9375,
+    "pct_low": 0.0493,
+    "pct_high": 0.4684
+   },
+   {
+    "key": "Italian",
+    "n": 1312,
+    "mean_agreement": 0.5459,
+    "median_agreement": 0.6135,
+    "pct_low": 0.439,
+    "pct_high": 0.2157
+   },
+   {
+    "key": "Tibetan",
+    "n": 1159,
+    "mean_agreement": 0.2467,
+    "median_agreement": 0.2005,
+    "pct_low": 0.868,
+    "pct_high": 0.0181
+   },
+   {
+    "key": "(unknown)",
+    "n": 578,
+    "mean_agreement": 0.3656,
+    "median_agreement": 0.0125,
+    "pct_low": 0.6315,
+    "pct_high": 0.3339
+   },
+   {
+    "key": "Chinese",
+    "n": 558,
+    "mean_agreement": 0.6965,
+    "median_agreement": 0.9175,
+    "pct_low": 0.2706,
+    "pct_high": 0.2885
+   },
+   {
+    "key": "Sanskrit",
+    "n": 539,
+    "mean_agreement": 0.6183,
+    "median_agreement": 0.8475,
+    "pct_low": 0.3506,
+    "pct_high": 0.3117
+   },
+   {
+    "key": "Persian",
+    "n": 516,
+    "mean_agreement": 0.764,
+    "median_agreement": 0.7975,
+    "pct_low": 0.0775,
+    "pct_high": 0.095
+   },
+   {
+    "key": "Hebrew",
+    "n": 506,
+    "mean_agreement": 0.5893,
+    "median_agreement": 0.6105,
+    "pct_low": 0.3972,
+    "pct_high": 0.3202
+   },
+   {
+    "key": "Lb",
+    "n": 476,
+    "mean_agreement": 0.9073,
+    "median_agreement": 0.9315,
+    "pct_low": 0.0042,
+    "pct_high": 0.3214
+   },
+   {
+    "key": "Middle English",
+    "n": 442,
+    "mean_agreement": 0.8495,
+    "median_agreement": 0.9545,
+    "pct_low": 0.0747,
+    "pct_high": 0.5023
+   },
+   {
+    "key": "Arabic",
+    "n": 430,
+    "mean_agreement": 0.711,
+    "median_agreement": 0.7195,
+    "pct_low": 0.1744,
+    "pct_high": 0.2419
+   },
+   {
+    "key": "Polish",
+    "n": 387,
+    "mean_agreement": 0.9797,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0052,
+    "pct_high": 0.9251
+   },
+   {
+    "key": "Armenian",
+    "n": 317,
+    "mean_agreement": 0.6828,
+    "median_agreement": 0.9745,
+    "pct_low": 0.2808,
+    "pct_high": 0.53
+   },
+   {
+    "key": "Multiple",
+    "n": 303,
+    "mean_agreement": 0.9354,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0231,
+    "pct_high": 0.6502
+   },
+   {
+    "key": "Russian",
+    "n": 217,
+    "mean_agreement": 0.8777,
+    "median_agreement": 0.9415,
+    "pct_low": 0.0323,
+    "pct_high": 0.4516
+   },
+   {
+    "key": "Javanese",
+    "n": 198,
+    "mean_agreement": 0.2643,
+    "median_agreement": 0.0635,
+    "pct_low": 0.7677,
+    "pct_high": 0.1061
+   },
+   {
+    "key": "Hausa",
+    "n": 144,
+    "mean_agreement": 0.9476,
+    "median_agreement": 0.9955,
+    "pct_low": 0.0417,
+    "pct_high": 0.7847
+   },
+   {
+    "key": "Occitan",
+    "n": 137,
+    "mean_agreement": 0.9962,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9854
+   },
+   {
+    "key": "Burmese",
+    "n": 137,
+    "mean_agreement": 0.9746,
+    "median_agreement": 0.9965,
+    "pct_low": 0,
+    "pct_high": 0.854
+   },
+   {
+    "key": "Yoruba",
+    "n": 131,
+    "mean_agreement": 0.9578,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0076,
+    "pct_high": 0.8015
+   },
+   {
+    "key": "Nahuatl",
+    "n": 123,
+    "mean_agreement": 0.7249,
+    "median_agreement": 0.8055,
+    "pct_low": 0.1789,
+    "pct_high": 0.0813
+   },
+   {
+    "key": "Maya hieroglyphs",
+    "n": 117,
+    "mean_agreement": 0.3373,
+    "median_agreement": 0.3035,
+    "pct_low": 0.8547,
+    "pct_high": 0
+   },
+   {
+    "key": "Zulu",
+    "n": 91,
+    "mean_agreement": 0.9783,
+    "median_agreement": 0.9995,
+    "pct_low": 0.011,
+    "pct_high": 0.9451
+   },
+   {
+    "key": "Korean",
+    "n": 79,
+    "mean_agreement": 0.6739,
+    "median_agreement": 0.7675,
+    "pct_low": 0.2532,
+    "pct_high": 0.2405
+   },
+   {
+    "key": "Hawaiian",
+    "n": 74,
+    "mean_agreement": 0.9524,
+    "median_agreement": 0.9965,
+    "pct_low": 0.027,
+    "pct_high": 0.7297
+   },
+   {
+    "key": "Unknown",
+    "n": 66,
+    "mean_agreement": 0.9933,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9545
+   },
+   {
+    "key": "Ge'ez",
+    "n": 65,
+    "mean_agreement": 0.6078,
+    "median_agreement": 0.9825,
+    "pct_low": 0.4,
+    "pct_high": 0.5231
+   },
+   {
+    "key": "Old Javanese",
+    "n": 64,
+    "mean_agreement": 0.9778,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "English; Chinese",
+    "n": 57,
+    "mean_agreement": 0.842,
+    "median_agreement": 0.9905,
+    "pct_low": 0.1228,
+    "pct_high": 0.6842
+   },
+   {
+    "key": "Egyptian hieroglyphs",
+    "n": 55,
+    "mean_agreement": 0.7212,
+    "median_agreement": 0.9945,
+    "pct_low": 0.2727,
+    "pct_high": 0.5818
+   },
+   {
+    "key": "Pahlavi",
+    "n": 43,
+    "mean_agreement": 0.0045,
+    "median_agreement": 0.0005,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Swahili",
+    "n": 41,
+    "mean_agreement": 0.9925,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9756
+   },
+   {
+    "key": "Georgian",
+    "n": 37,
+    "mean_agreement": 0.1819,
+    "median_agreement": 0.1475,
+    "pct_low": 0.9459,
+    "pct_high": 0
+   },
+   {
+    "key": "K'iche' Maya",
+    "n": 33,
+    "mean_agreement": 0.9834,
+    "median_agreement": 0.9985,
+    "pct_low": 0,
+    "pct_high": 0.9091
+   },
+   {
+    "key": "Thai",
+    "n": 33,
+    "mean_agreement": 0.997,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Kanuri",
+    "n": 32,
+    "mean_agreement": 0.938,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0625,
+    "pct_high": 0.8438
+   },
+   {
+    "key": "Spanish",
+    "n": 27,
+    "mean_agreement": 0.9535,
+    "median_agreement": 0.9945,
+    "pct_low": 0,
+    "pct_high": 0.8519
+   },
+   {
+    "key": "Syriac",
+    "n": 23,
+    "mean_agreement": 0.1271,
+    "median_agreement": 0.0085,
+    "pct_low": 0.8696,
+    "pct_high": 0
+   },
+   {
+    "key": "Middle High German",
+    "n": 20,
+    "mean_agreement": 0.7343,
+    "median_agreement": 0.7405,
+    "pct_low": 0.05,
+    "pct_high": 0
+   },
+   {
+    "key": "Japanese",
+    "n": 19,
+    "mean_agreement": 0.3305,
+    "median_agreement": 0.3555,
+    "pct_low": 0.7368,
+    "pct_high": 0.0526
+   },
+   {
+    "key": "Chinese; English",
+    "n": 18,
+    "mean_agreement": 0.9544,
+    "median_agreement": 0.9835,
+    "pct_low": 0,
+    "pct_high": 0.7222
+   },
+   {
+    "key": "ger",
+    "n": 18,
+    "mean_agreement": 0.9526,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0556,
+    "pct_high": 0.8889
+   },
+   {
+    "key": "Maori",
+    "n": 17,
+    "mean_agreement": 0.9982,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Xhosa",
+    "n": 17,
+    "mean_agreement": 0.9923,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Ancient Greek",
+    "n": 16,
+    "mean_agreement": 0.9806,
+    "median_agreement": 0.9875,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "e",
+    "n": 16,
+    "mean_agreement": 0.9334,
+    "median_agreement": 0.9915,
+    "pct_low": 0,
+    "pct_high": 0.625
+   },
+   {
+    "key": "Telugu",
+    "n": 15,
+    "mean_agreement": 0.5686,
+    "median_agreement": 0.6465,
+    "pct_low": 0.4,
+    "pct_high": 0
+   },
+   {
+    "key": "Hindi",
+    "n": 14,
+    "mean_agreement": 0.9788,
+    "median_agreement": 0.9795,
+    "pct_low": 0,
+    "pct_high": 0.8571
+   },
+   {
+    "key": "Hebrew-Greek",
+    "n": 14,
+    "mean_agreement": 0.8194,
+    "median_agreement": 0.8705,
+    "pct_low": 0.0714,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Vietnamese",
+    "n": 14,
+    "mean_agreement": 0.6403,
+    "median_agreement": 0.9085,
+    "pct_low": 0.3571,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Old Norse",
+    "n": 12,
+    "mean_agreement": 0.9947,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Old English",
+    "n": 11,
+    "mean_agreement": 0.7488,
+    "median_agreement": 0.9005,
+    "pct_low": 0.2727,
+    "pct_high": 0.4545
+   },
+   {
+    "key": "Latin/Hebrew",
+    "n": 10,
+    "mean_agreement": 0.691,
+    "median_agreement": 0.7335,
+    "pct_low": 0.2,
+    "pct_high": 0
+   },
+   {
+    "key": "Portuguese",
+    "n": 10,
+    "mean_agreement": 0.8831,
+    "median_agreement": 0.8695,
+    "pct_low": 0,
+    "pct_high": 0.2
+   },
+   {
+    "key": "Chagatai Turkish",
+    "n": 9,
+    "mean_agreement": 0.783,
+    "median_agreement": 0.8065,
+    "pct_low": 0.1111,
+    "pct_high": 0.1111
+   },
+   {
+    "key": "Classical Chinese",
+    "n": 9,
+    "mean_agreement": 0.6661,
+    "median_agreement": 0.9045,
+    "pct_low": 0.3333,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "und",
+    "n": 8,
+    "mean_agreement": 0.9011,
+    "median_agreement": 0.9115,
+    "pct_low": 0,
+    "pct_high": 0.25
+   },
+   {
+    "key": "Czech",
+    "n": 6,
+    "mean_agreement": 0.1254,
+    "median_agreement": 0.0775,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Karaim and Hebrew",
+    "n": 6,
+    "mean_agreement": 0.4306,
+    "median_agreement": 0.1715,
+    "pct_low": 0.6667,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "Greenlandic",
+    "n": 5,
+    "mean_agreement": 0.9964,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "English, Prakrit, Sanskrit",
+    "n": 2,
+    "mean_agreement": 0.9259,
+    "median_agreement": 0.9195,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Punjabi",
+    "n": 1,
+    "mean_agreement": 0.4928,
+    "median_agreement": 0.4925,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Coptic",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Turkish",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   }
+  ],
+  "year_bucket": [
+   {
+    "key": "1600-1699",
+    "n": 28432,
+    "mean_agreement": 0.8734,
+    "median_agreement": 0.9745,
+    "pct_low": 0.071,
+    "pct_high": 0.5863
+   },
+   {
+    "key": "1700-1799",
+    "n": 26473,
+    "mean_agreement": 0.9204,
+    "median_agreement": 0.9925,
+    "pct_low": 0.0452,
+    "pct_high": 0.7221
+   },
+   {
+    "key": "1500-1599",
+    "n": 18565,
+    "mean_agreement": 0.79,
+    "median_agreement": 0.9045,
+    "pct_low": 0.1376,
+    "pct_high": 0.3946
+   },
+   {
+    "key": "1800-1899",
+    "n": 16371,
+    "mean_agreement": 0.922,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0577,
+    "pct_high": 0.8029
+   },
+   {
+    "key": "1900+",
+    "n": 10027,
+    "mean_agreement": 0.9401,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0419,
+    "pct_high": 0.8341
+   },
+   {
+    "key": "pre-1500",
+    "n": 6369,
+    "mean_agreement": 0.6157,
+    "median_agreement": 0.7005,
+    "pct_low": 0.3186,
+    "pct_high": 0.1143
+   },
+   {
+    "key": "unknown",
+    "n": 2231,
+    "mean_agreement": 0.714,
+    "median_agreement": 0.9365,
+    "pct_low": 0.2443,
+    "pct_high": 0.4599
+   }
+  ],
+  "model_pair": [
+   {
+    "key": "gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 51190,
+    "mean_agreement": 0.8635,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0926,
+    "pct_high": 0.6196
+   },
+   {
+    "key": "gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 41281,
+    "mean_agreement": 0.8823,
+    "median_agreement": 0.9725,
+    "pct_low": 0.0674,
+    "pct_high": 0.5884
+   },
+   {
+    "key": "gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 11213,
+    "mean_agreement": 0.9459,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0291,
+    "pct_high": 0.8166
+   },
+   {
+    "key": "gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 2230,
+    "mean_agreement": 0.4151,
+    "median_agreement": 0.4355,
+    "pct_low": 0.5054,
+    "pct_high": 0.0363
+   },
+   {
+    "key": "?→gemini-3.1-flash-lite-preview",
+    "n": 660,
+    "mean_agreement": 0.3219,
+    "median_agreement": 0.0125,
+    "pct_low": 0.6773,
+    "pct_high": 0.2924
+   },
+   {
+    "key": "gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 605,
+    "mean_agreement": 0.9014,
+    "median_agreement": 0.9995,
+    "pct_low": 0.1008,
+    "pct_high": 0.795
+   },
+   {
+    "key": "gemini-2.5-flash→gemini-3-flash-preview",
+    "n": 556,
+    "mean_agreement": 0.8964,
+    "median_agreement": 0.9525,
+    "pct_low": 0.0432,
+    "pct_high": 0.5216
+   },
+   {
+    "key": "gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 330,
+    "mean_agreement": 0.7427,
+    "median_agreement": 0.7645,
+    "pct_low": 0.1364,
+    "pct_high": 0.303
+   },
+   {
+    "key": "gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 317,
+    "mean_agreement": 0.531,
+    "median_agreement": 0.5215,
+    "pct_low": 0.4669,
+    "pct_high": 0.0915
+   },
+   {
+    "key": "gemini-2.5-flash→claude-sonnet-4-6",
+    "n": 47,
+    "mean_agreement": 0.9248,
+    "median_agreement": 0.9585,
+    "pct_low": 0,
+    "pct_high": 0.5957
+   },
+   {
+    "key": "gemini-3-flash-preview→claude-sonnet-4-6",
+    "n": 27,
+    "mean_agreement": 0.6225,
+    "median_agreement": 0.7435,
+    "pct_low": 0.2593,
+    "pct_high": 0
+   },
+   {
+    "key": "gemini-3-flash-preview→manual",
+    "n": 9,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "gemini-2.0-flash→claude-sonnet-4-6",
+    "n": 1,
+    "mean_agreement": 0.8308,
+    "median_agreement": 0.8305,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "mineru-pipeline→gemini-3-flash-preview",
+    "n": 1,
+    "mean_agreement": 0.0286,
+    "median_agreement": 0.0285,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "gemini-3.1-flash-lite-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   }
+  ],
+  "prompt_transition": [
+   {
+    "key": "v10→v10",
+    "n": 38333,
+    "mean_agreement": 0.8822,
+    "median_agreement": 0.9735,
+    "pct_low": 0.0685,
+    "pct_high": 0.5915
+   },
+   {
+    "key": "spread-v2+ocr-v10→spread-v2+ocr-v10",
+    "n": 30354,
+    "mean_agreement": 0.9662,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0096,
+    "pct_high": 0.8514
+   },
+   {
+    "key": "12→12",
+    "n": 18032,
+    "mean_agreement": 0.9313,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0344,
+    "pct_high": 0.7474
+   },
+   {
+    "key": "?→v5.2026-02",
+    "n": 12678,
+    "mean_agreement": 0.6076,
+    "median_agreement": 0.6885,
+    "pct_low": 0.3126,
+    "pct_high": 0.107
+   },
+   {
+    "key": "v5.2026-02→v5.2026-02",
+    "n": 1698,
+    "mean_agreement": 0.3361,
+    "median_agreement": 0.0145,
+    "pct_low": 0.639,
+    "pct_high": 0.2185
+   },
+   {
+    "key": "v5.1.2026-03→spread-v2+ocr-v10",
+    "n": 1497,
+    "mean_agreement": 0.831,
+    "median_agreement": 0.8785,
+    "pct_low": 0.0421,
+    "pct_high": 0.2986
+   },
+   {
+    "key": "v5.1.2026-03→12",
+    "n": 1052,
+    "mean_agreement": 0.946,
+    "median_agreement": 0.9785,
+    "pct_low": 0.0067,
+    "pct_high": 0.6331
+   },
+   {
+    "key": "v10→v5.2026-02",
+    "n": 883,
+    "mean_agreement": 0.7841,
+    "median_agreement": 0.8225,
+    "pct_low": 0.0464,
+    "pct_high": 0.0306
+   },
+   {
+    "key": "v6.2026-03→v6.2026-03",
+    "n": 701,
+    "mean_agreement": 0.9546,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0043,
+    "pct_high": 0.7504
+   },
+   {
+    "key": "v4.2026-02→spread-v2+ocr-v10",
+    "n": 538,
+    "mean_agreement": 0.7862,
+    "median_agreement": 0.8775,
+    "pct_low": 0.1784,
+    "pct_high": 0.29
+   },
+   {
+    "key": "v5.2026-02→spread-v2+ocr-v10",
+    "n": 486,
+    "mean_agreement": 0.8472,
+    "median_agreement": 0.8945,
+    "pct_low": 0.035,
+    "pct_high": 0.2901
+   },
+   {
+    "key": "?→v10",
+    "n": 447,
+    "mean_agreement": 0.0088,
+    "median_agreement": 0.0085,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "14→14",
+    "n": 383,
+    "mean_agreement": 0.4765,
+    "median_agreement": 0.5115,
+    "pct_low": 0.4491,
+    "pct_high": 0
+   },
+   {
+    "key": "v5.1.2026-03→v10",
+    "n": 378,
+    "mean_agreement": 0.7742,
+    "median_agreement": 0.8165,
+    "pct_low": 0.1005,
+    "pct_high": 0.3228
+   },
+   {
+    "key": "15→15",
+    "n": 222,
+    "mean_agreement": 0.9684,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0135,
+    "pct_high": 0.8649
+   },
+   {
+    "key": "?→11",
+    "n": 213,
+    "mean_agreement": 0.9788,
+    "median_agreement": 0.9865,
+    "pct_low": 0,
+    "pct_high": 0.9061
+   },
+   {
+    "key": "v5.1.2026-03→v5.2026-02",
+    "n": 174,
+    "mean_agreement": 0.6,
+    "median_agreement": 0.8665,
+    "pct_low": 0.3908,
+    "pct_high": 0.3448
+   },
+   {
+    "key": "v3.2026-02→v5.2026-02",
+    "n": 151,
+    "mean_agreement": 0.7285,
+    "median_agreement": 0.8735,
+    "pct_low": 0.2583,
+    "pct_high": 0.2384
+   },
+   {
+    "key": "v5.1.2026-03→v5.1.2026-03",
+    "n": 95,
+    "mean_agreement": 0.9061,
+    "median_agreement": 0.9995,
+    "pct_low": 0.1053,
+    "pct_high": 0.8105
+   },
+   {
+    "key": "12→v5.2026-02",
+    "n": 43,
+    "mean_agreement": 0.273,
+    "median_agreement": 0.2295,
+    "pct_low": 0.8605,
+    "pct_high": 0.0233
+   },
+   {
+    "key": "12→v14-lacuna",
+    "n": 37,
+    "mean_agreement": 0.1435,
+    "median_agreement": 0.0835,
+    "pct_low": 0.9459,
+    "pct_high": 0
+   },
+   {
+    "key": "v5.2026-02→12",
+    "n": 32,
+    "mean_agreement": 0.2196,
+    "median_agreement": 0.2315,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "v6.2026-03→12",
+    "n": 8,
+    "mean_agreement": 0.382,
+    "median_agreement": 0.3925,
+    "pct_low": 0.875,
+    "pct_high": 0
+   },
+   {
+    "key": "12→v5.1.2026-03",
+    "n": 7,
+    "mean_agreement": 0.7481,
+    "median_agreement": 0.7955,
+    "pct_low": 0.1429,
+    "pct_high": 0
+   },
+   {
+    "key": "12→v14-lacuna-escalated",
+    "n": 6,
+    "mean_agreement": 0.2212,
+    "median_agreement": 0.0965,
+    "pct_low": 0.8333,
+    "pct_high": 0
+   },
+   {
+    "key": "v4.2026-02→v4.2026-02",
+    "n": 4,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "?→v14-lacuna",
+    "n": 3,
+    "mean_agreement": 0.1071,
+    "median_agreement": 0.0085,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "v4.2026-02→v5.2026-02",
+    "n": 2,
+    "mean_agreement": 0.996,
+    "median_agreement": 0.9915,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "v5.2026-02→v14-lacuna",
+    "n": 2,
+    "mean_agreement": 0.5051,
+    "median_agreement": 0.0105,
+    "pct_low": 0.5,
+    "pct_high": 0.5
+   },
+   {
+    "key": "10→v10",
+    "n": 2,
+    "mean_agreement": 0.8333,
+    "median_agreement": 0.8255,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "v5.1.2026-03→15",
+    "n": 2,
+    "mean_agreement": 0.3562,
+    "median_agreement": 0.2075,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "?→?",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "v3.2026-02→v3.2026-02",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "v5.2026-02→11",
+    "n": 1,
+    "mean_agreement": 0.9195,
+    "median_agreement": 0.9195,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "11→11",
+    "n": 1,
+    "mean_agreement": 0.9322,
+    "median_agreement": 0.9325,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "v5.1.2026-03→v6.2026-03",
+    "n": 1,
+    "mean_agreement": 0.8286,
+    "median_agreement": 0.8285,
+    "pct_low": 0,
+    "pct_high": 0
+   }
+  ],
+  "script_class": [
+   {
+    "key": "spaced",
+    "n": 106956,
+    "mean_agreement": 0.871,
+    "median_agreement": 0.9825,
+    "pct_low": 0.0827,
+    "pct_high": 0.6185
+   },
+   {
+    "key": "spaceless",
+    "n": 1512,
+    "mean_agreement": 0.4901,
+    "median_agreement": 0.3405,
+    "pct_low": 0.5741,
+    "pct_high": 0.1468
+   }
+  ],
+  "position_bucket": [
+   {
+    "key": "3 middle (25-75%)",
+    "n": 46250,
+    "mean_agreement": 0.874,
+    "median_agreement": 0.9855,
+    "pct_low": 0.0832,
+    "pct_high": 0.6274
+   },
+   {
+    "key": "2 early (5-25%)",
+    "n": 29620,
+    "mean_agreement": 0.8673,
+    "median_agreement": 0.9815,
+    "pct_low": 0.0895,
+    "pct_high": 0.6129
+   },
+   {
+    "key": "4 late (75-95%)",
+    "n": 14683,
+    "mean_agreement": 0.8396,
+    "median_agreement": 0.9745,
+    "pct_low": 0.1111,
+    "pct_high": 0.5702
+   },
+   {
+    "key": "1 front (0-5%)",
+    "n": 7941,
+    "mean_agreement": 0.8539,
+    "median_agreement": 0.9525,
+    "pct_low": 0.0785,
+    "pct_high": 0.5062
+   },
+   {
+    "key": "unknown",
+    "n": 6896,
+    "mean_agreement": 0.8996,
+    "median_agreement": 0.9985,
+    "pct_low": 0.0696,
+    "pct_high": 0.7529
+   },
+   {
+    "key": "5 back (95-100%)",
+    "n": 3078,
+    "mean_agreement": 0.803,
+    "median_agreement": 0.9625,
+    "pct_low": 0.1553,
+    "pct_high": 0.526
+   }
+  ],
+  "soft_hidden": [
+   {
+    "key": "false",
+    "n": 74866,
+    "mean_agreement": 0.8272,
+    "median_agreement": 0.9635,
+    "pct_low": 0.1235,
+    "pct_high": 0.5355
+   },
+   {
+    "key": "true",
+    "n": 33602,
+    "mean_agreement": 0.9515,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0138,
+    "pct_high": 0.7822
+   }
+  ],
+  "marginalia_fate": [
+   {
+    "key": "none",
+    "n": 80158,
+    "mean_agreement": 0.8907,
+    "median_agreement": 0.9885,
+    "pct_low": 0.0692,
+    "pct_high": 0.6677
+   },
+   {
+    "key": "kept",
+    "n": 19055,
+    "mean_agreement": 0.8844,
+    "median_agreement": 0.9685,
+    "pct_low": 0.055,
+    "pct_high": 0.5654
+   },
+   {
+    "key": "gained",
+    "n": 6660,
+    "mean_agreement": 0.5662,
+    "median_agreement": 0.6425,
+    "pct_low": 0.3841,
+    "pct_high": 0.1647
+   },
+   {
+    "key": "lost",
+    "n": 2595,
+    "mean_agreement": 0.7224,
+    "median_agreement": 0.8925,
+    "pct_low": 0.2135,
+    "pct_high": 0.3803
+   }
+  ],
+  "direction": [
+   {
+    "key": "both-transcription",
+    "n": 106458,
+    "mean_agreement": 0.8764,
+    "median_agreement": 0.9835,
+    "pct_low": 0.0767,
+    "pct_high": 0.6206
+   },
+   {
+    "key": "both-broken",
+    "n": 759,
+    "mean_agreement": 0.4808,
+    "median_agreement": 0.2625,
+    "pct_low": 0.5955,
+    "pct_high": 0.3505
+   },
+   {
+    "key": "repair",
+    "n": 643,
+    "mean_agreement": 0.2104,
+    "median_agreement": 0.0865,
+    "pct_low": 0.8336,
+    "pct_high": 0.0264
+   },
+   {
+    "key": "degraded",
+    "n": 608,
+    "mean_agreement": 0.1684,
+    "median_agreement": 0.0945,
+    "pct_low": 0.9079,
+    "pct_high": 0.0395
+   }
+  ],
+  "image_only": [
+   {
+    "key": "false",
+    "n": 108468,
+    "mean_agreement": 0.8657,
+    "median_agreement": 0.9825,
+    "pct_low": 0.0895,
+    "pct_high": 0.612
+   }
+  ],
+  "current_page_type": [
+   {
+    "key": "text",
+    "n": 96858,
+    "mean_agreement": 0.8694,
+    "median_agreement": 0.9835,
+    "pct_low": 0.087,
+    "pct_high": 0.6233
+   },
+   {
+    "key": "index",
+    "n": 3374,
+    "mean_agreement": 0.8734,
+    "median_agreement": 0.9775,
+    "pct_low": 0.0839,
+    "pct_high": 0.6257
+   },
+   {
+    "key": "preface",
+    "n": 2982,
+    "mean_agreement": 0.9069,
+    "median_agreement": 0.9835,
+    "pct_low": 0.0399,
+    "pct_high": 0.6455
+   },
+   {
+    "key": "blank",
+    "n": 1395,
+    "mean_agreement": 0.6805,
+    "median_agreement": 0.8625,
+    "pct_low": 0.2602,
+    "pct_high": 0.3878
+   },
+   {
+    "key": "toc",
+    "n": 773,
+    "mean_agreement": 0.8511,
+    "median_agreement": 0.9485,
+    "pct_low": 0.0802,
+    "pct_high": 0.4981
+   },
+   {
+    "key": "dedication",
+    "n": 734,
+    "mean_agreement": 0.9036,
+    "median_agreement": 0.9665,
+    "pct_low": 0.0163,
+    "pct_high": 0.5463
+   },
+   {
+    "key": "(none)",
+    "n": 697,
+    "mean_agreement": 0.8431,
+    "median_agreement": 0.8805,
+    "pct_low": 0.0301,
+    "pct_high": 0.0387
+   },
+   {
+    "key": "title-page",
+    "n": 497,
+    "mean_agreement": 0.7589,
+    "median_agreement": 0.8715,
+    "pct_low": 0.1811,
+    "pct_high": 0.3783
+   },
+   {
+    "key": "illustration",
+    "n": 393,
+    "mean_agreement": 0.5427,
+    "median_agreement": 0.6205,
+    "pct_low": 0.4377,
+    "pct_high": 0.1399
+   },
+   {
+    "key": "appendix",
+    "n": 161,
+    "mean_agreement": 0.9079,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0683,
+    "pct_high": 0.795
+   },
+   {
+    "key": "errata",
+    "n": 160,
+    "mean_agreement": 0.8642,
+    "median_agreement": 0.9705,
+    "pct_low": 0.0938,
+    "pct_high": 0.5875
+   },
+   {
+    "key": "frontispiece",
+    "n": 154,
+    "mean_agreement": 0.757,
+    "median_agreement": 0.8505,
+    "pct_low": 0.1494,
+    "pct_high": 0.3247
+   },
+   {
+    "key": "diagram",
+    "n": 135,
+    "mean_agreement": 0.4282,
+    "median_agreement": 0.3235,
+    "pct_low": 0.6296,
+    "pct_high": 0.1481
+   },
+   {
+    "key": "colophon",
+    "n": 36,
+    "mean_agreement": 0.7279,
+    "median_agreement": 0.7785,
+    "pct_low": 0.1667,
+    "pct_high": 0.25
+   },
+   {
+    "key": "bibliography",
+    "n": 36,
+    "mean_agreement": 0.9927,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9722
+   },
+   {
+    "key": "front-matter",
+    "n": 9,
+    "mean_agreement": 0.7475,
+    "median_agreement": 0.7695,
+    "pct_low": 0.2222,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "map",
+    "n": 9,
+    "mean_agreement": 0.4503,
+    "median_agreement": 0.4195,
+    "pct_low": 0.7778,
+    "pct_high": 0
+   },
+   {
+    "key": "notes",
+    "n": 9,
+    "mean_agreement": 0.998,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "advertisement",
+    "n": 6,
+    "mean_agreement": 0.8652,
+    "median_agreement": 0.9995,
+    "pct_low": 0.1667,
+    "pct_high": 0.6667
+   },
+   {
+    "key": "introduction",
+    "n": 6,
+    "mean_agreement": 0.9507,
+    "median_agreement": 0.9965,
+    "pct_low": 0,
+    "pct_high": 0.6667
+   },
+   {
+    "key": "letter",
+    "n": 6,
+    "mean_agreement": 0.8063,
+    "median_agreement": 0.7925,
+    "pct_low": 0.1667,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "calendar",
+    "n": 5,
+    "mean_agreement": 0.5933,
+    "median_agreement": 0.6075,
+    "pct_low": 0.4,
+    "pct_high": 0
+   },
+   {
+    "key": "glossary",
+    "n": 4,
+    "mean_agreement": 0.7504,
+    "median_agreement": 0.9995,
+    "pct_low": 0.25,
+    "pct_high": 0.75
+   },
+   {
+    "key": "music manuscript",
+    "n": 3,
+    "mean_agreement": 0.2025,
+    "median_agreement": 0.1695,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "privilege",
+    "n": 3,
+    "mean_agreement": 0.9308,
+    "median_agreement": 0.9325,
+    "pct_low": 0,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "text and illustration",
+    "n": 3,
+    "mean_agreement": 0.8335,
+    "median_agreement": 0.8535,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "library-checkout-card",
+    "n": 2,
+    "mean_agreement": 0.8878,
+    "median_agreement": 0.7755,
+    "pct_low": 0,
+    "pct_high": 0.5
+   },
+   {
+    "key": "approbation",
+    "n": 2,
+    "mean_agreement": 0.918,
+    "median_agreement": 0.8355,
+    "pct_low": 0,
+    "pct_high": 0.5
+   },
+   {
+    "key": "library-checkout-slip",
+    "n": 2,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "epigraph",
+    "n": 2,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "library-pocket",
+    "n": 1,
+    "mean_agreement": 0.194,
+    "median_agreement": 0.1945,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "table",
+    "n": 1,
+    "mean_agreement": 0.0525,
+    "median_agreement": 0.0525,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "notice",
+    "n": 1,
+    "mean_agreement": 0.9876,
+    "median_agreement": 0.9875,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "preface;text",
+    "n": 1,
+    "mean_agreement": 0.8549,
+    "median_agreement": 0.8545,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "preface, text",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "liminal",
+    "n": 1,
+    "mean_agreement": 0.6514,
+    "median_agreement": 0.6515,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "approbatie",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "chronology",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "list of publications",
+    "n": 1,
+    "mean_agreement": 0.9307,
+    "median_agreement": 0.9305,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "note",
+    "n": 1,
+    "mean_agreement": 0.7391,
+    "median_agreement": 0.7395,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "petition",
+    "n": 1,
+    "mean_agreement": 0.9976,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "text and diagram",
+    "n": 1,
+    "mean_agreement": 0.703,
+    "median_agreement": 0.7035,
+    "pct_low": 0,
+    "pct_high": 0
+   }
+  ],
+  "current_columns": [
+   {
+    "key": "(none)",
+    "n": 90442,
+    "mean_agreement": 0.8792,
+    "median_agreement": 0.9865,
+    "pct_low": 0.0769,
+    "pct_high": 0.6406
+   },
+   {
+    "key": "2",
+    "n": 17136,
+    "mean_agreement": 0.8051,
+    "median_agreement": 0.9425,
+    "pct_low": 0.146,
+    "pct_high": 0.4809
+   },
+   {
+    "key": "3",
+    "n": 686,
+    "mean_agreement": 0.6385,
+    "median_agreement": 0.7815,
+    "pct_low": 0.3017,
+    "pct_high": 0.2041
+   },
+   {
+    "key": "1",
+    "n": 153,
+    "mean_agreement": 0.7623,
+    "median_agreement": 0.8985,
+    "pct_low": 0.1961,
+    "pct_high": 0.3007
+   },
+   {
+    "key": "4",
+    "n": 30,
+    "mean_agreement": 0.6657,
+    "median_agreement": 0.7615,
+    "pct_low": 0.3333,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "5",
+    "n": 12,
+    "mean_agreement": 0.7355,
+    "median_agreement": 0.6775,
+    "pct_low": 0.0833,
+    "pct_high": 0.25
+   },
+   {
+    "key": "6",
+    "n": 4,
+    "mean_agreement": 0.5564,
+    "median_agreement": 0.4565,
+    "pct_low": 0.5,
+    "pct_high": 0.25
+   },
+   {
+    "key": "8",
+    "n": 2,
+    "mean_agreement": 0.5494,
+    "median_agreement": 0.0985,
+    "pct_low": 0.5,
+    "pct_high": 0.5
+   },
+   {
+    "key": "32",
+    "n": 1,
+    "mean_agreement": 0.2857,
+    "median_agreement": 0.2855,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "n",
+    "n": 1,
+    "mean_agreement": 0.8413,
+    "median_agreement": 0.8415,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "9",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   }
+  ],
+  "columns_changed": [
+   {
+    "key": "false",
+    "n": 101245,
+    "mean_agreement": 0.8844,
+    "median_agreement": 0.9865,
+    "pct_low": 0.072,
+    "pct_high": 0.6452
+   },
+   {
+    "key": "true",
+    "n": 7223,
+    "mean_agreement": 0.6027,
+    "median_agreement": 0.7285,
+    "pct_low": 0.3352,
+    "pct_high": 0.1461
+   }
+  ],
+  "page_type_changed": [
+   {
+    "key": "false",
+    "n": 93740,
+    "mean_agreement": 0.9071,
+    "median_agreement": 0.9905,
+    "pct_low": 0.0532,
+    "pct_high": 0.6881
+   },
+   {
+    "key": "true",
+    "n": 14728,
+    "mean_agreement": 0.6022,
+    "median_agreement": 0.6935,
+    "pct_low": 0.3208,
+    "pct_high": 0.1273
+   }
+  ],
+  "lang_tag_changed": [
+   {
+    "key": "false",
+    "n": 89788,
+    "mean_agreement": 0.9174,
+    "median_agreement": 0.9915,
+    "pct_low": 0.0437,
+    "pct_high": 0.7047
+   },
+   {
+    "key": "true",
+    "n": 18680,
+    "mean_agreement": 0.617,
+    "median_agreement": 0.7205,
+    "pct_low": 0.3099,
+    "pct_high": 0.1659
+   }
+  ],
+  "is_live": [
+   {
+    "key": "true",
+    "n": 86312,
+    "mean_agreement": 0.8419,
+    "median_agreement": 0.9685,
+    "pct_low": 0.1082,
+    "pct_high": 0.5537
+   },
+   {
+    "key": "false",
+    "n": 22156,
+    "mean_agreement": 0.9582,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0167,
+    "pct_high": 0.8387
+   }
+  ],
+  "lang_x_year": [
+   {
+    "key": "German | 1700-1799",
+    "n": 15472,
+    "mean_agreement": 0.9509,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0116,
+    "pct_high": 0.771
+   },
+   {
+    "key": "Latin | 1600-1699",
+    "n": 14635,
+    "mean_agreement": 0.8194,
+    "median_agreement": 0.9225,
+    "pct_low": 0.1117,
+    "pct_high": 0.4446
+   },
+   {
+    "key": "Latin | 1500-1599",
+    "n": 11653,
+    "mean_agreement": 0.7835,
+    "median_agreement": 0.8915,
+    "pct_low": 0.129,
+    "pct_high": 0.3659
+   },
+   {
+    "key": "German | 1600-1699",
+    "n": 6784,
+    "mean_agreement": 0.962,
+    "median_agreement": 0.9915,
+    "pct_low": 0.0043,
+    "pct_high": 0.8028
+   },
+   {
+    "key": "English | 1800-1899",
+    "n": 6399,
+    "mean_agreement": 0.9813,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0067,
+    "pct_high": 0.9248
+   },
+   {
+    "key": "English | 1900+",
+    "n": 6398,
+    "mean_agreement": 0.9449,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0417,
+    "pct_high": 0.864
+   },
+   {
+    "key": "Latin | 1700-1799",
+    "n": 4270,
+    "mean_agreement": 0.944,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0082,
+    "pct_high": 0.7073
+   },
+   {
+    "key": "German | 1800-1899",
+    "n": 3716,
+    "mean_agreement": 0.9113,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0632,
+    "pct_high": 0.7898
+   },
+   {
+    "key": "English | 1600-1699",
+    "n": 2783,
+    "mean_agreement": 0.8627,
+    "median_agreement": 0.9845,
+    "pct_low": 0.0747,
+    "pct_high": 0.6062
+   },
+   {
+    "key": "Latin | pre-1500",
+    "n": 2773,
+    "mean_agreement": 0.7158,
+    "median_agreement": 0.8135,
+    "pct_low": 0.207,
+    "pct_high": 0.1825
+   },
+   {
+    "key": "German | 1500-1599",
+    "n": 2577,
+    "mean_agreement": 0.9454,
+    "median_agreement": 0.9835,
+    "pct_low": 0.0093,
+    "pct_high": 0.695
+   },
+   {
+    "key": "French | 1700-1799",
+    "n": 2397,
+    "mean_agreement": 0.9565,
+    "median_agreement": 0.9955,
+    "pct_low": 0.0075,
+    "pct_high": 0.7801
+   },
+   {
+    "key": "Greek | 1800-1899",
+    "n": 1837,
+    "mean_agreement": 0.9285,
+    "median_agreement": 0.9815,
+    "pct_low": 0.0245,
+    "pct_high": 0.6516
+   },
+   {
+    "key": "English | 1700-1799",
+    "n": 1728,
+    "mean_agreement": 0.9213,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0475,
+    "pct_high": 0.7639
+   },
+   {
+    "key": "French | 1600-1699",
+    "n": 1646,
+    "mean_agreement": 0.9313,
+    "median_agreement": 0.9905,
+    "pct_low": 0.014,
+    "pct_high": 0.6853
+   },
+   {
+    "key": "Greek | 1500-1599",
+    "n": 1263,
+    "mean_agreement": 0.461,
+    "median_agreement": 0.4475,
+    "pct_low": 0.5598,
+    "pct_high": 0.0594
+   },
+   {
+    "key": "auto-detect | 1600-1699",
+    "n": 1245,
+    "mean_agreement": 0.9715,
+    "median_agreement": 0.9925,
+    "pct_low": 0.0016,
+    "pct_high": 0.8145
+   },
+   {
+    "key": "German | 1900+",
+    "n": 1169,
+    "mean_agreement": 0.9817,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0034,
+    "pct_high": 0.9273
+   },
+   {
+    "key": "auto-detect | 1700-1799",
+    "n": 1082,
+    "mean_agreement": 0.9238,
+    "median_agreement": 0.9625,
+    "pct_low": 0.0065,
+    "pct_high": 0.5545
+   },
+   {
+    "key": "French | 1500-1599",
+    "n": 996,
+    "mean_agreement": 0.8713,
+    "median_agreement": 0.9505,
+    "pct_low": 0.0442,
+    "pct_high": 0.502
+   },
+   {
+    "key": "Latin | 1800-1899",
+    "n": 984,
+    "mean_agreement": 0.9402,
+    "median_agreement": 0.9955,
+    "pct_low": 0.0447,
+    "pct_high": 0.8506
+   },
+   {
+    "key": "Dutch | 1500-1599",
+    "n": 904,
+    "mean_agreement": 0.8082,
+    "median_agreement": 0.8715,
+    "pct_low": 0.0973,
+    "pct_high": 0.1991
+   },
+   {
+    "key": "Italian | pre-1500",
+    "n": 840,
+    "mean_agreement": 0.3386,
+    "median_agreement": 0.1675,
+    "pct_low": 0.675,
+    "pct_high": 0.0083
+   },
+   {
+    "key": "Tibetan | 1700-1799",
+    "n": 814,
+    "mean_agreement": 0.1569,
+    "median_agreement": 0.1665,
+    "pct_low": 0.9914,
+    "pct_high": 0.0037
+   },
+   {
+    "key": "Greek | pre-1500",
+    "n": 803,
+    "mean_agreement": 0.5755,
+    "median_agreement": 0.5955,
+    "pct_low": 0.3412,
+    "pct_high": 0.0286
+   },
+   {
+    "key": "Greek | 1900+",
+    "n": 782,
+    "mean_agreement": 0.9479,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0243,
+    "pct_high": 0.8389
+   },
+   {
+    "key": "French | 1800-1899",
+    "n": 705,
+    "mean_agreement": 0.8175,
+    "median_agreement": 0.9955,
+    "pct_low": 0.1645,
+    "pct_high": 0.6809
+   },
+   {
+    "key": "Dutch | 1600-1699",
+    "n": 671,
+    "mean_agreement": 0.9674,
+    "median_agreement": 0.9935,
+    "pct_low": 0.0015,
+    "pct_high": 0.8301
+   },
+   {
+    "key": "? | unknown",
+    "n": 578,
+    "mean_agreement": 0.3656,
+    "median_agreement": 0.0125,
+    "pct_low": 0.6315,
+    "pct_high": 0.3339
+   },
+   {
+    "key": "English | unknown",
+    "n": 542,
+    "mean_agreement": 0.9849,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0018,
+    "pct_high": 0.9114
+   },
+   {
+    "key": "Latin | 1900+",
+    "n": 532,
+    "mean_agreement": 0.9818,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0019,
+    "pct_high": 0.8835
+   },
+   {
+    "key": "English | 1500-1599",
+    "n": 509,
+    "mean_agreement": 0.8757,
+    "median_agreement": 0.9715,
+    "pct_low": 0.0727,
+    "pct_high": 0.6267
+   },
+   {
+    "key": "Lb | unknown",
+    "n": 476,
+    "mean_agreement": 0.9073,
+    "median_agreement": 0.9315,
+    "pct_low": 0.0042,
+    "pct_high": 0.3214
+   },
+   {
+    "key": "Persian | pre-1500",
+    "n": 463,
+    "mean_agreement": 0.7675,
+    "median_agreement": 0.7935,
+    "pct_low": 0.0518,
+    "pct_high": 0.0454
+   },
+   {
+    "key": "Polish | 1800-1899",
+    "n": 387,
+    "mean_agreement": 0.9797,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0052,
+    "pct_high": 0.9251
+   },
+   {
+    "key": "Greek | unknown",
+    "n": 383,
+    "mean_agreement": 0.4765,
+    "median_agreement": 0.5115,
+    "pct_low": 0.4491,
+    "pct_high": 0
+   },
+   {
+    "key": "Tibetan | pre-1500",
+    "n": 319,
+    "mean_agreement": 0.4772,
+    "median_agreement": 0.4365,
+    "pct_low": 0.5486,
+    "pct_high": 0.0564
+   },
+   {
+    "key": "Multiple | 1700-1799",
+    "n": 303,
+    "mean_agreement": 0.9354,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0231,
+    "pct_high": 0.6502
+   },
+   {
+    "key": "Sanskrit | 1900+",
+    "n": 302,
+    "mean_agreement": 0.7395,
+    "median_agreement": 0.9485,
+    "pct_low": 0.2185,
+    "pct_high": 0.4967
+   },
+   {
+    "key": "Italian | 1600-1699",
+    "n": 291,
+    "mean_agreement": 0.9497,
+    "median_agreement": 0.9845,
+    "pct_low": 0.0034,
+    "pct_high": 0.732
+   },
+   {
+    "key": "Chinese | 1900+",
+    "n": 283,
+    "mean_agreement": 0.9029,
+    "median_agreement": 0.9425,
+    "pct_low": 0.0283,
+    "pct_high": 0.3816
+   },
+   {
+    "key": "Armenian | 1800-1899",
+    "n": 278,
+    "mean_agreement": 0.6706,
+    "median_agreement": 0.9945,
+    "pct_low": 0.3165,
+    "pct_high": 0.5935
+   },
+   {
+    "key": "Arabic | pre-1500",
+    "n": 276,
+    "mean_agreement": 0.6244,
+    "median_agreement": 0.6475,
+    "pct_low": 0.2101,
+    "pct_high": 0.0254
+   },
+   {
+    "key": "Middle English | 1800-1899",
+    "n": 257,
+    "mean_agreement": 0.9828,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.8638
+   },
+   {
+    "key": "Hebrew | 1600-1699",
+    "n": 247,
+    "mean_agreement": 0.6291,
+    "median_agreement": 0.6525,
+    "pct_low": 0.336,
+    "pct_high": 0.3239
+   },
+   {
+    "key": "Russian | 1800-1899",
+    "n": 217,
+    "mean_agreement": 0.8777,
+    "median_agreement": 0.9415,
+    "pct_low": 0.0323,
+    "pct_high": 0.4516
+   },
+   {
+    "key": "French | 1900+",
+    "n": 217,
+    "mean_agreement": 0.8356,
+    "median_agreement": 0.9405,
+    "pct_low": 0.1152,
+    "pct_high": 0.4931
+   },
+   {
+    "key": "Dutch | 1700-1799",
+    "n": 214,
+    "mean_agreement": 0.9094,
+    "median_agreement": 0.9455,
+    "pct_low": 0.014,
+    "pct_high": 0.4766
+   },
+   {
+    "key": "Hebrew | 1500-1599",
+    "n": 207,
+    "mean_agreement": 0.6077,
+    "median_agreement": 0.6465,
+    "pct_low": 0.372,
+    "pct_high": 0.3865
+   },
+   {
+    "key": "Javanese | 1800-1899",
+    "n": 198,
+    "mean_agreement": 0.2643,
+    "median_agreement": 0.0635,
+    "pct_low": 0.7677,
+    "pct_high": 0.1061
+   },
+   {
+    "key": "Latin | unknown",
+    "n": 185,
+    "mean_agreement": 0.9848,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9405
+   },
+   {
+    "key": "Middle English | pre-1500",
+    "n": 185,
+    "mean_agreement": 0.6644,
+    "median_agreement": 0.6825,
+    "pct_low": 0.1784,
+    "pct_high": 0
+   },
+   {
+    "key": "Chinese | pre-1500",
+    "n": 183,
+    "mean_agreement": 0.3214,
+    "median_agreement": 0.1415,
+    "pct_low": 0.7049,
+    "pct_high": 0.0874
+   },
+   {
+    "key": "Italian | 1500-1599",
+    "n": 153,
+    "mean_agreement": 0.8396,
+    "median_agreement": 0.8935,
+    "pct_low": 0.0458,
+    "pct_high": 0.2418
+   },
+   {
+    "key": "Sanskrit | 1800-1899",
+    "n": 150,
+    "mean_agreement": 0.3811,
+    "median_agreement": 0.2625,
+    "pct_low": 0.64,
+    "pct_high": 0.0933
+   },
+   {
+    "key": "English | pre-1500",
+    "n": 138,
+    "mean_agreement": 0.7852,
+    "median_agreement": 0.8335,
+    "pct_low": 0.1232,
+    "pct_high": 0.2174
+   },
+   {
+    "key": "Occitan | 1800-1899",
+    "n": 137,
+    "mean_agreement": 0.9962,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9854
+   },
+   {
+    "key": "Yoruba | 1800-1899",
+    "n": 131,
+    "mean_agreement": 0.9578,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0076,
+    "pct_high": 0.8015
+   },
+   {
+    "key": "Nahuatl | 1500-1599",
+    "n": 123,
+    "mean_agreement": 0.7249,
+    "median_agreement": 0.8055,
+    "pct_low": 0.1789,
+    "pct_high": 0.0813
+   },
+   {
+    "key": "Maya hieroglyphs | pre-1500",
+    "n": 117,
+    "mean_agreement": 0.3373,
+    "median_agreement": 0.3035,
+    "pct_low": 0.8547,
+    "pct_high": 0
+   },
+   {
+    "key": "Burmese | 1800-1899",
+    "n": 117,
+    "mean_agreement": 0.9729,
+    "median_agreement": 0.9965,
+    "pct_low": 0,
+    "pct_high": 0.8547
+   },
+   {
+    "key": "Arabic | 1800-1899",
+    "n": 98,
+    "mean_agreement": 0.9562,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0204,
+    "pct_high": 0.8367
+   },
+   {
+    "key": "Hausa | 1800-1899",
+    "n": 97,
+    "mean_agreement": 0.9255,
+    "median_agreement": 0.9865,
+    "pct_low": 0.0619,
+    "pct_high": 0.701
+   },
+   {
+    "key": "auto-detect | 1500-1599",
+    "n": 85,
+    "mean_agreement": 0.9565,
+    "median_agreement": 0.9785,
+    "pct_low": 0,
+    "pct_high": 0.7176
+   },
+   {
+    "key": "Chinese | 1800-1899",
+    "n": 71,
+    "mean_agreement": 0.8672,
+    "median_agreement": 0.9415,
+    "pct_low": 0.0704,
+    "pct_high": 0.4648
+   },
+   {
+    "key": "Unknown | 1700-1799",
+    "n": 66,
+    "mean_agreement": 0.9933,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9545
+   },
+   {
+    "key": "Old Javanese | pre-1500",
+    "n": 64,
+    "mean_agreement": 0.9778,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "English; Chinese | 1800-1899",
+    "n": 57,
+    "mean_agreement": 0.842,
+    "median_agreement": 0.9905,
+    "pct_low": 0.1228,
+    "pct_high": 0.6842
+   },
+   {
+    "key": "Zulu | 1800-1899",
+    "n": 56,
+    "mean_agreement": 0.9978,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Dutch | 1800-1899",
+    "n": 54,
+    "mean_agreement": 0.8862,
+    "median_agreement": 0.8965,
+    "pct_low": 0,
+    "pct_high": 0.2222
+   },
+   {
+    "key": "Korean | 1700-1799",
+    "n": 52,
+    "mean_agreement": 0.5549,
+    "median_agreement": 0.6565,
+    "pct_low": 0.3269,
+    "pct_high": 0
+   },
+   {
+    "key": "Hawaiian | 1800-1899",
+    "n": 48,
+    "mean_agreement": 0.9304,
+    "median_agreement": 0.9775,
+    "pct_low": 0.0417,
+    "pct_high": 0.625
+   },
+   {
+    "key": "Hausa | 1900+",
+    "n": 47,
+    "mean_agreement": 0.993,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9574
+   },
+   {
+    "key": "Pahlavi | 1800-1899",
+    "n": 43,
+    "mean_agreement": 0.0045,
+    "median_agreement": 0.0005,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Sanskrit | unknown",
+    "n": 43,
+    "mean_agreement": 0.705,
+    "median_agreement": 0.7145,
+    "pct_low": 0.0698,
+    "pct_high": 0
+   },
+   {
+    "key": "Armenian | pre-1500",
+    "n": 39,
+    "mean_agreement": 0.7693,
+    "median_agreement": 0.7635,
+    "pct_low": 0.0256,
+    "pct_high": 0.0769
+   },
+   {
+    "key": "Georgian | pre-1500",
+    "n": 37,
+    "mean_agreement": 0.1819,
+    "median_agreement": 0.1475,
+    "pct_low": 0.9459,
+    "pct_high": 0
+   },
+   {
+    "key": "Egyptian hieroglyphs | 1900+",
+    "n": 36,
+    "mean_agreement": 0.5772,
+    "median_agreement": 0.6265,
+    "pct_low": 0.4167,
+    "pct_high": 0.3889
+   },
+   {
+    "key": "Zulu | 1900+",
+    "n": 35,
+    "mean_agreement": 0.9471,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0286,
+    "pct_high": 0.8571
+   },
+   {
+    "key": "K'iche' Maya | 1800-1899",
+    "n": 33,
+    "mean_agreement": 0.9834,
+    "median_agreement": 0.9985,
+    "pct_low": 0,
+    "pct_high": 0.9091
+   },
+   {
+    "key": "Thai | pre-1500",
+    "n": 33,
+    "mean_agreement": 0.997,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Kanuri | 1800-1899",
+    "n": 32,
+    "mean_agreement": 0.938,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0625,
+    "pct_high": 0.8438
+   },
+   {
+    "key": "Hebrew | 1700-1799",
+    "n": 29,
+    "mean_agreement": 0.4109,
+    "median_agreement": 0.2085,
+    "pct_low": 0.6552,
+    "pct_high": 0.0345
+   },
+   {
+    "key": "Persian | 1900+",
+    "n": 26,
+    "mean_agreement": 0.8886,
+    "median_agreement": 0.9995,
+    "pct_low": 0.1538,
+    "pct_high": 0.8462
+   },
+   {
+    "key": "Hawaiian | 1900+",
+    "n": 26,
+    "mean_agreement": 0.9931,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9231
+   },
+   {
+    "key": "Swahili | 1900+",
+    "n": 25,
+    "mean_agreement": 0.9892,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.96
+   },
+   {
+    "key": "Tibetan | 1600-1699",
+    "n": 25,
+    "mean_agreement": 0.2035,
+    "median_agreement": 0.1485,
+    "pct_low": 0.96,
+    "pct_high": 0
+   },
+   {
+    "key": "Italian | 1800-1899",
+    "n": 25,
+    "mean_agreement": 0.9957,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Dutch | 1900+",
+    "n": 23,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Ge'ez | 1500-1599",
+    "n": 23,
+    "mean_agreement": 0.1162,
+    "median_agreement": 0.0225,
+    "pct_low": 0.913,
+    "pct_high": 0
+   },
+   {
+    "key": "Persian | 1800-1899",
+    "n": 22,
+    "mean_agreement": 0.6692,
+    "median_agreement": 0.7895,
+    "pct_low": 0.3182,
+    "pct_high": 0.2727
+   },
+   {
+    "key": "Ge'ez | 1900+",
+    "n": 21,
+    "mean_agreement": 0.9988,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Greek | 1600-1699",
+    "n": 20,
+    "mean_agreement": 0.7278,
+    "median_agreement": 0.7575,
+    "pct_low": 0.1,
+    "pct_high": 0.05
+   },
+   {
+    "key": "Syriac | pre-1500",
+    "n": 20,
+    "mean_agreement": 0.0197,
+    "median_agreement": 0.0065,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "German | pre-1500",
+    "n": 20,
+    "mean_agreement": 0.7773,
+    "median_agreement": 0.8015,
+    "pct_low": 0.05,
+    "pct_high": 0.05
+   },
+   {
+    "key": "Burmese | 1900+",
+    "n": 20,
+    "mean_agreement": 0.9849,
+    "median_agreement": 0.9955,
+    "pct_low": 0,
+    "pct_high": 0.85
+   },
+   {
+    "key": "Middle High German | pre-1500",
+    "n": 20,
+    "mean_agreement": 0.7343,
+    "median_agreement": 0.7405,
+    "pct_low": 0.05,
+    "pct_high": 0
+   },
+   {
+    "key": "Hebrew | 1800-1899",
+    "n": 19,
+    "mean_agreement": 0.2404,
+    "median_agreement": 0.2185,
+    "pct_low": 0.9474,
+    "pct_high": 0.0526
+   },
+   {
+    "key": "Egyptian hieroglyphs | 1800-1899",
+    "n": 19,
+    "mean_agreement": 0.994,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9474
+   },
+   {
+    "key": "Arabic | 1500-1599",
+    "n": 19,
+    "mean_agreement": 0.4069,
+    "median_agreement": 0.4305,
+    "pct_low": 0.6842,
+    "pct_high": 0
+   },
+   {
+    "key": "Arabic | 1600-1699",
+    "n": 19,
+    "mean_agreement": 0.843,
+    "median_agreement": 0.8435,
+    "pct_low": 0,
+    "pct_high": 0.1579
+   },
+   {
+    "key": "Arabic | 1900+",
+    "n": 18,
+    "mean_agreement": 0.8846,
+    "median_agreement": 0.9675,
+    "pct_low": 0.1111,
+    "pct_high": 0.6667
+   },
+   {
+    "key": "Chinese; English | 1800-1899",
+    "n": 18,
+    "mean_agreement": 0.9544,
+    "median_agreement": 0.9835,
+    "pct_low": 0,
+    "pct_high": 0.7222
+   },
+   {
+    "key": "ger | 1600-1699",
+    "n": 18,
+    "mean_agreement": 0.9526,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0556,
+    "pct_high": 0.8889
+   },
+   {
+    "key": "French | unknown",
+    "n": 17,
+    "mean_agreement": 0.9532,
+    "median_agreement": 0.9825,
+    "pct_low": 0,
+    "pct_high": 0.6471
+   },
+   {
+    "key": "Japanese | 1800-1899",
+    "n": 17,
+    "mean_agreement": 0.3133,
+    "median_agreement": 0.3555,
+    "pct_low": 0.7647,
+    "pct_high": 0.0588
+   },
+   {
+    "key": "Ge'ez | 1800-1899",
+    "n": 17,
+    "mean_agreement": 0.9186,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0588,
+    "pct_high": 0.7647
+   },
+   {
+    "key": "Maori | 1800-1899",
+    "n": 17,
+    "mean_agreement": 0.9982,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Xhosa | 1800-1899",
+    "n": 17,
+    "mean_agreement": 0.9923,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Sanskrit | 1600-1699",
+    "n": 16,
+    "mean_agreement": 0.8452,
+    "median_agreement": 0.8735,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Ancient Greek | 1600-1699",
+    "n": 16,
+    "mean_agreement": 0.9806,
+    "median_agreement": 0.9875,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "e | 1900+",
+    "n": 16,
+    "mean_agreement": 0.9334,
+    "median_agreement": 0.9915,
+    "pct_low": 0,
+    "pct_high": 0.625
+   },
+   {
+    "key": "Sanskrit | pre-1500",
+    "n": 16,
+    "mean_agreement": 0.3311,
+    "median_agreement": 0.1045,
+    "pct_low": 0.75,
+    "pct_high": 0.25
+   },
+   {
+    "key": "Swahili | 1800-1899",
+    "n": 16,
+    "mean_agreement": 0.9975,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Telugu | 1900+",
+    "n": 15,
+    "mean_agreement": 0.5686,
+    "median_agreement": 0.6465,
+    "pct_low": 0.4,
+    "pct_high": 0
+   },
+   {
+    "key": "Korean | 1800-1899",
+    "n": 15,
+    "mean_agreement": 0.9973,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Spanish | 1800-1899",
+    "n": 15,
+    "mean_agreement": 0.9925,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Hindi | 1900+",
+    "n": 14,
+    "mean_agreement": 0.9788,
+    "median_agreement": 0.9795,
+    "pct_low": 0,
+    "pct_high": 0.8571
+   },
+   {
+    "key": "Hebrew-Greek | 1800-1899",
+    "n": 14,
+    "mean_agreement": 0.8194,
+    "median_agreement": 0.8705,
+    "pct_low": 0.0714,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Vietnamese | 1800-1899",
+    "n": 14,
+    "mean_agreement": 0.6403,
+    "median_agreement": 0.9085,
+    "pct_low": 0.3571,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Sanskrit | 1700-1799",
+    "n": 12,
+    "mean_agreement": 0.3035,
+    "median_agreement": 0.2785,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Old Norse | 1800-1899",
+    "n": 12,
+    "mean_agreement": 0.9947,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Chinese | 1500-1599",
+    "n": 11,
+    "mean_agreement": 0.7967,
+    "median_agreement": 0.9235,
+    "pct_low": 0.1818,
+    "pct_high": 0.1818
+   },
+   {
+    "key": "Old English | 1800-1899",
+    "n": 11,
+    "mean_agreement": 0.7488,
+    "median_agreement": 0.9005,
+    "pct_low": 0.2727,
+    "pct_high": 0.4545
+   },
+   {
+    "key": "Greek | 1700-1799",
+    "n": 11,
+    "mean_agreement": 0.8227,
+    "median_agreement": 0.8975,
+    "pct_low": 0.0909,
+    "pct_high": 0.3636
+   },
+   {
+    "key": "Latin/Hebrew | 1500-1599",
+    "n": 10,
+    "mean_agreement": 0.691,
+    "median_agreement": 0.7335,
+    "pct_low": 0.2,
+    "pct_high": 0
+   },
+   {
+    "key": "Portuguese | 1500-1599",
+    "n": 10,
+    "mean_agreement": 0.8831,
+    "median_agreement": 0.8695,
+    "pct_low": 0,
+    "pct_high": 0.2
+   },
+   {
+    "key": "French | pre-1500",
+    "n": 10,
+    "mean_agreement": 0.5836,
+    "median_agreement": 0.6035,
+    "pct_low": 0.1,
+    "pct_high": 0
+   },
+   {
+    "key": "Chagatai Turkish | 1900+",
+    "n": 9,
+    "mean_agreement": 0.783,
+    "median_agreement": 0.8065,
+    "pct_low": 0.1111,
+    "pct_high": 0.1111
+   },
+   {
+    "key": "Classical Chinese | pre-1500",
+    "n": 9,
+    "mean_agreement": 0.6661,
+    "median_agreement": 0.9045,
+    "pct_low": 0.3333,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "Spanish | 1700-1799",
+    "n": 9,
+    "mean_agreement": 0.8758,
+    "median_agreement": 0.9535,
+    "pct_low": 0,
+    "pct_high": 0.5556
+   },
+   {
+    "key": "und | 1500-1599",
+    "n": 8,
+    "mean_agreement": 0.9011,
+    "median_agreement": 0.9115,
+    "pct_low": 0,
+    "pct_high": 0.25
+   },
+   {
+    "key": "Chinese | 1600-1699",
+    "n": 7,
+    "mean_agreement": 0.4612,
+    "median_agreement": 0.2585,
+    "pct_low": 0.7143,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Korean | 1500-1599",
+    "n": 7,
+    "mean_agreement": 0.7704,
+    "median_agreement": 0.8295,
+    "pct_low": 0.2857,
+    "pct_high": 0.4286
+   },
+   {
+    "key": "Czech | 1500-1599",
+    "n": 6,
+    "mean_agreement": 0.1254,
+    "median_agreement": 0.0775,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Karaim and Hebrew | 1700-1799",
+    "n": 6,
+    "mean_agreement": 0.4306,
+    "median_agreement": 0.1715,
+    "pct_low": 0.6667,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "Greenlandic | 1900+",
+    "n": 5,
+    "mean_agreement": 0.9964,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Korean | unknown",
+    "n": 5,
+    "mean_agreement": 0.8062,
+    "median_agreement": 0.9315,
+    "pct_low": 0.2,
+    "pct_high": 0.2
+   },
+   {
+    "key": "Persian | 1600-1699",
+    "n": 5,
+    "mean_agreement": 0.2175,
+    "median_agreement": 0.2455,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Hebrew | pre-1500",
+    "n": 4,
+    "mean_agreement": 0.1292,
+    "median_agreement": 0.1295,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Ge'ez | 1700-1799",
+    "n": 4,
+    "mean_agreement": 0.0616,
+    "median_agreement": 0.0165,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Syriac | 1900+",
+    "n": 3,
+    "mean_agreement": 0.8428,
+    "median_agreement": 0.8545,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Spanish | 1600-1699",
+    "n": 3,
+    "mean_agreement": 0.9913,
+    "median_agreement": 0.9955,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "English, Prakrit, Sanskrit | 1900+",
+    "n": 2,
+    "mean_agreement": 0.9259,
+    "median_agreement": 0.9195,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Italian | 1700-1799",
+    "n": 2,
+    "mean_agreement": 0.67,
+    "median_agreement": 0.3685,
+    "pct_low": 0.5,
+    "pct_high": 0.5
+   },
+   {
+    "key": "Japanese | 1900+",
+    "n": 2,
+    "mean_agreement": 0.477,
+    "median_agreement": 0.1025,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "Chinese | 1700-1799",
+    "n": 2,
+    "mean_agreement": 0.3517,
+    "median_agreement": 0.0005,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "Punjabi | 1600-1699",
+    "n": 1,
+    "mean_agreement": 0.4928,
+    "median_agreement": 0.4925,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Tibetan | 1500-1599",
+    "n": 1,
+    "mean_agreement": 0.8482,
+    "median_agreement": 0.8485,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Coptic | 1800-1899",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Turkish | 1900+",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Chinese | unknown",
+    "n": 1,
+    "mean_agreement": 0.0289,
+    "median_agreement": 0.0285,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Italian | unknown",
+    "n": 1,
+    "mean_agreement": 0.6863,
+    "median_agreement": 0.6865,
+    "pct_low": 0,
+    "pct_high": 0
+   }
+  ],
+  "lang_x_modelpair": [
+   {
+    "key": "German | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 17645,
+    "mean_agreement": 0.9656,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0041,
+    "pct_high": 0.8286
+   },
+   {
+    "key": "Latin | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 16495,
+    "mean_agreement": 0.7644,
+    "median_agreement": 0.8705,
+    "pct_low": 0.1685,
+    "pct_high": 0.4115
+   },
+   {
+    "key": "Latin | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 15829,
+    "mean_agreement": 0.9065,
+    "median_agreement": 0.9565,
+    "pct_low": 0.0204,
+    "pct_high": 0.5279
+   },
+   {
+    "key": "German | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 11189,
+    "mean_agreement": 0.9368,
+    "median_agreement": 0.9865,
+    "pct_low": 0.0201,
+    "pct_high": 0.718
+   },
+   {
+    "key": "English | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 7889,
+    "mean_agreement": 0.9758,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0091,
+    "pct_high": 0.8973
+   },
+   {
+    "key": "English | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 6816,
+    "mean_agreement": 0.9428,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0244,
+    "pct_high": 0.8096
+   },
+   {
+    "key": "French | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 3907,
+    "mean_agreement": 0.9354,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0192,
+    "pct_high": 0.7156
+   },
+   {
+    "key": "auto-detect | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 2412,
+    "mean_agreement": 0.9496,
+    "median_agreement": 0.9835,
+    "pct_low": 0.0037,
+    "pct_high": 0.6944
+   },
+   {
+    "key": "English | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 2328,
+    "mean_agreement": 0.9407,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0348,
+    "pct_high": 0.8015
+   },
+   {
+    "key": "Greek | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 2264,
+    "mean_agreement": 0.8131,
+    "median_agreement": 0.9615,
+    "pct_low": 0.1378,
+    "pct_high": 0.5119
+   },
+   {
+    "key": "Greek | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 1856,
+    "mean_agreement": 0.5195,
+    "median_agreement": 0.5155,
+    "pct_low": 0.472,
+    "pct_high": 0.0372
+   },
+   {
+    "key": "French | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 1809,
+    "mean_agreement": 0.9245,
+    "median_agreement": 0.9845,
+    "pct_low": 0.0254,
+    "pct_high": 0.6849
+   },
+   {
+    "key": "Latin | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 1417,
+    "mean_agreement": 0.5806,
+    "median_agreement": 0.7595,
+    "pct_low": 0.3013,
+    "pct_high": 0.0402
+   },
+   {
+    "key": "Dutch | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 1371,
+    "mean_agreement": 0.9039,
+    "median_agreement": 0.9375,
+    "pct_low": 0.0139,
+    "pct_high": 0.4705
+   },
+   {
+    "key": "Tibetan | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 1159,
+    "mean_agreement": 0.2467,
+    "median_agreement": 0.2005,
+    "pct_low": 0.868,
+    "pct_high": 0.0181
+   },
+   {
+    "key": "Latin | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 1024,
+    "mean_agreement": 0.8188,
+    "median_agreement": 0.9705,
+    "pct_low": 0.1563,
+    "pct_high": 0.5576
+   },
+   {
+    "key": "Greek | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 895,
+    "mean_agreement": 0.9283,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0235,
+    "pct_high": 0.7844
+   },
+   {
+    "key": "Italian | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 855,
+    "mean_agreement": 0.4014,
+    "median_agreement": 0.1705,
+    "pct_low": 0.6468,
+    "pct_high": 0.1965
+   },
+   {
+    "key": "German | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 620,
+    "mean_agreement": 0.9597,
+    "median_agreement": 0.9925,
+    "pct_low": 0.0065,
+    "pct_high": 0.7839
+   },
+   {
+    "key": "? | ?→gemini-3.1-flash-lite-preview",
+    "n": 578,
+    "mean_agreement": 0.3656,
+    "median_agreement": 0.0125,
+    "pct_low": 0.6315,
+    "pct_high": 0.3339
+   },
+   {
+    "key": "English | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 523,
+    "mean_agreement": 0.9766,
+    "median_agreement": 0.9995,
+    "pct_low": 0.0115,
+    "pct_high": 0.9101
+   },
+   {
+    "key": "English | gemini-2.5-flash→gemini-3-flash-preview",
+    "n": 515,
+    "mean_agreement": 0.91,
+    "median_agreement": 0.9575,
+    "pct_low": 0.0427,
+    "pct_high": 0.5612
+   },
+   {
+    "key": "Persian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 500,
+    "mean_agreement": 0.7781,
+    "median_agreement": 0.8015,
+    "pct_low": 0.052,
+    "pct_high": 0.098
+   },
+   {
+    "key": "Lb | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 476,
+    "mean_agreement": 0.9073,
+    "median_agreement": 0.9315,
+    "pct_low": 0.0042,
+    "pct_high": 0.3214
+   },
+   {
+    "key": "Arabic | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 430,
+    "mean_agreement": 0.711,
+    "median_agreement": 0.7195,
+    "pct_low": 0.1744,
+    "pct_high": 0.2419
+   },
+   {
+    "key": "Dutch | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 420,
+    "mean_agreement": 0.9225,
+    "median_agreement": 0.9585,
+    "pct_low": 0.0071,
+    "pct_high": 0.5452
+   },
+   {
+    "key": "Polish | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 387,
+    "mean_agreement": 0.9797,
+    "median_agreement": 0.9945,
+    "pct_low": 0.0052,
+    "pct_high": 0.9251
+   },
+   {
+    "key": "Hebrew | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 379,
+    "mean_agreement": 0.6908,
+    "median_agreement": 0.7165,
+    "pct_low": 0.2665,
+    "pct_high": 0.4195
+   },
+   {
+    "key": "Middle English | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 375,
+    "mean_agreement": 0.8252,
+    "median_agreement": 0.8985,
+    "pct_low": 0.0853,
+    "pct_high": 0.416
+   },
+   {
+    "key": "English | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 301,
+    "mean_agreement": 0.0153,
+    "median_agreement": 0.0065,
+    "pct_low": 0.9934,
+    "pct_high": 0.0033
+   },
+   {
+    "key": "Multiple | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 298,
+    "mean_agreement": 0.9368,
+    "median_agreement": 0.9925,
+    "pct_low": 0.0235,
+    "pct_high": 0.6611
+   },
+   {
+    "key": "Italian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 278,
+    "mean_agreement": 0.8637,
+    "median_agreement": 0.9115,
+    "pct_low": 0.0324,
+    "pct_high": 0.3561
+   },
+   {
+    "key": "Chinese | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 273,
+    "mean_agreement": 0.9118,
+    "median_agreement": 0.9445,
+    "pct_low": 0.0183,
+    "pct_high": 0.3919
+   },
+   {
+    "key": "Chinese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 258,
+    "mean_agreement": 0.5043,
+    "median_agreement": 0.5195,
+    "pct_low": 0.4922,
+    "pct_high": 0.2016
+   },
+   {
+    "key": "Armenian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 234,
+    "mean_agreement": 0.916,
+    "median_agreement": 0.9975,
+    "pct_low": 0.0299,
+    "pct_high": 0.7137
+   },
+   {
+    "key": "German | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 229,
+    "mean_agreement": 0.2991,
+    "median_agreement": 0.0085,
+    "pct_low": 0.6681,
+    "pct_high": 0.0961
+   },
+   {
+    "key": "Javanese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 198,
+    "mean_agreement": 0.2643,
+    "median_agreement": 0.0635,
+    "pct_low": 0.7677,
+    "pct_high": 0.1061
+   },
+   {
+    "key": "Sanskrit | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 194,
+    "mean_agreement": 0.8903,
+    "median_agreement": 0.9645,
+    "pct_low": 0.0722,
+    "pct_high": 0.6237
+   },
+   {
+    "key": "Sanskrit | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 193,
+    "mean_agreement": 0.6503,
+    "median_agreement": 0.8515,
+    "pct_low": 0.3575,
+    "pct_high": 0.2435
+   },
+   {
+    "key": "Russian | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 187,
+    "mean_agreement": 0.8662,
+    "median_agreement": 0.9215,
+    "pct_low": 0.0321,
+    "pct_high": 0.3797
+   },
+   {
+    "key": "Hausa | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 144,
+    "mean_agreement": 0.9476,
+    "median_agreement": 0.9955,
+    "pct_low": 0.0417,
+    "pct_high": 0.7847
+   },
+   {
+    "key": "Latin | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 141,
+    "mean_agreement": 0.4574,
+    "median_agreement": 0.4465,
+    "pct_low": 0.6312,
+    "pct_high": 0
+   },
+   {
+    "key": "Occitan | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 137,
+    "mean_agreement": 0.9962,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9854
+   },
+   {
+    "key": "Burmese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 137,
+    "mean_agreement": 0.9746,
+    "median_agreement": 0.9965,
+    "pct_low": 0,
+    "pct_high": 0.854
+   },
+   {
+    "key": "French | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 136,
+    "mean_agreement": 0.2137,
+    "median_agreement": 0.0145,
+    "pct_low": 0.7426,
+    "pct_high": 0.0074
+   },
+   {
+    "key": "Yoruba | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 131,
+    "mean_agreement": 0.9578,
+    "median_agreement": 0.9875,
+    "pct_low": 0.0076,
+    "pct_high": 0.8015
+   },
+   {
+    "key": "Hebrew | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 127,
+    "mean_agreement": 0.2864,
+    "median_agreement": 0.1685,
+    "pct_low": 0.7874,
+    "pct_high": 0.0236
+   },
+   {
+    "key": "Nahuatl | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 123,
+    "mean_agreement": 0.7249,
+    "median_agreement": 0.8055,
+    "pct_low": 0.1789,
+    "pct_high": 0.0813
+   },
+   {
+    "key": "Maya hieroglyphs | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 117,
+    "mean_agreement": 0.3373,
+    "median_agreement": 0.3035,
+    "pct_low": 0.8547,
+    "pct_high": 0
+   },
+   {
+    "key": "Italian | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 111,
+    "mean_agreement": 0.8202,
+    "median_agreement": 0.8375,
+    "pct_low": 0.018,
+    "pct_high": 0.1441
+   },
+   {
+    "key": "Latin | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 104,
+    "mean_agreement": 0.6768,
+    "median_agreement": 0.6875,
+    "pct_low": 0.0769,
+    "pct_high": 0.0192
+   },
+   {
+    "key": "Sanskrit | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 103,
+    "mean_agreement": 0.005,
+    "median_agreement": 0.0005,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Zulu | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 91,
+    "mean_agreement": 0.9783,
+    "median_agreement": 0.9995,
+    "pct_low": 0.011,
+    "pct_high": 0.9451
+   },
+   {
+    "key": "Armenian | ?→gemini-3.1-flash-lite-preview",
+    "n": 82,
+    "mean_agreement": 0.0133,
+    "median_agreement": 0.0135,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Greek | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 74,
+    "mean_agreement": 0.7812,
+    "median_agreement": 0.8105,
+    "pct_low": 0.0676,
+    "pct_high": 0.3378
+   },
+   {
+    "key": "Hawaiian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 74,
+    "mean_agreement": 0.9524,
+    "median_agreement": 0.9965,
+    "pct_low": 0.027,
+    "pct_high": 0.7297
+   },
+   {
+    "key": "Italian | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 68,
+    "mean_agreement": 0.6154,
+    "median_agreement": 0.6535,
+    "pct_low": 0.1765,
+    "pct_high": 0
+   },
+   {
+    "key": "Middle English | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 66,
+    "mean_agreement": 0.9969,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Unknown | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 66,
+    "mean_agreement": 0.9933,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9545
+   },
+   {
+    "key": "Ge'ez | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 65,
+    "mean_agreement": 0.6078,
+    "median_agreement": 0.9825,
+    "pct_low": 0.4,
+    "pct_high": 0.5231
+   },
+   {
+    "key": "Old Javanese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 64,
+    "mean_agreement": 0.9778,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "English | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 60,
+    "mean_agreement": 0.9056,
+    "median_agreement": 0.9765,
+    "pct_low": 0.0167,
+    "pct_high": 0.6333
+   },
+   {
+    "key": "English; Chinese | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 57,
+    "mean_agreement": 0.842,
+    "median_agreement": 0.9905,
+    "pct_low": 0.1228,
+    "pct_high": 0.6842
+   },
+   {
+    "key": "Egyptian hieroglyphs | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 55,
+    "mean_agreement": 0.7212,
+    "median_agreement": 0.9945,
+    "pct_low": 0.2727,
+    "pct_high": 0.5818
+   },
+   {
+    "key": "English | gemini-2.5-flash→claude-sonnet-4-6",
+    "n": 47,
+    "mean_agreement": 0.9248,
+    "median_agreement": 0.9585,
+    "pct_low": 0,
+    "pct_high": 0.5957
+   },
+   {
+    "key": "Pahlavi | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 43,
+    "mean_agreement": 0.0045,
+    "median_agreement": 0.0005,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Sanskrit | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 43,
+    "mean_agreement": 0.705,
+    "median_agreement": 0.7145,
+    "pct_low": 0.0698,
+    "pct_high": 0
+   },
+   {
+    "key": "Korean | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 42,
+    "mean_agreement": 0.5681,
+    "median_agreement": 0.6565,
+    "pct_low": 0.3095,
+    "pct_high": 0.0238
+   },
+   {
+    "key": "Swahili | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 41,
+    "mean_agreement": 0.9925,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9756
+   },
+   {
+    "key": "Georgian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 37,
+    "mean_agreement": 0.1819,
+    "median_agreement": 0.1475,
+    "pct_low": 0.9459,
+    "pct_high": 0
+   },
+   {
+    "key": "K'iche' Maya | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 33,
+    "mean_agreement": 0.9834,
+    "median_agreement": 0.9985,
+    "pct_low": 0,
+    "pct_high": 0.9091
+   },
+   {
+    "key": "Thai | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 33,
+    "mean_agreement": 0.997,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "French | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 33,
+    "mean_agreement": 0.8155,
+    "median_agreement": 0.8935,
+    "pct_low": 0.0606,
+    "pct_high": 0.3939
+   },
+   {
+    "key": "Dutch | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 32,
+    "mean_agreement": 0.2196,
+    "median_agreement": 0.2315,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Dutch | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 32,
+    "mean_agreement": 0.2094,
+    "median_agreement": 0.2205,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Kanuri | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 32,
+    "mean_agreement": 0.938,
+    "median_agreement": 0.9965,
+    "pct_low": 0.0625,
+    "pct_high": 0.8438
+   },
+   {
+    "key": "French | gemini-2.5-flash→gemini-3-flash-preview",
+    "n": 31,
+    "mean_agreement": 0.7548,
+    "median_agreement": 0.7775,
+    "pct_low": 0.0323,
+    "pct_high": 0.0323
+   },
+   {
+    "key": "German | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 30,
+    "mean_agreement": 0.8305,
+    "median_agreement": 0.9925,
+    "pct_low": 0.2333,
+    "pct_high": 0.7333
+   },
+   {
+    "key": "Russian | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 29,
+    "mean_agreement": 0.9821,
+    "median_agreement": 0.9925,
+    "pct_low": 0,
+    "pct_high": 0.931
+   },
+   {
+    "key": "French | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 29,
+    "mean_agreement": 0.9817,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 0.9655
+   },
+   {
+    "key": "Spanish | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 27,
+    "mean_agreement": 0.9535,
+    "median_agreement": 0.9945,
+    "pct_low": 0,
+    "pct_high": 0.8519
+   },
+   {
+    "key": "Chinese | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 25,
+    "mean_agreement": 0.344,
+    "median_agreement": 0.3725,
+    "pct_low": 0.72,
+    "pct_high": 0.04
+   },
+   {
+    "key": "French | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 23,
+    "mean_agreement": 0.8171,
+    "median_agreement": 0.8635,
+    "pct_low": 0.087,
+    "pct_high": 0.2174
+   },
+   {
+    "key": "Korean | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 22,
+    "mean_agreement": 0.9251,
+    "median_agreement": 0.9955,
+    "pct_low": 0.0909,
+    "pct_high": 0.8182
+   },
+   {
+    "key": "Syriac | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 20,
+    "mean_agreement": 0.0197,
+    "median_agreement": 0.0065,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Middle High German | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 20,
+    "mean_agreement": 0.7343,
+    "median_agreement": 0.7405,
+    "pct_low": 0.05,
+    "pct_high": 0
+   },
+   {
+    "key": "French | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 19,
+    "mean_agreement": 0.9645,
+    "median_agreement": 0.9785,
+    "pct_low": 0,
+    "pct_high": 0.6316
+   },
+   {
+    "key": "Chinese; English | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 18,
+    "mean_agreement": 0.9544,
+    "median_agreement": 0.9835,
+    "pct_low": 0,
+    "pct_high": 0.7222
+   },
+   {
+    "key": "ger | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 18,
+    "mean_agreement": 0.9526,
+    "median_agreement": 0.9895,
+    "pct_low": 0.0556,
+    "pct_high": 0.8889
+   },
+   {
+    "key": "Maori | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 17,
+    "mean_agreement": 0.9982,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Xhosa | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 17,
+    "mean_agreement": 0.9923,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "English | gemini-3-flash-preview→claude-sonnet-4-6",
+    "n": 16,
+    "mean_agreement": 0.4979,
+    "median_agreement": 0.6915,
+    "pct_low": 0.4375,
+    "pct_high": 0
+   },
+   {
+    "key": "Ancient Greek | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 16,
+    "mean_agreement": 0.9806,
+    "median_agreement": 0.9875,
+    "pct_low": 0,
+    "pct_high": 0.875
+   },
+   {
+    "key": "e | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 16,
+    "mean_agreement": 0.9334,
+    "median_agreement": 0.9915,
+    "pct_low": 0,
+    "pct_high": 0.625
+   },
+   {
+    "key": "Telugu | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 15,
+    "mean_agreement": 0.5686,
+    "median_agreement": 0.6465,
+    "pct_low": 0.4,
+    "pct_high": 0
+   },
+   {
+    "key": "Japanese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 15,
+    "mean_agreement": 0.3076,
+    "median_agreement": 0.3555,
+    "pct_low": 0.8,
+    "pct_high": 0.0667
+   },
+   {
+    "key": "Korean | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 15,
+    "mean_agreement": 0.6014,
+    "median_agreement": 0.7675,
+    "pct_low": 0.3333,
+    "pct_high": 0
+   },
+   {
+    "key": "Hebrew-Greek | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 14,
+    "mean_agreement": 0.8194,
+    "median_agreement": 0.8705,
+    "pct_low": 0.0714,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "Vietnamese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 14,
+    "mean_agreement": 0.6403,
+    "median_agreement": 0.9085,
+    "pct_low": 0.3571,
+    "pct_high": 0.2857
+   },
+   {
+    "key": "German | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 13,
+    "mean_agreement": 0.3846,
+    "median_agreement": 0.3335,
+    "pct_low": 0.8462,
+    "pct_high": 0
+   },
+   {
+    "key": "Old Norse | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 12,
+    "mean_agreement": 0.9947,
+    "median_agreement": 0.9975,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Dutch | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 11,
+    "mean_agreement": 0.4327,
+    "median_agreement": 0.4745,
+    "pct_low": 0.5455,
+    "pct_high": 0
+   },
+   {
+    "key": "Old English | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 11,
+    "mean_agreement": 0.7488,
+    "median_agreement": 0.9005,
+    "pct_low": 0.2727,
+    "pct_high": 0.4545
+   },
+   {
+    "key": "Latin/Hebrew | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 10,
+    "mean_agreement": 0.691,
+    "median_agreement": 0.7335,
+    "pct_low": 0.2,
+    "pct_high": 0
+   },
+   {
+    "key": "Portuguese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 10,
+    "mean_agreement": 0.8831,
+    "median_agreement": 0.8695,
+    "pct_low": 0,
+    "pct_high": 0.2
+   },
+   {
+    "key": "Hindi | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 9,
+    "mean_agreement": 0.967,
+    "median_agreement": 0.9765,
+    "pct_low": 0,
+    "pct_high": 0.7778
+   },
+   {
+    "key": "Chagatai Turkish | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 9,
+    "mean_agreement": 0.783,
+    "median_agreement": 0.8065,
+    "pct_low": 0.1111,
+    "pct_high": 0.1111
+   },
+   {
+    "key": "Classical Chinese | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 9,
+    "mean_agreement": 0.6661,
+    "median_agreement": 0.9045,
+    "pct_low": 0.3333,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "Persian | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 9,
+    "mean_agreement": 0.2443,
+    "median_agreement": 0.2455,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Latin | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 9,
+    "mean_agreement": 0.4008,
+    "median_agreement": 0.1075,
+    "pct_low": 0.5556,
+    "pct_high": 0
+   },
+   {
+    "key": "German | gemini-3-flash-preview→claude-sonnet-4-6",
+    "n": 8,
+    "mean_agreement": 0.787,
+    "median_agreement": 0.7765,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Latin | gemini-2.5-flash→gemini-3-flash-preview",
+    "n": 8,
+    "mean_agreement": 0.7052,
+    "median_agreement": 0.6345,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "und | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 8,
+    "mean_agreement": 0.9011,
+    "median_agreement": 0.9115,
+    "pct_low": 0,
+    "pct_high": 0.25
+   },
+   {
+    "key": "Persian | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 7,
+    "mean_agreement": 0.4277,
+    "median_agreement": 0.4815,
+    "pct_low": 0.7143,
+    "pct_high": 0
+   },
+   {
+    "key": "Sanskrit | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 6,
+    "mean_agreement": 0.7046,
+    "median_agreement": 0.6975,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Czech | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 6,
+    "mean_agreement": 0.1254,
+    "median_agreement": 0.0775,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Karaim and Hebrew | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 6,
+    "mean_agreement": 0.4306,
+    "median_agreement": 0.1715,
+    "pct_low": 0.6667,
+    "pct_high": 0.3333
+   },
+   {
+    "key": "Greenlandic | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 5,
+    "mean_agreement": 0.9964,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Hindi | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 5,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Multiple | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 5,
+    "mean_agreement": 0.8544,
+    "median_agreement": 0.8595,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Greek | gemini-3.1-flash-lite→gemini-3-flash-preview",
+    "n": 5,
+    "mean_agreement": 0.0939,
+    "median_agreement": 0.0965,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Latin | gemini-3-flash-preview→manual",
+    "n": 4,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Syriac | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 3,
+    "mean_agreement": 0.8428,
+    "median_agreement": 0.8545,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Greek | gemini-2.5-flash→gemini-3-flash-preview",
+    "n": 2,
+    "mean_agreement": 0.3591,
+    "median_agreement": 0.1285,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "Greek | gemini-3-flash-preview→claude-sonnet-4-6",
+    "n": 2,
+    "mean_agreement": 0.8748,
+    "median_agreement": 0.8115,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "English, Prakrit, Sanskrit | gemini-3-flash-preview→gemini-3-flash-preview",
+    "n": 2,
+    "mean_agreement": 0.9259,
+    "median_agreement": 0.9195,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Japanese | gemini-3-flash-preview→gemini-3.1-flash-lite-preview",
+    "n": 2,
+    "mean_agreement": 0.477,
+    "median_agreement": 0.1025,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "German | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 2,
+    "mean_agreement": 0.8213,
+    "median_agreement": 0.7715,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "Japanese | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 2,
+    "mean_agreement": 0.3562,
+    "median_agreement": 0.2075,
+    "pct_low": 0.5,
+    "pct_high": 0
+   },
+   {
+    "key": "German | gemini-2.0-flash→claude-sonnet-4-6",
+    "n": 1,
+    "mean_agreement": 0.8308,
+    "median_agreement": 0.8305,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "French | gemini-3-flash-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Greek | gemini-3-flash-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Latin | gemini-3-flash-preview→claude-sonnet-4-6",
+    "n": 1,
+    "mean_agreement": 0.7951,
+    "median_agreement": 0.7955,
+    "pct_low": 0,
+    "pct_high": 0
+   },
+   {
+    "key": "English | gemini-3-flash-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Chinese | gemini-3-flash-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Punjabi | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 1,
+    "mean_agreement": 0.4928,
+    "median_agreement": 0.4925,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Armenian | gemini-3-flash-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Russian | gemini-3.1-flash-lite-preview→gemini-3-flash-preview",
+    "n": 1,
+    "mean_agreement": 0,
+    "median_agreement": 0.0005,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "English | mineru-pipeline→gemini-3-flash-preview",
+    "n": 1,
+    "mean_agreement": 0.0286,
+    "median_agreement": 0.0285,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "German | gemini-3.1-flash-lite-preview→manual",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Coptic | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Turkish | gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview",
+    "n": 1,
+    "mean_agreement": 1,
+    "median_agreement": 0.9995,
+    "pct_low": 0,
+    "pct_high": 1
+   },
+   {
+    "key": "Middle English | gemini-3-flash-preview→gemini-3.1-flash-lite",
+    "n": 1,
+    "mean_agreement": 0.2567,
+    "median_agreement": 0.2565,
+    "pct_low": 1,
+    "pct_high": 0
+   },
+   {
+    "key": "Chinese | gemini-3.1-flash-lite→gemini-3.1-flash-lite",
+    "n": 1,
+    "mean_agreement": 0.0289,
+    "median_agreement": 0.0285,
+    "pct_low": 1,
+    "pct_high": 0
+   }
+  ]
+ },
+ "rows_jsonl": "scripts/eval/results/revision-agreement-corpus-2026-08-03.jsonl",
+ "regressions_report": "scripts/eval/results/revision-agreement-regressions-2026-08-03.md",
+ "elapsed_s": 1202
+}

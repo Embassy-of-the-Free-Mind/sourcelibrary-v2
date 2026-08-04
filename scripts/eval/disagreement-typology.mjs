@@ -35,6 +35,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { classifyPair } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -161,18 +162,27 @@ async function main() {
   const db = c.db('bookstore');
   const pages = db.collection('pages'), revs = db.collection('page_revisions');
 
-  const cur = revs.find({ field: 'ocr' }, { projection: { page_id: 1, data: 1 }, limit: 14000 })
+  const cur = revs.find({ field: 'ocr' }, { projection: { page_id: 1, data: 1, source: 1 }, limit: 14000 })
     .sort({ _id: -1 }).maxTimeMS(180000);
 
   const seen = new Set();
-  const counts = {}; let subs = 0, ins = 0, del = 0, pagesUsed = 0, skippedMisaligned = 0;
+  const counts = {}; let subs = 0, ins = 0, del = 0, pagesUsed = 0, skippedMisaligned = 0, skippedNotComparable = 0;
   const examples = {};
   for await (const r of cur) {
     if (seen.has(r.page_id)) continue;   // newest revision per page only
     seen.add(r.page_id);
     if (pagesUsed >= SAMPLE) break;
-    const p = await pages.findOne({ id: r.page_id }, { projection: { 'ocr.data': 1, book_id: 1, page_number: 1 } });
+    const p = await pages.findOne({ id: r.page_id }, { projection: { 'ocr.data': 1, 'ocr.source': 1, book_id: 1, page_number: 1 } });
     const now = p?.ocr?.data; if (!now || !r.data) continue;
+    // #3473: not every stored revision is a second READ. The e-rara repair sweep
+    // moved text between pages, so its "prior" side is the neighbouring leaf. The
+    // vocabulary gate below would reject most of those anyway — but as a
+    // side-effect of measuring overlap, which means it would also silently accept
+    // one whose neighbour happens to repeat (running heads, index columns).
+    // Reject them by provenance, and count them separately from misalignment.
+    if (!classifyPair({ priorSource: r.source, currentSource: p?.ocr?.source, priorText: r.data, currentText: now }).usable) {
+      skippedNotComparable++; continue;
+    }
     // Latin only, per the header rationale.
     if (!/<language>\s*latin\s*<\/language>/i.test(now)) continue;
 
@@ -220,7 +230,7 @@ async function main() {
   }
 
   const total = subs + ins + del;
-  console.log(`\n  Latin pages with two OCR passes: ${pagesUsed} analysed, ${skippedMisaligned} SKIPPED as misaligned`);
+  console.log(`\n  Latin pages with two OCR passes: ${pagesUsed} analysed, ${skippedMisaligned} SKIPPED as misaligned, ${skippedNotComparable} SKIPPED as not a second read (#3473)`);
   console.log(`  (skipped = the passes share <55% vocabulary or differ >30% in length — structural, not legibility)`);
   console.log(`  word-level operations: ${total}  (substitutions ${subs}, insertions ${ins}, deletions ${del})\n`);
   console.log(`  STRUCTURAL vs READING split:`);

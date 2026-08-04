@@ -142,3 +142,7 @@ scripts/eval/results/ft-enum-*.json
 # for free from Mongo via scripts/eval/revision-agreement-corpus.mjs).
 # The summary JSON + markdown reports beside it ARE committed.
 scripts/eval/results/revision-agreement-corpus-*.jsonl
+
+# Intermediate output of double-ocr-pages.mjs — regenerable, and large.
+scripts/eval/results/*.pass1
+scripts/eval/results/*.checkpoint

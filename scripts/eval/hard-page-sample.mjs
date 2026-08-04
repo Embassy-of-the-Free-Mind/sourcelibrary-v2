@@ -26,9 +26,14 @@
  * #3473 FILTER — MANDATORY on the proven_miss lane. ~40% of `page_revisions`
  * pairs do not read the same image: the #3357 e-rara repair moved `ocr`
  * subdocuments between pages, so the "disagreement" is an administrative
- * artifact replicated across thousands of pages. Pairs whose printed
- * `<page-num>` disagrees are dropped. Without this the "hard" pages are mostly
- * re-archived ones.
+ * artifact replicated across thousands of pages. Without this the "hard" pages
+ * are mostly re-archived ones.
+ *
+ * The filter has TWO halves and this lane long carried only one. Printed
+ * `<page-num>` disagreement catches an unlabelled image swap; the SOURCE label
+ * catches the repair sweep itself, whose moved text often prints the same number
+ * as the page it landed on. Both now come from `scripts/lib/revision-pairs.mjs` —
+ * do not re-implement either here.
  *
  * Blind spot, by construction: this cannot see FABRICATION. Two passes that
  * both recite the same memorized verse agree perfectly and look easy
@@ -44,6 +49,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { classifyPair } from '../lib/revision-pairs.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
   const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true];
@@ -69,10 +75,6 @@ const WARNING_CLASSES = [
 ];
 
 const SPACELESS = /tibet|chinese|japanese|thai|khmer|burmese|lao/i;
-const pageNum = t => {
-  const m = (t || '').match(/<page-num>\s*([0-9]{1,4})\s*<\/page-num>/i);
-  return m ? parseInt(m[1], 10) : null;
-};
 const plain = t => (t || '').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 const words = t => plain(t).split(' ').filter(Boolean);
 
@@ -202,7 +204,7 @@ async function main() {
   const revs = await db.collection('page_revisions').aggregate([
     { $match: { field: 'ocr' } },
     { $sample: { size: REV_SAMPLE } },
-    { $project: { page_id: 1, data: 1 } },
+    { $project: { page_id: 1, data: 1, source: 1 } },
   ], { allowDiskUse: true, maxTimeMS: 600000 }).toArray();
 
   const firstByPage = new Map();
@@ -212,22 +214,27 @@ async function main() {
   for (let i = 0; i < revIds.length; i += 500) {
     const chunk = await db.collection('pages').find(
       { id: { $in: revIds.slice(i, i + 500) } },
-      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, scan_quality: 1,
+      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.source': 1, scan_quality: 1,
                       display_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, crop: 1 } }
     ).maxTimeMS(180000).toArray();
     for (const p of chunk) pageById.set(p.id, p);
   }
 
-  let comparable = 0, shiftDropped = 0;
+  let comparable = 0;
+  const dropped = {};
   for (const [pid, rev] of firstByPage) {
     const p = pageById.get(pid);
     const now = p?.ocr?.data;
     if (!now) continue;
-    const a = pageNum(rev.data), b = pageNum(now);
-    // #3473: both sides must name the SAME printed leaf, or they are not two
-    // reads of one image and the disagreement is meaningless.
-    if (a !== null && b !== null && a !== b) { shiftDropped++; continue; }
-    if (a === null || b === null) continue;   // unverifiable pairing → drop
+    // #3473, both halves, from the shared filter — the source label AND the
+    // printed leaf. The page-number half was inline here and the source half was
+    // missing, so every shift-repair pair (a third of the OCR corpus) still
+    // entered this lane whenever the moved text happened to print the same number.
+    const cls = classifyPair({ priorSource: rev.source, currentSource: p?.ocr?.source, priorText: rev.data, currentText: now });
+    if (!cls.usable) { dropped[cls.reason] = (dropped[cls.reason] || 0) + 1; continue; }
+    // Stricter than `usable` on purpose: this lane claims a page is PROVABLY hard,
+    // so an unverifiable pairing is not good enough evidence.
+    if (cls.leaf !== 'same') { dropped.unverified_leaf = (dropped.unverified_leaf || 0) + 1; continue; }
     comparable++;
 
     const wOld = words(rev.data), wNew = words(now);
@@ -247,7 +254,9 @@ async function main() {
       add('degenerate_output', p, 'proven_miss', 'one pass degenerated, the other did not');
     }
   }
-  console.log(`    ${comparable.toLocaleString()} comparable pairs, ${shiftDropped.toLocaleString()} dropped as page-number shifts (#3473)`);
+  console.log(`    ${comparable.toLocaleString()} comparable pairs; dropped: ` +
+    (Object.entries(dropped).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v.toLocaleString()}`).join(', ') || 'none') +
+    ' (#3473)');
 
   // ------------------------------------------------------- book enrichment
   const allBookIds = new Set();
