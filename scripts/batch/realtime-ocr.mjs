@@ -15,6 +15,13 @@
  *   --status=STATUS    Filter by pipeline_auto.status (e.g. archive_complete, ocr_complete)
  *   --provider=NAME    Filter by image_source.provider (e.g. ia, gallica, efm)
  *   --offset=N         Skip first N eligible pages (for splitting across machines)
+ *   --page-ids-file=F  Re-OCR an EXPLICIT list of page ids from a JSON file.
+ *                      Accepts a bare array of ids, or objects carrying
+ *                      `page_id` under `confirmed` / `suspected` / `pages`.
+ *                      Replaces the targeting filters (the caller has already
+ *                      decided) but keeps the usual image requirement, revision
+ *                      snapshot and concurrency. Written for #3562: pages whose
+ *                      text was transcribed from a wrongly cropped image.
  *
  * Control options:
  *   --limit=N          Max pages to process (default: 2000)
@@ -22,6 +29,7 @@
  *   --dry-run          Show what would be processed, don't call Gemini
  */
 
+import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -44,6 +52,7 @@ const hasFlag = (name) => args.includes(`--${name}`);
 const MAX_PAGES = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '30', 10);
 const DRY_RUN = hasFlag('dry-run');
+const PAGE_IDS_FILE = getArg('page-ids-file');
 const SINGLE_BOOK = getArg('book-id');
 const OFFSET = parseInt(getArg('offset') || '0', 10);
 const PIPELINE_STATUS = getArg('status');
@@ -468,7 +477,21 @@ async function main() {
     const pageFilter = {};
     if (bookIds) pageFilter.book_id = { $in: bookIds };
 
-    if (targetMode === 'no-ocr') {
+    // An explicit id list REPLACES the targeting filters: the caller already
+    // decided which pages need work. The image requirement below still applies.
+    let explicitIds = null;
+    if (PAGE_IDS_FILE) {
+      const raw = JSON.parse(fs.readFileSync(PAGE_IDS_FILE, 'utf8'));
+      const collect = (v) => (Array.isArray(v) ? v.map((x) => (typeof x === 'string' ? x : x?.page_id)).filter(Boolean) : []);
+      explicitIds = [...new Set([...collect(raw), ...collect(raw.confirmed), ...collect(raw.suspected), ...collect(raw.pages)])];
+      pageFilter.id = { $in: explicitIds };
+      delete pageFilter.book_id;
+      console.log(`Explicit page list: ${explicitIds.length} ids from ${PAGE_IDS_FILE}`);
+    }
+
+    if (explicitIds) {
+      // no OCR-state predicate — the list is the decision
+    } else if (targetMode === 'no-ocr') {
       pageFilter.$or = [
         { 'ocr.data': { $exists: false } },
         { 'ocr.data': '' },
