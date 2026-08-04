@@ -11,8 +11,20 @@ import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
 
-// Page types where the entire "translation" is AI-generated description (no original text)
-const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'frontispiece', 'illustration', 'cover', 'map', 'diagram', 'musical-score', 'table']);
+/**
+ * Page types where the entire "translation" is AI-generated description (no
+ * original text).
+ *
+ * EXPORTED so `tests/unit/page-type-vocabulary.test.ts` can check it against the
+ * OCR prompt. These two lists drifted apart silently: `cover`, `musical-score`
+ * and `table` were handled here while the prompt never offered them, so the OCR
+ * could not emit them and all three sat at ZERO pages corpus-wide (#3591
+ * follow-up). Kircher's *Musurgia Universalis* — 748 pages, much of it engraved
+ * music — had every score page typed `text`, so it was translated as prose and
+ * rendered without this branch. A reader branch for a value the writer cannot
+ * produce is dead by construction, and nothing reports it.
+ */
+export const DESCRIPTION_ONLY_PAGE_TYPES = new Set(['blank', 'frontispiece', 'illustration', 'cover', 'map', 'diagram', 'musical-score', 'table']);
 
 interface NotesRendererProps {
   text: string;
