@@ -231,6 +231,48 @@ stored prompt only partly controls it. Settling it means re-reading each page
 with **its own** prompt version (the `prompts` collection stores them); until
 that runs, treat the 2.3× as suggestive, not established.
 
+## What the loop actually measured: instability by language
+
+The point of the metric, finally pointed at the question it was built for. True
+repeats only — same leaf, same model, same prompt, maintenance rows excluded —
+from `revision-agreement-corpus-2026-08-02.jsonl`. Free, already computed.
+
+| language | n | median | unstable (<0.85) | bad (<0.5) |
+|---|---|---|---|---|
+| English | 13,102 | 1.000 | 2.3% | 0.3% |
+| German | 19,081 | 0.998 | 4.4% | 0.4% |
+| French | 3,961 | 0.997 | 8.0% | 0.1% |
+| Latin | 17,114 | 0.982 | 15.5% | 0.9% |
+| Italian | 391 | 0.963 | 22.8% | 0.3% |
+| Greek | 2,516 | 0.983 | 23.3% | **7.8%** |
+| Arabic | 243 | 0.793 | **59.7%** | **12.3%** |
+| Persian | 274 | 0.808 | **70.1%** | 5.1% |
+
+**Arabic and Persian are an order of magnitude less stable than English or
+German.** Greek looks fine by median and has the second-worst outright-failure
+rate — a reminder to read more than one column.
+
+**This corrects a framing error made one message earlier.** The re-OCR pairing
+run (above) found 70.4% of *untouched* space-less control pages scoring as
+"mispaired", and that was written off as "the instrument does not work on this
+material". Wrong: for the PAIRING question a high baseline does destroy the
+signal, but instability *is* the quality measurement, so the same number is a
+finding rather than a failure. Two questions, one metric, opposite readings —
+name which one you are asking before interpreting the number.
+
+**And the corpus cannot answer it for Tibetan.** There are only **82 space-less
+true-repeat pairs** in all 61,640: those pages are rarely read twice under one
+model and prompt, and many are filtered as degenerate loops. So the paid re-OCR
+run — 81 pages per arm, prompt drift and all — is the *better* Tibetan evidence,
+not the discarded one. Where a free corpus is thin, a small paid probe is not a
+second-best.
+
+Caveats. These are **stability, not accuracy**: a model that is consistently
+wrong scores perfectly (see the memorisation result). And Latin's 15.5% against
+German's 4.4% may be **material rather than language** — Latin holdings skew
+older and harder — which this cut cannot separate without matching on year and
+scan quality.
+
 ## Why the loop matters more than the fix
 
 Five claims in this work were wrong and each was caught by the same move —
