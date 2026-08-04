@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug } from '@/lib/library-partners';
+import { canonicalHoldingLibrary } from '@/lib/holding-library';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import LibrarySchema from '@/components/seo/LibrarySchema';
 
@@ -196,11 +197,13 @@ async function fetchLibraryData(
     return data;
   }, null as { contributing_library: string | null }[] | null);
 
+  // Same screen-and-merge as the /libraries directory — otherwise a provider's
+  // own name and placeholder values head its list of contributing institutions.
   const contribCounts = new Map<string, number>();
   for (const row of (contribData || [])) {
-    if (row.contributing_library) {
-      contribCounts.set(row.contributing_library, (contribCounts.get(row.contributing_library) || 0) + 1);
-    }
+    const name = canonicalHoldingLibrary(row.contributing_library);
+    if (!name) continue;
+    contribCounts.set(name, (contribCounts.get(name) || 0) + 1);
   }
   const contributingLibraries = [...contribCounts.entries()]
     .map(([name, count]) => ({ name, count }))

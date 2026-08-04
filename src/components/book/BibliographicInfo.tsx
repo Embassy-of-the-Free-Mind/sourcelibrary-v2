@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
 import { getEffectiveByline } from '@/lib/byline';
+import { holdingLibraryName } from '@/lib/holding-library';
 
 const FIELD_LABELS: Record<string, string> = {
   display_title: 'Display Title',
@@ -512,10 +513,10 @@ export default function BibliographicInfo({
                     <span className="text-stone-200">{book.image_source.digitized_by}</span>
                   </div>
                 )}
-                {book.image_source.contributing_library && (
+                {holdingLibraryName(book.image_source) && (
                   <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">Provided by:</span>
-                    <span className="text-stone-200">{book.image_source.contributing_library}</span>
+                    <span className="text-stone-500 w-24 flex-shrink-0">Held by:</span>
+                    <span className="text-stone-200">{holdingLibraryName(book.image_source)}</span>
                   </div>
                 )}
                 {book.image_source.sponsor && (

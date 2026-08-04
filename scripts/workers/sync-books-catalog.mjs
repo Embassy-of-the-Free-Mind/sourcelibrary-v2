@@ -17,6 +17,31 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { holdingLibraryName } from '../lib/holding-library.mjs';
+
+/**
+ * Which custodian to ship to Supabase.
+ *
+ * TWO fields hold a contributing library and they disagree. The legacy
+ * top-level `books.contributing_library` is coarse — usually the PROVIDER
+ * ("Internet Archive", "e-rara (Swiss Electronic Library)") — while
+ * `image_source.contributing_library` names the institution that actually
+ * holds the volume. This mapping used to prefer the top-level one, so 6,931
+ * visible books shipped "Internet Archive" to the catalog while the record
+ * knew "Cornell University Library", and /libraries listed the host as its
+ * single largest contributing institution.
+ *
+ * Prefer the specific field, fall back to the legacy one (3,889 books have
+ * only that), and screen both through the shared resolver so placeholders and
+ * non-libraries never reach the catalog at all. See src/lib/holding-library.ts.
+ */
+function bestContributingLibrary(book) {
+  return (
+    holdingLibraryName(book.image_source) ||
+    holdingLibraryName({ contributing_library: book.contributing_library }) ||
+    null
+  );
+}
 
 // Locally-sourced .env.production.local values can carry a literal "\n"
 // suffix (vercel env pull escaping — same footgun as the R2 vars, #3000).
@@ -103,7 +128,7 @@ function transformBook(book) {
     collections: Array.isArray(book.collections) ? book.collections : [],
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
-    contributing_library: book.contributing_library || book.image_source?.contributing_library || null,
+    contributing_library: bestContributingLibrary(book),
     // Book detail fields (for serving /book/[id] from Supabase)
     summary_text: extractSummaryText(book),
     publisher: book.publisher || null,

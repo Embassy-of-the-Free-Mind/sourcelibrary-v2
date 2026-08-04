@@ -4,6 +4,8 @@ Every OCR transcription, translation, summary, index, chapter extraction, and im
 
 > **Last full audit:** 2026-05-05. See `.claude/handoffs/2026-05-05-provenance-audit.md` for the audit report and the gaps closed.
 
+> **Scope — there are TWO provenance layers.** This document covers the **AI-output** layer: what a model produced, from which prompt, when. The sibling layer is **bibliographic provenance** (`books.field_provenance`) — where a book's *title, author, year, publisher and holding library* came from. That layer backs every citation the library makes and is rendered to readers; it is documented in §10 below. The two are independent: a page can have flawless prompt provenance while the book's year is an unattributed guess.
+
 ## The Provenance Chain
 
 ```
@@ -392,3 +394,46 @@ console.assert(rows[0].triggered_by, 'no triggered_by');
 console.assert(rows[0].book_id, 'no book_id');
 console.assert(rows[0].prompt_version, 'no prompt_version');
 ```
+
+## 10. Bibliographic Provenance (`books.field_provenance`)
+
+The other half. Where the sections above answer *"what did the model produce, from which prompt"*, this answers *"where did this bibliographic claim come from"* — title, author, year, publisher, place, holding library. It is the provenance behind every citation, and `BibliographicInfo.tsx` renders it to readers.
+
+It is a much younger system than the AI chain and was undocumented until 2026-07-30 (#3445, follow-up #3471).
+
+### The write rule
+
+> Any code path that writes a bibliographic field on `books` MUST stamp it via `provenanceUpdate()` — in the **same** update as the value.
+
+`src/lib/field-provenance.ts` (scripts twin: `scripts/lib/field-provenance.mjs`, regenerate with `scripts/lib/regen-field-provenance-twin.py`):
+
+```javascript
+const prov = provenanceUpdate('contributing_library', {
+  source: 'ia_metadata_harvest',                 // required
+  script: 'scripts/maintenance/harvest-holding-libraries.mjs',
+  method: 'archive.org/metadata contributor',
+  previous_value: book.image_source?.contributing_library ?? null,  // required; null is a valid answer, absence is not
+});
+await books.updateOne({ _id }, {
+  $set: { 'image_source.contributing_library': next, updated_at: new Date(), ...prov.$set },
+  $push: prov.$push,   // append-only field_provenance_history
+});
+```
+
+Never write the value and the stamp in two operations — the second can fail, and a stamp describing a value it did not produce is worse than no stamp. Note `updated_at`: without it the write never reaches Supabase and no reader ever sees it (see `.claude/docs/supabase.md`, Known Sync Gap A).
+
+### Why the discipline matters here specifically
+
+**A wrong stamp is worse than a missing one** — it reads as authority and stops anyone looking. Measured 2026-07-30 across 19,420 visible books: 1,124 asserted `method: 'ia_metadata'` while storing "Internet Archive" as the holding library, a value IA's contributor field never returns for a library-scanned book. The records looked sourced, which is plausibly why that placeholder problem survived four months undetected.
+
+When a stamp's true provenance is **unrecoverable**, mark it `disputed` with a reason rather than inventing a plausible source. The audit counts disputed separately from still-asserting claims, so honest remediation moves the number instead of looking permanently broken.
+
+### Auditing
+
+```bash
+set -a; source .env.production.local; set +a
+node scripts/audit/field-provenance.mjs           # coverage / shape / contradicted / history
+node scripts/audit/field-provenance.mjs --strict  # non-zero on unmarked contradictions
+```
+
+Baseline at first audit (2026-07-30): 92.5% of visible books carried some stamp, but per field most values were unattributed — `published` 78.1% unprovenanced, `title`/`author` 74.1%, `contributing_library` 52.7%. Of 134,488 stamps written by **81 independent writers**, there were 164 distinct key-shapes; only 23.7% named their script and 16.1% recorded `previous_value`. Migrating the remaining writers to the helper is tracked in #3471.

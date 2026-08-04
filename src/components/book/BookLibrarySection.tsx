@@ -14,6 +14,13 @@ export interface LibrarySectionData {
   logo?: string;
   stats: { books: number; languages: number; translated: number };
   covers: Array<{ slug: string; title: string; thumbnail?: string }>;
+  /**
+   * The library holding the physical original, when it is a different
+   * institution from the provider (an IA book scanned from Fisher — University
+   * of Toronto). Absent whenever the provider is its own custodian, which is
+   * most of them. See src/lib/holding-library.ts.
+   */
+  holdingLibrary?: string;
 }
 
 const fmt = (n: number) => n.toLocaleString('en-US');
@@ -57,8 +64,18 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
           {/* Text side */}
           <div className="min-w-0">
             <div className="uppercase text-[11px] font-medium tracking-[0.16em] mb-3" style={{ color: '#8a8170' }}>From the collection of</div>
-            <h2 className="font-display font-medium text-[26px] md:text-[34px] leading-[1.08] mb-4" style={{ color: '#2b2620' }}>{data.name}</h2>
-            <p className="text-[14.5px] md:text-[15.5px] leading-relaxed mb-6 max-w-[54ch]" style={{ color: '#5c5546' }}>{data.description}</p>
+            {/* The custodian of the physical volume gets the headline; the
+                platform that scanned and hosts it gets the line beneath, which
+                also owns the description, stats and button below (they describe
+                the provider's holdings, not the custodian's). */}
+            <h2 className="font-display font-medium text-[26px] md:text-[34px] leading-[1.08] mb-2" style={{ color: '#2b2620' }}>{data.holdingLibrary || data.name}</h2>
+            {data.holdingLibrary && (
+              <p className="text-[13.5px] md:text-[14px] mb-4" style={{ color: '#8a8170' }}>
+                Digitized and hosted by{' '}
+                <Link href={`/libraries/${data.slug}`} className="underline underline-offset-2 transition-colors hover:text-[#a5503d]" style={{ color: '#6b6456' }}>{data.name}</Link>
+              </p>
+            )}
+            <p className={`text-[14.5px] md:text-[15.5px] leading-relaxed mb-6 max-w-[54ch] ${data.holdingLibrary ? '' : 'mt-4'}`} style={{ color: '#5c5546' }}>{data.description}</p>
 
             {/* A small heading makes clear these counts are what Source Library
                 holds from this library — not the library's total collection. */}
