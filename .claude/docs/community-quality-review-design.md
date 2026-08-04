@@ -1,9 +1,11 @@
 # Community quality review — design
 
 Status: **proposal, nothing built.** Written 2026-08-02 from a conversation with
-Derek about volunteer management. Read `.claude/docs/newsletter-queue.md` item 2
-alongside it — the volunteer letter is the recruiting instrument for this, and it
-should not go out until at least Phase 0 below exists.
+Derek about volunteer management; decisions on credit, payment, Spanish and
+abstention added 2026-08-04 (see "Decisions" at the end). Read
+`.claude/docs/newsletter-queue.md` item 2 alongside it — the volunteer letter is
+the recruiting instrument for this, and it should not go out until at least
+Phase 0 below exists.
 
 ## The problem, and the leverage
 
@@ -149,6 +151,13 @@ notes:   free text (optional)
 spans:   [{ quote, comment }]  (optional)
 ```
 
+A review row may instead carry **no verdict at all** — see the abstention
+section below. `passed_reason` and `verdict` are mutually exclusive, and any
+rate or agreement statistic must filter to rows that actually carry a verdict.
+(The `volunteer_ratings` table learned this the same way: `rating` is nullable
+so a note can arrive without one, and every statistic filters
+`rating IS NOT NULL`.)
+
 - **material_error** must be defined concretely or the scale drifts between
   reviewers: changes the sense, omits content that is present, or adds content
   that is not.
@@ -164,9 +173,11 @@ longer exists — the same paired-artifact failure as #3362 and #3368, in a new
 place.
 
 Proposed storage: a `page_reviews` collection — `page_id`, `book_id`,
-`reviewer_user_id`, `lane`, `assignment_id` (null for stream), `verdict`,
-`notes`, `spans`, `language`, `text_version`, `created_at`. Reviews never
-directly mutate public text; they are evidence, and a human applies fixes.
+`reviewer_user_id`, `lane`, `assignment_id` (null for stream), `verdict`
+(nullable), `passed_reason` (nullable), `notes`, `spans`, `language`,
+`text_version`, `created_at`. Exactly one of `verdict` / `passed_reason` is set.
+Reviews never directly mutate public text; they are evidence, and a human
+applies fixes.
 
 ## What we can and cannot say publicly
 
@@ -204,18 +215,102 @@ existing 32.
 
 **Phase 3.** A public statistics page, and per-reviewer readouts.
 
-## Open questions for Derek
+## Abstention — the reviewer must be able to say "not me"
 
-1. **Credit.** Named on a public methods/statistics page? Acknowledged in a
-   paper? For academics this is the actual compensation and it should be decided
-   before recruiting, not after.
-2. **Payment.** Is the panel paid? It is a defined piece of work and paying for
-   it is defensible. Needs an explicit yes before anything spends.
-3. **Who answers.** Every lane creates replies. The programme dies the first
-   month nobody responds, exactly as the standing offers have gone unanswered.
-4. **Spanish.** Five of the nine existing volunteers wrote in Spanish and one
-   said they do not read English. Does the review UI need Spanish, or only the
-   letter?
+Decided 2026-08-04. A reviewer handed a page in a language they do not read needs
+a way out, and **it must not be the `not_assessable` verdict.**
+
+Those are different objects:
+
+- `not_assessable` is a property of the **page** — blank, illegible, image
+  mismatch.
+- "I don't read Greek" is a property of the **reviewer–page pairing**.
+
+Conflating them corrupts the corpus statistic in the direction that flatters
+nobody: a Latinist reaching for `not_assessable` on a Greek page records that
+*the page* cannot be judged, which is false, and deflates the measured quality of
+a stratum for reasons that have nothing to do with the corpus. Same denominator
+error as the `reading_history` "62% came back" figure, in a new place.
+
+So: a **pass** action, stored as an assignment outcome rather than a verdict,
+which returns the page to the pool for someone else. Capture the reason —
+`not_my_language` / `not_my_period` / `cannot_read_scan` / `no_time`. The third
+is a page property wearing a reviewer's clothes and routes to repair; capture
+time is the only chance to tell them apart.
+
+### The incentive this creates, given credit-without-payment
+
+**Volume-based credit + no payment + an easy pass button = an incentive to
+guess.** If someone is named for reviewing N pages and a pass does not count
+toward N, the rational move for a person who wants the credit is to judge pages
+they cannot read — fabricating anchors into the one dataset whose entire value is
+that it is ground truth.
+
+Therefore: **credit attaches to completing a round, not to page count, and an
+abstention counts as participation.** This is not a nicety; it is what stops the
+compensation model from corrupting the measurement.
+
+### Abstention is data, and belongs in the paper
+
+- **Report coverage per stratum as a first-class number.** A stratum with 40%
+  abstention has a narrower effective reviewer population than its `n` suggests.
+- **Characterise the missingness, do not merely count it** (Rubin's
+  MCAR/MAR/MNAR). If reviewers abstain more on hard or degraded pages, the
+  retained sample is systematically easier and "% faithful" is optimistically
+  biased. This is cheaply testable: compare the machine cross-pass agreement
+  distribution of abstained vs completed pages. That agreement number already
+  exists for every page, so the instrument that detects the bias is free.
+- **The abstention pattern is the paper's own thesis replicated on the human
+  side.** If Latin draws twenty reviewers and Tibetan draws none, that is the
+  same ground-truth scarcity the memorization paper documents for machine
+  benchmarks. Report it as a finding, exactly as the scorecard reports the
+  zero-spaceless-anchor gap rather than laundering it.
+
+### Prior work to cite rather than re-derive
+
+- **Chow (1970)**, classification with a reject option — abstention buys accuracy
+  on retained decisions at the cost of coverage. Always report both.
+- **Rubin (1976)**, missing-data mechanisms — why the question is *which*
+  missingness, not *how much*.
+- **Dawid & Skene (1979)** — EM estimation of true labels *and* per-annotator
+  error rates from multiple noisy raters. The canonical answer to "we cannot
+  verify that someone reads Latin": infer competence from agreement instead of
+  trusting the declaration.
+- **MACE (Hovy et al. 2013)** — models annotators answering without looking.
+  This is what catches 40 pages in 90 seconds.
+- **Krippendorff's α, not Cohen's κ.** With abstention the coverage matrix is
+  ragged by construction, and α is the coefficient that tolerates missing data
+  and any number of raters. Not a stylistic preference.
+- **Artstein & Poesio (2008)** — standard IAA reference, including why raw
+  agreement flatters when one category dominates. Most pages will be fine, so
+  raw agreement will look excellent and mean little.
+
+In-repo precedent to copy rather than reinvent:
+`scripts/analysis/ft-rater-reliability.mjs` already separates **reliability**
+(chance-corrected agreement, by rater *family*, because the same model resampled
+shares its blind spot) from **validity** (accuracy against checkable gold), and
+warns that high agreement under shared bias is the trap. Same structure applies
+here.
+
+## Decisions (2026-08-04)
+
+1. **Credit — YES.** Contributors named on a public methods/statistics page and
+   acknowledged in the paper. Authorship is reserved for design and analysis
+   contributions; state that boundary in the recruiting letter rather than
+   negotiating it afterwards. Credit is per completed round, per the incentive
+   argument above.
+2. **Payment — NO.** The panel is unpaid. This makes the credit design
+   load-bearing rather than decorative, and it is why abstention must count as
+   participation.
+3. **Spanish — YES, and in the review UI, not only the letter.** 43 of 163
+   volunteers named Spanish and one said they do not read English. Honest caveat
+   to carry: reviewing a Spanish→English translation requires *both* languages,
+   so a Spanish UI serves Spanish-source review specifically — it does not make
+   Spanish speakers available for the whole corpus.
+4. **Who answers replies — STILL OPEN.** This is the one that kills programmes.
+   Every lane generates replies, and the standing offers already died of silence
+   once (132 signups, 0 ratings, all `contacted: false`). Assign a person before
+   the letter goes out.
 
 ## Risks
 
