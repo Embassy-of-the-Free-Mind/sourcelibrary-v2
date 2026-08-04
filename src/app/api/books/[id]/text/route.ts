@@ -19,8 +19,13 @@ import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '
 // the quote API uses; the materialized chapter text has wrappers baked in, so
 // stripping must happen here at read time. See CLAUDE.md "Quote & snippet
 // integrity" (#2232) and #2822 audit.
+// `keepTables` because this route serves a page's WHOLE text for reuse, not an
+// excerpt: flattening a GFM table keeps every cell value but discards the column
+// it belonged to, so a wide calendar/abjad table (40% of pages in some
+// manuscripts) arrives as unrecoverable runs of bare digits. Snippet surfaces
+// still flatten — see stripEditorialWrappers' options doc.
 function cleanText(text: string | undefined | null): string {
-  return text ? stripEditorialWrappers(text).trim() : '';
+  return text ? stripEditorialWrappers(text, { keepTables: true }).trim() : '';
 }
 
 export const maxDuration = 30;

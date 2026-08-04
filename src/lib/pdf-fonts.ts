@@ -30,6 +30,8 @@ export interface PdfFontSet {
   regular: Buffer | null;
   bold: Buffer | null;
   italic: Buffer | null;
+  /** Noto Naskh Arabic — Noto Serif has NO Arabic glyphs (see registerPdfFonts). */
+  arabic: Buffer | null;
 }
 
 let cached: PdfFontSet | null = null;
@@ -50,6 +52,7 @@ export function loadPdfFonts(): PdfFontSet {
     regular: readBundledFont('NotoSerif-Regular.ttf'),
     bold: readBundledFont('NotoSerif-Bold.ttf'),
     italic: readBundledFont('NotoSerif-Italic.ttf'),
+    arabic: readBundledFont('NotoNaskhArabic-Regular.ttf'),
   };
   return cached;
 }
@@ -59,6 +62,8 @@ export interface PdfFontNames {
   regular: string;
   bold: string;
   italic: string;
+  /** null when no Arabic face is bundled — never silently a Latin face. */
+  arabic: string | null;
 }
 
 /**
@@ -72,9 +77,14 @@ export function registerPdfFonts(doc: PDFKit.PDFDocument): PdfFontNames {
   if (fonts.regular) doc.registerFont('SL-Body', fonts.regular);
   if (fonts.bold) doc.registerFont('SL-Body-Bold', fonts.bold);
   if (fonts.italic) doc.registerFont('SL-Body-Italic', fonts.italic);
+  if (fonts.arabic) doc.registerFont('SL-Arabic', fonts.arabic);
   return {
     regular: fonts.regular ? 'SL-Body' : 'Times-Roman',
     bold: fonts.bold ? 'SL-Body-Bold' : 'Times-Bold',
     italic: fonts.italic ? 'SL-Body-Italic' : 'Times-Italic',
+    // null (not a Latin fallback) when the TTF is missing — the caller must be
+    // able to tell "no Arabic face available" from "here is a face", because
+    // rendering Arabic through Noto Serif produces .notdef boxes, not text.
+    arabic: fonts.arabic ? 'SL-Arabic' : null,
   };
 }

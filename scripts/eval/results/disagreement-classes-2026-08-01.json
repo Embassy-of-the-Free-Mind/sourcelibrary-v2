@@ -1,0 +1,317 @@
+{
+ "date": "2026-08-01",
+ "sampled": 305,
+ "pool": 6420,
+ "classes": [
+  {
+   "class": "local substitution — same words, same order, glyph-level differences",
+   "n": 205,
+   "share": 67.2,
+   "median_agreement": 0.789,
+   "median_bag": 0.763,
+   "median_seq": 0.81,
+   "examples": [
+    {
+     "book": "historia-plantarum-vol-ii-ray",
+     "language": "Latin",
+     "page_number": 634,
+     "agreement": 0.7931,
+     "bag": 0.662,
+     "seq": 0.794,
+     "words": [
+      676,
+      675
+     ],
+     "reader_url": "https://sourcelibrary.org/book/historia-plantarum-vol-ii-ray/page/6958e0d19659a6529d577538"
+    },
+    {
+     "book": "historia-plantarum-vol-iii-ray",
+     "language": "Latin",
+     "page_number": 788,
+     "agreement": 0.7787,
+     "bag": 0.643,
+     "seq": 0.778,
+     "words": [
+      471,
+      477
+     ],
+     "reader_url": "https://sourcelibrary.org/book/historia-plantarum-vol-iii-ray/page/6958e0d49659a6529d5779cd"
+    },
+    {
+     "book": "ornithologiae-de-avibus-historiae-libri-xii-aldrovandi",
+     "language": "Latin",
+     "page_number": 823,
+     "agreement": 0.7455,
+     "bag": 0.614,
+     "seq": 0.731,
+     "words": [
+      464,
+      498
+     ],
+     "reader_url": "https://sourcelibrary.org/book/ornithologiae-de-avibus-historiae-libri-xii-aldrovandi/page/6958e964813ea03889c3299e"
+    },
+    {
+     "book": "quadrupedum-omnium-bisulcorum-historia-aldrovandi",
+     "language": "Latin",
+     "page_number": 799,
+     "agreement": 0.8244,
+     "bag": 0.827,
+     "seq": 0.854,
+     "words": [
+      731,
+      758
+     ],
+     "reader_url": "https://sourcelibrary.org/book/quadrupedum-omnium-bisulcorum-historia-aldrovandi/page/6958e96c813ea03889c32f16"
+    }
+   ]
+  },
+  {
+   "class": "mixed — partial overlap, no dominant mode",
+   "n": 61,
+   "share": 20,
+   "median_agreement": 0.603,
+   "median_bag": 0.523,
+   "median_seq": 0.602,
+   "examples": [
+    {
+     "book": "theologia-naturalis-vol-i-wolff",
+     "language": "Latin",
+     "page_number": 839,
+     "agreement": 0.7431,
+     "bag": 0.586,
+     "seq": 0.736,
+     "words": [
+      212,
+      210
+     ],
+     "reader_url": "https://sourcelibrary.org/book/theologia-naturalis-vol-i-wolff/page/6954354a1479a63c1108c0f2"
+    },
+    {
+     "book": "quadrupedum-omnium-bisulcorum-historia-aldrovandi",
+     "language": "Latin",
+     "page_number": 866,
+     "agreement": 0.6987,
+     "bag": 0.591,
+     "seq": 0.681,
+     "words": [
+      851,
+      826
+     ],
+     "reader_url": "https://sourcelibrary.org/book/quadrupedum-omnium-bisulcorum-historia-aldrovandi/page/6958e96c813ea03889c32f59"
+    },
+    {
+     "book": "avicenna-s-canon-of-medicine-13th-century-latin-ms-cremona",
+     "language": "Latin",
+     "page_number": 938,
+     "agreement": 0.6779,
+     "bag": 0.577,
+     "seq": 0.66,
+     "words": [
+      720,
+      737
+     ],
+     "reader_url": "https://sourcelibrary.org/book/avicenna-s-canon-of-medicine-13th-century-latin-ms-cremona/page/69b3f78da107e55a0ee1e0ad"
+    },
+    {
+     "book": "sacred-art-of-the-philosophers-greek-alchemical-anthology-various",
+     "language": "Greek",
+     "page_number": 567,
+     "agreement": 0.5532,
+     "bag": 0.529,
+     "seq": 0.63,
+     "words": [
+      219,
+      209
+     ],
+     "reader_url": "https://sourcelibrary.org/book/sacred-art-of-the-philosophers-greek-alchemical-anthology-various/page/69b4c04d978ca9526eda362e"
+    }
+   ]
+  },
+  {
+   "class": "omission — one side has substantially more text",
+   "n": 17,
+   "share": 5.6,
+   "median_agreement": 0.402,
+   "median_bag": 0.348,
+   "median_seq": 0.226,
+   "examples": [
+    {
+     "book": "vat-gr-244-aristotle",
+     "language": "Greek",
+     "page_number": 1309,
+     "agreement": 0.1572,
+     "bag": 0.137,
+     "seq": 0.125,
+     "words": [
+      536,
+      226
+     ],
+     "reader_url": "https://sourcelibrary.org/book/vat-gr-244-aristotle/page/6993838c50654cbbe29175e2"
+    },
+    {
+     "book": "nicene-and-post-nicene-fathers-series-2-vol-1-eusebius-eds",
+     "language": "English",
+     "page_number": 215,
+     "agreement": 0.79,
+     "bag": 0.518,
+     "seq": 0.89,
+     "words": [
+      1215,
+      648
+     ],
+     "reader_url": "https://sourcelibrary.org/book/nicene-and-post-nicene-fathers-series-2-vol-1-eusebius-eds/page/69ad6a635e7e0803b48e6565"
+    },
+    {
+     "book": "reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner",
+     "language": "German",
+     "page_number": -39,
+     "agreement": 0.4532,
+     "bag": 0.423,
+     "seq": 0.442,
+     "words": [
+      534,
+      263
+     ],
+     "reader_url": "https://sourcelibrary.org/book/reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner/page/69b4193d2b0edf3eaa2df1e3"
+    },
+    {
+     "book": "reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner",
+     "language": "German",
+     "page_number": -123,
+     "agreement": 0.4475,
+     "bag": 0.423,
+     "seq": 0.432,
+     "words": [
+      227,
+      116
+     ],
+     "reader_url": "https://sourcelibrary.org/book/reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner/page/69b4193d2b0edf3eaa2df237"
+    }
+   ]
+  },
+  {
+   "class": "REORDERING — same words, different sequence",
+   "n": 15,
+   "share": 4.9,
+   "median_agreement": 0.427,
+   "median_bag": 0.977,
+   "median_seq": 0.422,
+   "examples": [
+    {
+     "book": "ortus-sanitatis-meydenbach",
+     "language": "English",
+     "page_number": 801,
+     "agreement": 0.5399,
+     "bag": 0.942,
+     "seq": 0.581,
+     "words": [
+      185,
+      186
+     ],
+     "reader_url": "https://sourcelibrary.org/book/ortus-sanitatis-meydenbach/page/6958e850538549809db822b5"
+    },
+    {
+     "book": "ante-nicene-fathers-vol-3-tertullian-eds",
+     "language": "English",
+     "page_number": 193,
+     "agreement": 0.4198,
+     "bag": 0.977,
+     "seq": 0.394,
+     "words": [
+      722,
+      721
+     ],
+     "reader_url": "https://sourcelibrary.org/book/ante-nicene-fathers-vol-3-tertullian-eds/page/69ad65870b6018c6ed178f2b"
+    },
+    {
+     "book": "nicene-and-post-nicene-fathers-series-1-vol-1-augustine-ed",
+     "language": "English",
+     "page_number": 254,
+     "agreement": 0.3163,
+     "bag": 0.99,
+     "seq": 0.339,
+     "words": [
+      1659,
+      1659
+     ],
+     "reader_url": "https://sourcelibrary.org/book/nicene-and-post-nicene-fathers-series-1-vol-1-augustine-ed/page/69ad6a525e7e0803b48e6108"
+    },
+    {
+     "book": "viridarium-sacrae-ac-profanae-eruditionis-mendoca",
+     "language": "Latin",
+     "page_number": 308,
+     "agreement": 0.2937,
+     "bag": 0.625,
+     "seq": 0.25,
+     "words": [
+      793,
+      772
+     ],
+     "reader_url": "https://sourcelibrary.org/book/viridarium-sacrae-ac-profanae-eruditionis-mendoca/page/69b51dc7768235dc65987d6d"
+    }
+   ]
+  },
+  {
+   "class": "divergent content — the two passes share few words",
+   "n": 7,
+   "share": 2.3,
+   "median_agreement": 0.123,
+   "median_bag": 0.174,
+   "median_seq": 0.149,
+   "examples": [
+    {
+     "book": "hebrew-kabbalistic-collection-17th-18th-century-ms-various",
+     "language": "German",
+     "page_number": -84,
+     "agreement": 0.2822,
+     "bag": 0.21,
+     "seq": 0.149,
+     "words": [
+      134,
+      108
+     ],
+     "reader_url": "https://sourcelibrary.org/book/hebrew-kabbalistic-collection-17th-18th-century-ms-various/page/69b418ae2b0edf3eaa2dd9fe"
+    },
+    {
+     "book": "bodleian-library-ms-barocci-29-anonymous",
+     "language": "Greek",
+     "page_number": 633,
+     "agreement": 0.1712,
+     "bag": 0.243,
+     "seq": 0.306,
+     "words": [
+      109,
+      121
+     ],
+     "reader_url": "https://sourcelibrary.org/book/bodleian-library-ms-barocci-29-anonymous/page/69bfcc988ab50eb88e8c5802"
+    },
+    {
+     "book": "bodleian-library-ms-barocci-241-anonymous",
+     "language": "Greek",
+     "page_number": 537,
+     "agreement": 0.2027,
+     "bag": 0.261,
+     "seq": 0.216,
+     "words": [
+      380,
+      360
+     ],
+     "reader_url": "https://sourcelibrary.org/book/bodleian-library-ms-barocci-241-anonymous/page/69bfccdf8ab50eb88e8c6e65"
+    },
+    {
+     "book": "tikun-shetarot-anonymous",
+     "language": "Hebrew",
+     "page_number": 105,
+     "agreement": 0.0644,
+     "bag": 0.079,
+     "seq": 0.064,
+     "words": [
+      282,
+      295
+     ],
+     "reader_url": "https://sourcelibrary.org/book/tikun-shetarot-anonymous/page/69c1bc148522835be8461688"
+    }
+   ]
+  }
+ ]
+}

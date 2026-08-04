@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
@@ -251,11 +252,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? formatAuthor(byline.displayName).name || byline.displayName
     : formatAuthor(book.author).name || book.author;
   const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
+  // `published` is FREE TEXT and ~23% of it is not a year — QuickStatements
+  // tails, "Unknown", century labels. buildSeoTitle/buildSeoDescription
+  // interpolate `year` raw, so sanitize before it reaches them (#3307).
+  const displayYear = displayPublished(book.published);
 
   // SEO/AI-O title + description rules — see src/lib/book-seo.ts.
   // Lead with the original-language title (book.title, the catalogue/citation
   // standard); byline is already life-date-stripped by formatAuthor.
-  const seoTitle = buildSeoTitle({ originalTitle: book.title, authorLabel: bylineLabel, year: book.published });
+  const seoTitle = buildSeoTitle({ originalTitle: book.title, authorLabel: bylineLabel, year: displayYear });
   const ogTitle = seoTitle;
   // Unique description from the real per-book summary, with an HONEST translation
   // claim (never the old blanket "English translation" that mislabelled originals).
@@ -280,7 +285,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = buildSeoDescription({
     originalTitle: book.title,
     authorLabel: bylineLabel,
-    year: book.published,
+    year: displayYear,
     language: book.language,
     summary: summaryText,
     isFirstTranslation: book.is_first_translation,
@@ -310,7 +315,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'citation_author': bylineLabel,
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
   };
-  if (book.published) scholarMeta['citation_publication_date'] = book.published;
+  // Only a bare year may be asserted here. A century or range is real knowledge
+  // but not a publication date, and this field cannot express the hedge —
+  // emitting nothing beats fabricating a precision the source never had.
+  const citeYear = citationYear(book.published);
+  if (citeYear) scholarMeta['citation_publication_date'] = citeYear;
   if (book.language) scholarMeta['citation_language'] = book.language;
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;

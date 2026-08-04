@@ -110,6 +110,25 @@ function shuffle(arr) {
   return arr;
 }
 
+/**
+ * Pages a volunteer must never be shown.
+ *
+ * A NEGATIVE `page_number` is a soft-hide (see the page-image field notes): the
+ * page is deliberately not reachable in the reader, usually an un-split spread
+ * superseded by its two halves. Its `page_link` resolves to `/page/-111`, a
+ * dead URL — so the "click to open the actual page" affordance is broken, and
+ * any judgment collected is about a page no reader will ever see. Measured
+ * before this filter: 7.5% of the scan-quality pool, 3.7% of hallucination.
+ *
+ * `archived-spread` is the same story from the other side: the spread is kept
+ * for provenance but the halves are what readers get.
+ */
+function isUnshowable(p) {
+  if (typeof p.page_number !== 'number' || p.page_number < 0) return true;
+  if (p.page_type === 'archived-spread') return true;
+  return false;
+}
+
 function imageUrlFor(p, bookId) {
   return (
     p.archived_photo ||
@@ -175,8 +194,34 @@ async function main() {
         .toArray();
       shuffle(rows);
 
-      for (const g of rows) {
-        if (collected.length >= TARGET) break;
+      /* Bias toward the CONTESTED band, which is the whole point of asking a
+         human. The 0.7 display cutoff means images scored 0.5-0.85 are where a
+         human judgment can actually change what the gallery shows; an image at
+         0.95 is one everybody agrees on, and rating it teaches us nothing.
+         The old per-request route drew 70% from that band. When this builder
+         replaced it the bias was lost — the route comment claimed it "now
+         lives in the builder" while the builder just took everything >= 0.4,
+         and the resulting pool came out 34% at >= 0.85.
+
+         Fill the contested band to quota FIRST, then top up from the rest.
+         Ordering the array and iterating once is not enough: the per-book cap
+         skips a large share of the prefix, so the tail silently backfills with
+         uncontested images (measured 42.5% contested when we tried that). */
+      const CONTESTED_SHARE = 0.7;
+      const contestedTarget = Math.round(TARGET * CONTESTED_SHARE);
+      const inContested = g => g.gallery_quality >= 0.5 && g.gallery_quality < 0.85;
+      const passes = [
+        { rows: rows.filter(inContested), limit: contestedTarget },
+        { rows: rows.filter(g => !inContested(g)), limit: TARGET },
+        { rows: rows.filter(inContested), limit: TARGET }, // top up if the band ran dry
+      ];
+
+      for (const pass of passes) {
+      for (const g of pass.rows) {
+        if (collected.length >= Math.min(pass.limit, TARGET)) break;
+        // Soft-hidden pages (negative page_number) link to a dead /page/-111
+        // URL, same as in the pages lane — see isUnshowable().
+        if (typeof g.page_number !== 'number' || g.page_number < 0) continue;
         const taken = perBookCount.get(g.book_id) ?? 0;
         if (taken >= PER_BOOK) continue;
         perBookCount.set(g.book_id, taken + 1);
@@ -208,6 +253,7 @@ async function main() {
           gold_answer: null,
           created_at: new Date(),
         });
+      }
       }
       booksScanned = perBookCount.size;
     }
@@ -254,6 +300,7 @@ async function main() {
       let takenFromBook = 0;
       for (const p of pageDocs) {
         if (takenFromBook >= PER_BOOK || collected.length >= TARGET) break;
+        if (isUnshowable(p)) continue;
 
         const pageLink = `https://sourcelibrary.org/book/${book.slug || book.id}/page/${p.page_number}`;
         const bookMeta = {

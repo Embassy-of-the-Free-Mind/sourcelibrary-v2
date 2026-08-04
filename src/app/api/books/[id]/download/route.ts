@@ -18,7 +18,9 @@ import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
-import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf } from '@/lib/pdf-export';
+import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
+import { pipeTableToHtml } from '@/lib/markdown-table-html';
+import { streamOrdered } from '@/lib/ordered-stream';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -234,6 +236,9 @@ function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
     if (block.startsWith('<h')) {
       return block;
     }
+    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
+    const table = pipeTableToHtml(block);
+    if (table) return table;
     // Replace single newlines with breaks within paragraphs
     block = block.replace(/\n/g, '<br/>');
     return `<p>${block}</p>`;
@@ -248,6 +253,19 @@ function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
 
 // Custom CSS for EPUB styling
 const EPUB_CSS = `
+table.page-table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.85em;
+  width: 100%;
+}
+table.page-table th, table.page-table td {
+  border: 1px solid #ccc;
+  padding: 0.25em 0.4em;
+  text-align: left;
+  vertical-align: top;
+}
+table.page-table th { background: #f2f0ec; font-weight: bold; }
 body {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.6;
@@ -1010,6 +1028,43 @@ async function fetchPageImagesOrdered(
   return results;
 }
 
+/**
+ * Ordered image fetch that yields each page AS IT ARRIVES, keeping only a
+ * bounded look-ahead window resident.
+ *
+ * `fetchPageImagesOrdered()` above awaits EVERY image before returning, which
+ * gives the streamed PDF two problems that only appear at real book sizes
+ * (measured on a 366-page book, #3597):
+ *
+ *  - Nothing is written for the whole fetch (231s locally). The response
+ *    "streams", but the producer blocks before emitting a body, so the
+ *    connection sits silent and Cloudflare's ~100s window kills it long before
+ *    `maxDuration` would.
+ *  - Every compressed image is resident at once (74MB), and peak RSS hit 707MB
+ *    against Vercel's 1024MB default. 6,987 visible books are LARGER than that
+ *    test book, so this is the common case, not the tail.
+ *
+ * Yielding in order with a `lookahead` cap fixes both: the first page is
+ * written as soon as one image lands, and at most `lookahead` buffers are held.
+ * Each yielded buffer is dropped from the window so it can be collected once
+ * the caller has embedded it.
+ */
+async function* streamPageImagesOrdered(
+  validPages: Page[],
+): AsyncGenerator<{ page: Page; imageBuffer: Buffer | null }> {
+  const stream = streamOrdered(
+    validPages,
+    page => {
+      const url = pageExportImageUrl(page);
+      return url ? fetchAndCompressImage(url) : Promise.resolve(null);
+    },
+    { concurrency: 8, lookahead: 12 },
+  );
+  for await (const { item, value } of stream) {
+    yield { page: item, imageBuffer: value };
+  }
+}
+
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -1338,7 +1393,7 @@ function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocu
       if (!text) continue;
 
       writePdfPageHeading(doc, fonts, page.page_number);
-      doc.font(fonts.regular).fontSize(11).text(text, { lineGap: 3 });
+      writePdfBody(doc, fonts, text, { fontSize: 11, lineGap: 3 });
       doc.moveDown(0.8);
     }
 
@@ -1360,12 +1415,25 @@ function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocu
   return doc;
 }
 
+/**
+ * Budget for the image phase, in ms. `maxDuration` on this route is 300s; we
+ * stop ADDING pages at 210s so there is room to finish the page in hand, write
+ * the truncation notice and the colophon, and flush.
+ *
+ * A big book cannot be served whole in one request (a 4,198-page book would
+ * need ~40 minutes of fetching), so the choice is between an opaque timeout and
+ * an honest partial edition. Per CLAUDE.md "no silent caps": if coverage is
+ * bounded, say what was dropped — here in the PDF itself, so the artifact
+ * carries its own provenance rather than relying on a header nobody reads.
+ */
+const FACSIMILE_IMAGE_BUDGET_MS = 210_000;
+
 // Generate facsimile PDF: title page, then per book page a "PAGE N" heading,
 // the page scan image, and the translation text flowing beneath it (onto
 // continuation pages as needed — pdfkit auto-paginates flowing text). Reuses
 // pageExportImageUrl() (canonical split-page-aware resolver) and
-// fetchPageImagesOrdered() (bounded concurrency) exactly like the facsimile
-// EPUB above. Streamed the same way as generatePdfTranslationStream.
+// streamPageImagesOrdered() (bounded look-ahead, yields as images arrive).
+// Streamed the same way as generatePdfTranslationStream.
 function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
   const now = new Date().toISOString().split('T')[0];
   const { doc, fonts } = createPdfDocument(book);
@@ -1381,13 +1449,22 @@ function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocume
       now,
     });
 
-    console.log(`Fetching ${validPages.length} images for pdf-facsimile (streaming)...`);
-    const pageImages = await fetchPageImagesOrdered(validPages);
+    console.log(`Streaming ${validPages.length} images for pdf-facsimile...`);
+    const startedAt = Date.now();
+    let written = 0;
+    let translated = 0;
+    let truncated = false;
 
     const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
     const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
 
-    for (const { page, imageBuffer } of pageImages) {
+    for await (const { page, imageBuffer } of streamPageImagesOrdered(validPages)) {
+      if (Date.now() - startedAt > FACSIMILE_IMAGE_BUDGET_MS) {
+        truncated = true;
+        break;
+      }
+      written++;
+      if (page.translation?.data) translated++;
       doc.addPage();
       writePdfPageHeading(doc, fonts, page.page_number);
 
@@ -1408,17 +1485,46 @@ function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocume
         const text = cleanTranslationForPdf(page.translation.data, book.id);
         if (text) {
           doc.moveDown(0.5);
-          doc.font(fonts.regular).fontSize(10.5).text(text, { lineGap: 3 });
+          writePdfBody(doc, fonts, text, { fontSize: 10.5, lineGap: 3 });
         }
       }
+    }
+
+    if (truncated) {
+      const firstMissing = validPages[written]?.page_number;
+      doc.addPage();
+      doc.font(fonts.bold).fontSize(14).text('This edition is incomplete', { align: 'center' });
+      doc.moveDown(1);
+      doc.font(fonts.regular).fontSize(11).text(
+        [
+          `This facsimile stops at page ${validPages[written - 1]?.page_number ?? written} of `
+          + `${validPages.length}. It was not truncated for editorial reasons: a single request `
+          + 'cannot fetch and lay out every page scan of a book this large within the time '
+          + 'available, so generation stopped rather than failing outright.',
+          '',
+          firstMissing !== undefined
+            ? `Pages from ${firstMissing} onward are not included here. They are all readable `
+              + `at ${BASE_URL}/book/${book.id}, and the text-only PDF and EPUB editions cover `
+              + 'the whole book.'
+            : '',
+          '',
+          'If you need the complete facsimile as a single file, please get in touch — we would '
+          + 'rather generate it for you offline than hand you a partial edition without saying so.',
+        ].filter(Boolean).join('\n'),
+        { lineGap: 3 },
+      );
+      console.warn(
+        `pdf-facsimile truncated: ${written}/${validPages.length} pages for book ${book.id} `
+        + `after ${Date.now() - startedAt}ms`,
+      );
     }
 
     doc.addPage();
     writePdfColophon(doc, fonts, book, {
       baseUrl: BASE_URL,
       now,
-      contentLabel: 'facsimile edition',
-      translatedCount: pageImages.filter(p => p.page.translation?.data).length,
+      contentLabel: truncated ? 'partial facsimile edition' : 'facsimile edition',
+      translatedCount: translated,
       totalCount: pages.length,
     });
 

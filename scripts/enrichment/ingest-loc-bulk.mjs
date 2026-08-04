@@ -45,8 +45,18 @@
  * WHAT COUNTS AS AN ENGLISH TRANSLATION
  * -------------------------------------
  * MARC `041$h` present (language of the original — a cataloguer's explicit
- * assertion that this item renders something from another language) AND the
- * item's own language is English (`041$a` or the 008 language position 35-37).
+ * assertion that this item renders something from another language) AND English
+ * appearing among the item's OWN languages (any `041$a`, or the 008 language
+ * position 35-37).
+ *
+ * ⚠️ "among" is load-bearing (#3556). This used to read only the FIRST `041$a`
+ * and require it to start with `eng`. MARC lists an item's languages in order of
+ * PREDOMINANCE, so a facing-page scholarly edition names the ancient language
+ * first — and `$a lat $a eng`, plus the concatenated `$a lateng`, were both
+ * rejected outright. That silently discarded the whole Loeb / I Tatti /
+ * Dumbarton Oaks class, i.e. the main vehicle for scholarly English translations
+ * of exactly the works this set exists to check. A bilingual edition IS an
+ * English translation — arguably the most citable kind.
  *
  * Usage:
  *   node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --out ./loc-bulk
@@ -58,6 +68,7 @@ import path from 'path';
 import zlib from 'zlib';
 import readline from 'readline';
 import { spawnSync } from 'child_process';
+import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
 
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
@@ -146,15 +157,53 @@ function extractVernacular(rec) {
   return out;
 }
 
+/**
+ * Every language code in which this item's own text appears.
+ *
+ * MARC 041$a lists the languages of the item **in order of predominance**, and it
+ * does so in two encodings that both occur in this dump: repeated subfields
+ * (`$a lat $a eng`) and a single concatenated run of 3-letter codes
+ * (`$a lateng`). Fixed-width chunking handles both.
+ *
+ * THIS IS WHY IT MATTERS (#3556). The previous test read only the FIRST $a and
+ * asked `startsWith('eng')`. A facing-page scholarly edition puts the ancient
+ * language first, because the ancient text is the primary content — so
+ * `$a lat $a eng` and `$a lateng` were BOTH rejected outright. That is the
+ * Loeb / I Tatti / Dumbarton Oaks / Clay Sanskrit form: the dominant vehicle for
+ * scholarly English translations of exactly the classical and early-modern works
+ * this reference set exists to check. Caplan's Loeb *Ad Herennium* returned zero
+ * rows; Lemay's *Women's Secrets* was absent.
+ *
+ * The bug's signature survived in the extract it produced: 4,622 rows passed
+ * carrying a multi-language item code (424 distinct forms — `engsan`, `englat`,
+ * `engfre`…) purely because `eng` happened to be listed first. The mirror
+ * population was discarded silently.
+ */
+export function itemLanguages(rec, f008 = controlField(rec, '008')) {
+  const fromSubfields = subfieldValues(rec, '041', 'a')
+    .flatMap((v) => (v.toLowerCase().replace(/[^a-z]/g, '').match(/.{1,3}/g) ?? []))
+    .filter((c) => c.length === 3);
+  if (fromSubfields.length) return [...new Set(fromSubfields)];
+  const fallback = (f008.slice(35, 38) || '').toLowerCase().trim();
+  return fallback ? [fallback] : [];
+}
+
 /** Extract the reference-set row, or null if this record is not an English translation. */
-export function extractEnglishTranslation(rec) {
-  if (!rec.includes('tag="041"')) return null;
+export function extractEnglishTranslation(rec, reject = () => {}) {
+  if (!rec.includes('tag="041"')) { reject('no_041'); return null; }
   const originalLangs = subfieldValues(rec, '041', 'h');
-  if (!originalLangs.length) return null;
+  if (!originalLangs.length) { reject('no_041h'); return null; }
 
   const f008 = controlField(rec, '008');
-  const itemLang = (subfieldValues(rec, '041', 'a')[0] || f008.slice(35, 38) || '').toLowerCase().trim();
-  if (!itemLang.startsWith('eng')) return null;
+  const itemLangs = itemLanguages(rec, f008);
+  // The item must contain English SOMEWHERE. A bilingual edition is still an
+  // English translation — arguably the most citable kind, since the reader can
+  // check it against the original on the facing page.
+  if (!itemLangs.includes('eng')) {
+    reject('item_not_english', itemLangs.join('+') || '(none)');
+    return null;
+  }
+  const itemLang = itemLangs.join('');
 
   const year = ((subfieldValues(rec, '264', 'c')[0]
     || subfieldValues(rec, '260', 'c')[0]
@@ -172,7 +221,15 @@ export function extractEnglishTranslation(rec) {
     extent: decode(subfieldValues(rec, '300', 'a')[0] || ''),
     publisher: decode(subfieldValues(rec, '264', 'b')[0] || subfieldValues(rec, '260', 'b')[0] || ''),
     original_languages: originalLangs,
+    // Kept for compatibility with the existing extract's shape; `item_languages`
+    // is the honest field. A consumer needs the distinction: a row that is
+    // ['eng'] is a standalone English translation, while ['lat','eng'] is a
+    // facing-page edition — which bears on the completeness screen in the demote
+    // packet, where "is this a complete rendering" reads differently for a
+    // bilingual critical edition than for a trade translation.
     item_language: itemLang,
+    item_languages: itemLangs,
+    bilingual: itemLangs.length > 1,
     subjects: subfieldValues(rec, '650', 'a').concat(subfieldValues(rec, '600', 'a')).map(decode).slice(0, 8),
     source: 'loc_mdsconnect',
     snapshot: SNAPSHOT,
@@ -188,8 +245,29 @@ async function processPart(gzPath, outPath) {
   });
 
   let buf = '';
-  const stats = { records: 0, with_041h: 0, english_translations: 0, with_uniform_title: 0, with_lccn: 0 };
+  const stats = { records: 0, with_041h: 0, english_translations: 0, with_uniform_title: 0, with_lccn: 0, bilingual: 0 };
   const originalLangTally = {};
+  /**
+   * WHAT THE FILTER THREW AWAY, and why this is not optional bookkeeping.
+   *
+   * #3556 — the item-language test rejected every facing-page bilingual edition
+   * for two years' worth of runs, and it was invisible because this script
+   * reported only what it KEPT. The raw dump is deleted after extraction, so the
+   * discarded population could not be counted after the fact either: the only
+   * evidence of the blind spot was an absence nobody could measure.
+   *
+   * A filter that reports only its survivors cannot be audited. This tally is the
+   * fix for the CLASS, where the one-line change above is the fix for the
+   * instance.
+   */
+  const rejects = { no_041: 0, no_041h: 0, item_not_english: 0 };
+  const rejectedItemLangs = {};
+  const onReject = (reason, detail) => {
+    rejects[reason] = (rejects[reason] || 0) + 1;
+    if (reason === 'item_not_english' && detail) {
+      rejectedItemLangs[detail] = (rejectedItemLangs[detail] || 0) + 1;
+    }
+  };
 
   for await (const line of rl) {
     buf += line + '\n';
@@ -199,17 +277,18 @@ async function processPart(gzPath, outPath) {
     stats.records++;
 
     if (rec.includes('tag="041"') && subfieldValues(rec, '041', 'h').length) stats.with_041h++;
-    const row = extractEnglishTranslation(rec);
+    const row = extractEnglishTranslation(rec, onReject);
     if (!row) continue;
 
     stats.english_translations++;
     if (row.uniform_title) stats.with_uniform_title++;
     if (row.lccn) stats.with_lccn++;
+    if (row.bilingual) stats.bilingual++;
     for (const l of row.original_languages) originalLangTally[l] = (originalLangTally[l] || 0) + 1;
     out.write(JSON.stringify(row) + '\n');
   }
   await new Promise((res) => out.end(res));
-  return { stats, originalLangTally };
+  return { stats, originalLangTally, rejects, rejectedItemLangs };
 }
 
 /**
@@ -258,12 +337,31 @@ async function download(url, dest) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Only run the ingest when this file is EXECUTED, never when it is imported.
+ *
+ * The extractor functions above are unit-tested (#3556,
+ * tests/unit/loc-bulk-item-language.test.ts), and without this guard importing
+ * them runs the whole pipeline as a side effect — which on a machine with no
+ * extract present means a unit test silently downloads a ~70MB MARC part from
+ * loc.gov. Fast and invisible locally where the parts already exist; a surprise
+ * network fetch inside CI.
+ */
+const IS_MAIN = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (IS_MAIN) {
+  await main();
+}
+
+async function main() {
 const parts = parseParts(argOf('--parts'));
 fs.mkdirSync(OUT_DIR, { recursive: true });
 console.log(`LoC MDSConnect ${SNAPSHOT} — ${parts.length} part(s) → ${OUT_DIR}\n`);
 
-const totals = { records: 0, with_041h: 0, english_translations: 0, with_uniform_title: 0, with_lccn: 0 };
+const totals = { records: 0, with_041h: 0, english_translations: 0, with_uniform_title: 0, with_lccn: 0, bilingual: 0 };
 const langTotals = {};
+const rejectTotals = { no_041: 0, no_041h: 0, item_not_english: 0 };
+const rejectedLangTotals = {};
 const failedParts = [];
 
 for (const p of parts) {
@@ -285,11 +383,13 @@ for (const p of parts) {
       await download(`${BASE}.part${pp}.xml.gz`, gz);
     }
     process.stdout.write(`  part${pp}  extracting…`);
-    const { stats, originalLangTally } = await processPart(gz, jsonl);
+    const { stats, originalLangTally, rejects, rejectedItemLangs } = await processPart(gz, jsonl);
     if (!KEEP_GZ) fs.rmSync(gz, { force: true });
 
     for (const k of Object.keys(totals)) totals[k] += stats[k];
     for (const [l, n] of Object.entries(originalLangTally)) langTotals[l] = (langTotals[l] || 0) + n;
+    for (const [k, n] of Object.entries(rejects)) rejectTotals[k] = (rejectTotals[k] || 0) + n;
+    for (const [l, n] of Object.entries(rejectedItemLangs)) rejectedLangTotals[l] = (rejectedLangTotals[l] || 0) + n;
     console.log(` ${stats.records} records → ${stats.english_translations} English translations`);
   } catch (err) {
     failedParts.push({ part: pp, error: err.message });
@@ -309,6 +409,27 @@ console.log('  ...with an LCCN       :', totals.with_lccn.toLocaleString(),
   totals.english_translations ? `(${((totals.with_lccn / totals.english_translations) * 100).toFixed(1)}%)` : '');
 console.log('  ...with a 240 uniform title:', totals.with_uniform_title.toLocaleString(),
   totals.english_translations ? `(${((totals.with_uniform_title / totals.english_translations) * 100).toFixed(1)}%)` : '');
+
+console.log('  ...bilingual (facing-page):', totals.bilingual.toLocaleString(),
+  totals.english_translations ? `(${((totals.bilingual / totals.english_translations) * 100).toFixed(1)}%)` : '');
+
+// ── WHAT THE FILTER DISCARDED ───────────────────────────────────────────────
+// #3556. This block is the fix for the CLASS; the item-language change is the
+// fix for the instance. The bilingual bug survived every previous run because
+// this script reported only its survivors, and the raw dump is deleted after
+// extraction — so the discarded population could not be counted afterwards
+// either. A filter that never reports its rejects cannot be audited, and its
+// blind spot is indistinguishable from the world simply not containing the thing.
+console.log('\n─── Rejected (what this filter can NOT see) ──────────────────');
+console.log('  no 041 field at all   :', rejectTotals.no_041.toLocaleString());
+console.log('  041 but no $h original:', rejectTotals.no_041h.toLocaleString());
+console.log('  item not in English   :', rejectTotals.item_not_english.toLocaleString());
+const topRejected = Object.entries(rejectedLangTotals).sort((a, b) => b[1] - a[1]).slice(0, 15);
+if (topRejected.length) {
+  console.log('\n  item-language codes most often rejected — any of these containing a');
+  console.log('  language we translate FROM is a bilingual edition class worth checking:');
+  for (const [l, n] of topRejected) console.log(`    ${l.padEnd(14)} ${String(n).padStart(8)}`);
+}
 
 const topLangs = Object.entries(langTotals).sort((a, b) => b[1] - a[1]).slice(0, 30);
 console.log('\n  original languages (top 30):');
@@ -357,4 +478,5 @@ if (LOAD) {
     }
     console.log(`Loaded ${loaded} rows into reference_translations.`);
   });
+}
 }

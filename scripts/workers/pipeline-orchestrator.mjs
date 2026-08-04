@@ -2852,8 +2852,28 @@ async function run() {
         // A book is archive-complete when every page has either archived_photo or cropped_photo on R2.
         // Use pages_count as the target (avoids slow full-collection scans).
         const totalPages = book.pages_count || 0;
-        const coveredPages = archivedPages + croppedPages; // May double-count, but that's fine (>= is the check)
+        // A page carrying BOTH archived_photo and cropped_photo is counted twice here,
+        // so coveredPages can exceed the number of pages actually covered and drive
+        // `remaining` to 0 while real pages still lack an archive. Observed on the small
+        // idp_dunhuang books: pages_count 4, archived 2, cropped 4 -> covered 6 >= 4 ->
+        // marked complete with 2 pages unarchived. Subtract the overlap.
+        const bothPages = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          archived_photo: { $exists: true, $regex: /^https?:\/\// },
+          cropped_photo: { $exists: true, $nin: [null, ''] },
+        });
+        const coveredPages = archivedPages + croppedPages - bothPages;
         const remaining = Math.max(0, totalPages - coveredPages);
+
+        // NEVER conclude "complete" from an unknown page count. With pages_count 0 or
+        // unset, totalPages is 0, so `remaining` is 0 and the check below marks the book
+        // archive_complete no matter how many unarchived pages it really has — and the
+        // status sticks once pages_count is later filled in by the sync worker. 622 books
+        // currently sit at archive_complete holding 291,310 unarchived pages, and the
+        // zero-page branch is the only path in this function that can produce a book with
+        // ZERO archived pages in that state (11 of 20 sampled). Not knowing the page count
+        // is a reason to skip the book, not to declare it done.
+        if (totalPages <= 0) continue;
 
         // Legacy fallback: for archivable sources, also check the old way
         // (pages from non-archivable sources that were never expected to be archived)

@@ -93,11 +93,20 @@ export function cleanOcrArtifacts(text) {
     .replace(/\\infty(?![a-z])/gi, '∞');
 }
 
-export function stripEditorialWrappers(text) {
+/**
+ * @param {string} text
+ * @param {{ keepTables?: boolean }} [opts] `keepTables: true` leaves GFM tables
+ *   intact. Default (false) flattens them, which is right for snippet/quote
+ *   surfaces but destroys column structure on surfaces that deliver a page's
+ *   WHOLE text for reuse (exports, bulk content API, corpus snapshot). Parity
+ *   with the TS twin (src/lib/strip-editorial-wrappers.ts) — change both together.
+ */
+export function stripEditorialWrappers(text, opts) {
   if (!text) return text;
+  const flattenTables = opts?.keepTables ? (s) => s : flattenMarkdownTables;
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
-      flattenMarkdownTables(
+      flattenTables(
         text
           // `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag — the OCR prompt emits
           // `<image-desc size="..." type="..." significance="...">` on ~0.77% of

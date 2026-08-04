@@ -1,5 +1,6 @@
 import { BASE_URL } from './schema-utils';
 import { buildSameAsArray } from '@/lib/jsonld';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 interface EntitySchemaProps {
   name: string;
@@ -126,7 +127,7 @@ export default function EntitySchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }
