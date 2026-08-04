@@ -55,6 +55,24 @@ const DATE = new Date().toISOString().slice(0, 10);
  * ours. These badges are not defensible and are recommended for demotion.
  */
 const PRIOR = [
+  // ── 2026-08-04 pass: catalogue-backed candidates that had never been read ──
+  // Each names the prior edition the search actually retrieved. Every one is a
+  // work continuously in English long before our translation.
+  ['Organon', 'Aristotle. Owen\'s Bohn "Organon" (1853) is the complete Organon in English.'],
+  ['The Odes of Pindar', 'Pindar. "The odes of Pindar" (1947); English since Moore (1852) and Sandys\' Loeb (1915).'],
+  ['The Tragedies of Sophocles', 'Sophocles. Plumptre, "The tragedies of Sophocles" (1865), complete.'],
+  ['Selected Tragedies of Aeschylus, Sophocles, and Euripides', 'All three tragedians complete in English well before 1863 ("The tragedies of Aeschylus", 1863).'],
+  ['The Complete Works of Plato', 'Plato. Cooper, "Complete works" (1997); Jowett complete from 1871.'],
+  ['The Complete Works of Plato Translated by Marsilio Ficino', 'The WORK is Plato\'s corpus, complete in English (Jowett 1871, Cooper 1997). Ficino\'s Latin is a witness, not a barrier.'],
+  ['De coelesti hierarchia', 'Pseudo-Dionysius. Parker, "The works of Dionysius the Areopagite" (1976 repr.); Luibheid\'s Complete Works (1987).'],
+  ['Pseudo-Dionysius Areopagita Schriften (German 1823)', 'Same work as De coelesti hierarchia — English via Parker and Luibheid.'],
+  ['Anthology of Martial\'s Epigrams', 'Martial. "The epigrams of Martial" (1897); Bohn prose translation earlier still.'],
+  ['Metaphysica / Aristotle, Hebrew translation (Or. 4771)', 'The work is Aristotle\'s Metaphysics — English long established ("The metaphysics", 1991; Ross 1908). The Hebrew is a transmission witness.'],
+  ['Aristotelis Metaphysicorum libri XIV (Bessarion trans.)', 'As above — Bessarion\'s Latin renders a work already complete in English.'],
+  ['On Animals (De Animalibus)', 'Matched 240 "Historia animalium." — Aristotle\'s History of Animals, English from 1862 (Cresswell).'],
+  ['The Soul, or Rational Psychology', 'Swedenborg, Psychologia rationalis → "The soul" (1887).'],
+  ['Timaeus, Asclepius, De deo Socratis, De mundo (VLQ 10)', 'Timaeus complete in English (Cornford, "Plato\'s cosmology", 1937; Jowett earlier); the other three items likewise.'],
+  ['Neyphug Thor bu Legs bshad gser phreng', 'Tsongkhapa. Sparham, "Golden garland of eloquence" (2008) is a complete English rendering of Legs bshad gser phreng.'],
   ['De formula honestae vitae', 'pseudo-Seneca. Whittington\'s "A frutefull worke" (1546) is a complete rendering. 10 duplicate book records carry this badge.'],
   ['De Officiis', 'Cicero. Nicholas Grimald, "Thre bokes of duties" (1556), complete; reprinted 1558.'],
   ['Plutarchi Chaeronensis Moralia', 'Plutarch. 1561 "Three morall treatises" is partial, but Goodwin\'s "Plutarch\'s morals" (1870) is the complete Moralia.'],
@@ -88,7 +106,7 @@ const PRIOR = [
   ['Geography', 'Strabo. Jones\'s complete Loeb Geography (1917-32).'],
   ['De subtilitate', 'Cardano. The 2013 Forrester translation is complete — and predates ours.'],
   ['Logical Works', 'Zabarella. "On methods" (2013) covers the logical works in English.'],
-  ['Timaeus, Asclepius, De deo Socratis, De mundo', 'Plato/Apuleius. Cornford\'s "Plato\'s cosmology" (1937) is a complete Timaeus; the Apuleius texts also have English versions.'],
+  ['Timaeus, Asclepius, De deo Socratis, De mundo (VLQ 10)', 'Plato/Apuleius. Cornford\'s "Plato\'s cosmology" (1937) is a complete Timaeus; the Apuleius texts also have English versions.'],
 ];
 
 /**
@@ -97,11 +115,13 @@ const PRIOR = [
  * re-labelled rather than demoted, and the prior credited.
  */
 const FIRST_COMPLETE = [
+  ['Paracelsus\'s Surgical Books and Writings', 'The catalogued English item is "Selected writings" — an anthology, not the surgical works entire.'],
+  ['Twelve Books of Letters and Lectures', 'Poliziano. The I Tatti "Letters" (2006) is volume one (Books I-IV), not all twelve.'],
   ['Historia Coelestis Britannica Vol. 1', 'The only English item is "The preface to Flamsteed\'s Historia" — a preface, not the work.'],
   ['Historia Coelestis Britannica Vol. 2', 'As Vol. 1 — preface only.'],
   ['Historia Coelestis Britannica Vol. 3', 'As Vol. 1 — preface only.'],
   ['Utriusque Cosmi Historia', '"The temple of music" is one section of Fludd\'s compendium, not the whole.'],
-  ['Servius the Grammarian, Commentaries on the Poems of Virgil', '"Commentary on Book four" is one book of twelve.'],
+  ['Servius the Grammarian, Commentaries on the Poems of Virgil, Vol. III', '"Commentary on Book four" is one book of twelve.'],
   ['Commentary on the Poems of Virgil, Vol. I', 'As above — Book four only.'],
   ['In Vergilii carmina commentarii, Vol. II', 'As above — Book four only.'],
   ['Hydraulic Architecture, Volume One, Part One', '"The mills of Bélidor" is a selection, not the complete Architecture hydraulique.'],
@@ -112,7 +132,7 @@ const FIRST_COMPLETE = [
   ['Optics', 'Witelo. "Perspectivae liber secundus et tertius" is books 2-3 of ten.'],
   ['Margarita philosophica', '"Natural philosophy epitomised" renders part of Reisch, not the whole Margarita.'],
   ['Aristotle with John Philoponus Commentary on Prior Analytics', 'The Aristotle text is long translated; the Philoponus commentary is the untranslated part.'],
-  ['Complete Works of Euclid, Vol. 6 (Optics, Catoptrics)', 'The catalogued item is the ARABIC version of the Optics in English — a different transmission line.'],
+  ['Complete Works of Euclid, Vol. 6 (Optics, Catoptrics, etc.)', 'The catalogued item is the ARABIC version of the Optics in English — a different transmission line.'],
   ['A Little Book on Colors', 'Telesio. "On colours" (2002) — verify whether complete before finalising; provisionally partial.'],
 ];
 
@@ -127,9 +147,10 @@ const NOT_A_PRIOR = [
   ['Introduction à l\'Histoire du Buddhisme Indien', 'Matched "Legends of Indian Buddhism" — a different Burnouf work. (Buffetrille/Lopez translated the Introduction in 2010, so re-check separately.)'],
   ['Adagiorum Desiderii Erasmi Roterodami epitome', 'Matched "The plea of reason, religion and humanity" (1813), which is not the Adagia. Erasmus\'s Adages DO exist in English (CWE 31-36) — re-screen against that, not this record.'],
   ['Roger Bacon Alchemical Compendium', 'Matched a truncated "Bacon :" record with a French source language — not a reliable identification.'],
-  ['Unpublished Works of Roger Bacon (Opus Tertium)', 'As above — the "Bacon :" record is not identifiable as this work.'],
+  ['Unpublished Works of Roger Bacon (Opus Tertium, Opus Minus, Compendium Studii)', 'As above — the "Bacon :" record is not identifiable as this work.'],
   ['The Philosophy of Roger Bacon', 'As above.'],
-  ['Les  fables egyptiennes et grecques dévoilées', 'Matched "An alchemical treatise on the great art" — needs a positive identification before any claim; not established.'],
+  ['Les  fables egyptiennes et grecques dévoilées & réduites au même principe, avec une explication des hiéroglyphes, et de la guerre de Troye / Tome premier.', 'Matched "An alchemical treatise on the great art" — needs a positive identification before any claim; not established.'],
+  ['Les  fables egyptiennes et grecques dévoilées & réduites au même principe, avec une explication des hiéroglyphes, et de la guerre de Troye / Tome second.', 'As Tome premier — not established.'],
 ];
 
 /** Everything else in the inconclusive set stays unresolved pending research. */
@@ -160,6 +181,35 @@ await withMongo(async (db) => {
   console.log(`search_efforts rows: ${all.length} across all generations`);
   console.log(`current generation (latest per book): ${current.length}`);
   console.log(`...of which inconclusive: ${efforts.length}\n`);
+
+  // ── A JUDGEMENT THAT MATCHES NOTHING MUST BE LOUD ────────────────────────
+  //
+  // Decisions are keyed on an EXACT work title. Five of the first sixty were
+  // transcribed from truncated console output — "Complete Works of Euclid,
+  // Vol. 6 (Optics, Catoptrics)" against a real title ending "…, etc.)" — and so
+  // matched no book at all. They were written, reviewed, applied, and silently
+  // did nothing: the books stayed `unresolved` and looked simply unscreened.
+  //
+  // It fails in the safe direction (unresolved blocks `none_found`, so no false
+  // claim), which is exactly why it survived unnoticed — the only cost is real
+  // human judgement quietly discarded. Same shape as every other defect here:
+  // silent, and toward leaving the question open.
+  //
+  // A key that can never be consumed is a bug in this file, so say so.
+  const workKeys = new Set(current.map((e) => e.proposition.match(/of "([^"]+)"/)?.[1]).filter(Boolean));
+  const inert = [...SCREEN_FOR.keys()].filter((k) => !workKeys.has(k));
+  if (inert.length) {
+    console.error(`\n⚠️  ${inert.length} screening decision(s) match NO book in the current generation.`);
+    console.error('   These are inert — the judgement is recorded and will never be applied.');
+    console.error('   Fix the key to the exact `work_title || title`, or remove the entry:\n');
+    for (const k of inert) console.error(`     ${JSON.stringify(k)}`);
+    console.error('');
+    if (APPLY) {
+      throw new Error(`refusing to --apply with ${inert.length} inert decision(s): fix the keys first`);
+    }
+  } else {
+    console.log(`✅ all ${SCREEN_FOR.size} screening decisions match a real work key\n`);
+  }
 
   const tally = { prior: 0, first_complete: 0, not_a_prior: 0, unscreened: 0 };
   const updates = [];
