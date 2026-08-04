@@ -75,6 +75,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
 import { once } from 'node:events';
+import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import { tokenize, ORIGINAL_LANGUAGE_CORPUS } from '../lib/ngram-normalize.mjs';
 
@@ -595,12 +596,22 @@ async function main() {
   // — a global IDF would just rediscover the corpus's language mix.
   if (PHASES.includes('tfidf')) {
     const t0 = Date.now();
-    const tfByBook = new Map();          // book_id -> { corpus, tf: Map, tokens }
-    const dfByCorpus = new Map();        // corpus -> Map(term -> docfreq)
-    const docsByCorpus = new Map();      // corpus -> n books
+    // EMIT → SCORE, the same split build-ngrams.mjs uses, and for the same
+    // reason: holding every book's term map in RAM and writing only at the end
+    // means one dropped connection loses the whole phase. All 8 retries of the
+    // first attempt died that way (querySrv ECONNREFUSED — the SRV lookup for
+    // the Atlas string, i.e. DNS, not Mongo). Per-book counts are appended to
+    // JSONL as they are computed, so a resume costs the last chunk. Scoring then
+    // runs offline over that file: two cheap passes, no network.
+    const COUNTS = path.join(OUT_DIR, 'tfidf-counts.jsonl');
+    const ckT = readCkpt('tfidf');
+    const tStart = ckT?.next_book_index || 0;
+    if (tStart) log(`  resuming tfidf from book ${tStart.toLocaleString()}/${scoped.length.toLocaleString()} (appending counts)`);
+    else if (fs.existsSync(COUNTS)) fs.unlinkSync(COUNTS);
+    const countsOut = fs.createWriteStream(COUNTS, { flags: tStart ? 'a' : 'w' });
 
-    let done = 0;
-    for (let i = 0; i < scoped.length; i += BOOK_CHUNK) {
+    let done = tStart;
+    for (let i = tStart; i < scoped.length; i += BOOK_CHUNK) {
       const chunk = scoped.slice(i, i + BOOK_CHUNK);
       const keys = chunk.flatMap(keysOf);
       // Two-step read. Only ~60 of a book's ~390 OCR'd pages are sampled, so
@@ -666,15 +677,35 @@ async function main() {
         }
         if (!tokens) continue;
         const id = b.id || String(b._id);
-        tfByBook.set(id, { corpus, tf, tokens, pages_sampled: sample.length, title: b.display_title || b.title, author: b.author });
-        if (!dfByCorpus.has(corpus)) { dfByCorpus.set(corpus, new Map()); docsByCorpus.set(corpus, 0); }
-        const df = dfByCorpus.get(corpus);
-        docsByCorpus.set(corpus, docsByCorpus.get(corpus) + 1);
-        for (const t of tf.keys()) df.set(t, (df.get(t) || 0) + 1);
+        if (!countsOut.write(JSON.stringify({
+          book_id: id, corpus, tokens, pages_sampled: sample.length,
+          title: b.display_title || b.title, author: b.author,
+          tf: Object.fromEntries(tf),
+        }) + '\n')) await once(countsOut, 'drain');
       }
       done += chunk.length;
-      if (done % 200 < BOOK_CHUNK) log(`  tfidf: ${done.toLocaleString()}/${scoped.length.toLocaleString()} books · ${tfByBook.size.toLocaleString()} with text`);
+      writeCkpt('tfidf', { next_book_index: i + BOOK_CHUNK });
+      if (done % 200 < BOOK_CHUNK) log(`  tfidf: ${done.toLocaleString()}/${scoped.length.toLocaleString()} books emitted`);
     }
+
+    await new Promise(r => countsOut.end(r));
+    clearCkpt('tfidf');
+
+    // ── score (offline, two passes over the JSONL) ────────────────
+    // Pass 1: document frequency per corpus. Pass 2: score each book against it.
+    // Only the df maps live in RAM, never every book's full term map.
+    const dfByCorpus = new Map(), docsByCorpus = new Map();
+    const streamCounts = async (fn) => {
+      const rl = readline.createInterface({ input: fs.createReadStream(COUNTS), crlfDelay: Infinity });
+      for await (const line of rl) { if (line.trim()) await fn(JSON.parse(line)); }
+    };
+    await streamCounts(rec => {
+      if (!dfByCorpus.has(rec.corpus)) { dfByCorpus.set(rec.corpus, new Map()); docsByCorpus.set(rec.corpus, 0); }
+      const df = dfByCorpus.get(rec.corpus);
+      docsByCorpus.set(rec.corpus, docsByCorpus.get(rec.corpus) + 1);
+      for (const t of Object.keys(rec.tf)) df.set(t, (df.get(t) || 0) + 1);
+    });
+    log(`  tfidf: df built over ${[...docsByCorpus.values()].reduce((a, b) => a + b, 0).toLocaleString()} books, ${dfByCorpus.size} corpora`);
 
     const vocab = new Csv(path.join(OUT_DIR, 'tfidf_vocab.csv'), ['corpus', 'term', 'doc_freq', 'n_docs', 'idf']);
     for (const [corpus, df] of dfByCorpus) {
@@ -689,11 +720,12 @@ async function main() {
     const terms = new Csv(path.join(OUT_DIR, 'book_terms.csv'), [
       'book_id', 'title', 'author', 'corpus', 'rank', 'term', 'tf', 'tf_rel', 'doc_freq', 'idf', 'tfidf', 'tokens_sampled', 'pages_sampled',
     ]);
-    for (const [id, rec] of tfByBook) {
+    let scoredBooks = 0;
+    await streamCounts(async (rec) => {
       const df = dfByCorpus.get(rec.corpus);
       const N = docsByCorpus.get(rec.corpus);
       const scored = [];
-      for (const [term, tf] of rec.tf) {
+      for (const [term, tf] of Object.entries(rec.tf)) {
         const d = df.get(term) || 1;
         if (d < TFIDF_MIN_DF) continue;
         if (TFIDF_MAX_DF < 1 && d / N > TFIDF_MAX_DF) continue;
@@ -703,18 +735,19 @@ async function main() {
       let rank = 0;
       for (const s of scored.slice(0, TFIDF_TOP)) {
         await terms.row({
-          book_id: id, title: rec.title, author: rec.author, corpus: rec.corpus, rank: ++rank,
+          book_id: rec.book_id, title: rec.title, author: rec.author, corpus: rec.corpus, rank: ++rank,
           term: s.term, tf: s.tf, tf_rel: +(s.tf / rec.tokens).toFixed(6), doc_freq: s.d,
           idf: +s.idf.toFixed(5), tfidf: +s.tfidf.toFixed(8),
           tokens_sampled: rec.tokens, pages_sampled: rec.pages_sampled,
         });
       }
-    }
+      scoredBooks++;
+    });
     manifest.rows.book_terms = await terms.close();
-    manifest.rows.tfidf_books = tfByBook.size;
+    manifest.rows.tfidf_books = scoredBooks;
     manifest.corpora = Object.fromEntries([...docsByCorpus].map(([c, n]) => [c, n]));
     manifest.timings.tfidf = +((Date.now() - t0) / 1000).toFixed(1);
-    log(`book_terms.csv → ${manifest.rows.book_terms.toLocaleString()} rows over ${tfByBook.size.toLocaleString()} books (${manifest.timings.tfidf}s)`);
+    log(`book_terms.csv → ${manifest.rows.book_terms.toLocaleString()} rows over ${scoredBooks.toLocaleString()} books (${manifest.timings.tfidf}s)`);
   }
 
   manifest.timings.total = +((Date.now() - t00) / 1000).toFixed(1);

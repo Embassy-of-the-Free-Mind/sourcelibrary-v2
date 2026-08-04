@@ -162,6 +162,56 @@ high-IDF. Latin and English look clean; German is the worst case. `doc_freq`,
 `n_docs` and `tf` are all emitted so any other weighting can be recomputed
 downstream, and `--tfidf-max-df` exists if it bites.
 
+## 4a. First result: re-OCR is not uniformly an improvement
+
+Joining each page's newest prior text to its live text over 100,580 clean pairs
+(`provenance_class='reocr'`, shifted excluded):
+
+| failure class | fixed | newly introduced | net |
+|---|---:|---:|---:|
+| commentary-as-transcription | 589 | 303 | −286 (better) |
+| repetition loops | 352 | 614 | **+262 (worse)** |
+
+Re-OCR repairs chatty preambles reliably (62% of broken priors) but introduces
+**more repetition loops than it fixes**. Ask the question per failure class; the
+aggregate agreement metric cannot see this, because a loop and a clean
+transcription of the same page disagree exactly like a hard page does.
+
+**The damage is concentrated in script, not spread evenly.** Loop-introduction
+rate by language × live model:
+
+| language × model | pairs | broke | rate |
+|---|---:|---:|---:|
+| Tibetan × `gemini-3.1-flash-lite-preview` | 1,357 | 341 | **25.1%** |
+| Chinese × `gemini-3.1-flash-lite-preview` | 865 | 38 | 4.4% |
+| Latin × `gemini-3.1-flash-lite-preview` | 17,310 | 17 | 0.10% |
+| German × `gemini-3-flash-preview` | 9,875 | 31 | 0.31% |
+
+Tibetan alone is **341 of all 614** newly-broken pages. Net effect by slice:
+
+| slice | n | fixed | broke | net |
+|---|---:|---:|---:|---:|
+| all | 100,580 | 352 | 614 | +262 |
+| excluding Tibetan | 99,223 | 228 | 273 | +45 |
+| space-less scripts | 2,910 | 109 | 242 | +133 |
+| spaced scripts | 97,670 | 243 | 372 | +129 |
+
+So the direction (net worse) holds in every slice, but the **magnitude outside
+Tibetan is negligible** — +45 pages across 99,223. Space-less scripts are 2.9%
+of pairs and carry 51% of the damage. This independently reproduces the known
+Tibetan-lite failure (`#3244`, "fails ~1/3") at 25% from a different instrument.
+
+Model matters too, after controlling for language: head-to-head within the same
+language, `gemini-3.1-flash-lite-preview` loops more than `gemini-3-flash-preview`
+in 7 of 9 languages (Greek 0.60% vs 0.00%, Chinese 4.39% vs 0.00%, Sanskrit
+1.31% vs 0.00%; German is the exception at 0.17% vs 0.31%). Both effects are
+real and they interact — do not report either alone.
+
+**Cleanup queue this produces:** 11,801 pages (1.6% of 732,037 OCR'd pages in
+scoped books) are degenerate, and **10,591 of them have never been re-OCR'd**.
+Re-running them on `gemini-3.1-flash-lite-preview` would, on this evidence, make
+the space-less subset worse — route by script or the queue is self-defeating.
+
 ## 5. Questions this dataset can and cannot answer
 
 **Can:**
