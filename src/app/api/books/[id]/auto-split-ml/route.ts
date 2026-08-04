@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { allowSplit, type GuardMode, type SpreadVerdict } from '@/lib/spread-guard';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
@@ -61,6 +62,12 @@ export const POST = withAuth(async (request, session, context) => {
       detectedPosition: number;
     }> = [];
     const errors: string[] = [];
+    // #3593 — the splitter had no check that its input is actually a spread, so
+    // individually-photographed leaves were cut in half (470 pages repaired in
+    // #3562). Default 'report': record the verdict without changing behaviour,
+    // so a real batch can be inspected before this is allowed to refuse work.
+    const guardMode: GuardMode = process.env.SPLIT_SPREAD_GUARD === 'enforce' ? 'enforce' : 'report';
+    const guardSkipped: Array<{ pageId: string; pageNumber: number; verdict: SpreadVerdict }> = [];
 
     for (const page of pagesToSplit) {
       try {
@@ -71,6 +78,19 @@ export const POST = withAuth(async (request, session, context) => {
         }
 
         const imageBuffer = await images.fetchBuffer(imageUrl, { timeout: 30000 });
+
+        // Is this even a spread? A single leaf has text through its centre; a
+        // spread has an ink-free channel there. Shape cannot answer this — a
+        // spread of two narrow leaves is still taller than it is wide.
+        const { allow, verdict } = await allowSplit(imageBuffer, guardMode);
+        if (!allow) {
+          guardSkipped.push({ pageId: page.id, pageNumber: page.page_number, verdict });
+          continue;
+        }
+        if (!verdict.isSpread) {
+          guardSkipped.push({ pageId: page.id, pageNumber: page.page_number, verdict });
+        }
+
         const features = await extractFeatures(imageBuffer);
 
         // Predict split position using ML
@@ -98,6 +118,8 @@ export const POST = withAuth(async (request, session, context) => {
     if (dryRun) {
       return NextResponse.json({
         dryRun: true,
+        guardMode,
+        guardSkipped: guardSkipped.map(g => ({ page: g.pageNumber, ...g.verdict })),
         wouldSplit: splits.length,
         splits: splits.slice(0, 10), // Show first 10
         errors
@@ -276,6 +298,14 @@ export const POST = withAuth(async (request, session, context) => {
       thumbnailsGenerated,
       imageErrors,
       errors,
+      // #3593 — in 'report' these were split anyway; the list is the evidence
+      // needed before switching SPLIT_SPREAD_GUARD to 'enforce'. In 'enforce'
+      // they were refused. Note ocrCleared above counts text this route
+      // destroys per run, which is why splitting a single leaf is not merely
+      // cosmetic.
+      guardMode,
+      guardFlagged: guardSkipped.length,
+      guardDetail: guardSkipped.map((g) => ({ page: g.pageNumber, ...g.verdict })),
       remainingToProcess: pagesToSplit.length - splits.length
     });
 
