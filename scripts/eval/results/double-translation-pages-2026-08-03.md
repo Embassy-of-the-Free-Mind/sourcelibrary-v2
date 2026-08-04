@@ -5,8 +5,8 @@ Built from `page_revisions` (field `translation`) with the #3473 filters in
 ## Headline
 - revisions read: **134,544**
 - pages carrying at least one stored OCR revision: **133,287**
-- **pages genuinely translated 2+ times: 70,508** (52.9% of them)
-- usable pair transitions: **70,555**
+- **pages genuinely translated 2+ times: 70,502** (52.9% of them)
+- usable pair transitions: **70,549**
 - pages whose ONLY revision is the e-rara shift sweep (not a second read): **54,221**
 - pairs demoted by the per-book shift verdict (unverified leaf in a demonstrably shifted book): **1,193**
 - live page doc missing (book purged): 1,749
@@ -15,12 +15,13 @@ Built from `page_revisions` (field `translation`) with the #3473 filters in
 read from inside `page_revisions` and is not one.
 | reason | pages |
 |---|---:|
-| ok | 70,555 |
+| ok | 70,549 |
 | text-move-source | 55,317 |
 | derived-text | 2,882 |
 | book-shifted | 1,193 |
 | different-leaf | 62 |
 | human-edit | 48 |
+| different-script | 6 |
 
 ## Leaf evidence on the usable pages
 `verified-same-leaf` = both passes printed the same page number, so they demonstrably
@@ -29,13 +30,13 @@ survives on the book-level verdict, which is weaker evidence. Report the split �
 quote the total as if it were all verified.
 | evidence | pages |
 |---|---:|
-| unverified-leaf | 69,720 |
+| unverified-leaf | 69,714 |
 | verified-same-leaf | 788 |
 
 ## Reads per page
 | independent reads | pages |
 |---|---:|
-| 2 | 70,462 |
+| 2 | 70,456 |
 | 3 | 45 |
 | 4 | 1 |
 
@@ -43,17 +44,17 @@ quote the total as if it were all verified.
 | language | pages |
 |---|---:|
 | Latin | 18,925 |
-| Tibetan | 17,738 |
+| Tibetan | 17,737 |
 | English | 7,011 |
 | German | 4,811 |
-| Sanskrit | 3,363 |
+| Sanskrit | 3,362 |
 | French | 2,581 |
 | Greek | 2,501 |
-| Arabic | 1,750 |
+| Arabic | 1,749 |
 | Korean | 1,681 |
 | Dutch | 1,650 |
 | Ge'ez | 1,034 |
-| Hebrew | 1,023 |
+| Hebrew | 1,022 |
 | Italian | 1,011 |
 | Chinese | 768 |
 | Persian | 741 |
@@ -66,10 +67,10 @@ quote the total as if it were all verified.
 ## By model transition
 | prior → current | pages |
 |---|---:|
-| gemini-3-flash-preview→gemini-3-flash-preview | 27,709 |
-| gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview | 27,572 |
+| gemini-3-flash-preview→gemini-3-flash-preview | 27,706 |
+| gemini-3.1-flash-lite-preview→gemini-3.1-flash-lite-preview | 27,570 |
 | gemini-3.1-flash-lite→gemini-3.1-flash-lite | 7,912 |
-| gemini-3.1-flash-lite-preview→gemini-3-flash-preview | 6,507 |
+| gemini-3.1-flash-lite-preview→gemini-3-flash-preview | 6,506 |
 | gemini-2.5-flash→gemini-3.1-flash-lite-preview | 401 |
 | gemini-3.1-flash-lite→gemini-3-flash-preview | 163 |
 | gemini-2.5-flash→gemini-3-flash-preview | 150 |
