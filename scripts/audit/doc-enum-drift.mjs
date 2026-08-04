@@ -32,6 +32,11 @@
  * --fail-on-findings, rather than printing a clean pass — an unrun check that
  * looks green is how the leak audit in CLAUDE.md nearly shipped twice.
  *
+ * RUN IT ON HETZNER, not a laptop. The exact mode scans `pages` twice (19.1M
+ * docs each) and takes longer than a consumer connection reliably stays up --
+ * two of three attempts on 2026-08-04/05 died on a network blip mid-scan. The
+ * scans are the point, so the fix is where you run it, not a weaker check.
+ *
  *   set -a; source .env.production.local; set +a
  *   node scripts/audit/doc-enum-drift.mjs
  *   node scripts/audit/doc-enum-drift.mjs --fail-on-findings
@@ -99,7 +104,13 @@ async function main() {
   await client.connect();
   const db = client.db(process.env.MONGODB_DB || 'bookstore');
 
+  // try/finally, not a bare close at the end: without it an error mid-scan
+  // leaves the connection pool open and, because we set process.exitCode rather
+  // than calling process.exit(), node's event loop never drains and the process
+  // hangs FOREVER. Observed 2026-08-04 -- a DNS blip left a run alive 2h43m,
+  // printing its error and then simply never exiting.
   const findings = [];
+  try {
   for (const entry of REGISTRY) {
     if (!existsSync(entry.doc)) {
       findings.push({ ...entry, kind: 'missing_doc', undocumented: [], phantom: [] });
@@ -146,16 +157,22 @@ async function main() {
 
     // Phantom: quoted in the doc as a value of this field but absent from
     // production. Informational only.
-    const quoted = [...text.matchAll(/["'`]([a-z][a-z0-9_.-]{2,40})["'`]/gi)].map(m => m[1]);
+    // Values only: a token containing a dot is a FIELD PATH mentioned in prose
+    // (`pages.translation.source`), not a value of the enum. Reporting those as
+    // "documented but absent from production" was noise in a tool whose whole
+    // job is to be trusted.
+    const quoted = [...text.matchAll(/["'`]([a-z][a-z0-9_-]{2,40})["'`]/gi)].map(m => m[1]);
     const present = new Set(values);
-    const phantom = [...new Set(quoted)].filter(q => !present.has(q) &&
+    const phantom = [...new Set(quoted)].filter(q => !present.has(q) && !q.includes('.') &&
       new RegExp(`${entry.field.split('.').pop()}[^\\n]{0,80}["'\`]${q}["'\`]`).test(text));
 
     findings.push({ ...entry, kind: undocumented.length ? 'undocumented_values' : 'ok',
       values, counts, undocumented, phantom, sampled, total, floor });
   }
 
-  await client.close();
+  } finally {
+    await client.close().catch(() => {});
+  }
 
   if (asJson) {
     console.log(JSON.stringify({ status: 'ran', findings }, null, 2));
