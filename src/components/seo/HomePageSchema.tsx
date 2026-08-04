@@ -1,5 +1,6 @@
 import { Book } from '@/lib/types';
 import { formatAuthor } from '@/lib/utils';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 interface HomePageSchemaProps {
   books: Book[];
@@ -91,7 +92,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }

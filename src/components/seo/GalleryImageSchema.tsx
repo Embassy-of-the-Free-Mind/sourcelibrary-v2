@@ -1,5 +1,6 @@
 import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 interface GalleryImageSchemaProps {
   imageId: string;
@@ -119,7 +120,7 @@ export default function GalleryImageSchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }
