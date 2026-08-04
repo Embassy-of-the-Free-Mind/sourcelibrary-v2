@@ -3,9 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSession } from 'next-auth/react';
+import { useLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
 
 export default function FeedbackWidget({ className, style, initialMessage, label, heading, intro, placeholder, contactEmail }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string; heading?: string; intro?: string; placeholder?: string; contactEmail?: string }) {
   const { data: session } = useSession();
+  // Explicit props still win — callers that pass copy (the 404 page, a book
+  // page's "Request one") are saying something specific, not just labelling.
+  const t = FEEDBACK_STRINGS[useLocale()];
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
@@ -66,7 +70,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
       >
         {status === 'sent' ? (
           <div className="text-center py-4">
-            <p className="text-lg font-medium text-stone-800">Thank you!</p>
+            <p className="text-lg font-medium text-stone-800">{t.thanks}</p>
             {submittedAsVolunteer ? (
               <>
                 <p className="text-sm text-stone-500 mt-1">
@@ -87,14 +91,14 @@ export default function FeedbackWidget({ className, style, initialMessage, label
                 </button>
               </>
             ) : (
-              <p className="text-sm text-stone-500 mt-1">Your feedback has been received.</p>
+              <p className="text-sm text-stone-500 mt-1">{t.received}</p>
             )}
           </div>
         ) : (
           <>
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-medium text-stone-800">{heading || 'Send feedback'}</h3>
+                <h3 className="text-lg font-medium text-stone-800">{heading || t.heading}</h3>
                 {intro && <p className="text-sm text-stone-500 mt-0.5">{intro}</p>}
               </div>
               <button onClick={() => setOpen(false)} className="text-stone-400 hover:text-stone-600 flex-shrink-0 ml-2">
@@ -107,20 +111,20 @@ export default function FeedbackWidget({ className, style, initialMessage, label
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder={placeholder || 'Spot an error? Have an idea? Anything at all...'}
+              placeholder={placeholder || t.placeholder}
               rows={4}
               className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold resize-none"
               autoFocus
             />
 
             {signedInName ? (
-              <p className="text-xs text-stone-500 mt-3">Sending as {signedInName}</p>
+              <p className="text-xs text-stone-500 mt-3">{t.sendingAs} {signedInName}</p>
             ) : (
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name (optional)"
+                placeholder={t.namePlaceholder}
                 className="w-full px-3 py-2 mt-3 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
               />
             )}
@@ -133,8 +137,8 @@ export default function FeedbackWidget({ className, style, initialMessage, label
                 className="mt-0.5 accent-stone-900"
               />
               <span className="text-sm text-stone-700 leading-snug">
-                I&rsquo;d like to help — translations, research, or suggesting books.
-                <span className="block text-xs text-stone-500 mt-0.5">We&rsquo;ll email you to learn more.</span>
+                {t.helpLabel}
+                <span className="block text-xs text-stone-500 mt-0.5">{t.helpHint}</span>
               </span>
             </label>
 
@@ -143,7 +147,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email (so we can reach out)"
+                placeholder={t.emailPlaceholder}
                 required
                 className="w-full px-3 py-2 mt-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
               />
@@ -151,14 +155,14 @@ export default function FeedbackWidget({ className, style, initialMessage, label
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4 w-full">
               <p className="text-xs text-stone-400 truncate min-w-0 flex-1">
-                Sent from {typeof window !== 'undefined' ? window.location.pathname : '/'}
+                {t.sentFrom} {typeof window !== 'undefined' ? window.location.pathname : '/'}
               </p>
               <button
                 onClick={submit}
                 disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer}
                 className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
-                {status === 'sending' ? 'Sending...' : status === 'error' ? 'Try again' : 'Send'}
+                {status === 'sending' ? t.sending : status === 'error' ? t.tryAgain : t.send}
               </button>
             </div>
 

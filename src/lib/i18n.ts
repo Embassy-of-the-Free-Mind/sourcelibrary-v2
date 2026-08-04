@@ -143,6 +143,67 @@ export interface FooterStrings {
   licenseLine: string;
 }
 
+/**
+ * The feedback dialog. Localised because the footer link already was: a Spanish
+ * reader clicked "Enviar comentarios" and got an entirely English form —
+ * "Send feedback", "Spot an error? Have an idea?", "Send". Translating the door
+ * and not the room is worse than translating neither, because it invites people
+ * in and then asks them to read a language they told us they do not.
+ *
+ * NOTE ON REACH: locale comes from the URL prefix, so these apply on /es and
+ * /es/support only. On a book page there is no prefix and the dialog is still
+ * English. Giving a Spanish reader a Spanish dialog everywhere needs locale to
+ * follow the USER rather than the path — a bigger decision, not made here.
+ */
+export interface FeedbackStrings {
+  heading: string;
+  placeholder: string;
+  namePlaceholder: string;
+  sendingAs: string;
+  helpLabel: string;
+  helpHint: string;
+  emailPlaceholder: string;
+  sentFrom: string;
+  send: string;
+  sending: string;
+  tryAgain: string;
+  thanks: string;
+  received: string;
+}
+
+export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
+  en: {
+    heading: 'Send feedback',
+    placeholder: 'Spot an error? Have an idea? Anything at all...',
+    namePlaceholder: 'Your name (optional)',
+    sendingAs: 'Sending as',
+    helpLabel: 'I\u2019d like to help \u2014 translations, research, or suggesting books.',
+    helpHint: 'We\u2019ll email you to learn more.',
+    emailPlaceholder: 'Your email (so we can reach out)',
+    sentFrom: 'Sent from',
+    send: 'Send',
+    sending: 'Sending...',
+    tryAgain: 'Try again',
+    thanks: 'Thank you!',
+    received: 'Your feedback has been received.',
+  },
+  es: {
+    heading: 'Enviar comentarios',
+    placeholder: '\u00bfHas visto un error? \u00bfTienes una idea? Lo que sea...',
+    namePlaceholder: 'Tu nombre (opcional)',
+    sendingAs: 'Enviando como',
+    helpLabel: 'Me gustar\u00eda ayudar: traducciones, investigaci\u00f3n o sugerir libros.',
+    helpHint: 'Te escribiremos para saber m\u00e1s.',
+    emailPlaceholder: 'Tu correo (para poder responderte)',
+    sentFrom: 'Enviado desde',
+    send: 'Enviar',
+    sending: 'Enviando...',
+    tryAgain: 'Int\u00e9ntalo de nuevo',
+    thanks: '\u00a1Gracias!',
+    received: 'Hemos recibido tus comentarios.',
+  },
+};
+
 export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   en: {
     colLibrary: 'Library',
