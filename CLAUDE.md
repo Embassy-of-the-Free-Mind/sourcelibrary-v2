@@ -407,6 +407,58 @@ Corollary for review: this arrived as a user complaint, not from the security re
 - **A `curl` against a URL shape cannot establish what the CLIENT sends.** #3542 was filed on a real observation — `/api//pages/<id>` 308s — and the app has not sent that URL since #1880 (2026-05-19), where a request interceptor began collapsing `/api//` → `/api/`. The wrong mechanism nearly aimed the fix at `getTenantSlug()`. Read the client's outbound path, not a hand-built one.
 - **A grant the system cannot read is indistinguishable from no grant.** There is no global editor role at all: `token.role` is only `superadmin` or `reader` (auth.ts, `TODO (Phase 1)` still open), and tenant roles enter solely via `x-tenant-id`, so `getTenantMembershipRole` returns null on a falsy tenant. A `memberships` row with `tenantId: null, role: 'editor'` — the same shape as every superadmin row, differing only in the role value — therefore does **nothing**, in both directions, and one has sat active and inert since 2026-05-04. Removing the scope gate above unblocks superadmins **only**; see #3589. If an invite flow accepts a role it silently ignores, that is its own defect.
 
+## A text helper is scoped to its CONSUMERS, not to its name
+Lessons from 2026-08-04 (#3580/#3598/#3620). Full postmortem:
+`.claude/handoffs/2026-08-04-export-surfaces-and-unreachable-page-types.md`.
+
+`stripEditorialWrappers()` flattens GFM tables (`| 1 | 23 |` → `1  23`). That is
+**correct** for the snippet/quote/search surfaces it was written for, and its own
+comment says so: *"Only the snippet/quote path routes through here."* Three
+surfaces that serve a page's **whole text for reuse** reached for it anyway — the
+PDF exporter (added months later), `/api/books/[id]/text` (what AI clients and
+licensees read), and `build-corpus-snapshot.mjs` (the distributed dataset).
+
+Flattening keeps every cell **value** and discards the **column** it belonged to.
+148 of 366 pages of one manuscript are tables (13,949 cells), and it fails
+silently because the output reads as ordinary prose.
+
+- **Before reusing a text helper, read its comment for who it was written for,
+  then ask whether your surface is that.** "Serves an excerpt" and "serves the
+  artifact" are different contracts. A new consumer of an old helper is the
+  moment to check, and nothing else will flag it.
+- **Widen behaviour by an opt-IN parameter, never by changing the default.**
+  `{ keepTables }` left ~40 existing callers byte-identical; flipping the default
+  would have silently changed every snippet in the product.
+- **Verify an export by RENDERING it and looking.** Generating a real PDF threw
+  immediately (`unsupported number: undefined` — OCR tables are *ragged*, and
+  pdfkit dies on any cell past the widest declared row); rasterising then showed
+  an Arabic line-indent regression. Neither was visible to a green suite, because
+  every fixture was rectangular and single-line. Same discipline as the
+  curl-the-served-HTML rule above: a passing test is not a rendered artifact.
+- **A value nothing can PRODUCE looks identical to a value nothing needs.**
+  `NotesRenderer`'s `DESCRIPTION_ONLY_PAGE_TYPES` handled `cover`,
+  `musical-score` and `table`; the OCR prompt's `<page-type>` enum never offered
+  them, so all three sat at **zero pages** while the other five carried
+  4,927–210,023. Kircher's *Musurgia Universalis* had every engraved-music page
+  typed `text` — translated as prose (paid) and rendered without its branch —
+  while the OCR's own note read "consists entirely of musical notation". The
+  inverse of the `reading_history.referrer` rule below; both are invisible from
+  either side alone. Pinned by `tests/unit/page-type-vocabulary.test.ts`.
+- **A read-time regex cannot recover a distinction the writer never encoded.**
+  Four predicates were measured for "blank pages that aren't blank" and "`<note>`
+  holding a page description"; three were rejected as worse than useless (they
+  caught ProQuest boilerplate, library stamps and `<page-num>17</page-num>`). The
+  one that shipped is **definitional, not statistical** — a gloss annotates text,
+  so a `<note>` on a page with no body text cannot be one. When no clean
+  predicate exists, ship a detector and fix the write side (#3591); do not ship a
+  heuristic that strips reader-visible content on a few points of signal.
+- **Never buffer a whole book to build one artifact.** Awaiting every page image
+  before writing left a "streamed" response silent for the entire fetch (past
+  Cloudflare's ~100s window) with every image resident. `streamOrdered()`
+  (`src/lib/ordered-stream.ts`) yields in input order with a bounded look-ahead.
+  And when an artifact must be truncated, **say so inside the artifact** — a
+  partial edition that doesn't admit it is worse than an error.
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
@@ -417,6 +469,65 @@ For behaviour, the assertion has to exercise the thing: render the component und
 **Don't reason about that question — run it.** Delete the guarded line, watch the test go red, restore it. Two source-shape guards written in one session (#3484/#3488) both passed *with the code they guarded deleted*, and neither failure was visible by reading the test: one asserted `toContain('hasSearchTerm')` + `toContain('offset === 0')`, where both tokens occur elsewhere in the same file; the other asserted `/tenantId/` against a call body and was satisfied by the **explanatory comment sitting directly above `tenantId,`**. A source assertion matches the whole file, comments included — so scope it to a slice, strip comments before matching, or assert a composite string whose position relative to the call is checked. The negative control is the only thing that distinguishes a guard from a decoration.
 
 **A fixture you INVENTED is evidence about you, not about the system.** The rule above assumes the test's *input* is real and only its assertion is in doubt. A third guard failed the same way in #3584 with a real assertion and fabricated input: the control for a diacritic-folding fix hand-wrote a title page as `"… IKHWÁNU-S SAFÁ. Translated from the Hindustani."`, and "Translated" matched the title's own `translation` token through the matcher's six-character prefix rule (`transl`). It passed **with the fold deliberately removed** — a real code path, exercised, asserting nothing. The database's actual page holds only `# IKHWÁNU-S SAFÁ.` and no such phrase. Two details made it invisible: the stopword list screened `translated` but not `translation`, and the fixture was written *after* the wanted verdict was known, which is how invented evidence acquires exactly the properties it needs. **Capture fixture text from the real source before writing the assertion, never after** — a fixture drafted toward a known answer will reach that answer by whichever path is available, and you will not know which. This is the paired-artifact rule applied to test data: the fixture *claims* to stand for the real artifact, and nothing checks that it does.
+
+## A classifier over images cannot validate itself — CRITICAL
+
+Lessons from the false-split repair, 2026-08-04 (#3562). A reader reported one
+half-rendered frontispiece. Finding the rest took **seven detectors, four of which
+shipped confident wrong answers**, and every single failure was caught by opening an
+image — never by a check that inspected data. Full postmortem:
+`.claude/handoffs/2026-08-04-false-split-repair-and-seven-detectors.md`.
+
+- **Never quote a detector's count before validating it against eyes.** The successive
+  answers were 1,046 → 10,277 → 567 → 470. Three of the four largest "findings" were
+  artifacts. Sweeping on the first would have stripped correct crops off hundreds of
+  properly split spreads. **Sort the review by risk** (most-suspicious first) so a
+  partial human pass is still maximally informative — 97 wrongly un-split spreads were
+  spotted in seconds that way, by a human, after the classifier had passed every one.
+- **Absolute thresholds fail wherever the population varies per item.** Leaf proportions
+  differ enormously between books: a spread of two narrow folio leaves (1415x3106 each)
+  is 2780x3105 — still taller than wide, so `w > h` flagged all 543 correctly split
+  pages of one book. Calibrate against the item's own population, and **abstain in the
+  ambiguous band** rather than let nearest-neighbour force a verdict (real spreads sat
+  at 1.32x and 1.40x where the classes are 1x and 2x).
+- **A reference set can be contaminated by the defect it is meant to calibrate.**
+  "Uncropped pages are single leaves" is false — in a partly-split book the unsplit
+  pages may be spreads nobody got to. One book drew its yardstick from 24 uncropped
+  pages that were *all* spreads, and its real spreads then read as damage.
+- **Check what the system already wrote down before inventing a signal.** The thing that
+  finally worked was the OCR model's own `<warning>` text — *"an extremely narrow
+  vertical fragment… truncated on both the left and right sides"* — recorded at write
+  time in February and never read. It needs no image fetching and works where shape
+  cannot. Same shape as the crawler-fleet and analytics lessons above: the evidence
+  existed; nothing surfaced it. Corollary: **absence of a complaint is not health** — a
+  model fed a clean half-page transcribes it without remark.
+- **A repair verified on a sample is not verified.** "Confirmed in production" was true
+  for the two books checked and false for a third of the rest: clearing `crop` +
+  `cropped_photo` falls through to `display_photo`, which for 196 of 567 pages was
+  itself a resize of the half. The pages read as repaired in Mongo and changed nothing
+  on screen.
+- **A count of zero needs its denominator checked before it means anything.** A
+  post-apply check reported "0 pages still carrying crop" from a query that matched
+  *nothing* — the backup serialises `_id` as a hex string while Mongo stores an
+  ObjectId, so `{_id: {$in: [<strings>]}}` matches zero documents and the zero reads as
+  success. Assert the match count equals the expected count in the same breath.
+- **A bare failure count hides its own cause.** A re-OCR run reported 27 of 54 failed;
+  the reason (`"API key not valid"` — two of four Gemini keys are dead, #3627) sat in
+  `gemini_usage.error_message` throughout. Surface distinct error messages in run
+  summaries, and drop a key on a permanent 400 instead of rotating back into it.
+
+Corollary of the invented-fixture rule above, met the hard way: the first version of
+`tests/unit/spread-guard.test.ts` failed because the FIXTURE was unrealistic (an
+11%-wide gutter puts the detector's flank-confirmation window entirely inside the
+gutter), not because the detector was wrong. Check the fixture against a real image
+before concluding the code is broken.
+
+**Splitting specifically:** `src/lib/spread-guard.ts` refuses to split an image that is
+not a spread, using content (a central ink-free channel with text on *both* sides) not
+shape. It ships in `report` mode — log a real batch and confirm the refusals before
+setting `SPLIT_SPREAD_GUARD=enforce`, because BPH books genuinely are mostly spreads.
+Note a false split also runs `$unset: { ocr, translation, summary }`, so it is never
+merely cosmetic.
 
 ## Count the search BOXES, not the search logs
 Before quoting anything about what users search for, **enumerate the search boxes in the UI and verify each one writes a row.** A log tells you about the boxes that log; it is silent about the ones that don't, and silence reads as "nobody searches."

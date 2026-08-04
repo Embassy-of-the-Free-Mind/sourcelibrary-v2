@@ -188,14 +188,58 @@ export function itemLanguages(rec, f008 = controlField(rec, '008')) {
   return fallback ? [fallback] : [];
 }
 
-/** Extract the reference-set row, or null if this record is not an English translation. */
-export function extractEnglishTranslation(rec, reject = () => {}) {
-  if (!rec.includes('tag="041"')) { reject('no_041'); return null; }
-  const originalLangs = subfieldValues(rec, '041', 'h');
-  if (!originalLangs.length) { reject('no_041h'); return null; }
+/**
+ * Does the MARC 240 declare this item to be the ENGLISH version of the work?
+ *
+ * `240$l` is *Language of a work* — the cataloguer stating exactly what `041$h`
+ * states, in a different field. It is NOT necessarily the last subfield: `$s`
+ * (version), `$k` (selections) and `$f` (date) follow it routinely, so
+ * "Bible. Psalms. English. Sternhold and Hopkins." must match as readily as
+ * "De consolatione philosophiae. English".
+ */
+export function uniformTitleDeclaresEnglish(rec) {
+  const l = subfieldValues(rec, '240', 'l');
+  return l.some((v) => /\beng(lish)?\b/i.test(v));
+}
 
+/**
+ * Extract the reference-set row, or null if this record is not an English
+ * translation.
+ *
+ * THREE GRADES OF EVIDENCE, and requiring only the first was the dominant cause
+ * of 27% catalogue recall (#3599). Measured on one part: of 136,193
+ * English-language records, 3,918 carry `041$h` — and ~131,000 declare nothing
+ * at all by any means. Every confirmed-absent prior we chased was sitting in LoC
+ * with a perfectly good MARC 240 and no 041 whatsoever: Caplan's Loeb
+ * *Ad Herennium* (LCCN 55004252, `240 Rhetorica ad Herennium.`), Böhme
+ * (`36037588`).
+ *
+ *   041h               a cataloguer's explicit "translated from <lang>"
+ *   uniform_title_lang `240$l English` — the same assertion, different field
+ *   uniform_title_only a 240 exists on an English item, but no language marker.
+ *                      Noisier — roughly a third are genuine, the rest English
+ *                      works with collective uniform titles ("Works.", "Poems.").
+ *                      Kept because this is where Caplan lives, and because the
+ *                      matcher already screens the noise: containment against
+ *                      OUR title cannot fire on an unrelated English work, and
+ *                      generic 1-2 token uniform titles demand author
+ *                      corroboration.
+ *
+ * `original_languages` is empty for the latter two, which is correct and
+ * load-bearing — the language screen reads an unresolvable value as UNKNOWN and
+ * KEEPS the candidate rather than rejecting a real prior.
+ */
+export function extractEnglishTranslation(rec, reject = () => {}) {
   const f008 = controlField(rec, '008');
   const itemLangs = itemLanguages(rec, f008);
+  const originalLangs = rec.includes('tag="041"') ? subfieldValues(rec, '041', 'h') : [];
+  const uniform = subfieldValues(rec, '240', 'a')[0] || '';
+
+  const evidence = originalLangs.length ? '041h'
+    : uniformTitleDeclaresEnglish(rec) ? 'uniform_title_lang'
+      : uniform ? 'uniform_title_only'
+        : null;
+  if (!evidence) { reject(rec.includes('tag="041"') ? 'no_041h' : 'no_041'); return null; }
   // The item must contain English SOMEWHERE. A bilingual edition is still an
   // English translation — arguably the most citable kind, since the reader can
   // check it against the original on the facing page.
@@ -230,6 +274,10 @@ export function extractEnglishTranslation(rec, reject = () => {}) {
     item_language: itemLang,
     item_languages: itemLangs,
     bilingual: itemLangs.length > 1,
+    // HOW this row was established to be a translation. Screening needs it: an
+    // `041h` row is a cataloguer's assertion, `uniform_title_only` is our
+    // inference from the presence of a 240 on an English item.
+    translation_evidence: evidence,
     subjects: subfieldValues(rec, '650', 'a').concat(subfieldValues(rec, '600', 'a')).map(decode).slice(0, 8),
     source: 'loc_mdsconnect',
     snapshot: SNAPSHOT,

@@ -123,6 +123,19 @@ async function partition(prefix, hits, depth = 0) {
   }
   const leaves = [];
   let childSum = 0;
+
+  // A prefix can BE a complete id. `id:N1*` covers 10,895 records, of which
+  // 10,894 are N10*…N1Z* and ONE is the record whose id is exactly "N1" —
+  // nothing that appends a character can reach it. Left unhandled the sums
+  // disagree by one, which is how the fail-closed check first surfaced this.
+  // Count it explicitly and carry it as its own single-record leaf.
+  const exact = (await search(`id:${prefix}`, 0, 1)).hits;
+  await sleep(DELAY_MS);
+  if (exact) {
+    childSum += exact;
+    leaves.push({ prefix, hits: exact, exactOnly: true });
+  }
+
   for (const ch of CHARS) {
     const n = await countOf(prefix + ch);
     await sleep(DELAY_MS);
@@ -141,10 +154,13 @@ async function partition(prefix, hits, depth = 0) {
 
 /** Page one leaf completely, asserting we received what it promised. */
 async function harvestLeaf(leaf, sink) {
+  // `exactOnly` leaves are the single record whose id IS the prefix; querying
+  // them with a wildcard would re-collect the whole subtree.
+  const query = leaf.exactOnly ? `id:${leaf.prefix}` : `id:${leaf.prefix}*`;
   let got = 0;
   for (let from = 0; from < leaf.hits; from += PAGE) {
     if (from >= FROM_CAP) throw new Error(`leaf ${leaf.prefix}* exceeds the ${FROM_CAP} cap — partition bug`);
-    const { rows } = await search(`id:${leaf.prefix}*`, from, PAGE);
+    const { rows } = await search(query, from, PAGE);
     if (!rows.length) throw new Error(`leaf ${leaf.prefix}* returned 0 rows at from=${from} of ${leaf.hits}`);
     for (const row of rows) sink(row);
     got += rows.length;
@@ -260,22 +276,62 @@ async function main() {
     throw new Error(`partition covers ${promised} of ${total} — refusing to harvest an incomplete set`);
   }
 
-  const outPath = path.join(OUT_DIR, `estc-translations.${SNAPSHOT}.jsonl`);
-  const out = fs.createWriteStream(outPath);
-  let seen = 0, kept = 0;
+  // ── RESUMABLE, per leaf ───────────────────────────────────────────────────
+  //
+  // The full harvest is ~4,875 requests at ~4.3s of SERVER latency each — about
+  // six hours, and the wall time is CERL's, not the network's. A single-file
+  // append that dies at hour five loses everything, which is the long-append-job
+  // hazard CLAUDE.md warns about.
+  //
+  // So each leaf writes its own file and is skipped if already complete. A leaf
+  // is only renamed into place after its row count is verified, so a half-written
+  // leaf is never mistaken for a finished one — a partial file left behind by a
+  // kill would otherwise read as "done" and silently shorten the set.
+  const partsDir = path.join(OUT_DIR, 'leaves');
+  fs.mkdirSync(partsDir, { recursive: true });
+
+  let seen = 0, kept = 0, skipped = 0;
   const evidence = {};
-  for (const leaf of leaves) {
+  const started = Date.now();
+
+  for (const [i, leaf] of leaves.entries()) {
+    const leafPath = path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
+    if (fs.existsSync(leafPath)) {
+      const done = fs.readFileSync(leafPath, 'utf8').split('\n').filter(Boolean).length;
+      kept += done; seen += leaf.hits; skipped++;
+      continue;
+    }
+    const tmp = `${leafPath}.partial`;
+    const out = fs.createWriteStream(tmp);
+    let leafKept = 0;
     await harvestLeaf(leaf, (raw) => {
       seen++;
       const row = toReferenceRow(raw);
       if (!isEnglishTranslation(row)) return;
-      kept++;
-      evidence[row.translation_evidence.split(':')[0]] = (evidence[row.translation_evidence.split(':')[0]] || 0) + 1;
+      kept++; leafKept++;
+      const k = row.translation_evidence.split(':')[0];
+      evidence[k] = (evidence[k] || 0) + 1;
       out.write(JSON.stringify(row) + '\n');
     });
-    process.stdout.write(`\r  harvested ${seen.toLocaleString()}/${promised.toLocaleString()}  kept ${kept.toLocaleString()}   `);
+    await new Promise((r) => out.end(r));
+    fs.renameSync(tmp, leafPath);   // atomic: only a verified leaf gets its name
+
+    const pct = ((i + 1) / leaves.length * 100).toFixed(1);
+    const rate = seen / ((Date.now() - started) / 1000);
+    const eta = rate > 0 ? ((promised - seen) / rate / 60).toFixed(0) : '?';
+    console.log(`  [${String(i + 1).padStart(4)}/${leaves.length}] ${pct}%  id:${leaf.prefix}* `
+      + `${String(leaf.hits).padStart(6)} rows, kept ${leafKept}  |  total kept ${kept.toLocaleString()}  ETA ~${eta}m`);
   }
-  await new Promise((r) => out.end(r));
+  if (skipped) console.log(`\n  (${skipped} leaf/leaves already on disk — resumed)`);
+
+  // Concatenate the verified leaves into the reference-set file.
+  const outPath = path.join(OUT_DIR, `estc-translations.${SNAPSHOT}.jsonl`);
+  const final = fs.createWriteStream(outPath);
+  for (const leaf of leaves) {
+    const p = path.join(partsDir, `${leaf.prefix}.jsonl`);
+    if (fs.existsSync(p)) final.write(fs.readFileSync(p));
+  }
+  await new Promise((r) => final.end(r));
 
   console.log(`\n\n─── ESTC reference set ───────────────────────────────────────`);
   console.log(`  records examined        : ${seen.toLocaleString()}`);
