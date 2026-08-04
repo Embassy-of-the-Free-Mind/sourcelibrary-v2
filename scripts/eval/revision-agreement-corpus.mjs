@@ -119,7 +119,13 @@ export function agreement(a, b) {
  * interest: how much of a stratum's inconsistency is convention.
  */
 export function agreementFolded(a, b) {
-  return agreement(foldOrthography(a), foldOrthography(b));
+  // STRIP FIRST, THEN FOLD. Folding raw text mangles the tag NAMES themselves —
+  // `<language>` becomes `<la\u1D3Aguage>` under the nasal rule — so the wrapper
+  // patterns stop matching and the editorial prose they should have removed leaks
+  // into the comparison. That made the folded score come out BELOW the raw score,
+  // which is impossible for a fold: mapping two texts through the same many-to-one
+  // function cannot make them less similar. The negative gap was the tell.
+  return agreement(foldOrthography(stripWrappers(a)), foldOrthography(stripWrappers(b)));
 }
 
 // Character-level twin of the same metric. REQUIRED for space-less scripts:
@@ -292,6 +298,7 @@ async function main() {
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
   const flow = {}, margFate = {}, directionCount = {};
   const notComparableReasons = {};
+  let foldRegressions = 0;
   let nearZero = 0, degenerate = 0;
   const margStat = new Stat();   // agreement on marginal text alone
   const t0 = Date.now();
@@ -354,6 +361,10 @@ async function main() {
         const prior = chain[i], current = chain[i + 1];
         const agr = agreement(prior.data, current.data);
         const agrFold = agreementFolded(prior.data, current.data);
+        // Invariant: folding cannot reduce similarity. If it does, the fold is
+        // corrupting the text rather than normalising it — count and report rather
+        // than publishing a number whose sign is wrong.
+        if (agrFold != null && agr != null && agrFold < agr - 0.02) foldRegressions++;
         if (agr == null) { skipped++; continue; }
         const cls = scriptClass(current.data) === 'unknown' ? scriptClass(prior.data) : scriptClass(current.data);
         // The char metric is a 3000x3000 Levenshtein (~9M cells) against the word
@@ -478,7 +489,14 @@ async function main() {
         overall.add(a);
         overallWord.add(row.agreement);
         if (row.agreement_folded != null) overallFold.add(row.agreement_folded);
-        if (row.agreement_folded != null) bump('folded_language', row.language || '(unknown)', row.agreement_folded);
+        if (row.agreement_folded != null) {
+          bump('folded_language', row.language || '(unknown)', row.agreement_folded);
+          // Prompt sameness is the cut that separates the model's own inconsistency
+          // from drift we instructed by changing the prompt.
+          const samePrompt = row.prior_prompt != null && row.prior_prompt === row.current_prompt;
+          bump(samePrompt ? 'raw_same_prompt' : 'raw_cross_prompt', row.language || '(unknown)', row.agreement);
+          bump(samePrompt ? 'folded_same_prompt' : 'folded_cross_prompt', row.language || '(unknown)', row.agreement_folded);
+        }
         bump('language', row.language || '(unknown)', a);
         bump('year_bucket', row.year_bucket, a);
         bump('model_pair', row.model_pair, a);
@@ -578,6 +596,7 @@ async function main() {
       p25_agreement: +overall.quantile(0.25).toFixed(4),
       p75_agreement: +overall.quantile(0.75).toFixed(4),
       mean_agreement_word_only: +overallWord.mean.toFixed(4),
+      fold_regressions: foldRegressions,
       mean_agreement_folded: overallFold.n ? +overallFold.mean.toFixed(4) : null,
       median_agreement_folded: overallFold.n ? +overallFold.median.toFixed(4) : null,
       convention_share_of_gap: overallFold.n ? +((overallFold.mean - overall.mean) / Math.max(1e-9, 1 - overall.mean)).toFixed(4) : null,
@@ -658,18 +677,32 @@ async function main() {
     `- mean agreement, pilot-parity word metric on every script: ${(overallWord.mean * 100).toFixed(1)}% — the gap is the CJK/Tibetan tokenization artifact`,
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
     `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
-    '## How much of the disagreement is CONVENTION, not reading?', '',
-    'Spot-checking the mid bands found the two sides usually transcribing the same words',
-    'under different conventions: one pass expands the tilde abbreviation (`ascendentis`),',
-    'the other preserves it (`ascendetis`); one hyphenates `fue-`, the other `fue=`; u/v,',
-    'i/j and ae/ligature differ by prompt era. None of that is misreading.', '',
-    '`agreement_folded` is the same metric over orthography-folded text. Raw stays the',
-    'headline because a reader sees the raw text; the GAP is how much of a stratum\'s',
-    'inconsistency is convention rather than legibility.', '',
+    '## Decomposing the inconsistency: rendering policy vs reading', '',
+    'A mismatch is INCONSISTENCY, not necessarily error. The distinction that matters is',
+    'whose inconsistency it is:', '',
+    '- **Instrument noise — excluded entirely.** Annotation syntax (`[[meta:]]` vs `<meta>`)',
+    '  changed because WE changed the output format between prompt versions, and #3362',
+    '  cross-book contamination is our archiver writing the wrong image. Neither is the',
+    '  model doing anything. Both are removed before measuring.',
+    '- **Rendering-policy inconsistency — counted.** One pass expands the macron',
+    '  (`ascendentis`), the other preserves it (`ascendetis`); one hyphenates `fue-`, the',
+    '  other `fue=`. Both are faithful readings, and the model still rendered the same page',
+    '  two ways. That IS inconsistency and belongs in the number.',
+    '- **Reading inconsistency — counted.** Glyph confusion, truncation, degeneration.', '',
+    '`agreement_folded` exists to DECOMPOSE the second and third, not to discard the second.',
+    'Raw stays the headline because a reader sees the raw text; the gap between raw and',
+    'folded is how much of a stratum\'s inconsistency is rendering policy rather than',
+    'reading.', '',
+    'The sharpest cut is prompt sameness. Where BOTH sides ran the same prompt version, the',
+    'model had identical instructions and still rendered differently — that is model',
+    'inconsistency with nothing else to blame. Where the versions differ, some of the drift',
+    'was instructed by us, and attributing it to the model overstates it.', '',
     overallFold.n ? `- folded median **${(overallFold.median * 100).toFixed(1)}%** vs raw ${(overall.median * 100).toFixed(1)}%; folded mean ${(overallFold.mean * 100).toFixed(1)}% vs raw ${(overall.mean * 100).toFixed(1)}%` : '',
     overallFold.n ? `- **${((overallFold.mean - overall.mean) / Math.max(1e-9, 1 - overall.mean) * 100).toFixed(1)}% of the average disagreement disappears** once convention is folded out` : '',
     '',
     table('folded_language', 'Folded agreement by language (compare against the raw table below)'),
+    table('raw_same_prompt', 'Raw agreement, SAME prompt version on both sides', 50),
+    table('folded_same_prompt', 'Folded agreement, SAME prompt version — the gap here is model inconsistency alone', 50),
     '## Stratified agreement', '',
     table('position_bucket', 'By position in the book', 1),
     table('soft_hidden', 'Soft-hidden pages (negative page_number)', 1),

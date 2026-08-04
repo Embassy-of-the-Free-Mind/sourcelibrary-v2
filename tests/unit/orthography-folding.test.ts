@@ -72,3 +72,15 @@ describe('foldOrthography — the nasal sentinel does not over-fold', () => {
     expect(foldOrthography('nō')).toBe(foldOrthography('non'));
   });
 });
+
+describe('folding must never reduce similarity', () => {
+  it('strips wrappers BEFORE folding, or tag names get mangled', () => {
+    // `<language>` under the nasal rule becomes `<laᴺguage>`, which the wrapper
+    // patterns no longer match — so the block it should have removed survives.
+    // Folding the raw text therefore made agreement WORSE, which a fold cannot do.
+    const withTag = '<language>Latin</language>\nhoram eclypticam quae erit';
+    expect(foldOrthography(withTag)).toContain('ᴺ');          // the fold does mangle it
+    expect(stripWrappers(withTag)).not.toContain('<language>'); // so strip first
+    expect(stripWrappers(withTag).trim()).toBe('horam eclypticam quae erit');
+  });
+});
