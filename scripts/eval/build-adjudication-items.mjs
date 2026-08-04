@@ -104,14 +104,17 @@ function substitutions(A, B) {
   while (i > 0) { i--; ops.push(['del', i, 0]); }
   while (j > 0) { j--; ops.push(['ins', 0, j]); }
   ops.reverse();
+  // A substitution is one slot read two ways, and it can surface as del->ins OR
+  // ins->del depending on how the backtrack broke ties before the reverse. Matching
+  // only one order silently produced ZERO substitutions on every page — the script
+  // ran clean and emitted an empty manifest.
   const out = [];
-  for (let k = 0; k < ops.length; k++) {
-    if (ops[k][0] === 'del' && ops[k + 1] && ops[k + 1][0] === 'ins') {
-      out.push({ ai: ops[k][1], bi: ops[k + 1][2], a: A[ops[k][1]], b: B[ops[k + 1][2]] });
-      k++;
-    }
+  for (let k = 0; k < ops.length - 1; k++) {
+    const [t1, x1, y1] = ops[k], [t2, x2, y2] = ops[k + 1];
+    if (t1 === 'del' && t2 === 'ins') { out.push({ ai: x1, bi: y2, a: A[x1], b: B[y2] }); k++; }
+    else if (t1 === 'ins' && t2 === 'del') { out.push({ ai: x2, bi: y1, a: A[x2], b: B[y1] }); k++; }
   }
-  return out;
+  return out.filter(o => o.a != null && o.b != null && o.a !== o.b);
 }
 
 async function main() {
