@@ -18,7 +18,8 @@ import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
-import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf } from '@/lib/pdf-export';
+import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
+import { pipeTableToHtml } from '@/lib/markdown-table-html';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -234,6 +235,9 @@ function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
     if (block.startsWith('<h')) {
       return block;
     }
+    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
+    const table = pipeTableToHtml(block);
+    if (table) return table;
     // Replace single newlines with breaks within paragraphs
     block = block.replace(/\n/g, '<br/>');
     return `<p>${block}</p>`;
@@ -248,6 +252,19 @@ function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
 
 // Custom CSS for EPUB styling
 const EPUB_CSS = `
+table.page-table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.85em;
+  width: 100%;
+}
+table.page-table th, table.page-table td {
+  border: 1px solid #ccc;
+  padding: 0.25em 0.4em;
+  text-align: left;
+  vertical-align: top;
+}
+table.page-table th { background: #f2f0ec; font-weight: bold; }
 body {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.6;
@@ -1338,7 +1355,7 @@ function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocu
       if (!text) continue;
 
       writePdfPageHeading(doc, fonts, page.page_number);
-      doc.font(fonts.regular).fontSize(11).text(text, { lineGap: 3 });
+      writePdfBody(doc, fonts, text, { fontSize: 11, lineGap: 3 });
       doc.moveDown(0.8);
     }
 
@@ -1408,7 +1425,7 @@ function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocume
         const text = cleanTranslationForPdf(page.translation.data, book.id);
         if (text) {
           doc.moveDown(0.5);
-          doc.font(fonts.regular).fontSize(10.5).text(text, { lineGap: 3 });
+          writePdfBody(doc, fonts, text, { fontSize: 10.5, lineGap: 3 });
         }
       }
     }
