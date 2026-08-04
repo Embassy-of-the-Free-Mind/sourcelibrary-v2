@@ -87,10 +87,16 @@ agreement elsewhere.** Using the word metric on Tibetan is what produced the voi
 
 ## Open, in priority order
 
-1. **PR #3617 is unverified.** The confirmation run — that `data-provenance.md` passes
-   its own check — died on a DNS drop mid-scan. The enum table came from a *completed*
-   exact scan so the values are right, but the round trip is not closed. Re-run
-   `node scripts/audit/doc-enum-drift.mjs --fail-on-findings` before merging.
+1. ~~**PR #3617 is unverified.**~~ **RESOLVED 2026-08-05 — verified and ready to merge.**
+   Exact full scans, no sampling: `page_revisions.source` 12 values, `pages.ocr.source`
+   16, `pages.translation.source` 11, all documented. Two bugs fixed on the way
+   (`4210b4db`): the error path **hung forever** — `process.exitCode` does not force an
+   exit and nothing closed the MongoClient, so one run sat alive 2h43m holding a
+   connection pool; and phantom detection was reporting field *paths* as values. The
+   hang was only visible from the process list, because the status check had been
+   reporting a *different* process for an hour. **Run this audit on Hetzner** — exact
+   mode scans `pages` twice at 19.1M docs and two of three local attempts died on a
+   network blip mid-scan.
 2. **#3614 — two `is_default: true` prompts** for `{summary, Standard Summary}`, one
    with no `version` field. Violates an invariant `data-provenance.md` itself states;
    `getSummaryPrompt()` resolves arbitrarily and one path records
