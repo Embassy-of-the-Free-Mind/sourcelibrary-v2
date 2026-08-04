@@ -1,0 +1,44 @@
+{
+  "book_id": "6a2199664b61907ea5ffbbf4",
+  "work_identified": "Gommatsara Jiva-kanda (Jiva-kanda, 'The Soul') by Nemichandra Siddhanta Chakravarti (c. 10th century CE), a Jain philosophical text in Prakrit/Sanskrit treating the nature of the soul across 734 verses in 20 chapters — distinct from the companion Karma-kanda volume",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Gommatsara Jiva-kanda (The Soul) — Sacred Books of the Jainas, Vol. V",
+      "translator": "Rai Bahadur J.L. Jaini",
+      "pub_year": "1927",
+      "publisher": "Central Jaina Publishing House, Lucknow",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/sacredbooksofthe029558mbp"
+    }
+  ],
+  "queries_run": [
+    "Gommatsara Jiva-kanda English translation Nemichandra",
+    "\"Sacred Books of the Jainas\" Gommatsara Jiva Kanda translator",
+    "Gommatsara Jiva-kanda worldcat \"J.L. Jaini\" 1927 Sacred Books Jainas complete"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/sacredbooksofthe029558mbp",
+      "found": "Complete digitized edition: Sacred Books of the Jainas Vol. V, Gommatsara Jiva-kanda, trans. Rai Bahadur J.L. Jaini, Central Jaina Publishing House, Lucknow, 1927, 444 pp."
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Gommatsara_Jiva-Kand.pdf",
+      "found": "Wikimedia Commons PDF of the same 1927 Jaini translation, title page confirms 'Sacred Books of the Jainas Vol. V'"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Gommats%C4%81ra",
+      "found": "Wikipedia article on Gommatsara references the 1927 Jaini publication; no other English translation listed"
+    },
+    {
+      "url": "https://www.wisdomlib.org/jainism/book/gommatsara-by-acharya-nemichandra/d/doc1679521.html",
+      "found": "Wisdomlib hosts a later scholarly edition of the same Jaini translation with additional commentary volumes"
+    }
+  ],
+  "reasoning": "A complete modern English translation of Gommatsara Jiva-kanda by Rai Bahadur J.L. Jaini (Sacred Books of the Jainas Vol. V, Central Jaina Publishing House, 1927) is positively confirmed in Internet Archive and Wikimedia Commons. 1927 is post-1900, so first_modern does not apply. This is the same text (same title, same author, same 734-verse Jiva-kanda content), not a different edition."
+}

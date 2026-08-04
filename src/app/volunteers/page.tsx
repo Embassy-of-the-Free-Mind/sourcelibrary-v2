@@ -95,15 +95,16 @@ export default function VolunteersWelcomePage() {
           only for spam detection.
         </p>
         <p>
-          <b>Feedback:</b>{' '}
-          <a href="mailto:derek@playpowerlabs.com" className="text-accent-rust hover:underline">
-            derek@playpowerlabs.com
+          <b>Feedback:</b> every queue has a note box — if you can see something the rating buttons
+          can't express, write it there and it comes straight to us. For anything longer,{' '}
+          <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+            team@sourcelibrary.org
           </a>
           . Bug reports, queue ideas, and "this rating UI made me crazy" notes all welcome.
         </p>
         <p>
-          <b>Want to be credited?</b> Reply to the invite email and we'll add you to the contributors page once
-          that lands.
+          <b>Want to be credited?</b> Say so in a note or an email and we'll add you to the
+          contributors page once that lands.
         </p>
       </div>
     </main>

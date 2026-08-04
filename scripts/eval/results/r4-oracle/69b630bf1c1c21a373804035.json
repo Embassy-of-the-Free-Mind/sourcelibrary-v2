@@ -1,0 +1,83 @@
+{
+  "book_id": "69b630bf1c1c21a373804035",
+  "work_identified": "Summa de sponsalibus et matrimoniis (Summa super quarto libro Decretalium) by Johannes Andreae (Giovanni d'Andrea, c. 1270–1348) — a commentary on Book IV of the Gregorian Decretales treating betrothal and marriage law, written c. 1303–1313; distinct from his other canonical commentaries (Novella, Mercuriales, etc.)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Summa de sponsalibus et matrimoniis Johannes medieval Latin canon law English translation",
+    "\"Summa de sponsalibus et matrimoniis\" author Johannes",
+    "Johannes Andreae \"Summa de sponsalibus\" English translation published",
+    "WorldCat \"Johannes Andreae\" sponsalibus matrimoniis English",
+    "Giovanni d'Andrea \"marriage law\" canon law English translation medieval \"betrothals and marriages\"",
+    "HathiTrust \"Johannes Andreae\" \"sponsalibus\" English translation",
+    "\"Johannes Andreae\" canon law marriage English translation scholar university press",
+    "site:search.worldcat.org \"Johannes Andreae\" sponsalibus",
+    "\"Giovanni d'Andrea\" OR \"Johannes Andreae\" \"sponsalibus\" translated English first translation 2020 2021 2022 2023 2024 2025",
+    "\"Johannes Andreae\" sponsalibus matrimoniis \"translated by\" OR \"translation by\" English",
+    "medieval canon law marriage betrothal English translation \"Johannes Andreae\" JSTOR 2010 2015 2020",
+    "\"summa on betrothals\" OR \"summary on betrothals and marriages\" Johannes Andreae English",
+    "\"Summa de sponsalibus\" English translation dissertation thesis academic press 1900 2026",
+    "Johannes Andreae \"betrothals and marriages\" OR \"betrothal and marriage\" translation English 14th century canon law",
+    "\"Johannes Andreae\" OR \"Giovanni d'Andrea\" marriage law translation English 2024 2025 2026"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/ned-kbn-all-00002052-001",
+      "found": "Latin incunabulum (Deventer: Richard Paffraet, 1479); no English translation mentioned"
+    },
+    {
+      "url": "https://medieval.bodleian.ox.ac.uk/catalog/work_2451",
+      "found": "Bodleian records work as Latin only; all manuscript witnesses in Latin"
+    },
+    {
+      "url": "https://data.cerl.org/istc/id00162400",
+      "found": "ISTC records edition as Latin; no English edition listed"
+    },
+    {
+      "url": "https://portail.biblissima.fr/ark:/43093/oedataf105d830e59eaa5b42521d19bb06d9eb162e7342",
+      "found": "Four incunabula editions listed (Vienne c.1478-80, Basel c.1472-74, Paris 1489, Louvain 1483-85), all Latin; no English edition"
+    },
+    {
+      "url": "https://amesfoundation.law.harvard.edu/BioBibCanonists/Report_Biobib2.php?record_id=r339",
+      "found": "Harvard Ames Foundation bio-bibliographical guide for medieval canonists: Summa de sponsalibus not listed as a major circulating work; no English translations listed for any Andreae work"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Giovanni_d'Andrea",
+      "found": "Confirms work exists; no English translation noted; earliest print edition 1472-74 Basel"
+    },
+    {
+      "url": "https://www.textmanuscripts.com/tm-assets/tm-descriptions/descriptions-sept16/tm-881-johannes-andreae.pdf",
+      "found": "Dealer description of a manuscript: confirms no modern edition; six incunabula print editions before 1500; all Latin"
+    },
+    {
+      "url": "https://www.themorgan.org/incunables/133434",
+      "found": "Morgan Library holds a Latin incunabulum (Rome: Stephan Plannck, c. 1490); no English translation"
+    },
+    {
+      "url": "https://referenceworks.brillonline.com/entries/religion-past-and-present/johannes-andreae-SIM_22886",
+      "found": "Blocked (403); no data retrieved"
+    },
+    {
+      "url": "https://search.worldcat.org/search?q=Johannes+Andreae+sponsalibus+matrimoniis",
+      "found": "Blocked (403); no data retrieved"
+    },
+    {
+      "url": "https://catalog.hathitrust.org/Search/Home?q=%22sponsalibus+et+matrimoniis%22",
+      "found": "Blocked (403); no data retrieved"
+    },
+    {
+      "url": "https://www.europeana.eu/en/item/0940435/_nhXSWX2",
+      "found": "Europeana record confirms Latin text; no English translation"
+    },
+    {
+      "url": "https://data.cerl.org/thesaurus/cnp01324802",
+      "found": "CERL thesaurus entry for Johannes Andreae; all editions in Latin"
+    }
+  ],
+  "reasoning": "No English translation of this 14c. Latin canon law treatise found across ISTC, Biblissima, Internet Archive, Bodleian, Ames Foundation BioBib, Morgan Library, Europeana, CERL, and targeted academic searches. All six incunabula editions (1472-1490) and all known MSS are Latin only. No modern critical edition exists, let alone an English rendering."
+}

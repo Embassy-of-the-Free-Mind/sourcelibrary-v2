@@ -1,0 +1,65 @@
+{
+  "book_id": "6a08fd429c1b82475e15c49d",
+  "work_identified": "Hanjungnok (한중록) kwon 3 — the 1802 memoir narrating King Jeongjo's life as a young boy coping with his father Crown Prince Sado's execution; one of four autobiographical memoirs by Crown Princess Hyegyŏng of Joseon-dynasty Korea",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Han Joong Nok: Reminiscences in Retirement",
+      "translator": "Bruce K. Grant and Kim Chin-man",
+      "pub_year": "1980",
+      "publisher": "Larchwood Publications, New York",
+      "completeness": "complete",
+      "source_url": "https://www.nypl.org/research/research-catalog/bib/pb992473703506421"
+    },
+    {
+      "english_title": "Memoirs of a Korean Queen",
+      "translator": "Yang-hi Choe-Wall",
+      "pub_year": "1985",
+      "publisher": "KPI, London",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Han-joong-nok-Reminiscences-retirement/dp/B0006EAAGY"
+    },
+    {
+      "english_title": "The Memoirs of Lady Hyegyong: The Autobiographical Writings of a Crown Princess of Eighteenth-Century Korea",
+      "translator": "JaHyun Kim Haboush",
+      "pub_year": "1996",
+      "publisher": "University of California Press, Berkeley",
+      "completeness": "complete",
+      "source_url": "https://www.ucpress.edu/books/the-memoirs-of-lady-hyegyong/paper"
+    }
+  ],
+  "queries_run": [
+    "Hanjungnok \"Memoirs of Lady Hyegyong\" English translation JaHyun Kim Haboush UC Press",
+    "한중록 \"Hanjungnok\" English translation complete kwon volumes Crown Princess Hyegyong",
+    "Hanjungnok \"kwon 3\" OR \"memoir of 1802\" English translation content scope",
+    "WorldCat \"Han Joong Nok\" OR \"Hanjungnok\" English translation 1980 Grant Kim \"Reminiscences in Retirement\""
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.ucpress.edu/books/the-memoirs-of-lady-hyegyong/paper",
+      "found": "UC Press confirms Haboush 1996 translation includes all four memoirs (1795, 1801, 1802, 1805) — explicitly the first COMPLETE scholarly English translation"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Memoirs_of_Lady_Hyegy%C5%8Fng",
+      "found": "Wikipedia confirms four kwon structure; kwon 3 = 1802 memoir about King Jeongjo; Haboush translation covers all four"
+    },
+    {
+      "url": "https://koreanstudies.com/ks/ksr/ksr98-14.htm",
+      "found": "Scholarly review confirms Haboush covers all four narratives including the 1802 memoir (kwon 3); notes earlier translations by Grant/Kim 1980 and Choe-Wall 1985"
+    },
+    {
+      "url": "https://www.nypl.gov/research/research-catalog/bib/pb992473703506421",
+      "found": "NYPL catalog entry confirms Grant & Kim 1980 English translation 'Han joong nok: reminiscences in retirement' exists"
+    },
+    {
+      "url": "https://www.amazon.com/Memoirs-Lady-Hyegyong-Autobiographical-Eighteenth-Century/dp/0520280482",
+      "found": "Amazon listing confirms Haboush UC Press edition is a complete translation of all four memoirs"
+    }
+  ],
+  "reasoning": "Kwon 3 (the 1802 memoir) is one of the four kwon of Hanjungnok. All four kwon have complete English translations: Grant & Kim 1980, Choe-Wall 1985, and Haboush 1996 (the first complete scholarly edition). Source-language rule applies: complete modern English of this work exists. Verdict: not_first."
+}

@@ -30,10 +30,23 @@
  *   node scripts/audit/revision-image-shift.mjs [--sample=6000] [--min-pairs=3]
  *
  * WHAT THIS DOES NOT ANSWER — state it when reporting:
- *   A shift says the image changed. It does NOT say which side is correct.
- *   #3357 REPAIRED an e-rara off-by-one, so some shifts are the fix rather than
- *   the damage. Separating them needs archive history (`batch_jobs.page_sources`,
- *   `archived_photo` provenance), not the OCR text.
+ *   A shift says the two sides do not describe one leaf. It does NOT say which
+ *   side is correct, and it does NOT say the IMAGE moved.
+ *
+ *   RESOLVED 2026-07-30/08-01 for the dominant class, and it is the opposite of
+ *   what the header above guesses: the ±1 slice is the #3357 REPAIR moving `ocr`
+ *   subdocuments between page docs. The text moved and the image stayed put —
+ *   verified against two e-rara scans whose printed numbers match the LIVE text,
+ *   not the revision. So a ±1 shift here is one administrative event replicated
+ *   across thousands of pages, not thousands of independent re-readings.
+ *
+ *   AND YOU DO NOT NEED THIS SCRIPT TO KNOW THAT. `page_revisions.source` says
+ *   `shift-repair-erara-2026-07` on those rows outright — 29.5% of the
+ *   collection, 99% of them leaf-shifted, against 3.8% for `batch_api`. This
+ *   script remains useful as the INDEPENDENT check on that label (it reads the
+ *   page's own printed number, which no writer controls), but the label is the
+ *   cheaper primary and it also covers pairs that print no number at all.
+ *   See `scripts/audit/ocr-revision-provenance.mjs`.
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';

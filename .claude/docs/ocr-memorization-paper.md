@@ -746,3 +746,97 @@ camera-ready Nov 13; Manchester Jan 6–8.
   org/token setup is Derek's, then `publish.sh v0.3`. Zenodo remains available
   later if a DOI is wanted for the paper's camera-ready; HF revision tags carry
   versioning until then.
+
+## Drafting brief (the prompt to commission a draft)
+
+Nothing above is prose. This section is the commissioning brief for whoever writes
+the draft — human or model. It exists because the failure mode of a one-shot "write
+the paper" prompt is confident overclaiming, and **a paper arguing that benchmark
+scores are inflated cannot itself inflate.** The brief is designed to make the
+honest version the easy version.
+
+### Sequence: note first, paper second
+
+Draft the **blog research note** (~1,500 words) before the paper. Compression is a
+filter: a claim that cannot survive 1,500 words does not belong in the paper's
+abstract either. The note is also citable and dated, which stakes the claim while
+the paper is written (see scoop watchlist).
+
+### Inputs — read in this order, and re-derive every number
+
+1. This document (claim, contributions, outcome measures, limitations).
+2. **Regenerate the numbers, do not copy them from prose**:
+   `node scripts/eval/report-canonical-gap.mjs` and `node scripts/eval/report-arms.mjs`
+   over `scripts/eval/observations/ocr-observations-<date>.jsonl`.
+3. `scripts/eval/dataset/v0.2/README.md` — the datasheet, caveats, and licensing.
+4. The handoffs `.claude/handoffs/2026-07-19-noncanon-eval-{continuation,v02}.md`
+   for provenance and the incidents behind the design.
+
+This document has carried **two generations of results**. Any figure that appears
+in prose but not in a regenerated report is superseded. The canonical example: the
+pooled subsidy once read `pro +2.2pp / sonnet5 +2.6pp` at n=23 and does not survive
+at n=40. Reprinting it would be the exact error the paper is about.
+
+### The claim ladder
+
+**Tier A — assert plainly.** Well supported, robust to the rebuild:
+- The outcome-battery **ranking inversion**: conditional accuracy ranks Pro first;
+  unconditional accuracy puts the cheapest model and the production pipeline ahead
+  of it. Survived tripling the page count.
+- **Recitation is real and demonstrable**: two canonical rows were deleted from our
+  own dataset after page-scan audits proved letter-perfect emission of text not
+  printed on the page.
+- **Consensus is not independent on canonical text** — the failure condition for the
+  Consensus Entropy line. The corpus arm supplies the converse (agreement
+  *understating* quality on marginal text).
+- **Resolution effects in 600–2000px are mediated by truncation, not legibility.**
+- The **annotation prompt costs ≈1pp** unconditional accuracy, alignment unchanged.
+
+**Tier B — assert only with the control named in the same sentence.**
+- The memorization subsidy itself: 1.0–5.4pp, **same-book**, and the sentence must
+  say it rests on **two books** (1580 Virgil, 1566 Louvain Vulgate).
+
+**Tier C — must NOT be asserted.**
+- The **pooled** canonical/non-canonical gap as an effect. It is reported as a
+  *methodological* result: pooling across unmatched pages destroys the signal, which
+  is why matched contrasts are the design. Do not launder it into a headline number.
+- A **canonicity × prompt interaction** — the signs disagree across models.
+- Any **causal** account of why small models show larger gaps.
+- "First to study", "never studied in transcription", or any unqualified priority
+  claim. Use the dossier's formulation: proved for ASR (Tseng et al. 2505.22251),
+  **unmeasured in OCR**. Cite Karamolegkou et al. 2605.27750 in the first paragraph
+  and differentiate generously.
+
+### Hard prohibitions
+
+- **No citation that is not already in the dossier above.** Every entry there was
+  abstract-checked. Adding a remembered reference to a contamination paper is fatal;
+  if a new citation is genuinely needed, flag it for verification rather than
+  inserting it.
+- **No number without a reproduction path.** The draft ships with a numbers table
+  mapping each figure to the command and file that produce it.
+- **Do not bury the negative result.** That the pooled gap collapsed under a larger
+  sample is the paper's credibility, not its embarrassment. It belongs in the
+  abstract, not a footnote.
+- **No quotation from a source not verified verbatim** (house rule; `get_quote` for
+  anything from the corpus).
+- Report n on every claim. Cells are unbalanced and small.
+
+### The sentence to build around
+
+The dossier's assessment is that this may be the sharpest available framing, and no
+prior work states it: **the ground-truth supply and the contamination are the same
+variable.** The texts with free published transcriptions — the only texts cheap
+enough to build historical OCR benchmarks from — are precisely the texts the models
+have memorized. The field's ground truth is contaminated by construction.
+
+### Self-check before handing the draft back
+
+1. **Numbers table**: every figure, its regenerating command, and its n.
+2. **Claims audit**: each claim tagged A/B/C against the ladder; any C-tier claim
+   that crept in gets cut or demoted.
+3. **Citation audit**: every reference present in the dossier; none invented.
+4. **Adversarial referee pass**: a second, independent agent instructed to *reject*
+   the draft — strongest available objection to each claim, with the sample sizes in
+   hand. Fix what survives. This is the same pattern the first-translation
+   verification uses, and for the same reason.

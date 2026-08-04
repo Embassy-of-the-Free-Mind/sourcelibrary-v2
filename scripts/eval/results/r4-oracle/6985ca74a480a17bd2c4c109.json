@@ -1,0 +1,40 @@
+{
+  "book_id": "6985ca74a480a17bd2c4c109",
+  "work_identified": "Prodromus, oder Vortrab, nothwendiger Rettung vornehmer evangelischer hohen und niedern Standts, betrangten und verleumbden Persohnen — attributed to Ludwig Camerarius (1573–1651), German Protestant political pamphlet c. 1622, defending evangelical nobles and persons against Catholic accusations during the Thirty Years' War; published anonymously in multiple German editions",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Prodromus Vortrab \"nothwendiger Rettung\" evangelischer English translation",
+    "\"Prodromus oder Vortrab\" nothwendiger Rettung evangelischer German anonymous",
+    "Ludwig Camerarius \"Prodromus\" 1622 English translation WorldCat",
+    "Camerarius \"Prodromus\" 1622 \"Thirty Years War\" pamphlet English translation available",
+    "Camerarius \"Vortrab\" \"nothwendiger Rettung\" English ESTC STC early modern pamphlet",
+    "VD17 \"Prodromus\" \"Vortrab\" Camerarius 1622 catalog record",
+    "\"Elmer Beller\" \"Thirty Years War\" English printed sources pamphlets Camerarius Prodromus",
+    "Camerarius \"Prodromus\" evangelical Thirty Years War English translation \"nothwendiger Rettung\" Rosicrucian esotericism",
+    "\"Ludwig Camerarius\" Prodromus \"Vortrab\" English HathiTrust scholar translation",
+    "\"Ludwig Camerarius\" OR \"Camerarius 1622\" \"Prodromus\" English HathiTrust scholar translation",
+    "worldcat \"Prodromus\" \"Vortrab\" \"Rettung\" evangelischer Camerarius editions languages",
+    "\"Ludwig Camerarius\" Prodromus \"Vortrab\" English primary source anthology translation published",
+    "Camerarius 1622 \"Prodromus\" \"Vortrab\" archive.org digitized copy",
+    "\"Prodromus\" \"Vortrab\" Camerarius 1622 propaganda Thirty Years War translation English scholarship"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Ludwig_Camerarius", "found": "Camerarius authored the Prodromus oder Vortrab (1622); no English translation mentioned in any Wikipedia language edition"},
+    {"url": "https://www.deutsche-digitale-bibliothek.de/item/IT3NSELJ7Z2YIYRGI5GDCLVM5N3UMAEW", "found": "DDB record for the work; ~12 related editions cataloged, all in German; no English translation listed"},
+    {"url": "https://digitale.bibliothek.uni-halle.de/vd17/search?query=Camerarius+Ludwig", "found": "VD17 catalog: all Camerarius entries in German; VD17 23:304309R is the primary record; no English-language edition recorded"},
+    {"url": "https://play.google.com/store/books/details?id=WixUAAAAcAAJ", "found": "Google Books: two distinct editions of the German Prodromus, both in early modern German"},
+    {"url": "https://play.google.com/store/books/details?id=NDQWyHlQ774C", "found": "Google Books: another German edition, January 1622, no English translation"},
+    {"url": "https://ndpr.nd.edu/reviews/reason-of-state-propaganda-and-the-thirty-years-war-an-unknown-translation-by-thomas-hobbes/", "found": "Review of Noel Malcolm ed. on Hobbes Thirty Years War translation — work translated by Hobbes was a Latin Habsburg pamphlet, not the Prodromus; Camerarius not mentioned"},
+    {"url": "https://www.jstor.org/stable/1843383", "found": "Beller 'Contemporary English Printed Sources for the Thirty Years War' — paywalled, but title confirms existence of scholarly survey; no result from open access portion citing English Prodromus"},
+    {"url": "https://search.worldcat.org/search?q=prodromus+vortrab+rettung+evangelischer", "found": "WorldCat direct: 403 Forbidden; indirect via Google search of WorldCat returned only German-language editions"},
+    {"url": "https://archive.org/search?query=Prodromus+Vortrab+Rettung+Evangelischer+Camerarius", "found": "No matching items found on archive.org for this specific work"},
+    {"url": "https://www.wikidata.org/wiki/Q1258320", "found": "Wikidata entry for Ludwig Camerarius: lists no English translations of any works"}
+  ],
+  "reasoning": "No English translation of this 1622 German Protestant propaganda pamphlet found in DDB/VD17 (all ~12 editions German), archive.org, WorldCat (blocked, indirect search confirms German only), Wikipedia, or Thirty Years' War scholarship. The text is an obscure political broadside, not an esoteric/alchemical work, making translation by any academic or specialist press highly unlikely. WorldCat direct access was blocked (403), limiting certainty to medium."
+}

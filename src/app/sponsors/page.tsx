@@ -342,8 +342,16 @@ export default async function SponsorsPage() {
               </div>
               <div className="font-semibold text-stone-900 mb-1">Cultural ANBI</div>
               <p className="text-sm text-stone-600 leading-relaxed">
-                Stichting Het Wereldhart holds Cultural ANBI status — 125% deductibility for Dutch
-                corporate donors under the Geefwet.
+                Stichting Het Wereldhart holds Cultural ANBI status. A Dutch company deducts gifts
+                against profit up to 50% of profit (€100,000/year), and the first €5,000 counts at
+                150%. See{' '}
+                <Link
+                  href="/support/business"
+                  className="text-[#9e4a3a] underline hover:text-[#7e3a2e]"
+                >
+                  giving through your company
+                </Link>
+                .
               </p>
             </div>
           </div>

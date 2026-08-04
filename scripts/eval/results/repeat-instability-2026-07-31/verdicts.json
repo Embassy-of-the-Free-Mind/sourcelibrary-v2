@@ -1,0 +1,50 @@
+[
+ {
+  "pair": "01",
+  "harder": "B",
+  "reason": "complex layout",
+  "note": "A: one blank verso + one page of Kurrent, left edge clipped. B: full opening, TWO dense manuscript pages, both inner margins clipped at the seam, heavier staining."
+ },
+ {
+  "pair": "02",
+  "harder": "A",
+  "reason": "bleed-through",
+  "note": "A: mirrored show-through overlapping the body, facing-page column intruding at left edge. B: same book, fainter show-through, crisp type."
+ },
+ {
+  "pair": "03",
+  "harder": "B",
+  "reason": "clipped + abbreviation",
+  "note": "A: worn type, pharmaceutical abbreviations, facing page at left, but own text intact. B: own text cut off at the RIGHT edge on nearly every line, all-italic, alchemical symbols."
+ },
+ {
+  "pair": "04",
+  "harder": "B",
+  "reason": "complex layout",
+  "note": "A: three levels of nested braces (a b c). B: six levels (a b c d e f), heavier show-through, Greek beta as section marker."
+ },
+ {
+  "pair": "05",
+  "harder": "B",
+  "reason": "complex layout",
+  "note": "A: clean crisp roman, generous leading, mild show-through. B: TITLE PAGE - ornamental headpiece, display capitals in several sizes, decorated drop cap, italic citation block, facing-page column intruding, heavy show-through."
+ },
+ {
+  "pair": "06",
+  "harder": "A",
+  "reason": "clipped + bleed-through",
+  "note": "A: systematic right-edge clipping losing final letters on many lines, strong reversed show-through at foot. B: same book, text within margins, hand-underlining and stains but readable."
+ },
+ {
+  "pair": "09",
+  "harder": "A",
+  "reason": "complex layout",
+  "note": "A: full opening, both pages dense, Latin roman left + Italian italic right, ornamental borders. B: same structure but left page much shorter; B has a faded patch in the title line."
+ },
+ {
+  "pair": "11",
+  "harder": "A",
+  "reason": "bleed-through",
+  "note": "A: near-blank opening, visible content is almost entirely REVERSED show-through from the verso plus a gothic display title. B: clean Victorian prose, two full crisp pages."
+ }
+]

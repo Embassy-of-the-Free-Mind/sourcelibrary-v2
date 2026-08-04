@@ -1,0 +1,90 @@
+{
+  "book_id": "69b3e612304c1c6b3950b1a3",
+  "work_identified": "Collection of astronomical and astrological texts by Abraham ibn Ezra (Hebrew) — identity unresolved; cataloger's generic title for a compiled manuscript or printed collection. Likely contains some or all of ibn Ezra's astrological corpus (Reshit Hokhmah, Sefer ha-Te'amim, Sefer ha-Olam, Sefer ha-Moladot, Sefer ha-She'elot, Sefer ha-Mivharim, Sefer ha-Me'orot, Mishpetei ha-Mazzalot) and possibly distinct astronomical works (Keli ha-Nehoshet, astronomical tables, Sefer ha-ibbur).",
+  "verdict": "needs_review",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "low",
+  "prior_translations_found": [
+    {
+      "english_title": "Abraham Ibn Ezra The Book of Reasons: A Parallel Hebrew-English Critical Edition of the Two Versions of the Text",
+      "translator": "Shlomo Sela",
+      "pub_year": "2007",
+      "publisher": "Brill (Études sur le judaïsme médiéval)",
+      "completeness": "complete",
+      "source_url": "https://brill.com/display/title/13739"
+    },
+    {
+      "english_title": "Abraham Ibn Ezra The Book of the World: A Parallel Hebrew-English Critical Edition of the Two Versions of the Text",
+      "translator": "Shlomo Sela",
+      "pub_year": "2010",
+      "publisher": "Brill (Études sur le judaïsme médiéval, 39)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Abraham-Judasme-Mdival-English-Hebrew/dp/9004179143"
+    },
+    {
+      "english_title": "Abraham Ibn Ezra on Elections, Interrogations, and Medical Astrology: A Parallel Hebrew-English Critical Edition of the Book of Elections (3 versions), the Book of Interrogations (3 versions), and the Book of the Luminaries",
+      "translator": "Shlomo Sela",
+      "pub_year": "2011",
+      "publisher": "Brill (Études sur le judaïsme médiéval, 50)",
+      "completeness": "complete",
+      "source_url": "https://brill.com/view/title/20526"
+    },
+    {
+      "english_title": "Abraham Ibn Ezra on Nativities and Continuous Horoscopy: A Parallel Hebrew-English Critical Edition of the Book of Nativities and the Book of Revolution",
+      "translator": "Shlomo Sela",
+      "pub_year": "2013",
+      "publisher": "Brill (Études sur le judaïsme médiéval, 59)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Abraham-Ezra-Nativities-Continuous-Horoscopy/dp/9004258515"
+    },
+    {
+      "english_title": "Abraham Ibn Ezra's Introductions to Astrology: A Parallel Hebrew-English Critical Edition of the Book of the Beginning of Wisdom and the Book of the Judgments of the Zodiacal Signs",
+      "translator": "Shlomo Sela",
+      "pub_year": "2017",
+      "publisher": "Brill (Études sur le judaïsme médiéval, 69)",
+      "completeness": "complete",
+      "source_url": "https://brill.com/display/title/33816"
+    },
+    {
+      "english_title": "Sefer Ha'ibbur: A Treatise on the Calendar",
+      "translator": "Mordechai S. Goodman",
+      "pub_year": "2011",
+      "publisher": "KTAV Publishing House",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Sefer-ha%60ibbur-Treatise-Calendar-Abraham/dp/1602801606"
+    }
+  ],
+  "queries_run": [
+    "Shlomo Sela Abraham ibn Ezra astrological works English translation Brill",
+    "Abraham ibn Ezra 'collection of astronomical and astrological texts' Hebrew English translation",
+    "Abraham ibn Ezra 'astrological writings' Sela Brill complete series volumes list",
+    "Shlomo Sela ibn Ezra 'book of the luminaries' 'book of elections' 'book of interrogations' English translation",
+    "Abraham ibn Ezra astronomical astrological texts collection Hebrew manuscript WorldCat",
+    "Abraham ibn Ezra complete astrological works Hebrew 'astronomical' collection WorldCat catalog",
+    "Abraham ibn Ezra astronomical works English translation 'sefer ha-ibbur' OR 'book of intercalation' OR 'astronomical tables' Hebrew",
+    "Abraham ibn Ezra Hebrew astrological collection 'first English translation' OR 'previously untranslated'",
+    "Abraham ibn Ezra 'keli ha-nehoshet' OR 'keli ha-nechoshet' astrolabe English translation 2000s",
+    "Abraham ibn Ezra 'sefer ha-ibbur' English translation published",
+    "Shlomo Sela 'Abraham ibn Ezra' 'all astrological works' OR 'complete astrological' Brill series five volumes",
+    "Abraham ibn Ezra 'sefer ha-te'amim' OR 'sefer ha-olam' OR 'reshit hokhmah' collection Hebrew printed 1507 OR 1482",
+    "'keli ha-nehoshet' OR 'keli ha-nechoshet' 'ibn ezra' astrolabe English translation 2000s",
+    "Abraham ibn Ezra 'astronomical and astrological' Hebrew collection OR manuscript translation English first",
+    "Abraham ibn Ezra 'sefer ha-ibbur' Goodman KTAV 2011 'first English translation' calendar"
+  ],
+  "sources_consulted": [
+    {"url": "https://brill.com/display/title/33816", "found": "Sela Vol 5 (2017) — 'completes the publication of Ibn Ezra's Hebrew astrological work' (19 texts across 5 vols)"},
+    {"url": "https://brill.com/view/title/20526", "found": "Sela Vol 3 (2011): Elections, Interrogations, Medical Astrology (Book of Luminaries)"},
+    {"url": "https://archive.org/details/abraham-ibn-ezras-introductions-to-astrology", "found": "Sela Vol 5 available on Internet Archive; confirms English translation of Reshit Hokhmah + Mishpetei ha-Mazzalot"},
+    {"url": "https://www.amazon.com/Sefer-ha%60ibbur-Treatise-Calendar-Abraham/dp/1602801606", "found": "Goodman (KTAV, 2011): first annotated English translation of Sefer ha-ibbur confirmed"},
+    {"url": "https://networks.h-net.org/node/28655/reviews/30886/sela-rabbi-abraham-ibn-ezra-sefer-haibbur-treatise-calendar-rabbi", "found": "H-Net review confirms Goodman is first annotated English translation of Sefer ha-ibbur"},
+    {"url": "https://en.wikipedia.org/wiki/Abraham_ibn_Ezra", "found": "Full list of ibn Ezra's astronomical works: Keli ha-Nehoshet (astrolabe), Sefer ha-ibbur (calendar), astronomical tables — distinct from astrological corpus"},
+    {"url": "https://islamsci.mcgill.ca/RASI/BEA/Ibn_Ezra_BEA.htm", "found": "McGill ISMI bibliography: lists astronomical works (Keli ha-nehoshet, Sefer ha-ibbur, Sefer ta'amei ha-luhot); only 1988 commentary translated to English"},
+    {"url": "https://www.textmanuscripts.com/medieval/hebrew-astronomy-60710", "found": "Manuscript miscellany including Keli ha-Nehoshet — no English translation referenced"},
+    {"url": "https://openn.library.upenn.edu/Data/0001/html/ljs57.html", "found": "Penn Hebrew astronomical anthology (LJS 57, 1391 Catalonia) — multi-author, not this collection"},
+    {"url": "https://worldcat.org/oclc/983796147", "found": "WorldCat record for Sela Vol 5 — confirmed publication; full WorldCat search blocked (403)"}
+  ],
+  "reasoning": "Sela/Brill (2007-2017) completed English translation of ALL 19 astrological works; Goodman/KTAV (2011) translated Sefer ha-ibbur. Title says 'astronomical AND astrological' — Keli ha-Nehoshet (astrolabe) and astronomical tables have no published English translation. Work identity unresolved: exact texts in this collection unknown; if includes untranslated astronomical works, no complete prior English exists."
+}

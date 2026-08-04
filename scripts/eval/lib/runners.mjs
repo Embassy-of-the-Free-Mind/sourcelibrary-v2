@@ -6,29 +6,13 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+// Prices come from the one shared table — this file used to carry its own copy,
+// which is how `gemini-3.1-flash-lite` ended up costed 3.3x apart across lanes.
+import { priceFor } from '../../lib/model-pricing.mjs';
 
-// ── Pricing (per 1M tokens, USD) ───────────────────────────────────
-
-const PRICING = {
-  'gemini-3-flash-preview':       { input: 0.50, output: 3.00 },
-  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-  'gemini-3.5-flash-lite':        { input: 0.30, output: 2.50 },
-  'gemini-3.6-flash':             { input: 1.50, output: 7.50 },
-  'gemini-3.1-pro-preview':       { input: 2.50, output: 15.00 },
-  'gemini-2.5-flash':             { input: 0.15, output: 0.60 },
-  'claude-fable-5':               { input: 10.00, output: 50.00 },
-  'claude-opus-4-8':              { input: 5.00, output: 25.00 },
-  'claude-sonnet-5':              { input: 3.00, output: 15.00 },
-  'claude-opus-4-6':              { input: 15.00, output: 75.00 },
-  'claude-sonnet-4-6':            { input: 3.00, output: 15.00 },
-  'claude-haiku-4-5-20251001':    { input: 0.80, output: 4.00 },
-  'mistral-medium-latest':        { input: 1.50, output: 7.50 },
-  'mistral-small-latest':         { input: 0.15, output: 0.60 },
-  default:                        { input: 0.50, output: 3.00 },
-};
 
 function calcCost(model, inputTokens, outputTokens) {
-  const p = PRICING[model] || PRICING.default;
+  const p = priceFor(model);
   return (inputTokens / 1e6) * p.input + (outputTokens / 1e6) * p.output;
 }
 
@@ -41,7 +25,7 @@ export function estimateCost(model, runsPerPage, sampleSize) {
   if (isMistralOcrModel(resolveModel(model))) {
     return { calls, estimatedUsd: calls * MISTRAL_OCR_USD_PER_PAGE };
   }
-  const p = PRICING[model] || PRICING.default;
+  const p = priceFor(model);
   // Rough estimate: ~1500 input tokens (image), ~2000 output tokens per OCR call
   const inputPerCall = 1500;
   const outputPerCall = 2000;

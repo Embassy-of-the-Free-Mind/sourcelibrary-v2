@@ -12,8 +12,13 @@ const priorClaimed = o => Array.isArray(o.prior_translations_found) && o.prior_t
 const priorExists = o => o.verdict === 'not_first' || priorClaimed(o);
 // already-English / wordless-art items (manually verified across both rounds)
 const ALREADY_ENGLISH = new Set([
+  // R1+R2: already-English originals / wordless art (NA = genuinely not a first candidate)
   '69aec4473b6ebce5e0ee5929','69b52fab1a04ee0f3b4180e9','699246b3bc722ec0ee81144f',
   '695581a157e3b773024f6989','69b3e686abb796bfd9de42ab','69ea3eb8300d991d0f1d4152',
+  // R3: Moninckx Atlas + Miniatures (wordless visual art), Roscoe Vie de Laurent (French tr. of English original)
+  '69b4cce0d5b6c3815e1a2892','69f3383f876dd827cbc5389c','69c63918881bf48c13c42648',
+  // R4: Wycliffe Bible Vol 2 (Middle English), White Ancient History of the Maori (bilingual English edition)
+  '699246babc722ec0ee8120e8','699249e7a2d53df4853c0e9c',
 ]);
 function corr(o){
   if(!o) return 'MISSING';
@@ -45,13 +50,15 @@ function loadRound(keyFile, gemFile, oracleDir){
 
 const r1 = loadRound('ft-pilot-r1-scoringkey.json','ft-pilot-r1-gemini.json','r1-oracle');
 const r2 = existsSync(`${R}/r2-oracle`) ? loadRound('ft-pilot-r2-scoringkey.json','ft-pilot-r2-gemini.json','r2-oracle') : [];
-const all = [...r1, ...r2].filter(r=>r.oCorr!=='MISSING' && r.g);
+const r3 = existsSync(`${R}/r3-oracle`) ? loadRound('ft-pilot-r3-scoringkey.json','ft-pilot-r3-gemini.json','r3-oracle') : [];
+const r4 = existsSync(`${R}/r4-oracle`) ? loadRound('ft-pilot-r4-scoringkey.json','ft-pilot-r4-gemini.json','r4-oracle') : [];
+const all = [...r1, ...r2, ...r3, ...r4].filter(r=>r.oCorr!=='MISSING' && r.g);
 
 function wilson(k,n){ if(!n) return [0,0,0]; const z=1.959963985,p=k/n,d=1+z*z/n;
   const c=(p+z*z/(2*n))/d, h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d; return [p,Math.max(0,c-h),Math.min(1,c+h)]; }
 const pct=x=>(100*x).toFixed(1)+'%';
 
-console.log(`\n===== #2880 CUMULATIVE (R1+R2), CORRECTED rubric — n=${all.length} (R1=${r1.length}, R2=${r2.length}) =====`);
+console.log(`\n===== #2880 CUMULATIVE (R1-R4), CORRECTED rubric — n=${all.length} (R1=${r1.length}, R2=${r2.length}, R3=${r3.length}, R4=${r4.length}) =====`);
 const strata=[...new Set(all.map(r=>r.stratum))];
 console.log('stratum                  n | genuine-FIRST [Wilson95] | not_first | NA(Eng) | indet');
 for(const s of [...strata,'__ALL__']){
@@ -89,20 +96,28 @@ const GEN = new Set(['anonymous','anon','unknown','various','collective','multip
 const bookIso = b => { for(const k of [norm(b.original_language),norm(b.language)]){ if(!k) continue; if(LANG_ISO[k]) return LANG_ISO[k]; const f=k.split(/[-\/, ]/)[0]; if(LANG_ISO[f]) return LANG_ISO[f]; } return norm(b.language)||'unknown'; };
 const isGeneric = a => { const n=norm(a); return !n||GEN.has(n)||n.length<3; };
 
-// scoringkey rows lack language/author — attach them from the R2 manifest so the guards can see them
+// scoringkey rows lack language/author — attach them from the round manifests so the guards can see them
 const r2man = new Map(JSON.parse(readFileSync(`${R}/ft-pilot-sample-r2-2026-06-30.json`,'utf8')).manifest.map(b=>[b.id,b]));
 for(const r of r2){ const m=r2man.get(r.id); if(m){ r.language=m.language; r.original_language=m.original_language; r.author=m.author; } }
+for(const [rnd,file] of [[r3,'ft-pilot-sample-r3-2026-06-30.json'],[r4,'ft-pilot-sample-r4-2026-06-30.json']]){
+  if(existsSync(`${R}/${file}`)){
+    const man = new Map(JSON.parse(readFileSync(`${R}/${file}`,'utf8')).manifest.map(b=>[b.id,b]));
+    for(const r of rnd){ const m=man.get(r.id); if(m){ r.language=m.language; r.original_language=m.original_language; r.author=m.author; } }
+  }
+}
 
-console.log(`\n===== #2885a Tier-0 ALIGNMENT AUDIT (Round 2 catalog matches) =====`);
-const hits = r2.filter(r=>r.tier0 && r.tier0.catalog_id && r.o);
+console.log(`\n===== #2885a Tier-0 ALIGNMENT AUDIT (Rounds 2-4 catalog matches) =====`);
+const hits = [...r2, ...r3, ...r4].filter(r=>r.tier0 && r.tier0.catalog_id && r.o);
 console.log(`Raw sampler candidates: ${hits.length}`);
 let prodKeep=[], prodReject=[];
+const MIN_TITLE_COVERAGE = 0.6; // production ft-catalog-match.mjs threshold (sampler used 0.3)
 for(const r of hits){
   const passLang = bookIso(r) === 'la';      // catalog is entirely src=la
   const generic = isGeneric(r.author);
-  (passLang && !generic ? prodKeep : prodReject).push(r);
+  const passTitle = (r.tier0.title_overlap ?? 0) >= MIN_TITLE_COVERAGE; // production title-coverage gate
+  (passLang && !generic && passTitle ? prodKeep : prodReject).push(r);
 }
-console.log(`After PRODUCTION guards (source-lang==la + non-generic author): KEEP ${prodKeep.length} / REJECT ${prodReject.length}`);
+console.log(`After PRODUCTION guards (source-lang==la + non-generic author + title-coverage>=${MIN_TITLE_COVERAGE}): KEEP ${prodKeep.length} / REJECT ${prodReject.length}`);
 let trueMerge=0, falseMerge=0;
 console.log('PRODUCTION-equivalent matches (these are what Tier-0 would actually nominate):');
 for(const r of prodKeep){

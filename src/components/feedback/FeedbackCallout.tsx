@@ -49,7 +49,7 @@ export default function FeedbackCallout() {
           className="font-serif text-xl sm:text-2xl leading-relaxed mb-2"
           style={{ color: 'var(--text-primary, #2c2824)' }}
         >
-          This library is built in the open.
+          Share your feedback.
         </p>
         <p
           className="text-sm sm:text-base mb-6 max-w-lg mx-auto"

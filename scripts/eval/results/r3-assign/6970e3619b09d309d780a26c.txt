@@ -1,0 +1,4 @@
+book_id: 6970e3619b09d309d780a26c
+Title: Alchimistisch Sieben-Gestirn, das ist: sieben schöne und auserlesene Tractätlein, vom Stein der Weisen
+Author: Anonymous
+Source language: German

@@ -9,6 +9,7 @@ import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -125,7 +126,7 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />

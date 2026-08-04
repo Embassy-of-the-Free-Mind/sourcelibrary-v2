@@ -1,0 +1,4 @@
+book_id: 6992ce93673ee1e40e321116
+Title: 武備志(六十九)
+Author: 茅元儀
+Source language: Chinese

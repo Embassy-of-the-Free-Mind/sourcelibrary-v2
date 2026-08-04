@@ -80,9 +80,227 @@ function flattenTagsForPdf(text: string): string {
  */
 export function cleanTranslationForPdf(raw: string, bookId: string): string {
   if (!raw) return '';
-  const stripped = stripEditorialWrappers(raw);
+  // keepTables — a downloaded edition is the whole text, not a snippet. The
+  // default flattening keeps every cell value but discards the column it
+  // belonged to; `writePdfBody()` below lays the surviving markup out as a real
+  // PDF table instead. (40% of pages in a manuscript like Kitab al-Bulhan are
+  // calendar/abjad tables, so this is not an edge case.)
+  const stripped = stripEditorialWrappers(raw, { keepTables: true });
   const marked = markForExport(stripped, bookId);
   return flattenTagsForPdf(marked);
+}
+
+/** A run of page text: either flowing prose or a GFM table. */
+export type PdfBlock =
+  | { kind: 'text'; text: string }
+  | { kind: 'table'; rows: string[][]; hasHeader: boolean };
+
+const TABLE_ROW_RE = /^[ \t]*\|(.+)\|[ \t]*$/;
+/** GFM alignment/separator row — cells are only dashes with optional colons. */
+const TABLE_SEPARATOR_RE = /^[ \t]*\|?[ \t]*:?-+:?[ \t]*(?:\|[ \t]*:?-+:?[ \t]*)+\|?[ \t]*$/;
+
+const splitRow = (line: string): string[] =>
+  (line.match(TABLE_ROW_RE)?.[1] ?? '').split('|').map(c => c.trim());
+
+/**
+ * Split cleaned page text into prose and table blocks so each can be laid out
+ * with the right pdfkit primitive. A table is a maximal run of consecutive
+ * pipe-delimited lines; its separator row marks the preceding row as a header.
+ *
+ * Exported for testing — `writePdfBody()` is the normal entry point.
+ */
+export function splitPdfBlocks(text: string): PdfBlock[] {
+  const blocks: PdfBlock[] = [];
+  let prose: string[] = [];
+  let rows: string[][] = [];
+  let hasHeader = false;
+
+  const flushProse = () => {
+    const t = prose.join('\n').trim();
+    if (t) blocks.push({ kind: 'text', text: t });
+    prose = [];
+  };
+  const flushTable = () => {
+    // Drop a fully-empty header row ("| | |") — common in OCR'd tables and it
+    // would render as a band of blank cells.
+    if (rows.length && rows[0].every(c => !c)) {
+      rows.shift();
+      hasHeader = false;
+    }
+    if (rows.length) {
+      // RECTANGULARIZE. OCR'd tables are frequently ragged — a damaged or
+      // merged cell drops a pipe, so row lengths vary within one table (a real
+      // page in Kitab al-Bulhan yields rows of 9, 10 and 11 cells). pdfkit sizes
+      // columns from the widest declared row and then throws
+      // "unsupported number: undefined" on any cell past that, killing the whole
+      // download. Pad short rows so the block invariant is "rectangular".
+      const width = Math.max(...rows.map(r => r.length));
+      rows = rows.map(r => (r.length === width ? r : [...r, ...Array(width - r.length).fill('')]));
+      blocks.push({ kind: 'table', rows, hasHeader });
+    }
+    rows = [];
+    hasHeader = false;
+  };
+
+  for (const line of text.split('\n')) {
+    if (TABLE_SEPARATOR_RE.test(line) && rows.length) {
+      // The row already collected is the header.
+      hasHeader = true;
+      continue;
+    }
+    if (TABLE_ROW_RE.test(line)) {
+      if (!rows.length) flushProse();
+      rows.push(splitRow(line));
+      continue;
+    }
+    if (rows.length) flushTable();
+    prose.push(line);
+  }
+  flushTable();
+  flushProse();
+  return blocks;
+}
+
+/**
+ * Arabic-script range (incl. supplement, extended-A and the presentation forms).
+ * Deliberately does NOT include Latin, so a transliteration like "durrī" stays
+ * on the Latin face.
+ */
+const ARABIC_RE = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+/** A run is Arabic if it holds Arabic letters; adjacent spaces/punctuation ride along. */
+const ARABIC_RUN_RE =
+  /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿][؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿\s،؛؟]*/g;
+
+/** Split text into alternating Latin / Arabic runs, preserving order. */
+export function splitScriptRuns(text: string): Array<{ arabic: boolean; text: string }> {
+  if (!ARABIC_RE.test(text)) return [{ arabic: false, text }];
+  const runs: Array<{ arabic: boolean; text: string }> = [];
+  let last = 0;
+  for (const m of text.matchAll(ARABIC_RUN_RE)) {
+    const start = m.index ?? 0;
+    if (start > last) runs.push({ arabic: false, text: text.slice(last, start) });
+    runs.push({ arabic: true, text: m[0] });
+    last = start + m[0].length;
+  }
+  if (last < text.length) runs.push({ arabic: false, text: text.slice(last) });
+  return runs;
+}
+
+/**
+ * Write a string that may mix Latin and Arabic, switching face per run.
+ *
+ * Two facts force this, both verified by rendering (2026-08-03):
+ *  - Noto Serif has NO Arabic glyphs, so Arabic inside translation glosses
+ *    (`<note>original: "دري اللون"…`) rendered as .notdef boxes — 97 of 366
+ *    pages on Kitab al-Bulhan.
+ *  - Noto Naskh Arabic has no Latin glyphs, so simply swapping the document
+ *    font inverts the problem. Only per-run switching works.
+ *
+ * The `rtla` OpenType feature is REQUIRED on Arabic runs. Without it pdfkit
+ * shapes the letters and orders the words correctly but DROPS the inter-word
+ * spaces ("قارعت الاثنين" → "الاثنينقارعت"), which silently alters the text —
+ * unacceptable in an edition that gets cited. With it, spacing is correct.
+ */
+function writeScriptAwareText(
+  doc: PDFKit.PDFDocument,
+  fonts: PdfFontNames,
+  text: string,
+  opts: { fontSize: number; lineGap?: number },
+): void {
+  const { fontSize, lineGap = 3 } = opts;
+  // No Arabic, or no Arabic face bundled: one plain call. When the face is
+  // missing we deliberately keep the .notdef boxes rather than dropping the
+  // text — a visible gap is honest, silently-deleted source is not.
+  if (!fonts.arabic || !ARABIC_RE.test(text)) {
+    doc.font(fonts.regular).fontSize(fontSize).text(text, { lineGap });
+    return;
+  }
+  // Continuation is scoped to ONE LINE. `continued: true` resumes at the
+  // current x, and an embedded "\n" inside a continued run does not reset it —
+  // so a single chain over multi-line text indents every line after the first
+  // to wherever the previous run happened to end. (Caught by rendering the full
+  // book: page 195 showed "hoping? for God's mercy" starting mid-measure.)
+  // Splitting per line keeps each line starting at the margin, matching the
+  // plain `doc.text(text)` path above.
+  const lines = text.split('\n');
+  lines.forEach(line => {
+    if (!line) {
+      doc.font(fonts.regular).fontSize(fontSize).text(' ', { lineGap });
+      return;
+    }
+    const runs = splitScriptRuns(line);
+    runs.forEach((run, i) => {
+      doc
+        .font(run.arabic ? fonts.arabic! : fonts.regular)
+        .fontSize(fontSize)
+        .text(run.text, {
+          lineGap,
+          continued: i < runs.length - 1,
+          ...(run.arabic ? { features: ['rtla'] } : {}),
+        });
+    });
+  });
+  doc.font(fonts.regular).fontSize(fontSize);
+}
+
+/**
+ * Render a page's cleaned text, laying GFM tables out as real PDF tables
+ * (pdfkit >= 0.16 `doc.table()`) rather than as flattened digit runs.
+ *
+ * Falls back to plain text if the installed pdfkit has no table support, so a
+ * version skew degrades the layout instead of 500ing the download.
+ */
+export function writePdfBody(
+  doc: PDFKit.PDFDocument,
+  fonts: PdfFontNames,
+  text: string,
+  opts: { fontSize: number; lineGap?: number },
+): void {
+  const { fontSize, lineGap = 3 } = opts;
+  const canTable = typeof (doc as { table?: unknown }).table === 'function';
+
+  for (const block of splitPdfBlocks(text)) {
+    if (block.kind === 'text') {
+      writeScriptAwareText(doc, fonts, block.text, { fontSize, lineGap });
+      continue;
+    }
+    if (!canTable) {
+      // Keep the pipes — unaligned, but the column each value belongs to is
+      // still recoverable, unlike a flattened run.
+      doc.font(fonts.regular).fontSize(fontSize).text(
+        block.rows.map(r => r.join(' | ')).join('\n'), { lineGap });
+      continue;
+    }
+    // Wide tables (some run 16-18 columns) need a smaller face to stay legible
+    // inside the A4 text block.
+    const cols = Math.max(...block.rows.map(r => r.length));
+    const cellSize = cols >= 12 ? 6.5 : cols >= 8 ? 7.5 : Math.min(fontSize, 9);
+    doc.moveDown(0.4);
+    // Set the face on the document so every cell inherits it; only the header
+    // row overrides, so a table never silently falls back to a Latin-only
+    // built-in face mid-way through.
+    doc.font(fonts.regular).fontSize(cellSize);
+    doc.table({
+      data: block.rows.map((row, i) => {
+        const isHeader = block.hasHeader && i === 0;
+        return row.map(cell => {
+          // A cell can be Arabic too (untranslated headings inside a table).
+          // Same rule as writeScriptAwareText: only switch when a face exists.
+          const face = fonts.arabic && ARABIC_RE.test(cell)
+            ? fonts.arabic
+            : isHeader ? fonts.bold : fonts.regular;
+          return {
+            text: cell,
+            type: (isHeader ? 'TH' : 'TD') as 'TH' | 'TD',
+            font: { src: face, size: cellSize },
+          };
+        });
+      }),
+      defaultStyle: { border: 0.5, borderColor: '#cccccc', padding: 2 },
+    });
+    doc.moveDown(0.4);
+    doc.font(fonts.regular).fontSize(fontSize);
+  }
 }
 
 /** Minimal book shape the layout helpers need — kept structural so callers

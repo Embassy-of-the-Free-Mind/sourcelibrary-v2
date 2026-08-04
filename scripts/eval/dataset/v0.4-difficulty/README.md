@@ -49,9 +49,9 @@ pages by their stored `<margin>` tag selects marginalia the model **found**.
 ~40% of `page_revisions` pairs do not read the same image. The #3357 e-rara
 repair moved `ocr` subdocuments between pages, so the "disagreement" is an
 administrative artifact replicated across thousands of pages. Pairs whose
-printed `<page-num>` disagrees are dropped. Measured here: **40.2% dropped**,
-matching the documented rate. Without this filter the "hard" pages would mostly
-be re-archived ones.
+printed `<page-num>` disagrees are dropped. Measured on this draw: **39.5%
+dropped** (3,103 of 7,849), against the 40.2% documented for #3473. Without this
+filter the "hard" pages would mostly be re-archived ones.
 
 ## Two findings that changed the design
 
@@ -117,26 +117,70 @@ useless for this set.
 
 ## This draw
 
-334 pages, 309 distinct books, 19 classes. 16 classes reached the target of 20.
+334 pages, 309 distinct books, 20 classes.
+
+### A spot check found 11.7% of the first draw mislabelled — read this before trusting a class count
+
+Opening exemplars against their stored OCR showed the `gutter_loss` sample was a
+**blank page**: its warning reads *"the page is blank, save for a small amount of
+text visible on the extreme left edge (the gutter) which belongs to the facing
+page"*, and the classifier matched the word `gutter`. Systematically, **39 of 334
+rows (11.7%) were declared blank by their own OCR** — `gutter_loss` 8/20,
+`image_only_labels` 10/20, `foxing` 7/20.
+
+A blank page cannot exemplify a text-difficulty class. They were **reclassified,
+not discarded**, into a `blank_page` class: "does the model invent text on an
+empty page" is one of the few fabrication probes available without ground truth,
+and it is a real failure mode. The sampler now routes them there at source
+(`isBlankPage`, keyed on the structured `<page-type>` tag rather than on warning
+prose — a prose regex misfires both ways, and would have dropped *"significant
+bleed-through makes some text difficult to read"*, a genuine hard page).
+
+The cost is that **11 classes are now under the target of 20** and only 8 reach
+it. That is the honest composition of this draw; a wider `--sample` refills them.
+
+| filled | short |
+|---|---|
+| `blur` `cropping` `degenerate_output` `handwriting` `microfilm` `multi_column` `spaceless_script` `tabular` (20 each) | `staining` 19 · `truncation` 19 · `marginalia_missed` 18 · `fading` 16 · `ink_blot` 16 · `bleed_through` 15 · `foxing` 13 · `gutter_loss` 12 · `skew` 12 · `image_only_labels` 10 · `corrupt_scan` 9 |
+
+`blank_page` holds 38 — larger than target because it absorbed the reclassified
+rows rather than being drawn to quota.
 
 | lane | rows |
 |---|---|
-| `self_reported` | 171 |
-| `structural` | 95 |
-| `proven_miss` | 39 |
+| `self_reported` | 144 |
+| `structural` | 124 |
+| `proven_miss` | 37 |
 | `scan_quality` | 29 |
 
 Sampled 200,000 pages (149,834 carrying OCR text) and 14,000 revisions, of which
 4,746 pairs were comparable and **3,103 (39.5%) were dropped as page-number
 shifts** — matching the 40.2% documented for #3473.
 
-Short of target: **`corrupt_scan` (9)**, limited by `scan_quality` coverage
-(~1.5% of pages), and **`skew` (13)**, because the model almost never reports it
-(13 candidates in 149,834 OCR'd pages). Both are properties of the corpus, not
-of the sample size — filling them needs a different source (synthetic
-degradation, or a targeted visual sweep), not a bigger `--sample`.
-**`marginalia_missed` (19)** is one short only because a single exemplar was
-dropped for having no reader URL.
+### Verified against the images, 2026-08-02
 
-`script_family` is 268 spaced / 66 space-less. 27 pages carry more than one
+The two pages that transcribed >50 characters in the blank-page study were
+opened and looked at. They are **not** the same kind of thing:
+
+- **Bhagvat Geeta, leaf 73** — genuinely mislabelled. The scan is a spread whose
+  right leaf is a fully printed NOTES page with a footnote table; only the left
+  leaf is blank. Relabelled `multi_column`, so `blank_page` now holds 38.
+- **Artis Cabalisticae, leaf 6** — correctly labelled `blank`. A title-page
+  verso carrying mirrored bleed-through plus two library stamps; nothing is
+  printed on that side. **Both** the production prompt and the Tier-2
+  bleed-through arm transcribed the show-through anyway. Kept as `blank_page`,
+  and it is the clearest single exemplar of the Tier-2 failure (#3444).
+
+The lesson generalises: a page flagged by this metric is a *question*, not a
+verdict. Of the first two, one was the corpus's fault and one the model's, and
+only opening the image told them apart.
+
+Two classes are short for reasons a bigger `--sample` cannot fix:
+**`corrupt_scan`** is limited by `scan_quality` coverage (~1.5% of pages), and
+**`skew`** because the model almost never reports it (13 candidates in 149,834
+OCR'd pages). Filling those needs a different source — synthetic degradation, or
+a targeted visual sweep. The rest are short because of the blank-page
+reclassification above, and a wider draw refills them.
+
+`script_family` is 268 spaced / 66 space-less. 24 pages carry more than one
 difficulty label.

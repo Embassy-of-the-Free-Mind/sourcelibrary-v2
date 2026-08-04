@@ -1,0 +1,66 @@
+{
+  "book_id": "6953a82c77f38f6761bd0bc5",
+  "work_identified": "New Testament — canonical Christian scripture (Armenian-Greek-Italian trilingual scholarly edition, likely Mekhitarist/Zohrab, Venice)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The New Testament of Our Lord and Saviour Jesus Christ (King James Version)",
+      "translator": "Royal commission of 47 scholars under King James I",
+      "pub_year": "1611",
+      "publisher": "Robert Barker, London",
+      "completeness": "complete",
+      "source_url": "https://www.worldcat.org/title/The-New-Testament-of-our-Lord-and-Saviour-Jesus-Christ-:-translated-out-of-the-original-Greek-and-with-the-former-translations-diligently-compared-and-revised-../oclc/15461081"
+    },
+    {
+      "english_title": "Revised Standard Version New Testament",
+      "translator": "American Standard Bible Committee",
+      "pub_year": "1946",
+      "publisher": "Thomas Nelson & Sons",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Revised_Standard_Version"
+    },
+    {
+      "english_title": "New International Version (NIV) New Testament",
+      "translator": "Committee on Bible Translation",
+      "pub_year": "1973",
+      "publisher": "Zondervan",
+      "completeness": "complete",
+      "source_url": "https://www.americanbible.org/engage/bible-resources/articles/a-brief-description-of-popular-bible-translations/"
+    },
+    {
+      "english_title": "Armenian-English Parallel New Testament (Western/Good News Translation)",
+      "translator": "Good News Translation committee",
+      "pub_year": "2000",
+      "publisher": "Shepherd's Books",
+      "completeness": "complete",
+      "source_url": "https://www.shepherdsbooks.org/product/armenian-english-parallel-new-testament-western-good-news-translation-hardback/"
+    }
+  ],
+  "queries_run": [
+    "Armenian New Testament English translation WorldCat",
+    "New Testament Armenian Greek Italian trilingual edition published",
+    "Armenian New Testament English translation history scholars",
+    "Mekhitarist Venice New Testament trilingual Armenian Greek Italian 1789 polyglot edition",
+    "New Testament has English translation from Greek site:worldcat.org OR site:loc.gov",
+    "Zohrab Armenian New Testament 1789 trilingual Greek Italian Venice polyglot Bible",
+    "Armenian New Testament English translation \"first English translation\" OR \"first time English\" OR \"never translated into English\"",
+    "New Testament English translation complete modern history dozens versions KJV RSV NIV NRSV",
+    "New Testament English translation from Armenian source Mekhitar Zohrab bilingual polyglot"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.shepherdsbooks.org/product/armenian-english-parallel-new-testament-western-good-news-translation-hardback/", "found": "Armenian-English Parallel New Testament (Western/Good News Translation) exists as a published bilingual edition"},
+    {"url": "https://shop.biblesociety.org.lb/product/armenian-english-new-testament-diglot/", "found": "Bible Society Lebanon Armenian/English diglot NT exists"},
+    {"url": "https://www.worldcat.org/title/The-New-Testament-of-our-Lord-and-Saviour-Jesus-Christ-:-translated-out-of-the-original-Greek-and-with-the-former-translations-diligently-compared-and-revised-../oclc/15461081", "found": "KJV NT in WorldCat — complete English translation from Greek"},
+    {"url": "https://en.wikipedia.org/wiki/Revised_Standard_Version", "found": "RSV NT 1946, complete modern English translation from Greek"},
+    {"url": "https://www.americanbible.org/engage/bible-resources/articles/a-brief-description-of-popular-bible-translations/", "found": "Lists dozens of complete English NT translations (KJV, RSV, NRSV, NIV, etc.)"},
+    {"url": "https://en.wikipedia.org/wiki/Bible_translations_into_Armenian", "found": "History of Armenian Bible — the NT itself was translated from Greek/Syriac into Armenian in the 5th c.; multiple modern Armenian editions"},
+    {"url": "https://archive.org/details/armenian_zohrab_nt", "found": "Zohrab Armenian NT (1805) on archive.org — confirms the edition identity"},
+    {"url": "https://www.internationalstandardbible.com/A/armenian-versions-of-the-bible.html", "found": "Armenian versions described; Zohrab 1789/1805 edition identified as the major critical Armenian NT"}
+  ],
+  "reasoning": "The New Testament is canonical scripture translated into English hundreds of times from Greek (one of the three languages in this trilingual edition). The source-language rule is decisive: complete modern English translations exist from ANY source language (KJV 1611, RSV 1946, NIV 1973, NRSV 1989, etc.). Armenian-English diglot NTs also exist specifically. Verdict: not_first."
+}

@@ -1,0 +1,40 @@
+{
+  "book_id": "69dbcb091040d1d5e20b14b8",
+  "work_identified": "Invectiva in superstitiosum quendam astrologum Johannem Lichtenberger, Paulus de Middelburgo (Antwerp: Gerard Leeu, post 1 Jan 1492) — a Latin polemic accusing Lichtenberger of plagiarising Middelburgo's 1484 Prognosticum",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Paulus de Middelburgo \"Invectiva in superstitiosum\" Lichtenberger English translation",
+    "Paulus de Middelburgo Lichtenberger invective astrologer English translation WorldCat",
+    "\"Paulus de Middelburgo\" works English translation bibliography",
+    "Paul of Middelburg Wikipedia — fetched",
+    "worldcat.org Paulus de Middelburgo invectiva astrologum English — 403 blocked",
+    "\"Paul of Middelburg\" astrology polemic Lichtenberger scholarship history astronomy renaissance",
+    "philological.cal.bham.ac.uk/bibliography/li.html — fetched",
+    "philological.cal.bham.ac.uk/bibliography/mi.html — fetched",
+    "\"Invectiva in superstitiosum\" Lichtenberger English translation excerpts Paul of Middelburg",
+    "\"Paul of Middelburg\" \"foolish pictures\" OR \"changed its appearance\" Lichtenberger invective scholarly book",
+    "\"Printing and Prophecy\" Lichtenberger \"Paul of Middelburg\" invective English translation book",
+    "worldcat \"Paulus de Middelburgo\" OR \"Paul of Middelburg\" invectiva astrologum English",
+    "\"Astrologi hallucinati\" Lichtenberger \"Paul of Middelburg\" invective English translation Zambelli",
+    "\"Paul of Middelburg\" OR \"Paulus Middelburg\" invective Lichtenberger complete English translation modern scholarly edition published"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Paul_of_Middelburg", "found": "Lists Paul's works incl. Invectiva; notes he destroyed some copies in 1494; no English translations mentioned"},
+    {"url": "https://philological.cal.bham.ac.uk/bibliography/mi.html", "found": "Philological bibliography: lists Invectiva in superstitiosum quendam astrologum (Antwerp, undated); NO English translations listed for any of Paul's works"},
+    {"url": "https://philological.cal.bham.ac.uk/bibliography/li.html", "found": "Cross-ref only: Lichtenberger, Johannes → see Paulus de Middelburgo; no English translation noted"},
+    {"url": "https://data.cerl.org/thesaurus/cnp00996213", "found": "CERL: lists three Middelburgo works; none in English; Invectiva not separately listed"},
+    {"url": "https://www.wikidata.org/wiki/Q2063440", "found": "Paul of Middelburg authority entry; no English translations of the Invectiva recorded"},
+    {"url": "https://muse.jhu.edu/pub/166/oa_monograph/chapter/2792891", "found": "Green, 'Printing and Prophecy' (U Michigan 2011): monograph on prognostication; search snippets show EN excerpts from Invectiva within scholarly commentary only — not a standalone translation"},
+    {"url": "https://www.worldcat.org/search?q=au%3A%22Paulus+de+Middelburgo%22", "found": "403 Forbidden — WorldCat direct access blocked; web searches against WorldCat returned no EN edition"},
+    {"url": "https://portail.biblissima.fr/ark:/43093/pdata333ecaabf442a13f005ecb32815cfe20528fe9c6", "found": "Biblissima / Gerard Leeu: confirms Invectiva printed Antwerp post 1 Jan 1492; Latin only"},
+    {"url": "https://www.degruyter.com/document/doi/10.1515/9783110852134/html", "found": "'Astrologi hallucinati' ed. Zambelli (De Gruyter 1986): conference volume on Lichtenberger era; no complete EN translation of Invectiva found"},
+    {"url": "https://www.newadvent.org/cathen/11588b.htm", "found": "Catholic Encyclopedia on Paul of Middelburg: mentions Invectiva; no English translation noted"}
+  ],
+  "reasoning": "No English translation of the Invectiva (Antwerp 1492) found in any catalogue or standalone publication. Birmingham philological bibliography, Wikidata, CERL, and Wikipedia all record only Latin editions. Scholarly works (Green 2011; Zambelli 1986) quote translated passages within academic argument but constitute secondary use, not a translation of the work. WorldCat inaccessible directly (403)."
+}

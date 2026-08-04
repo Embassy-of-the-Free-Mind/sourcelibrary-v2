@@ -1,0 +1,4 @@
+book_id: 69b630bf1c1c21a373804035
+Title: [Summa de sponsalibus et matrimoniis]
+Author: Johannes
+Source language: Latin

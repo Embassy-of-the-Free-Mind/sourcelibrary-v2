@@ -12,7 +12,23 @@
 // incident history (PR #2232, #3108, issue #2764).
 
 const EDITORIAL_WRAPPERS =
-  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc';
+  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc'
+  // The EPIGRAPHY/ARTIFACT schema, used by tablet, papyrus and manuscript-fragment
+  // records. `<condition>` in particular is a paragraph of English prose about the
+  // OBJECT ("The image shows multiple fragments (K.2421, K.2511, K.16765) from the
+  // British Museum collection..."), which is editorial description, not the text on
+  // the page — quoting it fabricates a citation exactly as `<meta>` did (#2232).
+  //
+  // Deliberately NOT included: `<transliteration>`, which holds the real
+  // line-by-line reading of the artifact and IS the page's text; and `<notes>` /
+  // `<confidence>`, whose contents were not verified, so they are left alone rather
+  // than guessed at.
+  //
+  // SCOPE, measured 2026-08-03: 5 pages across 4 books (Ur III Administrative
+  // Tablet, Code of Hammurabi, Neo-Assyrian Medical Prescriptions, Manishtusu
+  // Obelisk) — zero hits in a random 30,240-page sample. Small, but a fabricated
+  // citation is a fabricated citation.
+  + '|condition|period|surface|genre';
 
 function flattenMarkdownTables(text) {
   return text
@@ -77,11 +93,20 @@ export function cleanOcrArtifacts(text) {
     .replace(/\\infty(?![a-z])/gi, '∞');
 }
 
-export function stripEditorialWrappers(text) {
+/**
+ * @param {string} text
+ * @param {{ keepTables?: boolean }} [opts] `keepTables: true` leaves GFM tables
+ *   intact. Default (false) flattens them, which is right for snippet/quote
+ *   surfaces but destroys column structure on surfaces that deliver a page's
+ *   WHOLE text for reuse (exports, bulk content API, corpus snapshot). Parity
+ *   with the TS twin (src/lib/strip-editorial-wrappers.ts) — change both together.
+ */
+export function stripEditorialWrappers(text, opts) {
   if (!text) return text;
+  const flattenTables = opts?.keepTables ? (s) => s : flattenMarkdownTables;
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
-      flattenMarkdownTables(
+      flattenTables(
         text
           // `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag — the OCR prompt emits
           // `<image-desc size="..." type="..." significance="...">` on ~0.77% of

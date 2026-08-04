@@ -1,0 +1,4 @@
+book_id: 69dc55d2cb6f7429748b94b2
+Title: Liber physiognomiae. Add: Secreta Aristotelis
+Author: Michael Scotus
+Source language: Latin

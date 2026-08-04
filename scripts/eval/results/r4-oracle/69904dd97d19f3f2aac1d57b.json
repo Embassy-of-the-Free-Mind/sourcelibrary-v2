@@ -1,0 +1,60 @@
+{
+  "book_id": "69904dd97d19f3f2aac1d57b",
+  "work_identified": "De Coelesti Hierarchia (The Celestial Hierarchy) by Pseudo-Dionysius the Areopagite — the Latin transmission of the Greek-original treatise on the nine orders of celestial angels, distinct from The Ecclesiastical Hierarchy",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Celestial and Ecclesiastical Hierarchy of Dionysius the Areopagite",
+      "translator": "John Parker",
+      "pub_year": "1894",
+      "publisher": "Skeffington & Son, London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/celestialandecc01parkgoog"
+    },
+    {
+      "english_title": "Pseudo-Dionysius: The Complete Works (Classics of Western Spirituality)",
+      "translator": "Colm Luibheid",
+      "pub_year": "1987",
+      "publisher": "Paulist Press, New York/Mahwah NJ",
+      "completeness": "complete",
+      "source_url": "https://easternchristiansupply.biz/index.php/ecs/pseudo-dionysiusaeur-the-complete-works.html"
+    }
+  ],
+  "queries_run": [
+    "Pseudo-Dionysius \"Celestial Hierarchy\" English translation WorldCat",
+    "Colm Luibheid Paul Rorem \"Pseudo-Dionysius\" \"Celestial Hierarchy\" Paulist Press 1987 English translation",
+    "John Parker 1894 \"Celestial Hierarchy\" Pseudo-Dionysius complete English translation Skeffington"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/celestialandecc01parkgoog",
+      "found": "John Parker translation 1894, Skeffington, English, 119pp — complete translation of The Celestial Hierarchy confirmed"
+    },
+    {
+      "url": "https://www.tertullian.org/fathers/areopagite_12_introduction.htm",
+      "found": "Parker 1899 Works vol.2 introduction confirms translation from Greek, titled 'The Heavenly Hierarchy', 'now first translated into English' — complete"
+    },
+    {
+      "url": "https://easternchristiansupply.biz/index.php/ecs/pseudo-dionysiusaeur-the-complete-works.html",
+      "found": "Luibheid 1987 Paulist Press explicitly listed The Celestial Hierarchy as one of five included works — complete"
+    },
+    {
+      "url": "https://www.cambridge.org/core/journals/new-blackfriars/article/abs/pseudodionysius-the-complete-works-translation-by-colm-luibheid-foreword-notes-and-translation-collaboration-by-paul-rorem-preface-by-rene-roques-introductions-by-jaroslav-pelikan-jean-leclercq-and-karlfried-froehlich-paulist-press-and-spck-1987-pp-x-312-no-price-given/6D66C65C11AD7F1E56ACCADA367EC07F",
+      "found": "Cambridge Core review confirms Luibheid/Rorem 1987 Paulist Press+SPCK edition, reviewed in New Blackfriars 1988 by Andrew Louth — paywall on body"
+    },
+    {
+      "url": "https://www.worldcat.org/title/2699826",
+      "found": "WorldCat record for Parker translation — HTTP 403 returned"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/De_Coelesti_Hierarchia",
+      "found": "Wikipedia article on the work; lists 1935 Shrine of Wisdom edition and 1991 German critical edition (Heil/Ritter); limited English-translation bibliography"
+    }
+  ],
+  "reasoning": "De Coelesti Hierarchia has two confirmed complete English translations: John Parker (1894, Skeffington) and Colm Luibheid/Paul Rorem (1987, Paulist Press, Classics of Western Spirituality). Source-language rule applies: our book is the Latin edition of the same underlying work; prior English translators worked from Greek. Any complete English of this work → not_first."
+}

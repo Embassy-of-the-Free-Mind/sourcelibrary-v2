@@ -1,0 +1,4 @@
+book_id: 699062f1ef12272ffdc8e56e
+Title: Contra Celsum (1481 editio princeps)
+Author: Origen
+Source language: Latin

@@ -92,7 +92,19 @@ export async function GET(
  * PATCH /api/[tenant]/pages/[id] — replace a page's OCR / translation / summary.
  *
  * Gated at `editor` (#3511), matching both the UI gate and the global twin at
- * /api/pages/[id]. This is the route the reader's editor actually calls.
+ * /api/pages/[id].
+ *
+ * The 403 below is DELIBERATE and must not be relaxed to match the global twin,
+ * which now treats an absent tenant as global scope (#3542). Here `tenantId`
+ * comes from resolving the `[tenant]` path segment, so failing to resolve one
+ * means the caller named a tenant that does not exist — a misroute, not a global
+ * call. The two routes differ because their tenant inputs differ.
+ *
+ * Note this is NOT the only route the reader's editor reaches: `pagesApi` builds
+ * its URL from `window.location.pathname`, which is `/book/...` on the apex, so
+ * `getTenantSlug()` returns '' and the request interceptor collapses `/api//` to
+ * `/api/` — landing on the global twin. This route serves `/[tenant]/...` and
+ * `/embed/[tenant]/...` paths.
  */
 export const PATCH = withAuth(async (request, session, context) => {
   try {

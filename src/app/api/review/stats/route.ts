@@ -8,6 +8,10 @@ export const maxDuration = 5;
  *
  * Returns lifetime totals and (if volunteer_id provided) per-volunteer
  * totals for the landing-page display.
+ *
+ * Counts filter `rating IS NOT NULL`: a volunteer may submit a note without a
+ * rating, and those rows are feedback, not judgments. Including them would
+ * inflate the rating count with things nobody rated.
  */
 export async function GET(request: NextRequest) {
   if (!supabaseAdmin) {
@@ -18,16 +22,23 @@ export async function GET(request: NextRequest) {
 
   const { count: total } = await supabaseAdmin
     .from('volunteer_ratings')
-    .select('id', { count: 'exact', head: true });
+    .select('id', { count: 'exact', head: true })
+    .not('rating', 'is', null);
+
+  const { count: notes } = await supabaseAdmin
+    .from('volunteer_ratings')
+    .select('id', { count: 'exact', head: true })
+    .not('note', 'is', null);
 
   let mine: number | null = null;
   if (volunteerId && /^[0-9a-f-]{36}$/i.test(volunteerId)) {
     const { count } = await supabaseAdmin
       .from('volunteer_ratings')
       .select('id', { count: 'exact', head: true })
-      .eq('volunteer_id', volunteerId);
+      .eq('volunteer_id', volunteerId)
+      .not('rating', 'is', null);
     mine = count ?? 0;
   }
 
-  return NextResponse.json({ total: total ?? 0, mine });
+  return NextResponse.json({ total: total ?? 0, notes: notes ?? 0, mine });
 }

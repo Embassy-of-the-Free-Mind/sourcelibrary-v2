@@ -39,7 +39,23 @@
 // quote/search/text/IIIF surfaces route through here, so stripping it here does
 // not touch the reader.
 const EDITORIAL_WRAPPERS =
-  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc';
+  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc'
+  // The EPIGRAPHY/ARTIFACT schema, used by tablet, papyrus and manuscript-fragment
+  // records. `<condition>` in particular is a paragraph of English prose about the
+  // OBJECT ("The image shows multiple fragments (K.2421, K.2511, K.16765) from the
+  // British Museum collection..."), which is editorial description, not the text on
+  // the page — quoting it fabricates a citation exactly as `<meta>` did (#2232).
+  //
+  // Deliberately NOT included: `<transliteration>`, which holds the real
+  // line-by-line reading of the artifact and IS the page's text; and `<notes>` /
+  // `<confidence>`, whose contents were not verified, so they are left alone rather
+  // than guessed at.
+  //
+  // SCOPE, measured 2026-08-03: 5 pages across 4 books (Ur III Administrative
+  // Tablet, Code of Hammurabi, Neo-Assyrian Medical Prescriptions, Manishtusu
+  // Obelisk) — zero hits in a random 30,240-page sample. Small, but a fabricated
+  // citation is a fabricated citation.
+  + '|condition|period|surface|genre';
 
 /**
  * Flatten GFM markdown tables to plain text.
@@ -191,14 +207,47 @@ export function cleanOcrArtifacts(text: string): string {
     .replace(/\\infty(?![a-z])/gi, '∞');
 }
 
-export function stripEditorialWrappers(text: string): string {
+/**
+ * Options for {@link stripEditorialWrappers}.
+ */
+export interface StripEditorialWrappersOptions {
+  /**
+   * Keep GFM markdown tables intact instead of flattening them to plain text.
+   *
+   * Default `false` — flattening is right for the snippet/quote/search surfaces
+   * this function was originally written for, where a table would otherwise leak
+   * as raw pipe-soup (see {@link flattenMarkdownTables}).
+   *
+   * Pass `true` from surfaces that deliver a page's WHOLE text for reuse rather
+   * than an excerpt of it — the PDF/EPUB exporters, the bulk content API, and
+   * the corpus snapshot. There, flattening silently destroys the table's
+   * structure: the cell values survive but the column they belonged to does not,
+   * so a 16-column calendar table becomes unrecoverable runs of bare digits.
+   * Wrapper stripping (the #2232 quote-integrity guarantee) is unaffected either
+   * way — only the table markup differs.
+   */
+  keepTables?: boolean;
+}
+
+export function stripEditorialWrappers(
+  text: string,
+  opts?: StripEditorialWrappersOptions,
+): string {
   if (!text) return text;
+  const flattenTables = opts?.keepTables
+    ? (s: string) => s
+    : flattenMarkdownTables;
   // cleanOcrArtifacts runs LAST so lacuna/LaTeX cleanup applies to the final
   // plain text (after table flattening + marker stripping). Every snippet/quote
   // surface routes through here, so they all inherit the OCR safety net.
+  //
+  // Both remaining steps are table-safe when `keepTables` is set: the thematic-
+  // break rule in stripMarkdownMarkers only matches a line of BARE dashes (a
+  // `| :--- |` separator carries pipes, so it never matches), and the dash-run
+  // rule in cleanOcrArtifacts already guards on an adjacent `|`.
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
-      flattenMarkdownTables(
+      flattenTables(
         text
           // Paired blocks, content and all (multiline). Backreference keeps it from
           // swallowing text between two different wrapper types.

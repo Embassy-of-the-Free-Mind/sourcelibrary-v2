@@ -278,8 +278,8 @@
   "progress-studies": {
     "path": "src/app/blog/progress-studies/page.tsx",
     "published": "2026-03-08T13:52:21+01:00",
-    "revised": "2026-07-16T01:06:36+02:00",
-    "revisions": 10
+    "revised": "2026-08-02T01:54:47+08:00",
+    "revisions": 11
   },
   "rashi-ocr": {
     "path": "src/app/blog/rashi-ocr/page.tsx",
@@ -295,9 +295,9 @@
   },
   "reciting-not-reading": {
     "path": "src/app/blog/reciting-not-reading/page.tsx",
-    "published": "2026-07-30T15:35:23+02:00",
+    "published": "2026-07-30T11:13:19+02:00",
     "revised": "2026-07-30T15:35:23+02:00",
-    "revisions": 1
+    "revisions": 2
   },
   "rithmomachia": {
     "path": "src/app/blog/rithmomachia/page.tsx",

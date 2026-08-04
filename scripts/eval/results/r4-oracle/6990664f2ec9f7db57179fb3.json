@@ -1,0 +1,35 @@
+{
+  "book_id": "6990664f2ec9f7db57179fb3",
+  "work_identified": "Uttara Kalamrita (Uttarakalamritam) — Sanskrit jyotisha treatise by Ganaka Kalidasa (distinct from the classical playwright Kalidasa), covering planetary significators of houses, longevity, horary astrology, and muhurta in seven chapters (~320 shlokas in Sardula Vikridita metre)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Uttara Kalamrita: A Rare and Invaluable Treasure House of Astrological Lore (Sanskrit Text, English Translation, Notes and Illustrations)",
+      "translator": "P.S. Sastri (Prof. P. Subrahmanya Sastri)",
+      "pub_year": "2005",
+      "publisher": "Ranjan Publications, Delhi",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/uttkalamrita-kalidas-ps-sastri"
+    }
+  ],
+  "queries_run": [
+    "Uttara Kalamrita Kalidasa English translation",
+    "Uttara Kalamrita V Subrahmanya Sastri English translation Sanskrit astrology",
+    "WorldCat \"Uttara Kalamrita\" English translation Kalidasa",
+    "site:worldcat.org \"Uttara Kalamrita\""
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/uttkalamrita-kalidas-ps-sastri", "found": "Complete English translation by Pandit P. Subrahmanya Sastri, full text freely downloadable; described as 'English translation of Uttara kalamrita of Ganaka kalidasa'"},
+    {"url": "https://www.saujanyabooks.com/details.aspx?id=24637", "found": "P.S. Sastri edition, New Edition 2010, 262pp+115 charts, Ranjan Publications, ISBN 81-88230-40-5, preface by K.N. Rao — Sanskrit & English"},
+    {"url": "https://en.wikipedia.org/wiki/Uttara_Kalamrita", "found": "Confirms text is a Jyotisha treatise by a post-16th-century South Indian Kalidasa; Ranjan Publications ISBN 81-88230-40-5 listed"},
+    {"url": "https://openlibrary.org/books/OL13180507M/Uttara_Kalamrita", "found": "Open Library: Ranjan Publications, 2005, ISBN 9788188230402"},
+    {"url": "https://giri.in/products/uttara-kalamrita-kalidasa-english-by-ps-sastri", "found": "Commercial listing of Prof. P.S. Sastri English translation, Ranjan Publications, 264pp, actively sold"},
+    {"url": "https://www.exoticindiaart.com/book/details/uttara-kalamrita-kalidasa-rare-and-invaluable-treasure-house-of-astrological-lore-sanskrit-text-english-translation-notes-and-illustrations-idk783/", "found": "Ranjan Publications, 265pp, ISBN 8188230405; described as Sanskrit text with English translation by P.S. Sastri, enriched by annotator's 'half a century' of experience"}
+  ],
+  "reasoning": "A complete English translation by P.S. Sastri (Pandit P. Subrahmanya Sastri) has been published by Ranjan Publications in multiple editions; a third edition was noted by 1967, with current print editions 2005–2026. Full text is freely downloadable from archive.org. Multiple commercial distributors (Giri, Exotic India, Saujanya) list it. The prior is the same complete text translated directly from the Sanskrit original — same work, same source language. verdict: not_first."
+}

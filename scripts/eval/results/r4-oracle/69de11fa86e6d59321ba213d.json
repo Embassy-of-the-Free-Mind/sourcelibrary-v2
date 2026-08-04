@@ -1,0 +1,58 @@
+{
+  "book_id": "69de11fa86e6d59321ba213d",
+  "work_identified": "Pietro Aretino, 'Dubbj amorosi e Sonetti lussuriosi' — combined collection: (1) 'Dubbj amorosi', erotic questions in ottave/quatrains attributed to Aretino (earliest attestation 1712 Paris ms., authorship contested by modern scholarship); (2) 'Sonetti lussuriosi', 16 licentious sonnets composed c.1526 to accompany I Modi engravings by Raimondi after Giulio Romano",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Sportive Sonnets [I Sonnetti Lussuriosi]",
+      "translator": "Samuel Putnam",
+      "pub_year": "1926",
+      "publisher": "Pascal Covici, Chicago — in 'The Works of Aretino', Vol. II, pp. 245-268",
+      "completeness": "partial",
+      "source_url": "https://elfinspell.com/PutnamAretino/LettersSonnets1.html"
+    },
+    {
+      "english_title": "I Modi: The Sixteen Pleasures: An Erotic Album of the Italian Renaissance",
+      "translator": "Lynne Lawner",
+      "pub_year": "1988",
+      "publisher": "Harmony Books (1988); Northwestern University Press (1989 paperback)",
+      "completeness": "partial",
+      "source_url": "https://www.goodreads.com/book/show/912626"
+    }
+  ],
+  "queries_run": [
+    "Aretino \"Sonetti lussuriosi\" English translation WorldCat",
+    "Aretino \"Dubbj amorosi\" English translation",
+    "Pietro Aretino \"lascivious sonnets\" English translation complete Lynne Lawner",
+    "Aretino \"Dubbj amorosi\" English translation complete site:worldcat.org OR site:loc.gov",
+    "worldcat.org Aretino \"sonetti lussuriosi\" English translation 1926 Putnam \"dubbj amorosi\"",
+    "Samuel Putnam \"works of Aretino\" 1926 table of contents \"dubbi amorosi\" included",
+    "Aretino \"dubbi amorosi\" English translation history scholarship",
+    "Samuel Putnam 1933 Aretino \"dubbi amorosi\" \"dubbj amorosi\" translation publication",
+    "Legare Street Press 9781016960458 \"Dubbj Amorosi\" language Italian English",
+    "\"Maria Beatrice Sirolesi\" Aretino English translator",
+    "Maria Beatrice Sirolesi Aretino translation English \"dubbj amorosi\" OR \"sonetti lussuriosi\"",
+    "worldcat \"dubbi amorosi\" aretino English language translation",
+    "Aretino \"sonetti lussuriosi\" \"dubbi amorosi\" English translation complete modern",
+    "Alcide Bonneau Aretino English translation \"sonetti lussuriosi\" \"dubbi amorosi\""
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/dubbjamorosialt00aretgoog", "found": "1792 Italian-language edition (catalog language label 'English' is a metadata error); no English translation text present"},
+    {"url": "https://elfinspell.com/PutnamAretino/LettersSonnets1.html", "found": "Putnam 1926 English translation of Sonetti lussuriosi confirmed (Vol. II pp. 245-268); no Dubbj amorosi section in digitized Putnam edition"},
+    {"url": "https://elfinspell.com/PutnamAretino/LettersAppendix4.html", "found": "Putnam's own 1926 Aretino bibliography: no English translation of Dubbj amorosi listed; English Aretino translations described as 'few'"},
+    {"url": "https://www.goodreads.com/work/editions/21565678-sonetti-lussuriosi", "found": "Two English editions: Lawner 1988 and 1989 Northwestern UP — both cover only the I Modi sonnets (Sonetti lussuriosi), not the Dubbj amorosi"},
+    {"url": "https://en.wikipedia.org/wiki/Pietro_Aretino", "found": "Wikipedia claims Putnam translated 'both works (1926, 1933)' but Putnam's own bibliography and elfinspell digitized ToC do not support Dubbj amorosi being included"},
+    {"url": "https://it.wikipedia.org/wiki/Dubbi_amorosi", "found": "Italian Wikipedia article on Dubbi amorosi: zero English translations mentioned; textual history notes earliest attestation 1712"},
+    {"url": "https://medium.com/@mirkovisentin/il-dubbio-dei-dubbi-39a1011944d0", "found": "Scholarly piece on Dubbj amorosi attribution by Mirko Visentin: no English translations cited; earliest attestation 1712 Paris ms."},
+    {"url": "https://www.abebooks.com/book-search/title/sonetti-lussuriosi/author/aretino-pietro/", "found": "147 results scanned; Legare Street Press 2022 'English' edition identified as reprint of Italian Sirolesi/Newton Compton edition, not a new English translation"},
+    {"url": "https://fr.wikisource.org/wiki/L'oeuvre_du_Divin-Aretin/Partie_II/Essai_de_bibliographie", "found": "Bonneau 1882 bibliography of Aretino editions: lists no English translations of Sonetti lussuriosi or Dubbj amorosi (only Liseux English Ragionamenti noted)"},
+    {"url": "https://www.goodreads.com/book/show/4475764-sonetti-lussuriosi-e-dubbi-amorosi", "found": "Combined Italian edition (Newton Compton/Tascabili Economici): no English translation edition identified"},
+    {"url": "https://www.researchgate.net/publication/354052832", "found": "2016 Manchester UP chapter on Dubbj amorosi and Sonetti lussuriosi in Raimondi volume: no English translation cited (403 on full text, abstract only)"}
+  ],
+  "reasoning": "Sonetti lussuriosi has prior complete English translations: Putnam 1926, Lawner 1988 (both partial relative to combined collection). Dubbj amorosi: no English translation found across 6+ competent sources incl. Putnam's own 1926 bibliography, Bonneau 1882 bibliography, Italian Wikipedia, scholarly article. Combined collection never fully Englished → first_complete; priors cover only the sonnets portion."
+}

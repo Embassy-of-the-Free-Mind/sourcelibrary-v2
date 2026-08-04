@@ -1,0 +1,135 @@
+{
+  "date": "2026-08-01T10:05:35.519Z",
+  "sample": 8000,
+  "revisions_total": 191221,
+  "by_source": [
+    {
+      "source": "batch_api",
+      "n": 109982,
+      "pct": 57.5
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
+      "n": 56413,
+      "pct": 29.5
+    },
+    {
+      "source": "pipeline_preview",
+      "n": 12949,
+      "pct": 6.8
+    },
+    {
+      "source": "ai",
+      "n": 8622,
+      "pct": 4.5
+    },
+    {
+      "source": "unknown",
+      "n": 1979,
+      "pct": 1
+    },
+    {
+      "source": null,
+      "n": 1263,
+      "pct": 0.7
+    },
+    {
+      "source": "manual",
+      "n": 9,
+      "pct": 0
+    },
+    {
+      "source": "reocr-download-failure-fix-2026-07",
+      "n": 2,
+      "pct": 0
+    },
+    {
+      "source": "mineru",
+      "n": 1,
+      "pct": 0
+    },
+    {
+      "source": "system",
+      "n": 1,
+      "pct": 0
+    }
+  ],
+  "numbered_by_source": [
+    {
+      "source": "batch_api",
+      "n": 2386,
+      "shifted_pct": 3.8,
+      "plus_one_pct_of_shifted": 8.8
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
+      "n": 1717,
+      "shifted_pct": 99,
+      "plus_one_pct_of_shifted": 89.9
+    },
+    {
+      "source": "pipeline_preview",
+      "n": 243,
+      "shifted_pct": 0.8,
+      "plus_one_pct_of_shifted": 0
+    },
+    {
+      "source": "ai",
+      "n": 120,
+      "shifted_pct": 0,
+      "plus_one_pct_of_shifted": null
+    },
+    {
+      "source": "(none)",
+      "n": 17,
+      "shifted_pct": 41.2,
+      "plus_one_pct_of_shifted": 0
+    }
+  ],
+  "unnumbered_by_source": [
+    {
+      "source": "batch_api",
+      "n": 1753,
+      "pct": 59
+    },
+    {
+      "source": "shift-repair-erara-2026-07",
+      "n": 640,
+      "pct": 21.5
+    },
+    {
+      "source": "pipeline_preview",
+      "n": 298,
+      "pct": 10
+    },
+    {
+      "source": "ai",
+      "n": 167,
+      "pct": 5.6
+    },
+    {
+      "source": "unknown",
+      "n": 73,
+      "pct": 2.5
+    },
+    {
+      "source": "(none)",
+      "n": 41,
+      "pct": 1.4
+    },
+    {
+      "source": "manual",
+      "n": 1,
+      "pct": 0
+    }
+  ],
+  "unnumbered_shift_repair_pct": 21.5,
+  "clocks": {
+    "inverted_vs_created_at_pct": 84.4,
+    "inverted_vs_created_at_model_changed_pct": 90,
+    "has_original_date_pct": 91.8,
+    "original_date_orders_correctly_model_changed_pct": 99.3
+  },
+  "headline": "page_revisions.source labels the mechanism directly; shift-repair-erara-2026-07 is 99.4% leaf-shifted vs 3.8% for batch_api. No inference required.",
+  "caveat": "source says how a row was produced, not which side is correct. Which side is right was settled against the scans (handoff 2026-07-30)."
+}

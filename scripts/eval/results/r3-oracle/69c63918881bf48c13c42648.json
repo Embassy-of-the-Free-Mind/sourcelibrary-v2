@@ -1,0 +1,41 @@
+{
+  "book_id": "69c63918881bf48c13c42648",
+  "work_identified": "Vie de Laurent de Médicis, surnommé le Magnifique (François Thurot's 1799 French translation of William Roscoe's English original 'The Life of Lorenzo de' Medici', first published London 1796)",
+  "verdict": "not_applicable",
+  "prior_relationship": "null",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "William Roscoe \"Life of Lorenzo de Medici\" 1796 English original",
+    "\"Vie de Laurent de Medicis\" Roscoe French translation",
+    "WorldCat \"Vie de Laurent de Medicis\" Roscoe Thurot French translation English original language",
+    "site:archive.org \"Vie de Laurent de Medicis\" Roscoe Thurot",
+    "WorldCat \"Vie de Laurent de Medicis\" Roscoe 1799 language French English"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/bim_eighteenth-century_the-life-of-lorenzo-de-_roscoe-william_1796_1",
+      "found": "Roscoe's 1796 original English edition confirmed on Internet Archive"
+    },
+    {
+      "url": "https://archive.org/stream/bub_gb_VfuyWPlNqnIC/bub_gb_VfuyWPlNqnIC_djvu.txt",
+      "found": "Full-text title page reads: 'traduite de l'anglais de William Roscoe, sur la seconde édition. Par François Thurot' — definitively a French translation FROM English"
+    },
+    {
+      "url": "https://www.livre-rare-book.com/book/28344370/17704",
+      "found": "Rare book listing confirms: French edition translated from 2nd English edition by François Thurot, Paris: Baudoin, An VII (1799)"
+    },
+    {
+      "url": "https://www.amazon.com/Vie-Laurent-M%C3%A9dicis-Surnomm%C3%A9-Magnifique/dp/0371990394",
+      "found": "Amazon listing confirms full subtitle: 'Traduite De L'anglais De William Roscoe, Sur La Seconde Édition Par François Thurot'"
+    },
+    {
+      "url": "https://www.baumanrarebooks.com/rare-books/roscoe-william-de-medici-lorenzo/life-of-lorenzo-de--medici/86491.aspx",
+      "found": "Confirms Roscoe's 'Life of Lorenzo de' Medici' is an English-language original, first published 1796 in London"
+    }
+  ],
+  "reasoning": "Roscoe composed 'The Life of Lorenzo de' Medici' in English (London, 1796). Our item is Thurot's French translation of that English original (Paris, 1799), title page reads 'traduite de l'anglais'. DB source language 'Latin' is wrong. A 'first English translation' claim is a category error: English IS the original language. not_applicable."
+}

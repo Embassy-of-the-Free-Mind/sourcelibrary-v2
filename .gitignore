@@ -82,6 +82,13 @@ scripts/_tmp_*
 scripts/output/
 /check-*.mjs
 
+# Generated publication artifacts (EPUBs, covers, extracted plate images, manifests).
+# These are large binaries built on demand from the library — never committed.
+esoteric-geometries-out/
+kdp-out/
+**/*.epub
+.geo-*.jpg
+
 # Session coordination scratch (its own README says: never commit)
 .claude/agent-comms/
 

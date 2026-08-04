@@ -1,0 +1,4 @@
+book_id: 69b4cce0d5b6c3815e1a2892
+Title: Moninckx Atlas, vol. 9
+Author: Jan Moninckx; Maria Moninckx
+Source language: Latin

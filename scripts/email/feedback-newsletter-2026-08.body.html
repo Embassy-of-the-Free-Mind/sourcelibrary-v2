@@ -1,127 +1,152 @@
 <!--
-  Newsletter body — "How to tell us we got it wrong" (August 2026).
+  Newsletter body — "Can I get your feedback?" (August 2026).
 
-  Paste this into /admin/email → Compose → Manual mode. It is written for the
-  520px shell in src/lib/email-templates.ts (wrapInEmailShell), which supplies
-  the logo, the <h1> from the subject line, and the unsubscribe footer — so
-  this file deliberately has no header, no title, and no footer of its own.
+  Paste into /admin/email → Compose → Manual. Written for the 520px shell in
+  src/lib/email-templates.ts (wrapInEmailShell), which supplies the logo, the
+  <h1> from the subject line, and the unsubscribe footer — so this file has no
+  header, no title, and no footer of its own.
 
-  Render a full preview with:
+  Render a preview with:
     node scripts/email/render-newsletter-preview.mjs \
       scripts/email/feedback-newsletter-2026-08.body.html \
-      "How to tell us we got it wrong" /tmp/preview.html
+      "Can I get your feedback?" /tmp/preview.html
 
-  SCREENSHOTS are served from public/email/feedback-2026-08/. They resolve only
-  after a prod deploy — check all three load before sending.
+  ─────────────────────────────────────────────────────────────────────────────
+  THIS IS DEREK'S AUTHORED COPY. Do not reword it.
 
-  ~320 words, deliberately. The point (a reader is the first human to see a
-  given page, so noticing is the quality system) has to land early; the July
-  incidents are evidence for it, not the subject. Cut, don't re-expand.
+  The prose came from Derek on 2026-08-01 and is reproduced verbatim. The ONLY
+  changes made were four unambiguous typos: eevery→every, foooter→footer,
+  trust worth→trustworthy, roviding→providing. Voice, structure, punctuation
+  and sentence order are his, including the fragments ("Yet.") and the
+  exclamation marks, which are doing real work.
 
-  HOUSE VOICE — this was edited specifically to read as written, not generated.
-  If you revise it, keep clear of:
-    · em-dashes (there are none in the prose; commas and full stops instead)
-    · "It isn't X. It's Y." reversals, and "Which means..." as a pivot
-    · one-line paragraphs dropped in for a beat
-    · matched pairs ("Someone sent fourteen words... someone else sent four")
-    · summarising clauses that tell the reader what they just read
-  Uneven sentence lengths and small concrete asides are doing the work here.
+  An earlier draft of this letter was written by Claude and replaced wholesale
+  by Derek's version. Do not reinstate it, and do not "tighten" this one. See
+  memory feedback_dont_change_authored_copy: authored marketing copy is used as
+  written or sent back for a decision, never silently improved.
 
-  EVERY NUMBER AND QUOTE WAS VERIFIED against live data on 2026-08-01:
-    6.1M pages / 4.9M translated  → sum over books{visible:true}
-    336 messages / 298 addressed  → feedback collection counts
-    49 pages translated on request→ feedback.addressed_action tally
-    261 books / ~105K pages       → .claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md
-    ~4 in 5 citations unverifiable→ CLAUDE.md "Entity index & page attribution" (#3361)
-  Both reader quotes are verbatim from the feedback collection, unattributed.
-  Do not adjust a figure without re-measuring; do not paraphrase a quote.
+  ONE block is marked ADDED BY CLAUDE below — the in-reader translation prompt.
+  It is a proposal in Derek's voice and is his to cut.
+
+  Derek cut three things on 2026-08-04, all deliberate, do not reinstate:
+    · "Can you trust it? ... Don't trust any translation ..." — his own line,
+      and the most quotable in the letter. He dropped it anyway. If it ever
+      comes back it should come back from him.
+    · the "what are you researching" ask (Claude's), and its "hit reply" closer.
+  They were replaced by one line: "Or just reply and tell me your feedback."
+  The letter now carries a single ask and one soft invitation to reply.
+  ─────────────────────────────────────────────────────────────────────────────
+
+  BOOK COUNT — resolved 2026-08-01. Derek chose 19,420, which is the figure the
+  homepage itself shows: books that are visible AND have readable pages. 34,040
+  are visible in total, but 14,620 of those have no pages yet, so the larger
+  number would have overstated what a reader can actually open. It is a literal
+  count, not a "20,000+" style claim, so it goes stale — re-measure before
+  reusing it in another letter.
+
+  SCREENSHOTS live in public/email/feedback-2026-08/. footer.jpg deliberately
+  shows the callout button AND the footer link in one frame, because the letter
+  points at both.
+
+  callout.jpg was RE-SHOT on 2026-08-04 after the heading changed to "Share
+  your feedback." Shot against live production, not a DOM edited to look like
+  the future — the site ships first, then the picture is taken. If that band is
+  ever reworded again, this image is the one that goes stale.
+
+  footer.jpg is cropped to the FOOTER ALONE. It used to include the "built in
+  the open" callout above it, which duplicated callout.jpg and — worse — pinned
+  a second copy of a heading that can change. Keep the two images disjoint so
+  editing that band never silently staleness-rots this one.
+
+  footer.jpg carries a drawn outline around the FOOTER link only — it is a
+  faint rust-coloured link among a dozen others and readers slid past it. The
+  callout button above it is a solid black button and needs no help. The outline
+  is an annotation added in the browser for the screenshot; it does not exist on
+  the site.
+
+  modal.jpg holds a REAL reader report, verbatim, on the real page it was sent
+  from: "I'm seeing chapter 4 on the image page and chapter 5 in the text",
+  Pseudodoxia Epidemica p.221, 2026-07-26. Those fourteen words surfaced the
+  bulk-JP2 leaf offset (#3368) — 261 books serving every scan one leaf behind
+  its own text, ~105,000 pages, four months. The first version of this
+  screenshot used a plausible-sounding message Claude invented, which is a poor
+  thing to do in a letter about accuracy; Derek caught it. If you re-shoot this
+  image, use a real message from the feedback collection, not a written one.
 -->
 
 <p style="margin: 0 0 20px;">
-  Every page in this library was read by a machine before it was read by a person.
-  There are about six million scanned pages here, and close to five million of them
-  have been put into English by an AI model. Hardly any have been checked by a human.
-  At that scale, hardly any ever will be.
-</p>
-
-<p style="margin: 0 0 28px;">
-  If you open a page and read it properly, there is a good chance nobody has done that
-  before, and that you are the only person who will notice if something is off.
+  Hello Source Library friends,
 </p>
 
 <p style="margin: 0 0 20px;">
-  Two from July. A reader sent us fourteen words: <em>&ldquo;I&rsquo;m seeing chapter
-  4 on the image page and chapter 5 in the text.&rdquo;</em> We went and looked, and
-  261 books turned out to be showing every scan one leaf behind its own text. Around
-  105,000 pages, like that for four months. Another reader wrote four words on an
-  encyclopedia entry: <em>&ldquo;What is this page about? Real?&rdquo;</em> They were
-  right to ask. We had been citing page numbers we could not back up, roughly four out
-  of every five of them.
+  Can I get your feedback?
 </p>
 
-<p style="margin: 0 0 32px;">
-  We had not spotted either one, and we would not have.
+<p style="margin: 0 0 20px;">
+  I&rsquo;ve had the most fun time building the Source Library, but I haven&rsquo;t
+  had the time to read all of the 19,420 books in there. If you come across something
+  that could be improved, no matter how small, please let me know. It might be in the
+  UI or it might be the content of the translation or maybe some of our book data is
+  wrong.
 </p>
 
-<hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 32px;" />
-
-<p style="margin: 0 0 24px; font-size: 20px; font-family: Georgia, serif;">
-  Three ways to tell us
+<p style="margin: 0 0 28px;">
+  I want you to know that I personally read the feedback on the Source Library every
+  day. You are welcome to email me!
 </p>
 
-<p style="margin: 0 0 14px;">
-  <strong>1. At the bottom of any page.</strong> Click it, write whatever you noticed,
-  send. It records which page you were on, so there is no need to explain where you
-  are.
+<p style="margin: 0 0 16px;">
+  I also want to make sure everyone knows how to leave feedback in the site. You see,
+  down on the bottom of every page there is a button to leave feedback.
 </p>
 
 <img src="https://sourcelibrary.org/email/feedback-2026-08/callout.jpg"
-     alt="A band at the foot of the page reading 'This library is built in the open — if you spot an error, have a suggestion, or just want to say hello, we'd love to hear from you', with a black Give Feedback button."
+     alt="A band at the foot of the page headed 'Share your feedback' — if you spot an error, have a suggestion, or just want to say hello, we'd love to hear from you — with a black Give Feedback button."
      width="472"
-     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 14px; border: 1px solid #e8e4dc;" />
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 20px; border: 1px solid #e8e4dc;" />
+
+<p style="margin: 0 0 16px;">
+  And then, further down, here&hellip; and even here, on the footer.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/footer.jpg"
+     alt="The dark site footer, with a Give Feedback link outlined in the Participate column beside Libraries, Contribute, Support and Developers."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 20px; border: 1px solid #e8e4dc;" />
+
+<p style="margin: 0 0 16px;">
+  That way, I know what page or service you are leaving the feedback on.
+</p>
 
 <img src="https://sourcelibrary.org/email/feedback-2026-08/modal.jpg"
-     alt="The Send feedback dialog, with a message typed into it about a mistranslated Latin phrase, a checkbox offering to help with translations or research, and a Send button."
+     alt="The Send feedback dialog on a book page, holding a real reader report — &quot;I&#39;m seeing chapter 4 on the image page and chapter 5 in the text&quot; — with a note at the bottom reading &quot;Sent from /book/pseudodoxia-epidemica-...&quot; and a Send button."
      width="472"
-     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 32px; border: 1px solid #e8e4dc;" />
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 28px; border: 1px solid #e8e4dc;" />
 
-<p style="margin: 0 0 14px;">
-  <strong>2. Underneath a translation, while you are reading it.</strong> There is a
-  faint line below the English: <em>Notice a translation issue? Let us know.</em> That
-  one carries the book and the page number along with it, so &ldquo;wrong word in line
-  three&rdquo; is enough to work from.
+<!-- ADDED BY CLAUDE — the in-reader translation prompt. Derek's letter says
+     feedback "might be the content of the translation", and this is the control
+     built for exactly that, so it seemed worth showing. Cut freely. -->
+<p style="margin: 0 0 16px;">
+  And if it is the translation you want to flag, there is a quieter one right under
+  the English text while you are reading. That one already knows which book and which
+  page you are on.
 </p>
 
 <img src="https://sourcelibrary.org/email/feedback-2026-08/reader.jpg"
      alt="The reading view: Robert Fludd's 1617 engraved title page on the left, its English translation on the right, and an open feedback box beneath the translation reading 'What did you notice?'"
      width="472"
-     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 32px; border: 1px solid #e8e4dc;" />
-
-<p style="margin: 0 0 32px;">
-  <strong>3. Or ask us for something.</strong> A book we do not have, a translation
-  that does not exist yet. Forty-nine pages are readable in English today because
-  somebody clicked &ldquo;Request one&rdquo; on a book that had none.
-</p>
-
-<hr style="border: none; border-top: 1px solid #e8e4dc; margin: 0 0 32px;" />
-
-<p style="margin: 0 0 16px;">
-  None of it has to be careful. Two of the most useful notes we have ever had, in
-  full:
-</p>
-
-<div style="margin: 0 0 24px; padding: 4px 0 4px 18px; border-left: 2px solid #e7ddcc; color: #5c554d; font-size: 14px; line-height: 1.8;">
-  &ldquo;Not the original edition.&rdquo;<br />
-  &ldquo;This image doesn&rsquo;t correspond with this text.&rdquo;
-</div>
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 28px; border: 1px solid #e8e4dc;" />
+<!-- /ADDED BY CLAUDE -->
 
 <p style="margin: 0 0 28px;">
-  Both were fixed. We have had 336 messages so far and have dealt with 298 of them. If
-  you leave an email address, you will hear back when yours is done.
+  I really want to engage the reading community. Not everyone is interested in reading
+  texts that are hundreds of years old&hellip; yet! I&rsquo;d love to make the reading
+  experience as pleasant and trustworthy as possible.
 </p>
 
 <p style="margin: 0 0 28px;">
-  If something looks wrong, it probably is. Please tell us.
+  Or just reply and tell me your feedback. I&rsquo;d love to know what you find useful
+  and what you think needs improvement.
 </p>
 
 <p style="margin: 0 0 32px; text-align: center;">

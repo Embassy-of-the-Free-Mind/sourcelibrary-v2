@@ -1,0 +1,37 @@
+{
+  "book_id": "69b51e19efd8df28f2db0768",
+  "action": "demote",
+  "action_valid": true,
+  "basis": "complete_modern_prior",
+  "prior": {
+    "translator": "Brian P. Copenhaver",
+    "year": "1992",
+    "completeness": "complete — all 18 tractates of the Greek Corpus Hermeticum including Pymander (tractate I) plus Latin Asclepius",
+    "url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D"
+  },
+  "queries_run": [
+    "Brian Copenhaver \"Hermetica\" 1992 Cambridge complete English translation Corpus Hermeticum",
+    "GRS Mead \"Thrice-Greatest Hermes\" 1906 complete English translation Corpus Hermeticum Pymander",
+    "Walter Scott \"Hermetica\" 1924 English translation Corpus Hermeticum Oxford",
+    "Hannibal Rosselli \"Pymander\" commentary English translation 16th century Hermetica"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D",
+      "found": "Copenhaver 1992 covers all 18 tractates of the Corpus Hermeticum including Pymander (tractate I) and the Latin Asclepius — confirmed complete"
+    },
+    {
+      "url": "https://www.cambridge.org/core/journals/british-journal-for-the-history-of-science/article/abs/brian-p-copenhaver-hermetica-the-greek-corpus-hermeticum-and-the-latin-asdepius-in-a-new-english-translation-with-notes-and-introduction-cambridge-cambridge-university-press-1992-pp-lxxxiii-320-isbn-0521361443-4500-6995/7F8F960A233E2E4D1D3526BE2D9EC6C1",
+      "found": "Peer-reviewed confirmation of Copenhaver 1992 completeness"
+    },
+    {
+      "url": "https://sacred-texts.com/gno/th2/index.htm",
+      "found": "GRS Mead Thrice-Greatest Hermes (1906) Vol. 2 includes full Corpus Hermeticum including Pymander — additional complete modern prior"
+    },
+    {
+      "url": "https://archive.org/details/ScottHermeticaVolOne",
+      "found": "Walter Scott Hermetica Vol. 1 (Oxford, 1924) — third complete modern prior"
+    }
+  ],
+  "reasoning": "The Corpus Hermeticum (Pymander) has three complete modern English translations: Mead 1906, Scott 1924, and Copenhaver 1992 (Cambridge UP, all 18 tractates). Stage-1 prior Everard 1650 is pre-1900 but Copenhaver 1992 is definitive. Rosselli's commentary is untranslated but instructions direct source-language rule to the underlying Hermetic work. Demote valid."
+}

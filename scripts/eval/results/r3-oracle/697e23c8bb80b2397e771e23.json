@@ -1,0 +1,41 @@
+{
+  "book_id": "697e23c8bb80b2397e771e23",
+  "work_identified": "Hypnerotomachie (Jean Martin, 1546) — French adaptation of Francesco Colonna's Hypnerotomachia Poliphili (Venice, 1499)",
+  "verdict": "not_first",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Hypnerotomachia Poliphili: The Strife of Love in a Dream",
+      "translator": "Joscelyn Godwin",
+      "pub_year": "1999",
+      "publisher": "Thames & Hudson",
+      "completeness": "complete",
+      "source_url": "https://www.thamesandhudsonusa.com/books/hypnerotomachia-poliphili-the-strife-of-love-in-a-dream-softcover"
+    }
+  ],
+  "queries_run": [
+    "Hypnerotomachia Poliphili English translation Joscelyn Godwin 1999 Italian source language",
+    "Hypnerotomachie Jean Martin 1546 French translation English",
+    "Hypnerotomachia Poliphili English translations complete list WorldCat \"translated from\" Italian French",
+    "\"Strife of Love in a Dream\" 1592 \"R.D.\" OR \"Robert Dallington\" source Italian OR French Hypnerotomachia",
+    "\"Hypnerotomachie\" OR \"Discours du songe de Poliphile\" English translation WorldCat",
+    "Joscelyn Godwin Hypnerotomachia 1999 Thames Hudson \"translated from Italian\" OR \"translated from the Italian\"",
+    "Hypnerotomachia 1592 R.D. English \"translated from\" French OR Italian source text",
+    "\"Hypnerotomachie\" \"Jean Martin\" English translation never OR untranslated OR \"first translation\"",
+    "\"Hypnerotomachie\" OR \"Discours du songe de Poliphile\" \"Jean Martin\" translated English scholarly edition",
+    "Hypnerotomachie Poliphile Jean Martin French Renaissance English translation first ever"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Hypnerotomachia_Poliphili", "found": "Godwin 1999 complete English from Italian; 1592 R.D. partial English from Italian; no English of Jean Martin's French version mentioned"},
+    {"url": "https://caareviews.org/reviews/375", "found": "Confirms Godwin translated from Italian, using Pozzi & Ciapponi critical Italian edition (1968) as primary resource"},
+    {"url": "https://archive.org/details/hypnerotomachias0000colo", "found": "1592 English is a partial translation of Italian Hypnerotomachia Poliphili, not of the French version"},
+    {"url": "https://openlibrary.org/works/OL726081W/Hypnerotomachia_Poliphili", "found": "English editions are Godwin 1999 and 2005 reprint only; no English translation of Jean Martin's French version listed"},
+    {"url": "https://www.thamesandhudsonusa.com/books/hypnerotomachia-poliphili-the-strife-of-love-in-a-dream-softcover", "found": "Godwin 1999 complete English translation, Thames & Hudson, confirmed in print"},
+    {"url": "https://gallica.bnf.fr/ark:/12148/bpt6k54425079.texteImage", "found": "Jean Martin's French version catalogued as 'trad. de langage italien en français par Jean Martin et Jacques Gohorry' — a French-language adaptation from Italian"}
+  ],
+  "reasoning": "Godwin (1999) is a confirmed complete modern English of Colonna's Hypnerotomachia Poliphili from Italian; source-language rule applies. Jean Martin's 1546 French redaction is a distinct adaptation (condensed, different woodcuts) never specifically Englished, making first_from_source arguable; but source-language rule is decisive: a complete English of THIS WORK exists."
+}

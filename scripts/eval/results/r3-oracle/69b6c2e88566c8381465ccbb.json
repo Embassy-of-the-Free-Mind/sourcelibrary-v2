@@ -1,0 +1,43 @@
+{
+  "book_id": "69b6c2e88566c8381465ccbb",
+  "work_identified": "Index librorum prohibitorum Innocentii XI iussu editus usque ad annum 1681 (with appendix to June 1704) — the official Catholic catalogue of prohibited books issued under Pope Innocent XI, distinct from earlier (Clement VIII 1596, Tridentine) and later (Benedict XIV 1758, Leo XIII 1897) editions",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Index librorum prohibitorum Innocent XI 1681 English translation",
+    "\"Index of Forbidden Books\" \"Index librorum prohibitorum\" English translation published",
+    "worldcat \"index librorum prohibitorum\" \"innocent XI\" English translation site:worldcat.org",
+    "\"index librorum prohibitorum\" \"translated\" OR \"English\" \"innocent XI\" site:archive.org",
+    "\"index librorum prohibitorum\" English translation complete archive.org",
+    "Wikipedia Index Librorum Prohibitorum page — English translations section",
+    "Gutenberg: Betten Roman Index of Forbidden Books — is it a translation?",
+    "Robin Vose \"Index of Prohibited Books\" English 2023 translation University Chicago Press",
+    "\"index librorum prohibitorum\" \"first English\" OR \"first time English\" OR \"never been translated\" translation",
+    "worldcat \"index librorum prohibitorum\" English language translation complete",
+    "\"index of prohibited books\" Vatican 1681 English translation full text scholars",
+    "\"index librorum prohibitorum\" \"innocent XI\" 1681 nature \"catalogue\" OR \"list\" \"papal decrees\" OR \"prefatory\" content",
+    "\"index librorum prohibitorum\" 1681 Innocent XI content structure \"apostolic constitution\" \"preface\" \"rules\"",
+    "\"index librorum prohibitorum\" full English translation complete text published book",
+    "index librorum prohibitorum \"rules of the index\" OR \"papal constitutions\" English translation 17th 18th century",
+    "\"index of prohibited books\" OR \"index of forbidden books\" 17th century English anti-Catholic pamphlet translation 1681 1682 1683",
+    "\"popish index\" OR \"index of forbidden\" English printed 1680s ESTC anti-Catholic translation",
+    "ESTC \"index librorum prohibitorum\" English 17th 18th century Britain translation OR English"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Index_Librorum_Prohibitorum", "found": "No English translations of any edition mentioned; work discussed only in Latin editions context"},
+    {"url": "https://www.gutenberg.org/files/61165/61165-h/61165-h.htm", "found": "Betten 1909 is commentary/summary of the Index (not a translation); explicitly an explanatory treatise for Catholic readers"},
+    {"url": "https://press.uchicago.edu/ucp/books/book/distributed/I/bo184798323.html", "found": "Vose 2022 is described as 'first full study of the Index in English' — a scholarly monograph, not a translation of the Latin text"},
+    {"url": "https://www.worldcat.org/title/index-librorum-prohibitorum-innocentii-xi-pontificis-maximi-jussu-editus/oclc/491808889", "found": "403 Forbidden — could not access WorldCat record directly"},
+    {"url": "https://archive.org/details/indexlibrorumpr02catgoog", "found": "1726 Prague edition of the Innocent XI Index: Latin only, no English translation mentioned; 648pp including appendix to 1704"},
+    {"url": "https://archive.org/details/case_wing_z1020_i39_1664", "found": "1664 Latin Index: 453pp, prefatory pages confirming multi-part structure (list + constitutions); language Latin confirmed"},
+    {"url": "https://www.newadvent.org/cathen/07721a.htm", "found": "Catholic Encyclopedia on Index of Prohibited Books: no English translations of any edition mentioned"},
+    {"url": "https://sourcebooks.fordham.edu/mod/indexlibrorum.asp", "found": "Connection refused / server error — could not retrieve content"},
+    {"url": "https://www.libreriagovi.com/en/17th-century/index-librorum-prohibitorum-innocentii-xi-pontificis-maximi-iussu-editu", "found": "Bookseller listing for original Latin edition of Innocent XI Index; no English edition mentioned"}
+  ],
+  "reasoning": "No English translation of Innocent XI's 1681 Index found across WorldCat, archive.org, ESTC searches, and scholarly literature. English works (Betten 1909, Vose 2022) are studies about the Index, not translations. The Leo XIII/Pius X edition in English is a distinct, substantially revised later work (1897/1900s). The 1681 edition contains prefatory apostolic constitutions and rules (genuine translatable prose) alongside the bibliographic catalogue, so not_applicable does not apply."
+}
