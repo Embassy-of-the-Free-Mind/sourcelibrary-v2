@@ -95,12 +95,16 @@ const BOOK_CHUNK = parseInt(args['book-chunk'] || '25');    // books per pages q
 const TFIDF_PAGES = parseInt(args['tfidf-pages'] || '60');  // pages sampled per book
 const TFIDF_TOP = parseInt(args['tfidf-top'] || '40');      // terms kept per book
 const TFIDF_MIN_DF = parseInt(args['tfidf-min-df'] || '2'); // drop hapax vocabulary
-// Drop terms appearing in more than this FRACTION of a corpus's books. Off by
-// default: IDF already suppresses function words once a corpus has enough books.
-// It does NOT fully suppress them in early-modern text, where orthographic
-// variation splits one function word across many types (`vnd` / `vnnd` / `und`),
-// keeping each individually rare and therefore high-IDF. Raise this only if that
-// bites — `doc_freq` and `n_docs` are emitted so it can also be done downstream.
+// Drop terms appearing in more than this FRACTION of a corpus's books.
+// MEASURED NOT TO WORK on this corpus — left in place for other datasets, but do
+// not reach for it here. Early-modern orthography splits one function word into
+// many types, and it is the ARCHAIC ones that top the rankings while sitting
+// well below any usable cut: German `vnd` 0.268, `vnnd` 0.221, `nit` 0.237
+// against `und` 0.910 and `der` 0.967. A cut at 0.5 therefore removes the modern
+// spellings (harmless) and keeps every archaic one (the actual problem), while
+// destroying real content — Latin `aqua` is 0.586 and `ignis` 0.491.
+// The principled fix is orthographic folding in tokenize(), as already done for
+// Latin u/v + i/j and Greek polytonic. See .claude/docs/corpus-dataset.md.
 const TFIDF_MAX_DF = parseFloat(args['tfidf-max-df'] || '1');
 // Minimum term length. Single letters are noise for a topical keyword vector —
 // but NOT always: Trithemius's `Polygraphy` is a cipher manual whose ten highest
@@ -253,6 +257,24 @@ const writeCkpt = (phase, data) => {
 };
 const clearCkpt = phase => { try { fs.unlinkSync(ckptPath(phase)); } catch { /* already gone */ } };
 
+// ── stall watchdog ───────────────────────────────────────────────
+// Belt and braces alongside the finite socket timeout. Any driver-level hang
+// that does not surface as an error still stops progress, and a job stuck at 0%
+// CPU is indistinguishable from a slow one until hours have passed. Exiting
+// non-zero hands control back to the retry loop, which resumes from the
+// checkpoint — so a stall costs minutes, never a night.
+const STALL_MS = parseInt(args['stall-timeout'] || String(20 * 60 * 1000));
+let lastProgress = Date.now();
+const beat = () => { lastProgress = Date.now(); };
+const watchdog = setInterval(() => {
+  const idle = Date.now() - lastProgress;
+  if (idle > STALL_MS) {
+    console.error(`[watchdog] no progress for ${Math.round(idle / 60000)} min — exiting so the retry loop can resume from the checkpoint`);
+    process.exit(1);
+  }
+}, 60000);
+watchdog.unref();
+
 // ── main ─────────────────────────────────────────────────────────
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -264,7 +286,11 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, {
     serverSelectionTimeoutMS: 120000,
     heartbeatFrequencyMS: 30000,
-    socketTimeoutMS: 0,
+    // FINITE, deliberately. socketTimeoutMS: 0 means "never time out", so a
+    // silently dropped socket does not error — it hangs forever, the retry loop
+    // never fires, and the job sits at 0% CPU indefinitely. That cost 17 hours
+    // on the tfidf run. A retry that cannot be triggered is not a retry.
+    socketTimeoutMS: 600000,
     connectTimeoutMS: 60000,
     retryReads: true,
     maxPoolSize: 8,
@@ -473,6 +499,7 @@ async function main() {
       // Checkpoint AFTER the chunk's rows are written, never before — a
       // checkpoint ahead of the data would silently skip those books on resume.
       writeCkpt('pages', { next_book_index: i + BOOK_CHUNK });
+      beat();
       if (done % 200 < BOOK_CHUNK) {
         const rate = pagesOut / ((Date.now() - t0) / 1000);
         log(`  pages: ${done.toLocaleString()}/${scoped.length.toLocaleString()} books · ${pagesOut.toLocaleString()} pages · ${rate.toFixed(0)}/s`);
@@ -568,7 +595,7 @@ async function main() {
       // is a safe resume point. Batches arrive in page_id order.
       const lastId = batch[batch.length - 1]?.page_id;
       batch = [];
-      if (lastId) writeCkpt('revisions', { last_page_id: lastId });
+      if (lastId) { writeCkpt('revisions', { last_page_id: lastId }); beat(); }
     };
 
     for await (const rv of cur) {
@@ -685,6 +712,7 @@ async function main() {
       }
       done += chunk.length;
       writeCkpt('tfidf', { next_book_index: i + BOOK_CHUNK });
+      beat();
       if (done % 200 < BOOK_CHUNK) log(`  tfidf: ${done.toLocaleString()}/${scoped.length.toLocaleString()} books emitted`);
     }
 

@@ -155,12 +155,57 @@ a reason. `books.csv` carries `provider`, `dominant_scan_class`, `quality_score`
   them). Genuinely lossy in one known case: Trithemius's *Polygraphy* is a
   cipher manual whose ten strongest terms are all single letters.
 
-**Known weakness.** IDF suppresses function words only when a corpus has enough
-books. Early-modern orthographic variation splits one function word across many
-types (`vnd` / `vnnd` / `und`), keeping each individually rare and therefore
-high-IDF. Latin and English look clean; German is the worst case. `doc_freq`,
-`n_docs` and `tf` are all emitted so any other weighting can be recomputed
-downstream, and `--tfidf-max-df` exists if it bites.
+### Measured quality (2,136 books, 69 corpora, 715,194 vocab rows)
+
+Good: Latin reads `elementis aerem aer ignis aqua elementorum` for a treatise on
+the elements; Chinese and Tibetan produce plausible content terms.
+
+**Four defects, all real, listed because each changes how a result should be
+read:**
+
+1. **German is still function-word dominated at full scale, and `--tfidf-max-df`
+   does NOT fix it.** I predicted more books would let IDF suppress these. It did
+   not. Measured document frequencies in the 456-book German corpus:
+
+   | term | df/N | | term | df/N |
+   |---|---:|---|---|---:|
+   | `und` | 0.910 | | `vnd` | 0.268 |
+   | `der` | 0.967 | | `vnnd` | 0.221 |
+   | | | | `nit` | 0.237 |
+   | | | | `deß` | 0.349 |
+
+   A max-df cut at 0.5 removes the **modern** spellings, which were never the
+   problem, and leaves every **archaic** one — the exact terms topping the
+   rankings — making the output worse, not better. It also destroys real content:
+   Latin `aqua` sits at df/N 0.586 and `ignis` at 0.491. **Do not use
+   `--tfidf-max-df` on this corpus.** The principled fix is orthographic folding
+   inside `tokenize()` for German (`vnd`→`und`, `nit`→`nicht`), mirroring what it
+   already does for Latin u/v and Greek polytonic. Until then, filter downstream
+   using the emitted `doc_freq` / `tf` / `n_docs`.
+
+2. **`books.language` is the edition language, not the text's** — so the Greek
+   pool contains Latin. Its top-ranked book, *The Complete Works of the Divine
+   Plato*, scores `vt soc est vero quod esse non ad`: a Latin translation of
+   Plato filed under Greek, contaminating Greek IDF. Known issue
+   (`books.language = edition, not source`); it degrades every per-language pool.
+
+3. **`books.language` is free text with no controlled vocabulary.** 69 "corpora"
+   include `auto-detect` (28 books), `unknown`, `und`, `e`, `ger` (a German book
+   split from the other 456), `lb`, `multiple`, `latin/hebrew`,
+   `english, prakrit, sanskrit`, `karaim and hebrew`, and script names rather
+   than languages (`egyptian hieroglyphs`, `maya hieroglyphs`). 52 books total.
+   **30 corpora hold exactly one book**, where IDF is log(1/1) = 0 and every
+   TF-IDF is identically zero — 518 rows (0.6%). 51 corpora have fewer than 5
+   books (89 books) and their IDF is not meaningful.
+
+4. **Catalogue boilerplate can dominate a short book.** The Sanskrit sample
+   returns `barcode benares language pages sanskrit series works publication` —
+   Internet Archive scan front matter, not the text. Even sampling helps but
+   cannot save a book whose pages are mostly catalogue cards.
+
+Practical guidance: trust the top 8 corpora (1,901 books, 89%); treat anything
+under ~20 books as indicative only; and join `tfidf_vocab.csv` to filter rather
+than relying on the shipped ranking for German.
 
 ## 4a. First result: re-OCR is not uniformly an improvement
 
