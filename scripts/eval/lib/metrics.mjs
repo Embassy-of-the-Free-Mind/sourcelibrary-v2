@@ -254,12 +254,58 @@ export function pairwiseMetrics(runs, script = 'default') {
 
 const OCR_WRAPPER_BLOCKS = ['meta', 'summary', 'keywords', 'vocab', 'language', 'scan-quality', 'script', 'page-type', 'columns', 'warning'];
 
-/** Strip editorial annotation wrapper blocks (content + tag) and inline gloss tags. */
+/**
+ * Strip editorial annotation wrapper blocks (content + tag) and inline gloss tags.
+ *
+ * Handles BOTH annotation syntaxes. Older OCR (through ~2026-03) wrote
+ * `[[language: Latin]]`, `[[meta: ...]]`, `[[page number: 119]]` rather than XML
+ * tags, and stripping only the XML form left whole paragraphs of English prose
+ * about the scan sitting in the "transcription" — where an agreement metric reads
+ * it as body text the other side failed to produce. Measured: pairs with a bracket
+ * block on one side score 74.5% median agreement against 98.3% for the rest, a
+ * 24-point penalty that is entirely annotation syntax. The key may contain spaces
+ * (`page number`), which is why this is not `[a-z-]+`.
+ */
 export function stripWrappers(s) {
   if (!s) return '';
   let t = s;
   for (const w of OCR_WRAPPER_BLOCKS) t = t.replace(new RegExp(`<${w}[^>]*>[\\s\\S]*?</${w}>`, 'gi'), '');
+  t = t.replace(/\[\[\s*[a-z][a-z -]{0,24}:[\s\S]*?\]\]/gi, ' ');
   return t.replace(/<\/?(note|term|margin|gloss|unclear|insert|header|catchword|sig|page-num)[^>]*>/gi, '');
+}
+
+/**
+ * Fold the orthographic conventions that two passes disagree about as a matter of
+ * POLICY rather than reading, so `agreement` can be reported both ways.
+ *
+ * Spot-checking the mid agreement bands found most disagreement is not misreading.
+ * On Maternus p382 the two sides transcribe the same words: one expands the tilde
+ * abbreviation (`aſcendentis`, `luminantium`) and the other preserves it
+ * (`aſcendētis`, `luminantiū`); one hyphenates `fue-`, the other `fue=`. Both are
+ * faithful; they follow different prompt-era conventions.
+ *
+ * The RAW metric stays the headline — a reader sees the raw text. The folded twin
+ * says how much of the gap is convention, and the difference between them is the
+ * number worth reporting per stratum.
+ */
+export function foldOrthography(s) {
+  return (s || '')
+    .replace(/ſ/g, 's')                                   // long s
+    .replace(/æ/g, 'ae').replace(/œ/g, 'oe')         // ligatures
+    .replace(/Æ/g, 'AE').replace(/Œ/g, 'OE')
+    // The macron/tilde stands for a following m OR n — it does not say which
+    // (`aſcendētis` is `ascendentis`, `eorū` is `eorum`). So expanding it to a
+    // fixed letter is wrong half the time. Fold instead to a nasal SENTINEL, and
+    // fold a written m/n to the same sentinel in the position the abbreviation
+    // occupies: not before a vowel. `unus` keeps its n (followed by a vowel);
+    // `mundus` and `mundum` stay distinct from each other.
+    .replace(/[āēīōū]/g, c => 'aeiou'['āēīōū'.indexOf(c)] + 'ᴺ')
+    .replace(/[ãẽĩõũ]/g, c => 'aeiou'['ãẽĩõũ'.indexOf(c)] + 'ᴺ')
+    .replace(/([aeiou])[mn](?![aeiouᴺ])/gi, '$1ᴺ')
+    .replace(/q;/g, 'que').replace(/&/g, 'et')                  // scribal abbreviations
+    .replace(/[=¬]/g, '-')                                 // hyphen glyph variants
+    .replace(/[vV]/g, 'u').replace(/[jJ]/g, 'i')                // u/v and i/j
+    .normalize('NFD').replace(/\p{M}/gu, '');                   // remaining diacritics
 }
 
 /** Reduce CJK text to comparable characters: drop wrappers, punctuation, latin, digits, whitespace.

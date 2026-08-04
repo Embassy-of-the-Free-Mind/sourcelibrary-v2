@@ -44,7 +44,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { stripWrappers, levenshtein } from './lib/metrics.mjs';
+import { stripWrappers, levenshtein, foldOrthography } from './lib/metrics.mjs';
 import { classifyPair } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -108,6 +108,18 @@ export function agreement(a, b) {
   if (!A.length || !B.length) return 0;
   const d = levenshtein(A, B);
   return 1 - d / Math.max(A.length, B.length);
+}
+
+/**
+ * The same word metric over ORTHOGRAPHY-FOLDED text. Spot checks showed most
+ * mid-band disagreement is convention drift between prompt eras (tilde expansion,
+ * hyphen glyph, u/v, ligatures), not misreading. Reported ALONGSIDE the raw
+ * number, never instead of it — a reader sees the raw text, so raw agreement is
+ * what a reader would experience. The GAP between the two is the quantity of
+ * interest: how much of a stratum's inconsistency is convention.
+ */
+export function agreementFolded(a, b) {
+  return agreement(foldOrthography(a), foldOrthography(b));
 }
 
 // Character-level twin of the same metric. REQUIRED for space-less scripts:
@@ -275,6 +287,7 @@ async function main() {
   const bookCache = new Map();
   const overall = new Stat();      // agreement_primary
   const overallWord = new Stat();  // pilot-parity word metric, for comparability
+  const overallFold = new Stat();  // orthography-folded twin (convention removed)
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
   const flow = {}, margFate = {}, directionCount = {};
@@ -340,6 +353,7 @@ async function main() {
       for (let i = 0; i < chain.length - 1; i++) {
         const prior = chain[i], current = chain[i + 1];
         const agr = agreement(prior.data, current.data);
+        const agrFold = agreementFolded(prior.data, current.data);
         if (agr == null) { skipped++; continue; }
         const cls = scriptClass(current.data) === 'unknown' ? scriptClass(prior.data) : scriptClass(current.data);
         // The char metric is a 3000x3000 Levenshtein (~9M cells) against the word
@@ -382,6 +396,8 @@ async function main() {
           prompt_transition: `${prior.prompt || '?'}→${current.prompt || '?'}`,
           prior_source: prior.source,
           agreement: +agr.toFixed(4),
+          agreement_folded: agrFold == null ? null : +agrFold.toFixed(4),
+          convention_gap: agrFold == null ? null : +(agrFold - agr).toFixed(4),
           agreement_char: agrChar == null ? null : +agrChar.toFixed(4),
           // The number to trust per row: character-level on space-less scripts,
           // word-level (pilot parity) everywhere else.
@@ -461,6 +477,8 @@ async function main() {
         if (row.eligibility !== 'eligible') continue;  // pairs already counted
         overall.add(a);
         overallWord.add(row.agreement);
+        if (row.agreement_folded != null) overallFold.add(row.agreement_folded);
+        if (row.agreement_folded != null) bump('folded_language', row.language || '(unknown)', row.agreement_folded);
         bump('language', row.language || '(unknown)', a);
         bump('year_bucket', row.year_bucket, a);
         bump('model_pair', row.model_pair, a);
@@ -560,6 +578,9 @@ async function main() {
       p25_agreement: +overall.quantile(0.25).toFixed(4),
       p75_agreement: +overall.quantile(0.75).toFixed(4),
       mean_agreement_word_only: +overallWord.mean.toFixed(4),
+      mean_agreement_folded: overallFold.n ? +overallFold.mean.toFixed(4) : null,
+      median_agreement_folded: overallFold.n ? +overallFold.median.toFixed(4) : null,
+      convention_share_of_gap: overallFold.n ? +((overallFold.mean - overall.mean) / Math.max(1e-9, 1 - overall.mean)).toFixed(4) : null,
       histogram: Object.fromEntries(overall.hist.map((h, i) => [`${BUCKETS[i]}-${Math.min(BUCKETS[i + 1], 1)}`, h])),
       regressions: regressions.length,
       regression_rate: +(regressions.length / Math.max(1, pairs)).toFixed(4),
@@ -637,6 +658,18 @@ async function main() {
     `- mean agreement, pilot-parity word metric on every script: ${(overallWord.mean * 100).toFixed(1)}% — the gap is the CJK/Tibetan tokenization artifact`,
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
     `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
+    '## How much of the disagreement is CONVENTION, not reading?', '',
+    'Spot-checking the mid bands found the two sides usually transcribing the same words',
+    'under different conventions: one pass expands the tilde abbreviation (`ascendentis`),',
+    'the other preserves it (`ascendetis`); one hyphenates `fue-`, the other `fue=`; u/v,',
+    'i/j and ae/ligature differ by prompt era. None of that is misreading.', '',
+    '`agreement_folded` is the same metric over orthography-folded text. Raw stays the',
+    'headline because a reader sees the raw text; the GAP is how much of a stratum\'s',
+    'inconsistency is convention rather than legibility.', '',
+    overallFold.n ? `- folded median **${(overallFold.median * 100).toFixed(1)}%** vs raw ${(overall.median * 100).toFixed(1)}%; folded mean ${(overallFold.mean * 100).toFixed(1)}% vs raw ${(overall.mean * 100).toFixed(1)}%` : '',
+    overallFold.n ? `- **${((overallFold.mean - overall.mean) / Math.max(1e-9, 1 - overall.mean) * 100).toFixed(1)}% of the average disagreement disappears** once convention is folded out` : '',
+    '',
+    table('folded_language', 'Folded agreement by language (compare against the raw table below)'),
     '## Stratified agreement', '',
     table('position_bucket', 'By position in the book', 1),
     table('soft_hidden', 'Soft-hidden pages (negative page_number)', 1),
