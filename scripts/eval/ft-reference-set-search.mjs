@@ -783,4 +783,19 @@ await withMongo(async (db) => {
     written += res.upsertedCount + res.modifiedCount + res.matchedCount;
   }
   console.log(`APPLIED — ${written} search_efforts upserted (no badge was changed).`);
-});
+},
+/**
+ * `noTimeout` is REQUIRED — this walks a whole cohort (5,947 badged / 10,126
+ * inverse / 57,599 untranslated) against a 126,558-row reference set.
+ *
+ * FOURTH occurrence of the same watchdog in this subsystem: the demote packet
+ * died at 31 of 33 works, the source-language screen at 2,000 of 17,072, the LoC
+ * Mongo load at part 30 of 43. Each exited 0 having done a PREFIX of the work.
+ *
+ * It is worst here. A truncated search leaves `search_efforts` covering only the
+ * head of the cohort, and `latestEffortPerBook()` will happily read that as the
+ * current generation — so books the search never reached keep an older, staler
+ * verdict while the run reports success. Recall computed over the mixture is
+ * meaningless, and nothing about it looks wrong.
+ */
+{ noTimeout: true });
