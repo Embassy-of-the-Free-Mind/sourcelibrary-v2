@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
@@ -60,7 +61,13 @@ function generateCitations(
   baseUrl: string,
   edition?: TranslationEdition
 ): Citation {
-  const year = book.published || 'n.d.';
+  // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
+  // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
+  // string was landing in the BibTeX `year` field and the inline citation, i.e.
+  // straight into scholars' bibliographies. Assert a bare year or `n.d.`.
+  const year = citationYearOrNd(book.published);
+  // BibTeX keys must stay alphanumeric — 'n.d.' would emit a key with dots.
+  const bibtexYearKey = citationYear(book.published) ?? 'nd';
   const author = book.author || 'Unknown';
   const title = book.display_title || book.title;
   const doi = edition?.doi || book.doi;
@@ -97,7 +104,7 @@ function generateCitations(
   const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
 
   // BibTeX — original imprint (address/publisher) + translation credit (note)
-  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
+  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${bibtexYearKey}`;
   const bibtexLines = [
     `@book{${bibtexKey},`,
     `  author = {${authorLastFirst}},`,
