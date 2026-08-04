@@ -52,7 +52,7 @@ import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
 import { fileURLToPath } from 'url';
-import { stripWrappers } from './lib/metrics.mjs';
+import { stripWrappers, foldOrthography } from './lib/metrics.mjs';
 import { dominantScript } from '../lib/revision-pairs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -93,6 +93,18 @@ const SPACED_SCRIPTS = new Set(['latin', 'greek', 'cyrillic', 'hebrew', 'arabic'
 // Reject alignment artifacts rather than asking a human to judge them: a real
 // substitution is one word read two ways, so the candidates should be comparable in
 // length. `T` against `TABLEAU` is the aligner slipping, not a reading.
+/**
+ * THE HUMAN GETS THE RESIDUE. If two candidates are the same word once punctuation
+ * and scribal convention are folded — `uns,`/`uns`, `tiu`/`tiū`, `naturae`/`naturæ`
+ * — there is no reading question to answer. Those differences are real
+ * inconsistency and are already counted automatically by agreement_folded; putting
+ * them to a person spends the scarcest resource in the project re-deriving what a
+ * regex settles. Ask only what folding cannot resolve.
+ */
+const dePunct = t => (t || '').replace(/[.,;:!?()\[\]{}'"«»„“”‘’·—–\-]/g, '');
+const sameAfterFolding = (a, b) =>
+  dePunct(foldOrthography(a)).toLowerCase() === dePunct(foldOrthography(b)).toLowerCase();
+
 const plausibleSpan = (a, b) => {
   if (!a || !b) return false;
   const la = [...a].length, lb = [...b].length;
@@ -170,7 +182,7 @@ async function main() {
   console.log(`${pool.length.toLocaleString()} distinct books in the pool`);
 
   const items = [], key = [];
-  let pagesUsed = 0, goldCount = 0, skippedScript = 0, skippedSpan = 0;
+  let pagesUsed = 0, goldCount = 0, skippedScript = 0, skippedSpan = 0, skippedConvention = 0;
   const seenSpan = new Set();
   for (const r of pool) {
     if (items.length >= WANT) break;
@@ -203,6 +215,7 @@ async function main() {
       // Skip pure punctuation/number noise — nothing to judge.
       if (!/\p{L}/u.test(s.a) && !/\p{L}/u.test(s.b)) continue;
       if (!plausibleSpan(s.a, s.b)) { skippedSpan++; continue; }
+      if (sameAfterFolding(s.a, s.b)) { skippedConvention++; continue; }
       // The same disputed word often recurs on a page (a running head, a repeated
       // phrase). Asking the same question five times wastes the volunteer.
       const spanKey = `${r.page_id}|${s.a}|${s.b}`;
@@ -282,6 +295,9 @@ async function main() {
     '  cannot pose a sensible question there, and they need a character-level variant',
     `- ${skippedSpan} spans whose two candidates were too dissimilar in length to be one word read`,
     '  two ways — the aligner slipping, not a reading',
+    `- ${skippedConvention} spans that are the SAME WORD after folding punctuation and scribal`,
+    '  convention (`uns,`/`uns`, `tiu`/`tiū`, `naturae`/`naturæ`). Real inconsistency, already',
+    '  counted by `agreement_folded`, and not a question a person can add anything to.',
     '- `<image-desc>` blocks, which are AI prose about a picture: a preview run asked whether',
     '  the page said "beginning" or "start" when nothing on the page said either', '',
     '## Coverage', '', '| language | items |', '|---|---:|',
