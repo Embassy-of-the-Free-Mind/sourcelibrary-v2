@@ -85,10 +85,43 @@ function getAllApiKeys() {
 }
 
 let currentKeyIndex = 0;
-const apiKeys = getAllApiKeys();
+let apiKeys = getAllApiKeys();
 const rateLimitedKeys = new Map(); // keyName -> unblock timestamp
 const RATE_LIMIT_COOLDOWN = 5 * 60 * 1000; // 5 min cooldown for rate-limited keys
-console.log(`API keys: ${apiKeys.map(k => k.name).join(', ')}`);
+
+/**
+ * Drop keys that are not merely throttled but INVALID (#3627).
+ *
+ * Rotation treats every configured key as usable, so a revoked one keeps taking
+ * its turn and failing. On 2026-08-04 two of four keys in `.env.production.local`
+ * returned 400 "API key not valid", and a 54-page run failed 27 of 54 — a clean
+ * 50%, which reads as throttling or bad images rather than what it was. The
+ * reason sat in `gemini_usage.error_message` and never reached the console.
+ *
+ * A 400 is permanent (a 429 is not), so the cheap fix is one probe per key at
+ * startup. Four requests to avoid silently halving every run.
+ */
+async function dropInvalidKeys(keys) {
+  const checked = await Promise.all(keys.map(async (k) => {
+    try {
+      const r = await fetch(`${GEMINI_API_BASE}/models?key=${k.key}`);
+      if (r.status === 400 || r.status === 403) {
+        const body = await r.text().catch(() => '');
+        return { ...k, dead: true, why: `HTTP ${r.status} ${(body.match(/"message":\s*"([^"]+)"/) || [])[1] || ''}`.trim() };
+      }
+      return { ...k, dead: false };
+    } catch {
+      // A network failure is not proof the key is bad — keep it and let the run
+      // surface the error per call, rather than silently shrinking the pool.
+      return { ...k, dead: false };
+    }
+  }));
+  const dead = checked.filter((k) => k.dead);
+  for (const k of dead) console.log(`  DROPPING ${k.name}: ${k.why}`);
+  const live = checked.filter((k) => !k.dead).map(({ key, name }) => ({ key, name }));
+  if (live.length === 0) throw new Error('Every configured Gemini key was rejected — fix the env before running.');
+  return live;
+}
 
 function getNextKey() {
   const now = Date.now();
@@ -453,6 +486,13 @@ async function main() {
   if (PIPELINE_STATUS) console.log(`  pipeline_status=${PIPELINE_STATUS}`);
   if (PROVIDER) console.log(`  provider=${PROVIDER}`);
   if (DRY_RUN) console.log(`  DRY RUN`);
+  console.log('');
+
+  // Validate the key pool before doing any work — a revoked key otherwise keeps
+  // its slot in the rotation and fails its share of every batch (#3627).
+  console.log(`API keys configured: ${apiKeys.map(k => k.name).join(', ')}`);
+  apiKeys = await dropInvalidKeys(apiKeys);
+  console.log(`API keys usable:     ${apiKeys.map(k => k.name).join(', ')}`);
   console.log('');
 
   try {
