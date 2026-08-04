@@ -146,3 +146,60 @@ describe('the reject tally — a filter that reports only survivors cannot be au
     expect(seen).toEqual([]);
   });
 });
+
+describe('three grades of translation evidence (#3599)', () => {
+  // Requiring 041$h was the dominant cause of 27% catalogue recall: of 136,193
+  // English-language records in one part, 3,918 carry it and ~131,000 declare
+  // nothing at all. Every confirmed-absent prior we chased was in LoC with a
+  // good MARC 240 and no 041 — Caplan's Loeb Ad Herennium (LCCN 55004252).
+  const withUniform = (uniform: string, lang?: string) => `<record>
+    <controlfield tag="008">000000s1954    xx            000 0 eng d</controlfield>
+    <datafield tag="240"><subfield code="a">${uniform}</subfield>${lang ? `<subfield code="l">${lang}</subfield>` : ''}</datafield>
+    <datafield tag="245"><subfield code="a">Ad C. Herennium de ratione dicendi</subfield></datafield>
+  </record>`;
+
+  it('accepts 041$h as before', () => {
+    const row = extractEnglishTranslation(marc({ langSubfields: ['eng'], original: 'lat' }));
+    expect(row.translation_evidence).toBe('041h');
+    expect(row.original_languages).toEqual(['lat']);
+  });
+
+  it('accepts 240$l English when there is no 041 at all — the Caplan shape', () => {
+    const row = extractEnglishTranslation(withUniform('Rhetorica ad Herennium.', 'English'));
+    expect(row, 'a 240 with $l English is the same assertion as 041$h').not.toBeNull();
+    expect(row.translation_evidence).toBe('uniform_title_lang');
+  });
+
+  it('accepts 240$l mid-field, where $s or $k follows the language', () => {
+    const rec = `<record>
+      <controlfield tag="008">000000s1600    xx            000 0 eng d</controlfield>
+      <datafield tag="240"><subfield code="a">Bible. Psalms</subfield><subfield code="l">English</subfield><subfield code="s">Sternhold and Hopkins</subfield></datafield>
+      <datafield tag="245"><subfield code="a">The whole booke of Psalmes</subfield></datafield>
+    </record>`;
+    expect(extractEnglishTranslation(rec).translation_evidence).toBe('uniform_title_lang');
+  });
+
+  it('accepts a bare 240 on an English item as the WEAKEST grade, labelled', () => {
+    const row = extractEnglishTranslation(withUniform('Rhetorica ad Herennium.'));
+    expect(row.translation_evidence).toBe('uniform_title_only');
+    // No 041$h means no source language. Empty is required: the language screen
+    // reads unresolvable as UNKNOWN and keeps the candidate.
+    expect(row.original_languages).toEqual([]);
+  });
+
+  it('still rejects an English item with no 240 and no 041$h', () => {
+    const rec = `<record>
+      <controlfield tag="008">000000s1900    xx            000 0 eng d</controlfield>
+      <datafield tag="245"><subfield code="a">An ordinary English book</subfield></datafield>
+    </record>`;
+    expect(extractEnglishTranslation(rec)).toBeNull();
+  });
+
+  it('still rejects a non-English item however it declares itself', () => {
+    const rec = `<record>
+      <controlfield tag="008">000000s1600    xx            000 0 fre d</controlfield>
+      <datafield tag="240"><subfield code="a">Rhetorica ad Herennium.</subfield><subfield code="l">French</subfield></datafield>
+    </record>`;
+    expect(extractEnglishTranslation(rec)).toBeNull();
+  });
+});
