@@ -639,6 +639,28 @@ OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written 
 - **Never read bulk OCR "disagreement" as a quality signal without inclusion criteria.** The same PR found five distinct populations all scoring as disagreement — editorial notes (only ~3% of it), space-less-script tokenization artifacts, image-only pages (covers/plates where both texts are AI descriptions of one engraving), commentary-as-transcription, and degeneration. State eligibility *before* the analysis and count what each class excludes; and note that classes 4-5 **invert direction** (a shorter, disagreeing re-OCR of a looping prior is the fix, not the damage). Word-level metrics additionally lie about space-less scripts: a Chinese page is ~22 whitespace tokens vs ~310 for Latin, so one wrong glyph invalidates a whole token (Chinese reads 36.7% word-agreement vs 72.7% character-agreement).
 - **The leak is frozen into stored artifacts.** `page_translations.translation` (the semantic-search snippet column) and the embedding vectors were written by the old `cleanText`, so the editorial prose is baked in with the tags already gone — a read-time re-strip can't recover it. Re-derive the snippet column from Mongo with `scripts/maintenance/backfill-clean-snippets.mjs` (UPDATE-only, zero Gemini cost — does NOT touch embeddings). Re-embedding (paid) is separate and only changes *ranking*; decide it on an eval, not reflexively.
 
+### Page text is not inert — it contains tags that close yours
+OCR output carries an HTML-shaped metadata envelope, and one of its tags is
+literally **`<script>`** — it records the writing system: `<script>printed</script>`.
+So `pages.ocr.data` is a string containing `</script>`, and the HTML parser ends a
+`<script>` element at the first `</script` it sees, inside a JS string literal or
+not. Any surface that interpolates page text into HTML or JS without escaping is
+broken by ordinary corpus data, not by an attacker.
+
+- **Serialize JSON-LD with `jsonLdHtml()` (`src/lib/json-ld.ts`), never bare
+  `JSON.stringify`** — it escapes `<` to `<`, which defeats both `</script`
+  and `<!--` and is transparent to Google since it is a valid JSON escape. All 11
+  schema sites were unescaped until #3609, and the reader page's JSON-LD embeds a
+  500-char excerpt of page text (`buildPageJsonLd`, gated on `seo_indexable`).
+  `tests/unit/json-ld-escape.test.ts` pins it, including an absence check that
+  fails a new component hand-rolling `JSON.stringify`.
+- **The tell is bizarre and worth recognising:** a `ReferenceError` naming a word
+  from the *page's own metadata* (`printed is not defined`), because the value
+  inside the envelope tag escaped into the document as markup.
+- `stripEditorialWrappers()` removes the envelope, so a stripped excerpt is
+  normally clean — but that is one function standing between corpus text and a
+  script break. Escape at the boundary anyway.
+
 ### House style: quoting sources in authored editorial content
 The rules above protect the *rendering pipeline*. These cover *authored* prose — blog posts (`src/app/blog/<slug>/page.tsx`), collection `description`/`expanded_description`, exhibition and library pages, anywhere a human or AI writes text that quotes a source. Lessons from the cannabis essay (`/blog/cannabis-bangue`, 2026-06-19; PRs #2584/#2587), where **three of the published quotes were wrong until a validation pass caught them**.
 
