@@ -96,6 +96,119 @@ pairs are image-shift artefacts, not legibility). A reviewer handed one of those
 reports "the text does not match the image," which is true, is worth knowing, and
 is *not* a translation-quality datum. It routes to archival repair instead.
 
+## Round 1 should be OCR adjudication, not translation review
+
+Added 2026-08-04. The panel's first round should adjudicate **double-OCR pairs**
+rather than judge translation faithfulness. It is better on every axis, and it
+serves the memorization paper's binding constraint directly.
+
+### Why this and not translation review
+
+`.claude/docs/ocr-memorization-paper.md` lists its own blocker: *"the corpus
+gives agreement and its factors, never accuracy. Only the anchor rows can supply
+truth."* The calibration scorecard's spaced fit rests on **n=32** non-canonical
+anchors (12 canonical, per-script: Greek 12, Armenian 8, German 5, Hebrew 2), and
+the **spaceless fit is n=0** — Chinese, Tibetan and Japanese have no anchor points
+at all.
+
+More importantly, the paper notes that *"two models reciting agree while both
+misreport the page."* So **agreement is structurally blind to the fabrication
+class**: two passes reproducing the same memorized text agree perfectly while
+neither reads the page. No quantity of corpus data can detect that. A human
+holding the image against both transcriptions is the only instrument that can —
+which makes volunteers not a cheaper source of anchors but the *only* way to
+measure the extreme form of the paper's central claim.
+
+The task shape is also far better suited to a mixed-skill pool. "Which of these
+two transcriptions matches the page?" is comparison rather than evaluation:
+faster, shallower, and a large share of disagreements are **mechanical** —
+truncation, repetition loops, `&nbsp;` padding, normalization conventions
+(`nūc`→`nunc`) — diagnosable by someone who does not read Latin. That directly
+relieves the abstention pressure described above.
+
+### Eligibility — three filters, in this order
+
+Measured on a random sample of 35 OCR revision pairs (2026-08-04; small, re-run
+at scale before relying on the percentages, though `revision-image-shift.mjs`
+already put the shift rate at 40.2% on n=3,339):
+
+1. **Drop byte-identical pairs — 11% of the sample.** Identical text and
+   identical length is a duplicate write, not a second pass. Including it
+   manufactures perfect agreement out of nothing.
+2. **Record and stratify on independence. 83% of pairs carry the SAME model AND
+   the SAME `prompt_version` on both sides.** Those are re-runs of one
+   configuration, not independent observers, and their agreement is inflated by
+   a shared blind spot. Classify each pair `cross_family` /
+   `same_family_diff_prompt` / `same_config` and never pool them. This is the
+   same doctrine `scripts/analysis/ft-rater-reliability.mjs` already applies:
+   independence is by *family*, because the same model resampled shares its
+   blind spot.
+3. **Split on the printed page number before sampling by agreement.** Where both
+   sides carry a `<page-num>`, they disagree **50%** of the time — and the
+   separation is nearly total:
+
+   | | median agreement |
+   |---|---|
+   | printed page numbers agree | **0.956** |
+   | printed page numbers differ | **0.204** |
+
+   **72% of pairs below 0.5 agreement are printed-number disagreements**, i.e.
+   the two texts describe different leaves. They are the #3357 repair artifact,
+   not legibility.
+
+### The trap this creates for the "spread across agreement deciles" sample
+
+The design above asks for anchors spread across the agreement range, because a
+random draw clusters at typical agreement and leaves the scorecard correctly
+refusing to extrapolate. But **the low end of the agreement range is
+overwhelmingly image-shift.** Draw the spread sample naively and roughly
+three-quarters of the low-agreement anchors are pages where the two texts are of
+different leaves — and the calibration curve's low end, which the paper already
+flags as *soft*, would be fitted on that.
+
+So: apply filter 3 **first**, then draw the spread sample from the surviving
+population. `different_leaf` remains a label a reviewer can apply (it is the one
+class humans catch instantly), and those rows route to archival repair and to
+measuring the printed-page-number detector's own recall — which CLAUDE.md notes
+is weak, since a *uniform* shift preserves the page-number sequence perfectly.
+
+### The adjudication
+
+Shown: the page image, transcription A and transcription B, no indication of
+which is current.
+
+```
+which:  a_matches | b_matches | both_match | neither_matches
+        | different_leaf | cannot_judge (+ passed_reason)
+cause:  [multi] truncation | repetition_loop | entity_padding
+        | normalization | misreading | commentary_as_transcription
+        | illegible_scan
+notes:  free text
+```
+
+- **`neither_matches` is the fabrication detector** and the reason this round
+  exists. It is unreachable from agreement.
+- **`cause` is confirmation, not authoring** — pre-fill the candidate class from
+  `disagreement-typology.mjs` and let the reviewer accept or correct it. Per the
+  gallery-volunteer doc: verification gets ~50× the throughput of blank-form
+  annotation.
+
+### What the labels produce, and what they are not
+
+The adjudication yields, per page, whether each side is correct — so aggregated
+within an agreement decile it gives **P(page correct | agreement)**. That is a
+calibration curve in probability space, and it is a *different quantity* from
+the scorecard's existing CER-based anchor fit. **Do not pool them.** The
+probability curve is arguably the more useful one for a public claim (it answers
+"what fraction of pages are right"), and it maps onto the panel's own
+`material_error` framing; the CER fit stays the instrument for the paper.
+
+Stratify by **canonicity** and one interaction becomes testable that nothing in
+the pipeline can currently produce: the memorization hypothesis predicts
+canonical pages show **high agreement *and* elevated `neither_matches`.** High
+agreement with low accuracy is the recitation signature, and it is only visible
+when a human holds the image against both sides.
+
 ## Lane 2 — the stream (improvement)
 
 Endless queue, self-selected, no quota, read whatever you like. This is the lane
