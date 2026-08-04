@@ -1,0 +1,4 @@
+book_id: 69c63918881bf48c13c42648
+Title: Vie de Laurent de Medicis
+Author: Roscoe, William
+Source language: Latin

@@ -1,0 +1,40 @@
+{
+  "book_id": "6a08596549638a50931c75f1",
+  "work_identified": "Paolo Manuzio (Paulus Manutius, 1512–1574), Epistolarum libri XII — 12 books of his own Ciceronian humanist Latin letters plus prefaces (distinct from his editorial work on Cicero). Note: DB author field reads 'Manuzio, Aldo' but the title page names Paullus Manutius; this is Paolo, son of Aldus, not Aldus himself.",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Paolo Manuzio \"Epistolarum libri\" English translation",
+    "Paulus Manutius epistles letters English translation Renaissance",
+    "WorldCat \"Paolo Manuzio\" letters English translation",
+    "\"Paulus Manutius\" OR \"Paolo Manuzio\" epistles letters English translation modern scholarly",
+    "\"I Tatti Renaissance Library\" \"Paolo Manuzio\" OR \"Paulus Manutius\" letters",
+    "\"Paolo Manuzio\" epistolario letters English \"first translation\" OR translated",
+    "\"Paolo Manuzio\" OR \"Paul Manutius\" letters translated English modern edition",
+    "Renaissance humanist letters epistolary English translation \"Manutius\" OR \"Manuzio\" bibliography",
+    "HathiTrust \"Paulus Manutius\" OR \"Paolo Manuzio\" epistolarum English",
+    "\"Paulus Manutius\" epistles letters English -Cicero -Demosthenes translated",
+    "\"Neo-Latin\" letters epistles humanist translation English \"not been translated\" OR \"never translated\"",
+    "WorldCat \"Manuzio, Paolo\" epistolarum language:English",
+    "\"Paolo Manuzio\" OR \"Paulus Manutius\" \"epistolarum\" translation English JSTOR OR \"Oxford University Press\" OR \"Cambridge\"",
+    "\"letters of Paolo Manuzio\" English OR \"Manutius letters translated\"",
+    "Paolo Manuzio Paulus Manutius letters untranslated scholarship",
+    "\"Paolo Manuzio\" OR \"Paulus Manutius\" \"epistolarum\" translation English JSTOR OR \"Oxford University Press\" OR \"Cambridge\""
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/bim_early-english-books-1475-1640_epistolarum-libri-x-_manuzio-paolo_1573", "found": "1573 EEBO-collection edition; OCR language detection confirms Latin (100% confidence); not an English translation — EEBO includes books printed in England regardless of language"},
+    {"url": "https://openlibrary.org/books/OL17606962M/Epistolarum_Pauli_Manutii_libri_X", "found": "7 editions listed (1571–1581); all tagged Language: Latin; no English edition or translation present"},
+    {"url": "https://en.wikipedia.org/wiki/Paulus_Manutius", "found": "No English translations of his epistolary works mentioned; letters described as Ciceronian Latin compositions"},
+    {"url": "https://itatti.harvard.edu/publications/book-series/i-tatti-renaissance-library", "found": "Full I Tatti Renaissance Library catalog browsed; no volume on Paolo Manuzio's letters exists"},
+    {"url": "https://www.abebooks.com/Epistolarum-Libri-duobus-nuper-Additis-eiusdem/15235448502/bd", "found": "Antiquarian listing of 1571 Latin edition; described as 'celebrated Latin epistles in Ciceronian style'; no English translation mentioned"},
+    {"url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=ha008965509", "found": "One 1698 Latin reprint listed; no English translation"},
+    {"url": "https://www.wikidata.org/wiki/Q941151", "found": "Wikidata entry for Paulus Manutius; no translation works listed"},
+    {"url": "https://warwick.ac.uk/fac/arts/ren/snls/neolatintexts/", "found": "Collections of Neo-Latin texts on web; Neo-Latin corpus ~59,000 texts, most never translated; Manuzio not listed with an English version"}
+  ],
+  "reasoning": "Every edition traced (Open Library: 7 editions 1571–1581; EEBO archive.org: Latin confirmed by OCR; HathiTrust record; antiquarian listings) is in Latin. The WorldCat 'Latin and English' language tag for 1581–1611 editions reflects EEBO/library-record English, not a translation. I Tatti Renaissance Library — the canonical venue for bilingual Neo-Latin — has no Manuzio letters volume. Wikipedia and Britannica mention no English translation. No publisher (OUP, Cambridge, Brill) records found. Verdict: first English rendering of these letters."
+}

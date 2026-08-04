@@ -1,0 +1,46 @@
+{
+  "book_id": "69e7887a4a6785cfd60d113d",
+  "action": "demote",
+  "action_valid": false,
+  "basis": "prior_is_different_text",
+  "prior": {
+    "translator": "Solvej Hyveled Nielsen",
+    "year": "2019",
+    "completeness": "different_recension",
+    "url": "https://brill.com/display/book/9789004402621/BP000004.xml?language=en"
+  },
+  "queries_run": [
+    "Sobisch Nielsen 'Divining with Achi and Tara' Brill 2019 contents chapters",
+    "Nielsen 'Divination Manual of Tara' Tibetan text translation Brill 2019",
+    "'jo bo rje' 'phreng mo' Atisha divination rosary English translation Drametse",
+    "Sobisch 'Divining with Achi and Tara' table of contents 'chapter 4' mala phreng Tara Nielsen",
+    "'Divination Manual of Tara' Drikung Achi Nielsen 2019 Brill phreng mo different text",
+    "Solvej Nielsen Atisha Dipankara phreng mo Tara divination manual Tibetan translation",
+    "Dorzin Dhondrup Bhutan divination Tara phreng mala",
+    "'three divination manuals' Atisha Tara phreng 'different contents' Sobisch Brill OR Nielsen",
+    "'Tara phreng mo' OR 'Tara mala divination' Atisha 'jo bo rje' translation English 2019 Drikung OR Bhutan"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://searchworks.stanford.edu/view/13438489",
+      "found": "Full ToC of Ch.4 Mālā Divination: sections include 'Phreng Mo: A Popular Tibetan Way', 'Tibetan Text and Translation of the Divination Manual of Tara', 'Explanations from Khenchen Nyima Gyaltsen Rinpoche', 'Explanations from Dorzin Konchog Dhondrup Rinpoche', 'Some Variations and Similarities'"
+    },
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP105-1-3-145",
+      "found": "EAP105 entry for 'jo bo rje dhi pam ka ras mdzad pa'i phreng mo' at Drametse Monastery, Bhutan — manuscript noted for 'difficult orthography and non-standard spellings'"
+    },
+    {
+      "url": "https://perfumedskull.com/2018/01/12/telling-the-future-some-thoughts-on-fortune-fingers-and-tibetan-rosary-divination/",
+      "found": "Three distinct phreng mo traditions compared; Atiśa phreng mo is one; different manuals have very different contents despite sharing the same divination method"
+    },
+    {
+      "url": "https://www.drikungdharmasurya.org/his-eminence-garchen-rinpoche/venerable-dorzin-konchok-dhondrup/",
+      "found": "Dorzin Konchog Dhondrup: Drikung Kagyu master born Nangchen/Kham, not Bhutan; practices Tārā divination from oral transmission; 'never read a divination manual'"
+    },
+    {
+      "url": "https://brill.com/display/title/55025",
+      "found": "Nielsen 'contributes further interviews, a mālā divination of Tārā and its oral tradition'; Sobisch is a Drikung Kagyu specialist"
+    }
+  ],
+  "reasoning": "Nielsen 2019 translates an Atiśa-attributed Tārā phreng mo sourced from Drikung Kagyu oral tradition (Kham/Nangchen masters Dorzin Dhondrup + Khenchen Nyima Gyaltsen). Multiple Atiśa Tārā phreng mo recensions exist with 'very different contents despite following the same divination method.' Our Drametse/Bhutanese ms has distinct orthography. Ch.4's 'Some Variations and Similarities' section sits separate from the main translation, indicating Nielsen's primary text is one recension; the Bhutanese text is likely noted as a variant, not translated. Different recension = not a prior for this specific text."
+}

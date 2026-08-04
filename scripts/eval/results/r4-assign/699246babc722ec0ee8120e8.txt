@@ -1,0 +1,4 @@
+book_id: 699246babc722ec0ee8120e8
+Title: The Holy Bible (Wycliffe), Vol. 2
+Author: John Wycliffe / Forshall & Madden (eds.)
+Source language: Hebrew-Greek

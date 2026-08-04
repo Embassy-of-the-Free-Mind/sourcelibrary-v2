@@ -1,0 +1,73 @@
+{
+  "book_id": "69e8b27f2ff2a8dc09e77ed7",
+  "work_identified": "Bhagavad Gita (श्रीमद्भगवद्गीता) — the canonical 700-verse Sanskrit dialogue between Krishna and Arjuna, part of Mahabharata Book 6. This item is a 1492 manuscript copy of the Sanskrit source text, not a translation.",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Bhagvat-geeta, or Dialogues of Kreeshna and Arjoon",
+      "translator": "Charles Wilkins",
+      "pub_year": "1785",
+      "publisher": "C. Nourse, London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/in.ernet.dli.2015.195577"
+    },
+    {
+      "english_title": "The Bhagavadgita (Sacred Books of the East, Vol. 8)",
+      "translator": "Kashinath Trimbak Telang",
+      "pub_year": "1882",
+      "publisher": "Oxford University Press (Clarendon Press)",
+      "completeness": "complete",
+      "source_url": "https://beezone.com/current/the-early-history-of-translation-of-the-bhagavad-gita-1785-1945.html"
+    },
+    {
+      "english_title": "The Song Celestial, or Bhagavad-Gita",
+      "translator": "Edwin Arnold",
+      "pub_year": "1885",
+      "publisher": "Trübner & Co., London",
+      "completeness": "complete",
+      "source_url": "https://beezone.com/current/the-early-history-of-translation-of-the-bhagavad-gita-1785-1945.html"
+    },
+    {
+      "english_title": "The Bhagavadgita",
+      "translator": "Sarvepalli Radhakrishnan",
+      "pub_year": "1948",
+      "publisher": "Allen & Unwin, London",
+      "completeness": "complete",
+      "source_url": "https://beezone.com/current/the-early-history-of-translation-of-the-bhagavad-gita-1785-1945.html"
+    }
+  ],
+  "queries_run": [
+    "Bhagavad Gita English translations history WorldCat Charles Wilkins 1785",
+    "Bhagavad Gita complete English translations list Sanskrit GRETIL",
+    "site:worldcat.org \"Bhagavad Gita\" English translation",
+    "Bhagavad Gita English translations bibliography 1785 Wilkins Edwin Arnold Radhakrishnan complete list scholars"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/in.ernet.dli.2015.195577",
+      "found": "Confirmed: Charles Wilkins 1785 English translation of Bhagavad Gita, 162 pages, complete, public domain."
+    },
+    {
+      "url": "https://www.worldcat.org/oclc/773611712",
+      "found": "WorldCat record for Bhagavad Gita English translation; multiple records confirm extensive English translation history."
+    },
+    {
+      "url": "https://beezone.com/current/the-early-history-of-translation-of-the-bhagavad-gita-1785-1945.html",
+      "found": "Scholarly bibliography of English translations 1785–1945 including Wilkins (1785), Telang (1882), Arnold (1885), Radhakrishnan (1948)."
+    },
+    {
+      "url": "https://www.rarebooksocietyofindia.org/postDetail.php?id=196174216674_10154320737466675",
+      "found": "Confirms Wilkins 1785 as 'world's first English translation of the Bhagavad Gita,' published London."
+    },
+    {
+      "url": "https://sanskritdocuments.org/gitalinks/",
+      "found": "Sanskrit Documents hub for Bhagavad Gita resources; confirms multiple complete English translations exist."
+    }
+  ],
+  "reasoning": "The Bhagavad Gita is among the world's most-translated Sanskrit texts. Charles Wilkins produced the first complete English translation in 1785 (confirmed on archive.org); Telang (1882), Arnold (1885), and Radhakrishnan (1948) followed. Source-language rule applies: complete modern English translations from Sanskrit exist — not_first."
+}

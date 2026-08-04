@@ -1,0 +1,4 @@
+book_id: 69905f4140bc3a0478efb47b
+Title: Brihat Samhita
+Author: Varahamihira
+Source language: Sanskrit

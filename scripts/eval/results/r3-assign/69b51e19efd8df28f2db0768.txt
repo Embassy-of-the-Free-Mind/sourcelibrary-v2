@@ -1,0 +1,4 @@
+book_id: 69b51e19efd8df28f2db0768
+Title: Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rosseli Calabri, Ordinis Minorvm Regvlaris obseruantiæ, Theologiæ & Philosophiæ, ad S. Bernardinum Cracoviæ Profeßoris. 6, De immortalitate Animae, qui est primus Asclepii
+Author: Hermes, Trismegistus, ca. 2./4. Jh.
+Source language: Latin

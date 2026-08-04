@@ -1,0 +1,38 @@
+{
+  "book_id": "69c72aca6a0f3d112faf6f49",
+  "work_identified": "Adumbratio Kabbalae Christianae (Sketch of Christian Kabbalism) by Franciscus Mercurius van Helmont, 1684 Latin original appended to Knorr von Rosenroth's Kabbala Denudata vol. 2; our copy is the 1899 French translation published by Bibliothèque Chacornac, Paris",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Francis Mercury Van Helmont's Sketch of Christian Kabbalism",
+      "translator": "Sheila A. Spector",
+      "pub_year": "2012",
+      "publisher": "Brill (Aries Books, vol. 15), ISBN 9789004226555",
+      "completeness": "complete",
+      "source_url": "https://brill.com/edcollbook/title/21456"
+    }
+  ],
+  "queries_run": [
+    "Adumbratio Kabbalae Christianae van Helmont English translation",
+    "Kabbala Denudata English translation Knorr von Rosenroth complete",
+    "Sheila Spector \"Sketch of Christian Kabbalism\" van Helmont Brill translation year published",
+    "\"Adumbratio Kabbalae Christianae\" English translation WorldCat",
+    "\"Adumbratio Kabbalae Christianae\" \"J. Clark\" English translation 17th century",
+    "WorldCat \"van Helmont\" \"Adumbratio Kabbalae Christianae\" English translation site:worldcat.org",
+    "Spector \"Sketch of Christian Kabbalism\" 2012 Brill \"Adumbratio\" Latin ISBN complete translation",
+    "\"van Helmont\" \"Adumbratio\" OR \"Sketch of Christian Kabbalism\" English 1700 1800 1900 translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://brill.com/edcollbook/title/21456", "found": "403 Forbidden; publisher page for Spector 2012 Brill translation confirmed via search snippets as 'first English version'"},
+    {"url": "https://archive.org/details/BSG_8RSUP3061_7RES", "found": "Confirmed our copy is the 1899 French translation by Bibliothèque Chacornac, Paris; subtitle 'traduit du latin pour la première fois'"},
+    {"url": "https://books.google.nl/books/about/Francis_Mercury_Van_Helmont_s_Sketch_of.html?id=ugU1GpCO7REC&redir_esc=y", "found": "Confirmed Spector 2012 Brill; bilingual Latin/English facsimile; 'first English version'; published 10 May 2012"},
+    {"url": "https://www.amazon.com/Francis-Mercury-Helmonts-Christian-Kabbalism/dp/9004226559", "found": "500 error; confirmed via search snippets: Brill Aries Books #15, 2012, ISBN 9789004226555"},
+    {"url": "https://www.ernster.com/en/detail/ISBN-9789004226555/Spector-Sheila/Francis-Mercury-Van-Helmonts-Sketch-of-Christian-Kabbalism-Translated-and-Edited-by-Sheila-A.-Spector", "found": "Publication date 10/05/2012, Spector as translator/editor"}
+  ],
+  "reasoning": "Complete English translation (Spector, Brill 2012, ISBN 9789004226555) confirmed; multiple independent sources call it 'the first English version.' Our copy is the 1899 French intermediary (Chacornac). Per source-language rule, a complete modern English of this work from any source language yields not_first."
+}

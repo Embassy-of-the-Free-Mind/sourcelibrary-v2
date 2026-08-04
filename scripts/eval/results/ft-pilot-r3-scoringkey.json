@@ -1,0 +1,594 @@
+[
+  {
+    "id": "69b1deccca46fa60ea1ee439",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:alexander-trallianus:original",
+    "tier0": {
+      "candidates": 2,
+      "title_overlap": 0.4,
+      "catalog_id": "69ab0b7b77a90a8493179f54",
+      "english_title": "The Latin Alexander Trallianus : the text and transmission of a late Latin medical book",
+      "translator": "",
+      "pub_year": 2006,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69b51e19efd8df28f2db0768",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "asclepius-mercurii-trismegisti-6-de-immortalitate-animae-qui-hermes",
+    "tier0": {
+      "candidates": 33,
+      "title_overlap": 0.57,
+      "catalog_id": "69ab0b7b77a90a8493179c9f",
+      "english_title": "Hermetica : the ancient Greek and Latin writings which contain religious or philosophic teachings ascribed to Hermes Trismegistus (1:) Introduction, texts, and translation; (2:) Notes on the Corpus Hermeticum; (3:) Notes on the Latin Asclepius and the Hermetic excerpts of Stobaeus; (4:) Testimonia  with introduction, addenda and indices by A.S. Ferguson",
+      "translator": "",
+      "pub_year": 1985,
+      "source_language": "la",
+      "completeness": "partial",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "6970e3619b09d309d780a26c",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::alchemical-seven-stars",
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7b77a90a8493179a1a",
+      "english_title": "Alchemical poetry, 1575-1700: from previously unpublished manuscripts",
+      "translator": "",
+      "pub_year": 1995,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69b51e18768235dc6598c1b7",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:hermes-trismegistus:hannibal-pymander-rosseli",
+    "tier0": {
+      "candidates": 33,
+      "title_overlap": 0.43,
+      "catalog_id": "69ab0b7b77a90a8493179c9f",
+      "english_title": "Hermetica : the ancient Greek and Latin writings which contain religious or philosophic teachings ascribed to Hermes Trismegistus (1:) Introduction, texts, and translation; (2:) Notes on the Corpus Hermeticum; (3:) Notes on the Latin Asclepius and the Hermetic excerpts of Stobaeus; (4:) Testimonia  with introduction, addenda and indices by A.S. Ferguson",
+      "translator": "",
+      "pub_year": 1985,
+      "source_language": "la",
+      "completeness": "partial",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69dc55d2cb6f7429748b94b2",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "Q28407388",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69aeab3967e6731bc13662c9",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "needs_review",
+    "work_id": "local:a:cristoforo-landino:camaldolese-disputations",
+    "tier0": {
+      "candidates": 3,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b51ea9cf111105c42a2cb6",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:ramon-llull:algebra-art-demonstration-great-introduction-knowledge-precursor-specious-univer",
+    "tier0": {
+      "candidates": 1,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c842e06c6f3cc53c850dec",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:jacobus-rhenferd:palmyrenum-periculum",
+    "tier0": null
+  },
+  {
+    "id": "69a5d7d74d84314297c07d7f",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "alchemia-libavius",
+    "tier0": null
+  },
+  {
+    "id": "69b51e3dff09e4fe943aa2f5",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "de-linguae-phoenicis-excellentia-praefatio-postel",
+    "tier0": {
+      "candidates": 4,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "698255f20fdc0a098b59a3c0",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:willem-teellinck:jerusalem",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b4cce0d5b6c3815e1a2892",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "Q3628219",
+    "tier0": null
+  },
+  {
+    "id": "69ae9cde0cfd89c490b715d1",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:real-academia-ercolanese:herculaneum-surviving-vol-volumes",
+    "tier0": null
+  },
+  {
+    "id": "69d5acf04dc55b8478dde728",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": null,
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7a77a90a84931797d0",
+      "english_title": "The book of pontiffs (liber pontificalis)",
+      "translator": "Davis, Raymond",
+      "pub_year": 1989,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69a5ed6d96d6dd816a56a840",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:bar-hebraeus:book-splendours",
+    "tier0": null
+  },
+  {
+    "id": "695931d4b91a6184ea9433a8",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:ahmad-al-buni:al-amulet",
+    "tier0": null
+  },
+  {
+    "id": "69e78b614a6785cfd60d553c",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bka-chag-chen-dkar-ma-mo-rgya-rnam-thar",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7618fcc48e59ad74f0599",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:collection-gangtey-monas:chen-dus-gsang-skor-thugs",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e789aa4a6785cfd60d2cf0",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bka-bkod-gdong-gro-gros-gtor-kyi-ltar-ma-mkha-nag-pa",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6992ce93673ee1e40e321116",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "茅元儀-treatise-armament-technology",
+    "tier0": null
+  },
+  {
+    "id": "69e7887a4a6785cfd60d113d",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:collection-drametse-mona:bo-dhi-jo-ka-mdzad-mo-pa-pam-phreng-ras-rje",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6953a82c77f38f6761bd0bc5",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "bible-nt",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69dfede68d34461cbe7f4df4",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:murasaki-shikibu:1-genji-ko-monogatari-vol",
+    "tier0": null
+  },
+  {
+    "id": "6992cf4cf5b4f75c1a4c887b",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:wu-qijun:mingshi-tukao-zhiwu",
+    "tier0": null
+  },
+  {
+    "id": "69e747e685f786e884a49e40",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:s-mundr-fro-i-ed-rasmus-rask:edda-hinns-mundar",
+    "tier0": null
+  },
+  {
+    "id": "69e7ac425f1a22ab19aa607c",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:monastery-neyphug:bka-bu-bum-gling-pad-thor",
+    "tier0": null
+  },
+  {
+    "id": "69a9574565ddd05bbcd3e608",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:n:caesarea-eusebius-rufinu:ecclesiastical-history",
+    "tier0": {
+      "candidates": 18,
+      "title_overlap": 0.5,
+      "catalog_id": "69ab0b7b77a90a8493179ab2",
+      "english_title": "The church history of Rufinus of Aquileia, books 10 and 11",
+      "translator": "Amidon, Philip R.",
+      "pub_year": 1997,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "6952d05477f38f6761bc511e",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:oswald-croll:chemistry-royal",
+    "tier0": {
+      "candidates": 2,
+      "title_overlap": 0.5,
+      "catalog_id": "69dbbdedf071889fedd298fc",
+      "english_title": "Basilica Chymica & Praxis Chymiatrica, or Royal and Practical Chymistry",
+      "translator": "John Hartmann (and others)",
+      "pub_year": 1670,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "validated_additions"
+    }
+  },
+  {
+    "id": "697e23c8bb80b2397e771e23",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "local:a:francesco-colonna:dans-inventions-poliphile-qui-representees-riches-songe-sont-tableau",
+    "tier0": {
+      "candidates": 9,
+      "title_overlap": 0.5,
+      "catalog_id": "69ab0b7b77a90a8493179f01",
+      "english_title": "Hypnerotomachia Poliphili : the strife of love in a dream",
+      "translator": "Godwin, Joscelyn",
+      "pub_year": 2005,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69dbc9511040d1d5e20a2023",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "Q1180721",
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 1,
+      "catalog_id": "69ab0b7a77a90a849317985b",
+      "english_title": "Marcus Tullius Ciceroes thre bokes of duties, to Marcus his sonne",
+      "translator": "Grimalde, Nicholas",
+      "pub_year": 1990,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69c2c2dab82ba5d5bedac3e3",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:georg-kloss:1742-1811-annalen-bundes-der-directorial-eclectischen-einigkeit-englischen-frank",
+    "tier0": null
+  },
+  {
+    "id": "69aea8871cbf28a363a4fecc",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:emile-durkheim:division-labour-society",
+    "tier0": null
+  },
+  {
+    "id": "69c88b0a6c6f3cc53c85a824",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:francesco-colonna:dans-inventions-poliphile-qui-representees-riches-songe-sont-tableau",
+    "tier0": {
+      "candidates": 9,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b525942379d2fed6c291f6",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:willem-jansz-blaeu:aerdrycks-door-en-iohannem-nieulycx-toonneel-uytgegeven-wilhelm",
+    "tier0": {
+      "candidates": 7,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c63918881bf48c13c42648",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:william-roscoe:laurent-medicis-vie",
+    "tier0": null
+  },
+  {
+    "id": "69f331b5876dd827cbc493ea",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:map-walter:1400-1450-146-book-cambridge-commonplace-houghton-lat-manuscript-mass-poetry-uni",
+    "tier0": {
+      "candidates": 6,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b6c2e88566c8381465ccbb",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:innozenz:1681-ad-annum-editus-index-innoc-iussu-librorum-prohibitorum-usque-xi",
+    "tier0": null
+  },
+  {
+    "id": "69b00a0ec42435fcd0cf9acb",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "first_from_source",
+    "work_id": "local:a:galen:18-2-claudius-pt-vol-works",
+    "tier0": null
+  },
+  {
+    "id": "69aea4b60fefd7831dcda548",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:pierre-joseph-proudhon:is-property-what",
+    "tier0": null
+  },
+  {
+    "id": "6990630be7b7642c081de08b",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "zohar",
+    "tier0": {
+      "candidates": 11,
+      "title_overlap": 0.5,
+      "catalog_id": "69ab0b7a77a90a84931797ff",
+      "english_title": "The Book of causes = Liber de causis (Mediaeval philosophical texts in translation)",
+      "translator": "",
+      "pub_year": 1984,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "6990693f2f82e0fda4805a70",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "Q7676814",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e787094a6785cfd60ca250",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:collection-drametse-mona:bum-ma-rgyud-rnying",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7abf35f1a22ab19aa0d6e",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:monastery-neyphug:ba-dul-ka-kanjur",
+    "tier0": null
+  },
+  {
+    "id": "69f3383f876dd827cbc5389c",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:matteo:1500-994-houghton-initial-letters-manuscript-miniatures-typ",
+    "tier0": {
+      "candidates": 6,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b3e5bd304c1c6b39509eb8",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:joseph-ben-abraham-gikatilla:kabbalistic-philosophical-writings",
+    "tier0": null
+  },
+  {
+    "id": "69e1582bec0a328a49d0a24c",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "local:a:el-hibe-papyrus-scroll:report-wenamun",
+    "tier0": null
+  },
+  {
+    "id": "69e789be4a6785cfd60d2e15",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:choling-collection-ogyen:bskul-can-dam-dug-gter-mchod-mda-nag-pa-phur-po-rdo",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69905f4140bc3a0478efb47b",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:varahamihira:brihat-samhita",
+    "tier0": null
+  },
+  {
+    "id": "6a08fd429c1b82475e15c49d",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:crown-princess-hyegyong:3-hanjung-kwon-mallok-memoirs",
+    "tier0": null
+  },
+  {
+    "id": "69a5ea9a2c1720a023b0c9c0",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:narsai:homilies-songs-vol",
+    "tier0": null
+  },
+  {
+    "id": "69e7965180b52390feb19416",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:choling-collection-ogyen:brgya-btsun-byed-byor-chen-don-gsang-gyi-lam-lde-ma-mig",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69920b97e0a548a13d8840d5",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "bible-nt",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  }
+]

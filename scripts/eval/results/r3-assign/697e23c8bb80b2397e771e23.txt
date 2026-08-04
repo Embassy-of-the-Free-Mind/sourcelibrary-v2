@@ -1,0 +1,4 @@
+book_id: 697e23c8bb80b2397e771e23
+Title: Hypnerotomachie, ou discours du songe de Poliphile
+Author: [Colonna, Francesco]
+Source language: French

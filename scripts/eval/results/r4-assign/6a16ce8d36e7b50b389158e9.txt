@@ -1,0 +1,4 @@
+book_id: 6a16ce8d36e7b50b389158e9
+Title: Histoire Naturelle des Indes
+Author: Anonymous (French)
+Source language: French

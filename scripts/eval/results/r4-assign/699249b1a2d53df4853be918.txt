@@ -1,0 +1,4 @@
+book_id: 699249b1a2d53df4853be918
+Title: The Prose Edda
+Author: Snorri Sturluson
+Source language: Old Norse

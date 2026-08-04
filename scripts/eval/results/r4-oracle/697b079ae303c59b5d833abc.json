@@ -1,0 +1,39 @@
+{
+  "book_id": "697b079ae303c59b5d833abc",
+  "work_identified": "Exercitia (Piissima Exercitia de vita et passione Christi) — pseudo-Tauler; the Latin text compiled by Laurentius Surius from Middle High German material attributed to Johannes Tauler; 45 meditations on the life and passion of Christ. Distinct from Tauler's authentic sermons.",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Meditations on the Life and Passion of Our Lord Jesus Christ",
+      "translator": "A.P.J. Cruikshank, D.D.",
+      "pub_year": "1875",
+      "publisher": "T. Richardson and Son, London (1st ed.); Art & Book Company, London (4th ed., 1906)",
+      "completeness": "complete",
+      "source_url": "https://www.ccel.org/ccel/tauler/meditations.html"
+    }
+  ],
+  "queries_run": [
+    "Tauler \"Exercitia\" English translation \"exercises on the life and passion of Christ\"",
+    "Johannes Tauler \"Exercitia vitae spiritualis\" English translation",
+    "Tauler \"Meditations on the Life and Passion\" Cruikshank English translation 1904 1905 1906",
+    "Tauler \"meditations on the life and passion\" worldcat \"Cruikshank\" first edition year",
+    "Tauler \"meditations on the life and passion\" \"third edition\" OR \"second edition\" OR \"first edition\" \"Richardson\" 1880 1875",
+    "Tauler pseudo-Tauler \"Exercitia\" English translation 20th century modern scholarly edition",
+    "\"Tauler\" \"Exercitia\" OR \"piissima exercitia\" \"meditations on the life\" English 1875 1880 history"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.ccel.org/ccel/tauler/meditations.html", "found": "Complete English translation of 45 meditations — Cruikshank tr., hosted in full"},
+    {"url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Tauler,+Johannes,+approximately+1300-1361", "found": "Lists Cruikshank translation first ed. 1875, second listing 1906 — same translator"},
+    {"url": "https://catalog.hathitrust.org/Record/012308038", "found": "HathiTrust catalog record for 'Meditations on the life and passion of our Lord Jesus Christ' — confirmed Cruikshank translation"},
+    {"url": "https://catholicebooks.wordpress.com/2025/04/06/free-ebook-meditations-on-the-life-and-passion-of-our-lord-jesus-christ-by-johannes-tauler/", "found": "Confirms translator A.P.J. Cruikshank D.D., Art & Book Co., 1906, 4th edition, with Imprimatur"},
+    {"url": "https://www.newadvent.org/cathen/14465c.htm", "found": "Catholic Encyclopedia: confirms Exercitia super vita et passione Christi is spurious (pseudo-Tauler)"},
+    {"url": "https://en.wikipedia.org/wiki/Johannes_Tauler", "found": "Wikipedia: Tauler's authenticated works are 80 sermons; Exercitia not mentioned as authentic"},
+    {"url": "https://play.google.com/store/books/details/Exercitia_D_Ioannis_Thauleri_piissima_super_vita_e?id=dSmqsIii1oEC", "found": "Confirms Latin text is Surius's 16th-century translation from German; full Latin title Exercitia D. Ioannis Thauleri piissima super vita et Passione Saluatoris nostri Iesu Christi"}
+  ],
+  "reasoning": "A.P.J. Cruikshank's 'Meditations on the Life and Passion of Our Lord Jesus Christ' (first pub. 1875, 4th ed. 1906, Art & Book Co.) is a complete English translation of the same Latin pseudo-Tauler Exercitia. The 1906 post-1900 edition disqualifies first_modern. CCEL hosts it freely. Prior confirmed strong."
+}

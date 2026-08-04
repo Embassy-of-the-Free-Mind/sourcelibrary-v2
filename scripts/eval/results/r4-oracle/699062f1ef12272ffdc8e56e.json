@@ -1,0 +1,50 @@
+{
+  "book_id": "699062f1ef12272ffdc8e56e",
+  "work_identified": "Origen, Contra Celsum (Against Celsus) — 1481 Latin editio princeps (Cristoforo Persona / Bessarion translation), distinct from the Greek source text but the same underlying apologetic work in 8 books",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Origen Against Celsus",
+      "translator": "Frederick Crombie",
+      "pub_year": "1869",
+      "publisher": "T&T Clark / Ante-Nicene Fathers Vol. IV",
+      "completeness": "complete",
+      "source_url": "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IV/Origen/Origen_Against_Celsus"
+    },
+    {
+      "english_title": "Origen: Contra Celsum",
+      "translator": "Henry Chadwick",
+      "pub_year": "1953",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/books/origen-contra-celsum/763A0C668E490E8D550F7D2A6CCCD0F7"
+    },
+    {
+      "english_title": "Origen Against Celsus: translated from the original into English",
+      "translator": "James Bellamy",
+      "pub_year": "1710",
+      "publisher": "unknown",
+      "completeness": "partial",
+      "source_url": "https://archive.org/details/bim_eighteenth-century_contra-celsum-english_origen_1710"
+    }
+  ],
+  "queries_run": [
+    "Origen \"Contra Celsum\" English translation history Chadwick Crombie",
+    "Origen \"Against Celsus\" English translation complete WorldCat",
+    "Origen \"Against Celsus\" Crombie \"Ante-Nicene Fathers\" complete translation 1869",
+    "Origen \"Contra Celsum\" 1481 editio princeps Cristoforo Persona Bessarion Latin translation printer"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Contra_Celsum", "found": "Confirms 1481 editio princeps is Latin translation; Bessarion named as translator; Chadwick 1953 Cambridge confirmed"},
+    {"url": "https://en.wikisource.org/wiki/Ante-Nicene_Fathers/Volume_IV/Origen/Origen_Against_Celsus", "found": "Complete 8-book English translation by Frederick Crombie, 1869, Ante-Nicene Fathers Vol. IV"},
+    {"url": "https://www.cambridge.org/core/books/origen-contra-celsum/763A0C668E490E8D550F7D2A6CCCD0F7", "found": "Complete 8-book English translation by Henry Chadwick, Cambridge University Press 1953/1980"},
+    {"url": "https://archive.org/details/bim_eighteenth-century_contra-celsum-english_origen_1710", "found": "James Bellamy 1710 English translation, described as missing first part — partial"},
+    {"url": "https://www.torrossa.com/en/resources/an/3048463", "found": "Scholarly reference confirming Cristoforo Persona's Latin version of Contra Celsum"}
+  ],
+  "reasoning": "Source-language rule applies: complete English translations of Contra Celsum (8 books) from the Greek original exist — Crombie/ANF 1869 (complete, Wikisource-verified) and Chadwick/CUP 1953 (complete, Cambridge-verified). The 1481 Latin editio princeps is a different-language intermediary of the same underlying work; per the rule, any source language English suffices."
+}

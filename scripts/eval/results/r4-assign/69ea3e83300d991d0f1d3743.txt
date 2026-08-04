@@ -1,0 +1,4 @@
+book_id: 69ea3e83300d991d0f1d3743
+Title: كتاب البلدان (Kitāb al-Buldān)
+Author: Al-Yaqubi
+Source language: Arabic

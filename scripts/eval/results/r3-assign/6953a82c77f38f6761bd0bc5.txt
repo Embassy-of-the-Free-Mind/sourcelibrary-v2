@@ -1,0 +1,4 @@
+book_id: 6953a82c77f38f6761bd0bc5
+Title: New Testament (Armenian-Greek-Italian trilingual)
+Author: Various
+Source language: Armenian

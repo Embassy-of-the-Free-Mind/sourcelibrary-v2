@@ -1,0 +1,41 @@
+{
+  "book_id": "69e7618fcc48e59ad74f0599",
+  "work_identified": "Thugs chen gsang 'dus skor — Avalokiteśvara secret-assembly cycle, Gangtey Monastery (Pema Lingpa tradition, Bhutan; preserved under EAP039 at the British Library as EAP039-1-4-169 'Thugs sgrub gsang 'dus skor sogs')",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Thugs chen gsang dus skor English translation Avalokitesvara secret assembly Gangtey",
+    "\"Thugs chen gsang 'dus\" English translation Tibetan",
+    "84000 Avalokitesvara \"secret assembly\" OR \"gsang dus\" translation published",
+    "Lotsawa House Avalokitesvara \"thugs chen\" OR \"Gangtey\" English translation cycle",
+    "BDRC \"thugs chen gsang 'dus\" OR \"thugs sgrub gsang 'dus\" Gangtey Monastery Tibetan",
+    "WorldCat \"Thugs chen gsang 'dus skor\" OR \"thugs sgrub gsang dus skor\" Tibetan",
+    "bdrc.io \"thugs chen gsang 'dus\" Gangtey Monastery cycle English",
+    "Pema Lingpa \"thugs chen\" OR \"Avalokitesvara\" terma cycle English translation published scholars",
+    "archive.org \"thugs chen gsang 'dus\" OR \"thugs sgrub gsang 'dus\" Gangtey Tibetan text",
+    "\"Palchen Dupa\" OR \"Palchen Düpa\" OR \"dpal chen 'dus pa\" English translation Avalokitesvara secret assembly",
+    "Gangtey Monastery Bhutan \"secret assembly\" OR \"gsang 'dus\" Avalokitesvara terma English",
+    "\"Avalokitesvara secret assembly\" English translation published Tibetan Buddhist",
+    "\"thugs sgrub gsang 'dus\" OR \"Thugschen sang du\" English translation published academic",
+    "Pema Lingpa complete works \"sang du\" OR \"gsang 'dus\" Chenrezig cycle English scholars",
+    "Gangtey collection EAP039 \"Thugs chen\" English translation published",
+    "\"Chenrezig secret gathering\" OR \"Avalokitesvara secret gathering\" English translation Tibetan Buddhist published"
+  ],
+  "sources_consulted": [
+    {"url": "https://eap.bl.uk/archive-file/EAP039-1-4-169", "found": "Tibetan manuscript 'Thugs sgrub gsang 'dus skor sogs' (149 TIFF images) from Gangtey Monastery Rinpoche's Private Library; preservation/research access only, no English translation"},
+    {"url": "https://eap.bl.uk/project/EAP039", "found": "Digital documentation project for Gangtey Monastery manuscript collection (~1130 titles); preservation project with no translation component"},
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/pema-lingpa/", "found": "Only 2 texts by Pema Lingpa on Lotsawa House; neither relates to a gsang 'dus or secret-assembly Avalokiteśvara cycle"},
+    {"url": "https://84000.co/", "found": "84000 covers Kangyur texts only; no terma-cycle translation found for this text"},
+    {"url": "https://library.bdrc.io/", "found": "BDRC page header only returned; direct search inconclusive due to dynamic rendering, but no English translation surfaced in any query"},
+    {"url": "https://gangteng-rinpoche.org/lineage/", "found": "Confirms Pema Lingpa Avalokiteśvara cycle ('Great Compassionate One, Lamp Illuminating the Darkness') in the tradition; no English translation of the gsang 'dus skor mentioned"},
+    {"url": "https://archive.org/details/bdrc-W27296", "found": "Related Tibetan Avalokiteśvara cycle text on archive.org; original Tibetan only, no English translation"},
+    {"url": "https://www.rigpawiki.org/index.php?title=Palchen_D%C3%BCpa", "found": "Palchen Düpa is a different text (wrathful Kagyé heruka cycle, not Avalokiteśvara gsang 'dus)"},
+    {"url": "https://search.worldcat.org/title/Thugs-rje-chen-po-an-so-kun-skyobs-:-a-cycle-of-Buddhist-practice-focussing-upon-Avalokitesvara/oclc/311233667", "found": "WorldCat result is a different Avalokiteśvara cycle (ngan song kun skyobs), not the gsang 'dus skor; no English translation of target text found"}
+  ],
+  "reasoning": "Exhaustive search across tradition-appropriate sources (Lotsawa House, 84000, BDRC, EAP/British Library, archive.org, WorldCat) found no prior English translation of this specific Avalokiteśvara secret-assembly cycle from Gangtey Monastery. The text is a specialized Nyingma terma cycle (Pema Lingpa tradition, Bhutan), preserved as a manuscript under EAP039; Lotsawa House has only 2 Pema Lingpa texts total, none of this cycle. BDRC dynamic-rendering limited full confirmation. Moderate evidence for first."
+}

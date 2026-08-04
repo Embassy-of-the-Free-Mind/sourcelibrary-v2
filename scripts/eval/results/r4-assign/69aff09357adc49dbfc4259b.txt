@@ -1,0 +1,4 @@
+book_id: 69aff09357adc49dbfc4259b
+Title: A Balbale to Inana (ETCSL 4.08.01)
+Author: Anonymous Sumerian
+Source language: Sumerian

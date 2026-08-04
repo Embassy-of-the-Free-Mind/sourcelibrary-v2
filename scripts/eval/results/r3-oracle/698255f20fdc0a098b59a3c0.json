@@ -1,0 +1,40 @@
+{
+  "book_id": "698255f20fdc0a098b59a3c0",
+  "work_identified": "'t Nieuwe Jerusalem (Het Nieuwe Jeruzalem) — a posthumously published (1635) Dutch Further Reformation devotional by Willem Teellinck (1579–1629), written as a dialogue between Christ and Mary sitting at his feet. Distinct from Teellinck's other works and from the contemporaneous German translation (Sola Gratia Medien, 2021).",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Willem Teellinck \"Nieuwe Jerusalem\" English translation",
+    "Willem Teellinck \"New Jerusalem\" English translation 17th century",
+    "WorldCat Teellinck \"nieuwe Jerusalem\" English translation worldcat.org",
+    "Teellinck \"nieuwe Jerusalem\" ESTC English Short Title Catalogue",
+    "Teellinck \"nieuwe Jerusalem\" STCN OR \"Short Title Catalogue Netherlands\" Dutch",
+    "Teellinck \"t Nieuwe Jerusalem\" OR \"Het Nieuwe Jerusalem\" Dutch Further Reformation English",
+    "Teellinck \"new Jerusalem\" English translated Beeke OR \"Heritage Books\" OR \"Reformation Heritage\"",
+    "Teellinck works English translations complete list Godbehere \"north star\" OR \"new Jerusalem\" OR \"soliloquium\"",
+    "\"Teellinck\" \"new Jerusalem\" English translated Beeke OR \"Heritage Books\" OR \"Reformation Heritage\"",
+    "Teellinck \"nieuwe Jerusalem\" English \"first translation\" OR translated",
+    "Teellinck English translation 1621 \"Paul's complaint\" \"balance of sanctuary\" EEBO further reformation",
+    "site:quod.lib.umich.edu Teellinck Jerusalem EEBO",
+    "\"new Jerusalem\" Teellinck English translation 2020 OR 2021 OR 2022 OR 2023 OR 2024 OR 2025",
+    "Teellinck \"new Jerusalem\" English publisher 2010 OR 2015 OR 2016 OR 2017 OR 2018 OR 2019",
+    "Teellinck works English translations list \"balance of sanctuary\" \"resting place\" \"Christian conflict\" \"north star\"",
+    "Teellinck \"new Jerusalem\" \"new Hierusalem\" English 1621 OR 1622 OR 1623 OR 1624 OR 1635 OR 1636"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Willem_Teellinck", "found": "Only one modern English translation mentioned: The Path of True Godliness (2003); no mention of Nieuwe Jerusalem in English"},
+    {"url": "https://www.christianstudylibrary.org/article/willem-teellinck-1579-1629", "found": "States Path of True Godliness was 'the first of his writings to be translated into English' (meaning first modern translation); lists Het Nieuwe Jeruzalem (1635) as a Dutch mystical work only; no English translation mentioned"},
+    {"url": "https://www.prdl.juniusinstitute.org/author_view.php?a_id=35", "found": "Full 49-title PRDL listing reviewed across all three pages; only two 17th-c English translations appear (The ballance of the sanctuarie 1621; Pauls complaint 1621); no English Nieuwe Jerusalem"},
+    {"url": "https://encyclopedievanzeeland.nl/Willem_Teellinck", "found": "Lists Het Nieuw Jerusalem (1635 posthumous) among Teellinck's works; no English translation mentioned"},
+    {"url": "https://quod.lib.umich.edu/e/eebo — search for Teellinck Jerusalem", "found": "EEBO returns only two Teellinck English works: A13569 (ballance of the sanctuarie) and A13570 (Pauls complaint); no 't Nieuwe Jerusalem"},
+    {"url": "https://openlibrary.org/authors/OL968671A/Willem_Teellinck", "found": "Lists 30 works; Het nieuwe Jeruzalem appears only in a 1969 Dutch edition; no English edition listed"},
+    {"url": "https://www.goodreads.com/author/list/337950.Willem_Teellinck", "found": "14 distinct Teellinck works listed; Path of True Godliness (2003) is the only modern English title; no New Jerusalem in English"},
+    {"url": "https://buch-zur-heide.de/shop/item/9783948475352/das-neue-jerusalem-von-willem-teellinck", "found": "German translation 'Das neue Jerusalem' by Sola Gratia Medien, 2021, 144 pp.; German only, no English"}
+  ],
+  "reasoning": "No English translation of 't Nieuwe Jerusalem found anywhere. The four 17th-c Teellinck English translations (1621) all predate this posthumous 1635 work. Modern publisher Reformation Heritage Books/Baker Academic have issued The Path of True Godliness (2003) and The North Star (2021) but not this title. Only a German translation (2021) exists. Bounded absence across EEBO, PRDL, Open Library, Goodreads, and trade searches."
+}

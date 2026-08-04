@@ -1,0 +1,51 @@
+{
+  "book_id": "69aea4b60fefd7831dcda548",
+  "work_identified": "Qu'est-ce que la propriété? (What Is Property? An Inquiry into the Principle of Right and of Government) by Pierre-Joseph Proudhon, 1840",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "What Is Property? An Inquiry into the Principle of Right and of Government",
+      "translator": "Benjamin R. Tucker",
+      "pub_year": "1876",
+      "publisher": "Benjamin R. Tucker (self-published; later reprinted widely)",
+      "completeness": "complete",
+      "source_url": "https://standardebooks.org/ebooks/pierre-joseph-proudhon/what-is-property/benjamin-tucker"
+    },
+    {
+      "english_title": "Proudhon: What is Property?",
+      "translator": "Donald R. Kelley and Bonnie G. Smith",
+      "pub_year": "1994",
+      "publisher": "Cambridge University Press (Cambridge Texts in the History of Political Thought)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Proudhon-Property-Cambridge-History-Political/dp/0521405564"
+    }
+  ],
+  "queries_run": [
+    "Proudhon \"What is Property\" English translation Tucker 1876",
+    "Proudhon \"Qu'est-ce que la propriété\" English translation Kelley Smith Cambridge 1994"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://standardebooks.org/ebooks/pierre-joseph-proudhon/what-is-property/benjamin-tucker",
+      "found": "Complete Tucker 1876 English translation available as free ebook; confirms translator and year"
+    },
+    {
+      "url": "https://www.amazon.com/Proudhon-Property-Cambridge-History-Political/dp/0521405564",
+      "found": "Cambridge Texts edition ed./trans. Donald R. Kelley & Bonnie G. Smith, ISBN 9780521405560, confirmed"
+    },
+    {
+      "url": "https://archive.org/details/whatispropertya00prougoog",
+      "found": "Internet Archive copy of Tucker translation; 'Translation of: Qu'est-ce que la propriété?' noted in metadata"
+    },
+    {
+      "url": "https://nationalhumanitiescenter.org/fellows-books/what-is-property-quest-ce-que-la-propriete/",
+      "found": "National Humanities Center cites the Kelley/Smith Cambridge edition as the standard scholarly translation"
+    }
+  ],
+  "reasoning": "Two complete English translations confirmed: Benjamin Tucker (1876), the first and long-canonical English rendering; and Donald R. Kelley & Bonnie G. Smith for Cambridge UP (1994), the standard modern scholarly edition. Source-language rule applies — not_first."
+}

@@ -1,0 +1,36 @@
+{
+  "book_id": "69b4cce0d5b6c3815e1a2892",
+  "work_identified": "Moninckx Atlas, vol. 9 — the ninth and final supplementary volume (1749) of the nine-volume Amsterdam Hortus Botanicus botanical watercolour atlas, comprising five plant-portrait watercolours on parchment by Jan Mattias Cok and Dorothea Storm-Kreps",
+  "verdict": "not_applicable",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Moninckx Atlas botanical watercolor Amsterdam Hortus Botanicus Jan Maria Moninckx contents text Latin",
+    "Moninckx Atlas English translation published WorldCat",
+    "\"Moninckx Atlas\" volume 9 facsimile publication English 1989 Walburg Pers",
+    "\"Moninckx Atlas\" facsimile \"Botany of the Commelins\" English published introduction",
+    "Moninckx Atlas \"vol 9\" OR \"volume 9\" contents watercolors plates text description 1749",
+    "\"Moninckx Atlas\" published edition \"Verloren\" OR \"Walburg\" OR \"Taylor Francis\" English introduction text translation",
+    "\"Moninckx Atlas\" worldcat OCLC English language edition translation",
+    "\"Moninckx Atlas\" \"catalog\" \"herbarium\" publication \"Hortus\" 1990 1991 1992 1993 1994 publisher introduction",
+    "Moninckx Atlas botanical watercolor \"Latin names\" plates text \"no text\" OR \"text only\" annotation inscription",
+    "\"Moninckx atlas\" archive.org \"vol 9\" OR \"volume 9\" botanical watercolor Amsterdam",
+    "site:archive.org \"Moninckx Atlas\"",
+    "Moninckx Atlas OCLC \"906597283\" OR \"315019614\" OR \"63812116\" language Dutch English"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Jan_Moninckx", "found": "Atlas is 420 large watercolours on parchment; plant names printed in Latin and Dutch on vols 1–5 and part of 6; vol. 9 added 1749, 5 watercolours only, by Cok/Storm-Kreps"},
+    {"url": "https://en.wikipedia.org/wiki/Maria_Moninckx", "found": "Atlas is primarily visual; text limited to botanical nomenclature (plant names in Latin and Dutch); vol. 9 = 5 aquarels"},
+    {"url": "https://library.wur.nl/speccol/Alida/Alida_Main/AlidaMain_h4_3.htm", "found": "425 water- and gouache drawings on parchment; reverse of each drawing carries Latin (and sometimes Dutch) plant name as descriptive phrase, not prose; vol. 9 = five 1749 drawings"},
+    {"url": "https://www.allardpierson.nl/blog/moninckxatlas", "found": "Vol. 1–5 and first half of vol. 6 include plant descriptions in Latin and Dutch; vol. 9 = five additional watercolours; no English publication mentioned; described as 'colossal herb book' in illustration form"},
+    {"url": "https://www.richheritage.eu/the-monickx-atlas-of-the-hortus-amsterdam", "found": "420 plates with plant scientific and common names; primarily visual, no prose; no English edition found"},
+    {"url": "https://www.abebooks.com/book-search/title/moninckx-atlas/", "found": "All AbeBooks listings are for Wijnands 1983 scholarly work about the atlas (in English), not a translation of the atlas itself; no English facsimile listed"},
+    {"url": "https://www.amazon.com/Botany-Commelins-D-Wijnands/dp/9061912628", "found": "D.O. Wijnands, The Botany of the Commelins (1983, A.A. Balkema, English) — a taxonomical/historical study of the plants depicted; not a translation of the atlas"},
+    {"url": "https://www.wikidata.org/wiki/Q3628219", "found": "Nine-volume botanical work of the Hortus Botanicus Amsterdam; language recorded as Dutch; publication 1709; only one Wikipedia sitelink (Italian)"}
+  ],
+  "reasoning": "Vol. 9 is 5 botanical watercolour paintings (1749) by Cok/Storm-Kreps — a purely visual supplement. All text in the atlas (vols 1–6 only) is Latin/Dutch plant nomenclature on the reverse of plates, not translatable prose. No English facsimile or translation exists or is needed. Verdict: wordless visual art → not_applicable."
+}
