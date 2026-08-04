@@ -257,6 +257,57 @@ scoped books) are degenerate, and **10,591 of them have never been re-OCR'd**.
 Re-running them on `gemini-3.1-flash-lite-preview` would, on this evidence, make
 the space-less subset worse — route by script or the queue is self-defeating.
 
+## 4b. Disagreement signals — and why the review queue finds repairs
+
+`scripts/eval/corpus-signal-audit.mjs` (offline, free) scores ten per-page
+disagreement signals and writes a ranked queue. Three results, in order of how
+much they should change your behaviour.
+
+**Score against a target you did not help define.** `degenerate` IS a low
+type/token ratio, and loops inflate word counts, so length/TTR signals predict
+their own label. The ranking reorders completely between a circular target
+(degenerate-or-commentary) and an independent one (commentary/refusal prose,
+regex on content):
+
+| signal | flagged | circular | independent |
+|---|---:|---:|---:|
+| `body_emptied` | 572 | 3.3× | **7.4×** |
+| `script_flip` | 231 | 11.3× | **4.6×** |
+| `ttr_drop` | 1,076 | 14.7× | 3.0× |
+| `pagetype_flip` | 3,513 | 1.3× | 2.7× |
+| `grew_3x` | 2,736 | 9.7× | 1.3× |
+| `delta_100` | 10,654 | 5.1× | **1.1×** |
+
+`|Δ words| > 100` is the cautionary one: 5.1× circular, **1.1× independent** —
+i.e. nothing. The word-delta *distribution* is still descriptively useful (38.4%
+of re-reads change the count by zero, 71% by ≤10 words) but it is not a detector.
+
+**Stacking is discontinuous.** Precision is flat 1→2 signals (1.0% → 1.7%) and
+jumps at 3 (8.1%, 12.2×) and 4+ (22.2%, 33.8×). A ≥2 cut is 1,861 pages at 97%
+false positives; a ≥3 cut is 220 pages across 76 books, and heavily concentrated
+(Micrographia 36, *Rasārṇavakalpa* 24, *Rasaprakāśasudhākara* 24 — three books
+are 38%). Review by book, not by page.
+
+**The queue is enriched for REPAIRS, not damage — this is the finding.**
+Micrographia p289's prior text was `CAP. 9. HARMONICORUM LIB. III` — Mersenne's
+*Harmonicorum Libri*, a different book entirely (the `archived/undefined/`
+contamination, #3362) — and its live text correctly describes Micrographia plate
+XXVIII. The re-OCR **repaired** it; `body_emptied` fired on the fix. 41 of that
+book's 377 OCR'd pages now have zero body text, matching its ~38 engraved plates.
+Corpus-wide, **61 of the 72 `body_emptied` pages in the tier-3 queue have a clean
+live page.**
+
+The selection is structural, not bad luck: the printed-page-number shift test
+abstains on **49.9% of all clean pairs but 97.3% of this queue**, because a page
+that becomes a plate has no printed number to compare. The signals concentrate
+exactly where the one instrument that could adjudicate them cannot run.
+
+**Consequence.** These signals detect that the two passes *disagree about what
+the page is*. They do not say which side is right — the same limit as
+`printed_page_shift` itself. Use the queue to BUILD a labelled set; never quote a
+precision figure from it as though it measured damage, and never drive an
+automated re-OCR from it (which, per §4a, would make the space-less subset worse).
+
 ## 5. Questions this dataset can and cannot answer
 
 **Can:**
