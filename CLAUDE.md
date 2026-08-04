@@ -345,6 +345,20 @@ answers erased.
   hour. Freeze an incident recipient list to a file (private ops repo — reader
   addresses never go in this repo) and never re-derive it at send time.
 
+## A pinned copy of a live artifact drifts, and always flatters whoever pinned it
+Sibling of the instrument rule below, and the failure is one step earlier: not a metric computed wrongly, but a *baseline* that stopped being what it claims. Two instances found in one session (2026-08-01/02, #3569), both invisible in every output they fed.
+
+- **`scripts/eval/prompts/ablation/B-current.txt` asserted in its NAME that it was the production OCR prompt.** It was a v10-era reconstruction missing ~2,800 characters, including the entire **Output contract** block (#3108's guard against untagged commentary). It emitted **47,813 characters** of looping `[...]` on a blank page where the live prompt emits none — reported as a fabrication finding, retracted once the baseline was checked. Every study in the #3444 series had used it as "current production."
+- **Gemini price constants were copied into ten files and split into two camps for the same model** — `gemini-3.1-flash-lite` at `0.075/0.30` (OCR/enrich, `src/lib/ai.ts`, eval) and `0.25/1.50` (translate-worker, `src/lib/gemini-logger.ts`, the batch/usage writers). So an OCR row and a translation row are costed 3.3×/5× apart and `gemini_usage.cost_usd` is a blend (#3576).
+
+**The live OCR prompt is a Mongo row, not a file** — `prompts` collection, `type:'ocr'`, `is_default:true` (v15 as of 2026-08). `prompts/ocr/*.md` are snapshots that lag it. Read it with `scripts/eval/lib/production-prompt.mjs`, which mirrors the pipeline's own `getOcrPromptFromDb`.
+
+- **Read the source of truth; do not pin a copy of it.** Where a copy is unavoidable, make drift *loud*: a name that says `legacy`, a warning printed on every run, or a guard test.
+- **Record the provenance in the output.** Result files now carry `production_prompt {name, version, content_hash}`. Without it, "which prompt did this run use" is unanswerable after the fact, which is exactly what let the stale pin survive a whole study series.
+- **A constant duplicated across files is the same defect.** `scripts/lib/model-pricing.mjs` is the single price table; `tests/unit/model-pricing-single-source.test.ts` fails on any new inline one. That guard immediately caught two files a manual `git grep` had missed. This is the legitimate case for a source-shape test — the failure mode *is* re-adding the literal (see "A test that greps source is not a guard").
+- **Do not "just fix" a drifted constant that feeds stored data.** `cost_usd` is computed, never billed, so changing a price silently rewrites every historical figure. Keep the old value visible (`DISPUTED_LEGACY_PRICING`) and make the change a decision, not a refactor.
+- **Corollary for eval runs: store the raw artifact, never only derived scores.** A Tier-1 run stored scores alone; when the question changed the model calls had to be re-bought. `prompt-ablation.mjs` already said it in a comment — "scoring can be redone offline, model calls cannot."
+
 ## A metric is a claim about an instrument before it is a claim about readers
 A usage review on 2026-07-28 produced six findings; **three were instrument failures, not product facts** — and each failed *silently*, in the direction that invited a confident conclusion. Full postmortem: `.claude/handoffs/2026-07-28-instruments-lied-translation-streaming-crash.md`.
 
