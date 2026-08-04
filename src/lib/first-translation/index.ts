@@ -9,3 +9,4 @@ export * from './types';
 export * from './derive';
 export * from './attempt-log';
 export * from './resolve';
+export * from './candidate';
