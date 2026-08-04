@@ -1,0 +1,50 @@
+{
+  "book_id": "69b3e5bd304c1c6b39509eb8",
+  "work_identified": "Compilation / miscellany of kabbalistic treatises by Joseph Gikatilla — not a single titled work. Likely includes shorter treatises such as Sha'are Tzedek, Sefer ha-Nikkud, Sod ha-Hashmal, and/or other minor works, possibly alongside Sha'are Orah. The vague catalogue title 'Collection of kabbalistic texts' reflects a manuscript miscellany, not one of Gikatilla's named compositions.",
+  "verdict": "needs_review",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "low",
+  "prior_translations_found": [
+    {
+      "english_title": "Gates of Light (Sha'are Orah)",
+      "translator": "Avi Weinstein",
+      "pub_year": "1994",
+      "publisher": "HarperCollins (San Francisco)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/ShaAre-Sacred-Literature-English-Hebrew/dp/0060637978"
+    }
+  ],
+  "queries_run": [
+    "Joseph Gikatilla \"collection of kabbalistic texts\" English translation",
+    "Joseph Gikatilla works English translation complete list Hebrew Kabbalah",
+    "Gikatilla \"Sha'are Orah\" OR \"Gates of Light\" English translation Weinstein 1994",
+    "Joseph Gikatilla manuscript \"collection of kabbalistic texts\" Hebrew compilation miscellany",
+    "Gikatilla minor works English translation \"Sod ha-Nachash\" \"Sha'are Tzedek\" \"Ginnat Egoz\" anthology",
+    "WorldCat Gikatilla \"kabbalistic texts\" collection English translation",
+    "Gikatilla Hebrew manuscript \"collected texts\" OR \"miscellany\" English published book",
+    "\"Shaarei Orah Shaarei Tzedek Sefer Hanikud Sefer Hachashmal\" Gikatilla Hebrew English",
+    "Gikatilla \"Sodot ha-Mitzvot\" English translation OR Gikatilla \"Ozar ha-Kavod\" English translation",
+    "Joseph Gikatilla kabbalistic works English translated compilation 2000s 2010s 2020s \"first English translation\"",
+    "Gikatilla \"Sha'are Tzedek\" English translation published",
+    "\"Sod ha-Nachash\" Gikatilla English translation published first",
+    "Gikatilla kabbalistic works minor treatises English translation Sefaria",
+    "Gikatilla \"collection of kabbalistic\" OR \"kabbalistic compilation\" English publisher translated book buy",
+    "Gikatilla \"Sha'are Orah\" complete English translation Weinstein 1994 HarperCollins complete text"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Joseph_ben_Abraham_Gikatilla", "found": "Lists all known Gikatilla works; only Sha'are Orah confirmed in complete modern English (Weinstein 1994); Ginnat Egoz in partial adaptation only (Neirot Foundation 2020)"},
+    {"url": "https://www.jewishencyclopedia.com/articles/6669-gikatilla-joseph-b-abraham", "found": "Comprehensive list of Gikatilla's ~10 works; Sha'are Orah translated into Latin (Renaissance); no English translation of any other work noted"},
+    {"url": "https://www.amazon.com/ShaAre-Sacred-Literature-English-Hebrew/dp/0060637978", "found": "Gates of Light / Sha'are Orah, Weinstein trans., HarperCollins 1994 — confirmed complete English translation of that single work"},
+    {"url": "https://www.abebooks.com/book-search/author/joseph-gikatilla/", "found": "AbeBooks lists: only Gates of Light confirmed as complete English; Ginat Egoz in Hebrew; no compiled English anthology"},
+    {"url": "https://keterjudaica.com/shaarei-orah-shaarei-tzedek-sefer-hanikud-sefer-hachashmal-by-rabbi-yosef-gikatilla", "found": "Hebrew-language collected edition combining Sha'are Orah, Sha'are Tzedek, Sefer ha-Nikkud, Sefer ha-Hashmal — exists only in Hebrew"},
+    {"url": "https://www.sefaria.org/topics/yosef-giqatillah", "found": "Sefaria topic page for Gikatilla; page did not fully load to confirm English availability of minor works"},
+    {"url": "https://archive.org/details/ldpd_17033021_000", "found": "15th-century Hebrew manuscript of Sha'are Orah from Columbia University Libraries — Hebrew only"},
+    {"url": "https://www.academia.edu/112948562/Sod_ha_Nachash_u_Mishpato_ve_Maasehu_THE_SECRET_OF_THE_SERPENT_HIS_LAW_AND_HIS_DEED_Translation_of_the_Treatise_by_R_Yosef_Gikatilla_1248_1325_", "found": "Academic journal translation of Sod ha-Nachash by Krawczyk — scholarly article, not a published book; described as 'first complete translation'"},
+    {"url": "https://www.amazon.com/HaShem-One-Rabbi-Yosef-Gikatilla/dp/B085K7PHCH", "found": "HaShem Is One — adaptation of Ginnat Egoz, Neirot Foundation 2020, partial adaptation not a full scholarly translation"},
+    {"url": "https://www.britannica.com/biography/Joseph-Gikatilla", "found": "Biography confirming Gikatilla's major works; no mention of a compiled English translation of his collected texts"}
+  ],
+  "reasoning": "Work identity unresolvable: 'Collection of kabbalistic texts' is a manuscript miscellany title, not a named Gikatilla work. His only fully-translated major work is Sha'are Orah (Weinstein 1994). Minor works (Sha'are Tzedek, Sod ha-Hashmal, Sefer ha-Nikkud, Sodot ha-Mitzvot, etc.) have no complete published English translations. Cannot determine if this compilation IS Sha'are Orah (→not_first) or a miscellany of untranslated minor works (→first). Human identification of the manuscript contents required."
+}

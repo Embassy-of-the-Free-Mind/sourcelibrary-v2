@@ -1,0 +1,4 @@
+book_id: 69b3e612304c1c6b3950b1a3
+Title: Collection of astronomical and astrological texts
+Author: Abraham ibn Ezra
+Source language: Hebrew

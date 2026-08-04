@@ -1,0 +1,31 @@
+{
+  "book_id": "69b1deccca46fa60ea1ee439",
+  "work_identified": "Therapeutica (Twelve Books on Medicine) by Alexander of Tralles (c. 525–605 CE), Byzantine Greek physician; cataloguing unit is Vol. 1 of the Puschmann bilingual scholarly edition (Vienna, 1878) presenting the Greek original text with German translation",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Alexander of Tralles English translation medical treatise Therapeutica",
+    "Alexander Trallianus \"twelve books\" OR \"de re medica\" English translation",
+    "\"Alexander of Tralles\" WorldCat English translation site:worldcat.org",
+    "\"Alexander of Tralles\" OR \"Alexander Trallianus\" English translation \"translated by\"",
+    "Langslow \"Latin Alexander Trallianus\" English translation complete OR partial",
+    "\"Alexander Trallianus\" OR \"Alexander of Tralles\" English translation published university press",
+    "\"Alexander of Tralles\" \"twelve books\" medicine English 2010 OR 2015 OR 2018 OR 2019 OR 2020 OR 2021 OR 2022 OR 2023 OR 2024 OR 2025 translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Alexander_of_Tralles", "found": "No English translations listed; German (Puschmann 1878-79) and French (Brunet 1933-37) are the only modern complete translations"},
+    {"url": "https://www.penn.museum/sites/expedition/the-life-and-times-of-alexander-of-tralles/", "found": "Explicit statement: 'Except in excerpts, no English translations exist of the writings of this physician extraordinaire.'"},
+    {"url": "https://dergipark.org.tr/en/pub/meandrosmdj/article/540556", "found": "Explicit statement (2003): 'No English and Turkish translations of the writings of Alexander exist.'"},
+    {"url": "https://openlibrary.org/authors/OL1172177A/Alexander_of_Tralles", "found": "11 works listed; no English editions among them — only Latin, Greek, German, French"},
+    {"url": "https://catalog.perseus.org/catalog/urn:cite:perseus:author.64", "found": "Four works cataloged (Therapeutica, de Febribus, Epistula de vermibus, Dedicatio ad Cosman); no English translations indicated"},
+    {"url": "https://scalar.usc.edu/works/the-latin-alexander-of-tralles-provisional-edition-with-apparatus-notes-and-the-greek-text/about-the-latin-alexander.9", "found": "Provisional, incomplete English translation of LATIN version only; Books 1-3 provisionally available, English 'to be added shortly'; not published"},
+    {"url": "https://www.amazon.com/Latin-Alexander-Trallianus-Transmission-Studies-Monographs/dp/0907764320", "found": "Langslow 2006 — study of Latin transmission with only a sample translation of Book 2 coughing chapters; not a complete translation of the work"},
+    {"url": "https://archive.org/details/b24755990_0001", "found": "Confirms this is the Puschmann German/Greek bilingual edition (Vienna 1878), Vol. 1 — original Greek text plus German translation"}
+  ],
+  "reasoning": "Multiple sources (Penn Museum Expedition; Meandros Journal 2003) confirm: 'Except in excerpts, no English translations exist of the writings of this physician.' Langslow (2006) offers only a sample excerpt of Book 2 chapters from the LATIN version. USC Scalar project is provisional, incomplete, and Latin-only. German (Puschmann 1878-79) and French (Brunet 1933-37) are the only complete translations."
+}

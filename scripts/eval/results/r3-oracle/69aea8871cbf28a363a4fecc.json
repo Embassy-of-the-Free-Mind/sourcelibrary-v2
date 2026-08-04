@@ -1,0 +1,60 @@
+{
+  "book_id": "69aea8871cbf28a363a4fecc",
+  "work_identified": "De la division du travail social (The Division of Labour in Society) by Émile Durkheim, originally published 1893 — the complete sociological treatise on organic vs. mechanical solidarity",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Emile Durkheim on the Division of Labor in Society",
+      "translator": "George Simpson",
+      "pub_year": "1933",
+      "publisher": "The Macmillan Company, New York",
+      "completeness": "complete",
+      "source_url": "https://journals.sagepub.com/doi/10.1177/000271623417300127"
+    },
+    {
+      "english_title": "The Division of Labour in Society",
+      "translator": "W.D. Halls",
+      "pub_year": "1984",
+      "publisher": "Free Press (New York) / Macmillan Press Ltd (London); introduction by Lewis A. Coser",
+      "completeness": "complete",
+      "source_url": "https://wellcomecollection.org/works/prfhka8a"
+    }
+  ],
+  "queries_run": [
+    "Durkheim \"Division of Labour in Society\" English translation George Simpson 1933",
+    "Durkheim \"Division of Labor in Society\" W.D. Halls 1984 Macmillan Free Press English translation",
+    "WorldCat Durkheim \"Division of Labour in Society\" Simpson 1933 Macmillan complete translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://journals.sagepub.com/doi/10.1177/000271623417300127",
+      "found": "1934 review confirms: Simpson, George (Translator). Emile Durkheim on the Division of Labor in Society. Pp. xliv, 439. New York: The Macmillan Company, 1933 — complete English translation"
+    },
+    {
+      "url": "https://wellcomecollection.org/works/prfhka8a",
+      "found": "Wellcome Collection catalog record: W.D. Halls translation with Lewis Coser introduction, 1984, Macmillan/Free Press — complete English translation"
+    },
+    {
+      "url": "https://www.worldcat.org/title/division-of-labor-in-society/oclc/229571",
+      "found": "WorldCat record for the Simpson 1933 Macmillan edition confirmed"
+    },
+    {
+      "url": "https://www.worldcat.org/title/division-of-labor-in-society/oclc/10778886",
+      "found": "WorldCat record for the Halls 1984 Free Press edition confirmed"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/The_Division_of_Labour_in_Society",
+      "found": "Wikipedia confirms two English translations: Simpson and Halls; Halls edition cited as Free Press, New York"
+    },
+    {
+      "url": "https://archive.org/details/in.ernet.dli.2015.126617",
+      "found": "Archive.org hosts a full-text digitisation of a prior English edition (Free Press of Glencoe), confirming public availability"
+    }
+  ],
+  "reasoning": "Two complete English translations confirmed by library catalogues and peer-reviewed scholarship: George Simpson (Macmillan, 1933) and W.D. Halls (Free Press/Macmillan, 1984). The Simpson edition is xliv+439 pp — the full text. Halls remains the standard academic edition. Source-language rule applies: both prior translators worked from the French original, same as our copy. verdict=not_first."
+}

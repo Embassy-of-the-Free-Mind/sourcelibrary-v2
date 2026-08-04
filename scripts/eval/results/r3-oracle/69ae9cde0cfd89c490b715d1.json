@@ -1,0 +1,68 @@
+{
+  "book_id": "69ae9cde0cfd89c490b715d1",
+  "work_identified": "Herculanensium Voluminum quae Supersunt, Vol. V (Collectio Prima, Naples 1793–1855) — scholarly engraved edition of Herculaneum papyri, Vol. V contains fragments of Philodemus' De Rhetorica (On Rhetoric), with Latin scholarly apparatus by Real Academia Ercolanese",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "The Rhetorica of Philodemus. Translation and Commentary",
+      "translator": "Harry M. Hubbell",
+      "pub_year": "1920",
+      "publisher": "Transactions of the Connecticut Academy of Arts and Sciences, Vol. 23, pp. 243–382",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/PhilodemiRhetoricatrans.HubbellOPTIMIZED"
+    },
+    {
+      "english_title": "Philodemus on Rhetoric Books 1 and 2: Translation and Exegetical Essays",
+      "translator": "Clive Chandler",
+      "pub_year": "2004",
+      "publisher": "Routledge (Studies in Classics)",
+      "completeness": "partial",
+      "source_url": "https://www.amazon.com/Philodemus-Rhetoric-Books-Translation-Exegetical/dp/0415976111"
+    }
+  ],
+  "queries_run": [
+    "Herculanensium Voluminum quae Supersunt Volume V contents Philodemus papyri",
+    "\"Herculanensium Voluminum\" \"Vol. V\" OR \"volume 5\" contents texts Herculaneum papyri",
+    "Herculanensium Voluminum quae Supersunt \"tomus quintus\" OR \"fifth volume\" OR \"vol 5\" Philodemus works",
+    "Herculanensium Voluminum quae Supersunt volume V Philodemus \"De morte\" OR \"De ira\" OR \"De libertate\" OR \"Peri\" contents",
+    "Polystratus \"Peri Alogou Kataphroneseos\" Philodemus \"De Rhetorica\" Herculanensium Voluminum volume English translation",
+    "Philodemus \"On Rhetoric\" OR \"De Rhetorica\" Herculanensium Voluminum \"Vol. V\" OR \"tomus V\"",
+    "Philodemus \"On Rhetoric\" English translation complete history Sudhaus Hubbell 1920",
+    "Philodemus \"On Rhetoric\" Books 1 2 English translation complete Obbink Asmis SBL",
+    "Philodemus \"On Rhetoric\" complete translation all books English Longo Auricchio Sudhaus",
+    "Hubbell 1920 Rhetorica Philodemus translation \"all books\" OR \"complete\" OR \"Books I-VII\"",
+    "\"Herculanensium Voluminum\" \"Collectio Prima\" volume contents list papyri each volume"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/gri_33125008559995",
+      "found": "Vol. I of HVQ = Philodemus De Musica IV with Latin scholarly apparatus"
+    },
+    {
+      "url": "https://wellcomecollection.org/works/vtbn9g2r",
+      "found": "HVQ tomus I[-VI, VIII-XI] set; Vol. V edited by A. Ottaviano; Vol. VII never published"
+    },
+    {
+      "url": "https://archive.org/stream/PhilodemiRhetoricatrans.Hubbell/Philodemi%20Rhetorica%20(trans.%20Hubbell)_djvu.txt",
+      "found": "Hubbell 1920 covers all 7 books of Philodemus' Rhetorica plus Hypomnematicon — described as a systematic presentation of the complete rhetorical fragments"
+    },
+    {
+      "url": "https://www.amazon.com/Philodemus-Rhetoric-Books-Translation-Exegetical/dp/0415976111",
+      "found": "Chandler 2004 Routledge translation covers only Books 1 and 2 of Philodemus' On Rhetoric (partial)"
+    },
+    {
+      "url": "https://archive.org/details/PhilodemiRhetoricatrans.HubbellOPTIMIZED",
+      "found": "Hubbell's complete Rhetorica translation confirmed on archive.org"
+    },
+    {
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/15362426.2004.10557239",
+      "found": "Chandler 2004 partial translation confirmed — Advances in History of Rhetoric 7(1)"
+    }
+  ],
+  "reasoning": "HVQ Vol. V (Collectio Prima) contains Philodemus' De Rhetorica (On Rhetoric) fragments. Hubbell (1920) produced a complete English translation of all 7 books of Philodemus' Rhetorica. The oracle note confirms individual papyri/volumes have scholarly English editions. Complete prior English of this content exists from ANY source language per the decisive rule."
+}

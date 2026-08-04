@@ -1,0 +1,65 @@
+{
+  "book_id": "6a08e32450bd891addfb5eee",
+  "work_identified": "De Spelen van G.A. Bredero — collected plays of Gerbrand Adriaensz Bredero (Amsterdam 1617), comprising Rodd'rick ende Alphonsus, Griane, Het Moortje, Lucelle, Spaanschen Brabander, and the farces (Klucht van de Koe, Klucht van den Molenaer)",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Spanish Brabanter: A Seventeenth-Century Dutch Social Satire in Five Acts",
+      "translator": "H. David Brumble III",
+      "pub_year": "1982",
+      "publisher": "Medieval and Renaissance Texts and Studies (ACMRS), Binghamton, NY (Vol. 11)",
+      "completeness": "partial",
+      "source_url": "https://search.worldcat.org/title/spanish-brabanter-a-seventeenth-century-dutch-social-satire-in-five-acts/oclc/8032646"
+    }
+  ],
+  "queries_run": [
+    "Bredero \"collected plays\" English translation",
+    "Gerbrand Adriaensz Bredero plays English translation WorldCat",
+    "\"De Spelen van Bredero\" English translation complete",
+    "Bredero \"Spaanschen Brabander\" OR \"Spanish Brabanter\" English translation Brumble site:worldcat.org",
+    "Bredero English translation \"collected plays\" OR \"complete works\" OR \"plays in English\" worldcat",
+    "Bredero \"Moortje\" OR \"Griane\" OR \"Roddrick\" OR \"Lucelle\" English translation published",
+    "Bredero Dutch Golden Age playwright English translation \"first English\" OR \"translated into English\" complete works",
+    "site:archive.org Bredero plays English",
+    "Bredero STCN \"De Spelen\" 1617 bibliography",
+    "Bredero plays English \"no English translation\" OR \"never translated\" OR \"only Spanish Brabanter\"",
+    "\"Bredero\" \"Moortje\" OR \"Lucelle\" OR \"Griane\" \"English\" translated publication",
+    "Bredero \"collected plays\" English translation published academic press"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://search.worldcat.org/title/spanish-brabanter-a-seventeenth-century-dutch-social-satire-in-five-acts/oclc/8032646",
+      "found": "Confirms Brumble 1982 translation of Spaanschen Brabander (one play only) is the sole Bredero English item in WorldCat"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Gerbrand_Adriaensz_Bredero",
+      "found": "Lists seven plays; mentions no English translations other than Spanish Brabanter (Brumble); article on songs notes English translations of songs exist but not plays"
+    },
+    {
+      "url": "http://www.dutchcourtesan.co.uk/city-comedy-across-the-channel-commerce-charity-and-carnival-in-the-comedies-of-bredero/",
+      "found": "Scholar footnotes 'English translations of quotations from Moortje are my own' — confirms no published English Moortje exists"
+    },
+    {
+      "url": "https://neerlandistiek.nl/2018/08/gerbrand-adriaensz-brederos-spaanschen-brabander-an-english-appreciation/",
+      "found": "2018 scholarly appreciation of Spanish Brabanter mentions Brumble as the only English translation of any Bredero play"
+    },
+    {
+      "url": "https://www.amazon.com/Spanish-Brabanter-Seventeenth-Century-Medieval-Renaissance/dp/0866980180",
+      "found": "ACMRS Vol. 11 — confirms single-play English translation scope (Spaanschen Brabander only)"
+    },
+    {
+      "url": "https://archive.org/search?query=Bredero+English",
+      "found": "Archive.org holds only Dutch-language Bredero editions; no English translations of collected plays found"
+    },
+    {
+      "url": "https://www.dbnl.org/tekst/bred001moor01_01/bred001moor01_01.pdf",
+      "found": "DBNL holds Dutch-language Moortje; no English edition referenced"
+    }
+  ],
+  "reasoning": "Only Spaanschen Brabander has an English translation (Brumble 1982, ACMRS Vol. 11 — one play). The other six plays in the 1617 collected volume (Moortje, Griane, Rodd'rick, Lucelle, two farces) have never been translated; Dutch Courtesan Project scholars note they must translate Moortje quotations themselves. Our item is the first complete English rendering of the collected plays."
+}

@@ -1,0 +1,4 @@
+book_id: 6990664f2ec9f7db57179fb3
+Title: Uttara Kalamrita
+Author: Kalidasa
+Source language: Sanskrit

@@ -1,0 +1,4 @@
+book_id: 6952d05477f38f6761bc511e
+Title: Basilica chymica
+Author: Croll, Oswald
+Source language: Latin

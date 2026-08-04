@@ -1,0 +1,65 @@
+{
+  "book_id": "69dc55d2cb6f7429748b94b2",
+  "work_identified": "Michael Scot, Liber physiognomiae (c. 1230), bound with Pseudo-Aristotle, Secretum Secretorum [Philip of Tripoli Latin translation, c. 1232] — Louvain: Jan Veldener, 1484/87 incunabula (Goff M-552)",
+  "verdict": "first_modern",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Secretum Secretorum (The Governance of Princes)",
+      "translator": "Robert Copland",
+      "pub_year": "1528",
+      "publisher": "Robert Copland, London",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Secretum_Secretorum"
+    }
+  ],
+  "queries_run": [
+    "Michael Scot \"Liber physiognomiae\" English translation",
+    "Michael Scotus \"Secreta Aristotelis\" English translation",
+    "Michael Scot physiognomiae \"English translation\" translator publisher WorldCat",
+    "\"Michael Scot\" physiognomy English translation book published medieval",
+    "\"Michael Scot\" OR \"Michael Scotus\" \"physionomia\" 1660 English edition translation complete",
+    "\"Liber physiognomiae\" \"Secreta Aristotelis\" Michael Scot edition incunabula contents",
+    "\"Michael Scot\" physiognomy 18th century English translation \"physiognomia\" book London",
+    "Manzalaoui \"Secretum Secretorum\" \"nine English versions\" EETS 1977 complete translation modern",
+    "\"Secretum secretorum\" OR \"Secreta Aristotelis\" Michael Scot 1484 incunabula Louvain \"Veldener\" content description",
+    "\"Secretum Secretorum\" \"Secret of Secrets\" modern English translation complete book 20th 21st century",
+    "Linda Kerns \"Secret of Secrets\" \"Secreta secretorum\" 2008 translation complete publisher",
+    "worldcat \"Michael Scot\" OR \"Michael Scotus\" \"Liber physiognomiae\" English"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Liber_physiognomiae",
+      "found": "No complete English translations listed; Lynn Thorndike translated passages for scholarship only (1965); no modern translator/edition documented"
+    },
+    {
+      "url": "https://academic.oup.com/library/article-abstract/20/4/533/5673304",
+      "found": "Confirmed: a complete 1660 English translation of the Physionomia exists (unique copy, Russian Academy of Sciences); translator identity established in article but behind paywall; compared with 18th and 19th c. English derivatives that exploit the 1660 edition, all pre-1900"
+    },
+    {
+      "url": "https://muse.jhu.edu/article/743279/summary",
+      "found": "Project MUSE abstract for Stasevich 2019 article; CAPTCHA blocked full retrieval; confirms existence of the 1660 English translation"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Secretum_Secretorum",
+      "found": "Robert Copland (1528) complete English translation of the Secretum Secretorum confirmed; nine medieval Middle English versions exist; all pre-1900"
+    },
+    {
+      "url": "https://www.amazon.com/Secret-Secrets-Secreta-Secretorum-Introduction/dp/0779901193",
+      "found": "Lin Kerns (2008) E. Mellen Press: modern English of James Yonge's Governance of Princes (1422) — partial variant only, not the full Philip of Tripoli Secretum Secretorum"
+    },
+    {
+      "url": "https://archive.org/details/3843510",
+      "found": "Latin Louvain 1484/87 incunabula: Secreta secretorum (pseudo-Aristotle) begins at leaf k4, bound with Michael Scot's Liber physiognomiae; language: Latin"
+    },
+    {
+      "url": "https://wellcomecollection.org/works/u6efanvh",
+      "found": "Latin 1477 Venice editio princeps of Liber physiognomiae; no English translation indicated"
+    }
+  ],
+  "reasoning": "A complete 1660 English translation of the Physionomia (= Liber physiognomiae) is confirmed by Stasevich 2019 (Oxford Academic, The Library 20/4:533); 18th/19th c. English adaptations derived from it exist — all pre-1900. For the bound Secreta Aristotelis (= Secretum Secretorum), Robert Copland translated the complete work in 1528; nine medieval Middle English versions also exist — all pre-1900. Lin Kerns (2008) translates only Yonge's partial variant. No post-1900 complete modern English of the Liber physiognomiae found. Verdict: first_modern."
+}

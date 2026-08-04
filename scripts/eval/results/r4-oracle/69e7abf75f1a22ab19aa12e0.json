@@ -1,0 +1,59 @@
+{
+  "book_id": "69e7abf75f1a22ab19aa12e0",
+  "work_identified": "Mūlasarvāstivāda Vinayavastu vol. Nga — 4th and final of 4 volumes of the Vinayavastu (Toh 1, Degé 'dul ba nga, folio–302a colophon), containing approx. chapters 7–17 of the 17-chapter Chapters on Monastic Discipline; Neyphug Monastery Kangyur edition (Bhutanese recension)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Tibetan Kangyur \"Dul ba Nga\" Vinaya volume contents English translation",
+    "84000 \"Dulwa Nga\" OR \"'Dul ba Nga\" Kangyur Vinaya translated",
+    "Kangyur Vinaya section volumes Nga Mulasarvastivada English translation published",
+    "Dege Kangyur \"'dul ba\" volume \"nga\" Tohoku catalog Toh contents list",
+    "BDRC \"Kanjur Dul ba Nga\" OR \"bka' 'gyur 'dul ba nga\" Neyphug Monastery volume",
+    "rKTs Kangyur \"dul ba\" \"volume Nga\" OR \"vol. nga\" Degé Tohoku index",
+    "\"Neyphug\" kanjur \"dul ba\" volume Vinaya Tibetan Buddhist monastery",
+    "Degé Kangyur \"dul ba\" volumes \"ka kha ga nga\" Vinaya Tohoku 1 2 3 structure",
+    "84000 Toh 1-7 1-8 1-9 1-10 Vinayavastu chapters published English translation",
+    "Mulasarvastivada Vinayavastu \"Sanghabhedavastu\" OR \"Civara vastu\" OR \"Karmavastu\" complete English translation published book",
+    "Mulasarvastivada Vinayavastu chapter 7 8 9 10 11 12 English translation Schopen Clarke academic",
+    "WorldCat \"Vinayavastu\" English translation \"Mūlasarvāstivāda\" chapters complete",
+    "\"Vinayavastu\" English translation 2020 2021 2022 2023 2024 2025 published complete Tibetan",
+    "Vinayavastu \"chapters 7-17\" OR \"later chapters\" Mulasarvastivada English translation published academic",
+    "Mulasarvastivada Vinayavastu \"Civara\" OR \"Kathin\" OR \"Poshadha\" OR \"chapter on robes\" English translation published complete"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://84000.co/canon-sections/discipline",
+      "found": "Toh 1-1 through 1-6 (chapters 1–6) published in English; Toh 1-7 through 1-17 (chapters 7–17) all listed as 'in progress' — not yet published"
+    },
+    {
+      "url": "https://discourse.suttacentral.net/t/english-translations-of-sarvastivada-vinaya/13699",
+      "found": "Forum confirms 'very little has been translated'; civara vastu and kathina vastu (chapters 7–8) explicitly confirmed untranslated into English"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Kangyur",
+      "found": "Degé Kangyur Vinaya section spans 13 volumes (ka–pa); Vinayavastu occupies vols ka–nga with colophon at end of 'dul ba nga folio 302a"
+    },
+    {
+      "url": "https://discourse.suttacentral.net/t/english-translation-of-the-mulasarvastivada-bhikkhuni-vinaya-part1-now-online/43402",
+      "found": "Bhikṣuṇī Vinaya partial translation is from Chinese, covers a different text (Toh 4–5), not 'Dul ba Nga content"
+    },
+    {
+      "url": "https://www.academia.edu/89171267/Exclusion_as_Penalty...",
+      "found": "Academic edition of Karmavastu/Pudgalavastu/Pārivāsikavastu from Sanskrit Gilgit mss — partial sections, Sanskrit source not Tibetan, unpublished thesis not a book"
+    },
+    {
+      "url": "https://eap.bl.uk/collection/EAP310-2-1",
+      "found": "Neyphug Kanjur is a 17th-century Bhutanese manuscript Kangyur, 108 volumes including 13 'dul ba vols; notable for distinct Bhikṣuṇī-vinayavibhaṅga recension"
+    },
+    {
+      "url": "https://maitripa.org/library/subject-guides/kangyur-and-tengyur/kangyur-genres-and-catalog/",
+      "found": "'Dul ba section uses volume letters ka, kha, ga, nga, ca, cha, ja, nya, ta, tha, da, na, pa (13 volumes total for Vinaya)"
+    }
+  ],
+  "reasoning": "Kanjur 'Dul ba Nga = final (4th) volume of Vinayavastu (Toh 1, Neyphug/Degé Kangyur), containing approx. chapters 7–17. 84000 confirms only chapters 1–6 published; 7–17 all 'in progress.' SuttaCentral forum explicitly confirms civara/kathina chapters untranslated. No complete English translation found across 84000, SuttaCentral, or academic databases."
+}

@@ -1,0 +1,622 @@
+[
+  {
+    "id": "69b630bf1c1c21a373804035",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": null,
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7b77a90a84931799f3",
+      "english_title": "Regule = The rules; Summa = The summa (a new critical text and translation on facing pages, with an introduction, annotations, and indices verborum and nominum et rerum  by Peter M. Lefferts)",
+      "translator": "Lefferts, Peter M.",
+      "pub_year": 1991,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "c4aa9f54-cf66-4065-a310-9b786b4d9954",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "Q138752489",
+    "tier0": {
+      "candidates": 3,
+      "title_overlap": 1,
+      "catalog_id": "69dbbdedf071889fedd29935",
+      "english_title": "The Consolation of Philosophy",
+      "translator": "P.G. Walsh",
+      "pub_year": 1999,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "validated_additions"
+    }
+  },
+  {
+    "id": "69c72aca6a0f3d112faf6f49",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:franciscus-mercurius-van-helmont:adumbratio-christianae-est-hebraizans-id-kabbalae-syncatabasis",
+    "tier0": {
+      "candidates": 3,
+      "title_overlap": 0.4,
+      "catalog_id": "69dbbdcef071889fedd2899a",
+      "english_title": "Francis Mercury van Helmont's \"Sketch of Christian Kabbalism\"",
+      "translator": "",
+      "pub_year": 2012,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "loc_marc"
+    }
+  },
+  {
+    "id": "6990523c8d19cbc90d9d5d0f",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:girolamo-menghi:art-compendium-exorcism",
+    "tier0": {
+      "candidates": 1,
+      "title_overlap": 0.5,
+      "catalog_id": "69dbbdc5f071889fedd28202",
+      "english_title": "The devil's scourge exorcism during the Italian Renaissance",
+      "translator": "",
+      "pub_year": 2002,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "loc_marc"
+    }
+  },
+  {
+    "id": "69b65fd6b3f4fc044152c073",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:wolf-heinrich:chronologia-comprehensa-duobus-ecclesiasticis-eius-et-libris-mutationibus-sive-t",
+    "tier0": {
+      "candidates": 21,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69ac5f757f20875486da50e7",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "huygens-oeuvres-completes",
+    "tier0": {
+      "candidates": 8,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "698255f071f849b62f11b4b6",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:kirchweger-anton-joseph:basil-microscope-valentine",
+    "tier0": null
+  },
+  {
+    "id": "6985ca74a480a17bd2c4c109",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::defense-evangelical-forerunner-necessary-noble-persons",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69de11fa86e6d59321ba213d",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:pietro-aretino:amorosi-dubbj-lussuriosi-sonetti",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "697b079ae303c59b5d833abc",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:johannes-tauler:exercises-spiritual",
+    "tier0": null
+  },
+  {
+    "id": "6970e36a9b09d309d780a286",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:willem-teellinck:collected-first-part-works",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69b525d89658af9164709eea",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:quad-matthias:ac-antehac-compendiosa-descriptio-ducatus-et-lutzenburge-montuosissimi-n-nunquam",
+    "tier0": null
+  },
+  {
+    "id": "6a09dd2724d4d312f5c30ebe",
+    "stratum": "badged · western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:aine-forbet-galen-jean:au-corps-esprit-et-jeu-paume-provient-qui-utilite",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69907d97aee9f4aa5859304e",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:unknown:giver-lamp-life",
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7a77a90a84931798dc",
+      "english_title": "Beatrice of Nazareth : a thirteenth century biography (With original Latin text)",
+      "translator": "Ganck, Roger de",
+      "pub_year": 1991,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "69a5e461006a409842216e78",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "anonymous-syriac-manuscript",
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.5,
+      "catalog_id": "69ab0b7a77a90a8493179871",
+      "english_title": "De musica mensurata : the Anonymous of St. Emmeram (Text and English translation of a unique manuscript (Clm. 14523) in the Bayerische Staatsbibliothek, Munich)",
+      "translator": "",
+      "pub_year": 1990,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "6992ceef673ee1e40e321c54",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:mao-yuanyi-compiler:wubei-zhi",
+    "tier0": null
+  },
+  {
+    "id": "6992cd6743713c66ea6363c5",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "王圻-三才圖會",
+    "tier0": null
+  },
+  {
+    "id": "69e7ac3c5f1a22ab19aa5ce8",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:monastery-neyphug:bdun-bu-dge-len-nyams-pa-sbyor-sogs-thor",
+    "tier0": null
+  },
+  {
+    "id": "69e78f5b6cebc588933221f7",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bdar-kun-mo-sel",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c1bae08522835be845b1f6",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::arabic-book-composite-hebrew-judeo-karaite-manuscript-passover-prayer-shavuot",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69c1bc3e8522835be84620a8",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n::bible-hebrew-yemenite",
+    "tier0": {
+      "candidates": 40,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6992cfad27dcac3f8ca1b967",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "魏源-海國圖志",
+    "tier0": null
+  },
+  {
+    "id": "69e7ac7b5f1a22ab19aa83a5",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:gonpa-phurdrup:dgongs-dus-ta",
+    "tier0": null
+  },
+  {
+    "id": "69e789c34a6785cfd60d2e31",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:choling-collection-ogyen:bar-bla-bya-bzhin-ched-dang-dkar-drag-gsal-hom-khor-ki",
+    "tier0": {
+      "candidates": 13,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "699246babc722ec0ee8120e8",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:forshall-john-madden-wyc:2-bible-holy-vol",
+    "tier0": {
+      "candidates": 12,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69a5ee1ebfd8cafd91e432cd",
+    "stratum": "badged · non-western",
+    "badged": true,
+    "disposition": "confirmed_first",
+    "work_id": "local:a:ephrem-the-syrian:3-saint-volume-works",
+    "tier0": null
+  },
+  {
+    "id": "69b642051c1c21a373889f10",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:heinrich-cornelius-agrippa:ab-agrippae-archivis-consiliis-cor-et-henrici-iii-inditiarii-libri-maiestatis-ne",
+    "tier0": {
+      "candidates": 40,
+      "title_overlap": 0.64,
+      "catalog_id": "69ab0b7e77a90a849317bdb8",
+      "english_title": "Henrici Cornelii Agrippae ab Nettesheym à consiliis & archiuis inditiarii sacrae Caesareae maiestatis",
+      "translator": "",
+      "pub_year": 1872,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "openlibrary"
+    }
+  },
+  {
+    "id": "69e419df8a8dae1074c51dad",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "Q126721514",
+    "tier0": {
+      "candidates": 9,
+      "title_overlap": 1,
+      "catalog_id": "69dbbdedf071889fedd298c9",
+      "english_title": "Aristophanes: Comedies",
+      "translator": "Jeffrey Henderson",
+      "pub_year": 2002,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "validated_additions"
+    }
+  },
+  {
+    "id": "69e3ff77b142e5dd9d6b03d2",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:nicolas-chorier:satyra-sotadica",
+    "tier0": {
+      "candidates": 1,
+      "title_overlap": 0.5,
+      "catalog_id": "69dbbdbaf071889fedd27911",
+      "english_title": "The dialogues of Luisa Sigea (Aloisiæ Sigæ Satyra sotadica de arcanis amoris et veneris)",
+      "translator": "",
+      "pub_year": 1949,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "loc_marc"
+    }
+  },
+  {
+    "id": "699062f1ef12272ffdc8e56e",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "Q917141",
+    "tier0": {
+      "candidates": 37,
+      "title_overlap": 0.4,
+      "catalog_id": "69dbbdbaf071889fedd279f5",
+      "english_title": "Contra Celsum.",
+      "translator": "Chadwick Henry",
+      "pub_year": 1965,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "loc_marc"
+    }
+  },
+  {
+    "id": "69b4c07886a5921d5bc43e41",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "local:a:calcidius:chalcidius-plato-timaeus",
+    "tier0": null
+  },
+  {
+    "id": "6a16ce8d36e7b50b389158e9",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n::histoire-indes-naturelle",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "6a08596549638a50931c75f1",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:aldo-manuzio:12-addito-appellantur-eiusdem-epistolarum-libri-manutii-nuper-paulli-praefatione",
+    "tier0": null
+  },
+  {
+    "id": "6a08e32450bd891addfb5eee",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:gerbrand-adriaensz-bredero:1617-amsterdam-bredero-collected-plays-spelen-van",
+    "tier0": null
+  },
+  {
+    "id": "69b18a95c4be2cdd0edc835c",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:john-amos-comenius:darkness-light",
+    "tier0": null
+  },
+  {
+    "id": "69dbcb091040d1d5e20b14b8",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:a:paulus-de-middelburgo:against-astrologer-certain-invective-johannes-lichtenberger-superstitious",
+    "tier0": null
+  },
+  {
+    "id": "6a06f2764dcc6d5d8f03647c",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:aldo-manuzio:al-altra-cicerone-comporre-con-contenute-copiosissime-da-dell-due-epistole-libro",
+    "tier0": null
+  },
+  {
+    "id": "6993895674305116d72d1515",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "local:a:theophrastus:402-bern-burgerbibliothek-ms",
+    "tier0": {
+      "candidates": 20,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69904dd97d19f3f2aac1d57b",
+    "stratum": "unbadged · western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "Q5244319",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e8b27f2ff2a8dc09e77ed7",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "Q108660034",
+    "tier0": {
+      "candidates": 2,
+      "title_overlap": 0.67,
+      "catalog_id": "6a4390f74b412c757bd5e91d",
+      "english_title": "The Bhagavadgîtâ, with the Sanatsujâtîya and the Anugîtâ",
+      "translator": "Kâshinâth Trimbak Telang",
+      "pub_year": 1882,
+      "source_language": "sa",
+      "completeness": "complete",
+      "source": "sacred_books_east"
+    }
+  },
+  {
+    "id": "69b3e612304c1c6b3950b1a3",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:ibn-ezra:astrological-astronomical-treatises",
+    "tier0": {
+      "candidates": 4,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7c77a90a849317a501",
+      "english_title": "Abraham Ibn Ezra Latinus: Henry Bate's Latin Versions of Abraham Ibn Ezra's Astrological Writings (Volume 1)",
+      "translator": "Shlomo Sela",
+      "pub_year": 2022,
+      "source_language": "la",
+      "completeness": "partial",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "699249b1a2d53df4853be918",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:snorri-sturluson-3:arme-edda-fylgjandi-ir-og-ritgjor-samt-skalda-snorra",
+    "tier0": {
+      "candidates": 2,
+      "title_overlap": 0.5,
+      "catalog_id": "69ab0b7e77a90a849317c348",
+      "english_title": "Edda",
+      "translator": "Anthony Faulkes (Translator)",
+      "pub_year": 1924,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "openlibrary"
+    }
+  },
+  {
+    "id": "699249e7a2d53df4853c0e9c",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:john-white:ancient-history-maori-mythology-traditions-vol",
+    "tier0": {
+      "candidates": 35,
+      "title_overlap": 0.33,
+      "catalog_id": "69ab0b7b77a90a849317a0fd",
+      "english_title": "A garden of Latin verse : poems of Ancient Rome",
+      "translator": "",
+      "pub_year": 1998,
+      "source_language": "la",
+      "completeness": "unknown",
+      "source": "unesco_master"
+    }
+  },
+  {
+    "id": "6953a82777f38f6761bd0aad",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:a:andrew-and-arethas-of-cappadocia:apocalypse-john",
+    "tier0": null
+  },
+  {
+    "id": "6a14e1a4311a9edd46222dc2",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "confirmed_first",
+    "work_id": "local:n:monastery-tshamdrak:bu-chos-dzin-gling-rig-smin-thig-thor-thugs-zab",
+    "tier0": null
+  },
+  {
+    "id": "69aff09357adc49dbfc4259b",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:n:sumerian:01-08-4-balbale-etcsl-inana",
+    "tier0": null
+  },
+  {
+    "id": "6a2199664b61907ea5ffbbf4",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:chakravarti-nemichandra-:essence-soul",
+    "tier0": null
+  },
+  {
+    "id": "69ea3e83300d991d0f1d3743",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": null,
+    "tier0": null
+  },
+  {
+    "id": "69d5ad004dc55b8478dde8b5",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": null,
+    "tier0": {
+      "candidates": 12,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69aff08c57adc49dbfc424ac",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "translation_found",
+    "work_id": "local:n:sumerian:from-id-ilak-letter-ni-samas-tab",
+    "tier0": null
+  },
+  {
+    "id": "6990664f2ec9f7db57179fb3",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": "needs_review",
+    "work_id": "local:a:kalidasa:latter-nectar-time",
+    "tier0": {
+      "candidates": 2,
+      "best": null,
+      "note": "surname matched, no title overlap >=0.3"
+    }
+  },
+  {
+    "id": "69e7abf75f1a22ab19aa12e0",
+    "stratum": "unbadged · non-western",
+    "badged": false,
+    "disposition": null,
+    "work_id": "local:n:monastery-neyphug:ba-dul-kanjur-nga",
+    "tier0": null
+  }
+]

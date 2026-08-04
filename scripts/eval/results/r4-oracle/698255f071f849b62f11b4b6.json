@@ -1,0 +1,36 @@
+{
+  "book_id": "698255f071f849b62f11b4b6",
+  "work_identified": "Microscopium Basilii Valentini, sive commentariolum et cribrellum über den grossen Kreuzapfel der Welt (1790) — Kirchweger's own Latin-German alchemical commentary on Basil Valentine's principles; distinct from Basil Valentine's own works and from Kirchweger's Aurea Catena Homeri",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Kirchweger \"Microscopium Basilii Valentini\" English translation",
+    "Anton Joseph Kirchweger \"Microscopium\" Basil Valentine English translation alchemy",
+    "Kirchweger \"Microscopium Basilii Valentini\" WorldCat",
+    "WorldCat \"Microscopium Basilii Valentini\" Kirchweger English",
+    "Adam McLean alchemy \"Microscopium\" Kirchweger \"Basil Valentine\" English translation",
+    "RAMS \"Restorers of Alchemical Manuscripts\" Kirchweger Microscopium English translation 1984",
+    "Nintzel Hamilton Wheeler Kirchweger \"Microscopium\" alchemy translation",
+    "\"Microscopium Basilii Valentini\" English \"translated by\" OR \"translation by\" OR \"English edition\"",
+    "Kirchweger \"Microscopium Basilii Valentini\" English translation published HathiTrust Brill",
+    "\"Microscopium Basilii Valentini\" Kirchweger alchemy 18th century \"Kreuzapfel\" English scholarly",
+    "Kirchweger Microscopium \"Basil Valentine\" alchemical commentary alchemy scholarship review history"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/b28756654", "found": "1790 Berlin original, German/Latin only, Wellcome Library copy, 186pp, no English edition indicated"},
+    {"url": "https://openlibrary.org/books/OL26262566M/...", "found": "1 edition only listed, language undetermined but German content confirmed, no English translations linked"},
+    {"url": "https://openlibrary.org/books/OL26994603M/...", "found": "Explicitly labelled '(German Edition)', no English alternatives shown"},
+    {"url": "https://en.wikipedia.org/wiki/Anton_Josef_Kirchweger", "found": "Lists Aurea Catena Homeri and Microscopium Basilii Valentini as Kirchweger's two main works; notes Bacstrom translated 'parts' of Aurea Catena Homeri into English, no mention of any English rendering of Microscopium"},
+    {"url": "https://ramsdigital.com/the-complete-catalogue/", "found": "RAMS catalogue lists Kirchweger only for Aurea Catena Homeri (1984, 498pp); Microscopium Basilii Valentini absent from their translated holdings"},
+    {"url": "https://www.abebooks.com/book-search/author/KIRCHWEGER,-ANTON", "found": "84 books listed; Microscopium entries all German-language (Legare Street Press 2022, Kessinger 2009); only Aurea Catena Homeri appears in English translation"},
+    {"url": "https://www.alchemywebsite.com/twelve_keys.html", "found": "Adam McLean's site covers Basil Valentine's Twelve Keys but no mention of Kirchweger's Microscopium as a translated work"},
+    {"url": "https://www.biblio.com/9781120646156", "found": "Kessinger 2009 reprint listed as German-language paperback, no English translation noted"},
+    {"url": "https://catalogue.swanngalleries.com/Lots/auction-lot/...", "found": "Auction lot for 1790 first edition (German/Latin), no English translation mentioned in catalogue notes"}
+  ],
+  "reasoning": "Across archive.org, Open Library (1 edition, German), AbeBooks (84 Kirchweger titles, no English Microscopium), the RAMS full catalogue (Aurea Catena Homeri only), Wikipedia, and Adam McLean's alchemy website, no English translation of this work exists. WorldCat was inaccessible (403) but Open Library and RAMS are tradition-appropriate proxies confirming absence. Confidence medium not high due to WorldCat not directly accessible."
+}

@@ -1,0 +1,4 @@
+book_id: 69b00a0ec42435fcd0cf9acb
+Title: Claudii Galeni Opera Omnia, Vol. 18 Pt. 2
+Author: Galen; Karl Gottlob Kühn (ed.)
+Source language: Latin

@@ -1,0 +1,4 @@
+book_id: 69c842e06c6f3cc53c850dec
+Title: Periculum palmyrenum
+Author: Rhenferd, Jacobus
+Source language: Latin

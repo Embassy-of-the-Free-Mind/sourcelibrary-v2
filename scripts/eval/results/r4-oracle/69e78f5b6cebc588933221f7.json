@@ -1,0 +1,41 @@
+{
+  "book_id": "69e78f5b6cebc588933221f7",
+  "work_identified": "mo bdar kun sel — a Tibetan mo divination text (honing prayers to dispel all doubt through casting the mo), a manuscript from the Ogyen Choling Collection, Bhutan (EAP105/2/5/37)",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "\"mo bdar kun sel\" Tibetan divination English translation",
+    "site:tbrc.org \"mo bdar kun sel\"",
+    "\"Ogyen Choling\" collection Tibetan divination English translation",
+    "\"mo bdar kun sel\" Tibetan",
+    "Tibetan mo divination \"kun sel\" English translation published",
+    "BDRC \"Ogyen Choling\" manuscript collection Bhutan Tibetan texts catalog",
+    "Lotsawa House \"mo bdar\" OR \"mo divination\" Tibetan English translation",
+    "Brill \"Glimpses of Tibetan Divination\" contents table chapters translated texts",
+    "archive.org \"mo bdar kun sel\" Tibetan divination text",
+    "\"Glimpses of Tibetan Divination\" Ogyen Choling divination text translation",
+    "Ogyen Choling Bhutan \"mo bdar\" divination manuscript English translation",
+    "site:eap.bl.uk \"mo bdar kun sel\" EAP105 Ogyen Choling",
+    "\"mo bdar kun sel\" English translation scholar published",
+    "EAP105 \"Ogyen Choling\" manuscripts catalog divination texts listed",
+    "Bhutanese Tibetan divination \"mo\" text English translation Bhutan scholar",
+    "\"mo bdar\" Tibetan divination academic scholar study publication English",
+    "Tibetan divination \"mo bdar\" \"honing\" English translation book published scholar"
+  ],
+  "sources_consulted": [
+    {"url": "https://eap.bl.uk/archive-file/EAP105-2-5-37", "found": "Confirmed: 'mo bdar kun sel' is EAP105/2/5/37 in the Ogyen Choling Collection — an archival Tibetan manuscript from Bhutan; no English translation indicated"},
+    {"url": "https://www.lotsawahouse.org/bo/free-translations-tibetan-buddhist-texts", "found": "No 'mo bdar' or related Tibetan divination honing-prayer texts listed among Lotsawa House translations"},
+    {"url": "https://www.amazon.com/Mo-Tibetan-Divination-Jamgon-Mipham/dp/1559391472", "found": "Only known published English mo divination translation is Jamgon Mipham's system (Snow Lion, 2000) — a completely different text/author, not this Ogyen Choling manuscript"},
+    {"url": "https://brill.com/display/book/edcoll/9789004410688/9789004410688_webready_content_text.pdf", "found": "Glimpses of Tibetan Divination (Brill 2019): scholarly coverage of divination genre; no mention of mo bdar kun sel or Ogyen Choling divination specifically"},
+    {"url": "https://epub.ub.uni-muenchen.de/84429/", "found": "Glimpses of Tibetan Divination abstract: discusses various divination practices but does not reference this manuscript"},
+    {"url": "https://library.bdrc.io/", "found": "BDRC search attempted but direct catalog entry for 'mo bdar kun sel' not surfaced; Ogyen Choling Collection is documented in EAP105, not in a BDRC search result"},
+    {"url": "https://archive.org/details/motibetandivinat0000jayg", "found": "Internet Archive: only Mipham/Goldberg Mo text available; no Ogyen Choling mo bdar kun sel found"},
+    {"url": "https://search.worldcat.org/title/mo-tibetan-divination-system/oclc/748356963", "found": "WorldCat: only Mipham Mo divination system; 'mo bdar kun sel' not found in any WorldCat query result"}
+  ],
+  "reasoning": "EAP105/2/5/37 confirms this is an archival Bhutanese ms, not a canonical circulating text. No English translation found across Lotsawa House, WorldCat, BDRC, archive.org, Brill, or general web. Only English mo divination translation (Mipham/Goldberg, Snow Lion 2000) is a distinct unrelated work. The Ogyen Choling Collection ms genre (Bhutanese local divination manual) has received negligible translation attention. Absence is well-bounded but BDRC direct catalog and WorldCat were access-limited."
+}

@@ -1,0 +1,60 @@
+{
+  "book_id": "6a06f2764dcc6d5d8f03647c",
+  "work_identified": "Locutioni dell'Epistole di Cicerone — Italian/Latin bilingual phrase-book of Ciceronian locutions compiled by Aldo Manuzio il Giovane (1547-1597); first published Venice c.1573, 24 editions to 1641",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Aldo Manuzio Younger \"Locutioni dell'Epistole di Cicerone\" English translation",
+    "WorldCat \"Locutioni dell'Epistole di Cicerone\" Aldo Manuzio",
+    "\"Locutioni\" Cicero Manuzio English translation humanist phrase-book",
+    "Manuzio \"Phrases linguae latinae\" \"Cicero\" OR \"epistles\" London 1573 content",
+    "\"Phrases linguae latinae\" Manuzio 1579 EEBO English translation",
+    "Aldus Manutius Younger works English translation scholarship Renaissance",
+    "Aldus Manutius Younger \"Locutioni\" \"Phrases linguae latinae\" different works bibliography",
+    "\"Locutioni dell'epistole di Cicerone\" English OR anglice OR \"in Anglicum\"",
+    "Aldo Manuzio il giovane opere traduzioni inglese \"Locutioni Cicerone\"",
+    "Manuzio \"Phrases linguae latinae\" English 1636 London Cicero",
+    "site:worldcat.org \"Locutioni\" Manuzio Cicero",
+    "Manuzio \"Locutioni dell'epistole\" editions WorldCat languages 1573 1641"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Aldus_Manutius_the_Younger",
+      "found": "Lists Locuzioni dell'epistole di Cicerone (1575) as a distinct work from Phrases linguae latinae; only Eleganze translated into English (1573); no English translation of Locutioni mentioned"
+    },
+    {
+      "url": "https://archive.org/details/manvtivs-aldus-locutioni-dell-epistole-di-cicerone",
+      "found": "Work confirmed in Italian and Latin only; no English content"
+    },
+    {
+      "url": "https://archive.org/details/bub_gb_MUgdVlTIb-sC",
+      "found": "1607 edition: Italian and Latin, no English; subtitle confirms bilingual Italian-Latin composition aid"
+    },
+    {
+      "url": "https://archive.org/stream/bim_early-english-books-1475-1640_phrases-linguae-latinae-_manuzio-aldo_1579/bim_early-english-books-1475-1640_phrases-linguae-latinae-_manuzio-aldo_1579_djvu.txt",
+      "found": "Phrases linguae latinae 1579 is a DIFFERENT work by same author (general Latin phrases with English); not about Cicero's Epistles specifically; full text confirmed distinct content"
+    },
+    {
+      "url": "https://www.treccani.it/enciclopedia/manuzio-aldo-il-giovane_(Dizionario-Biografico)/",
+      "found": "Authoritative Italian encyclopedia entry on Manuzio il Giovane: no English translation of Locutioni mentioned anywhere in bibliography"
+    },
+    {
+      "url": "http://www.worldcat.org/identities/lccn-n88-132189/",
+      "found": "403 Forbidden — could not access directly; external snippet reports 24 editions in 3 languages 1573-1641, 44 holding libraries"
+    },
+    {
+      "url": "https://leme.library.utoronto.ca/lexicons/988/details",
+      "found": "503 unavailable — LEME (Lexicons of Early Modern English) entry for Manuzio could not be retrieved"
+    },
+    {
+      "url": "https://library.villanova.edu/Find/Record/2033265",
+      "found": "Villanova catalog entry for Phrases linguae latinae English edition — confirmed this is the Phrases (different work), not the Locutioni; access blocked by auth screen"
+    }
+  ],
+  "reasoning": "No English translation of the Locutioni dell'Epistole di Cicerone found in archive.org, Wikipedia, Treccani, or targeted web searches. The related Phrases linguae latinae was put into English (London 1573/1579) but is a provably distinct work. All 24 documented editions are in Italian/Latin. WorldCat inaccessible directly; absence is well-bounded across tradition-appropriate sources."
+}

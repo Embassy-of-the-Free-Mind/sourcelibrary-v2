@@ -1,0 +1,47 @@
+{
+  "book_id": "6a09dd2724d4d312f5c30ebe",
+  "work_identified": "Galen, De parvae pilae exercitio (On Exercise with the Small Ball) — French translation by Jean Forbet l'aîné, 'L'Utilité qui provient du jeu de la paume au corps et à l'esprit' (c.1592/1599)",
+  "verdict": "not_first",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Exercise with the Small Ball",
+      "translator": "P. N. Singer",
+      "pub_year": "1997",
+      "publisher": "Oxford University Press (Oxford World's Classics), in 'Galen: Selected Works'",
+      "completeness": "complete",
+      "source_url": "https://global.oup.com/academic/product/galen-9780192824509"
+    },
+    {
+      "english_title": "On Exercise with a Small Ball",
+      "translator": "Ian Johnston",
+      "pub_year": "2018",
+      "publisher": "Harvard University Press, Loeb Classical Library 536 (Hygiene, Vol. II: Books 5-6. Thrasybulus. On Exercise with a Small Ball)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Galen-Hygiene-Thrasybulus-Exercise-Classical/dp/0674997131"
+    }
+  ],
+  "queries_run": [
+    "Galen \"De parvae pilae exercitio\" English translation \"small ball\" exercise",
+    "Galen \"exercise with the small ball\" English translation Singer OUP 1997",
+    "WorldCat Galen \"parvae pilae\" English translation",
+    "Galen \"On Exercise with the Small Ball\" Loeb Classical Library LCL 536 translator 2016 2018",
+    "Jean Forbet \"jeu de la paume\" Galen French translation 16th century",
+    "worldcat \"L'utilite qui provient du jeu de la paume\" English translation Forbet Galen",
+    "Singer \"Galen Selected Works\" 1997 Oxford \"exercise with a small ball\" table of contents"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.loebclassics.com/view/galen-small_ball/2018/pb_LCL536.377.xml", "found": "Loeb Classical Library page confirms 'GALEN, On Exercise with a Small Ball' in LCL 536 (2018)"},
+    {"url": "https://www.amazon.com/Galen-Hygiene-Thrasybulus-Exercise-Classical/dp/0674997131", "found": "Amazon listing confirms LCL 536 (Johnston 2018) includes On Exercise with a Small Ball, ISBN 9780674997134"},
+    {"url": "https://global.oup.com/academic/product/galen-9780192824509", "found": "OUP listing for Singer 1997 Galen: Selected Works (World's Classics), ISBN 9780192824509"},
+    {"url": "https://vdoc.pub/documents/galen-selected-works-3act8p0jr2d0", "found": "Table of contents of Singer 1997 confirms 'The Exercise with the Small Ball' on p.299"},
+    {"url": "https://gallica.bnf.fr/ark:/12148/bpt6k1525325b.image", "found": "BnF Gallica: our item is Forbet l'aîné's French translation 'Traduict du grec de Galien en François' — confirms it is the French rendering of De parvae pilae exercitio"},
+    {"url": "https://www.researchgate.net/figure/First-page-of-Lutilite-qui-provient-du-jeu-de-la-paume-1599_fig7_275507683", "found": "Confirms our item = Forbet's 1599 French translation of Galen's De parvae pilae exercitio"},
+    {"url": "https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(12)61205-7/fulltext", "found": "Lancet article 'Motion and rest: Galen on exercise and health' cites Singer 1997 as the standard English translation"}
+  ],
+  "reasoning": "Our item is Forbet l'aîné's French translation (c.1592–1599) of Galen's short treatise De parvae pilae exercitio. Source-language rule is decisive: P. N. Singer (OUP 1997, p.299) and Ian Johnston (Loeb LCL 536, 2018) both provide complete modern English translations of this same Galen work from Greek. Prior translations confirmed from multiple authoritative sources."
+}

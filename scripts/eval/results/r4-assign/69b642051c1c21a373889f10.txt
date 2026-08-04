@@ -1,0 +1,4 @@
+book_id: 69b642051c1c21a373889f10
+Title: Henrici Cor. Agrippae ab Nettesheym a consiliis et archivis inditiarii sacrae maiestatis, De occulta philosophia libri III
+Author: Agrippa von Nettesheim, Heinrich Cornelius
+Source language: Latin

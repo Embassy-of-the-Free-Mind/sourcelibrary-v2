@@ -1,0 +1,43 @@
+{
+  "book_id": "6a14e1a4311a9edd46222dc2",
+  "work_identified": "Thor bu sMin gling zab chos rig 'dzin thugs thig — Miscellany of the Profound Mindrolling Vidyādhara Heart-Essence Teachings; a collection of texts from the rig 'dzin thugs thig terma cycle revealed by Terdak Lingpa (gter bdag gling pa, 1646–1714) at Yamalung in 1663, preserved at Tshamdrak (mTsham brag) Monastery, Chhukha district, Bhutan",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Thor bu sMin gling zab chos rig 'dzin thugs thig English translation",
+    "Mindrolling vidyadhara thugs thig English translation Tibetan",
+    "\"thugs thig\" \"Mindrolling\" OR \"sMin gling\" \"rig 'dzin\" WorldCat English translation book",
+    "site:worldcat.org \"Mindrolling\" \"thugs thig\" OR \"heart essence\" vidyadhara Tibetan",
+    "\"rig 'dzin thugs thig\" English translation site:lotsawahouse.org",
+    "Tshamdrak Monastery Bhutan Mindrolling teachings English translation",
+    "BDRC \"Thor bu\" \"sMin gling\" \"thugs thig\" Tshamdrak",
+    "\"rig 'dzin thugs thig\" \"gter bdag gling pa\" OR \"Terdak Lingpa\" Mindrolling terma English",
+    "\"rig 'dzin thugs thig\" English translated book published",
+    "\"Minling Dorsem\" English translation published Mindrolling",
+    "Terdak Lingpa \"rig 'dzin thugs thig\" English translation published",
+    "\"Terdak Lingpa\" terma \"Innermost Spirituality\" OR \"heart essence\" \"awareness holder\" English published book",
+    "\"rig 'dzin thugs thig\" Terdak Lingpa Mindrolling terma translation 2020 2021 2022 2023 2024 2025 2026",
+    "\"sMin gling\" \"rig 'dzin\" \"thugs thig\" OR \"tuktik\" english translation published 2010 2015 2020 2025",
+    "worldcat \"Terdak Lingpa\" OR \"Terdag Lingpa\" OR \"gter bdag gling pa\" terma English language",
+    "\"rig 'dzin thugs thig\" OR \"rigdzin tuktik\" Mindrolling English translation Brill Cambridge Snow Lion",
+    "site:worldcat.org \"Terdak Lingpa\" OR \"Terdag Lingpa\" English",
+    "\"Tshamdrak\" OR \"Tsamdrak\" OR \"mTsham brag\" Bhutan monastery Mindrolling texts catalog",
+    "archive.org bdrc \"smin gling\" \"rig dzin thugs thig\" Tibetan text"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/minling-terchen/", "found": "Lotsawa House Minling Terchen series: 8 short texts (prayers, sadhanas, lineage prayers, bardo text); no rig 'dzin thugs thig content"},
+    {"url": "https://www.lotsawahouse.org/topics/minling-dorsem/", "found": "Minling Dorsem series: one entry (tsa-tsa liturgy by Jamyang Khyentse Wangpo); unrelated to rig 'dzin thugs thig"},
+    {"url": "https://www.mindrollinginternational.org/lineage-and-history/terdag-lingpa/", "found": "Confirms rig 'dzin thugs thig discovered by Terdak Lingpa at Yamalung, 1663; no English translation mentioned"},
+    {"url": "https://eap.bl.uk/project/EAP310", "found": "EAP310 digitized Tshamdrak manuscripts; page loaded empty, no catalog details retrieved"},
+    {"url": "http://worldcat.org/identities/lccn-n82066871/", "found": "WorldCat identities for Terdak Lingpa (403); most held English work = The Jewel Ladder (Nyingma Lamrim), 56 libraries; no rig 'dzin thugs thig"},
+    {"url": "https://dorji-wangchuk.com/2023/05/15/looking-for-the-drums-of-tsamdrak/", "found": "Tshamdrak holds 46-vol rNying ma rGyud 'bum and gter ma literature; Kaneko catalog exists; no English translations of rig 'dzin thugs thig mentioned"},
+    {"url": "https://www.rigpawiki.org/index.php?title=Minling_Dorsem", "found": "403 blocked"},
+    {"url": "https://archive.org/search?query=smin+gling+rig+dzin+thugs+thig", "found": "No direct match for this specific text/cycle in archive.org BDRC items"}
+  ],
+  "reasoning": "The rig 'dzin thugs thig is Terdak Lingpa's first terma (Yamalung, 1663), foundational to Mindrolling. This thor bu volume preserves miscellaneous texts from that cycle at Tshamdrak Monastery, Bhutan. Lotsawa House (main Tibetan translation database), WorldCat, BDRC/archive.org, and Mindrolling's own websites show no English of this cycle. The Minling Terchen corpus in English is limited to a handful of short general texts."
+}

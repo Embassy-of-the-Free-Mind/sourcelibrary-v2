@@ -1,0 +1,4 @@
+book_id: 695931d4b91a6184ea9433a8
+Title: Amulette composée par Al-Buni
+Author: Ahmad al-Buni
+Source language: Arabic

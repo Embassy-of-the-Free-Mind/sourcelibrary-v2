@@ -1,0 +1,57 @@
+{
+  "book_id": "69b51e18768235dc6598c1b7",
+  "work_identified": "Corpus Hermeticum (Pymander) in Ficino's Latin redaction, with Rosselli's theological commentary — vol. 1 'De SS. Trinitate'",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Divine Pymander of Hermes Mercurius Trismegistus in XVII Books",
+      "translator": "John Everard",
+      "pub_year": "1650",
+      "publisher": "London (republished with John French)",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/hermetica"
+    },
+    {
+      "english_title": "Thrice-Greatest Hermes: Studies in Hellenistic Theosophy and Gnosis",
+      "translator": "G.R.S. Mead",
+      "pub_year": "1906",
+      "publisher": "Theosophical Publishing Society, London",
+      "completeness": "complete",
+      "source_url": "https://s3.us-west-1.wasabisys.com/luminist/EB/M/Mead%20-%20Hermetica.pdf"
+    },
+    {
+      "english_title": "Hermetica: The Greek Corpus Hermeticum and the Latin Asclepius in a New English Translation",
+      "translator": "Brian P. Copenhaver",
+      "pub_year": "1992",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D"
+    }
+  ],
+  "queries_run": [
+    "Hannibal Rosselli \"Pymander Mercurii Trismegisti\" commentary English translation",
+    "Annibale Rosselli Pymander commentary Corpus Hermeticum Latin English",
+    "Rosselli \"Divinus Pymander\" commentary English translation worldcat",
+    "\"Hannibal Rosselli\" OR \"Annibale Rosselli\" Hermetica commentary English scholarship",
+    "worldcat \"Rosselli\" \"Pymander\" English translation site:worldcat.org",
+    "\"Pymander\" \"Rosselli\" OR \"Rosseli\" English translation published",
+    "Corpus Hermeticum Pymander English translation history Everard Mead Copenhaver complete",
+    "John Everard \"Divine Pymander\" 1650 Ficino Latin translation Corpus Hermeticum first English",
+    "Rosselli Calabri \"Pymander\" English OR translated Franciscan commentary Renaissance Hermetica scholarly",
+    "Hermes Trismegistus Pymander \"first English translation\" 1650 Everard complete",
+    "Corpus Hermeticum Ficino Latin Pymander complete English translation Everard 1650 OR Mead 1906 OR Copenhaver worldcat"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/hermetica", "found": "Everard 1650 English translation of Divine Pymander from Ficino's Latin, all 17 books, confirmed complete on Archive.org"},
+    {"url": "https://archive.org/details/MercvriiTrismegistiPymander-ATranslationAndCommentary", "found": "David Myatt's own translation/commentary of the Corpus Hermeticum text only — no Rosselli commentary included"},
+    {"url": "http://wouterjhanegraaff.blogspot.com/2013/11/butchering-corpus-hermeticum-breaking.html", "found": "Rosselli edited Cracow 1585 Corpus Hermeticum with 'huge commentaries'; no English translation of Rosselli mentioned"},
+    {"url": "https://www.worldcat.org/title/divinus-pymander-hermetis-mercurii-trismegisti-cum-commentariis-rpf-hannibalis-rosseli-tomus-primus-sextus/oclc/491281743", "found": "WorldCat record for the 6-volume Rosselli Latin commentary — Latin only, no English translation edition recorded (access blocked, surfaced via search)"},
+    {"url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D", "found": "Copenhaver 1992 complete English translation of Greek Corpus Hermeticum and Latin Asclepius, Cambridge University Press"}
+  ],
+  "reasoning": "The named work (Pymander = Corpus Hermeticum in Ficino's Latin) has multiple complete English translations: Everard 1650 from Ficino's Latin specifically; Mead 1906; Copenhaver 1992 from Greek. Source-language rule applies. Rosselli's commentary has no known English translation but is ancillary to the primary identified text."
+}

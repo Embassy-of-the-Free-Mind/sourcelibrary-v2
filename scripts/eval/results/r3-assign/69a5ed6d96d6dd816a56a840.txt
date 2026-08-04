@@ -1,0 +1,4 @@
+book_id: 69a5ed6d96d6dd816a56a840
+Title: Le Livre des Splendeurs (Grammaire)
+Author: Bar Hebraeus
+Source language: Syriac

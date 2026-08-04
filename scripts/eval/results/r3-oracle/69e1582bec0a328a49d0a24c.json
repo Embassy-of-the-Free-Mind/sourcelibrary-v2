@@ -1,0 +1,70 @@
+{
+  "book_id": "69e1582bec0a328a49d0a24c",
+  "work_identified": "The Report of Wenamun (Story of Wenamun / Voyage of Wenamun) — Late Egyptian literary/administrative text, Papyrus Pushkin 120, 21st Dynasty, c. 1075 BCE",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Report of Wenamun",
+      "translator": "Hans Goedicke",
+      "pub_year": "1975",
+      "publisher": "Johns Hopkins University Press (Johns Hopkins Near Eastern Studies)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Report-Wenamun-Hopkins-Eastern-studies/dp/0801816394"
+    },
+    {
+      "english_title": "Ancient Egyptian Literature, Volume II: The New Kingdom — The Report of Wenamun (pp. 224–229)",
+      "translator": "Miriam Lichtheim",
+      "pub_year": "1976",
+      "publisher": "University of California Press",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/MiriamLichtheimAncientEgyptianLiteratureVolII"
+    },
+    {
+      "english_title": "The Literature of Ancient Egypt: An Anthology — The Report of Wenamun",
+      "translator": "Edward F. Wente Jr.",
+      "pub_year": "2003",
+      "publisher": "Yale University Press (ed. William Kelly Simpson, 3rd ed.)",
+      "completeness": "complete",
+      "source_url": "https://yalebooks.yale.edu/book/9780300099201/the-literature-of-ancient-egypt/"
+    }
+  ],
+  "queries_run": [
+    "Report of Wenamun English translation Lichtheim Gardiner Simpson WorldCat",
+    "\"Wenamun\" OR \"Wen-Amun\" English translation ancient Egyptian literature complete",
+    "Goedicke \"Report of Wenamun\" Johns Hopkins 1975 English translation complete",
+    "Miriam Lichtheim \"Ancient Egyptian Literature\" volume 2 Wenamun translation 1976",
+    "Simpson \"Literature of Ancient Egypt\" Wente Wenamun translation Yale University Press"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Story_of_Wenamun",
+      "found": "Wikipedia article confirms text is one of the most-translated ancient Egyptian literary texts; references Goedicke 1975 translation"
+    },
+    {
+      "url": "https://books.google.nl/books/about/The_Report_of_Wenamun.html?id=pskNAAAAYAAJ",
+      "found": "Goedicke, Hans — The Report of Wenamun, Johns Hopkins University Press, 1975, 192 pp — complete English translation with commentary"
+    },
+    {
+      "url": "https://archive.org/stream/MiriamLichtheimAncientEgyptianLiteratureVolII/Miriam+Lichtheim+Ancient+Egyptian+Literature+Vol+II_djvu.txt",
+      "found": "Lichtheim Vol II table of contents confirms The Report of Wenamun is included as complete English translation"
+    },
+    {
+      "url": "https://yalebooks.yale.edu/book/9780300099201/the-literature-of-ancient-egypt/",
+      "found": "Simpson anthology (Yale UP, 3rd ed. 2003) includes Wente translation of The Report of Wenamun"
+    },
+    {
+      "url": "https://www.amazon.com/Report-Wenamun-Hopkins-Eastern-studies/dp/0801816394",
+      "found": "Goedicke 1975 monograph confirmed as complete English translation, ISBN 0801816394"
+    },
+    {
+      "url": "https://www.worldhistory.org/article/1087/the-report-of-wenamun-text--commentary/",
+      "found": "World History Encyclopedia article covers the text and confirms multiple English translations exist"
+    }
+  ],
+  "reasoning": "The Report of Wenamun is one of the most-translated ancient Egyptian literary texts. Three complete modern English translations are positively confirmed: Goedicke (Johns Hopkins UP, 1975), Lichtheim (UC Press, 1976, pp.224-229), and Wente in Simpson ed. (Yale UP, 2003). Source-language rule applies: prior complete English translations from the Egyptian hieratic source text exist. verdict=not_first."
+}

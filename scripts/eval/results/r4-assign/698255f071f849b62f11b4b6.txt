@@ -1,0 +1,4 @@
+book_id: 698255f071f849b62f11b4b6
+Title: Microscopium Basilii Valentini, sive commentariolum et cribrellum über den grossen Kreuzapfel der Welt
+Author: Kirchweger, Anton Joseph
+Source language: Latin-German
