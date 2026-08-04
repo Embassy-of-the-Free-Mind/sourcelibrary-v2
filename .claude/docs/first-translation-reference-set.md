@@ -140,7 +140,59 @@ not to matching — which points at queue item 4 as much as at the corpus.
 available gain from matching and it is done and pinned. Further tuning is the trap
 this file exists to name. The next gain must come from the corpus.
 
+### 2e. THE ANSWER (2026-08-02, third pass) — `041$h` was required at all
+
+§2c below identified an ingest filter and named the wrong line. Two causal stories
+were derived from what the extract *contained*; both were measured to be
+non-causes. What settled it was four API calls: fetch the live MARC for a
+confirmed-absent prior and ask **which condition rejected this row**.
+
+They are all in LoC. They are all killed by the `041$h` requirement, while
+carrying the exact MARC 240 the matcher is built around:
+
+| prior | LCCN | 240 | 041 |
+|---|---|---|---|
+| Caplan, Loeb *Ad C. Herennium* 1954 | `55004252` | ✅ `Rhetorica ad Herennium.` | **none at all** |
+| Ellistone/Böhme *Signature of All Things* | `36037588` | — | **none at all** |
+| (Agrippa 1569/1575 imprints) | `a18001007`, `11002606` | ✅ `De incertitudine…` | none / `041` without `$h` |
+
+(The Agrippa row is context only — per §2b it is **not** a miss: a 1694 edition
+*is* in the extract and our copies sit at `inconclusive`.)
+
+**The signal the ingest never read is MARC `240$l`** — *Language of a work* — the
+cataloguer stating explicitly that this item is the **English** version of the
+named work. It is a direct equivalent of `041$h`.
+
+Measured on part01 (250,000 records, the same part the extract was built from):
+
+| | count |
+|---|---|
+| accepted today (`041$h` + English item) | **3,918** |
+| English item + 240, **no `041$h`** | **1,604** |
+| …of those, explicit **`240$l` English** | **255** → ~11,000 corpus-wide |
+
+And **100% of the `$l` population carries a 240**, against 64.8% of the current
+extract — *more* matchable than what we already hold. Samples are exactly the
+class: Cicero `Speeches.`, Virgil `Aeneis.`, Hildegard `Physica.`, Jami
+`Salāmān va Absāl.`, Zola `Fécondité.`
+
+**Fix: accept when `041$h` OR `240$l` names English** — #3599. Tier A (`$l`,
+~11,000) is precise. Tier B (240 present, no `041$h`, no `$l`, ~69,000) is
+noisier — roughly a third genuine, the rest English works with collective uniform
+titles (`Works.`, `Poems.`) that the generic-uniform-title guard already screens.
+
+> **The method lesson, after three swings:** stop theorising about a set's
+> coverage and go read one known-missing record in the source. A single
+> known-absent item, looked up, outranks any amount of reasoning about
+> aggregates — and it is nearly free.
+
 ### 2c. What the cause actually is — and how the first answer went wrong
+
+> **⚠️ Superseded by §2e.** The filter named here is real (#3556) and the fix is
+> merged, but it is worth **+5 Latin/Greek rows in 250,000 records** — measured
+> A/B on identical input. It is not the cause. Kept because the reasoning is the
+> instructive part.
+
 
 The first explanation was: *"the extract holds 1,230 pre-1800 imprints of 118,352
 — 1.04% — so we are asking a modern-imprint catalogue about early-modern
