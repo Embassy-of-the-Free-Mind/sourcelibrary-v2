@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { storagePut } from '@/lib/storage';
+import { auth } from '@/lib/auth';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -24,6 +26,29 @@ export async function POST(
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ error: 'AI not configured' }, { status: 500 });
+  }
+
+  // Reader-facing, so this is rate-limited rather than role-gated — same shape
+  // as the Librarian in /api/embassy/chat. Each call spends a Gemini script
+  // generation AND a TTS render on our key, so an ungated route is a standing
+  // invitation to bill us. `getClientIp` reads `cf-connecting-ip` first, or the
+  // bucket would key on a Cloudflare edge node and be shared by every caller
+  // behind it (#3487/#3491).
+  const session = await auth();
+  if (!session?.user?.id) {
+    const rl = checkRateLimit(
+      { name: 'podcast-ask', limit: 5, windowSeconds: 3600 },
+      getClientIp(request),
+    );
+    if (!rl.allowed) {
+      return NextResponse.json(
+        {
+          error: 'You\'ve used your 5 free questions this hour. Sign in (free) to keep asking.',
+          code: 'SIGNIN_REQUIRED',
+        },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+      );
+    }
   }
 
   const { id } = await params;

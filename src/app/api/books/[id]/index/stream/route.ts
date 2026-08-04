@@ -1,4 +1,5 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { withAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
@@ -175,11 +176,8 @@ Use the actual quotes provided. Be accurate.`;
   };
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
+export const GET = withAuth(async (request, _session, context) => {
+  const { id } = await context.params;
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -299,11 +297,14 @@ export async function GET(
     }
   });
 
-  return new Response(stream, {
+  // NextResponse (not the bare Response this used to return) because `withAuth`
+  // is typed to it. NextResponse extends Response and takes the same BodyInit,
+  // so the streaming behaviour is unchanged.
+  return new NextResponse(stream, {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       'Transfer-Encoding': 'chunked',
       'Cache-Control': 'no-cache',
     },
   });
-}
+}, { minRole: 'editor' });
