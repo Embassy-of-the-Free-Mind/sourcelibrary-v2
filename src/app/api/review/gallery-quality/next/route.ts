@@ -7,10 +7,11 @@ export const maxDuration = 15;
  * GET /api/review/gallery-quality/next?volunteer_id=<uuid>
  *
  * Returns one unrated extracted image for the gallery-quality queue.
- * The pool is built from images at gallery_quality >= 0.4, capped per book so
- * one heavily-illustrated volume can't dominate the sample. That selection now
- * lives in the builder (scripts/maintenance/build-review-candidates.mjs)
- * rather than in the request path.
+ * The pool is built biased toward the contested 0.5-0.85 quality band — where
+ * the 0.7 display cutoff means a human judgment can actually change what the
+ * gallery shows — and capped per book so one heavily-illustrated volume can't
+ * dominate the sample. Both live in the builder
+ * (scripts/maintenance/build-review-candidates.mjs), not in the request path.
  *
  * This route never 504'd, but `$sample` over `gallery_images` (207K docs) cost
  * ~8.2s per item, which is its own kind of unusable. It now reads the pooled
