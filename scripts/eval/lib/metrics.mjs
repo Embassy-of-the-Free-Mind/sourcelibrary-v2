@@ -552,3 +552,64 @@ export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds
     charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
     spanDispersion: guard.spanDispersion };
 }
+
+// ── Revision-agreement metric (#3235 / #3473) ──────────────────────
+// The primary word-level agreement used by revision-agreement-corpus.mjs and
+// by reocr-pairing-check.mjs. Kept HERE, in one place, because two copies of a
+// metric drift and every number computed with either becomes uncomparable.
+//
+// HTML entities are not text: a prior revision on Kircher's Arithmologia p9 was
+// 24,692 chars of `&nbsp;` padding around 73 real words, and because `nbsp` is a
+// letter run it counted as 4,025 body words.
+export const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
+
+export const toAgreementWords = s => deEntity(stripWrappers(s || ''))
+  .toLowerCase()
+  .replace(/[^\p{L}\s]/gu, ' ')
+  .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
+
+/** Normalized word-level Levenshtein agreement, 0..1. null when both sides empty. */
+export function agreementWords(a, b) {
+  const A = toAgreementWords(a), B = toAgreementWords(b);
+  if (!A.length && !B.length) return null;
+  if (!A.length || !B.length) return 0;
+  return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
+}
+
+// ── Script class + the primary agreement selector (#3235 / #3473) ──
+// Word tokenization collapses space-less scripts into a handful of huge tokens
+// (a Chinese page is ~22 whitespace tokens against ~310 for Latin), so ONE wrong
+// glyph invalidates a whole token and the word metric reads catastrophically
+// low on text that is largely correct. Measured: Chinese 36.7% word-agreement
+// against 72.7% character-agreement.
+//
+// This bit me directly. reocr-pairing-check.mjs first ran the WORD metric over
+// an arm that was 76% Tibetan and reported 86% of pages "mispaired"; 61% of the
+// never-re-archived CONTROL pages in the same script scored the same way, which
+// is the metric failing rather than the data. Always route through
+// `agreementPrimary`, never `agreementWords`, unless you have checked the script.
+const SPACELESS_RE = /[\p{Script=Han}\p{Script=Tibetan}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Khmer}\p{Script=Lao}\p{Script=Myanmar}]/u;
+
+export function scriptClassOf(s) {
+  const letters = (s || '').replace(/[^\p{L}]/gu, '');
+  if (!letters) return 'unknown';
+  let n = 0;
+  for (const ch of letters.slice(0, 2000)) if (SPACELESS_RE.test(ch)) n++;
+  return n / Math.min(letters.length, 2000) > 0.3 ? 'spaceless' : 'spaced';
+}
+
+export const toAgreementChars = s =>
+  [...deEntity(stripWrappers(s || '')).toLowerCase().replace(/[^\p{L}]/gu, '')].slice(0, 3000);
+
+export function agreementChars(a, b) {
+  const A = toAgreementChars(a), B = toAgreementChars(b);
+  if (!A.length && !B.length) return null;
+  if (!A.length || !B.length) return 0;
+  return 1 - levenshtein(A, B) / Math.max(A.length, B.length);
+}
+
+/** Character agreement on space-less scripts, word agreement elsewhere. */
+export function agreementPrimary(a, b) {
+  const cls = scriptClassOf(b) === 'unknown' ? scriptClassOf(a) : scriptClassOf(b);
+  return cls === 'spaceless' ? agreementChars(a, b) : agreementWords(a, b);
+}

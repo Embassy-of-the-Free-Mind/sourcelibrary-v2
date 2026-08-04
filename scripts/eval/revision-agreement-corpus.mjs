@@ -44,7 +44,10 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { stripWrappers, levenshtein } from './lib/metrics.mjs';
+import { stripWrappers, levenshtein, deEntity, agreementWords } from './lib/metrics.mjs';
+// Which `source` labels are readings vs bulk maintenance (#3473) — shared with
+// repeat-instability-draw.mjs and pinned by tests/unit/revision-source.test.ts.
+import { isMaintenanceSource } from './lib/revision-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -54,11 +57,16 @@ const LIMIT = args.limit ? parseInt(args.limit) : 0;       // 0 = whole corpus
 const BATCH = parseInt(args.batch || '500');               // page_ids per pages lookup
 const DATE = new Date().toISOString().slice(0, 10);
 const OUT_DIR = args['out-dir'] || path.join(__dirname, 'results');
-const OUT_JSONL = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.jsonl`);
-const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.json`);
-const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus-${DATE}.md`);
-const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions-${DATE}.md`);
 const TOP_REGRESSIONS = parseInt(args['top'] || '200');
+const FIELD = args.field || 'ocr';                         // 'ocr' | 'translation'
+// Non-ocr runs get a field suffix. Without it a --field=translation run
+// overwrites the OCR corpus in place: same OUT_DIR, same DATE, same filename.
+const SUF = FIELD === 'ocr' ? '' : `-${FIELD}`;
+const OUT_JSONL = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.jsonl`);
+const OUT_SUMMARY = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.json`);
+const OUT_REPORT = path.join(OUT_DIR, `revision-agreement-corpus${SUF}-${DATE}.md`);
+const OUT_REGRESSIONS = path.join(OUT_DIR, `revision-agreement-regressions${SUF}-${DATE}.md`);
+
 // ── Pair eligibility (stated up front, counted, never post-hoc) ───
 // A page's OCR text is only comparable if BOTH passes actually transcribed
 // something. Two thresholds on body-word count (annotation excluded) split the
@@ -77,7 +85,7 @@ const SITE = 'https://sourcelibrary.org';
 // 24,692 chars of `&nbsp;` padding around 73 real words — and because `nbsp` is a
 // letter run, it counted as 4,025 body words and shot to the top of the
 // regression queue as "text that was lost".
-const deEntity = s => (s || '').replace(/&[a-z]{2,8};/gi, ' ').replace(/&#\d+;/g, ' ');
+// deEntity now lives in ./lib/metrics.mjs -- one copy, so numbers stay comparable.
 
 // Degenerate output: the model looped. A Tibetan page carried 8,104 words with 40
 // unique (ratio 0.005, `तथा तथा तथा…`). Low type/token ratio on a long text means
@@ -89,18 +97,30 @@ const repetitionRatio = s => {
 };
 const DEGENERATE = 0.15;
 
+// The printed page number, transcribed by the model FROM the leaf it was shown.
+// That makes it the one signal in this corpus that identifies WHICH IMAGE a pass
+// read, independently of how well it read it (#3473). Two passes reporting
+// different printed numbers did not look at the same leaf, so their disagreement
+// is not a re-reading of one page.
+// Measured 2026-07-30 on a randomized n=3,339: 40.2% of pairs carrying a number
+// on both sides differ, and in 88 books one offset (usually exactly +1, the
+// #3368 / #3357 leaf-offset signature) explains ≥80% of the shifts.
+// RESOLVED (#3473): that is the #3357 REPAIR relocating text between page docs,
+// not re-archiving — the image never moved. It is labelled `source:
+// 'shift-repair-erara-2026-07'`, so `is_maintenance` above is the primary test
+// and this printed number is the independent check on it (no writer controls
+// what is printed on the leaf).
+const printedPageNum = t => {
+  const m = (t || '').match(/<page-num>\s*([0-9]{1,4})\s*<\/page-num>/i);
+  return m ? parseInt(m[1], 10) : null;
+};
+
 // ── metric (parity with revision-agreement-pilot.mjs) ─────────────
-const toWords = s => deEntity(stripWrappers(s || ''))
-  .toLowerCase()
-  .replace(/[^\p{L}\s]/gu, ' ')
-  .split(/\s+/).filter(w => w.length > 1).slice(0, 800);
-export function agreement(a, b) {
-  const A = toWords(a), B = toWords(b);
-  if (!A.length && !B.length) return null;
-  if (!A.length || !B.length) return 0;
-  const d = levenshtein(A, B);
-  return 1 - d / Math.max(A.length, B.length);
-}
+// The word metric and its tokenizer moved to ./lib/metrics.mjs
+// (`agreementWords` / `toAgreementWords`) so reocr-pairing-check.mjs uses the
+// SAME implementation. Two copies drift, and every number computed with either
+// then stops being comparable to the other.
+export const agreement = agreementWords;
 
 // Character-level twin of the same metric. REQUIRED for space-less scripts:
 // `toWords` splits on whitespace, so a page of Chinese or Tibetan collapses into
@@ -251,6 +271,17 @@ const bump = (dim, key, x) => {
   strata[dim].get(key).add(x);
 };
 
+// Second, identically-keyed strata set fed ONLY by pairs both passes agree read
+// the same leaf (see `leaf_shift` below). Kept parallel rather than replacing
+// `strata` so this run stays comparable with every earlier one, and so the
+// exclusion is a choice the consumer makes rather than one baked into the corpus.
+const strataSame = {};
+const bumpSame = (dim, key, x) => {
+  if (!strataSame[dim]) strataSame[dim] = new Map();
+  if (!strataSame[dim].has(key)) strataSame[dim].set(key, new Stat());
+  strataSame[dim].get(key).add(x);
+};
+
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const client = new MongoClient(process.env.MONGODB_URI);
@@ -260,13 +291,28 @@ async function main() {
   const PAGES = db.collection('pages');
   const BOOKS = db.collection('books');
 
-  const total = await REVS.countDocuments({ field: 'ocr' });
-  console.log(`page_revisions field:'ocr' → ${total.toLocaleString()} revisions`);
+  const total = await REVS.countDocuments({ field: FIELD });
+  console.log(`page_revisions field:'${FIELD}' → ${total.toLocaleString()} revisions`);
+
+  // What each `source` label contributes, before any of it is averaged. A bulk
+  // maintenance sweep and a real model pass both land here and only this field
+  // tells them apart (#3473).
+  const srcCounts = await REVS.aggregate([
+    { $match: { field: FIELD } },
+    { $group: { _id: '$source', n: { $sum: 1 } } }, { $sort: { n: -1 } },
+  ], { allowDiskUse: true }).toArray();
+  console.log('  by source: ' + srcCounts.map(s => `${s._id}=${s.n.toLocaleString()}`).join('  '));
+  const sweep = srcCounts.filter(s => isMaintenanceSource(s._id)).reduce((t, s) => t + s.n, 0);
+  if (sweep) console.log(`  -> ${sweep.toLocaleString()} (${(100 * sweep / total).toFixed(1)}%) are MAINTENANCE sweeps, not readings; excluded from the true-repeat population.`);
 
   const out = fs.createWriteStream(OUT_JSONL, { flags: 'w' });
   const bookCache = new Map();
   const overall = new Stat();      // agreement_primary
   const overallWord = new Stat();  // pilot-parity word metric, for comparability
+  const overallSame = new Stat();     // eligible pairs both passes read the same leaf
+  const overallShifted = new Stat();  // eligible pairs that demonstrably did not
+  const offsets = new Map();          // leaf_offset -> count
+  let shifted = 0, unmeasurable = 0;
   const regressions = [];
   let revsRead = 0, pairs = 0, pagesSeen = 0, missingPage = 0, skipped = 0, refusals = 0;
   const flow = {}, margFate = {}, directionCount = {};
@@ -277,7 +323,7 @@ async function main() {
   // Sorted by page_id so a page's revisions arrive contiguously — served by the
   // {page_id:1, field:1, created_at:-1} index, no in-memory sort of 126K docs.
   const cursor = REVS.find(
-    { field: 'ocr', data: { $type: 'string', $ne: '' } },
+    { field: FIELD, data: { $type: 'string', $ne: '' } },
     { projection: { page_id: 1, book_id: 1, data: 1, model: 1, prompt_version: 1, source: 1, created_at: 1 } },
   ).sort({ page_id: 1, created_at: -1 }).batchSize(500);
 
@@ -289,7 +335,7 @@ async function main() {
     const ids = batch.map(b => b.page_id);
     const pageDocs = await PAGES.find(
       { id: { $in: ids } },
-      { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.prompt_version': 1, 'ocr.language': 1 } },
+      { projection: { id: 1, book_id: 1, page_number: 1, [`${FIELD}.data`]: 1, [`${FIELD}.model`]: 1, [`${FIELD}.prompt_version`]: 1, [`${FIELD}.language`]: 1 } },
     ).toArray();
     const pageById = new Map(pageDocs.map(p => [p.id, p]));
 
@@ -319,10 +365,11 @@ async function main() {
       // chain: oldest prior → … → newest prior → live pages.ocr
       const chain = [...entry.revs].sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0))
         .map(r => ({ data: r.data, model: r.model || null, prompt: r.prompt_version == null ? null : String(r.prompt_version), source: r.source || null, at: r.created_at || null, live: false }));
-      if (pg?.ocr?.data) {
+      const liveField = pg?.[FIELD];
+      if (liveField?.data) {
         chain.push({
-          data: pg.ocr.data, model: pg.ocr.model || null,
-          prompt: pg.ocr.prompt_version == null ? null : String(pg.ocr.prompt_version),
+          data: liveField.data, model: liveField.model || null,
+          prompt: liveField.prompt_version == null ? null : String(liveField.prompt_version),
           source: 'live', at: null, live: true,
         });
       }
@@ -370,6 +417,11 @@ async function main() {
           current_prompt: current.prompt,
           prompt_transition: `${prior.prompt || '?'}→${current.prompt || '?'}`,
           prior_source: prior.source,
+          // TRUE when the prior side was written by a bulk maintenance sweep
+          // rather than a model pass — the pair is then two different pages'
+          // text, not two readings of one page. Emitted rather than dropped so
+          // the raw record stays complete; downstream selection must exclude it.
+          is_maintenance: isMaintenanceSource(prior.source),
           agreement: +agr.toFixed(4),
           agreement_char: agrChar == null ? null : +agrChar.toFixed(4),
           // The number to trust per row: character-level on space-less scripts,
@@ -417,8 +469,17 @@ async function main() {
           columns_changed: ep.columns !== ec.columns,
           page_type_changed: ep.page_type !== ec.page_type,
           lang_tag_changed: ep.lang_tag !== ec.lang_tag,
+          // Which leaf each side read (#3473). `leaf_shift` is null — not false —
+          // when either side printed no number: "we cannot tell" must never
+          // collapse into "same leaf", or the same-leaf stratum silently absorbs
+          // every unmeasurable pair.
+          page_num_prior: printedPageNum(prior.data),
+          page_num_current: printedPageNum(current.data),
           prior_at: prior.at,
         };
+        row.leaf_shift = (row.page_num_prior == null || row.page_num_current == null)
+          ? null : row.page_num_prior !== row.page_num_current;
+        row.leaf_offset = row.leaf_shift ? row.page_num_current - row.page_num_prior : null;
         row.near_zero_overlap = a0 < 0.05 && row.body_words_prior >= 40 && row.body_words_current >= 40;
         // Direction: prior is commentary, current is clean -> the re-OCR FIXED it.
         const priorBad = row.prior_meta || degPrior, currentBad = row.current_meta || degCurrent;
@@ -438,15 +499,29 @@ async function main() {
         if (row.eligibility !== 'eligible') continue;  // pairs already counted
         overall.add(a);
         overallWord.add(row.agreement);
-        bump('language', row.language || '(unknown)', a);
-        bump('year_bucket', row.year_bucket, a);
-        bump('model_pair', row.model_pair, a);
-        bump('prompt_transition', row.prompt_transition, a);
-        bump('script_class', row.script_class, a);
-        bump('position_bucket', row.position_bucket, a);
-        bump('soft_hidden', String(row.soft_hidden), a);
-        bump('marginalia_fate', row.marginalia_fate, a);
-        bump('direction', row.direction, a);
+        // Mirror every stratum into the same-leaf set. A pair only qualifies on an
+        // explicit false — an unmeasurable pair (no printed number on one side) is
+        // excluded from both the numerator and the denominator there.
+        const sameLeaf = row.leaf_shift === false;
+        if (sameLeaf) overallSame.add(a);
+        else if (row.leaf_shift === true) { overallShifted.add(a); shifted++; }
+        else unmeasurable++;
+        if (row.leaf_offset != null) offsets.set(row.leaf_offset, (offsets.get(row.leaf_offset) || 0) + 1);
+        const b2 = (dim, key) => { bump(dim, key, a); if (sameLeaf) bumpSame(dim, key, a); };
+        bump('leaf_shift', row.leaf_shift == null ? '(no printed number)' : String(row.leaf_shift), a);
+        // Report the mechanism label directly. It classifies EVERY pair, including
+        // the ones printing no page number that `leaf_shift` has to give up on.
+        bump('prior_source', row.prior_source || '(none)', a);
+        bump('is_maintenance', String(row.is_maintenance), a);
+        b2('language', row.language || '(unknown)');
+        b2('year_bucket', row.year_bucket);
+        b2('model_pair', row.model_pair);
+        b2('prompt_transition', row.prompt_transition);
+        b2('script_class', row.script_class);
+        b2('position_bucket', row.position_bucket);
+        b2('soft_hidden', String(row.soft_hidden));
+        b2('marginalia_fate', row.marginalia_fate);
+        b2('direction', row.direction);
         if (row.prior_degenerate || row.current_degenerate) degenerate++;
         if (row.near_zero_overlap) nearZero++;
         directionCount[row.direction] = (directionCount[row.direction] || 0) + 1;
@@ -459,8 +534,8 @@ async function main() {
         bump('page_type_changed', String(row.page_type_changed), a);
         bump('lang_tag_changed', String(row.lang_tag_changed), a);
         bump('is_live', String(row.is_live), a);
-        bump('lang_x_year', `${row.language || '?'} | ${row.year_bucket}`, a);
-        bump('lang_x_modelpair', `${row.language || '?'} | ${row.model_pair}`, a);
+        b2('lang_x_year', `${row.language || '?'} | ${row.year_bucket}`);
+        b2('lang_x_modelpair', `${row.language || '?'} | ${row.model_pair}`);
 
         // Regression candidate: low agreement AND current much shorter than
         // prior — the shape of "re-OCR made it worse". Severity ranks the audit
@@ -505,12 +580,17 @@ async function main() {
   regressions.sort((a, b) => b.severity - a.severity);
   const top = regressions.slice(0, TOP_REGRESSIONS);
 
-  const strataOut = {};
-  for (const [dim, m] of Object.entries(strata)) {
-    strataOut[dim] = [...m.entries()]
-      .map(([key, s]) => ({ key, n: s.n, mean_agreement: +s.mean.toFixed(4), median_agreement: +s.median.toFixed(4), pct_low: +(s.low / s.n).toFixed(4), pct_high: +(s.high / s.n).toFixed(4) }))
-      .sort((a, b) => b.n - a.n);
-  }
+  const flatten = src => {
+    const o = {};
+    for (const [dim, m] of Object.entries(src)) {
+      o[dim] = [...m.entries()]
+        .map(([key, s]) => ({ key, n: s.n, mean_agreement: +s.mean.toFixed(4), median_agreement: +s.median.toFixed(4), pct_low: +(s.low / s.n).toFixed(4), pct_high: +(s.high / s.n).toFixed(4) }))
+        .sort((a, b) => b.n - a.n);
+    }
+    return o;
+  };
+  const strataOut = flatten(strata);
+  const strataSameOut = flatten(strataSame);
 
   const summary = {
     date: new Date().toISOString(),
@@ -540,7 +620,25 @@ async function main() {
       regressions: regressions.length,
       regression_rate: +(regressions.length / Math.max(1, pairs)).toFixed(4),
     },
+    // #3473 — did the two passes read the same leaf? Eligible pairs only.
+    leaf: {
+      same_leaf_pairs: overallSame.n,
+      shifted_pairs: shifted,
+      unmeasurable_pairs: unmeasurable,   // no printed page number on one side
+      shifted_share_of_measurable: overallSame.n + shifted
+        ? +(shifted / (overallSame.n + shifted)).toFixed(4) : null,
+      mean_agreement_same_leaf: overallSame.n ? +overallSame.mean.toFixed(4) : null,
+      median_agreement_same_leaf: overallSame.n ? +overallSame.median.toFixed(4) : null,
+      mean_agreement_shifted: overallShifted.n ? +overallShifted.mean.toFixed(4) : null,
+      median_agreement_shifted: overallShifted.n ? +overallShifted.median.toFixed(4) : null,
+      offset_histogram: Object.fromEntries([...offsets.entries()].sort((a, b) => b[1] - a[1]).slice(0, 40)),
+      caveat: 'A shift proves the image changed, not which side is right. #3357 repaired an e-rara off-by-one, so some of these are the fix landing rather than fresh damage; separating them needs archive history, not OCR text.',
+      selection_caveat: 'strata_same_leaf is NOT a cleaner sample of the same population. Requiring a printed page number on both sides selects pages legible enough to print one twice, and those pages agree far more than the unmeasurable remainder. Read the same-leaf bands as a ceiling on that subpopulation, never as the corpus accuracy with noise removed — compare mean_agreement_same_leaf against the unmeasurable stratum in `strata.leaf_shift` before quoting either.',
+    },
     strata: strataOut,
+    // Identically keyed, restricted to pairs that demonstrably read the same leaf.
+    // This is what a consumer applying an agreement→accuracy fit should read.
+    strata_same_leaf: strataSameOut,
     rows_jsonl: path.relative(process.cwd(), OUT_JSONL),
     regressions_report: path.relative(process.cwd(), OUT_REGRESSIONS),
     elapsed_s: Math.round((Date.now() - t0) / 1000),
@@ -593,6 +691,34 @@ async function main() {
     `- mean agreement, pilot-parity word metric on every script: ${(overallWord.mean * 100).toFixed(1)}% — the gap is the CJK/Tibetan tokenization artifact`,
     `- agreement distribution: ` + overall.hist.map((h, i) => `[${BUCKETS[i]}–${Math.min(BUCKETS[i + 1], 1)}) ${(h / pairs * 100).toFixed(1)}%`).join(' · '),
     `- regression candidates (agreement<0.5 AND current <60% of prior length): **${regressions.length.toLocaleString()}** (${(regressions.length / Math.max(1, overall.n) * 100).toFixed(2)}% of eligible)`, '',
+    '## Did the two passes read the same leaf? (#3473)', '',
+    'The printed page number is transcribed *from the leaf the model was shown*, so it',
+    'identifies which image a pass read independently of how well it read it. Two passes',
+    'printing different numbers did not look at the same page — their disagreement is',
+    're-archiving, not reading difficulty. This matters because the corpus is consumed as',
+    'a double-OCR dataset: `calibration-scorecard.mjs` fits agreement→accuracy on anchor',
+    'pages and applies it here, which assumes both sides read one image.', '',
+    `- same leaf (both numbers present and equal): **${overallSame.n.toLocaleString()}** · median agreement ${overallSame.n ? (overallSame.median * 100).toFixed(1) + '%' : '—'}`,
+    `- DIFFERENT leaf: **${shifted.toLocaleString()}** · median agreement ${overallShifted.n ? (overallShifted.median * 100).toFixed(1) + '%' : '—'}`,
+    `- unmeasurable (no printed number on one side): **${unmeasurable.toLocaleString()}** — counted as neither, never folded into "same"`,
+    `- shifted share of measurable pairs: **${overallSame.n + shifted ? (shifted / (overallSame.n + shifted) * 100).toFixed(1) + '%' : '—'}**`,
+    `- most common offsets (current − prior): ` + ([...offsets.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([o, n]) => `\`${o > 0 ? '+' : ''}${o}\` ×${n.toLocaleString()}`).join(' · ') || '—'), '',
+    'A shift proves the image **changed**, not which side is right. #3357 repaired an',
+    'e-rara off-by-one and #3368 a bulk-jp2 leaf offset, so a positive offset is what a',
+    '*fix* looks like as much as what damage looks like. Separating repair from damage',
+    'needs archive history (`batch_jobs.page_sources`, `archived_photo` provenance), not',
+    'the OCR text. Standing measurement: `scripts/audit/revision-image-shift.mjs`.', '',
+    'The summary JSON carries a second, identically-keyed `strata_same_leaf` block',
+    'restricted to same-leaf pairs. Anything applying an agreement→accuracy fit to this',
+    'corpus should read that one; the tables below are the unrestricted population.', '',
+    '**`strata_same_leaf` is not a cleaner sample of the same population.** Requiring a',
+    'printed number on both sides selects pages legible enough to print one twice, and',
+    'those pages agree far more than the unmeasurable remainder does — read the row for',
+    '`(no printed number)` below against `false` before quoting either. The same-leaf',
+    'bands are a ceiling on that subpopulation, not the corpus with noise removed.', '',
+    table('is_maintenance', 'Prior side written by a bulk maintenance sweep (NOT a reading)', 1),
+    table('prior_source', 'By `source` on the prior side — the stored mechanism label', 1),
+    table('leaf_shift', 'By whether the passes read the same leaf', 1),
     '## Stratified agreement', '',
     table('position_bucket', 'By position in the book', 1),
     table('soft_hidden', 'Soft-hidden pages (negative page_number)', 1),
