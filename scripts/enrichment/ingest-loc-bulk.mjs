@@ -477,6 +477,25 @@ if (LOAD) {
       console.log(`  ${f} → running total ${loaded}`);
     }
     console.log(`Loaded ${loaded} rows into reference_translations.`);
-  });
+  },
+  /**
+   * `noTimeout` is REQUIRED here, not a tuning choice.
+   *
+   * `withMongo` kills the process after 300s to stop zombie scripts. Upserting
+   * 126,558 rows across 43 files takes longer than that, so the watchdog fires
+   * MID-LOAD and the process exits 0 having written a PREFIX of the extract.
+   *
+   * Observed 2026-08-04: the run reported a complete 43-of-43 extraction and a
+   * full statistics block, then died at `eng-translations.part30.jsonl` with
+   * `[mongo] Script timeout after 300s`. `reference_translations` held 120,976 of
+   * the 126,558 rows — a partial reference set that looks exactly like a complete
+   * one from the log, and which would understate coverage in every downstream
+   * recall measurement while appearing authoritative.
+   *
+   * Same failure as the demote packet (31 of 33 works) and the source-language
+   * screen (2,000 of 17,072). Any script that loops over the corpus inside
+   * `withMongo` needs this.
+   */
+  { noTimeout: true });
 }
 }
