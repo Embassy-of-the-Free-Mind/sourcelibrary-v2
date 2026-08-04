@@ -105,6 +105,21 @@ const dePunct = t => (t || '').replace(/[.,;:!?()\[\]{}'"«»„“”‘’·�
 const sameAfterFolding = (a, b) =>
   dePunct(foldOrthography(a)).toLowerCase() === dePunct(foldOrthography(b)).toLowerCase();
 
+/**
+ * Line-break hyphenation: one pass rejoined a word split across a line, the other
+ * kept the fragment (`inso-` against `insolubles.`, `hé-` against `hébreux`). Both
+ * passes read the same marks and differ on POLICY, so there is nothing for a person
+ * to look at — the answer is not on the page. Counted automatically, excluded here.
+ */
+const hyphenationArtifact = (a, b) => {
+  const stem = t => (t || '').replace(/[-¬=]+$/, '').toLowerCase();
+  const ha = /[-¬=]$/.test(a || ''), hb = /[-¬=]$/.test(b || '');
+  if (!ha && !hb) return false;
+  const sa = stem(a), sb = stem(b);
+  if (!sa || !sb) return false;
+  return sa.startsWith(sb) || sb.startsWith(sa);
+};
+
 const plausibleSpan = (a, b) => {
   if (!a || !b) return false;
   const la = [...a].length, lb = [...b].length;
@@ -182,7 +197,7 @@ async function main() {
   console.log(`${pool.length.toLocaleString()} distinct books in the pool`);
 
   const items = [], key = [];
-  let pagesUsed = 0, goldCount = 0, skippedScript = 0, skippedSpan = 0, skippedConvention = 0;
+  let pagesUsed = 0, goldCount = 0, skippedScript = 0, skippedSpan = 0, skippedConvention = 0, skippedHyphen = 0;
   const seenSpan = new Set();
   for (const r of pool) {
     if (items.length >= WANT) break;
@@ -216,6 +231,7 @@ async function main() {
       if (!/\p{L}/u.test(s.a) && !/\p{L}/u.test(s.b)) continue;
       if (!plausibleSpan(s.a, s.b)) { skippedSpan++; continue; }
       if (sameAfterFolding(s.a, s.b)) { skippedConvention++; continue; }
+      if (hyphenationArtifact(s.a, s.b)) { skippedHyphen++; continue; }
       // The same disputed word often recurs on a page (a running head, a repeated
       // phrase). Asking the same question five times wastes the volunteer.
       const spanKey = `${r.page_id}|${s.a}|${s.b}`;
@@ -295,6 +311,9 @@ async function main() {
     '  cannot pose a sensible question there, and they need a character-level variant',
     `- ${skippedSpan} spans whose two candidates were too dissimilar in length to be one word read`,
     '  two ways — the aligner slipping, not a reading',
+    `- ${skippedHyphen} spans that are line-break hyphenation (\`inso-\` against \`insolubles.\`): both`,
+    '  passes read the same marks and differ on whether to rejoin, so the answer is not on',
+    '  the page',
     `- ${skippedConvention} spans that are the SAME WORD after folding punctuation and scribal`,
     '  convention (`uns,`/`uns`, `tiu`/`tiū`, `naturae`/`naturæ`). Real inconsistency, already',
     '  counted by `agreement_folded`, and not a question a person can add anything to.',
