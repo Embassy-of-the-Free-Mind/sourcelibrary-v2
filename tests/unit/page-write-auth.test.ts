@@ -29,15 +29,34 @@ vi.mock('@/lib/auth', () => ({
   })),
 }));
 
+// Records every query filter the routes issue, so the tenant-scope suite below
+// can assert on the shape of the filter and not merely on the status code.
+const { dbCalls } = vi.hoisted(() => ({
+  dbCalls: [] as { collection: string; op: string; filter: unknown }[],
+}));
+
 // No memberships, no platform-superadmin grant, no page found. The handler is
 // allowed to run and fail on its own terms — this test only cares whether the
 // gate let it through at all.
 vi.mock('@/lib/mongodb', () => ({
   getDb: vi.fn(async () => ({
-    collection: () => ({
-      findOne: async () => null,
-      findOneAndUpdate: async () => null,
-      updateOne: async () => ({ matchedCount: 0 }),
+    collection: (name: string) => ({
+      findOne: async (filter: unknown) => {
+        dbCalls.push({ collection: name, op: 'findOne', filter });
+        return null;
+      },
+      findOneAndUpdate: async (filter: unknown) => {
+        dbCalls.push({ collection: name, op: 'findOneAndUpdate', filter });
+        return null;
+      },
+      updateOne: async (filter: unknown) => {
+        dbCalls.push({ collection: name, op: 'updateOne', filter });
+        return { matchedCount: 0 };
+      },
+      deleteOne: async (filter: unknown) => {
+        dbCalls.push({ collection: name, op: 'deleteOne', filter });
+        return { deletedCount: 1 };
+      },
     }),
   })),
 }));
@@ -94,6 +113,13 @@ const CASES: RouteCase[] = [
     minRole: 'admin',
     load: () => import('@/app/api/[tenant]/pages/[id]/route'),
     params: { tenant: 'bph', id: 'page-1' },
+  },
+  {
+    name: 'DELETE /api/pages/[id]',
+    method: 'DELETE',
+    minRole: 'admin',
+    load: () => import('@/app/api/pages/[id]/route'),
+    params: { id: 'page-1' },
   },
   {
     name: 'PATCH /api/pages/[id]/quick-fix',
@@ -190,6 +216,94 @@ describe('page-write routes are gated above reader (#3511)', () => {
       expect(body).not.toEqual({ error: 'Forbidden - Insufficient role' });
     });
   }
+});
+
+/**
+ * An absent tenant means GLOBAL SCOPE on the global route, not a refusal (#3542).
+ *
+ * The reader lives at `/book/<slug>/page/<id>`, so `getTenantSlug()` returns ''
+ * and the API client lands on `/api/pages/[id]` with no tenant. The only thing
+ * that ever supplied one there was the proxy's referer fallback, which resolves
+ * the tenant FROM THE BOOK — so it returns null for the 88.5% of visible books
+ * that carry no `tenantId`, and every save on them answered 403.
+ *
+ * These cases drive the real `withAuth` and the real route modules; only `auth()`
+ * and the DB are faked. Note the mocked session hands the route an `editor` role
+ * directly, which production cannot currently produce without a tenant header
+ * (the JWT role is only `superadmin` or `reader`) — that limit lives in the role
+ * model, not in this route, and is tracked separately.
+ */
+describe('global page writes are tenant-optional, tenant-scoped when present (#3542)', () => {
+  beforeEach(() => {
+    vi.unstubAllEnvs();
+    vi.stubEnv('PLATFORM_ADMIN_EMAILS', '');
+    dbCalls.length = 0;
+  });
+
+  async function patchGlobal(role: string, headers: Record<string, string> = {}) {
+    currentRole = role;
+    const mod = await import('@/app/api/pages/[id]/route');
+    const handler = mod.PATCH as (req: unknown, ctx: unknown) => Promise<Response>;
+    const req = new Request('https://sourcelibrary.org/api/pages/page-1', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json', ...headers },
+      body: JSON.stringify(PAGE_TEXT_BODY),
+    });
+    return handler(req, { params: Promise.resolve({ id: 'page-1' }) });
+  }
+
+  /** The filter the route used to locate the page it was about to rewrite. */
+  const pageWriteFilter = () =>
+    dbCalls.find((c) => c.collection === 'pages' && c.op === 'findOneAndUpdate')?.filter as
+      | Record<string, unknown>
+      | undefined;
+
+  it('does not refuse an editor for want of a tenant', async () => {
+    const res = await patchGlobal('editor');
+    // 404 from the mocked-empty DB is the pass condition: the handler ran.
+    expect(await res.json()).not.toEqual({ error: 'Unauthorized' });
+    expect(res.status).not.toBe(403);
+  });
+
+  it('omits tenantId from the write filter entirely when no tenant is resolved', async () => {
+    await patchGlobal('editor');
+    const filter = pageWriteFilter();
+    expect(filter).toBeDefined();
+    expect(filter).toEqual({ id: 'page-1' });
+    // Not `{ tenantId: null }` — that matches missing-and-null in Mongo, so it
+    // would read as working on global books while never matching a tenant page.
+    expect(Object.keys(filter!)).not.toContain('tenantId');
+  });
+
+  it('still scopes the write to the tenant when one is resolved', async () => {
+    const res = await patchGlobal('superadmin', { 'x-tenant-id': 'bce03f71-tenant' });
+    expect(res.status).not.toBe(403);
+    expect(pageWriteFilter()).toEqual({ id: 'page-1', tenantId: 'bce03f71-tenant' });
+  });
+
+  it('still refuses a reader that has no tenant', async () => {
+    const res = await patchGlobal('reader');
+    expect(res.status).toBe(403);
+    expect(await res.json()).toEqual({ error: 'Forbidden - Insufficient role' });
+  });
+
+  it('keeps the tenant twin refusing an unresolvable tenant', async () => {
+    // Deliberate divergence: there `tenantId` comes from the `[tenant]` path
+    // segment, so failing to resolve one is a misroute, not a global call.
+    currentRole = 'superadmin';
+    const mod = await import('@/app/api/[tenant]/pages/[id]/route');
+    const handler = mod.PATCH as (req: unknown, ctx: unknown) => Promise<Response>;
+    const req = new Request('https://sourcelibrary.org/api/no-such-tenant/pages/page-1', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(PAGE_TEXT_BODY),
+    });
+    const res = await handler(req, {
+      params: Promise.resolve({ tenant: 'no-such-tenant', id: 'page-1' }),
+    });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toEqual({ error: 'Unauthorized' });
+  });
 });
 
 describe('the page-write route list stays complete', () => {
