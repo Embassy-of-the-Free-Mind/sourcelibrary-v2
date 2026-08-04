@@ -208,24 +208,37 @@ function writeScriptAwareText(
   opts: { fontSize: number; lineGap?: number },
 ): void {
   const { fontSize, lineGap = 3 } = opts;
-  const runs = splitScriptRuns(text);
   // No Arabic, or no Arabic face bundled: one plain call. When the face is
   // missing we deliberately keep the .notdef boxes rather than dropping the
   // text — a visible gap is honest, silently-deleted source is not.
-  if (runs.length === 1 || !fonts.arabic) {
+  if (!fonts.arabic || !ARABIC_RE.test(text)) {
     doc.font(fonts.regular).fontSize(fontSize).text(text, { lineGap });
     return;
   }
-  runs.forEach((run, i) => {
-    const isLast = i === runs.length - 1;
-    doc
-      .font(run.arabic ? fonts.arabic! : fonts.regular)
-      .fontSize(fontSize)
-      .text(run.text, {
-        lineGap,
-        continued: !isLast,
-        ...(run.arabic ? { features: ['rtla'] } : {}),
-      });
+  // Continuation is scoped to ONE LINE. `continued: true` resumes at the
+  // current x, and an embedded "\n" inside a continued run does not reset it —
+  // so a single chain over multi-line text indents every line after the first
+  // to wherever the previous run happened to end. (Caught by rendering the full
+  // book: page 195 showed "hoping? for God's mercy" starting mid-measure.)
+  // Splitting per line keeps each line starting at the margin, matching the
+  // plain `doc.text(text)` path above.
+  const lines = text.split('\n');
+  lines.forEach(line => {
+    if (!line) {
+      doc.font(fonts.regular).fontSize(fontSize).text(' ', { lineGap });
+      return;
+    }
+    const runs = splitScriptRuns(line);
+    runs.forEach((run, i) => {
+      doc
+        .font(run.arabic ? fonts.arabic! : fonts.regular)
+        .fontSize(fontSize)
+        .text(run.text, {
+          lineGap,
+          continued: i < runs.length - 1,
+          ...(run.arabic ? { features: ['rtla'] } : {}),
+        });
+    });
   });
   doc.font(fonts.regular).fontSize(fontSize);
 }

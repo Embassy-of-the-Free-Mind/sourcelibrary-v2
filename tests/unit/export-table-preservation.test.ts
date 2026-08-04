@@ -14,7 +14,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { splitPdfBlocks, cleanTranslationForPdf, splitScriptRuns } from '@/lib/pdf-export';
+import { splitPdfBlocks, cleanTranslationForPdf, splitScriptRuns, writePdfBody } from '@/lib/pdf-export';
 import { loadPdfFonts } from '@/lib/pdf-fonts';
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 
@@ -142,6 +142,45 @@ describe('mixed-script runs', () => {
   it('leaves a romanised transliteration on the Latin face', () => {
     const runs = splitScriptRuns('durrī and al-Thurayyā');
     expect(runs.every(r => !r.arabic)).toBe(true);
+  });
+
+  /**
+   * Regression: `continued: true` resumes at the current x, and an embedded
+   * "\n" inside a continued run does NOT reset it — so chaining runs across
+   * multi-line text indents every line after the first to wherever the previous
+   * run ended. Found by rendering the whole book and looking at page 195
+   * ("hoping? for God's mercy" began mid-measure); no fixture caught it because
+   * the earlier ones were all single-line.
+   *
+   * Asserts the invariant directly: a continued run never carries a newline.
+   */
+  it('never emits a continued run containing a newline', () => {
+    const calls: Array<{ text: string; continued: boolean }> = [];
+    const fakeDoc = {
+      font() { return this; },
+      fontSize() { return this; },
+      text(t: string, o?: { continued?: boolean }) {
+        calls.push({ text: t, continued: !!o?.continued });
+        return this;
+      },
+    };
+    const fonts = { regular: 'R', bold: 'B', italic: 'I', arabic: 'AR' };
+    // Arabic on TWO different lines. That is what makes the intervening Latin
+    // run — the one carrying the "\n" — a *continued* run. With Arabic on only
+    // one line every newline falls in the final, non-continued run and the bug
+    // is invisible; that fixture passed with the fix removed (negative control).
+    const text = 'resident of Egypt "دري اللون" identity.\nhoping for mercy "قارعت الاثنين" amen\nthird line';
+    writePdfBody(fakeDoc as never, fonts as never, text, { fontSize: 10 });
+
+    expect(calls.length).toBeGreaterThan(1); // the mixed-script path ran
+    for (const c of calls) {
+      if (c.continued) expect(c.text).not.toContain('\n');
+    }
+    // Nothing is lost: every source line still appears.
+    const joined = calls.map(c => c.text).join('');
+    expect(joined).toContain('hoping for mercy');
+    expect(joined).toContain('third line');
+    expect(joined).toContain('دري اللون');
   });
 });
 
