@@ -184,6 +184,53 @@ it. So `leaf_shift` is null on 98% of translation rows and the same-leaf filter
 reduced 130,049 rows to **331** usable pairs. The `source` label is the only
 mechanism filter that functions on this field at all.
 
+## Re-reading the page: the one direct test, and what it cost to get right
+
+`scripts/eval/reocr-pairing-check.mjs` (2026-08-03/04, $0.78 total). Every other
+instrument answers "does this text describe this image?" indirectly. This one
+reads the image again and compares. Two arms: SUSPECT (`archive_metadata.
+archived_at > ocr.updated_at`) against CONTROL.
+
+**The first run was void, and it looked like the best result of the week.** It
+reported 86% of suspect pages mispaired against 16.6% of control — a clean 5×
+separation that survived stratification by prompt and by model. Two errors, both
+invisible in the aggregate:
+
+- **Wrong metric for the material.** Word-level agreement on space-less scripts,
+  which this repo has always documented as invalid. The tell was inside the run:
+  61.1% of *control* space-less pages — never re-archived — also scored
+  "mispaired".
+- **Arms not comparable.** Suspect was 76% Tibetan, control 7%, because the
+  May-2026 re-archiving campaign targeted the Tibetan collections. "Re-archived
+  after OCR" was very nearly a proxy for "is a Tibetan manuscript".
+
+Fixed by routing through `agreementPrimary` (characters on space-less scripts)
+and frequency-matching the arms on language. Re-run:
+
+| script class | suspect (median / mispaired) | control |
+|---|---|---|
+| spaced | 0.593 / 35.9% | 0.793 / 15.5% |
+| space-less | 0.212 / 88.9% | 0.225 / **70.4%** |
+
+**Two different answers.** On space-less scripts there is *no* signal — the arms
+are indistinguishable and both are terrible, because a re-read of a Tibetan
+manuscript diverges from the stored text whether or not anything changed. That
+70.4% control figure is the honest statement of a measurement limit: this
+question cannot be answered by re-reading on that material.
+
+On spaced scripts a ~2.3× gap survives language matching, the corrected metric,
+and within-prompt stratification (prompt 12: 87.1% against 15.0%). So
+re-archiving after OCR does look associated with text that no longer matches its
+scan — **modestly, not catastrophically**, and the honest headline is 2.3× rather
+than the 5× the broken run produced.
+
+**One confound remains, and it is structural.** "Re-archived after OCR" entails
+*older* OCR, hence an older prompt, while the re-read uses the current one —
+which is also why control sits at 15.5% rather than near zero. Stratifying by
+stored prompt only partly controls it. Settling it means re-reading each page
+with **its own** prompt version (the `prompts` collection stores them); until
+that runs, treat the 2.3× as suggestive, not established.
+
 ## Why the loop matters more than the fix
 
 Five claims in this work were wrong and each was caught by the same move —
@@ -197,6 +244,7 @@ opening the artifact instead of reading the aggregate:
 | plate fix "addresses 30%" | 0.34% of illustrated pages | bucket size read as effect size |
 | inverted timestamp proves a text move | 90% of proven re-OCRs invert too | signal never checked against a control cohort |
 | "no clock can classify these rows" | `source` labels every row; `original_date` orders 99.3% | one field's failure generalised to the category |
+| pairing check: "86% of re-archived pages mispaired" | 2.3x on spaced scripts, no signal on space-less | word metric on Tibetan + arms 76% vs 7% Tibetan |
 
 Every one was a plausible aggregate over a broken instrument, and none would
 have been caught by a green test. That is the argument for keeping the metric
