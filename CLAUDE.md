@@ -407,6 +407,58 @@ Corollary for review: this arrived as a user complaint, not from the security re
 - **A `curl` against a URL shape cannot establish what the CLIENT sends.** #3542 was filed on a real observation — `/api//pages/<id>` 308s — and the app has not sent that URL since #1880 (2026-05-19), where a request interceptor began collapsing `/api//` → `/api/`. The wrong mechanism nearly aimed the fix at `getTenantSlug()`. Read the client's outbound path, not a hand-built one.
 - **A grant the system cannot read is indistinguishable from no grant.** There is no global editor role at all: `token.role` is only `superadmin` or `reader` (auth.ts, `TODO (Phase 1)` still open), and tenant roles enter solely via `x-tenant-id`, so `getTenantMembershipRole` returns null on a falsy tenant. A `memberships` row with `tenantId: null, role: 'editor'` — the same shape as every superadmin row, differing only in the role value — therefore does **nothing**, in both directions, and one has sat active and inert since 2026-05-04. Removing the scope gate above unblocks superadmins **only**; see #3589. If an invite flow accepts a role it silently ignores, that is its own defect.
 
+## A text helper is scoped to its CONSUMERS, not to its name
+Lessons from 2026-08-04 (#3580/#3598/#3620). Full postmortem:
+`.claude/handoffs/2026-08-04-export-surfaces-and-unreachable-page-types.md`.
+
+`stripEditorialWrappers()` flattens GFM tables (`| 1 | 23 |` → `1  23`). That is
+**correct** for the snippet/quote/search surfaces it was written for, and its own
+comment says so: *"Only the snippet/quote path routes through here."* Three
+surfaces that serve a page's **whole text for reuse** reached for it anyway — the
+PDF exporter (added months later), `/api/books/[id]/text` (what AI clients and
+licensees read), and `build-corpus-snapshot.mjs` (the distributed dataset).
+
+Flattening keeps every cell **value** and discards the **column** it belonged to.
+148 of 366 pages of one manuscript are tables (13,949 cells), and it fails
+silently because the output reads as ordinary prose.
+
+- **Before reusing a text helper, read its comment for who it was written for,
+  then ask whether your surface is that.** "Serves an excerpt" and "serves the
+  artifact" are different contracts. A new consumer of an old helper is the
+  moment to check, and nothing else will flag it.
+- **Widen behaviour by an opt-IN parameter, never by changing the default.**
+  `{ keepTables }` left ~40 existing callers byte-identical; flipping the default
+  would have silently changed every snippet in the product.
+- **Verify an export by RENDERING it and looking.** Generating a real PDF threw
+  immediately (`unsupported number: undefined` — OCR tables are *ragged*, and
+  pdfkit dies on any cell past the widest declared row); rasterising then showed
+  an Arabic line-indent regression. Neither was visible to a green suite, because
+  every fixture was rectangular and single-line. Same discipline as the
+  curl-the-served-HTML rule above: a passing test is not a rendered artifact.
+- **A value nothing can PRODUCE looks identical to a value nothing needs.**
+  `NotesRenderer`'s `DESCRIPTION_ONLY_PAGE_TYPES` handled `cover`,
+  `musical-score` and `table`; the OCR prompt's `<page-type>` enum never offered
+  them, so all three sat at **zero pages** while the other five carried
+  4,927–210,023. Kircher's *Musurgia Universalis* had every engraved-music page
+  typed `text` — translated as prose (paid) and rendered without its branch —
+  while the OCR's own note read "consists entirely of musical notation". The
+  inverse of the `reading_history.referrer` rule below; both are invisible from
+  either side alone. Pinned by `tests/unit/page-type-vocabulary.test.ts`.
+- **A read-time regex cannot recover a distinction the writer never encoded.**
+  Four predicates were measured for "blank pages that aren't blank" and "`<note>`
+  holding a page description"; three were rejected as worse than useless (they
+  caught ProQuest boilerplate, library stamps and `<page-num>17</page-num>`). The
+  one that shipped is **definitional, not statistical** — a gloss annotates text,
+  so a `<note>` on a page with no body text cannot be one. When no clean
+  predicate exists, ship a detector and fix the write side (#3591); do not ship a
+  heuristic that strips reader-visible content on a few points of signal.
+- **Never buffer a whole book to build one artifact.** Awaiting every page image
+  before writing left a "streamed" response silent for the entire fetch (past
+  Cloudflare's ~100s window) with every image resident. `streamOrdered()`
+  (`src/lib/ordered-stream.ts`) yields in input order with a bounded look-ahead.
+  And when an artifact must be truncated, **say so inside the artifact** — a
+  partial edition that doesn't admit it is worse than an error.
+
 ## A test that greps source is not a guard
 A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
 
