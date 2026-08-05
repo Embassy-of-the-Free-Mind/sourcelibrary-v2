@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
@@ -110,12 +111,15 @@ export default async function SponsorsPage() {
             for anyone who wants to read them.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <a
+            <OutboundLink
               href={mailto}
+              surface="sponsors_hero"
+              channel="email"
+              intent="inquiry"
               className="inline-flex items-center px-6 py-3 rounded-md bg-[#9e4a3a] text-white text-sm font-semibold hover:bg-[#7e3a2e] transition-colors"
             >
               Talk to us
-            </a>
+            </OutboundLink>
             <Link
               href="/collections"
               className="inline-flex items-center px-6 py-3 rounded-md border border-stone-300 text-stone-700 text-sm font-semibold hover:border-stone-500 transition-colors"
@@ -214,12 +218,15 @@ export default async function SponsorsPage() {
                   Scope set in conversation. Wire, stock, DAF, or annual invoice — whatever your
                   procurement team prefers.
                 </p>
-                <a
+                <OutboundLink
                   href={mailto}
+                  surface="sponsors_stewardship"
+                  channel="email"
+                  intent="inquiry"
                   className="inline-flex items-center px-5 py-3 rounded-md bg-[#9e4a3a] text-white text-sm font-semibold hover:bg-[#7e3a2e] transition-colors"
                 >
                   Open a conversation
-                </a>
+                </OutboundLink>
               </div>
             </div>
           </div>
@@ -253,12 +260,15 @@ export default async function SponsorsPage() {
                 </div>
                 <div className="font-display text-2xl text-[#c9a86c] mb-1">$1M / yr</div>
                 <div className="text-xs text-stone-400 mb-6">Multi-year, by arrangement</div>
-                <a
+                <OutboundLink
                   href={mailto}
+                  surface="sponsors_founding_steward"
+                  channel="email"
+                  intent="inquiry"
                   className="inline-flex items-center px-5 py-3 rounded-md bg-[#c9a86c] text-stone-900 text-sm font-semibold hover:bg-[#b8975b] transition-colors"
                 >
                   Be the first
-                </a>
+                </OutboundLink>
               </div>
             </div>
           </div>
@@ -369,12 +379,15 @@ export default async function SponsorsPage() {
             a collection you care about, an expedition, or something we haven&apos;t built yet.
             We&apos;ll come back inside a week with a concrete proposal.
           </p>
-          <a
+          <OutboundLink
             href={mailto}
+            surface="sponsors_footer_cta"
+            channel="email"
+            intent="inquiry"
             className="inline-flex items-center px-8 py-4 rounded-md bg-[#c9a86c] text-stone-900 text-sm font-semibold hover:bg-[#b8975b] transition-colors"
           >
             {PARTNERSHIP_EMAIL}
-          </a>
+          </OutboundLink>
           <p className="text-xs text-stone-500 mt-8">
             For individual donations and small gifts, see{' '}
             <Link href="/support" className="underline hover:text-stone-300">

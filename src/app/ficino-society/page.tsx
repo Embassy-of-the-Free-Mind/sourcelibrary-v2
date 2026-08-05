@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useState, useEffect } from 'react';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -310,14 +311,14 @@ function FicinoSocietyContent() {
               {isContributor ? 'Thank you' : contributing ? 'Redirecting...' : 'Contribute $100/year'}
             </button>
           ) : (
-            <a
+            <OutboundLink
               href={EFM_STRIPE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              surface="ficino_society"
+              channel="efm_stripe"
               className="inline-block px-8 py-3 rounded text-sm font-sans tracking-wide border border-[#1a1612]/20 text-[#1a1612] hover:brightness-110 transition-all"
             >
               Contribute
-            </a>
+            </OutboundLink>
           )}
           <p className="mt-6 text-[12px] text-[#8a8480] font-body">
             Any amount welcome &mdash;{' '}

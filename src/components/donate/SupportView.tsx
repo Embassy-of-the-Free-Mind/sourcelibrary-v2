@@ -2,6 +2,7 @@ import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import QuickSubscribe from '@/components/donate/QuickSubscribe';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
 
@@ -185,21 +186,21 @@ export default function SupportView({ stats, locale = 'en' }: { stats: SupportSt
               <p className="text-stone-600 leading-relaxed mb-6">{s.giveLead}</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a href={DONORPERFECT_URL} target="_blank" rel="noopener noreferrer" className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
+                <OutboundLink href={DONORPERFECT_URL} surface="support" channel="naf_donorperfect" locale={locale} className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.usLabel}</span>
                   <span className="block text-sm font-semibold text-stone-900">{s.usTitle}</span>
                   <span className="block text-xs text-stone-500 mt-1">{s.usSub}</span>
-                </a>
-                <a href={EFM_STRIPE_URL} target="_blank" rel="noopener noreferrer" className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
+                </OutboundLink>
+                <OutboundLink href={EFM_STRIPE_URL} surface="support" channel="efm_stripe" locale={locale} className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.intlLabel}</span>
                   <span className="block text-sm font-semibold text-stone-900">{s.intlTitle}</span>
                   <span className="block text-xs text-stone-500 mt-1">{s.intlSub}</span>
-                </a>
+                </OutboundLink>
                 <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.largeLabel}</span>
-                  <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`} className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all">
+                  <OutboundLink href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`} surface="support" channel="email" locale={locale} className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all">
                     {CONTACT_EMAIL}
-                  </a>
+                  </OutboundLink>
                 </div>
               </div>
 
