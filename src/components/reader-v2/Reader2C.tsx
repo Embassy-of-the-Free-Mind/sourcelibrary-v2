@@ -5,12 +5,15 @@ import Logo from '@/components/layout/Logo';
 import LikeButton from '@/components/ui/LikeButton';
 import ShareButton from '@/components/ui/ShareButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
+import { useIdentity } from '@/hooks/useIdentity';
 import { getPageThumbUrl } from '@/lib/utils';
-import { pages as pagesApi } from '@/lib/api-client';
+import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/api-client';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
 import {
   ChevronLeft, ChevronRight, ChevronDown, List, Search, StickyNote, Quote,
   Pencil, Check, X, Loader2, GalleryHorizontal, ZoomIn, ZoomOut,
+  Heart, Share2, BookOpen, MessageCircle,
 } from 'lucide-react';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls from './ReaderSettingsControls';
@@ -30,7 +33,16 @@ import {
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
 
-type LeftPanel = 'contents' | 'search' | 'settings' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'cite' | 'settings' | null;
+
+const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
+  contents: 'Contents',
+  search: 'Search this book',
+  guide: 'Reading guide',
+  librarian: 'Ask the librarian',
+  cite: 'Cite this page',
+  settings: 'Reading settings',
+};
 
 interface Reader2CProps {
   initialBook: Book;
@@ -61,6 +73,293 @@ function RailButton({
       {icon}
       <span className="font-sans text-[8.5px] tracking-[0.06em]">{label}</span>
     </button>
+  );
+}
+
+// One hover treatment for every icon action on the ink bar: a quiet 34px chip.
+const INK_ACTION_CLS = 'w-[34px] h-[34px] flex items-center justify-center gap-1 transition-colors '
+  + 'text-[rgba(253,252,249,0.72)] hover:text-[#fdfcf9] hover:bg-[rgba(253,252,249,0.10)]';
+
+/** Like — same behavior as the site's LikeButton (visitor identity, optimistic), ink-bar styling. */
+function LikeAction({ pageId, bookId }: { pageId: string; bookId: string }) {
+  const identity = useIdentity();
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!identity.id || identity.loading) return;
+    let cancelled = false;
+    likesApi.getStatus(JSON.stringify([{ type: 'page', id: pageId }]), identity.id)
+      .then(data => {
+        if (cancelled) return;
+        const key = `page:${pageId}`;
+        const row = (data as { results?: Record<string, { count: number; liked: boolean }> }).results?.[key];
+        if (row) { setCount(row.count); setLiked(row.liked); }
+      })
+      .catch(() => { /* status is cosmetic */ });
+    return () => { cancelled = true; };
+  }, [pageId, identity.id, identity.loading]);
+
+  const toggle = () => {
+    if (!identity.id) return;
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    setCount(c => Math.max(0, c + (nextLiked ? 1 : -1)));
+    likesApi.toggle('page', pageId, identity.id)
+      .then(res => { setLiked(res.liked); setCount(res.count); })
+      .catch(() => { setLiked(!nextLiked); setCount(c => Math.max(0, c + (nextLiked ? -1 : 1))); });
+  };
+
+  void bookId; // reserved for like-cascade parity with LikeButton
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className={`${INK_ACTION_CLS} ${count > 0 ? 'w-auto px-2' : ''}`}
+      title={liked ? 'Unlike this page' : 'Like this page'}
+      aria-pressed={liked}
+    >
+      <Heart size={16} fill={liked ? 'var(--accent-rust)' : 'none'}
+        style={liked ? { color: 'var(--accent-rust)' } : undefined} />
+      {count > 0 && <span className="font-sans text-[11.5px] tabular-nums">{count}</span>}
+    </button>
+  );
+}
+
+/** Share — copies the page's canonical link; identical chip to LikeAction. */
+function ShareAction({ url }: { url: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        navigator.clipboard?.writeText(url).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1600);
+        });
+      }}
+      className={INK_ACTION_CLS}
+      title={copied ? 'Link copied' : 'Copy link to this page'}
+    >
+      {copied ? <Check size={16} style={{ color: 'var(--accent-gold)' }} /> : <Share2 size={16} />}
+    </button>
+  );
+}
+
+interface GuideData {
+  overview?: string;
+  themes?: string[];
+  sections?: Array<{ title: string; startPage: number; endPage: number; summary: string }>;
+}
+
+/** Reading guide, from book.reading_summary / index.bookSummary — fetched on open. */
+function GuidePanel({ bookId, bookPath, onGoToPageNumber }: {
+  bookId: string;
+  bookPath: string;
+  onGoToPageNumber: (n: number) => void;
+}) {
+  const [loading, setLoading] = useState(true);
+  const [guide, setGuide] = useState<GuideData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    booksApi.get(bookId).then((b) => {
+      if (cancelled) return;
+      const book = b as unknown as {
+        reading_summary?: { overview?: string; themes?: string[] };
+        index?: { bookSummary?: { detailed?: string; abstract?: string; brief?: string }; sectionSummaries?: GuideData['sections'] };
+      };
+      const overview = book.reading_summary?.overview
+        || book.index?.bookSummary?.detailed
+        || book.index?.bookSummary?.abstract
+        || book.index?.bookSummary?.brief;
+      const data: GuideData = {
+        overview,
+        themes: book.reading_summary?.themes,
+        sections: book.index?.sectionSummaries,
+      };
+      setGuide(overview || data.sections?.length ? data : null);
+      setLoading(false);
+    }).catch(() => { if (!cancelled) { setGuide(null); setLoading(false); } });
+    return () => { cancelled = true; };
+  }, [bookId]);
+
+  if (loading) {
+    return (
+      <div className="px-4 py-6 flex justify-center">
+        <Loader2 size={16} className="animate-spin" style={{ color: 'var(--text-muted)' }} />
+      </div>
+    );
+  }
+  if (!guide) {
+    return (
+      <p className="px-4 py-3 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
+        No reading guide for this book yet.{' '}
+        <a href={`/book/${bookPath}/guide`} className="underline" style={{ color: 'var(--accent-rust)' }}>Open the guide page</a>
+      </p>
+    );
+  }
+  return (
+    <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
+      {guide.overview && (
+        <p className="font-body text-[14.5px] leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
+          {guide.overview.split('\n\n')[0]}
+        </p>
+      )}
+      {!!guide.themes?.length && (
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {guide.themes.slice(0, 8).map(t => (
+            <span key={t} className="font-sans text-[11px] px-2 py-1 border"
+              style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
+      {!!guide.sections?.length && (
+        <>
+          <CapsLabel className="block mb-2" style={{ color: 'var(--text-muted)' }}>Sections</CapsLabel>
+          {guide.sections.map((s, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => onGoToPageNumber(s.startPage)}
+              className="w-full text-left py-2.5 border-t hover:bg-[var(--bg-white)] transition-colors"
+              style={{ borderColor: 'var(--border-light)' }}
+            >
+              <span className="block font-body text-[14px]" style={{ color: 'var(--text-primary)' }}>{s.title}</span>
+              <span className="block font-sans text-[11px] mb-1" style={{ color: 'var(--accent-rust)' }}>
+                pp. {s.startPage}–{s.endPage}
+              </span>
+              <span className="block font-sans text-[12px] leading-snug line-clamp-3" style={{ color: 'var(--text-muted)' }}>
+                {s.summary}
+              </span>
+            </button>
+          ))}
+        </>
+      )}
+      <p className="mt-4 pt-3 border-t font-sans text-[12px]" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
+        <a href={`/book/${bookPath}/guide`} className="underline">Full reading guide →</a>
+      </p>
+    </div>
+  );
+}
+
+export interface LibrarianMessage { role: 'user' | 'assistant'; content: string }
+
+const LIBRARIAN_SUGGESTIONS = [
+  'What is this page about?',
+  'Who was the author?',
+  'Explain the key concepts here',
+];
+
+/** Ask the librarian — questions about this page, book, author, or a concept. */
+function LibrarianPanel({ page, book, messages, onMessages }: {
+  page: Page;
+  book: Book;
+  messages: LibrarianMessage[];
+  onMessages: (m: LibrarianMessage[]) => void;
+}) {
+  const [input, setInput] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+  }, [messages, busy]);
+
+  const ask = async (question: string) => {
+    const q = question.trim();
+    if (!q || busy) return;
+    setError(false);
+    const history = messages;
+    onMessages([...history, { role: 'user', content: q }]);
+    setInput('');
+    setBusy(true);
+    try {
+      const pageText = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '').slice(0, 6000);
+      const res = await pagesApi.ask(page.id, {
+        question: q,
+        history,
+        pageText,
+        bookTitle: book.display_title || book.title,
+        bookAuthor: book.author,
+        pageNumber: page.page_number,
+      });
+      onMessages([...history, { role: 'user', content: q }, { role: 'assistant', content: res.answer }]);
+    } catch {
+      setError(true);
+      onMessages(history);
+      setInput(q);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col min-h-0 flex-1">
+      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-4 pb-3" style={{ overscrollBehavior: 'contain' }}>
+        {messages.length === 0 && (
+          <>
+            <p className="font-sans text-[12.5px] leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>
+              Ask about this page, the book, its author, or any concept in the text.
+            </p>
+            <div className="flex flex-col gap-1.5">
+              {LIBRARIAN_SUGGESTIONS.map(s => (
+                <button key={s} type="button" onClick={() => ask(s)}
+                  className="text-left px-2.5 py-2 border font-sans text-[12.5px] hover:bg-[var(--bg-white)] transition-colors"
+                  style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+        {messages.map((m, i) => (
+          m.role === 'user' ? (
+            <p key={i} className="font-sans text-[13px] font-medium mt-3 mb-1.5" style={{ color: 'var(--accent-rust)' }}>
+              {m.content}
+            </p>
+          ) : (
+            <p key={i} className="font-body text-[14px] leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-secondary)' }}>
+              {m.content}
+            </p>
+          )
+        ))}
+        {busy && (
+          <div className="flex items-center gap-2 mt-3 font-sans text-[12px]" style={{ color: 'var(--text-muted)' }}>
+            <Loader2 size={13} className="animate-spin" /> Consulting the text…
+          </div>
+        )}
+        {error && (
+          <p className="mt-2 font-sans text-[12px]" style={{ color: 'var(--status-error)' }} role="alert">
+            The librarian couldn&apos;t answer just now — try again.
+          </p>
+        )}
+      </div>
+      <form
+        className="shrink-0 px-4 pb-4"
+        onSubmit={e => { e.preventDefault(); ask(input); }}
+      >
+        <div className="flex items-center gap-2 px-2.5 py-2 border"
+          style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)' }}>
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder={`Ask about p. ${page.page_number}…`}
+            className="flex-1 bg-transparent outline-none font-sans text-[13px]"
+            style={{ color: 'var(--text-primary)' }}
+            aria-label="Ask the librarian"
+          />
+          <button type="submit" disabled={busy || !input.trim()}
+            className="font-sans text-[12px] disabled:opacity-40"
+            style={{ color: 'var(--accent-rust)' }}>
+            Ask
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
@@ -261,9 +560,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     setLeftPanel(prev => (prev === p ? null : p));
   }, []);
 
-  const [citeOpen, setCiteOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
+
+  // Librarian conversation survives panel toggles and page turns
+  const [librarianMessages, setLibrarianMessages] = useState<LibrarianMessage[]>([]);
+
+  // Jump-to-page input in the top-bar stepper
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const [jumpValue, setJumpValue] = useState('');
+  const jumpRef = useRef<HTMLInputElement>(null);
+  useEffect(() => { if (jumpOpen) jumpRef.current?.focus(); }, [jumpOpen]);
 
   // Scan zoom — controlled from the pane header, never from buttons over the scan
   const [scanZoom, setScanZoom] = useState(1);
@@ -351,7 +658,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Escape closes panels/popovers (the hook handles settings + focus mode)
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') { setLeftPanel(null); setCiteOpen(false); }
+      if (e.key === 'Escape') { setLeftPanel(null); setJumpOpen(false); }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -418,7 +725,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
 
-  const leftPanelTitle = leftPanel === 'contents' ? 'Contents' : leftPanel === 'search' ? 'Search this book' : 'Reading settings';
+  const leftPanelTitle = leftPanel ? LEFT_PANEL_TITLES[leftPanel] : '';
+  const leftPanelWidth = leftPanel === 'librarian' || leftPanel === 'guide' ? 340 : 300;
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
     <textarea
@@ -445,10 +753,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           <Logo white compact />
           <span style={{ color: onInk(0.28) }}>/</span>
-          <div className="min-w-0 max-w-[340px]">
-            <div className="font-body text-[15.5px] leading-[1.2] truncate">{r.book.display_title || r.book.title}</div>
-            <div className="font-sans text-[11px] truncate" style={{ color: onInk(0.5) }}>{bookByline(r.book)}</div>
-          </div>
+          <a
+            href={`/book/${r.bookPath}`}
+            className="min-w-0 max-w-[340px] no-underline group px-1.5 py-1 -ml-1.5 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+            title="Back to the book page"
+          >
+            <div className="font-body text-[15.5px] leading-[1.2] truncate" style={{ color: '#fdfcf9' }}>
+              {r.book.display_title || r.book.title}
+            </div>
+            <div className="font-sans text-[11px] truncate" style={{ color: onInk(0.5) }}>
+              {bookByline(r.book)} <span className="opacity-0 group-hover:opacity-100 transition-opacity">· book page ↗</span>
+            </div>
+          </a>
           <div className="flex-1" />
           {saveError && (
             <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
@@ -456,31 +772,69 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </span>
           )}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact />
-          {r.chapters.length > 0 && (
-            <button
-              type="button"
-              onClick={() => togglePanel('contents')}
-              className="flex items-center gap-2 px-3 py-[7px] font-sans text-[13px] border max-w-[240px] transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-              style={{ background: onInk(0.06), borderColor: onInk(0.14), color: onInk(0.9) }}
-              title="Open contents"
-              aria-expanded={leftPanel === 'contents'}
-            >
-              <span className="truncate">
-                {r.currentChapter ? (r.currentChapter.titleEn || r.currentChapter.title) : 'Contents'}
-              </span>
-              <ChevronDown size={13} style={{ color: onInk(0.5) }} />
-            </button>
-          )}
-          <div data-rv2-actions className="flex items-center gap-0.5 px-0.5">
-            <LikeButton key={r.currentPageId} targetType="page" targetId={r.currentPageId} bookId={r.book.id} size="sm" showCount />
-            <ShareButton
-              title={r.book.display_title || r.book.title}
-              author={r.book.author}
-              year={r.book.published}
-              page={r.currentPage?.page_number}
-              url={shareUrl}
-              variant="icon"
-            />
+          {/* Place: chapter + page stepper as one group */}
+          <div className="flex items-stretch">
+            {r.chapters.length > 0 && (
+              <button
+                type="button"
+                onClick={() => togglePanel('contents')}
+                className="flex items-center gap-2 px-3 font-sans text-[13px] border max-w-[220px] transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+                style={{ background: onInk(0.06), borderColor: onInk(0.14), color: onInk(0.9) }}
+                title="Open contents"
+                aria-expanded={leftPanel === 'contents'}
+              >
+                <span className="truncate">
+                  {r.currentChapter ? (r.currentChapter.titleEn || r.currentChapter.title) : 'Contents'}
+                </span>
+                <ChevronDown size={13} style={{ color: onInk(0.5) }} />
+              </button>
+            )}
+            <div className="flex items-stretch border border-l-0" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
+              <button type="button" aria-label="Previous page" onClick={r.goPrev}
+                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+                style={{ color: onInk(0.72) }}>
+                <ChevronLeft size={15} />
+              </button>
+              {jumpOpen ? (
+                <input
+                  ref={jumpRef}
+                  value={jumpValue}
+                  onChange={e => setJumpValue(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      const n = parseInt(jumpValue, 10);
+                      if (!Number.isNaN(n)) r.goToPageNumber(n);
+                      setJumpOpen(false); setJumpValue('');
+                    }
+                  }}
+                  onBlur={() => setJumpOpen(false)}
+                  placeholder={String(pageNum)}
+                  className="w-14 text-center font-sans text-[12.5px] bg-transparent outline-none"
+                  style={{ color: '#fdfcf9' }}
+                  inputMode="numeric"
+                  aria-label="Jump to page"
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setJumpOpen(true)}
+                  className="px-2 font-sans text-[12.5px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+                  title="Jump to page"
+                  style={{ color: onInk(0.9) }}
+                >
+                  p. {pageNum}<span style={{ color: onInk(0.45) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
+                </button>
+              )}
+              <button type="button" aria-label="Next page" onClick={r.goNext}
+                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+                style={{ color: onInk(0.72) }}>
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center gap-0.5 px-0.5">
+            <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
+            <ShareAction url={shareUrl} />
           </div>
           {editing ? (
             <div className="flex items-center gap-1.5">
@@ -524,13 +878,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           <RailButton label="Contents" active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
           <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
+          <RailButton label="Guide" active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
+          <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
           <RailButton
             label="Notes"
             active={r.settings.glosses}
             onClick={() => r.updateSettings({ glosses: !r.settings.glosses })}
             icon={<StickyNote size={17} />}
           />
-          <RailButton label="Cite" active={citeOpen} onClick={() => setCiteOpen(v => !v)} icon={<Quote size={17} />} />
+          <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton
             label="Settings"
             active={leftPanel === 'settings'}
@@ -654,8 +1010,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {/* Left slide-out panel (Contents / Search / Settings) */}
           {leftPanel && (
             <div
-              className="absolute top-0 left-0 bottom-0 w-[300px] border-r z-40 flex flex-col rv2-slide-in-left"
+              className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
+                width: leftPanelWidth,
                 background: SURFACE.panel, borderColor: 'var(--border-medium)',
                 boxShadow: '24px 0 48px -28px rgba(30,20,8,0.5)',
               }}
@@ -683,6 +1040,40 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {leftPanel === 'search' && (
                 <BookSearchPanel bookId={r.book.id} onGoTo={(pid) => { setLeftPanel(null); r.goToPage(pid); }} />
               )}
+              {leftPanel === 'guide' && (
+                <GuidePanel
+                  bookId={r.book.id}
+                  bookPath={r.bookPath}
+                  onGoToPageNumber={(n) => { setLeftPanel(null); r.goToPageNumber(n); }}
+                />
+              )}
+              {leftPanel === 'librarian' && (
+                <LibrarianPanel
+                  page={r.currentPage}
+                  book={r.book}
+                  messages={librarianMessages}
+                  onMessages={setLibrarianMessages}
+                />
+              )}
+              {leftPanel === 'cite' && (
+                <div className="flex-1 overflow-y-auto px-4 pb-4" style={{ overscrollBehavior: 'contain' }}>
+                  <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    {citation}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={copyCitation}
+                    className="flex items-center gap-2 px-3 py-1.5 font-sans text-[12.5px] border hover:bg-[var(--bg-white)] transition-colors"
+                    style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+                  >
+                    {copied ? <Check size={13} /> : null}
+                    {copied ? 'Copied' : 'Copy citation'}
+                  </button>
+                  <p className="mt-4 pt-3 border-t font-sans text-[12px] leading-relaxed" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
+                    The link points at this exact page, so readers land where you quoted.
+                  </p>
+                </div>
+              )}
               {leftPanel === 'settings' && (
                 <div className="flex-1 overflow-y-auto px-[18px] pb-4" style={{ overscrollBehavior: 'contain' }}>
                   <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} />
@@ -698,32 +1089,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </button>
                 </div>
               )}
-            </div>
-          )}
-
-          {/* Cite popover */}
-          {citeOpen && (
-            <div
-              className="absolute bottom-4 left-4 w-[360px] border z-50 p-4 rv2-pop"
-              style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)', boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)' }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <CapsLabel style={{ color: 'var(--accent-rust)' }}>Cite this page</CapsLabel>
-                <button type="button" aria-label="Close citation" onClick={() => setCiteOpen(false)}
-                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)]"><X size={15} /></button>
-              </div>
-              <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
-                {citation}
-              </p>
-              <button
-                type="button"
-                onClick={copyCitation}
-                className="flex items-center gap-2 px-3 py-1.5 font-sans text-[12.5px] border hover:bg-[var(--bg-warm)]"
-                style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
-              >
-                {copied ? <Check size={13} /> : null}
-                {copied ? 'Copied' : 'Copy citation'}
-              </button>
             </div>
           )}
 

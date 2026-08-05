@@ -314,34 +314,6 @@ h1, h2, h3, h4 {
   .rv2-slide-in-left, .rv2-pop { animation: none; }
 }
 
-/* Reader v2: Like + Share (reused site components) get the same quiet
-   34px hover chip as every other ink-bar control — no scale, no stone
-   hover tint, no rounded pill. Scoped to the direct action buttons so
-   the share menu's own items are untouched. */
-[data-rv2-actions] > div > button {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-}
-[data-rv2-actions] > div > button:hover {
-  background: rgba(253, 252, 249, 0.1);
-}
-[data-rv2-actions] > div > button:hover div {
-  transform: none !important;
-}
-[data-rv2-actions] > div > button .text-stone-500,
-[data-rv2-actions] > div > button.text-stone-500,
-[data-rv2-actions] > div > button .text-gray-400 {
-  color: rgba(253, 252, 249, 0.72);
-}
-[data-rv2-actions] > div > button:hover,
-[data-rv2-actions] > div > button:hover .text-gray-400 {
-  color: #fdfcf9;
-}
 
 /* Prose styling for content/document pages */
 .prose-content {
