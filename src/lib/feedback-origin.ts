@@ -125,3 +125,51 @@ export function isEmbeddedOrigin(
   if (headerIsEmbedded) return true;
   return refererPath ? refererPath.split('/').filter(Boolean)[0] === 'embed' : false;
 }
+
+/** What a partner's librarians are allowed to see of a feedback row. */
+export interface LibrarianFeedback {
+  id: string;
+  message: string;
+  page: string | null;
+  name: string | null;
+  surface: FeedbackSurface | null;
+  embedded: boolean;
+  created_at: string | null;
+  read: boolean;
+  addressed: boolean;
+  /** Whether a reply address exists, never the address itself. */
+  has_contact: boolean;
+}
+
+/**
+ * Project a raw `feedback` document down to what a librarian may read.
+ *
+ * This is an ALLOWLIST on purpose. A blocklist ("delete ip, delete email")
+ * leaks every field added later, and these rows carry `ip`, `email` and
+ * `user_agent`. Only the fields named here ever reach the client.
+ *
+ * `has_contact` exists so the UI can say "this person can be replied to"
+ * without handing over the address; replies still go through the admin path,
+ * which is the only place the reply email is wired up.
+ */
+export function toLibrarianFeedback(row: Record<string, unknown>): LibrarianFeedback {
+  const email = typeof row.email === 'string' ? row.email : null;
+  const createdAt = row.created_at;
+  return {
+    id: String(row._id ?? ''),
+    message: typeof row.message === 'string' ? row.message : '',
+    page: typeof row.page === 'string' ? row.page : null,
+    name: typeof row.name === 'string' ? row.name : null,
+    surface: (row.surface as FeedbackSurface | undefined) ?? null,
+    embedded: row.embedded === true,
+    created_at:
+      createdAt instanceof Date
+        ? createdAt.toISOString()
+        : typeof createdAt === 'string'
+          ? createdAt
+          : null,
+    read: row.read === true,
+    addressed: row.addressed === true,
+    has_contact: Boolean(email && email.includes('@')),
+  };
+}

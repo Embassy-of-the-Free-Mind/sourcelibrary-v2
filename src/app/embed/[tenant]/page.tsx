@@ -12,7 +12,8 @@ import {
     fetchTenantCatalogTotal,
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
-import { resolveTenantId } from '@/lib/tenant-context';
+import { resolveTenantId, getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath } from '@/lib/catalog-nav';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
 import { getRequestBaseUrl } from '@/lib/shortlinks';
@@ -284,12 +285,16 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
         forceEmbedded: true,
     };
 
+    // Toolbar links must match the URL shape the browser is actually showing:
+    // /catalog/… on the subdomain, /embed/<tenant>/catalog/… everywhere else.
+    const navBasePath = catalogBasePath((await getTenantContext())?.source ?? null, tenant);
+
     return (
         <>
             <EmbedNavigationReporter />
             {showCatalogTools && catalogRole && (
                 <div className="max-w-7xl mx-auto px-6 pt-4">
-                    <CatalogEditorNav role={catalogRole} />
+                    <CatalogEditorNav role={catalogRole} basePath={navBasePath} />
                 </div>
             )}
             <SharedLibraryView {...viewProps} />
