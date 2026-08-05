@@ -6,6 +6,9 @@ import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
 import { memorixAliasesFor } from '@/lib/bph-cataloguer-identity';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
 /**
  * The librarian's workspace: your work, what needs attention, what changed.
@@ -87,7 +90,10 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
   const platformRole = normalizeCatalogRole((session.user as { role?: unknown }).role);
   const tenantRole = await effectiveCatalogRole(session.user.email, platformRole, tenant);
   const role = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
-  if (ROLE_LEVEL[role] < ROLE_LEVEL['editor']) redirect('/catalog');
+  const tenantSource = (await getTenantContext())?.source ?? null;
+  const catalogueIndexHref = catalogIndexPath(tenantSource, tenant);
+  const navBasePath = catalogBasePath(tenantSource, tenant);
+  if (ROLE_LEVEL[role] < ROLE_LEVEL['editor']) redirect(catalogueIndexHref);
 
   const email = (session.user.email || '').toLowerCase();
   const aliases = memorixAliasesFor(email);
@@ -147,9 +153,10 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
   return (
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <a href="/catalog" className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
+        <a href={catalogueIndexHref} className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
           ← Back to catalogue
         </a>
+        <CatalogEditorNav role={role} current="workspace" basePath={navBasePath} />
 
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Catalogue workspace

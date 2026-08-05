@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogIndexPath } from '@/lib/catalog-nav';
 
 /**
  * BPH catalogue editor — help / how-to page. The in-app version of the
@@ -34,11 +36,13 @@ export default async function CatalogHelpPage({ params }: Props) {
   const { tenant } = await params;
   if (tenant !== 'bph') notFound();
 
+  const catalogueIndexHref = catalogIndexPath((await getTenantContext())?.source ?? null, tenant);
+
   return (
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to catalogue

@@ -5,6 +5,9 @@ import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import PendingChangesInbox from '@/components/catalog/PendingChangesInbox';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
 /**
  * BPH catalog pending-changes review inbox.
@@ -81,12 +84,16 @@ export default async function CatalogReviewPage({ params }: Props) {
     ? platformRole
     : await tenantRole(session.user.email, tenant);
 
+  const tenantSource = (await getTenantContext())?.source ?? null;
+  const catalogueIndexHref = catalogIndexPath(tenantSource, tenant);
+  const navBasePath = catalogBasePath(tenantSource, tenant);
+
   if (ROLE_LEVEL[role] < ROLE_LEVEL['editor']) {
     // Contributors don't have an inbox in v1; they see status on the
     // catalog detail page via their own pending list (deferred follow-up).
     // Bounce them back rather than render an empty page that looks like
     // they're authorised.
-    redirect(`/catalog`);
+    redirect(catalogueIndexHref);
   }
 
   // Fetch pending rows + titles for each UBN in one go. The bph_works
@@ -147,11 +154,12 @@ export default async function CatalogReviewPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Catalogue
         </a>
+        <CatalogEditorNav role={role} current="review" basePath={navBasePath} />
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Catalogue review
         </h1>

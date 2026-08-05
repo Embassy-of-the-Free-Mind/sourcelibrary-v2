@@ -4,6 +4,9 @@ import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import CatalogTeamClient from '@/components/catalog/CatalogTeamClient';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
 /**
  * BPH catalog team — invite contributors, change roles, remove members.
@@ -74,8 +77,12 @@ export default async function CatalogTeamPage({ params }: Props) {
   const tenantRole = normalizeRoleLocal(userMembership?.role);
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
+  const tenantSource = (await getTenantContext())?.source ?? null;
+  const catalogueIndexHref = catalogIndexPath(tenantSource, tenant);
+  const navBasePath = catalogBasePath(tenantSource, tenant);
+
   if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
-    redirect('/catalog');
+    redirect(catalogueIndexHref);
   }
 
   // Pull all tenant memberships, plus user names from `users` so we can show
@@ -115,11 +122,12 @@ export default async function CatalogTeamPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Catalogue
         </a>
+        <CatalogEditorNav role={effectiveRole} current="team" basePath={navBasePath} />
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Catalogue team
         </h1>

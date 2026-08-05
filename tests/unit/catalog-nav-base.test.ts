@@ -9,7 +9,7 @@
  * rule that decides the prefix.
  */
 import { describe, it, expect } from 'vitest';
-import { catalogBasePath } from '@/lib/catalog-nav';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 import { toLibrarianFeedback } from '@/lib/feedback-origin';
 
 describe('catalogBasePath', () => {
@@ -29,6 +29,39 @@ describe('catalogBasePath', () => {
 
   it('encodes the tenant slug', () => {
     expect(catalogBasePath('embed-path', 'a b')).toBe('/embed/a%20b/catalog');
+  });
+});
+
+/**
+ * The catalogue INDEX does not live under the record base path. On the
+ * subdomain both are spelled `/catalog`, which is what hides the difference:
+ * the proxy sends bare `/catalog` to `/embed/<tenant>?view=catalog` but
+ * `/catalog/<ubn>` to `/embed/<tenant>/catalog/<ubn>`. Nothing is served at
+ * `/embed/<tenant>/catalog`, so treating the two as one 404s the "New search"
+ * and "← Catalogue" links on every non-subdomain host.
+ */
+describe('catalogIndexPath', () => {
+  it('is /catalog on the subdomain, same as the record base', () => {
+    expect(catalogIndexPath('subdomain', 'bph')).toBe('/catalog');
+  });
+
+  it('is NOT the record base path off the subdomain', () => {
+    expect(catalogIndexPath('embed-path', 'bph')).not.toBe(catalogBasePath('embed-path', 'bph'));
+  });
+
+  it('points at the landing page view for query-param tenants like bph', () => {
+    expect(catalogIndexPath('embed-path', 'bph')).toBe('/embed/bph?view=catalog');
+  });
+
+  it('points at the dedicated route for tenants that have one', () => {
+    expect(catalogIndexPath('embed-path', 'bhutan')).toBe('/embed/bhutan/catalogue');
+  });
+
+  it('never returns the unserved /embed/<tenant>/catalog path', () => {
+    for (const tenant of ['bph', 'bhutan', 'kloss']) {
+      expect(catalogIndexPath('embed-path', tenant)).not.toBe(`/embed/${tenant}/catalog`);
+      expect(catalogIndexPath(null, tenant)).not.toBe(`/embed/${tenant}/catalog`);
+    }
   });
 });
 

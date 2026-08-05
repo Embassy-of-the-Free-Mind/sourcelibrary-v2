@@ -6,7 +6,7 @@ import { getDb } from '@/lib/mongodb';
 import { getTenantContext } from '@/lib/tenant-context';
 import { effectiveCatalogRole, normalizeCatalogRole, canEditCatalog } from '@/lib/catalog-role';
 import { toLibrarianFeedback, type LibrarianFeedback } from '@/lib/feedback-origin';
-import { catalogBasePath } from '@/lib/catalog-nav';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 import BphFeedbackList from '@/components/catalog/BphFeedbackList';
 
@@ -45,6 +45,7 @@ export default async function CatalogFeedbackPage({ params }: Props) {
 
   const ctx = await getTenantContext();
   const base = catalogBasePath(ctx?.source ?? null, tenant);
+  const catalogueIndexHref = catalogIndexPath(ctx?.source ?? null, tenant);
 
   const session = await auth();
   if (!session?.user) {
@@ -54,7 +55,7 @@ export default async function CatalogFeedbackPage({ params }: Props) {
   const platformRole = normalizeCatalogRole((session.user as { role?: unknown }).role);
   const role = await effectiveCatalogRole(session.user.email, platformRole, tenant);
   if (!canEditCatalog(role)) {
-    redirect(base);
+    redirect(catalogueIndexHref);
   }
 
   // Read Mongo directly rather than fetching our own API: a server component
@@ -83,7 +84,7 @@ export default async function CatalogFeedbackPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href={base}
+          href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Catalogue

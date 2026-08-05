@@ -24,3 +24,27 @@ export function catalogBasePath(source: TenantSource | null, tenant: string): st
   if (source === 'subdomain') return '/catalog';
   return `/embed/${encodeURIComponent(tenant)}/catalog`;
 }
+
+/**
+ * Tenants whose catalogue index is its own route rather than a view of the
+ * landing page. Mirrors `usesDedicatedCatalogue` in `src/proxy.ts` — if that
+ * list grows, this one has to grow with it.
+ */
+const DEDICATED_CATALOGUE_TENANTS = new Set(['bhutan']);
+
+/**
+ * The catalogue INDEX is not `${catalogBasePath()}` — that is the base for
+ * record and sub-pages only.
+ *
+ * On a subdomain both are spelled `/catalog`, which is what hid this: the
+ * proxy rewrites bare `/catalog` to `/embed/<tenant>?view=catalog` (or to
+ * `/embed/<tenant>/catalogue` for tenants with a dedicated route), while
+ * `/catalog/<ubn>` rewrites to `/embed/<tenant>/catalog/<ubn>`. There is no
+ * page at `/embed/<tenant>/catalog`, so linking there 404s off the subdomain.
+ */
+export function catalogIndexPath(source: TenantSource | null, tenant: string): string {
+  if (source === 'subdomain') return '/catalog';
+  const slug = encodeURIComponent(tenant);
+  if (DEDICATED_CATALOGUE_TENANTS.has(tenant)) return `/embed/${slug}/catalogue`;
+  return `/embed/${slug}?view=catalog`;
+}

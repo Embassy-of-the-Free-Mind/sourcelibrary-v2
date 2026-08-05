@@ -16,7 +16,7 @@ import { AISection } from '@/components/embed/AISection';
 import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getTenantContext } from '@/lib/tenant-context';
-import { catalogBasePath } from '@/lib/catalog-nav';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 
@@ -376,7 +376,9 @@ export default async function CatalogEntryPage({ params }: Props) {
   const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
   // Toolbar and "New search" must point at the URL shape the browser is on:
   // /catalog/… via the subdomain rewrite, /embed/<tenant>/catalog/… elsewhere.
-  const navBasePath = catalogBasePath((await getTenantContext())?.source ?? null, tenant);
+  const tenantSource = (await getTenantContext())?.source ?? null;
+  const navBasePath = catalogBasePath(tenantSource, tenant);
+  const catalogueIndexHref = catalogIndexPath(tenantSource, tenant);
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
@@ -405,7 +407,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             catalogue search view. */}
         <div className="mb-3">
           <a
-            href={navBasePath}
+            href={catalogueIndexHref}
             className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
           >
             <Search className="w-3.5 h-3.5" />

@@ -6,6 +6,9 @@ import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { suggestNewUbn } from '@/lib/bph-catalog';
 import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 
 /**
  * Create a new BPH catalogue record.
@@ -40,9 +43,13 @@ export default async function NewCatalogEntryPage({ params }: Props) {
   const tenantRole = await effectiveCatalogRole(session.user.email, platformRole, tenant);
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
+  const tenantSource = (await getTenantContext())?.source ?? null;
+  const catalogueIndexHref = catalogIndexPath(tenantSource, tenant);
+  const navBasePath = catalogBasePath(tenantSource, tenant);
+
   // Creating new records is editor+ only (see the create API route).
   if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
-    redirect('/catalog');
+    redirect(catalogueIndexHref);
   }
 
   const suggestedUbn = await suggestNewUbn();
@@ -51,17 +58,18 @@ export default async function NewCatalogEntryPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to catalogue
         </a>
+        <CatalogEditorNav role={effectiveRole} current="new" basePath={navBasePath} />
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           New catalogue entry
         </h1>
         <p className="text-sm text-muted mb-6">
           Adding a record · Signed in as {session.user.email} ·{' '}
-          <a href="/catalog/help" className="text-accent-rust hover:underline">
+          <a href={`${navBasePath}/help`} className="text-accent-rust hover:underline">
             How does this work?
           </a>
         </p>
