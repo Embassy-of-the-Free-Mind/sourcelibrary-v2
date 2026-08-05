@@ -4,6 +4,8 @@
 
 # Source Library
 
+[![MCP Toplist](https://mcptoplist.com/badge/io.github.Embassy-of-the-Free-Mind%2Fsourcelibrary.svg)](https://mcptoplist.com/server/io.github.Embassy-of-the-Free-Mind%2Fsourcelibrary)
+
 **A digital library of historical primary sources with AI-aided OCR, translation, and scholarly curation.**
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
