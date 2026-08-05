@@ -35,8 +35,26 @@ const CLASSIFIERS = [
   ['metadata-correction', /\bnot \d{3,4}\b|wrong|incorrect|should be|actually the|you (claim|are using)|edition|impressum|provenance|\bUBN\b|repeatable|separate field|two separate/i],
   ['feature-request', /feature request|would be (nice|great|good)|please add|could you add|suggestion|i.?d like|i wish|make it easier|add a (button|field|way)/i],
 ];
+// Partner-CMS detection. `tenant_slug` is written server-side by
+// /api/feedback from the proxy's x-tenant-* headers (src/lib/feedback-origin.ts),
+// so it is authoritative when present.
+//
+// The `page` prefix below is the OLD heuristic, kept only for rows written
+// before tagging shipped and not covered by
+// scripts/maintenance/backfill-feedback-tenant.mjs. It is wrong in both
+// directions — it matches the global site's /catalog/scholar, and misses
+// /catalogue and the tenant home — which is exactly why tenant_slug exists.
+// Drop this fallback once the backfill has run and the untagged tail is empty.
+function isPartnerCms(r) {
+  if (r.tenant_slug) return true;
+  if (r.tenant_slug === null && r.tenant_source) return false; // tagged as global
+  const page = r.page || '';
+  if (page === '/catalog/scholar' || page.startsWith('/catalog/scholar/')) return false;
+  return page.startsWith('/catalog/');
+}
+
 function classify(r) {
-  if ((r.page || '').startsWith('/catalog/')) return 'partner-cms';
+  if (isPartnerCms(r)) return 'partner-cms';
   const m = (r.message || '');
   for (const [label, re] of CLASSIFIERS) if (re.test(m)) return label;
   return 'other';
