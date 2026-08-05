@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildCoverUpdate, resolvePageCoverUrl, COVER_WRITE_FIELDS, isRenderableCoverUrl, selectFallbackCoverPage, isJunkRepresentativePage } from '@/lib/cover-fields';
+import { buildCoverUpdate, resolvePageCoverUrl, COVER_WRITE_FIELDS, isRenderableCoverUrl, selectFallbackCoverPage, selectScoredCoverPage, isJunkRepresentativePage, COVER_SCORE_CONFIDENT } from '@/lib/cover-fields';
 
 const SAMPLE_URL = 'https://images.sourcelibrary.org/cropped/abc/page-1.jpg';
 const SAMPLE_THUMB = 'https://images.sourcelibrary.org/thumbnails/abc/page-1-thumb.jpg';
@@ -223,5 +223,62 @@ describe('selectFallbackCoverPage — digitiser plates', () => {
       { page_number: 9, page_type: 'text', ocr_head: 'the argument of the present treatise' },
     ];
     expect(selectFallbackCoverPage(pages)?.page_number).toBe(9);
+  });
+});
+
+describe('isJunkRepresentativePage — scanner hand in frame', () => {
+  it('rejects pages whose OCR describes a hand holding the book', () => {
+    for (const head of [
+      'A gloved hand is visible at the bottom edge of the page',
+      "The scanner's hand holding the volume open",
+      'fingers are visible along the left margin of the photograph',
+    ]) {
+      expect(isJunkRepresentativePage({ page_type: 'text', ocr_head: head })).toBe(true);
+    }
+  });
+
+  it('keeps hand-colored plates and handwriting notes', () => {
+    expect(isJunkRepresentativePage({ page_type: 'plate', ocr_head: 'A hand-colored woodcut of the celestial spheres' })).toBe(false);
+    expect(isJunkRepresentativePage({ page_type: 'text', ocr_head: 'Handwriting in the lower margin records a former owner' })).toBe(false);
+  });
+});
+
+describe('selectScoredCoverPage', () => {
+  it('uses the OCR scorer when it can decide: a real title page beats an earlier first leaf', () => {
+    const pages = [
+      { page_number: 1, ocr_head: 'Some faint unclassified text.' },
+      { page_number: 3, page_type: 'title-page', ocr_head: 'DE PROVIDENTIA ET FATO typis excudebat, ornamental border' },
+    ];
+    const pick = selectScoredCoverPage(pages, 'De providentia et fato');
+    expect(pick?.page.page_number).toBe(3);
+    expect(pick?.method).toBe('smart-ocr');
+    expect(pick?.score).toBeGreaterThanOrEqual(COVER_SCORE_CONFIDENT);
+  });
+
+  it('never scores a hand-in-frame or blank page as the cover', () => {
+    const pages = [
+      { page_number: 1, ocr_head: 'A gloved hand is visible at the edge, holding the book' },
+      { page_number: 2, ocr_head: 'This page is blank, aged paper.' },
+      { page_number: 4, page_type: 'frontispiece', ocr_head: 'An allegorical engraved portrait of the author' },
+    ];
+    const pick = selectScoredCoverPage(pages);
+    expect(pick?.page.page_number).toBe(4);
+    expect(pick?.method).toBe('smart-ocr');
+  });
+
+  it('falls back to the type-priority rule when nothing scores confidently (no OCR yet)', () => {
+    // A typed title page still clears the bar without OCR — the genuinely
+    // undecidable case is NO types and NO OCR.
+    const typed = selectScoredCoverPage([{ page_number: 1 }, { page_number: 2, page_type: 'title-page' }]);
+    expect(typed?.page.page_number).toBe(2);
+
+    const untyped = selectScoredCoverPage([{ page_number: 1 }, { page_number: 2 }]);
+    expect(untyped?.method).toBe('type-priority');
+    expect(untyped?.page.page_number).toBe(1);
+    expect(untyped?.score).toBeNull();
+  });
+
+  it('returns undefined on an empty page list', () => {
+    expect(selectScoredCoverPage([])).toBeUndefined();
   });
 });

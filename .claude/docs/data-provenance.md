@@ -58,7 +58,7 @@ page.ocr.prompt_version    // "v10"
 page.ocr.prompt_id         // ObjectId-string of the prompt document, or 'hardcoded' / 'custom'
 page.ocr.prompt_hash       // md5 of prompt content (cryptographic verifier)
 page.ocr.prompt_name       // "Standard OCR" | "Latin OCR (Neo-Latin)" | etc
-page.ocr.source            // 'ai' | 'batch_api' | 'manual' | 'contributor' | 'skip'
+page.ocr.source            // see the full enum below — 16 values, not 5
 page.translation.prompt_version
 page.translation.prompt_id
 page.translation.prompt_hash
@@ -127,7 +127,8 @@ For batch jobs the four fields are stamped on the `batch_jobs` row at submission
   data: "the full previous text content",
   source: "batch_api" | "ai" | "pipeline_preview" | "manual" | "skip" | "system" |
           "maintenance" | "mineru" | "realtime_api_sequential" | "unknown" | null |
-          "<sweep-label>",   // ad-hoc, e.g. "shift-repair-erara-2026-07"
+          "<sweep-label>",   // ad-hoc, e.g. "shift-repair-erara-2026-07",
+                             // "reocr-download-failure-fix-2026-07"
   model: "gemini-3-flash-preview",
   prompt_version: "v10",
   job_id: "job_abc123",
@@ -135,6 +136,45 @@ For batch jobs the four fields are stamped on the `batch_jobs` row at submission
   created_at: Date      // when it was SUPERSEDED (a snapshot clock — see below)
 }
 ```
+
+### The live `pages.{ocr,translation}.source` enum
+
+Exact counts, 2026-08-04, `node scripts/audit/doc-enum-drift.mjs`. **Guarded** —
+that script fails when production carries a value this doc does not mention, so
+the list below stays true or the audit says so.
+
+| `pages.ocr.source` | rows | | `pages.translation.source` | rows |
+|---|---|---|---|---|
+| `batch_api` | 4,159,051 | | `ai` | 5,153,668 |
+| `ai` | 2,070,501 | | `system` | 92,420 |
+| `pipeline_preview` | 210,527 | | `batch_api` | 82,826 |
+| `corpus` | 5,749 | | `corpus` | 5,759 |
+| `mineru` | 2,586 | | `skip` | 1,153 |
+| `system` | 775 | | `realtime_api_sequential` | 62 |
+| `spread-split` | 277 | | `manual` | 21 |
+| `ia-ocr-repair` | 191 | | `manual-backfill` | 12 |
+| `reocr-contamination-repair-3362` | 93 | | `broadsheet-ocr` | 2 |
+| `batch_api_recovery` | 74 | | `songshi-juan56` | 1 |
+| `manual` | 33 | | `AI generated` | 1 |
+| `wikisource` | 21 | | | |
+| `ai-repair-sync` | 11 | | | |
+| `broadsheet-ocr` | 2 | | | |
+| `songshi-juan56` | 1 | | | |
+| `AI generated` | 1 | | | |
+
+Three things in that table are load-bearing:
+
+- **`wikisource` (21 pages) is not model output at all.** Neither is `corpus`
+  (~5.7K on each field). Any metric that treats `pages.ocr` as "what the model
+  read" is wrong on those rows, and no field other than `source` says so.
+- **Repair sweeps write here too**, exactly as they do on `page_revisions`:
+  `ia-ocr-repair`, `reocr-contamination-repair-3362` (the #3362 shared-key
+  contamination), `spread-split`, `ai-repair-sync`. Text carrying one of these
+  was *relocated or rewritten*, not read from the page in front of it.
+- **`songshi-juan56` and `AI generated` (1 row each) are junk labels** — a book
+  slug and a free-text string that leaked into an enum. Left documented rather
+  than silently ignored, because the alternative is an audit that has to be
+  taught to lie.
 
 **`source` is the mechanism label, and it is the first thing to read when asking
 what a set of revisions actually records.** Measured 2026-08-01 (`node

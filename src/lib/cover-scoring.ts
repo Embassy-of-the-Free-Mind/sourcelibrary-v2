@@ -1,23 +1,40 @@
 /**
- * Shared cover page scoring logic.
+ * Cover page scoring — TS twin of `scripts/lib/cover-scoring.mjs`.
  *
- * Used by:
- *   - pipeline-orchestrator.mjs (Phase 3 + Phase 8.9)
- *   - smart-cover-selection.mjs (batch re-evaluation)
+ * Scores a page as a potential book cover from OCR content analysis. Used by
+ * `/api/books/[id]/ensure-cover` and the book page's render fallback so the
+ * on-view pick uses the same intelligence as pipeline Phase 8.9 instead of the
+ * crude type-priority rule (which picked blanks, library stamps, and pages
+ * with the scanner's hand in frame whenever `page_type` was missing).
  *
- * Scores a page as a potential book cover using OCR content analysis.
- * Parses <page-type> tags from OCR text when page.page_type is null.
- * Detects binding photos, digitizer inserts, bookplates (incl. BPH pelican),
- * and prefers decorated title pages with woodcuts/borders/printer's marks.
- *
- * TS twin: src/lib/cover-scoring.ts (used by ensure-cover + the book page).
- * Keep in lock-step — tests/unit/cover-scoring-parity.test.ts runs both over
- * the same fixtures and fails on divergence.
+ * Keep in lock-step with `scripts/lib/cover-scoring.mjs` — the parity test in
+ * `tests/unit/cover-scoring-parity.test.ts` runs both implementations over the
+ * same fixtures and fails on any divergence.
  */
 
-/** Scanner's hand caught in the frame. Mirror of HAND_IN_FRAME_RE in
- *  src/lib/cover-scoring.ts — deliberately narrow ("hand-colored",
- *  "handwriting", body text about hands must not match). */
+export interface CoverScoreInput {
+  page_number?: number;
+  page_type?: string | null;
+  hidden?: boolean;
+  ocr?: { data?: string | null } | null;
+  ocr_text?: string | null;
+  /** Projected head of `pages.ocr.data` (callers use `$substrCP` … 1200). */
+  ocr_head?: string | null;
+}
+
+export interface CoverScore {
+  score: number;
+  reason: string;
+}
+
+/**
+ * The scanner's own hand caught in the frame. Written the way the OCR model
+ * describes such pages ("a gloved hand is visible at the edge…"), and kept
+ * deliberately narrow: "hand-colored", "handwriting", and body text discussing
+ * hands must not match (same lesson as the DIGITIZER_RE watermark trap in
+ * cover-fields.ts). Mirrored in cover-fields.ts / cover-write.mjs /
+ * cover-scoring.mjs — change all four together.
+ */
 export const HAND_IN_FRAME_RE =
   /\b(?:human|person'?s|scanner'?s|gloved) hand\b|\bhands? (?:is |are )?(?:visible|hold(?:s|ing)|gripping|resting on|in (?:the )?frame|at the (?:edge|corner))|\bfingers? (?:is |are )?(?:visible|hold(?:s|ing)|gripping)|\bthumb (?:is |appears )?(?:visible|hold(?:s|ing)|in (?:the )?frame)/i;
 
@@ -25,24 +42,25 @@ export const HAND_IN_FRAME_RE =
  * Extract page type from <page-type> tags in OCR text.
  * Returns null if no tag found.
  */
-export function parsePageTypeFromOcr(ocrText) {
+export function parsePageTypeFromOcr(ocrText?: string | null): string | null {
   if (!ocrText) return null;
   const match = ocrText.match(/<page-type>([^<]+)<\/page-type>/);
   return match ? match[1].trim() : null;
 }
 
 /**
- * Score a page as a potential book cover.
- *
- * @param {Object} page - Page document with page_number, page_type, ocr.data, hidden
- * @param {Object} [options]
- * @param {string} [options.bookTitle] - Book title for title-match bonus
- * @returns {{ score: number, reason: string }}
+ * Score a page as a potential book cover. Higher is better; anything below 30
+ * is "no confident pick" (callers fall back or escalate to vision).
  */
-export function scorePageForCover(page, options = {}) {
+export function scorePageForCover(
+  page: CoverScoreInput,
+  options: { bookTitle?: string | null } = {},
+): CoverScore {
   const ocrRaw = page.ocr?.data || page.ocr_text || page.ocr_head || '';
   const ocr = ocrRaw.substring(0, 1200).toLowerCase();
-  const pageNum = page.page_number;
+  // NaN mirrors the mjs twin's `undefined` semantics: every position
+  // comparison is false for a page with no page_number.
+  const pageNum = page.page_number ?? NaN;
 
   // Resolve page type: explicit field → parsed from OCR tags → null
   const pageType = page.page_type || parsePageTypeFromOcr(ocrRaw);

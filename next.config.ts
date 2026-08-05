@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
+import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -119,8 +120,10 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              // Images: self + all configured remote image sources + data URIs for base64 thumbnails
-              "img-src 'self' data: blob: https://images.sourcelibrary.org https://*.r2.dev https://*.public.blob.vercel-storage.com https://*.amazonaws.com https://iiif.archive.org https://archive.org https://dl.ndl.go.jp https://gallica.bnf.fr https://api.digitale-sammlungen.de https://www.e-rara.ch https://digi.vatlib.it https://*.bodleian.ox.ac.uk https://cudl.lib.cam.ac.uk https://diglib.hab.de https://iiif.wellcomecollection.org https://upload.wikimedia.org https://*.loc.gov https://babel.hathitrust.org https://bl.digirati.io https://images.lib.cam.ac.uk https://www.e-codices.unifr.ch https://cdm21059.contentdm.oclc.org https://iiif.universiteitleiden.nl https://image.digitalcollections.manchester.ac.uk https://digi.ub.uni-heidelberg.de https://iiif.qdl.qa https://permalinkbnd.bnportugal.gov.pt https://cdli.earth https://images.uba.uva.nl https://imagenes.patrimonionacional.es https://images.eap.bl.uk https://*.basemaps.cartocdn.com",
+              // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
+              // Host list lives in src/lib/csp-img-hosts.ts (shared with getBookThumbnailUrl's
+              // renderability screen — edit it there, never inline here).
+              CSP_IMG_SRC,
               "connect-src 'self' https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
               "frame-src 'self' https://translate.google.com",

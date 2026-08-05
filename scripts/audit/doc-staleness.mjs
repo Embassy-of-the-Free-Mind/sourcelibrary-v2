@@ -49,8 +49,14 @@ const statAgeDays = Number(
   args.includes('--stat-age') ? args[args.indexOf('--stat-age') + 1] : 14,
 );
 
-/** Files whose content is read into every session, so stale stats there mislead by default. */
-const AUTO_LOADED = ['CLAUDE.md', 'memory'];
+/**
+ * Files an agent is directed to read as binding, so stale stats there mislead by default.
+ * `CLAUDE.md` and `memory/` load unconditionally; `.claude/docs/invariants/` is the
+ * conditional tier that `CLAUDE.md`'s routing table sends sessions to — it holds most of
+ * the dated numbers that used to live in `CLAUDE.md` itself, and dropping it here would
+ * have silently un-guarded them the day the split landed.
+ */
+const AUTO_LOADED = ['CLAUDE.md', 'memory', '.claude/docs/invariants'];
 const DOCS_DIR = '.claude/docs';
 const ARCHIVE_DIR = '.claude/docs/archive';
 
