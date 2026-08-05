@@ -3,7 +3,14 @@ import { NextRequest, NextResponse } from 'next/server';
 // mongodb requires the Node.js runtime (never edge).
 export const runtime = 'nodejs';
 import { getDb } from '@/lib/mongodb';
-import { buildCoverUpdate, isRenderableCoverUrl, RENDERABLE_COVER_HOST_RE, selectFallbackCoverPage } from '@/lib/cover-fields';
+import {
+  buildCoverUpdate,
+  isRenderableCoverUrl,
+  RENDERABLE_COVER_HOST_RE,
+  selectScoredCoverPage,
+  type ThumbnailSource,
+} from '@/lib/cover-fields';
+import { selectBestCover } from '@/lib/cover-selection';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { getPageSource } from '@/lib/page-image-url';
 import type { Page } from '@/lib/types';
@@ -25,6 +32,22 @@ import type { Page } from '@/lib/types';
  * `pipeline_auto.status: 'images_complete'`. This route closes the gap for any
  * book someone actually opens, without resuming paid pipeline phases.
  *
+ * HOW IT PICKS (2026-08 upgrade — the old type-priority-only rule chose
+ * blanks, library stamps, and scanner's-hand shots whenever `page_type` was
+ * missing, and passed over untagged title pages):
+ *  1. `selectScoredCoverPage` — the same OCR-content scorer as pipeline
+ *     Phase 8.9, shared with the book page's render fallback so the cover a
+ *     reader sees and the cover the catalogue stores stay the same page.
+ *  2. When the scorer can't decide (typically: OCR hasn't run yet, or nothing
+ *     in the front matter looks like a cover), ONE Gemini Vision pass over the
+ *     first pages (`selectBestCover`, ~$0.005–0.01). Guarded by an atomic
+ *     `cover_vision_attempted_at` marker so a book is only ever paid for once,
+ *     and by the `ENSURE_COVER_VISION=0` kill-switch. This only ever runs for
+ *     books someone actually opened that have no renderable cover — there is
+ *     no sweep behind it.
+ *  3. Otherwise the old type-priority pick (title page → frontispiece → first
+ *     non-junk leaf).
+ *
  * It is deliberately a *narrow* writer:
  *  - never overrides a `manual` pick, or any already-renderable cover;
  *  - only ever writes a URL derived from the book's own pages, so there is no
@@ -34,8 +57,8 @@ import type { Page } from '@/lib/types';
  *    archived to R2 gets left alone rather than having a blocked URL promoted
  *    into the catalogue, where nothing can fall back for it;
  *  - never touches `pipeline_auto.status`, so a book stays queued for Phase 8.9
- *    and its smarter OCR-scored pick still supersedes this one later (8.9 skips
- *    only `thumbnail_source: 'manual'`).
+ *    and its pick still supersedes this one later (8.9 skips only
+ *    `thumbnail_source: 'manual'`).
  */
 
 // Mirrors the book page's own query: first 100 real leaves in reading order.
@@ -58,14 +81,20 @@ const PAGE_PROJECTION = {
   thumbnail: 1,
   split_from_spread: 1,
   crop: 1,
-  // Lets `selectFallbackCoverPage` reject digitiser boilerplate and library
-  // stamps that `page_type` alone waves through. Must stay in step with the
-  // book page's projection or the two would pick different pages.
-  ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
+  hidden: 1,
+  // Feeds both `isJunkRepresentativePage` and the cover scorer. 1200 chars is
+  // the scorer's window (`scorePageForCover`). Must stay in step with the book
+  // page's projection or the two would pick different pages.
+  ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
 } as const;
 
 /** The projected page shape this route reasons about. */
-type CoverCandidatePage = Partial<Page> & { page_number?: number; page_type?: string | null; ocr_head?: string | null };
+type CoverCandidatePage = Partial<Page> & {
+  page_number?: number;
+  page_type?: string | null;
+  ocr_head?: string | null;
+  hidden?: boolean;
+};
 
 type Result = { ok: boolean; reason: string; thumbnail?: string; cover_page?: number };
 
@@ -82,7 +111,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { _id: 0, id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_source: 1 } },
+      { projection: { _id: 0, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_source: 1 } },
     );
     if (!book?.id) return json({ ok: false, reason: 'book-not-found' }, 404);
 
@@ -104,8 +133,49 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         .slice(0, PAGE_KEEP));
     if (!pages.length) return json({ ok: false, reason: 'no-pages' });
 
-    const coverPage = selectFallbackCoverPage(pages);
-    if (!coverPage) return json({ ok: false, reason: 'no-cover-page' });
+    const pick = selectScoredCoverPage(pages, book.title);
+    if (!pick) return json({ ok: false, reason: 'no-cover-page' });
+
+    let coverPage: CoverCandidatePage = pick.page;
+    let source: ThumbnailSource = pick.method === 'smart-ocr' ? 'smart_ocr' : 'page_fallback';
+    let method = pick.method === 'smart-ocr' ? 'ensure-cover-scored' : 'ensure-cover-on-view';
+    let confidence = pick.method === 'smart-ocr' ? 0.85 : 0.5;
+    let detail = pick.method === 'smart-ocr'
+      ? `page ${coverPage.page_number} — ${pick.reason} (score: ${pick.score})`
+      : `page ${coverPage.page_number} (${pick.reason}) — first-view fallback, pending Phase 8.9`;
+
+    // Text couldn't decide (no OCR yet, or nothing scored like a cover): one
+    // vision pass, at most once per book EVER. The atomic claim means two
+    // concurrent first views spend one call, and a failed call is never
+    // retried — the type-priority pick above stands until Phase 8.9.
+    if (pick.method === 'type-priority'
+        && process.env.ENSURE_COVER_VISION !== '0'
+        && process.env.GEMINI_API_KEY) {
+      const claim = await db.collection('books').updateOne(
+        { id: book.id, cover_vision_attempted_at: { $exists: false } },
+        { $set: { cover_vision_attempted_at: new Date() } },
+      );
+      if (claim.modifiedCount === 1) {
+        try {
+          const vision = await selectBestCover(db, book.id, 10, { triggered_by: 'auto_recovery' });
+          const visionPage = vision.confidence !== 'low'
+            ? pages.find(p => p.page_number === vision.pageNumber)
+            : undefined;
+          if (visionPage) {
+            coverPage = visionPage;
+            source = 'vision';
+            method = 'ensure-cover-vision';
+            confidence = vision.confidence === 'high' ? 0.9 : 0.7;
+            detail = `page ${visionPage.page_number} — ${vision.rationale}`;
+          }
+        } catch (err) {
+          // Non-fatal: the text pick stands. The claim marker stays set on
+          // purpose — a book whose images make Gemini fail once will fail the
+          // same way on every view, and each retry costs money.
+          console.warn('[ensure-cover] vision pass failed:', err instanceof Error ? err.message : err);
+        }
+      }
+    }
 
     // Verify before writing: the chosen page must resolve to an image the
     // browser can actually load. `buildCoverUpdate` resolves the same way via
@@ -117,10 +187,10 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     }
 
     const update = buildCoverUpdate(coverPage, {
-      source: 'page_fallback',
-      method: 'ensure-cover-on-view',
-      confidence: 0.5,
-      detail: `page ${coverPage.page_number} (${coverPage.page_type || 'untyped'}) — first-view fallback, pending Phase 8.9`,
+      source,
+      method,
+      confidence,
+      detail,
       actor: 'pipeline',
     });
     if (!update) return json({ ok: false, reason: 'no-usable-page-image' });

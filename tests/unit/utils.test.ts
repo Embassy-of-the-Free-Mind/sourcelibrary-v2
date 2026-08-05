@@ -248,3 +248,28 @@ describe('getCoverImageCandidates', () => {
     expect(c[0]).toContain('-thumb.jpg');
   });
 });
+
+describe('getBookThumbnailUrl — browser-renderability screen', () => {
+  // A stored cover the browser cannot load must read as "no cover" (null), so
+  // cards render the typographic placeholder instead of an <Image> stuck in
+  // its shimmer state (the pre-hydration CSP block means onError never runs).
+  it('returns null for archive.org/download covers (302s off the CSP allowlist)', () => {
+    const book = { thumbnail: 'https://archive.org/download/some_item/page/n0/full/pct:15/0/default.jpg' };
+    expect(getBookThumbnailUrl(book, 'display')).toBeNull();
+    expect(getBookThumbnailUrl(book, 'thumb')).toBeNull();
+  });
+
+  it('returns null for hosts absent from the CSP img-src allowlist', () => {
+    expect(getBookThumbnailUrl({ thumbnail: 'https://example.com/cover.jpg' }, 'display')).toBeNull();
+  });
+
+  it('keeps covers on newly-allowlisted library hosts', () => {
+    const url = 'https://mps.lib.harvard.edu/sds/view/12345?width=400';
+    expect(getBookThumbnailUrl({ thumbnail: url }, 'display')).toBe(url);
+  });
+
+  it('trims stray whitespace from stored cover URLs', () => {
+    const book = { thumbnail: 'https://images.sourcelibrary.org/pages/abc/0001.jpg\n' };
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/pages/abc/0001.jpg');
+  });
+});

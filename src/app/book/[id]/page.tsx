@@ -25,7 +25,7 @@ import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import EnsureCover from '@/components/book/EnsureCover';
-import { isJunkRepresentativePage, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectScoredCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -466,11 +466,13 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
-          // First 600 chars of the OCR — the metadata envelope plus the model's
+          // First 1200 chars of the OCR — the metadata envelope plus the model's
           // page description. Enough to recognise digitiser boilerplate and
           // library/owner stamps that `page_type` misses (see
           // `isJunkRepresentativePage`), without pulling whole pages of text.
-          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
+          // 1200 is the cover scorer's window (`scorePageForCover`) — keep in
+          // step with ensure-cover's projection.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
         },
         maxTimeMS: 5000,
       })
@@ -811,12 +813,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
     const coverRenderable = isRenderableCoverUrl(storedCover);
-    // Best cover-scan candidate: the actual title page, else a frontispiece,
-    // else the first non-junk page (avoids the Google/IA boilerplate, endpapers
-    // and scanner colour cards when a classified title page exists).
-    // `selectFallbackCoverPage` is shared with /api/books/[id]/ensure-cover so
-    // the page we SHOW here is the page that gets SAVED as the cover.
-    const coverPage = selectFallbackCoverPage(pages);
+    // Best cover-scan candidate: OCR-scored (same scorer as pipeline Phase
+    // 8.9 — decorated title pages and frontispieces win, blanks / stamps /
+    // scanner's-hand shots are rejected), falling back to the type-priority
+    // rule when nothing scores confidently. `selectScoredCoverPage` is shared
+    // with /api/books/[id]/ensure-cover so the page we SHOW here is the page
+    // that gets SAVED as the cover.
+    const coverPage = selectScoredCoverPage(pages, book.title)?.page;
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');

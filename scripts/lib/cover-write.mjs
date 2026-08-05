@@ -17,6 +17,9 @@
  * field semantics there, mirror it here.
  */
 
+// Scanner's-hand screen — shared with the cover scorer (same file-pair rule).
+import { HAND_IN_FRAME_RE } from './cover-scoring.mjs';
+
 /** The four canonical write keys + provenance. */
 export const COVER_WRITE_FIELDS = [
   'image_display',
@@ -132,7 +135,8 @@ export function isJunkRepresentativePage(page) {
   if (JUNK_COVER_PAGE_TYPES.has(String(page.page_type || ''))) return true;
   const head = String(page.ocr_head || '');
   if (!head) return false;
-  return DIGITIZER_RE.test(head) || OWNERSHIP_RE.test(head) || BINDING_RE.test(head);
+  return DIGITIZER_RE.test(head) || OWNERSHIP_RE.test(head) || BINDING_RE.test(head)
+    || HAND_IN_FRAME_RE.test(head);
 }
 
 export function selectFallbackCoverPage(pages) {
