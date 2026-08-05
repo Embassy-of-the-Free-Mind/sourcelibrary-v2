@@ -1,0 +1,55 @@
+# An absence claim is only as strong as the set it was asserted against
+
+**Read this when:** Asserting, badging, or counting "first translation" — or working on `search_efforts` / `reference_translations` / the FT reference set.
+
+*Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
+
+---
+
+"First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
+
+**Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
+layer, its measured reliability, and the invariants below in detail.
+
+That machinery is only honest if you know the set's **recall**, and ours is **27%**
+(was 22%; `scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed
+priors in `translation_classification`) — three of four known prior translations are
+invisible to it. A sampled check of the queue puts `none_found`'s **positive
+predictive value at ~50%**: a coin flip. So:
+
+- **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
+- **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
+- **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
+
+**Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
+
+
+**A reference set's SIZE is not its COVERAGE — but measure the coverage that answers YOUR question, not a proxy for it.** Six of the seven misses checked in the 2026-08-01 sample are **absent from the set, not mis-matched** (Hall's 1654 Maier, Ellistone's 1651 Böhme, Caplan's Loeb *Rhetorica ad Herennium* and Lemay's *De secretis mulierum* at zero rows, the *Confessio Augustana*, Gregory of Nazianzus) — so the limit is the corpus, not the matcher. The seventh, Agrippa, is **present**; see the correction below, and note that it weakens "threshold work is finished" from proven to merely likely.
+
+**The first explanation offered for that was wrong, and the way it was wrong is the lesson.** "The extract is 1.04% pre-1800 while our corpus is early-modern" is a true statistic and a false diagnosis: **a prior English translation of a 1531 Latin work is normally a MODERN imprint.** Checked properly, that class is well covered — of 6,947 rows translating from Latin/Greek, **80.8% are post-1950**. The set's overall date skew was never evidence of anything.
+
+A second explanation was then offered and **also measured wrong**: an ordering bug in the item-language filter (`041$a[0].startsWith('eng')`, which rejects a facing-page `$a lat $a eng`). Real bug, fixed in #3556, purely additive — and worth **+5 Latin/Greek rows in 250,000 records**. Negligible for the question.
+
+**The actual cause is that `041$h` was required at all.** Confirmed-absent priors are *in* LoC and thrown away by that one condition, while carrying the exact MARC 240 the matcher is built around — Caplan's Loeb *Ad Herennium* (LCCN 55004252, `240 Rhetorica ad Herennium.`, **no 041 at all**) and Böhme's *Signature of All Things* (`36037588`, no 041). MARC's *other* explicit translation marker is **`240$l`** — the cataloguer stating this item is the English version of the named work — and the ingest never read it. Measured on one part: 3,918 accepted vs **255 with an explicit `240$l` English** (~11,000 corpus-wide), **100% of them carrying a 240** against 64.8% of the current set. See #3599.
+
+**The meta-lesson, after THREE swings: stop theorising about a set's coverage and go read one known-missing record.** Two plausible causal stories were derived from what the extract *contained* (its date skew, then a filter-ordering bug) and both were measured to be non-causes. What settled it in four API calls was fetching the actual MARC for a prior we knew was missing and asking *which condition rejected this row*. **A single known-absent item, looked up in the source, outranks any amount of reasoning about aggregates** — and it is nearly free. Do that first.
+
+Corollary, and the reason two rounds were wasted: **a filter's discards are the only place its blind spot is visible, so make it report them.** `ingest-loc-bulk.mjs` now tallies rejections by reason; before that, the extract could only be read for what it kept, and the raw dump is deleted after extraction so the rejects could not be recovered afterwards either. Same shape as the section this sits in — an absence claim is only as strong as the set it was asserted against, and that applies to claims about the set itself.
+
+Related but genuinely separate: **depth is not reachability** — Chinese looks deep at 3,868 rows and is unanswerable anyway, because CJK is reachable only via MARC 880 (2.3% of rows).
+
+**And a correction is not exempt from the standard it enforces.** The same 2026-08-01 sample was re-verified 2026-08-02 by querying `uniform_title`, `title` AND `author` rather than author alone: six of the seven works are confirmed absent, but **Agrippa's *De incertitudine* is PRESENT** (LCCN 92246639, 1694, matched on its MARC 240) and its books read `inconclusive`, not `none_found` — so it was never a miss, it is an unscreened candidate, and it does not belong in the PPV sample. Two rounds of correction missed it because the re-check inherited the original's search strategy. **Query every field before writing "absent"** — a query against a non-existent field (`record_author`; the field is `author`) returns 0 and reads exactly like a real absence.
+
+**Naming a prior is not linking one, and only one layer can do it.** `reference_translations` carries an **LCCN on 100%** of rows and is the only citable layer. `translation_catalogs` (24,061 asserted priors from UNESCO/LoC/OpenLibrary/HathiTrust/Loeb/publishers) carries **zero** `book_id`, `work_id`, LCCN, OCLC, ISBN or URL — it joins to books by normalised title/author strings at query time, so "which prior?" is unanswerable from it. `translation_classification` (2,755 asserting a prior) carries a model-written prose sentence and **zero** URLs. Only `reference_translations` findings belong in reader-facing evidence until #3455/#3428 land. **Standing check:** 158 books are badged `is_first_translation: true` while `translation_classification` names a prior for them (measured 2026-08-02) — a lead is not authority, but an unreviewed contradiction of our own public claim is a screening queue.
+
+**A yardstick inside the set it measures reads 100%.** `translation_classification` became both a *source* and the recall test set, and the combined figure came out at exactly 100.0%. Quote **catalogue-only** recall. Adding it raised *coverage*, not recall, and structurally could not raise recall — it is a join on our own ids, so it resolves the books we already had an answer for and reaches nothing beyond them. (Same family as a metric's name being a claim about its denominator.)
+
+Three specific traps, each of which cost real work:
+- **Threshold tuning does not converge — find the right instrument.** The work-identity matcher was tuned five times; pass four lost verified true positives (Cicero's *De Officiis*, Grimald 1556) while making the corpus look *cleaner*. The answer was not a threshold but MARC **240 uniform-title containment**, because 240 exists to name a work independently of how an edition titles it. The same move fixed the 245 fallback that left 35.2% of rows unconfirmable: the overlap there is usually carried by **the author's own name** ("Poetics" vs "The Rhetoric of Aristotle"), so discount personal-name tokens and require containment plus author agreement — never a higher cap. Pinned by a gold set (`tests/unit/reference-set-work-identity.test.ts`) holding both the verified positives and the false-positive class each tuning pass produced.
+- **An immutable log is a history, not a state.** Efforts are immutable so a stale negative re-opens when the set improves — but adding a source mints a new generation and silently orphans prior judgement. Screening lives in `screening_decisions`, keyed on (work, prior), and is re-applied to every generation. Read `search_efforts` through `latestEffortPerBook()`.
+- **Provenance cannot tell you what you translated.** Re-hosted scholarly editions (Budge, Langdon) carry `translation.model` and `source:"ai"` exactly like our own work, because our pipeline OCR'd their printed *English* and re-rendered it. The signal that works is the OCR model's own declaration inside `ocr.data` (`<language>English</language>`) — `scripts/lib/english-source-detect.mjs`. The `pages.ocr.language` column is null on exactly the older ingests where it matters. And strip editorial wrappers before measuring any page text, or you measure our own annotations (that bug shipped here and inflated a count 6×).
+
+- **UNKNOWN must never read as MISMATCH.** The source-language screen compared MARC codes against Wikidata **Q-numbers** (`['gre','grc'].includes('Q35497')` is false), so it rejected every Wikidata row whose language it knew — 228 real priors, including Xenophon's *Symposium* and all six *Rubáiyát*. Reject only when **both** sides resolve to a known value and disagree; an unreadable identifier is unknown (`scripts/lib/source-language-match.mjs`). Deliberately no QID table — a hand-written list of unverifiable assertions reproduces the bug on its first wrong entry.
+- **`books.language` is the language of the WORK, not of the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition.
+
+Full postmortem: private ops repo, `~/sourcelibrary-ops/handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.
