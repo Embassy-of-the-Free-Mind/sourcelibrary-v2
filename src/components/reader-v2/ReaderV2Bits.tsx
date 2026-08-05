@@ -1,8 +1,12 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
+import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
+import { MoreHorizontal, Check } from 'lucide-react';
 import type { ReaderSettings } from './useReaderV2';
 
 // Shared presentational pieces for the v2 reader design previews. All values
@@ -85,6 +89,7 @@ export function ReaderProse({
   return (
     <div
       className="prose-manuscript"
+      data-reader-v2-typeface={settings.typeface}
       style={{
         ['--reader-font-size' as string]: `${fontSize}px`,
         ['--reader-line-height' as string]: settings.lineHeight,
@@ -92,9 +97,6 @@ export function ReaderProse({
         marginInline: 'auto',
         color: 'var(--text-primary)',
         textWrap: 'pretty',
-        ...(settings.typeface === 'sans'
-          ? { fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }
-          : {}),
       }}
     >
       <NotesRenderer
@@ -134,9 +136,19 @@ export function resolveScanUrls(page: Page): ScanUrls {
   return { display, thumb, native };
 }
 
-/** The scan image with its paper shadow. Fixed aspect placeholder while loading. */
-export function ScanImage({ page, book, className = '' }: { page: Page; book: Book; className?: string }) {
-  const { display } = resolveScanUrls(page);
+/**
+ * The scan image with its paper shadow, rendered through the production
+ * ImageWithMagnifier — hover reading lens, in-place pan/zoom controls, click
+ * for the fullscreen viewer (the same affordances the current reader has).
+ */
+export function ScanImage({ page, book, className = '', fit = 'width' }: {
+  page: Page;
+  book: Book;
+  className?: string;
+  /** 'height' for fixed-height panes (image hugs the pane height); 'width' for stacked/mobile layouts */
+  fit?: 'height' | 'width';
+}) {
+  const { display, thumb, native } = resolveScanUrls(page);
   const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
   if (!display) {
     return (
@@ -148,21 +160,133 @@ export function ScanImage({ page, book, className = '' }: { page: Page; book: Bo
       />
     );
   }
+  const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={display}
-      alt={alt}
-      className={`block max-w-full ${className}`}
+    <div
+      className={className}
       style={{
         boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-        filter: (page as unknown as { display_brightness?: number }).display_brightness
-          ? `brightness(${(page as unknown as { display_brightness?: number }).display_brightness})`
-          : undefined,
+        filter: brightness ? `brightness(${brightness})` : undefined,
       }}
-      draggable={false}
-    />
+    >
+      <ImageWithMagnifier
+        src={display}
+        thumbnail={thumb || undefined}
+        highResSrc={native || undefined}
+        alt={alt}
+        scrollable
+        inlineZoomable
+        {...(fit === 'height' ? { className: 'h-full', imgClassName: 'h-full w-auto object-contain' } : {})}
+      />
+    </div>
   );
+}
+
+export interface PaneMenuItem {
+  label: string;
+  onClick?: () => void;
+  href?: string;
+  /** Static informational row (model name, language) — not clickable */
+  info?: string;
+}
+
+/**
+ * The `⋯` menu on a pane/bar: copy text, provenance info, links into the
+ * current reader for flows the preview doesn't duplicate (Trace, Edit).
+ */
+export function PaneMenu({ items, onInkBar = false }: { items: PaneMenuItem[]; onInkBar?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function onDown(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, [open]);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        aria-label="More options"
+        aria-expanded={open}
+        onClick={() => setOpen(v => !v)}
+        className="w-[30px] h-[30px] flex items-center justify-center"
+        style={{ color: onInkBar ? onInk(0.72) : 'var(--text-muted)' }}
+      >
+        <MoreHorizontal size={16} />
+      </button>
+      {open && (
+        <div
+          className="absolute top-full right-0 mt-1 w-[240px] border z-50 py-1"
+          style={{
+            background: SURFACE.popover, borderColor: 'var(--border-medium)',
+            boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)',
+          }}
+          role="menu"
+        >
+          {items.map((it, i) => {
+            if (it.info !== undefined) {
+              return (
+                <div key={i} className="px-3.5 py-1.5 flex items-baseline justify-between gap-3 font-sans text-[12px]">
+                  <span style={{ color: 'var(--text-faint)' }}>{it.label}</span>
+                  <span className="truncate" style={{ color: 'var(--text-secondary)' }}>{it.info}</span>
+                </div>
+              );
+            }
+            const cls = 'w-full flex items-center justify-between gap-2 text-left px-3.5 py-2 font-sans text-[13px] hover:bg-[var(--bg-warm)] no-underline';
+            const style = { color: 'var(--text-secondary)' };
+            if (it.href) {
+              return (
+                <a key={i} href={it.href} className={cls} style={style} role="menuitem">{it.label}</a>
+              );
+            }
+            return (
+              <button
+                key={i}
+                type="button"
+                role="menuitem"
+                className={cls}
+                style={style}
+                onClick={() => {
+                  it.onClick?.();
+                  setCopiedIdx(i);
+                  setTimeout(() => { setCopiedIdx(null); setOpen(false); }, 700);
+                }}
+              >
+                {it.label}
+                {copiedIdx === i && <Check size={13} style={{ color: 'var(--accent-rust)' }} />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Menu items shared by both variants for a page's text panes. */
+export function buildTextMenuItems(
+  page: Page, book: Book, kind: 'ocr' | 'translation', readerHref: string,
+): PaneMenuItem[] {
+  const data = kind === 'ocr' ? page.ocr : page.translation;
+  const items: PaneMenuItem[] = [];
+  if (data?.data) {
+    items.push({
+      label: `Copy ${kind === 'ocr' ? 'transcription' : 'translation'} text`,
+      onClick: () => { navigator.clipboard?.writeText(stripEditorialWrappers(data.data).trim()); },
+    });
+  }
+  if (data?.model) items.push({ label: 'Model', info: data.model });
+  if (data?.language || (kind === 'ocr' && book.language)) {
+    items.push({ label: 'Language', info: (data?.language || book.language) as string });
+  }
+  items.push({ label: 'Trace mode (current reader)', href: readerHref });
+  return items;
 }
 
 /** 34×34 icon button on the ink bar. */

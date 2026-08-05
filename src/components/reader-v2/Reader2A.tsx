@@ -2,17 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
+import LikeButton from '@/components/ui/LikeButton';
+import ShareButton from '@/components/ui/ShareButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import type { Book, Page } from '@/lib/types';
 import {
-  ChevronLeft, ChevronRight, ChevronDown, List, Heart, Share2, MoreHorizontal,
-  Pencil, Check,
+  ChevronLeft, ChevronRight, ChevronDown, List, Pencil,
 } from 'lucide-react';
 import { useReaderV2, type ReaderSettings } from './useReaderV2';
 import ReaderSettingsControls from './ReaderSettingsControls';
 import {
   CapsLabel, AiChip, ReaderProse, PageBreakMarker, ScanImage, resolveScanUrls,
-  InkIconButton, ViewToggleGroup, onInk, SURFACE, themeAttr, bookByline,
+  PaneMenu, buildTextMenuItems, ViewToggleGroup, onInk, SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
 
 // ─── Variant 2a: "Quiet Desk" ────────────────────────────────────────────────
@@ -132,7 +133,7 @@ function PageFooterActions({ book, page }: { book: Book; page: Page }) {
       className="flex items-center justify-between mt-10 pt-3 border-t font-sans text-[13px]"
       style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}
     >
-      <span>♡ Like this page</span>
+      <LikeButton key={page.id} targetType="page" targetId={page.id} bookId={book.id} size="sm" showCount label="Like this page" />
       <a
         href={`/book/${book.slug || book.id}/page/${page.id}`}
         className="hover:text-[var(--accent-rust)] no-underline"
@@ -203,17 +204,12 @@ export default function Reader2A({ initialBook, initialPage, initialPageList }: 
   useEffect(() => { if (jumpOpen) jumpRef.current?.focus(); }, [jumpOpen]);
 
   const [chaptersOpen, setChaptersOpen] = useState(false);
-  const [shared, setShared] = useState(false);
   const [mobileView, setMobileView] = useState<MobileView>('en');
   const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
 
-  const share = useCallback(() => {
-    const url = `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`;
-    navigator.clipboard?.writeText(url).then(() => {
-      setShared(true);
-      setTimeout(() => setShared(false), 1600);
-    });
-  }, [r.bookPath, r.currentPageId]);
+  const shareUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
+    : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
 
   const scan = resolveScanUrls(r.currentPage);
   const pageNum = r.currentPage?.page_number ?? '—';
@@ -327,15 +323,22 @@ export default function Reader2A({ initialBook, initialPage, initialPageList }: 
               <span className="font-body"><span className="text-[11px]">A</span><span className="text-[15px]">A</span></span>
               Reading settings
             </button>
-            <InkIconButton label="Save to library (in the current reader)" href={editHref}>
-              <Heart size={16} />
-            </InkIconButton>
-            <InkIconButton label={shared ? 'Link copied' : 'Copy link to this page'} onClick={share}>
-              {shared ? <Check size={16} /> : <Share2 size={16} />}
-            </InkIconButton>
-            <InkIconButton label="More" onClick={() => { /* reserved */ }}>
-              <MoreHorizontal size={16} />
-            </InkIconButton>
+            <LikeButton key={r.currentPageId} targetType="page" targetId={r.currentPageId} bookId={r.book.id} size="sm" showCount />
+            <ShareButton
+              title={r.book.display_title || r.book.title}
+              author={r.book.author}
+              year={r.book.published}
+              page={r.currentPage?.page_number}
+              url={shareUrl}
+              variant="icon"
+            />
+            <PaneMenu
+              onInkBar
+              items={[
+                ...buildTextMenuItems(r.currentPage, r.book, 'translation', editHref),
+                ...buildTextMenuItems(r.currentPage, r.book, 'ocr', editHref).filter(i => i.label.startsWith('Copy')),
+              ]}
+            />
             <a
               href={editHref}
               className="ml-2 flex items-center gap-2 px-3 py-[7px] font-sans text-[13px] border no-underline"
@@ -393,7 +396,7 @@ export default function Reader2A({ initialBook, initialPage, initialPageList }: 
               }}
             >
               <div className="relative flex-1 min-h-0 flex items-center justify-center px-10 pt-[30px] pb-3">
-                <ScanImage page={r.currentPage} book={r.book} className="max-h-full w-auto object-contain" />
+                <ScanImage page={r.currentPage} book={r.book} className="h-full max-w-full" fit="height" />
                 <button type="button" aria-label="Previous page" onClick={r.goPrev}
                   className="absolute left-1.5 top-1/2 -translate-y-1/2 w-[38px] h-24 flex items-center justify-center transition-colors"
                   style={{ background: 'rgba(43,38,32,0.07)', color: 'var(--text-muted)' }}
@@ -413,7 +416,7 @@ export default function Reader2A({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>Original scan · p. {pageNum}</CapsLabel>
                 <span className="flex gap-4 font-sans text-[12.5px]" style={{ color: 'var(--text-muted)' }}>
                   {scan.native && (
-                    <a href={scan.native} target="_blank" rel="noreferrer" className="no-underline hover:text-[var(--text-primary)]">Zoom</a>
+                    <a href={scan.native} target="_blank" rel="noreferrer" className="no-underline hover:text-[var(--text-primary)]">Full res</a>
                   )}
                   {scan.native && (
                     <a href={scan.native} download={`${r.bookPath}-page-${pageNum}.jpg`} className="no-underline hover:text-[var(--text-primary)]">Download</a>

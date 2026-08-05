@@ -291,6 +291,14 @@ h1, h2, h3, h4 {
 [data-reader-theme='night'] .text-stone-700 { color: #cfc8bd; }
 [data-reader-theme='night'] .hover\:text-stone-700:hover { color: #ece7df; }
 
+/* Reader v2 design previews (/v2a, /v2c): the typeface setting must reach
+   NotesRenderer's nested .prose-manuscript, whose class font-family would
+   otherwise beat an inherited inline style. */
+[data-reader-v2-typeface='sans'],
+[data-reader-v2-typeface='sans'] .prose-manuscript {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Prose styling for content/document pages */
 .prose-content {
   font-family: 'Newsreader', Georgia, serif;
