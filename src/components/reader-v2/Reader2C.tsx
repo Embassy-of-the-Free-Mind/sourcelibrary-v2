@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
+import UserMenu from '@/components/layout/UserMenu';
 import LikeButton from '@/components/ui/LikeButton';
 import ShareButton from '@/components/ui/ShareButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -11,9 +12,9 @@ import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/a
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
 import {
-  ChevronLeft, ChevronRight, ChevronDown, List, Search, StickyNote, Quote,
+  ChevronLeft, ChevronRight, ChevronDown, List, Search, Quote,
   Pencil, Check, X, Loader2, GalleryHorizontal, ZoomIn, ZoomOut,
-  Heart, Share2, BookOpen, MessageCircle,
+  Heart, Share2, BookOpen, MessageCircle, Info,
 } from 'lucide-react';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls from './ReaderSettingsControls';
@@ -33,13 +34,14 @@ import {
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'cite' | 'settings' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'settings' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
   search: 'Search this book',
   guide: 'Reading guide',
   librarian: 'Ask the librarian',
+  info: 'Edition & page info',
   cite: 'Cite this page',
   settings: 'Reading settings',
 };
@@ -241,6 +243,95 @@ function GuidePanel({ bookId, bookPath, onGoToPageNumber }: {
       <p className="mt-4 pt-3 border-t font-sans text-[12px]" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
         <a href={`/book/${bookPath}/guide`} className="underline">Full reading guide →</a>
       </p>
+    </div>
+  );
+}
+
+/** Pane-level Notes toggle — inline editorial notes/glosses apply per text pane. */
+function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={on}
+      className="font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-1.5 h-[24px] transition-colors hover:bg-black/5"
+      style={{
+        color: on ? 'var(--accent-rust)' : 'var(--text-faint)',
+        boxShadow: on ? 'inset 0 -2px 0 var(--accent-rust)' : 'none',
+      }}
+      title={on ? 'Hide inline notes and glosses' : 'Show inline notes and glosses'}
+    >
+      Notes
+    </button>
+  );
+}
+
+/** Extract the page summary from the translation's editorial wrapper blocks. */
+function extractPageSummary(page: Page): string | null {
+  const raw = page.translation?.data || '';
+  const summary = raw.match(/<summary>([\s\S]*?)<\/summary>/i)?.[1]?.trim();
+  if (summary) return summary;
+  const meta = raw.match(/<meta>([\s\S]*?)<\/meta>/i)?.[1]?.trim();
+  return meta || null;
+}
+
+/** Edition & page info — page summary + bibliographic record, fetched on open. */
+function InfoPanel({ page, book }: { page: Page; book: Book }) {
+  const [fullBook, setFullBook] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    booksApi.get(book.id)
+      .then(b => { if (!cancelled) setFullBook(b as unknown as Record<string, unknown>); })
+      .catch(() => { /* fall back to nav fields */ });
+    return () => { cancelled = true; };
+  }, [book.id]);
+
+  const summary = extractPageSummary(page);
+  const b = { ...(fullBook || {}), ...book } as Record<string, unknown>;
+  const rows: Array<[string, string | undefined]> = [
+    ['Title', b.title as string],
+    ['English', (b.display_title as string) !== (b.title as string) ? (b.display_title as string) : undefined],
+    ['Author', b.author as string],
+    ['Language', b.language as string],
+    ['Place', (fullBook?.place_published as string) || undefined],
+    ['Publisher', (fullBook?.publisher as string) || undefined],
+    ['Published', b.published as string],
+    ['Format', (fullBook?.format as string) || undefined],
+    ['Pages', fullBook?.pages_count ? String(fullBook.pages_count) : undefined],
+    ['USTC', (fullBook?.ustc_id as string) || undefined],
+  ];
+
+  return (
+    <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
+      {summary && (
+        <div className="mb-4 p-3 border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }}>
+          <CapsLabel className="block mb-1.5" style={{ color: 'var(--accent-gold-dark)' }}>This page</CapsLabel>
+          <p className="font-body text-[13.5px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            {summary}
+          </p>
+        </div>
+      )}
+      <CapsLabel className="block mb-2" style={{ color: 'var(--text-muted)' }}>This edition</CapsLabel>
+      {!fullBook && (
+        <div className="py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
+      )}
+      <dl>
+        {rows.filter(([, v]) => v).map(([label, value]) => (
+          <div key={label} className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
+            <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{label}</dt>
+            <dd style={{ color: 'var(--text-secondary)' }}>
+              {label === 'Title' ? <em className="font-body">{value}</em> : value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      {typeof b.doi === 'string' && b.doi && (
+        <p className="mt-3 font-sans text-[12px]">
+          <a href={`https://doi.org/${b.doi}`} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+            DOI {b.doi as string}
+          </a>
+        </p>
+      )}
     </div>
   );
 }
@@ -868,6 +959,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <Pencil size={13} /> Edit
             </button>
           )}
+          <div className="ml-1">
+            <UserMenu variant="hero" />
+          </div>
         </header>
 
         {/* Tool rail */}
@@ -880,12 +974,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
           <RailButton label="Guide" active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
           <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
-          <RailButton
-            label="Notes"
-            active={r.settings.glosses}
-            onClick={() => r.updateSettings({ glosses: !r.settings.glosses })}
-            icon={<StickyNote size={17} />}
-          />
+          <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
           <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton
             label="Settings"
@@ -965,7 +1054,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               className="flex-1 min-w-0 flex flex-col border-r"
               style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}
             >
-              <PaneHeader right={!editing ? <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} /> : undefined}>
+              <PaneHeader right={!editing ? (
+                <div className="flex items-center gap-1">
+                  <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
+                </div>
+              ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
                   {r.book.language || 'Original'} · OCR
                 </CapsLabel>
@@ -987,7 +1081,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           )}
           {r.views.en && (
             <section className="flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
-              <PaneHeader right={!editing ? <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} /> : undefined}>
+              <PaneHeader right={!editing ? (
+                <div className="flex items-center gap-1">
+                  <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
+                </div>
+              ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English</CapsLabel>
                 <AiChip short />
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
@@ -1054,6 +1153,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   messages={librarianMessages}
                   onMessages={setLibrarianMessages}
                 />
+              )}
+              {leftPanel === 'info' && (
+                <InfoPanel page={r.currentPage} book={r.book} />
               )}
               {leftPanel === 'cite' && (
                 <div className="flex-1 overflow-y-auto px-4 pb-4" style={{ overscrollBehavior: 'contain' }}>
@@ -1194,7 +1296,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section className="border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4">
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
-                <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
+                <div className="flex items-center gap-1">
+                  <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
+                </div>
               </div>
               <div className="px-[22px] pb-8">
                 <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17} />
@@ -1208,7 +1313,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>English</CapsLabel>
                   <AiChip short />
                 </div>
-                <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
+                <div className="flex items-center gap-1">
+                  <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
+                </div>
               </div>
               <div className="px-[22px] pb-6">
                 <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />

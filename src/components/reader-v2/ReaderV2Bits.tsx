@@ -167,6 +167,9 @@ export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
  * drag pans (clamped to the image), double-click toggles 2.2×, and the
  * high-resolution source swaps in for sharpness.
  */
+const LENS_SIZE = 220;
+const LENS_MAG = 2.4;
+
 export function ScanViewer({ page, book, zoom, onZoomChange }: {
   page: Page;
   book: Book;
@@ -175,9 +178,34 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
 }) {
   const { display, native } = resolveScanUrls(page);
   const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const dragRef = useRef<{ startX: number; startY: number; panX: number; panY: number } | null>(null);
   const [dragging, setDragging] = useState(false);
+  // Hover reading lens (magnifier) — active at 100% only; pan/zoom takes over past that
+  const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
+
+  const updateLens = useCallback((clientX: number, clientY: number) => {
+    const img = imgRef.current;
+    const container = containerRef.current;
+    if (!img || !container) return;
+    const r = img.getBoundingClientRect();
+    if (clientX < r.left || clientX > r.right || clientY < r.top || clientY > r.bottom) {
+      setLens(null);
+      return;
+    }
+    const cr = container.getBoundingClientRect();
+    const relX = (clientX - r.left) / r.width;
+    const relY = (clientY - r.top) / r.height;
+    setLens({
+      x: clientX - cr.left,
+      y: clientY - cr.top,
+      bgW: r.width * LENS_MAG,
+      bgH: r.height * LENS_MAG,
+      bgX: -(relX * r.width * LENS_MAG - LENS_SIZE / 2),
+      bgY: -(relY * r.height * LENS_MAG - LENS_SIZE / 2),
+    });
+  }, []);
 
   // New page or zoom back to 1 → recenter (state adjusted during render,
   // per the React "derive state from props" pattern — no effect needed)
@@ -209,8 +237,16 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
   };
   const onPointerMove = (e: React.PointerEvent) => {
     const d = dragRef.current;
-    if (!d) return;
-    setPan(clampPan(d.panX + (e.clientX - d.startX), d.panY + (e.clientY - d.startY), zoom));
+    if (d) {
+      setPan(clampPan(d.panX + (e.clientX - d.startX), d.panY + (e.clientY - d.startY), zoom));
+      return;
+    }
+    // Reading lens at 100%, mouse only (touch gets pinch-free plain view)
+    if (zoom === 1 && e.pointerType === 'mouse') {
+      updateLens(e.clientX, e.clientY);
+    } else if (lens) {
+      setLens(null);
+    }
   };
   const endDrag = () => { dragRef.current = null; setDragging(false); };
 
@@ -230,19 +266,20 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
       ref={containerRef}
       className="h-full w-full overflow-hidden flex items-center justify-center select-none"
       style={{
-        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in',
+        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : 'crosshair',
         touchAction: 'none',
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
-      onPointerLeave={endDrag}
+      onPointerLeave={() => { endDrag(); setLens(null); }}
       onDoubleClick={() => onZoomChange(zoom > 1 ? 1 : 2.2)}
       role="img"
       aria-label={alt}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         draggable={false}
@@ -254,6 +291,23 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
           filter: brightness ? `brightness(${brightness})` : undefined,
         }}
       />
+      {lens && zoom === 1 && (
+        <div
+          aria-hidden="true"
+          className="absolute pointer-events-none border"
+          style={{
+            width: LENS_SIZE,
+            height: LENS_SIZE,
+            left: lens.x - LENS_SIZE / 2,
+            top: lens.y - LENS_SIZE / 2,
+            borderColor: 'var(--border-medium)',
+            boxShadow: '0 12px 32px -12px rgba(30,20,8,0.5)',
+            background: `#fff url(${JSON.stringify(native || display)}) no-repeat`,
+            backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
+            backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
+          }}
+        />
+      )}
     </div>
   );
 }
