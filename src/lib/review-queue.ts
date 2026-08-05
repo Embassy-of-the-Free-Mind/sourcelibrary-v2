@@ -32,6 +32,16 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'n', rating: 'blank',            label: '∅ blank',            color: '#6b7280', hint: 'Effectively blank page' },
     { key: 'u', rating: 'unclear',          label: '? unclear',          color: '#9ca3af', hint: "Can't tell" },
   ],
+  // UI copy, not book pages. The item is a translated interface string and the
+  // question is whether the Spanish says what the English says and reads like a
+  // person wrote it. No image, no page — see review-candidates.ts, which cares
+  // only about `queue`.
+  'spanish-copy': [
+    { key: 'k', rating: 'natural',  label: '\u2713 natural',  color: '#10b981', hint: 'Correct, and reads like Spanish' },
+    { key: 'a', rating: 'awkward',  label: '~ awkward',  color: '#f59e0b', hint: 'Understandable but stiff, or the wrong register' },
+    { key: 'j', rating: 'wrong',    label: '\u2717 wrong',    color: '#ef4444', hint: 'Says something the English does not, or is a mistranslation' },
+    { key: 'u', rating: 'unclear',  label: '? unclear',  color: '#6b7280', hint: "Can't tell without seeing where it appears" },
+  ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
@@ -54,7 +64,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

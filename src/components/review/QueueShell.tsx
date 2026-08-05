@@ -27,6 +27,9 @@ export function QueueShell(props: {
   body: ReactNode | null;
   submitting: boolean;
   note: string;
+  /** Queue-specific example. The default was written for the hallucination
+   *  queue and read as nonsense everywhere else. */
+  notePlaceholder?: string;
   onNoteChange: (v: string) => void;
   onNoteSubmit: () => void;
   noteSaved: boolean;
@@ -34,7 +37,7 @@ export function QueueShell(props: {
   const {
     queueTitle, question, ratings, sessionCount, loading, error,
     onRate, onSkip, onRetry, body, submitting,
-    note, onNoteChange, onNoteSubmit, noteSaved,
+    note, notePlaceholder, onNoteChange, onNoteSubmit, noteSaved,
   } = props;
   return (
     <main className="min-h-screen bg-stone-50">
@@ -114,7 +117,7 @@ export function QueueShell(props: {
                   onChange={e => onNoteChange(e.target.value)}
                   rows={3}
                   maxLength={4000}
-                  placeholder="e.g. not a hallucination — it's bleed-through from the facing leaf"
+                  placeholder={notePlaceholder ?? 'Anything the buttons cannot express'}
                   className="w-full px-3 py-2 border border-stone-300 rounded-md text-sm text-stone-900 bg-white resize-y focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
                 />
                 <div className="flex items-center gap-3 mt-2">
