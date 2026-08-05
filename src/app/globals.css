@@ -325,8 +325,14 @@ body:has([data-reader-v2]) {
   to   { transform: none; opacity: 1; }
 }
 .rv2-pop { animation: rv2-pop 0.16s ease-out both; }
+/* Panels rise from the bottom toolbar */
+@keyframes rv2-slide-up {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
-  .rv2-slide-in-left, .rv2-pop { animation: none; }
+  .rv2-slide-in-left, .rv2-pop, .rv2-slide-up { animation: none; }
 }
 
 

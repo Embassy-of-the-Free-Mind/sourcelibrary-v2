@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
-import LikeButton from '@/components/ui/LikeButton';
-import ShareButton from '@/components/ui/ShareButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIdentity } from '@/hooks/useIdentity';
 import { getPageThumbUrl } from '@/lib/utils';
@@ -52,6 +50,7 @@ interface Reader2CProps {
   initialPageList: Page[];
 }
 
+/** Desktop tool rail button (the rail is the desktop navigation). */
 function RailButton({
   label, icon, onClick, active = false,
 }: {
@@ -75,6 +74,84 @@ function RailButton({
       {icon}
       <span className="font-sans text-[8.5px] tracking-[0.06em]">{label}</span>
     </button>
+  );
+}
+
+/** Mobile toolbar button: icon over label, sharing the row at a 52px target. */
+function ToolButton({
+  label, icon, onClick, active = false,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  onClick?: () => void;
+  active?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      className="flex-1 min-w-0 h-[52px] flex flex-col items-center justify-center gap-0.5 transition-colors"
+      style={{
+        color: active ? '#fdfcf9' : onInk(0.62),
+        background: active ? onInk(0.14) : 'transparent',
+      }}
+      title={label}
+      onClick={onClick}
+      aria-pressed={active}
+    >
+      {icon}
+      <span className="font-sans text-[9px] tracking-[0.04em] truncate max-w-full px-0.5">{label}</span>
+    </button>
+  );
+}
+
+const AaGlyph = <span className="font-body leading-none"><span className="text-[11px]">A</span><span className="text-[15px]">A</span></span>;
+
+/**
+ * Mobile toolbar: the phone's equivalent of the desktop rail. It sits at the
+ * bottom (thumb reach) and its panels expand upward, so every tool the desk
+ * has — contents, search, guide, librarian, info, cite, settings, pages — is
+ * reachable on a phone without stealing reading width.
+ */
+function MobileToolbar({
+  panel, onTogglePanel, stripVisible, onToggleStrip,
+}: {
+  panel: LeftPanel;
+  onTogglePanel: (p: Exclude<LeftPanel, null>) => void;
+  stripVisible: boolean;
+  onToggleStrip: () => void;
+}) {
+  const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
+    ['contents', 'Contents', <List key="i" size={18} />],
+    ['search', 'Search', <Search key="i" size={18} />],
+    ['guide', 'Guide', <BookOpen key="i" size={18} />],
+    ['librarian', 'Librarian', <MessageCircle key="i" size={18} />],
+    ['info', 'Info', <Info key="i" size={18} />],
+    ['cite', 'Cite', <Quote key="i" size={18} />],
+    ['settings', 'Settings', AaGlyph],
+  ];
+  return (
+    <div
+      className="flex items-center w-full"
+      style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}`, height: 52 }}
+      role="toolbar"
+      aria-label="Reader tools"
+    >
+      {tools.map(([key, label, icon]) => (
+        <ToolButton
+          key={key}
+          label={label}
+          icon={icon}
+          active={panel === key}
+          onClick={() => onTogglePanel(key)}
+        />
+      ))}
+      <ToolButton
+        label="Pages"
+        icon={<GalleryHorizontal size={18} />}
+        active={stripVisible}
+        onClick={onToggleStrip}
+      />
+    </div>
   );
 }
 
@@ -642,6 +719,106 @@ function Filmstrip({
   );
 }
 
+type ReaderState = ReturnType<typeof useReaderV2>;
+
+/**
+ * The body of whichever tool panel is open. Shared verbatim between the
+ * desktop panel (rises above the toolbar) and the mobile sheet, so the two
+ * breakpoints can never drift apart.
+ */
+function PanelContent({
+  panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose,
+}: {
+  panel: Exclude<LeftPanel, null>;
+  r: ReaderState;
+  citation: string;
+  copied: boolean;
+  onCopyCitation: () => void;
+  librarianMessages: LibrarianMessage[];
+  onLibrarianMessages: (m: LibrarianMessage[]) => void;
+  onClose: () => void;
+}) {
+  if (panel === 'contents') {
+    return (
+      <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
+        {r.chapters.length ? (
+          <ChapterList
+            chapters={r.chapters}
+            currentTitle={r.currentChapter?.title}
+            onSelect={(pid) => { onClose(); if (pid) r.goToPage(pid); }}
+          />
+        ) : (
+          <p className="px-4 py-3 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
+            No table of contents for this book yet.
+          </p>
+        )}
+      </div>
+    );
+  }
+  if (panel === 'search') {
+    return <BookSearchPanel bookId={r.book.id} onGoTo={(pid) => { onClose(); r.goToPage(pid); }} />;
+  }
+  if (panel === 'guide') {
+    return (
+      <GuidePanel
+        bookId={r.book.id}
+        bookPath={r.bookPath}
+        onGoToPageNumber={(n) => { onClose(); r.goToPageNumber(n); }}
+      />
+    );
+  }
+  if (panel === 'librarian') {
+    return (
+      <LibrarianPanel
+        page={r.currentPage}
+        book={r.book}
+        messages={librarianMessages}
+        onMessages={onLibrarianMessages}
+      />
+    );
+  }
+  if (panel === 'info') {
+    return <InfoPanel page={r.currentPage} book={r.book} />;
+  }
+  if (panel === 'cite') {
+    return (
+      <div className="flex-1 overflow-y-auto px-4 pb-4" style={{ overscrollBehavior: 'contain' }}>
+        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
+          {citation}
+        </p>
+        <button
+          type="button"
+          onClick={onCopyCitation}
+          className="flex items-center gap-2 px-3 py-1.5 font-sans text-[12.5px] border hover:bg-[var(--bg-white)] transition-colors"
+          style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+        >
+          {copied ? <Check size={13} /> : null}
+          {copied ? 'Copied' : 'Copy citation'}
+        </button>
+        <p className="mt-4 pt-3 border-t font-sans text-[12px] leading-relaxed" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
+          The link points at this exact page, so readers land where you quoted.
+        </p>
+      </div>
+    );
+  }
+  // settings
+  return (
+    <div className="flex-1 overflow-y-auto px-[18px] pb-4" style={{ overscrollBehavior: 'contain' }}>
+      <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} />
+      <button
+        type="button"
+        onClick={() => { onClose(); r.setFocusMode(true); }}
+        className="w-full flex items-center justify-between min-h-[38px] border-t font-sans text-[12px]"
+        style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}
+      >
+        Focus mode
+        <kbd className="px-1.5 py-0.5 border font-sans text-[11px]"
+          style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>F</kbd>
+      </button>
+    </div>
+  );
+}
+
 export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true });
   const browserTranslated = useBrowserTranslation();
@@ -652,7 +829,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   }, []);
 
   const [copied, setCopied] = useState(false);
-  const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
+
+  // Which breakpoint's panel to mount. Both layouts exist in the DOM (one
+  // hidden by CSS), so without this the open panel would mount TWICE and
+  // double every fetch it makes. Safe to derive on the client: a panel only
+  // exists after a click, so it can't differ at hydration.
+  const [isDesktop, setIsDesktop] = useState(
+    () => (typeof window === 'undefined' ? true : window.matchMedia('(min-width: 1024px)').matches)
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   // Librarian conversation survives panel toggles and page turns
   const [librarianMessages, setLibrarianMessages] = useState<LibrarianMessage[]>([]);
@@ -773,10 +963,41 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     window.setTimeout(() => { syncLock.current = null; }, 80);
   }, []);
 
+  // Mobile: one scroller for the stacked panes. Reset it on a page turn so a
+  // new page always starts at the top, and drive paging from a horizontal swipe.
+  const mobileMainRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
+    mobileMainRef.current?.scrollTo({ top: 0 });
   }, [r.currentPageId]);
+
+  // Swipe to page: axis-locked so a vertical read never turns a page, and a
+  // horizontal drag has to clear both a distance floor and a vertical bias.
+  const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length !== 1) { swipeRef.current = null; return; }
+    swipeRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null };
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    const s = swipeRef.current;
+    if (!s || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - s.x;
+    const dy = e.touches[0].clientY - s.y;
+    if (!s.axis && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+      s.axis = Math.abs(dx) > Math.abs(dy) * 1.5 ? 'x' : 'y';
+    }
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const s = swipeRef.current;
+    swipeRef.current = null;
+    if (!s || s.axis !== 'x') return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - s.x;
+    if (Math.abs(dx) < 45) return;
+    if (dx < 0) r.goNext(); else r.goPrev();
+  };
 
   // Filmstrip: keep the current page centred
   const stripRef = useRef<HTMLDivElement>(null);
@@ -811,13 +1032,22 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const pageNum = r.currentPage?.page_number ?? '—';
   const scan = resolveScanUrls(r.currentPage);
   const readerHref = `/book/${r.bookPath}/page/${r.currentPageId}`;
-  const searchHref = `/book/${r.bookPath}/search`;
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
 
   const leftPanelTitle = leftPanel ? LEFT_PANEL_TITLES[leftPanel] : '';
   const leftPanelWidth = leftPanel === 'librarian' || leftPanel === 'guide' ? 340 : 300;
+  const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
+  const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
+
+  const panelProps = {
+    r, citation, copied,
+    onCopyCitation: copyCitation,
+    librarianMessages,
+    onLibrarianMessages: setLibrarianMessages,
+    onClose: () => setLeftPanel(null),
+  };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
     <textarea
@@ -976,22 +1206,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
           <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
           <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
-          <RailButton
-            label="Settings"
-            active={leftPanel === 'settings'}
-            onClick={() => togglePanel('settings')}
-            icon={<span className="font-body leading-none"><span className="text-[11px]">A</span><span className="text-[15px]">A</span></span>}
-          />
+          <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
           <div className="flex-1" />
           {/* Bottom slot matches the filmstrip height so the toggle sits
               centred against the strip it controls */}
           <div className="flex items-center justify-center transition-[height] duration-300" style={{ height: stripVisible ? 92 : 56 }}>
-            <RailButton
-              label="Pages"
-              active={stripVisible}
-              onClick={toggleStrip}
-              icon={<GalleryHorizontal size={17} />}
-            />
+            <RailButton label="Pages" active={stripVisible} onClick={toggleStrip} icon={<GalleryHorizontal size={17} />} />
           </div>
         </nav>
 
@@ -1107,7 +1327,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           )}
 
           {/* Left slide-out panel (Contents / Search / Settings) */}
-          {leftPanel && (
+          {leftPanel && isDesktop && (
             <div
               className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
@@ -1116,81 +1336,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 boxShadow: '24px 0 48px -28px rgba(30,20,8,0.5)',
               }}
             >
-              <div className="flex items-center justify-between px-4 pt-4 pb-2">
+              <div className="flex items-center justify-between px-4 pt-3.5 pb-2 shrink-0">
                 <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
                   className="text-[var(--text-muted)] hover:text-[var(--text-primary)]"><X size={15} /></button>
               </div>
-              {leftPanel === 'contents' && (
-                <div className="flex-1 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
-                  {r.chapters.length ? (
-                    <ChapterList
-                      chapters={r.chapters}
-                      currentTitle={r.currentChapter?.title}
-                      onSelect={(pid) => { setLeftPanel(null); if (pid) r.goToPage(pid); }}
-                    />
-                  ) : (
-                    <p className="px-4 py-3 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-                      No table of contents for this book yet.
-                    </p>
-                  )}
-                </div>
-              )}
-              {leftPanel === 'search' && (
-                <BookSearchPanel bookId={r.book.id} onGoTo={(pid) => { setLeftPanel(null); r.goToPage(pid); }} />
-              )}
-              {leftPanel === 'guide' && (
-                <GuidePanel
-                  bookId={r.book.id}
-                  bookPath={r.bookPath}
-                  onGoToPageNumber={(n) => { setLeftPanel(null); r.goToPageNumber(n); }}
-                />
-              )}
-              {leftPanel === 'librarian' && (
-                <LibrarianPanel
-                  page={r.currentPage}
-                  book={r.book}
-                  messages={librarianMessages}
-                  onMessages={setLibrarianMessages}
-                />
-              )}
-              {leftPanel === 'info' && (
-                <InfoPanel page={r.currentPage} book={r.book} />
-              )}
-              {leftPanel === 'cite' && (
-                <div className="flex-1 overflow-y-auto px-4 pb-4" style={{ overscrollBehavior: 'contain' }}>
-                  <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
-                    {citation}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={copyCitation}
-                    className="flex items-center gap-2 px-3 py-1.5 font-sans text-[12.5px] border hover:bg-[var(--bg-white)] transition-colors"
-                    style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
-                  >
-                    {copied ? <Check size={13} /> : null}
-                    {copied ? 'Copied' : 'Copy citation'}
-                  </button>
-                  <p className="mt-4 pt-3 border-t font-sans text-[12px] leading-relaxed" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
-                    The link points at this exact page, so readers land where you quoted.
-                  </p>
-                </div>
-              )}
-              {leftPanel === 'settings' && (
-                <div className="flex-1 overflow-y-auto px-[18px] pb-4" style={{ overscrollBehavior: 'contain' }}>
-                  <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} />
-                  <button
-                    type="button"
-                    onClick={() => { setLeftPanel(null); r.setFocusMode(true); }}
-                    className="w-full flex items-center justify-between min-h-[38px] border-t font-sans text-[12px]"
-                    style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}
-                  >
-                    Focus mode
-                    <kbd className="px-1.5 py-0.5 border font-sans text-[11px]"
-                      style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>F</kbd>
-                  </button>
-                </div>
-              )}
+              <PanelContent panel={leftPanel} {...panelProps} />
             </div>
           )}
 
@@ -1207,7 +1358,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           )}
         </div>
 
-        {/* Filmstrip — the only page control in 2c; collapses smoothly */}
+        {/* Filmstrip — page control, collapses smoothly */}
         <div
           className={`col-start-2 min-w-0 overflow-hidden transition-[height] duration-300 ease-out ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}
           style={{ height: stripVisible && !chromeHidden ? 92 : 0 }}
@@ -1229,25 +1380,27 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
       <div className="lg:hidden flex flex-col h-[100dvh]">
         <header className={`shrink-0 transition-opacity ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`} style={{ background: INK, color: '#fdfcf9' }}>
-          <div className="flex items-center h-[52px] px-2.5">
-            <a href={`/book/${r.bookPath}`} aria-label="Back to the book" className="w-11 h-11 -ml-1 flex items-center justify-center no-underline" style={{ color: onInk(0.85) }}>
-              <ChevronLeft size={20} />
-            </a>
-            <div className="flex-1 min-w-0 text-center">
-              <div className="font-body text-[15px] truncate">{r.book.display_title || r.book.title}</div>
-              <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
-                {r.currentChapter ? `${r.currentChapter.titleEn || r.currentChapter.title} · ` : ''}p. {pageNum}
+          <div className="flex items-center gap-2.5 h-[52px] px-3">
+            {/* Circles-only mark (the wordmark stays a desktop affordance) */}
+            <Logo white mini />
+            <a
+              href={`/book/${r.bookPath}`}
+              className="flex-1 min-w-0 no-underline"
+              title="Back to the book page"
+            >
+              <div className="font-body text-[14.5px] truncate" style={{ color: '#fdfcf9' }}>
+                {r.book.display_title || r.book.title}
               </div>
-            </div>
-            <a href={searchHref} aria-label="Search this book" className="w-11 h-11 flex items-center justify-center no-underline" style={{ color: onInk(0.85) }}>
-              <Search size={18} />
+              <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
+                {r.currentChapter ? `${r.currentChapter.titleEn || r.currentChapter.title} · ` : ''}p. {pageNum} of {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}
+              </div>
             </a>
-            <button type="button" aria-label="Reading settings" onClick={() => setMobileSettingsOpen(v => !v)}
-              className="w-11 h-11 flex items-center justify-center font-body" style={{ color: onInk(0.85) }}>
-              <span><span className="text-[12px]">A</span><span className="text-[17px]">A</span></span>
-            </button>
+            <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
+            <ShareAction url={shareUrl} />
+            <UserMenu variant="hero" />
           </div>
-          <div className="flex gap-1.5 px-3 pb-3 border-b" style={{ borderColor: onInk(0.12) }}>
+          {/* View chips — deliberately small; the toolbar carries the big targets */}
+          <div className="flex gap-1 px-3 pb-2.5">
             {(['scan', 'ocr', 'en'] as const).map(v => {
               const on = r.views[v];
               return (
@@ -1256,7 +1409,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   type="button"
                   aria-pressed={on}
                   onClick={() => r.toggleView(v)}
-                  className="flex-1 h-11 font-sans text-[13px] border transition-colors"
+                  className="flex-1 h-[30px] font-sans text-[11.5px] border transition-colors"
                   style={{
                     borderColor: on ? onInk(0.3) : onInk(0.16),
                     background: on ? onInk(0.14) : 'transparent',
@@ -1271,14 +1424,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         </header>
 
         <main
+          ref={mobileMainRef}
           key={browserTranslated ? `m-translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="flex-1 min-h-0 overflow-y-auto"
           style={{ overscrollBehavior: 'contain', background: SURFACE.translation }}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section style={{ background: SURFACE.scanBed }}>
-              <div className="h-[34px] flex items-center justify-between px-4">
+              <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>Original scan</CapsLabel>
                 {scan.native && (
                   <a href={scan.native} target="_blank" rel="noreferrer"
@@ -1287,28 +1444,28 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </a>
                 )}
               </div>
-              <div className="px-8 pb-6 pt-1 flex justify-center">
+              <div className="px-8 py-5 flex justify-center">
                 <ScanImage page={r.currentPage} book={r.book} className="w-full max-w-[420px]" />
               </div>
             </section>
           )}
           {r.views.ocr && (
             <section className="border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
-              <div className="h-[34px] flex items-center justify-between px-4">
+              <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
                 </div>
               </div>
-              <div className="px-[22px] pb-8">
+              <div className="px-[22px] pt-4 pb-8">
                 <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17} />
               </div>
             </section>
           )}
           {r.views.en && (
             <section className="border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
-              <div className="h-[34px] flex items-center justify-between px-4">
+              <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>English</CapsLabel>
                   <AiChip short />
@@ -1318,51 +1475,81 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
                 </div>
               </div>
-              <div className="px-[22px] pb-6">
+              <div className="px-[22px] pt-4 pb-6">
                 <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
-              </div>
-              <div className="px-[18px] pb-8 flex items-center gap-3" style={{ color: 'var(--text-muted)' }}>
-                <LikeButton key={`m-${r.currentPageId}`} targetType="page" targetId={r.currentPageId} bookId={r.book.id} size="sm" showCount label="Like this page" />
-                <ShareButton
-                  title={r.book.display_title || r.book.title}
-                  author={r.book.author}
-                  year={r.book.published}
-                  page={r.currentPage?.page_number}
-                  url={shareUrl}
-                  variant="icon"
-                />
               </div>
             </section>
           )}
+
+          {/* End of the scroll: page turn where the reading actually ends
+              (swiping left/right anywhere in this scroller does the same) */}
+          <div
+            className="flex items-stretch border-t"
+            style={{ borderColor: 'var(--border-medium)', background: SURFACE.panel }}
+          >
+            <button
+              type="button"
+              onClick={r.goPrev}
+              disabled={!prevPage}
+              className="flex-1 min-h-[56px] px-4 flex items-center gap-2 font-sans text-[13px] disabled:opacity-35 border-r"
+              style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}
+            >
+              <ChevronLeft size={16} />
+              {prevPage ? `Page ${prevPage.page_number}` : 'Start of book'}
+            </button>
+            <button
+              type="button"
+              onClick={r.goNext}
+              disabled={!nextPage}
+              className="flex-1 min-h-[56px] px-4 flex items-center justify-end gap-2 font-sans text-[13px] disabled:opacity-35"
+              style={{ color: 'var(--accent-rust)' }}
+            >
+              {nextPage ? `Next page ${nextPage.page_number}` : 'End of book'}
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </main>
 
-        {/* Settings sheet above the filmstrip */}
-        {mobileSettingsOpen && (
+        {/* Tool panel — rises from the toolbar, clearing the filmstrip */}
+        {leftPanel && !isDesktop && (
           <div
-            className="fixed left-0 right-0 z-50 border-t p-4 pb-6 rv2-pop"
+            className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up"
             style={{
-              bottom: 96, background: SURFACE.panel, borderColor: 'var(--border-medium)',
+              bottom: 52 + (stripVisible ? 96 : 0),
+              maxHeight: '62dvh',
+              background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
           >
-            <div className="flex items-center justify-between mb-1">
-              <CapsLabel style={{ color: 'var(--accent-rust)' }}>Reading settings</CapsLabel>
-              <button type="button" aria-label="Close settings" onClick={() => setMobileSettingsOpen(false)}
-                className="w-11 h-11 -mr-2 flex items-center justify-center text-[var(--text-muted)]">×</button>
+            <div className="flex items-center justify-between px-4 pt-3 pb-1.5 shrink-0">
+              <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
+              <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
+                className="w-11 h-11 -mr-2 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
             </div>
-            <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} compact />
+            <PanelContent panel={leftPanel} {...panelProps} />
           </div>
         )}
 
-        <div className="shrink-0 h-[96px]">
-          <Filmstrip
-            pageList={r.pageList}
-            currentPageId={r.currentPageId}
-            compact
-            innerRef={stripMobileRef}
-            onPrev={r.goPrev}
-            onNext={r.goNext}
-            onGoTo={r.goToPage}
+        {stripVisible && (
+          <div className={`shrink-0 h-[96px] ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}>
+            <Filmstrip
+              pageList={r.pageList}
+              currentPageId={r.currentPageId}
+              compact
+              innerRef={stripMobileRef}
+              onPrev={r.goPrev}
+              onNext={r.goNext}
+              onGoTo={r.goToPage}
+            />
+          </div>
+        )}
+
+        <div className={`shrink-0 transition-opacity ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}>
+          <MobileToolbar
+            panel={leftPanel}
+            onTogglePanel={togglePanel}
+            stripVisible={stripVisible}
+            onToggleStrip={toggleStrip}
           />
         </div>
       </div>
