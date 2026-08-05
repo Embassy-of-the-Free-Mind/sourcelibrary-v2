@@ -302,7 +302,9 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
             top: lens.y - LENS_SIZE / 2,
             borderColor: 'var(--border-medium)',
             boxShadow: '0 12px 32px -12px rgba(30,20,8,0.5)',
-            background: `#fff url(${JSON.stringify(native || display)}) no-repeat`,
+            // The lens magnifies the ALREADY-LOADED display image (the full-res
+            // source can take seconds on first hover and reads as a blank box).
+            background: `var(--bg-warm) url(${JSON.stringify(src)}) no-repeat`,
             backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
             backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
           }}
