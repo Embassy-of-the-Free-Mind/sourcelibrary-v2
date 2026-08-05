@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
-import { logMcpToolCall } from '@/lib/mcp-usage';
+import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
 import {
@@ -858,9 +858,36 @@ export async function GET() {
   });
 }
 
+/**
+ * Record who is connecting. `initialize` is the only MCP message that carries
+ * `params.clientInfo`, and the transport consumes it before any of our handlers
+ * see it — so we read it off the parsed body here, before handing it to the SDK.
+ *
+ * Batched JSON-RPC arrives as an array, hence the normalisation. Never throws:
+ * a malformed body is the client's problem, not a reason to fail the request.
+ */
+function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) {
+  const messages = Array.isArray(body) ? body : [body];
+  for (const msg of messages) {
+    const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
+    if (!m || m.method !== 'initialize') continue;
+    const info = (m.params?.clientInfo || {}) as Record<string, unknown>;
+    const s = (v: unknown) => (typeof v === 'string' ? v : null);
+    logMcpInitialize({
+      clientName: s(info.name),
+      clientVersion: s(info.version),
+      clientTitle: s(info.title),
+      protocolVersion: s(m.params?.protocolVersion),
+      ip,
+      userAgent,
+    });
+  }
+}
+
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
+    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'));
 
     // Always set the Accept header the SDK requires — clients send varying
     // combinations (just application/json, just text/event-stream, or neither)
