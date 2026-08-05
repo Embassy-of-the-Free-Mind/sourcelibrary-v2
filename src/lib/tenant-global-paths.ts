@@ -47,6 +47,13 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/blog',
   '/contribute',
   '/support',
+  // `/give` is /support's one-screen twin and the header's Support button. Both
+  // solicit for Source Library specifically (the NAF form is the Source Library
+  // designation, not the Embassy's general fund), so a partner reading room is
+  // the wrong place for it — a BPH visitor asked for money on BPH's own domain
+  // would reasonably think they were giving to BPH. The header filters on this
+  // list, so listing it here also removes the button on tenant hosts.
+  '/give',
   '/sponsors',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room

@@ -94,6 +94,20 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const NAV_LINKS = buildNavLinks(t).filter(
     link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
   );
+  // The Support button is deliberately NOT in buildNavLinks: it is an action,
+  // not a destination among peers, and it renders as a pill after the nav rather
+  // than as another link in the row. It goes through the same tenant filter,
+  // which is what keeps it off partner subdomains (`/give` is on the global-only
+  // list — a BPH visitor asked for money on BPH's own domain would reasonably
+  // think the money went to BPH).
+  //
+  // Why it exists at all: measured over the 30 days to 2026-08-05, /support drew
+  // 60 of 330,698 pageviews (0.018%) while /book/* drew 217,490. The site had no
+  // giving link anywhere above the footer's third column, so two-thirds of all
+  // traffic never saw an ask. Every comparable library puts one in the header —
+  // Wikipedia's "Donate" is the first item in its article nav, ahead of "Create
+  // account"; the Internet Archive's sits in its sitewide bar.
+  const showSupport = !(isTenantHost && isGlobalOnlyNavHref('/give'));
   // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
   // support) — the thin-i18n bargain (#2763). On deep English-only pages the
   // toggle is hidden, so clicking ES never bounces the reader to the `/es`
@@ -215,6 +229,22 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               );
             })}
           </nav>
+
+          {/* Support — a pill, at every breakpoint including mobile, where most
+              reading happens. Ordered before the language toggle and search so
+              it does not get pushed off a narrow viewport. */}
+          {showSupport && (
+            <Link
+              href="/give"
+              className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium tracking-wide transition-colors ${
+                isWhiteText
+                  ? 'border-white/40 text-white hover:bg-white hover:text-dark'
+                  : 'border-accent-rust text-accent-rust hover:bg-accent-rust hover:text-white'
+              }`}
+            >
+              {t.support}
+            </Link>
+          )}
 
           {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
           {showLangToggle && (
