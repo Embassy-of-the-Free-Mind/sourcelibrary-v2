@@ -3,7 +3,29 @@
 ## Mission
 Source Library is a digital library of historical primary sources — alchemy, Hermetica, Kabbalah, Rosicrucianism, early modern science, and adjacent traditions — with AI-aided OCR, translation, and curation that make these texts readable and citable. The core experience is *reading and quoting* originals (`/book/...`, shortlinks, DOIs via Zenodo); curation surfaces them through collections, galleries, and editorial pages. Tenant subdomains (BPH/EFM, etc.) host curated subsets as standalone reading rooms for partner institutions.
 
-When making product decisions, lead with: who reads this, what experience are they having, and does this serve the goal of putting primary sources into people's hands. Technical choices flow from that. The CRITICAL sections below are scar tissue from real incidents — read them, but don't mistake them for the point of the project.
+When making product decisions, lead with: who reads this, what experience are they having, and does this serve the goal of putting primary sources into people's hands. Technical choices flow from that. The CRITICAL sections below — and the invariant docs they route to — are scar tissue from real incidents. Read them, but don't mistake them for the point of the project.
+
+## How this file works
+
+This file is **always loaded, in every session, in every terminal** — so it holds only
+what applies regardless of the task: the mission, the workflow rules, and the invariants
+whose violation is catastrophic no matter what you were doing.
+
+Everything else that used to live here is now one tier down, in
+`.claude/docs/invariants/`, indexed by **what you are about to touch** rather than by
+having read the whole file. That index is the "Conditional invariants" section below.
+The text there is unchanged and just as binding — it simply loads when it's relevant.
+
+**The budget is the point.** This file grew from ~290 lines to 827 in three months
+because every incident added a section and nothing ever demoted one. It is now capped:
+
+> **Adding a section to CLAUDE.md means fitting the budget (~250 lines) or demoting an
+> existing one to `.claude/docs/invariants/`.** An invariant that applies only when you
+> touch a subsystem belongs in the index, not the body. If you cannot name the file or
+> subsystem that triggers a rule, it probably belongs here; if you can, it probably
+> doesn't.
+
+`/gnite` runs both halves of that ratchet. See `.claude/docs/knowledge-layer.md`.
 
 ## Development Workflow — CRITICAL
 - **Never combine `export const revalidate = false` + a fallible fetch (Mongo/Supabase/fetch) + a `try/catch` that renders a fallback.** One bad render caches that fallback (an "unavailable" message, or zeroed/empty stats) permanently, until the next deploy — this is how `/explore/timeline` froze (#2973) and how `/explore/map` froze before it. If a static page's data can fail, let the error **throw** (ISR then serves the last good page on revalidation failure — `src/app/error.tsx` handles cold failures) and give the page a real numeric `revalidate` window instead of `false`. Audited and fixed across the app in #2974; don't reintroduce the pattern on a new page.
@@ -19,10 +41,10 @@ When making product decisions, lead with: who reads this, what experience are th
 - **A merge to `main` is now a production build, so the `entities`-sweep interlock applies at MERGE time.** The `/explore` prerender timeout below used to be a hazard only when someone ran `deploy:prod`; it now fires on any merge. Check both machines before merging, per that entry.
 - **Deploy prod with `npm run deploy:prod`, NOT bare `vercel --prod`.** A bare `vercel --prod` ships new asset hashes and purges the previous deploy's CSS/JS chunks, but does NOT clear the CDN-cached HTML. `next.config.ts` caches rendered HTML at the edge for 24h (`CDN-Cache-Control: max-age=86400`) on `/collections/*`, `/book/*`, `/author/*`, `/gallery/*`, `/browse/*`, etc. So any page cached just before a deploy then points at a now-404'd `/_next/static/chunks/*.css` and renders **fully unstyled** (cards collapse, images lose their frame — it reads as "broken images / junk content") for up to 24h. `scripts/deploy-prod.sh` (= `npm run deploy:prod`) does deploy → Cloudflare `purge_everything` → re-warm, closing that gap. `post-deploy-warm.yml` covers the **merge** path automatically (it fires on push-to-main, which deploys prod — see above), so the gap you have to close by hand is only the **out-of-band** one: a bare `vercel --prod` from a machine, with no push behind it, gets no workflow run and no purge. **Tell that you hit this:** a page's referenced `/_next/static/chunks/*.css` returns 404 while the homepage's returns 200 → it's stale-HTML/dead-CSS, NOT a data or curation problem. Emergency unstick without a redeploy: `set -a; source .env.production.local; set +a; curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" --data '{"purge_everything":true}'`. (Purge needs `CLOUDFLARE_API_TOKEN` — `CF_API_TOKEN` is WAF-scoped only.)
 - **A "failed" `deploy:prod` may still have shipped — always check before re-running.** The Vercel CLI can die mid-poll (`write EPIPE`) *after* the build promoted server-side but *before* the script reaches its purge + warm steps — which is precisely the gap `deploy-prod.sh` exists to close, so a crash there leaves prod newly deployed **and** serving stale HTML against dead CSS chunks. On ANY `deploy:prod` failure, run `npx vercel inspect sourcelibrary.org` first: if the newest deployment reads `target production / status Ready`, it shipped, and you must run the Cloudflare purge above plus `curl -s -X POST https://sourcelibrary.org/api/deploy-warm -H "Authorization: Bearer $CRON_SECRET"` manually before doing anything else. Re-running the deploy instead wastes ten minutes and leaves the window open the whole time. (Observed 2026-07-17.)
-- **Pause `entities` bulk sweeps before deploying prod.** `/explore` is ISR (`revalidate = 86400`), so it prerenders **at build time**, and its counts (`countDocuments` + `distinct('type')` over `entities`, ~1M docs) run with `maxTimeMS: 25000`. They already sit close to that cap; a concurrent bulk writer — `scripts/maintenance/repair-entity-page-attribution.mjs` is the current one — tips them over and `npm run build` exits 1, losing the whole ten-minute deploy. **Check BOTH machines — as of 2026-07-28 this sweep runs on Hetzner, not a laptop:** `ssh root@46.224.122.120 'pgrep -af repair-entity'` **and** `pgrep -af repair-entity` locally. A local-only grep is the dangerous check here, because it returns nothing and looks like an all-clear while the sweep is very much running remotely — the habit predates the move and still *appears* to work. **Tell:** `MongoServerError: operation exceeded time limit` + `Error occurred prerendering page "/explore"` in the build log — it reads like a code error, it isn't. The collision is **intermittent** (per-book write volume ranges zero to ~900 entities), so one green deploy with a sweep running is not evidence the sweep is safe. Note this is the "let it throw" invariant below working as prescribed — throwing protects the ISR cache from freezing an empty render (#2973); the page just pays that cost with a query too close to its own timeout. Real fix is to precompute the counts like `system_config.homepage_stats` — #3373.
+- **Pause `entities` bulk sweeps before deploying prod.** `/explore` is ISR (`revalidate = 86400`), so it prerenders **at build time**, and its counts (`countDocuments` + `distinct('type')` over `entities`, ~1M docs) run with `maxTimeMS: 25000`. They already sit close to that cap; a concurrent bulk writer — `scripts/maintenance/repair-entity-page-attribution.mjs` is the current one — tips them over and `npm run build` exits 1, losing the whole ten-minute deploy. **Check BOTH machines — as of 2026-07-28 this sweep runs on Hetzner, not a laptop:** `ssh root@46.224.122.120 'pgrep -af repair-entity'` **and** `pgrep -af repair-entity` locally. A local-only grep is the dangerous check here, because it returns nothing and looks like an all-clear while the sweep is very much running remotely — the habit predates the move and still *appears* to work. **Tell:** `MongoServerError: operation exceeded time limit` + `Error occurred prerendering page "/explore"` in the build log — it reads like a code error, it isn't. The collision is **intermittent** (per-book write volume ranges zero to ~900 entities), so one green deploy with a sweep running is not evidence the sweep is safe. Note this is the "let it throw" invariant above working as prescribed — throwing protects the ISR cache from freezing an empty render (#2973); the page just pays that cost with a query too close to its own timeout. Real fix is to precompute the counts like `system_config.homepage_stats` — #3373.
 
 ## PR Conventions
-Lessons from PR #1980 (see `.claude/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
+Lessons from PR #1980 (postmortem: private ops repo, `~/sourcelibrary-ops/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
 
 - **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
 - **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
@@ -62,77 +84,6 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
 - **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
 
-## A fetch failure is a claim about the SOURCE, and it is usually wrong — CRITICAL
-Lessons from acquiring Thibault's *Académie de l'Espée* (2026-08-01). Full
-postmortem: `.claude/handoffs/2026-08-01-thibault-acquisition-and-archive-failure-classes.md`.
-Three failure classes, one shape: an archiver's error handling encoded a guess
-about the source as a durable fact, and every one of them failed *silently, in
-the direction that looks like success*.
-
-- **A total-duration fetch timeout is a file-size limit wearing a clock's
-  costume.** Aborting 60s after a fetch *starts* fires on the LARGEST page in a
-  book — always the foldout, the map, the plate — while ordinary text pages sail
-  through. It cost **42 of 45 double-page engravings** on one book, and the book
-  still reported hundreds of archived pages, so nothing looked wrong. Use
-  `fetchWithStallTimeout()` (`scripts/lib/fetch-stall-timeout.mjs`), which
-  re-arms per chunk so size stops mattering. **Never "fix" this by requesting a
-  smaller IIIF size** — that is the #3186 mistake and is doubly destructive on
-  exactly the wide plates it destroys. **Tell:** failures cluster on the widest
-  canvases; a lone fetch of the failing page succeeds. The abort surfaces as
-  `This operation was aborted`, which reads as rate limiting — backing the
-  request rate off makes it strictly worse, because the constraint is
-  per-request duration, not requests per second.
-- **HTTP 403 may be a rights refusal, not a block — never auto-retry it.** 88%
-  of this corpus's failure markers are Internet Archive, and they resolve to
-  `access-restricted-item: true` / `inlibrary` books: IA **correctly refusing to
-  serve in-copyright material**. Clearing such a marker re-queues a fetch that
-  must never succeed, and if one did we would mirror copyrighted pages into R2.
-  `classifyArchiveFailure()` treats bare 403 as `unknown` (reported, never
-  auto-cleared); `--include-403` is an explicit opt-in for a caller who has
-  confirmed the books are public domain. Check the IA item's
-  `access-restricted-item` before assuming a 403 is transient.
-- **Never write an error you did not attribute into `archived_photo`.** The
-  field doubles as the archiver's work queue, so any `failed:` string hides the
-  page from every future run — and a catch-all handler writes *our* failures
-  there too: a Mongo DNS blip and an R2 clock-skew error each permanently hid a
-  perfectly readable page. An infrastructure error says nothing about the
-  source. (Same class as the Data Protection rule below: a bad write erases its
-  own repair path.)
-- **Recovery must never be gated on the SPEND allowlist.** Phase 8.5 rolls a
-  stuck `*_submitted` status back, which submits nothing and costs nothing — but
-  it was confined to the selective-unpause scope (160 books of ~99.7K) and
-  skipped entirely on a paused run, so 8 books sat stuck 10–23 days and were
-  repaired by hand. Corollary of "the pause is a SPEND control": gate the phases
-  that spend, never the bookkeeping that heals.
-- **Sampling the head of a collection samples insertion order, not the
-  population.** A 2,500-page sample read 92.9% retryable; the full 14,123 read
-  69.2%. Validate a corpus sweep at corpus scale — and note that a *silent*
-  long-running script reads as a hang (two full scans were killed before
-  emitting a line). The fix is a heartbeat, not an index: indexing
-  `archived_photo` would add ~1.5 GB to a hot collection to serve a rare sweep.
-
-## Paired artifacts must be verified, never assumed — CRITICAL
-Three incidents, one shape: #3362 (archiver wrote every page to a shared `archived/undefined/N.jpg` because `book_id` was missing from a projection), #3186/#3357 (e-rara PDF cover sheet made `photo_original` a one-page-offset sequence, and the re-archive sweep slid every image under its OCR), and #3368 (bulk archiver indexed the IA `*_jp2.zip` with the IIIF `/page/nN` number — IA keeps calibration/`Delete` leaves in the zip but strips them from the access derivatives, so a leading `Color Card` put **every** page's scan one leaf behind its text, on ~261 visible books / ~105K pages, undetected for four months).
-
-Each time, two artifacts produced by **different code at different times** were assumed to correspond, and nothing checked. The rule:
-
-- **When one writer's output must line up with another's, verify the pairing at write time and fail closed.** Not "usually lines up," not "lined up in testing" — the failure mode here works on the majority of inputs (1,309 aligned vs 524 shifted), so spot checks pass. `scripts/lib/page-alignment.mjs` `checkAlignment()` is the shared perceptual-hash test; `archive-bulk.mjs` and `rearchive-iiif-fullres.mjs` both gate on it. Refuse the book rather than write a suspect sequence — a skipped book is recoverable, a silently shifted one is not.
-- **Never treat an external system's two numbering schemes as one.** IA's IIIF page number ≠ the zip leaf ordinal; resolve via `scripts/lib/ia-access-leaves.mjs` (scandata), and index files by the **ordinal in the filename**, never by position in a sorted listing (that also shifts on sparse zips).
-- **A misalignment is invisible in either artifact alone.** Both panes render real content from the right book; only reading them *against each other* reveals it. A browser always looks fine. Proof is a hash or a page-by-page comparison, never a glance.
-- **Don't trust `<page-num>` (or any single-side signal) as the detector.** A *uniform* shift preserves the page-number sequence perfectly (`De Abditis Nonnullis`: 100% shifted, zero sequence breaks), and early-modern books produce heavy false positives (`Opera Chymica`: 77 spurious "duplicates" from ornate numerals). It detects only the duplicate/gap class that arises when two OCR passes straddle the archival date.
-- **Audit the writer's own pages, not the book's.** Books are archived by several paths; sampling all pages tests pages the writer never touched and returns a false pass (`Homiliae S. Isaaci Antiocheni`: 22 of 894 pages from bulk_jp2, sampled clean, actually shifted).
-- **Ordering matters as much as mapping.** OCR that runs *before* archival reads the source URL; OCR that runs *after* reads the archived image. If those disagree, a book OCR'd in two passes gets pages transcribed **twice** while their neighbours are never transcribed at all — real duplicate text and real gaps that re-archiving alone cannot repair (see #3362's ordering hazard).
-
-Full postmortem: `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`.
-
-## A request-path query must not scale with the corpus
-Two of the three volunteer review queues returned **504** for months (#3568): each picked one item by `$sample`-ing `pages` — **19.1M docs** — with a predicate no index can serve (a regex on `ocr.data`; `archived_photo: {$exists}`). That is a full collection scan per request, behind `maxDuration = 15`. It was never going to work at corpus scale and it degraded **quietly** as the corpus grew, because nothing alarms on "slower every month" and the client only ever showed "Network error".
-
-- **The tell is the query shape, not the timing:** an unindexed predicate on a collection whose size tracks the corpus. `pages` is 19.1M and growing; `gallery_images` is 207K. Confirm offline — the same aggregation also fails to return locally inside two minutes.
-- **Which one survived is the lesson.** `gallery-quality` worked only because `gallery_images` is a *materialized view* — and still cost 8.2s/item, its own kind of unusable. **Precompute a bounded pool** (`review_candidates`, built by `scripts/maintenance/build-review-candidates.mjs`, read via `src/lib/review-candidates.ts`) and the same work takes 23–61ms.
-- **A builder that feeds such a pool must cap items per book.** An unbounded draw lets one 900-page volume dominate and silently turns "quality of the corpus" into "quality of that book" — and write the `stratum` at build time, because a stratified draw cannot be reconstructed afterwards.
-- Same family as the `/explore` prerender timeout (#3373), where counts over `entities` sit close to `maxTimeMS`: a query that merely *fits* today is a deadline you have already scheduled.
-
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
 - **NEVER** batch delete — list items first, wait for approval
@@ -146,487 +97,9 @@ Two of the three volunteer review queues returned **504** for months (#3568): ea
 - **NEVER** embed secrets in code — use `process.env.VAR` with no fallback
 - Review scripts for hardcoded credentials before committing
 
-## Visibility & Stats Invariants
-Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public surfaces filter on `visible: true`, but `hidden: true` exists as a parallel flag. When the two disagree, books leak into public counts.
-
-- **`visible` and `hidden` must be opposites.** Every writer that sets `hidden: true` must also set `visible: false` (and vice versa for un-hide). Don't write one without the other. Active writers: `scripts/maintenance/hide-{unarchived-books,efm-duplicates}.mjs`, `scripts/maintenance/set-launch-books.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, `src/app/api/admin/duplicates/route.ts`, `src/app/api/books/[id]/visibility/route.ts`. Historical drift cleaned up by `scripts/maintenance/fix-conflicting-visibility.mjs` — re-run if `db.books.countDocuments({ visible: true, hidden: true })` ever climbs above zero again.
-- **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both scripts now share the same canonical filters — keep them in sync if you touch either. The canonical filters are:
-  - `totalBooks` / `authorCount` / `languageCount`: `visible: true && pages_count > 0` (plus `pages_translated > 0` for authors/languages)
-  - `translatedToEnglish`: ≥90% "readable" — `pages_translated >= 0.9 * (pages_ocr - pages_blank)`
-  - `artworkCount`: `visible: true && content_type: 'artwork'` — single-object entries (paintings, prints, sculptures, etc.), distinguished from books by being non-sequential. They typically have `pages_count: 0` (image + metadata only) or a handful of non-sequential images of the same object. Don't filter on `resource_type` here — it's a finer-grained sub-category (sculpture, religious, allegory, manuscript-illumination…) that under-counts if used alone.
-  - `illustrationCount`: `gallery_images.countDocuments({})`
-- **`hidden_reason` is a flip-guard, not a read-gate.** Consumers must gate on `visible` alone — treating the reason field as a state/rights signal silently misfires, and once did on a third of the corpus: ~6.3K `visible: true` books carried a stale `hidden_reason` (`launch_curation` 5.7K, `unprocessed`, `unarchived`, …) left by batch sweeps that flipped `visible` without unsetting the field, and the corpus exporter dropped 6,289 books that way (#3332). **That backlog is cleared** — #3334 swept it and audited the writers; re-measured 2026-07-29, `{visible: true, hidden_reason: {$exists: true, $ne: null}}` returns **0**. The invariant is what still matters, not the backlog: the field's real job is protecting visibility *flips* (never bulk-unhide takedown reasons), and rights-class reasons (`/copyright|takedown|dmca/i`) are the only defensible read-side screen. Corollary of the visible/hidden opposites rule above: any writer setting `visible: true` must `$unset: { hidden_reason }` in the same update (the single-book visibility route already does) — that corollary is the thing keeping the count at zero, so a new writer that skips it reopens the whole class.
-- **`is_first_translation: true` ≠ "we have it in English."** It's a bibliographic claim that gets set by batch-flag scripts (e.g. `scripts/_archived/2026-06-ft-cleanup/bulk-flag-tibetan-ft.mjs`) before translation completes. Render gates that show the "First Translation" badge must require translated pages — otherwise readers see a badge on a book they can't read. **`pages_translated > 0` is NOT enough, and the corrected gate is `isTranslationReadable()` (`src/lib/first-translation/derive.ts`)**: measured 2026-08-01, 366 of 5,839 badged books were under half translated and 244 under 10% — one carried an unqualified badge at 18 of 1,071 pages (1.7%), and some carried "First **Complete** Translation" at ~6%. The threshold is the **canonical readable denominator already used by `homepage_stats.translatedToEnglish`** (≥90% of `pages_ocr − pages_blank`); don't invent a second one. Below it, qualify the *label* ("First Translation, in progress") rather than dropping the badge — the bibliographic claim is still true, only the readability implication is false — and keep it out of the `isPublicFirst()` headline. Unknown coverage counts as readable: a book with missing page counts hasn't been *shown* to be thin, and demoting on absent data is the §17 hazard. (#3435, PR #3523.)
-
-## Tenant Subdomain Lockdown — CRITICAL
-Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visitors must never be able to land on, follow a link to, or be redirected to non-tenant content. EFM and other partners use these subdomains as their public face — leaks break the trust model.
-
-**Invariants** — verify every change against these:
-
-1. **No proxy redirect off the tenant subdomain.** `src/proxy.ts` rewrites every BPH path to `/embed/bph/...`. Never add a branch that issues a redirect to `sourcelibrary.org/...` (the original `/gallery` redirect was the canonical bug). Rewrites stay on-host; redirects must too.
-2. **Every server query touching a tenant page filters by tenant.** When rendered under `/embed/[tenant]/*` or `/[tenant]/*` with a tenant subdomain host, all data fetches must include the tenant constraint. The default for `held_by` / `image_source.provider` (Supabase) and `tenantId` (Atlas) is GLOBAL — explicit filtering is required. This applies to: book listings, related-books, related-editions, gallery images, collection highlights, exhibition books, mentioned books.
-3. **Pre-computed cross-references are not safe in embed mode.** `book.related_books`, `book.author_cross_ref`, and similar fields are computed across the whole library. Gate them behind `embedPolicy.show*` flags (defined in `src/lib/embed-ui-policy.ts`) — they must be `false` when `isEmbedded`.
-4. **Share/quote URLs use the request host.** `getShortUrl()` and the `/api/[tenant]/books/[id]/quote` route accept a `baseUrl` derived from the request via `getRequestBaseUrl(headers)`. Don't hardcode `https://sourcelibrary.org` in user-facing URLs returned from the API.
-5. **Internal anchor links are relative, not absolute.** `/book/...`, `/collections/...`, `/gallery/...` resolve against the tenant subdomain via `proxy.ts` rewrites. Any `https://sourcelibrary.org/...` href in component output is a leak.
-6. **Corpus-wide surfaces are 404'd on tenant hosts, not scoped.** `/encyclopedia`, `/explore/*`, `/ngrams`, `/libraries` and their APIs render aggregations over the whole library, so on a partner subdomain they served every other library's holdings (#3364: `/encyclopedia/Matthiolus` on the BPH host linked 121 books, **102 not BPH**). The list lives in `src/lib/tenant-global-paths.ts` and the proxy refuses them — enforced there because these routes are ISR and reading `headers()` in the page would force dynamic rendering. A tenant-scoped version of any of them is a *different feature, not a filter*; until one exists a reading room should say "not here". **The site nav filters on the same list** — blocking a route the header links to (it links "Map" → `/explore/map`) just moves the leak into a dead link.
-
-**Verifying the invariant**
-
-`node scripts/audit-bph-leaks.mjs` crawls the BPH subdomain, follows internal links to a configurable depth, and exits non-zero if any anchor or one-hop redirect resolves off-subdomain. Run it after touching anything in `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, or any component that builds URLs.
-
-**A hostname check alone cannot see a content leak.** #3364 sat undetected because the encyclopedia's hrefs are *relative*: every link resolved to `bph.sourcelibrary.org` and the audit passed clean while the page listed 102 other libraries' books. The audit now also resolves every `/book/<id>` reference against `books.tenantId` and fails on any foreign book (needs `MONGODB_URI`; without it the check reports **NOT RUN** rather than passing). It seeds the blocked paths too, so removing the block re-exposes them and the audit fires. When you add a tenant surface, ask what it *renders*, not only where it *links*.
-
-**Testing a tenant behaviour on a Vercel preview does not work.** Curling a preview URL with `Host: bph.sourcelibrary.org` makes Vercel's router resolve the Host to the **production** deployment for that domain and serve that instead — during #3367 this produced a convincing false negative (every blocked path answered 200, including a real BPH landing page at `/`, on a build whose fix was correct). Test the proxy by calling `proxy()` directly in a unit test (`tests/unit/tenant-global-paths.test.ts`), then confirm on the real subdomain after deploy.
-
-**The preview trap has a second form: visiting the preview host directly.** No `Host:` header needed — a preview URL is `sourcelibrary-v2-git-*.vercel.app`, which is *not* a `.sourcelibrary.org` subdomain, so every host-gated code path (`isTenantSubdomain`, `useEmbedContext`) correctly evaluates to false and the tenant branch never executes. A check there can only ever pass. #3383 shipped a double-mounted menu onto EFM's public landing page this way: it was "verified" on a preview at the **path-based** `/embed/bph`, where the buggy guard happened to work, while the collision only exists behind the subdomain rewrite. **If a behaviour depends on the host or on a proxy rewrite, a preview cannot verify it — only the real subdomain can, after deploy.**
-
-**Never branch on `usePathname()` in a component that can render on a tenant host.** The proxy *rewrites* `/` → `/embed/<tenant>` internally, but `usePathname()` returns the **browser** path (`/`). So a check like `pathname.startsWith('/embed/')` fires on the apex — where it is not needed — and is silently inert on the subdomain, where it is. That inverted guard is exactly what #3383 shipped. Gate on the host (`useEmbedContext`) or on the `x-tenant-*` headers the proxy stamps, never on the public path.
-
-## Source Library is the destination — content URLs & library pages
-Content lives on Source Library. We re-host books from many digital libraries
-(Internet Archive, Gallica, Bodleian, Wellcome, …) and we credit them, but a
-reader who landed on a book here never has to leave to read it. The URL shape
-encodes that:
-
-1. **Books, pages, gallery, collections live at tenant-agnostic URLs.**
-   `/book/<slug>`, `/book/<slug>/page/<n>`, `/gallery`, `/gallery/image/<id>`,
-   `/collections/<slug>`. Never `/internet-archive/book/foo`,
-   `/gallica/gallery`, or any other `/<provider-slug>/*` prefix for content.
-   This was patched in two waves: PR #1918 dropped the tenant prefix from
-   book-page gallery links; PR #2025 added a proxy-level strip so every
-   provider-prefixed URL 308s to its global equivalent. The strip's original
-   Mongo lookup (`kind:'provider'` rows in `tenants`) was removed in commit
-   8e348991 (providers were wrongly resolving as tenants), which silently
-   killed the redirect for ~2 weeks (~770 404s/week in `not_found_reports`).
-   PR #2505 restored it as a static lookup in `src/lib/provider-prefix.ts`,
-   keyed off `LIBRARY_PARTNERS` with routing tenants excluded — a guard test
-   (`tests/unit/provider-prefix-redirect.test.ts`) now pins the proxy wiring.
-   Don't reintroduce provider-prefixed content paths, and don't replace the
-   static lookup with a `tenants`-collection query.
-2. **Each contributing library has its own page on Source Library at
-   `/libraries/<slug>`.** The page credits the institution (name, description,
-   hero image), shows the books we have from them, and may link out to the
-   institution's own site. The `LIBRARY_PARTNERS` lookup in
-   `src/lib/library-partners.ts` is the source of truth for this metadata —
-   adding a new library is an edit to that file, not a DB change.
-3. **Bibliographic data on a specific book may link out.** The
-   `book.image_source.source_url` link in `BibliographicInfo.tsx` (and the
-   IIIF manifest link beside it) point at the original record for citation
-   and scholarly accountability. Keep these — they're per-book provenance,
-   not "leave Source Library" prompts.
-4. **The `tenants` Mongo collection is for subdomain partners, not for
-   contributing libraries.** Subdomain tenants (`bph`, `kloss-collection`,
-   `bhutan`) have their own scoped UI under a partner subdomain. The 29
-   legacy `kind:'provider'` rows (from when routing doubled as an attribution
-   registry) were **deleted on 2026-06-10** — backup at
-   `scripts/output/tenants-provider-rows-backup-2026-06-10.json` in Derek's
-   main checkout. Don't recreate them (`create-all-provider-tenants.mjs` is
-   the legacy writer — don't run it). New contributing libraries go in
-   `LIBRARY_PARTNERS`, not in the `tenants` collection.
-
-## Author identity — the `authors` thesaurus (read this before touching author code)
-"Who wrote this, and is *this* Andreas the same as *that* Andreas?" is answered by the canonical **`authors`** collection — one doc per person, `_id` = canonical slug, with `variants[]` / `variant_slugs[]` / `viaf_id` / `wikidata_id`. It **supersedes** the legacy `entities` layer. Umbrella issue #2179.
-
-- **Read `books.author_id` → `authors._id`, not `author_entity_id`.** `author_id` is the canonical FK (~74% of live books linked); `author_entity_id` → `entities` is transitional and being retired. Both are written during migration.
-- **Don't render `authors.book_count`** — it's a stale build snapshot. The true count is the read-path union query.
-- **Build/enrich scripts:** `scripts/maintenance/build-authors-collection.mjs` writes the collection (deterministic name-key ∪ VIAF ∪ Wikidata, #2202); `reconcile-authors-grounded.mjs` anchors the tail to Wikidata/VIAF using each author's books as evidence (#2218). The similarly-named `build-canonical-authors.mjs` is a read-only sizer that does NOT write — don't run it to rebuild.
-- **Read-path** (`/author/[slug]` → `src/lib/author-thesaurus.ts`) is flag-gated by `AUTHOR_THESAURUS_READPATH` and redirects every variant slug to the canonical one. Full design, provenance, and migration status: **`.claude/docs/author-identity-system.md`**.
-- **A SEARCH TERM IS NOT METADATA. Never write the query that found a record into a field of that record.** A 2026-03-14 BSB run imported 1,353 books and stamped its own search string into `books.author` — which is why values like `Albertus Secrets`, `Fludd Medicina`, `Kircher Oedipus`, `John Dee Monas` exist: they are `<surname> <work keyword>` queries, not names. It ran undetected for four months and the wrong names reached readers, `work_id` cluster keys (`local:a:heinrich-khunrath:…`) and book slugs. **The hits skew to catalogues by construction** — a full-text title search matches every bookseller/library catalogue that *lists* a copy, so those are the top results and the least likely to be spot-checked. Hence 14 catalogues and periodicals (1751–1810) attributed to Khunrath, who died in 1605, and 16 editions of the Augsburg Confession under `Confessio Fraternitatis`. Detector: `scripts/audit/author-attribution.mjs` (#3434).
-- **Three correct guards can still leave a gap; check the gap, not each guard.** Nothing caught the above, and no single piece was wrong: `qa-author-date-anachronisms.mjs` tests only the **birth** side (this is the death side); `quarantine-non-person-authors.mjs` fixes the `authors` thesaurus and never touches `books.author`, and its interlock rightly refuses to touch anchored real people — so **Khunrath was uncatchable there**, being a genuine VIAF-anchored author of other books we hold; and `author-date-window.mjs` deliberately refuses death-side exclusion because a 1925 Boethius is a reprint (he carries 55). The usable signal only exists in the **combination**: long-dead author **AND** reference-genre containing book (`posthumousMisattributionLikely()`). Neither half alone works — a person *can* compile a catalogue (Guanzelli's *Index librorum expurgandorum*, Bernardus de Lutzemburgo's *Catalogus haereticorum*), and death-side-alone flags every reprint in the corpus.
-- **`authors` carries no life dates** — 0 of 4,825 have a birth/death year, only `birth_place`/`death_place`. Death years come from `entities.wikidata_death_date` via `authors.entity_ids`, and only 1,229 of 3,253 entity-linked docs resolve one, so any date-based author check abstains on ~⅔ of the corpus. Don't read a clean result from one as coverage.
-- **`is_person: false` is a READ-PATH gate, and the read path is `classifyNonPersonAuthor` (`src/lib/non-person-author.ts`).** `quarantine-non-person-authors.mjs` set the flag on 59 docs and **nothing in `src/` read it for a year**, so every quarantined heading rendered with a portrait slot, life dates, an "Artist page" link and a schema.org **`Person`** node — telling search engines that `Theatrum Chemicum`, `British Museum` and `Anonymous` are human beings (#3483). The flag is **absent on 4,766 of 4,825 docs**, so consumers must test `=== false`; a truthiness check strips the person framing from every author on the site. A `merged_into` tombstone is not a non-person — the resolver follows it to its primary first. Institutions render as `Organization`; work titles and placeholders get **no entity node at all** and a `CollectionPage`, because there is no entity to point at. Don't "simplify" that to one non-person branch: a museum really does author its own catalogue, and a book title never authors anything.
-- **Quarantining a doc does not clear the byline, and clearing the byline retires the page.** The two layers are independent: `authors.is_person` governs *rendering*, `books.author` governs *existence* — an author page exists only while books point at it, so clearing a bogus `books.author` 404s the page with no code change. Decide which layer a given heading belongs to before writing anything. Roughly half of the 59 were the #3434 data defect (fix the books; the page retires itself) and half were legitimate corporate or anonymous headings (keep the books; drop the person framing).
-- **Enumerate author defects by the author STRING, never by the thesaurus doc.** A doc-keyed sweep walks `author_id` ∪ `author_entity_id` ∪ `variants` and silently misses any book whose string never joined — that gap hid `Kircher Oedipus` (6 periodicals), `Kircher Musurgia`, `Kircher Mundus` and `AnonymousUnknown author` from a sweep that believed it was exhaustive, and `scripts/audit/author-attribution.mjs` (which scans strings) found all of them afterwards. Corollary for repairs: **key the fix on whatever unit was actually verified.** #3434 keyed on book ids because the *name* was valid and only the pairing was wrong; #3483 keys on the string because the string itself is never a name (`S.n` is *sine nomine*), which makes string-matching self-limiting rather than a widening heuristic.
-- **A re-runnable repair must MERGE its backup, not overwrite it.** These scripts select by "still wearing the bad value", so a second run sees only the newly-found records — an overwriting backup would replace 770 restorable records with 15 and strand `--revert` for everything already fixed. Merge on id, and let the **earlier** `before` win: it is the true original.
-
-## Work identity & "do we have the original?" (read before reasoning about gaps)
-**Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
-— it ties together work identity, the #2453 catalog, the translation gap/registry,
-holdings, and first-translation into one stack (coordination home: #2567).
-
-The **work** layer (sibling to the author thesaurus). "Is *this* translation a
-work we also hold the source-language original of?" is answered by clustering
-editions under a shared **`books.work_id`** (Wikidata QID or works-catalog id),
-NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
-
-- **CRITICAL invariant:** `text_role:'modern-translation'` does **not** mean we
-  lack the original — it usually sits as a separate, *unlinked* book. **Never
-  infer a gap from an unlinked translation.** Cluster by `work_id` and read
-  coverage with `scripts/analysis/work-coverage.mjs`, which reports anything
-  without a `work_id` as "unknown coverage," never a gap. (Inferring gaps the
-  wrong way once claimed Plato/Zohar/Avicenna "missing" when we hold them.)
-- **Assigning `work_id`** (the "fit" rule): author-anchor + title **containment**
-  + **specificity** (reject generic stubs/containers like "Fragments"/"Muhūrta")
-  + rare-token fallback for anonymous works. HIGH-confidence only is auto-written,
-  always with a backup. Resolvers: `resolve-work-ids.mjs` (local `works` catalog —
-  Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
-- Full design, tool list, per-tradition candidate coverage, and open levers:
-  **`.claude/docs/work-identity-coverage.md`**.
-- **Acquiring works we're missing — read FIRST, don't reinvent:**
-  **`.claude/docs/finding-missing-works-acquisition.md`**. TWO layers, don't conflate:
-  **(1) our works system IS `books.work_id`** — ~99% coverage across ALL traditions
-  (Chinese, Latin, Greek, Tibetan, Arabic…), USTC-independent; **(2) USTC is just ONE
-  external universe** (continental print, 1450–1700) to diff against for *unheld* works,
-  NOT our works system (use Wikidata P50 for what USTC misses). The "enumerate IA →
-  title-cluster → diff → import" shortcut is a known trap — it over-reports gaps and
-  re-imports works we hold (the divergent-title tail; our own Pymander is 35 editions
-  across 12 work_ids). We are NOT thin on Latin — verify a gap before any "dump."
-
-## Authentication across subdomains
-
-The NextAuth session cookie is set on `.sourcelibrary.org` (with the leading dot) in production, so signing in on `sourcelibrary.org` carries through to every tenant subdomain (`bph.sourcelibrary.org` today, `kloss/jung/...` later) and vice versa. Gated on `VERCEL_ENV === 'production'` — Vercel previews and localhost stay host-scoped.
-
-**Identity shares, permissions do not.** Role checks still run via `memberships` collection lookups per tenant (`getTenantMembershipRole` in `src/lib/auth-helpers.ts`). A user signed in on the parent site does not inherit any tenant role just by visiting a subdomain; the `withAuth(handler, { minRole })` wrapper (and role-specific shorthands like `withEditorAuth`, `withAdminAuth`) continues to enforce per-tenant gates.
-
-**CSRF token stays per-host** (`__Host-` prefix forbids the `domain` attribute, and each subdomain hits its own `/api/auth/*` routes).
-
-Source: `src/lib/auth.ts` (cookies block). See `.claude/docs/auth-tenant-cookies.md` for the full rationale and rollback notes.
-
-## Crawler & AI-access policy — three-layer gate (CRITICAL)
-The policy across the whole site (open-access posture since 2026-07-05, #2963): **search-index crawlers and user-initiated assistant fetches get full content; declared AI-training crawlers get the policy docs + a gated API preview (funnel, not wall) and must license bulk/training use** — a standing rate card ($250/book floor, $200K/yr corpus) is published at `/licensing`. Enforced at **three independent layers, and they must agree** — this is the load-bearing gotcha.
-
-1. **Cloudflare (edge)** — custom firewall rules + zone-level bot features, **NOT in this repo**. Custom rules (phase `http_request_firewall_custom`): the **skip rule** "Allow social-card scrapers + verified search crawlers" (`Googlebot`/`bingbot`/`Claude-SearchBot`/`OAI-SearchBot`/`Claude-User`/`ChatGPT-User`/`Perplexity-User`/…); a **path-scoped skip** "Policy pages readable by any agent" (`/robots.txt`, `/llms.txt`, `/licensing`, `/terms`, `/developers`, tdmrep, sitemaps); a **scoped skip** letting declared AI crawlers (`GPTBot`/`Claude-Web`/`ClaudeBot`/`Anthropic-AI`) reach the robots-allow-listed API paths; and the old block rule "Block Anthropic training crawlers" — **DISABLED 2026-07-05, kept for one-call rollback**. Separately, a **zone-level AI-bot block** (bot management, not editable with our tokens) still 403s AI crawlers on content HTML, and **CF managed robots.txt** prepends its own block above our origin file (harmless duplication; disable in dash for a single clean policy). Edit custom rules via the CF API with **`CF_API_TOKEN`** (WAF scope; `CLOUDFLARE_API_TOKEN` is purge-only). Adding a UA to a skip rule is additive/idempotent and can't block real traffic.
-2. **Proxy layer** — `src/proxy.ts` `BLOCKED_BOT_RE` hard-403s robots-blocked crawlers (CCBot, Bytespider, Amazonbot, SEO bots…) with a pitch page on all matched paths **except** the policy docs (`isBotReadablePath`: /licensing, /terms, /developers, /blog). Dotted paths (/robots.txt, /llms.txt, /.well-known/*) never reach the proxy (matcher excludes them). Note: CDN cache HITs can mask this layer when testing — always check `cf-cache-status`.
-3. **App layer** — `src/lib/bot-gate.ts` (`KNOWN_BOTS` → page-gated to `BOT_PAGE_PERCENT` = 20% of each book; `SEARCH_CRAWLERS` + `USER_FETCH_AGENTS` bypass via `isTrustedBot`), and the budget in `src/lib/api-budget.ts` + `src/lib/api-auth.ts`. Applies on the content APIs (`/api/books/[id]/{text,quote}`, tenant quote, `dts/document`, `iiif/search`). HTML reader pages are NOT app-gated — robots.txt + the zone-level AI block are their only crawler controls.
-
-**The trap: changing one layer alone is silently defeated by the others.** Ungating a UA in `bot-gate.ts` does nothing if Cloudflare or the proxy still blocks it — we hit this three times (OAI-SearchBot, ChatGPT-User at the CF layer; CCBot on /licensing at the proxy layer, 2026-07-05). **When you change crawler access, check ALL THREE layers, then curl-verify per UA × path.**
-
-**Diagnosing which layer returned a 403:** `cf-ray` present + **no** `x-vercel-id` + "Your request was blocked." = **Cloudflare edge**. `x-vercel-id` + the ASCII "SOURCE LIBRARY — AI-Ready Collection" pitch = **proxy**. `x-vercel-id` + a JSON error body = **app** (bot gate or budget).
-
-**Budget (anti-bulk).** `api-budget.ts`: rolling 24h page cap — anon 500 / session 1000 (raised from 100/200 on 2026-07-05, #2983; env-overridable via `API_ANON_PAGES_PER_DAY`/`API_SESSION_PAGES_PER_DAY` for instant rollback) / apikey + verified-bot unlimited. **Enforced in prod** (`API_AUTH_ENFORCE=1`). Two spoof/granularity guards: (a) the verified-bot "unlimited" tier is granted only after **forward-confirmed reverse DNS** (`api-auth.ts` `VERIFIED_BOT_DOMAINS`) — a spoofed `Googlebot` UA from a non-Google IP is demoted to anon; (b) `/text` clamps **pages-per-request** to the caller's remaining budget (returns a `budget` block when truncated). `google-extended` is deliberately NOT a verified bot (it's a training token).
-
-**Declaration layer (separate from enforcement):** `src/app/robots.txt/route.ts` (custom route — carries the CC0 Content Signals Policy preamble and `Content-Signal: search=yes, ai-input=yes, ai-train=no` on every UA group; pinned by `tests/unit/robots-content-signals.test.ts`), `/.well-known/tdmrep.json`, the `TDM-Reservation`/`TDM-Policy` headers (`next.config.ts`) plus `tdm-reservation` meta tags (root layout), `public/llms.txt`, `/licensing` (rate card + layered legal grounds), and the `CONTENT_LICENSE` block (`src/lib/license-info.ts`) embedded in content-API JSON. Prices appear ONLY on /licensing + llms.txt + /dataset (reconciled 2026-07-23: /licensing holds the standing rate card — $250/book, $200K/yr full corpus, the invoicing basis for unlicensed use; /dataset holds the lower-priced cooperative subscription tiers delivered via the streaming API; each page states the relationship and links the other — keep all three in sync when prices change). Keep all of these consistent with the enforcement layers when the policy changes.
-
-## An edge control protects a ZONE, not an application (CRITICAL)
-Lessons from the AS132203 scraper fleet, 2026-07-29 (#3438, #3446). Full postmortem: `.claude/handoffs/2026-07-29-scraper-fleet-edge-bypass.md`. A fleet on Tencent Cloud Singapore read the corpus for **nine weeks** — 2,043,739 page views in the final 30 days, 84 rotating /24s, 28 forged Chrome UAs, 17,357 books, ~$234 of Vercel transfer. Three separate defences existed. Each failed silently, in a different way.
-
-- **A Cloudflare rule can read "enabled" in the dashboard and never fire.** The AS132203 block sat *below* a `managed_challenge` rule matching the same ASN. `managed_challenge` is a **terminating action** — evaluation stops there, and every rule after it is dead. Rule ORDER is part of the rule. After adding or editing a custom rule, verify by traffic volume, never by the dashboard's enabled toggle.
-- **Every hostname the project answers on is a separate front door, and only the canonical one is behind the CDN.** A Vercel alias resolves straight to Vercel — **no `cf-ray` on any response** — so every Cloudflare-layer control is simply absent there: the ASN rules, the bot rules, the whole first layer of the three-layer crawler gate above. 100% of fleet reads arrived via an alias host and **zero** via `sourcelibrary.org`. **Audit every alias, not just the one you know about** — `vercel domains ls` is the list, and the tell is `curl -sI https://<host>/ | grep -i cf-ray` returning nothing. Current alias status is tracked in the private ops repo, not here.
-- **An alias allowlist that only ADDS routes does not scope the domain.** `SOCIETY_DOMAINS` in `src/proxy.ts` rewrote `/` → `/ficino-society` and lifted `/discussions` and `/members`. It scoped three paths *onto* the domain and never restricted it, so the entire library was served there too — for months, invisibly, because the society pages themselves worked perfectly. A host allowlist must be **fail-shut**: `src/lib/alias-host-scope.ts` 308s anything outside the alias's own surface to the canonical domain, so a route added next year is scoped automatically.
-- **Put the durable control in the application.** A Cloudflare rule covers one zone; the app layer covers every hostname and every route. `src/lib/blocked-networks.ts` (checked at the top of `proxy()`) is where a network refusal belongs — it cannot be routed around by DNS. Edge controls are an optimisation; the app layer is the guarantee. Corollary of the three-layer gate rule above: changing one layer alone is silently defeated by the others.
-- **Per-IP rate limits cannot see a fleet.** 84 rotating /24s defeat every per-address cap; no single address looks abnormal while the aggregate runs 50,000/day. This is the third instance (quote-scrape, PostHog contamination, this). Rate caps are a floor, never the filter — which is why `traffic_class` is *stored* at write time rather than inferred later.
-- **Behind a CDN, an IP-based control measures the CDN — read `cf-connecting-ip` FIRST, everywhere (#3487/#3491).** The chain is client → Cloudflare → Vercel, and **Vercel rewrites `x-forwarded-for` with whatever connected to Vercel**, i.e. a Cloudflare edge node. So `x-forwarded-for` first silently files every front-door request under ~15 shared addresses in `172.64.0.0/13`, `104.16.0.0/13`, `162.158.0.0/15`. Three consequences, all observed: `analytics_pageviews`/`analytics_events` recorded the CDN rather than readers; the proxy's 10-req/60s bot bucket was keyed on those same addresses, so bots behind a busy edge node shared one bucket while a bot on a quiet node ran free; and `/api/views` deduped view increments per edge node, collapsing many readers into one — which matters because `books.read_count` orders the paid re-OCR queues. **This is why the only fleet ever caught is the one that bypassed Cloudflare**: going around the CDN is what caused its real addresses to be written down. A fleet arriving through the front door is invisible to every IP check by construction. Canonical helper: `clientIpFromHeaders()` in `src/lib/analytics-ingest.ts`; every analytics writer goes through it (pinned by `tests/unit/analytics-client-ip.test.ts`, which also fails a NEW `route.ts` under an `analytics/` or `track/` path that reads the header itself).
-- **A concentration alarm that doesn't know its own CDN will tell you to block it.** Before #3491 the detector's `traffic_concentration` check flagged 14–15 "networks each reading >2,000 pages" that were all Cloudflare, with remediation text naming `src/lib/blocked-networks.ts` — following it would have taken the site down. It now recognises the published egress ranges and raises `client_ip_not_recorded` instead, which states the instrument is broken rather than inventing a fleet. Generalisation of the "an alarm is an instrument too" rule below: **an alarm whose remediation is self-harm is worse than no alarm.**
-- **Scope an alias by an exact host match, never `host.includes('vercel.app')`.** Preview deployments (`*-git-*.vercel.app`, `*-<team>.vercel.app`) must keep serving the whole site or branch review stops working; the bare production alias must not. `DEPLOYMENT_ALIAS_HOSTS` in `src/lib/alias-host-scope.ts` is an exact-match set for that reason. And **check what points at an alias before scoping it** — `scripts/uptime-monitor.mjs` probes `sourcelibrary-v2.vercel.app`, and the Playwright suite defaulted `BASE_URL` to it, so a catch-all 308 would not merely have broken them: it would have silently repointed `e2e/crawl-all-pages.spec.ts` at production. Hence the allowlist's EXACT entries (`/api/books` yes, `/api/books/<id>/{text,quote}` no; the three `/embed/*` landing pages yes, the reading rooms beneath them no).
-- **Watch for it: `scripts/workers/traffic-anomaly-alert.mjs`** (hourly cron on Hetzner, pushes to `ntfy.sh/sourcelibrary-uptime` **on state change only** — a detector that repeats itself hourly trains you to ignore it). Three checks, one per failure above: volume concentration per /24, reader traffic on an unexpected hostname, and traffic still reaching the app from a network we believe is blocked. **Adding a new alias means adding it to `EXPECTED_HOSTS`** — the test pins that the allowlist stays small, because every host on it is a surface nobody is watching.
-- **A suffix match is not a host match, and a redirect is a second request (#3508).** `/api/image` gated its server-side fetch on `hostname.endsWith(allowed)`, under which `evilarchive.org`, `xr2.dev` and `notamazonaws.com` all passed — registering a domain that *ends in* an allowlisted string was enough to own the proxy. Match on a dot boundary (`h === allowed || h.endsWith('.' + allowed)`), the way `api/auth/oidc/authorize` already did. And axios follows up to 5 redirects by default while re-checking nothing, so any allowlisted origin could hand us onto a private address: validate **every hop**, not the caller's URL. Shared policy lives in `src/lib/image-proxy-hosts.ts` (`refuseImageUrl`), which also refuses non-http protocols and RFC1918/loopback/link-local/CGNAT literals. Note the severity ceiling here is ours specifically — Vercel runs on Lambda, which has no EC2 metadata service, so `169.254.169.254` credential theft does not apply; on a normal EC2 host it would.
-
-## Session flags go stale, and blank forms erase — CRITICAL
-Lessons from the `/welcome` lockout, 2026-07-30 (#3467/#3496). Full postmortem:
-`.claude/handoffs/2026-08-01-welcome-gate-lockout-and-blank-form-overwrite.md`.
-Three bugs stacked: 42 readers could not leave the welcome page, and 2 had their
-answers erased.
-
-- **`useSession().update()` MUST be called with a payload.** With no argument it
-  issues a **GET** to `/api/auth/session` (next-auth's `update(data)` only builds a
-  body when given data; `lib/client.js` only sets `method:'POST'` when a body
-  exists), and a GET never runs the `jwt` callback with `trigger:'update'`. Since
-  the DB re-read in `src/lib/auth.ts` is gated on `(user || trigger === 'update')`,
-  every token field computed there stays frozen for the token's full 30-day life.
-  Mongo said `welcomedAt` was set; the session served `needsWelcome: true` for
-  hours. **Verify a session change by reading `/api/auth/session`, never by
-  trusting the write** — the disagreement between the two is the diagnosis.
-- **A mount-scoped `useRef` is not a redirect guard.** Every redirect is a
-  navigation and every navigation remounts, so the ref resets each time and a
-  stale flag becomes a lockout instead of a nuisance. Persist "already fired" in
-  `sessionStorage`. This is also the only thing that can heal a stale JWT, because
-  nothing server-side can force-refresh one.
-- **An ABSENT field means "leave this alone"; a PRESENT empty string means "the
-  reader cleared it".** Conflating them lets a form overwrite data it never showed
-  the reader — `/welcome` rendered blank on every visit, so the second save wiped
-  the first. Any surface that writes user-authored text must prefill (server-side,
-  so there is no mounted-and-empty window) or omit the key. Rule + tests:
-  `src/lib/welcome-profile-update.ts`. **Corollary:** a test asserting "record the
-  blank so declined ≠ never asked" encodes exactly this bug — keep the intent, move
-  the signal to the caller.
-- **A cohort keyed on an overwritten field drifts under you.** `users.welcomedAt`
-  is rewritten on every save, so a "who was affected in this window" query loses
-  anyone who came back and re-saved — a 42-person incident list became 40 within an
-  hour. Freeze an incident recipient list to a file (private ops repo — reader
-  addresses never go in this repo) and never re-derive it at send time.
-
-## A metric is a claim about an instrument before it is a claim about readers
-A usage review on 2026-07-28 produced six findings; **three were instrument failures, not product facts** — and each failed *silently*, in the direction that invited a confident conclusion. Full postmortem: `.claude/handoffs/2026-07-28-instruments-lied-translation-streaming-crash.md`.
-
-- PostHog reported traffic **tripling** over a month when human traffic **fell 4×** — it was counting a headless fleet (204,270 one-hit distinct_ids in 7d; an impossible 50/50 Chrome-Windows/Chrome-Mac split). Those loads never reach `/api/track`, so the server-side classifier never sees them to label.
-- "81% of readers read a single page" was a crawler: `analytics_events.page_read` has **no bot filter and stores no user-agent**, so it cannot be classified even retroactively (#3405).
-- "Nobody shares" was a **missing button** — the book page, 72% of pageviews, rendered no share control at all (#3410).
-- "Exceptions carry no detail" was the **wrong field name**: PostHog's singular `$exception_type`/`$exception_message` are always null; the data is in the plural `$exception_types`/`$exception_values`. That mistake buried a live crash for weeks.
-
-**Before treating a number as a fact about readers, ask what would have to be true of the instrument to produce it.** Concretely:
-
-- **Compare two independent instruments before quoting either.** Mongo (bot-filtered at write time) and PostHog (not) disagreed by *direction*. Where they agreed — multi-pageview users, ~3,200 vs 4,108 — the number was trustworthy; the divergence *was* the finding.
-- **Group by path SHAPE, never exact `$pathname`.** Reader URLs are unique per page (`/book/<slug>/page/<id>`), so exact grouping scatters reader traffic over thousands of rows and buries it while `/collections/x` aggregates into one. This alone produced a wrong "the reader is unaffected" conclusion.
-- **Report rates, not counts, and exclude bot traffic from every denominator.** Collection pages looked minor by volume and were running at ~0.96 crashes per pageview. A zh-CN "audience" of 200K is one actor.
-- **A silently-dropped field is the default failure.** `/api/analytics/event` drops prop keys not on its allowlist — no error, 200 response, field simply absent later. Adding a prop without allowlisting it reproduces the bug inside its own fix.
-- **Absence of data is a claim that needs its own evidence.** 88% of crash frames read as unresolvable because **our own bot gate 403s PostHog's symbolicator** (#3422), and Googlebot "vanishing" was bucket opacity, not absent crawling.
-
-Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 applied a real remedy for the wrong failure and was closed rather than merged once the actual cause was found.
-
-**An alarm is an instrument too, and one sample is not an outage (#3478).** `/api/health/auth` emailed "[CRITICAL] Source Library sign-in is broken" off a **single** dropped Atlas TLS handshake at 00:00:01 UTC. Sign-in was fine — a sign-in link went out at 23:27, an account was created at 00:02:24 (two minutes *after* the page), and 2,013 of the preceding 2,016 probes were clean. Everything above about measuring readers applies verbatim to measuring ourselves:
-
-- **Confirm before paging.** A probe that alerts on its first failed sample is reporting its own connection, not the product. `src/lib/health-alerting.ts` `recordFailureStreaks()` requires N consecutive failures, counted **per check** so unrelated single blips never sum to a page, and **fails open** when the streak store is unreachable — a genuine Atlas outage still pages immediately. Match the guard to the cadence: a 10-min probe can afford a 2-probe streak (~20 min to page); an hourly one cannot, and gets `retryWithBackoff()` instead.
-- **A retry with no delay is not a retry.** Both routes looped twice back-to-back, so a fault lasting a couple of seconds exhausted every attempt and still read as "after retry" in the alert text.
-- **Cron convergence manufactures the fault.** Nine Hetzner schedules align at 00:00 UTC; the resulting pile of cold Vercel functions all dialling Atlas at once is what dropped the handshake, and it took out both DB-touching probes in the same second. Keep probes off `:00`.
-- **Word the alert as what was observed.** "Users cannot sign in" was an inference from one probe, and it was false. Say which check failed, how many consecutive probes it has failed, and tell the reader to confirm real user impact — for auth that means recent `users` inserts and `verification_tokens`, never another probe.
-- **Get the base rate before believing a pattern.** The Hetzner cron log (`/var/log/sourcelibrary/cron-caller.log*`, 14 days rotated) turns "the DB is flaky" into "3 failures in 2,016 probes, two of them an unrelated Resend outage" in one command.
-
-**The replacement instrument needs the same audit as the one it replaced (#3453).** `reading_history` was the clean twin that rescued the reading-depth question from the scraper fleet — auth-gated, keyed on `user_id`, no crawler can be in it — and it was right about the thing it was checked on (26% of member sessions are 10+ pages, stable across every window and robust to dropping the heaviest accounts). Then it was quoted for two things nobody had checked, and both were wrong:
-
-- **A metric's name is a claim about its denominator.** "Members who came back: 62%" counted `sessions > 1`, and a session is one user + one **book** — so opening a second book in the same sitting scored as a return. The day-based figure is 30.9%, and 61.0% of members have their entire history inside a single hour. Before quoting a rate, say out loud what one row *is*; if the unit isn't the thing the label names, the number is measuring something else. Same trap as grouping by exact `$pathname` above.
-- **Auth-gated is not human-gated.** A session excludes anonymous crawlers, not a signed-in account bulk-fetching: 29.5% of member pages arrived faster than 20 pages/minute, and the top 1% of members are 39% of all pages. **Per-session shares survived it and totals did not** — which is the general rule, not a detail of this dataset. A rate whose denominator grows with the contamination is robust; a sum is not.
-- **Counting sessions put the weight in the wrong place.** One-page sessions are 43.7% of sessions and **2.8% of pages read**; 10+ page sessions are 26.5% of sessions and **88.3% of pages**. The shallow tail is loud in one denominator and nearly weightless in the other. Report both, or the tail reads as the story.
-
-And **a field nothing writes looks identical to a field nothing needs.** `reading_history.referrer` was accepted by both routes, plumbed through the API client, projected into the GET response — and never sent by the reader, so all 6,659 rows were empty and "how do members reach a book" was unanswerable without one line of client code. Before concluding a signal is absent, check that something is actually emitting it.
-
-## A default that publishes under someone's real name must be opt-in (CRITICAL)
-`POST /api/embassy/chat` defaulted `visibility` to `'public'` and the client toggle initialised to `'public'`, so every signed-in reader's Librarian conversation went into the public Recent feed carrying `creatorName` — their account name. **539 threads were public against 20 private**, which is the tell: nobody chose this, because nobody was asked. 14 named people, most with full first-and-last names, until a reader wrote in on 2026-07-30 asking why her questions showed her name (#3505).
-
-Every other gate around it was correct. `/api/embassy/threads/[id]` properly 404s a private thread to everyone but its creator; anonymous threads were already `'unlisted'`. **The entire leak was one default**, which is why no audit of the access-control code would have found it.
-
-- **A default is a decision you made on the user's behalf.** For anything that attaches a person's name, location, or words to a public surface, the safe value is the private one — and "the reader can toggle it" is not consent when the toggle starts on. Ask what happens to someone who never touches the control.
-- **A lopsided split IS the finding.** 539/20 is not a preference distribution, it is a default. Before concluding readers like a setting, check the ratio against what the code does when they say nothing. Same shape as the metric-denominator rules above: the number was real and measured the instrument, not the people.
-- **Say what publishing costs, at the point of publishing.** The toggle read "(visible to others)", which describes the thread and not the byline. It now reads "(shown in Recent, under your name)". If a control's label omits the part a reader would object to, the label is the bug.
-- **Retract the backlog, not just the default.** Fixing the default protects the next reader and nobody already exposed. `scripts/maintenance/unpublish-default-public-librarian-threads.mjs` writes the affected ids to a backup *before* the flip and carries a `--restore`, because retracting content a user might genuinely have wanted public has to be reversible in one command.
-- **The data fix and the code fix ship on different clocks.** The retraction took effect the moment it ran; the default stayed `'public'` in production until the PR merged and prod deployed. Between those two points the backlog was clean and the tap was still open. When remediating an active exposure, state which half is live.
-
-Corollary for review: this arrived as a user complaint, not from the security review being verified at the same time — the review checked the write routes and the auth wrappers, and a default is neither. **Readers see the product; audits see the code.**
-
-**`withAuth`'s default is `reader`, and omitting `minRole` does not look like a decision (#3511).** Same shape as the `visibility` default above, one layer down: `withAuth(handler)` reads as "this route is protected" and means "any signed-in account may call it." Eight routes that rewrite or destroy page text sat on it — including `DELETE /api/[tenant]/pages/[id]`, which hard-deletes a page and renumbers the book writing **no revision**, while its global twin was correctly `withAdminAuth`. **A wrapper with a permissive default is only as good as every call site remembering to override it; write the `minRole` explicitly even when it matches the default.**
-
-- **The UI gate is not the API gate, and they drift apart silently.** The Read/Edit toggle has always been wrapped in `<AuthCheck role="inner_circle">`, so no reader ever saw an edit button and nothing looked wrong for a year. An affordance nobody can see is not an access control — the only gate that counts is the one on the route. Ask of any protected UI: *what happens if someone calls the endpoint directly?*
-- **Enumerate the writers; the reported instance is never the class.** #3511 named one route and scoped it to "a tenant subdomain". There were eight, and the two broadest apply **no tenant filter at all** — `quick-fix` looks a page up by `id`, and `restoreRevision()` resolves its page from the revision document, *ignoring the `[id]` in the path*. Reach was the whole corpus from the main domain. Enumeration found five of the eight; reading the issue found one. Same lesson as the five `entities.books[]` writers, now with a test that fails when a ninth appears.
-- **A path parameter that the handler never reads is a scoping illusion.** `/api/pages/[id]/revisions/[revisionId]/restore` looks per-page and is not. If a route's identifier does not appear in its query, it is decoration — do not reason about blast radius from the URL shape.
-- **Check the twins.** Every one of these routes exists twice, `/api/x` and `/api/[tenant]/x`, and in two cases the pair disagreed about who may call it. Fixing one and shipping is how the identical bug shipped twice in the same week before (`da1c221c`, then `b2786b10`).
-
-**An ABSENT scope identifier means "unscoped", never "denied" (#3542).** The direct sequel to #3511, on the same routes, in the opposite direction: `PATCH`/`DELETE /api/pages/[id]` answered `403` whenever no `x-tenant-id` resolved — so page saves worked on the 3,907 visible books owned by a tenant and failed on the other **30,132**, for as long as the gate existed. Editors could not correct the corpus, which is the labelled data behind `correction_events` (#3241).
-
-- **When sibling handlers on one route disagree about what absence means, the disagreement IS the bug.** The `GET` on that very route had always read a missing tenant as global scope and said so in a comment; only `PATCH`/`DELETE` read it as a refusal, and the six other global page writers (`quick-fix`, `split`, `reset`, `revisions/[revisionId]/restore`, `batch-split`, `batch-reset`) applied no tenant filter at all. One handler out of eight disagreeing with its own `GET` is drift, not policy. Same family as "UNKNOWN must never read as MISMATCH" below, one layer up.
-- **Build the scope filter conditionally; never interpolate a possibly-null tenant.** A literal `{ id, tenantId }` with a null tenant matches missing-**and**-null in Mongo, so simply deleting the gate would have read as working on global books while silently never matching a tenant-owned page — a worse bug than the one being fixed. `const scope = { id }; if (tenantId) scope.tenantId = tenantId;`
-- **The two 403 bodies are load-bearing — do not homogenise them.** `{"error":"Unauthorized"}` is a route's own scope gate; `{"error":"Forbidden - Insufficient role"}` is `withAuth`. Nothing else distinguished a scoping bug from a permissions one here, and the whole diagnosis turned on which string came back.
-- **A `curl` against a URL shape cannot establish what the CLIENT sends.** #3542 was filed on a real observation — `/api//pages/<id>` 308s — and the app has not sent that URL since #1880 (2026-05-19), where a request interceptor began collapsing `/api//` → `/api/`. The wrong mechanism nearly aimed the fix at `getTenantSlug()`. Read the client's outbound path, not a hand-built one.
-- **A grant the system cannot read is indistinguishable from no grant.** There is no global editor role at all: `token.role` is only `superadmin` or `reader` (auth.ts, `TODO (Phase 1)` still open), and tenant roles enter solely via `x-tenant-id`, so `getTenantMembershipRole` returns null on a falsy tenant. A `memberships` row with `tenantId: null, role: 'editor'` — the same shape as every superadmin row, differing only in the role value — therefore does **nothing**, in both directions, and one has sat active and inert since 2026-05-04. Removing the scope gate above unblocks superadmins **only**; see #3589. If an invite flow accepts a role it silently ignores, that is its own defect.
-
-## A text helper is scoped to its CONSUMERS, not to its name
-Lessons from 2026-08-04 (#3580/#3598/#3620). Full postmortem:
-`.claude/handoffs/2026-08-04-export-surfaces-and-unreachable-page-types.md`.
-
-`stripEditorialWrappers()` flattens GFM tables (`| 1 | 23 |` → `1  23`). That is
-**correct** for the snippet/quote/search surfaces it was written for, and its own
-comment says so: *"Only the snippet/quote path routes through here."* Three
-surfaces that serve a page's **whole text for reuse** reached for it anyway — the
-PDF exporter (added months later), `/api/books/[id]/text` (what AI clients and
-licensees read), and `build-corpus-snapshot.mjs` (the distributed dataset).
-
-Flattening keeps every cell **value** and discards the **column** it belonged to.
-148 of 366 pages of one manuscript are tables (13,949 cells), and it fails
-silently because the output reads as ordinary prose.
-
-- **Before reusing a text helper, read its comment for who it was written for,
-  then ask whether your surface is that.** "Serves an excerpt" and "serves the
-  artifact" are different contracts. A new consumer of an old helper is the
-  moment to check, and nothing else will flag it.
-- **Widen behaviour by an opt-IN parameter, never by changing the default.**
-  `{ keepTables }` left ~40 existing callers byte-identical; flipping the default
-  would have silently changed every snippet in the product.
-- **Verify an export by RENDERING it and looking.** Generating a real PDF threw
-  immediately (`unsupported number: undefined` — OCR tables are *ragged*, and
-  pdfkit dies on any cell past the widest declared row); rasterising then showed
-  an Arabic line-indent regression. Neither was visible to a green suite, because
-  every fixture was rectangular and single-line. Same discipline as the
-  curl-the-served-HTML rule above: a passing test is not a rendered artifact.
-- **A value nothing can PRODUCE looks identical to a value nothing needs.**
-  `NotesRenderer`'s `DESCRIPTION_ONLY_PAGE_TYPES` handled `cover`,
-  `musical-score` and `table`; the OCR prompt's `<page-type>` enum never offered
-  them, so all three sat at **zero pages** while the other five carried
-  4,927–210,023. Kircher's *Musurgia Universalis* had every engraved-music page
-  typed `text` — translated as prose (paid) and rendered without its branch —
-  while the OCR's own note read "consists entirely of musical notation". The
-  inverse of the `reading_history.referrer` rule below; both are invisible from
-  either side alone. Pinned by `tests/unit/page-type-vocabulary.test.ts`.
-- **A read-time regex cannot recover a distinction the writer never encoded.**
-  Four predicates were measured for "blank pages that aren't blank" and "`<note>`
-  holding a page description"; three were rejected as worse than useless (they
-  caught ProQuest boilerplate, library stamps and `<page-num>17</page-num>`). The
-  one that shipped is **definitional, not statistical** — a gloss annotates text,
-  so a `<note>` on a page with no body text cannot be one. When no clean
-  predicate exists, ship a detector and fix the write side (#3591); do not ship a
-  heuristic that strips reader-visible content on a few points of signal.
-- **Never buffer a whole book to build one artifact.** Awaiting every page image
-  before writing left a "streamed" response silent for the entire fetch (past
-  Cloudflare's ~100s window) with every image resident. `streamOrdered()`
-  (`src/lib/ordered-stream.ts`) yields in input order with a bounded look-ahead.
-  And when an artifact must be truncated, **say so inside the artifact** — a
-  partial edition that doesn't admit it is worse than an error.
-
-## A test that greps source is not a guard
-A unit test whose every assertion is "this string appears in this file" can only catch **deletion**, never **wrongness**. `tests/unit/tenant-account-menu.test.ts` (#3383) asserted seven such facts — including one pinning the exact `pathname.startsWith('/embed/')` check that was the bug — and passed green the entire time the feature was broken in production. It was reverted along with the code it "guarded".
-
-Source-shape assertions are legitimate for **absence** invariants, where deletion *is* the failure mode: `tests/unit/soft-404-loading-guard.test.ts` pins that certain `loading.tsx` files do not exist, and re-adding one genuinely reintroduces the soft-404. That test earns its keep; a shape test for *behaviour* does not.
-
-For behaviour, the assertion has to exercise the thing: render the component under the condition (a simulated tenant host), call the function (`proxy()` directly, per the tenant section above), or hit a deployed URL and check the response. **Before writing a guard, ask what code change would make it fail — if the answer is only "deleting this line", it is documentation with a green checkmark, not a test.**
-
-**Don't reason about that question — run it.** Delete the guarded line, watch the test go red, restore it. Two source-shape guards written in one session (#3484/#3488) both passed *with the code they guarded deleted*, and neither failure was visible by reading the test: one asserted `toContain('hasSearchTerm')` + `toContain('offset === 0')`, where both tokens occur elsewhere in the same file; the other asserted `/tenantId/` against a call body and was satisfied by the **explanatory comment sitting directly above `tenantId,`**. A source assertion matches the whole file, comments included — so scope it to a slice, strip comments before matching, or assert a composite string whose position relative to the call is checked. The negative control is the only thing that distinguishes a guard from a decoration.
-
-**A fixture you INVENTED is evidence about you, not about the system.** The rule above assumes the test's *input* is real and only its assertion is in doubt. A third guard failed the same way in #3584 with a real assertion and fabricated input: the control for a diacritic-folding fix hand-wrote a title page as `"… IKHWÁNU-S SAFÁ. Translated from the Hindustani."`, and "Translated" matched the title's own `translation` token through the matcher's six-character prefix rule (`transl`). It passed **with the fold deliberately removed** — a real code path, exercised, asserting nothing. The database's actual page holds only `# IKHWÁNU-S SAFÁ.` and no such phrase. Two details made it invisible: the stopword list screened `translated` but not `translation`, and the fixture was written *after* the wanted verdict was known, which is how invented evidence acquires exactly the properties it needs. **Capture fixture text from the real source before writing the assertion, never after** — a fixture drafted toward a known answer will reach that answer by whichever path is available, and you will not know which. This is the paired-artifact rule applied to test data: the fixture *claims* to stand for the real artifact, and nothing checks that it does.
-
-## A classifier over images cannot validate itself — CRITICAL
-
-Lessons from the false-split repair, 2026-08-04 (#3562). A reader reported one
-half-rendered frontispiece. Finding the rest took **seven detectors, four of which
-shipped confident wrong answers**, and every single failure was caught by opening an
-image — never by a check that inspected data. Full postmortem:
-`.claude/handoffs/2026-08-04-false-split-repair-and-seven-detectors.md`.
-
-- **Never quote a detector's count before validating it against eyes.** The successive
-  answers were 1,046 → 10,277 → 567 → 470. Three of the four largest "findings" were
-  artifacts. Sweeping on the first would have stripped correct crops off hundreds of
-  properly split spreads. **Sort the review by risk** (most-suspicious first) so a
-  partial human pass is still maximally informative — 97 wrongly un-split spreads were
-  spotted in seconds that way, by a human, after the classifier had passed every one.
-- **Absolute thresholds fail wherever the population varies per item.** Leaf proportions
-  differ enormously between books: a spread of two narrow folio leaves (1415x3106 each)
-  is 2780x3105 — still taller than wide, so `w > h` flagged all 543 correctly split
-  pages of one book. Calibrate against the item's own population, and **abstain in the
-  ambiguous band** rather than let nearest-neighbour force a verdict (real spreads sat
-  at 1.32x and 1.40x where the classes are 1x and 2x).
-- **A reference set can be contaminated by the defect it is meant to calibrate.**
-  "Uncropped pages are single leaves" is false — in a partly-split book the unsplit
-  pages may be spreads nobody got to. One book drew its yardstick from 24 uncropped
-  pages that were *all* spreads, and its real spreads then read as damage.
-- **Check what the system already wrote down before inventing a signal.** The thing that
-  finally worked was the OCR model's own `<warning>` text — *"an extremely narrow
-  vertical fragment… truncated on both the left and right sides"* — recorded at write
-  time in February and never read. It needs no image fetching and works where shape
-  cannot. Same shape as the crawler-fleet and analytics lessons above: the evidence
-  existed; nothing surfaced it. Corollary: **absence of a complaint is not health** — a
-  model fed a clean half-page transcribes it without remark.
-- **A repair verified on a sample is not verified.** "Confirmed in production" was true
-  for the two books checked and false for a third of the rest: clearing `crop` +
-  `cropped_photo` falls through to `display_photo`, which for 196 of 567 pages was
-  itself a resize of the half. The pages read as repaired in Mongo and changed nothing
-  on screen.
-- **A count of zero needs its denominator checked before it means anything.** A
-  post-apply check reported "0 pages still carrying crop" from a query that matched
-  *nothing* — the backup serialises `_id` as a hex string while Mongo stores an
-  ObjectId, so `{_id: {$in: [<strings>]}}` matches zero documents and the zero reads as
-  success. Assert the match count equals the expected count in the same breath.
-- **A bare failure count hides its own cause.** A re-OCR run reported 27 of 54 failed;
-  the reason (`"API key not valid"` — two of four Gemini keys are dead, #3627) sat in
-  `gemini_usage.error_message` throughout. Surface distinct error messages in run
-  summaries, and drop a key on a permanent 400 instead of rotating back into it.
-
-Corollary of the invented-fixture rule above, met the hard way: the first version of
-`tests/unit/spread-guard.test.ts` failed because the FIXTURE was unrealistic (an
-11%-wide gutter puts the detector's flank-confirmation window entirely inside the
-gutter), not because the detector was wrong. Check the fixture against a real image
-before concluding the code is broken.
-
-**Splitting specifically:** `src/lib/spread-guard.ts` refuses to split an image that is
-not a spread, using content (a central ink-free channel with text on *both* sides) not
-shape. It ships in `report` mode — log a real batch and confirm the refusals before
-setting `SPLIT_SPREAD_GUARD=enforce`, because BPH books genuinely are mostly spreads.
-Note a false split also runs `$unset: { ocr, translation, summary }`, so it is never
-merely cosmetic.
-
-## Count the search BOXES, not the search logs
-Before quoting anything about what users search for, **enumerate the search boxes in the UI and verify each one writes a row.** A log tells you about the boxes that log; it is silent about the ones that don't, and silence reads as "nobody searches."
-
-On 2026-07-31 a partner usage report claimed "of 93,179 views in the BPH reading room, exactly four were searches" and concluded readers there don't search. Both wrong, in two stacked ways (#3484):
-
-- **Wrong instrument.** The 4 came from counting pageviews of a `/search` *page*. Site-wide there were 5,903 such pageviews against 43,980 actual searches — searching mostly never produces a `/search` pageview at all. The tell was available immediately: two numbers that should have been comparable differed 7×. Related: **`analytics_pageviews.path` strips query strings** (0 of 926K stored paths contain `?`), so any URL-param search is invisible there by construction.
-- **A whole box was unmeasured.** `/api/catalog/bph` — the reading room's front-page catalogue search, the first thing a visitor sees — had no analytics call of any kind. Four months, zero rows. The BPH searches that *did* exist came from in-book search and the site's unified search: different boxes.
-
-Six search entry points existed, each built at a different time, each hand-rolling its own `analytics_events` insert, so logging was something every new route had to remember — and forgetting produces silence, not an error. The five that logged had also drifted: **none stored `host`**, so all 94,442 rows are `host: null` and cannot be split by surface even retroactively. Same shape as the five `entities.books[]` writers above.
-
-- **`src/lib/search-event-log.ts` is the single writer** for `search_query` events; `src/lib/search-log.ts` is the twin for the `search_queries` latency log. Both derive `host` / tenant / traffic class **inside the writer** from request headers rather than accepting them from callers, so a new surface cannot be born unattributable. A new search route uses them or it is not measured — `tests/unit/search-event-instrumentation.test.ts` pins the route list, and a route added without being listed silently stops being covered.
-- **A route that resolves a tenant to scope its query must pass that tenant to the logger.** `/api/search` did the first and not the second, leaving every "global" search unattributable with the answer sitting in scope (#3488).
-- **Tenant, not host, is the discriminator.** The reading room is served at `sourcelibrary.org/embed/bph`, so host says "sourcelibrary.org" for both surfaces. Separately, a subdomain's `/search?q=…` is rewritten by `proxy.ts` to `/embed/<tenant>/search`, which **re-exports the main `SearchPage`** and lands in `/api/search` — so a "main site" search list silently contains partner searches unless the row carries a tenant.
-- **Don't instrument `/api/search/semantic` with a `search_query` event.** It fires on the same page-load as `/api/search` for one user query; adding one double-counts every search. It logs latency to `search_queries` only, and a guard pins that.
-
-## `page_revisions` is not a clean double-OCR corpus
-It is used as one — 109,953 same-page pairs, and `scripts/eval/calibration-scorecard.mjs` fits agreement→accuracy on 32 anchor pages then applies it corpus-wide. **That inference assumes both sides read the same image, and ~40% of the time they did not.** Measured 2026-07-30 (`scripts/audit/revision-image-shift.mjs`, randomized n=3,339 pairs carrying a printed `<page-num>` on both sides): 40.2% report a *different printed page number*, i.e. a different leaf. Of 366 books with ≥3 comparable pairs, 112 shift on >50% of pairs and 88 of those systematically — one offset, almost always exactly **+1**.
-
-**Those are the #3357 e-rara repair, not fresh damage — the live data is correct** (verified against the scans: image `…974800b0/49.jpg` shows printed 5, current OCR says 5, the revision says 4). The tell was **inverted timestamps**: revision created 2026-07-25 while the current `ocr.updated_at` read 2026-04-04, i.e. *older than the text it supposedly replaced*. That is impossible for a re-OCR and diagnostic of a **text shift** — #3357 moved existing `ocr` subdocuments between pages rather than re-transcribing ("323 text-shifted back"), so each page inherited its neighbour's object *and that object's timestamp*, while `page_revisions` snapshotted the displaced text at repair time.
-
-- **Exclude pairs whose printed page numbers disagree before any corpus-wide fit.** One predicate removes both the repair artifact and genuine image swaps. Without it you are partly measuring one administrative event replicated across thousands of pages.
-- **This is why agreement is a weak accuracy proxy** — 63 points of agreement range map to ~5 points of accuracy in the anchor fit. Agreement is partly measuring image stability, not legibility.
-- **Mining the corpus for "hard to read" pages (#3469) must apply the same filter**, or the hard pages will mostly be re-archived ones. And note it is blind to the *fabrication* class by construction: two passes that both recite the same memorized verse agree perfectly (`/blog/reciting-not-reading`).
-- **Any shift-style repair must stamp `ocr.updated_at` on the write.** Leaving the moved object's original timestamp is precisely what made this take a day to diagnose, and the next such sweep will do it again.
-- Two further non-legibility causes in the same corpus: **truncation** (one pass transcribed a single column and stopped — 156 words vs 661 on the same page) and **normalization convention** (`nūc`→`nunc`, `q;`→`que`, `&`→`et`), which breaks exact-string alignment and cascades into fake substitutions. The *actual* early-modern glyph confusions — long-s ↔ f, ligatures, tildes — are ~1% of substitutions (`scripts/eval/disagreement-typology.mjs`).
-
-
-## Static-prerender Suspense invariant (SEO-critical)
-Any client component that calls `useSearchParams()` (or another prerender-bailout hook) must wrap the consumer in its **own** `<Suspense fallback={null}>` inside the component — never rely on a page-level boundary catching it. On statically prerendered routes (the ISR book page is the canonical case: `revalidate = 86400`, never reads `headers()`), an unwrapped call throws a CSR bailout that the *nearest* Suspense boundary catches; when that's the page's main content boundary, the served HTML becomes the loading skeleton. Users never notice (the client re-renders from flight data), but crawlers get a content-free page — this silently blanked every `/book/<slug>` page for search engines from ~2026-05-27 to 2026-07-19 and was the real root cause of the "99% of pages orphaned" finding (#2266, fixed in PR #3231 via `EmbedNavigationReporter`). **Tell:** a `BAILOUT_TO_CLIENT_SIDE_RENDERING` template in served HTML above the content, and 0 content anchors while the flight-data scripts contain them. **Verify with `curl` + grep for real `<a href>` anchors** — a browser always looks fine, so eyeballing proves nothing. Dynamic routes (anything reading `headers()`, like collections and the reader) don't hit this, which makes the regression easy to miss in spot checks.
-
-## Browser-translation invariant (don't remove the guard or the key)
-Chrome/Edge's built-in translator replaces every text node with a nested `<font style="vertical-align: inherit">` pair. React keeps a reference to the ORIGINAL node, so its next commit calls `removeChild`/`insertBefore` on a node that is no longer a child of the parent React recorded — the DOM throws `NotFoundError`, React re-throws out of the commit phase, and the nearest error boundary blanks the page. For a reader with auto-translate on this was: open a book, turn two or three pages, get an error screen, on every book and device (reported in Italian, fixed in #3314; see `.claude/handoffs/2026-07-22-browser-translation-reader-crash.md`). Two pieces keep it working, and each looks deletable on its own:
-- **`TRANSLATION_DOM_GUARD_SCRIPT` in `src/app/layout.tsx`** is a deliberate monkey-patch of two DOM primitives, not a leftover. It must stay an inline `<head>` script — the translator can rewrite the DOM before the React bundle parses, so a client component is too late for the hydration commit. Pinned by `tests/unit/translation-dom-guard.test.ts`.
-- **The `key` on `data-reader-panels-container`** (`TranslationEditor`, driven by `useBrowserTranslation`) is not a perf mistake. The guard stops the *throw*; only a remount makes the update *arrive* — without it React's writes land on departed nodes and the reader shows the previous page's words. Key is `undefined` when no translator is detected, so untranslated readers are untouched. Never key the whole reader: panel toggles/font size/trace mode live above the key and would reset on every page turn.
-
-**Route-level `error.tsx` bypasses the global `ErrorReporter` boundary** (Next.js handles it first), so any route error page must call `reportError` itself or its failures are invisible in `application_errors` — that is why this bug ran for months unmeasured.
-
-**Verifying:** Chrome's built-in translator can't be driven from CDP and the Google Translate *widget* is blocked by our CSP (`translate-pa.googleapis.com` absent from `script-src`; the built-in translator is browser-level and unaffected, so real users are fine). Model it with a MutationObserver that wraps text nodes in `<font><font>` — but **apply the batches asynchronously**, never synchronously inside the observer callback: sync surgery lands inside React's commit, which no real translator does, and it manufactures staleness on correct builds. Always run the unfixed build through the same harness as a negative control; if the old code passes too, the harness proves nothing.
-
-## An absence claim is only as strong as the set it was asserted against — CRITICAL
-"First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
-
-**Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
-layer, its measured reliability, and the invariants below in detail.
-
-That machinery is only honest if you know the set's **recall**, and ours is **27%**
-(was 22%; `scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed
-priors in `translation_classification`) — three of four known prior translations are
-invisible to it. A sampled check of the queue puts `none_found`'s **positive
-predictive value at ~50%**: a coin flip. So:
-
-- **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
-- **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
-- **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
-
-**Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
-
-
-**A reference set's SIZE is not its COVERAGE — but measure the coverage that answers YOUR question, not a proxy for it.** Six of the seven misses checked in the 2026-08-01 sample are **absent from the set, not mis-matched** (Hall's 1654 Maier, Ellistone's 1651 Böhme, Caplan's Loeb *Rhetorica ad Herennium* and Lemay's *De secretis mulierum* at zero rows, the *Confessio Augustana*, Gregory of Nazianzus) — so the limit is the corpus, not the matcher. The seventh, Agrippa, is **present**; see the correction below, and note that it weakens "threshold work is finished" from proven to merely likely.
-
-**The first explanation offered for that was wrong, and the way it was wrong is the lesson.** "The extract is 1.04% pre-1800 while our corpus is early-modern" is a true statistic and a false diagnosis: **a prior English translation of a 1531 Latin work is normally a MODERN imprint.** Checked properly, that class is well covered — of 6,947 rows translating from Latin/Greek, **80.8% are post-1950**. The set's overall date skew was never evidence of anything.
-
-A second explanation was then offered and **also measured wrong**: an ordering bug in the item-language filter (`041$a[0].startsWith('eng')`, which rejects a facing-page `$a lat $a eng`). Real bug, fixed in #3556, purely additive — and worth **+5 Latin/Greek rows in 250,000 records**. Negligible for the question.
-
-**The actual cause is that `041$h` was required at all.** Confirmed-absent priors are *in* LoC and thrown away by that one condition, while carrying the exact MARC 240 the matcher is built around — Caplan's Loeb *Ad Herennium* (LCCN 55004252, `240 Rhetorica ad Herennium.`, **no 041 at all**) and Böhme's *Signature of All Things* (`36037588`, no 041). MARC's *other* explicit translation marker is **`240$l`** — the cataloguer stating this item is the English version of the named work — and the ingest never read it. Measured on one part: 3,918 accepted vs **255 with an explicit `240$l` English** (~11,000 corpus-wide), **100% of them carrying a 240** against 64.8% of the current set. See #3599.
-
-**The meta-lesson, after THREE swings: stop theorising about a set's coverage and go read one known-missing record.** Two plausible causal stories were derived from what the extract *contained* (its date skew, then a filter-ordering bug) and both were measured to be non-causes. What settled it in four API calls was fetching the actual MARC for a prior we knew was missing and asking *which condition rejected this row*. **A single known-absent item, looked up in the source, outranks any amount of reasoning about aggregates** — and it is nearly free. Do that first.
-
-Corollary, and the reason two rounds were wasted: **a filter's discards are the only place its blind spot is visible, so make it report them.** `ingest-loc-bulk.mjs` now tallies rejections by reason; before that, the extract could only be read for what it kept, and the raw dump is deleted after extraction so the rejects could not be recovered afterwards either. Same shape as the section this sits in — an absence claim is only as strong as the set it was asserted against, and that applies to claims about the set itself.
-
-Related but genuinely separate: **depth is not reachability** — Chinese looks deep at 3,868 rows and is unanswerable anyway, because CJK is reachable only via MARC 880 (2.3% of rows).
-
-**And a correction is not exempt from the standard it enforces.** The same 2026-08-01 sample was re-verified 2026-08-02 by querying `uniform_title`, `title` AND `author` rather than author alone: six of the seven works are confirmed absent, but **Agrippa's *De incertitudine* is PRESENT** (LCCN 92246639, 1694, matched on its MARC 240) and its books read `inconclusive`, not `none_found` — so it was never a miss, it is an unscreened candidate, and it does not belong in the PPV sample. Two rounds of correction missed it because the re-check inherited the original's search strategy. **Query every field before writing "absent"** — a query against a non-existent field (`record_author`; the field is `author`) returns 0 and reads exactly like a real absence.
-
-**Naming a prior is not linking one, and only one layer can do it.** `reference_translations` carries an **LCCN on 100%** of rows and is the only citable layer. `translation_catalogs` (24,061 asserted priors from UNESCO/LoC/OpenLibrary/HathiTrust/Loeb/publishers) carries **zero** `book_id`, `work_id`, LCCN, OCLC, ISBN or URL — it joins to books by normalised title/author strings at query time, so "which prior?" is unanswerable from it. `translation_classification` (2,755 asserting a prior) carries a model-written prose sentence and **zero** URLs. Only `reference_translations` findings belong in reader-facing evidence until #3455/#3428 land. **Standing check:** 158 books are badged `is_first_translation: true` while `translation_classification` names a prior for them (measured 2026-08-02) — a lead is not authority, but an unreviewed contradiction of our own public claim is a screening queue.
-
-**A yardstick inside the set it measures reads 100%.** `translation_classification` became both a *source* and the recall test set, and the combined figure came out at exactly 100.0%. Quote **catalogue-only** recall. Adding it raised *coverage*, not recall, and structurally could not raise recall — it is a join on our own ids, so it resolves the books we already had an answer for and reaches nothing beyond them. (Same family as a metric's name being a claim about its denominator.)
-
-Three specific traps, each of which cost real work:
-- **Threshold tuning does not converge — find the right instrument.** The work-identity matcher was tuned five times; pass four lost verified true positives (Cicero's *De Officiis*, Grimald 1556) while making the corpus look *cleaner*. The answer was not a threshold but MARC **240 uniform-title containment**, because 240 exists to name a work independently of how an edition titles it. The same move fixed the 245 fallback that left 35.2% of rows unconfirmable: the overlap there is usually carried by **the author's own name** ("Poetics" vs "The Rhetoric of Aristotle"), so discount personal-name tokens and require containment plus author agreement — never a higher cap. Pinned by a gold set (`tests/unit/reference-set-work-identity.test.ts`) holding both the verified positives and the false-positive class each tuning pass produced.
-- **An immutable log is a history, not a state.** Efforts are immutable so a stale negative re-opens when the set improves — but adding a source mints a new generation and silently orphans prior judgement. Screening lives in `screening_decisions`, keyed on (work, prior), and is re-applied to every generation. Read `search_efforts` through `latestEffortPerBook()`.
-- **Provenance cannot tell you what you translated.** Re-hosted scholarly editions (Budge, Langdon) carry `translation.model` and `source:"ai"` exactly like our own work, because our pipeline OCR'd their printed *English* and re-rendered it. The signal that works is the OCR model's own declaration inside `ocr.data` (`<language>English</language>`) — `scripts/lib/english-source-detect.mjs`. The `pages.ocr.language` column is null on exactly the older ingests where it matters. And strip editorial wrappers before measuring any page text, or you measure our own annotations (that bug shipped here and inflated a count 6×).
-
-- **UNKNOWN must never read as MISMATCH.** The source-language screen compared MARC codes against Wikidata **Q-numbers** (`['gre','grc'].includes('Q35497')` is false), so it rejected every Wikidata row whose language it knew — 228 real priors, including Xenophon's *Symposium* and all six *Rubáiyát*. Reject only when **both** sides resolve to a known value and disagree; an unreadable identifier is unknown (`scripts/lib/source-language-match.mjs`). Deliberately no QID table — a hand-written list of unverifiable assertions reproduces the bug on its first wrong entry.
-- **`books.language` is the language of the WORK, not of the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition.
-
-Full postmortem: private ops repo, `handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.
-
-## Social-card metadata invariant
-Next.js merges page `metadata` shallowly per top-level key. Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):
-- A page that defines `openGraph` **replaces the root layout's entire openGraph object, images included** — title/description-only blocks ship NO `og:image` at all (blank share cards on FB/LinkedIn/Slack/iMessage).
-- The root layout's `twitter.images` (generic logo) **wins over per-page `openGraph.images` on X** — a correct og image still cards as the logo unless the page sets its own `twitter.images`.
-
-Rule: **any page that defines `openGraph` must set `images` explicitly and mirror them in a `twitter` block.** Exempt: routes with a file-convention `opengraph-image.tsx` (book, author, category detail, reader pages, gallery images) — the convention feeds the twitter card automatically. Tenant/embed routes are deliberately image-less pending tenant-scoped cards. New blog notes copy the openGraph+twitter pattern from any existing post; their "Last revised" footer dates come from `src/generated/blog-revisions.json` (regenerated from git history by `deploy-prod.sh` — see `scripts/maintenance/generate-blog-revisions.mjs`).
-
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore`, NOT `sourcelibrary_research`. As of 2026-07-09: ~99.7K total docs, ~32K `visible: true` (publicly shown), ~74.7K with `pages_count > 0` (actually processed), ~48.3K with any OCR. Re-measure before quoting — the previous figures here were 2026-05-26 vintage and had drifted by up to 5× (`pages_count > 0` read ~15K against a true 74.7K). The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
+- Production database: `bookstore`, NOT `sourcelibrary_research`. Measured 2026-08-04: **104,624** total docs, **34,038** `visible: true` (publicly shown), **79,638** with `pages_count > 0` (actually processed), **55,361** with `pages_ocr > 0`. Re-measure before quoting — these drift by thousands a month, and the 2026-05-26 vintage of this line was off by up to 5× (`pages_count > 0` read ~15K against a true 74.7K) before anyone noticed. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
 - **supabase-js silently caps every response at 1,000 rows** — no error, no warning, just a truncated array (truncation order follows the query plan, so it can look systematic, e.g. alphabetical). Any `.select()` that can exceed 1K rows needs `.range()` pagination or must be split into per-key queries. This zeroed whole corpora on `/api/ngrams` while reporting `found=true` (PR #3208) — the bug shape is "some keys work, others silently empty."
 
 ## AI Models — IMPORTANT
@@ -634,149 +107,45 @@ Rule: **any page that defines `openGraph` must set `images` explicitly and mirro
 - OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
-## Quality systems — two distinct scores
-Image extraction emits two separate quality signals in the **same Gemini call**. They answer different questions and get stored in different places — don't conflate them.
+## Conditional invariants — read the one matching what you're touching
 
-- **`gallery_quality`** (per detected illustration, range 0.0–1.0) — *Is this image worth showing in the curated gallery?* Lives on `pages.detected_images[].gallery_quality` (source of truth) and `gallery_images.gallery_quality` (materialized view). Current rubric is 4-tier (0.4–0.6 musical scores / 0.6–0.8 non-figural illustrations / 0.8–0.9 figural / 0.9–1.0 exceptional). The gallery materialization threshold is **0.5** — anything below is filtered out before write. **Rubric drift watch:** the archived prompt at `prompts/image-extraction/image-extraction-v0.md` shows the *old* 6-tier rubric; the live prompt is inline in `scripts/workers/image-extract-worker.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, and `src/lib/image-extraction.ts`. PR #450 (2026-03-27) made the change.
+Each of these is scar tissue from a real incident. They are **as binding as the rules
+above**; they are down here because they only fire on a specific subsystem. Paths are
+relative to `.claude/docs/invariants/`. When in doubt, read the one that looks closest —
+they open with a "Read this when" line so you can bail in two seconds.
 
-- **`scan_quality`** (per page, range 0–100 score + class enum) — *How cleanly was this page digitized?* Classes include `color_photo`, `bitonal_clean`, `bitonal_microfilm`, `microfiche`, `scanner_metadata`, `blank`, `corrupt`. Lives on `pages.scan_quality` (per page) + `books.scan_quality` (book rollup with `dominant_scan_class`, `median_score`, `has_microfilm_pages`, etc). **Currently only ~0.2% of pages have it** — scan_quality only fires when image extraction fires, and image extraction only fires on illustration-candidate pages. Design rationale + extension plan in `.claude/docs/automated-image-quality-system.md`.
+**Data & corpus**
+- Archivers/importers, `archived_photo`, "failed to fetch" triage → `archive-fetch-failures.md`
+- Two artifacts that must line up (page images vs OCR, splits vs text) → `paired-artifacts.md`
+- `visible` / `hidden` / `hidden_reason`, homepage stats, FT badge gating → `visibility-and-stats.md`
+- `books.author`, `author_id`, the `authors` thesaurus, `/author/[slug]` → `author-identity.md`
+- `books.work_id`, translation gaps, "do we hold the original?", acquisition at scale → `work-identity.md`
+- `entities.books[]`, book-index generation, page citations from the index → `entity-page-attribution.md`
+- Measuring OCR agreement / calibration / page difficulty → `page-revisions-corpus.md`
+- Asserting, badging, or counting "first translation" → `first-translation-claims.md`
 
-A famous Kircher diagram has `gallery_quality: 0.9` whether the scan is pristine or microfilmed; the same diagram on microfilm has `scan_quality.scan_class: bitonal_microfilm` regardless of how gallery-worthy it is. See `/blog/what-makes-a-good-scan` for the user-facing version.
+**Serving text & images**
+- Any surface that serves page text: snippets, quotes, IIIF, ngrams, embeddings, authored prose → `quote-and-snippet-integrity.md`
+- Reusing a text helper on a new surface; exports (PDF, `/text`, corpus snapshot); `<page-type>` → `text-helpers-and-exports.md`
+- `gallery_quality` / `scan_quality`, image crops, deep-zoom bbox remapping → `image-quality-and-bboxes.md`
+- Detectors over page images, spread splitting, corpus-wide image repair sweeps → `image-classifiers-and-splits.md`
 
-**Bbox coordinate-space invariant (PRs #2516/#2517):** `detected_images[].bbox` / `gallery_images.bbox` are normalized to the image returned by `getPageSource()` (`scripts/lib/page-image-url.mjs`; TS twin `getPageImageUrl()` in `src/lib/utils.ts`) — on split pages that's the half, NOT `archived_photo` (the full spread). Every crop writer (extracted/thumbnail/hires generators, current: `generate-thumbnails.mjs`, `backfill-hires-gallery.mjs`, `gallery-image-gen.ts` callers) must resolve its source with that same function, never an ad-hoc `archived_photo || cropped_photo` priority. Symptom of getting it wrong: gutter-spanning junk crops in the gallery, and the `/gallery/image/[id]` magnifier showing different content than the displayed image (the lens crops on-the-fly from the correct source — check the data before debugging lens math). Repair sweep: `scripts/maintenance/regen-split-gallery-images.mjs` (`--dry-run` / `--clear` / `--regenerate`).
+**Routing, access & the edge**
+- `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, any URL on a partner subdomain → `tenant-lockdown.md`
+- Book/page/gallery/collection routes, provider prefixes, contributing libraries → `content-urls-and-libraries.md`
+- Crawler access, bot gating, rate/budget limits, blocked networks, a new Vercel alias → `crawler-access-gate.md`
+- `src/lib/auth.ts`, session cookies, per-tenant role checks → `auth-subdomains.md`
+- Defaults that publish a person's name or words; every `withAuth` call site → `safe-defaults.md`
+- NextAuth session updates, client redirect guards, forms saving user-authored text → `session-flags-and-forms.md`
 
-**The deep-zoom master is a THIRD coordinate space — never point a bbox at it directly (#2714).** `pages.fullres_master` / `pages.deepzoom` are harvested from `page.photo_original` rewritten to `/full/full/` (`deepzoom-harvest-page-masters.mjs`), and the splitter overwrites `photo` / `archived_photo` / `display_photo` with the half but **leaves `photo_original` alone** — so on a split scan the tile pyramid is the whole **spread** while the bbox is fractions of the **half**. Anything framing a region of the pyramid (viewer focus, overlays, tile-space crops) must go through `remapBboxToMaster()` in `src/lib/gallery-deepzoom-bbox.ts`, which uses the splitter's own `crop: { xStart, xEnd }` (**0–1000 scale of the spread's width**, binding overlap already baked in; halves are cut full-height, so y/height never change). It returns `null` rather than guessing when the geometry can't be confirmed — callers must treat that as "don't focus," never as "use the raw bbox." Note that `crop` coords are also what `/api/image` reads as `cx`/`cw`, on the same 0–1000 scale. **Coverage caveat:** tiling and splitting barely overlap today (a 400-page sample of tiled pages across 17 books held zero split pages — the tiled corpus is BSB/Vatican single-leaf, the split cohort is BPH), so the split branch is unit-tested but unexercised in production. Don't "simplify" the remap away because every page you can click is identity.
+**Queries, search & rendering**
+- A query behind an API route, especially over `pages` / `entities` → `request-path-queries.md`
+- Search filters, a new search lane, indexing a column into a public search surface → `search-filters-and-lanes.md`
+- Client components on ISR routes, reader panels, root layout, page `metadata` → `rendering-and-seo.md`
 
-**Record images: use the accessor, never raw fields — book vs artwork store images differently.** The `books` collection mixes content types with *different* image-field conventions: book **covers** live in `thumbnail` / `thumbnail_blob`; **page scans** in `pages.display_photo` / `archived_photo` / `photo`; and **artworks** (`content_type:'artwork'` — single-image gallery items like the Tarot cards) in `image_display` / `image_full` / `image_thumb` / `archived_full_url`. Checking the *wrong* family makes an artwork look imageless when it isn't (a real footgun — it produced a false "94% of artworks have no image" during a 2026-06 audit; the images were all present in the `image_*` fields). **Always resolve a record's display image via `getBookThumbnailUrl()` / `getCoverImageCandidates()` (`src/lib/utils.ts`)** — they already handle every convention (incl. Wikimedia CDN URLs and the artwork 600px/2000px/full thumb variants). Don't hand-check `photo` / `display_photo` on an artwork record. Likewise, **artworks legitimately have `pages_count: 0`** — they're single images, not paginated books, so a `visible:true, pages_count:0` record is usually fine art, not a broken "stub."
-
-## The measurement layer fails silently, and always toward good news
-Lessons from the 2026-07-28 usage review (#3399, #3400, #3405, #3408, #3409). Five instruments were checked; four were broken, and not one of them looked broken. A dead cost rollup reads `$0.00`. An unfiltered event stream reads as engagement. A frozen dashboard reads as stable. **Treat a monitoring gap as a defect with a blast radius, not a chore** — every one of these was feeding a decision.
-
-- **Classify traffic at WRITE time, in every collection analytics reads from.** `analytics_pageviews` classified at ingestion and stayed clean; `analytics_events` did not and stored no user-agent, so `page_read` counted a crawler fleet as readers (839,701 events vs 24,577 human book-page views in the same week — 34×) and **could never be cleaned, because the field needed to classify was not stored**. Ingestion is the only point where the evidence exists. `src/lib/analytics-ingest.ts` `classifyRequest()` is the shared entry point; a new analytics write path uses it or it is born contaminated. Stored rows carry `traffic_class` + `user_agent` so the *next* contamination is diagnosable from the data instead of by inference.
-- **A crawler-inflated counter spends money, not just pixels.** `books.read_count` sorts "popular" surfaces **and** picks the queue for paid OCR batches (`/api/admin/bulk-ocr-new`, `/api/admin/bulk-reocr` both sort on it). Never increment a counter from an unclassified request.
-- **Per-IP limits cannot see a fleet.** ~80 rotating IPs defeat every per-address cap we have; this is the second instance this month (the other being the quote-scrape). Rate caps are a floor, never the filter — which is why the class is *stored* rather than trusted.
-- **The pipeline pause is a SPEND control. Never gate bookkeeping on it.** `sync-worker` exited on `processing_control.paused` before its first phase, so the 2026-06-08 pause froze six derived outputs for seven weeks: `gemini_usage_daily`, `system_config.analytics_usage`, `author_slugs`, page counts, collection counts, gallery materialization. And the pause does **not** stop everything that spends (`bulk-reocr-local.mjs` bypasses it) — ~$397 of computed cost ran during that window, including 32,094 pages OCR'd on 2026-07-07, while the dashboard read `$0.00`. Pausing the pipeline must never blind the meter that would show what's bypassing the pause. If a phase spends, gate the phase; never the worker.
-- **An alarm nobody reads is not an instrument.** `pipeline-health-alert` emitted `sync_worker_missing` daily — and emailed it — for all seven weeks. It was worded "worker may never have run", which reads as a cron nit rather than "six collections are frozen". Before adding a new alarm, check whether the existing one already fired and was ignored; if so, the fix is the wording or the channel, not another alert.
-- **A worker that bails before phase one writes no `cron_runs` record**, so "no record" and "never scheduled" are indistinguishable from the alert. Check the worker's own log on the box before blaming cron.
-- **Verify a metric's property names before reporting it missing.** #3409 reported 15,611 exceptions with null `$exception_type`/`$exception_message`. Those are posthog-js's *legacy* singular names — current versions send `$exception_list`, surfaced as `$exception_types`/`$exception_values`, and the data was fully populated. A null on a name you assumed is a query bug until proven otherwise.
-- **When an instrument is broken, say so instead of printing a number.** The read paths now report "not measurable, N unclassified events" rather than a plausible histogram. A number that looks authoritative and is wrong is worse than no number — it had already reached the weekly digest.
-- **A row written BEFORE the work happens must be closed out after it, by the same key — or it is a permanent zero.** Batch jobs log a `gemini_usage` row at submit time, when no tokens exist yet: `input_tokens: 0, cost_usd: 0.00`. Nothing reconciled them, and `batch-collector` inserted a *second* row with the real numbers, so one meter simultaneously read $0.00 over 376,804 pages of real spend **and** double-counted every completed batch's calls and pages in `dashboard_usage` (#3452). Writers close the placeholder via `completeBatchUsage()` (`scripts/workers/lib/supabase-usage-logger.mjs`), matched on `batch_job_id` + a placeholder status; `scripts/maintenance/reconcile-batch-usage.mjs` is the standing reconciler for every other terminator (ghost sweep, nameless reaper, generation guard) and derives their outcome from `batch_jobs` rather than asking each site to touch the meter. Three traps this class hides behind:
-  - **A reconciler that exists is not a reconciler that runs.** `logBatchResult()` in `src/lib/gemini-logger.ts` was written for exactly this job and matched `status = 'pending'` — while the orchestrator writes `'submitted'`, and nothing called it. Two spellings of one state is the same bug as no state; both are now in `PLACEHOLDER_STATUSES` and any sum must exclude them.
-  - **Bill per RESPONSE, not per saved page.** Gemini charges for responses we throw away (RECITATION blocks, empty candidates, over-length output, generation-guard drops), so a job where every page was blocked recorded $0.00; and in multi-page mode one response carries one `usageMetadata` for N pages, so per-page attribution multiplied it by N. `sumBatchResponseUsage()` is the shared summer.
-  - **`batch_job_id` holds two different identifiers** — `batch_jobs.id` from the orchestrator, the Gemini job name (`batches/v7zl…`) from the older `/api/books/[id]/batch-ocr-async` route. Joining on `id` alone reported 562 of the first 1,000 placeholders as orphans: missing-looking data that was merely keyed differently. Where a join can't resolve, the row is marked `unknown`, never `failed, $0` — an unmeasurable is not a zero.
-
-## Search filters must be enforced in every lane
-Lessons from PRs #3267/#3268/#3269 (the "dates leak" report, 2026-07-19 — three
-independent instances of one shape in a single session).
-
-Search fans out into **independent lanes whose results are merged into one list**.
-A filter is only as strong as its weakest lane, and the UI's "active filter"
-indicator reads page state, not what the query path received — so an unenforced
-filter renders as *on* while out-of-range results sit at the top.
-
-- **`/api/search/unified` (All tab):** the book lane is **Supabase
-  `books_catalog`** via `searchBooksCatalog()` — NOT Atlas Search. Adding a
-  predicate to `BookSearchFilters` (`src/lib/atlas-search.ts`) does nothing for
-  it. Other lanes: index, gallery, CLIP-visual, semantic, artwork (semantic +
-  lexical), collections.
-- **`/api/search` (Books tab):** four lanes — Supabase trigram books, Atlas
-  pages, `semanticBookSearch`, `semanticPageSearchGlobal`.
-- **Vector lanes carry no metadata predicate** and their hits merge in as
-  book/passage results. They must be post-filtered in JS or they leak past every
-  filter. This is the one people miss.
-- **`books.published` is FREE TEXT** (`circa 1600`, `[1620]`, `n.d.`, roman
-  numerals). Never range-compare it as a string — `$gte: "1600"` is not a year
-  comparison. The numeric `year` field is the filterable one, in both Mongo and
-  `books_catalog`.
-- **"That source has no year/metadata to filter on" is usually false — check the
-  data before asserting it.** Index hits are entity→book pairs whose book has a
-  year (and the lane already does a books lookup for tenant scoping);
-  `gallery_images` denormalizes `book_year` (83% of rows). Both were filterable
-  all along. `filterVisibleArtworks()` takes an optional year range folded into
-  the books lookup it already performs — one helper covers the gallery,
-  CLIP-visual, and artwork lanes.
-- **Wire-name mismatches are the recurring failure mode.** `/gallery`'s year
-  filter was inert in production because the api-client sent `yearFrom`/`yearTo`
-  while `/api/gallery` reads `yearStart`/`yearEnd`. Pinned by
-  `tests/unit/search-filter-wire-names.test.ts` — add a case there for any new
-  filter.
-
-**Verifying:** a browser always looks fine — results appear and the filter chip
-lights up. Proof is a **curl matrix against a deployed preview**: unfiltered vs
-filtered vs an impossible range (which must return 0). Check every lane in the
-response body, not just the first list. Same discipline as the three-layer
-crawler gate above: changing one layer alone is silently defeated by the others.
-
-**A searchable field is a readable field — never index a staff-only column.**
-Being able to search a field is a way of reading it: an attacker (or a curious
-visitor) can binary-search for the phrase it contains, one query at a time, and
-a hit is itself the disclosure. So the public search columns —
-`bph_works.search_norm`, `bph_works.search_tsv`, and any successor — must
-exclude `internal_remarks`, `exhibition_history`, `price`,
-`acquisition_source`/`_date`, the workflow flags, and `modified_by_*` (personal
-data). The exclusion list with per-field reasons lives in
-`scripts/migration/expand-bph-search-norm.sql`; keep it there rather than
-rediscovering it. This is the same shape as the tenant-lockdown rule above — ask
-what a surface *renders*, not only where it *links* — applied to the query side.
-
-**The inverse failure is just as real: a field nobody indexed is a field nobody
-can find.** `search_norm` covered 20 of ~40 populated columns, so searching a
-shelf location, a donor, a USTC number or a phrase from the remarks returned
-nothing — indistinguishable from "we don't hold it", and it took a librarian
-telling us in person to surface it (#3481). When adding a column that a human
-will later search by, add it to the search column in the same PR, or state why
-it is excluded.
-
-**Careful with generated search columns.** They cannot be altered in place —
-drop + recreate, which **also drops their indexes** (rebuild
-`idx_bph_search_norm_trgm` or every query becomes a seq scan), so wrap the whole
-thing in a transaction. And the expression must be IMMUTABLE: `concat_ws` is
-STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`.
-`add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
-deployed reality** — read `pg_get_expr` off the live column, not the migration
-file.
-
-## Quote & snippet integrity — CRITICAL
-Lessons from PRs #2232/#2233 (the "mercury on page 89" misquote — Nirmal, 2026-05-30).
-
-OCR/translation text in `pages.{ocr,translation}.data` is wrapped in AI-written **editorial annotation blocks**. There are **two distinct families**: the translation-side page descriptions `<meta>`, `<summary>`, `<keywords>`, `<vocab>`, and the OCR-side page-level metadata envelope `<language>`, `<scan-quality>`, `<script>`, `<page-type>`, `<columns>`, `<warning>` (the tags `extractRawHeadings` in `scripts/workers/enrich-worker.mjs` already skips). Both *describe* the page/scan and routinely name content from **adjacent** pages ("the previous page focused on perpetual motion wheels using mercury…"). They are **never verbatim source** — quoting or embedding them fabricates citations to words that aren't on the page, which strikes at the core "read and quote the original" promise.
-
-- **Never serve any of those wrapper blocks as quotable text.** Strip the *content*, not just the tag. The classic bug is `replace(/<[^>]+>/g, '')` — it deletes the tag but keeps the editorial prose. Use `stripEditorialWrappers()` from `src/lib/strip-editorial-wrappers.ts` (it knows **both** wrapper families) **before** any generic tag strip.
-- **Every search/snippet surface reads its own copy of the page text — fixes do NOT propagate.** Known text-cleaning paths: `/api/search`, `/api/books/[id]/search`, `src/lib/search/librarian-search.ts`, `src/lib/semantic-alignment.ts`, `scripts/workers/embed-gemini.mjs` (`cleanText`), `/api/likes/{popular,mine}` (+ tenant), `/api/learn`, the **quote API** `/api/books/[id]/quote` (+ tenant twin, PR #2420 — was missed in the #2232 sweep and served raw `<meta>` blocks as quotable text until 2026-06-03), the **IIIF surfaces** `/api/iiif/[id]/canvas/[n]/{ocr,translation}` + `/api/iiif/[id]/search` (PR #2323/#2327), and the **ngram build** `scripts/analytics/build-ngrams.mjs` (#3175 — counting wrapper prose would fabricate frequency data the same way quoting it fabricates citations). Route them all through `stripEditorialWrappers`. Batch `.mjs` consumers use the full scripts-side twin `scripts/lib/strip-editorial-wrappers.mjs` (parity-pinned to the TS original by `tests/unit/ngram-normalize.test.ts` — change both sides together). When you add a new surface that snippets page text, wire it through too. (See [[project_search_three_surfaces]] and `.claude/docs/iiif-api.md`.)
-- **Inline glosses (`<note>`/`<term>`/`<margin>`/`<gloss>`/`<unclear>`/`<insert>`) and real page marks (`<header>`/`<catchword>`/`<sig>`/`<page-num>`) are NOT editorial wrappers** — they sit on / are real body text. Keep their content; they aid recall and reading. **But `<note>` content is NOT uniformly verbatim source** (measured 2026-07-22, #3308): ~39% of note spans are preserved `original: "…"` source phrases, the rest AI-authored explanation/interpolation/image-description. Don't build anything that treats note content as either all-source or all-AI; the provenance split is open work tracked in #3308.
-- **Annotation spans must be normalized before any markdown/regex pairing** (`normalizeAnnotationSpans`, PR #3298): raw model output contains multi-paragraph, nested, and unbalanced note-family tags, which break CommonMark HTML-blocks (highlight silently dies at the first blank line — AI prose then renders as the book's own text) and every lazy `<note>[\s\S]*?<\/note>` regex. The reader normalizes first; don't add new lazy pairing regexes upstream of it, and don't assume stored tags are well-formed.
-- **A third class: UNTAGGED conversational preambles** (PR #3108, 2026-07-09). Dec-2025-era OCR batches asserted the book's `language` in the prompt; on mistagged books Gemini prepended bare-prose disclaimers ("Note: The text in the image is in French, not Latin. I have transcribed it exactly…") or refusals ("I cannot fulfill this request…") *outside any tag*, so tag-based stripping can't catch them and they render indistinguishable from page text. `stripLeadingAiPreamble` (first step of `cleanOcrArtifacts`, inherited by the reader + all `stripEditorialWrappers` consumers) is the read-time guard; OCR prompt v15 / translation prompt v12 add an output contract (any commentary must live inside `<warning>`/`<meta>`) at write time. If a new chatty-opener variant appears, extend the guard's regexes — don't add per-surface fixes.
-- **A fourth class: DEGENERATE output** (PR #3273, 2026-07-19, measured on 109,953 revision pairs). Beyond wrappers and preambles, some `pages.ocr.data` is not a transcription attempt at all: **repetition loops** (one Tibetan page holds 8,104 words with 40 unique — `तथा तथा तथا…`), **HTML-entity padding** (a Kircher page holds 24,692 characters of `&nbsp;` around 73 real words), and **reasoning-as-transcription** (``-> wait, "croire à ma lague:" is on the same line as``, `I'll provide the transcription now`) — the last naming no refusal, so refusal regexes miss it. ~1.3% of revision pairs have a degenerate side. Two consequences: (a) these render to readers as page text, so read-time guards belong with `stripLeadingAiPreamble`; (b) **any metric over page text must screen for them first** — `&nbsp;` inflates word counts (`nbsp` is a letter run), loops inflate length, and both make a *repaired* page look like a catastrophic regression. Cheap detectors: strip `&[a-z]+;` before tokenizing, and flag type/token ratio < 0.15 on texts over 120 words.
-- **Never read bulk OCR "disagreement" as a quality signal without inclusion criteria.** The same PR found five distinct populations all scoring as disagreement — editorial notes (only ~3% of it), space-less-script tokenization artifacts, image-only pages (covers/plates where both texts are AI descriptions of one engraving), commentary-as-transcription, and degeneration. State eligibility *before* the analysis and count what each class excludes; and note that classes 4-5 **invert direction** (a shorter, disagreeing re-OCR of a looping prior is the fix, not the damage). Word-level metrics additionally lie about space-less scripts: a Chinese page is ~22 whitespace tokens vs ~310 for Latin, so one wrong glyph invalidates a whole token (Chinese reads 36.7% word-agreement vs 72.7% character-agreement).
-- **The leak is frozen into stored artifacts.** `page_translations.translation` (the semantic-search snippet column) and the embedding vectors were written by the old `cleanText`, so the editorial prose is baked in with the tags already gone — a read-time re-strip can't recover it. Re-derive the snippet column from Mongo with `scripts/maintenance/backfill-clean-snippets.mjs` (UPDATE-only, zero Gemini cost — does NOT touch embeddings). Re-embedding (paid) is separate and only changes *ranking*; decide it on an eval, not reflexively.
-
-### House style: quoting sources in authored editorial content
-The rules above protect the *rendering pipeline*. These cover *authored* prose — blog posts (`src/app/blog/<slug>/page.tsx`), collection `description`/`expanded_description`, exhibition and library pages, anywhere a human or AI writes text that quotes a source. Lessons from the cannabis essay (`/blog/cannabis-bangue`, 2026-06-19; PRs #2584/#2587), where **three of the published quotes were wrong until a validation pass caught them**.
-
-- **Validate every quotation before publishing — no exceptions.** Anything inside quotation marks must be checked verbatim against the source with the `get_quote` MCP tool (or `get_book_text`) first. The tool exists for exactly this ("ALWAYS use before putting text in quotation marks") and returns wrapper-stripped, page-exact text plus a citation URL. Copy it exactly; never paraphrase *inside* quote marks, never hand-transcribe from memory or from a search snippet.
-- **Every quote hyperlinks to its exact source page.** Verify the **page, not just the book** — in the cannabis essay the "considerable a Medicine…Indies" quote sat on p226 while the surrounding link pointed at p224.
-- **The reader page route takes a page ID, NOT a page number: `/book/<slug>/page/<pageId>`.** `/book/<slug>/page/<number>` returns HTTP 200 with a "Page Not Found" body (a Next.js soft-404 — `notFound()`), so a page-number link looks fine but is broken. Get the id from `get_quote` (`citation.url`) or `pages.id`. (All 10 deep links in the cannabis essay shipped broken this way, 2026-06-20.)
-- **Validate links by grepping the response body for a not-found marker, NOT by status code.** `curl -w '%{http_code}'` returns 200 for these soft-404s. Real check: `curl -s "$URL" | grep -ci "page not found"` must be 0. A 200 from any Next.js dynamic route is never proof the page exists.
-- **Quote the words on the page you link to — not a retelling of them.** The Hooke "Indian hemp" lede was the historian Breen's rendering of Hooke's *private diary*, quoted as if it came from our facsimile of his *Philosophical Experiments*. Quoting a source's paraphrase as the primary text is a fabricated citation — the exact failure mode of the #2232 misquote, in authored form.
-- **Secondary sources (scholars' sentences) get quote marks only if verified.** If you can't confirm a historian's exact wording, paraphrase (no quote marks) and link out to the source. Don't dress a paraphrase as a direct quote.
-- **`get_quote` already strips editorial wrappers**, so quoting from its output keeps you compliant with the wrapper rules above for free. When in doubt, the data is truth — read the page, don't trust the prose you remember.
-
-## Entity index & page attribution — CRITICAL
-Lessons from #3361 (the `/encyclopedia/Matthiolus` "Real?" report, 2026-07-26). Same family as the quote-integrity rules above, in a different surface: a page number rendered next to a name is a **citation**, and inventing one is the same failure as quoting words that aren't on the page.
-
-**The shape of the bug.** The index extractor asks Gemini which people/places/concepts appear in a ~50k-char **batch** and gets back bare name lists — only `quotes` come back with a `page`. The old code filled that hole by crediting **every page in the batch's range** with **every entity in it**, and `/encyclopedia/[name]` rendered those inferred numbers as exact `p. N` links. Measured over 30 sampled entity-book pairs, **~22%** of claimed pages actually contained the name; a full-corpus sweep drops **~80%** of claimed citations as unverifiable. `Matthiolus` claimed pp. 47-58 of one book and is named on pp. 44 and 100.
-
-- **Never write a page number you did not verify against that page's text.** Attribution goes through `attributeEntityPages()` — `scripts/lib/entity-page-match.mjs` for `.mjs` writers, `src/lib/entity-page-match.ts` for TS (parity-pinned by `tests/unit/entity-page-attribution.test.ts`; change both sides together). No match anywhere in the batch means **section precision**: `pages: []` plus a `page_range`, rendered as "discussed in pp. X-Y". A coarse true claim beats a precise false one, and **`page_precision` must never be upgraded by synthesizing pages from a range.**
-- **FIVE writers maintain `entities.books[]` and a fix must land in all of them.** `scripts/workers/enrich-worker.mjs` (Phase 6), `scripts/batch/batch-generate-indexes.mjs`, `src/app/api/entities/route.ts` (rebuild-from-`book.index`), `src/app/api/books/[id]/index/route.ts`, and its tenant twin `src/app/api/[tenant]/books/[id]/index/route.ts`. The fourth was missed in the first pass (#3363); **the fifth was missed by that correction too** and ran unfixed until 2026-07-27 — still smearing whole batch ranges and still `$addToSet`-ing whole book subdocuments, reachable via the tenant route's auto-generating GET on the 110 visible tenant books that had no index. Each time, #3361 read as closed while the class was still live: **a closed issue is not proof the class is gone, and neither is a fix that "landed everywhere."** The writer set is now asserted on every test run by `tests/unit/entity-page-attribution.test.ts` — add a new writer to that list or the guard silently stops covering it. Note the two legitimate write shapes: extractors verify pages with `attributeEntityPages` and replace their entry with `$pull`+`$push`; the rebuild route has no page text, so it carries the precision marker forward (`normalizeEntityBook` demotes unmarked legacy rows) and `$set`s a whole array keyed by `book_id`.
-- **Never `$addToSet` a whole book subdocument into `entities.books[]`.** It compares the entire object, so a re-index with a different page list appends a *second* entry for the same book. One entity carried 162 entries for 117 distinct books, which is why its hero count contradicted its own "Appears in N Books" heading. `$pull` by `book_id`, then `$push`.
-- **`total_mentions` counts VERIFIED page references; `book_count` counts DISTINCT books.** Summing raw page-array lengths over duplicated entries is how one entity advertised "10,700 total mentions" of smeared page slots. Read paths derive both from the deduped array (`src/lib/entity-books.ts`) rather than trusting the stored fields, and `normalizeEntityBook()` demotes any row lacking a `page_precision` marker to section precision — so un-swept legacy rows stop citing at deploy time, not sweep time.
-- **The blast radius is wider than the encyclopedia.** The same index feeds `/api/search/index`, `/api/search/unified`, `/api/explore/map`, the reader-facing book index (`/api/books/[id]/index`), and the book/author/artist/collection pages.
-- **Repair sweep:** `scripts/maintenance/repair-entity-page-attribution.mjs` — re-runnable, no Gemini cost, verifies only within the window an entry already claims (it removes fabrications; it does not build a fuller concordance). Its own failure modes are instructive for any long sweep: non-idempotence (an empty `pages` array fell back to whole-book scanning, so a second pass *added* 8% more citations), whole-array reads that pin it at 0.3% CPU, `CursorNotFound` from a cursor held open across a 10-minute batch, and DNS failures on sleep/wake. **Validate a corpus sweep at corpus scale, not on 25 books.**
-
-## System Map
-- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
-- **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`, at `src/app/rithmomachia`), not dead code.
+**Measuring anything**
+- Quoting a usage number, analytics read/write paths, alarms, health probes → `measurement-instruments.md`
+- Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 
 ## Domain Context
 
@@ -806,12 +175,17 @@ Detect the work domain from the user's prompt and load the right context automat
 
 If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-graph.md`), use it at **PR-open time** — `detect_changes_tool` + `get_review_context_tool` give a risk-scored summary with test-gap detection and "wide blast radius, consider splitting" warnings. Also useful for `get_impact_radius_tool` ("what does changing this file affect?") and `query_graph(callers_of=X)` when grep would be noisy. **Never trust `refactor_tool(mode="dead_code")` output as a deletion list** — measured on this repo it produced 2,509 "dead" functions including active Next.js `GET` route handlers (validated 2026-05-25, see doc). Memory files win for *why* questions (decisions, incidents, domain invariants). Always grep-verify before any destructive action the graph informed.
 
+## System Map
+- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
+- **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
+- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`, at `src/app/rithmomachia`), not dead code.
+
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
 - Memory entries with dates >14 days old: verify before trusting stats/counts.
 - **Two memory systems, in plain terms:** repo memory = *team facts* (committed, shared with collaborators). Auto-memory = *Claude's per-machine notes* about the user (gitignored, private). The `/lesson` workflow writes to repo memory. Locations: `<repo>/memory/` (loaded by skills like `/pipeline-context`); `~/.claude/projects/<project>/memory/` (managed by Claude across sessions, has its own `MEMORY.md` + `_index-*.md` hierarchy).
-- **Every incident handoff ends with a CLAUDE.md check.** When writing a handoff in `.claude/handoffs/`, the last step is: "does CLAUDE.md need a new invariant?" If yes, PR the doc change the same session. Otherwise the lesson lives only in the handoff and decays. Both big CRITICAL sections in this file were written this way.
+- **Every incident handoff ends with a CLAUDE.md check, and it runs in BOTH directions.** *Up:* "does this need a new invariant?" If yes, PR the doc change the same session — and pick the tier (unconditional → here; subsystem-triggered → `.claude/docs/invariants/` plus a routing line above). *Down:* "is anything here now conditional, duplicated, contradicted, or stale?" Demote, merge, or fix it. **The downward pass is not optional** — for three months only the upward one was written down, and this file grew to 827 lines with the same incident written up twice, 300 lines apart. `/gnite` asks both questions and also sweeps the private memory store; `/lesson` runs the loop mid-session.
 
 ## User Feedback
 Feedback is a first-class signal — it's how real readers and AI clients tell us what's broken or missing. Know where it lives and how to handle it.
