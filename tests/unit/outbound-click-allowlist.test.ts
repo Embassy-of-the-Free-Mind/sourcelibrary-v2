@@ -27,6 +27,16 @@ const SHAPES = [
     label: 'inquiry',
     input: { surface: 'sponsors_hero', channel: 'email', intent: 'inquiry' as const },
   },
+  // /give and the /support mount of <GiveForm> attach what the donor selected
+  // before the handoff. Read as intent, never revenue.
+  {
+    label: 'give, one-time with amount',
+    input: { surface: 'give', channel: 'efm_stripe', locale: 'en', amount: 25, frequency: 'once' as const },
+  },
+  {
+    label: 'give, monthly with amount',
+    input: { surface: 'support', channel: 'naf_donorperfect', locale: 'en', amount: 10, frequency: 'monthly' as const },
+  },
 ];
 
 describe('outbound click payloads survive the analytics allowlist', () => {

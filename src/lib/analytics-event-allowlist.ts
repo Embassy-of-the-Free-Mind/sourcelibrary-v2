@@ -63,4 +63,12 @@ export const ALLOWED_PROPS = new Set([
   // indistinguishable forever. `surface` + `channel` (both above) carry the rest:
   // which page emitted the click, and where it went.
   'locale',
+  // amount / frequency: on donate_click from /give, what the donor selected
+  // before we handed them off. This is INTENT, not revenue — the gift completes
+  // in NAF's or the Embassy's system and nothing reports back, so a click at
+  // amount=25 is a person who chose 25 and left our origin, never $25 received.
+  // Stored because it is the only signal we will ever have about which rungs of
+  // the ladder people actually reach for, and the ladder is the main lever we
+  // control (see GIVE_PRESETS in src/lib/give-routes.ts).
+  'amount', 'frequency',
 ]);

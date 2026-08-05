@@ -33,6 +33,8 @@ export default function OutboundLink({
   channel,
   locale,
   intent = 'donate',
+  amount,
+  frequency,
   className,
   newTab,
   children,
@@ -45,6 +47,9 @@ export default function OutboundLink({
   locale?: string;
   /** `donate` for money, `inquiry` for a partnership/licensing/dataset ask. */
   intent?: OutboundIntent;
+  /** On surfaces that ask before handing off (/give): what the donor selected. */
+  amount?: number;
+  frequency?: 'once' | 'monthly';
   className?: string;
   /** Defaults to true for http(s), false for mailto — a mailto in a new tab leaves a blank one behind. */
   newTab?: boolean;
@@ -57,7 +62,7 @@ export default function OutboundLink({
       href={href}
       className={className}
       onClick={() => {
-        const { event, props } = outboundClickPayload({ surface, channel, locale, intent });
+        const { event, props } = outboundClickPayload({ surface, channel, locale, intent, amount, frequency });
         trackEvent(event, props);
       }}
       {...(openInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}

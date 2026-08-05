@@ -17,11 +17,18 @@ export interface OutboundClickInput {
   channel: string;
   locale?: string;
   intent?: OutboundIntent;
+  /**
+   * What the donor selected before the handoff, on surfaces that ask (currently
+   * /give). Whole currency units — the currency itself is implied by `channel`,
+   * since the NAF route is USD and the Embassy's Stripe is EUR.
+   */
+  amount?: number;
+  frequency?: 'once' | 'monthly';
 }
 
 export interface OutboundClickPayload {
   event: 'donate_click' | 'inquiry_click';
-  props: Record<string, string>;
+  props: Record<string, string | number>;
 }
 
 export function outboundClickPayload({
@@ -29,12 +36,19 @@ export function outboundClickPayload({
   channel,
   locale,
   intent = 'donate',
+  amount,
+  frequency,
 }: OutboundClickInput): OutboundClickPayload {
-  const props: Record<string, string> = { surface, channel };
+  const props: Record<string, string | number> = { surface, channel };
   // Omit rather than send undefined: trackEvent strips undefined anyway, but an
   // absent key and an empty string mean different things downstream ("this
   // surface has no locale" vs "the locale was blank").
   if (locale) props.locale = locale;
+  // Same rule, and it bites harder here: a surface that doesn't ask for an
+  // amount must not report 0, which would average into the ladder analysis as a
+  // real choice of nothing.
+  if (typeof amount === 'number' && Number.isFinite(amount)) props.amount = amount;
+  if (frequency) props.frequency = frequency;
 
   return {
     event: intent === 'donate' ? 'donate_click' : 'inquiry_click',

@@ -76,6 +76,7 @@ export interface NavStrings {
   podcast: string;
   search: string;
   menu: string;
+  support: string;
 }
 
 export const NAV_STRINGS: Record<Locale, NavStrings> = {
@@ -89,6 +90,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     podcast: 'Podcast',
     search: 'Search',
     menu: 'Navigation menu',
+    support: 'Support',
   },
   es: {
     collections: 'Colecciones',
@@ -100,6 +102,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     podcast: 'Podcast',
     search: 'Buscar',
     menu: 'Menú de navegación',
+    support: 'Donar',
   },
 };
 
