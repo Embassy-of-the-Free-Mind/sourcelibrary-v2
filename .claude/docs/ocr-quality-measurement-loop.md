@@ -273,6 +273,42 @@ German's 4.4% may be **material rather than language** — Latin holdings skew
 older and harder — which this cut cannot separate without matching on year and
 scan quality.
 
+## The rescued pairs are real: the neighbour test
+
+The 23,130 pairs that print no page number were excluded from the true-repeat
+corpus for being *unmeasurable*, and that exclusion is biased — a page whose
+printed number the model cannot read is a page it is struggling with.
+
+`scripts/eval/neighbour-leaf-test.mjs` settles it without a page number, a
+timestamp, or any metadata: compare the prior revision's text against its own
+page's live text AND against pages N-1 and N+1. If a neighbour matches better,
+the prior belonged to a different leaf. The pages' own text is the instrument,
+and no writer controls it.
+
+Measured 2026-08-05, n=190 usable of 200 sampled, stratified across five
+agreement bands:
+
+```
+same leaf (own page wins)          180   94.7%
+SHIFTED (neighbour wins by >0.15)    3    1.6%
+ambiguous                            7    3.7%
+```
+
+**But read the low band before adopting anything.** The failures concentrate
+where the signal lives: at 0-0.3 agreement it is 77% same / 5% shifted / 18%
+ambiguous, against essentially clean above 0.3. 94.7% is the claim about the
+*population*; the unstable arm carries roughly a fifth uncertain provenance, and
+those are not the same claim.
+
+Two limits, both in the direction of under-reporting: it compares against +/-1
+only, so a larger offset reads as "same leaf"; and it needs neighbours with live
+text, so book edges and un-OCR'd neighbours land in `unusable`, never in `same`.
+
+**Separately checked and clean:** `corpus` and `wikisource` rows are not model
+output, but **zero** of them reach the true-repeat set (measured over all 61,640)
+— the same-model-same-prompt filter excludes them by construction, since a
+non-model source carries neither. Every language figure above is unaffected.
+
 ## Why the loop matters more than the fix
 
 Five claims in this work were wrong and each was caught by the same move —
