@@ -210,17 +210,15 @@ export function useReaderV2(
     return () => window.removeEventListener('keydown', onKey);
   }, [goNext, goPrev]);
 
-  // Focus mode exits on pointer movement (after a grace period so the click
-  // that toggled it doesn't immediately cancel it)
-  useEffect(() => {
-    if (!focusMode) return;
-    const armAt = Date.now() + 600;
-    function onMove() {
-      if (Date.now() > armAt) setFocusMode(false);
-    }
-    window.addEventListener('pointermove', onMove);
-    return () => window.removeEventListener('pointermove', onMove);
-  }, [focusMode]);
+  // Focus mode exits via Esc, F, or the on-screen exit pill (rendered by the
+  // variant) — not on pointer move, which made it impossible to stay focused
+  // while using a mouse and read as "no way out" when it misfired.
+
+  // Editing (or a refresh) hands back an updated page: sync cache + state.
+  const applyPageUpdate = useCallback((page: Page) => {
+    cacheRef.current.set(page.id, page);
+    setCurrentPage(page);
+  }, []);
 
   // Browser back/forward: re-derive the page id from the URL
   useEffect(() => {
@@ -251,7 +249,7 @@ export function useReaderV2(
   return {
     book, bookPath, pageList, currentPage, currentPageId, currentIndex, totalPages,
     pageLoading, progress,
-    goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage,
+    goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage, applyPageUpdate,
     views, toggleView,
     settings, updateSettings, settingsOpen, setSettingsOpen,
     focusMode, setFocusMode,

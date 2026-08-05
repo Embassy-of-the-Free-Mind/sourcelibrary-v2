@@ -150,9 +150,9 @@ export default function ReaderSettingsControls({
         </div>
       )}
 
-      {/* Glosses */}
+      {/* Notes (inline editorial notes + glosses in the text) */}
       <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
-        <RowLabel>Highlight glosses</RowLabel>
+        <RowLabel>Notes</RowLabel>
         <button
           type="button"
           role="switch"

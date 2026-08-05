@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
-import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
@@ -111,17 +110,6 @@ export function ReaderProse({
   );
 }
 
-/** Centred page-break rule: ─── PAGE 8 ─── */
-export function PageBreakMarker({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-4 mt-[52px] mb-8" aria-hidden="true">
-      <span className="flex-1 h-px" style={{ background: 'var(--border-light)' }} />
-      <CapsLabel style={{ color: 'var(--text-faint)', letterSpacing: '0.16em' }}>{label}</CapsLabel>
-      <span className="flex-1 h-px" style={{ background: 'var(--border-light)' }} />
-    </div>
-  );
-}
-
 export interface ScanUrls {
   display: string | null;
   thumb: string | null;
@@ -141,14 +129,9 @@ export function resolveScanUrls(page: Page): ScanUrls {
  * ImageWithMagnifier — hover reading lens, in-place pan/zoom controls, click
  * for the fullscreen viewer (the same affordances the current reader has).
  */
-export function ScanImage({ page, book, className = '', fit = 'width' }: {
-  page: Page;
-  book: Book;
-  className?: string;
-  /** 'height' for fixed-height panes (image hugs the pane height); 'width' for stacked/mobile layouts */
-  fit?: 'height' | 'width';
-}) {
-  const { display, thumb, native } = resolveScanUrls(page);
+/** Plain scan image with the paper shadow — used in the stacked mobile layout. */
+export function ScanImage({ page, book, className = '' }: { page: Page; book: Book; className?: string }) {
+  const { display } = resolveScanUrls(page);
   const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
   if (!display) {
     return (
@@ -162,21 +145,114 @@ export function ScanImage({ page, book, className = '', fit = 'width' }: {
   }
   const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
   return (
-    <div
-      className={className}
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={display}
+      alt={alt}
+      className={`block max-w-full ${className}`}
       style={{
         boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
         filter: brightness ? `brightness(${brightness})` : undefined,
       }}
+      draggable={false}
+    />
+  );
+}
+
+export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
+
+/**
+ * Desktop scan viewer. Zoom is CONTROLLED FROM OUTSIDE (the pane header's
+ * −/+/reset buttons) — no controls overlay the scan itself. When zoomed,
+ * drag pans (clamped to the image), double-click toggles 2.2×, and the
+ * high-resolution source swaps in for sharpness.
+ */
+export function ScanViewer({ page, book, zoom, onZoomChange }: {
+  page: Page;
+  book: Book;
+  zoom: number;
+  onZoomChange: (z: number) => void;
+}) {
+  const { display, native } = resolveScanUrls(page);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const dragRef = useRef<{ startX: number; startY: number; panX: number; panY: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+
+  // New page or zoom back to 1 → recenter (state adjusted during render,
+  // per the React "derive state from props" pattern — no effect needed)
+  const [prevPageId, setPrevPageId] = useState(page.id);
+  const [prevZoom, setPrevZoom] = useState(zoom);
+  if (prevPageId !== page.id) {
+    setPrevPageId(page.id);
+    setPan({ x: 0, y: 0 });
+  }
+  if (prevZoom !== zoom) {
+    setPrevZoom(zoom);
+    if (zoom === 1) setPan({ x: 0, y: 0 });
+  }
+
+  const clampPan = useCallback((x: number, y: number, scale: number) => {
+    const el = containerRef.current;
+    const img = el?.querySelector('img');
+    if (!el || !img) return { x, y };
+    const maxX = Math.max(0, (img.clientWidth * scale - el.clientWidth) / 2);
+    const maxY = Math.max(0, (img.clientHeight * scale - el.clientHeight) / 2);
+    return { x: Math.min(maxX, Math.max(-maxX, x)), y: Math.min(maxY, Math.max(-maxY, y)) };
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (zoom <= 1) return;
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    dragRef.current = { startX: e.clientX, startY: e.clientY, panX: pan.x, panY: pan.y };
+    setDragging(true);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = dragRef.current;
+    if (!d) return;
+    setPan(clampPan(d.panX + (e.clientX - d.startX), d.panY + (e.clientY - d.startY), zoom));
+  };
+  const endDrag = () => { dragRef.current = null; setDragging(false); };
+
+  const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
+  if (!display) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <div className="h-[80%]" style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }} role="img" aria-label={alt} />
+      </div>
+    );
+  }
+  const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
+  const src = zoom > 1.5 && native ? native : display;
+
+  return (
+    <div
+      ref={containerRef}
+      className="h-full w-full overflow-hidden flex items-center justify-center select-none"
+      style={{
+        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in',
+        touchAction: 'none',
+      }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerLeave={endDrag}
+      onDoubleClick={() => onZoomChange(zoom > 1 ? 1 : 2.2)}
+      role="img"
+      aria-label={alt}
     >
-      <ImageWithMagnifier
-        src={display}
-        thumbnail={thumb || undefined}
-        highResSrc={native || undefined}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
         alt={alt}
-        scrollable
-        inlineZoomable
-        {...(fit === 'height' ? { className: 'h-full', imgClassName: 'h-full w-auto object-contain' } : {})}
+        draggable={false}
+        className="max-h-full max-w-full object-contain"
+        style={{
+          transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+          transition: dragging ? 'none' : 'transform 0.18s ease-out',
+          boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
+          filter: brightness ? `brightness(${brightness})` : undefined,
+        }}
       />
     </div>
   );
@@ -222,7 +298,7 @@ export function PaneMenu({ items, onInkBar = false }: { items: PaneMenuItem[]; o
       </button>
       {open && (
         <div
-          className="absolute top-full right-0 mt-1 w-[240px] border z-50 py-1"
+          className="absolute top-full right-0 mt-1 w-[240px] border z-50 py-1 rv2-pop"
           style={{
             background: SURFACE.popover, borderColor: 'var(--border-medium)',
             boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)',
@@ -287,41 +363,6 @@ export function buildTextMenuItems(
   }
   items.push({ label: 'Trace mode (current reader)', href: readerHref });
   return items;
-}
-
-/** 34×34 icon button on the ink bar. */
-export function InkIconButton({
-  label, onClick, href, children, active = false,
-}: {
-  label: string;
-  onClick?: () => void;
-  href?: string;
-  children: React.ReactNode;
-  active?: boolean;
-}) {
-  const cls = 'w-[34px] h-[34px] flex items-center justify-center transition-colors';
-  const style: React.CSSProperties = {
-    color: active ? '#fdfcf9' : onInk(0.72),
-    background: active ? onInk(0.14) : 'transparent',
-  };
-  if (href) {
-    return (
-      <a href={href} className={cls} style={style} title={label} aria-label={label}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = onInk(0.1); }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = active ? onInk(0.14) : 'transparent'; }}
-      >
-        {children}
-      </a>
-    );
-  }
-  return (
-    <button type="button" className={cls} style={style} title={label} aria-label={label} onClick={onClick}
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = onInk(0.1); }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = active ? onInk(0.14) : 'transparent'; }}
-    >
-      {children}
-    </button>
-  );
 }
 
 /** Adjoining multi-toggle group on the ink bar (Scan / OCR / English). */
