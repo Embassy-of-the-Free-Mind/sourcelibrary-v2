@@ -272,7 +272,33 @@ async function sampleMode() {
   });
   fs.writeFileSync(sheet, sOut.join('\n') + '\n');
   fs.writeFileSync(key, kOut.join('\n') + '\n');
+
+  // Volunteer queue. Feeds the EXISTING page-check system unchanged:
+  //   node scripts/maintenance/build-page-check-candidates.mjs --file <this> --apply
+  // Blinding survives for free — a volunteer sees a URL and a question, never a
+  // score — but only if the prompt is identical for every page. A prompt that
+  // said "we think this page is broken" would leak the decile and turn the
+  // calibration into a confirmation.
+  //
+  // The prompt asks for the ONE judgement a reader can make without the source
+  // to hand: does the transcription correspond to the image in front of them.
+  // It deliberately does not ask "is this good OCR" — that invites a quality
+  // rating, and the thing being measured is correspondence, not quality.
+  const tasks = picked.map((p, i) => ({
+    item_id: `ocr-screen:${p.page_id}`,
+    url: p.slug ? `https://sourcelibrary.org/book/${p.slug}/page/${p.page_id}` : '',
+    label: `page ${p.page_number} of ${p.book}`,
+    campaign: 'OCR spot check',
+    prompt: 'Compare the scanned image with the transcribed text beside it. Does the text '
+      + 'actually match what is printed or written on the page? Say if it is fine, if it is '
+      + 'garbled, if it looks fluent but bears no relation to the image, or if the page is '
+      + 'blank. If you cannot read the script, say that — it is a useful answer.',
+  })).filter(t => t.url);
+  const tasksFile = path.join(OUT, 'volunteer-tasks.json');
+  fs.writeFileSync(tasksFile, JSON.stringify(tasks, null, 2));
   console.log(`\n  → ${sheet}  ${picked.length} pages, shuffled, no scores shown`);
+  console.log(`  → ${tasksFile}  ${tasks.length} tasks for the volunteer page-check queue`);
+  console.log(`     node scripts/maintenance/build-page-check-candidates.mjs --file ${tasksFile} --apply`);
   console.log(`  → ${key}  (do not open before reviewing)`);
   console.log(`\n  verdict column: good | garbled | fabricated | blank | unsure`);
   console.log(`  After review, join on review_id to get the calibration curve.`);
