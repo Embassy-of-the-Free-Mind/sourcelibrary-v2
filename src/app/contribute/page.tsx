@@ -56,6 +56,10 @@ async function getGalleryImages() {
 }
 
 function formatNumber(n: number): string {
+  // Millions first. Without this branch 19,132,100 rendered as "19132.1k" on a
+  // live page asking strangers to help — the thousands rule kept applying long
+  // after it stopped making sense.
+  if (n >= 1_000_000) return `${Math.floor(n / 100_000) / 10}M`;
   if (n >= 1000) return `${Math.floor(n / 100) / 10}k`;
   return n.toString();
 }
@@ -214,7 +218,7 @@ export default async function ParticipatePage() {
             </div>
             <h3 className="text-sm font-semibold text-primary mb-0.5 group-hover:text-accent-rust transition-colors">Rate illustrations</h3>
             <p className="text-xs text-muted leading-snug">
-              A few seconds each: does this plate belong in the gallery? Keyboard-driven, no signup.
+              A few seconds each: does this plate belong in the gallery? Keyboard-driven, and credited to you.
             </p>
           </Link>
 
