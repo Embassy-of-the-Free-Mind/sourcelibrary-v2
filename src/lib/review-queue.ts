@@ -42,6 +42,18 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'j', rating: 'wrong',    label: '\u2717 wrong',    color: '#ef4444', hint: 'Says something the English does not, or is a mistranslation' },
     { key: 'u', rating: 'unclear',  label: '? unclear',  color: '#6b7280', hint: "Can't tell without seeing where it appears" },
   ],
+  // The generic queue: an item is a URL and a question, the answer is prose.
+  // Adding a task type becomes inserting rows, not writing a component.
+  //
+  // The two verdict buttons are NOT decoration next to the note box. Collecting
+  // only comments means you cannot tell "someone checked this and it was fine"
+  // from "nobody has looked yet" — you hear about problems and never learn
+  // coverage. One click is what makes the queue drain visibly.
+  'page-check': [
+    { key: 'k', rating: 'fine',    label: '\u2713 looks right', color: '#10b981', hint: 'I looked, nothing wrong' },
+    { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off \u2014 please say what in the box' },
+    { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Couldn't tell, or the page wouldn't load" },
+  ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
@@ -64,7 +76,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

@@ -9,6 +9,15 @@ export const metadata: Metadata = {
 
 const QUEUES = [
   {
+    slug: 'page-check',
+    title: 'Page check',
+    blurb:
+      'We point you at a page — a blog post, a collection, a book record — and you tell us ' +
+      'whether anything is wrong with it. No expertise needed beyond reading it carefully.',
+    status: 'live',
+    timePerItem: '~2 minutes',
+  },
+  {
     slug: 'spanish-copy',
     title: 'Spanish copy',
     blurb:
