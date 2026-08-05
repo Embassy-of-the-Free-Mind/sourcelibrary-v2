@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
+import OutboundLink from '@/components/analytics/OutboundLink';
 
 export const revalidate = 86400;
 
@@ -228,10 +229,10 @@ export default function BusinessGivingPage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-            <a
+            <OutboundLink
               href={EFM_STRIPE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              surface="support_business"
+              channel="efm_stripe"
               className="bg-white rounded-xl border border-stone-200 p-5 hover:border-stone-400 transition-colors block"
             >
               <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
@@ -241,11 +242,11 @@ export default function BusinessGivingPage() {
                 Give to Stichting Het Wereldhart
               </span>
               <span className="block text-xs text-stone-500 mt-1">Cultural ANBI</span>
-            </a>
-            <a
+            </OutboundLink>
+            <OutboundLink
               href={NAF_SOURCELIBRARY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              surface="support_business"
+              channel="naf_donorperfect"
               className="bg-white rounded-xl border border-stone-200 p-5 hover:border-stone-400 transition-colors block"
             >
               <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
@@ -255,9 +256,11 @@ export default function BusinessGivingPage() {
                 Give via the Netherland-America Foundation
               </span>
               <span className="block text-xs text-stone-500 mt-1">501(c)(3) public charity</span>
-            </a>
-            <a
+            </OutboundLink>
+            <OutboundLink
               href={MAILTO}
+              surface="support_business"
+              channel="email"
               className="bg-white rounded-xl border border-stone-200 p-5 hover:border-stone-400 transition-colors block"
             >
               <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
@@ -269,7 +272,7 @@ export default function BusinessGivingPage() {
               <span className="block text-xs text-stone-500 mt-1">
                 Periodic gifts, sponsorship, in kind
               </span>
-            </a>
+            </OutboundLink>
           </div>
 
           <p className="text-sm text-stone-500 leading-relaxed max-w-3xl">
@@ -277,9 +280,9 @@ export default function BusinessGivingPage() {
             Rules described here are current for the 2026 tax year and the right answer depends on
             your company&apos;s profit, VAT position, and where you are resident. Confirm with your
             accountant before you give, and write to{' '}
-            <a href={MAILTO} className="text-[#9e4a3a] underline hover:text-[#7e3a2e]">
+            <OutboundLink href={MAILTO} surface="support_business" channel="email" className="text-[#9e4a3a] underline hover:text-[#7e3a2e]">
               {CONTACT_EMAIL}
-            </a>{' '}
+            </OutboundLink>{' '}
             if it would help to have us talk it through with them.
           </p>
         </div>
