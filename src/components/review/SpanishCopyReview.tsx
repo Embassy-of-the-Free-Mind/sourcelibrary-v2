@@ -83,6 +83,8 @@ export default function SpanishCopyReview() {
       onRetry={() => q.fetchNext(q.volunteerId)}
       body={body}
       submitting={q.submitting}
+      canSubmit={q.canSubmit}
+      authStatus={q.authStatus}
       notePlaceholder="e.g. 'sugerir' is odd here — a reader would say 'proponer'"
       note={q.note}
       onNoteChange={q.setNote}

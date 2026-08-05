@@ -79,7 +79,7 @@ export default function ReviewLandingPage() {
         a long way.
       </p>
       <p className="text-stone-700 mb-8 leading-relaxed">
-        Pick a queue below. No signup. Keyboard-driven. You can stop anytime.
+        Pick a queue below. Sign in so your work is credited to you. Keyboard-driven, and you can stop anytime.
       </p>
 
       <ReviewStats />
@@ -114,7 +114,7 @@ export default function ReviewLandingPage() {
       <div className="mt-12 text-sm text-stone-600 leading-relaxed border-t border-stone-200 pt-6">
         <p className="mb-2">
           <b>What we do with your ratings:</b> when several people agree on a judgment, it becomes part of
-          our filter rules and quality signals. Your ratings are stored only as a per-browser ID — no PII.
+          our filter rules and quality signals. Your judgments are recorded against your account, so we can credit your work and come back to you about it.
         </p>
         <p>
           Every queue also has a free-text box: if you can see something the buttons can&apos;t

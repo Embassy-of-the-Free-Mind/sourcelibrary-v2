@@ -78,6 +78,8 @@ export default function PageCheckReview() {
       onRetry={() => q.fetchNext(q.volunteerId)}
       body={body}
       submitting={q.submitting}
+      canSubmit={q.canSubmit}
+      authStatus={q.authStatus}
       note={q.note}
       notePlaceholder="e.g. the third paragraph says 1623 but the title page says 1633"
       onNoteChange={q.setNote}
