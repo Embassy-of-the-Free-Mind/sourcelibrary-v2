@@ -156,6 +156,11 @@ export interface FooterStrings {
  * follow the USER rather than the path — a bigger decision, not made here.
  */
 export interface FeedbackStrings {
+  /** The band above the footer (FeedbackCallout), not the dialog. */
+  calloutHeading: string;
+  calloutIntro: string;
+  calloutButton: string;
+  calloutDismiss: string;
   heading: string;
   placeholder: string;
   namePlaceholder: string;
@@ -173,6 +178,10 @@ export interface FeedbackStrings {
 
 export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
   en: {
+    calloutHeading: 'Share your feedback.',
+    calloutIntro: 'If you spot an error, have a suggestion, or just want to say hello \u2014 we\u2019d love to hear from you.',
+    calloutButton: 'Give Feedback',
+    calloutDismiss: 'Dismiss',
     heading: 'Send feedback',
     placeholder: 'Spot an error? Have an idea? Anything at all...',
     namePlaceholder: 'Your name (optional)',
@@ -188,6 +197,10 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
     received: 'Your feedback has been received.',
   },
   es: {
+    calloutHeading: 'Comparte tus comentarios.',
+    calloutIntro: 'Si encuentras un error, tienes una sugerencia o simplemente quieres saludar, nos encantar\u00eda saber de ti.',
+    calloutButton: 'Enviar comentarios',
+    calloutDismiss: 'Descartar',
     heading: 'Enviar comentarios',
     placeholder: '\u00bfHas visto un error? \u00bfTienes una idea? Lo que sea...',
     namePlaceholder: 'Tu nombre (opcional)',
