@@ -5,7 +5,6 @@ import QuickSubscribe from '@/components/donate/QuickSubscribe';
 import GiveForm from '@/components/donate/GiveForm';
 import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
-import type { GiveRoute } from '@/lib/give-routes';
 
 // The two payment destinations, the NAF-form ambiguity, and the amount-carrying
 // URL params all live in src/lib/give-routes.ts now — this page and /give mount
@@ -135,12 +134,9 @@ const STRINGS: Record<Locale, SupportStrings> = {
 export default function SupportView({
   stats,
   locale = 'en',
-  defaultRoute = 'international',
 }: {
   stats: SupportStats;
   locale?: Locale;
-  /** Resolved from the request country by the page; see defaultRouteForCountry. */
-  defaultRoute?: GiveRoute;
 }) {
   const s = STRINGS[locale];
   const homeHref = locale === 'es' ? '/es' : '/';
@@ -197,7 +193,14 @@ export default function SupportView({
                   that linked out with no amount attached, leaving the donor to
                   meet a $0.00 field on arrival — the anchor is the strongest
                   lever on gift size and we were forfeiting it. */}
-              <GiveForm defaultRoute={defaultRoute} locale={locale} surface="support" contactEmail={CONTACT_EMAIL} />
+              {/* Hardcoded `international`, NOT resolved from the request
+                  country — this page is edge-cached for 24h by the static-pages
+                  rule in next.config.ts, so any per-visitor default would be
+                  frozen to whoever warmed the cache (measured: cf-cache-status
+                  HIT, age 1202, on a page marked force-dynamic). `/give` is the
+                  country-aware surface and is not edge-cached; here the donor
+                  gets a visible "Giving from the United States?" switch. */}
+              <GiveForm defaultRoute="international" locale={locale} surface="support" contactEmail={CONTACT_EMAIL} />
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
               <p className="mt-2 text-xs text-stone-500 leading-relaxed">
