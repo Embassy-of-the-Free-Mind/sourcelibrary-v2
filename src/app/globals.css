@@ -299,6 +299,21 @@ h1, h2, h3, h4 {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Reader v2 is a fixed-frame reader: it owns exactly one viewport and never
+   scrolls the document. The root layout renders the feedback callout (a
+   <section>) and the global <footer> as siblings of #main-content, which
+   would hang below the frame and make the page scroll. Same shape as the
+   embed-mode suppression above, keyed on the reader root instead. */
+body:has([data-reader-v2]) > section,
+body:has([data-reader-v2]) > footer {
+  display: none !important;
+}
+html:has([data-reader-v2]),
+body:has([data-reader-v2]) {
+  overflow: hidden;
+  min-height: 0;
+}
+
 /* Reader v2: smooth entrances for panels / menus / popovers */
 @keyframes rv2-slide-in-left {
   from { transform: translateX(-16px); opacity: 0; }

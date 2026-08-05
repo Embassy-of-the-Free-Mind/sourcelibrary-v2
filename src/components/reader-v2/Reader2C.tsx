@@ -831,7 +831,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   );
 
   return (
-    <div data-reader-theme={themeAttr(r.settings.theme)}>
+    <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)}>
       {/* ── Desktop (lg+): fixed frame, panes scroll ─────────────────────── */}
       <div
         className="hidden lg:grid h-[100dvh]"
