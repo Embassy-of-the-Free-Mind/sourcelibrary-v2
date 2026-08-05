@@ -20,9 +20,48 @@
  * Fire-and-forget; logging failures never affect the tool response.
  */
 import { createHash } from 'crypto';
+import { after } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 const COLLECTION = 'mcp_tool_calls';
+
+/**
+ * Hand deferred work to the platform instead of orphaning a floating promise.
+ *
+ * A bare `void writeEntry()` is not fire-and-forget on serverless — it is
+ * fire-and-*maybe*. Vercel freezes the instance once the response is sent, so
+ * an insert that hasn't finished is suspended mid-flight and only resumes if
+ * some later request happens to thaw that same instance. Measured on a cold
+ * preview (2026-08-05): an `initialize` row appeared ~40s after the request,
+ * on the back of an unrelated later call, and a tool-call row from the same
+ * deployment never landed at all. Warm production instances usually win the
+ * race, which is precisely what makes the loss invisible — the log undercounts
+ * silently and disproportionately drops COLD starts, i.e. new clients.
+ *
+ * `after()` keeps the function alive until the callback settles. Bounded, so a
+ * slow Atlas write can't hold the slot; the fallback covers non-request scopes
+ * (tests, scripts) where `after()` throws. Same shape as
+ * src/app/api/track/route.ts.
+ */
+const DB_TIMEOUT_MS = 3000;
+
+function deferDbWrite(work: () => Promise<void>): void {
+  const bounded = async () => {
+    try {
+      await Promise.race([
+        work(),
+        new Promise<void>((resolve) => setTimeout(resolve, DB_TIMEOUT_MS)),
+      ]);
+    } catch {
+      // Telemetry must never surface to the caller.
+    }
+  };
+  try {
+    after(bounded);
+  } catch {
+    void bounded();
+  }
+}
 
 let indexesEnsured = false;
 async function ensureIndexes() {
@@ -60,7 +99,7 @@ export interface LogMcpToolCallInput {
 }
 
 export function logMcpToolCall(input: LogMcpToolCallInput): void {
-  void writeEntry(input).catch(() => {});
+  deferDbWrite(() => writeEntry(input));
 }
 
 async function writeEntry(input: LogMcpToolCallInput) {
@@ -133,7 +172,7 @@ export interface LogMcpInitializeInput {
 }
 
 export function logMcpInitialize(input: LogMcpInitializeInput): void {
-  void writeClientEntry(input).catch(() => {});
+  deferDbWrite(() => writeClientEntry(input));
 }
 
 async function writeClientEntry(input: LogMcpInitializeInput) {
