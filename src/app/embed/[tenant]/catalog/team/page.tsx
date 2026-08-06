@@ -4,7 +4,6 @@ import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import CatalogTeamClient from '@/components/catalog/CatalogTeamClient';
-import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
@@ -127,7 +126,6 @@ export default async function CatalogTeamPage({ params }: Props) {
         >
           ← Catalogue
         </a>
-        <CatalogEditorNav role={effectiveRole} current="team" basePath={navBasePath} />
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Catalogue team
         </h1>

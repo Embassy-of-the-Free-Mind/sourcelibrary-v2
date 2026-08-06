@@ -6,7 +6,6 @@ import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
 import { memorixAliasesFor } from '@/lib/bph-cataloguer-identity';
-import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
@@ -156,7 +155,6 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
         <a href={catalogueIndexHref} className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
           ← Back to catalogue
         </a>
-        <CatalogEditorNav role={role} current="workspace" basePath={navBasePath} />
 
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Catalogue workspace

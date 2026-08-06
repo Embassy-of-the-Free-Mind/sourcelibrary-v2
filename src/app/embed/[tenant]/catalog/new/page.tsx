@@ -8,7 +8,6 @@ import { suggestNewUbn } from '@/lib/bph-catalog';
 import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
 import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
-import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 
 /**
  * Create a new BPH catalogue record.
@@ -63,7 +62,6 @@ export default async function NewCatalogEntryPage({ params }: Props) {
         >
           ← Back to catalogue
         </a>
-        <CatalogEditorNav role={effectiveRole} current="new" basePath={navBasePath} />
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           New catalogue entry
         </h1>

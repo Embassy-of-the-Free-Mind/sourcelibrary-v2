@@ -13,7 +13,7 @@ import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
 import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
-import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import CatalogRecordActions from '@/components/catalog/CatalogRecordActions';
 import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
@@ -414,7 +414,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             New search
           </a>
         </div>
-        <CatalogEditorNav
+        <CatalogRecordActions
           role={role}
           ubn={work.ubn}
           editLabel={editLabel}

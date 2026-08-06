@@ -13,13 +13,19 @@ import {
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId, getTenantContext } from '@/lib/tenant-context';
-import { catalogBasePath } from '@/lib/catalog-nav';
+import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
 import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { auth } from '@/lib/auth';
-import { effectiveCatalogRole, normalizeCatalogRole, canEditCatalog } from '@/lib/catalog-role';
-import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import {
+  effectiveCatalogRole,
+  normalizeCatalogRole,
+  canEditCatalog,
+  canReviewCatalog,
+} from '@/lib/catalog-role';
+import CatalogTopBar from '@/components/catalog/CatalogTopBar';
+import { getInboxCounts, EMPTY_INBOX_COUNTS } from '@/lib/catalog-inbox';
 
 // Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
 // Vercel default function budget (10s) under Atlas load, surfacing as
@@ -287,15 +293,23 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
 
     // Toolbar links must match the URL shape the browser is actually showing:
     // /catalog/… on the subdomain, /embed/<tenant>/catalog/… everywhere else.
-    const navBasePath = catalogBasePath((await getTenantContext())?.source ?? null, tenant);
+    // This page is the catalogue index, but it sits outside the /catalog
+    // layout that owns the top bar, so it renders the bar itself.
+    const tenantSource = (await getTenantContext())?.source ?? null;
+    const navBasePath = catalogBasePath(tenantSource, tenant);
+    const showTopBar = Boolean(showCatalogTools && catalogRole && canEditCatalog(catalogRole));
+    const inboxCounts = showTopBar ? await getInboxCounts(tenant) : EMPTY_INBOX_COUNTS;
 
     return (
         <>
             <EmbedNavigationReporter />
-            {showCatalogTools && catalogRole && (
-                <div className="max-w-7xl mx-auto px-6 pt-4">
-                    <CatalogEditorNav role={catalogRole} basePath={navBasePath} />
-                </div>
+            {showTopBar && catalogRole && (
+                <CatalogTopBar
+                    canReview={canReviewCatalog(catalogRole)}
+                    basePath={navBasePath}
+                    indexPath={catalogIndexPath(tenantSource, tenant)}
+                    counts={inboxCounts}
+                />
             )}
             <SharedLibraryView {...viewProps} />
         </>
