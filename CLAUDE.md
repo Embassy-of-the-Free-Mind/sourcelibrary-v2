@@ -134,6 +134,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, any URL on a partner subdomain → `tenant-lockdown.md`
 - Book/page/gallery/collection routes, provider prefixes, contributing libraries → `content-urls-and-libraries.md`
 - Crawler access, bot gating, rate/budget limits, blocked networks, a new Vercel alias → `crawler-access-gate.md`
+- `deploy-warm`, `deploy-prod.sh`, Cloudflare purges, `CDN-Cache-Control`, any `revalidatePath` → `deploy-and-caching.md`
 - `src/lib/auth.ts`, session cookies, per-tenant role checks → `auth-subdomains.md`
 - Defaults that publish a person's name or words; every `withAuth` call site → `safe-defaults.md`
 - NextAuth session updates, client redirect guards, forms saving user-authored text → `session-flags-and-forms.md`
