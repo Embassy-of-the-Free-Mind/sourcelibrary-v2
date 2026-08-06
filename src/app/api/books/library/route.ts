@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
+import { translationPercent } from '@/lib/translation-percent';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -204,6 +205,11 @@ export async function GET(request: NextRequest) {
 
     const booksWithTenantSlug = books.map((book: any) => ({
       ...book,
+      // Computed, not projected. The stored `translation_percent` is absent on
+      // 8,928 of 19,419 live books — its writer (`sync-page-counts`) is archived
+      // — and this route feeds MCP `list_books`, so callers were getting nothing
+      // usable back (#3652 B). See src/lib/translation-percent.ts.
+      translation_percent: translationPercent(book),
       tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
     }));
 

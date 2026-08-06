@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { translationPercent } from '@/lib/translation-percent';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -104,9 +105,10 @@ function computeBooks(raw: any[]): Book[] {
     ...b,
     pages_count: b.pages_count || 0,
     pages_translated: b.pages_translated || 0,
-    translation_percent: b.pages_ocr > 0
-      ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
-      : 0,
+    // Shared definition. The formula that stood here divided by
+    // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books because
+    // "blank" leaves do get translated. See src/lib/translation-percent.ts.
+    translation_percent: translationPercent(b),
   }));
 }
 
