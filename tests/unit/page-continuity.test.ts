@@ -1,0 +1,116 @@
+import { describe, it, expect } from 'vitest';
+import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import fixtures from '../fixtures/page-continuity.json';
+
+// Every fixture is REAL, FULL page text captured from production Mongo on
+// 2026-08-05 (see tests/fixtures/page-continuity.json, written by a script that
+// applied stripEditorialWrappers — the same treatment the quote API gives text
+// before serving it). Nothing is hand-written toward a wanted verdict, which is
+// the failure recorded in .claude/docs/invariants/tests-that-are-not-guards.md:
+// a fixture drafted after the answer is known reaches that answer by whichever
+// path is available, and you never learn which.
+//
+// An earlier draft of this file DID paraphrase these pages down to ~170 chars
+// for readability. Three tests failed — the elided text fell under the 200-char
+// prose floor — and the temptation was to lower the floor to make them pass.
+// That would have been tuning the code to fit invented evidence. Captured the
+// real pages instead; the floor is unchanged.
+
+const { p46, p47, p48, self_contained } = fixtures.thibault;
+const arabic = fixtures.arabic.p7;
+
+describe('pageContinuity', () => {
+  it('catches a word split by a hyphen at the foot of the page', () => {
+    // Thibault p46 ends "…the guide of our move-", and "movements" opens p47.
+    const c = pageContinuity(p46);
+    expect(c.hyphen_split_at_end).toBe(true);
+    expect(c.continues_on_next).toBe(true);
+    // p46 opens under a <header>TABLE I.</header> on "Circle No. 5" — a caption,
+    // not a continuation. The two edges are judged independently, and a run-on
+    // ending must never imply a run-on opening.
+    expect(c.continues_from_previous).toBe(false);
+  });
+
+  it('catches the far half of that split word, and p47 running on in turn', () => {
+    const c = pageContinuity(p47);
+    expect(c.continues_from_previous).toBe(true);
+    expect(c.continues_on_next).toBe(true);
+    expect(c.hyphen_split_at_end).toBe(false); // ends on a comma, not a hyphen
+  });
+
+  it('catches a page opening mid-clause', () => {
+    // p48 opens "that might arise from it…" — the clause began on p47.
+    expect(pageContinuity(p48).continues_from_previous).toBe(true);
+  });
+
+  // The case that exposed a systematic false negative while this was being
+  // written, and the reason page furniture is stripped before the edge test.
+  // Thibault p61 opens:
+  //     BOOK ONE
+  //
+  //     and of their interpretations, to demonstrate the true proportions…
+  // The prose plainly continues from p60. A naive "starts with a capital" test
+  // sees the running head and reports a clean opening. Most pages in most scans
+  // carry a running head, so this was not an edge case — it was the common case.
+  it('sees through a running head to the prose underneath', () => {
+    expect(self_contained.startsWith('BOOK ONE')).toBe(true); // fixture really is head-first
+    expect(pageContinuity(self_contained).continues_from_previous).toBe(true);
+  });
+
+  // The negative control that matters most. If this goes true, the flag fires on
+  // ordinary pages, callers learn to ignore it, and the signal is worse than
+  // nothing — one that cries wolf on 7 boundaries in 8 is noise.
+  it('stays silent at an ending that closes cleanly', () => {
+    // p61 ends "…will find in effect and with admiration." — a full stop.
+    const c = pageContinuity(self_contained);
+    expect(c.continues_on_next).toBe(false);
+    expect(c.hyphen_split_at_end).toBe(false);
+  });
+
+  it('makes no case-based claim about a caseless script', () => {
+    // The Arabic page ends "…من ان" with no terminal mark, so a naive
+    // missing-punctuation rule would call it a run-on. We decline: in a script
+    // with no case there is no corroborating signal, and a confident wrong
+    // answer is worse than none.
+    const c = pageContinuity(arabic);
+    expect(/[\p{Ll}\p{Lu}]/u.test(arabic)).toBe(false); // fixture really is caseless
+    expect(c.continues_on_next).toBe(false);
+    expect(c.continues_from_previous).toBe(false);
+  });
+
+  it('declines to judge text too short to be prose', () => {
+    // Real shape: a Chinese page whose entire stripped content was "道\n蔵\n1".
+    expect(pageContinuity('道\n蔵\n1').continues_on_next).toBe(false);
+    expect(pageContinuity('TABLE I.').continues_on_next).toBe(false);
+    expect(pageContinuity('').continues_on_next).toBe(false);
+    expect(pageContinuity(null).continues_on_next).toBe(false);
+    expect(pageContinuity(undefined).continues_on_next).toBe(false);
+  });
+});
+
+describe('continuityHint', () => {
+  it('says nothing when both edges are clean', () => {
+    // Constructed from the predicate's own output shape rather than a page, so
+    // this states the contract even if no such page existed.
+    expect(
+      continuityHint(
+        { continues_from_previous: false, continues_on_next: false, hyphen_split_at_end: false },
+        12
+      )
+    ).toBeNull();
+  });
+
+  it('names both neighbours when the page is open at both ends', () => {
+    const hint = continuityHint(pageContinuity(p47), 47);
+    expect(hint).toContain('p.46');
+    expect(hint).toContain('p.48');
+    expect(hint).toContain('context: true');
+  });
+
+  it('points only forward when only the ending runs on, and calls out the split word', () => {
+    const hint = continuityHint(pageContinuity(p46), 46);
+    expect(hint).toContain('p.47');
+    expect(hint).toContain('split');
+    expect(hint).not.toContain('p.45');
+  });
+});
