@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { translationPercent } from '@/lib/translation-percent';
+import { buildSortStage, type SortOption } from '@/lib/book-sort';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -14,30 +15,6 @@ const DEFAULT_LIMIT = 100;
 const browseCache = new Map<string, { data: string; timestamp: number }>();
 const BROWSE_CACHE_TTL = 60_000; // 1 minute
 const MAX_CACHE_ENTRIES = 50;
-
-type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc' | 'date_asc' | 'date_desc';
-
-function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<string, 1 | -1> } {
-  switch (sort) {
-    case 'recent':
-      return { $sort: { last_processed: -1, title: 1 } as Record<string, 1 | -1> };
-    case 'title-asc':
-      return { $sort: { sort_title: 1 } as Record<string, 1 | -1> };
-    case 'title-desc':
-      return { $sort: { sort_title: -1 } as Record<string, 1 | -1> };
-    case 'date_asc':
-      return { $sort: { year: 1, title: 1 } as Record<string, 1 | -1> };
-    case 'date_desc':
-      return { $sort: { year: -1, title: 1 } as Record<string, 1 | -1> };
-    case 'recent-translation':
-    default:
-      // When viewing a collection, sort by relevance score first
-      if (collection) {
-        return { $sort: { _collection_relevance: -1, has_translations: -1, title: 1 } as Record<string, 1 | -1> };
-      }
-      return { $sort: { is_bph_translated: -1, quality_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
-  }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -121,6 +98,12 @@ export async function GET(request: NextRequest) {
       id: { $ifNull: ['$id', { $toString: '$_id' }] },
     };
 
+    // Carry Atlas Search's relevance out of $search so the sort can use it.
+    // Only valid in a pipeline that actually began with $search.
+    if (search.trim()) {
+      addFields.search_score = { $meta: 'searchScore' };
+    }
+
     // Only add computed fields required by the active sort
     if (sort === 'title-asc' || sort === 'title-desc') {
       addFields.sort_title = { $toLower: { $ifNull: ['$display_title', '$title'] } };
@@ -175,7 +158,7 @@ export async function GET(request: NextRequest) {
     const [books, countResult] = await Promise.all([
       db.collection('books').aggregate([
         ...basePipeline,
-        buildSortStage(sort, collection || undefined),
+        buildSortStage(sort, collection || undefined, Boolean(search.trim())),
         { $skip: skip },
         { $limit: limit },
         { $project: bookProject },
