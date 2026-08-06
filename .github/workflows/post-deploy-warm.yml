@@ -1,8 +1,14 @@
 name: Post-deploy cache warm
 
 # Runs after a push to main that changes app files (i.e., triggers a Vercel deploy).
-# Waits for Vercel to finish building, then warms the top pages so the ISR + Cloudflare
-# caches are populated immediately instead of waiting for organic traffic.
+# Waits for that deploy to actually be live, then purges Cloudflare and warms the top
+# pages so the ISR + Cloudflare caches are populated immediately instead of waiting for
+# organic traffic.
+#
+# ORDER IS THE WHOLE POINT. Purging before the new deployment is live re-warms the edge
+# with the outgoing build's HTML, which then references asset hashes that the promotion
+# deletes — pages render unstyled for up to 24h. So the wait below polls for a real
+# signal rather than sleeping for a plausible number of seconds.
 
 on:
   push:
@@ -15,14 +21,61 @@ on:
       - 'package.json'
       - 'package-lock.json'
 
+permissions:
+  deployments: read
+  contents: read
+
 jobs:
   warm:
     runs-on: ubuntu-latest
-    # Wait for Vercel to finish deploying (~2-4 min typically)
     steps:
+      # Wait for the deploy of THIS commit to actually be live.
+      #
+      # This step used to be `sleep 180`, which is a guess, not a wait. Observed
+      # 2026-08-06 (#3658): the build took 6 minutes, so the purge and warm below
+      # ran three minutes before the new deployment existed. That is worse than
+      # doing nothing — it purges the edge and then re-warms it with the OLD
+      # deployment's HTML, which starts pointing at dead /_next/static asset
+      # hashes the moment the new build promotes. Pages then render fully
+      # unstyled for up to 24h, which is the exact failure the deploy section of
+      # CLAUDE.md exists to prevent, arriving automatically on every merge whose
+      # build runs long.
+      #
+      # Vercel's GitHub integration posts a deployment status for each commit, so
+      # we poll that with the built-in token rather than adding a Vercel API
+      # secret. Fails OPEN: if it times out we purge anyway and say so loudly,
+      # because a late purge is recoverable and no purge is not.
       - name: Wait for Vercel deploy
-        run: sleep 180
+        id: wait
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          for i in $(seq 1 60); do
+            STATE=$(gh api "repos/$REPO/deployments?sha=$SHA&per_page=100" \
+              --jq '.[].id' 2>/dev/null | while read -r id; do
+                gh api "repos/$REPO/deployments/$id/statuses?per_page=100" \
+                  --jq '.[] | select(.environment | test("[Pp]roduction")) | .state' 2>/dev/null
+              done | grep -m1 -E '^(success|failure|error)$' || true)
+            if [ "$STATE" = "success" ]; then
+              echo "Production deploy for $SHA is live after $((i * 15))s"
+              echo "deploy_ready=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ "$STATE" = "failure" ] || [ "$STATE" = "error" ]; then
+              echo "::error::Vercel production deploy for $SHA reported '$STATE' — not purging."
+              echo "deploy_ready=false" >> "$GITHUB_OUTPUT"
+              exit 1
+            fi
+            sleep 15
+          done
+          echo "::warning::Timed out after 15 min waiting for the production deploy of $SHA. Purging anyway — verify the site is styled, and see CLAUDE.md on stale HTML vs dead CSS chunks."
+          echo "deploy_ready=false" >> "$GITHUB_OUTPUT"
 
+      # Read the success flag, do not merely print it. A purge that failed
+      # silently against a dead token went unnoticed for weeks and produced
+      # exactly the stale-CSS symptom this workflow exists to prevent.
       - name: Purge Cloudflare cache
         run: |
           RESULT=$(curl -s -X POST \
@@ -31,6 +84,12 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}')
           echo "CF purge: $RESULT"
+          if echo "$RESULT" | grep -q '"success":true'; then
+            echo "PURGED"
+          else
+            echo "::error::Cloudflare purge FAILED — the edge is still serving pre-deploy HTML, which will point at dead /_next/static chunks. Check CLOUDFLARE_API_TOKEN (CF_API_TOKEN is WAF-scoped and will not work here)."
+            exit 1
+          fi
 
       - name: Warm cache
         run: |

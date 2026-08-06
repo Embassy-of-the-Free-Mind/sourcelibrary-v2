@@ -103,6 +103,59 @@ describe('isBlockedNetwork', () => {
     expect(isBlockedNetwork(null)).toBe(false);
     expect(isBlockedNetwork('')).toBe(false);
   });
+
+  it('covers the four cloud operators measured on 2026-08-06', () => {
+    expect(isBlockedNetwork('116.204.33.7')).toBe(true); // Huawei Cloud AS55990
+    expect(isBlockedNetwork('1.92.219.4')).toBe(true); // Huawei Cloud AS55990
+    expect(isBlockedNetwork('149.232.130.9')).toBe(true); // Huawei Clouds HK AS136907
+    expect(isBlockedNetwork('150.5.132.1')).toBe(true); // Byteplus AS150436
+    expect(isBlockedNetwork('163.7.14.200')).toBe(true); // Byteplus AS150436
+    expect(isBlockedNetwork('82.157.9.1')).toBe(true); // Tencent AS45090
+    expect(isBlockedNetwork('81.70.200.5')).toBe(true); // Tencent AS45090
+    expect(isBlockedNetwork('49.233.140.2')).toBe(true); // Tencent AS45090
+  });
+
+  it('blocks the enumerating consumer /24s but not their neighbours', () => {
+    // These are bare /24s inside consumer allocations on purpose: the block is
+    // as narrow as the measurement. One /24 over in either direction is a
+    // stranger who did nothing, and must still be able to read.
+    expect(isBlockedNetwork('180.153.197.44')).toBe(true);
+    expect(isBlockedNetwork('180.153.196.44')).toBe(false);
+    expect(isBlockedNetwork('180.153.198.44')).toBe(false);
+    expect(isBlockedNetwork('112.65.211.8')).toBe(true);
+    expect(isBlockedNetwork('112.65.210.8')).toBe(false);
+    expect(isBlockedNetwork('112.65.213.8')).toBe(false);
+  });
+
+  it('leaves genuine reader networks alone', () => {
+    // Every one of these read the library in the same window and is a person:
+    // Comcast, Charter, Virgin Media, University of Florida, TurkNet.
+    expect(isBlockedNetwork('73.106.56.4')).toBe(false);
+    expect(isBlockedNetwork('72.226.47.9')).toBe(false);
+    expect(isBlockedNetwork('82.28.4.1')).toBe(false);
+    expect(isBlockedNetwork('128.227.209.3')).toBe(false);
+    expect(isBlockedNetwork('31.223.11.9')).toBe(false);
+  });
+
+  it('never blocks our own CDN, at any address in its ranges', () => {
+    // An alarm whose remediation is self-harm; a block that lands on the CDN
+    // takes the site down for everyone. Cheap to assert, catastrophic to miss.
+    for (const ip of ['172.64.0.1', '172.71.148.9', '104.16.0.1', '162.158.110.3', '141.101.13.7', '173.245.48.1']) {
+      expect(isBlockedNetwork(ip)).toBe(false);
+    }
+  });
+
+  it('handles malformed and non-IPv4 input without matching', () => {
+    expect(isBlockedNetwork('not-an-ip')).toBe(false);
+    expect(isBlockedNetwork('116.204.33')).toBe(false);
+    expect(isBlockedNetwork('116.204.33.7.9')).toBe(false);
+    expect(isBlockedNetwork('116.204.999.7')).toBe(false);
+    expect(isBlockedNetwork('unknown')).toBe(false);
+    // IPv6 is deliberately never blocked — no measurement behind it.
+    expect(isBlockedNetwork('2a02:c7f:1234::1')).toBe(false);
+    // ...but the IPv4-mapped form must still resolve to the v4 rule.
+    expect(isBlockedNetwork('::ffff:116.204.33.7')).toBe(true);
+  });
 });
 
 describe('proxy() refuses blocked networks on every host', () => {
