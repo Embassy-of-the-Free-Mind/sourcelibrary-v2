@@ -72,8 +72,22 @@ const LEADING_FURNITURE =
 const TRAILING_FURNITURE =
   /(?:\s*<(header|page-num|sig|margin|catchword)>[\s\S]*?<\/\1>\s*|\n\s*[\p{Lu}\p{N}][\p{Lu}\p{N}\s.,'’:-]{0,38}\s*)+$/u;
 
+/**
+ * Zero-width characters, which `markForExport` (src/lib/provenance.ts) threads
+ * through every served passage as the provenance imprimatur.
+ *
+ * This MUST be removed before the edge tests. The mark is invisible, so a page
+ * ending "…our move-" can be served as "…our move-​⁠", and
+ * `/[\p{L}]-$/` then sees a zero-width joiner as the final character and reports
+ * a clean ending. The unit tests would keep passing the whole time, because they
+ * run on pre-mark text straight out of Mongo — the detector would simply stop
+ * working in production and say so nowhere. (Found exactly that way: the flags
+ * came back all-false on a preview deploy while 10/10 tests were green.)
+ */
+const ZERO_WIDTH = /[​-‏⁠-⁤﻿]/g;
+
 function stripInlineNoise(text: string): string {
-  return text.replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
+  return text.replace(ZERO_WIDTH, '').replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
 }
 
 /** The text as it flows INTO this page — furniture at the top removed. */

@@ -297,8 +297,12 @@ async function getQuote(args: Record<string, unknown>) {
   // The flags are the actual fix. Access was never the problem — a caller cannot
   // tell a fragment from a whole sentence, so it never knows to ask. Computed
   // from text already in hand: no extra query, no extra model call.
+  // The served field is `translation` (see src/app/api/books/[id]/quote/route.ts);
+  // `text` is not a field on this response and reading it silently produced
+  // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
-  const continuity = pageContinuity(typeof quote?.text === 'string' ? quote.text : null);
+  const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
+  const continuity = pageContinuity(quoteText);
   const hint = continuityHint(continuity, Number(args.page));
 
   return {

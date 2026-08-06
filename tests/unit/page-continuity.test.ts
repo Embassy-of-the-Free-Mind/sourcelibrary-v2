@@ -78,6 +78,21 @@ describe('pageContinuity', () => {
     expect(c.continues_from_previous).toBe(false);
   });
 
+  // Production serves this text through markForExport (src/lib/provenance.ts),
+  // which threads zero-width characters through it as the provenance mark. Those
+  // are invisible, so a page ending "our move-" arrives ending in a zero-width
+  // joiner and a naive /-$/ reports a clean break. This is not theoretical: the
+  // flags came back all-false on a preview deploy while 10/10 tests were green,
+  // because the tests ran on pre-mark text straight out of Mongo.
+  it('sees through the zero-width provenance mark', () => {
+    const ZWJ = '‍', ZWSP = '​', BOM = '﻿';
+    const marked = p46 + ZWJ + ZWSP + BOM;
+    expect(/[​-‏⁠-⁤﻿]/.test(marked)).toBe(true); // really is marked
+    const c = pageContinuity(marked);
+    expect(c.hyphen_split_at_end).toBe(true);
+    expect(c.continues_on_next).toBe(true);
+  });
+
   it('declines to judge text too short to be prose', () => {
     // Real shape: a Chinese page whose entire stripped content was "道\n蔵\n1".
     expect(pageContinuity('道\n蔵\n1').continues_on_next).toBe(false);
