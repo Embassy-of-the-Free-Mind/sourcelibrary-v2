@@ -14,8 +14,9 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal,
+  Info, Bell, MoreHorizontal, Link as LinkIcon,
 } from 'lucide-react';
+import { trackEvent } from '@/lib/track-event';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls from './ReaderSettingsControls';
 import {
@@ -34,7 +35,7 @@ import {
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'settings' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
@@ -43,6 +44,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   librarian: 'Ask the librarian',
   info: 'Edition & page info',
   cite: 'Cite this page',
+  share: 'Save & share',
   settings: 'Reading settings',
   more: 'More',
 };
@@ -50,6 +52,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
 /** The tools that live behind "More" on mobile, in the order they're offered. */
 const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
+  ['share', 'Save & share', 'Save this page, copy the link, post it'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
@@ -167,76 +170,6 @@ function MobileToolbar({
         onClick={() => onTogglePanel('more')}
       />
     </div>
-  );
-}
-
-// One hover treatment for every icon action on the ink bar: a quiet 34px chip.
-const INK_ACTION_CLS = 'w-[34px] h-[34px] flex items-center justify-center gap-1 transition-colors '
-  + 'text-[rgba(253,252,249,0.72)] hover:text-[#fdfcf9] hover:bg-[rgba(253,252,249,0.10)]';
-
-/** Like — same behavior as the site's LikeButton (visitor identity, optimistic), ink-bar styling. */
-function LikeAction({ pageId, bookId }: { pageId: string; bookId: string }) {
-  const identity = useIdentity();
-  const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!identity.id || identity.loading) return;
-    let cancelled = false;
-    likesApi.getStatus(JSON.stringify([{ type: 'page', id: pageId }]), identity.id)
-      .then(data => {
-        if (cancelled) return;
-        const key = `page:${pageId}`;
-        const row = (data as { results?: Record<string, { count: number; liked: boolean }> }).results?.[key];
-        if (row) { setCount(row.count); setLiked(row.liked); }
-      })
-      .catch(() => { /* status is cosmetic */ });
-    return () => { cancelled = true; };
-  }, [pageId, identity.id, identity.loading]);
-
-  const toggle = () => {
-    if (!identity.id) return;
-    const nextLiked = !liked;
-    setLiked(nextLiked);
-    setCount(c => Math.max(0, c + (nextLiked ? 1 : -1)));
-    likesApi.toggle('page', pageId, identity.id)
-      .then(res => { setLiked(res.liked); setCount(res.count); })
-      .catch(() => { setLiked(!nextLiked); setCount(c => Math.max(0, c + (nextLiked ? -1 : 1))); });
-  };
-
-  void bookId; // reserved for like-cascade parity with LikeButton
-  return (
-    <button
-      type="button"
-      onClick={toggle}
-      className={`${INK_ACTION_CLS} ${count > 0 ? 'w-auto px-2' : ''}`}
-      title={liked ? 'Unlike this page' : 'Like this page'}
-      aria-pressed={liked}
-    >
-      <Heart size={16} fill={liked ? 'var(--accent-rust)' : 'none'}
-        style={liked ? { color: 'var(--accent-rust)' } : undefined} />
-      {count > 0 && <span className="font-sans text-[11.5px] tabular-nums">{count}</span>}
-    </button>
-  );
-}
-
-/** Share — copies the page's canonical link; identical chip to LikeAction. */
-function ShareAction({ url }: { url: string }) {
-  const [copied, setCopied] = useState(false);
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        navigator.clipboard?.writeText(url).then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1600);
-        });
-      }}
-      className={INK_ACTION_CLS}
-      title={copied ? 'Link copied' : 'Copy link to this page'}
-    >
-      {copied ? <Check size={16} style={{ color: 'var(--accent-gold)' }} /> : <Share2 size={16} />}
-    </button>
   );
 }
 
@@ -396,6 +329,114 @@ function GuidePanel({ bookId, bookPath, bookTitle, onGoToPageNumber }: {
   );
 }
 
+/**
+ * Save & share. Liking is the site's "save to my library" (visitor identity,
+ * optimistic count), and the share targets mirror the site's ShareButton so a
+ * post from the reader looks like a post from anywhere else, and reports the
+ * same `share` analytics event.
+ */
+function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }) {
+  const identity = useIdentity();
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!identity.id || identity.loading) return;
+    let cancelled = false;
+    likesApi.getStatus(JSON.stringify([{ type: 'page', id: page.id }]), identity.id)
+      .then(data => {
+        if (cancelled) return;
+        const row = (data as { results?: Record<string, { count: number; liked: boolean }> }).results?.[`page:${page.id}`];
+        if (row) { setCount(row.count); setLiked(row.liked); }
+      })
+      .catch(() => { /* cosmetic */ });
+    return () => { cancelled = true; };
+  }, [page.id, identity.id, identity.loading]);
+
+  const toggleLike = () => {
+    if (!identity.id) return;
+    const next = !liked;
+    setLiked(next);
+    setCount(c => Math.max(0, c + (next ? 1 : -1)));
+    likesApi.toggle('page', page.id, identity.id)
+      .then(res => { setLiked(res.liked); setCount(res.count); })
+      .catch(() => { setLiked(!next); setCount(c => Math.max(0, c + (next ? -1 : 1))); });
+  };
+
+  const title = book.display_title || book.title;
+  const citation = `${book.author ? `${book.author}, ` : ''}${title}${page.page_number != null ? `, p. ${page.page_number}` : ''}`;
+  const copy = (what: string, value: string) => {
+    navigator.clipboard?.writeText(value).then(() => {
+      setCopied(what);
+      setTimeout(() => setCopied(null), 1600);
+    });
+  };
+  const open = (href: string, channel: string) => {
+    trackEvent('share', { channel, url, page: page.page_number });
+    window.open(href, '_blank', 'width=550,height=440');
+  };
+
+  const targets: Array<[string, string]> = [
+    ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(citation)}&url=${encodeURIComponent(url)}`],
+    ['Bluesky', `https://bsky.app/intent/compose?text=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
+    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`],
+    ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${citation}\n${url}`)}`],
+    ['Email', `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+  ];
+
+  const rowCls = 'w-full text-left px-4 min-h-[46px] flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
+
+  return (
+    <div className="flex-1 min-h-0 overflow-y-auto pb-4" style={{ overscrollBehavior: 'contain' }}>
+      <button type="button" onClick={toggleLike} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+        <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+          <Heart size={16} fill={liked ? 'var(--accent-rust)' : 'none'} style={{ color: liked ? 'var(--accent-rust)' : 'var(--text-muted)' }} />
+          {liked ? 'Saved to your library' : 'Save this page'}
+        </span>
+        {count > 0 && (
+          <span className="font-sans text-[12px] tabular-nums" style={{ color: 'var(--text-faint)' }}>{count}</span>
+        )}
+      </button>
+
+      <button type="button" onClick={() => copy('link', url)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+        <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+          <LinkIcon size={16} style={{ color: 'var(--text-muted)' }} />
+          Copy link to this page
+        </span>
+        {copied === 'link' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
+      </button>
+
+      <button type="button" onClick={() => copy('ref', `${citation}. ${url}`)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+        <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+          <Quote size={16} style={{ color: 'var(--text-muted)' }} />
+          Copy link with reference
+        </span>
+        {copied === 'ref' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
+      </button>
+
+      <CapsLabel className="block px-4 pt-4 pb-2" style={{ color: 'var(--text-faint)' }}>Post to</CapsLabel>
+      <div className="grid grid-cols-2 gap-1.5 px-4">
+        {targets.map(([label, href]) => (
+          <button
+            key={label}
+            type="button"
+            onClick={() => open(href, label.toLowerCase())}
+            className="min-h-[44px] px-3 border font-sans text-[13px] text-left transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className="px-4 pt-4 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
+        Every link points at this exact page, so whoever opens it lands where you were reading.
+      </p>
+    </div>
+  );
+}
+
 /** Pane-level Notes toggle — inline editorial notes/glosses apply per text pane. */
 function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
@@ -403,10 +444,13 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
       type="button"
       onClick={onToggle}
       aria-pressed={on}
-      className="font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-1.5 h-[24px] transition-colors hover:bg-black/5"
+      className="font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
       style={{
+        // Active reads as a filled chip rather than an underline, which was
+        // being mistaken for a link and got lost on the dark theme.
         color: on ? 'var(--accent-rust)' : 'var(--text-faint)',
-        boxShadow: on ? 'inset 0 -2px 0 var(--accent-rust)' : 'none',
+        background: on ? 'color-mix(in srgb, var(--accent-rust) 14%, transparent)' : 'transparent',
+        borderColor: on ? 'color-mix(in srgb, var(--accent-rust) 45%, transparent)' : 'transparent',
       }}
       title={on ? 'Hide inline notes and glosses' : 'Show inline notes and glosses'}
     >
@@ -863,7 +907,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  */
 function PanelContent({
   panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
-  editing, onToggleEdit,
+  editing, onToggleEdit, shareUrl,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -877,6 +921,7 @@ function PanelContent({
   onSelectPanel: (p: Exclude<LeftPanel, null>) => void;
   editing: boolean;
   onToggleEdit: () => void;
+  shareUrl: string;
 }) {
   if (panel === 'more') {
     return (
@@ -990,6 +1035,9 @@ function PanelContent({
   }
   if (panel === 'info') {
     return <InfoPanel page={r.currentPage} book={r.book} />;
+  }
+  if (panel === 'share') {
+    return <SharePanel page={r.currentPage} book={r.book} url={shareUrl} />;
   }
   if (panel === 'cite') {
     return (
@@ -1283,6 +1331,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     onSelectPanel: (p: Exclude<LeftPanel, null>) => setLeftPanel(p),
     editing,
     onToggleEdit: () => setEditing(v => !v),
+    shareUrl,
   };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
@@ -1378,10 +1427,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-0.5 px-0.5">
-            <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
-            <ShareAction url={shareUrl} />
-          </div>
           {editing ? (
             <div className="flex items-center gap-1.5">
               <button
@@ -1421,6 +1466,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
           <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
           <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
+          <RailButton label="Share" active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
           <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
           {/* Editing is editor-and-above only, so the affordance is gated the
               same way the current reader gates its Read/Edit toggle. */}
@@ -1428,10 +1474,27 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <RailButton label="Edit" active={editing} onClick={() => setEditing(v => !v)} icon={<Pencil size={17} />} />
           </AuthCheck>
           <div className="flex-1" />
-          {/* Bottom slot matches the filmstrip height so the toggle sits
-              centred against the strip it controls */}
-          <div className="flex items-center justify-center transition-[height] duration-300" style={{ height: stripVisible ? 92 : 56 }}>
-            <RailButton label="Pages" active={stripVisible} onClick={toggleStrip} icon={<GalleryHorizontal size={17} />} />
+          {/* Bottom slot mirrors the filmstrip's own box (92px tall, 8px top
+              padding, 54px controls) so Pages lines up with the strip's
+              arrows and the top edge of the page thumbnails it toggles. */}
+          <div
+            className="flex items-start justify-center transition-[height] duration-300"
+            style={{ height: stripVisible ? 92 : 62, paddingTop: 8 }}
+          >
+            <button
+              type="button"
+              onClick={toggleStrip}
+              aria-pressed={stripVisible}
+              title="Pages"
+              className="w-12 h-[54px] flex flex-col items-center justify-center gap-1 transition-colors"
+              style={{
+                color: stripVisible ? '#fdfcf9' : onInk(0.62),
+                background: stripVisible ? onInk(0.12) : 'transparent',
+              }}
+            >
+              <GalleryHorizontal size={17} />
+              <span className="font-sans text-[8.5px] tracking-[0.06em]">Pages</span>
+            </button>
           </div>
         </nav>
 
@@ -1602,8 +1665,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   : ''}
               </div>
             </a>
-            <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
-            <ShareAction url={shareUrl} />
             <UserMenu variant="hero" />
           </div>
           {/* View chips — a slim segmented control; the toolbar carries the
