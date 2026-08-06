@@ -124,11 +124,14 @@ export function resolveScanUrls(page: Page): ScanUrls {
   return { display, thumb, native };
 }
 
-export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
+// Fine steps: a facsimile is read at the size the type happens to need, so
+// the jumps stay small rather than doubling.
+export const SCAN_ZOOM_STEPS = [1, 1.15, 1.3, 1.5, 1.75, 2, 2.3, 2.6, 3, 3.5, 4, 4.7, 5.3, 6];
 export const SCAN_ZOOM_MAX = 6;
 
 const LENS_SIZE = 220;
-const LENS_MAG = 2.4;
+const LENS_MAG_MIN = 1.5;
+const LENS_MAG_MAX = 6;
 
 /**
  * The scan surface.
@@ -163,12 +166,15 @@ export function ScanViewer({
   const pointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [dragging, setDragging] = useState(false);
   const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
+  // The lens has its own magnification, dialled with the wheel while it is up.
+  const [lensMag, setLensMag] = useState(2.4);
+  const lastLensPoint = useRef<{ x: number; y: number } | null>(null);
 
   const zoomed = zoom > 1;
 
   // Plain function: the ref it closes over can arrive as a prop, which the
   // React Compiler cannot memoize manually.
-  const updateLens = (clientX: number, clientY: number) => {
+  const updateLens = (clientX: number, clientY: number, mag = lensMag) => {
     const img = imgRef.current;
     const container = containerRef.current;
     if (!img || !container) return;
@@ -177,17 +183,40 @@ export function ScanViewer({
       setLens(null);
       return;
     }
+    lastLensPoint.current = { x: clientX, y: clientY };
     const cr = container.getBoundingClientRect();
     const relX = (clientX - r.left) / r.width;
     const relY = (clientY - r.top) / r.height;
     setLens({
       x: clientX - cr.left,
       y: clientY - cr.top,
-      bgW: r.width * LENS_MAG,
-      bgH: r.height * LENS_MAG,
-      bgX: -(relX * r.width * LENS_MAG - LENS_SIZE / 2),
-      bgY: -(relY * r.height * LENS_MAG - LENS_SIZE / 2),
+      bgW: r.width * mag,
+      bgH: r.height * mag,
+      bgX: -(relX * r.width * mag - LENS_SIZE / 2),
+      bgY: -(relY * r.height * mag - LENS_SIZE / 2),
     });
+  };
+
+  /**
+   * Wheel does one of three things, depending on what is on:
+   * lens up   → dial the lens's magnification (what a loupe's focus does)
+   * ctrl/⌘    → zoom the scan, which is what a trackpad pinch sends
+   * otherwise → nothing, so a zoomed pane scrolls natively
+   */
+  const onWheel = (e: React.WheelEvent) => {
+    if (lensOn && !zoomed) {
+      e.preventDefault();
+      const next = Math.min(LENS_MAG_MAX, Math.max(LENS_MAG_MIN, lensMag * (e.deltaY < 0 ? 1.12 : 1 / 1.12)));
+      setLensMag(next);
+      const at = lastLensPoint.current;
+      if (at) updateLens(at.x, at.y, next);
+      return;
+    }
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const next = Math.min(SCAN_ZOOM_MAX, Math.max(1, zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1)));
+      onZoomChange(Math.round(next * 100) / 100);
+    }
   };
 
   // A new page starts at the top of the scan. This touches the DOM, so it
@@ -273,6 +302,7 @@ export function ScanViewer({
         touchAction: zoomed || lensOn ? 'none' : 'auto',
         overscrollBehavior: 'contain',
       }}
+      onWheel={onWheel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -311,7 +341,15 @@ export function ScanViewer({
             backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
             backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
           }}
-        />
+        >
+          {/* Its own magnification, so dialling it with the wheel is legible */}
+          <span
+            className="absolute bottom-0 right-0 px-1.5 py-0.5 font-sans text-[10px] tabular-nums"
+            style={{ background: 'rgba(20,16,12,0.72)', color: '#fdfcf9' }}
+          >
+            {lensMag.toFixed(1)}×
+          </span>
+        </div>
       )}
     </div>
   );

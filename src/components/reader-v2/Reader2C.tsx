@@ -446,11 +446,12 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
       aria-pressed={on}
       className="font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
       style={{
-        // Active reads as a filled chip rather than an underline, which was
-        // being mistaken for a link and got lost on the dark theme.
-        color: on ? 'var(--accent-rust)' : 'var(--text-faint)',
-        background: on ? 'color-mix(in srgb, var(--accent-rust) 14%, transparent)' : 'transparent',
-        borderColor: on ? 'color-mix(in srgb, var(--accent-rust) 45%, transparent)' : 'transparent',
+        // Wears the notes' own colour (NOTE_TAG_STYLES.note is
+        // bg-accent-gold/15 + text-accent-gold-dark), so the control and the
+        // thing it controls read as the same object.
+        color: on ? 'var(--accent-gold-dark)' : 'var(--text-faint)',
+        background: on ? 'color-mix(in srgb, var(--accent-gold) 15%, transparent)' : 'transparent',
+        borderColor: on ? 'color-mix(in srgb, var(--accent-gold) 45%, transparent)' : 'transparent',
       }}
       title={on ? 'Hide inline notes and glosses' : 'Show inline notes and glosses'}
     >
@@ -1358,17 +1359,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           <Logo white compact />
+          {/* Title and byline sit on one line rather than stacking, so the bar
+              stays a single row of chrome */}
           <a
             href={`/book/${r.bookPath}`}
-            className="min-w-0 max-w-[340px] no-underline group px-1.5 py-1 ml-1 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+            className="min-w-0 max-w-[52%] no-underline group flex items-baseline gap-2.5 px-1.5 py-1 ml-1 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
             title="Back to the book page"
           >
-            <div className="font-body text-[15.5px] leading-[1.2] truncate" style={{ color: '#fdfcf9' }}>
+            <span className="font-body text-[15.5px] leading-none truncate shrink" style={{ color: '#fdfcf9' }}>
               {r.book.display_title || r.book.title}
-            </div>
-            <div className="font-sans text-[11px] truncate" style={{ color: onInk(0.5) }}>
-              {bookByline(r.book)} <span className="opacity-0 group-hover:opacity-100 transition-opacity">· book page ↗</span>
-            </div>
+            </span>
+            <span className="font-sans text-[11.5px] leading-none truncate shrink-0 max-w-[45%]" style={{ color: onInk(0.5) }}>
+              {bookByline(r.book)}
+            </span>
           </a>
           <div className="flex-1" />
           {saveError && (
@@ -1655,15 +1658,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               className="flex-1 min-w-0 no-underline"
               title="Back to the book page"
             >
-              <div className="font-body text-[14.5px] truncate" style={{ color: '#fdfcf9' }}>
+              {/* Title only: the author lives on the book page, and the phone
+                  bar has no room to stack two lines */}
+              <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
                 {r.book.display_title || r.book.title}
               </div>
-              <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
-                {bookByline(r.book)}
-                {r.settings.showSection && r.currentChapter
-                  ? ` · ${r.currentChapter.titleEn || r.currentChapter.title}`
-                  : ''}
-              </div>
+              {r.settings.showSection && r.currentChapter && (
+                <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
+                  {r.currentChapter.titleEn || r.currentChapter.title}
+                </div>
+              )}
             </a>
             <UserMenu variant="hero" />
           </div>
