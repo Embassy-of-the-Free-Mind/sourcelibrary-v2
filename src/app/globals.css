@@ -272,6 +272,11 @@ h1, h2, h3, h4 {
   /* "dark" accent variants exist for text on light backgrounds — lighten them */
   --accent-sage-dark: #a8b898;
   --accent-gold-dark: #d4b072;
+  /* Oxblood at its light-background value (#9e4a3a) is barely legible on the
+     night surfaces — panel headings, the current chapter, links. Lighten it
+     here for the same reason the two above are lightened. It stays readable
+     as a fill too (cream text on #cf7f6a). */
+  --accent-rust: #cf7f6a;
 }
 
 /* Night-mode compatibility for hardcoded light-utility classes used inside the
@@ -314,6 +319,15 @@ body:has([data-reader-v2]) {
   min-height: 0;
 }
 
+/* The global :focus-visible ring is unlayered, so it beats Tailwind's layered
+   focus:outline-none and drew a rust box inside the reader's text fields (the
+   search field autofocuses, so it appeared the moment the panel opened). The
+   fields carry their focus state on the wrapper border instead. */
+[data-reader-v2] input:focus,
+[data-reader-v2] input:focus-visible {
+  outline: none;
+}
+
 /* Reader v2: smooth entrances for panels / menus / popovers */
 @keyframes rv2-slide-in-left {
   from { transform: translateX(-16px); opacity: 0; }
@@ -331,8 +345,15 @@ body:has([data-reader-v2]) {
   to   { transform: none; opacity: 1; }
 }
 .rv2-slide-up { animation: rv2-slide-up 0.22s ease-out both; }
+/* The page strip slides in by its own height, so the travel reads the same on
+   a 92px desktop strip and a 96px phone one. Short on purpose. */
+@keyframes rv2-strip-in {
+  from { transform: translateY(100%); }
+  to   { transform: none; }
+}
+.rv2-strip-in { animation: rv2-strip-in 180ms ease-out both; }
 @media (prefers-reduced-motion: reduce) {
-  .rv2-slide-in-left, .rv2-pop, .rv2-slide-up { animation: none; }
+  .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in { animation: none; }
 }
 
 

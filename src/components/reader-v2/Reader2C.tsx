@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIdentity } from '@/hooks/useIdentity';
 import { getPageThumbUrl } from '@/lib/utils';
@@ -10,7 +11,7 @@ import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/a
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
 import {
-  ChevronLeft, ChevronRight, ChevronDown, ChevronRight as ChevronRightSmall,
+  ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
   Info, Bell, MoreHorizontal,
@@ -581,13 +582,13 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
         className="shrink-0 px-4 pb-4"
         onSubmit={e => { e.preventDefault(); ask(input); }}
       >
-        <div className="flex items-center gap-2 px-2.5 py-2 border"
+        <div className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--accent-rust)]"
           style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)' }}>
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder={`Ask about p. ${page.page_number}…`}
-            className="flex-1 bg-transparent outline-none font-sans text-[13px]"
+            className="flex-1 bg-transparent outline-none focus:outline-none font-sans text-[16px] lg:text-[13px]"
             style={{ color: 'var(--text-primary)' }}
             aria-label="Ask the librarian"
           />
@@ -726,20 +727,23 @@ function BookSearchPanel({
   return (
     <div className="flex flex-col min-h-0 flex-1">
       <div className="px-4 pb-2">
+        {/* The field autofocuses, so the global focus-visible ring drew a rust
+            box inside it on open. Emphasis lives on the wrapper's border. */}
         <div
-          className="flex items-center gap-2 px-2.5 py-2 border"
+          className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--accent-rust)]"
           style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)' }}
         >
           {searching
             ? <Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} />
             : <Search size={14} style={{ color: 'var(--text-muted)' }} />}
+          {/* 16px on phones: anything smaller makes iOS Safari zoom on focus */}
           <input
             ref={inputRef}
             type="search"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search this book…"
-            className="flex-1 bg-transparent outline-none font-sans text-[13px]"
+            className="flex-1 bg-transparent outline-none focus:outline-none font-sans text-[16px] lg:text-[13px]"
             style={{ color: 'var(--text-primary)' }}
             aria-label="Search this book"
           />
@@ -785,19 +789,22 @@ function Filmstrip({
   onNext: () => void;
   onGoTo: (pageId: string) => void;
 }) {
+  // Arrows match the thumbnail image exactly and share its top edge; the row
+  // is top-aligned so the page-number line below can't push them down.
+  const thumbH = compact ? 50 : 54;
   return (
     <div
-      className="flex items-center gap-1 h-full"
+      className="flex items-start gap-1 h-full pt-2 rv2-strip-in"
       style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}` }}
     >
       <button type="button" aria-label="Previous page" onClick={onPrev}
         className="shrink-0 flex items-center justify-center mx-1.5 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
-        style={{ width: compact ? 34 : 30, height: compact ? 52 : 54, background: onInk(0.08), color: onInk(0.8) }}>
+        style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronLeft size={15} />
       </button>
       <div
         ref={innerRef}
-        className="flex-1 h-full flex items-center gap-2 overflow-x-auto px-1"
+        className="flex-1 flex items-start gap-2 overflow-x-auto px-1"
         style={{ overscrollBehavior: 'contain', scrollbarWidth: 'none' }}
       >
         {pageList.map((p) => {
@@ -840,7 +847,7 @@ function Filmstrip({
       </div>
       <button type="button" aria-label="Next page" onClick={onNext}
         className="shrink-0 flex items-center justify-center mx-1.5 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
-        style={{ width: compact ? 34 : 30, height: compact ? 52 : 54, background: onInk(0.08), color: onInk(0.8) }}>
+        style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronRight size={15} />
       </button>
     </div>
@@ -856,6 +863,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  */
 function PanelContent({
   panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
+  editing, onToggleEdit,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -867,6 +875,8 @@ function PanelContent({
   onClose: () => void;
   /** Mobile "More" menu hands off to another panel */
   onSelectPanel: (p: Exclude<LeftPanel, null>) => void;
+  editing: boolean;
+  onToggleEdit: () => void;
 }) {
   if (panel === 'more') {
     return (
@@ -886,12 +896,61 @@ function PanelContent({
             <ChevronRightSmall size={15} style={{ color: 'var(--text-faint)' }} />
           </button>
         ))}
+        {/* Editor-and-above only, same gate as the desktop rail */}
+        <AuthCheck role="inner_circle">
+          <button
+            type="button"
+            onClick={() => { onClose(); onToggleEdit(); }}
+            className="w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-light)' }}
+          >
+            <span className="min-w-0">
+              <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>
+                {editing ? 'Stop editing' : 'Edit this page'}
+              </span>
+              <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>
+                Correct the transcription or translation
+              </span>
+            </span>
+            <Pencil size={15} style={{ color: 'var(--text-faint)' }} />
+          </button>
+        </AuthCheck>
       </div>
     );
   }
   if (panel === 'contents') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
+        {/* The section title left the top bar; this is where a reader asks
+            for it back. */}
+        <div
+          className="flex items-center justify-between gap-3 px-4 min-h-[44px] border-b"
+          style={{ borderColor: 'var(--border-light)' }}
+        >
+          <span className="font-sans text-[12px]" style={{ color: 'var(--text-secondary)' }}>
+            Show section title
+          </span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={r.settings.showSection}
+            onClick={() => r.updateSettings({ showSection: !r.settings.showSection })}
+            className="relative w-10 h-[22px] border transition-colors shrink-0"
+            style={{
+              borderColor: 'var(--border-medium)',
+              background: r.settings.showSection ? 'var(--accent-rust)' : 'var(--bg-warm)',
+            }}
+          >
+            <span
+              className="absolute top-[2px] w-4 h-4 border transition-all"
+              style={{
+                left: r.settings.showSection ? 20 : 2,
+                background: '#fdfcf9',
+                borderColor: 'var(--border-medium)',
+              }}
+            />
+          </button>
+        </div>
         {r.chapters.length ? (
           <ChapterList
             chapters={r.chapters}
@@ -1099,20 +1158,28 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Scroll-sync the two text panes (proportional), without feedback loops.
+  // Scroll-sync the panes proportionally, without feedback loops. The zoomed
+  // scan joins the group: once it scrolls, a reader travelling down the
+  // facsimile keeps the translation beside the same passage.
   const ocrRef = useRef<HTMLDivElement>(null);
   const enRef = useRef<HTMLDivElement>(null);
-  const syncLock = useRef<'ocr' | 'en' | null>(null);
-  const syncFrom = useCallback((from: 'ocr' | 'en') => {
-    const src = from === 'ocr' ? ocrRef.current : enRef.current;
-    const dst = from === 'ocr' ? enRef.current : ocrRef.current;
-    if (!src || !dst) return;
+  const scanScrollRef = useRef<HTMLDivElement>(null);
+  const syncLock = useRef<string | null>(null);
+  const syncFrom = useCallback((from: 'scan' | 'ocr' | 'en') => {
+    const panes: Record<string, HTMLDivElement | null> = {
+      scan: scanScrollRef.current, ocr: ocrRef.current, en: enRef.current,
+    };
+    const src = panes[from];
+    if (!src) return;
     if (syncLock.current && syncLock.current !== from) return;
-    syncLock.current = from;
     const srcMax = src.scrollHeight - src.clientHeight;
-    const dstMax = dst.scrollHeight - dst.clientHeight;
-    if (srcMax > 0 && dstMax > 0) {
-      dst.scrollTop = (src.scrollTop / srcMax) * dstMax;
+    if (srcMax <= 0) return;
+    syncLock.current = from;
+    const ratio = src.scrollTop / srcMax;
+    for (const [key, dst] of Object.entries(panes)) {
+      if (key === from || !dst) continue;
+      const dstMax = dst.scrollHeight - dst.clientHeight;
+      if (dstMax > 0) dst.scrollTop = ratio * dstMax;
     }
     window.setTimeout(() => { syncLock.current = null; }, 80);
   }, []);
@@ -1195,6 +1262,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
 
+  // Colour of whatever pane ends the mobile column, used to fill any leftover
+  // height so a short page never shows a white band.
+  const lastSurface = r.views.en ? SURFACE.translation : r.views.ocr ? SURFACE.ocr : SURFACE.scanBed;
+
   const scanMenuItems: PaneMenuItem[] = [
     ...(scan.native ? [
       { label: 'Open full resolution', href: scan.native },
@@ -1210,6 +1281,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     onLibrarianMessages: setLibrarianMessages,
     onClose: () => setLeftPanel(null),
     onSelectPanel: (p: Exclude<LeftPanel, null>) => setLeftPanel(p),
+    editing,
+    onToggleEdit: () => setEditing(v => !v),
   };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
@@ -1255,24 +1328,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </span>
           )}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact />
-          {/* Place: chapter + page stepper as one group */}
+          {/* Section title, only when the reader asks for it (Contents panel) */}
+          {r.settings.showSection && r.currentChapter && (
+            <span className="font-sans text-[12.5px] max-w-[240px] truncate" style={{ color: onInk(0.62) }}>
+              {r.currentChapter.titleEn || r.currentChapter.title}
+            </span>
+          )}
           <div className="flex items-stretch">
-            {r.chapters.length > 0 && (
-              <button
-                type="button"
-                onClick={() => togglePanel('contents')}
-                className="flex items-center gap-2 px-3 font-sans text-[13px] border max-w-[220px] transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ background: onInk(0.06), borderColor: onInk(0.14), color: onInk(0.9) }}
-                title="Open contents"
-                aria-expanded={leftPanel === 'contents'}
-              >
-                <span className="truncate">
-                  {r.currentChapter ? (r.currentChapter.titleEn || r.currentChapter.title) : 'Contents'}
-                </span>
-                <ChevronDown size={13} style={{ color: onInk(0.5) }} />
-              </button>
-            )}
-            <div className="flex items-stretch border border-l-0" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
+            <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
               <button type="button" aria-label="Previous page" onClick={r.goPrev}
                 className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
                 style={{ color: onInk(0.72) }}>
@@ -1340,17 +1403,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {dirty ? 'Save changes' : 'Done'}
               </button>
             </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              className="flex items-center gap-2 px-3 py-[7px] font-sans text-[13px] border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-              style={{ background: onInk(0.06), borderColor: onInk(0.14), color: onInk(0.9) }}
-              title="Edit the transcription and translation in place"
-            >
-              <Pencil size={13} /> Edit
-            </button>
-          )}
+          ) : null}
           <div className="ml-1">
             <UserMenu variant="hero" />
           </div>
@@ -1369,6 +1422,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
           <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
+          {/* Editing is editor-and-above only, so the affordance is gated the
+              same way the current reader gates its Read/Edit toggle. */}
+          <AuthCheck role="inner_circle">
+            <RailButton label="Edit" active={editing} onClick={() => setEditing(v => !v)} icon={<Pencil size={17} />} />
+          </AuthCheck>
           <div className="flex-1" />
           {/* Bottom slot matches the filmstrip height so the toggle sits
               centred against the strip it controls */}
@@ -1402,8 +1460,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Original scan</CapsLabel>
               </PaneHeader>
-              <div className="flex-1 min-h-0 px-6 py-[22px] overflow-hidden">
-                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={setScanZoom} lensOn={lensOn} />
+              <div className={`flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
+                <ScanViewer
+                  page={r.currentPage}
+                  book={r.book}
+                  zoom={scanZoom}
+                  onZoomChange={setScanZoom}
+                  lensOn={lensOn}
+                  scrollRef={scanScrollRef}
+                  onScroll={() => syncFrom('scan')}
+                />
               </div>
             </section>
           )}
@@ -1530,8 +1596,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {r.book.display_title || r.book.title}
               </div>
               <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
-                {r.currentChapter ? (r.currentChapter.titleEn || r.currentChapter.title) : bookByline(r.book)}
-                {r.currentPage?.page_number != null ? ` · p. ${r.currentPage.page_number}` : ''}
+                {bookByline(r.book)}
+                {r.settings.showSection && r.currentChapter
+                  ? ` · ${r.currentChapter.titleEn || r.currentChapter.title}`
+                  : ''}
               </div>
             </a>
             <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
@@ -1568,8 +1636,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           ref={mobileMainRef}
           key={browserTranslated ? `m-translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
-          className="flex-1 min-h-0 overflow-y-auto"
-          style={{ overscrollBehavior: 'contain', background: SURFACE.translation }}
+          className="flex-1 min-h-0 overflow-y-auto flex flex-col"
+          style={{ overscrollBehavior: 'contain', background: lastSurface }}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -1632,10 +1700,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </section>
           )}
 
+          {/* Fills whatever is left when the page is short, in the last
+              visible pane's colour, so no white band shows above the pager */}
+          <div className="flex-1" style={{ background: lastSurface }} />
+
           {/* End of the scroll: page turn where the reading actually ends
-              (swiping left/right anywhere in this scroller does the same) */}
+              (swiping left/right anywhere in this scroller does the same).
+              The spacer above keeps it flush with the toolbar. */}
           <div
-            className="flex items-center justify-between border-t px-2"
+            className="shrink-0 flex items-center justify-between border-t px-2"
             style={{ borderColor: 'var(--border-medium)', background: SURFACE.panel }}
           >
             <button

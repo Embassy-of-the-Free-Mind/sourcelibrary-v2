@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -125,34 +125,50 @@ export function resolveScanUrls(page: Page): ScanUrls {
 }
 
 export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
+export const SCAN_ZOOM_MAX = 6;
 
-/**
- * Desktop scan viewer. Zoom is CONTROLLED FROM OUTSIDE (the pane header's
- * −/+/reset buttons) — no controls overlay the scan itself. When zoomed,
- * drag pans (clamped to the image), double-click toggles 2.2×, and the
- * high-resolution source swaps in for sharpness.
- */
 const LENS_SIZE = 220;
 const LENS_MAG = 2.4;
 
-export function ScanViewer({ page, book, zoom, onZoomChange, lensOn = false }: {
+/**
+ * The scan surface.
+ *
+ * At 100% the page is fitted and static. Past 100% it becomes a real SCROLLER
+ * rather than a transformed image: the scan is laid out at `zoom × pane width`
+ * and the pane scrolls it. That is what lets a reader zoom into the type and
+ * then travel down the page beside the translation, and it is what makes
+ * scroll-syncing the scan to the text possible at all, since there is now a
+ * genuine scrollTop to share. Dragging pans, two fingers pinch, and the
+ * reading lens (a separate control) magnifies a spot at 100%.
+ */
+export function ScanViewer({
+  page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll,
+}: {
   page: Page;
   book: Book;
   zoom: number;
   onZoomChange: (z: number) => void;
   /** Reading lens: off by default, toggled from the pane header. */
   lensOn?: boolean;
+  /** The scroller, exposed so the reader can sync it with the text panes. */
+  scrollRef?: React.RefObject<HTMLDivElement | null>;
+  onScroll?: () => void;
 }) {
   const { display, native } = resolveScanUrls(page);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const localRef = useRef<HTMLDivElement>(null);
+  const containerRef = scrollRef ?? localRef;
   const imgRef = useRef<HTMLImageElement>(null);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const dragRef = useRef<{ startX: number; startY: number; panX: number; panY: number } | null>(null);
+  const dragRef = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
+  const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
+  const pointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [dragging, setDragging] = useState(false);
-  // Hover reading lens (magnifier) — active at 100% only; pan/zoom takes over past that
   const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
 
-  const updateLens = useCallback((clientX: number, clientY: number) => {
+  const zoomed = zoom > 1;
+
+  // Plain function: the ref it closes over can arrive as a prop, which the
+  // React Compiler cannot memoize manually.
+  const updateLens = (clientX: number, clientY: number) => {
     const img = imgRef.current;
     const container = containerRef.current;
     if (!img || !container) return;
@@ -172,56 +188,67 @@ export function ScanViewer({ page, book, zoom, onZoomChange, lensOn = false }: {
       bgX: -(relX * r.width * LENS_MAG - LENS_SIZE / 2),
       bgY: -(relY * r.height * LENS_MAG - LENS_SIZE / 2),
     });
-  }, []);
+  };
 
-  // New page or zoom back to 1 → recenter (state adjusted during render,
-  // per the React "derive state from props" pattern — no effect needed)
-  const [prevPageId, setPrevPageId] = useState(page.id);
-  const [prevZoom, setPrevZoom] = useState(zoom);
-  if (prevPageId !== page.id) {
-    setPrevPageId(page.id);
-    setPan({ x: 0, y: 0 });
-  }
-  if (prevZoom !== zoom) {
-    setPrevZoom(zoom);
-    if (zoom === 1) setPan({ x: 0, y: 0 });
-  }
-
-  const clampPan = useCallback((x: number, y: number, scale: number) => {
-    const el = containerRef.current;
-    const img = el?.querySelector('img');
-    if (!el || !img) return { x, y };
-    const maxX = Math.max(0, (img.clientWidth * scale - el.clientWidth) / 2);
-    const maxY = Math.max(0, (img.clientHeight * scale - el.clientHeight) / 2);
-    return { x: Math.min(maxX, Math.max(-maxX, x)), y: Math.min(maxY, Math.max(-maxY, y)) };
-  }, []);
+  // A new page starts at the top of the scan. This touches the DOM, so it
+  // belongs in an effect rather than in the render pass.
+  useEffect(() => {
+    containerRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [page.id, containerRef]);
 
   const onPointerDown = (e: React.PointerEvent) => {
-    if (zoom > 1) {
-      (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-      dragRef.current = { startX: e.clientX, startY: e.clientY, panX: pan.x, panY: pan.y };
-      setDragging(true);
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.current.size === 2) {
+      const [a, b] = Array.from(pointers.current.values());
+      pinchRef.current = { dist: Math.hypot(a.x - b.x, a.y - b.y) || 1, zoom };
+      dragRef.current = null;
+      setDragging(false);
       return;
     }
-    // Touch + lens: the finger is the lens, so show it on contact
+    if (zoomed) {
+      const el = containerRef.current;
+      if (el) {
+        (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+        dragRef.current = { x: e.clientX, y: e.clientY, left: el.scrollLeft, top: el.scrollTop };
+        setDragging(true);
+      }
+      return;
+    }
     if (lensOn && e.pointerType !== 'mouse') updateLens(e.clientX, e.clientY);
   };
+
   const onPointerMove = (e: React.PointerEvent) => {
+    if (pointers.current.has(e.pointerId)) {
+      pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+    // Two fingers: pinch to zoom, continuously.
+    if (pointers.current.size === 2 && pinchRef.current) {
+      const [a, b] = Array.from(pointers.current.values());
+      const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+      const next = Math.min(SCAN_ZOOM_MAX, Math.max(1, pinchRef.current.zoom * (dist / pinchRef.current.dist)));
+      onZoomChange(Math.round(next * 100) / 100);
+      return;
+    }
     const d = dragRef.current;
-    if (d) {
-      setPan(clampPan(d.panX + (e.clientX - d.startX), d.panY + (e.clientY - d.startY), zoom));
+    const el = containerRef.current;
+    if (d && el) {
+      el.scrollLeft = d.left - (e.clientX - d.x);
+      el.scrollTop = d.top - (e.clientY - d.y);
       return;
     }
     // The lens tracks the cursor on a desk and the finger on a phone. Touch
     // pointermove only fires during contact, so no extra gating is needed.
-    if (lensOn && zoom === 1) updateLens(e.clientX, e.clientY);
+    if (lensOn && !zoomed) updateLens(e.clientX, e.clientY);
     else if (lens) setLens(null);
   };
+
   const onPointerUp = (e: React.PointerEvent) => {
-    endDrag();
+    pointers.current.delete(e.pointerId);
+    if (pointers.current.size < 2) pinchRef.current = null;
+    dragRef.current = null;
+    setDragging(false);
     if (e.pointerType !== 'mouse') setLens(null);
   };
-  const endDrag = () => { dragRef.current = null; setDragging(false); };
 
   const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
   if (!display) {
@@ -237,20 +264,21 @@ export function ScanViewer({ page, book, zoom, onZoomChange, lensOn = false }: {
   return (
     <div
       ref={containerRef}
-      className="h-full w-full overflow-hidden flex items-center justify-center select-none"
+      onScroll={onScroll}
+      className={`relative h-full w-full select-none ${zoomed ? 'overflow-auto' : 'overflow-hidden flex items-center justify-center'}`}
       style={{
-        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
-        // Only capture touch when the scan itself is interactive; otherwise a
-        // drag over the scan must still scroll (mobile) and swipe pages.
-        touchAction: zoom > 1 || lensOn ? 'none' : 'auto',
+        cursor: zoomed ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
+        // Capture touch only while the scan is interactive, so a drag over a
+        // fitted page still scrolls the mobile column and swipes pages.
+        touchAction: zoomed || lensOn ? 'none' : 'auto',
+        overscrollBehavior: 'contain',
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onPointerLeave={() => { endDrag(); setLens(null); }}
-      onDoubleClick={() => onZoomChange(zoom > 1 ? 1 : 2.2)}
-      role="img"
-      aria-label={alt}
+      onPointerCancel={onPointerUp}
+      onPointerLeave={() => { if (!dragRef.current) setLens(null); }}
+      onDoubleClick={() => onZoomChange(zoomed ? 1 : 2.2)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -258,15 +286,15 @@ export function ScanViewer({ page, book, zoom, onZoomChange, lensOn = false }: {
         src={src}
         alt={alt}
         draggable={false}
-        className="max-h-full max-w-full object-contain"
+        className={zoomed ? 'block max-w-none' : 'max-h-full max-w-full object-contain'}
         style={{
-          transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-          transition: dragging ? 'none' : 'transform 0.18s ease-out',
+          width: zoomed ? `${zoom * 100}%` : undefined,
+          height: zoomed ? 'auto' : undefined,
           boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
           filter: brightness ? `brightness(${brightness})` : undefined,
         }}
       />
-      {lens && lensOn && zoom === 1 && (
+      {lens && lensOn && !zoomed && (
         <div
           aria-hidden="true"
           className="absolute pointer-events-none border"

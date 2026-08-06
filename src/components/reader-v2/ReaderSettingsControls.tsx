@@ -6,13 +6,15 @@ import type { ReaderSettings, ReaderTheme } from './useReaderV2';
 // and the mobile sheets. All type set in the site's existing faces (Inter UI,
 // letterspaced caps for labels — the house style uses no monospace).
 
+// Swatches are literal, never tokens: a token is re-declared by the very theme
+// being previewed, so in dark mode the "Light" chip rendered dark.
 const THEMES: Array<{ key: ReaderTheme; label: string; swatch: string }> = [
-  { key: 'light', label: 'Light', swatch: 'var(--bg-cream)' },
+  { key: 'light', label: 'Light', swatch: '#fdfcf9' },
   { key: 'sepia', label: 'Sepia', swatch: '#f6eeda' },
   { key: 'dark', label: 'Dark', swatch: '#2a241d' },
 ];
 
-const TEXT_SCALES = [0.85, 0.925, 1, 1.1, 1.22];
+const TEXT_SCALES = [0.7, 0.8, 0.9, 1, 1.15, 1.3, 1.5, 1.75, 2];
 const LINE_WIDTHS: Array<ReaderSettings['lineWidth']> = ['narrow', 'comfortable', 'wide'];
 const LINE_HEIGHTS = [1.5, 1.6, 1.7, 1.8, 1.9];
 
@@ -161,9 +163,11 @@ export default function ReaderSettingsControls({
           className="relative w-10 h-[22px] border border-[var(--border-medium)] transition-colors"
           style={{ background: settings.glosses ? 'var(--accent-rust)' : 'var(--bg-warm)' }}
         >
+          {/* Knob colour is literal: the night theme rewrites .bg-white, which
+              turned the knob dark against the rust track. */}
           <span
-            className="absolute top-[2px] w-4 h-4 bg-white border border-[var(--border-medium)] transition-all"
-            style={{ left: settings.glosses ? 20 : 2 }}
+            className="absolute top-[2px] w-4 h-4 border border-[var(--border-medium)] transition-all"
+            style={{ left: settings.glosses ? 20 : 2, background: '#fdfcf9' }}
           />
         </button>
       </div>

@@ -21,6 +21,8 @@ export interface ReaderSettings {
   typeface: 'serif' | 'sans';
   lineHeight: number;
   glosses: boolean;
+  /** Show the current section title in the bar (toggled from Contents) */
+  showSection: boolean;
 }
 
 export interface ViewState {
@@ -38,6 +40,7 @@ export const DEFAULT_SETTINGS: ReaderSettings = {
   typeface: 'serif',
   lineHeight: 1.7,
   glosses: true,
+  showSection: false,
 };
 
 function loadStored<T>(key: string, fallback: T): T {
