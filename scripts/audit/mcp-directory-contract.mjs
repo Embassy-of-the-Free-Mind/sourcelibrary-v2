@@ -30,6 +30,16 @@
  * runs it on every PR; the live audit runs nightly.
  *
  * Live run:  node scripts/audit/mcp-directory-contract.mjs [baseUrl]
+ *
+ * The base URL is a real parameter, and a **Vercel preview URL works** — unlike
+ * the tenant-lockdown audit, nothing here keys on the production hostname, so a
+ * branch can be checked before it merges rather than the morning after:
+ *
+ *   npm run audit:mcp -- https://sourcelibrary-v2-git-<branch>-…vercel.app
+ *
+ * Do that on any PR touching src/app/api/mcp/**. Verified against a preview on
+ * 2026-08-05: 14/14, identical to production.
+ *
  * Exits 1 on any failure. Workflow: .github/workflows/mcp-directory-contract.yml
  */
 

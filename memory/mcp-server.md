@@ -45,7 +45,9 @@ MCP to production and asserts both properties plus a committed tool manifest.
 `npm run audit:mcp:self-test` runs the negative controls — every predicate against
 the defect it exists to catch, including the exact 2026-05 title-under-annotations
 shape. CI: `.github/workflows/mcp-directory-contract.yml` (self-test on PRs, live
-audit nightly).
+audit nightly). **A Vercel preview URL is a valid target** — nothing keys on the
+production hostname — so run `npm run audit:mcp -- <preview-url>` before merging
+anything under `src/app/api/mcp/**` rather than finding out the next morning.
 
 **What a change costs.** Neither listing snapshots the tools; both hold a pointer
 to `/api/mcp`, and clients call `tools/list` on connect. So **adding a tool, adding

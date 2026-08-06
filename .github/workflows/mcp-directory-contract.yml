@@ -14,9 +14,17 @@ name: MCP directory contract
 #                and deterministic, so it runs on every PR and blocks merge. It
 #                proves the audit can still FAIL; a guard nobody has watched go
 #                red is decoration (.claude/docs/invariants/tests-that-are-not-guards.md).
-#   live       — speaks MCP to production. Not a PR check: a preview deploy is
-#                not what the directory points at, and prod pre-merge is the
-#                wrong target. Nightly is the meaningful run.
+#   live       — speaks MCP to production. Nightly and on merge to main, not on
+#                PRs: pre-merge, prod is by definition the wrong target, since it
+#                still carries whatever the PR is about to change.
+#
+# A preview deploy IS a valid target though — nothing here keys on the production
+# hostname — so before merging anything under src/app/api/mcp/**, run it against
+# your own preview and catch the regression a day early:
+#
+#   npm run audit:mcp -- https://sourcelibrary-v2-git-<branch>-…vercel.app
+#
+# (workflow_dispatch takes the same URL if you'd rather run it from Actions.)
 
 on:
   pull_request:
