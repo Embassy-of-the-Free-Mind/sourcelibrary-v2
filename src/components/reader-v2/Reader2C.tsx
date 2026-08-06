@@ -10,15 +10,16 @@ import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/a
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
 import {
-  ChevronLeft, ChevronRight, ChevronDown, List, Search, Quote,
-  Pencil, Check, X, Loader2, GalleryHorizontal, ZoomIn, ZoomOut,
-  Heart, Share2, BookOpen, MessageCircle, Info,
+  ChevronLeft, ChevronRight, ChevronDown, ChevronRight as ChevronRightSmall,
+  List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
+  ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
+  Info, Bell, MoreHorizontal,
 } from 'lucide-react';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls from './ReaderSettingsControls';
 import {
-  CapsLabel, AiChip, ReaderProse, ScanImage, ScanViewer, SCAN_ZOOM_STEPS,
-  resolveScanUrls, PaneMenu, buildTextMenuItems, ViewToggleGroup, onInk,
+  CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS,
+  resolveScanUrls, PaneMenu, type PaneMenuItem, buildTextMenuItems, ViewToggleGroup, onInk,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
 
@@ -32,7 +33,7 @@ import {
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'settings' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'settings' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
@@ -42,7 +43,16 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   info: 'Edition & page info',
   cite: 'Cite this page',
   settings: 'Reading settings',
+  more: 'More',
 };
+
+/** The tools that live behind "More" on mobile, in the order they're offered. */
+const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
+  ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
+  ['guide', 'Reading guide', 'Overview, themes, sections'],
+  ['info', 'Edition & page info', 'This page, and the edition it comes from'],
+  ['cite', 'Cite this page', 'A citation that points at this exact page'],
+];
 
 interface Reader2CProps {
   initialBook: Book;
@@ -120,14 +130,12 @@ function MobileToolbar({
   stripVisible: boolean;
   onToggleStrip: () => void;
 }) {
+  // Five slots, grouped by how often a reader reaches for them. Everything
+  // else (settings, guide, info, cite) sits one tap away behind More.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
-    ['contents', 'Contents', <List key="i" size={18} />],
-    ['search', 'Search', <Search key="i" size={18} />],
-    ['guide', 'Guide', <BookOpen key="i" size={18} />],
-    ['librarian', 'Librarian', <MessageCircle key="i" size={18} />],
-    ['info', 'Info', <Info key="i" size={18} />],
-    ['cite', 'Cite', <Quote key="i" size={18} />],
-    ['settings', 'Settings', AaGlyph],
+    ['contents', 'Contents', <List key="i" size={19} />],
+    ['search', 'Search', <Search key="i" size={19} />],
+    ['librarian', 'Ask', <MessageCircle key="i" size={19} />],
   ];
   return (
     <div
@@ -147,9 +155,15 @@ function MobileToolbar({
       ))}
       <ToolButton
         label="Pages"
-        icon={<GalleryHorizontal size={18} />}
+        icon={<GalleryHorizontal size={19} />}
         active={stripVisible}
         onClick={onToggleStrip}
+      />
+      <ToolButton
+        label="More"
+        icon={<MoreHorizontal size={19} />}
+        active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
+        onClick={() => onTogglePanel('more')}
       />
     </div>
   );
@@ -231,14 +245,40 @@ interface GuideData {
   sections?: Array<{ title: string; startPage: number; endPage: number; summary: string }>;
 }
 
+/** What the guide is, shown when a book has none yet (and in brief when it does). */
+const GUIDE_BLURB = 'A reading guide is our own summary layer over the book: an overview, the themes it keeps returning to, and a short summary of each section with the page it starts on.';
+const GUIDE_BLURB_2 = 'It is not the printed table of contents. The contents list what the printer set down; the guide describes what the text actually covers, in modern English, and points you to where each part begins.';
+const GUIDE_BLURB_3 = 'Guides come from an AI-assisted enrichment pass that runs after a book is transcribed and translated, so they appear once enough of the book has been through that pipeline.';
+
 /** Reading guide, from book.reading_summary / index.bookSummary — fetched on open. */
-function GuidePanel({ bookId, bookPath, onGoToPageNumber }: {
+function GuidePanel({ bookId, bookPath, bookTitle, onGoToPageNumber }: {
   bookId: string;
   bookPath: string;
+  bookTitle: string;
   onGoToPageNumber: (n: number) => void;
 }) {
   const [loading, setLoading] = useState(true);
   const [guide, setGuide] = useState<GuideData | null>(null);
+  const [requested, setRequested] = useState(false);
+  const [requesting, setRequesting] = useState(false);
+
+  // Requests ride the same queue as every other reader request (translation,
+  // corrections): the feedback collection, which is triaged into issues.
+  const requestGuide = async () => {
+    setRequesting(true);
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `Reading guide requested for "${bookTitle}" (book ${bookId})`,
+          page: `/book/${bookPath}`,
+        }),
+      });
+    } catch { /* best effort, same as the translation request */ }
+    setRequesting(false);
+    setRequested(true);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -272,10 +312,36 @@ function GuidePanel({ bookId, bookPath, onGoToPageNumber }: {
   }
   if (!guide) {
     return (
-      <p className="px-4 py-3 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-        No reading guide for this book yet.{' '}
-        <a href={`/book/${bookPath}/guide`} className="underline" style={{ color: 'var(--accent-rust)' }}>Open the guide page</a>
-      </p>
+      <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
+        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
+          {GUIDE_BLURB}
+        </p>
+        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
+          {GUIDE_BLURB_2}
+        </p>
+        <p className="font-body text-[14px] leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
+          {GUIDE_BLURB_3}
+        </p>
+        <p className="font-sans text-[13px] mb-3" style={{ color: 'var(--text-primary)' }}>
+          This book does not have one yet.
+        </p>
+        {requested ? (
+          <p className="font-sans text-[13px]" style={{ color: 'var(--accent-sage-dark)' }} role="status">
+            Thanks. This book is queued for a guide, and it will appear here once the pass runs.
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={requestGuide}
+            disabled={requesting}
+            className="flex items-center gap-2 px-3 py-2 font-sans text-[13px] border transition-colors hover:bg-[var(--bg-white)] disabled:opacity-60"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            {requesting ? <Loader2 size={13} className="animate-spin" /> : <Bell size={13} />}
+            Request a reading guide
+          </button>
+        )}
+      </div>
     );
   }
   return (
@@ -317,9 +383,14 @@ function GuidePanel({ bookId, bookPath, onGoToPageNumber }: {
           ))}
         </>
       )}
-      <p className="mt-4 pt-3 border-t font-sans text-[12px]" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
-        <a href={`/book/${bookPath}/guide`} className="underline">Full reading guide →</a>
-      </p>
+      <div className="mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+        <p className="font-sans text-[11.5px] leading-relaxed mb-2" style={{ color: 'var(--text-faint)' }}>
+          Written by an AI-assisted enrichment pass over the transcription and translation, not the printed contents.
+        </p>
+        <a href={`/book/${bookPath}/guide`} className="font-sans text-[12px] underline" style={{ color: 'var(--accent-rust)' }}>
+          Full reading guide →
+        </a>
+      </div>
     </div>
   );
 }
@@ -531,6 +602,63 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
   );
 }
 
+/**
+ * Scan pane controls. Two distinct jobs, kept visually separate: the zoom
+ * group scales the whole scan in place, and the lens is a spot magnifier you
+ * switch on (it used to follow the cursor uninvited).
+ */
+function ScanControls({
+  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, menuItems,
+}: {
+  zoom: number;
+  onZoomStep: (dir: 1 | -1) => void;
+  onZoomReset: () => void;
+  lensOn: boolean;
+  onToggleLens: () => void;
+  menuItems: PaneMenuItem[];
+}) {
+  const btn = 'w-[30px] h-[30px] flex items-center justify-center hover:bg-black/5 disabled:opacity-30 transition-colors';
+  return (
+    <div className="flex items-center gap-0.5">
+      <button type="button" aria-label="Zoom out" disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
+        className={btn} style={{ color: 'var(--text-muted)' }}>
+        <ZoomOut size={15} />
+      </button>
+      <button
+        type="button"
+        onClick={onZoomReset}
+        disabled={zoom === 1}
+        className="min-w-[42px] px-1 h-[30px] font-sans text-[11.5px] tabular-nums hover:bg-black/5 disabled:cursor-default transition-colors"
+        style={{ color: 'var(--text-muted)' }}
+        title="Reset zoom"
+      >
+        {Math.round(zoom * 100)}%
+      </button>
+      <button type="button" aria-label="Zoom in" disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
+        onClick={() => onZoomStep(1)} className={btn} style={{ color: 'var(--text-muted)' }}>
+        <ZoomIn size={15} />
+      </button>
+      <span className="w-px h-4 mx-1" style={{ background: 'var(--border-medium)' }} />
+      <button
+        type="button"
+        onClick={onToggleLens}
+        aria-pressed={lensOn}
+        aria-label="Reading lens"
+        disabled={zoom > 1}
+        className={btn}
+        style={{
+          color: lensOn ? 'var(--accent-rust)' : 'var(--text-muted)',
+          boxShadow: lensOn ? 'inset 0 -2px 0 var(--accent-rust)' : 'none',
+        }}
+        title={zoom > 1 ? 'Reading lens (available at 100%)' : lensOn ? 'Turn the reading lens off' : 'Reading lens: magnify the spot under the pointer'}
+      >
+        <ScanSearch size={15} />
+      </button>
+      <PaneMenu items={menuItems} />
+    </div>
+  );
+}
+
 function PaneHeader({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
     <div
@@ -727,7 +855,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  * breakpoints can never drift apart.
  */
 function PanelContent({
-  panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose,
+  panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -737,7 +865,30 @@ function PanelContent({
   librarianMessages: LibrarianMessage[];
   onLibrarianMessages: (m: LibrarianMessage[]) => void;
   onClose: () => void;
+  /** Mobile "More" menu hands off to another panel */
+  onSelectPanel: (p: Exclude<LeftPanel, null>) => void;
 }) {
+  if (panel === 'more') {
+    return (
+      <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
+        {MORE_TOOLS.map(([key, label, hint]) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => onSelectPanel(key)}
+            className="w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-light)' }}
+          >
+            <span className="min-w-0">
+              <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>{label}</span>
+              <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>{hint}</span>
+            </span>
+            <ChevronRightSmall size={15} style={{ color: 'var(--text-faint)' }} />
+          </button>
+        ))}
+      </div>
+    );
+  }
   if (panel === 'contents') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
@@ -763,6 +914,7 @@ function PanelContent({
       <GuidePanel
         bookId={r.book.id}
         bookPath={r.bookPath}
+        bookTitle={r.book.display_title || r.book.title}
         onGoToPageNumber={(n) => { onClose(); r.goToPageNumber(n); }}
       />
     );
@@ -853,8 +1005,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const jumpRef = useRef<HTMLInputElement>(null);
   useEffect(() => { if (jumpOpen) jumpRef.current?.focus(); }, [jumpOpen]);
 
-  // Scan zoom — controlled from the pane header, never from buttons over the scan
+  // Scan zoom + lens — controlled from the pane header, never from buttons
+  // over the scan itself. The lens is off until asked for.
   const [scanZoom, setScanZoom] = useState(1);
+  const [lensOn, setLensOn] = useState(false);
   useEffect(() => { setScanZoom(1); }, [r.currentPageId]);
   const zoomStep = (dir: 1 | -1) => {
     const idx = SCAN_ZOOM_STEPS.findIndex(s => Math.abs(s - scanZoom) < 0.01);
@@ -1041,12 +1195,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
 
+  const scanMenuItems: PaneMenuItem[] = [
+    ...(scan.native ? [
+      { label: 'Open full resolution', href: scan.native },
+      { label: 'Download scan', href: scan.native },
+    ] : []),
+    ...(r.currentPage?.page_number != null ? [{ label: 'Page', info: `p. ${r.currentPage.page_number}` }] : []),
+  ];
+
   const panelProps = {
     r, citation, copied,
     onCopyCitation: copyCitation,
     librarianMessages,
     onLibrarianMessages: setLibrarianMessages,
     onClose: () => setLeftPanel(null),
+    onSelectPanel: (p: Exclude<LeftPanel, null>) => setLeftPanel(p),
   };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
@@ -1073,10 +1236,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           <Logo white compact />
-          <span style={{ color: onInk(0.28) }}>/</span>
           <a
             href={`/book/${r.bookPath}`}
-            className="min-w-0 max-w-[340px] no-underline group px-1.5 py-1 -ml-1.5 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+            className="min-w-0 max-w-[340px] no-underline group px-1.5 py-1 ml-1 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
             title="Back to the book page"
           >
             <div className="font-body text-[15.5px] leading-[1.2] truncate" style={{ color: '#fdfcf9' }}>
@@ -1228,44 +1390,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             >
               <PaneHeader
                 right={
-                  <div className="flex items-center gap-0.5">
-                    <button type="button" aria-label="Zoom out" disabled={scanZoom <= 1}
-                      onClick={() => zoomStep(-1)}
-                      className="w-[30px] h-[30px] flex items-center justify-center hover:bg-black/5 disabled:opacity-30"
-                      style={{ color: 'var(--text-muted)' }}>
-                      <ZoomOut size={15} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setScanZoom(1)}
-                      disabled={scanZoom === 1}
-                      className="min-w-[42px] px-1 h-[30px] font-sans text-[11.5px] tabular-nums hover:bg-black/5 disabled:cursor-default"
-                      style={{ color: 'var(--text-muted)' }}
-                      title="Reset zoom"
-                    >
-                      {Math.round(scanZoom * 100)}%
-                    </button>
-                    <button type="button" aria-label="Zoom in" disabled={scanZoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
-                      onClick={() => zoomStep(1)}
-                      className="w-[30px] h-[30px] flex items-center justify-center hover:bg-black/5 disabled:opacity-30"
-                      style={{ color: 'var(--text-muted)' }}>
-                      <ZoomIn size={15} />
-                    </button>
-                    <span className="w-px h-4 mx-1" style={{ background: 'var(--border-medium)' }} />
-                    <PaneMenu items={[
-                      ...(scan.native ? [
-                        { label: 'Open full resolution', href: scan.native },
-                        { label: 'Download scan', href: scan.native },
-                      ] : []),
-                      { label: 'Page', info: `p. ${pageNum}` },
-                    ]} />
-                  </div>
+                  <ScanControls
+                    zoom={scanZoom}
+                    onZoomStep={zoomStep}
+                    onZoomReset={() => setScanZoom(1)}
+                    lensOn={lensOn}
+                    onToggleLens={() => setLensOn(v => !v)}
+                    menuItems={scanMenuItems}
+                  />
                 }
               >
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Original scan</CapsLabel>
               </PaneHeader>
               <div className="flex-1 min-h-0 px-6 py-[22px] overflow-hidden">
-                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={setScanZoom} />
+                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={setScanZoom} lensOn={lensOn} />
               </div>
             </section>
           )}
@@ -1392,16 +1530,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {r.book.display_title || r.book.title}
               </div>
               <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
-                {r.currentChapter ? `${r.currentChapter.titleEn || r.currentChapter.title} · ` : ''}p. {pageNum} of {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}
+                {r.currentChapter ? (r.currentChapter.titleEn || r.currentChapter.title) : bookByline(r.book)}
+                {r.currentPage?.page_number != null ? ` · p. ${r.currentPage.page_number}` : ''}
               </div>
             </a>
             <LikeAction key={r.currentPageId} pageId={r.currentPageId} bookId={r.book.id} />
             <ShareAction url={shareUrl} />
             <UserMenu variant="hero" />
           </div>
-          {/* View chips — deliberately small; the toolbar carries the big targets */}
-          <div className="flex gap-1 px-3 pb-2.5">
-            {(['scan', 'ocr', 'en'] as const).map(v => {
+          {/* View chips — a slim segmented control; the toolbar carries the
+              large tap targets, so these stay out of the way */}
+          <div className="flex px-3 pb-2">
+            {(['scan', 'ocr', 'en'] as const).map((v, i) => {
               const on = r.views[v];
               return (
                 <button
@@ -1409,11 +1549,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   type="button"
                   aria-pressed={on}
                   onClick={() => r.toggleView(v)}
-                  className="flex-1 h-[30px] font-sans text-[11.5px] border transition-colors"
+                  className="flex-1 h-[24px] font-sans text-[10px] font-medium uppercase tracking-[0.08em] border transition-colors"
                   style={{
                     borderColor: on ? onInk(0.3) : onInk(0.16),
                     background: on ? onInk(0.14) : 'transparent',
                     color: on ? '#fdfcf9' : onInk(0.5),
+                    marginLeft: i === 0 ? 0 : -1,
                   }}
                 >
                   {v === 'scan' ? 'Scan' : v === 'ocr' ? 'OCR' : 'English'}
@@ -1435,17 +1576,27 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           {r.views.scan && (
             <section style={{ background: SURFACE.scanBed }}>
-              <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
+              <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>Original scan</CapsLabel>
-                {scan.native && (
-                  <a href={scan.native} target="_blank" rel="noreferrer"
-                    className="font-sans text-[12px] no-underline" style={{ color: 'var(--text-muted)' }}>
-                    Full res
-                  </a>
-                )}
+                <ScanControls
+                  zoom={scanZoom}
+                  onZoomStep={zoomStep}
+                  onZoomReset={() => setScanZoom(1)}
+                  lensOn={lensOn}
+                  onToggleLens={() => setLensOn(v => !v)}
+                  menuItems={scanMenuItems}
+                />
               </div>
-              <div className="px-8 py-5 flex justify-center">
-                <ScanImage page={r.currentPage} book={r.book} className="w-full max-w-[420px]" />
+              {/* Zoom/pan and the lens need the touch stream, so keep those
+                  gestures from also turning the page */}
+              <div
+                className="px-4 py-4"
+                style={{ height: 'min(66dvh, 520px)' }}
+                onTouchStart={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+                onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+                onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+              >
+                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={setScanZoom} lensOn={lensOn} />
               </div>
             </section>
           )}
@@ -1484,28 +1635,33 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {/* End of the scroll: page turn where the reading actually ends
               (swiping left/right anywhere in this scroller does the same) */}
           <div
-            className="flex items-stretch border-t"
+            className="flex items-center justify-between border-t px-2"
             style={{ borderColor: 'var(--border-medium)', background: SURFACE.panel }}
           >
             <button
               type="button"
               onClick={r.goPrev}
               disabled={!prevPage}
-              className="flex-1 min-h-[56px] px-4 flex items-center gap-2 font-sans text-[13px] disabled:opacity-35 border-r"
-              style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}
+              aria-label="Previous page"
+              className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              <ChevronLeft size={16} />
-              {prevPage ? `Page ${prevPage.page_number}` : 'Start of book'}
+              <ChevronLeft size={16} /> Previous
             </button>
+            {r.currentPage?.page_number != null && (
+              <span className="font-sans text-[12.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
+                p. {r.currentPage.page_number}
+              </span>
+            )}
             <button
               type="button"
               onClick={r.goNext}
               disabled={!nextPage}
-              className="flex-1 min-h-[56px] px-4 flex items-center justify-end gap-2 font-sans text-[13px] disabled:opacity-35"
+              aria-label="Next page"
+              className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
               style={{ color: 'var(--accent-rust)' }}
             >
-              {nextPage ? `Next page ${nextPage.page_number}` : 'End of book'}
-              <ChevronRight size={16} />
+              Next <ChevronRight size={16} />
             </button>
           </div>
         </main>
@@ -1522,7 +1678,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             }}
           >
             <div className="flex items-center justify-between px-4 pt-3 pb-1.5 shrink-0">
-              <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
+              <div className="flex items-center gap-1.5 min-w-0">
+                {MORE_TOOLS.some(([k]) => k === leftPanel) && (
+                  <button type="button" aria-label="Back to More" onClick={() => setLeftPanel('more')}
+                    className="w-8 h-8 -ml-2 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                    <ChevronLeft size={16} />
+                  </button>
+                )}
+                <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
+              </div>
               <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
                 className="w-11 h-11 -mr-2 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
             </div>

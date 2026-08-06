@@ -124,41 +124,6 @@ export function resolveScanUrls(page: Page): ScanUrls {
   return { display, thumb, native };
 }
 
-/**
- * The scan image with its paper shadow, rendered through the production
- * ImageWithMagnifier — hover reading lens, in-place pan/zoom controls, click
- * for the fullscreen viewer (the same affordances the current reader has).
- */
-/** Plain scan image with the paper shadow — used in the stacked mobile layout. */
-export function ScanImage({ page, book, className = '' }: { page: Page; book: Book; className?: string }) {
-  const { display } = resolveScanUrls(page);
-  const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
-  if (!display) {
-    return (
-      <div
-        className={`w-full ${className}`}
-        style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }}
-        role="img"
-        aria-label={alt}
-      />
-    );
-  }
-  const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={display}
-      alt={alt}
-      className={`block max-w-full ${className}`}
-      style={{
-        boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-        filter: brightness ? `brightness(${brightness})` : undefined,
-      }}
-      draggable={false}
-    />
-  );
-}
-
 export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
 
 /**
@@ -170,11 +135,13 @@ export const SCAN_ZOOM_STEPS = [1, 1.5, 2.2, 3.2, 4.5];
 const LENS_SIZE = 220;
 const LENS_MAG = 2.4;
 
-export function ScanViewer({ page, book, zoom, onZoomChange }: {
+export function ScanViewer({ page, book, zoom, onZoomChange, lensOn = false }: {
   page: Page;
   book: Book;
   zoom: number;
   onZoomChange: (z: number) => void;
+  /** Reading lens: off by default, toggled from the pane header. */
+  lensOn?: boolean;
 }) {
   const { display, native } = resolveScanUrls(page);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -230,10 +197,14 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
   }, []);
 
   const onPointerDown = (e: React.PointerEvent) => {
-    if (zoom <= 1) return;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-    dragRef.current = { startX: e.clientX, startY: e.clientY, panX: pan.x, panY: pan.y };
-    setDragging(true);
+    if (zoom > 1) {
+      (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+      dragRef.current = { startX: e.clientX, startY: e.clientY, panX: pan.x, panY: pan.y };
+      setDragging(true);
+      return;
+    }
+    // Touch + lens: the finger is the lens, so show it on contact
+    if (lensOn && e.pointerType !== 'mouse') updateLens(e.clientX, e.clientY);
   };
   const onPointerMove = (e: React.PointerEvent) => {
     const d = dragRef.current;
@@ -241,12 +212,14 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
       setPan(clampPan(d.panX + (e.clientX - d.startX), d.panY + (e.clientY - d.startY), zoom));
       return;
     }
-    // Reading lens at 100%, mouse only (touch gets pinch-free plain view)
-    if (zoom === 1 && e.pointerType === 'mouse') {
-      updateLens(e.clientX, e.clientY);
-    } else if (lens) {
-      setLens(null);
-    }
+    // The lens tracks the cursor on a desk and the finger on a phone. Touch
+    // pointermove only fires during contact, so no extra gating is needed.
+    if (lensOn && zoom === 1) updateLens(e.clientX, e.clientY);
+    else if (lens) setLens(null);
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    endDrag();
+    if (e.pointerType !== 'mouse') setLens(null);
   };
   const endDrag = () => { dragRef.current = null; setDragging(false); };
 
@@ -266,12 +239,14 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
       ref={containerRef}
       className="h-full w-full overflow-hidden flex items-center justify-center select-none"
       style={{
-        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : 'crosshair',
-        touchAction: 'none',
+        cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
+        // Only capture touch when the scan itself is interactive; otherwise a
+        // drag over the scan must still scroll (mobile) and swipe pages.
+        touchAction: zoom > 1 || lensOn ? 'none' : 'auto',
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
+      onPointerUp={onPointerUp}
       onPointerLeave={() => { endDrag(); setLens(null); }}
       onDoubleClick={() => onZoomChange(zoom > 1 ? 1 : 2.2)}
       role="img"
@@ -291,7 +266,7 @@ export function ScanViewer({ page, book, zoom, onZoomChange }: {
           filter: brightness ? `brightness(${brightness})` : undefined,
         }}
       />
-      {lens && zoom === 1 && (
+      {lens && lensOn && zoom === 1 && (
         <div
           aria-hidden="true"
           className="absolute pointer-events-none border"
