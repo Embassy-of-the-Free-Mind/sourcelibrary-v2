@@ -26,6 +26,7 @@ export type McpErrorCode =
   | 'not_found'         // the book or page does not exist
   | 'no_translation'    // the page exists but has no translation yet
   | 'too_large'         // the request asked for more than one call may return
+  | 'invalid_request'   // the arguments are wrong; an identical retry cannot work
   | 'transient';        // upstream hiccup; a retry is reasonable
 
 export interface McpErrorPayload {
@@ -36,6 +37,24 @@ export interface McpErrorPayload {
   recovery: string;
   /** Present when the page exists in the original language but not in translation. */
   has_original?: boolean;
+}
+
+/**
+ * Pull the human sentence out of `API 400: {"error":"Message too long: 5211
+ * characters received, maximum 5000"}`, falling back to the raw string. The
+ * route's own wording carries the limit, which is exactly what a caller needs.
+ */
+function apiBody(raw: string): string {
+  const json = raw.match(/\{[\s\S]*\}/)?.[0];
+  if (json) {
+    try {
+      const parsed = JSON.parse(json) as { error?: unknown; message?: unknown };
+      const text = typeof parsed.error === 'string' ? parsed.error
+        : typeof parsed.message === 'string' ? parsed.message : null;
+      if (text) return text.slice(0, 300);
+    } catch { /* fall through to the raw string */ }
+  }
+  return raw.trim().slice(0, 300) || 'The request failed without a reported reason.';
 }
 
 /** Anything thrown by the apiGet/apiPost helpers, which stringify status + body. */
@@ -85,6 +104,28 @@ export function classifyApiError(err: unknown): McpErrorPayload {
       error: 'too_large',
       message: 'The request asked for more than one call can return.',
       recovery: 'Split the range into smaller calls — get_book_text takes from/to, get_quotes takes up to 25 pages.',
+    };
+  }
+
+  // A 4xx that is not one of the cases above is the caller's own request being
+  // wrong, and it is DETERMINISTIC: the identical payload will fail identically
+  // forever. Falling through to 'transient' told an agent to "retry once" after
+  // a "Message too long" rejection — which wastes a call and then, following the
+  // same advice, invites it to give up on a request that would have succeeded at
+  // half the length. Reported by an MCP client that only recovered by ignoring
+  // the recovery guidance (#3653).
+  //
+  // The upstream message is passed through rather than replaced, because these
+  // routes name their own limits ("maximum 5000") and that sentence is the most
+  // useful thing the caller can be given.
+  if (status >= 400 && status < 500) {
+    const tooLong = lower.includes('too long');
+    return {
+      error: 'invalid_request',
+      message: apiBody(raw),
+      recovery: tooLong
+        ? 'Shorten the offending field and resubmit. Do NOT retry the same payload — the limit is fixed and the result will not change.'
+        : 'Fix the arguments and call again. Do NOT retry the same payload unchanged — this is a validation failure, not an outage.',
     };
   }
 
