@@ -94,6 +94,21 @@ export const CONCENTRATION_THRESHOLD = 2000;
 // fleet /16 (2,287), rather than being a round number someone liked.
 export const PREFIX16_THRESHOLD = 1500;
 
+// A proxy pool's signature, sized off the 2026-08-06 measurement: a /16 in
+// which many distinct /24s each contribute almost nothing. Real traffic from a
+// consumer /16 does not look like this — a person reads several pages, so their
+// /24 carries more than a couple of reads. The measured pool ran 5,366 /24s at
+// 1.45 reads each; the busiest genuine /16 in the same window (31.223.x.x) ran
+// 8 /24s at 51 reads each and 22.8 pages per book.
+export const SPRAY_MIN_NETS = 25;
+export const SPRAY_MAX_READS_PER_NET = 3;
+
+// The pool is only worth waking someone for once it is a real share of traffic.
+// Both floors must clear: a percentage alone fires on quiet nights, a count
+// alone fires on busy ones.
+export const SPRAY_MIN_READS = 2000;
+export const SPRAY_MIN_SHARE = 0.05;
+
 // Pages-per-book is what separates a fleet from a devoted reader, and it is a
 // far better discriminator than volume. The 2026-08-06 fleet read ~1.4-1.8
 // pages from each of thousands of books — enumeration. In the same window
@@ -209,6 +224,17 @@ export function prefix16(ip) {
  * a few. Volume alone cannot tell them apart and blocking on volume alone
  * eventually blocks a person.
  */
+/**
+ * Does this /16's traffic look like a proxy pool rather than a network of
+ * readers? Many /24s, each contributing almost nothing. Deliberately says
+ * nothing about volume: the pool's defining property is that its per-unit
+ * volume is ~1 at every unit you might threshold.
+ */
+export function looksLikeSpray(reads, nets) {
+  if (!nets || nets < SPRAY_MIN_NETS) return false;
+  return reads / nets <= SPRAY_MAX_READS_PER_NET;
+}
+
 export function looksLikeEnumeration(reads, books) {
   if (!books || books < 20) return false; // too few books to judge the shape
   return reads / books < ENUMERATION_PAGES_PER_BOOK;
@@ -302,17 +328,33 @@ async function run() {
   // spreading. On 2026-08-06 four cloud ASNs read 137,000 pages from 612 /24s
   // in four days and not one /24 crossed the bar. Rolling the SAME rows up to
   // /16 made it unmissable: 116.204.x.x alone was 28,595 reads from 90 /24s.
+  //
+  // Distinct books are counted by a SEPARATE aggregation rather than by summing
+  // the per-/24 counts. Summing double-counts every book that more than one /24
+  // touched, which inflates the book count and therefore DEFLATES pages-per-book
+  // — pushing legitimate networks toward the enumeration verdict. The first cut
+  // of this check made that mistake (#3658); on the fleet it did not matter
+  // (~1.0 either way), on a busy consumer /16 it would have.
+  const books16raw = await ev.aggregate([
+    { $match: { ...classified, traffic_class: 'human' } },
+    { $addFields: { p16: { $regexFind: { input: '$ip', regex: /^\d{1,3}\.\d{1,3}/ } } } },
+    { $match: { 'p16.match': { $ne: null } } },
+    { $group: { _id: { p: '$p16.match', b: '$book_id' } } },
+    { $group: { _id: '$_id.p', books: { $sum: 1 } } },
+  ], { allowDiskUse: true }).toArray();
+  const books16 = new Map(books16raw.map((r) => [`${r._id}.x.x`, r.books]));
+
   const nets16 = new Map();
   for (const h of perNet) {
     if (isCdnEgress(h._id)) continue; // our own CDN is not an actor
     const p = prefix16(h._id);
     if (!p) continue;
-    const cur = nets16.get(p) || { n: 0, books: 0, nets: 0 };
+    const cur = nets16.get(p) || { n: 0, nets: 0 };
     cur.n += h.n;
-    cur.books += h.books;
     cur.nets += 1;
     nets16.set(p, cur);
   }
+  for (const [p, v] of nets16) v.books = books16.get(p) ?? 0;
 
   // A /16 is only interesting if the volume is spread across many /24s — a
   // single loud /24 is check 1's job and would otherwise be reported twice.
@@ -328,6 +370,36 @@ async function run() {
       level: 'critical',
       check: 'distributed_fleet',
       message: `${spread.length} /16 network(s) read >${PREFIX16_THRESHOLD} pages in ${HOURS}h spread across many /24s, all classified HUMAN — ${sum.toLocaleString()} events total. Worst: ${worst.p} with ${worst.n.toLocaleString()} reads from ${worst.nets} distinct /24s at ${(worst.n / worst.books).toFixed(1)} pages per book. Rotating /24s is how a fleet stays under a per-/24 threshold, so treat the /24 numbers as meaningless here. Resolve the OPERATOR, not the address: whois -h whois.cymru.com " -v ${worst.p.replace(/x\.x$/, '1.1')}" — and block the operator's measured allocations, because blocking one allocation just moves the fleet to the next (AS132203 → AS45090 did exactly that). Networks: ${spread.slice(0, 8).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
+    });
+  }
+
+  // ── 1c. Spray — a pool too diffuse for ANY per-network threshold ──────────
+  // Third iteration of the same lesson. Check 1 asks whether a /24 is too loud;
+  // check 1b asks whether a /16 is. Hours after the 2026-08-06 cloud block, ~26%
+  // of reads were arriving from China Mobile provincial ASNs as 5,366 distinct
+  // /24s averaging 1.45 reads each — 24,044 addresses in 12h, of which 20,643
+  // made EXACTLY ONE read. No /16 came near PREFIX16_THRESHOLD (the loudest was
+  // 253). A residential/mobile proxy pool defeats every per-unit threshold by
+  // construction, because the per-unit volume is ~1 by design.
+  //
+  // So this check does not threshold a network at all. It identifies the SHAPE
+  // — many /24s inside one /16, each contributing almost nothing — and then sums
+  // across every /16 with that shape, because the whole point is that no single
+  // one is alarming. Measure the aggregate, not the loudest member.
+  const sprayed = [...nets16.entries()]
+    .map(([p, v]) => ({ p, ...v }))
+    .filter((v) => looksLikeSpray(v.n, v.nets))
+    .sort((a, b) => b.n - a.n);
+
+  const sprayReads = sprayed.reduce((s, v) => s + v.n, 0);
+  const sprayNets = sprayed.reduce((s, v) => s + v.nets, 0);
+  const sprayShare = classifiedCount ? sprayReads / classifiedCount : 0;
+
+  if (sprayed.length && sprayReads >= SPRAY_MIN_READS && sprayShare >= SPRAY_MIN_SHARE) {
+    alerts.push({
+      level: 'critical',
+      check: 'distributed_proxy_pool',
+      message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. That is a residential/mobile proxy pool, not a datacenter fleet — each exit address is used once and discarded, so no per-IP, per-/24 or per-/16 threshold can see it. **Do NOT add these to blocked-networks.ts**: measured 2026-08-06 they were China Mobile provincial ASNs (Hebei, Hunan, Heilongjiang, Jilin, Henan), consumer mobile space where real readers live, and an app-layer block would refuse them along with the pool. The lever that fits this shape is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless pool clients mostly do not) — a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
     });
   }
 
