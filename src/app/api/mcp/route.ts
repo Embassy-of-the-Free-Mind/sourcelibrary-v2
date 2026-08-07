@@ -194,6 +194,10 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const pageNum = Number(r.pageNumber);
     return {
       page: pageNum, snippet: stripProvenanceMarks(best?.snippet as string), source: best?.field, match_count: matches?.length || 0,
+      // Relevance and which leg found it. A page found by BOTH keyword and
+      // meaning is the strongest signal the tool can give.
+      ...(r.score !== undefined ? { score: r.score } : {}),
+      ...(r.found_by ? { found_by: r.found_by } : {}),
       // Not body text: introduction, preface, contents, index, blank leaves,
       // binding photography. Surfaced, not
       // just used for ordering, so a caller can SEE why something ranks low —
@@ -205,11 +209,16 @@ async function searchWithinBook(args: Record<string, unknown>) {
     };
   });
   const frontCount = Number(result.front_matter_results) || 0;
+  // Present only when the semantic leg could not see this book. Passed straight
+  // through so the caveat reaches the agent that has to decide whether a blank
+  // means "not here" — which, on an unembedded book, it does not.
+  const coverage = result.semantic_coverage as { status?: string; caveat?: string } | undefined;
   return {
-    book_id: args.book_id, query: result.query, total: result.total,
+    book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
     ...(frontCount ? { front_matter_results: frontCount } : {}),
+    ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}`,
+    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
