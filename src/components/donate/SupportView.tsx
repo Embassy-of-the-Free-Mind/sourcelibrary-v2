@@ -205,7 +205,7 @@ export default function SupportView({
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
               <p className="mt-2 text-xs text-stone-500 leading-relaxed">
                 <span className="font-semibold text-stone-600">{s.businessPre}</span>{' '}
-                <Link href="/support/business" className="text-accent-rust underline hover:text-accent-gold-dark">
+                <Link href={locale === 'es' ? '/es/support/business' : '/support/business'} className="text-accent-rust underline hover:text-accent-gold-dark">
                   {s.businessLink}
                 </Link>{' '}
                 {s.businessPost}
