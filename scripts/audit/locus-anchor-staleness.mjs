@@ -39,6 +39,32 @@ await client.connect();
 const db = client.db('bookstore');
 
 let problems = 0;
+
+// Is this collection even OURS?
+//
+// On 2026-08-07 a second session implemented #3661 in parallel and wrote the
+// same collection name with a different schema (`page`/`scan_page`/`locus`
+// instead of `ref_page`/`page_number`/`ref_label`), replacing 6,324 rows with
+// 4,279. The API queries `ref_page`, matched nothing, and every reference on
+// production returned `witness_count: 0` with an honest "no witness holds an
+// anchor at this reference" — indistinguishable from a genuine gap in the
+// corpus. A row count alone would have passed: the foreign rows carry
+// `book_id` too.
+//
+// So check the SHAPE, not just the count. This is the read-side lesson from the
+// embedding outage applied one layer down (derived-stores-and-schedules.md): an
+// empty answer and an unreadable store look identical from outside.
+const total = await db.collection('locus_anchors').countDocuments({});
+const mine = await db.collection('locus_anchors').countDocuments({ ref_page: { $exists: true } });
+if (total && mine !== total) {
+  problems++;
+  console.log(`\n✗ FOREIGN SCHEMA in locus_anchors: ${total - mine} of ${total} rows carry no ref_page.`);
+  console.log(`    Something else is writing this collection. /api/locus queries ref_page and will`);
+  console.log(`    return "no witness" for every reference — silently, as a data gap.`);
+  const stray = await db.collection('locus_anchors').findOne({ ref_page: { $exists: false } }, { projection: { _id: 0 } });
+  console.log(`    example row: ${JSON.stringify(stray).slice(0, 200)}`);
+}
+
 console.log(`\n${LOCUS_EDITIONS.length} registered editions\n${'-'.repeat(72)}`);
 
 for (const ed of LOCUS_EDITIONS) {
