@@ -1,0 +1,99 @@
+{
+  "$comment": "Golden-passage regression set for the MCP read/search surface. Every case here was reported by a real MCP client during Aristotle quote-verification sessions on 2026-08-05 and 2026-08-07, and every one is a case where the API answered with something PLAUSIBLE AND WRONG rather than with an error. See tests/smoke/mcp-golden-passages.test.ts for why these assert on rank and flag values rather than on non-emptiness.",
+
+  "ranking": {
+    "tool": "search_within_book",
+    "expectation": "The page that literally contains the searched sentence must appear in the top N results. Before #3680 every one of these ranked below 48 pages of front matter and apparatus, or did not appear at all.",
+    "$why": "The reporter's diagnosis: score was a raw count of distinct query terms present, unweighted. A natural-language query contributes ~10 function words that match every prose page, so every page ties and the tie breaks by page order — a contiguous run from page 1. The more precisely a caller described the passage they wanted, the worse the search performed.",
+    "cases": [
+      {
+        "book_id": "69d14a6c1c2a66dc094b41b2",
+        "book": "Taylor's Metaphysics, 1801",
+        "query": "the whole is not merely a heap but something besides its parts",
+        "expectPage": 264,
+        "withinTopN": 10,
+        "contains": "not merely a heap",
+        "$was": "Absent from the top 50 entirely; results were 48 front-matter pages at match_count 10-12."
+      },
+      {
+        "book_id": "6a0851bb49638a50931b901a",
+        "book": "Aldine Aristotle, 1551",
+        "query": "one should prefer plausible impossibilities to implausible possibilities",
+        "expectPage": 705,
+        "withinTopN": 10,
+        "$was": "Ranked last of 8 (match_count 2), beaten by p.642 — a Rhetoric passage that merely repeats 'plausible/implausible'. A verbatim phrase match lost to scattered repetition.",
+        "$note": "Poetics 1460a26. The front-matter detector does not fire on this volume at all: early modern books use signature marks, not roman pagination, and its front matter is in Greek and Latin."
+      },
+      {
+        "book_id": "6993882874305116d72cf9f3",
+        "book": "Diogenes Laertius, Pal.gr.182",
+        "query": "Aristotle asked what is hope, a waking dream; what is a friend, one soul in two bodies",
+        "expectPage": 159,
+        "withinTopN": 5,
+        "contains": "hope",
+        "$was": "Ranked ~50th of 59, behind 48 pages in strict ascending page order (title page, an attribution, a Vatican library seal). The page contains BOTH halves of the query verbatim."
+      }
+    ]
+  },
+
+  "rare_term_control": {
+    "tool": "search_within_book",
+    "expectation": "A single distinctive term still returns its few exact pages. This is the control that proves the ranking fix did not simply loosen matching.",
+    "cases": [
+      {
+        "book_id": "69d14a6c1c2a66dc094b41b2",
+        "query": "Speusippus",
+        "expectPagesInclude": [217, 347, 410],
+        "maxTotal": 25
+      }
+    ]
+  },
+
+  "nonsense_control": {
+    "tool": "search_within_book",
+    "expectation": "A query the book cannot answer must score BELOW one it answers verbatim, so a caller can tell 'not here' from 'found it'.",
+    "$openBug": "#3699 — currently both top out at score 1.0, because score is normalised within the result set. Marked it.fails in the test.",
+    "$historyNote": "The original reporter's control was 'nonsense returns total 0', which held before #3680 only because the semantic leg was not firing. It now fires, which is a fix, so returning neighbours for nonsense is correct behaviour — scoring them 1.0 is not. Do not restore the total===0 assertion.",
+    "cases": [
+      {
+        "book_id": "69d14a6c1c2a66dc094b41b2",
+        "query": "zebra pancake velocipede submarine trombone"
+      }
+    ]
+  },
+
+  "continuity": {
+    "tool": "get_quote",
+    "expectation": "Page-edge flags must be correct in BOTH directions and must read the hyphen from the original, not the translation.",
+    "$why": "A page opening mid-sentence reads as complete prose and carries a perfectly valid citation, so a wrong flag here produces a confident misquote. Both cases below returned false before #3680.",
+    "cases": [
+      {
+        "book_id": "6956953e8c9559f6c2db0b6d",
+        "page": 269,
+        "expect": { "continues_from_previous": true },
+        "$why": "Opens 'dom from pain' — the tail of 'the prudent man pursues a free-' on p.268. The detector caught forward splits but missed backward ones. Root cause: stripInlineNoise ran before the furniture strip and ate the '>' of every tag, so a tagged running head was never removed and the head was never reached."
+      },
+      {
+        "book_id": "6993882874305116d72cf9f3",
+        "page": 33,
+        "expect": { "hyphen_split_at_end": true },
+        "$why": "The Greek original ends 'ἐγέ-' (ἐγέ-/-νετο). The flag was tested against the TRANSLATION, where a translator has already resolved the hyphen — so it could never fire. Different book and different language from the case above, deliberately: this is the cross-script confirmation."
+      }
+    ]
+  },
+
+  "structure": {
+    "tool": "get_book",
+    "expectation": "Chapter spans must never invert, and a container must span its children.",
+    "$why": "endPage was derived as chapters[i+1].pageNumber - 1 with no regard for level. A 'Book I' heading is immediately followed by its own 'Chapter I', usually on the same page, so every level-1 span ran backwards (29,037 entries across 6,901 books before #3696).",
+    "cases": [
+      {
+        "book_id": "6956953e8c9559f6c2db0b6d",
+        "book": "Taylor's Nicomachean Ethics, 1818",
+        "expectNoInvertedSpans": true,
+        "expectChapter": { "title": "Book I", "pageNumber": 12, "endPage": 57 },
+        "$was": "Book I: pageNumber 12, endPage 11. Book II: 58/57. Book III: 84/83. Every level-1 entry."
+      }
+    ]
+  }
+}
