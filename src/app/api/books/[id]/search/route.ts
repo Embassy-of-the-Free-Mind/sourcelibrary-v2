@@ -146,12 +146,25 @@ export async function GET(
             ]
           };
           if (tenantContext.id) regexFilter.tenantId = tenantContext.id;
+          // NO .sort({ page_number: 1 }).limit(50) here. That took the first 50
+          // matching pages in PAGE ORDER, so on any long book the cap was spent
+          // before the body was reached — which is why front matter appeared to
+          // dominate and why it looked like a ranking problem.
+          //
+          // Measured on the Taylor Metaphysics (536pp): 138 pages match "whole".
+          // Page 264 carries the wanted passage (whole x2, parts x4, heap x2) and
+          // never appeared, because page-ordered retrieval stopped at page 56.
+          // Diogenes Laertius "worked" only because its front matter is short
+          // enough that page order reached the body by accident.
+          //
+          // Over-fetch instead, then let the scoring and the front-matter demotion
+          // below decide what survives — the same over-fetch pattern searchPassages
+          // and searchConcept already use for their own filters.
           pages = await db.collection('pages')
             .find(regexFilter, {
               projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 }
             })
-            .sort({ page_number: 1 })
-            .limit(50)
+            .limit(400)
             .toArray();
         }
 
@@ -264,12 +277,18 @@ export async function GET(
     // DEMOTED, never dropped: a reader searching for what the translator said
     // about his own method is asking a real question, and the count stays
     // honest. Stable within each group, so existing order is otherwise kept.
-    const bodyFirst = [
-      ...results.filter((r) => !r.is_front_matter),
-      ...results.filter((r) => r.is_front_matter),
+    // Rank WITHIN each group by how strongly the page matched, then cap. The
+    // over-fetch above widens the pool; without this the extra pages would just
+    // be returned in storage order and the response would balloon.
+    const byStrength = (a: SearchResult, b: SearchResult) => b.matches.length - a.matches.length;
+    const ranked = [
+      ...results.filter((r) => !r.is_front_matter).sort(byStrength),
+      ...results.filter((r) => r.is_front_matter).sort(byStrength),
     ];
+    const RESULT_CAP = 50;
+    const totalMatched = ranked.length;
     results.length = 0;
-    results.push(...bodyFirst);
+    results.push(...ranked.slice(0, RESULT_CAP));
 
     let ocrPages = 0;
     let translationPages = 0;
@@ -287,7 +306,10 @@ export async function GET(
 
     return NextResponse.json({
       query: trimmedQuery,
-      total: results.length,
+      // total is what MATCHED, not what is being returned — a caller that sees
+      // 50 and assumes that is everything will stop looking too early.
+      total: totalMatched,
+      returned: results.length,
       ocrPages,
       translationPages,
       front_matter_results: results.filter((r) => r.is_front_matter).length,

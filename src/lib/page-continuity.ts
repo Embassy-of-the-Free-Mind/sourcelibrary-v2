@@ -86,18 +86,38 @@ const TRAILING_FURNITURE =
  */
 const ZERO_WIDTH = /[​-‏⁠-⁤﻿]/g;
 
+/**
+ * ORDER IS LOAD-BEARING: furniture first, then inline noise.
+ *
+ * `stripInlineNoise` removes `>` to kill markdown blockquote markers — and `>`
+ * is also the closing bracket of every tag. Running it first turns
+ * `<page-num>276</page-num>` into `<page-num276</page-num`, after which
+ * LEADING_FURNITURE cannot match a tagged block at all and the head is never
+ * reached.
+ *
+ * That shipped. `get_quote` on p.269 of the Taylor Ethics reported
+ * continues_from_previous: false on a page opening "dom from pain" — the tail
+ * of "the prudent man pursues a free-" on p.268 — which is the single most
+ * mechanically detectable case the feature exists for. Reported from a real
+ * session (#3653).
+ *
+ * The unit tests passed throughout because every fixture used a BARE running
+ * head ("BOOK ONE"), which the uppercase-line alternative catches without any
+ * tag surviving. The tagged path had no coverage. There is now a fixture with
+ * real tags for exactly this reason.
+ */
 function stripInlineNoise(text: string): string {
-  return text.replace(ZERO_WIDTH, '').replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
+  return text.replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
 }
 
 /** The text as it flows INTO this page — furniture at the top removed. */
 function headOf(text: string): string {
-  return stripInlineNoise(text).replace(LEADING_FURNITURE, '').trim();
+  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(LEADING_FURNITURE, '')).trim();
 }
 
 /** The text as it flows OUT of this page — furniture at the foot removed. */
 function tailOf(text: string): string {
-  return stripInlineNoise(text).replace(TRAILING_FURNITURE, '').trim();
+  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(TRAILING_FURNITURE, '')).trim();
 }
 
 export interface PageContinuity {
@@ -126,7 +146,7 @@ export function pageContinuity(text: string | null | undefined): PageContinuity 
 
   // Too short to be prose — plate captions, colophons, blank leaves. Judging
   // these produces noise, and noise here is worse than silence.
-  if (stripInlineNoise(text).trim().length < 200) return NONE;
+  if (stripInlineNoise(text.replace(ZERO_WIDTH, '')).trim().length < 200) return NONE;
 
   const head = headOf(text);
   const tail = tailOf(text);

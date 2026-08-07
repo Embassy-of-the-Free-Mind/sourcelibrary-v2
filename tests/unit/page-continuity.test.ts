@@ -93,6 +93,45 @@ describe('pageContinuity', () => {
     expect(c.continues_on_next).toBe(true);
   });
 
+
+  // THE REGRESSION. Reported from a live session against the deployed tool:
+  // get_quote on p.269 of the Taylor Ethics said continues_from_previous:false
+  // on a page opening "dom from pain" — the tail of "the prudent man pursues a
+  // free-" on p.268. The most mechanically detectable case the feature exists
+  // for, and it was the one it missed.
+  //
+  // Cause: stripInlineNoise removes `>` to kill markdown blockquote markers,
+  // and `>` also closes every tag. Run first, it turned
+  // `<page-num>276</page-num>` into `<page-num276</page-num`, after which the
+  // furniture regex could not match and the head was never reached.
+  //
+  // Every existing fixture used a BARE running head ("BOOK ONE"), which the
+  // uppercase-line branch catches with no tag involved — so the tagged path had
+  // no coverage at all and 11 green tests said nothing about it.
+  it('sees through TAGGED page furniture, not just bare running heads', () => {
+    const p269 =
+      '<page-num>276</page-num>\n<header>THE NICOMACHEAN BOOK VII.</header>\n\n' +
+      'dom from pain, and not what is pleasant; for pleasure is not a generation, ' +
+      'nor is it always accompanied by generation, but it is an energy and an end. ' +
+      'Nor does it arise when we are being filled, but when we are exercising some ' +
+      'power. Its end is not always something other than itself, but only in the ' +
+      'case of those who are being led to the perfecting of their nature.';
+    const c = pageContinuity(p269);
+    expect(c.continues_from_previous, 'page opens mid-word after a tagged header').toBe(true);
+  });
+
+  it('sees a hyphen split through a TAGGED trailing block', () => {
+    const p268 =
+      '<page-num>275</page-num>\n<header>CHAP. XI. ETHICS.</header>\n\n' +
+      'The discussion of pleasure follows, since it is proper to one who philosophises ' +
+      'about political science to consider it. Some say that no pleasure is a good, ' +
+      'either essentially or accidentally, and that the temperate man avoids pleasures. ' +
+      'Furthermore, the prudent man pursues a free-';
+    const c = pageContinuity(p268);
+    expect(c.hyphen_split_at_end, 'trailing hyphen after a tagged header block').toBe(true);
+    expect(c.continues_on_next).toBe(true);
+  });
+
   it('declines to judge text too short to be prose', () => {
     // Real shape: a Chinese page whose entire stripped content was "道\n蔵\n1".
     expect(pageContinuity('道\n蔵\n1').continues_on_next).toBe(false);
