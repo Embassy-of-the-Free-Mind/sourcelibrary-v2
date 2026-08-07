@@ -9,13 +9,17 @@
 > recorded, dated, reproducible **search** (`search_efforts`), and — crucially —
 > it *measures* what that search is worth. The headline:
 >
-> - **Catalogue recall is 27%.** Three of every four known prior English
->   translations are invisible to the reference set. **`none_found` is weak
->   evidence and no count built on it should be quoted.** Positive findings are
->   unaffected.
+> - **Catalogue recall is 32.1%** (2026-08-07, after adding ESTC; 22% → 27% → 32.1%).
+>   **Two of every three** known prior English translations are still invisible to
+>   the reference set. **`none_found` is weak evidence and no count built on it
+>   should be quoted.** Positive findings are unaffected.
 > - A sample of the queue puts `none_found`'s **positive predictive value at ~50%**.
-> - The cause is corpus, not matching: the extract is **1.04% pre-1800** against an
->   early-modern corpus. **Matcher/threshold work is finished** — see #3522 (ESTC).
+> - The cause is corpus, not matching, and ESTC (#3522, merged) bought +5.1 points —
+>   but it covers imprints **1473–1800** while 80.8% of this corpus's known
+>   Latin/Greek priors are post-1950 imprints, so the remaining loss sits in modern
+>   scholarly publishing that no early-modern catalogue can reach. **Do not read the
+>   gain as the problem receding.** (The old "the extract is 1.04% pre-1800" line was
+>   retracted as a false diagnosis — see the reference-set doc §2b/§2c.)
 >
 > Any statement in this doc of the form "N books are first translations" or "N have
 > no prior" was written without that measurement and should be re-derived. The
