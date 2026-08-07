@@ -8,6 +8,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { frontMatterVerdict } from '@/lib/front-matter';
 import { scorePages } from '@/lib/passage-score';
+import { semanticCoverage, type SemanticCoverage } from '@/lib/semantic-coverage';
 
 /**
  * How many pages to pull before scoring. The cap must be applied AFTER ranking,
@@ -120,7 +121,7 @@ export async function GET(
     // doc is found we preserve prior behavior (just search pages) rather than 404.
     const gateBook = await db.collection('books').findOne(
       { $or: [{ id: bookId }, { slug: bookId }] },
-      { projection: { id: 1, visible: 1 } }
+      { projection: { id: 1, visible: 1, pages_translated: 1 } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -380,6 +381,20 @@ export async function GET(
     results.length = 0;
     results.push(...capped);
 
+    // Was the semantic leg able to run at all? Only checked when it produced
+    // NOTHING — that is the one case where a caller could mistake a blind index
+    // for an absent passage, and checking unconditionally would put a Supabase
+    // round-trip on every search that is already working. See
+    // src/lib/semantic-coverage.ts for the measurement that motivated this.
+    let coverage: SemanticCoverage | undefined;
+    if (semanticResults.length === 0) {
+      coverage = await semanticCoverage(
+        (gateBook?.id as string) || bookId,
+        (gateBook?.pages_translated as number) || 0,
+      );
+      if (coverage.status === 'full' || coverage.status === 'unknown') coverage = undefined;
+    }
+
     let ocrPages = 0;
     let translationPages = 0;
     for (const result of results) {
@@ -403,6 +418,7 @@ export async function GET(
       ocrPages,
       translationPages,
       front_matter_results: results.filter((r) => r.is_front_matter).length,
+      ...(coverage ? { semantic_coverage: coverage } : {}),
       results
     });
   } catch (error) {
