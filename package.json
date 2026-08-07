@@ -20,6 +20,8 @@
     "test:e2e:ui": "npx playwright test --ui",
     "audit:mcp": "node scripts/audit/mcp-directory-contract.mjs",
     "audit:mcp:self-test": "node scripts/audit/mcp-directory-contract.mjs --self-test",
+    "audit:greek": "node scripts/audit/greek-name-search.mjs",
+    "audit:scenarios": "node scripts/audit/mcp-feedback-scenarios.mjs",
     "lambda:build": "./scripts/aws-lambda/build-lambda.sh",
     "lambda:package": "./scripts/aws-lambda/package-lambda.sh",
     "lambda:prepare": "npm run lambda:build && npm run lambda:package",

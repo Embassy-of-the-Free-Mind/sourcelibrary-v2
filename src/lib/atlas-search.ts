@@ -42,6 +42,11 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
         { autocomplete: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
         { autocomplete: { query, path: 'english_title', score: { boost: { value: 8 } }, ...fuzzyOpt } },
         { autocomplete: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
+        // Original-script author names (Greek). Mapped with icuFolding, NOT the
+        // standard_diacritic used above — asciiFolding leaves Greek untouched,
+        // so πλατων would never match Πλάτων. No autocomplete mapping on this
+        // field, so it stays a text clause even in autocomplete mode.
+        { text: { query, path: 'name_forms', score: { boost: { value: 5 } } } },
         // Also include text match on overview (no autocomplete index on this field)
         { text: { query, path: 'reading_summary.overview' } },
       ]
@@ -50,6 +55,12 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
         { text: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
         { text: { query, path: 'english_title', score: { boost: { value: 8 } }, ...fuzzyOpt } },
         { text: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
+        // See the note above. Boosted like `author` because that is what it is:
+        // 1,151 Greek-language books carry no Greek anywhere in their metadata,
+        // so `Πλάτων` returned nothing while `Platonis` returned 63.
+        // NO fuzzy: edit-distance on a folded Greek string collides wildly
+        // between unrelated names, and the folding already does the work.
+        { text: { query, path: 'name_forms', score: { boost: { value: 5 } } } },
         { text: { query, path: 'reading_summary.overview', ...fuzzyOpt } },
       ];
 
