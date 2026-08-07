@@ -321,6 +321,25 @@ async function listEditions(args: Record<string, unknown>) {
   };
 }
 
+/**
+ * Resolve a canonical citation — Bekker for Aristotle, Stephanus for Plato — to
+ * the pages that carry it.
+ *
+ * This is the "biggest missing feature" from the MCP quote-verification reports
+ * (#3653 item 2): scan pages are a property of one copy, while a Bekker number
+ * is the coordinate scholarship actually uses. Note it needs no work identity,
+ * which is what unblocked it — canonical numbers are globally unique within
+ * their system, so 1103b resolves without knowing which work it names.
+ */
+async function getLocus(args: Record<string, unknown>) {
+  const system = String(args.system || '').toLowerCase();
+  const reference = String(args.reference || '');
+  if (!system || !reference) {
+    return { error: 'invalid_request', message: 'Both system and reference are required, e.g. system "bekker", reference "1103b24".' };
+  }
+  return apiGet('/locus', new URLSearchParams({ system, ref: reference }));
+}
+
 async function getBookText(args: Record<string, unknown>) {
   const params = new URLSearchParams();
   if (args.chapter !== undefined) params.set('chapter', String(args.chapter));
@@ -718,6 +737,20 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'get_locus',
+    title: 'Find a Canonical Reference (Bekker / Stephanus)',
+    description: 'RESOLVES A CANONICAL CITATION to the pages that carry it — Bekker numbers for Aristotle ("1103b24"), Stephanus for Plato ("509d"). PICK THIS when you have a reference rather than a phrase: verifying an attributed quotation, following a footnote, or comparing one passage across witnesses. Accepts what a classicist writes — "1103b24", "Bekker 1103b", "Pol. 1287a28", "Republic 509 d"; a work name and a trailing line number are ignored, since anchors are page-and-column. Returns each witness with its scan page, a reading URL and a quote URL. COVERAGE IS NARROW AND YOU MUST READ IT: only editions that PRINT canonical references carry anchors — currently the Bekker 1831 and Stephanus 1578 root editions plus five Oxford/Burnet volumes, together spanning Bekker 184a–1462 and Stephanus 3–992. A reference outside those ranges returns nothing, and that is NOT evidence the corpus lacks the passage — it means no anchor was printed on a leaf we hold. When no exact anchor exists the response returns the nearest anchors BELOW and ABOVE with exact:false and a caveat; the passage falls between them, so read from there rather than citing those pages as the locus. → To search by wording instead, use search_within_book; by meaning, search_concept.',
+    annotations: { title: 'Find a Canonical Reference (Bekker / Stephanus)', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        system: { type: 'string', enum: ['bekker', 'stephanus'], description: 'bekker for Aristotle, stephanus for Plato.' },
+        reference: { type: 'string', description: 'The citation, e.g. "1103b24", "Bekker 1103b", "Pol. 1287a28", "509d".' },
+      },
+      required: ['system', 'reference'],
+    },
+  },
+  {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
     description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote.',
@@ -828,6 +861,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);
+    case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args);
@@ -926,7 +960,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.6.0' },
+    { name: 'source-library', version: '4.7.0' },
     { capabilities: { tools: {}, resources: {} } },
   );
 
@@ -1053,7 +1087,10 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.5.0',
+    // Kept in step with the initialize handshake above and with server.json.
+    // These had drifted to 4.6.0 / 4.5.0 / 4.6.0 — the same class of silent
+    // divergence that the directory contract audit exists to catch.
+    version: '4.7.0',
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
