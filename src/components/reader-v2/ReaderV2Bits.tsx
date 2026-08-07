@@ -195,6 +195,18 @@ export function ScanViewer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef]);
 
+  // A cached image is already complete before React attaches onLoad, so that
+  // event never fires and the viewer would sit there unable to size itself —
+  // which silently disabled zoom entirely on a warm CDN. Read it directly too.
+  useEffect(() => {
+    const el = imgRef.current;
+    if (el?.complete && el.naturalWidth) {
+      natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      measure();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page.id]);
+
   const zoomed = zoom > 1;
 
   // Scroll offsets computed alongside a zoom change, applied before paint so
