@@ -174,7 +174,11 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
             <PendingChangesInbox tenant={tenant} rows={edits} titlesByUbn={titlesByUbn} basePath={base} />
           ) : (
             <div className="p-6 rounded-lg border border-border-light bg-white text-center text-muted text-sm">
-              When a contributor submits an edit, it will appear here for approval.
+              <p className="mb-2">Nothing waiting for approval.</p>
+              <p className="text-xs">
+                Every edit lands here first, including your own, so nothing reaches the public
+                catalogue unread. Edit any record and it will appear here.
+              </p>
             </div>
           )
         ) : feedbackError ? (
