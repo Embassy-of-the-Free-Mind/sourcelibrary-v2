@@ -29,7 +29,8 @@ Hence the governing policy everywhere below:
 > a "no" from those sources actually worth?** It records the search itself
 > (`search_efforts`) and measures it.
 >
-> **Catalogue recall is 27%**, and a sampled positive predictive value of ~50% —
+> **Catalogue recall is 32.1%** (2026-08-07, after ESTC; was 27%), and a sampled
+> positive predictive value of ~50% —
 > so **`none_found` is weak evidence and no count built on it should be quoted**,
 > anywhere in this stack. Positive findings are unaffected. Read that doc before
 > quoting any gap, census, or registry figure that rests on an absence.
