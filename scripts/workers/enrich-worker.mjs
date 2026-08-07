@@ -44,6 +44,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
+import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import pg from 'pg';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
@@ -1306,17 +1307,6 @@ Respond with ONLY a JSON array, no markdown fences, no explanation:
 Empty array [] if no discernible structure.`;
 
   return prompt;
-}
-
-function computeEndPages(chapters, totalPages) {
-  for (let i = 0; i < chapters.length; i++) {
-    if (i < chapters.length - 1) {
-      chapters[i].endPage = chapters[i + 1].pageNumber - 1;
-    } else {
-      chapters[i].endPage = totalPages;
-    }
-  }
-  return chapters;
 }
 
 async function extractChaptersForBook(db, bookId) {
