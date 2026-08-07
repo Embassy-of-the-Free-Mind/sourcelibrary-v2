@@ -35,6 +35,7 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
+import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -143,7 +144,40 @@ async function embedBatch(texts) {
   if (!data.embeddings || data.embeddings.length !== texts.length) {
     throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
   }
+
+  // Meter this call. Until 2026-08-07 this worker logged NOTHING, so ~4.9M
+  // embeddings across five tables were invisible to every cost surface — the
+  // single largest unmetered pipeline phase (#3576).
+  //
+  // `batchEmbedContents` returns no `usageMetadata`, so token count is READ if
+  // the API ever starts supplying it and ESTIMATED otherwise. The estimate is
+  // marked in `prompt_version` so a reader can tell measured from approximated
+  // — an unlabelled estimate in a meter is the failure this exercise was about.
+  const reportedTokens = num(data.usageMetadata?.totalTokenCount ?? data.usageMetadata?.promptTokenCount);
+  const estimated = reportedTokens === 0;
+  const inputTokens = estimated
+    ? Math.round(texts.reduce((s, t) => s + (t?.length || 0), 0) / 4) // ~4 chars/token
+    : reportedTokens;
+
+  logUsageAsync({
+    type: 'embedding',
+    mode: 'realtime',
+    model: MODEL,
+    page_count: texts.length,
+    input_tokens: inputTokens,
+    output_tokens: 0,               // embeddings produce vectors, not billed output tokens
+    status: 'success',
+    endpoint: 'worker/embed-gemini',
+    prompt_version: estimated ? 'tokens=estimated(chars/4)' : 'tokens=reported',
+  });
+
   return data.embeddings.map(e => e.values);
+}
+
+/** Coerce a possibly-absent numeric field to 0 rather than NaN. */
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────

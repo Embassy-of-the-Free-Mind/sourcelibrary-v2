@@ -12,6 +12,7 @@
 
 import { MongoClient } from 'mongodb';
 import crypto from 'crypto';
+import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -79,6 +80,22 @@ async function transliteratePage(db, page) {
   }
 
   const data = await res.json();
+
+  // Meter the call. This worker logged nothing until 2026-08-07 (#3576).
+  // Logged BEFORE the empty-response throw below: an empty candidate is still
+  // a billed call (see the RECITATION/empty-candidate notes in batch-collector).
+  logUsageAsync({
+    type: 'transliterate',
+    mode: 'realtime',
+    model: MODEL,
+    book_id: page.book_id || null,
+    page_count: 1,
+    input_tokens: data.usageMetadata?.promptTokenCount || 0,
+    output_tokens: data.usageMetadata?.candidatesTokenCount || 0,
+    status: 'success',
+    endpoint: 'worker/transliterate-greek',
+  });
+
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) throw new Error('Empty response from Gemini');
 

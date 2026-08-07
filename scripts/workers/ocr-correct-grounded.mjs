@@ -46,6 +46,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { normalizeLongS, isCorrectionAcceptable, detectLongSArtefacts } from '../lib/early-modern-text.mjs';
+import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 
 const argv = process.argv.slice(2);
 const flag = k => argv.includes(k);
@@ -117,6 +118,21 @@ async function correctPage(page) {
     config: { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } },
   });
 
+  // Meter the call. This worker logged nothing until 2026-08-07 (#3576), so its
+  // spend was invisible to every cost surface. Logged BEFORE the early return
+  // below: a call that produced empty output was still billed.
+  logUsageAsync({
+    type: 'ocr_correction',
+    mode: 'realtime',
+    model: MODEL,
+    book_id: page.book_id || null,
+    page_count: 1,
+    input_tokens: r.usageMetadata?.promptTokenCount || 0,
+    output_tokens: r.usageMetadata?.candidatesTokenCount || 0,
+    status: 'success',
+    endpoint: 'worker/ocr-correct-grounded',
+  });
+
   const finish = r.candidates?.[0]?.finishReason;
   let text = (r.text || '').trim();
   if (!text) return { skip: `empty output (${finish})`, finish };
@@ -131,7 +147,7 @@ for (const book of books) {
   const bid = book.id || String(book._id);
   const q = { book_id: bid, 'ocr.source': 'mineru', 'ocr.data': { $exists: true, $ne: '' } };
   let cur = db.collection('pages').find(q, { projection: {
-    id: 1, page_number: 1, 'ocr.data': 1, cropped_photo: 1, archived_photo: 1,
+    id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, cropped_photo: 1, archived_photo: 1,
     photo_original: 1, photo: 1, enhanced_photo: 1, split_from_spread: 1, crop: 1,
   }}).sort({ page_number: 1 });
   if (PAGE_LIMIT) cur = cur.limit(PAGE_LIMIT);
