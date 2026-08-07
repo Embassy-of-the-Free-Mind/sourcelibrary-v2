@@ -8,6 +8,8 @@ import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { EDITABLE_BPH_FIELDS } from '@/lib/bph-catalog';
 import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
+import { getTenantContext } from '@/lib/tenant-context';
+import { catalogBasePath } from '@/lib/catalog-nav';
 
 /**
  * BPH catalog entry editor.
@@ -115,6 +117,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           initial={work}
           editorEmail={session.user.email || ''}
           mode={formMode}
+          basePath={catalogBasePath((await getTenantContext())?.source ?? null, tenant)}
         />
       </div>
     </div>

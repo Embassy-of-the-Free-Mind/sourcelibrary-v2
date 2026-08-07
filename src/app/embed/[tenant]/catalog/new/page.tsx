@@ -79,6 +79,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
           editorEmail={session.user.email || ''}
           mode="create"
           suggestedUbn={suggestedUbn}
+          basePath={navBasePath}
         />
       </div>
     </div>

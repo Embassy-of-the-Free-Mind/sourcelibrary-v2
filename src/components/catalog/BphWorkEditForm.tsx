@@ -27,6 +27,13 @@ import type { BphContributor } from '@/lib/bph-contributors';
 interface Props {
   ubn: string;
   tenant: string;
+  /**
+   * Where catalogue routes live on the host being served. The catalogue
+   * answers on both `/catalog/...` (tenant subdomain, via a proxy rewrite)
+   * and `/embed/<tenant>/catalog/...` (everywhere else, including previews),
+   * so a hardcoded prefix 404s off the subdomain. See `catalogBasePath()`.
+   */
+  basePath?: string;
   initial: Record<string, unknown>;
   editorEmail: string;
   /** 'editor' → Save applies directly via applyWorkRevision.
@@ -192,9 +199,10 @@ function isUnchanged(orig: unknown, next: unknown): boolean {
   return false;
 }
 
-export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode, suggestedUbn }: Props) {
+export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode, suggestedUbn, basePath = '/catalog' }: Props) {
   const router = useRouter();
   const isCreate = mode === 'create';
+  const base = basePath.replace(/\/$/, '');
 
   // Form state — one entry per editable field, all strings (number-typed
   // fields are coerced at submit time so users can clear them by deleting).
@@ -306,7 +314,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         // New record is live. Land the cataloguer on it so they can see the
         // entry they just made (and its first history row).
         const newUbn = body.ubn || createUbn.trim();
-        router.push(`/catalog/${encodeURIComponent(newUbn)}`);
+        router.push(`${base}/${encodeURIComponent(newUbn)}`);
         router.refresh();
         return;
       }
@@ -319,10 +327,10 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         setSubmitting(false);
         return;
       }
-      // Editor flow: changes are live. Bounce back to the detail page so the
-      // updated values are visible immediately (router.refresh forces a
-      // fresh server-side fetch).
-      router.push(`/catalog/${encodeURIComponent(ubn)}`);
+      // Every edit now queues for review, so a response without a pendingId
+      // means the server did something unexpected rather than "applied". Land
+      // the user back on the record rather than leaving them on a dead form.
+      router.push(`${base}/${encodeURIComponent(ubn)}`);
       router.refresh();
     } catch (err) {
       setError((err as Error).message || 'Save failed');
@@ -340,13 +348,13 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         <p className="text-xs text-muted mb-4 font-mono">Submission ID: {submittedPendingId}</p>
         <div className="flex flex-wrap gap-2">
           <a
-            href={`/catalog/${encodeURIComponent(ubn)}`}
+            href={`${base}/${encodeURIComponent(ubn)}`}
             className="px-3 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
           >
             Back to catalogue entry
           </a>
           <a
-            href={`/catalog/${encodeURIComponent(ubn)}/edit`}
+            href={`${base}/${encodeURIComponent(ubn)}/edit`}
             className="px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
           >
             Propose another change
@@ -358,14 +366,18 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Mode banner — clarifies what Save will do. Contributor edits queue
-          for editor review; editor edits apply immediately. Both write to
-          the same revision history once approved. */}
-      {mode === 'contributor' && (
+      {/* Every edit goes through review now, an editor's included, so the
+          banner is no longer conditional on role. Saying so up front matters:
+          an editor who used to write straight through will otherwise expect
+          the change to be live the moment they save. */}
+      {!isCreate && (
         <div className="p-3 rounded-lg border border-accent-gold/50 bg-accent-gold/10 text-sm text-primary">
-          <p className="font-medium mb-0.5">Your changes will be sent for review</p>
+          <p className="font-medium mb-0.5">Your changes go to the review queue</p>
           <p className="text-xs text-secondary">
-            An editor (Jose or Paul) will see your proposed changes and either apply them or leave a note. You&rsquo;ll be able to track the status from this work&rsquo;s page.
+            Saving does not change the live catalogue. Your proposal appears under{' '}
+            <strong>Inbox → Edits</strong>, where a librarian can approve it, correct it first, or
+            decline it with a note. This applies to everyone, editors included, so nothing reaches
+            the public catalogue unread.
           </p>
         </div>
       )}
@@ -553,7 +565,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         </div>
         <div className="flex items-center gap-2">
           <a
-            href={isCreate ? '/catalog' : `/catalog/${encodeURIComponent(ubn)}`}
+            href={isCreate ? base : `${base}/${encodeURIComponent(ubn)}`}
             className="px-3 py-1.5 text-sm text-muted hover:text-primary transition-colors"
           >
             Cancel

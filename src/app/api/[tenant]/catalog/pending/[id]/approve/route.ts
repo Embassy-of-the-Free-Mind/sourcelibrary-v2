@@ -30,7 +30,22 @@ export const POST = withAuth(
   async (request: NextRequest, session, ctx) => {
     const params = await (ctx?.params as Promise<{ tenant: string; id: string }>);
     const { tenant, id } = params;
-    void request;
+
+    // Optional: the reviewer amended the proposal before approving. Values
+    // here replace the proposer's for the fields named, and only for those —
+    // an omitted field keeps what was proposed. The amendment is recorded in
+    // the note so the revision history says who changed what, rather than
+    // silently attributing the reviewer's wording to the proposer.
+    let amended: Record<string, { to: unknown; source?: string; evidence?: string }> | null = null;
+    try {
+      const body = await request.json();
+      if (body && typeof body === 'object' && body.fieldChanges && typeof body.fieldChanges === 'object') {
+        amended = body.fieldChanges as typeof amended;
+      }
+    } catch {
+      // No body, or not JSON. Plain approve.
+    }
+
     if (tenant !== 'bph') {
       return NextResponse.json({ error: 'Unsupported tenant' }, { status: 404 });
     }
@@ -81,9 +96,30 @@ export const POST = withAuth(
       return NextResponse.json({ error: 'Pending edit has no UBN' }, { status: 400 });
     }
 
-    // 2. Re-validate field names against the current whitelist.
+    // 2. Merge any reviewer amendment over the proposal, then re-validate
+    //    field names against the current whitelist. Validation runs on the
+    //    merged result, so an amendment cannot smuggle in a field the
+    //    proposer would not have been allowed to touch.
+    const proposed = row.field_changes || {};
+    const merged: Record<string, { to: unknown; source?: string; evidence?: string }> = {
+      ...(proposed as Record<string, { to: unknown; source?: string; evidence?: string }>),
+    };
+    const amendedFields: string[] = [];
+    if (amended) {
+      for (const [key, raw] of Object.entries(amended)) {
+        if (!raw || typeof raw !== 'object') continue;
+        const change = raw as { to: unknown; source?: unknown; evidence?: unknown };
+        merged[key] = {
+          to: change.to,
+          ...(typeof change.source === 'string' ? { source: change.source } : {}),
+          ...(typeof change.evidence === 'string' ? { evidence: change.evidence } : {}),
+        };
+        amendedFields.push(key);
+      }
+    }
+
     const fieldChanges: FieldChangeMap = {};
-    for (const [key, change] of Object.entries(row.field_changes || {})) {
+    for (const [key, change] of Object.entries(merged)) {
       if (!EDITABLE_SET.has(key)) {
         return NextResponse.json(
           { error: `Field "${key}" is no longer editable — cannot apply` },
@@ -98,6 +134,14 @@ export const POST = withAuth(
       };
     }
 
+    // The note carries the amendment so it survives into the revision row and
+    // is readable in History, not just inferable from a diff.
+    const noteWithAmendment = amendedFields.length
+      ? [row.note, `Amended before approval by ${editorEmail}: ${amendedFields.join(', ')}.`]
+          .filter(Boolean)
+          .join(' — ')
+      : row.note;
+
     // 3. Apply the change.
     let appliedAt: string;
     let revisionId: string;
@@ -109,7 +153,7 @@ export const POST = withAuth(
         editorEmail,
         proposedBy: row.proposer_email,
         sourcePendingId: row.id,
-        note: row.note,
+        note: noteWithAmendment,
       });
       appliedAt = result.appliedAt;
       revisionId = result.revisionId;

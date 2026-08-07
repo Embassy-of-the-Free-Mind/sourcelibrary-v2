@@ -26,6 +26,11 @@ interface Props {
   tenant: string;
   rows: PendingRow[];
   titlesByUbn: Record<string, string>;
+  /**
+   * Where catalogue routes live on the host being served. Hardcoding
+   * `/catalog/...` 404s off the tenant subdomain. See `catalogBasePath()`.
+   */
+  basePath?: string;
 }
 
 function formatValue(v: unknown): string {
@@ -46,11 +51,24 @@ function timeAgo(iso: string): string {
   return `${d}d ago`;
 }
 
-export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props) {
+export default function PendingChangesInbox({
+  tenant,
+  rows,
+  titlesByUbn,
+  basePath = '/catalog',
+}: Props) {
   const router = useRouter();
+  const base = basePath.replace(/\/$/, '');
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set(rows.slice(0, 1).map(r => r.id)));
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejectNotes, setRejectNotes] = useState<Record<string, string>>({});
+  /**
+   * Reviewer amendments, keyed by pending id then field name. A reviewer can
+   * correct a proposal in place rather than having to decline it and ask the
+   * proposer to redo it — the common case being a right correction with a
+   * typo or the wrong source cited.
+   */
+  const [amendments, setAmendments] = useState<Record<string, Record<string, string>>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [, startTransition] = useTransition();
 
@@ -62,12 +80,48 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
       return next;
     });
 
+  /**
+   * Only send fields the reviewer actually touched. An untouched field keeps
+   * whatever the proposer wrote, and a plain approve sends no fieldChanges at
+   * all, so the server path is unchanged for the common case.
+   *
+   * Values are re-coerced to the proposed value's type: the inputs are text,
+   * and a year silently becoming the string "1737" would change the column's
+   * shape on write.
+   */
+  function buildApproveBody(pendingId: string) {
+    const edited = amendments[pendingId];
+    if (!edited) return {};
+    const row = rows.find((r) => r.id === pendingId);
+    if (!row) return {};
+    const fieldChanges: Record<string, { to: unknown; source?: string; evidence?: string }> = {};
+    for (const [field, raw] of Object.entries(edited)) {
+      const original = row.field_changes[field];
+      if (!original) continue;
+      if (raw === formatValue(original.to)) continue; // untouched
+      let value: unknown = raw;
+      if (raw === '' ) value = null;
+      else if (typeof original.to === 'number') {
+        const n = Number(raw);
+        value = Number.isFinite(n) ? n : raw;
+      }
+      fieldChanges[field] = {
+        to: value,
+        ...(original.source ? { source: original.source } : {}),
+        ...(original.evidence ? { evidence: original.evidence } : {}),
+      };
+    }
+    return Object.keys(fieldChanges).length ? { fieldChanges } : {};
+  }
+
   async function decide(pendingId: string, action: 'approve' | 'reject') {
     setBusyId(pendingId);
     setErrors((e) => ({ ...e, [pendingId]: '' }));
     try {
       const body =
-        action === 'reject' ? { reviewNote: rejectNotes[pendingId]?.trim() || null } : {};
+        action === 'reject'
+          ? { reviewNote: rejectNotes[pendingId]?.trim() || null }
+          : buildApproveBody(pendingId);
       const res = await fetch(`/api/${tenant}/catalog/pending/${encodeURIComponent(pendingId)}/${action}`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -114,7 +168,7 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
               </div>
               {row.ubn && (
                 <a
-                  href={`/catalog/${encodeURIComponent(row.ubn)}`}
+                  href={`${base}/${encodeURIComponent(row.ubn)}`}
                   className="shrink-0 text-xs text-muted hover:text-accent-rust underline"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -142,7 +196,25 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
                           {formatValue(change.from)}
                         </td>
                         <td className="py-2 pr-3 text-primary break-words">
-                          {formatValue(change.to)}
+                          <input
+                            type="text"
+                            aria-label={`Proposed value for ${field}`}
+                            value={amendments[row.id]?.[field] ?? formatValue(change.to)}
+                            onChange={(e) =>
+                              setAmendments((m) => ({
+                                ...m,
+                                [row.id]: { ...(m[row.id] || {}), [field]: e.target.value },
+                              }))
+                            }
+                            className={
+                              'w-full text-sm rounded-md px-2 py-1 bg-white text-primary border ' +
+                              'focus:outline-none focus:ring-2 focus:ring-accent-rust/30 ' +
+                              (amendments[row.id]?.[field] !== undefined &&
+                              amendments[row.id][field] !== formatValue(change.to)
+                                ? 'border-accent-rust'
+                                : 'border-border-light')
+                            }
+                          />
                         </td>
                         <td className="py-2 text-xs text-muted break-words">
                           {change.source || '—'}
@@ -162,6 +234,11 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
                     Proposer&rsquo;s note: {row.note}
                   </p>
                 )}
+
+                <p className="text-xs text-muted">
+                  You can correct a value before approving — edit it above and the
+                  amendment is recorded against your name in the entry&rsquo;s history.
+                </p>
 
                 {/* Reject note + actions */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3">

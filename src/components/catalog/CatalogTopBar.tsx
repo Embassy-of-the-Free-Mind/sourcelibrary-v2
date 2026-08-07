@@ -24,11 +24,11 @@ import type { InboxCounts } from '@/lib/catalog-inbox';
  */
 
 const ITEM =
-  'px-3 py-1.5 text-sm rounded-md text-cream/70 hover:text-cream hover:bg-cream/10 ' +
+  'px-3 py-2 text-sm rounded-md text-cream/65 hover:text-cream hover:bg-cream/10 ' +
   'transition-colors whitespace-nowrap';
 
 const ITEM_CURRENT =
-  'px-3 py-1.5 text-sm rounded-md bg-cream/15 text-cream whitespace-nowrap';
+  'px-3 py-2 text-sm rounded-md bg-cream/15 text-cream whitespace-nowrap';
 
 interface Props {
   /** Editor+ — gates the queues, the team page and record creation. */
@@ -38,6 +38,12 @@ interface Props {
   /** Where the catalogue index lives on this host (see catalogIndexPath). */
   indexPath: string;
   counts?: InboxCounts;
+  /**
+   * Tailwind max-width of the page's own content container, so the bar's
+   * contents line up with the page rather than floating on their own grid.
+   * The catalogue index is the widest page and the one this most matters on.
+   */
+  containerClass?: string;
 }
 
 /**
@@ -68,7 +74,13 @@ function Badge({ n }: { n: number }) {
   );
 }
 
-export default function CatalogTopBar({ canReview, basePath, indexPath, counts }: Props) {
+export default function CatalogTopBar({
+  canReview,
+  basePath,
+  indexPath,
+  counts,
+  containerClass = 'max-w-[1500px]',
+}: Props) {
   const current = activeItem(usePathname());
   const base = basePath.replace(/\/$/, '');
 
@@ -77,16 +89,23 @@ export default function CatalogTopBar({ canReview, basePath, indexPath, counts }
 
   return (
     <header className="sticky top-0 z-40 bg-primary text-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center gap-2 h-12 overflow-x-auto">
+      <div className={`${containerClass} mx-auto px-6`}>
+        <div className="flex items-center gap-5 h-14 overflow-x-auto">
           <a
             href={indexPath}
-            className="font-display text-sm tracking-[0.18em] uppercase text-cream whitespace-nowrap mr-2 hover:opacity-80 transition-opacity"
+            className="flex items-baseline gap-2.5 whitespace-nowrap hover:opacity-80 transition-opacity"
           >
-            BPH Catalogue
+            <span className="font-display text-sm tracking-[0.2em] uppercase text-cream">
+              BPH Catalogue
+            </span>
+            {/* Says plainly that this is the staff view of a public catalogue,
+                which the bar alone does not communicate. */}
+            <span className="font-display text-[0.6875rem] tracking-[0.18em] uppercase text-cream/50">
+              Editor
+            </span>
           </a>
 
-          <nav aria-label="Catalogue" className="flex items-center gap-1">
+          <nav aria-label="Catalogue" className="flex items-center gap-0.5">
             <a href={indexPath} className={item('browse')} aria-current={mark('browse')}>
               Browse
             </a>
@@ -119,7 +138,7 @@ export default function CatalogTopBar({ canReview, basePath, indexPath, counts }
             <a
               href={`${base}/new`}
               className={
-                'ml-auto px-3 py-1.5 text-sm rounded-md border border-cream/30 text-cream ' +
+                'ml-auto px-3.5 py-2 text-sm rounded-md border border-cream/30 text-cream ' +
                 'hover:bg-cream hover:text-primary transition-colors whitespace-nowrap'
               }
             >

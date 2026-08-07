@@ -25,6 +25,7 @@ import {
   canReviewCatalog,
 } from '@/lib/catalog-role';
 import CatalogTopBar from '@/components/catalog/CatalogTopBar';
+import CatalogFeedbackButton from '@/components/catalog/CatalogFeedbackButton';
 import { getInboxCounts, EMPTY_INBOX_COUNTS } from '@/lib/catalog-inbox';
 
 // Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
@@ -309,9 +310,11 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
                     basePath={navBasePath}
                     indexPath={catalogIndexPath(tenantSource, tenant)}
                     counts={inboxCounts}
+                    containerClass="max-w-[1500px]"
                 />
             )}
             <SharedLibraryView {...viewProps} />
+            <CatalogFeedbackButton />
         </>
     );
 }

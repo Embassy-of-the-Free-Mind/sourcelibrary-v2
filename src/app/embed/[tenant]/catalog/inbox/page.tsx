@@ -171,7 +171,7 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
               <p className="text-xs text-muted">{editsError}</p>
             </div>
           ) : edits.length > 0 ? (
-            <PendingChangesInbox tenant={tenant} rows={edits} titlesByUbn={titlesByUbn} />
+            <PendingChangesInbox tenant={tenant} rows={edits} titlesByUbn={titlesByUbn} basePath={base} />
           ) : (
             <div className="p-6 rounded-lg border border-border-light bg-white text-center text-muted text-sm">
               When a contributor submits an edit, it will appear here for approval.

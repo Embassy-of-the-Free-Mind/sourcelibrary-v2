@@ -136,35 +136,21 @@ export const POST = withAuth(
       };
     }
 
-    // Decide whether to apply directly or queue for review.
+    // EVERY edit is queued for review, whatever the author's role.
+    //
+    // Editors used to write straight through to bph_works via
+    // applyWorkRevision. That made the review queue structurally empty
+    // whenever the team were all editors, which is the normal case here, and
+    // meant most changes went live with nobody having read them.
+    //
+    // Now the catalogue has one road in: propose, then a reviewer approves,
+    // amends, or declines. An editor approving their own proposal is allowed
+    // and is one extra click, so nobody is blocked; what changed is that the
+    // change is on the record before it is on the catalogue.
     const platformRole = normalizeRole((session.user as { role?: unknown }).role);
     const role = await effectiveRole(userEmail, platformRole, tenant);
+    void role; // kept: the withAuth gate below is what authorises proposing.
 
-    if (ROLE_LEVEL[role] >= ROLE_LEVEL['editor']) {
-      try {
-        const result = await applyWorkRevision({
-          ubn,
-          changeType: 'edit',
-          fieldChanges,
-          editorEmail: userEmail,
-          note: typeof payload.note === 'string' ? payload.note : null,
-        });
-        return NextResponse.json({ ok: true, mode: 'applied', ...result });
-      } catch (err) {
-        if (err instanceof BphCatalogError) {
-          const msg = err.message;
-          const status =
-            msg.includes('not editable') || msg.includes('not found') || msg.includes('empty')
-              ? 400
-              : 500;
-          return NextResponse.json({ error: msg }, { status });
-        }
-        console.error('[catalog/edit] unexpected error:', err);
-        return NextResponse.json({ error: 'Internal error' }, { status: 500 });
-      }
-    }
-
-    // Contributor path: queue a pending row. bph_works is untouched.
     if (!supabaseAdmin) {
       return NextResponse.json(
         { error: 'supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing' },
