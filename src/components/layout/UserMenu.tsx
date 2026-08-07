@@ -152,21 +152,29 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Analytics
                 </Link>
+                {/* People first. Introductions is what readers WROTE about
+                    themselves and who offered to help — it lived only inside
+                    AdminNav, which renders on /admin/* pages, so you could only
+                    reach it once you were already there. 216 volunteers had
+                    written in and none had been answered; a menu with no door
+                    to them is part of why. Duplicates and API Keys moved out to
+                    make room: they are deep tools that belong in the admin nav,
+                    not in a menu opened twenty times a day. */}
                 <Link
-                  href="/admin/duplicates"
+                  href="/admin/introductions"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
                   style={{ color: 'var(--text-primary)' }}
                   onClick={() => setIsOpen(false)}
                 >
-                  Duplicates
+                  Introductions
                 </Link>
                 <Link
-                  href="/admin/api-keys"
+                  href="/admin/users"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
                   style={{ color: 'var(--text-primary)' }}
                   onClick={() => setIsOpen(false)}
                 >
-                  API Keys
+                  Users
                 </Link>
                 <Link
                   href="/feedback"
