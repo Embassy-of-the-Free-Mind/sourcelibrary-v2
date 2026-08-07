@@ -340,10 +340,13 @@ export default async function SponsorsPage() {
               <div className="text-xs uppercase tracking-wider text-stone-500 mb-2">
                 United States
               </div>
-              <div className="font-semibold text-stone-900 mb-1">501(c)(3) via NAF</div>
+              <div className="font-semibold text-stone-900 mb-1">Business expense, or 501(c)(3)</div>
               <p className="text-sm text-stone-600 leading-relaxed">
-                Netherland-America Foundation handles the US side. Wire, stock, DAF, and corporate
-                matching all work.
+                From 2026 a C corporation deducts charitable gifts only above 1% of taxable income,
+                capped at 10%; a sponsorship with real consideration behind it is a business expense
+                with neither floor nor cap, so for most companies that is now the better structure.
+                Where a charitable gift is the right call, the Netherland-America Foundation handles
+                the US side — wire, stock, DAF, and corporate matching all work.
               </p>
             </div>
             <div className="bg-white rounded-lg border border-stone-200 p-6">
