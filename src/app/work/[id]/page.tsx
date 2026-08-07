@@ -5,6 +5,8 @@ import Link from 'next/link';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { editionYear } from '@/lib/dedup';
+import { formatYear, formatYearSpan } from '@/lib/format-year';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -25,15 +27,25 @@ async function getWorkEditions(idOrSlug: string) {
     { $or: [{ work_slug: idOrSlug }, { work_id: idOrSlug }], visible: true },
     {
       projection: {
-        id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+        id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1,
         language: 1, original_language: 1, 'image_source.provider_name': 1,
         thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1, pages_ocr: 1,
         pages_translated: 1, resource_type: 1, work_title: 1, work_slug: 1,
       },
-      sort: { published: 1 },
     }
   ).toArray();
-  return editions as unknown as (Book & { image_source?: { provider_name?: string } })[];
+  // Chronological order, NOT the old `sort: { published: 1 }`. `published` is a
+  // free-text string ("12th century", "MDXLIX. [1549]", "[18--]"), so sorting it
+  // lexically put "550" after "1750" and buried the oldest witness — exactly the
+  // thing a transmission list exists to show. Sort on the parsed year instead;
+  // undated editions sink to the end rather than leading with a bogus 0.
+  return (editions as unknown as (Book & { image_source?: { provider_name?: string } })[]).sort((a, b) => {
+    const ya = editionYear(a), yb = editionYear(b);
+    if (ya === null && yb === null) return 0;
+    if (ya === null) return 1;
+    if (yb === null) return -1;
+    return ya - yb;
+  });
 }
 
 // Derive a human-readable work title. Prefer the curated `work_title` carried on
@@ -51,6 +63,23 @@ function workTitleFromEditions(editions: { work_title?: string | null }[], workI
   // legacy clean-slug fallback (e.g. "turba-philosophorum"); never prettify a "local:…" id
   const tail = workId.includes(':') ? workId.split(':').pop()! : workId;
   return tail.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+// Catalogue no-date markers. These are real values in `published` and must not
+// be printed at a reader ("n.d", "[18--]" is fine to show, "Unknown" is not).
+const NO_DATE = /^(unknown|undated|n\.?d\.?\]?|\[n\.?d\.?\]|\[?date of publication not identified\]?)$/i;
+
+/**
+ * Date to show on an edition card. Prefers the catalogue's own `published`
+ * string, because for a manuscript "12th century" is more honest than the
+ * point estimate 1150 that `year` carries. Falls back to the numeric year so
+ * a book with a junk or missing `published` still shows a date.
+ */
+function bookYearLabel(book: { published?: string | null; year?: number | null }): string | null {
+  const published = (book.published || '').trim();
+  if (published && !NO_DATE.test(published)) return published;
+  const y = editionYear(book);
+  return y === null ? null : formatYear(y);
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -86,9 +115,13 @@ export default async function WorkPage({ params }: PageProps) {
     editions.map(e => (e as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name).filter(Boolean)
   )];
   const languages = [...new Set(editions.map(e => e.language || (e as unknown as { original_language?: string }).original_language).filter(Boolean).filter(l => l !== 'Unknown'))];
+  // `parseInt(published)` read "12th century" as the year 12, so this work's
+  // span rendered as "12 – 1900" (Boethius) and "18 – 1100" (the Four Gospels,
+  // whose real span is 550–1750). editionYear prefers the numeric `year` field,
+  // which is populated on ~98% of live books.
   const dateRange = editions
-    .map(e => parseInt(e.published || '0'))
-    .filter(y => y > 0);
+    .map(e => editionYear(e as { year?: number | null; published?: string | null }))
+    .filter((y): y is number => y !== null);
   const earliest = dateRange.length ? Math.min(...dateRange) : null;
   const latest = dateRange.length ? Math.max(...dateRange) : null;
   const totalPages = editions.reduce((s, e) => s + (e.pages_count || 0), 0);
@@ -106,10 +139,7 @@ export default async function WorkPage({ params }: PageProps) {
       <div className="prose-content max-w-none">
         {/* Stats bar */}
         <div className="flex flex-wrap items-center gap-6 text-sm text-stone-500 mb-10">
-          {earliest && latest && earliest !== latest && (
-            <span>{earliest} &ndash; {latest}</span>
-          )}
-          {earliest && earliest === latest && <span>{earliest}</span>}
+          {formatYearSpan(earliest, latest) && <span>{formatYearSpan(earliest, latest)}</span>}
           {languages.length > 0 && <span>{languages.join(', ')}</span>}
           <span>{totalPages.toLocaleString('en-US')} pages</span>
           <span>{editions.length} editions</span>
@@ -155,7 +185,7 @@ export default async function WorkPage({ params }: PageProps) {
                   </h3>
                   <p className="text-sm text-stone-500 mt-1">
                     {book.author}
-                    {book.published && book.published !== 'Unknown' ? ` · ${book.published}` : ''}
+                    {bookYearLabel(book) ? ` · ${bookYearLabel(book)}` : ''}
                   </p>
                   <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-400">
                     {book.language && book.language !== 'Unknown' && (
