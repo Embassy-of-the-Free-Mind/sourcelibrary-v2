@@ -6,6 +6,7 @@ import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -66,7 +67,7 @@ async function searchLibrary(args: Record<string, unknown>) {
     published: r.published,
     has_doi: r.has_doi,
     ...(r.page_number ? { page_number: r.page_number } : {}),
-    ...(r.snippet ? { snippet: r.snippet, snippet_type: r.snippet_type } : {}),
+    ...(r.snippet ? { snippet: stripProvenanceMarks(r.snippet as string), snippet_type: r.snippet_type } : {}),
     url: r.page_number
       ? `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}?page=${r.page_number}`
       : `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
@@ -112,7 +113,7 @@ async function searchPassages(args: Record<string, unknown>) {
       snippet_language: snippetLanguage,
       published: r.published,
       page: r.page_number,
-      snippet: r.snippet,
+      snippet: stripProvenanceMarks(r.snippet as string),
       // snippet_type:
       //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
       //   'summary'             = AI-generated description (do NOT quote as the author's words)
@@ -160,7 +161,7 @@ async function searchConcept(args: Record<string, unknown>) {
     snippet_language: 'English',
     published: r.book_year,
     page: r.page_number,
-    snippet: r.snippet,
+    snippet: stripProvenanceMarks(r.snippet as string),
     // 'translation' = verbatim source text (safe to quote).
     // 'summary'     = AI-written page-continuity preamble we couldn't cleanly strip —
     //                 useful as topical evidence but DO NOT quote as the author's words.
@@ -190,7 +191,7 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const bookId = String(args.book_id);
     const pageNum = Number(r.pageNumber);
     return {
-      page: pageNum, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0,
+      page: pageNum, snippet: stripProvenanceMarks(best?.snippet as string), source: best?.field, match_count: matches?.length || 0,
       // Introduction / preface / contents rather than the body. Surfaced, not
       // just used for ordering, so a caller can SEE why something ranks low —
       // and so a reader who genuinely wants the translator's own words knows
@@ -381,6 +382,17 @@ async function getQuote(args: Record<string, unknown>) {
   const quote = result.quote as Record<string, unknown> | undefined;
   const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
   const continuity = pageContinuity(quoteText);
+  // Strip the zero-width provenance mark on the CITATION path. See
+  // stripProvenanceMarks in src/lib/provenance.ts for why this and not
+  // get_book_text: one page is a citation, hundreds is a corpus pull.
+  if (quote && typeof quote.translation === 'string') quote.translation = stripProvenanceMarks(quote.translation);
+  if (quote && typeof quote.original === 'string') quote.original = stripProvenanceMarks(quote.original);
+  const ctx = result.context as Record<string, unknown> | undefined;
+  if (ctx) {
+    for (const k of ['previous_page', 'next_page']) {
+      if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
+    }
+  }
   const hint = continuityHint(continuity, Number(args.page));
 
   return {
@@ -419,6 +431,8 @@ async function getQuotes(args: Record<string, unknown>) {
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
         const continuity = pageContinuity(typeof q?.translation === 'string' ? q.translation : null);
+        if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
+        if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
         const hint = continuityHint(continuity, page);
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
