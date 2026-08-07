@@ -144,31 +144,79 @@ async function partition(prefix, hits, depth = 0) {
     leaves.push(...await partition(prefix + ch, n, depth + 1));
   }
   // Arithmetic, not trust: an id belongs to exactly one child, so the children
-  // must account for the parent exactly. Anything else means the wildcard is not
-  // behaving as a prefix and the partition cannot be called complete.
-  if (childSum !== hits) {
-    throw new Error(`partition of ${prefix}* is lossy: children sum ${childSum} vs parent ${hits}`);
+  // must account for the parent. Directional for the same reason as
+  // harvestLeaf — children SHORT of the parent means the wildcard is not
+  // behaving as a prefix and records are unreachable, which is fatal. Children
+  // OVER the parent means the live index grew between the two counts; the
+  // partition still covers everything, so it is reported, not thrown.
+  if (childSum < hits) {
+    throw new Error(
+      `partition of ${prefix}* is lossy: children sum ${childSum} vs parent ${hits} — `
+      + `${hits - childSum} records unreachable`,
+    );
+  }
+  if (childSum > hits) {
+    console.warn(`  ⚠ partition of ${prefix}*: children sum ${childSum} vs parent ${hits} — index grew between counts`);
   }
   return leaves;
 }
 
-/** Page one leaf completely, asserting we received what it promised. */
-async function harvestLeaf(leaf, sink) {
+/**
+ * Page one leaf completely, asserting we received what it promised.
+ *
+ * THE ASSERTION IS DIRECTIONAL, AND THAT IS THE POINT.
+ *
+ * The hazard this whole script exists to prevent is SILENT TRUNCATION — `from`
+ * past 10,000 returns HTTP 200 with no rows, so a naive harvester records
+ * nothing for most of the catalogue and every book downstream reads
+ * `none_found`. That failure is always `got < hits`. It stays fatal.
+ *
+ * `got > hits` cannot be that failure: we hold a superset of what was promised,
+ * so nothing is missing. CERL is a LIVE index and `hits` was read during
+ * partitioning, minutes before the paging — a record added or moved in between
+ * gives exactly this. Observed 2026-08-07 on the first full run: leaf `R5*`
+ * collected 2,284 against a promised 2,283 and killed a harvest that was 34%
+ * done and correct. Failing closed on the safe direction is not caution, it is
+ * a false alarm that costs the run.
+ *
+ * So: under-collection throws, over-collection is deduped by id (the ids are
+ * what the partition's own arithmetic rests on, so they are exact), counted, and
+ * reported. Drift is never swallowed — `main` prints the total at the end.
+ */
+export async function harvestLeaf(leaf, sink, drift = { leaves: 0, records: 0, dupes: 0 }, fetchPage = search) {
   // `exactOnly` leaves are the single record whose id IS the prefix; querying
   // them with a wildcard would re-collect the whole subtree.
   const query = leaf.exactOnly ? `id:${leaf.prefix}` : `id:${leaf.prefix}*`;
+  const ids = new Set();
   let got = 0;
+  let dupes = 0;
   for (let from = 0; from < leaf.hits; from += PAGE) {
     if (from >= FROM_CAP) throw new Error(`leaf ${leaf.prefix}* exceeds the ${FROM_CAP} cap — partition bug`);
-    const { rows } = await search(query, from, PAGE);
+    const { rows } = await fetchPage(query, from, PAGE);
     if (!rows.length) throw new Error(`leaf ${leaf.prefix}* returned 0 rows at from=${from} of ${leaf.hits}`);
-    for (const row of rows) sink(row);
-    got += rows.length;
+    for (const row of rows) {
+      // A record shifting position under a live index can surface twice across a
+      // page boundary. Deduping by id keeps `got` a count of DISTINCT records,
+      // so the comparison below measures coverage rather than paging noise.
+      if (row.id && ids.has(row.id)) { dupes++; continue; }
+      if (row.id) ids.add(row.id);
+      sink(row);
+      got++;
+    }
     await sleep(DELAY_MS);
   }
-  if (got !== leaf.hits) {
-    throw new Error(`leaf ${leaf.prefix}*: collected ${got} but it reported ${leaf.hits}`);
+  if (got < leaf.hits) {
+    throw new Error(
+      `leaf ${leaf.prefix}*: collected ${got} but it reported ${leaf.hits} — `
+      + `${leaf.hits - got} records missing, refusing to record a short leaf`,
+    );
   }
+  if (got > leaf.hits) {
+    drift.leaves++;
+    drift.records += got - leaf.hits;
+    console.warn(`  ⚠ leaf ${leaf.prefix}*: index grew under us — ${got} collected vs ${leaf.hits} promised (superset, kept)`);
+  }
+  if (dupes) drift.dupes += dupes;
   return got;
 }
 
@@ -272,8 +320,15 @@ async function main() {
 
   const promised = leaves.reduce((s, l) => s + l.hits, 0);
   console.log(`\n${leaves.length} leaves, ${promised.toLocaleString()} records promised`);
-  if (!ONLY_PREFIX && Math.abs(promised - total) > 1) {
+  // Directional here too. SHORT of the total is an incomplete partition and is
+  // fatal at any size. OVER the total is the live index having grown during the
+  // ~15-minute partitioning pass — harmless, but say by how much, because a
+  // silently-tolerated drift is how a real partition bug would hide.
+  if (!ONLY_PREFIX && promised < total) {
     throw new Error(`partition covers ${promised} of ${total} — refusing to harvest an incomplete set`);
+  }
+  if (!ONLY_PREFIX && promised > total) {
+    console.warn(`  ⚠ partition promises ${promised} vs a reported total of ${total} — index grew during partitioning (+${promised - total})`);
   }
 
   // ── RESUMABLE, per leaf ───────────────────────────────────────────────────
@@ -293,6 +348,9 @@ async function main() {
   let seen = 0, kept = 0, skipped = 0;
   const evidence = {};
   const started = Date.now();
+  // How far the live index moved under the harvest. Tolerated, never swallowed:
+  // reported at the end so a genuine partition bug cannot hide inside "drift".
+  const drift = { leaves: 0, records: 0, dupes: 0 };
 
   for (const [i, leaf] of leaves.entries()) {
     const leafPath = path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
@@ -312,7 +370,7 @@ async function main() {
       const k = row.translation_evidence.split(':')[0];
       evidence[k] = (evidence[k] || 0) + 1;
       out.write(JSON.stringify(row) + '\n');
-    });
+    }, drift);
     await new Promise((r) => out.end(r));
     fs.renameSync(tmp, leafPath);   // atomic: only a verified leaf gets its name
 
@@ -323,6 +381,13 @@ async function main() {
       + `${String(leaf.hits).padStart(6)} rows, kept ${leafKept}  |  total kept ${kept.toLocaleString()}  ETA ~${eta}m`);
   }
   if (skipped) console.log(`\n  (${skipped} leaf/leaves already on disk — resumed)`);
+  if (drift.leaves || drift.dupes) {
+    console.log(
+      `\n  index drift: ${drift.leaves} leaf/leaves grew (+${drift.records} records), `
+      + `${drift.dupes} duplicate id(s) collapsed across page boundaries.`,
+    );
+    console.log('  (a superset is safe — a SHORT leaf would have thrown)');
+  }
 
   // Concatenate the verified leaves into the reference-set file.
   const outPath = path.join(OUT_DIR, `estc-translations.${SNAPSHOT}.jsonl`);
