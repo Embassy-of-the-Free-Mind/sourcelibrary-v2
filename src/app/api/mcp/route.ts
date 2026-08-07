@@ -10,6 +10,8 @@ import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
   type Tool,
 } from '@modelcontextprotocol/sdk/types.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
@@ -192,7 +194,8 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const pageNum = Number(r.pageNumber);
     return {
       page: pageNum, snippet: stripProvenanceMarks(best?.snippet as string), source: best?.field, match_count: matches?.length || 0,
-      // Introduction / preface / contents rather than the body. Surfaced, not
+      // Not body text: introduction, preface, contents, index, blank leaves,
+      // binding photography. Surfaced, not
       // just used for ordering, so a caller can SEE why something ranks low —
       // and so a reader who genuinely wants the translator's own words knows
       // which results those are.
@@ -237,6 +240,12 @@ async function getBook(args: Record<string, unknown>) {
     pages_translated: result.pages_translated, doi: result.doi,
     reading_summary: result.reading_summary, chapters: result.chapters,
     work_id: result.work_id,
+    // What the volume's own running heads say it holds, with page spans. This
+    // is the answer to "which book has the Poetics?", which the catalogue title
+    // could not give — four volumes advertised works their scans do not contain
+    // (#3652 A). Absent where the scans carry no heads; `status:
+    // 'insufficient-heads'` means examined and undecidable, not unexamined.
+    ...(result.contains_works ? { contains_works: result.contains_works } : {}),
     url: `https://sourcelibrary.org/book/${result.slug || result.id}`,
     iiif_manifest: `https://sourcelibrary.org/api/iiif/${result.id}/manifest`,
   };
@@ -381,7 +390,11 @@ async function getQuote(args: Record<string, unknown>) {
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
   const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
-  const continuity = pageContinuity(quoteText);
+  // Hyphen splits live in the ORIGINAL, never in the translation — a translator
+  // resolves them. Passing only the translation made hyphen_split_at_end
+  // unfireable; see the note on pageContinuity's second parameter.
+  const originalText = typeof quote?.original === 'string' ? quote.original : null;
+  const continuity = pageContinuity(quoteText, originalText);
   // Strip the zero-width provenance mark on the CITATION path. See
   // stripProvenanceMarks in src/lib/provenance.ts for why this and not
   // get_book_text: one page is a citation, hundreds is a corpus pull.
@@ -430,7 +443,10 @@ async function getQuotes(args: Record<string, unknown>) {
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
-        const continuity = pageContinuity(typeof q?.translation === 'string' ? q.translation : null);
+        const continuity = pageContinuity(
+          typeof q?.translation === 'string' ? q.translation : null,
+          typeof q?.original === 'string' ? q.original : null,
+        );
         if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
         const hint = continuityHint(continuity, page);
@@ -608,7 +624,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_within_book',
     title: 'Search Within Book',
-    description: 'SEARCHES INSIDE ONE BOOK (requires book_id) — runs keyword AND scoped semantic search in parallel over that book\'s pages and merges them, so it handles both literal terms ("ouroboros") and conceptual queries ("the marriage of opposites"). PICK THIS once you have a candidate book and want every relevant page in it. → To find the book first, use search_library or search_concept (then pass its book_id here). Faster than a global re-search because it\'s scoped to one book\'s 100-500 pages. Returns OCR and translation snippets with page numbers, ready to cite.',
+    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Each result carries score (0-1, normalised within this book) and found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -637,7 +653,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -901,14 +917,49 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.5.0' },
-    { capabilities: { tools: {} } },
+    { name: 'source-library', version: '4.6.0' },
+    { capabilities: { tools: {}, resources: {} } },
   );
+
+  /**
+   * Documents an agent can READ from inside a session.
+   *
+   * Reported from a full working day spent on the wrong tool (#3653 follow-up
+   * #5): *"Surface /llms.txt from inside the MCP. An agent in a chat session
+   * has no way to discover it, and it is the file that would have prevented all
+   * of this."* Correct — the file has existed at sourcelibrary.org/llms.txt the
+   * whole time and is reachable only by someone already browsing the website,
+   * which an MCP client is not doing. Tool descriptions can carry a sentence;
+   * they cannot carry a corpus guide.
+   */
+  const RESOURCES = [
+    {
+      uri: 'https://sourcelibrary.org/llms.txt',
+      name: 'Source Library — guide for AI agents',
+      title: 'How to search this corpus well',
+      description: 'What the corpus holds, which search tool to reach for, how citation and provenance work, and the failure modes worth knowing before you spend calls. Read this first if you are doing sustained research rather than a single lookup.',
+      mimeType: 'text/plain',
+    },
+  ] as const;
+
+  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+    resources: RESOURCES.map((r) => ({ ...r })),
+  }));
+
+  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+    const uri = request.params.uri;
+    const known = RESOURCES.find((r) => r.uri === uri);
+    if (!known) throw new Error(`Unknown resource: ${uri}`);
+    const resp = await fetch(uri, { signal: AbortSignal.timeout(8000) });
+    if (!resp.ok) throw new Error(`Could not read ${uri}: HTTP ${resp.status}`);
+    return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
+  });
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
       about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
+      read_first: 'https://sourcelibrary.org/llms.txt — a guide to this corpus and its search tools, also exposed as an MCP resource. Worth reading once before a long research session; it costs one call and documents the failure modes that otherwise cost many.',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
         'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is rare pre-modern texts (mostly 1400-1900, ranging from Sumerian tablets to 19th-century scholarship) translated into English. Use it together with your own knowledge and web search:',

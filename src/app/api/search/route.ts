@@ -740,6 +740,46 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const bWordHits = queryWords.filter(w => bAllText.includes(w)).length;
         if (aWordHits !== bWordHits) return bWordHits - aWordHits;
 
+        // 2c. Does the query name this book's AUTHOR? A commentary ON Aristotle
+        // is not Aristotle.
+        //
+        // Measured on "Aristotle Metaphysics": Bekker's 1831 Greek critical
+        // edition ranked 7th and Taylor's translation 9th, behind commentaries
+        // by Aquinas, Asclepius and Tartaretus. All of those carry both query
+        // words in their titles, so rung 2 tied — and the tie fell through to
+        // rung 4, "older editions rank higher", which handed the top of the page
+        // to whichever commentary happened to be oldest.
+        //
+        // Rung 4 is right BETWEEN EDITIONS OF ONE WORK, where earlier really
+        // does mean closer to the source. It says nothing ACROSS works: a 1480
+        // commentary is not a better witness to the Metaphysics than an 1831
+        // critical edition of it. This rung stops that comparison being reached
+        // in the one case where the corpus can tell the difference.
+        //
+        // It sits ABOVE the exact-phrase rung deliberately. Asclepius's volume
+        // is titled "…Commentary on Aristotle Metaphysics", so it contains the
+        // query as a literal phrase and won that rung by coincidence. Being the
+        // named author's own text is better evidence than a phrase that happens
+        // to fall contiguously in a title about them. Measured across eight
+        // queries, moving it up promoted Aristotle over both commentaries and
+        // Newton over Descartes, and changed nothing else.
+        //
+        // WHAT THIS DOES NOT FIX: rung 2 counts query words across title AND
+        // author together, so a commentary whose title names both the author and
+        // the work ("Averroes' Paraphrase of Plato's Republic", "Proclus in
+        // Politiam Platonis") scores 2 where Plato's own manuscripts score 1,
+        // and is separated before this rung is reached. Searching "Plato
+        // Republic" still returns Proclus at #2 and Averroes at #3. That needs
+        // the work/commentary distinction represented in the data rather than
+        // inferred from title strings — see the issue linked in the PR.
+        const authorHits = (r: SearchResult) => {
+          const author = (r.author || '').toLowerCase();
+          return author ? queryWords.filter((w) => author.includes(w)).length : 0;
+        };
+        const aAuthorHits = authorHits(a);
+        const bAuthorHits = authorHits(b);
+        if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
+
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
         const bTitle = (b.display_title || b.title).toLowerCase();
