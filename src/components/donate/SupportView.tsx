@@ -2,17 +2,13 @@ import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import QuickSubscribe from '@/components/donate/QuickSubscribe';
-import OutboundLink from '@/components/analytics/OutboundLink';
+import GiveForm from '@/components/donate/GiveForm';
 import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
 
-const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-// The Netherland-America Foundation (NAF, EIN 13-2989216) runs TWO DonorPerfect forms for the
-// Embassy — see https://thenaf.org/friends-funds/embassy-of-the-free-mind/. `.../give/naf/
-// embassyofthefreemind` is GENERAL Embassy support (BPH preservation, exhibitions, the monument);
-// this one is the Source Library designation. A donor arriving from sourcelibrary.org means to
-// fund Source Library, so use this one. Don't "simplify" the two into the general form.
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/embassyofthefreemindsourcelibrary';
+// The two payment destinations, the NAF-form ambiguity, and the amount-carrying
+// URL params all live in src/lib/give-routes.ts now — this page and /give mount
+// the same <GiveForm>, so neither holds its own copy of a destination URL.
 const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Hand-coloured volvelle (perpetual calendar wheel) from the astrology collection.
@@ -135,7 +131,13 @@ const STRINGS: Record<Locale, SupportStrings> = {
   },
 };
 
-export default function SupportView({ stats, locale = 'en' }: { stats: SupportStats; locale?: Locale }) {
+export default function SupportView({
+  stats,
+  locale = 'en',
+}: {
+  stats: SupportStats;
+  locale?: Locale;
+}) {
   const s = STRINGS[locale];
   const homeHref = locale === 'es' ? '/es' : '/';
   return (
@@ -185,24 +187,20 @@ export default function SupportView({ stats, locale = 'en' }: { stats: SupportSt
               <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 leading-tight font-display">{s.giveTitle}</h2>
               <p className="text-stone-600 leading-relaxed mb-6">{s.giveLead}</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <OutboundLink href={DONORPERFECT_URL} surface="support" channel="naf_donorperfect" locale={locale} className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.usLabel}</span>
-                  <span className="block text-sm font-semibold text-stone-900">{s.usTitle}</span>
-                  <span className="block text-xs text-stone-500 mt-1">{s.usSub}</span>
-                </OutboundLink>
-                <OutboundLink href={EFM_STRIPE_URL} surface="support" channel="efm_stripe" locale={locale} className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.intlLabel}</span>
-                  <span className="block text-sm font-semibold text-stone-900">{s.intlTitle}</span>
-                  <span className="block text-xs text-stone-500 mt-1">{s.intlSub}</span>
-                </OutboundLink>
-                <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.largeLabel}</span>
-                  <OutboundLink href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`} surface="support" channel="email" locale={locale} className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all">
-                    {CONTACT_EMAIL}
-                  </OutboundLink>
-                </div>
-              </div>
+              {/* The same picker /give serves, so the fast path and the long
+                  path can never disagree about amounts, routes, or which NAF
+                  form is the Source Library one. This replaced a pair of cards
+                  that linked out with no amount attached, leaving the donor to
+                  meet a $0.00 field on arrival — the anchor is the strongest
+                  lever on gift size and we were forfeiting it. */}
+              {/* Hardcoded `international`, NOT resolved from the request
+                  country — this page is edge-cached for 24h by the static-pages
+                  rule in next.config.ts, so any per-visitor default would be
+                  frozen to whoever warmed the cache (measured: cf-cache-status
+                  HIT, age 1202, on a page marked force-dynamic). `/give` is the
+                  country-aware surface and is not edge-cached; here the donor
+                  gets a visible "Giving from the United States?" switch. */}
+              <GiveForm defaultRoute="international" locale={locale} surface="support" contactEmail={CONTACT_EMAIL} />
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
               <p className="mt-2 text-xs text-stone-500 leading-relaxed">

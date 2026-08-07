@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import SupportView, { fetchSupportStats } from '@/components/donate/SupportView';
 
+// ISR and request-independent, for the reason spelled out in the English twin
+// (src/app/support/page.tsx): `/support` sits in the static-pages CDN rule, so a
+// `force-dynamic` page is still edge-cached for 24h and cannot personalise.
 export const revalidate = 600;
 export const maxDuration = 60;
 

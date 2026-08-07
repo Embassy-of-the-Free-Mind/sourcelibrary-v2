@@ -4,6 +4,7 @@ import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
+import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -284,8 +285,32 @@ const QUOTE_TIP =
   '> — [Author], p. [N]. [citation_link]';
 
 async function getQuote(args: Record<string, unknown>) {
-  const result = await apiGet(`/books/${args.book_id}/quote`, new URLSearchParams({ page: String(args.page) })) as Record<string, unknown>;
-  return { ...withCitationLink(result), tip: QUOTE_TIP };
+  const params = new URLSearchParams({ page: String(args.page) });
+  // The quote API has always accepted this; the MCP tool never passed it, so
+  // every client got exactly one page and no way to ask for the rest of the
+  // sentence. Opt-in, because it triples the payload on a call that is usually
+  // fine as-is — 18.6% of adjacent prose pairs span the break, not 100%.
+  if (args.context === true) params.set('include_context', 'true');
+
+  const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
+
+  // The flags are the actual fix. Access was never the problem — a caller cannot
+  // tell a fragment from a whole sentence, so it never knows to ask. Computed
+  // from text already in hand: no extra query, no extra model call.
+  // The served field is `translation` (see src/app/api/books/[id]/quote/route.ts);
+  // `text` is not a field on this response and reading it silently produced
+  // all-false flags on a preview deploy while every unit test stayed green.
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
+  const continuity = pageContinuity(quoteText);
+  const hint = continuityHint(continuity, Number(args.page));
+
+  return {
+    ...withCitationLink(result),
+    continuity,
+    ...(hint ? { continuity_hint: hint } : {}),
+    tip: QUOTE_TIP,
+  };
 }
 
 // Assemble a multi-passage dossier in one round-trip: fetch several pages of a
@@ -541,13 +566,14 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nFor several pages of one book at once, use get_quotes.',
+    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right. For several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
         book_id: { type: 'string', description: 'The book ID' },
         page: { type: 'number', description: 'Page number' },
+        context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
       },
       required: ['book_id', 'page'],
     },

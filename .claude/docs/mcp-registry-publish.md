@@ -5,6 +5,30 @@ The Source Library MCP is listed in the **Official MCP Registry**
 third-party directories auto-ingest from the official registry, so this is
 the single highest-leverage place to be listed.
 
+## Two listings exist, and only one of them is ours to edit
+
+Don't conflate them — they drift, and updating one does nothing to the other.
+
+| | Official MCP Registry | Anthropic connector directory |
+|---|---|---|
+| Where | `registry.modelcontextprotocol.io` | <https://claude.ai/directory/connectors/source-library> |
+| Since | 2026-04 (PR #1801) | published 2026-08-04, approved as a **community connector** 2026-07-31 |
+| Source of truth | `server.json` in this repo | Anthropic's own record |
+| How to change it | bump `version`, run `mcp-publisher publish` (below) | **reply to the `directory@mail.anthropic.com` thread** |
+
+The directory listing is **not linked to a Claude organization**, which is why it
+does not appear in any submission portal. Anthropic publish and maintain it;
+nothing is required from us. To gain self-serve edit access, reply to that thread
+with a Claude organization ID on a Team or Enterprise account — we don't have one
+yet, so listing copy currently changes by email.
+
+**Neither listing snapshots the tools.** Both store a pointer to
+`https://sourcelibrary.org/api/mcp`, and clients call `tools/list` on connect. So
+adding a tool, adding a parameter, or rewording a description goes live on deploy
+with no re-publish and no re-review. **Renaming or removing an existing tool is
+the one genuinely breaking change** — it silently breaks saved Claude Projects and
+any client holding a tool name. Add-and-deprecate instead.
+
 ## What's published
 
 The registry shows the contents of `server.json` at the repo root. Edit that

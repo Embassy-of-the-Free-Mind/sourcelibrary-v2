@@ -21,6 +21,13 @@ const BPH_DIGITIZED_PINNED_TOTAL = 2222;
 // New (expanded) field set — requires expand-bph-works-schema.sql to have been run.
 const FIELDS_NEW_CORE = [
   'ubn',
+  // Memorix issues no UBN for manuscripts or photographs — 2,012 rows, every
+  // `Fot` record and 442 `M ` manuscripts among them. `uuid` is the only key
+  // they have, and without it the browser can build no detail link at all, so
+  // they rendered as dead plain text (José Bouman 2026-07-31, Natalie Koch
+  // 2026-08-05). `full_title` is where manuscript records keep their title;
+  // `title` is null on all 812 of them.
+  'uuid', 'full_title',
   'title', 'parallel_title', 'uniform_title',
   'author', 'variant_author', 'pseudonym',
   'editor', 'variant_editor',
