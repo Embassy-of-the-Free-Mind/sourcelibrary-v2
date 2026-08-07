@@ -123,6 +123,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - `books.work_id`, translation gaps, "do we hold the original?", acquisition at scale → `work-identity.md`
 - `entities.books[]`, book-index generation, page citations from the index → `entity-page-attribution.md`
 - Measuring OCR agreement / calibration / page difficulty → `page-revisions-corpus.md`
+- Embeddings, any Supabase store derived from Mongo, pausing a scheduled job, or a "is it still running?" monitor → `derived-stores-and-schedules.md`
 - Asserting, badging, or counting "first translation" → `first-translation-claims.md`
 
 **Serving text & images**
