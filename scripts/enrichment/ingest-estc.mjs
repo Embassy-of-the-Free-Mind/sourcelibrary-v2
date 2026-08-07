@@ -60,12 +60,16 @@
  */
 import fs from 'fs';
 import path from 'path';
+import readline from 'readline';
 import { fileURLToPath } from 'url';
+import { withMongo } from '../lib/mongo.mjs';
 
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
 const OUT_DIR = argOf('--out') ?? path.join(process.cwd(), 'scripts', 'output', 'estc');
 const ONLY_PREFIX = argOf('--prefix');
 const DELAY_MS = parseInt(argOf('--delay') ?? '400', 10);
+const LOAD = process.argv.includes('--load');
+const LOAD_ONLY = process.argv.includes('--load-only');
 
 const ENDPOINT = 'https://datb.cerl.org/estc/_search';
 const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set ingest)';
@@ -270,7 +274,11 @@ export function toReferenceRow(row) {
   const authors = names.filter((n) => !/translator|printer|bookseller|publisher|engraver/i.test(n));
 
   return {
-    lccn: '',                                   // ESTC has none; the id is the identifier
+    // NO `lccn` KEY AT ALL — not `''`. `reference_translations` carries a
+    // UNIQUE SPARSE index on `lccn`, and sparse skips only missing/null: an
+    // empty string is a value, so 22,538 rows sharing `''` would collide on the
+    // second upsert. The identifier here is `estc_id` (the ESTC S/R/T/N-number),
+    // which is a citable access point in its own right.
     estc_id: row.id,
     author: authors[0] ?? '',
     added_entries: [...authors.slice(1), ...translators],
@@ -299,7 +307,18 @@ const isEnglishTranslation = (r) => Boolean(r.translation_evidence) && /eng/i.te
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 const IS_MAIN = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
-if (IS_MAIN) await main();
+if (IS_MAIN) {
+  if (LOAD_ONLY) {
+    // Load an artifact that already exists, without the ~15-minute partition
+    // pass. The harvest is idempotent, but re-walking 427 prefixes to reach a
+    // file sitting on disk is pure latency.
+    const existing = fs.readdirSync(OUT_DIR).filter((f) => /^estc-translations\..*\.jsonl$/.test(f)).sort();
+    if (!existing.length) throw new Error(`no estc-translations.*.jsonl in ${OUT_DIR} — run the harvest first`);
+    await loadIntoMongo(path.join(OUT_DIR, existing[existing.length - 1]));
+  } else {
+    await main();
+  }
+}
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -450,4 +469,68 @@ async function main() {
   console.log(`\n  BOUNDARY: ESTC covers imprints 1473-1800 only. A translation`);
   console.log(`  published after 1800 is absent by construction, not by evidence.`);
   console.log(`\nWrote ${outPath}`);
+
+  if (LOAD) await loadIntoMongo(outPath);
+}
+
+/**
+ * Upsert the harvested rows into Mongo `reference_translations`.
+ *
+ * KEYED ON `estc_id`, NOT `lccn`. The LoC loader's key is the LCCN and its
+ * fallback is `nolccn:${title}:${year}` — which for ESTC would collide any two
+ * records sharing a title and year, of which a short-title catalogue of the hand
+ * press era has many. `estc_id` is present on 100% of rows and unique by
+ * construction (the id-prefix partition's arithmetic depends on it).
+ *
+ * `noTimeout` is REQUIRED, not tuning: `withMongo` kills the process after 300s,
+ * and a watchdog firing mid-load exits 0 having written a PREFIX of the set. A
+ * short reference set does not error — it fails to find priors, which reads as
+ * `none_found`, which reads as "first translation". That exact failure left
+ * 120,976 of 126,558 LoC rows loaded on 2026-08-04 while the log looked clean.
+ */
+async function loadIntoMongo(outPath) {
+  if (!fs.existsSync(outPath)) {
+    throw new Error(`nothing to load: ${outPath} does not exist — run the harvest first`);
+  }
+  const expected = fs.readFileSync(outPath, 'utf8').split('\n').filter(Boolean).length;
+  console.log(`\nLoading ${expected.toLocaleString()} rows into Mongo \`reference_translations\`…`);
+
+  await withMongo(async (db) => {
+    const coll = db.collection('reference_translations');
+    await coll.createIndex({ estc_id: 1 }, { unique: true, sparse: true });
+
+    const before = await coll.countDocuments({ source: 'estc' });
+    let batch = [];
+    let loaded = 0;
+    const flush = async () => {
+      if (!batch.length) return;
+      await coll.bulkWrite(batch, { ordered: false });
+      loaded += batch.length;
+      batch = [];
+    };
+    const rl = readline.createInterface({ input: fs.createReadStream(outPath), crlfDelay: Infinity });
+    for await (const line of rl) {
+      if (!line.trim()) continue;
+      const row = JSON.parse(line);
+      if (!row.estc_id) throw new Error(`row without estc_id — refusing to load an unidentifiable record: ${line.slice(0, 120)}`);
+      // Belt and braces against the sparse-unique `lccn` index: an older
+      // artifact may still carry `lccn: ''`, which would collide across every
+      // ESTC row. Absent means absent.
+      if (!row.lccn) delete row.lccn;
+      batch.push({ updateOne: { filter: { estc_id: row.estc_id }, update: { $set: row }, upsert: true } });
+      if (batch.length >= 1000) await flush();
+    }
+    await flush();
+
+    // Reconcile against the DESTINATION, not the log — the same rule the
+    // concatenator now follows. A partial load is invisible from its own output.
+    const after = await coll.countDocuments({ source: 'estc' });
+    console.log(`  upserted ${loaded.toLocaleString()} · source:'estc' rows ${before.toLocaleString()} → ${after.toLocaleString()}`);
+    if (after !== expected) {
+      throw new Error(
+        `load does not reconcile: ${after} rows with source:'estc' in Mongo vs ${expected} in the artifact`,
+      );
+    }
+    console.log(`  ✓ reconciled: ${after.toLocaleString()} rows`);
+  }, { noTimeout: true });
 }

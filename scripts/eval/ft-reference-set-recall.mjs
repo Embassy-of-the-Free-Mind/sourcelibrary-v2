@@ -81,7 +81,23 @@ function latestRun(cohort) {
   return path.join(OUT_DIR, files[files.length - 1]);
 }
 
-const CATALOGUE_SOURCES = new Set(['loc_mdsconnect', 'wikidata']);
+/**
+ * What counts as a CATALOGUE for the governing recall figure.
+ *
+ * The distinction is provenance, not usefulness: a catalogue is an external
+ * bibliographic authority we did not write. `translation_classification` is
+ * deliberately absent because it is our own model's output over our own books —
+ * including it makes the yardstick a subset of the thing it measures and returns
+ * exactly 100.0%, which is circular rather than good.
+ *
+ * ⚠️ ADDING A SOURCE TO THE SEARCH MEANS ADDING IT HERE. ESTC (#3522) is a
+ * national short-title catalogue and belongs in this set; leaving it out would
+ * have computed "catalogue-only recall" over a definition that excluded the
+ * catalogue just added, so 22,538 new rows would have moved the number by
+ * exactly zero and read as "ESTC contributed nothing". Same family as the
+ * yardstick-inside-the-set trap above, inverted.
+ */
+const CATALOGUE_SOURCES = new Set(['loc_mdsconnect', 'wikidata', 'estc']);
 
 const runs = ['inverse', 'badged'].map((c) => ({ cohort: c, file: latestRun(c) }));
 for (const r of runs) console.log(`  ${r.cohort.padEnd(8)} ${path.basename(r.file)}`);

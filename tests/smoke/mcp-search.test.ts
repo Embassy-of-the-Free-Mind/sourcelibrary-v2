@@ -17,6 +17,21 @@
  * Query matrix: tests/fixtures/mcp-search-regression-queries.json
  * PR: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/pull/2162
  *
+ * ## Scope, and what this file CANNOT catch
+ *
+ * Every assertion here is a non-emptiness or stability check — "did anything
+ * come back?", "is the total deterministic?". That is the right shape for the
+ * two bugs above, both of which were silent-zero failures.
+ *
+ * It is the wrong shape for a ranking bug, and all of these passed throughout
+ * the period an MCP client was reporting that `search_within_book` returned 48
+ * pages of front matter in page order with the target passage ranked ~50th.
+ * The results were never empty; they were plausible and wrong.
+ *
+ * Golden-passage assertions — "for THIS query on THIS book, THIS page must be
+ * in the top N" — live in tests/smoke/mcp-golden-passages.test.ts. Add ranking
+ * and flag-correctness cases there, not here.
+ *
  * Run with: npx vitest run --config vitest.smoke.config.ts tests/smoke/mcp-search.test.ts
  *
  * To exercise the actual MCP JSON-RPC endpoint (requires API key):

@@ -11,6 +11,7 @@
     "deploy:prod": "./scripts/deploy-prod.sh",
     "lint": "eslint",
     "test": "vitest run && vitest run --config vitest.integration.config.ts",
+    "test:smoke": "vitest run --config vitest.smoke.config.ts",
     "test:unit": "vitest run",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:watch": "vitest",
