@@ -45,6 +45,10 @@ export const GET = withApiAuth(async (
       // Needed by the MCP list_editions tool to find sibling editions of the
       // same work without a second lookup.
       work_id: 1,
+      // What the volume's own running heads say it contains. Present only where
+      // the scans carry heads; `status: 'insufficient-heads'` distinguishes
+      // "we looked and could not tell" from "nobody looked".
+      contains_works: 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined);

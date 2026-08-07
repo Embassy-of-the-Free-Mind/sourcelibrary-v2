@@ -237,6 +237,12 @@ async function getBook(args: Record<string, unknown>) {
     pages_translated: result.pages_translated, doi: result.doi,
     reading_summary: result.reading_summary, chapters: result.chapters,
     work_id: result.work_id,
+    // What the volume's own running heads say it holds, with page spans. This
+    // is the answer to "which book has the Poetics?", which the catalogue title
+    // could not give — four volumes advertised works their scans do not contain
+    // (#3652 A). Absent where the scans carry no heads; `status:
+    // 'insufficient-heads'` means examined and undecidable, not unexamined.
+    ...(result.contains_works ? { contains_works: result.contains_works } : {}),
     url: `https://sourcelibrary.org/book/${result.slug || result.id}`,
     iiif_manifest: `https://sourcelibrary.org/api/iiif/${result.id}/manifest`,
   };
@@ -637,7 +643,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
