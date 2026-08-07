@@ -55,7 +55,10 @@ export default async function NewCatalogEntryPage({ params }: Props) {
 
   return (
     <div className="bg-cream min-h-screen">
-      <div className="max-w-2xl mx-auto px-6 py-8">
+      <div className="max-w-[1500px] mx-auto px-6 py-8">
+        {/* Wide container so the page shares the top bar's left edge;
+            inner measure so prose stays readable at 1500px. */}
+        <div className="max-w-2xl">
         <a
           href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
@@ -81,6 +84,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
           suggestedUbn={suggestedUbn}
           basePath={navBasePath}
         />
+        </div>
       </div>
     </div>
   );

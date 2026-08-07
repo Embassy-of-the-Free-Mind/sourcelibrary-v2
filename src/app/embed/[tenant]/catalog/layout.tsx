@@ -58,7 +58,7 @@ export default async function CatalogLayout({
           basePath={catalogBasePath(source, tenant)}
           indexPath={catalogIndexPath(source, tenant)}
           counts={counts}
-          containerClass="max-w-3xl"
+          containerClass="max-w-[1500px]"
         />
       )}
       {children}

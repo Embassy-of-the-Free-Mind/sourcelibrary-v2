@@ -119,7 +119,7 @@ export default async function CatalogTeamPage({ params }: Props) {
 
   return (
     <div className="bg-cream min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-[1500px] mx-auto px-6 py-8">
         <a
           href={catalogueIndexHref}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"

@@ -255,6 +255,7 @@ export default function EmbedUserMenu() {
       )}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        data-avatar="true"
         className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm cursor-pointer hover:bg-white transition-colors"
         aria-label={session ? 'Account & view options' : 'Sign in & view options'}
       >
@@ -264,11 +265,15 @@ export default function EmbedUserMenu() {
             <img
               src={session.user.image}
               alt=""
+              data-avatar="true"
               className="w-7 h-7 rounded-full"
               onError={handleImgError}
             />
           ) : (
-            <div className="w-7 h-7 rounded-full bg-accent-rust text-white text-xs font-medium flex items-center justify-center">
+            <div
+              data-avatar="true"
+              className="w-7 h-7 rounded-full bg-accent-rust text-white text-xs font-medium flex items-center justify-center"
+            >
               {initials}
             </div>
           )

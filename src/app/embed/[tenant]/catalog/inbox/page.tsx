@@ -135,7 +135,7 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
 
   return (
     <div className="bg-cream min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-[1500px] mx-auto px-6 py-8">
         <h1 className="text-2xl sm:text-3xl text-primary font-display leading-tight mb-1">
           Inbox
         </h1>

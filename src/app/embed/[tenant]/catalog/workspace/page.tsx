@@ -84,7 +84,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
   if (tenant !== 'bph') notFound();
 
   const session = await auth();
-  if (!session?.user) redirect(`/${tenant}/login?callbackUrl=/catalog/workspace`);
+  if (!session?.user) redirect(`/${tenant}/login?callbackUrl=${encodeURIComponent(`${catalogBasePath((await getTenantContext())?.source ?? null, tenant)}/workspace`)}`);
 
   const platformRole = normalizeCatalogRole((session.user as { role?: unknown }).role);
   const tenantRole = await effectiveCatalogRole(session.user.email, platformRole, tenant);
@@ -151,7 +151,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
 
   return (
     <div className="bg-cream min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-[1500px] mx-auto px-6 py-8">
         <a href={catalogueIndexHref} className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
           ← Back to catalogue
         </a>
@@ -202,7 +202,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                   const source = Object.values(r.field_changes || {}).find((c) => c?.source)?.source;
                   return (
                     <li key={r.id} className="py-2.5 text-sm">
-                      <a href={`/catalog/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
+                      <a href={`${navBasePath}/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
                         {r.ubn}
                       </a>
                       <span className="text-muted"> · {formatDate(r.applied_at)}</span>
@@ -239,7 +239,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                   {w.samples.slice(0, 12).map((s, i) => (
                     <a
                       key={`${w.category}-${s.id}-${i}`}
-                      href={`/catalog/${encodeURIComponent(s.ubn || s.id)}`}
+                      href={`${navBasePath}/${encodeURIComponent(s.ubn || s.id)}`}
                       className="text-accent-rust hover:underline"
                       title={s.hint || undefined}
                     >
@@ -268,7 +268,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
               return (
                 <div key={r.id} className="p-4 text-sm">
                   <div className="flex items-baseline justify-between gap-3">
-                    <a href={`/catalog/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
+                    <a href={`${navBasePath}/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
                       {r.ubn}
                     </a>
                     <span className="text-muted shrink-0">{formatDate(r.applied_at)}</span>
