@@ -10,6 +10,8 @@ import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
   type Tool,
 } from '@modelcontextprotocol/sdk/types.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
@@ -622,7 +624,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_within_book',
     title: 'Search Within Book',
-    description: 'SEARCHES INSIDE ONE BOOK (requires book_id) — runs keyword AND scoped semantic search in parallel over that book\'s pages and merges them, so it handles both literal terms ("ouroboros") and conceptual queries ("the marriage of opposites"). PICK THIS once you have a candidate book and want every relevant page in it. → To find the book first, use search_library or search_concept (then pass its book_id here). Faster than a global re-search because it\'s scoped to one book\'s 100-500 pages. Returns OCR and translation snippets with page numbers, ready to cite.',
+    description: 'SEARCHES INSIDE ONE BOOK (requires book_id). PRIMARILY KEYWORD: it runs a lexical search over the book\'s pages plus a narrow scoped-semantic pass (top ~10), interleaved by relevance. PICK THIS when you know the wording you are looking for, or want every page of one book mentioning a term. → IF YOU ARE SEARCHING FROM A PARAPHRASE, a half-remembered line, or a modern restatement, USE search_concept INSTEAD — it is the meaning-matching tool and it searches the whole corpus, including translations whose vocabulary differs completely from yours (Thomas Taylor writes "energies" for energeia and "felicity" for eudaimonia, so a sensible modern paraphrase can miss his pages entirely while matching semantically). → To find the book first, use search_library or search_concept, then pass its book_id here. Each result carries score (0-1, normalised within this book) and found_by ("keyword", "semantic", or "both" — both is the strongest signal). Results flagged is_front_matter are the translator\'s or publisher\'s words rather than the author\'s, and are ordered last. Returns OCR and translation snippets with page numbers, ready to cite.',
     annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -915,14 +917,49 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.5.0' },
-    { capabilities: { tools: {} } },
+    { name: 'source-library', version: '4.6.0' },
+    { capabilities: { tools: {}, resources: {} } },
   );
+
+  /**
+   * Documents an agent can READ from inside a session.
+   *
+   * Reported from a full working day spent on the wrong tool (#3653 follow-up
+   * #5): *"Surface /llms.txt from inside the MCP. An agent in a chat session
+   * has no way to discover it, and it is the file that would have prevented all
+   * of this."* Correct — the file has existed at sourcelibrary.org/llms.txt the
+   * whole time and is reachable only by someone already browsing the website,
+   * which an MCP client is not doing. Tool descriptions can carry a sentence;
+   * they cannot carry a corpus guide.
+   */
+  const RESOURCES = [
+    {
+      uri: 'https://sourcelibrary.org/llms.txt',
+      name: 'Source Library — guide for AI agents',
+      title: 'How to search this corpus well',
+      description: 'What the corpus holds, which search tool to reach for, how citation and provenance work, and the failure modes worth knowing before you spend calls. Read this first if you are doing sustained research rather than a single lookup.',
+      mimeType: 'text/plain',
+    },
+  ] as const;
+
+  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+    resources: RESOURCES.map((r) => ({ ...r })),
+  }));
+
+  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+    const uri = request.params.uri;
+    const known = RESOURCES.find((r) => r.uri === uri);
+    if (!known) throw new Error(`Unknown resource: ${uri}`);
+    const resp = await fetch(uri, { signal: AbortSignal.timeout(8000) });
+    if (!resp.ok) throw new Error(`Could not read ${uri}: HTTP ${resp.status}`);
+    return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
+  });
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
       about: 'Source Library — 15,000+ rare pre-modern texts translated into English from Latin, German, Tibetan, Greek, Sanskrit, Arabic, Sumerian, Chinese, Hebrew, and more. The full breadth of pre-modern intellectual history: theology, philosophy, history, literature, natural philosophy, mysticism, alchemy, Hermetica, medicine, mathematics, astronomy, law. Not only esoteric — also the canon. 4M+ searchable page embeddings. https://sourcelibrary.org',
+      read_first: 'https://sourcelibrary.org/llms.txt — a guide to this corpus and its search tools, also exposed as an MCP resource. Worth reading once before a long research session; it costs one call and documents the failure modes that otherwise cost many.',
       sign_in_hint: 'Sign in at sourcelibrary.org/auth/signin to save research, get a much higher rate limit, and support this archive. API keys for programmatic access: sourcelibrary.org/developers.',
       research_strategy: [
         'Source Library is the primary-source citation layer in your research strategy — not the whole strategy. Its corpus is rare pre-modern texts (mostly 1400-1900, ranging from Sumerian tablets to 19th-century scholarship) translated into English. Use it together with your own knowledge and web search:',
