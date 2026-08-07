@@ -144,6 +144,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - A query behind an API route, especially over `pages` / `entities` → `request-path-queries.md`
 - Search filters, a new search lane, indexing a column into a public search surface → `search-filters-and-lanes.md`
 - Client components on ISR routes, reader panels, root layout, page `metadata` → `rendering-and-seo.md`
+- Any `/es/*` route, a view taking a `locale` prop, or a formatted number in a shared string table → `localized-surfaces.md`
 
 **Measuring anything**
 - Quoting a usage number, analytics read/write paths, alarms, health probes → `measurement-instruments.md`
