@@ -44,6 +44,29 @@ describe('assertBookScopedKey', () => {
     expect(() => assertBookScopedKey(`archived/${BOOK}/31.jpg`, BOOK)).not.toThrow();
   });
 
+  // The write guard used `key.split('/').includes(bookId)`, a bare-segment match
+  // that rejected two conventions the corpus actually uses — including one that
+  // isBookScopedUrl's own comment documents as valid. The two sides of the guard
+  // must agree, or a key can pass the audit and be refused at upload.
+  it('accepts every book-scoped convention the read-side twin accepts', () => {
+    for (const key of [
+      `archived/${BOOK}/31.jpg`,        // id as its own segment
+      `archived/${BOOK}-0031.jpg`,      // id + hyphen, documented in isBookScopedUrl
+      `pages/${BOOK}/0031-thumb.jpg`,
+      `book-thumbnails/${BOOK}.jpg`,    // id as filename stem (~4,634 live objects)
+    ]) {
+      expect(() => assertBookScopedKey(key, BOOK), key).not.toThrow();
+      expect(isBookScopedUrl(`https://images.sourcelibrary.org/${key}`, BOOK), key).toBe(true);
+      expect(() => twin.assertBookScopedKey(key, BOOK), `twin: ${key}`).not.toThrow();
+    }
+  });
+
+  it('still rejects a near-miss that only CONTAINS the id without a delimiter', () => {
+    // `<id>extra` is a different object, not this book's.
+    expect(() => assertBookScopedKey(`archived/${BOOK}extra/31.jpg`, BOOK))
+      .toThrow(/not scoped to its book/);
+  });
+
   it('rejects a well-formed key belonging to a DIFFERENT book', () => {
     // validateR2Key alone cannot catch this — the key looks perfect.
     expect(() => assertBookScopedKey(`archived/69b220f356715b0e32473bd0/31.jpg`, BOOK))

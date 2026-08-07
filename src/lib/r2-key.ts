@@ -33,7 +33,14 @@ export function assertBookScopedKey(key: string, bookId: string, context = ''): 
   if (!bookId || typeof bookId !== 'string') {
     throw new Error(`bookId is missing${where}: ${JSON.stringify(bookId)} for key "${key}"`);
   }
-  if (!key.split('/').includes(bookId)) {
+  // Delimiter-aware, NOT a bare segment match — the corpus carries several
+  // book-scoped conventions and `key.split('/').includes(bookId)` rejected two
+  // of them: `archived/<bookId>-<NNNN>.jpg` (documented as valid in
+  // isBookScopedUrl below) and `book-thumbnails/<bookId>.jpg` (~4,634 objects
+  // written by migrate-book-thumbnails-to-r2.mjs). This is the same test the
+  // read-side twin applies, so a key that passes the write guard is one the
+  // audit will also call book-scoped.
+  if (!new RegExp(`(?:^|/)${escapeRegExp(bookId)}(?=[/._-]|$)`).test(key)) {
     throw new Error(
       `R2 key is not scoped to its book${where}: "${key}" does not contain bookId "${bookId}" — ` +
       `book-independent page keys are shared between books (see #3362)`
