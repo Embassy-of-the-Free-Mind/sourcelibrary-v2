@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -124,9 +124,11 @@ export function resolveScanUrls(page: Page): ScanUrls {
   return { display, thumb, native };
 }
 
-// Fine steps: a facsimile is read at the size the type happens to need, so
-// the jumps stay small rather than doubling.
-export const SCAN_ZOOM_STEPS = [1, 1.15, 1.3, 1.5, 1.75, 2, 2.3, 2.6, 3, 3.5, 4, 4.7, 5.3, 6];
+// Fine steps, closely spaced where a facsimile actually gets read (a little
+// over 100%) and opening up only past 2x.
+export const SCAN_ZOOM_STEPS = [
+  1, 1.05, 1.1, 1.15, 1.2, 1.3, 1.4, 1.5, 1.65, 1.8, 2, 2.3, 2.6, 3, 3.5, 4, 4.7, 5.3, 6,
+];
 export const SCAN_ZOOM_MAX = 6;
 
 const LENS_SIZE = 220;
@@ -136,13 +138,16 @@ const LENS_MAG_MAX = 6;
 /**
  * The scan surface.
  *
- * At 100% the page is fitted and static. Past 100% it becomes a real SCROLLER
- * rather than a transformed image: the scan is laid out at `zoom × pane width`
- * and the pane scrolls it. That is what lets a reader zoom into the type and
- * then travel down the page beside the translation, and it is what makes
- * scroll-syncing the scan to the text possible at all, since there is now a
- * genuine scrollTop to share. Dragging pans, two fingers pinch, and the
- * reading lens (a separate control) magnifies a spot at 100%.
+ * At 100% the page is fitted. Past that the pane becomes a scroller so a
+ * reader can travel down an enlarged page beside the translation, and so the
+ * scan has a real scrollTop to share with the text panes.
+ *
+ * Zoom is applied as a COMPOSITED TRANSFORM on the image, with an empty spacer
+ * behind it carrying the scroll extent. Re-laying out a multi-megapixel image
+ * on every gesture frame is what made pinching feel jumpy; scaling it does not
+ * touch layout. Each zoom keeps the point under the cursor (or between the
+ * fingers) pinned, so the page grows around what you were looking at instead
+ * of leaping.
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll,
@@ -160,6 +165,7 @@ export function ScanViewer({
   const { display, native } = resolveScanUrls(page);
   const localRef = useRef<HTMLDivElement>(null);
   const containerRef = scrollRef ?? localRef;
+  const spacerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const dragRef = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
@@ -170,7 +176,95 @@ export function ScanViewer({
   const [lensMag, setLensMag] = useState(2.4);
   const lastLensPoint = useRef<{ x: number; y: number } | null>(null);
 
+  // Size the page takes at 100% (contained in the pane). Zoom multiplies it.
+  const [fit, setFit] = useState<{ w: number; h: number } | null>(null);
+  const natural = useRef<{ w: number; h: number } | null>(null);
+  const measure = () => {
+    const c = containerRef.current;
+    const n = natural.current;
+    if (!c || !n || !n.w || !n.h) return;
+    const s = Math.min(c.clientWidth / n.w, c.clientHeight / n.h);
+    setFit({ w: Math.max(1, Math.round(n.w * s)), h: Math.max(1, Math.round(n.h * s)) });
+  };
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => measure());
+    ro.observe(c);
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerRef]);
+
   const zoomed = zoom > 1;
+
+  // Scroll offsets computed alongside a zoom change, applied before paint so
+  // the anchored point does not visibly move.
+  const pendingScroll = useRef<{ left: number; top: number } | null>(null);
+  const prevZoom = useRef(zoom);
+  useLayoutEffect(() => {
+    const c = containerRef.current;
+    const k = zoom / prevZoom.current;
+    prevZoom.current = zoom;
+    if (!c || k === 1) return;
+    const p = pendingScroll.current;
+    if (p) {
+      // A gesture told us exactly which point to keep still.
+      pendingScroll.current = null;
+      c.scrollLeft = p.left;
+      c.scrollTop = p.top;
+      return;
+    }
+    // Zoom arrived from outside (the header's +/- buttons own the state), so
+    // hold what is in the middle of the pane. Without this the page appears
+    // to leap on every press.
+    c.scrollTop = Math.max(0, (c.scrollTop + c.clientHeight / 2) * k - c.clientHeight / 2);
+    c.scrollLeft = Math.max(0, (c.scrollLeft + c.clientWidth / 2) * k - c.clientWidth / 2);
+  }, [zoom, containerRef]);
+
+  /**
+   * Change zoom while pinning `anchor` (a client point) in place.
+   *
+   * Everything is read live rather than from the render closure: this runs
+   * inside a rAF, by which point several more wheel or pointer events may have
+   * arrived, and computing k against a stale zoom is what left the anchor
+   * drifting.
+   */
+  const applyZoom = (next: number, anchor?: { x: number; y: number }) => {
+    const current = prevZoom.current;
+    const clamped = Math.min(SCAN_ZOOM_MAX, Math.max(1, Math.round(next * 1000) / 1000));
+    if (Math.abs(clamped - current) < 0.002) return;
+    const c = containerRef.current;
+    const sp = spacerRef.current;
+    if (c && sp) {
+      const rect = sp.getBoundingClientRect();
+      const ax = anchor ? anchor.x : rect.left + Math.min(rect.width, c.clientWidth) / 2;
+      const ay = anchor ? anchor.y : rect.top + Math.min(rect.height, c.clientHeight) / 2;
+      const k = clamped / current;
+      pendingScroll.current = {
+        left: Math.max(0, c.scrollLeft + (ax - rect.left) * (k - 1)),
+        top: Math.max(0, c.scrollTop + (ay - rect.top) * (k - 1)),
+      };
+    }
+    onZoomChange(clamped);
+  };
+
+  // One zoom update per frame: pinch and trackpad both fire far faster than
+  // the screen refreshes, and coalescing them is most of the smoothness. The
+  // queued target compounds, so events sharing a frame all count.
+  const frame = useRef<number | null>(null);
+  const queued = useRef<{ z: number; anchor?: { x: number; y: number } } | null>(null);
+  const queueBase = () => queued.current?.z ?? prevZoom.current;
+  const queueZoom = (z: number, anchor?: { x: number; y: number }) => {
+    queued.current = { z, anchor };
+    if (frame.current != null) return;
+    frame.current = requestAnimationFrame(() => {
+      frame.current = null;
+      const q = queued.current;
+      queued.current = null;
+      if (q) applyZoom(q.z, q.anchor);
+    });
+  };
+  useEffect(() => () => { if (frame.current != null) cancelAnimationFrame(frame.current); }, []);
 
   // Plain function: the ref it closes over can arrive as a prop, which the
   // React Compiler cannot memoize manually.
@@ -206,7 +300,7 @@ export function ScanViewer({
   const onWheel = (e: React.WheelEvent) => {
     if (lensOn && !zoomed) {
       e.preventDefault();
-      const next = Math.min(LENS_MAG_MAX, Math.max(LENS_MAG_MIN, lensMag * (e.deltaY < 0 ? 1.12 : 1 / 1.12)));
+      const next = Math.min(LENS_MAG_MAX, Math.max(LENS_MAG_MIN, lensMag * Math.exp(-e.deltaY * 0.0022)));
       setLensMag(next);
       const at = lastLensPoint.current;
       if (at) updateLens(at.x, at.y, next);
@@ -214,8 +308,11 @@ export function ScanViewer({
     }
     if (e.ctrlKey || e.metaKey) {
       e.preventDefault();
-      const next = Math.min(SCAN_ZOOM_MAX, Math.max(1, zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1)));
-      onZoomChange(Math.round(next * 100) / 100);
+      // Scale by the actual delta so a trackpad pinch tracks the fingers
+      // instead of stepping by a fixed factor per event. The coefficient is
+      // deliberately small: a pinch fires dozens of events per second, so
+      // anything punchier runs the page to 600% in half a gesture.
+      queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
     }
   };
 
@@ -229,7 +326,7 @@ export function ScanViewer({
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 2) {
       const [a, b] = Array.from(pointers.current.values());
-      pinchRef.current = { dist: Math.hypot(a.x - b.x, a.y - b.y) || 1, zoom };
+      pinchRef.current = { dist: Math.hypot(a.x - b.x, a.y - b.y) || 1, zoom: prevZoom.current };
       dragRef.current = null;
       setDragging(false);
       return;
@@ -250,12 +347,14 @@ export function ScanViewer({
     if (pointers.current.has(e.pointerId)) {
       pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     }
-    // Two fingers: pinch to zoom, continuously.
+    // Two fingers: pinch continuously, anchored between them.
     if (pointers.current.size === 2 && pinchRef.current) {
       const [a, b] = Array.from(pointers.current.values());
       const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
-      const next = Math.min(SCAN_ZOOM_MAX, Math.max(1, pinchRef.current.zoom * (dist / pinchRef.current.dist)));
-      onZoomChange(Math.round(next * 100) / 100);
+      queueZoom(pinchRef.current.zoom * (dist / pinchRef.current.dist), {
+        x: (a.x + b.x) / 2,
+        y: (a.y + b.y) / 2,
+      });
       return;
     }
     const d = dragRef.current;
@@ -294,8 +393,14 @@ export function ScanViewer({
     <div
       ref={containerRef}
       onScroll={onScroll}
-      className={`relative h-full w-full select-none ${zoomed ? 'overflow-auto' : 'overflow-hidden flex items-center justify-center'}`}
+      className="relative h-full w-full select-none"
       style={{
+        display: 'grid',
+        // "safe" matters: an overflowing item centred the normal way is pushed
+        // off both edges, which puts the top of an enlarged page out of reach
+        // and shifts the origin the zoom anchor is measured from.
+        placeItems: 'safe center',
+        overflow: zoomed ? 'auto' : 'hidden',
         cursor: zoomed ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
         // Capture touch only while the scan is interactive, so a drag over a
         // fitted page still scrolls the mobile column and swipes pages.
@@ -308,22 +413,42 @@ export function ScanViewer({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
       onPointerLeave={() => { if (!dragRef.current) setLens(null); }}
-      onDoubleClick={() => onZoomChange(zoomed ? 1 : 2.2)}
+      onDoubleClick={e => applyZoom(zoomed ? 1 : 2, { x: e.clientX, y: e.clientY })}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        draggable={false}
-        className={zoomed ? 'block max-w-none' : 'max-h-full max-w-full object-contain'}
-        style={{
-          width: zoomed ? `${zoom * 100}%` : undefined,
-          height: zoomed ? 'auto' : undefined,
-          boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-          filter: brightness ? `brightness(${brightness})` : undefined,
-        }}
-      />
+      {/* Empty spacer carries the scroll extent; the image only composites. */}
+      <div
+        ref={spacerRef}
+        className="relative"
+        style={fit
+          ? { width: fit.w * zoom, height: fit.h * zoom }
+          : { width: '100%', height: '100%' }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          ref={imgRef}
+          src={src}
+          alt={alt}
+          draggable={false}
+          onLoad={e => {
+            const el = e.currentTarget;
+            natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            measure();
+          }}
+          className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}
+          style={{
+            width: fit ? fit.w : undefined,
+            height: fit ? fit.h : undefined,
+            transform: fit ? `scale(${zoom})` : undefined,
+            transformOrigin: '0 0',
+            // No transition: the scroll compensation that keeps the anchored
+            // point still is applied instantly, so an eased transform would
+            // slide out of step with it and read as a wobble.
+            willChange: 'transform',
+            boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
+            filter: brightness ? `brightness(${brightness})` : undefined,
+          }}
+        />
+      </div>
       {lens && lensOn && !zoomed && (
         <div
           aria-hidden="true"

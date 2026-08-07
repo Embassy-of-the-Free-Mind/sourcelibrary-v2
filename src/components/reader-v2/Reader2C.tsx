@@ -1118,10 +1118,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const [scanZoom, setScanZoom] = useState(1);
   const [lensOn, setLensOn] = useState(false);
   useEffect(() => { setScanZoom(1); }, [r.currentPageId]);
+  // Any zoom holds the pane sync off briefly: the scan's scroll is being moved
+  // to keep the anchored point still, and a follower syncing back would drag
+  // the page out from under the reader.
+  const changeZoom = useCallback((z: number) => {
+    zoomingUntil.current = Date.now() + 300;
+    setScanZoom(z);
+  }, []);
   const zoomStep = (dir: 1 | -1) => {
     const idx = SCAN_ZOOM_STEPS.findIndex(s => Math.abs(s - scanZoom) < 0.01);
     const next = SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, Math.max(0, (idx === -1 ? 0 : idx) + dir))];
-    setScanZoom(next);
+    changeZoom(next);
   };
 
   // Filmstrip visibility — toggled from the bottom of the rail, persisted.
@@ -1213,24 +1220,31 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const ocrRef = useRef<HTMLDivElement>(null);
   const enRef = useRef<HTMLDivElement>(null);
   const scanScrollRef = useRef<HTMLDivElement>(null);
-  const syncLock = useRef<string | null>(null);
+  // The lock is time-based and refreshed on every write, because the scroll
+  // events a programmatic sync provokes can land well after a fixed 80ms
+  // window — long enough for a follower pane to sync back and undo the
+  // leader's position (this is what dragged the zoom anchor around).
+  const syncLock = useRef<{ from: string; at: number } | null>(null);
+  const zoomingUntil = useRef(0);
   const syncFrom = useCallback((from: 'scan' | 'ocr' | 'en') => {
     const panes: Record<string, HTMLDivElement | null> = {
       scan: scanScrollRef.current, ocr: ocrRef.current, en: enRef.current,
     };
     const src = panes[from];
     if (!src) return;
-    if (syncLock.current && syncLock.current !== from) return;
+    // A zoom moves the scan to keep its anchor; that is not a reading move.
+    if (Date.now() < zoomingUntil.current) return;
+    const lock = syncLock.current;
+    if (lock && lock.from !== from && Date.now() - lock.at < 250) return;
     const srcMax = src.scrollHeight - src.clientHeight;
     if (srcMax <= 0) return;
-    syncLock.current = from;
+    syncLock.current = { from, at: Date.now() };
     const ratio = src.scrollTop / srcMax;
     for (const [key, dst] of Object.entries(panes)) {
       if (key === from || !dst) continue;
       const dstMax = dst.scrollHeight - dst.clientHeight;
       if (dstMax > 0) dst.scrollTop = ratio * dstMax;
     }
-    window.setTimeout(() => { syncLock.current = null; }, 80);
   }, []);
 
   // Mobile: one scroller for the stacked panes. Reset it on a page turn so a
@@ -1517,7 +1531,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <ScanControls
                     zoom={scanZoom}
                     onZoomStep={zoomStep}
-                    onZoomReset={() => setScanZoom(1)}
+                    onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
                     onToggleLens={() => setLensOn(v => !v)}
                     menuItems={scanMenuItems}
@@ -1531,7 +1545,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   page={r.currentPage}
                   book={r.book}
                   zoom={scanZoom}
-                  onZoomChange={setScanZoom}
+                  onZoomChange={changeZoom}
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
@@ -1714,7 +1728,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <ScanControls
                   zoom={scanZoom}
                   onZoomStep={zoomStep}
-                  onZoomReset={() => setScanZoom(1)}
+                  onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
                   onToggleLens={() => setLensOn(v => !v)}
                   menuItems={scanMenuItems}
@@ -1729,7 +1743,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
                 onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
               >
-                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={setScanZoom} lensOn={lensOn} />
+                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn} />
               </div>
             </section>
           )}
