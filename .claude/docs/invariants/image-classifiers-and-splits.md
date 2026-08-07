@@ -1,6 +1,6 @@
 # A classifier over images cannot validate itself
 
-**Read this when:** Writing a detector over page images, splitting spreads (`src/lib/spread-guard.ts`), or running a corpus-wide image repair sweep.
+**Read this when:** Writing a detector over page images or page OCR, sampling a book's pages to classify it, splitting spreads (`src/lib/spread-guard.ts`), or running a corpus-wide image repair sweep.
 
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
@@ -55,6 +55,31 @@ Corollary of the invented-fixture rule (`tests-that-are-not-guards.md`), met the
 11%-wide gutter puts the detector's flank-confirmation window entirely inside the
 gutter), not because the detector was wrong. Check the fixture against a real image
 before concluding the code is broken.
+
+**Sampling a book's pages is itself a classifier, and it has two standard failure modes**
+(2026-08-06, #3524, adjudicating 55 books badged "first English translation" while tagged
+English). Both shipped confident, internally consistent, wrong answers.
+
+- **`pages.ocr` is an OBJECT, not a string** — `{ data, model, prompt_hash, prompt_id,
+  prompt_name, prompt_version, source, updated_at }`. The text is `ocr.data`.
+  `String(p.ocr)` yields `"[object Object]"`, fifteen characters, so any
+  `length >= N` content filter matches *nothing*. The first run reported a clean "no
+  content pages sampled" for all 55 books and looked like a finding. (Documented in
+  `page-system.md` and `page-lifecycle.md` — the failure was not consulting them.)
+- **The FRONT of a book lies, not just page 1.** It is already known that page 1 is a
+  cover whose OCR `<language>` tag describes modern pencil cataloguing marks. The larger
+  trap is one level up: a scholarly edition of a Latin text opens with an English title
+  page, preface and introduction. Quignones' *Breviarium Romanum*, Feltoe's
+  *Sacramentarium Leonianum* and Little's *Opus Tertium* all read English for a dozen
+  content pages and are solidly Latin at pages 112, 113 and 63. Sampling the first N
+  content pages measures the **apparatus**, not the text — it put three legitimate
+  first-translation badges one step from demotion. Spread the sample across the interior
+  (`spreadSample()` in `scripts/audit/ft-english-badged-classify.mjs` trims ~15% front,
+  ~5% back).
+
+The general form: **when a probe returns "nothing found" for every input, that is a
+result about the probe.** Give it a positive control — a case you know should come back
+positive — before believing a negative. The same session's badge check hit this twice.
 
 **Splitting specifically:** `src/lib/spread-guard.ts` refuses to split an image that is
 not a spread, using content (a central ink-free channel with text on *both* sides) not
