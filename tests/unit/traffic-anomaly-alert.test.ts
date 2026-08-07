@@ -9,7 +9,10 @@ import {
   isUnexpectedHost,
   isSupposedlyBlocked,
   looksLikeEnumeration,
+  looksLikeSpray,
   prefix16,
+  SPRAY_MIN_READS,
+  SPRAY_MIN_SHARE,
   EXPECTED_HOSTS,
   CONCENTRATION_THRESHOLD,
   PREFIX16_THRESHOLD,
@@ -134,6 +137,35 @@ describe('enumeration vs reading', () => {
   it('keeps the ratio inside the measured gap', () => {
     expect(ENUMERATION_PAGES_PER_BOOK).toBeGreaterThan(1.8);
     expect(ENUMERATION_PAGES_PER_BOOK).toBeLessThan(32);
+  });
+});
+
+describe('proxy-pool (spray) detection', () => {
+  it('recognises the 2026-08-06 pool', () => {
+    // 183.199.x.x: 254 reads across 153 /24s. No per-unit threshold sees this.
+    expect(looksLikeSpray(254, 153)).toBe(true);
+    expect(looksLikeSpray(215, 113)).toBe(true);
+    // And it fires far below the /16 volume bar, which is the entire point.
+    expect(254).toBeLessThan(PREFIX16_THRESHOLD);
+  });
+
+  it('does not fire on a network of actual readers', () => {
+    // 31.223.x.x in the same window: 411 reads from 8 /24s — 51 each.
+    expect(looksLikeSpray(411, 8)).toBe(false);
+    // A busy /16 with many /24s but real per-network volume is not a pool.
+    expect(looksLikeSpray(5000, 50)).toBe(false);
+  });
+
+  it('refuses to judge a handful of networks', () => {
+    // Two /24s with one read each is noise, not a pool.
+    expect(looksLikeSpray(2, 2)).toBe(false);
+    expect(looksLikeSpray(0, 0)).toBe(false);
+  });
+
+  it('keeps both alert floors, so it fires on neither quiet nor busy nights alone', () => {
+    expect(SPRAY_MIN_READS).toBeGreaterThan(0);
+    expect(SPRAY_MIN_SHARE).toBeGreaterThan(0);
+    expect(SPRAY_MIN_SHARE).toBeLessThan(1);
   });
 });
 
