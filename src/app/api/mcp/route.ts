@@ -192,7 +192,8 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const pageNum = Number(r.pageNumber);
     return {
       page: pageNum, snippet: stripProvenanceMarks(best?.snippet as string), source: best?.field, match_count: matches?.length || 0,
-      // Introduction / preface / contents rather than the body. Surfaced, not
+      // Not body text: introduction, preface, contents, index, blank leaves,
+      // binding photography. Surfaced, not
       // just used for ordering, so a caller can SEE why something ranks low —
       // and so a reader who genuinely wants the translator's own words knows
       // which results those are.
@@ -387,7 +388,11 @@ async function getQuote(args: Record<string, unknown>) {
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
   const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
-  const continuity = pageContinuity(quoteText);
+  // Hyphen splits live in the ORIGINAL, never in the translation — a translator
+  // resolves them. Passing only the translation made hyphen_split_at_end
+  // unfireable; see the note on pageContinuity's second parameter.
+  const originalText = typeof quote?.original === 'string' ? quote.original : null;
+  const continuity = pageContinuity(quoteText, originalText);
   // Strip the zero-width provenance mark on the CITATION path. See
   // stripProvenanceMarks in src/lib/provenance.ts for why this and not
   // get_book_text: one page is a citation, hundreds is a corpus pull.
@@ -436,7 +441,10 @@ async function getQuotes(args: Record<string, unknown>) {
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
-        const continuity = pageContinuity(typeof q?.translation === 'string' ? q.translation : null);
+        const continuity = pageContinuity(
+          typeof q?.translation === 'string' ? q.translation : null,
+          typeof q?.original === 'string' ? q.original : null,
+        );
         if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
         const hint = continuityHint(continuity, page);

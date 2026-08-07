@@ -168,3 +168,46 @@ describe('continuityHint', () => {
     expect(hint).not.toContain('p.45');
   });
 });
+
+describe('the hyphen signal is read from the ORIGINAL, not the translation', () => {
+  // Reported twice, on two books and two languages (#3653 follow-ups #3 and #4):
+  // hyphen_split_at_end "appears never to fire". The cause is that a TRANSLATOR
+  // RESOLVES HYPHENS — the line-break hyphen is a fact about the printed page,
+  // and the English rendering of that page simply carries the whole word. The
+  // flag was being tested against the one text in which it can never appear.
+  //
+  // Text below is the real Diogenes Laertius p.33 (book 6993882874305116d72cf9f3),
+  // trimmed. The Greek breaks ἐγέ-/-νετο across the leaf; the English does not.
+  const body = 'He judged the case of a friend according to the law. '.repeat(6);
+  const translation = `${body}He was most reputable among the Greeks.\n\n<margin></margin>\nThe level\n</margin>`;
+  const original = `${body}εὐδοξότατος δὲ μάλιστα παρὰ τοῖς ἕλλησιν ἐγέ-\n\n<margin>\nἡ στάθμη\n</margin>`;
+
+  it('does not fire on the translation alone — the hyphen is not there to find', () => {
+    expect(pageContinuity(translation).hyphen_split_at_end).toBe(false);
+  });
+
+  it('fires when the original is supplied', () => {
+    expect(pageContinuity(translation, original).hyphen_split_at_end).toBe(true);
+  });
+
+  it('carries the split through to continues_on_next', () => {
+    // Without the original this page looks self-contained: the English ends on
+    // a full stop. That is the misleading case the flag exists to catch.
+    expect(pageContinuity(translation).continues_on_next).toBe(false);
+    expect(pageContinuity(translation, original).continues_on_next).toBe(true);
+  });
+
+  it('steps past a trailing <margin> gloss to reach the hyphen', () => {
+    // The gloss sits AFTER the hyphenated word in the markup, so a naive tail
+    // read sees "ἡ στάθμη" and concludes the page ends cleanly.
+    expect(pageContinuity(translation, original).hyphen_split_at_end).toBe(true);
+  });
+
+  it('falls back to the served text when there is no separate original', () => {
+    // Monolingual books pass the same string twice, or only one; behaviour must
+    // not change for them.
+    const mono = `${body}the prudent man pursues a free-`;
+    expect(pageContinuity(mono).hyphen_split_at_end).toBe(true);
+    expect(pageContinuity(mono, null).hyphen_split_at_end).toBe(true);
+  });
+});

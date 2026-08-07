@@ -141,7 +141,26 @@ const NONE: PageContinuity = {
  * very run-on we are looking for. (That is not hypothetical: the same measurement
  * run at 39% before the real stripper was applied and 55.7% after.)
  */
-export function pageContinuity(text: string | null | undefined): PageContinuity {
+export function pageContinuity(
+  text: string | null | undefined,
+  /**
+   * The page's SOURCE text, when the served text is a translation.
+   *
+   * The hyphen signal must be read here, not from the translation. Reported
+   * twice independently, on two books and two languages (#3653 follow-up #3
+   * and #4): p.269 of Taylor's Ethics opens "dom from pain" after p.268 ends
+   * "pursues a free-", and p.33 of Diogenes Laertius ends
+   * "…ἐγέ-" (ἐγέ-/-νετο) — both returned hyphen_split_at_end: false.
+   *
+   * The cause is that a TRANSLATOR RESOLVES HYPHENS. The line-break hyphen is a
+   * fact about the printed original; the English rendering of that page simply
+   * has the whole word. So the flag was being tested against the one text in
+   * which it can never appear, and it could never fire. The sentence-level
+   * signals were unaffected, which is why continues_on_next looked correct on
+   * exactly the pages where the hyphen flag was wrong.
+   */
+  originalText?: string | null,
+): PageContinuity {
   if (!text) return NONE;
 
   // Too short to be prose — plate captions, colophons, blank leaves. Judging
@@ -150,7 +169,11 @@ export function pageContinuity(text: string | null | undefined): PageContinuity 
 
   const head = headOf(text);
   const tail = tailOf(text);
-  const hyphen_split_at_end = HYPHEN_SPLIT.test(tail);
+  // Prefer the original: see the parameter note above. Fall back to the served
+  // text when there is no separate source, which is the monolingual case where
+  // the two are the same string anyway.
+  const hyphenTail = originalText ? tailOf(originalText) : tail;
+  const hyphen_split_at_end = HYPHEN_SPLIT.test(hyphenTail);
 
   // Caseless scripts get the hyphen signal only; see the note above.
   if (!HAS_CASED_SCRIPT.test(tail)) {
