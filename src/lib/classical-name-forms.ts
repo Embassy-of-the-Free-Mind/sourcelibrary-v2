@@ -71,7 +71,10 @@ export const CLASSICAL_NAME_FORMS: Record<string, string[]> = {
   // Medicine and natural science
   Galen: ['Γαληνός', 'Γαληνοῦ'],
   Hippocrates: ['Ἱπποκράτης', 'Ἱπποκράτους'],
-  Dioscorides: ['Διοσκουρίδης'],
+  // Both spellings are attested and editions differ. A search field does not
+  // have to adjudicate: carry both. (Flagged independently by two checks —
+  // Gemini 3 Flash both when grading this list and when generating one cold.)
+  Dioscorides: ['Διοσκουρίδης', 'Διοσκορίδης', 'Διοσκορίδου'],
   Theophrastus: ['Θεόφραστος', 'Θεοφράστου'],
   Aelian: ['Αἰλιανός'],
 
@@ -104,7 +107,9 @@ export const CLASSICAL_NAME_FORMS: Record<string, string[]> = {
   Aristophanes: ['Ἀριστοφάνης', 'Ἀριστοφάνους'],
 
   // Hermetica, alchemy and the patristic tradition this library collects
-  'Hermes Trismegistus': ['Ἑρμῆς Τρισμέγιστος'],
+  // The articled form is how it usually appears in the texts themselves; the
+  // bare form is how a reader is likelier to type it. Carry both.
+  'Hermes Trismegistus': ['Ἑρμῆς Τρισμέγιστος', 'Ἑρμῆς ὁ Τρισμέγιστος', 'Ἑρμοῦ τοῦ Τρισμεγίστου'],
   Zosimos: ['Ζώσιμος'],
   Philo: ['Φίλων'],
   Eusebius: ['Εὐσέβιος'],

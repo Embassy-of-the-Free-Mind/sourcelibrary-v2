@@ -78,14 +78,32 @@ Run on a throwaway index `books_search_greek_test` on 2026-08-06 over 414 books:
 `αριστοτελης` both returned Aristotle. Build took ~2.5 minutes over 19K books.
 The test index was dropped and the test field removed afterwards.
 
-## Risk
+## Risk — measured, not assumed
 
-- `updateSearchIndex` rebuilds. **Confirm Atlas keeps serving the previous
-  generation during the rebuild before running this in the day** — the ~2.5
-  minute build above was for a new index, not a replacement, so it is not
-  evidence either way.
-- Recovery is to re-apply the backed-up definition.
-- The data write is independent and already reversible.
+**The rebuild does not take search down.** Tested 2026-08-06 on a throwaway
+collection (3,000 docs, its own index), never on `books`: the definition was
+updated to add an analyzer and a mapped field, and a query was fired every ~3
+seconds throughout. **17 of 17 samples returned results.** Status went
+`BUILDING` for ~58s then `READY`, and the newly mapped field was queryable
+immediately after. Atlas keeps the previous generation serving while the new one
+builds.
+
+Script: `_tmp-index-risk.mjs` pattern — recreate if you want to re-verify on a
+future Atlas version rather than trusting this note.
+
+Remaining risks, in order:
+
+1. **`updateSearchIndex` replaces the WHOLE definition.** Omit a field and its
+   mapping is silently dropped — `books_search` has twelve. Build the new
+   definition programmatically from the live one (read it, add to it, write it
+   back); never hand-author it. Assert the field count went 12 → 13, not 12 → 1.
+2. **Take a backup of the live definition first.** Recovery is re-applying it,
+   and the same no-downtime property makes rollback safe.
+3. **Relevance shifts slightly** once `name_forms` joins the `should` clauses,
+   because scores renormalise. `name_forms` holds only Greek, so a Latin query
+   cannot match it — but re-run the five-query check in
+   `scripts/audit/greek-name-search.mjs` plus a Latin regression before and after.
+4. The data write is independent and already reversible (`--unset --apply`).
 
 ## Not in scope
 
