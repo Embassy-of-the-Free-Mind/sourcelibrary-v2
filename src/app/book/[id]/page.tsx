@@ -287,13 +287,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
     } catch { /* keep null → factual template fallback */ }
   }
+  // The claim's register for the meta description (#3459).
+  //
+  // ⚠️ `getCachedBookLookup` serves the Supabase `books_catalog` row in the
+  // common case (it is ~50ms against Atlas's 1-5s), and that row carries
+  // `is_first_translation` and `ft_disposition` but NOT
+  // `first_translation.evidence_strength` or the screens. Classifying the thin
+  // payload directly returns `candidate` for EVERY book — including the 627 that
+  // earned the assertion — because "the field is absent" is indistinguishable
+  // from "the evidence is weak". That is the invariant this area keeps breaking:
+  // "we could not ask" must stay separate from "we asked and found nothing".
+  //
+  // So when the payload cannot answer, ASK — one projected lookup, and only for
+  // the ~17% of visible books that carry the flag at all. A failure falls back
+  // to `candidate`, which drops the "First" prefix rather than asserting it.
+  let ftClaimForSeo = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const seoPayloadCanAnswer = (book as { first_translation?: unknown }).first_translation !== undefined;
+  if (!seoPayloadCanAnswer && book.is_first_translation && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const ev = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        {
+          projection: {
+            _id: 0, visible: 1, language: 1, pages_translated: 1,
+            first_translation: 1, translation_verification: 1,
+            source_language_screen: 1, translator_author_screen: 1,
+          },
+          maxTimeMS: 3000,
+        },
+      );
+      if (ev) ftClaimForSeo = classifyFirstTranslationClaim(ev as unknown as ScreenedBook).claim;
+    } catch { /* keep `candidate` — understate, never overstate */ }
+  }
+
   const description = buildSeoDescription({
     originalTitle: book.title,
     authorLabel: bylineLabel,
     year: displayYear,
     language: book.language,
     summary: summaryText,
-    firstTranslationClaim: classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim,
+    firstTranslationClaim: ftClaimForSeo,
     pagesTranslated: book.pages_translated,
   });
   const bookUrl = `/book/${book.slug || book.id}`;
