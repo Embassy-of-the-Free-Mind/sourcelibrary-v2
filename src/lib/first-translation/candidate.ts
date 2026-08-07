@@ -36,6 +36,20 @@ import { isFirstTranslation, resolveFirstTranslation } from './derive';
 import type { FirstTranslationBook } from './types';
 
 /**
+ * Evidence strengths that can carry an assertive claim.
+ *
+ * `strong` = cross-checked across independent catalogues/models.
+ * `moderate` = one documented search, queries retained.
+ *
+ * Everything else — `weak`, or a verdict object that never recorded a strength,
+ * or the legacy-disposition shim `resolveFirstTranslation` synthesizes for the
+ * 2,957 badged books with no verdict object at all — is NOT enough to assert a
+ * universal negative. Same two values `StrengthChip` already treats as earned,
+ * and the same cut `isPublicFirst` makes for the headline count.
+ */
+const ASSERTABLE_STRENGTHS: ReadonlySet<string> = new Set(['strong', 'moderate']);
+
+/**
  * What we can honestly say about this book's first-translation status.
  *
  * Ordered from strongest claim to no claim. `candidate` is the DEFAULT for the
@@ -43,7 +57,10 @@ import type { FirstTranslationBook } from './types';
  * eligible books sit here.
  */
 export type FirstTranslationClaim =
-  /** A verified first. Earned by evidence, never defaulted into. */
+  /**
+   * A verified first: first-family verdict AND strong or moderate evidence.
+   * Earned by evidence, never defaulted into — a badge alone does not qualify.
+   */
   | 'confirmed'
   /** Non-English, no prior found, screens clear. The honest default. */
   | 'candidate'
@@ -164,10 +181,32 @@ export function classifyFirstTranslationClaim(
     };
   }
 
-  // 5. A verified first, earned through the existing gates (evidence quality,
-  //    readable coverage, the single-writer verdict).
+  // 5. A verified first: the single-writer verdict AND evidence strong enough to
+  //    carry the assertion.
+  //
+  //    ⚠️ The strength check is load-bearing and was missing. `isFirstTranslation`
+  //    is the RENDER gate — verdict in the first family, visible, some translated
+  //    pages — and says nothing about evidence. Measured over the 5,932 badged +
+  //    visible books on 2026-08-07, gating on it alone made 5,684 (95.8%)
+  //    `confirmed`, while only 689 of those carry strong or moderate evidence:
+  //    2,286 are `weak` and 2,957 have no verdict object at all. That made this
+  //    state circular — "confirmed" meant "we badged it", which is the very
+  //    claim the state exists to qualify, and left this file's own promise
+  //    ("earned by evidence, never defaulted into") false.
   if (isFirstTranslation(book)) {
-    return { claim: 'confirmed', reason: 'verified_first', screensIncomplete, needsReview: false };
+    const strength = resolved?.evidence_strength;
+    if (strength && ASSERTABLE_STRENGTHS.has(strength)) {
+      return { claim: 'confirmed', reason: 'verified_first', screensIncomplete, needsReview: false };
+    }
+    // Badged, but on evidence too thin to assert a negative. This is a candidate
+    // — the honest default — not a demotion: the flag is untouched and the book
+    // still shows a first-translation claim, stated as the search we ran.
+    return {
+      claim: 'candidate',
+      reason: screensIncomplete ? 'source_language_unscreened' : 'no_prior_found',
+      screensIncomplete,
+      needsReview: false,
+    };
   }
 
   // 6. The honest default.

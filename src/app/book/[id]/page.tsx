@@ -52,6 +52,11 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import {
+  classifyFirstTranslationClaim,
+  type ScreenedBook,
+} from '@/lib/first-translation/candidate';
+import { firstTranslationClause } from '@/lib/first-translation-labels';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
@@ -288,7 +293,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     year: displayYear,
     language: book.language,
     summary: summaryText,
-    isFirstTranslation: book.is_first_translation,
+    firstTranslationClaim: classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim,
     pagesTranslated: book.pages_translated,
   });
   const bookUrl = `/book/${book.slug || book.id}`;
@@ -655,6 +660,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   }
 
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+
+  // What we can honestly SAY about this book's first-translation status (#3459).
+  // The flag decides whether a claim appears at all; this decides its register —
+  // `confirmed` asserts, anything weaker reports the search we ran instead.
+  // Computed once so the publication timeline, the stat line and the evidence
+  // panel cannot drift apart.
+  const ftClaim = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const ftClause = firstTranslationClause(ftClaim);
 
   // Hidden books (visible:false) are not public — defense in depth alongside
   // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
@@ -1141,7 +1154,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         key: `edition-${i}`,
         dateText: my,
         label: i === 0
-          ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
+          ? (ftClaim === 'confirmed'
+            ? 'First English translation published'
+            : 'English edition published')
           : 'New edition published',
         detail: (
           <>
@@ -1470,8 +1485,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
                   )}
-                  {!!book.is_first_translation && translatedCount > 0 && (
-                    <span title="First translation into English" style={{ color: '#e0b46a' }}>First translation</span>
+                  {!!book.is_first_translation && translatedCount > 0 && ftClause && (
+                    <span
+                      title={
+                        ftClaim === 'confirmed'
+                          ? 'First translation into English'
+                          : 'We searched the catalogues and found no earlier English translation — a record of the search, not proof none exists'
+                      }
+                      style={{ color: ftClaim === 'confirmed' ? '#e0b46a' : '#948d80' }}
+                    >
+                      {ftClaim === 'confirmed' ? 'First translation' : 'No prior translation found'}
+                    </span>
                   )}
                 </div>
               )}
