@@ -17,6 +17,26 @@ import {
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 
+/**
+ * The MCP server version, in ONE place.
+ *
+ * It used to be three string literals — the `initialize` handshake, the
+ * `GET /api/mcp` banner, and `server.json` — and they drifted apart every time
+ * someone bumped one of them: on 2026-08-07 they read 4.7.0, 4.5.0 and 4.6.0
+ * simultaneously. Two of those bumps were made by people specifically tidying
+ * the version, which is the tell that the problem is the duplication, not the
+ * carelessness.
+ *
+ * `scripts/audit/mcp-directory-contract.mjs` compares the live handshake
+ * against `server.json`, so a drift here is a real tripwire and not cosmetic —
+ * but it can only compare two values, and there were three.
+ *
+ * `server.json` is consumed by the MCP registry publisher and cannot import
+ * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
+ * audit's job is exactly to hold it against this one. Bump both together.
+ */
+const SERVER_VERSION = '4.7.0';
+
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
 const API_BASE = 'https://sourcelibrary.org/api';
@@ -960,7 +980,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.7.0' },
+    { name: 'source-library', version: SERVER_VERSION },
     { capabilities: { tools: {}, resources: {} } },
   );
 
@@ -1088,7 +1108,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.5.0',
+    version: SERVER_VERSION,
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
