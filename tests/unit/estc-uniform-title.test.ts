@@ -19,7 +19,7 @@
 import { describe, it, expect } from 'vitest';
 
 // @ts-expect-error — .mjs script module without type declarations
-import { splitUniformTitle, toReferenceRow } from '../../scripts/enrichment/ingest-estc.mjs';
+import { splitUniformTitle, toReferenceRow, harvestLeaf } from '../../scripts/enrichment/ingest-estc.mjs';
 
 describe('language as the LAST component', () => {
   it.each([
@@ -106,5 +106,77 @@ describe('toReferenceRow', () => {
     const r = toReferenceRow(row);
     expect(r.author).toMatch(/^Agrippa/);
     expect(r.added_entries).toContain('Sanford, James, translator.');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The leaf assertion is DIRECTIONAL — under-collection is fatal, over is not.
+//
+// The whole script exists because CERL's `from` cap fails as HTTP 200 with no
+// rows, which always shows up as collecting FEWER records than promised. That
+// must stay fatal. Collecting MORE cannot be that failure — CERL is a live index
+// and `hits` is read minutes earlier during partitioning. On the first full run
+// (2026-08-07) leaf `R5*` returned 2,284 against a promised 2,283 and killed a
+// harvest that was 34% done and entirely correct.
+// ─────────────────────────────────────────────────────────────────────────────
+describe('harvestLeaf: short is fatal, long is drift', () => {
+  /** A fake pager returning `total` synthetic rows, `PAGE`-sized, ids unique. */
+  const pagerOf = (total) => async (_q, from, size) => ({
+    hits: total,
+    rows: Array.from({ length: Math.max(0, Math.min(size, total - from)) },
+      (_, i) => ({ id: `R${from + i}`, language: 'eng', search_titles: [], search_names: [], subjects: [], dates: [] })),
+  });
+
+  it('accepts an exact leaf', async () => {
+    const drift = { leaves: 0, records: 0, dupes: 0 };
+    const got = await harvestLeaf({ prefix: 'R5', hits: 250 }, () => {}, drift, pagerOf(250));
+    expect(got).toBe(250);
+    expect(drift.leaves).toBe(0);
+  });
+
+  it('THROWS on the CERL truncation shape — a page that returns no rows', async () => {
+    // `from` past the cap answers HTTP 200 with no `rows` key. This is the exact
+    // failure the script exists to prevent, and it must never be tolerated.
+    await expect(
+      harvestLeaf({ prefix: 'R5', hits: 250 }, () => {}, undefined, pagerOf(200)),
+    ).rejects.toThrow(/returned 0 rows/);
+  });
+
+  it('THROWS on the OTHER short shape — pages that stay non-empty but under-deliver', async () => {
+    // Short-but-non-empty pages never trip the 0-rows guard, so the count
+    // comparison is the only thing standing between this and a silently
+    // shortened leaf. Pinned separately because the two shapes fail at
+    // different lines and a fixture that only produces one proves nothing
+    // about the other.
+    const shortPager = async (_q, from, size) => ({
+      hits: 250,
+      rows: Array.from({ length: Math.max(0, Math.min(size - 10, 250 - from)) },
+        (_, i) => ({ id: `S${from + i}` })),
+    });
+    await expect(
+      harvestLeaf({ prefix: 'R5', hits: 250 }, () => {}, undefined, shortPager),
+    ).rejects.toThrow(/records missing/);
+  });
+
+  it('KEEPS a superset and records the drift instead of dying', async () => {
+    // The exact shape that killed the 2026-08-07 run.
+    const drift = { leaves: 0, records: 0, dupes: 0 };
+    const got = await harvestLeaf({ prefix: 'R5', hits: 2283 }, () => {}, drift, pagerOf(2284));
+    expect(got).toBe(2284);
+    expect(drift.leaves).toBe(1);
+    expect(drift.records).toBe(1);
+  });
+
+  it('collapses a duplicate id across a page boundary rather than counting it', async () => {
+    // A record shifting under a live index can surface on two pages. Deduping
+    // keeps `got` a count of DISTINCT records, so the comparison measures
+    // coverage rather than paging noise.
+    const rows = [{ id: 'A' }, { id: 'B' }, { id: 'B' }, { id: 'C' }];
+    const pager = async (_q, from, size) => ({ hits: 3, rows: rows.slice(from, from + size) });
+    const drift = { leaves: 0, records: 0, dupes: 0 };
+    const got = await harvestLeaf({ prefix: 'X', hits: 3 }, () => {}, drift, pager);
+    expect(got).toBe(3);
+    expect(drift.dupes).toBe(1);
+    expect(drift.leaves).toBe(0);
   });
 });
