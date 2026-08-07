@@ -42,6 +42,9 @@ export const GET = withApiAuth(async (
       pages_count: 1, pages_translated: 1,
       categories: 1, reading_summary: 1,
       chapters: 1,
+      // Needed by the MCP list_editions tool to find sibling editions of the
+      // same work without a second lookup.
+      work_id: 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined);
