@@ -26,6 +26,10 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category') || '';
     const collection = searchParams.get('collection') || '';
     const library = searchParams.get('library') || '';
+    // Every edition of one work. Handled as a post-$search $match like
+    // `collection`, so it needs no Atlas index mapping. 98.5% of live books
+    // carry a work_id, which is what makes this cheap.
+    const workId = searchParams.get('work_id') || '';
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
@@ -45,7 +49,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -74,6 +78,7 @@ export async function GET(request: NextRequest) {
           isFirstTranslation: firstTranslation || undefined,
         }),
         ...(collection ? [{ $match: { collections: collection } }] : []),
+        ...(workId ? [{ $match: { work_id: workId } }] : []),
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
@@ -86,6 +91,7 @@ export async function GET(request: NextRequest) {
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });
       if (collection) matchConditions.push({ collections: collection });
+      if (workId) matchConditions.push({ work_id: workId });
       if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
