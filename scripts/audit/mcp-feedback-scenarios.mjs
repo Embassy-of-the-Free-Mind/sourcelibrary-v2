@@ -12,6 +12,21 @@
  *
  * Scenarios still marked OPEN are expected to fail; they are the unfixed items,
  * kept here so the backlog is measured rather than remembered.
+ *
+ * ## Pointing this at a preview does NOT test the preview
+ *
+ * `src/app/api/mcp/route.ts` sets `API_BASE = 'https://sourcelibrary.org/api'`,
+ * hardcoded. So an MCP tool running on a preview deploy executes the preview's
+ * *tool* code but calls **production's** REST API underneath.
+ *
+ * The practical consequence, learned the confusing way: a change inside the MCP
+ * route (say the get_quote continuity flags) shows up on a preview immediately,
+ * while a change to a downstream route (say search ranking in
+ * /api/books/library) does not show up here until it is merged — the preview's
+ * MCP is still asking production. If a row fails on a preview but its
+ * equivalent passes in scripts/audit/greek-name-search.mjs (which calls the
+ * REST API directly on whatever host you gave it), that is this, not a
+ * regression.
  */
 
 const BASE = (process.argv[2] || 'https://sourcelibrary.org').replace(/\/$/, '');
@@ -84,9 +99,18 @@ const scenario = (state, name, ok, detail) => {
 // ── STILL OPEN: "which book has the Poetics?" is unanswerable from metadata,
 //    because work_id names the container. (#3653 item 1, #3652 A)
 {
+  // Deliberately NOT "does a search for Poetics return something titled
+  // Poetics" — it now does, and that would score this fixed while the actual
+  // complaint stands. The reporter's problem was that four volumes advertise
+  // the Poetics in their titles and none contain it, so a title match is the
+  // very thing that misled them. The real question is whether any record says
+  // WHICH pages hold the work, which is what contains_works would carry.
   const r = await tool('search_library', { query: 'Poetics Aristotle', limit: 5 });
-  const found = (r.results || []).some((b) => /poetic/i.test(b.title || ''));
-  scenario('OPEN', 'contains_works — "which book holds the Poetics?"', found, 'needs contains_works from OCR running headers');
+  const first = (r.results || [])[0];
+  const detail = first ? await tool('get_book', { book_id: first.id }) : null;
+  const hasContents = Boolean(detail?.contains_works || detail?.book?.contains_works);
+  scenario('OPEN', 'contains_works — which pages actually hold the Poetics', hasContents,
+    'no contains_works field; title claims remain unverifiable (#3652 A)');
 }
 
 // ── STILL OPEN: "Every semantic search on a 400+ page book returned ~45 pages
