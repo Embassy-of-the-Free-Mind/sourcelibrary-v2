@@ -95,6 +95,63 @@ locus is (`tests-that-are-not-guards.md`).
   `scripts/audit/locus-anchor-staleness.mjs` is the detector: it checks coverage
   against the registry and exits 1. A stale anchor points at text that has moved.
 
+## The collection name is shared state between sessions
+
+**This already broke production, on the day it shipped.** Two sessions implemented
+#3661 in parallel — #3703 merged, #3713 opened four minutes later — and both wrote
+a Mongo collection called `locus_anchors` with incompatible schemas
+(`ref_page`/`page_number`/`ref_label` against `page`/`scan_page`/`locus`). The
+second extractor ran after the first and replaced 6,324 rows with 4,279. The
+merged API queried `ref_page`, matched nothing, and every reference on production
+returned `witness_count: 0` with the honest message *"no witness holds an anchor
+at this reference"* — **indistinguishable from a genuine gap in the corpus.**
+
+Three things worth keeping from that:
+
+- **A row count is not an integrity check.** The foreign rows carried `book_id`,
+  so per-edition counts passed while the feature was dead. The audit now asserts
+  the SHAPE (`ref_page` present on every row) and fails loudly. That is the
+  read-side lesson of `derived-stores-and-schedules.md` one layer down: an empty
+  answer and an unreadable store look identical from outside.
+- **A write-time guard would not have helped.** The clobbering writer was the
+  other session's script, which does not run this repo's guards. Only a check that
+  both sides run — or a check on the read side — can catch it.
+- **The root cause was coordination, not code.** Neither session claimed the issue
+  before starting, though `CLAUDE.md` prescribes exactly that. No guard in an
+  extractor fixes duplicated work.
+
+## Taken from the parallel implementation (#3713)
+
+Recorded because the reasoning is worth keeping, and because two of these were
+defects in the merged version:
+
+- **`server.json` must be bumped with the MCP server version.** #3703 moved the
+  route to 4.7.0 and left the manifest at 4.6.0;
+  `scripts/audit/mcp-directory-contract.mjs` asserts they match, and it would have
+  failed against production. Adding a tool needs no directory re-review — the
+  fixture exists to catch REMOVALS — but the version has to track.
+- **The section letter is checkable.** Bekker prints two columns (a, b); Stephanus
+  divides a page into five sections (a–e). A Bekker anchor reading `1094e` is an
+  OCR misread of `b`. `plausibleSection()` drops the letter and **keeps the page**,
+  because the digits are separate evidence from the letter — #3713 rejects the
+  whole anchor. Measured 2026-08-07: this corrects **zero** rows across the ten
+  registered editions, so it is preventive, not a fix.
+
+And two things in that implementation to avoid, both measured against our data:
+
+- **Do not gate Bekker at a lower bound of 184.** #3713's parser rejects any
+  Bekker page outside `[184, 1462]`, but Bekker numbering starts at 1 — we hold
+  **175 anchors below 184**, the whole Organon (Categories 2–15, De
+  Interpretatione 16–24, Prior Analytics 25–71, Posterior Analytics 72–100, Topics
+  101–164, Sophistical Refutations 165–183). The gate is latent there only because
+  that registry omits Bekker vol. I; add it and the Organon vanishes with no error.
+- **Do not discard the work name for Stephanus.** #3713 drops it, reasoning that a
+  canonical number is globally unique within its system. True for Bekker, **false
+  for Stephanus**, which restarts in each 1578 volume: Stephanus 328 appears under
+  **five** distinct running heads in our editions (Letters, Minos, Protagoras,
+  Epistola, Republic) and under three within #3713's own seven. Without the work
+  name, `Republic 328b` and `Letters 328b` are the same query.
+
 ## What this does NOT solve
 
 Of 276 live Aristotle and Plato books, 10 are registered here. The rest hold no

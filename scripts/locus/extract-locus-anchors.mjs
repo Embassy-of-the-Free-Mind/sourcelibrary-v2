@@ -92,6 +92,7 @@ for (const ed of editions) {
   const { anchors, rejected, report } = extractAnchors(inputs, {
     author: book.author || '',
     frame: ed.frame,
+    system: ed.system,
   });
 
   // Verify the reviewed pins. A book that fails one is REFUSED, not published

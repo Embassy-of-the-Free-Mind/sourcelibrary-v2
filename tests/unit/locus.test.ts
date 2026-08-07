@@ -54,6 +54,24 @@ describe('parseRefCandidates', () => {
   it('keeps a markup boundary as a separator', () => {
     expect(parseRefCandidates('<unclear>553 a, b</unclear>')[0]).toEqual({ page: 553, section: 'a', line: null });
   });
+
+  it('drops a column letter the system cannot have, and keeps the page', () => {
+    // Bekker prints two columns, a and b; Stephanus divides a page into five
+    // sections, a-e. OCR confuses c/e and b/d, so `1094e` is a misread.
+    //
+    // Adopted from the parallel implementation in #3713. It corrects ZERO rows
+    // in the ten registered editions as of 2026-08-07 — measured, not assumed —
+    // so this is preventive: it stops an unreadable letter being published as a
+    // precision claim. The page is kept because the digits are separate evidence
+    // from the letter; #3713 rejects the whole anchor instead.
+    expect(parseRefCandidates('1094e', 'bekker')).toEqual([{ page: 1094, section: null, line: null }]);
+    expect(parseRefCandidates('1094b', 'bekker')).toEqual([{ page: 1094, section: 'b', line: null }]);
+    expect(parseRefCandidates('328e', 'stephanus')).toEqual([{ page: 328, section: 'e', line: null }]);
+    // Without a declared system nothing is dropped — the caller has not said
+    // which system it is, and guessing from the letter is the inference #3713's
+    // own comment warns against.
+    expect(parseRefCandidates('1094e')[0].section).toBe('e');
+  });
 });
 
 describe('parseLocusQuery', () => {

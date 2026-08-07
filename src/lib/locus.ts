@@ -128,7 +128,7 @@ export function normaliseRefText(raw: string): string {
  * Returns [] when nothing numeric is present: roman front matter (`vii`), a
  * library shelfmark, an empty tag.
  */
-export function parseRefCandidates(raw: string | null | undefined): LocusRef[] {
+export function parseRefCandidates(raw: string | null | undefined, system?: LocusSystem | null): LocusRef[] {
   if (!raw) return [];
   const s = normaliseRefText(raw);
   const out: LocusRef[] = [];
@@ -136,9 +136,40 @@ export function parseRefCandidates(raw: string | null | undefined): LocusRef[] {
   // glued to a longer word (`1900 v. 4` must not read as section "v").
   const re = /(\d{1,4})\s*([a-e])?(?![\p{L}\d])/giu;
   for (const m of s.matchAll(re)) {
-    out.push({ page: Number(m[1]), section: m[2] ? m[2].toLowerCase() : null, line: null });
+    out.push({
+      page: Number(m[1]),
+      section: plausibleSection(m[2] ? m[2].toLowerCase() : null, system),
+      line: null,
+    });
   }
   return out;
+}
+
+/**
+ * How many divisions a page has in each system: Bekker prints two columns, a
+ * and b; Stephanus divides a page into five sections, a–e.
+ *
+ * Adopted from the parallel implementation in #3713, which spotted that the
+ * section letter is checkable. It matters because OCR confuses `c` and `e` and
+ * `b` and `d`: a Bekker anchor reading `1094e` is a misread, since no such
+ * column exists.
+ *
+ * The response to an implausible letter is to keep the PAGE and drop the
+ * SECTION, not to reject the anchor. The digits and the letter are separate
+ * pieces of evidence — an unreadable column letter says nothing about the page
+ * number printed beside it, and rejecting the whole anchor would lose a leaf we
+ * can address correctly. #3713 rejects; this is the conservative half of the
+ * same insight.
+ */
+const SECTIONS_PER_SYSTEM: Record<LocusSystem, string> = {
+  bekker: 'ab',
+  stephanus: 'abcde',
+};
+
+/** Null out a section letter the system cannot have. Keeps the page. */
+export function plausibleSection(section: string | null, system?: LocusSystem | null): string | null {
+  if (!section || !system) return section;
+  return SECTIONS_PER_SYSTEM[system].includes(section) ? section : null;
 }
 
 /** Sortable key: page, then section, then line. */
@@ -294,6 +325,8 @@ export interface WorkSegment {
 export interface ExtractOptions {
   /** The book's author, so a head that is only the author's name names no work. */
   author?: string;
+  /** Which system this edition is in, so an impossible section letter is dropped. */
+  system?: LocusSystem;
   /**
    * Set for a root edition whose own pagination IS the citation standard. The
    * offset (printed − scan) is then measured, required to be constant across
@@ -470,7 +503,7 @@ export function extractAnchors(pages: LocusPageInput[], opts: ExtractOptions = {
   const bySegment = new Map<number, Array<{ pageIndex: number; page_number: number; candIndex: number; ref: LocusRef; raw: string }>>();
   let candidatePages = 0;
   sorted.forEach((p, pageIndex) => {
-    const cands = parseRefCandidates(p.page_num);
+    const cands = parseRefCandidates(p.page_num, opts.system);
     if (!cands.length) return;
     candidatePages++;
     const seg = segmentIdOf[pageIndex];
