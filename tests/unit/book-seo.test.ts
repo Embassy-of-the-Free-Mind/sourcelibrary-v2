@@ -37,19 +37,33 @@ describe('buildSeoDescription', () => {
   const summary = 'A cosmological treatise mapping the macrocosm and microcosm.';
 
   it('marks a genuine first translation', () => {
-    const d = buildSeoDescription({ originalTitle: 'Utriusque Cosmi Historia', language: 'Latin', summary, isFirstTranslation: true, pagesTranslated: 1036 });
+    const d = buildSeoDescription({ originalTitle: 'Utriusque Cosmi Historia', language: 'Latin', summary, firstTranslationClaim: 'confirmed', pagesTranslated: 1036 });
     expect(d.startsWith('First English translation.')).toBe(true);
     expect(d).toContain('macrocosm');
   });
 
   it('marks a later (non-first) translation plainly', () => {
-    const d = buildSeoDescription({ originalTitle: 'Sefer ha-Zohar', language: 'Hebrew', summary, isFirstTranslation: false, pagesTranslated: 611 });
+    const d = buildSeoDescription({ originalTitle: 'Sefer ha-Zohar', language: 'Hebrew', summary, firstTranslationClaim: 'defeated', pagesTranslated: 611 });
     expect(d.startsWith('English translation.')).toBe(true);
     expect(d.startsWith('First')).toBe(false);
   });
 
+  it('drops the "First" claim when the evidence only makes it a candidate', () => {
+    // 155 characters is not room to state a search AND its limits, and a
+    // truncated caveat would put the bare assertion in front of search engines
+    // and AI crawlers. Say less rather than assert more (#3459).
+    const d = buildSeoDescription({ originalTitle: 'Amphitheatrum sapientiae aeternae', language: 'Latin', summary, firstTranslationClaim: 'candidate', pagesTranslated: 400 });
+    expect(d.startsWith('English translation.')).toBe(true);
+    expect(d.startsWith('First')).toBe(false);
+  });
+
+  it('does not assert a first when the claim is missing entirely', () => {
+    const d = buildSeoDescription({ originalTitle: 'Amphitheatrum sapientiae aeternae', language: 'Latin', summary, pagesTranslated: 400 });
+    expect(d.startsWith('First')).toBe(false);
+  });
+
   it('never claims translation on an English-language original', () => {
-    const d = buildSeoDescription({ originalTitle: 'Illustrations of British Mycology', language: 'English', summary, isFirstTranslation: false, pagesTranslated: 0 });
+    const d = buildSeoDescription({ originalTitle: 'Illustrations of British Mycology', language: 'English', summary, firstTranslationClaim: 'not_applicable', pagesTranslated: 0 });
     expect(d.toLowerCase()).not.toContain('translation');
     expect(d).toContain('macrocosm');
   });
