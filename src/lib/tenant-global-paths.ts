@@ -34,6 +34,15 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/explore',
   '/ngrams',
   '/libraries',
+  // The works index groups editions by `work_id` across the entire corpus and
+  // its whole point is the cross-library span — "31 editions across 4
+  // libraries". On a partner host that is a list of other institutions'
+  // holdings, and a tenant-scoped version would be a different feature (most
+  // works would collapse to one witness). Same reasoning as /libraries.
+  // Note `/work/[id]` (singular) is NOT listed: it is a per-book detail surface
+  // reached from a book page and already tenant-gated via embedPolicy
+  // .showRelatedEditions, the same gate as the RelatedEditions rail.
+  '/works',
   // Source Library's own institutional pages (#3370). A partner reading room is
   // not the place to tell Source Library's story, and these pages carry
   // hardcoded links into the wider corpus: /about alone embeds a figure linking
