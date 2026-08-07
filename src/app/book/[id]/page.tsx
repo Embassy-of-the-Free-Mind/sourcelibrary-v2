@@ -52,6 +52,11 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import {
+  classifyFirstTranslationClaim,
+  type ScreenedBook,
+} from '@/lib/first-translation/candidate';
+import { firstTranslationClause } from '@/lib/first-translation-labels';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
@@ -282,13 +287,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
     } catch { /* keep null → factual template fallback */ }
   }
+  // The claim's register for the meta description (#3459).
+  //
+  // ⚠️ `getCachedBookLookup` serves the Supabase `books_catalog` row in the
+  // common case (it is ~50ms against Atlas's 1-5s), and that row carries
+  // `is_first_translation` and `ft_disposition` but NOT
+  // `first_translation.evidence_strength` or the screens. Classifying the thin
+  // payload directly returns `candidate` for EVERY book — including the 627 that
+  // earned the assertion — because "the field is absent" is indistinguishable
+  // from "the evidence is weak". That is the invariant this area keeps breaking:
+  // "we could not ask" must stay separate from "we asked and found nothing".
+  //
+  // So when the payload cannot answer, ASK — one projected lookup, and only for
+  // the ~17% of visible books that carry the flag at all. A failure falls back
+  // to `candidate`, which drops the "First" prefix rather than asserting it.
+  let ftClaimForSeo = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const seoPayloadCanAnswer = (book as { first_translation?: unknown }).first_translation !== undefined;
+  if (!seoPayloadCanAnswer && book.is_first_translation && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const ev = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        {
+          projection: {
+            _id: 0, visible: 1, language: 1, pages_translated: 1,
+            first_translation: 1, translation_verification: 1,
+            source_language_screen: 1, translator_author_screen: 1,
+          },
+          maxTimeMS: 3000,
+        },
+      );
+      if (ev) ftClaimForSeo = classifyFirstTranslationClaim(ev as unknown as ScreenedBook).claim;
+    } catch { /* keep `candidate` — understate, never overstate */ }
+  }
+
   const description = buildSeoDescription({
     originalTitle: book.title,
     authorLabel: bylineLabel,
     year: displayYear,
     language: book.language,
     summary: summaryText,
-    isFirstTranslation: book.is_first_translation,
+    firstTranslationClaim: ftClaimForSeo,
     pagesTranslated: book.pages_translated,
   });
   const bookUrl = `/book/${book.slug || book.id}`;
@@ -655,6 +694,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   }
 
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+
+  // What we can honestly SAY about this book's first-translation status (#3459).
+  // The flag decides whether a claim appears at all; this decides its register —
+  // `confirmed` asserts, anything weaker reports the search we ran instead.
+  // Computed once so the publication timeline, the stat line and the evidence
+  // panel cannot drift apart.
+  const ftClaim = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const ftClause = firstTranslationClause(ftClaim);
 
   // Hidden books (visible:false) are not public — defense in depth alongside
   // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
@@ -1141,7 +1188,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         key: `edition-${i}`,
         dateText: my,
         label: i === 0
-          ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
+          ? (ftClaim === 'confirmed'
+            ? 'First English translation published'
+            : 'English edition published')
           : 'New edition published',
         detail: (
           <>
@@ -1470,8 +1519,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
                   )}
-                  {!!book.is_first_translation && translatedCount > 0 && (
-                    <span title="First translation into English" style={{ color: '#e0b46a' }}>First translation</span>
+                  {!!book.is_first_translation && translatedCount > 0 && ftClause && (
+                    <span
+                      title={
+                        ftClaim === 'confirmed'
+                          ? 'First translation into English'
+                          : 'We searched the catalogues and found no earlier English translation — a record of the search, not proof none exists'
+                      }
+                      style={{ color: ftClaim === 'confirmed' ? '#e0b46a' : '#948d80' }}
+                    >
+                      {ftClaim === 'confirmed' ? 'First translation' : 'No prior translation found'}
+                    </span>
                   )}
                 </div>
               )}

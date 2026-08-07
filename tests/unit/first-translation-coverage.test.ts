@@ -21,7 +21,7 @@ import {
   isFirstTranslation,
   FIRST_TRANSLATION_READABLE_MIN,
 } from '@/lib/first-translation/derive';
-import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
 import type { FirstTranslationBook } from '@/lib/first-translation/types';
 
 /** A badged book with strong evidence — the only thing varying is coverage. */
@@ -117,21 +117,52 @@ describe('isPublicFirst excludes barely-translated books from the headline', () 
 
 describe('firstTranslationBadge qualifies an in-progress translation', () => {
   it('reads plainly when the translation is done', () => {
-    expect(firstTranslationBadge('confirmed_first', 'Latin', false)).toBe('First Translation');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'confirmed')).toBe('First Translation');
   });
 
   it('says so when it is not', () => {
-    expect(firstTranslationBadge('confirmed_first', 'Latin', true)).toBe('First Translation, in progress');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', true, 'confirmed')).toBe('First Translation, in progress');
   });
 
   it('never calls a partly-translated book COMPLETE', () => {
     // The specific claim the gate exists to prevent: "First Complete
     // Translation" on a book that is 6% translated.
-    expect(firstTranslationBadge('first_complete_translation', 'Latin', true))
+    expect(firstTranslationBadge('first_complete_translation', 'Latin', true, 'confirmed'))
       .not.toContain('Complete');
   });
 
   it('keeps the source-language wording when qualifying', () => {
-    expect(firstTranslationBadge('first_from_source', 'Dutch', true)).toBe('First from Dutch, in progress');
+    expect(firstTranslationBadge('first_from_source', 'Dutch', true, 'confirmed')).toBe('First from Dutch, in progress');
+  });
+});
+
+describe('firstTranslationBadge states the search when the claim is a candidate', () => {
+  it('reports the search instead of asserting the negative', () => {
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'candidate'))
+      .toBe('No prior translation found');
+  });
+
+  it('keeps the in-progress qualifier', () => {
+    expect(firstTranslationBadge('confirmed_first', 'Latin', true, 'candidate'))
+      .toBe('No prior translation found, in progress');
+  });
+
+  it('does not draw distinctions the weak evidence cannot support', () => {
+    // complete / modern / from-source are gradations of a conclusion, not of the
+    // evidence behind it. Rendering them on a candidate dresses up a coin flip.
+    for (const d of ['first_complete_translation', 'first_modern_translation', 'first_from_source']) {
+      expect(firstTranslationBadge(d, 'Dutch', false, 'candidate')).toBe('No prior translation found');
+    }
+  });
+
+  it('DEFAULTS to the candidate register when the caller omits the claim', () => {
+    // The load-bearing default (#3459). Card surfaces render from
+    // `books_catalog`, which carries no evidence strength, so a caller that
+    // cannot supply the claim must not assert one by omission. If this ever
+    // flips to 'confirmed', every collection, catalogue and author card starts
+    // asserting a universal negative again.
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false))
+      .toBe('No prior translation found');
+    expect(firstTranslationDescription('confirmed_first')).toContain('not proof');
   });
 });

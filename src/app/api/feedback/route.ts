@@ -4,6 +4,9 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 import { guardPublicSubmission } from '@/lib/public-submission-guard';
 import { getClientIp } from '@/lib/rate-limit';
 
+/** Kept in step with the `message` field's documented range in the MCP tool schema. */
+const MAX_MESSAGE = 5000;
+
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
   try {
@@ -17,8 +20,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    if (message.length > 5000) {
-      return NextResponse.json({ error: 'Message too long' }, { status: 400 });
+    // Say WHAT the limit is and what arrived. A bare "Message too long" gives an
+    // automated caller nothing to aim at, so it has to binary-search the ceiling
+    // by trial — reported by an MCP client that lost two submissions to it
+    // (#3653). The other public write routes (share-findings,
+    // collection-proposals) already name their maxima; this one did not.
+    if (message.length > MAX_MESSAGE) {
+      return NextResponse.json({
+        error: `Message too long: ${message.length} characters received, maximum ${MAX_MESSAGE}`,
+        max_length: MAX_MESSAGE,
+        received_length: message.length,
+      }, { status: 400 });
     }
 
     const db = await getDb();
