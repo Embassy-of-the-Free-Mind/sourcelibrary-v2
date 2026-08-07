@@ -78,3 +78,25 @@ Six search entry points existed, each built at a different time, each hand-rolli
 - **The loss is biased, not random.** Cold starts are where the Mongo connect is slowest — and a cold start is disproportionately *the first contact from a client we have never seen*. A log that drops new clients preferentially is the worst possible instrument for counting new clients. Read pre-fix `mcp_tool_calls` volumes as a floor.
 - **Hand deferred work to the platform.** Next.js `after()` keeps the function alive until the callback settles; bound it (3s) so a slow Atlas write can't hold the slot, and fall back to a bare call for non-request scopes where `after()` throws. Canonical shapes: `src/lib/mcp-usage.ts`, `src/app/api/track/route.ts` `deferDbWrite()`.
 - **Verifying against a cold preview is what surfaced this**, and only because the probe had a positive control — "no row after 12s" was initially read as "the write path doesn't fire," and the truth (it fires late) only appeared on a re-check a minute later. When a probe comes back negative on a deployment that just booted, re-read before concluding; see `lesson_probe_needs_a_positive_control` and `tests-that-are-not-guards.md`.
+
+## "The data is contaminated" and "the number that spends money is contaminated" are different claims
+Recorded 2026-08-06 (#3658/#3669), where the second was asserted from the first and was wrong.
+
+A scraper fleet accounted for **43.8% of `page_read` events**. `books.read_count` orders the
+paid re-OCR and translation queues. It looked obvious that the fleet had been choosing what we
+pay Gemini to transcribe, and that a backfill was owed. It hadn't, and it wasn't.
+
+- **`books.read_count` increments only on `book_read`** (`src/app/api/analytics/track/route.ts`),
+  and both fleets deep-linked straight to page URLs — **0 of 3,006 `book_read` events** since
+  2026-08-02 came from either. `180.153.197.0` has 18,796 `page_read` and zero `book_read`
+  going back to May. The counter was clean the whole time.
+- **`pages.read_count` genuinely was ~60% bot — and nothing reads it.** `git grep` finds a
+  writer and no consumer. Contamination in a field nobody acts on costs nothing.
+- **So: trace the write path from the event to the counter, and the read path from the counter
+  to the money, before you cost out a repair.** Which event increments it, and who sorts on it.
+  Both are one `git grep` away, and skipping them turns a clean system into an invented backlog.
+
+The general shape: a contamination finding is about a **population**; a spending decision is
+about a **specific field**. Getting from one to the other requires showing the population
+actually reaches the field. See `lesson_denormalized_counter_definitional_gap` for the
+neighbouring error, where a counter gap that looked like staleness was definitional.
