@@ -345,6 +345,18 @@ async function main() {
   const partsDir = path.join(OUT_DIR, 'leaves');
   fs.mkdirSync(partsDir, { recursive: true });
 
+  // ONE definition of a leaf's filename, used by the writer AND the reader.
+  //
+  // These were built independently and drifted: the writer appended `.exact` for
+  // an `exactOnly` leaf, the concatenator did not, and its `existsSync` turned
+  // the mismatch into a silent skip. All 37 exact leaves were dropped from the
+  // final file on the 2026-08-07 run — visible only because 2 of them happened
+  // to carry English translations (`N4`, `T17`), so the artifact came out at
+  // 22,536 rows against 22,538 collected. Same shape as the R2 key incident in
+  // CLAUDE.md: two sites deriving one path, and nothing comparing them.
+  const leafPathOf = (leaf) =>
+    path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
+
   let seen = 0, kept = 0, skipped = 0;
   const evidence = {};
   const started = Date.now();
@@ -353,10 +365,22 @@ async function main() {
   const drift = { leaves: 0, records: 0, dupes: 0 };
 
   for (const [i, leaf] of leaves.entries()) {
-    const leafPath = path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
+    const leafPath = leafPathOf(leaf);
     if (fs.existsSync(leafPath)) {
-      const done = fs.readFileSync(leafPath, 'utf8').split('\n').filter(Boolean).length;
-      kept += done; seen += leaf.hits; skipped++;
+      // Re-tally the evidence breakdown from the resumed rows. Counting only
+      // `kept` here made the printed breakdown cover fresh leaves ONLY: the
+      // 2026-08-07 run reported 22,538 translations but 15,518 + 166 = 15,684
+      // in the by-evidence lines, the 6,854 difference being exactly what the
+      // 146 resumed leaves held. A total whose own parts do not sum to it
+      // invites the reader to trust the wrong one.
+      const lines = fs.readFileSync(leafPath, 'utf8').split('\n').filter(Boolean);
+      for (const line of lines) {
+        try {
+          const k = String(JSON.parse(line).translation_evidence ?? '').split(':')[0];
+          if (k) evidence[k] = (evidence[k] || 0) + 1;
+        } catch { /* a malformed row would have failed its own leaf's rename */ }
+      }
+      kept += lines.length; seen += leaf.hits; skipped++;
       continue;
     }
     const tmp = `${leafPath}.partial`;
@@ -390,13 +414,34 @@ async function main() {
   }
 
   // Concatenate the verified leaves into the reference-set file.
+  //
+  // A missing leaf here is a BUG, not a condition to tolerate: every leaf in
+  // `leaves` was either harvested and renamed into place this run, or found on
+  // disk and skipped. `existsSync`-and-continue is what let the `.exact` path
+  // mismatch drop 37 leaves without a word.
   const outPath = path.join(OUT_DIR, `estc-translations.${SNAPSHOT}.jsonl`);
   const final = fs.createWriteStream(outPath);
+  let written = 0;
   for (const leaf of leaves) {
-    const p = path.join(partsDir, `${leaf.prefix}.jsonl`);
-    if (fs.existsSync(p)) final.write(fs.readFileSync(p));
+    const p = leafPathOf(leaf);
+    if (!fs.existsSync(p)) {
+      throw new Error(`leaf file missing at concatenation: ${p} — refusing to write a short reference set`);
+    }
+    const buf = fs.readFileSync(p);
+    written += buf.toString('utf8').split('\n').filter(Boolean).length;
+    final.write(buf);
   }
   await new Promise((r) => final.end(r));
+
+  // Reconcile the ARTIFACT against the count, which the script never did on its
+  // own output — the one place a silent shortfall would survive every upstream
+  // guard and still reach the reference set.
+  const onDisk = fs.readFileSync(outPath, 'utf8').split('\n').filter(Boolean).length;
+  if (onDisk !== kept || written !== kept) {
+    throw new Error(
+      `reference set does not reconcile: ${onDisk} rows on disk, ${written} concatenated, ${kept} counted`,
+    );
+  }
 
   console.log(`\n\n─── ESTC reference set ───────────────────────────────────────`);
   console.log(`  records examined        : ${seen.toLocaleString()}`);
