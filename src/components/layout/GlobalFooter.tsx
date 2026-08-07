@@ -8,6 +8,7 @@ import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import ReaderPresence from '@/components/presence/ReaderPresence';
 import { clearConsent } from '@/lib/consent';
+import { trackEvent } from '@/lib/track-event';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { visibleFooterNavColumns } from '@/lib/footer-nav';
 import { useLocale, FOOTER_STRINGS } from '@/lib/i18n';
@@ -104,6 +105,13 @@ export default function GlobalFooter() {
                     {link.key === 'support' ? (
                       <Link
                         href={link.href}
+                        // Instrumented alongside the header pill so the two paths
+                        // are comparable. Before the pill existed this footer link
+                        // was the ONLY route to giving, and it drew 60 of 330,698
+                        // pageviews in 30 days — the baseline the pill is meant to
+                        // beat. Attributing the split needs an event at each
+                        // control; the referrer cannot tell them apart.
+                        onClick={() => trackEvent('give_nav_click', { source: 'footer', url: link.href })}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
                       >
                         {t[link.key]}

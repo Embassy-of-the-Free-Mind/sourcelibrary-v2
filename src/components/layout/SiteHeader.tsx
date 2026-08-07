@@ -9,6 +9,7 @@ import { Search, ChevronDown } from 'lucide-react';
 import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { trackEvent } from '@/lib/track-event';
 
 interface NavLink {
   label: string;
@@ -236,6 +237,12 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           {showSupport && (
             <Link
               href="/give"
+              // Fired here, at the control, because nothing downstream can
+              // reconstruct it: /api/track collapses self-referrals to 'direct'
+              // and client-side navigation preserves the original external
+              // referrer, so an arrival at /give cannot be attributed after the
+              // fact. trackEvent uses sendBeacon, which survives this navigation.
+              onClick={() => trackEvent('give_nav_click', { source: 'header', url: '/give' })}
               className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium tracking-wide transition-colors ${
                 isWhiteText
                   ? 'border-white/40 text-white hover:bg-white hover:text-dark'
