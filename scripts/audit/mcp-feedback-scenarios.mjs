@@ -113,13 +113,27 @@ const scenario = (state, name, ok, detail) => {
     'no contains_works field; title claims remain unverifiable (#3652 A)');
 }
 
-// ── STILL OPEN: "Every semantic search on a 400+ page book returned ~45 pages
-//    of front matter ... one Politics search put the passage at result #52."
+// ── Reported: "Every semantic search on a 400+ page book returned ~45 pages of
+//    front matter at match_count 6-12, with real hits buried ... one Politics
+//    search put the passage I needed at result #52." (#3653 item 3)
+//
+//    The book is the one the reporter NAMED — the Taylor 1801 Metaphysics,
+//    whose introduction runs to scan page ~64. An earlier version of this check
+//    used the Bekker volume and counted "hits before page 60" as front matter.
+//    That was wrong twice over: Bekker's body starts on scan page 7 and it has
+//    no front matter at all, so the check reported a failure that did not exist
+//    and would have justified burying 50+ pages of genuine Aristotle. Assert on
+//    the flag the server returns, never on page position.
 {
-  const r = await tool('search_within_book', { book_id: '69937973b0a84a5763964d43', query: 'virtue and the mean', limit: 10 });
-  const hits = r.results || r.passages || [];
-  const early = hits.filter((h) => (h.page || h.page_number || 0) < 60).length;
-  scenario('OPEN', 'search_within_book front-matter inversion', early <= 3, `${early}/${hits.length} hits in the first 60 pages`);
+  const r = await tool('search_within_book', { book_id: '69d14a6c1c2a66dc094b41b2', query: 'being qua being and substance', limit: 12 });
+  const hits = r.results || [];
+  const firstFront = hits.findIndex((h) => h.is_front_matter);
+  const frontCount = hits.filter((h) => h.is_front_matter).length;
+  // Front matter must be ORDERED LAST, not removed: a reader asking what the
+  // translator said about his own method is asking a real question.
+  const ordered = firstFront === -1 || hits.slice(firstFront).every((h) => h.is_front_matter);
+  scenario('FIXED', 'search_within_book puts front matter last', ordered,
+    `${frontCount}/${hits.length} flagged, ${firstFront === -1 ? 'none present' : `first at position ${firstFront + 1}`}`);
 }
 
 const fixed = rows.filter((r) => r.state === 'FIXED');

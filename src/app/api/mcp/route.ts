@@ -189,9 +189,24 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const best = matches?.find((m) => m.field === 'translation') || matches?.[0];
     const bookId = String(args.book_id);
     const pageNum = Number(r.pageNumber);
-    return { page: pageNum, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0, url: `https://sourcelibrary.org/book/${bookId}?page=${pageNum}`, short_url: bookId && pageNum ? getShortUrl(bookId, pageNum) : undefined };
+    return {
+      page: pageNum, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0,
+      // Introduction / preface / contents rather than the body. Surfaced, not
+      // just used for ordering, so a caller can SEE why something ranks low —
+      // and so a reader who genuinely wants the translator's own words knows
+      // which results those are.
+      ...(r.is_front_matter ? { is_front_matter: true, front_matter_reason: r.reason } : {}),
+      url: `https://sourcelibrary.org/book/${bookId}?page=${pageNum}`,
+      short_url: bookId && pageNum ? getShortUrl(bookId, pageNum) : undefined,
+    };
   });
-  return { book_id: args.book_id, query: result.query, total: result.total, results, tip: 'Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.' };
+  const frontCount = Number(result.front_matter_results) || 0;
+  return {
+    book_id: args.book_id, query: result.query, total: result.total,
+    ...(frontCount ? { front_matter_results: frontCount } : {}),
+    results,
+    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}`,
+  };
 }
 
 async function listBooks(args: Record<string, unknown>) {
