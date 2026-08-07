@@ -2,7 +2,8 @@
 
 *Read this when you touch: `src/app/api/deploy-warm/route.ts`, `scripts/deploy-prod.sh`,
 `.github/workflows/post-deploy-warm.yml`, any `CDN-Cache-Control` header in `next.config.ts`, any
-`revalidatePath` / `revalidateTag` call, or Vercel project settings.*
+`revalidatePath` / `revalidateTag` call, **any `export const dynamic` on a page**, or Vercel project
+settings.*
 
 ## There are two independent caches, and a deploy can empty both
 
@@ -87,3 +88,36 @@ The invoice line items measure the stack, not just the money:
 
 Line items are in the plaintext body of the Vercel receipt emails. Current figures and how to re-pull
 them live in the private ops repo (`costs/infrastructure-costs.md`) — not here.
+
+## `CDN-Cache-Control` is a PATH rule and overrides `force-dynamic`
+
+`export const dynamic = 'force-dynamic'` does **not** stop Cloudflare caching the page. The
+`CDN-Cache-Control` headers in `next.config.ts` are keyed on path, entirely independently of the
+route's rendering mode — so a route that is both `force-dynamic` and listed in a `public, max-age=…`
+rule renders per request, gets cached anyway, and serves one visitor's render to everyone for the TTL.
+
+Shipped this in #3646 and fixed it in #3649: `/support` was made `force-dynamic` so the giving form
+could default its tax route from `x-vercel-ip-country`, while `/support` sits in the static-pages rule
+(`/(privacy|terms|dmca|support|sponsors|developers|contribute|beta)`) at `max-age=86400`. Production
+answered `cf-cache-status: HIT` with `age: 1202` on the supposedly dynamic page. Nothing errored — the
+personalisation was simply dead, plus a per-request Mongo call that bought nothing.
+
+- **The tell is that both headers are present at once.** `cache-control: private, no-cache, no-store`
+  (what Next sends the browser, which looks correct and reassuring) sits **beside**
+  `cdn-cache-control: public, max-age=86400` and `cf-cache-status: HIT`. Reading only the first tells
+  you the opposite of the truth.
+- **Personalise on an UNCACHED route; never uncache a route in order to personalise.** These TTLs are
+  load-bearing — the rule's own comment records a June 2026 scraper flood of ~1.3M req/day at exactly
+  those pages, all of it reaching Vercel. `/give` carries no CDN rule, answers `BYPASS`, and is the
+  right home for anything request-dependent.
+- **Rule ORDER decides the effective header** — the last matching rule wins, and the config depends on
+  it: `/book/:id/preview` is `private, no-store` declared *after* `/book/:path*` is `max-age=86400`.
+  Reordering those could serve a cached editor 200 to anon users. Anything reasoning about these rules
+  must take the **last** match, not any match.
+- **Corollary: a prop nobody passes is a trap.** Leaving `SupportView`'s `defaultRoute` prop in place
+  with a default, documented as "resolved from the request country", would have told the next person
+  the page personalises when it cannot. Remove it and hardcode the literal with the reason.
+- Standing guard: `tests/unit/dynamic-routes-not-edge-cached.test.ts` fails on a new route that is both
+  `force-dynamic` and publicly edge-cached. It carries an allowlist of **10 pre-existing collisions**
+  (`/collections/[id]`, `/libraries/[slug]`, the four `/browse/*/[letter]` pages, `/book/[id]/overview`,
+  `/collections/mycology`, two blog posts) that were never triaged — shrink it, don't grow it.

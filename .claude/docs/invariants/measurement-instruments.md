@@ -100,3 +100,35 @@ The general shape: a contamination finding is about a **population**; a spending
 about a **specific field**. Getting from one to the other requires showing the population
 actually reaches the field. See `lesson_denormalized_counter_definitional_gap` for the
 neighbouring error, where a counter gap that looked like staleness was definitional.
+
+## `referrer` cannot attribute an in-site click, in either direction
+
+**Never use `analytics_pageviews.referrer` to ask "did they get here from our own page X?"** It
+cannot answer, for two independent reasons that stack:
+
+1. **`/api/track` collapses self-referrals by design** — `if (hostname !== SITE_HOST) referrerDomain =
+   hostname;`, otherwise the row stores `'direct'`. An internal click is byte-identical to a stranger
+   typing the URL.
+2. **Next's `<Link>` does not reload the document**, so `document.referrer` stays whatever EXTERNAL
+   page started the session. A reader who arrived from Google and *then* clicked a nav control still
+   logs `google.com`.
+
+Hit this on 2026-08-07 (#3668) reading the new `/give` page: 7 visits, 4 `direct` and 3 Google. I
+first reported "none came from the header" — an unsound inference, since up to 4 of them may have been
+exactly that. The field was never capable of carrying the signal.
+
+- **Fire the event AT the control**, where the information still exists, rather than reconstructing it
+  downstream. `give_nav_click` on the header pill and footer link carries `source` (the control) and
+  `url` (its destination — they differ: header→`/give`, footer→`/support`, and merging them averages
+  two funnels with different odds). Guard: `tests/unit/give-nav-attribution.test.ts`.
+- **Use `sendBeacon` for any event fired on a control that navigates.** A plain `fetch` is cancelled by
+  the navigation the click triggers, so every event dies in flight and the metric reads zero for a
+  reason unrelated to users. `trackEvent` already does this — don't "simplify" it.
+- **Verify a new conversion event end-to-end in production before trusting its zero.** A unit test
+  cannot prove a beacon survives a navigation or that props clear the route's allowlist. Click it once
+  yourself, confirm the row, and **write down the timestamp** so the test row can be excluded.
+- Generalisation of the rule this file opens with: **a zero from a field that cannot express the thing
+  is not evidence of absence.** Before quoting a referrer breakdown, check whether the writer
+  normalises self-referrals and whether the navigation was client-side.
+- Neighbouring case, same family: `analytics_pageviews.path` strips query strings (0 of 926K rows
+  contain `?`), so any URL-param signal is invisible there too.
