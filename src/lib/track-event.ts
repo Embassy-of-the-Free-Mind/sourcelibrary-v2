@@ -35,7 +35,12 @@ export function trackEvent(
     // the last thing we can see — the gift itself lands in someone else's system
     // with no webhook back to us. Never treat the count as revenue.
     | 'donate_click'
-    | 'inquiry_click',
+    | 'inquiry_click'
+    // give_nav_click: a press on a control that navigates to /give, carrying
+    // `source` ('header' | 'footer'). The referrer cannot answer this — see the
+    // note in analytics-event-allowlist.ts. Relies on this function's sendBeacon
+    // transport to survive the navigation it triggers.
+    | 'give_nav_click',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;
