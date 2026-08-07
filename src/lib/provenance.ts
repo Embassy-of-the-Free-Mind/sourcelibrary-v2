@@ -124,3 +124,30 @@ export function verifyExport(
   if (!PROVENANCE_KEY) return null;
   return verifyProvenance(text, PROVENANCE_KEY);
 }
+
+/**
+ * Remove the zero-width provenance mark from text about to be handed to an
+ * agent for citation.
+ *
+ * The mark exists so that text scraped and republished can be traced back. An
+ * assistant quoting three sentences to a reader is not that threat — it is the
+ * case the library exists to serve — and the mark costs it something real: AI
+ * clients measured ~10–20% extra tokens on long pages, and the invisible
+ * characters survive a copy-paste into a document, where they corrupt the
+ * reader's own search and diffing (#3653 item 7).
+ *
+ * So the CITATION path strips and the BULK path does not. The signal is
+ * volume, not identity: one page is a citation, several hundred is a corpus
+ * pull, and only the second is worth marking.
+ *
+ * The cost of that trade, stated rather than buried: provenance applied only to
+ * bulk traffic is provenance we do not have on anything taken politely, one
+ * page at a time. Exports — PDF, /text, the corpus snapshot — therefore keep
+ * marking unconditionally. They are the actual extraction vector, and nobody
+ * pastes a 600-page PDF into a chat.
+ */
+const ZERO_WIDTH_MARK = /[​-‏⁠-⁤﻿]/g;
+
+export function stripProvenanceMarks(text: string | null | undefined): string {
+  return typeof text === 'string' ? text.replace(ZERO_WIDTH_MARK, '') : '';
+}

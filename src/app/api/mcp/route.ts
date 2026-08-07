@@ -5,6 +5,8 @@ import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import { classifyApiError } from '@/lib/mcp-errors';
+import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -65,7 +67,7 @@ async function searchLibrary(args: Record<string, unknown>) {
     published: r.published,
     has_doi: r.has_doi,
     ...(r.page_number ? { page_number: r.page_number } : {}),
-    ...(r.snippet ? { snippet: r.snippet, snippet_type: r.snippet_type } : {}),
+    ...(r.snippet ? { snippet: stripProvenanceMarks(r.snippet as string), snippet_type: r.snippet_type } : {}),
     url: r.page_number
       ? `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}?page=${r.page_number}`
       : `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
@@ -111,7 +113,7 @@ async function searchPassages(args: Record<string, unknown>) {
       snippet_language: snippetLanguage,
       published: r.published,
       page: r.page_number,
-      snippet: r.snippet,
+      snippet: stripProvenanceMarks(r.snippet as string),
       // snippet_type:
       //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
       //   'summary'             = AI-generated description (do NOT quote as the author's words)
@@ -159,7 +161,7 @@ async function searchConcept(args: Record<string, unknown>) {
     snippet_language: 'English',
     published: r.book_year,
     page: r.page_number,
-    snippet: r.snippet,
+    snippet: stripProvenanceMarks(r.snippet as string),
     // 'translation' = verbatim source text (safe to quote).
     // 'summary'     = AI-written page-continuity preamble we couldn't cleanly strip —
     //                 useful as topical evidence but DO NOT quote as the author's words.
@@ -188,9 +190,24 @@ async function searchWithinBook(args: Record<string, unknown>) {
     const best = matches?.find((m) => m.field === 'translation') || matches?.[0];
     const bookId = String(args.book_id);
     const pageNum = Number(r.pageNumber);
-    return { page: pageNum, snippet: best?.snippet, source: best?.field, match_count: matches?.length || 0, url: `https://sourcelibrary.org/book/${bookId}?page=${pageNum}`, short_url: bookId && pageNum ? getShortUrl(bookId, pageNum) : undefined };
+    return {
+      page: pageNum, snippet: stripProvenanceMarks(best?.snippet as string), source: best?.field, match_count: matches?.length || 0,
+      // Introduction / preface / contents rather than the body. Surfaced, not
+      // just used for ordering, so a caller can SEE why something ranks low —
+      // and so a reader who genuinely wants the translator's own words knows
+      // which results those are.
+      ...(r.is_front_matter ? { is_front_matter: true, front_matter_reason: r.reason } : {}),
+      url: `https://sourcelibrary.org/book/${bookId}?page=${pageNum}`,
+      short_url: bookId && pageNum ? getShortUrl(bookId, pageNum) : undefined,
+    };
   });
-  return { book_id: args.book_id, query: result.query, total: result.total, results, tip: 'Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.' };
+  const frontCount = Number(result.front_matter_results) || 0;
+  return {
+    book_id: args.book_id, query: result.query, total: result.total,
+    ...(frontCount ? { front_matter_results: frontCount } : {}),
+    results,
+    tip: `Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}`,
+  };
 }
 
 async function listBooks(args: Record<string, unknown>) {
@@ -219,8 +236,70 @@ async function getBook(args: Record<string, unknown>) {
     categories: result.categories, pages_count: result.pages_count,
     pages_translated: result.pages_translated, doi: result.doi,
     reading_summary: result.reading_summary, chapters: result.chapters,
+    work_id: result.work_id,
     url: `https://sourcelibrary.org/book/${result.slug || result.id}`,
     iiif_manifest: `https://sourcelibrary.org/api/iiif/${result.id}/manifest`,
+  };
+}
+
+/**
+ * Every edition of one work that we hold.
+ *
+ * Asked for in #3653 item 6: "list_books(search='Aristotle') returns 248
+ * heavily-duplicated results with no way to ask 'show me every witness to
+ * Politics I.2'." The witnesses were the session's most interesting finding —
+ * comparing Congreve 1855, a 15th-c. Greek MS and Bekker 1831 established that
+ * what circulates as Aristotle today is Bacon's 1625 reshaping.
+ *
+ * Cheap because the work layer already exists: 98.5% of live books carry a
+ * `work_id`. Its known limit is that on multi-work volumes the id names the
+ * CONTAINER — Bekker vol. 2 is `aristotle-aristotelis-opera`, not the
+ * Metaphysics — so for those this returns the other volumes of the set rather
+ * than other witnesses to one text. That is the `contains_works` gap (#3652 A),
+ * and it is stated in the response rather than hidden, because a caller that
+ * believes it is looking at witnesses when it is looking at a set will draw a
+ * wrong conclusion about the transmission.
+ */
+async function listEditions(args: Record<string, unknown>) {
+  let workId = args.work_id ? String(args.work_id) : '';
+  let seed: Record<string, unknown> | null = null;
+
+  if (!workId) {
+    if (!args.book_id) return { error: 'Provide either book_id or work_id.' };
+    seed = await apiGet(`/books/${args.book_id}`, new URLSearchParams({ pages: 'nav' })) as Record<string, unknown>;
+    workId = String(seed.work_id || '');
+    if (!workId) {
+      return {
+        book_id: args.book_id,
+        editions: [],
+        note: 'This book carries no work_id, so sibling editions cannot be identified. About 1.5% of live books are in this state.',
+      };
+    }
+  }
+
+  const result = await apiGet('/books/library', new URLSearchParams({ work_id: workId, limit: '50' })) as Record<string, unknown>;
+  const editions = ((result.books as Array<Record<string, unknown>>) || []).map((b) => ({
+    id: b.id,
+    title: b.display_title || b.title,
+    author: b.author,
+    language: b.language,
+    published: b.published,
+    pages_count: b.pages_count,
+    translation_percent: b.translation_percent,
+    is_first_translation: b.is_first_translation,
+    url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
+  }));
+
+  const container = /opera|works|complete|s[äa]mtliche|oeuvres|\bvol\b|volume/i.test(String(workId));
+  return {
+    work_id: workId,
+    ...(seed ? { seed_book: seed.display_title || seed.title } : {}),
+    total: result.total,
+    editions,
+    ...(container ? {
+      caveat: 'This work_id names a multi-volume COLLECTION, not a single work — so these are other volumes of the set, not other witnesses to one text. Per-work identification is not yet available (#3652).',
+    } : {}),
+    tip: 'Languages differ across editions: compare an original-language witness against a translation before concluding what an author wrote. A phrase present only in one English edition may belong to its translator.',
   };
 }
 
@@ -303,6 +382,17 @@ async function getQuote(args: Record<string, unknown>) {
   const quote = result.quote as Record<string, unknown> | undefined;
   const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
   const continuity = pageContinuity(quoteText);
+  // Strip the zero-width provenance mark on the CITATION path. See
+  // stripProvenanceMarks in src/lib/provenance.ts for why this and not
+  // get_book_text: one page is a citation, hundreds is a corpus pull.
+  if (quote && typeof quote.translation === 'string') quote.translation = stripProvenanceMarks(quote.translation);
+  if (quote && typeof quote.original === 'string') quote.original = stripProvenanceMarks(quote.original);
+  const ctx = result.context as Record<string, unknown> | undefined;
+  if (ctx) {
+    for (const k of ['previous_page', 'next_page']) {
+      if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
+    }
+  }
   const hint = continuityHint(continuity, Number(args.page));
 
   return {
@@ -335,9 +425,20 @@ async function getQuotes(args: Record<string, unknown>) {
     pageNums.map(async (page) => {
       try {
         const result = await apiGet(`/books/${bookId}/quote`, new URLSearchParams({ page: String(page) })) as Record<string, unknown>;
-        return withCitationLink(result);
+        // Same continuity signal get_quote returns. This is the tool where it
+        // matters MOST — a batch is how a caller assembles a multi-page dossier,
+        // which is exactly where a sentence running across a leaf gets quoted as
+        // though it were whole. Omitting it here was backwards.
+        const q = result.quote as Record<string, unknown> | undefined;
+        const continuity = pageContinuity(typeof q?.translation === 'string' ? q.translation : null);
+        if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
+        if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
+        const hint = continuityHint(continuity, page);
+        return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
-        return { page, error: err instanceof Error ? err.message : 'Failed to fetch page' };
+        // Per-page structured failure, so one untranslated page in a range does
+        // not read as the whole batch being broken.
+        return { page, ...classifyApiError(err) };
       }
     })
   );
@@ -579,6 +680,19 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'list_editions',
+    title: 'List Editions of a Work',
+    description: 'Every edition of one work that the library holds — the other witnesses to the same text, across languages and centuries. Give it a book_id (easiest: the id of any edition you already found) or a work_id. USE THIS when a quotation needs checking against more than one witness, when you want the original-language text behind a translation, or when comparing how a passage reads across editions — differences between witnesses are often the finding. Returns language, date, page count and translation coverage per edition, so you can pick the right one to read. Note: for multi-volume collected works the identifier names the SET rather than a single text, and the response says so explicitly when that applies.',
+    annotations: { title: 'List Editions of a Work', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        book_id: { type: 'string', description: 'Any edition you already have. Its work is looked up and the siblings returned.' },
+        work_id: { type: 'string', description: 'A work identifier, if you already have one (from get_book).' },
+      },
+    },
+  },
+  {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
     description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote.',
@@ -688,6 +802,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'search_within_book': return searchWithinBook(args);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
+    case 'list_editions': return listEditions(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args);
@@ -786,7 +901,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.4.0' },
+    { name: 'source-library', version: '4.5.0' },
     { capabilities: { tools: {} } },
   );
 
@@ -856,8 +971,15 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         tool: name, args: argsObj, ms: Date.now() - started, error: message,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
       });
+      // Structured, not prose. Ten separate AI-client reports (#3083) describe
+      // the same failure: an opaque string reads as a NON-DETERMINISTIC error,
+      // so the client falls back to general web search and tells the user the
+      // text "could not be retrieved" — a false statement about the corpus
+      // caused by a temporary rate limit. A code plus a recovery sentence lets
+      // the caller wait, authenticate, fall back, or give up honestly.
+      const payload = classifyApiError(error);
       return {
-        content: [{ type: 'text' as const, text: `Error: ${message}` }],
+        content: [{ type: 'text' as const, text: JSON.stringify(payload, null, 2) }],
         isError: true,
       };
     }
@@ -871,7 +993,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.4.0',
+    version: '4.5.0',
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),

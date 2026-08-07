@@ -6,6 +6,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBookReadable } from '@/lib/book-access';
 import { logSearchEvent } from '@/lib/search-event-log';
+import { frontMatterVerdict } from '@/lib/front-matter';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -17,6 +18,9 @@ interface SearchResult {
   pageId: string;
   pageNumber: number;
   matches: SearchMatch[];
+  /** Introduction / preface / contents rather than the body — see src/lib/front-matter.ts. */
+  is_front_matter?: boolean;
+  reason?: 'roman-pagination' | 'structural-header';
 }
 
 function escapeRegex(str: string): string {
@@ -191,10 +195,12 @@ export async function GET(
           }
 
           if (matches.length > 0) {
+            const ocrData = (page.ocr as { data?: string } | undefined)?.data;
             results.push({
               pageId: page.id as string,
               pageNumber: page.page_number as number,
-              matches
+              matches,
+              ...frontMatterVerdict(ocrData),
             });
           }
         }
@@ -210,9 +216,15 @@ export async function GET(
           // Look up page_type to drop boilerplate (title-page, blank, illustration, etc.)
           // — these have embeddings in Supabase but aren't real book content.
           const pageIds = filtered.map(p => p.page_id);
+          // Also pull the OCR so the same front-matter judgement can be made
+          // here. This is the path the report was actually about — "EVERY
+          // semantic search on a 400+ page book returned ~45 pages of front
+          // matter" — so flagging only the keyword path would fix the quieter
+          // half of the complaint.
           const pageTypeDocs = await db.collection('pages')
-            .find({ id: { $in: pageIds } }, { projection: { id: 1, page_type: 1 } })
+            .find({ id: { $in: pageIds } }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
             .toArray();
+          const ocrById = new Map(pageTypeDocs.map((d) => [d.id as string, (d.ocr as { data?: string } | undefined)?.data]));
           const badIds = new Set(
             pageTypeDocs
               .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
@@ -228,6 +240,7 @@ export async function GET(
                 snippet: p.snippet,
                 position: 0,
               }],
+              ...frontMatterVerdict(ocrById.get(p.page_id)),
             }));
         } catch {
           return [];
@@ -244,6 +257,19 @@ export async function GET(
         seenPages.add(sem.pageNumber);
       }
     }
+
+    // Front matter last. The reported failure was a conceptual query returning
+    // 50 consecutive hits from a translator's introduction and the publisher's
+    // advertising, with the wanted passage at result #52 (#3653 item 3).
+    // DEMOTED, never dropped: a reader searching for what the translator said
+    // about his own method is asking a real question, and the count stays
+    // honest. Stable within each group, so existing order is otherwise kept.
+    const bodyFirst = [
+      ...results.filter((r) => !r.is_front_matter),
+      ...results.filter((r) => r.is_front_matter),
+    ];
+    results.length = 0;
+    results.push(...bodyFirst);
 
     let ocrPages = 0;
     let translationPages = 0;
@@ -264,6 +290,7 @@ export async function GET(
       total: results.length,
       ocrPages,
       translationPages,
+      front_matter_results: results.filter((r) => r.is_front_matter).length,
       results
     });
   } catch (error) {

@@ -33,6 +33,21 @@ export const ALLOWED_EVENTS = new Set([
   // reaches it" were the same observation. Read them as intent, never revenue —
   // the gift lands in EFM's Stripe or NAF's DonorPerfect, not here.
   'donate_click', 'inquiry_click',
+  // give_nav_click: someone pressed a control that navigates TO /give (the header
+  // Support pill, the footer link). Fired at the control, not on arrival, because
+  // referrers cannot recover this: /api/track deliberately collapses self-referrals
+  // to 'direct', and Next's client-side navigation leaves document.referrer as the
+  // ORIGINAL external referrer — so a reader who came from Google and then clicked
+  // the pill is logged identically to one who typed the URL. Measured 2026-08-07,
+  // /give had 7 visits (4 'direct', 3 Google) and the field could not attribute a
+  // single one. Pairs with the /give pageview count (total arrivals) and
+  // donate_click (actual gives) to make a three-step funnel.
+  //
+  // `source` names the CONTROL ('header' | 'footer'), `url` its DESTINATION —
+  // they differ: the header pill goes to /give, the footer link to /support.
+  // Recording only the control would silently merge two funnels with different
+  // pages and different conversion odds.
+  'give_nav_click',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
