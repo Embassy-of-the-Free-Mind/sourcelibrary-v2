@@ -10,7 +10,9 @@ import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 import { toLibrarianFeedback, type LibrarianFeedback } from '@/lib/feedback-origin';
 import PendingChangesInbox from '@/components/catalog/PendingChangesInbox';
 import BphFeedbackList from '@/components/catalog/BphFeedbackList';
+import BphTaskBoard from '@/components/catalog/BphTaskBoard';
 import type { PendingRow } from '@/lib/catalog-inbox';
+import { listTasks, promotedFeedbackIds, type BphTask } from '@/lib/bph-tasks';
 
 /**
  * The catalogue Inbox: everything waiting for a librarian, in one place.
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-type Tab = 'edits' | 'feedback';
+type Tab = 'edits' | 'feedback' | 'board';
 
 interface Props {
   params: Promise<{ tenant: string }>;
@@ -53,7 +55,7 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
   if (tenant !== 'bph') notFound();
 
   const { tab } = await searchParams;
-  const active: Tab = tab === 'feedback' ? 'feedback' : 'edits';
+  const active: Tab = tab === 'feedback' ? 'feedback' : tab === 'board' ? 'board' : 'edits';
 
   const ctx = await getTenantContext();
   const base = catalogBasePath(ctx?.source ?? null, tenant);
@@ -128,9 +130,21 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
 
   const unreadFeedback = feedback.filter((f) => !f.read).length;
 
+  // --- Board ---
+  let tasks: BphTask[] = [];
+  let promoted: string[] = [];
+  try {
+    [tasks, promoted] = await Promise.all([listTasks(tenant), promotedFeedbackIds(tenant)]);
+  } catch (error) {
+    console.error('[inbox] tasks load failed:', error);
+  }
+
+  const openTasks = tasks.filter((t) => t.status !== 'shipped' && t.status !== 'declined').length;
+
   const tabs: Array<{ key: Tab; label: string; count: number }> = [
     { key: 'edits', label: 'Edits', count: edits.length },
     { key: 'feedback', label: 'Feedback', count: unreadFeedback },
+    { key: 'board', label: 'Board', count: openTasks },
   ];
 
   return (
@@ -181,13 +195,15 @@ export default async function CatalogInboxPage({ params, searchParams }: Props) 
               </p>
             </div>
           )
-        ) : feedbackError ? (
+        ) : active === 'feedback' && feedbackError ? (
           <div className="p-4 rounded-lg border border-accent-rust/40 bg-accent-rust/5 text-sm text-secondary">
             <p className="font-medium text-accent-rust mb-1">Could not load feedback</p>
             <p className="text-xs text-muted">{feedbackError}</p>
           </div>
+        ) : active === 'board' ? (
+          <BphTaskBoard tenant={tenant} initialTasks={tasks} basePath={base} />
         ) : feedback.length > 0 ? (
-          <BphFeedbackList rows={feedback} basePath={base} />
+          <BphFeedbackList rows={feedback} basePath={base} promotedFeedbackIds={promoted} tenant={tenant} />
         ) : (
           <div className="p-6 rounded-lg border border-border-light bg-white text-center text-muted text-sm">
             <p className="mb-2">

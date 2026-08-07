@@ -311,8 +311,8 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
       }
       const body = (await res.json()) as { mode?: 'applied' | 'queued' | 'created'; pendingId?: string; ubn?: string };
       if (body.mode === 'created') {
-        // New record is live. Land the cataloguer on it so they can see the
-        // entry they just made (and its first history row).
+        // Legacy path: kept in case an older deployment still applies creates
+        // directly. Land the cataloguer on the record they just made.
         const newUbn = body.ubn || createUbn.trim();
         router.push(`${base}/${encodeURIComponent(newUbn)}`);
         router.refresh();
@@ -370,9 +370,11 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
           banner is no longer conditional on role. Saying so up front matters:
           an editor who used to write straight through will otherwise expect
           the change to be live the moment they save. */}
-      {!isCreate && (
+      {(
         <div className="p-3 rounded-lg border border-accent-gold/50 bg-accent-gold/10 text-sm text-primary">
-          <p className="font-medium mb-0.5">Your changes go to the review queue</p>
+          <p className="font-medium mb-0.5">
+            {isCreate ? 'New records go to the review queue' : 'Your changes go to the review queue'}
+          </p>
           <p className="text-xs text-secondary">
             Saving does not change the live catalogue. Your proposal appears under{' '}
             <strong>Inbox → Edits</strong>, where a librarian can approve it, correct it first, or

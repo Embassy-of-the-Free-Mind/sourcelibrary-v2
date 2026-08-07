@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAuth } from '@/lib/auth-helpers';
 import {
-  applyWorkRevision,
   EDITABLE_BPH_FIELDS,
   BphCatalogError,
   type FieldChangeMap,
 } from '@/lib/bph-catalog';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
+import { supabaseAdmin } from '@/lib/supabase';
 
 /**
  * POST /api/[tenant]/catalog/create
@@ -24,7 +24,8 @@ import { getDb } from '@/lib/mongodb';
  *     note?: string
  *   }
  *
- * On success the new row is written via applyWorkRevision(changeType:'create'),
+ * On success the record is QUEUED as a pending 'create' for review; approval
+ * writes the row via applyWorkRevision(changeType:'create'),
  * which records a `create` revision in the same append-only history every edit
  * lands in. Returns { ok, mode:'created', ubn, revisionId, appliedAt }.
  *
@@ -165,24 +166,59 @@ export const POST = withAuth(
       );
     }
 
-    try {
-      const result = await applyWorkRevision({
-        ubn,
-        changeType: 'create',
-        fieldChanges,
-        editorEmail: userEmail,
-        note: typeof payload.note === 'string' ? payload.note : null,
-      });
-      return NextResponse.json({ ok: true, mode: 'created', ubn, ...result });
-    } catch (err) {
-      if (err instanceof BphCatalogError) {
-        const msg = err.message;
-        const status = msg.includes('already exists') ? 409 : msg.includes('not editable') ? 400 : 500;
-        return NextResponse.json({ error: msg }, { status });
-      }
-      console.error('[catalog/create] unexpected error:', err);
-      return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    // New records queue for review like every other change. A create is the
+    // one case where nothing exists to compare against, which is an argument
+    // for MORE review rather than less: an invented UBN or a duplicate of a
+    // record already in the catalogue is expensive to unpick afterwards.
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing' },
+        { status: 500 },
+      );
     }
+
+    // Refuse up front if the UBN is taken, rather than letting the proposal sit
+    // in the queue and fail at approval time.
+    const { data: existing } = await supabaseAdmin
+      .from('bph_works')
+      .select('ubn')
+      .eq('ubn', ubn)
+      .maybeSingle();
+    if (existing) {
+      return NextResponse.json(
+        { error: `UBN ${ubn} already exists in the catalogue` },
+        { status: 409 },
+      );
+    }
+
+    const { data: inserted, error: insertErr } = await supabaseAdmin
+      .from('bph_works_pending_changes')
+      .insert({
+        ubn,
+        change_type: 'create',
+        proposer_email: userEmail,
+        field_changes: fieldChanges,
+        note: typeof payload.note === 'string' ? payload.note : null,
+        status: 'pending',
+      })
+      .select('id, created_at')
+      .single();
+
+    if (insertErr || !inserted) {
+      console.error('[catalog/create] pending insert failed:', insertErr);
+      return NextResponse.json(
+        { error: insertErr?.message || 'Failed to queue the new record for review' },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      mode: 'queued',
+      ubn,
+      pendingId: (inserted as { id: string }).id,
+      createdAt: (inserted as { created_at: string }).created_at,
+    });
   },
   { minRole: 'editor' },
 );

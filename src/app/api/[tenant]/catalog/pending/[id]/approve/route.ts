@@ -84,16 +84,34 @@ export const POST = withAuth(
         { status: 409 },
       );
     }
-    if (row.change_type !== 'edit') {
-      // PR-D ships edit approvals only. Create / delete approvals come with
-      // PR-D2 once the UBN assignment flow is wired up.
+    if (row.change_type !== 'edit' && row.change_type !== 'create') {
       return NextResponse.json(
         { error: `change_type "${row.change_type}" approvals are not implemented yet` },
         { status: 400 },
       );
     }
     if (!row.ubn) {
-      return NextResponse.json({ error: 'Pending edit has no UBN' }, { status: 400 });
+      return NextResponse.json({ error: 'Pending change has no UBN' }, { status: 400 });
+    }
+
+    // A create can sit in the queue for a while, and in the meantime the UBN
+    // may have been taken — by another approval, or by a Memorix sync. Check
+    // now rather than letting applyWorkRevision fail after the pending row has
+    // already been stamped.
+    if (row.change_type === 'create') {
+      const { data: clash } = await supabaseAdmin
+        .from('bph_works')
+        .select('ubn')
+        .eq('ubn', row.ubn)
+        .maybeSingle();
+      if (clash) {
+        return NextResponse.json(
+          {
+            error: `UBN ${row.ubn} now exists in the catalogue — decline this proposal, or ask for it to be resubmitted under a free id`,
+          },
+          { status: 409 },
+        );
+      }
     }
 
     // 2. Merge any reviewer amendment over the proposal, then re-validate
@@ -148,7 +166,7 @@ export const POST = withAuth(
     try {
       const result = await applyWorkRevision({
         ubn: row.ubn,
-        changeType: 'edit',
+        changeType: row.change_type === 'create' ? 'create' : 'edit',
         fieldChanges,
         editorEmail,
         proposedBy: row.proposer_email,

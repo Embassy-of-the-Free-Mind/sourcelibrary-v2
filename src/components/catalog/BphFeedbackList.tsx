@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { MessageSquare, ExternalLink } from 'lucide-react';
+import { useMemo, useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { MessageSquare, ExternalLink, Check, Columns3 } from 'lucide-react';
 import type { LibrarianFeedback } from '@/lib/feedback-origin';
 
 /**
@@ -54,11 +55,48 @@ function ubnFromPage(page: string | null): string | null {
 export default function BphFeedbackList({
   rows,
   basePath,
+  tenant,
+  promotedFeedbackIds = [],
 }: {
   rows: LibrarianFeedback[];
   basePath: string;
+  tenant?: string;
+  /** Feedback already turned into a board card, so we don't offer it twice. */
+  promotedFeedbackIds?: string[];
 }) {
+  const router = useRouter();
   const [filter, setFilter] = useState<FilterKey>('all');
+  const [promoted, setPromoted] = useState<Set<string>>(() => new Set(promotedFeedbackIds));
+  const [busy, setBusy] = useState<string | null>(null);
+  const [, startTransition] = useTransition();
+
+  /**
+   * Turn a message into a board card. The feedback row is NOT modified: it
+   * stays an append-only record of what someone said, and the card is our
+   * decision about it, linked by feedback_id.
+   */
+  async function addToBoard(row: LibrarianFeedback) {
+    if (!tenant || promoted.has(row.id)) return;
+    setBusy(row.id);
+    try {
+      const res = await fetch(`/api/${tenant}/tasks`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          title: row.message.replace(/\s+/g, ' ').slice(0, 120),
+          body: row.message.length > 120 ? row.message : null,
+          feedbackId: row.id,
+          list: 'librarian',
+        }),
+      });
+      if (res.ok) {
+        setPromoted((s) => new Set(s).add(row.id));
+        startTransition(() => router.refresh());
+      }
+    } finally {
+      setBusy(null);
+    }
+  }
 
   const counts = useMemo(
     () => ({
@@ -132,15 +170,37 @@ export default function BphFeedbackList({
                       {row.embedded && <span>via embed</span>}
                     </div>
 
-                    {ubn && (
-                      <a
-                        href={`${basePath}/${encodeURIComponent(ubn)}`}
-                        className="mt-2 inline-flex items-center gap-1 text-xs text-accent-rust hover:underline"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        UBN {ubn}
-                      </a>
-                    )}
+                    <div className="mt-2 flex flex-wrap items-center gap-3">
+                      {ubn && (
+                        <a
+                          href={`${basePath}/${encodeURIComponent(ubn)}`}
+                          className="inline-flex items-center gap-1 text-xs text-accent-rust hover:underline"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          UBN {ubn}
+                        </a>
+                      )}
+                      {tenant &&
+                        (promoted.has(row.id) ? (
+                          <a
+                            href={`${basePath}/inbox?tab=board`}
+                            className="inline-flex items-center gap-1 text-xs text-muted hover:text-primary"
+                          >
+                            <Check className="w-3 h-3" />
+                            On the board
+                          </a>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => addToBoard(row)}
+                            disabled={busy === row.id}
+                            className="inline-flex items-center gap-1 text-xs text-secondary hover:text-primary disabled:opacity-50"
+                          >
+                            <Columns3 className="w-3 h-3" />
+                            {busy === row.id ? 'Adding…' : 'Add to board'}
+                          </button>
+                        ))}
+                    </div>
                     {!ubn && row.page && (
                       <p className="mt-2 text-xs text-muted">Sent from {row.page}</p>
                     )}

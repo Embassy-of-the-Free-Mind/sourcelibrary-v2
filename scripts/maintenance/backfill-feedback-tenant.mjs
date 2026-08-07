@@ -50,11 +50,53 @@ function isGlobalCatalogPath(page) {
   return GLOBAL_CATALOG_PREFIXES.some((p) => page === p || page.startsWith(`${p}/`));
 }
 
-/** Mirrors deriveSurface() in src/lib/feedback-origin.ts for these paths. */
-function surfaceForPage(page) {
-  if (page === '/catalog' || page === '/catalogue') return 'catalog';
-  if (page.startsWith('/catalog/') || page.startsWith('/catalogue/')) return 'catalog';
+/**
+ * Historical rows carry three different URL shapes for the same tenant,
+ * because the catalogue answers on the subdomain, on the /embed path, and on
+ * the /<tenant> path:
+ *
+ *   /catalog/17155/edit                 subdomain (proxy-rewritten)
+ *   /embed/bph/catalog/14143            embed path
+ *   /bph/book/<id>/page/<id>            tenant path, a reading surface
+ *
+ * Strip any `/embed/<tenant>` or `/<tenant>` prefix first, then classify what
+ * is left. Returns null when the path is not this tenant's.
+ */
+function stripTenantPrefix(page, tenant) {
+  if (page.startsWith(`/embed/${tenant}/`)) return page.slice(`/embed/${tenant}`.length);
+  if (page === `/embed/${tenant}`) return '/';
+  if (page.startsWith(`/${tenant}/`)) return page.slice(`/${tenant}`.length);
   return null;
+}
+
+/**
+ * Mirrors deriveSurface() in src/lib/feedback-origin.ts.
+ *
+ * `hadTenantPrefix` says the URL named the tenant explicitly, which is proof
+ * of tenancy. A bare `/catalog/...` is only BPH by inference — on the global
+ * site the same prefix exists — so it is accepted for catalogue paths (where
+ * the editor lives) but never for anything else.
+ */
+function classify(page, tenant) {
+  const stripped = stripTenantPrefix(page, tenant);
+  const hadTenantPrefix = stripped !== null;
+  const path = stripped ?? page;
+
+  if (isGlobalCatalogPath(path)) return null;
+
+  const isCatalogue =
+    path === '/catalog' ||
+    path === '/catalogue' ||
+    path.startsWith('/catalog/') ||
+    path.startsWith('/catalogue/');
+  if (isCatalogue) return { surface: 'catalog', certain: hadTenantPrefix };
+
+  if (!hadTenantPrefix) return null; // bare non-catalogue path proves nothing
+
+  if (path.startsWith('/book/') || path.startsWith('/read/')) {
+    return { surface: 'reader', certain: true };
+  }
+  return { surface: 'global', certain: true };
 }
 
 await withMongo(async (db) => {
@@ -67,10 +109,13 @@ await withMongo(async (db) => {
   };
 
   const totalUntagged = await fb.countDocuments(untagged);
+  // Cast wide in the query, decide in code. The previous regex here was
+  // `^/catalogue?(/|$)`, which requires the literal "catalogu" and so matched
+  // none of the real `/catalog/...` rows.
   const candidates = await fb
     .find({
       ...untagged,
-      page: { $regex: '^/catalogue?(/|$)' },
+      page: { $regex: `(^|/)(catalog|catalogue|${TENANT})(/|$)`, $options: 'i' },
     })
     .project({ _id: 1, page: 1, created_at: 1, message: 1 })
     .sort({ created_at: 1 })
@@ -80,16 +125,12 @@ await withMongo(async (db) => {
   const skipped = [];
   for (const row of candidates) {
     const page = row.page || '';
-    if (isGlobalCatalogPath(page)) {
-      skipped.push({ row, why: 'global-site catalogue route' });
+    const verdict = classify(page, TENANT);
+    if (!verdict) {
+      skipped.push({ row, why: 'not identifiable as this tenant' });
       continue;
     }
-    const surface = surfaceForPage(page);
-    if (!surface) {
-      skipped.push({ row, why: 'no surface derived' });
-      continue;
-    }
-    eligible.push({ row, surface });
+    eligible.push({ row, surface: verdict.surface, certain: verdict.certain });
   }
 
   const toWrite = LIMIT > 0 ? eligible.slice(0, LIMIT) : eligible;
@@ -111,12 +152,12 @@ await withMongo(async (db) => {
   }
 
   console.log('\nSample of what would be written:');
-  for (const { row, surface } of toWrite.slice(0, 15)) {
+  for (const { row, surface } of toWrite.slice(0, 40)) {
     const when = row.created_at ? new Date(row.created_at).toISOString().slice(0, 10) : '??';
     const msg = String(row.message || '').replace(/\s+/g, ' ').slice(0, 48);
-    console.log(`  ${when}  ${String(row.page).padEnd(30)} → ${TENANT}/${surface}  "${msg}"`);
+    console.log(`  ${when}  ${String(row.page).padEnd(42)} → ${TENANT}/${surface}  "${msg}"`);
   }
-  if (toWrite.length > 15) console.log(`  … and ${toWrite.length - 15} more`);
+  if (toWrite.length > 40) console.log(`  … and ${toWrite.length - 40} more`);
 
   if (!APPLY) {
     console.log('\nDry run. Re-run with --apply to write.\n');

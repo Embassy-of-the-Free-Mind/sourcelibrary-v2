@@ -145,7 +145,12 @@ export default function PendingChangesInbox({
   return (
     <ul className="space-y-3">
       {rows.map((row) => {
-        const title = row.ubn ? titlesByUbn[row.ubn] || `UBN ${row.ubn}` : '(new catalogue entry)';
+        const isCreate = row.change_type === 'create';
+        const title = isCreate
+          ? `New record — UBN ${row.ubn ?? '(unassigned)'}`
+          : row.ubn
+            ? titlesByUbn[row.ubn] || `UBN ${row.ubn}`
+            : '(new catalogue entry)';
         const fieldCount = Object.keys(row.field_changes).length;
         const isOpen = expanded.has(row.id);
         const isBusy = busyId === row.id;
@@ -162,7 +167,7 @@ export default function PendingChangesInbox({
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-primary truncate">{title}</p>
                   <p className="text-xs text-muted">
-                    {row.change_type} · {fieldCount} field{fieldCount === 1 ? '' : 's'} · {row.proposer_email} · {timeAgo(row.created_at)}
+                    {isCreate ? 'new record' : 'edit'} · {fieldCount} field{fieldCount === 1 ? '' : 's'} · {row.proposer_email} · {timeAgo(row.created_at)}
                   </p>
                 </div>
               </div>
@@ -193,7 +198,7 @@ export default function PendingChangesInbox({
                       <tr key={field} className="align-top">
                         <td className="py-2 pr-3 text-xs text-muted font-mono">{field}</td>
                         <td className="py-2 pr-3 text-primary line-through opacity-60 break-words">
-                          {formatValue(change.from)}
+                          {isCreate ? <span className="no-underline opacity-60">—</span> : formatValue(change.from)}
                         </td>
                         <td className="py-2 pr-3 text-primary break-words">
                           <input
