@@ -46,7 +46,11 @@ Two call sites, and only two:
 - `scripts/workers/identity-worker.mjs`, cron on Hetzner every 2h, which stamps
   any book missing the fields **however it was inserted** — this is what closes
   the 47-direct-insert-scripts hole, and it runs even while the pipeline is
-  paused (zero AI cost; the pause exists to stop paid work).
+  paused (zero AI cost; the pause exists to stop paid work). Since 2026-08-08 it
+  covers `books_warehouse` too (backfilled: 22,542 stamped, 100 unkeyable) —
+  import dedup queries the warehouse alongside the live library, so an unstamped
+  warehouse row is invisible to any identity-keyed tier. `stale_missing` in
+  `cron_runs` is the COMBINED count across both collections.
 
 Field convention: **absent = never computed** (the worker's queue), **null =
 computed, unkeyable** (stub title — a correct terminal state, not a gap). Never
