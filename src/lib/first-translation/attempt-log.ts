@@ -81,6 +81,19 @@ export interface FirstTranslationAttempt {
   cost_usd?: number;
   notes?: string;
   /**
+   * Version tag of the prompt that produced this attempt (e.g.
+   * 'ft-ladder-skeptic/v1-2026-08-08'). Required on every automated
+   * instrument's rows (#3778): without it a search result cannot be reproduced
+   * or superseded when the prompt changes — the July replicability gap.
+   */
+  prompt_version?: string;
+  /**
+   * Pointer into `first_translation_transcripts` (the attempt_id doubles as the
+   * key) when the full prompt + raw response + grounding metadata were
+   * persisted separately. The ledger row stays lean; the transcript endures.
+   */
+  transcript_ref?: string;
+  /**
    * The verifier's raw result string, preserved by the ingest
    * (ingest-ft-verify-results.mjs) alongside the coarse `result`. For a
    * demote-direction Tier-2 check, `'not_found'` means the agent went looking
