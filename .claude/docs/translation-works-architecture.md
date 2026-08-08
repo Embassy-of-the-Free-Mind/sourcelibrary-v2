@@ -5,6 +5,11 @@ status, the translation gap/registry, or first-translation claims. It's the map;
 the detailed docs (linked at the bottom) are the territory. Coordination home:
 issue **#2567**.
 
+*Being asked to justify this work rather than do it?* The argument — measured,
+with the reader-facing failure it causes and the counter-argument stated fairly —
+is [`identity-stack-rationale.md`](./identity-stack-rationale.md). Current
+execution plan: **#3730**.
+
 ## The one question, and why it bottoms out in identity
 
 Almost everything here is a *per-work* question:
