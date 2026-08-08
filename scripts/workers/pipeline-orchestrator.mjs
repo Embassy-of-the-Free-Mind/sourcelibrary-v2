@@ -3864,7 +3864,9 @@ Rules:
                 },
               },
             }},
-            { $sort: { _priority: 1, hidden: 1 } },
+            // processing_priority (#3756): explicit queue weight, higher first
+            // (absent sorts last under -1). Existing ordering kept as tiebreak.
+            { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
             { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
@@ -3969,7 +3971,8 @@ Rules:
               },
             },
           }},
-          { $sort: { _priority: 1, hidden: 1 } },
+          // processing_priority (#3756): explicit queue weight, higher first.
+          { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
@@ -4499,9 +4502,10 @@ Rules:
           }}}},
           { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
           { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
-          // Reader requests first (processing_priority 100, board-reader-requests.mjs #3750),
-          // then BPH priority until backlog cleared, then first translations, then speed tier.
-          // Descending sort puts books without the field last — no $addFields needed.
+          // processing_priority (#3756/#3750) leads: explicit queue weight, higher
+          // first (reader requests board at 100). Then BPH until backlog cleared,
+          // then first translations, then speed tier. Descending sort puts books
+          // without the field last.
           { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
@@ -4522,7 +4526,9 @@ Rules:
             }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
-            { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            // processing_priority + pages_translated must survive the projection
+            // for the sort below to see them (#3756).
+            { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },

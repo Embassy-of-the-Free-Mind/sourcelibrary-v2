@@ -38,6 +38,11 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
             ],
           },
         },
+        // Blank leaves carry the placeholder "[Blank page — no translatable
+        // content]", not a translation, and are already excluded from the
+        // denominator via `pages_blank` — counting them here is what pushed
+        // `translation_pct` over 100 on 6,228 live books. Mirror of the .mjs
+        // isTranslatedPage() rule; keep the two in step.
         with_translation: {
           $sum: {
             $cond: [
@@ -45,6 +50,7 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
                 { $ne: ['$translation.data', null] },
                 { $ne: ['$translation.data', ''] },
                 { $ifNull: ['$translation.data', false] },
+                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
               ] },
               1, 0,
             ],
