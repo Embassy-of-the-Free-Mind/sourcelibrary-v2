@@ -8,6 +8,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { editionYear } from '@/lib/dedup';
 import { formatYear, formatYearSpan } from '@/lib/format-year';
 import { canonWork, canonWorkForWorkId, workEditionsFilter, type CanonWork } from '@/lib/canon-works';
+import { workAliasTarget } from '@/lib/work-alias';
 import { authorUrl, bookUrl } from '@/lib/slugify';
 import { locusEdition } from '@/lib/locus-editions';
 import { jsonLdHtml } from '@/lib/json-ld';
@@ -275,6 +276,12 @@ export default async function WorkPage({ params }: PageProps) {
     // a raw work_id that belongs to a canon entry gets one stable address
     const owner = canonWorkForWorkId(id);
     if (owner) redirect(`/work/${owner.slug}`);
+    // a retired work_id (merged into another cluster, #3759) redirects to the
+    // survivor — old URLs stay citable. Checked BEFORE the editions query:
+    // a legacy work_slug equal to the retired id would otherwise keep
+    // rendering a fragment page. Indexed lookup (work_id_aliases_1).
+    const target = await workAliasTarget(await getReadDb(), id);
+    if (target) redirect(`/work/${encodeURIComponent(target)}`);
   }
 
   const editions = await getWorkEditions(id);
