@@ -832,7 +832,20 @@ export async function verifyFirstTranslationFromMetadata(
 export async function verifyFirstTranslation(
   db: Db,
   bookId: string,
-  options?: { dryRun?: boolean; force?: boolean; collection?: 'books' | 'books_warehouse'; triggered_by?: GeminiTrigger },
+  options?: {
+    dryRun?: boolean;
+    force?: boolean;
+    collection?: 'books' | 'books_warehouse';
+    triggered_by?: GeminiTrigger;
+    /**
+     * Also write `is_first_translation` (the public badge boolean). Default false:
+     * the badge is owned by scripts/maintenance/reconcile-first-translation-flag.ts,
+     * which applies verified-only gating; this function writes evidence
+     * (`translation_verification`) and returns the would-be flag for the caller.
+     * Only opt in for non-public collections (books_warehouse). See #3726.
+     */
+    writeBadge?: boolean;
+  },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
   const booksCol = options?.collection || 'books';
@@ -899,15 +912,11 @@ export async function verifyFirstTranslation(
     const previousVerification = book.translation_verification;
     const previousIsFirst = book.is_first_translation;
 
-    await db.collection(booksCol).updateOne(
-      { id: bookId },
-      {
-        $set: {
-          translation_verification: verification,
-          is_first_translation: isFirstTranslation,
-        },
-      },
-    );
+    const setFields: Record<string, unknown> = { translation_verification: verification };
+    if (options?.writeBadge) {
+      setFields.is_first_translation = isFirstTranslation;
+    }
+    await db.collection(booksCol).updateOne({ id: bookId }, { $set: setFields });
 
     // Log to gemini_usage
     await logGeminiCall({
@@ -934,7 +943,7 @@ export async function verifyFirstTranslation(
         new_value: { disposition: verification.disposition, confidence: verification.confidence, translations_found: verification.translations_found.length },
       });
     }
-    if (previousIsFirst !== isFirstTranslation) {
+    if (options?.writeBadge && previousIsFirst !== isFirstTranslation) {
       changes.push({
         field: 'is_first_translation',
         previous: previousIsFirst ?? null,

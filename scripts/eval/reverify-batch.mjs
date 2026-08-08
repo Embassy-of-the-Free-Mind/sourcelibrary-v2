@@ -147,6 +147,9 @@ async function main() {
           dryRun: DRY_RUN,
           force: true,
           collection: USE_WAREHOUSE ? 'books_warehouse' : 'books',
+          // Public badge stays with reconcile-first-translation-flag.ts (#3726);
+          // warehouse rows aren't public, so the flag write is allowed there.
+          writeBadge: USE_WAREHOUSE,
         });
 
         if (!result.success) {

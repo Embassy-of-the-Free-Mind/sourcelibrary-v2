@@ -135,6 +135,7 @@ async function main() {
             dryRun: DRY_RUN,
             force: false,
             collection: 'books_warehouse',
+            writeBadge: true, // warehouse only — not the public badge (#3726)
           });
           if (!result.success) {
             errors++;
