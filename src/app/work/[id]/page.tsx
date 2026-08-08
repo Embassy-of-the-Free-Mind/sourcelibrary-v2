@@ -6,6 +6,7 @@ import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { canonWork, canonWorkForWorkId, workEditionsFilter, type CanonWork } from '@/lib/canon-works';
+import { workAliasTarget } from '@/lib/work-alias';
 import { authorUrl, bookUrl } from '@/lib/slugify';
 import { locusEdition } from '@/lib/locus-editions';
 import { jsonLdHtml } from '@/lib/json-ld';
@@ -234,7 +235,13 @@ export default async function WorkPage({ params }: PageProps) {
   }
 
   const editions = await getWorkEditions(id);
-  if (editions.length === 0) notFound();
+  if (editions.length === 0) {
+    // a retired work_id (merged into another cluster, #3759) redirects to the
+    // surviving id's address instead of 404ing — old URLs stay citable
+    const target = await workAliasTarget(await getReadDb(), id);
+    if (target) redirect(`/work/${encodeURIComponent(target)}`);
+    notFound();
+  }
   const collected = canon ? await getCollectedEditions(canon) : [];
 
   const title = canon ? canon.title : workTitleFromEditions(editions as { work_title?: string | null }[], id);

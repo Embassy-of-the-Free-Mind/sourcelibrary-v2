@@ -29,6 +29,18 @@ NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
   + rare-token fallback for anonymous works. HIGH-confidence only is auto-written,
   always with a backup. Resolvers: `resolve-work-ids.mjs` (local `works` catalog —
   Sanskrit) and `resolve-work-ids-wikidata.mjs` (Wikidata P50 — Greek/Latin).
+- **Merging fragmented work_ids (#3759):** `scripts/maintenance/merge-work-clusters.mjs`
+  (run with `node --env-file`; it imports the canon registry). HIGH lanes — canon gold
+  seeds + identical-title — auto-write with backup; the containment fit rule only ever
+  QUEUES to `work_merge_queue` (status=pending, human review). Retired ids are kept on
+  every edition in **`books.work_id_aliases`** (indexed); `/work/[id]` resolves an alias
+  via `src/lib/work-alias.ts` and 307s to the survivor, so old URLs stay citable.
+  Provenance log: `work_id_merges`. Two hazards the tool guards, don't relax them:
+  ids SHARED between canon entries are combined volumes (Iliad+Odyssey), never merged;
+  and a work_id whose books carry >1 distinct title is POLLUTED — its representative
+  can't speak for it (the Ellis Yoruba/Tshi/Ewe case), so it is excluded from auto-merge.
+  After any apply, run `node scripts/workers/sync-books-catalog.mjs` (books_catalog
+  carries work_id).
 - Full design, tool list, per-tradition candidate coverage, and open levers:
   **`.claude/docs/work-identity-coverage.md`**.
 - **Acquiring works we're missing — read FIRST, don't reinvent:**

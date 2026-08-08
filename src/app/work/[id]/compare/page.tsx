@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import CompareClient from './CompareClient';
 import { canonWork, workEditionsFilter } from '@/lib/canon-works';
+import { workAliasTarget } from '@/lib/work-alias';
 
 // Must be a finite number — `false` would cache a bad render forever (same
 // rule as the parent work page; see CLAUDE.md on ISR + fallible fetches).
@@ -116,6 +117,11 @@ export default async function CompareWorkPage({ params }: PageProps) {
   const { id: rawId } = await params;
   const id = decodeURIComponent(rawId);
   const editions = await getEditionsForCompare(id);
+  if (editions.length === 0) {
+    // retired work_id (merged cluster, #3759) — follow the alias, keep old URLs alive
+    const target = await workAliasTarget(await getReadDb(), id);
+    if (target) redirect(`/work/${encodeURIComponent(target)}/compare`);
+  }
   if (editions.length < 2) notFound();
 
   const title = canonWork(id)?.title || workTitleFromEditions(editions, id);
