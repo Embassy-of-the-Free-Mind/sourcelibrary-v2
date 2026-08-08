@@ -34,6 +34,30 @@ export function hasTranslation(page) {
   return typeof data === 'string' && data !== '';
 }
 
+/** True iff the page is a blank leaf (flyleaf, endpaper, empty verso). */
+export function isBlankPage(page) {
+  return (page?.page_type ?? '') === 'blank';
+}
+
+/**
+ * True iff a page counts toward `pages_translated`.
+ *
+ * A blank leaf does NOT, even though it carries translation text: the
+ * translator writes the literal placeholder "[Blank page — no translatable
+ * content]" onto every blank page. Measured 2026-08-08, that was 87,777 pages
+ * — flyleaves and endpapers — counted as translations, 99.8% of them under 120
+ * characters.
+ *
+ * It also made `translation_pct` exceed 100 on 6,228 live books (32% of the
+ * public library), because blank pages are subtracted from the denominator
+ * (`pages_ocr - pages_blank`) while still being counted in the numerator. The
+ * Blue Qur'an reported **1000% translated**: 60 pages, 54 of them blank, over a
+ * denominator of 6.
+ */
+export function isTranslatedPage(page) {
+  return hasTranslation(page) && !isBlankPage(page);
+}
+
 /**
  * Aggregation pipeline that returns { total, with_ocr, with_translation }
  * for the VISIBLE pages of one book. Used by the batch collectors.
@@ -57,6 +81,9 @@ export function buildVisiblePageCountPipeline(bookId) {
             ],
           },
         },
+        // Mirrors isTranslatedPage(): blank leaves carry a placeholder, not a
+        // translation, and must not count here — they are already excluded
+        // from the denominator via `pages_blank`.
         with_translation: {
           $sum: {
             $cond: [
@@ -64,6 +91,7 @@ export function buildVisiblePageCountPipeline(bookId) {
                 { $ne: ['$translation.data', null] },
                 { $ne: ['$translation.data', ''] },
                 { $ifNull: ['$translation.data', false] },
+                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
               ] },
               1, 0,
             ],
@@ -84,6 +112,6 @@ export function countVisiblePageStats(pages) {
   return {
     total: visible.length,
     with_ocr: visible.filter(hasOcr).length,
-    with_translation: visible.filter(hasTranslation).length,
+    with_translation: visible.filter(isTranslatedPage).length,
   };
 }
