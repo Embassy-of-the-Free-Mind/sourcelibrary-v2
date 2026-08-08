@@ -32,6 +32,7 @@ import {
   contentHash,
   SKIP_TRANSLATION_PAGE_TYPES,
   isBlankFromOcr,
+  assessTranslationHealth,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -411,6 +412,20 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef) {
+  // Health gate (2026-08-08 relight incident): on the first live cohort, flash
+  // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
+  // OCR) and the worker wrote every one. Never persist a collapsed/runaway
+  // translation — stamp the page for the benchmark lane and move on. The
+  // page stays untranslated, which is the honest state.
+  const health = assessTranslationHealth(page.ocr?.data, text);
+  if (!health.healthy) {
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      { $set: { 'translation.health_blocked': health.reason, 'translation.health_blocked_at': new Date(), updated_at: new Date() } }
+    );
+    console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused`);
+    return { written: false, reason: health.reason };
+  }
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
     translation: {
@@ -435,6 +450,19 @@ async function writePageTranslation(db, page, text, book, promptRef) {
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
 async function bulkWritePageTranslations(db, entries, book, promptRef) {
+  // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
+  const unhealthy = [];
+  entries = entries.filter(({ page, text }) => {
+    const h = assessTranslationHealth(page.ocr?.data, text);
+    if (!h.healthy) { unhealthy.push({ page, reason: h.reason, len: (text || '').length }); return false; }
+    return true;
+  });
+  if (unhealthy.length > 0) {
+    await db.collection('pages').bulkWrite(unhealthy.map(({ page, reason }) => ({
+      updateOne: { filter: { id: page.id }, update: { $set: { 'translation.health_blocked': reason, 'translation.health_blocked_at': new Date(), updated_at: new Date() } } },
+    })), { ordered: false }).catch(() => {});
+    for (const u of unhealthy) console.log(`  [health-gate] ${u.page.id} p${u.page.page_number}: ${u.reason} (${u.len} chars) — write refused`);
+  }
   if (entries.length === 0) return;
   if (entries.length === 1) {
     return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
@@ -506,6 +534,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
+      'translation.health_blocked': { $exists: false },
       $or: [
         { 'translation.data': { $exists: false } },
         { 'translation.data': null },
@@ -1070,6 +1099,7 @@ async function selfDispatch(db, limit) {
         page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
+      'translation.health_blocked': { $exists: false },
         $or: [
           { 'translation.data': { $exists: false } },
           { 'translation.data': null },
