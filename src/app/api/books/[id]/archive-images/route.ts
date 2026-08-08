@@ -18,6 +18,17 @@ const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlun
  * Download images from external sources and upload to Vercel Blob.
  * Supports: Internet Archive, Gallica (BnF), MDZ (Bavarian State Library)
  * This makes images available even when source sites are down.
+ *
+ * Writes `archived_photo` (plus a thumbnail) per page and syncs the book's
+ * `pages_archived` counter — see the recount near the end of the handler for why that
+ * matters.
+ *
+ * KNOWN GAP, deliberate: this route does NOT generate `display_photo` variants, which is
+ * what the reader actually reads. The worker archivers do (via `uploadPageVariants`), so a
+ * book archived through this route has `archived_photo` on every page and no display
+ * variant, and falls back to the source URL until the display backfill sweep reaches it.
+ * That sweep is live and cursor-driven, so the gap closes on its own; it is recorded here
+ * only so the asymmetry is not mistaken for a bug in the reader.
  */
 export const POST = withAuth(async (request, session, context) => {
   try {
@@ -208,6 +219,26 @@ export const POST = withAuth(async (request, session, context) => {
         { photo_original: { $regex: ARCHIVABLE_SOURCES_REGEX } },
       ],
     });
+
+    // Record the work on the BOOK, not just on its pages (#3712).
+    //
+    // `books.pages_archived` is a cached count of pages holding an `archived_photo`,
+    // and selectors key on it rather than on the pages: archive-erara picks work with
+    // `pages_archived: { $not: { $gte: 1 } }`, and archiving-watchdog treats a book as
+    // progressing only when it is > 0. This route used to write `archived_photo` onto
+    // every page and never touch the book, so a book fully archived here still read 0 —
+    // permanently eligible for re-archiving, and a re-run re-downloaded every page from
+    // the source. That is the expensive half: full-bandwidth refetches against providers
+    // that rate-limit or block us.
+    //
+    // Set from the recount above, never an increment. The route is called repeatedly with
+    // `limit`, and the Cloudflare edge times out around 100s while the function keeps
+    // working to its 300s maxDuration — so callers legitimately retry work that in fact
+    // completed, and an increment would drift every time that happens.
+    await db.collection('books').updateOne(
+      { id: bookId },
+      { $set: { pages_archived: archivedPages, updated_at: new Date() } }
+    );
 
     const successCount = results.filter(r => r.success).length;
     const failedCount = results.filter(r => !r.success).length;
