@@ -28,6 +28,7 @@ interface BookRef {
   thumbnail_blob?: string;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
 }
 
 interface GalleryImage {
@@ -279,7 +280,7 @@ function SectionsBlock({ sections, books }: {
                       <AuthorName author={book.author} />{book.year ? `, ${book.year}` : ''}
                       {book.is_first_translation && (
                         <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                          {firstTranslationBadge(book.ft_disposition, book.language)}
+                          {firstTranslationBadge(book.ft_disposition, book.language, undefined, book.ft_claim)}
                         </span>
                       )}
                     </p>

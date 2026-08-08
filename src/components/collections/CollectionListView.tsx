@@ -23,6 +23,7 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   resource_type?: string;
 }
 
@@ -135,7 +136,7 @@ export default function CollectionListView({
                     </span>
                     {book.is_first_translation && (
                       <span className="inline-block ml-2 bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle">
-                        {firstTranslationBadge(book.ft_disposition, book.language)}
+                        {firstTranslationBadge(book.ft_disposition, book.language, undefined, book.ft_claim)}
                       </span>
                     )}
                     {/* Author on mobile (hidden on sm+) */}

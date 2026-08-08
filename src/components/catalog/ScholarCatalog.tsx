@@ -9,6 +9,7 @@ import {
 import AuthorName from '@/components/AuthorName';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { ftRenderProps } from '@/lib/first-translation/render';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 
 const PER_PAGE = 60;
@@ -40,6 +41,13 @@ interface BookItem {
   published?: string | null;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  // Raw graded-verdict projections from books_catalog (#3726 Tier 3);
+  // ftRenderProps resolves them into the badge register at render time.
+  ft_verdict?: string | null;
+  ft_evidence_strength?: string | null;
+  ft_our_completeness?: string | null;
+  ft_source_screen?: string | null;
+  ft_translator_screen?: string | null;
   image_source_provider?: string | null;
 }
 
@@ -625,7 +633,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                         </span>
                         {isPublishedFirstTranslation(book) && (
                           <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                            {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
+                            {(() => { const ft = ftRenderProps(book); return firstTranslationBadge(ft.disposition, book.language ?? undefined, undefined, ft.claim); })()}
                           </span>
                         )}
                       </div>
@@ -680,7 +688,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                           </Link>
                           {isPublishedFirstTranslation(book) && (
                             <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                              {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
+                              {(() => { const ft = ftRenderProps(book); return firstTranslationBadge(ft.disposition, book.language ?? undefined, undefined, ft.claim); })()}
                             </span>
                           )}
                           <CopyPermalink slug={book.slug} id={book.id} />
