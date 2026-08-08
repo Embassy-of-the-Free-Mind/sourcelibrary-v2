@@ -25,12 +25,19 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import {
+  getTranslateModelForBook,
+  loadTranslationPrompts,
+  buildTranslationPrompt,
+  writePageTranslation,
+} from '../lib/translate-core.mjs';
 
 // --- Config ---
-const TARGET_MODEL = 'gemini-3-flash-preview';
-const TARGET_PROMPT = 'v5.2026-02';
+// Model + prompt come from translate-core (issue #3725). This script used to
+// hardcode gemini-3-flash-preview for EVERY book — the same shape as the #482
+// bug that once tripled translation costs — and carried its own hardcoded
+// English modernization prompt with no provenance stamping.
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const SKIP_PAGE_TYPES = ['blank'];
 
@@ -77,8 +84,8 @@ function getNextKey() {
 }
 
 // --- Gemini API call ---
-async function callGemini(promptText, apiKey) {
-  const url = `${GEMINI_API_BASE}/models/${TARGET_MODEL}:generateContent?key=${apiKey}`;
+async function callGemini(promptText, apiKey, model) {
+  const url = `${GEMINI_API_BASE}/models/${model}:generateContent?key=${apiKey}`;
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -109,50 +116,12 @@ async function callGemini(promptText, apiKey) {
   };
 }
 
-// --- Translation prompt ---
-async function getTranslationPrompt(db) {
-  const prompt = await db.collection('prompts').findOne(
-    { type: 'translation', is_default: true },
-    { sort: { version: -1 } }
-  );
-  if (!prompt?.content) throw new Error('No default translation prompt found in DB');
-  console.log(`Translation prompt: ${prompt.name} v${prompt.version}`);
-  return prompt.content;
-}
-
-// English modernization prompt (hardcoded, same as in code)
-const ENGLISH_MODERNIZATION_PROMPT = `You are a specialist in Early Modern English (pre-1700). Your task is to modernize the following text into clear, contemporary English while preserving the author's meaning, tone, and intent.
-
-**Rules:**
-- Update archaic spelling, grammar, and vocabulary to modern equivalents
-- Preserve proper nouns, titles, and technical terms
-- Keep the paragraph structure intact
-- Do NOT summarize or abridge — modernize every sentence
-- If a passage is ambiguous, choose the most likely modern reading
-- Output ONLY the modernized text, no commentary`;
-
-function buildTranslationPrompt(basePrompt, ocrText, language, previousTranslation) {
-  const isEnglish = language.toLowerCase() === 'english';
-
-  let prompt;
-  if (isEnglish) {
-    prompt = ENGLISH_MODERNIZATION_PROMPT;
-    prompt += `\n\n**Text to modernize:**\n${ocrText}`;
-    if (previousTranslation) {
-      prompt += `\n\n**Previous page (modernized) for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
-    }
-  } else {
-    prompt = basePrompt
-      .replace('{language}', language)
-      .replace('{sourceLanguage}', language)
-      .replace('{targetLanguage}', 'English');
-    prompt += `\n\n**Text to translate:**\n${ocrText}`;
-    if (previousTranslation) {
-      prompt += `\n\n**Previous page translation for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
-    }
-  }
-
-  return prompt;
+// --- Translation prompts — DB-owned, loaded once via translate-core ---
+async function getPrompts(db) {
+  const prompts = await loadTranslationPrompts(db);
+  console.log(`Translation prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}`);
+  console.log(`Modernization prompt: ${prompts.english.ref.name} v${prompts.english.ref.version}`);
+  return prompts;
 }
 
 // --- Extract translation metadata (simplified) ---
@@ -167,8 +136,8 @@ function extractTranslationMetadata(text) {
 }
 
 // --- Process one book sequentially ---
-async function processBook(book, pages, basePrompt, db, globalStats) {
-  const language = book.language || book.original_language || 'Latin';
+async function processBook(book, pages, prompts, db, globalStats) {
+  const model = getTranslateModelForBook(book);
   let previousTranslation = null;
   let bookCompleted = 0, bookFailed = 0, bookSkipped = 0;
 
@@ -207,8 +176,10 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
     const startTime = Date.now();
 
     try {
-      const prompt = buildTranslationPrompt(basePrompt, page.ocr.data, language, previousTranslation);
-      const result = await callGemini(prompt, keyInfo.key);
+      const { prompt, promptRef } = buildTranslationPrompt({
+        prompts, book, ocrText: page.ocr.data, previousTranslation,
+      });
+      const result = await callGemini(prompt, keyInfo.key, model);
       const durationMs = Date.now() - startTime;
 
       if (!result.text || result.text.length < 5) {
@@ -228,36 +199,21 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
 
       const translationMeta = extractTranslationMetadata(result.text);
 
-      // Retain existing translation as a revision before overwriting (#3240) —
-      // no-op on first translation, fires in --stale mode re-translations.
-      await saveRevisionBeforeOverwrite(db, page.id, 'translation', { reason: 'retranslate_stale' });
-
-      await db.collection('pages').updateOne(
-        { id: page.id },
-        {
-          $set: {
-            translation: {
-              data: result.text,
-              language: 'English',
-              model: TARGET_MODEL,
-              updated_at: new Date(),
-              source: 'ai',
-              prompt_version: TARGET_PROMPT,
-            },
-            ...translationMeta,
-            updated_at: new Date(),
-          },
-        }
-      );
+      // The one door (translate-core): revision snapshot (#3240) + provenance-
+      // stamped write + counter-safe extras, in one call.
+      await writePageTranslation(db, {
+        page, book, text: result.text, promptRef, model,
+        note: 'retranslate_stale', extraSet: translationMeta,
+      });
 
       // Non-blocking usage log
       db.collection('gemini_usage').insertOne({
-        type: 'translate', mode: 'realtime', model: TARGET_MODEL,
+        type: 'translate', mode: 'realtime', model,
         book_id: book.id, page_ids: [page.id],
         input_tokens: result.usage.inputTokens,
         output_tokens: result.usage.outputTokens,
         status: 'success', duration_ms: durationMs,
-        prompt_version: TARGET_PROMPT,
+        prompt_version: String(promptRef?.version ?? ''),
         endpoint: 'scripts/realtime-translate.mjs',
         timestamp: new Date(),
       }).catch(() => {});
@@ -271,10 +227,10 @@ async function processBook(book, pages, basePrompt, db, globalStats) {
       const durationMs = Date.now() - startTime;
 
       db.collection('gemini_usage').insertOne({
-        type: 'translate', mode: 'realtime', model: TARGET_MODEL,
+        type: 'translate', mode: 'realtime', model,
         book_id: book.id, page_ids: [page.id],
         status: 'error', error_message: error.message?.substring(0, 200),
-        duration_ms: durationMs, prompt_version: TARGET_PROMPT,
+        duration_ms: durationMs,
         endpoint: 'scripts/realtime-translate.mjs', timestamp: new Date(),
       }).catch(() => {});
 
@@ -441,8 +397,8 @@ async function main() {
       return;
     }
 
-    // Get translation prompt
-    const basePrompt = await getTranslationPrompt(db);
+    // Get translation prompts (DB-owned)
+    const prompts = await getPrompts(db);
 
     // Process books in parallel batches
     const globalStats = {
@@ -459,7 +415,7 @@ async function main() {
       console.log(`\nBatch ${Math.floor(i / BOOK_CONCURRENCY) + 1}: ${bookNames.join(', ')}`);
 
       await Promise.allSettled(
-        batch.map(({ book, pages }) => processBook(book, pages, basePrompt, db, globalStats))
+        batch.map(({ book, pages }) => processBook(book, pages, prompts, db, globalStats))
       );
     }
 

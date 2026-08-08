@@ -182,6 +182,34 @@ export async function getTranslationPrompt(
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
 
   if (isEnglish && !options?.customText && !options?.name && !options?.id) {
+    // DB-first (#3725): the english_modernization prompt lives in the prompts
+    // collection — the same row translate-worker.mjs reads — so improving it
+    // never requires a deploy. This used to short-circuit to the hardcoded
+    // constant, silently forking the prompt for every English book processed
+    // through the API/Lambda paths. The constant remains only as a fallback
+    // so English books never fail closed on a DB hiccup.
+    try {
+      const db = await getDb();
+      const doc = await db.collection('prompts').findOne(
+        { type: 'english_modernization', is_default: true },
+        { sort: { version: -1 } }
+      );
+      if (doc?.content) {
+        const content = doc.content as string;
+        return {
+          text: content,
+          reference: {
+            id: doc._id?.toString() || 'unknown',
+            name: (doc.name as string) || 'English Modernization',
+            version: (doc.version as number) || 1,
+            content_hash: (doc.content_hash as string) || promptContentHash(content),
+          },
+        };
+      }
+    } catch (error) {
+      console.error('[prompts] Error fetching english_modernization prompt:', error);
+    }
+    console.warn('[prompts] No english_modernization prompt in DB, using hardcoded fallback');
     return {
       text: ENGLISH_MODERNIZATION_PROMPT,
       reference: {

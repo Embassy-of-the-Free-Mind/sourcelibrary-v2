@@ -7,6 +7,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { withAuth } from '@/lib/auth-helpers';
+import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -361,17 +362,20 @@ export const GET = withAuth(async (request, session, context) => {
           }
         );
 
-        // Update book's translation count
-        const translatedCount = await db.collection('pages').countDocuments({
-          book_id: bookId,
-          'translation.data': { $exists: true, $nin: [null, ''] }
-        });
-
+        // Update book counters with the canonical visible-pages convention
+        // (#3293) — the old count here included soft-hidden pages
+        // (page_number <= 0), drifting from every other writer.
+        const [counts] = await db.collection('pages')
+          .aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
         await db.collection('books').updateOne(
           { id: bookId },
           {
             $set: {
-              pages_translated: translatedCount,
+              ...(counts ? {
+                pages_count: counts.total,
+                pages_ocr: counts.with_ocr,
+                pages_translated: counts.with_translation,
+              } : {}),
               last_translation_at: new Date(),
               updated_at: new Date()
             }
