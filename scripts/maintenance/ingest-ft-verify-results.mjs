@@ -91,6 +91,12 @@ function buildPriors(r) {
       translator: t.translator || undefined,
       pub_year: t.pub_year != null ? String(t.pub_year) : undefined,
       completeness: t.completeness || completenessFor(r.result),
+      // The judgement that decides whether this prior DEFEATS the claim. See
+      // PriorRelationship in types.ts. Carried through because dropping it is
+      // what let a prior verified as translating a different witness be read as
+      // a defeater — Kerns 2008 renders Yonge's Middle English, not the Latin
+      // Secretum secretorum, and the badge came off anyway (2026-08-08).
+      relationship: t.relationship || undefined,
       source_url: t.source_url || r.evidence_url || undefined,
     }));
   }
@@ -102,6 +108,7 @@ function buildPriors(r) {
       translator: t.translator || undefined,
       pub_year: t.year != null && t.year !== 0 ? String(t.year) : (t.pub_year != null ? String(t.pub_year) : undefined),
       completeness: t.completeness || completenessFor(r.result),
+      relationship: t.relationship || undefined,
       source_url: t.source_url || r.evidence_url || undefined,
     }));
   }
