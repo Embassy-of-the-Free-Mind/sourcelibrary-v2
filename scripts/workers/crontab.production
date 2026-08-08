@@ -144,3 +144,5 @@
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
 # Stage coverage snapshot — nightly semantic monitoring, coverage from data not job counters (#3756). Supervised runs 2026-08-08; page-level counts need the long socket timeout.
 15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
+# Author canonical-link convergence (#3769/#3756) — link books.author -> authors._id where unambiguous; live-only default (backlog inclusion is the #3780 decision)
+40 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
