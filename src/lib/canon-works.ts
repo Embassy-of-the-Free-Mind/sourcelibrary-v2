@@ -1,10 +1,17 @@
 /**
  * Canon works registry — hand-curated landing slugs for major ancient works.
  *
- * Why this exists: the same work is fragmented across several `books.work_id`
- * values (Wikidata QIDs, minted `local:…` ids, legacy clean slugs — the Iliad
- * alone spans four). A canon slug aggregates those verified clusters into one
- * stable reading address: /work/iliad. See issue #3736.
+ * Why this exists: the same work used to be fragmented across several
+ * `books.work_id` values (Wikidata QIDs, minted `local:…` ids, legacy clean
+ * slugs — the Iliad alone spanned four). A canon slug aggregates verified
+ * clusters into one stable reading address: /work/iliad. See issue #3736.
+ *
+ * Since the #3759 merge (2026-08-08) each fragmented cluster has ONE surviving
+ * work_id; retired ids live in `books.work_id_aliases` and /work/[id] 307s
+ * them to the survivor, so entries here hold a single id unless the extra ids
+ * are genuinely distinct works (combined Iliad+Odyssey volumes). Run
+ * `scripts/maintenance/merge-work-clusters.mjs` before adding a multi-id
+ * entry — the merge is usually the right move, not a longer array.
  *
  * Rules for adding an entry:
  * - Every id in `workIds`/`collectedWorkIds` must be VERIFIED against
@@ -56,7 +63,10 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Homer',
     era: 'c. 8th century BCE',
     originalLanguage: 'Greek',
-    workIds: ['Q125518202', 'Q16547641', 'homer-homer-iliad-odyssey', 'Q19090449'],
+    // Q125518202 merged into Q16547641 (2026-08-08, #3759); the two remaining
+    // extra ids are combined Iliad+Odyssey volumes, shared with the Odyssey
+    // entry on purpose — they are their own work_id, never merged.
+    workIds: ['Q16547641', 'homer-homer-iliad-odyssey', 'Q19090449'],
     collectedWorkIds: HOMER_COLLECTED,
   },
   {
@@ -97,7 +107,7 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Plato',
     era: 'c. 360 BCE',
     originalLanguage: 'Greek',
-    workIds: ['Q371884', 'plato-timaeus'],
+    workIds: ['Q371884'], // plato-timaeus merged in (2026-08-08, #3759)
     collectedWorkIds: PLATO_COLLECTED,
     locus: { system: 'stephanus', workSlug: 'timaeus', example: '29d' },
   },
@@ -169,13 +179,7 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Herodotus',
     era: 'c. 430 BCE',
     originalLanguage: 'Greek',
-    workIds: [
-      'Q746583',
-      'local:n:herodotus:histories',
-      'local:a:herodotus:1-2-persian-wars',
-      'local:a:herodotus:historiae',
-      'local:a:herodotus:histories-works',
-    ],
+    workIds: ['Q746583'], // 4 local fragment ids merged in (2026-08-08, #3759)
   },
   {
     slug: 'meditations',
@@ -193,7 +197,7 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Euclid',
     era: 'c. 300 BCE',
     originalLanguage: 'Greek',
-    workIds: ['Q172891', 'local:a:euclid:elements'],
+    workIds: ['Q172891'], // local:a:euclid:elements merged in (2026-08-08, #3759)
   },
   {
     slug: 'aeneid',
@@ -221,7 +225,7 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Lucretius',
     era: 'c. 55 BCE',
     originalLanguage: 'Latin',
-    workIds: ['Q137592632', 'local:a:titus-lucretius:natura-rerum'],
+    workIds: ['Q137592632'], // local natura-rerum id merged in (2026-08-08, #3759)
   },
   {
     slug: 'consolation-of-philosophy',
@@ -230,7 +234,7 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Boethius',
     era: '524 CE',
     originalLanguage: 'Latin',
-    workIds: ['Q138752489', 'local:n:boethius:consolation-philosophy'],
+    workIds: ['Q138752489'], // local consolation id merged in (2026-08-08, #3759)
   },
   {
     slug: 'epistulae-morales',
@@ -239,10 +243,8 @@ export const CANON_WORKS: CanonWork[] = [
     author: 'Seneca',
     era: 'c. 65 CE',
     originalLanguage: 'Latin',
-    workIds: [
-      'seneca-epistulae-morales',
-      'local:a:seneca:ad-add-buschius-epistolae-hermannus-lucilium-senecae-vita',
-    ],
+    // seneca-epistulae-morales merged in (2026-08-08, #3759)
+    workIds: ['local:a:seneca:ad-add-buschius-epistolae-hermannus-lucilium-senecae-vita'],
   },
 ];
 
