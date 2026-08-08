@@ -283,8 +283,14 @@ async function processBook(book, pages, prompts, db, globalStats) {
     try {
       // VISIBLE pages only (page_number > 0). Soft-hidden pages never render, so
       // counting them corrupts the visible-only read-path convention (issue #3293).
+      // page_type != 'blank' mirrors isTranslatedPage() in lib/page-counts.mjs:
+      // a blank leaf carries the placeholder "[Blank page — no translatable
+      // content]" and must not count as translated, or `translation_pct`
+      // exceeds 100 (blank pages are subtracted from its denominator).
       const translatedCount = await db.collection('pages').countDocuments({
-        book_id: book.id, ...VISIBLE_PAGE_MATCH, 'translation.data': { $exists: true, $ne: '' }
+        book_id: book.id, ...VISIBLE_PAGE_MATCH,
+        'translation.data': { $exists: true, $ne: '' },
+        page_type: { $ne: 'blank' },
       });
       await db.collection('books').updateOne(
         { id: book.id },

@@ -55,6 +55,8 @@ import {
   buildTranslationPrompt,
   writePageTranslation,
   syncBookTranslationCounters,
+  assessTranslationHealth,
+  bodyLen,
 } from '../lib/translate-core.mjs';
 
 function getModelForBook(book) {
@@ -76,36 +78,11 @@ const aiClient = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.lengt
 
 import { sanitizeTranslationTags } from '../lib/translate-core.mjs';
 
-// ── collapse-guard body measurement (mirror of detect-translation-collapse.mjs) ──
-const BLOCK_TAGS = ['meta','image-desc','vocab','summary','keywords','warning','note',
-  'scan-quality','language','page-type','page-num','header','sig','insert','columns','script'];
-const blockRe = new RegExp(`<(${BLOCK_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
-const looseRe = new RegExp(`</?(${BLOCK_TAGS.join('|')})\\b[^>]*>`, 'gi');
-function bodyLen(text) {
-  if (!text) return 0;
-  return String(text).replace(blockRe, ' ').replace(looseRe, ' ')
-    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim().length;
-}
-// Collapse = the translation BODY is genuinely short in absolute terms (empty or
-// a sliver). The absolute cap is essential: dense pages and pages with huge/
-// artifact-inflated OCR have a low body RATIO but a perfectly adequate translation
-// — they are NOT collapses. (Verified 2026-06-16: ratio-only flagged ~20% false
-// positives from oversized OCR denominators.)
-const COLLAPSE_ABS_CAP = 800;
-const isCollapsed = (ocr, tr) => {
-  const ob = bodyLen(ocr), tb = bodyLen(tr);
-  if (ob < 400) return false;
-  if (tb >= COLLAPSE_ABS_CAP) return false;
-  return tb / ob < 0.3 || (/continued from previous page/i.test(tr || '') && tb < 60);
-};
-// Runaway / repetition loop: translation body far longer than its own OCR body.
-// Body-based to avoid false positives on low-OCR pages (headers, image-only).
-const isExcess = (ocr, tr) => {
-  if ((tr || '').length > 20000) return true;
-  const ob = bodyLen(ocr), tb = bodyLen(tr);
-  return ob >= 300 && tb > ob * 3;
-};
-const isBad = (ocr, tr) => isCollapsed(ocr, tr) || isExcess(ocr, tr);
+// ── collapse/runaway detection now lives in translate-core (#3756) ──
+// The local copies this file carried were extracted into
+// assessTranslationHealth(ocrText, translationText) so every writer shares
+// one definition of "is this translation plausibly real?".
+const isBad = (ocr, tr) => !assessTranslationHealth(ocr, tr).healthy;
 // Smaller = healthier. 0 when translation body ≈ OCR body.
 const badnessScore = (ocr, tr) => {
   const ob = bodyLen(ocr) || 1, tb = bodyLen(tr) || 1;
@@ -196,12 +173,16 @@ await withMongo(async (db) => {
     // a non-Latin page where flash also loops/collapses), keep the existing text —
     // replacing a bad translation with another bad one wastes tokens and gains
     // nothing. These pages need a benchmark, not a blind re-run.
+    // (refuseUnhealthy below makes the door itself enforce this too.)
     if (isBad(page.ocr.data, best.text)) { stillBad++; return; }
 
-    // The one door: revision snapshot + provenance-stamped write (translate-core).
+    // The one door: revision snapshot + provenance-stamped write (translate-core),
+    // with the semantic health gate armed (#3756).
     const w = await writePageTranslation(db, {
       page, book, text: best.text, promptRef: best.promptRef, model, note: 'anomaly-fix',
+      refuseUnhealthy: true,
     });
+    if (w.unhealthy) { stillBad++; return; }
     if (w.protected) {
       // Human-edited page — the door refused (correctly). Never count as fixed.
       console.log(`  ⛨ ${book.id} p${t.page_number}: human-edited, left untouched`);
