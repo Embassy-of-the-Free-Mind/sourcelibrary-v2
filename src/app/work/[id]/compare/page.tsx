@@ -5,8 +5,11 @@ import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import CompareClient from './CompareClient';
 import { editionYear } from '@/lib/dedup';
+import { canonWork, workEditionsFilter } from '@/lib/canon-works';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad render forever (same
+// rule as the parent work page; see CLAUDE.md on ISR + fallible fetches).
+export const revalidate = 21600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
@@ -54,7 +57,7 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
   const editions = await db
     .collection('books')
     .find(
-      { $or: [{ work_slug: workId }, { work_id: workId }], visible: true },
+      workEditionsFilter(workId),
       {
         projection: {
           id: 1,
@@ -110,7 +113,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id: rawId } = await params;
   // Decode non-ASCII work_id (CJK / accented) before use — see /work/[id]/page.tsx.
   const id = decodeURIComponent(rawId);
-  const title = workTitle(id);
+  const title = canonWork(id)?.title || workTitle(id);
   return {
     title: `Compare Translations — ${title} | Source Library`,
     description: `Compare translations across editions of ${title}. View original language texts alongside AI and human translations side by side.`,
@@ -125,7 +128,7 @@ export default async function CompareWorkPage({ params }: PageProps) {
   const editions = await getEditionsForCompare(id);
   if (editions.length < 2) notFound();
 
-  const title = workTitleFromEditions(editions, id);
+  const title = canonWork(id)?.title || workTitleFromEditions(editions, id);
   const translatedEditions = editions.filter((e) => e.pages_translated > 0);
 
   return (

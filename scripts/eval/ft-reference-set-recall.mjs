@@ -22,10 +22,21 @@
  * answer to. That number is worthless and must never be quoted.
  *
  * So the honest measure is CATALOGUE-ONLY recall: re-derive each verdict from the
- * candidates that came from LoC and Wikidata alone, and ask how often those
- * catalogues independently surface a prior we know exists. That is directly
- * comparable to the 22.0% baseline of 2026-07-31 and is the number that moves
- * when the matcher genuinely improves.
+ * candidates that came from the external bibliographic catalogues alone —
+ * whatever `CATALOGUE_SOURCES` currently lists — and ask how often those
+ * catalogues independently surface a prior we know exists. It is the number that
+ * moves when the matcher genuinely improves, or when a source is added.
+ *
+ * Measured baselines, so a run can be read against its own history:
+ *   22.0%  2026-07-31  LoC + Wikidata, before MARC 240 containment
+ *   27.0%  2026-08-01  after 240 uniform-title containment (#3459)
+ *   32.1%  2026-08-07  after adding ESTC (#3522) — 22,538 rows, +16% set size,
+ *                      contributing 8,325 candidates across 986 efforts
+ *
+ * ⚠️ ADDING A SOURCE MEANS ADDING IT TO `CATALOGUE_SOURCES`. Leaving it out
+ * computes "catalogue-only" over a definition that excludes the catalogue you
+ * just added, so the number cannot move and reads as "that source contributed
+ * nothing." The printed header is derived from the set for the same reason.
  *
  * The combined figure is still worth printing, because it is what an effort
  * actually says about a book today — but it measures COVERAGE (do we hold any
@@ -144,10 +155,21 @@ await withMongo(async (db) => {
     return pct;
   };
 
+  // The label is DERIVED from the set, never hand-written. A hard-coded
+  // "(LoC + Wikidata)" survived the addition of ESTC and printed a header that
+  // named two sources while the number behind it counted three — the exact trap
+  // this subsystem keeps hitting: a metric's name is a claim about its
+  // denominator, and a stale name is a false claim. Anyone reading that output
+  // would have concluded ESTC contributed nothing.
+  const catalogueNames = [...CATALOGUE_SOURCES]
+    .map((s) => ({ loc_mdsconnect: 'LoC', wikidata: 'Wikidata', estc: 'ESTC' }[s] ?? s))
+    .join(' + ');
+
   const catalogue = report(
-    'CATALOGUE-ONLY (LoC + Wikidata) — the honest number',
+    `CATALOGUE-ONLY (${catalogueNames}) — the honest number`,
     (c) => CATALOGUE_SOURCES.has(c.source),
-    'Comparable to the 22.0% baseline of 2026-07-31. This is the one to quote.',
+    'Baselines: 22.0% (2026-07-31, LoC+Wikidata pre-240) → 27.0% (2026-08-01, after MARC 240\n'
+    + '  uniform-title containment) → this run. This is the one to quote.',
   );
 
   report(

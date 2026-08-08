@@ -29,6 +29,7 @@ interface AuthorBook {
   translation_percent?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   publisher?: string;
   place_of_publication?: string;
 }
@@ -137,7 +138,7 @@ export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
                         </span>
                         {book.is_first_translation && (
                           <span className="inline-block ml-2 bg-accent-gold/15 text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle" style={{ color: 'var(--accent-gold-dark)' }}>
-                            {firstTranslationBadge(book.ft_disposition, book.language)}
+                            {firstTranslationBadge(book.ft_disposition, book.language, undefined, book.ft_claim)}
                           </span>
                         )}
                         {hasOriginalTitle && (

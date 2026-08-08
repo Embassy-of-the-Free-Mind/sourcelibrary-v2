@@ -2,7 +2,19 @@
 
 Operational reference for pipeline monitoring, debugging, and processing. For full architecture details, see `.claude/docs/pipeline-architecture.md`.
 
-## Where Everything Runs (snapshot 2026-05 — verify if older than ~30 days)
+## Where Everything Runs
+
+> **Reality check (2026-08-08):** the table below describes the ORCHESTRATED
+> era and much of it is dormant. Verified against the live Hetzner crontab:
+> the main `pipeline-orchestrator.mjs` loop is **not scheduled at all** (only
+> `--phase 9` finalize runs, every 15 min), `translate-worker.mjs` is **not
+> running**, and enrich-worker is idle with the pipeline paused. What IS live:
+> the finalize tail, `collect-batch-results.mjs` (every 30 min, #3717 — batch
+> result collection), archiving/acquisition crons, and the daily health alert.
+> Processing happens per-book via the batch routes (see `translating-a-book.md`).
+> Shared translation logic now lives in `scripts/lib/translate-core.mjs` (the
+> "one door": model routing, DB prompts, revision-before-overwrite, counter
+> sync — issue #3725); any new translation writer must import it.
 
 | Component | Where | How |
 |-----------|-------|-----|
@@ -32,6 +44,27 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 | Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 
+## The Budget Dial (#3737)
+
+Spend is a **number**, not a switch. `system_config.processing_control.daily_budget_usd`
+is the ceiling for paid dispatch; `scripts/lib/spend-guard.mjs` gates orchestrator
+Phase 2 (OCR submit) and Phase 4 (translation dispatch) against today's measured
+`gemini_usage` spend (UTC day, ObjectId-range — the `timestamp` field is a string on
+old rows). **Default-closed:** unset/null/0 means NO paid dispatch even when
+`paused: false` — flipping the old pause flag can no longer reopen unbounded spending.
+In-flight work always finishes; `--phase N --book=ID` operator runs bypass the dial
+exactly as they bypass the pause. Enrichment (Phases 6–7) isn't gated directly but its
+spend counts toward the measured total, and its volume is downstream of gated phases.
+`cost_usd` is a computed estimate and some rows lack it → the guard can UNDERCOUNT;
+treat the ceiling as a brake, not accounting. The guard logs `spend $X / $Y` every cycle.
+
+**To turn the line on (Derek):**
+1. Set the dial: `db.system_config.updateOne({_id:'processing_control'}, {$set:{daily_budget_usd: 5}})` — start at $5/day.
+2. Unpause: `{$set:{paused:false}}` (same doc).
+3. Re-add the scheduler line to the live Hetzner crontab — it already exists in `scripts/workers/crontab.production` line 20 (`*/2 * * * * … scheduler.mjs`); the live crontab lost it during the pause era.
+4. Watch `/var/log/sourcelibrary/scheduler.log` + `pipeline.log` for the `[spend-guard]` lines; first candidates processed should be `loop_quarantine_hold` books once those are re-enrolled.
+5. Failure at step 4 = no `[spend-guard]` line at all → the box hasn't pulled main yet (auto-pull ~5 min) or the crontab line didn't take (`crontab -l | grep scheduler`).
+
 ## Emergency Controls
 
 - **Stop all:** Set `system_config._id: 'processing_control'` → `paused: true`
@@ -52,7 +85,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 ## Critical Rules
 
-- NEVER use Gemini Batch API for translation — lacks cross-page context. Use `translate-worker.mjs` (Hetzner) or Lambda FIFO (fallback).
+- **Batch-API translation: banned for bulk, sanctioned for one-off books — know why.** Sequential translation (translate-worker, Lambda FIFO) feeds each page's finished translation into the next page's prompt; that chain is what keeps cross-page sentences and terminology coherent, and the Batch API cannot provide it. The per-book route `batch-translate-async` (the `translating-a-book.md` path) IS Batch-API translation: each page is translated independently, with no previous-page context — a deliberate cost/coherence tradeoff acceptable for a single requested book, wrong for bulk reprocessing. (The Feb 18 incident — 17K wrong translations — was a separate bug: batch results matched by array index instead of `metadata.key`; that part is fixed.) So: bulk → sequential worker; one-off → batch route; never claim the two produce equivalent quality.
 - **Translation prompt source of truth is the DB `prompts` collection** (type: 'translation', is_default: true). Both workers read it once per run and cache. Never hardcode prompts in worker files. To update the prompt, update the DB — no code deploy needed.
 - **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first

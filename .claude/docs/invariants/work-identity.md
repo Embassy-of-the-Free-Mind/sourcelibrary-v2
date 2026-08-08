@@ -6,6 +6,9 @@
 
 ---
 
+**Why this layer earns maintenance at all: `.claude/docs/identity-stack-rationale.md`**
+(measured; the reader-facing failure, the compounding cost, and the case against).
+
 **Start with the architecture map: `.claude/docs/translation-works-architecture.md`**
 — it ties together work identity, the #2453 catalog, the translation gap/registry,
 holdings, and first-translation into one stack (coordination home: #2567).

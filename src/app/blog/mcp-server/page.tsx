@@ -50,7 +50,7 @@ export default function McpServerPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Today we&apos;re releasing an{' '}
           <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP server</a>
-          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations, a cross-book entity knowledge graph, and 90,000+ extracted illustrations.
+          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations and 110,000+ extracted illustrations.
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
@@ -59,7 +59,7 @@ export default function McpServerPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           <a href="https://modelcontextprotocol.io/" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP</a>
-          {' '}(Model Context Protocol) is an open standard that lets AI assistants connect to external data sources. Instead of pasting text into a chat window, you give Claude a set of tools &mdash; and it decides when and how to use them. Our server provides 11 tools covering search, full-text reading, entity lookup, academic citation, and image retrieval.
+          {' '}(Model Context Protocol) is an open standard that lets AI assistants connect to external data sources. Instead of pasting text into a chat window, you give Claude a set of tools &mdash; and it decides when and how to use them. The server now provides 15 tools covering search, full-text reading, verbatim citation, canonical-reference lookup, and image retrieval &mdash; plus ways to contribute findings back. <em>(This post has been updated as the toolset has grown since launch; the list below is current.)</em>
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -87,7 +87,7 @@ export default function McpServerPage() {
 
         <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
           <p className="text-stone-700 italic mb-2">&ldquo;Find everything about Hermes Trismegistus in the collection. What books mention him, and how does his treatment change across traditions?&rdquo;</p>
-          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_entities</code> &rarr; <code className="text-accent-rust">get_entity</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">search_within_book</code> &rarr; <code className="text-accent-rust">get_quotes</code></p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -146,7 +146,7 @@ export default function McpServerPage() {
 
         <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
           <p className="text-stone-700 italic mb-2">&ldquo;Find alchemical emblems depicting the ouroboros. What texts are they from, and what do they symbolize?&rdquo;</p>
-          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_images</code> &rarr; <code className="text-accent-rust">get_image</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_images</code> &rarr; <code className="text-accent-rust">get_quote</code></p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -201,37 +201,47 @@ export default function McpServerPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The 11 tools are organized into four groups:
+          The 15 tools are organized into five groups:
         </p>
 
         <div className="grid md:grid-cols-2 gap-4 mb-8">
           <div className="bg-white rounded-lg border border-border-light p-5">
-            <h4 className="font-semibold text-primary mb-2">Discovery</h4>
+            <h4 className="font-semibold text-primary mb-2">Search</h4>
             <p className="text-secondary text-sm">
-              <code className="text-accent-rust">search_library</code> for full-text search across all books and pages.{' '}
-              <code className="text-accent-rust">list_books</code> for browsing with filters (language, category, sort).
+              <code className="text-accent-rust">search_library</code> to find books on a topic.{' '}
+              <code className="text-accent-rust">search_translations</code> for quotable passages by keyword,{' '}
+              <code className="text-accent-rust">search_concept</code> for passages by meaning (semantic search), and{' '}
+              <code className="text-accent-rust">search_within_book</code> to dig inside one book.
             </p>
           </div>
           <div className="bg-white rounded-lg border border-border-light p-5">
             <h4 className="font-semibold text-primary mb-2">Reading</h4>
             <p className="text-secondary text-sm">
-              <code className="text-accent-rust">get_book_text</code> for bulk reading (whole books or page ranges).{' '}
-              <code className="text-accent-rust">get_book</code> for metadata.{' '}
-              <code className="text-accent-rust">get_quote</code> for cited passages.
+              <code className="text-accent-rust">get_book</code> for a book&apos;s summary, chapters, and metadata.{' '}
+              <code className="text-accent-rust">get_book_text</code> for bulk reading (chapters or page ranges).{' '}
+              <code className="text-accent-rust">list_books</code> to browse the catalog and{' '}
+              <code className="text-accent-rust">list_editions</code> to find every edition of a work we hold.
             </p>
           </div>
           <div className="bg-white rounded-lg border border-border-light p-5">
-            <h4 className="font-semibold text-primary mb-2">Knowledge Graph</h4>
+            <h4 className="font-semibold text-primary mb-2">Citing</h4>
             <p className="text-secondary text-sm">
-              <code className="text-accent-rust">search_index</code> for concepts, people, and places in book indexes.{' '}
-              <code className="text-accent-rust">search_entities</code> and <code className="text-accent-rust">get_entity</code> for the cross-book entity network.
+              <code className="text-accent-rust">get_quote</code> and <code className="text-accent-rust">get_quotes</code> for verbatim page text with stable citation links.{' '}
+              <code className="text-accent-rust">get_locus</code> resolves canonical references &mdash; Bekker numbers for Aristotle, Stephanus pages for Plato &mdash; to the actual leaves that carry them.
             </p>
           </div>
           <div className="bg-white rounded-lg border border-border-light p-5">
             <h4 className="font-semibold text-primary mb-2">Gallery</h4>
             <p className="text-secondary text-sm">
-              <code className="text-accent-rust">search_images</code> across 90,000+ illustrations by subject, symbol, figure, or type.{' '}
-              <code className="text-accent-rust">get_image</code> and <code className="text-accent-rust">get_book_images</code> for details.
+              <code className="text-accent-rust">search_images</code> across 110,000+ illustrations and 23,000+ artworks by subject, symbol, figure, or type.
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-border-light p-5">
+            <h4 className="font-semibold text-primary mb-2">Contributing</h4>
+            <p className="text-secondary text-sm">
+              <code className="text-accent-rust">submit_feedback</code> for bug reports and requests,{' '}
+              <code className="text-accent-rust">share_findings</code> to send back a cited research dossier, and{' '}
+              <code className="text-accent-rust">propose_collection</code> to suggest a themed grouping of books. All three go to a human review queue.
             </p>
           </div>
         </div>
@@ -241,7 +251,14 @@ export default function McpServerPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-4">
-          For Claude Code:
+          The easiest path today needs no install at all: Source Library is in the{' '}
+          <a href="https://claude.ai/directory/connectors/source-library" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">Claude connector directory</a>
+          {' '}&mdash; switch it on from the connectors menu, or add{' '}
+          <code className="text-accent-rust text-sm">https://sourcelibrary.org/api/mcp</code> as a custom connector in any MCP client.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          To run it locally instead &mdash; for Claude Code:
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-6 overflow-x-auto">

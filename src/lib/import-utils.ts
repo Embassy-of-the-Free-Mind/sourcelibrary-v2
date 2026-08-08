@@ -6,7 +6,8 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { computeIdentityFields } from '@/lib/identity-fields';
 import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
@@ -430,8 +431,9 @@ export async function importBookFromIIIF(
   // Dedup fields for cross-source matching
   const fp = sourceFingerprint(bookDoc as Record<string, unknown>);
   if (fp) (bookDoc as Record<string, unknown>).source_fingerprint = fp;
-  (bookDoc as Record<string, unknown>).normalized_title = normalizeTitle(config.title);
-  (bookDoc as Record<string, unknown>).normalized_author = normalizeAuthor(config.author);
+  // Identity fields (Phase 0). The identity-worker cron stamps books that
+  // arrive by any other door; writing here just saves route imports the wait.
+  Object.assign(bookDoc as Record<string, unknown>, computeIdentityFields(bookDoc as Record<string, unknown>));
 
   // Publisher/place from IIIF manifest metadata
   if (manifestPublisher) (bookDoc as Record<string, unknown>).publisher = manifestPublisher;

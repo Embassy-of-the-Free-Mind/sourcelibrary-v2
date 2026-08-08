@@ -122,6 +122,13 @@
 30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-acquire.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/acquire-gap-batch.mjs --batch 400 --concurrency 10" >> /var/log/sourcelibrary/acquire.log 2>&1
 # Archive newly-acquired gap books to R2 (companion to acquisition)
 45 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-arch-acq.lock bash -c "set -a; source .env.production.local; set +a; npx tsx scripts/catalog-coverage/archive-acquired.ts --batch 240 --concurrency 10" >> /var/log/sourcelibrary/archive-acquired.log 2>&1
+
+# Collect Gemini Batch API results (#3713). Submitting a batch and getting text are
+# different events: the Vercel process-batches cron was archived as "replaced by Hetzner
+# workers", but this replacement was never added, so results sat on Gemini's side until
+# somebody ran the script by hand. --abandon-stale=7 stops the collector retrying jobs
+# whose output Gemini has already discarded, which otherwise keeps this log permanently red.
+*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collect-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/batch/collect-batch-results.mjs --limit 200 --abandon-stale=7" >> /var/log/sourcelibrary/collect-batch.log 2>&1
 */20 * * * * tmux has-session -t catchup 2>/dev/null || ( cd /root/sourcelibrary && P=$(bash -c "set -a; source .env.production.local; set +a; node -e \"const {MongoClient}=require(process.cwd()+\x27/node_modules/mongodb\x27);(async()=>{const c=new MongoClient(process.env.MONGODB_URI);await c.connect();console.log(await c.db(\x27bookstore\x27).collection(\x27acquisition_queue\x27).countDocuments({status:\x27pending\x27}));await c.close();})()\"" 2>/dev/null); [ "$P" -gt 500 ] 2>/dev/null && tmux new-session -d -s catchup "/tmp/acquire_catchup.sh" )
 30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-supabase-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/supabase-sync.mjs" >> /var/log/sourcelibrary/supabase-sync.log 2>&1
 # catchup-watchdog: restart the acquisition catch-up if it died (loop self-exits when queue drains)
@@ -133,3 +140,5 @@
 0 5 * * * /root/restic-backup.sh
 # Traffic anomaly detector — pushes to ntfy on state change (#3446)
 17 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-traffic-anomaly.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/traffic-anomaly-alert.mjs" >> /var/log/sourcelibrary/traffic-anomaly.log 2>&1
+# Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
+40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1

@@ -72,12 +72,25 @@ async function syncPageCounts(db) {
             ],
           },
         },
+        // A blank page is NOT a translated page. The translator writes the
+        // literal placeholder "[Blank page — no translatable content]" onto
+        // every blank leaf, so a naive non-empty check counted 87,777 flyleaves
+        // and endpapers as translations (99.8% of them under 120 characters).
+        //
+        // That is also what made `translation_pct` exceed 100: blank pages are
+        // subtracted from the denominator below via `pages_blank`, but were
+        // still counted here in the numerator. The Blue Qur'an reported
+        // **1000% translated** — 60 pages of which 54 were blank, over a
+        // denominator of 6. Measured 2026-08-08: every one of 300 sampled
+        // over-100% books had translated blank pages, and excluding them lands
+        // each on exactly 100%.
         pages_translated: {
           $sum: {
             $cond: [
               { $and: [
                 { $eq: [{ $type: '$translation.data' }, 'string'] },
                 { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
               ] },
               1, 0,
             ],

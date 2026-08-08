@@ -6,6 +6,7 @@ import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
@@ -16,6 +17,26 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
+
+/**
+ * The MCP server version, in ONE place.
+ *
+ * It used to be three string literals — the `initialize` handshake, the
+ * `GET /api/mcp` banner, and `server.json` — and they drifted apart every time
+ * someone bumped one of them: on 2026-08-07 they read 4.7.0, 4.5.0 and 4.6.0
+ * simultaneously. Two of those bumps were made by people specifically tidying
+ * the version, which is the tell that the problem is the duplication, not the
+ * carelessness.
+ *
+ * `scripts/audit/mcp-directory-contract.mjs` compares the live handshake
+ * against `server.json`, so a drift here is a real tripwire and not cosmetic —
+ * but it can only compare two values, and there were three.
+ *
+ * `server.json` is consumed by the MCP registry publisher and cannot import
+ * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
+ * audit's job is exactly to hold it against this one. Bump both together.
+ */
+const SERVER_VERSION = '4.7.1';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -564,6 +585,24 @@ async function proposeCollection(args: Record<string, unknown>) {
   return { ok: true, id: result.id, message: result.message || 'Collection proposal sent to the Source Library team for review. Thank you!' };
 }
 
+/**
+ * Resolve a canonical locus — a Bekker or Stephanus reference — to the leaves
+ * that carry it (#3661).
+ *
+ * This exists because a reader fact-checking attributed Aristotle quotes had to
+ * reconstruct the Bekker mapping by hand and then guess which scan page held
+ * 1094 (#3653 item 2). A scan page is a property of one copy; a Bekker number is
+ * how the field cites, and it is stable across every edition.
+ */
+async function getLocus(args: Record<string, unknown>) {
+  const ref = String(args.reference ?? args.ref ?? '').trim();
+  if (!ref) return { error: 'Provide reference, e.g. "1094a8" (Bekker) or "328b" with work: "Republic" (Stephanus).' };
+  const params = new URLSearchParams({ ref });
+  if (args.work) params.set('work', String(args.work));
+  if (args.system) params.set('system', String(args.system));
+  return apiGet('/locus', params);
+}
+
 // ── Tool definitions ───────────────────────────────────────────────
 
 // Shared annotation for all read-only tools
@@ -757,7 +796,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        message: { type: 'string', description: 'Your feedback (2-5000 chars)' },
+        message: { type: 'string', description: `Your feedback (${MIN_FEEDBACK_MESSAGE}-${MAX_FEEDBACK_MESSAGE} chars). Long structured reports are welcome — the limit was raised from 5,000 because agent reports were pressing against it and being split across submissions.` },
         name: { type: 'string' }, email: { type: 'string' },
       },
       required: ['message'],
@@ -812,6 +851,21 @@ const TOOLS: Tool[] = [
       required: ['title', 'rationale', 'book_ids'],
     },
   },
+  {
+    name: 'get_locus',
+    title: 'Find a Canonical Reference (Bekker / Stephanus)',
+    description: 'Turn a CANONICAL CITATION into the actual leaves that carry it. Aristotle is cited by Bekker number (1094a8, 1447a) and Plato by Stephanus number (Rep. 328b) — the references scholarship has used for centuries, which survive re-typesetting and are shareable in a way a scan page never is. USE THIS FIRST whenever a passage arrives as a canonical reference rather than a page: do not try to derive the page yourself from a book\'s pagination, which is what produced a wrong guess before this tool existed. Bekker numbers are unique across the whole Aristotelian corpus, so the number alone is enough and it also tells you WHICH WORK you are citing. Stephanus numbers restart in each of the three 1578 volumes, so pass work ("Republic", "Timaeus") — without it the response lists the candidate dialogues instead of choosing one. Returns every witness the library holds: the Greek reference edition and, where we have one, an English translation of the same lines, each with its scan page, a reader URL and a quote_api link — so you can compare the original against a translation at one reference. Then call get_quote with the returned book_id + page for the verbatim text and a citable shortlink. LIMITS, stated plainly: a witness is only returned where the reference is PRINTED on that leaf (or, in the two root editions, where a verified constant offset brackets it) — nothing is interpolated, so an empty result means this library holds no anchored leaf there, NOT that the citation is wrong; editions_searched shows what was consulted and the range each covers. Line numbers (the "8" of 1094a8) are not resolved — you get the right leaf and read the line off it. Two works can share a page where one ends and the next begins (Bekker 184 and 1447 are both such joins), and each leaf is filed by the running head printed on it, so a reference at the very start of a work may come back under its predecessor — always read other_works_at_this_reference before concluding a passage is absent. A bare number that exists in both systems returns Aristotle and Plato leaves together; check the system field on each.',
+    annotations: { title: 'Find a Canonical Reference', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        reference: { type: 'string', description: 'The canonical reference: "1094a8", "1094a", "1447", "328b". A leading system name is accepted ("Bekker 1094a"), as is a work name ("Rep. 328b").' },
+        work: { type: 'string', description: 'The work or dialogue, when the reference needs it (Plato always does): "Republic", "Timaeus", "Laws", "Nicomachean Ethics", "Poetics". Greek or Latin titles as printed in the editions also resolve.' },
+        system: { type: 'string', description: 'Optional: "bekker" or "stephanus". Inferred from the work when omitted; do not guess it from the number, since the two ranges overlap.' },
+      },
+      required: ['reference'],
+    },
+  },
 ];
 
 // ── Tool dispatch ──────────────────────────────────────────────────
@@ -828,6 +882,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);
+    case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args);
@@ -835,7 +890,9 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
-    default: throw new Error(`Unknown tool: ${name}`);
+    // Name every tool in the error: a caller that guessed a name ("search") can
+    // self-correct on the next call instead of concluding the server is broken.
+    default: throw new Error(`Unknown tool: ${name}. Available tools: ${TOOLS.map((t) => t.name).join(', ')}`);
   }
 }
 
@@ -926,7 +983,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
-    { name: 'source-library', version: '4.6.0' },
+    { name: 'source-library', version: SERVER_VERSION },
     { capabilities: { tools: {}, resources: {} } },
   );
 
@@ -979,6 +1036,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         '4. CITE from here, frame from elsewhere. Use Source Library passages as evidence. Use your own knowledge and web search for context, scholarly consensus, author biography, modern interpretation, comparison to texts not in this corpus.',
         '5. EMPTY RESULTS mean "try a different angle" (broaden terms, try the original language, brainstorm adjacent authors) — not "doesn\'t exist."',
         '6. CITE WITH URLS. Every passage you present to a user should include its short_url (e.g. sourcelibrary.org/q/abc123). These are stable, shareable citations — the standard way to refer to a Source Library passage.',
+        '7. A CANONICAL REFERENCE IS NOT A PAGE. If a passage arrives as "1094a8" (Bekker, Aristotle) or "Rep. 328b" (Stephanus, Plato), call get_locus — do not derive the page from a volume\'s pagination. Deriving it is how a previous session guessed wrong.',
       ].join('\n'),
     },
   }));
@@ -1053,7 +1111,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
-    version: '4.5.0',
+    version: SERVER_VERSION,
     description: 'Source Library MCP Server — search, read, and cite 15,000+ rare pre-modern texts translated to English. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),

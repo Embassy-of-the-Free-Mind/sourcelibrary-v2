@@ -7,6 +7,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { withAuth } from '@/lib/auth-helpers';
+import { VISIBLE_PAGE_MATCH } from '@/lib/page-counts';
 import { resolveTenantId } from '@/lib/tenant-context';
 
 /**
@@ -376,10 +377,12 @@ export const GET = withAuth(async (request, session, context) => {
           }
         );
 
-        // Update book's translation count
+        // Update book's translation count — visible pages only (#3293); the
+        // old count included soft-hidden pages (page_number <= 0).
         const translatedCount = await db.collection('pages').countDocuments({
           book_id: bookId,
           tenantId,
+          ...VISIBLE_PAGE_MATCH,
           'translation.data': { $exists: true, $nin: [null, ''] }
         });
 

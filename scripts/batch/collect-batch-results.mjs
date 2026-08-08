@@ -31,6 +31,15 @@ const limitIdx = args.indexOf('--limit');
 const LIMIT = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 const concIdx = args.indexOf('--concurrency');
 const CONCURRENCY = concIdx >= 0 ? parseInt(args[concIdx + 1], 10) : 10;
+// Gemini discards batch output a couple of days after a job finishes. A job still
+// uncollected weeks later is not "pending", it is unrecoverable — but it matched the
+// selection query on every run, so each pass burned a lookup on it and reported it as
+// an error. With the collector on a cron that meant a permanently red log, which is
+// worse than useless: it hides a real failure among 22 that will never clear.
+// --abandon-stale=N marks anything older than N days as given up on, with provenance.
+const abandonArg = args.find(a => a.startsWith('--abandon-stale='));
+const ABANDON_STALE_DAYS = abandonArg ? parseInt(abandonArg.split('=')[1], 10) : null;
+const DRY_RUN = args.includes('--dry-run');
 
 // --- OCR metadata extraction (mirrors defaults.ts) ---
 function extractPageType(text) {
@@ -160,7 +169,20 @@ async function extractResults(geminiData, apiKey) {
 }
 
 // --- Process one job ---
+// Type allowlist (#3725): the save path treats anything that isn't
+// 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
+// submitter would silently write model output into translation.data.
+const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extraction']);
+
 async function processOneJob(db, job) {
+  if (!KNOWN_JOB_TYPES.has(job.type)) {
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
+    await db.collection('batch_jobs').updateOne(
+      { _id: job._id },
+      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
+    );
+    return { status: 'unknown_type' };
+  }
   const jobName = job.job_name || job.gemini_job_name;
   if (!jobName) return { status: 'skipped' };
 
@@ -320,6 +342,40 @@ async function processOneJob(db, job) {
 }
 
 // --- Main ---
+/**
+ * Mark jobs older than `days` as abandoned so the collector stops retrying them.
+ *
+ * Never deletes: sets a flag plus the reason and the status it had, so the decision is
+ * auditable and reversible with a single $unset. Only touches jobs the collector would
+ * otherwise select — a job already collected is left alone.
+ */
+async function abandonStaleJobs(db, days) {
+  const cutoff = new Date(Date.now() - days * 86400000);
+  const filter = {
+    child_job_ids: { $exists: false },
+    collection_abandoned: { $ne: true },
+    created_at: { $lt: cutoff },
+    $or: [
+      { status: { $in: ['pending', 'processing', 'completed', 'completed_with_errors', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] }, results_collected: { $ne: true } },
+      { status: 'saved', completed_pages: 0 },
+    ],
+  };
+  const stale = await db.collection('batch_jobs').countDocuments(filter);
+  if (stale === 0) { console.log(`No jobs older than ${days}d to abandon.`); return; }
+  if (DRY_RUN) { console.log(`[dry-run] would abandon ${stale} job(s) older than ${days}d`); return; }
+  const res = await db.collection('batch_jobs').updateMany(filter, [
+    {
+      $set: {
+        collection_abandoned: true,
+        collection_abandoned_at: new Date(),
+        collection_abandoned_reason: `uncollected after ${days}d — Gemini batch output has expired`,
+        status_before_abandon: '$status',
+      },
+    },
+  ]);
+  console.log(`Abandoned ${res.modifiedCount} stale job(s) older than ${days}d (reversible: $unset collection_abandoned).`);
+}
+
 async function run() {
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
@@ -330,9 +386,14 @@ async function run() {
   // 2. completed/completed_with_errors — parent set status but results not collected
   // 3. saved with 0 pages — broken by metadata.key bug
   // Exclude parent jobs (child_job_ids exists) — they don't have Gemini results
+  // Exclude jobs explicitly given up on (see --abandon-stale) — their output has
+  // expired at Gemini and retrying them only manufactures errors.
+  if (ABANDON_STALE_DAYS != null) await abandonStaleJobs(db, ABANDON_STALE_DAYS);
+
   const pendingJobs = await db.collection('batch_jobs')
     .find({
       child_job_ids: { $exists: false },
+      collection_abandoned: { $ne: true },
       $or: [
         {
           status: { $in: ['pending', 'processing', 'completed', 'completed_with_errors', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },

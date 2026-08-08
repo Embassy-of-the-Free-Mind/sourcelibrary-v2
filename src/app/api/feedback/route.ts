@@ -4,8 +4,15 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 import { guardPublicSubmission } from '@/lib/public-submission-guard';
 import { getClientIp } from '@/lib/rate-limit';
 
-/** Kept in step with the `message` field's documented range in the MCP tool schema. */
-const MAX_MESSAGE = 5000;
+import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
+
+/**
+ * One constant, shared with the `submit_feedback` tool schema that advertises it.
+ * Previously two literals kept in step by a comment — the same shape as the MCP
+ * server version, which was written three times and drifted to three values on
+ * the same day (#3715).
+ */
+const MAX_MESSAGE = MAX_FEEDBACK_MESSAGE;
 
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
@@ -16,7 +23,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { message, page, name, email, wantsToHelp } = body;
 
-    if (!message || typeof message !== 'string' || message.trim().length < 2) {
+    if (!message || typeof message !== 'string' || message.trim().length < MIN_FEEDBACK_MESSAGE) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 

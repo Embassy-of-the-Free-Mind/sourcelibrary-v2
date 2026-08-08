@@ -11,11 +11,18 @@
 **Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
 layer, its measured reliability, and the invariants below in detail.
 
-That machinery is only honest if you know the set's **recall**, and ours is **27%**
-(was 22%; `scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed
-priors in `translation_classification`) — three of four known prior translations are
-invisible to it. A sampled check of the queue puts `none_found`'s **positive
-predictive value at ~50%**: a coin flip. So:
+That machinery is only honest if you know the set's **recall**, and ours is **32.1%**
+(22% → 27% with MARC 240 containment → 32.1% on 2026-08-07 with ESTC added;
+`scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed priors in
+`translation_classification`) — **two of every three** known prior translations are
+still invisible to it. A sampled check of the queue puts `none_found`'s **positive
+predictive value at ~50%**: a coin flip.
+
+**Do not read the improvement as the problem receding.** ESTC covers imprints
+1473–1800 while 80.8% of this corpus's known Latin/Greek priors are post-1950
+imprints, so the remaining loss sits in modern scholarly publishing that no
+early-modern catalogue can reach. Adding sources of the same kind will not close
+it. So:
 
 - **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
 - **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.

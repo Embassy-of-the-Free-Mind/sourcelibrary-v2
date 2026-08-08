@@ -5,6 +5,11 @@ status, the translation gap/registry, or first-translation claims. It's the map;
 the detailed docs (linked at the bottom) are the territory. Coordination home:
 issue **#2567**.
 
+*Being asked to justify this work rather than do it?* The argument — measured,
+with the reader-facing failure it causes and the counter-argument stated fairly —
+is [`identity-stack-rationale.md`](./identity-stack-rationale.md). Current
+execution plan: **#3730**.
+
 ## The one question, and why it bottoms out in identity
 
 Almost everything here is a *per-work* question:
@@ -29,10 +34,28 @@ Hence the governing policy everywhere below:
 > a "no" from those sources actually worth?** It records the search itself
 > (`search_efforts`) and measures it.
 >
-> **Catalogue recall is 27%**, and a sampled positive predictive value of ~50% —
+> **Catalogue recall is 32.1%** (2026-08-07, after ESTC; was 27%), and a sampled
+> positive predictive value of ~50% —
 > so **`none_found` is weak evidence and no count built on it should be quoted**,
 > anywhere in this stack. Positive findings are unaffected. Read that doc before
 > quoting any gap, census, or registry figure that rests on an absence.
+
+> ### 2026-08-07: the EDITION layer is materialized — [`invariants/edition-identity.md`](./invariants/edition-identity.md)
+>
+> `books.edition_key` now exists on 79,588 books (#3260, workstream A of #3258) —
+> the last unbuilt key in the four-layer stack (author_id / work_id /
+> **edition_key** / duplicate_of). One definition, `src/lib/edition-key.ts`;
+> the three private "same edition" matchers that disagreed with each other are
+> retired.
+>
+> Two things it changes for anyone reading this map. **(1)** Edition is now a
+> place to put a claim, so stop attaching per-printing facts (translation
+> completeness, scan provenance) to the work. **(2)** It falsifies the work layer
+> from below: 222 clusters are one edition with two `work_id`s, 213 of them at
+> full key quality, nearly all English-gloss-vs-original-title slug pairs of a
+> single work. That is the known `work_id` over-split, now enumerated
+> automatically rather than hunted. Under-clustering remains the right policy —
+> but this is the cheap instrument for finding where it happened.
 
 ## The layer stack (bottom → top)
 

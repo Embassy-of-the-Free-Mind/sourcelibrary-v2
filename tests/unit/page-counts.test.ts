@@ -20,6 +20,8 @@ import {
   isVisiblePage,
   hasOcr,
   hasTranslation,
+  isBlankPage,
+  isTranslatedPage,
   buildVisiblePageCountPipeline,
   countVisiblePageStats,
 } from '../../scripts/lib/page-counts.mjs';
@@ -96,5 +98,70 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.with_translation).toBe(581); // not 20, not 890
     // >90%-readable and >5% gates both see the visible truth
     expect(stats.with_translation / stats.total).toBeGreaterThan(0.9);
+  });
+});
+
+/**
+ * Blank leaves are not translations.
+ *
+ * The translator writes the literal placeholder "[Blank page — no translatable
+ * content]" onto every blank page, so a plain non-empty check counted 87,777
+ * flyleaves and endpapers as translated work (99.8% under 120 characters).
+ *
+ * Worse, it broke the ratio: `translation_pct` divides by
+ * `pages_ocr - pages_blank`, so blank pages left the denominator while staying
+ * in the numerator. 6,228 live books — 32% of the public library — reported
+ * over 100% translated. The Blue Qur'an reported 1000%: 60 pages, 54 blank,
+ * denominator 6.
+ */
+describe('blank pages are excluded from pages_translated', () => {
+  const blankPage = {
+    page_number: 4,
+    page_type: 'blank',
+    ocr: { data: '<page-type>blank</page-type>' },
+    translation: { data: '[Blank page — no translatable content]' },
+  };
+
+  it('isBlankPage identifies the blank page_type', () => {
+    expect(isBlankPage(blankPage)).toBe(true);
+    expect(isBlankPage({ page_type: 'text' })).toBe(false);
+    expect(isBlankPage({})).toBe(false);
+    expect(isBlankPage(null)).toBe(false);
+  });
+
+  it('isTranslatedPage rejects a blank page that carries placeholder text', () => {
+    // hasTranslation stays literal — the text IS non-empty…
+    expect(hasTranslation(blankPage)).toBe(true);
+    // …but it does not count as translated work.
+    expect(isTranslatedPage(blankPage)).toBe(false);
+    expect(isTranslatedPage({ page_type: 'text', translation: { data: 'real' } })).toBe(true);
+    expect(isTranslatedPage({ translation: { data: 'real' } })).toBe(true);
+  });
+
+  it('the pipeline excludes blank pages from with_translation', () => {
+    const group = buildVisiblePageCountPipeline('b1')[1].$group;
+    expect(JSON.stringify(group.with_translation)).toContain('blank');
+  });
+
+  it('reproduces the Blue Qur\'an: 60 pages, 54 blank, and no longer 1000%', () => {
+    const pages = [];
+    for (let n = 1; n <= 6; n++) {
+      pages.push({ page_number: n, page_type: 'text', ocr: { data: 'o' }, translation: { data: 'real translation' } });
+    }
+    for (let n = 7; n <= 60; n++) {
+      pages.push({
+        page_number: n, page_type: 'blank',
+        ocr: { data: '<page-type>blank</page-type>' },
+        translation: { data: '[Blank page — no translatable content]' },
+      });
+    }
+    const stats = countVisiblePageStats(pages);
+    expect(stats.total).toBe(60);
+    expect(stats.with_ocr).toBe(60);
+    expect(stats.with_translation).toBe(6); // was 60 — the numerator bug
+
+    // translation_pct divides by (pages_ocr - pages_blank) = 60 - 54 = 6.
+    const denominator = stats.with_ocr - 54;
+    expect((stats.with_translation / denominator) * 100).toBe(100); // was 1000
   });
 });

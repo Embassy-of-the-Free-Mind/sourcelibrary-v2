@@ -211,3 +211,51 @@ describe('the hyphen signal is read from the ORIGINAL, not the translation', () 
     expect(pageContinuity(mono, null).hyphen_split_at_end).toBe(true);
   });
 });
+
+/**
+ * The translator's ellipsis marker (#3721).
+ *
+ * Fixtures captured from production, not drafted: Taylor 1818 Nicomachean Ethics
+ * pp.45-47. The reporter gave eight datapoints across five books and five
+ * layouts, and also retracted their own earlier theory that hyphen resolution
+ * was the cause — the mechanism is that the translation layer appends an
+ * ellipsis where a sentence runs off the leaf, and TERMINAL contained both the
+ * ellipsis and the dot. The marker meaning INCOMPLETE made the detector say
+ * COMPLETE.
+ */
+describe('pageContinuity — an edge ellipsis is a continuation marker', () => {
+  const { p45, p46, p47 } = fixtures.ellipsis_marker;
+
+  it('reads a page ending on an appended ellipsis as continuing', () => {
+    // p.46 ends `…a conscious awareness of such energy..."` — inside a block
+    // quote, so the marker is followed by a closing quotation mark.
+    expect(pageContinuity(p46.translation, p46.original).continues_on_next).toBe(true);
+    expect(pageContinuity(p47.translation, p47.original).continues_on_next).toBe(true);
+  });
+
+  it('reads a page opening on an ellipsis as continued-from', () => {
+    expect(pageContinuity(p46.translation, p46.original).continues_from_previous).toBe(true);
+  });
+
+  it('leaves a page ending on a bare word alone', () => {
+    // p.45 ends "…displeasing to a common nature, but" and always worked. The
+    // fix must not be doing the work of the existing rule.
+    expect(pageContinuity(p45.translation, p45.original).continues_on_next).toBe(true);
+  });
+
+  it('satisfies the reporter\'s invariant across the captured run', () => {
+    // For adjacent pages, N.continues_on_next must equal N+1.continues_from_previous.
+    // This is the assertion that makes the class visible rather than one page.
+    const c45 = pageContinuity(p45.translation, p45.original);
+    const c46 = pageContinuity(p46.translation, p46.original);
+    const c47 = pageContinuity(p47.translation, p47.original);
+    expect(c45.continues_on_next).toBe(c46.continues_from_previous);
+    expect(c46.continues_on_next).toBe(c47.continues_from_previous);
+  });
+
+  it('still reports a self-contained page as self-contained', () => {
+    // Guard against the fix turning into "everything continues". A real page
+    // that ends on a full stop with no ellipsis must stay false.
+    expect(pageContinuity(self_contained).continues_on_next).toBe(false);
+  });
+});

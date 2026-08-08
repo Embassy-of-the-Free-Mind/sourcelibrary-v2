@@ -21,6 +21,7 @@ import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout 
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
+import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/render';
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
@@ -120,6 +121,7 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   resource_type?: string;
 }
 
@@ -137,6 +139,7 @@ interface CuratedHighlight {
   thumbnail_blob?: string;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   language?: string;
   // Carried through the merge so the badge can be qualified when the
   // translation is barely started (#3435).
@@ -418,7 +421,26 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
-    is_first_translation: 1, ft_disposition: 1,
+    is_first_translation: 1,
+    // What ftRenderProps needs to pick the claim register (#3726 Tier 3).
+    // (The old `ft_disposition: 1` here projected a field Mongo books never
+    // had — every card silently fell to the candidate register.)
+    'translation_verification.disposition': 1,
+    'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
+    'first_translation.our_completeness': 1,
+    'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
+  };
+
+  // Compute the badge render pair once, server-side, and drop the raw
+  // subdocuments so client payloads stay lean.
+  const withFtRender = <T extends Record<string, unknown>>(b: T) => {
+    const ft = ftRenderProps(b as FtRenderSource);
+    const {
+      first_translation: _ft, translation_verification: _tv,
+      source_language_screen: _sls, translator_author_screen: _tas,
+      ...rest
+    } = b;
+    return { ...rest, ft_disposition: ft.disposition, ft_claim: ft.claim };
   };
 
   // Extract curated highlights from collection document
@@ -682,7 +704,10 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         slug: book.slug as string | undefined,
         thumbnail: sanitizeThumbnail(book.thumbnail_blob as string) || sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
-        ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
+        ...(() => {
+          const ft = ftRenderProps(book as FtRenderSource);
+          return { ft_disposition: ft.disposition, ft_claim: ft.claim };
+        })(),
         language: book.language as string | undefined,
         pages_count: book.pages_count as number | undefined,
         pages_ocr: book.pages_ocr as number | undefined,
@@ -742,14 +767,13 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       const exBooks = await withTimeout(
         db.collection('books').find(
           { id: { $in: [...allBookIds] }, visible: true },
-          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1, 'first_translation.verdict': 1, 'first_translation.evidence_strength': 1, 'first_translation.our_completeness': 1, 'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1 } },
         ).toArray(),
         8000, [],
       );
-      exhibitionBooks = exBooks.map(b => ({
+      exhibitionBooks = exBooks.map(b => withFtRender({
         ...b,
         thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),
-        ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
       })) as unknown as BookItem[];
     }
   }
@@ -757,14 +781,12 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: collectionClean as any,
-    books: sanitizeBookThumbs(books) as unknown as BookItem[],
+    books: sanitizeBookThumbs(
+      (books as Record<string, unknown>[]).map(withFtRender),
+    ) as unknown as BookItem[],
     highlights: mergedHighlights,
     firstTranslations: sanitizeBookThumbs(
-      (firstTranslations as Record<string, unknown>[]).map((b) => ({
-        ...b,
-        ft_disposition: (b.ft_disposition as string | undefined)
-          || ((b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined),
-      })),
+      (firstTranslations as Record<string, unknown>[]).map(withFtRender),
     ) as unknown as BookItem[],
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1177,7 +1199,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     )}
                     {b.is_first_translation && (b.pages_translated ?? 0) > 0 && (
                       <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                        {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b))}
+                        {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b), b.ft_claim)}
                       </span>
                     )}
                   </Link>
@@ -1237,7 +1259,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                       </p>
                     )}
                     <span className="inline-block mt-1 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                      {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b))}
+                      {firstTranslationBadge(b.ft_disposition, b.language, !isTranslationReadable(b), b.ft_claim)}
                     </span>
                   </Link>
                 );
@@ -1351,7 +1373,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     {featured.author}{featured.year ? `, ${featured.year}` : ''}
                     {featured.is_first_translation && (
                       <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                        {firstTranslationBadge(featured.ft_disposition, featured.language, !isTranslationReadable(featured))}
+                        {firstTranslationBadge(featured.ft_disposition, featured.language, !isTranslationReadable(featured), featured.ft_claim)}
                       </span>
                     )}
                   </p>
@@ -1525,7 +1547,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h), h.ft_claim)}
                             </span>
                           )}
                         </p>
@@ -1578,7 +1600,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h), h.ft_claim)}
                             </span>
                           )}
                         </p>
@@ -1630,7 +1652,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h))}
+                              {firstTranslationBadge(h.ft_disposition, h.language, !isTranslationReadable(h), h.ft_claim)}
                             </span>
                           )}
                         </p>
