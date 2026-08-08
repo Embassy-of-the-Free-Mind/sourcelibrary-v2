@@ -44,6 +44,27 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 | Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 
+## The Budget Dial (#3737)
+
+Spend is a **number**, not a switch. `system_config.processing_control.daily_budget_usd`
+is the ceiling for paid dispatch; `scripts/lib/spend-guard.mjs` gates orchestrator
+Phase 2 (OCR submit) and Phase 4 (translation dispatch) against today's measured
+`gemini_usage` spend (UTC day, ObjectId-range — the `timestamp` field is a string on
+old rows). **Default-closed:** unset/null/0 means NO paid dispatch even when
+`paused: false` — flipping the old pause flag can no longer reopen unbounded spending.
+In-flight work always finishes; `--phase N --book=ID` operator runs bypass the dial
+exactly as they bypass the pause. Enrichment (Phases 6–7) isn't gated directly but its
+spend counts toward the measured total, and its volume is downstream of gated phases.
+`cost_usd` is a computed estimate and some rows lack it → the guard can UNDERCOUNT;
+treat the ceiling as a brake, not accounting. The guard logs `spend $X / $Y` every cycle.
+
+**To turn the line on (Derek):**
+1. Set the dial: `db.system_config.updateOne({_id:'processing_control'}, {$set:{daily_budget_usd: 5}})` — start at $5/day.
+2. Unpause: `{$set:{paused:false}}` (same doc).
+3. Re-add the scheduler line to the live Hetzner crontab — it already exists in `scripts/workers/crontab.production` line 20 (`*/2 * * * * … scheduler.mjs`); the live crontab lost it during the pause era.
+4. Watch `/var/log/sourcelibrary/scheduler.log` + `pipeline.log` for the `[spend-guard]` lines; first candidates processed should be `loop_quarantine_hold` books once those are re-enrolled.
+5. Failure at step 4 = no `[spend-guard]` line at all → the box hasn't pulled main yet (auto-pull ~5 min) or the crontab line didn't take (`crontab -l | grep scheduler`).
+
 ## Emergency Controls
 
 - **Stop all:** Set `system_config._id: 'processing_control'` → `paused: true`
