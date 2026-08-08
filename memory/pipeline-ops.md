@@ -2,7 +2,19 @@
 
 Operational reference for pipeline monitoring, debugging, and processing. For full architecture details, see `.claude/docs/pipeline-architecture.md`.
 
-## Where Everything Runs (snapshot 2026-05 — verify if older than ~30 days)
+## Where Everything Runs
+
+> **Reality check (2026-08-08):** the table below describes the ORCHESTRATED
+> era and much of it is dormant. Verified against the live Hetzner crontab:
+> the main `pipeline-orchestrator.mjs` loop is **not scheduled at all** (only
+> `--phase 9` finalize runs, every 15 min), `translate-worker.mjs` is **not
+> running**, and enrich-worker is idle with the pipeline paused. What IS live:
+> the finalize tail, `collect-batch-results.mjs` (every 30 min, #3717 — batch
+> result collection), archiving/acquisition crons, and the daily health alert.
+> Processing happens per-book via the batch routes (see `translating-a-book.md`).
+> Shared translation logic now lives in `scripts/lib/translate-core.mjs` (the
+> "one door": model routing, DB prompts, revision-before-overwrite, counter
+> sync — issue #3725); any new translation writer must import it.
 
 | Component | Where | How |
 |-----------|-------|-----|
@@ -52,7 +64,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 ## Critical Rules
 
-- NEVER use Gemini Batch API for translation — lacks cross-page context. Use `translate-worker.mjs` (Hetzner) or Lambda FIFO (fallback).
+- **Batch-API translation: banned for bulk, sanctioned for one-off books — know why.** Sequential translation (translate-worker, Lambda FIFO) feeds each page's finished translation into the next page's prompt; that chain is what keeps cross-page sentences and terminology coherent, and the Batch API cannot provide it. The per-book route `batch-translate-async` (the `translating-a-book.md` path) IS Batch-API translation: each page is translated independently, with no previous-page context — a deliberate cost/coherence tradeoff acceptable for a single requested book, wrong for bulk reprocessing. (The Feb 18 incident — 17K wrong translations — was a separate bug: batch results matched by array index instead of `metadata.key`; that part is fixed.) So: bulk → sequential worker; one-off → batch route; never claim the two produce equivalent quality.
 - **Translation prompt source of truth is the DB `prompts` collection** (type: 'translation', is_default: true). Both workers read it once per run and cache. Never hardcode prompts in worker files. To update the prompt, update the DB — no code deploy needed.
 - **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first

@@ -169,7 +169,20 @@ async function extractResults(geminiData, apiKey) {
 }
 
 // --- Process one job ---
+// Type allowlist (#3725): the save path treats anything that isn't
+// 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
+// submitter would silently write model output into translation.data.
+const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extraction']);
+
 async function processOneJob(db, job) {
+  if (!KNOWN_JOB_TYPES.has(job.type)) {
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
+    await db.collection('batch_jobs').updateOne(
+      { _id: job._id },
+      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
+    );
+    return { status: 'unknown_type' };
+  }
   const jobName = job.job_name || job.gemini_job_name;
   if (!jobName) return { status: 'skipped' };
 
