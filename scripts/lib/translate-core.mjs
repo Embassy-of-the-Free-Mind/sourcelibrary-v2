@@ -401,6 +401,30 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
 }
 
 /**
+ * Bulk form of the human-edit guard, for batch collectors that write many
+ * pages at once: which of these pages have a human-edited `field`
+ * ('translation' | 'ocr')? Returns the Set of protected page ids — batch
+ * results for those pages must be skipped, not written. Same predicate as
+ * writePageTranslation's guard (source 'manual' or edited_by set); manual
+ * edits stamp the identical convention on both fields (/api/pages/[id]).
+ * TS twin: findHumanEditedPageIds in src/lib/translate-write.ts.
+ */
+export async function findHumanEditedPageIds(db, pageIds, field = 'translation') {
+  if (!pageIds || pageIds.length === 0) return new Set();
+  const docs = await db.collection('pages').find(
+    {
+      id: { $in: pageIds },
+      $or: [
+        { [`${field}.source`]: 'manual' },
+        { [`${field}.edited_by`]: { $exists: true, $nin: [null, ''] } },
+      ],
+    },
+    { projection: { id: 1 } }
+  ).toArray();
+  return new Set(docs.map(d => d.id));
+}
+
+/**
  * Recompute the book's cached page counters with the canonical visible-pages
  * convention (#3293) and bump updated_at (which the Supabase catalog sync
  * keys on — a counter write without updated_at is invisible downstream).

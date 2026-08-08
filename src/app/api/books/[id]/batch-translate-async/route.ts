@@ -6,6 +6,7 @@ import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
+import { findHumanEditedPageIds, findPendingBatchJob } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
 
@@ -49,6 +50,7 @@ export const POST = withAuth(async (request, session, context) => {
       model = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have translation (for re-processing)
       staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
+      resubmit = false, // When true, bypass the pending-job double-submit guard
     } = body;
 
     const db = await getDb();
@@ -57,6 +59,21 @@ export const POST = withAuth(async (request, session, context) => {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Double-submit guard (#3749, archaeology I68): a pending translation
+    // batch for this book means submitting again pays Gemini twice for the
+    // same pages. 409 with the existing job; pass resubmit: true to bypass
+    // (e.g. a job Gemini lost track of).
+    if (!resubmit) {
+      const pending = await findPendingBatchJob(db, { bookId, type: 'translation' });
+      if (pending) {
+        return NextResponse.json({
+          error: 'batch_job_already_pending',
+          message: `A translation batch job for this book is already pending (submitted ${pending.createdAt?.toISOString?.() || pending.createdAt}). Collect it or pass resubmit: true to force a new submission.`,
+          existingJob: pending,
+        }, { status: 409 });
+      }
     }
 
     // Find pages to translate (or modernize for English books)
@@ -298,8 +315,14 @@ export const GET = withAuth(async (request, session, context) => {
         const validPageIdSet = new Set(pageIds as string[]);
         const responses = batchJob.dest.inlinedResponses;
 
+        // Human-edit guard (#3749): pages whose translation was written or
+        // corrected by a person (source 'manual' or edited_by) are protected —
+        // batch results submitted before the edit must not clobber it.
+        const protectedPageIds = await findHumanEditedPageIds(db, pageIds as string[], 'translation');
+
         let successCount = 0;
         let failCount = 0;
+        let protectedCount = 0;
         const now = new Date().toISOString();
 
         for (let i = 0; i < responses.length; i++) {
@@ -312,6 +335,12 @@ export const GET = withAuth(async (request, session, context) => {
           if (!pageId || !validPageIdSet.has(pageId)) {
             console.warn(`[batch-translate] Result idx ${i} has invalid pageId: ${pageId}`);
             failCount++;
+            continue;
+          }
+
+          if (protectedPageIds.has(pageId)) {
+            console.log(`[batch-translate] Skipping page ${pageId} — translation is human-edited; refusing to overwrite (#3749)`);
+            protectedCount++;
             continue;
           }
 
@@ -357,6 +386,7 @@ export const GET = withAuth(async (request, session, context) => {
               results_collected: true,
               success_count: successCount,
               fail_count: failCount,
+              ...(protectedCount > 0 && { protected_count: protectedCount }),
               completed_at: new Date()
             }
           }
@@ -418,7 +448,8 @@ export const GET = withAuth(async (request, session, context) => {
           resultsCollected: true,
           successCount,
           failCount,
-          message: `Collected ${successCount} translations`
+          ...(protectedCount > 0 && { protectedCount }),
+          message: `Collected ${successCount} translations${protectedCount > 0 ? ` (${protectedCount} skipped: human-edited)` : ''}`
         });
       }
     }

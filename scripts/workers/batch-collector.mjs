@@ -24,6 +24,7 @@ import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -472,22 +473,32 @@ async function processOneJob(db, job) {
       }
     }
 
+    // Human-edit guard (#3749): pages whose ocr/translation was written or
+    // corrected by a person (source 'manual' or edited_by) are protected —
+    // batch results submitted before the edit must not clobber them.
+    let humanEditedIds = new Set();
+    let protectedCount = 0;
+
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
     if (job.type !== 'image_extraction') {
-      const nullFixOps = pageResults.map(({ pageId }) => ({
-        updateOne: {
-          filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
-          update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
-        },
-      }));
+      const field = job.type === 'ocr' ? 'ocr' : 'translation';
+      humanEditedIds = await findHumanEditedPageIds(db, pageResults.map(r => r.pageId), field);
+
+      const nullFixOps = pageResults
+        .filter(({ pageId }) => !humanEditedIds.has(pageId))
+        .map(({ pageId }) => ({
+          updateOne: {
+            filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
+            update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
+          },
+        }));
       if (nullFixOps.length > 0) {
         await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
       }
 
       // Save revisions for pages that already have content (non-blocking, parallel)
-      const field = job.type === 'ocr' ? 'ocr' : 'translation';
       const revisionPromises = pageResults
-        .filter(r => r.text.length <= HALLUCINATION_LIMIT)
+        .filter(r => r.text.length <= HALLUCINATION_LIMIT && !humanEditedIds.has(r.pageId))
         .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
       await Promise.allSettled(revisionPromises);
     }
@@ -504,6 +515,11 @@ async function processOneJob(db, job) {
 
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
+      if (humanEditedIds.has(pageId)) {
+        console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
+        protectedCount++;
+        continue;
+      }
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
       // Per-page stamp only — the job totals are summed per response above.
@@ -693,10 +709,12 @@ async function processOneJob(db, job) {
     }
 
     // Update batch_jobs status — mark as 'failed' if zero pages saved
-    const finalStatus = successCount > 0 ? 'saved' : 'failed';
-    const errorDetail = successCount === 0 && recitationCount > 0
-      ? `All ${recitationCount} pages blocked by RECITATION filter`
-      : successCount === 0 ? `All ${failCount} pages failed` : undefined;
+    // (pages skipped by the human-edit guard count as handled, not failed)
+    const finalStatus = successCount > 0 || protectedCount > 0 ? 'saved' : 'failed';
+    const errorDetail = finalStatus !== 'failed' ? undefined
+      : recitationCount > 0
+        ? `All ${recitationCount} pages blocked by RECITATION filter`
+        : `All ${failCount} pages failed`;
 
     const costUsd = calculateCost(job.model, totalInputTokens, totalOutputTokens);
 
@@ -708,6 +726,7 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(protectedCount > 0 && { protected_pages: protectedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,
