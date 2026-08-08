@@ -194,6 +194,68 @@ export function sanitizeTranslationTags(text) {
 export const contentHash = (t) =>
   createHash('sha256').update(t || '').digest('hex').slice(0, 16);
 
+// ────────────────────────────────────────────────────────────────────────────
+// Edge cases (issue #3734): one definition of "is this page translatable",
+// replacing ~10 forked skip-lists across writers, and the blank-from-OCR
+// detection that previously lived only inside translate-worker.
+// ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Page types that no translation lane should translate. Union of the forks
+ * this replaced: defaults.ts had [blank, exlibris, bookplate]; translate-worker
+ * had [blank, digitizer-notice]. Kept equal to the TS canonical
+ * SKIP_TRANSLATION_PAGE_TYPES in src/lib/types/prompts/defaults.ts — pinned by
+ * tests/unit/translate-edge-cases.test.ts.
+ */
+export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+
+/**
+ * Old OCR outputs (pre-pipeline) can describe a blank page without the page
+ * ever getting page_type: 'blank'. Detect them from the OCR text itself so
+ * every lane skips them (previously only translate-worker knew this pattern).
+ */
+export function isBlankFromOcr(ocrText) {
+  const t = ocrText || '';
+  return /<lang>\s*None\s*<\/lang>/i.test(t) && /blank\s+page/i.test(t);
+}
+
+/**
+ * THE translatability check. Returns { ok, reason } so callers can count and
+ * log why pages were excluded rather than silently dropping them.
+ *
+ * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
+ * 'skip-type', 'no-ocr', 'blank-ocr', 'recitation-blocked', 'safety-blocked'.
+ *
+ * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
+ * retranslate-stale deliberately also skips illustrations and title pages.
+ */
+export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
+  if ((page?.page_number ?? 0) <= 0) return { ok: false, reason: 'soft-hidden' };
+  const skip = new Set([...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes]);
+  if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
+  const ocr = page?.ocr?.data;
+  if (typeof ocr !== 'string' || ocr === '') return { ok: false, reason: 'no-ocr' };
+  if (isBlankFromOcr(ocr)) return { ok: false, reason: 'blank-ocr' };
+  if (page?.translation?.recitation_blocked) return { ok: false, reason: 'recitation-blocked' };
+  if (page?.translation?.safety_blocked) return { ok: false, reason: 'safety-blocked' };
+  return { ok: true };
+}
+
+/**
+ * Mongo match fragment expressing the same rule for selection queries (the
+ * blank-from-OCR regex is intentionally not expressible here — apply
+ * isTranslatablePage to fetched docs for that final filter).
+ */
+export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
+  return {
+    page_number: { $gt: 0 },
+    'ocr.data': { $exists: true, $nin: [null, ''] },
+    page_type: { $nin: [...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes] },
+    'translation.recitation_blocked': { $ne: true },
+    'translation.safety_blocked': { $ne: true },
+  };
+}
+
 /**
  * Snapshot the page's current translation into page_revisions, then write the
  * new one with full provenance. Promise 3 lives here so no caller can forget
@@ -210,9 +272,28 @@ export const contentHash = (t) =>
  * @param {string} [args.note]    revision reason (e.g. 'anomaly-fix', 'retranslate_stale')
  * @param {object} [args.extraSet] extra top-level page fields to $set in the same write
  *                                (e.g. detected_terms) — never translation.* keys
+ * @param {boolean} [args.overwriteHuman=false] bypass the human-edit guard
+ * @returns {{written: boolean, protected: boolean, text: string}} — when
+ *   protected, `text` is the EXISTING human translation (use it for
+ *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false }) {
   const clean = sanitizeTranslationTags(text);
+
+  // Human-edit guard (#3734): a translation a person wrote or corrected by
+  // hand (source: 'manual', or edited_by set) must never be silently replaced
+  // by AI output — no automated heuristic outranks a human. Refuse by default;
+  // a caller that REALLY means it passes { overwriteHuman: true }.
+  const current = await db.collection('pages').findOne(
+    { id: page.id },
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+  );
+  const existing = current?.translation;
+  const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
+  if (isHumanEdited && !overwriteHuman) {
+    return { written: false, protected: true, text: existing.data };
+  }
+
   // Promise 3 delegates to the blessed revision helper (scripts/lib/
   // page-revisions.mjs): marker-text skip, reason field, never throws.
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', { jobId, reason: note });
@@ -238,7 +319,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       },
     }
   );
-  return clean;
+  return { written: true, protected: false, text: clean };
 }
 
 /**

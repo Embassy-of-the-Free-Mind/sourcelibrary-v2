@@ -26,7 +26,7 @@ import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
-import { getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -482,10 +482,7 @@ async function probeDbHealth(db) {
   return grade;
 }
 
-// Page types to skip for translation (mirrors defaults.ts)
-const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate',
-];
+// Page types to skip for translation: canonical list from translate-core (#3734).
 
 // Languages that get inline transliteration before translation.
 // Currently Greek only — other scripts are handled by the translator directly.

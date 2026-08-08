@@ -31,6 +31,7 @@ import {
   loadTranslationPrompts,
   buildTranslationPrompt,
   writePageTranslation,
+  SKIP_TRANSLATION_PAGE_TYPES,
 } from '../lib/translate-core.mjs';
 
 // --- Config ---
@@ -39,7 +40,7 @@ import {
 // bug that once tripled translation costs — and carried its own hardcoded
 // English modernization prompt with no provenance stamping.
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-const SKIP_PAGE_TYPES = ['blank'];
+const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -172,6 +173,16 @@ async function processBook(book, pages, prompts, db, globalStats) {
       continue;
     }
 
+    // Human-edited page: skip BEFORE calling Gemini (the door would refuse the
+    // write anyway — don't pay for a translation we won't keep). Chain
+    // continuity from the human text.
+    if (page.translation?.source === 'manual' || page.translation?.edited_by) {
+      bookSkipped++;
+      globalStats.skipped++;
+      previousTranslation = page.translation?.data || null;
+      continue;
+    }
+
     const keyInfo = getNextKey();
     const startTime = Date.now();
 
@@ -200,13 +211,13 @@ async function processBook(book, pages, prompts, db, globalStats) {
       const translationMeta = extractTranslationMetadata(result.text);
 
       // The one door (translate-core): revision snapshot (#3240) + provenance-
-      // stamped write + counter-safe extras, in one call.
-      await writePageTranslation(db, {
+      // stamped write + human-edit guard, in one call.
+      const w = await writePageTranslation(db, {
         page, book, text: result.text, promptRef, model,
         note: 'retranslate_stale', extraSet: translationMeta,
       });
 
-      // Non-blocking usage log
+      // Non-blocking usage log (the Gemini call happened either way)
       db.collection('gemini_usage').insertOne({
         type: 'translate', mode: 'realtime', model,
         book_id: book.id, page_ids: [page.id],
@@ -218,7 +229,15 @@ async function processBook(book, pages, prompts, db, globalStats) {
         timestamp: new Date(),
       }).catch(() => {});
 
-      previousTranslation = result.text;
+      if (w.protected) {
+        // Human-edited page — door refused; chain continuity from the HUMAN text.
+        bookSkipped++;
+        globalStats.skipped++;
+        previousTranslation = w.text;
+        continue;
+      }
+
+      previousTranslation = w.text;
       bookCompleted++;
       globalStats.completed++;
       globalStats.totalTokens += (result.usage.inputTokens + result.usage.outputTokens);
@@ -338,6 +357,7 @@ async function main() {
               id: 1, _id: 0, book_id: 1, page_number: 1,
               'ocr.data': 1, 'ocr.updated_at': 1,
               'translation.data': 1, 'translation.updated_at': 1,
+              'translation.source': 1, 'translation.edited_by': 1,
               page_type: 1,
             },
           }
