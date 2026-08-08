@@ -5,7 +5,9 @@ building a duplicate queue, deciding whether two books are "the same edition,"
 or adding a surface that shows other scans/copies of a book.
 
 Materialized 2026-08-07 (#3260, workstream A of #3258). Companion to
-`work-identity.md` — that file governs the layer above this one.
+`work-identity.md` — that file governs the layer above this one. For *why* this
+layer is worth maintaining rather than merely how, see
+[`../identity-stack-rationale.md`](../identity-stack-rationale.md).
 
 ---
 
