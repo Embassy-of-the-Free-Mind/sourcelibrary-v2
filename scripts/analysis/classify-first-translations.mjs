@@ -200,24 +200,9 @@ async function main() {
 
     if (ops.length > 0) {
       await collection.bulkWrite(ops);
-
-      // Also set is_first_translation on the books collection
-      const bookOps = [];
-      for (const result of results) {
-        const bookIdx = (result.book_index || result.bookIndex || 0) - 1;
-        const book = batch[bookIdx];
-        if (!book) continue;
-        const isFirst = result.classification === 'never_translated';
-        bookOps.push({
-          updateOne: {
-            filter: { id: book.id },
-            update: { $set: { is_first_translation: isFirst } },
-          }
-        });
-      }
-      if (bookOps.length > 0) {
-        await db.collection('books').bulkWrite(bookOps);
-      }
+      // Deliberately does NOT write books.is_first_translation. An unverified
+      // classification is a lead, not a verdict — the public badge is owned by
+      // scripts/maintenance/reconcile-first-translation-flag.ts (#3726).
     }
 
     console.log(`  Saved ${ops.length} results. Running totals: ${JSON.stringify(stats)}`);

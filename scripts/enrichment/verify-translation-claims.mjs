@@ -539,7 +539,8 @@ async function main() {
                 verified_at: new Date(),
                 match_score: matches[0].score,
               },
-              is_first_translation: false,
+              // No is_first_translation write: a title-match score is a lead, not a
+              // verified demotion. The badge is owned by reconcile-first-translation-flag.ts (#3726).
               updated_at: new Date(),
             },
           });
@@ -676,16 +677,9 @@ async function main() {
             }));
           }
 
-          if (disposition === 'confirmed_first') {
-            update.is_first_translation = true;
-          } else if (disposition === 'translation_found') {
-            // Check if all found translations are partial — if so, this is the first FULL translation
-            const allPartial = result.translations?.every(t =>
-              t.completeness === 'partial' || t.completeness === 'excerpts'
-            );
-            update.is_first_translation = allPartial ? true : false;
-          }
-
+          // No is_first_translation write here: grounded search output is evidence,
+          // not a verdict — promotions and demotions of the public badge flow through
+          // reconcile-first-translation-flag.ts only (#3726).
           await db.collection('books').updateOne({ id: book.id }, { $set: update });
 
           // Log AI usage
