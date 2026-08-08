@@ -36,7 +36,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.7.0';
+const SERVER_VERSION = '4.7.1';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -890,7 +890,9 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
-    default: throw new Error(`Unknown tool: ${name}`);
+    // Name every tool in the error: a caller that guessed a name ("search") can
+    // self-correct on the next call instead of concluding the server is broken.
+    default: throw new Error(`Unknown tool: ${name}. Available tools: ${TOOLS.map((t) => t.name).join(', ')}`);
   }
 }
 

@@ -9,14 +9,20 @@ them as one.
 | Code | `src/app/api/mcp/route.ts` | `mcp-server/` (separate package at the repo root) |
 | Reached at | `https://sourcelibrary.org/api/mcp` (Streamable HTTP, stateless) | installed locally, stdio |
 | Used by | Claude.ai, Cowork, Claude Code, anything in the directory | local/dev clients |
-| Version | `4.4.0` (in the route's `serverInfo`) | `4.5.0` (`mcp-server/package.json`) |
-| Tools | 13 | 12 |
+| Version | `SERVER_VERSION` in the route (single literal since #3715; `server.json` is the only other copy — bump both together) | `4.5.0` (`mcp-server/package.json`) |
+| Tools | 15 | 12 |
+
+The remote version used to be three drifting literals (4.7.0 / 4.5.0 / 4.6.0
+simultaneously on 2026-08-07); #3715 collapsed it to one constant, held against
+`server.json` by the audit below.
 
 The two tool lists have **diverged** and that is not (currently) a bug to fix
-blindly: the remote server carries `get_quotes` (batch) and `propose_collection`
-which the package lacks, and the package carries `check_duplicate` — a
-pre-import helper that has no business on a public unauthenticated surface — which
-the remote server rightly lacks. Check the file you are actually changing.
+blindly: the remote server carries `get_quotes` (batch), `propose_collection`,
+`list_editions` (#3676) and `get_locus` (#3703) which the package lacks, and the
+package carries `check_duplicate` — a pre-import helper that has no business on
+a public unauthenticated surface — which the remote server rightly lacks. Check
+the file you are actually changing. The gap is now four tools wide; whether to
+sync or deprecate the npm package is an open decision.
 
 ## The listing, and the thing that must not happen again
 
@@ -75,4 +81,12 @@ deprecate instead; the manifest in
   `mcp_clients` (initialize handshakes, #3644) and `mcp_tool_calls` record who
   connects — **segment by `client_name` before quoting usage**, because a large
   share of handshakes are directory crawlers (`glimind-probe`, `mcpbeat`, `glama`,
-  `MCPScoringEngine`, `census-probe`, …) rather than readers.
+  `MCPScoringEngine`, `census-probe`, …) rather than readers. Snapshot 2026-08-08
+  (14 days): ~1,950 handshakes but the top real clients are `Anthropic/ClaudeAI`
+  (394) and `claude-code` (302); ~940 genuine tool calls, led by `get_book_text`,
+  `search_library`, `search_within_book`, `get_quote`, `list_books`. Read errors
+  before adding features: the same window showed `submit_feedback` failing 14/33
+  calls on a 5,000-char limit (raised to 20,000 as one shared constant,
+  `src/lib/feedback-limits.ts`, #3722) — the failure table in `mcp_tool_calls`
+  is the cheapest ergonomics backlog we have. Two sessions independently found
+  and fixed this within hours of each other; check open PRs before acting on it.
