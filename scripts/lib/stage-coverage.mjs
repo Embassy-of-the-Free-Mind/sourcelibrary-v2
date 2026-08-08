@@ -198,15 +198,20 @@ export async function measureOcr(db) {
   );
 }
 
-/** translated — visible pages carrying non-empty translation.data (#3293 convention). */
+/** translated — visible NON-BLANK pages carrying a real translation.
+ *  Mirrors isTranslatedPage() (#3747): blank leaves carry the literal
+ *  placeholder, not a translation, and are excluded from BOTH sides —
+ *  they can never be translated, so counting them as queue would show a
+ *  permanently unreachable backlog. */
 export async function measureTranslated(db) {
   const pages = db.collection('pages');
-  const coveredPredicate = { ...VISIBLE_PAGE_MATCH, 'translation.data': { $type: 'string', $ne: '' } };
+  const nonBlank = { ...VISIBLE_PAGE_MATCH, page_type: { $ne: 'blank' } };
+  const coveredPredicate = { ...nonBlank, 'translation.data': { $type: 'string', $ne: '' } };
   if (!(await pagesControlFound(db, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'translated' }, false);
   }
   const [total, covered] = await Promise.all([
-    count(pages, VISIBLE_PAGE_MATCH),
+    count(pages, nonBlank),
     count(pages, coveredPredicate),
   ]);
   return finalizeMeasurement(
