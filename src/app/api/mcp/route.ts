@@ -6,6 +6,7 @@ import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { getShortUrl } from '@/lib/shortlinks';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import {
   CallToolRequestSchema,
@@ -795,7 +796,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        message: { type: 'string', description: 'Your feedback (2-5000 chars)' },
+        message: { type: 'string', description: `Your feedback (${MIN_FEEDBACK_MESSAGE}-${MAX_FEEDBACK_MESSAGE} chars). Long structured reports are welcome — the limit was raised from 5,000 because agent reports were pressing against it and being split across submissions.` },
         name: { type: 'string' }, email: { type: 'string' },
       },
       required: ['message'],
