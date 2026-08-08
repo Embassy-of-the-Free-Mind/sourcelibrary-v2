@@ -23,17 +23,46 @@
  *   so it is fully auditable and reversible via `--undo`.
  *
  * USAGE:
- *   node scripts/maintenance/backfill-author-canonical-links.mjs            # dry run (default)
+ *   node scripts/maintenance/backfill-author-canonical-links.mjs            # dry run (default), LIVE books only
  *   node scripts/maintenance/backfill-author-canonical-links.mjs --apply    # write
+ *   node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog          # + hidden/unprocessed
+ *   node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply
  *   node scripts/maintenance/backfill-author-canonical-links.mjs --undo     # revert this run's writes
+ *                                       (add --include-backlog to undo the backlog run specifically)
  *
  * Env: MONGODB_URI (set -a; source .env.production.local; set +a)
  */
 import { MongoClient, ObjectId } from 'mongodb';
 
-const RUN_ID = 'backfill-2250';
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
+
+/**
+ * --include-backlog: also link books that are hidden or not yet processed.
+ *
+ * WHY THIS EXISTS. Both halves of the author layer were scoped to LIVE books —
+ * this script and `build-authors-collection.mjs:71` share the filter
+ * `visible: {$ne:false}, pages_count: {$gt:0}`. But imports land HIDDEN by
+ * invariant (see .claude/docs/import-workflow.md), so every acquisition is born
+ * outside the identity system and stays there until someone flips it visible.
+ * Measured 2026-08-08: 63,568 books with an author string and no `author_id`, of
+ * which 43,858 are excluded for being hidden — and `author_id` gates BOTH work
+ * resolvers (`resolve-work-ids-wikidata.mjs` requires it; `llm-verify-work-
+ * merges.mjs` blocks by it). So the backlog cannot acquire work identity at all,
+ * which is precisely when you most want it: work_id is what answers "do we
+ * already hold this?" before you import another copy.
+ *
+ * It stays opt-in because the two scopes answer different questions — "what does
+ * the public site show" vs "what do we hold" — and the live default is the right
+ * one for anything user-facing. The linking rule is unchanged and is exact:
+ * verbatim NFD match to the variants of EXACTLY ONE canonical person, ambiguous
+ * strings skipped, provenance written, reversible via --undo.
+ */
+const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
+const liveScope = INCLUDE_BACKLOG ? {} : { visible: { $ne: false }, pages_count: { $gt: 0 } };
+// Separate run id so a backlog pass can be reverted on its own, without also
+// undoing the live linkage an earlier run wrote.
+const RUN_ID = INCLUDE_BACKLOG ? 'backfill-2250-backlog' : 'backfill-2250';
 
 const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 
@@ -88,8 +117,7 @@ for (const a of allAuthors) {
 const liveUnlinked = await books
   .find(
     {
-      visible: { $ne: false },
-      pages_count: { $gt: 0 },
+      ...liveScope,
       author: { $type: 'string', $ne: '' },
       author_id: { $exists: false },
       $or: [{ author_entity_id: { $in: [null, ''] } }, { author_entity_id: { $exists: false } }],
@@ -142,8 +170,7 @@ for (const b of liveUnlinked) {
 const liveEntityLinked = await books
   .find(
     {
-      visible: { $ne: false },
-      pages_count: { $gt: 0 },
+      ...liveScope,
       author_entity_id: { $nin: [null, ''] },
       author_id: { $exists: false },
     },
@@ -179,6 +206,7 @@ for (const b of liveEntityLinked) {
 }
 
 console.log('=== backfill-author-canonical-links (#2250) ===');
+console.log(`scope: ${INCLUDE_BACKLOG ? 'ALL books (live + hidden/unprocessed backlog)' : 'LIVE books only (visible && pages_count>0) — pass --include-backlog for the rest'}`);
 console.log(`mode: ${APPLY ? 'APPLY (writing)' : 'DRY RUN (no writes)'}`);
 console.log('--- Phase A: entity-less books (exact author-string match) ---');
 console.log(`  scanned: ${liveUnlinked.length} | writes staged: ${ops.length - (liveEntityLinked.length - entAmbiguous - entOrphan)}`);
