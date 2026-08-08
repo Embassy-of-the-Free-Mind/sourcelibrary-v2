@@ -24,6 +24,12 @@
  * Also the alarm: reports how many books older than 7 days are still missing
  * fields (should be 0 — nonzero means this worker has not been running).
  *
+ * Covers BOTH `books` and `books_warehouse`: import dedup (`checkDuplicate`)
+ * queries the warehouse alongside the live library, so an unstamped warehouse
+ * row is invisible to any identity-keyed tier — the edition-key dedup flip
+ * (#3730 §2) cannot happen against a warehouse with no keys. Measured
+ * 2026-08-08: 22,543 warehouse docs, 0 with edition_key.
+ *
  * Cron: Hetzner, every 2 hours at :40, under flock — the exact line lives in
  * scripts/workers/crontab.production (kept as a snapshot of the live crontab).
  *
@@ -49,30 +55,21 @@ const DRY_RUN = argv.includes('--dry-run');
 const RESTAMP = argv.includes('--restamp');
 const LIMIT = parseInt(argv.find((a) => a.startsWith('--limit='))?.split('=')[1] || (RESTAMP ? '200000' : '5000'), 10);
 
-async function main() {
-  if (!MONGODB_URI) { console.error('[IDENTITY] MONGODB_URI not set'); process.exit(1); }
-  const started = Date.now();
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
-  await client.connect();
-  const db = client.db('bookstore');
-  const books = db.collection('books');
+// Field ABSENT = never computed. Field null = computed, unkeyable — not
+// re-selected, or the 127 unkeyable books would thrash every cycle.
+// --restamp widens the queue to every book and rewrites only diffs.
+const ABSENCE_QUEUE = {
+  content_type: { $ne: 'artwork' },
+  $or: [
+    { edition_key: { $exists: false } },
+    { normalized_title: { $exists: false } },
+  ],
+};
 
-  console.log(`[IDENTITY] ${new Date().toISOString()} — limit=${LIMIT}, dry-run=${DRY_RUN}`);
+async function stampCollection(coll) {
+  const queue = RESTAMP ? { content_type: { $ne: 'artwork' } } : ABSENCE_QUEUE;
 
-  // Field ABSENT = never computed. Field null = computed, unkeyable — not
-  // re-selected, or the 127 unkeyable books would thrash every cycle.
-  // --restamp widens the queue to every book and rewrites only diffs.
-  const queue = RESTAMP
-    ? { content_type: { $ne: 'artwork' } }
-    : {
-        content_type: { $ne: 'artwork' },
-        $or: [
-          { edition_key: { $exists: false } },
-          { normalized_title: { $exists: false } },
-        ],
-      };
-
-  const cursor = books
+  const cursor = coll
     .find(queue, {
       projection: {
         _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
@@ -101,7 +98,7 @@ async function main() {
     ops.push({ updateOne: { filter: { _id: b._id }, update: { $set: fields } } });
     if (ops.length >= 500) {
       if (!DRY_RUN) {
-        const r = await books.bulkWrite(ops, { ordered: false });
+        const r = await coll.bulkWrite(ops, { ordered: false });
         stamped += r.modifiedCount;
       } else stamped += ops.length;
       ops = [];
@@ -109,7 +106,7 @@ async function main() {
   }
   if (ops.length) {
     if (!DRY_RUN) {
-      const r = await books.bulkWrite(ops, { ordered: false });
+      const r = await coll.bulkWrite(ops, { ordered: false });
       stamped += r.modifiedCount;
     } else stamped += ops.length;
   }
@@ -117,16 +114,45 @@ async function main() {
   // Queue metrics always report the CRON's queue (absence), not the restamp
   // scan — a cron_runs row claiming "79,755 queued" after a restamp would
   // read as an outage.
-  const absenceQueue = {
-    content_type: { $ne: 'artwork' },
-    $or: [{ edition_key: { $exists: false } }, { normalized_title: { $exists: false } }],
-  };
-  const remaining = await books.countDocuments(absenceQueue);
+  const remaining = await coll.countDocuments(ABSENCE_QUEUE);
 
   // The alarm: a book older than a week with no identity fields means this
   // worker has not been running (or a new writer invented a new gap shape).
   const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-  const staleMissing = await books.countDocuments({ ...absenceQueue, created_at: { $lt: weekAgo } });
+  const staleMissing = await coll.countDocuments({ ...ABSENCE_QUEUE, created_at: { $lt: weekAgo } });
+
+  return { stamped, unkeyable, remaining, staleMissing };
+}
+
+async function main() {
+  if (!MONGODB_URI) { console.error('[IDENTITY] MONGODB_URI not set'); process.exit(1); }
+  const started = Date.now();
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
+  await client.connect();
+  const db = client.db('bookstore');
+
+  console.log(`[IDENTITY] ${new Date().toISOString()} — limit=${LIMIT}/collection, dry-run=${DRY_RUN}`);
+
+  // The warehouse needs the same index the live collection got in #3710, or
+  // every edition-keyed lookup against it is a collection scan. No-op when it
+  // already exists.
+  if (!DRY_RUN) await db.collection('books_warehouse').createIndex({ edition_key: 1 });
+
+  const perCollection = {};
+  const totals = { stamped: 0, unkeyable: 0, remaining: 0, stale_missing: 0 };
+  for (const name of ['books', 'books_warehouse']) {
+    const r = await stampCollection(db.collection(name));
+    perCollection[name] = r;
+    totals.stamped += r.stamped;
+    totals.unkeyable += r.unkeyable;
+    totals.remaining += r.remaining;
+    totals.stale_missing += r.staleMissing;
+    console.log(`[IDENTITY]   ${name}: stamped ${r.stamped}, ${r.unkeyable} unkeyable, ${r.remaining} queued, ${r.staleMissing} stale-missing`);
+  }
+  const { stamped, unkeyable, remaining } = totals;
+  // stale_missing stays the COMBINED number — the gates table and the alarm
+  // read this one field, and a stalled warehouse lane must trip it too.
+  const staleMissing = totals.stale_missing;
 
   const summary = `${RESTAMP ? 'RESTAMP: ' : ''}stamped ${stamped}${DRY_RUN ? ' (dry-run)' : ''}, ${unkeyable} unkeyable, ${remaining} queued, ${staleMissing} stale-missing`;
   console.log(`[IDENTITY] ${summary} in ${Math.round((Date.now() - started) / 1000)}s`);
@@ -137,7 +163,7 @@ async function main() {
     duration_ms: Date.now() - started,
     status: DRY_RUN ? 'dry-run' : 'success',
     failed: false,
-    actions: { stamped, unkeyable, remaining, stale_missing: staleMissing },
+    actions: { stamped, unkeyable, remaining, stale_missing: staleMissing, by_collection: perCollection },
     errors: [],
     error_count: 0,
     summary,
