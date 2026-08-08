@@ -8,6 +8,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { canonWork, canonWorkForWorkId, workEditionsFilter, type CanonWork } from '@/lib/canon-works';
 import { authorUrl, bookUrl } from '@/lib/slugify';
 import { locusEdition } from '@/lib/locus-editions';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -267,7 +268,7 @@ export default async function WorkPage({ params }: PageProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: jsonLdHtml({
               '@context': 'https://schema.org',
               '@type': 'CreativeWork',
               name: canon.title,
