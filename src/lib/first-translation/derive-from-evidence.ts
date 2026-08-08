@@ -166,6 +166,18 @@ function hasSearchCoverage(a: FirstTranslationAttempt): boolean {
   return (a.sources_checked?.length ?? 0) > 0 || (a.queries?.length ?? 0) > 0;
 }
 
+/**
+ * "We asked and could not tell" is not "we asked and found nothing" (#3778).
+ * The rung-2 skeptic records an unsettleable question as result:'none' (no
+ * priors surfaced) with verdict:'uncertain'; counting that row as an absence
+ * vote — or letting it refute a found — would turn an unrun check into a
+ * confident negative, the single most common way this system lies. Excluding
+ * it is strictly conservative: fewer absence votes, fewer refutes.
+ */
+function isUncertain(a: FirstTranslationAttempt): boolean {
+  return a.verdict === 'uncertain';
+}
+
 /** A prior is *locatable* when it carries a resolvable http(s) grounding link. */
 function hasResolvableUrl(p: NonNullable<FirstTranslationAttempt['priors']>[number]): boolean {
   const u = p.source_url;
@@ -242,7 +254,7 @@ export function deriveVerdictFromAttempts(
     const strongest = strongestAttempt(trustFound)!;
     const maxFoundTier = Math.max(...trustFound.map(familyTier));
     const refutes = attempts.filter(
-      (a) => a.result === 'none' && !isNotApplicable(a) && hasSearchCoverage(a),
+      (a) => a.result === 'none' && !isNotApplicable(a) && !isUncertain(a) && hasSearchCoverage(a),
     );
     const maxRefuteTier = refutes.length ? Math.max(...refutes.map(familyTier)) : -1;
     if (maxRefuteTier >= 2 && maxRefuteTier > maxFoundTier) {
@@ -352,7 +364,7 @@ export function deriveVerdictFromAttempts(
   //    exclude not_applicable rows (not absence votes) and rows with no recorded
   //    search coverage (an undocumented "none" is not evidence of absence).
   const absences = attempts.filter(
-    (a) => a.result === 'none' && !isNotApplicable(a) && hasSearchCoverage(a),
+    (a) => a.result === 'none' && !isNotApplicable(a) && !isUncertain(a) && hasSearchCoverage(a),
   );
   if (absences.length === 0) return null;
   const families = new Set(absences.map(attemptFamily)).size;
