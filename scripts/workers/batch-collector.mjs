@@ -533,6 +533,7 @@ async function processOneJob(db, job) {
 
         const setObj = {
           'ocr.data': text,
+          'ocr.has_warning': /<warning[\s>]/i.test(text), // write-time sensor (see collect-batch-results)
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,

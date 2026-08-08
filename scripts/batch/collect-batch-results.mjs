@@ -263,6 +263,10 @@ async function processOneJob(db, job) {
 
         const setObj = {
           'ocr.data': text,
+          // The model's own <warning> tag is a quality sensor that went unread
+          // for months (false-split incident) — stamp it at write time so the
+          // nightly snapshot can count it and repair lanes can query it.
+          'ocr.has_warning': /<warning[\s>]/i.test(text),
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
