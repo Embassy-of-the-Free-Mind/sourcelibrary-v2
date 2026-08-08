@@ -98,4 +98,4 @@ await withMongo(async (db) => {
       ` | dial: ${doc.dial.paused ? 'PAUSED' : 'running'} budget=$${doc.dial.daily_budget_usd ?? 'unset'}` +
       ` spend=$${doc.spend_today_usd.toFixed(2)} | ${doc.duration_ms}ms${DRY_RUN ? ' (dry-run)' : ''}`,
   );
-}, { timeoutMs: 30 * 60_000 });
+}, { timeoutMs: 30 * 60_000, socketTimeoutMs: 15 * 60_000 });

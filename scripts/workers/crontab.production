@@ -142,5 +142,5 @@
 17 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-traffic-anomaly.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/traffic-anomaly-alert.mjs" >> /var/log/sourcelibrary/traffic-anomaly.log 2>&1
 # Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
-# Stage coverage snapshot — nightly semantic monitoring, coverage from data not job counters (#3756). NOT YET ACTIVE — enable after first supervised run.
-#15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
+# Stage coverage snapshot — nightly semantic monitoring, coverage from data not job counters (#3756). Supervised runs 2026-08-08; page-level counts need the long socket timeout.
+15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
