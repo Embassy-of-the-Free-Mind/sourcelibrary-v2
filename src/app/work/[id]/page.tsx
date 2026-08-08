@@ -9,6 +9,7 @@ import { canonWork, canonWorkForWorkId, workEditionsFilter, type CanonWork } fro
 import { authorUrl, bookUrl } from '@/lib/slugify';
 import { locusEdition } from '@/lib/locus-editions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import LocusJumpBox from '@/components/work/LocusJumpBox';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -326,6 +327,15 @@ export default async function WorkPage({ params }: PageProps) {
                 <ReadNowCard book={readNow.english} lane="Read in English" />
               )}
             </div>
+            {canon?.locus && (
+              <div className="mt-4">
+                <LocusJumpBox
+                  workSlug={canon.slug}
+                  systemLabel={canon.locus.system === 'bekker' ? 'Bekker' : 'Stephanus'}
+                  example={canon.locus.example}
+                />
+              </div>
+            )}
           </div>
         )}
 

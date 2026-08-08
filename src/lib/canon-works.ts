@@ -35,6 +35,14 @@ export interface CanonWork {
   workIds: string[];
   /** Verified work_id values of collected editions containing this work */
   collectedWorkIds?: string[];
+  /**
+   * Canonical citation config (enables /work/[slug]/at/[ref] and the jump
+   * box). `workSlug` must be a slug from src/lib/locus-works.ts — it filters
+   * anchors by running head, which is how a Stephanus number is disambiguated
+   * between dialogues. `example` is a reader-facing reference inside the
+   * work's real range.
+   */
+  locus?: { system: 'bekker' | 'stephanus'; workSlug: string; example: string };
 }
 
 const PLATO_COLLECTED = ['Q139619812', 'plato-opera-ficino']; // Stephanus 1578; Ficino's Latin Opera
@@ -80,6 +88,7 @@ export const CANON_WORKS: CanonWork[] = [
     originalLanguage: 'Greek',
     workIds: ['plato-republic'],
     collectedWorkIds: PLATO_COLLECTED,
+    locus: { system: 'stephanus', workSlug: 'republic', example: '328b' },
   },
   {
     slug: 'timaeus',
@@ -90,6 +99,7 @@ export const CANON_WORKS: CanonWork[] = [
     originalLanguage: 'Greek',
     workIds: ['Q371884', 'plato-timaeus'],
     collectedWorkIds: PLATO_COLLECTED,
+    locus: { system: 'stephanus', workSlug: 'timaeus', example: '29d' },
   },
   {
     slug: 'phaedo',
@@ -100,6 +110,7 @@ export const CANON_WORKS: CanonWork[] = [
     originalLanguage: 'Greek',
     workIds: ['Q244161'],
     collectedWorkIds: PLATO_COLLECTED,
+    locus: { system: 'stephanus', workSlug: 'phaedo', example: '64a' },
   },
   {
     slug: 'laws-plato',
@@ -110,6 +121,7 @@ export const CANON_WORKS: CanonWork[] = [
     originalLanguage: 'Greek',
     workIds: ['Q752285'],
     collectedWorkIds: PLATO_COLLECTED,
+    locus: { system: 'stephanus', workSlug: 'laws', example: '624a' },
   },
   {
     slug: 'nicomachean-ethics',
@@ -119,6 +131,7 @@ export const CANON_WORKS: CanonWork[] = [
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['aristotle-nicomachean-ethics'],
+    locus: { system: 'bekker', workSlug: 'nicomachean-ethics', example: '1094a' },
   },
   {
     slug: 'metaphysics',
@@ -128,6 +141,7 @@ export const CANON_WORKS: CanonWork[] = [
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['aristotle-metaphysics'],
+    locus: { system: 'bekker', workSlug: 'metaphysics', example: '980a' },
   },
   {
     slug: 'organon',
@@ -146,6 +160,7 @@ export const CANON_WORKS: CanonWork[] = [
     era: '4th century BCE',
     originalLanguage: 'Greek',
     workIds: ['local:a:aristotle:soul'],
+    locus: { system: 'bekker', workSlug: 'de-anima', example: '402a' },
   },
   {
     slug: 'herodotus-histories',
