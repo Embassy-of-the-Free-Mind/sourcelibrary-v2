@@ -6,6 +6,7 @@ import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
 import { memorixAliasesFor } from '@/lib/bph-cataloguer-identity';
+import { fetchRevisionsByEditor, fieldLabel } from '@/lib/bph-catalogue-activity';
 import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath, catalogIndexPath } from '@/lib/catalog-nav';
 
@@ -56,20 +57,6 @@ interface RevisionRow {
   note: string | null;
 }
 
-const FIELD_LABELS: Record<string, string> = {
-  state_shelf_mark: 'State Collection shelf mark',
-  shelf_mark: 'Shelf mark',
-  present_location: 'Present location',
-  internal_remarks: 'Internal remarks',
-  exhibition_history: 'Exhibition history',
-  impressum_original: 'Original impressum',
-  bibliographic_format: 'Format',
-  number_of_copies: 'Copies held',
-  ustc_sn: 'USTC number',
-  ia_identifier: 'Internet Archive id',
-};
-const fieldLabel = (f: string) =>
-  FIELD_LABELS[f] || f.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -101,19 +88,8 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
 
   // bph_works_revisions is RLS-protected; read with the service-role client
   // (this page is already editor-gated above).
-  const [worklistRes, myRevisionsRes, recentRes, integrityRes, memorixRes] = await Promise.all([
-    supabaseAdmin.rpc('bph_catalogue_worklist'),
-    supabaseAdmin
-      .from('bph_works_revisions')
-      .select('id, ubn, change_type, field_changes, editor_email, applied_at, note')
-      .eq('editor_email', email)
-      .order('applied_at', { ascending: false })
-      .limit(40),
-    supabaseAdmin
-      .from('bph_works_revisions')
-      .select('id, ubn, change_type, field_changes, editor_email, applied_at, note')
-      .order('applied_at', { ascending: false })
-      .limit(25),
+  const [myRevisions, integrityRes, memorixRes] = await Promise.all([
+    fetchRevisionsByEditor(email, 40),
     supabaseAdmin
       .from('bph_works_integrity')
       .select('last_checked')
@@ -129,9 +105,6 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
       : Promise.resolve({ data: null, count: 0, error: null }),
   ]);
 
-  const worklist = ((worklistRes.data as WorklistRow[] | null) || []).filter((w) => w.n > 0);
-  const myRevisions = (myRevisionsRes.data as RevisionRow[] | null) || [];
-  const recent = (recentRes.data as RevisionRow[] | null) || [];
   const lastChecked = (integrityRes.data as { last_checked: string }[] | null)?.[0]?.last_checked || null;
 
   const memorixCount = (memorixRes as { count?: number | null }).count || 0;
@@ -146,8 +119,6 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
       .limit(1);
     memorixLast = (data as { modified_time: string }[] | null)?.[0]?.modified_time || null;
   }
-
-  const totalAttention = worklist.reduce((s, w) => s + Number(w.n), 0);
 
   return (
     <div className="bg-cream min-h-screen">
@@ -218,75 +189,22 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
           </div>
         </section>
 
-        {/* 2. What needs a librarian. Every number links to the actual records. */}
-        <section className="mb-10">
-          <h2 className="text-lg text-primary font-display mb-1">Needs your attention</h2>
-          <p className="text-sm text-muted mb-3">
-            {totalAttention > 0
-              ? `${n(totalAttention)} records where only a librarian can decide what is right.`
-              : 'Nothing outstanding.'}
-          </p>
+        {/* "Needs your attention" moved to Review (it is a queue of decisions,
+            not a report about you) and "Recent changes" to its own Changes
+            page (it records the whole catalogue, not your work). Both are
+            linked from the top bar. */}
+        <p className="text-sm text-muted">
+          Records needing a librarian&rsquo;s decision are under{' '}
+          <a href={`${navBasePath}/review?tab=attention`} className="text-accent-rust hover:underline">
+            Review → Needs attention
+          </a>
+          . Every edit to the catalogue is under{' '}
+          <a href={`${navBasePath}/changes`} className="text-accent-rust hover:underline">
+            Changes
+          </a>
+          .
+        </p>
 
-          {worklist.map((w) => (
-            <div key={w.category} className="border border-stone-200 bg-white p-5 mb-3">
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="text-primary font-medium">{w.label}</h3>
-                <span className="text-xl text-primary font-display shrink-0">{n(Number(w.n))}</span>
-              </div>
-              <p className="text-sm text-muted mt-1">{w.detail}</p>
-              {w.samples?.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm">
-                  {w.samples.slice(0, 12).map((s, i) => (
-                    <a
-                      key={`${w.category}-${s.id}-${i}`}
-                      href={`${navBasePath}/${encodeURIComponent(s.ubn || s.id)}`}
-                      className="text-accent-rust hover:underline"
-                      title={s.hint || undefined}
-                    >
-                      {s.ubn || s.shelf_mark || s.id.slice(0, 8)}
-                    </a>
-                  ))}
-                  {Number(w.n) > 12 && <span className="text-muted">+{n(Number(w.n) - 12)} more</span>}
-                </div>
-              )}
-            </div>
-          ))}
-        </section>
-
-        {/* 3. What has been done to the catalogue, in plain words. */}
-        <section className="mb-10">
-          <h2 className="text-lg text-primary font-display mb-1">Recent changes</h2>
-          <p className="text-sm text-muted mb-3">
-            Every edit to this catalogue, by a person or by our software, with what changed and why.
-          </p>
-          <div className="border border-stone-200 bg-white divide-y divide-stone-100">
-            {recent.length === 0 && <p className="p-5 text-sm text-muted">No changes recorded yet.</p>}
-            {recent.map((r) => {
-              const fields = Object.keys(r.field_changes || {});
-              const isSystem = r.editor_email.startsWith('system:');
-              const who = isSystem ? 'Source Library (automatic)' : r.editor_email;
-              return (
-                <div key={r.id} className="p-4 text-sm">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <a href={`${navBasePath}/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
-                      {r.ubn}
-                    </a>
-                    <span className="text-muted shrink-0">{formatDate(r.applied_at)}</span>
-                  </div>
-                  <div className="text-primary mt-0.5">
-                    {r.change_type === 'create' ? 'Record created' : `Changed ${fields.map(fieldLabel).join(', ')}`}
-                    <span className="text-muted"> · {who}</span>
-                  </div>
-                  {r.note && <p className="text-muted mt-1">{r.note}</p>}
-                </div>
-              );
-            })}
-          </div>
-          <p className="text-xs text-muted mt-2">
-            Showing the {recent.length} most recent. Every record also has its own full history, linked
-            from the record itself.
-          </p>
-        </section>
       </div>
     </div>
   );

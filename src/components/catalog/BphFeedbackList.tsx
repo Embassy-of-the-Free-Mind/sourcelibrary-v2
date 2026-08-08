@@ -183,7 +183,7 @@ export default function BphFeedbackList({
                       {tenant &&
                         (promoted.has(row.id) ? (
                           <a
-                            href={`${basePath}/inbox?tab=board`}
+                            href={`${basePath}/review?tab=board`}
                             className="inline-flex items-center gap-1 text-xs text-muted hover:text-primary"
                           >
                             <Check className="w-3 h-3" />

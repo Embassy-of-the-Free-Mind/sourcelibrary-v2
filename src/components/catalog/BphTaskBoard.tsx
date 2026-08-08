@@ -250,7 +250,7 @@ export default function BphTaskBoard({ tenant, initialTasks, basePath }: Props) 
 
                       {task.feedback_id && (
                         <a
-                          href={`${basePath}/inbox?tab=feedback`}
+                          href={`${basePath}/review?tab=feedback`}
                           title="Came from feedback"
                           className="p-1 text-muted hover:text-accent-rust"
                         >

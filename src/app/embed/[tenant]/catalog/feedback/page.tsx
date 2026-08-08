@@ -3,12 +3,11 @@ import { getTenantContext } from '@/lib/tenant-context';
 import { catalogBasePath } from '@/lib/catalog-nav';
 
 /**
- * Feedback moved into the catalogue Inbox as a tab, alongside proposed edits,
- * so librarians have one place for "things needing me" rather than two links
- * that read as redundant.
+ * Feedback is a tab of Review, alongside proposed edits and the board, so
+ * librarians have one place for "things needing me".
  *
- * Kept as a redirect because this URL has been handed out (the toolbar linked
- * it, and it is the natural thing to guess).
+ * Kept as a redirect because this URL has been handed out — the toolbar linked
+ * it, and it is the natural thing to guess.
  */
 export default async function CatalogFeedbackRedirect({
   params,
@@ -18,5 +17,5 @@ export default async function CatalogFeedbackRedirect({
   const { tenant } = await params;
   if (tenant !== 'bph') notFound();
   const base = catalogBasePath((await getTenantContext())?.source ?? null, tenant);
-  redirect(`${base}/inbox?tab=feedback`);
+  redirect(`${base}/review?tab=feedback`);
 }

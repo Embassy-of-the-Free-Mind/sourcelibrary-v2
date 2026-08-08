@@ -93,7 +93,7 @@ export default async function CatalogHelpPage({ params }: Props) {
           <p>
             <strong>Every change goes through review, including an editor&rsquo;s own.</strong> Your
             edit does not touch the live catalogue when you save it — it goes to{' '}
-            <strong>Inbox → Edits</strong> as a proposal, with the old and new values side by side.
+            <strong>Review → Edits</strong> as a proposal, with the old and new values side by side.
           </p>
           <p>
             A reviewing librarian can <strong>approve</strong> it, <strong>correct it first and then
@@ -133,13 +133,18 @@ export default async function CatalogHelpPage({ params }: Props) {
             <strong>Browse</strong> — the full catalogue, the same view the public gets.
           </p>
           <p>
-            <strong>Inbox</strong> — everything waiting for you, in two tabs.{' '}
+            <strong>Review</strong> — everything waiting for you, in four tabs.{' '}
             <em>Edits</em> are proposed changes awaiting approval. <em>Feedback</em> is messages
-            from people using the site. The number on the bar counts both.
+            from people using the site. <em>Board</em> is what we have decided to do about any of
+            it. <em>Needs attention</em> is records the catalogue itself flags as incomplete.
           </p>
           <p>
-            <strong>My work</strong> — what you have catalogued, and the records that need a
-            librarian&rsquo;s decision.
+            <strong>Changes</strong> — every edit ever made to this catalogue, by a person or by
+            our software, newest first.
+          </p>
+          <p>
+            <strong>My work</strong> — what you have catalogued here and in Memorix, and your own
+            recent edits.
           </p>
           <p>
             <strong>Team</strong> — invite colleagues and set what they can do. A{' '}

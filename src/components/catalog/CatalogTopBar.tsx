@@ -9,11 +9,11 @@ import type { InboxCounts } from '@/lib/catalog-inbox';
  * Replaces the row of outlined buttons that used to float above each page.
  * That row had three problems: it existed on only two of the seven catalogue
  * pages, it read as page content rather than as chrome, and it offered
- * "Review queue" and "Feedback" as two separate queues, which looks redundant
- * even though they are not.
+ * "Review queue" and "Feedback" as two separate destinations, which looks
+ * redundant even though they are not.
  *
- * Now: one dark bar, always present, with both queues folded into a single
- * Inbox carrying a count. See `getInboxCounts()` for why they merge in the UI
+ * Now: one dark bar, always present, with the queues folded into a single
+ * Review carrying a count. See `getInboxCounts()` for why they merge in the UI
  * but stay separate in storage.
  *
  * Client component purely so the active item can come from `usePathname()` —
@@ -58,7 +58,7 @@ function activeItem(pathname: string | null): string | null {
   if (!pathname) return null;
   const segments = pathname.split('/').filter(Boolean);
   const last = segments[segments.length - 1] ?? '';
-  const known = ['inbox', 'team', 'help', 'new', 'workspace'];
+  const known = ['review', 'changes', 'team', 'help', 'new', 'workspace'];
   if (known.includes(last)) return last;
   // The index is `/catalog`, `/catalogue`, or the tenant root with ?view=catalog.
   if (last === 'catalog' || last === 'catalogue') return 'browse';
@@ -112,8 +112,8 @@ export default function CatalogTopBar({
 
             {canReview && (
               <>
-                <a href={`${base}/inbox`} className={item('inbox')} aria-current={mark('inbox')}>
-                  Inbox
+                <a href={`${base}/review`} className={item('review')} aria-current={mark('review')}>
+                  Review
                   <Badge n={counts?.total ?? 0} />
                 </a>
                 <a
@@ -122,6 +122,9 @@ export default function CatalogTopBar({
                   aria-current={mark('workspace')}
                 >
                   My work
+                </a>
+                <a href={`${base}/changes`} className={item('changes')} aria-current={mark('changes')}>
+                  Changes
                 </a>
                 <a href={`${base}/team`} className={item('team')} aria-current={mark('team')}>
                   Team
