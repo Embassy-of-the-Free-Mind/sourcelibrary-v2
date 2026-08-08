@@ -85,6 +85,23 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
 - **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
 
+## Writing to a store an automated job reads is ACTUATION, not recording — CRITICAL
+A ledger, queue or evidence log that a cron or worker consumes is not a notebook; it is
+the input to a writer you are not watching. On 2026-08-08 a first-translation
+verification round wrote 40 rows to an append-only evidence ledger and reported "Sink B
+untouched, no flag written" — true of the ingest, false of the pipeline. Seven hours
+later the nightly loop read that evidence and **removed three public badges**, including
+books the same session had just verified as correct. The rows even carried
+`resolver: tier2_agent`, which is exactly what the loop's safety valve
+(`--resolver=tier2_agent,human`) admits — the evidence unlocked the gate it was meant to
+pass. **Before writing to any such store, ask what reads it and when it next runs**, and
+say so in the report: "ingested N rows; the 05:30 job will act on them." A sign-off that
+sits two hops downstream of the decision is not a sign-off. Prefer a shape where the
+human reviews the *diff* at the point the change becomes visible (see #3726 Tier 3 for
+the pattern). Corollary: **a valve that only removes claims can never undo its own
+error** — `--only-demotions` is right for an unattended job, and it means every mistake
+it makes needs a person. Related: `.claude/docs/invariants/first-translation-claims.md`.
+
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
 - **NEVER** batch delete — list items first, wait for approval
