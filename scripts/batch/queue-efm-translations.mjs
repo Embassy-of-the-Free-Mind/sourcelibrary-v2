@@ -16,9 +16,10 @@
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 
 // --- Config ---
-const SKIP_PAGE_TYPES = ['blank'];
+const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // --- Parse args ---

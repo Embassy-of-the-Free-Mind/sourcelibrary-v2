@@ -12,8 +12,10 @@ const VALID_PAGE_TYPES = new Set([
 
 // Page types that should be skipped during translation — no meaningful text content
 // (ex-libris/bookplates are ownership marks, not book content)
+// Keep equal to SKIP_TRANSLATION_PAGE_TYPES in scripts/lib/translate-core.mjs
+// (the scripts-side canonical) — pinned by tests/unit/translate-edge-cases.test.ts.
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate',
+  'blank', 'exlibris', 'bookplate', 'digitizer-notice',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)
