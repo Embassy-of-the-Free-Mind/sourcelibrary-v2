@@ -4,14 +4,17 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 ## Where Everything Runs
 
-> **Reality check (2026-08-08):** the table below describes the ORCHESTRATED
-> era and much of it is dormant. Verified against the live Hetzner crontab:
-> the main `pipeline-orchestrator.mjs` loop is **not scheduled at all** (only
-> `--phase 9` finalize runs, every 15 min), `translate-worker.mjs` is **not
-> running**, and enrich-worker is idle with the pipeline paused. What IS live:
-> the finalize tail, `collect-batch-results.mjs` (every 30 min, #3717 — batch
-> result collection), archiving/acquisition crons, and the daily health alert.
-> Processing happens per-book via the batch routes (see `translating-a-book.md`).
+> **Reality check (2026-08-08, second pass):** the LINE IS RUNNING. The
+> unified scheduler was on the crontab the whole pause (an earlier note here
+> said "not scheduled at all" — that came from grepping the crontab for the
+> word "orchestrator", which the scheduler line doesn't contain; the grep was
+> the lying instrument). With `paused: false` + `daily_budget_usd` set
+> (2026-08-08 relight), the scheduler spawns orchestrator, translate-worker,
+> enrich workers and archivers every 2 min; spend-guard gates Phases 2/4 and
+> the worker's health gate refuses looped translations (relight canary: flash
+> looped on 42% of the loop-prone manuscript cohort's fresh pages; dial
+> contained spend to <$3). Also live: `collect-batch-results.mjs` every 30
+> min (#3717), the nightly stage-coverage snapshot (04:15, /platform/admin/line).
 > Shared translation logic now lives in `scripts/lib/translate-core.mjs` (the
 > "one door": model routing, DB prompts, revision-before-overwrite, counter
 > sync — issue #3725); any new translation writer must import it.
