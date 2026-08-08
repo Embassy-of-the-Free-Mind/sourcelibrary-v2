@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
     author?: string;
     language?: string;
     year?: number;
-    match_type: 'source_fingerprint' | 'title_author' | 'iiif_manifest' | 'keyword' | 'semantic';
+    match_type: 'source_fingerprint' | 'title_author' | 'iiif_manifest' | 'edition_key' | 'keyword' | 'semantic';
     confidence: 'exact' | 'high' | 'medium' | 'low';
     similarity?: number;
     url: string;
