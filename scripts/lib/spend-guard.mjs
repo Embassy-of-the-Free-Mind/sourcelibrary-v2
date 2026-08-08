@@ -15,7 +15,7 @@
  * Spend is measured from `gemini_usage`. Two deliberate choices:
  *   - Rows are selected by **ObjectId time range**, not the `timestamp` field —
  *     old rows store timestamp as a string, and Date-range queries silently
- *     return nothing (known trap, pipeline-architecture "Known Bugs" #1).
+ *     return nothing (known trap, pipeline-architecture "Known traps").
  *   - `cost_usd` is a computed estimate, not billed truth, and some writers
  *     omit it. Missing costs count as 0, so the guard can UNDERCOUNT — treat
  *     the ceiling as a strong brake, not an accounting system. The costless

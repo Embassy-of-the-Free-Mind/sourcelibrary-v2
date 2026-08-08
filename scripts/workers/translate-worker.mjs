@@ -1027,8 +1027,11 @@ async function selfDispatch(db, limit) {
     // Books with ≥200 pages fill the full 200-page cap and finish together.
     // Small books finish early, leaving idle slots. Dispatch big books first.
     { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
-    // First translations prioritized above speed tier — clear untranslated backlog first
-    { $sort: { is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+    // processing_priority (#3756) leads: explicit queue weight, higher first
+    // (reader requests / sponsorships / curated collections — see
+    // memory/pipeline-ops.md "Priority Ordering"). Then first translations
+    // above speed tier — clear untranslated backlog first.
+    { $sort: { processing_priority: -1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
     { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
     { $limit: limit },
   ]).toArray();
@@ -1045,8 +1048,10 @@ async function selfDispatch(db, limit) {
       } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
-      { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
-      { $sort: { pages_translated: -1 } }, // most-translated first — finish fastest
+      // processing_priority + pages_translated must survive the projection for
+      // the sort below to see them (#3756).
+      { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'image_source.provider': 1 } },
+      { $sort: { processing_priority: -1, pages_translated: -1 } }, // explicit priority first, then most-translated — finish fastest
       { $limit: limit },
     ]).toArray();
     if (candidates.length > 0) {

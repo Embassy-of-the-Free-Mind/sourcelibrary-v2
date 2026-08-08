@@ -195,6 +195,69 @@ export const contentHash = (t) =>
   createHash('sha256').update(t || '').digest('hex').slice(0, 16);
 
 // ────────────────────────────────────────────────────────────────────────────
+// Semantic health (issue #3756): collapse / runaway detection at the door.
+// Extracted verbatim from scripts/maintenance/retranslate-pages.mjs (which
+// mirrored detect-translation-collapse.mjs) so every writer can ask "is this
+// translation plausibly real?" instead of only the repair script knowing.
+// ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Editorial wrapper tags stripped before measuring the translation BODY.
+ * A page whose output is only <summary>/<keywords>/<note> wrappers has no
+ * actual translation, however long the raw string is.
+ */
+export const BLOCK_TAGS = ['meta','image-desc','vocab','summary','keywords','warning','note',
+  'scan-quality','language','page-type','page-num','header','sig','insert','columns','script'];
+const blockRe = new RegExp(`<(${BLOCK_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
+const looseRe = new RegExp(`</?(${BLOCK_TAGS.join('|')})\\b[^>]*>`, 'gi');
+
+/** Length of the prose body after stripping wrappers, tags, and whitespace. */
+export function bodyLen(text) {
+  if (!text) return 0;
+  return String(text).replace(blockRe, ' ').replace(looseRe, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim().length;
+}
+
+/**
+ * Collapse = the translation BODY is genuinely short in absolute terms (empty
+ * or a sliver). The absolute cap is essential: dense pages and pages with
+ * huge/artifact-inflated OCR have a low body RATIO but a perfectly adequate
+ * translation — they are NOT collapses. (Verified 2026-06-16: ratio-only
+ * flagged ~20% false positives from oversized OCR denominators.)
+ */
+export const COLLAPSE_ABS_CAP = 800;
+export const isCollapsed = (ocr, tr) => {
+  const ob = bodyLen(ocr), tb = bodyLen(tr);
+  if (ob < 400) return false;
+  if (tb >= COLLAPSE_ABS_CAP) return false;
+  return tb / ob < 0.3 || (/continued from previous page/i.test(tr || '') && tb < 60);
+};
+
+/**
+ * Runaway / repetition loop: translation body far longer than its own OCR
+ * body. Body-based to avoid false positives on low-OCR pages (headers,
+ * image-only). The 3× ratio deliberately clears normal CJK→English expansion
+ * (~3× in chars — #2532 found length-ratio runaway flags were ~97% false
+ * positives on CJK; real loops need a repetition metric, this only catches
+ * the gross ones).
+ */
+export const isExcess = (ocr, tr) => {
+  if ((tr || '').length > 20000) return true;
+  const ob = bodyLen(ocr), tb = bodyLen(tr);
+  return ob >= 300 && tb > ob * 3;
+};
+
+/**
+ * THE semantic health check for a freshly generated translation.
+ * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|null}}
+ */
+export function assessTranslationHealth(ocrText, translationText) {
+  if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
+  if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
+  return { healthy: true, reason: null };
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 // Edge cases (issue #3734): one definition of "is this page translatable",
 // replacing ~10 forked skip-lists across writers, and the blank-from-OCR
 // detection that previously lived only inside translate-worker.
@@ -273,12 +336,27 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  * @param {object} [args.extraSet] extra top-level page fields to $set in the same write
  *                                (e.g. detected_terms) — never translation.* keys
  * @param {boolean} [args.overwriteHuman=false] bypass the human-edit guard
- * @returns {{written: boolean, protected: boolean, text: string}} — when
- *   protected, `text` is the EXISTING human translation (use it for
+ * @param {boolean} [args.refuseUnhealthy=false] OPT-IN semantic health gate:
+ *   assess the new text against the page's OCR (assessTranslationHealth) and
+ *   refuse to write a collapsed/runaway result, returning
+ *   {written:false, unhealthy:true, reason}. Deliberately NOT default-on —
+ *   the production worker's behavior must not change silently (#3756).
+ * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, reason?: string, text: string}}
+ *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false }) {
   const clean = sanitizeTranslationTags(text);
+
+  // Opt-in semantic health gate (#3756): never persist an obviously collapsed
+  // or runaway translation. Checked before any DB access — an unhealthy result
+  // must leave no trace (no revision snapshot, no write).
+  if (refuseUnhealthy) {
+    const health = assessTranslationHealth(page?.ocr?.data, clean);
+    if (!health.healthy) {
+      return { written: false, protected: false, unhealthy: true, reason: health.reason, text: clean };
+    }
+  }
 
   // Human-edit guard (#3734): a translation a person wrote or corrected by
   // hand (source: 'manual', or edited_by set) must never be silently replaced

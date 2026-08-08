@@ -65,6 +65,30 @@ treat the ceiling as a brake, not accounting. The guard logs `spend $X / $Y` eve
 4. Watch `/var/log/sourcelibrary/scheduler.log` + `pipeline.log` for the `[spend-guard]` lines; first candidates processed should be `loop_quarantine_hold` books once those are re-enrolled.
 5. Failure at step 4 = no `[spend-guard]` line at all → the box hasn't pulled main yet (auto-pull ~5 min) or the crontab line didn't take (`crontab -l | grep scheduler`).
 
+## Priority Ordering (#3756)
+
+One field decides who gets processed first: **`books.processing_priority`** (number;
+absent = 0; **higher first**). It is the LEADING sort key in every paid candidate
+query — orchestrator Phase 2 (OCR submit, both passes), Phase 4 (translation
+dispatch, fresh + gap-fill), and translate-worker self-dispatch (fresh + partial) —
+with each query's previous ordering (BPH boost, first-translation flag, speed tier)
+kept as the tiebreak. The archive crons already honored the same field
+(`image-storage-architecture.md`), so one number now moves a book up the whole line.
+
+Feeder sources and their conventional weights (writers stamp the field; also record
+why in `processing_priority_breakdown`):
+
+| Source | Weight |
+|--------|--------|
+| Sponsorship (paid, promised to a donor) | 200 |
+| Reader request (feedback translation-requests) | 100 |
+| Fresh imports (existing import-script default) | 80 |
+| Curated collection membership | 50 |
+
+Legacy note: Phase 2's aggregations also honor an older `pipeline_priority` (≥1 = manual
+boost) inside their computed `_priority` — it now acts as a tiebreak below
+`processing_priority`. Prefer `processing_priority` for anything new.
+
 ## Emergency Controls
 
 - **Stop all:** Set `system_config._id: 'processing_control'` → `paused: true`
