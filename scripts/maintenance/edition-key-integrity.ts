@@ -75,12 +75,21 @@ async function main() {
     const id = b.id || String(b._id);
     const built = buildEditionKey(b);
 
+    // Convention (src/lib/identity-fields.ts): field absent = never computed
+    // (missing — the identity worker's queue); field null = computed,
+    // unkeyable (correct state for a stub title, NOT missing).
+    const hasField = Object.prototype.hasOwnProperty.call(raw, 'edition_key');
     if (!built.key) {
       unkeyable++;
       if (b.edition_key) { drift++; row({ check: 'key-on-unkeyable-book', id, slug: b.slug, stored: b.edition_key }); }
+      else if (!hasField) { missing++; row({ check: 'missing-key', id, slug: b.slug, computed: null }); }
       continue;
     }
-    if (!b.edition_key) { missing++; row({ check: 'missing-key', id, slug: b.slug, computed: built.key }); continue; }
+    if (!b.edition_key) {
+      missing++;
+      row({ check: 'missing-key', id, slug: b.slug, computed: built.key });
+      continue;
+    }
     if (b.edition_key !== built.key) {
       drift++;
       row({ check: 'key-drift', id, slug: b.slug, stored: b.edition_key, computed: built.key });

@@ -131,12 +131,17 @@ async function main() {
 
     // Only touch documents whose stored value actually differs — a no-op
     // bulkWrite over 100k docs is pure churn, and modifiedCount is how we
-    // verify the run did what it claims.
+    // verify the run did what it claims. One asymmetry: an ABSENT field is
+    // never "unchanged", even when the computed value is null — the convention
+    // (src/lib/identity-fields.ts) is field-absent = never computed, field-null
+    // = computed-and-unkeyable, and the identity worker's queue query depends
+    // on unkeyable books getting their explicit null stamped exactly once.
+    const hasField = Object.prototype.hasOwnProperty.call(raw, 'edition_key');
     const nextExternal = link ? { ustc: link.ustc, ustc_scope: link.scope, ustc_reason: link.reason } : null;
     const sameKey = (b.edition_key ?? null) === built.key;
     const sameQuality = (b.edition_key_quality ?? null) === (built.quality ?? null);
     const sameExternal = JSON.stringify(b.edition_external_ids ?? null) === JSON.stringify(nextExternal);
-    if (sameKey && sameQuality && sameExternal) { unchanged++; continue; }
+    if (hasField && sameKey && sameQuality && sameExternal) { unchanged++; continue; }
 
     if (APPLY) {
       backupRows.push(JSON.stringify({

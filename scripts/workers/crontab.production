@@ -140,3 +140,5 @@
 0 5 * * * /root/restic-backup.sh
 # Traffic anomaly detector — pushes to ntfy on state change (#3446)
 17 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-traffic-anomaly.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/traffic-anomaly-alert.mjs" >> /var/log/sourcelibrary/traffic-anomaly.log 2>&1
+# Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
+40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1

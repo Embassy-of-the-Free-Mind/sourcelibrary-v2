@@ -35,8 +35,24 @@ layer replaced — `dedup.ts`, `duplicate-integrity-check.mjs` and the admin
 duplicates route each had one, and they disagreed: the same corpus read as 456
 or 296 same-edition clusters depending on which you asked, the difference being
 volume-awareness alone. A metric with three implementations cannot be falsified.
-Import writes the key (`import-utils.ts`); the sweep backfills; the integrity
-script proves stored == computed.
+
+**Identity is a PIPELINE property, not a convention (Phase 0, 2026-08-08).**
+The writer is `computeIdentityFields()` — `src/lib/identity-fields.ts`, with a
+pinned `.mjs` twin in `scripts/lib/` for plain-node workers (parity test:
+`tests/unit/identity-fields-parity.test.ts`; change both sides or neither).
+Two call sites, and only two:
+
+- `import-utils.ts` at import time (books that take the official route);
+- `scripts/workers/identity-worker.mjs`, cron on Hetzner every 2h, which stamps
+  any book missing the fields **however it was inserted** — this is what closes
+  the 47-direct-insert-scripts hole, and it runs even while the pipeline is
+  paused (zero AI cost; the pause exists to stop paid work).
+
+Field convention: **absent = never computed** (the worker's queue), **null =
+computed, unkeyable** (stub title — a correct terminal state, not a gap). Never
+write partial identity. The worker's `stale_missing` count in `cron_runs` is
+the alarm: a book >7 days old with no identity fields means the worker is not
+running. The integrity script proves stored == computed.
 
 ## `edition_key_quality` is not decoration — gate on it
 
