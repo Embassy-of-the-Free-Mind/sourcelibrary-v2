@@ -116,12 +116,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CompareWorkPage({ params }: PageProps) {
   const { id: rawId } = await params;
   const id = decodeURIComponent(rawId);
-  const editions = await getEditionsForCompare(id);
-  if (editions.length === 0) {
-    // retired work_id (merged cluster, #3759) — follow the alias, keep old URLs alive
+  if (!canonWork(id)) {
+    // retired work_id (merged cluster, #3759) — follow the alias, keep old
+    // URLs alive; before the editions query so a legacy work_slug match
+    // can't pin a fragment page (same ordering as the parent work page)
     const target = await workAliasTarget(await getReadDb(), id);
     if (target) redirect(`/work/${encodeURIComponent(target)}/compare`);
   }
+  const editions = await getEditionsForCompare(id);
   if (editions.length < 2) notFound();
 
   const title = canonWork(id)?.title || workTitleFromEditions(editions, id);

@@ -232,16 +232,16 @@ export default async function WorkPage({ params }: PageProps) {
     // a raw work_id that belongs to a canon entry gets one stable address
     const owner = canonWorkForWorkId(id);
     if (owner) redirect(`/work/${owner.slug}`);
+    // a retired work_id (merged into another cluster, #3759) redirects to the
+    // survivor — old URLs stay citable. Checked BEFORE the editions query:
+    // a legacy work_slug equal to the retired id would otherwise keep
+    // rendering a fragment page. Indexed lookup (work_id_aliases_1).
+    const target = await workAliasTarget(await getReadDb(), id);
+    if (target) redirect(`/work/${encodeURIComponent(target)}`);
   }
 
   const editions = await getWorkEditions(id);
-  if (editions.length === 0) {
-    // a retired work_id (merged into another cluster, #3759) redirects to the
-    // surviving id's address instead of 404ing — old URLs stay citable
-    const target = await workAliasTarget(await getReadDb(), id);
-    if (target) redirect(`/work/${encodeURIComponent(target)}`);
-    notFound();
-  }
+  if (editions.length === 0) notFound();
   const collected = canon ? await getCollectedEditions(canon) : [];
 
   const title = canon ? canon.title : workTitleFromEditions(editions as { work_title?: string | null }[], id);
