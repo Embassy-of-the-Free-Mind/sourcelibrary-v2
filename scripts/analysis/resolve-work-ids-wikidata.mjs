@@ -13,6 +13,7 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { anchorProblem } from '../lib/author-anchor-classes.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const LANG = (process.argv.find(a=>a.startsWith('--lang='))||'--lang=greek').split('=')[1].toLowerCase();
@@ -27,14 +28,32 @@ const GENERIC = new Set(['letters','poems','poem','life','lives','works','fragme
 const tok = t => new Set(deacc(t).replace(/[\(\[].*?[\)\]]/g,' ').split(/ [—–-] |:| with | trans| edited/)[0]
   .replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>3 && !STOP.has(w)));
 
+// Wikidata class for "version, edition, or translation". An item of this class
+// is a *manifestation* of a work, not the work — filing a book under one makes a
+// cluster that can never join the work's other editions.
+const Q_EDITION = 'Q3331189';
+
 // ---- SPARQL: works for a batch of author QIDs ----
 async function worksForAuthors(qids){
   const values = qids.map(q=>`wd:${q}`).join(' ');
   // label only — altLabels injected foreign tokens into container items
   // ("Fragments"), defeating the generic-skip and faking matches.
+  //
+  // The P31 filter is load-bearing, not tidiness. Wikidata routinely carries the
+  // work AND its editions under the same P50 and the SAME English label:
+  // Polybius has THREE items labelled "The Histories" — Q250816 (the work),
+  // Q16038921 ("edition of…") and Q53748127 ("1920s translation by W. R. Paton").
+  // Containment scores all three at 1.00, and the tie-break below keeps whichever
+  // arrived first, so the chosen work_id depended on SPARQL row order — the same
+  // book resolved to Q250816 or Q53748127 across runs, written at HIGH and
+  // auto-applied. Dropping edition-class items removes the ambiguity at source.
+  // (The `^opera |^the works of|collected works` label blocklist further down is
+  // the older, hand-grown symptom of this; it stays as belt-and-braces for items
+  // that carry no P31 at all.)
   const query = `SELECT ?author ?w ?wLabel WHERE {
     VALUES ?author { ${values} }
     ?w wdt:P50 ?author .
+    FILTER NOT EXISTS { ?w wdt:P31/wdt:P279* wd:${Q_EDITION} }
     SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
   }`;
   const r = await fetch('https://query.wikidata.org/sparql?'+new URLSearchParams({query, format:'json'}),
@@ -50,6 +69,42 @@ async function worksForAuthors(qids){
     byAuthor.get(a).push({ qid:b.w.value.split('/').pop(), label, _tt:tok(label) });
   }
   return byAuthor;
+}
+
+// ---- Author anchors: every candidate hangs off authors.wikidata_id, so a wrong
+// anchor poisons every match under it. Two real cases found 2026-08-08:
+//   authors/sextus   → Q1270100, the *Sentences of Sextus*, a collection of
+//                      maxims — a TEXT used as a person. Four visible books.
+//   authors/longinus → Q436634, Cassius Longinus — the Neoplatonist to whom
+//                      On the Sublime was wrongly ascribed, not its author.
+// The first fails SILENTLY (P50 of a text returns no works → "HIGH 0", which
+// reads identically to "nothing to link"). The second is a real human and is
+// NOT caught here — right-class/wrong-person needs a different instrument.
+// The test is a denylist, not `P31 = Q5`: see scripts/lib/author-anchor-classes
+// for why Homer, Hermes Trismegistus and Orpheus must pass.
+async function validateAuthorAnchors(qids){
+  const bad = new Map();
+  for(let i=0;i<qids.length;i+=50){
+    const values = qids.slice(i,i+50).map(q=>`wd:${q}`).join(' ');
+    const query = `SELECT ?a ?type WHERE { VALUES ?a { ${values} } OPTIONAL { ?a wdt:P31 ?type } }`;
+    const r = await fetch('https://query.wikidata.org/sparql?'+new URLSearchParams({query, format:'json'}),
+      { headers:{ 'User-Agent':UA, 'Accept':'application/sparql-results+json' }, signal:AbortSignal.timeout(60000) });
+    if(!r.ok) throw new Error('SPARQL(anchor-check) '+r.status);
+    const d = await r.json();
+    const types = new Map();
+    for(const b of d.results.bindings){
+      const a = b.a.value.split('/').pop();
+      const t = b.type?.value?.split('/').pop();
+      if(!types.has(a)) types.set(a, new Set());
+      if(t) types.get(a).add(t);
+    }
+    for(const q of qids.slice(i,i+50)){
+      const problem = anchorProblem(types.get(q));
+      if(problem) bad.set(q, problem);
+    }
+    await sleep(800);
+  }
+  return bad;
 }
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
@@ -67,16 +122,43 @@ const aidToAuthorTok = new Map(authors.map(a=>[a._id, tok(a.name||'')]));  // au
 const qids = [...new Set([...aidToQid.values()].map(q=>q.replace(/^wd:/,'')))];
 console.log(`${LANG}: ${books.length} unlinked books w/ author; ${qids.length} distinct author QIDs to query Wikidata`);
 
-// fetch works per author (batched)
+// Validate the anchors before spending any matching effort on them.
+let badAnchors = new Map();
+try {
+  badAnchors = await validateAuthorAnchors(qids);
+} catch(e){
+  console.error(`FATAL: could not validate author anchors — ${e.message}`);
+  console.error('Refusing to continue: an unvalidated anchor can mis-file every book under it.');
+  process.exit(1);
+}
+if(badAnchors.size){
+  const qidToAid = new Map([...aidToQid].map(([a,q])=>[q.replace(/^wd:/,''),a]));
+  console.log(`\n!! ${badAnchors.size} BAD AUTHOR ANCHOR(S) in \`authors.wikidata_id\` — skipped, fix these:`);
+  for(const [q,why] of badAnchors) console.log(`   ${(qidToAid.get(q)||'?').padEnd(30)} ${q.padEnd(11)} ${why}`);
+  console.log('');
+}
+const goodQids = qids.filter(q=>!badAnchors.has(q));
+
+// fetch works per author (batched). A transport failure here must NOT be
+// reported as "nothing to link" — 502/429 from WDQS are routine, and swallowing
+// them yielded a confident "HIGH 0" that looks exactly like a clean empty run.
+// (Repo invariant: absence is not failure; a skip must be recorded, not implied.)
 const worksByQid = new Map();
-for(let i=0;i<qids.length;i+=40){
-  const batch = qids.slice(i,i+40);
+const failedBatches = [];
+for(let i=0;i<goodQids.length;i+=40){
+  const batch = goodQids.slice(i,i+40);
   try { const m = await worksForAuthors(batch); for(const [a,ws] of m) worksByQid.set(a,ws); }
-  catch(e){ console.log(`  SPARQL batch ${i} failed: ${e.message}`); }
+  catch(e){ console.log(`  SPARQL batch ${i} failed: ${e.message}`); failedBatches.push({ i, n: batch.length, err: e.message }); }
   await sleep(800);
 }
 const totalWorks = [...worksByQid.values()].reduce((s,w)=>s+w.length,0);
 console.log(`fetched ${totalWorks} works across ${worksByQid.size} authors from Wikidata`);
+if(failedBatches.length){
+  const lost = failedBatches.reduce((s,f)=>s+f.n,0);
+  console.error(`\n!! ${failedBatches.length} SPARQL batch(es) failed — ${lost}/${goodQids.length} author QIDs were never queried.`);
+  console.error('   This run is INCOMPLETE. Counts below are a floor, not a result; --apply is refused.');
+  if(APPLY){ console.error('   Re-run when Wikidata is reachable.'); await mc.close(); process.exit(2); }
+}
 
 const out={high:[],medium:[],low:[]};
 for(const b of books){
@@ -102,6 +184,24 @@ for(const b of books){
     if(cont>bestCont || (cont===bestCont && inter>bestInter)){ bestCont=cont; bestInter=inter; best=w; bestTT=wtt; }
   }
   if(!best || bestInter===0){ continue; }
+  // A strict `>` keeps whichever candidate SPARQL happened to return first, so a
+  // genuine tie resolved differently run to run. Ties are ambiguity, not a
+  // winner: count them and demote instead of picking arbitrarily.
+  const tied = cands.filter(w=>{
+    if(w.qid===best.qid) return false;
+    const wtt = new Set([...w._tt].filter(x=>!aTok.has(x)));
+    if(!wtt.size || [...wtt].every(x=>GENERIC.has(x))) return false;
+    if(wtt.has('fragments')||wtt.has('fragment')) return false;
+    if(/with an english translation|amddiffyniad|^opera |^the works of|collected works|complete works/i.test(w.label)) return false;
+    let inter=0; for(const x of wtt) if(bt.has(x)) inter++;
+    return inter===bestInter && inter/wtt.size===bestCont;
+  });
+  if(tied.length){
+    out.low.push({ book:b.title.slice(0,48), role:b.text_role||'?', bookId:b.id, authorQid:qid,
+      work:best.label.slice(0,40), qid:best.qid, cont:+bestCont.toFixed(2), inter:bestInter,
+      ambiguous:[best.qid, ...tied.map(t=>t.qid)], reason:`tied at cont=${bestCont.toFixed(2)} with ${tied.length} other candidate(s)` });
+    continue;
+  }
   const wTokens=[...bestTT];
   const generic = wTokens.length===1 && GENERIC.has(wTokens[0]);
   const rec={ book:b.title.slice(0,48), role:b.text_role||'?', bookId:b.id, authorQid:qid,
@@ -112,7 +212,12 @@ for(const b of books){
   else if(bestCont>=0.8 && generic) out.medium.push(rec);
   else out.low.push(rec);
 }
-console.log(`\n${LANG}: HIGH ${out.high.length} | MEDIUM(generic, review) ${out.medium.length} | LOW ${out.low.length}`);
+const ambiguous = out.low.filter(r=>r.ambiguous);
+console.log(`\n${LANG}: HIGH ${out.high.length} | MEDIUM(generic, review) ${out.medium.length} | LOW ${out.low.length}${ambiguous.length?` (of which ${ambiguous.length} AMBIGUOUS — tied candidates, demoted not guessed)`:''}`);
+if(ambiguous.length){
+  console.log('\n=== AMBIGUOUS (tied; would previously have been decided by SPARQL row order) ===');
+  for(const r of ambiguous.slice(0,20)) console.log(`  "${r.book}" → ${r.ambiguous.join(' / ')}  ${r.reason}`);
+}
 console.log('\n=== HIGH proposals (evidence) ===');
 for(const r of out.high.slice(0,40)) console.log(`  [${r.role.slice(0,4)}] "${r.book}" → ${r.qid} "${r.work}" cont=${r.cont} (author ${r.authorQid})`);
 fs.writeFileSync(`/tmp/wikidata-work-proposals-${LANG}.json`, JSON.stringify(out,null,2));
