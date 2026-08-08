@@ -41,6 +41,44 @@
 /** Sentence-final marks across the scripts where we make a claim, plus closers. */
 const TERMINAL = /[.!?:;»”"'’)\]…。！？۔։።៕။]$/;
 
+/**
+ * The translator's own "this is cut off here" marker, at either edge.
+ *
+ * **The marker meaning INCOMPLETE was making the detector say COMPLETE.** The
+ * translation layer appends an ellipsis where a sentence runs off the leaf, and
+ * `TERMINAL` above contains both `…` and `.` — so every such page tested as
+ * ending on sentence-final punctuation and reported `continues_on_next: false`.
+ * A page opening on one failed the mirror test, since `^\p{Ll}` sees a dot, not
+ * a lowercase letter.
+ *
+ * Reported with eight datapoints across five books and five layouts, in a
+ * submission that also retracted its own earlier theory that hyphen resolution
+ * was the cause (#3721):
+ *
+ *     TRUE   Taylor p.45   "…to a common nature, but"      ← bare word, detected
+ *     TRUE   Taylor p.269  "…likewise which appear to"     ← bare word, detected
+ *     FALSE  Taylor p.46   "…of such energy..."            ← appended ellipsis
+ *     FALSE  Taylor p.47   "…in a variety..."              ← appended ellipsis
+ *     FALSE  Maier p.100   "…increased and stronger..."    ← appended ellipsis
+ *     FALSE  Confucius p.300 "…is by nature so..."         ← appended ellipsis
+ *
+ * So an edge ellipsis is now read as continuation rather than termination, which
+ * is also the right way to be wrong: this module's whole purpose is that a false
+ * negative (no hint, caller quotes a fragment believing it whole) is worse than a
+ * false positive (a hint to fetch context that turns out unnecessary).
+ *
+ * Matches a single `…` and a spaced or unspaced run of dots (`...`, `. . .`).
+ *
+ * **Closers must be allowed AFTER the marker.** Captured from production, the
+ * real tails are `…of such energy..."` and `…in a variety...”` — the pages sit
+ * inside a block quote, so the ellipsis is followed by a closing quotation mark.
+ * A `$`-anchored pattern without this matched neither, and the first draft of
+ * this fix silently did nothing on the very pages it was written for.
+ */
+const CLOSERS = '[»”"\'’)\\]]*';
+const ELLIPSIS_TAIL = new RegExp(`(?:…|\\.\\s*\\.\\s*\\.)\\s*${CLOSERS}\\s*$`, 'u');
+const ELLIPSIS_HEAD = new RegExp(`^\\s*[«“"'‘(\\[]*\\s*(?:…|\\.\\s*\\.\\s*\\.)`, 'u');
+
 /** A trailing hyphen directly after a letter: the word itself is cut in half. */
 const HYPHEN_SPLIT = /[\p{L}]-$/u;
 
@@ -181,8 +219,10 @@ export function pageContinuity(
   }
 
   return {
-    continues_from_previous: /^\p{Ll}/u.test(head),
-    continues_on_next: hyphen_split_at_end || !TERMINAL.test(tail),
+    // An edge ellipsis is the translator saying "cut off here" — see ELLIPSIS_*.
+    // Tested BEFORE the punctuation rules, because those two read it backwards.
+    continues_from_previous: ELLIPSIS_HEAD.test(head) || /^\p{Ll}/u.test(head),
+    continues_on_next: hyphen_split_at_end || ELLIPSIS_TAIL.test(tail) || !TERMINAL.test(tail),
     hyphen_split_at_end,
   };
 }
