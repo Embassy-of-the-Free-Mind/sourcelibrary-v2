@@ -109,12 +109,30 @@ a book is still in the backlog. `--include-backlog` linked **10,101** books
   exactly where junk strings live (#3434, #3770), and a rebuild can reshape existing
   clusters and relink live books.
 - **#3770 — `[object Object]`.** 3,297 books, all hidden, zero visible.
-- **LLM merge pass unfinished.** `llm-verify-work-merges.mjs` was at ~800/1387 authors
-  when the session ended (proposals only, no writes, ~$1 of `gemini-3.1-flash-lite`).
-  It writes `scripts/output/llm-work-merge-proposals.json` **only at the end**, so a
-  killed run leaves nothing — **re-run from scratch**, don't look for partial output.
-  1,387 candidate authors; the 10,101 newly-linked books are what make more of them
-  eligible.
+- **LLM merge pass COMPLETED — do NOT re-run it.** (Corrects an earlier line in this
+  handoff that said to re-run from scratch; that was written while it was still in
+  flight.) `llm-verify-work-merges.mjs` finished all 1,387 candidate authors:
+  **471 groups, 450 HIGH, 1,737 books.** Proposals at
+  `scripts/output/llm-work-merge-proposals.json` (gitignored; backup copy in the
+  session scratchpad as `llm-work-merge-proposals-2026-08-08.json`). **Nothing was
+  applied.**
+
+  Many are the divergent-title cross-language wins the tool exists for — al-Bīrūnī's
+  *Taḥqīq mā li-l-Hind* (Arabic + Sachau), Cagliostro's *Mémoire* (French + English),
+  Avicenna's *Canon* pulling 8 Arabic/Latin items together.
+
+  **Review before applying — roughly 12% sit on shapes the casebook says need
+  judgment.** 41 groups contain a volume/part-marked title, 14 contain a
+  container-ish one. Two concrete suspected mis-merges found by inspection:
+  - `[archimedes] Opera omnia` would fuse a Bodmer manuscript, the 1544 Basel editio
+    princeps, Heiberg Vol. I and "The Works of Archimedes" into one work — a
+    **container merged with its own constituents** (casebook #4).
+  - `[abhinavagupta] Tantrāloka` would absorb "The Essence of Tantra", almost
+    certainly the *Tantrasāra* — a distinct, abridged work by the same author.
+
+  The `hasVolumeConflict` guard catches *conflicting* volume numbers (it correctly
+  kept Libavius's *pars prima* and *pars quarta* apart) but not a volume merged with
+  a non-volume item. Worth strengthening before a bulk apply.
 
 ## 6. Downstream effects to expect
 
