@@ -13,6 +13,7 @@ interface NavItem {
 
 const adminLinks: NavItem[] = [
   { href: '/admin', label: 'Dashboard', exact: true },
+  { href: '/admin/canon', label: 'Canon' },
   { href: '/admin/pipeline', label: 'Pipeline' },
   { href: '/admin/processing', label: 'Processing' },
   { href: '/admin/realtime', label: 'Realtime' },
