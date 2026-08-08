@@ -4499,8 +4499,10 @@ Rules:
           }}}},
           { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
           { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
-          // BPH priority until backlog cleared, then first translations, then speed tier
-          { $sort: { _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+          // Reader requests first (processing_priority 100, board-reader-requests.mjs #3750),
+          // then BPH priority until backlog cleared, then first translations, then speed tier.
+          // Descending sort puts books without the field last — no $addFields needed.
+          { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
@@ -4520,9 +4522,10 @@ Rules:
             }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
-            { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, language: 1, pages_translated: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
-            { $sort: { _isBph: 1, pages_translated: -1 } },
+            // Reader requests first (#3750) — see the fresh-books sort above.
+            { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
           if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
