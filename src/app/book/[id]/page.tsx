@@ -1509,6 +1509,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   the left of the label. "First translation" reads as plain text
                   to the right of Translated (full history lives in Editions &
                   translations). */}
+              {/* Untranscribed books say so. This row used to render only when
+                  ocrPct > 0, so the 704 visible books with NO OCR showed no
+                  status at all — and a missing badge reads as "nothing wrong",
+                  not "no text here". The reader then clicked "Read this book"
+                  into a pane that had nothing to show. */}
+              {ocrPct === 0 && (
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
+                  <span title={`${totalPages} scans available; no pages transcribed yet`} style={{ color: 'rgba(245,240,232,0.55)' }}>
+                    Scans only — not transcribed yet
+                  </span>
+                </div>
+              )}
               {ocrPct > 0 && (
                 <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
