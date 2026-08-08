@@ -54,6 +54,47 @@ resolved to "we badged it": the very claim it existed to qualify. Same family as
 name being a claim about its denominator. When a state promises "earned by evidence", the
 gate must read evidence.
 
+**A prior only defeats a claim if it is COMPLETE and of the SAME text — and the grader
+checked neither** (2026-08-08, #3753). `deriveVerdictFromEvidence` graded the defeat
+branch on a found sighting and the priors' *years alone*. So an `excerpt` defeated a
+claim exactly as a complete edition did, and `prior_relationship` — documented in
+`types.ts` as the field that "determines whether the candidate defeats first" — was
+**hardcoded to `same_text`**, the value that always defeats, while the ingest dropped the
+verifier's actual judgement. Of 429 books graded `not_first`, **31 had no complete prior
+anywhere** (7 already demoted) and **44 had priors of unknown completeness** (36 already
+demoted). Three books verified hours earlier as *badge stands* were demoted overnight.
+
+Two rules follow, and both are about registers, not facts:
+
+- **Judgement must be a field or it does not exist.** Forty verification rounds concluded
+  "this prior does not defeat the claim" — in `notes`, as prose, where no grader can read
+  it. Record the *relationship* (`different_source_language`, `related_distinct_work`),
+  not just the citation. Absent relationship still defaults to defeating, deliberately:
+  most rows predate the field and reversing them silently would be its own mass rewrite.
+- **"All fragments" and "we could not tell" are different verdicts.** Every prior known
+  partial → `first_complete`, a *badgeable* first-family claim (ours may be the first
+  complete edition). Any completeness unknown → `needs_review`. Collapsing them repeats
+  the error one level up.
+
+**A verification queue built from "obvious" over-claims is mostly correct badges.** 39 of
+59 verified by independent subagents, each chosen *because* it looked like a certain
+demote: **25 badges stood, 6 demotes held.** Not one failure was a search failure — every
+one was *which text is this exactly*: Boethius **plus Waleys**, Coornhert's **Dutch**
+Odyssey, Traversari's **Latin** Diogenes, volume 2 **of** the Hagakure, one juan **of** a
+106-juan encyclopedia, *usuras* vs *cambios*, *Shaʿarei Ẓedek* vs *Orah* (and a third
+unrelated text of the same title). Screen before verifying —
+`scripts/audit/ft-demote-queue-screen.mjs` cut 59 to 2 for free, and both its "no signal"
+cases were genuine badge-removals.
+
+**Fabricated priors are the norm here, and the hardest shape is well-formed.** Six
+observed: no named translator; an amalgam ("Hadock **(or** Gibbons)" — two real
+translators of two different works); a *study* counted as a translation (the NLM's own
+catalogue files Savage-Smith as a work *about* the treatise); a wrong date (Read
+1946→"1936"); **a real scholar attached to a nonexistent work** ("Deitz and Monfasani
+1997", "Del Soldato 2010" — absent from their own bibliographies), which defeats every
+structural detector; and a fabrication sitting *beside* a genuine defeater, so finding
+one fabrication does not clear a book.
+
 **Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
 
 
