@@ -10,6 +10,7 @@ import { authorUrl, bookUrl } from '@/lib/slugify';
 import { locusEdition } from '@/lib/locus-editions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import LocusJumpBox from '@/components/work/LocusJumpBox';
+import { isPublishedFirstTranslation } from '@/lib/book';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -33,6 +34,7 @@ const EDITION_PROJECTION = {
   language: 1, original_language: 1, 'image_source.provider_name': 1,
   thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1, pages_ocr: 1,
   pages_translated: 1, resource_type: 1, work_title: 1, work_slug: 1,
+  is_first_translation: 1,
 };
 
 async function getWorkEditions(idOrSlug: string) {
@@ -215,6 +217,9 @@ function EditionRow({ book }: { book: WorkEdition }) {
               {locus.system === 'bekker' ? 'Bekker' : 'Stephanus'} reference edition
             </span>
           )}
+          {isPublishedFirstTranslation(book) && (
+            <span className="text-amber-700">First translation</span>
+          )}
           {provider && <span>{provider}</span>}
         </div>
       </div>
@@ -339,11 +344,52 @@ export default async function WorkPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Editions grid */}
-        {canon && <h2 className="text-lg font-medium text-stone-700 mb-4">Editions &amp; manuscripts</h2>}
-        <div className="grid gap-4">
-          {editions.map((book) => <EditionRow key={book.id} book={book} />)}
-        </div>
+        {/* Editions grid. Canon pages group originals first, then translations
+            by language — what we HOLD, never a claim about what exists (an
+            absence claim needs evidence this page does not have; see
+            first-translation-claims.md). Non-canon pages keep the flat list. */}
+        {canon ? (() => {
+          const isOriginal = (b: WorkEdition) =>
+            !b.language || b.language === 'Unknown' || b.language.includes(canon.originalLanguage);
+          const originals = editions.filter(isOriginal);
+          const translationsByLang = new Map<string, WorkEdition[]>();
+          for (const b of editions) {
+            if (isOriginal(b)) continue;
+            const lang = b.language as string;
+            translationsByLang.set(lang, [...(translationsByLang.get(lang) || []), b]);
+          }
+          return (
+            <>
+              {originals.length > 0 && (
+                <>
+                  <h2 className="text-lg font-medium text-stone-700 mb-4">
+                    Editions &amp; manuscripts in {canon.originalLanguage}
+                  </h2>
+                  <div className="grid gap-4">
+                    {originals.map((book) => <EditionRow key={book.id} book={book} />)}
+                  </div>
+                </>
+              )}
+              {translationsByLang.size > 0 && (
+                <div className={originals.length > 0 ? 'mt-12 pt-8 border-t border-border-light' : ''}>
+                  <h2 className="text-lg font-medium text-stone-700 mb-4">Translations we hold</h2>
+                  {[...translationsByLang.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([lang, books]) => (
+                    <div key={lang} className="mb-6">
+                      <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wide mb-3">{lang}</h3>
+                      <div className="grid gap-4">
+                        {books.map((book) => <EditionRow key={book.id} book={book} />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          );
+        })() : (
+          <div className="grid gap-4">
+            {editions.map((book) => <EditionRow key={book.id} book={book} />)}
+          </div>
+        )}
 
         {/* Collected editions containing this work */}
         {collected.length > 0 && (
