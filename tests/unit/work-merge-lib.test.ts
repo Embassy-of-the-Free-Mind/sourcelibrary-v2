@@ -22,7 +22,16 @@ describe('pickWinner', () => {
 });
 
 describe('canonGoldClusters', () => {
-  const clusters = canonGoldClusters(CANON_WORKS);
+  // The registry AS IT STOOD before the 2026-08-08 merge run — frozen here so
+  // the extraction rules stay pinned even though the live registry has since
+  // shrunk to single ids (the merge's whole point).
+  const PRE_MERGE_REGISTRY = [
+    { slug: 'iliad', workIds: ['Q125518202', 'Q16547641', 'homer-homer-iliad-odyssey', 'Q19090449'] },
+    { slug: 'odyssey', workIds: ['local:a:homer:dolinghe-odyssea-ulysse-van', 'Q19090449', 'homer-homer-iliad-odyssey'] },
+    { slug: 'republic', workIds: ['plato-republic'], collectedWorkIds: ['Q139619812', 'plato-opera-ficino'] },
+    { slug: 'timaeus', workIds: ['Q371884', 'plato-timaeus'] },
+  ];
+  const clusters = canonGoldClusters(PRE_MERGE_REGISTRY);
 
   it('never includes an id shared between two canon entries (combined volumes)', () => {
     // Q19090449 and homer-homer-iliad-odyssey are Iliad+Odyssey combined
@@ -41,21 +50,25 @@ describe('canonGoldClusters', () => {
     expect(iliad!.winner).toBe('Q16547641');
   });
 
-  it('skips single-id entries (nothing to merge)', () => {
+  it('skips entries left with fewer than two unshared ids', () => {
     expect(clusters.find((c) => c.slug === 'republic')).toBeUndefined();
-    expect(clusters.find((c) => c.slug === 'aeneid')).toBeUndefined();
+    expect(clusters.find((c) => c.slug === 'odyssey')).toBeUndefined();
   });
 
-  it('never touches collectedWorkIds (Opera containers are separate works)', () => {
+  it('prefers the QID winner (timaeus)', () => {
+    expect(clusters.find((c) => c.slug === 'timaeus')!.winner).toBe('Q371884');
+  });
+
+  it('LIVE registry steady state: no mergeable fragmentation remains', () => {
+    // Post-merge every entry holds one id (plus genuinely-shared combined
+    // volumes). If this fails, someone added a multi-id entry — run
+    // merge-work-clusters.mjs instead of growing the array.
+    expect(canonGoldClusters(CANON_WORKS)).toEqual([]);
+  });
+
+  it('LIVE registry never lists a collected id inside workIds', () => {
     const collected = new Set(CANON_WORKS.flatMap((w) => w.collectedWorkIds || []));
-    for (const c of clusters) for (const id of c.ids) expect(collected.has(id)).toBe(false);
-  });
-
-  it('prefers the QID for every cluster that has one', () => {
-    for (const c of clusters) {
-      const qids = c.ids.filter((i: string) => /^Q\d+$/.test(i));
-      if (qids.length) expect(/^Q\d+$/.test(c.winner)).toBe(true);
-    }
+    for (const w of CANON_WORKS) for (const id of w.workIds) expect(collected.has(id)).toBe(false);
   });
 });
 
