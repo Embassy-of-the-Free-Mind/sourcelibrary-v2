@@ -105,6 +105,43 @@ function toCited(p: NonNullable<FirstTranslationAttempt['priors']>[number]): Cit
   };
 }
 
+/**
+ * Does this prior actually DEFEAT a first-translation claim?
+ *
+ * Two conditions, both of which the model already promised and neither of which
+ * the grader was checking.
+ *
+ * 1. COMPLETENESS. A demote requires a COMPLETE prior. The ft-verify contract
+ *    has always said so ("demote survives only if result == confirmed_complete")
+ *    but the grader keyed on `result === 'found'` and the priors' YEARS alone,
+ *    never their completeness — so an `excerpt` defeated a claim exactly as a
+ *    complete edition did. Measured 2026-08-08: of 429 books graded `not_first`,
+ *    31 had NO complete prior anywhere and 7 had already lost their badge —
+ *    al-Jāḥiẓ's *Kitāb al-Ḥayawān* among them, whose every English rendering is
+ *    a fragment and for which no complete translation exists in any catalogue.
+ *
+ * 2. RELATIONSHIP. `PriorRelationship` is documented in types.ts as the field
+ *    that "determines whether the candidate defeats first" — and the grader
+ *    hardcoded `same_text`, the value that always defeats, while the ingest
+ *    never carried the agent's actual judgement. So a prior verified as
+ *    translating a DIFFERENT WITNESS (Kerns 2008 renders Yonge's Middle English,
+ *    not the Latin *Secretum secretorum*) or a DIFFERENT WORK was recorded
+ *    faithfully and then read as a defeater. Only `same_text` and
+ *    `same_work_diff_edition` defeat; `different_source_language` and
+ *    `related_distinct_work` explicitly do not, per POLICY 2.
+ *
+ * An ABSENT relationship keeps the old default (`same_text`), because most
+ * historical rows predate the field and silently reversing them would be its own
+ * mass rewrite. Absence is not evidence of a non-defeating relationship.
+ */
+export function priorDefeatsClaim(
+  p: NonNullable<FirstTranslationAttempt['priors']>[number],
+): boolean {
+  const rel = (p as { relationship?: string }).relationship;
+  if (rel && rel !== 'same_text' && rel !== 'same_work_diff_edition') return false;
+  return /^complete$/i.test(String(p.completeness ?? ''));
+}
+
 const NOT_APPLICABLE_RE = /^\s*not[_ ]applicable\b/i;
 // Legacy backfills embed the judgment mid-notes ("[legacy_ai] status=not_applicable; …"),
 // which the anchored form misses — so an "original English work, FT does not apply"
@@ -220,15 +257,42 @@ export function deriveVerdictFromAttempts(
         best_attempt_id: strongest.attempt_id,
       };
     }
-    // Grade by the trustworthy priors' years: registry refs (year unknown) and any
-    // post-1900 prior defeat outright; all-parseable-and-pre-1900 → first_modern.
     const hasRegistryRef = trustFound.some((a) => (a.found_refs?.length ?? 0) > 0);
-    const years = trustFound
-      .flatMap((a) => (a.priors ?? []).filter((p) => evaluatePrior(bi, toCited(p)).trustworthy))
-      .map(priorYear);
+    const trustworthyPriors = trustFound
+      .flatMap((a) => a.priors ?? [])
+      .filter((p) => evaluatePrior(bi, toCited(p)).trustworthy);
+
+    // ONLY priors that actually defeat the claim may grade it. See
+    // priorDefeatsClaim: complete, and of a defeating relationship.
+    const defeating = trustworthyPriors.filter(priorDefeatsClaim);
+    const families = new Set(trustFound.map(attemptFamily)).size;
+
+    // A found sighting with nothing that defeats is NOT a demote. A registry ref
+    // still counts (its completeness is unknown by construction, and the
+    // registry is the layer that resolved it), so it keeps the old path.
+    if (!hasRegistryRef && trustworthyPriors.length > 0 && defeating.length === 0) {
+      // Distinguish "we found only fragments" from "we could not tell". The
+      // first is a real, badgeable finding — our edition may be the first
+      // COMPLETE one. The second is an unrun check and must not read as either.
+      const allKnownPartial = trustworthyPriors.every((p) =>
+        /^(partial|excerpts?)$/i.test(String(p.completeness ?? '')));
+      return {
+        verdict: allKnownPartial ? 'first_complete' : 'needs_review',
+        evidence_strength: allKnownPartial && families >= 2 ? 'moderate' : 'weak',
+        our_completeness: 'unknown',
+        match_key: bestMatchKey(trustFound),
+        prior_relationship: 'partial',
+        prior_refs: strongest.found_refs?.length ? strongest.found_refs : undefined,
+        resolver: methodToResolver(strongest.method),
+        best_attempt_id: strongest.attempt_id,
+      };
+    }
+
+    // Grade by the DEFEATING priors' years: registry refs (year unknown) and any
+    // post-1900 prior defeat outright; all-parseable-and-pre-1900 → first_modern.
+    const years = (defeating.length ? defeating : trustworthyPriors).map(priorYear);
     const allPre1900 =
       !hasRegistryRef && years.length > 0 && years.every((y) => y !== null && y < 1900);
-    const families = new Set(trustFound.map(attemptFamily)).size;
     return {
       verdict: allPre1900 ? 'first_modern' : 'not_first',
       evidence_strength: families >= 2 ? 'strong' : 'moderate',
