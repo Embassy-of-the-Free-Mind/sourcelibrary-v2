@@ -28,6 +28,9 @@
  * double-page plates this function exists to rescue.
  */
 
+import { createWriteStream } from 'node:fs';
+import { pipeline as streamPipeline } from 'node:stream/promises';
+
 /**
  * @param {string} url
  * @param {object} [opts]
@@ -88,6 +91,78 @@ export async function fetchWithStallTimeout(url, opts = {}) {
     cleanup();
     // Surface WHY it aborted. A bare "This operation was aborted" is what made
     // the original failure read as rate-limiting for two debugging passes.
+    if (abortReason) throw new Error(`fetch aborted: ${abortReason} (${url})`);
+    throw err;
+  }
+}
+
+/**
+ * Same stall semantics, but streamed to a file instead of buffered in memory —
+ * for the archive-bulk / archive-erara whole-book downloads (IA _jp2.zip and
+ * e-rara PDFs run hundreds of MB to GB; buffering them would trade a timeout
+ * bug for an OOM). The stall timer re-arms per chunk while `pipeline()`
+ * preserves backpressure to disk.
+ *
+ * On a non-2xx response nothing is written and `bytes` is 0 — the caller
+ * inspects `res.status`, exactly like fetchWithStallTimeout. On abort the
+ * partial file is left for the caller's tmp-dir cleanup.
+ *
+ * @param {string} url
+ * @param {string} destPath
+ * @param {object} [opts]
+ * @param {number} [opts.stallMs=60000]  Abort if no bytes arrive for this long.
+ * @param {number} [opts.maxMs=900000]   Absolute backstop for a trickling connection.
+ * @param {Record<string,string>} [opts.headers]
+ * @returns {Promise<{ res: Response, bytes: number }>}
+ */
+export async function fetchToFileWithStallTimeout(url, destPath, opts = {}) {
+  const stallMs = opts.stallMs ?? 60_000;
+  const maxMs = opts.maxMs ?? 15 * 60_000;
+  const headers = opts.headers ?? {};
+
+  const controller = new AbortController();
+  let abortReason = null;
+  let stallTimer = null;
+
+  const armStall = () => {
+    if (stallTimer) clearTimeout(stallTimer);
+    stallTimer = setTimeout(() => {
+      abortReason = `stalled — no data for ${Math.round(stallMs / 1000)}s`;
+      controller.abort();
+    }, stallMs);
+  };
+  const hardTimer = setTimeout(() => {
+    abortReason = `exceeded absolute cap of ${Math.round(maxMs / 1000)}s`;
+    controller.abort();
+  }, maxMs);
+
+  const cleanup = () => {
+    if (stallTimer) clearTimeout(stallTimer);
+    clearTimeout(hardTimer);
+  };
+
+  armStall();
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers });
+    if (!res.ok || !res.body) {
+      cleanup();
+      return { res, bytes: 0 };
+    }
+
+    let bytes = 0;
+    const body = res.body;
+    async function* rearmedChunks() {
+      for await (const chunk of body) {
+        bytes += chunk.length;
+        armStall();
+        yield chunk;
+      }
+    }
+    await streamPipeline(rearmedChunks(), createWriteStream(destPath));
+    cleanup();
+    return { res, bytes };
+  } catch (err) {
+    cleanup();
     if (abortReason) throw new Error(`fetch aborted: ${abortReason} (${url})`);
     throw err;
   }

@@ -25,13 +25,12 @@ const execFileAsync = promisify(execFileCb);
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { pipeline } from 'stream/promises';
-import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
+import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -147,19 +146,19 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+// Stall timeout, not a total-duration cap (#3477): a multi-GB _jp2.zip on a
+// slow link legitimately outlives a fixed clock. The old 600s total survives
+// as the absolute backstop; the abort now asks "is data still arriving?".
+const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '60000', 10);
+
 async function downloadToFile(url, destPath, timeoutMs = 600000) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': USER_AGENT } });
-    clearTimeout(timeoutId);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    await pipeline(res.body, createWriteStream(destPath));
-    return fs.statSync(destPath).size;
-  } catch (err) {
-    clearTimeout(timeoutId);
-    throw err;
-  }
+  const { res, bytes } = await fetchToFileWithStallTimeout(url, destPath, {
+    stallMs: FETCH_STALL_MS,
+    maxMs: timeoutMs,
+    headers: { 'User-Agent': USER_AGENT },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return bytes;
 }
 
 async function resolveDownloadUrl(iaId) {

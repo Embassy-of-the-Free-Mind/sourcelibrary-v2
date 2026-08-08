@@ -33,6 +33,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -73,17 +74,18 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+// Stall timeout, not a total-duration cap (#3477): the old 30s-from-start abort
+// selected for the largest page in a book. The old 30s becomes the stall
+// window; the lib's 15-min maxMs is the backstop.
+const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '30000', 10);
+
 async function downloadImage(url, maxRetries = 3) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30_000);
     try {
-      const res = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeout);
+      const { res, buffer } = await fetchWithStallTimeout(url, { stallMs: FETCH_STALL_MS });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return Buffer.from(await res.arrayBuffer());
+      return buffer;
     } catch (err) {
-      clearTimeout(timeout);
       if (attempt === maxRetries) throw err;
       await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
     }
