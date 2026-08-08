@@ -96,6 +96,6 @@ await withMongo(async (db) => {
     `[stage-coverage] ${parts.join(' | ')} | stalled: ${stalled.length ? stalled.join(',') : 'none'}` +
       `${broken.length ? ` | PROBE BROKEN: ${broken.join(',')}` : ''}` +
       ` | dial: ${doc.dial.paused ? 'PAUSED' : 'running'} budget=$${doc.dial.daily_budget_usd ?? 'unset'}` +
-      ` spend=$${doc.spend_today_usd.toFixed(2)} | ${doc.duration_ms}ms${DRY_RUN ? ' (dry-run)' : ''}`,
+      ` spend=$${doc.spend_today_usd.toFixed(2)} | gate-held=${healthBlocked ?? '?'} warn-pages=${ocrWarnings ?? '?'} | ${doc.duration_ms}ms${DRY_RUN ? ' (dry-run)' : ''}`,
   );
 }, { timeoutMs: 30 * 60_000, socketTimeoutMs: 15 * 60_000 });
