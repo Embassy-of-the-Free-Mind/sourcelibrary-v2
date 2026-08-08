@@ -85,6 +85,13 @@ export const KNOWN_SOURCE_LANGUAGES = new Set([
   'egy', // Egyptian
   'ta',  // Tamil
   'de', 'nl', 'fr', 'it', 'es', // modern European (parity with existing rows)
+  // Catalan. Added 2026-08-08 after a verified prior was quarantined for it:
+  // McKenny 2024 translates Ramon Llull's *Llibre de contemplació* from the
+  // Catalan, and Llull is a major author in this corpus — the omission sat
+  // beside Spanish, French and Italian and looked like an oversight rather than
+  // a judgement. The quarantine worked exactly as designed (kept the row and the
+  // reason instead of dropping it), which is how the gap surfaced at all.
+  'ca',  // Catalan
   // Long-tail sources that appear in hand-verified rows. Added with #3460 so a
   // real verified prior is never lost to an over-narrow whitelist — every one of
   // these was observed in `source: 'claude_subagent_verify'` production rows.
@@ -135,6 +142,7 @@ const SOURCE_LANGUAGE_ALIASES = {
   french: 'fr', fr: 'fr',
   italian: 'it', it: 'it',
   spanish: 'es', es: 'es',
+  catalan: 'ca', ca: 'ca', valencian: 'ca',
   'middle english': 'enm', enm: 'enm',
   nahuatl: 'nah', nah: 'nah',
   mandaic: 'myz', myz: 'myz',
