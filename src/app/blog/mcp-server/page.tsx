@@ -87,7 +87,7 @@ export default function McpServerPage() {
 
         <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
           <p className="text-stone-700 italic mb-2">&ldquo;Find everything about Hermes Trismegistus in the collection. What books mention him, and how does his treatment change across traditions?&rdquo;</p>
-          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_entities</code> &rarr; <code className="text-accent-rust">get_entity</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_library</code> &rarr; <code className="text-accent-rust">search_within_book</code> &rarr; <code className="text-accent-rust">get_quotes</code></p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -146,7 +146,7 @@ export default function McpServerPage() {
 
         <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
           <p className="text-stone-700 italic mb-2">&ldquo;Find alchemical emblems depicting the ouroboros. What texts are they from, and what do they symbolize?&rdquo;</p>
-          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_images</code> &rarr; <code className="text-accent-rust">get_image</code> &rarr; <code className="text-accent-rust">get_book_text</code></p>
+          <p className="text-xs text-muted">Tools used: <code className="text-accent-rust">search_images</code> &rarr; <code className="text-accent-rust">get_quote</code></p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
