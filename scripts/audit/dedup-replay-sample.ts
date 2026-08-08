@@ -73,9 +73,15 @@ function fullMetadata(b: BookDoc) {
   };
 }
 
-/** Non-Latin stratum: the stored normalized_title is empty while a real title exists. */
+/**
+ * Non-Latin stratum: the stored normalized_title is too short to reach tier 2
+ * (< 5 chars) while a real title exists. Not merely empty: «Чехова. Том 3»
+ * ASCII-normalizes to "3" — non-empty, but just as invisible to the title
+ * tier as the empty string, and stratifying it as "Latin" understates the
+ * non-Latin miss population.
+ */
 function isNonLatin(b: BookDoc): boolean {
-  return !!b.title && (b.normalized_title ?? '') === '';
+  return !!b.title && (b.normalized_title ?? '').length < 5;
 }
 
 async function replay(db: Db, candidate: Parameters<typeof checkDuplicate>[1]): Promise<boolean> {
@@ -95,14 +101,18 @@ async function main() {
   // Oversample non-Latin so its stratum is statistically meaningful instead
   // of ~15% of whatever $sample returns.
   const perStratum = Math.ceil(SAMPLE / 2);
-  const latin = await books.aggregate<BookDoc>([
+  // Stratify by tier-2 REACHABILITY (normalized_title length >= 5, the guard
+  // tier 2 itself applies), not by empty-vs-not — see isNonLatin().
+  const latinRaw = await books.aggregate<BookDoc>([
     { $match: { visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, normalized_title: { $nin: [null, ''] } } },
-    { $sample: { size: perStratum } },
+    { $sample: { size: perStratum * 2 } },
   ]).toArray();
-  const nonLatin = await books.aggregate<BookDoc>([
-    { $match: { visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, normalized_title: '', title: { $nin: [null, ''] } } },
-    { $sample: { size: perStratum } },
+  const latin = latinRaw.filter((b) => !isNonLatin(b)).slice(0, perStratum);
+  const nonLatinRaw = await books.aggregate<BookDoc>([
+    { $match: { visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, title: { $nin: [null, ''] } } },
+    { $sample: { size: perStratum * 6 } },
   ]).toArray();
+  const nonLatin = nonLatinRaw.filter(isNonLatin).slice(0, perStratum);
 
   const strata: Record<string, { same: [number, number]; cross: [number, number] }> = {
     latin: { same: [0, 0], cross: [0, 0] },
