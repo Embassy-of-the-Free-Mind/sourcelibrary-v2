@@ -120,6 +120,34 @@ async function computeAuthors(db: any) {
   };
 }
 
+// Of the live corpus, how far through the FT process is each book?
+// "Searched" joins attempts.book_id (= books.id) in chunks — ~30K distinct ids.
+// A searched-but-verdict-less book is usually terminal, not pending: its search
+// FOUND a prior, so it was never badged, and verdicts are only materialized
+// where they defend a badge (reconcile demotes badged books only).
+async function computeFtProcessCoverage(db: any) {
+  const books = db.collection('books');
+  const ids: string[] = await db.collection('first_translation_attempts').distinct('book_id');
+  let searched = 0;
+  for (let i = 0; i < ids.length; i += 10000) {
+    const chunk = ids.slice(i, i + 10000);
+    searched += await books.countDocuments({ ...LIVE, id: { $in: chunk } });
+  }
+  const [liveTotal, liveTranslated, verdict, badged] = await Promise.all([
+    books.countDocuments(LIVE),
+    books.countDocuments({ ...LIVE, pages_translated: { $gt: 0 } }),
+    books.countDocuments({ ...LIVE, 'first_translation.verdict': { $exists: true } }),
+    books.countDocuments({ ...LIVE, is_first_translation: true }),
+  ]);
+  return {
+    live_total: liveTotal,
+    live_translated: liveTranslated,
+    searched,
+    verdict_materialized: verdict,
+    badged,
+  };
+}
+
 async function computeFirstTranslations(db: any) {
   const books = db.collection('books');
   const attempts = db.collection('first_translation_attempts');
@@ -201,12 +229,13 @@ export const GET = withAdminAuth(async () => {
 
 export const POST = withAdminAuth(async () => {
   const db = await getDb();
-  const [works, authors, ft] = await Promise.all([
+  const [works, authors, ft, process] = await Promise.all([
     computeWorks(db),
     computeAuthors(db),
     computeFirstTranslations(db),
+    computeFtProcessCoverage(db),
   ]);
-  const data = { works, authors, first_translations: ft };
+  const data = { works, authors, first_translations: { ...ft, process } };
   await db.collection('system_config').updateOne(
     { _id: SNAPSHOT_ID as any },
     { $set: { data, updated_at: new Date() } },
