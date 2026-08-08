@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { citationYear, citationYearOrNd } from '@/lib/publication-date';
+import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
@@ -13,18 +13,6 @@ import { isBookReadable } from '@/lib/book-access';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
-}
-
-interface Citation {
-  inline: string;           // (Drebbel 1628, p. 15)
-  footnote: string;         // Full footnote citation
-  bibliography: string;     // Bibliography entry
-  bibtex: string;           // BibTeX format
-  chicago: string;          // Chicago style
-  mla: string;              // MLA style
-  url: string;              // Direct link to page in Source Library
-  short_url: string;        // Shortlink for sharing (e.g., Twitter)
-  doi_url?: string;         // Clickable DOI URL
 }
 
 interface QuoteResponse {
@@ -44,117 +32,6 @@ interface QuoteResponse {
   context?: {
     previous_page?: string;
     next_page?: string;
-  };
-}
-
-function formatAccessedDate(): string {
-  const d = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-function generateCitations(
-  book: Book,
-  pageNumber: number,
-  bookId: string,
-  pageId: string,
-  baseUrl: string,
-  edition?: TranslationEdition
-): Citation {
-  // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
-  // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
-  // string was landing in the BibTeX `year` field and the inline citation, i.e.
-  // straight into scholars' bibliographies. Assert a bare year or `n.d.`.
-  const year = citationYearOrNd(book.published);
-  // BibTeX keys must stay alphanumeric — 'n.d.' would emit a key with dots.
-  const bibtexYearKey = citationYear(book.published) ?? 'nd';
-  const author = book.author || 'Unknown';
-  const title = book.display_title || book.title;
-  const doi = edition?.doi || book.doi;
-  const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
-  const accessed = formatAccessedDate();
-  const translationYear = edition?.published_at
-    ? new Date(edition.published_at).getFullYear()
-    : new Date().getFullYear();
-
-  // Clean author name (remove extra spaces, handle "Lastname, Firstname")
-  const authorParts = author.split(',').map(s => s.trim());
-  const authorLastFirst = authorParts.length === 2
-    ? `${authorParts[0]}, ${authorParts[1]}`
-    : author;
-  const authorFirstLast = authorParts.length === 2
-    ? `${authorParts[1]} ${authorParts[0]}`
-    : author;
-
-  // Original-edition imprint (place, publisher, format, USTC) of the source
-  // printing being translated — the bibliographic record of the original work,
-  // distinct from the Source Library translation credit. Mirrors the "Cite"
-  // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
-  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
-  const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
-  const imprintStr = imprint ? `${imprint}. ` : '';
-
-  // Inline citation
-  const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
-
-  // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
-
-  // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
-
-  // BibTeX — original imprint (address/publisher) + translation credit (note)
-  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${bibtexYearKey}`;
-  const bibtexLines = [
-    `@book{${bibtexKey},`,
-    `  author = {${authorLastFirst}},`,
-    `  title = {${title}},`,
-    `  year = {${year}},`,
-  ];
-  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
-  bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
-  bibtexLines.push(`  translator = {Source Library},`);
-  if (doi) {
-    bibtexLines.push(`  doi = {${doi}},`);
-    bibtexLines.push(`  url = {${doiUrl}},`);
-  }
-  const bibtexNote = [`Translation published ${translationYear}`];
-  if (book.format) bibtexNote.push(book.format);
-  if (book.ustc_id) bibtexNote.push(`USTC ${book.ustc_id}`);
-  bibtexLines.push(`  note = {${bibtexNote.join('; ')}}`);
-  bibtexLines.push(`}`);
-  const bibtex = bibtexLines.join('\n');
-
-  // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
-
-  // MLA
-  const mla = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
-
-  // Direct URL to page in Source Library (pinned to edition version).
-  // baseUrl is derived from the request host so quotes returned from
-  // tenant subdomains link back to the same subdomain.
-  //
-  // Built from the book's slug, not the requested id: this URL gets printed
-  // into papers and footnotes, so it has to say which book it is. Calling the
-  // API by id would otherwise mint a permanent citation to /book/<objectid>.
-  const editionVersion = edition?.version;
-  const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `${baseUrl}${readerPageUrl({ slug: book.slug, id: bookId }, pageId)}${vParam}`;
-
-  // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);
-
-  return {
-    inline,
-    footnote,
-    bibliography,
-    bibtex,
-    chicago,
-    mla,
-    url,
-    short_url,
-    doi_url: doiUrl,
   };
 }
 
