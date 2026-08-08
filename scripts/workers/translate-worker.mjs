@@ -30,6 +30,8 @@ import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
   contentHash,
+  SKIP_TRANSLATION_PAGE_TYPES,
+  isBlankFromOcr,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -135,7 +137,7 @@ async function getEnglishModernizationPromptFromDb(db) {
 }
 
 // ── Skip these page types (no translatable content) ──
-const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice'];
+const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734) — the local fork missed exlibris/bookplate
 // Pages with very short OCR get excluded from batches (translated single-page instead).
 // Short pages in batches cause the model to produce minimal responses without XML tags.
 const MIN_OCR_CHARS_FOR_BATCH = 200;
@@ -519,11 +521,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
   // ── Detect blank pages missing page_type (pre-pipeline OCR) ──
   // Some older OCR outputs have <lang>None</lang> or "Blank page" in meta but never set page_type.
   // Filter them out and backfill page_type so they're skipped in future runs too.
-  const blankFromOcr = pages.filter(p => {
-    if (p.page_type) return false; // already classified
-    const ocr = p.ocr?.data || '';
-    return /<lang>\s*None\s*<\/lang>/i.test(ocr) && /blank\s+page/i.test(ocr);
-  });
+  const blankFromOcr = pages.filter(p => !p.page_type && isBlankFromOcr(p.ocr?.data));
   if (blankFromOcr.length > 0) {
     const blankIds = blankFromOcr.map(p => p.id);
     // Snapshot prior translation content before overwriting with the blank marker.

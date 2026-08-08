@@ -158,7 +158,7 @@ await withMongo(async (db) => {
     return book;
   };
 
-  let fixed = 0, stillBad = 0, skipped = 0, alreadyGood = 0, done = 0;
+  let fixed = 0, stillBad = 0, skipped = 0, alreadyGood = 0, protectedCount = 0, done = 0;
   const touchedBooks = new Set();
 
   async function processTarget(t) {
@@ -199,9 +199,15 @@ await withMongo(async (db) => {
     if (isBad(page.ocr.data, best.text)) { stillBad++; return; }
 
     // The one door: revision snapshot + provenance-stamped write (translate-core).
-    await writePageTranslation(db, {
+    const w = await writePageTranslation(db, {
       page, book, text: best.text, promptRef: best.promptRef, model, note: 'anomaly-fix',
     });
+    if (w.protected) {
+      // Human-edited page — the door refused (correctly). Never count as fixed.
+      console.log(`  ⛨ ${book.id} p${t.page_number}: human-edited, left untouched`);
+      protectedCount++;
+      return;
+    }
     touchedBooks.add(t.book_id);
     fixed++;
   }
@@ -225,5 +231,5 @@ await withMongo(async (db) => {
   }
   if (touchedBooks.size) console.log(`  counters synced for ${touchedBooks.size} book(s)`);
 
-  console.log(`\nDone. fixed=${fixed} stillBad=${stillBad} alreadyGood=${alreadyGood} skipped=${skipped}`);
+  console.log(`\nDone. fixed=${fixed} stillBad=${stillBad} alreadyGood=${alreadyGood} protected=${protectedCount} skipped=${skipped}`);
 }, { maxPoolSize: 12, noTimeout: true });
