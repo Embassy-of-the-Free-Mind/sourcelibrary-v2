@@ -34,6 +34,19 @@ describe('editionYear', () => {
     expect(editionYear({ published: 'Unknown' })).toBeNull();
     expect(editionYear({})).toBeNull();
   });
+
+  // A `> 0` guard used to reject BCE years and fall through to digit-scraping
+  // `published`, so an ancient object's prose date ("…c. 2100–1600 BCE") came
+  // back as the year 2100 CE — off by four millennia and the wrong sign.
+  it('keeps BCE years instead of scraping a positive year out of prose', () => {
+    expect(editionYear({ year: -1550, published: 'Stela (Dynasty 18)' })).toBe(-1550);
+    expect(editionYear({ year: -2100, published: 'Ur III / Old Babylonian (c. 2100–1600 BCE)' })).toBe(-2100);
+  });
+
+  it('ignores a zero year, which encodes "no date" rather than 1 BCE', () => {
+    expect(editionYear({ year: 0, published: '1544' })).toBe(1544);
+    expect(editionYear({ year: 0 })).toBeNull();
+  });
 });
 
 // Minimal fake Mongo Db. Tier 1 (fingerprint) and Tier 3 (iiif) findOne return

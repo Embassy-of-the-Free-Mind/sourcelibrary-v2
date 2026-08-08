@@ -71,6 +71,7 @@ export interface NavStrings {
   gallery: string;
   browse: string;
   catalogue: string;
+  works: string;
   map: string;
   librarian: string;
   podcast: string;
@@ -85,6 +86,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     gallery: 'Gallery',
     browse: 'Browse',
     catalogue: 'Catalogue',
+    works: 'Works',
     map: 'Map',
     librarian: 'Librarian',
     podcast: 'Podcast',
@@ -97,6 +99,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     gallery: 'Galería',
     browse: 'Explorar',
     catalogue: 'Catálogo',
+    works: 'Obras',
     map: 'Mapa',
     librarian: 'Bibliotecario',
     podcast: 'Podcast',

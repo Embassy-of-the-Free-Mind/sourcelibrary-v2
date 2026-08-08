@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import CompareClient from './CompareClient';
+import { editionYear } from '@/lib/dedup';
 import { canonWork, workEditionsFilter } from '@/lib/canon-works';
 
 // Must be a finite number — `false` would cache a bad render forever (same
@@ -71,12 +72,21 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
           chapters: 1,
           thumbnail: 1, image_display: 1,
           thumbnail_blob: 1, image_thumb: 1,
-          work_title: 1,
+          work_title: 1, year: 1,
         },
-        sort: { published: 1 },
       }
     )
     .toArray();
+  // Same fix as /work/[id]: `published` is free text, so the old
+  // `sort: { published: 1 }` was a lexical sort that placed "550" after "1750".
+  editions.sort((a, b) => {
+    const ya = editionYear(a as { year?: number | null; published?: string | null });
+    const yb = editionYear(b as { year?: number | null; published?: string | null });
+    if (ya === null && yb === null) return 0;
+    if (ya === null) return 1;
+    if (yb === null) return -1;
+    return ya - yb;
+  });
   return editions.map((e) => ({
     id: (e.id || e._id?.toString()) as string,
     slug: e.slug as string,

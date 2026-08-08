@@ -31,6 +31,7 @@ function buildNavLinks(t: NavStrings): NavLink[] {
       children: [
         { label: t.browse, href: '/browse' },
         { label: t.catalogue, href: '/catalog' },
+        { label: t.works, href: '/works' },
       ],
     },
     { label: t.map, href: '/explore/map', activePrefix: '/explore' },
@@ -92,9 +93,18 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // pages that render SiteHeader directly and stay reachable there (e.g.
   // /author/[name]).
   const isTenantHost = useIsEmbedded();
-  const NAV_LINKS = buildNavLinks(t).filter(
-    link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
-  );
+  // Dropdown children get the same treatment as top-level links. They used to
+  // be rendered unfiltered, which was harmless only because no child pointed at
+  // a global-only path; `/works` under Browse is the first that does, and an
+  // unfiltered child would put a proxy-404 link in a partner's own header —
+  // the one thing the shared list exists to prevent.
+  const NAV_LINKS = buildNavLinks(t)
+    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(link.href)))
+    .map(link =>
+      link.children && isTenantHost
+        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(child.href)) }
+        : link
+    );
   // The Support button is deliberately NOT in buildNavLinks: it is an action,
   // not a destination among peers, and it renders as a pill after the nav rather
   // than as another link in the row. It goes through the same tenant filter,

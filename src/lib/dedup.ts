@@ -129,9 +129,15 @@ export function extractVolume(title?: string | null): number | null {
 /**
  * Best-effort publication year for edition comparison. Prefers a numeric
  * `year`, else parses the first 3–4 digit run out of `published`.
+ *
+ * Negative years are BCE and are returned as-is. They used to be rejected by a
+ * `> 0` guard, which then fell through to digit-scraping `published` — and for
+ * an ancient object that string is prose, so "Ur III / Old Babylonian
+ * (c. 2100–1600 BCE)" scraped to the year 2100 CE. Trusting the numeric field
+ * is strictly more correct for the ~600 live books dated BCE.
  */
 export function editionYear(book: { year?: number | null; published?: string | null }): number | null {
-  if (typeof book.year === 'number' && book.year > 0) return book.year;
+  if (typeof book.year === 'number' && Number.isFinite(book.year) && book.year !== 0) return book.year;
   if (book.published) {
     const m = String(book.published).match(/\b(\d{3,4})\b/);
     if (m) return parseInt(m[1], 10);
