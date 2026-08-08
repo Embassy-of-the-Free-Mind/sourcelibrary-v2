@@ -85,7 +85,9 @@ function isNonLatin(b: BookDoc): boolean {
 }
 
 async function replay(db: Db, candidate: Parameters<typeof checkDuplicate>[1]): Promise<boolean> {
-  const r = await checkDuplicate(db, candidate);
+  // shadowLog off: these are books already in the DB — every replay would log
+  // a self-match "agreement" and pollute the flip criterion's stats.
+  const r = await checkDuplicate(db, candidate, { shadowLog: false });
   return r.isDuplicate;
 }
 

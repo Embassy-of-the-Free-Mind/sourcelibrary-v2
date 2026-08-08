@@ -58,6 +58,17 @@ write partial identity. The worker's `stale_missing` count in `cron_runs` is
 the alarm: a book >7 days old with no identity fields means the worker is not
 running. The integrity script proves stored == computed.
 
+**Dedup's edition-key tier runs in SHADOW (since 2026-08-08).** Every real
+`checkDuplicate()` call logs the edition-key tier's would-be verdict next to
+the live tier-2 verdict in `dedup_shadow_decisions` (`agree` compares tier 2
+only — fingerprint/IIIF are untouched by the flip). Read it with
+`scripts/audit/dedup-shadow-agreement.mjs`; the flip criterion is a week of
+agreement on real traffic (offline baseline: 99.94% over 20,326, PR #3787).
+Audit scripts replaying books already in the DB must pass
+`{ shadowLog: false }` or their self-matches pollute the stats. The shadow
+block is fenced — it must never fail or slow an import materially, and it
+DECIDES nothing until the flip PR swaps tier 2's implementation.
+
 ## `edition_key_quality` is not decoration — gate on it
 
     full        title + author + year      the ONLY tier a reader-facing surface may trust
