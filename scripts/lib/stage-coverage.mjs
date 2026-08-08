@@ -111,6 +111,30 @@ export function parseContentRangeCount(header) {
 
 // ── Mongo helpers ───────────────────────────────────────────────────────────
 
+/**
+ * Scoped positive control for `pages` probes: an unscoped findOne on an
+ * unindexed predicate collscans ~19M docs and times out, which reads as
+ * probe_broken (observed on the first supervised run, 2026-08-08 — the
+ * control caught its own cost). Scope the control to ONE live processed
+ * book's pages (book_id is indexed) so it answers in milliseconds.
+ */
+async function pagesControlFound(db, predicate) {
+  try {
+    const book = await db.collection('books').findOne(
+      { visible: true, pages_ocr: { $gt: 0 }, pages_translated: { $gt: 0 } },
+      { projection: { id: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS },
+    );
+    if (!book?.id) return false;
+    const doc = await db.collection('pages').findOne(
+      { book_id: book.id, ...predicate },
+      { projection: { _id: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS },
+    );
+    return doc != null;
+  } catch {
+    return false;
+  }
+}
+
 async function controlFound(coll, predicate) {
   try {
     const doc = await coll.findOne(predicate, {
@@ -134,7 +158,7 @@ function count(coll, predicate) {
 export async function measureArchived(db) {
   const pages = db.collection('pages');
   const coveredPredicate = { archived_photo: ARCHIVED_OK };
-  if (!(await controlFound(pages, coveredPredicate))) {
+  if (!(await pagesControlFound(db, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'archived' }, false);
   }
   const [total, covered, failed] = await Promise.all([
@@ -161,7 +185,7 @@ export async function measureArchived(db) {
 export async function measureOcr(db) {
   const pages = db.collection('pages');
   const coveredPredicate = { ...VISIBLE_PAGE_MATCH, 'ocr.data': { $type: 'string', $ne: '' } };
-  if (!(await controlFound(pages, coveredPredicate))) {
+  if (!(await pagesControlFound(db, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'ocr' }, false);
   }
   const [total, covered] = await Promise.all([
@@ -178,7 +202,7 @@ export async function measureOcr(db) {
 export async function measureTranslated(db) {
   const pages = db.collection('pages');
   const coveredPredicate = { ...VISIBLE_PAGE_MATCH, 'translation.data': { $type: 'string', $ne: '' } };
-  if (!(await controlFound(pages, coveredPredicate))) {
+  if (!(await pagesControlFound(db, coveredPredicate))) {
     return finalizeMeasurement({ stage: 'translated' }, false);
   }
   const [total, covered] = await Promise.all([
