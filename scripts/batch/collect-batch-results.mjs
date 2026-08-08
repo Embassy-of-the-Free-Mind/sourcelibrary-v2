@@ -9,6 +9,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -225,6 +226,13 @@ async function processOneJob(db, job) {
       }
     }
 
+    // Human-edit guard (#3749): pages whose ocr/translation was written or
+    // corrected by a person (source 'manual' or edited_by) are protected —
+    // batch results submitted before the edit must not clobber them.
+    const guardField = job.type === 'ocr' ? 'ocr' : 'translation';
+    const humanEditedIds = await findHumanEditedPageIds(db, pageResults.map(r => r.pageId), guardField);
+    let protectedCount = 0;
+
     // First pass: fix null ocr/translation subdocuments
     const nullFixOps = [];
     for (const { pageId } of pageResults) {
@@ -241,6 +249,11 @@ async function processOneJob(db, job) {
     // Second pass: save results
     const bulkOps = [];
     for (const { pageId, text, usage } of pageResults) {
+      if (humanEditedIds.has(pageId)) {
+        console.log(`  PROTECTED: page ${pageId} has a human-edited ${guardField} — skipping (#3749)`);
+        protectedCount++;
+        continue;
+      }
       if (text.length > 25000) { failCount++; continue; }
 
       if (job.type === 'ocr') {
@@ -319,6 +332,7 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(protectedCount > 0 && { protected_pages: protectedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,
