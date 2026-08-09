@@ -22,6 +22,7 @@
 
 import { MongoClient } from 'mongodb';
 import { getScopeConfig, resolveScopeBookIds } from '../workers/lib/selective-unpause.mjs';
+import { updateConfigVersioned } from '../lib/versioned-config.mjs';
 
 const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 if (!uri) { console.error('No MONGODB_URI in env (source .env.production.local).'); process.exit(1); }
