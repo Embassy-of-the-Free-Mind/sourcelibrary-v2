@@ -93,6 +93,45 @@ describe('Notes toggle preserves transcribed page marks', () => {
     expect(isDescriptionOnly).toBe(true);
   });
 
+  it('keeps inline term+note translation words when notes are off (#3811)', () => {
+    // pages/6949af986ef4a68b726b8008 (Ten Books on Architecture, 1522) — the
+    // pre-fix stored translation, verbatim. The old pair-drop deleted the term
+    // content mid-sentence, rendering "how a ** is produced in the body".
+    const VITRUVIUS_PAGE = `<meta>This page continues the discussion of the "perfect" proportions of the human body.</meta>
+
+### BOOK THREE
+
+46
+
+No less than how a **<term>scheme of roundness</term> <note>original: "schema rotundationis"</note> is produced in the body, so too a <term>square arrangement</term> <note>original: "quadrata designatio"</note> is found within it. For if a measurement is taken from the soles of the feet to the very top of the head, the width will be found to be the same as the height.**
+
+**<term>scheme of roundness</term> <note>original: "schema rotundationis"</note>, <term>square arrangement</term> <note>original: "quadrata designatio"</note>, width, height, Vitruvius**
+
+<summary>This page concludes the description of the Vitruvian Man.</summary>
+<keywords>Vitruvian Man, geometry, proportion</keywords>`;
+
+    const { processedText } = prepareNotesMarkdown(VITRUVIUS_PAGE, { showNotes: false });
+    // The inline terms are the translation itself — they must survive
+    expect(processedText).toContain('how a **scheme of roundness');
+    expect(processedText).toContain('so too a square arrangement');
+    // ...while the notes (the AI's "original:" glosses) are gone
+    expect(processedText).not.toContain('schema rotundationis');
+    // The trailing vocab line has stray words, so it is not a pure glossary
+    // line; its pairs unwrap rather than leaving comma-holes (", ,")
+    expect(processedText).not.toMatch(/,\s*,/);
+  });
+
+  it('still drops a whole trailing glossary line when notes are off', () => {
+    const prose = `The dog delivered a sharp bite to the intruder.
+
+<term>bite</term> <note>original: "morsus."</note>`;
+    const { processedText } = prepareNotesMarkdown(prose, { showNotes: false });
+    expect(processedText).toContain('sharp bite to the intruder');
+    // The dangling glossary entry (term + its now-hidden definition) is removed
+    expect(processedText).not.toContain('morsus');
+    expect(processedText.trim().endsWith('intruder.')).toBe(true);
+  });
+
   it('drops a term\'s AI gloss but keeps the transcribed term', () => {
     const { processedText } = prepareNotesMarkdown(DIAGRAM_PAGE, { showNotes: false, pageType: 'diagram' });
     // The <note> that contained this pair is gone entirely here; assert the rule
