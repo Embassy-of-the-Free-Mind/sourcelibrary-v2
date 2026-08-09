@@ -37,7 +37,7 @@ Our work sits at the intersection of four literatures.
 
 ## 3. Population and denominators
 
-All counts are live against the production catalogue, 19 June 2026.
+All counts are live against the production catalogue, 19 June 2026. **The catalogue has since grown; Appendix B carries the reconciled August 2026 denominators and the v2 system state — reconcile §3/§5 scale-ups to those before submission.**
 
 | Population | Count |
 |---|---|
@@ -201,7 +201,33 @@ A widely-quoted "~6,000 first translations" turns out to be roughly defensible a
 - Human gold standard: 150-book stratified sample, hybrid in-house + specialist annotation, anti-anchoring tool, double-annotated κ subset (PR #2614).
 - Per-book verdicts, evidence trails, and analysis code in the repository (issue #2564, PR #2573); each adjudication is an append-only provenance record.
 
+### Appendix B. System-state addendum — v2 architecture and August 2026 numbers (added 2026-08-09)
+
+The June draft describes the audit as run against the v1 system. Between June and August the production system changed in ways the paper must reflect; this appendix records the deltas and the reconciled counts, all measured live on 2026-08-09.
+
+**B.1 Reconciled denominators (2026-08-09, same definitions as §3).** The catalogue grew substantially after June (large acquisitions plus continued processing):
+
+| Population | 19 Jun | 9 Aug |
+|---|---|---|
+| Publicly visible books | 30,868 | 36,799 |
+| Translated to English (`pages_translated > 0`) | 15,707 | 18,211 |
+| — English-language originals | 1,737 | 1,976 |
+| First-translation-eligible | 13,970 | 16,235 |
+| Badged as first translations (visible) | 5,696 | 5,925 |
+| Eligible with a graded verdict (visible) | — | 10,122 |
+| Eligible, never assessed | 8,306 | 6,894 |
+
+§5's scaled estimates use the June population sizes; re-scaling to the August pool is mechanical (the stratum rates are the finding, the scale-up is arithmetic) but must be done before submission, and the recall-side population has *shrunk* relative to growth because the v2 pipeline assessed ~3,900 of the June backlog.
+
+**B.2 Single-writer derivation shipped.** The badge is no longer a mutable flag: `book.first_translation` (graded verdict + qualifiers, `src/lib/first-translation/types.ts`) is the single source, and one reconciliation job derives the public flag from it. Measured 2026-08-09: **99.95% of rendered badges (5,810 of 5,813 visible, translated, badged books) carry a graded verdict** with a `best_attempt_id` pointer into the append-only attempt ledger. The flag↔disposition drift that §9 warned about is structurally closed. The unattended reconcile loop is deliberately demote-only (`--only-demotions`): a valve that only removes claims can never silently mint one, and every promotion passes through the verified evidence path.
+
+**B.3 The escalation ladder (August 2026).** Tier-2 adjudication is now organised as an explicit ladder (`scripts/eval/ft-ladder.ts`): cheap grounded search → independent skeptic verification → (on disagreement or weak evidence) escalation to a stronger instrument, with every rung appending to `first_translation_attempts` under a recorded `prompt_version` (#3778) and, where persisted, a `transcript_ref` into a full-transcript store. The ledger held **64,834 attempts on 2026-08-09** (63,173 after takedown exclusions in the published snapshot), spanning 29,938 distinct books — this is the dataset described in B.5.
+
+**B.4 The 2026-08-09 stratified spot audit (independent replication of §5.1).** An 18-book stratified audit with full citation capture, run by independent verification subagents (2 badged `first_no_prior` per tradition, n=12; plus 6 unbadged "prior found" books): first-family precision 5/12 with Wilson 95% CI [19%, 68%] — consistent with §5.1's 46% (n=462) — and the failure *composition* replicated the headline finding: ill-posedness dominates (6/12: container fascicles, standard liturgy copies, a unique archival document, one volume of a reference work), with exactly one hard false first (Clüver, a 1657 English prior, Wing C4740). On the unbadged side 6/6 verdict directions were correct while 3/6 evidence trails were imperfect (one fabricated-shaped citation, one overstated prior, one muddled work-identity chain) — the verdict-right/evidence-flawed asymmetry §7 predicts. Full report: `scripts/output/ft-spot-audit-2026-08-09/report.md`; the six follow-up corrections were routed through the verified-evidence path, not applied directly.
+
+**B.5 The dataset is now a deliverable (#3798).** `scripts/eval/export-ft-dataset.mjs` produces a versioned, deterministic, PII-swept snapshot of the corpus — attempts, per-book verdicts, screening decisions, the taxonomy codebook, and reference-set composition — with a Datasheet (`scripts/eval/ft-dataset-datasheet.md`) and a Zenodo deposit script (`deposit-ft-dataset.mjs`; draft-only by default, DOI minting is a human action). Books removed by takedown or owner request are excluded from the snapshot entirely. This unbundles the venue strategy: the **JOHD data paper** can go first on the dataset alone (no Rogan–Gladen correction required), while the CHR methods paper waits on the §6 human gold standard, which remains the binding step and remains not yet run (0 annotations).
+
 ### Notes
 - **Citations are placeholders** (the *(To cite: …)* markers in §2) — fill before submission; Rogan & Gladen (1978, *Am. J. Epidemiology*) and the *Index Translationum* are load-bearing.
 - **Authorship/credit:** Source Library / EFM + collaborators; decide before drafting submission prose.
-- This draft is intentionally untracked (research draft in a public AGPL repo); it supersedes `ft-census-paper.md` and `ft-audit-paper-draft.md`.
+- This draft is tracked in the public AGPL repo (an earlier note claimed it was untracked — it is not, and nothing in it is sensitive); it supersedes `ft-census-paper.md` and `ft-audit-paper-draft.md`.
