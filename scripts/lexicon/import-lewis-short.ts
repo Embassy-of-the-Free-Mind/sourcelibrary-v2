@@ -192,6 +192,8 @@ async function main() {
   await newMap.createIndex({ form_loose: 1 });
   await newMap.rename('lexicon_lemma_map', { dropTarget: true });
 
+  await db.collection('lexicon_misses').createIndex({ form: 1 }, { unique: true });
+  await db.collection('lexicon_misses').createIndex({ count: -1 });
   await entriesCol.createIndex({ key: 1 }, { unique: true });
   await entriesCol.createIndex({ key_normalized: 1 });
   await entriesCol.createIndex({ key_loose: 1 });

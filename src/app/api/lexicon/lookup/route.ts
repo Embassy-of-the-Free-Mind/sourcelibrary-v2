@@ -44,9 +44,38 @@ export async function GET(request: NextRequest) {
   try {
     const db = await getReadDb();
     const result = await lookupLatinWord(db, word);
+    if (!result.found && result.normalized.length >= 3) {
+      // Miss telemetry: aggregated per normalized form (bounded by vocabulary,
+      // no PII, nothing automated reads it). This is the Phase-2.5 worklist —
+      // the most-tapped missing words are the next tier to build.
+      db.collection('lexicon_misses')
+        .updateOne(
+          { form: result.normalized },
+          { $inc: { count: 1 }, $set: { last_seen: new Date(), sample_query: result.query } },
+          { upsert: true }
+        )
+        .catch(() => {});
+    }
     return NextResponse.json(result, { headers: CACHE_HEADERS });
   } catch (err) {
     console.error('[lexicon/lookup] failed:', err);
+    // Same store the client-side reporter uses (application_errors), so
+    // lookup failures surface in the admin errors view instead of only in
+    // function logs. Fire-and-forget: logging must never fail the response.
+    try {
+      const db = await getReadDb();
+      db.collection('application_errors')
+        .insertOne({
+          message: `lexicon lookup failed: ${err instanceof Error ? err.message : String(err)}`,
+          source: 'api/lexicon/lookup',
+          url: request.nextUrl.pathname + '?word=' + encodeURIComponent(word),
+          stack: err instanceof Error ? err.stack?.slice(0, 2000) : undefined,
+          timestamp: new Date(),
+        })
+        .catch(() => {});
+    } catch {
+      /* logging is best-effort */
+    }
     return NextResponse.json({ error: 'Lookup failed.' }, { status: 500 });
   }
 }
