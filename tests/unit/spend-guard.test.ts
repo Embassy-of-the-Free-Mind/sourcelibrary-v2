@@ -2,17 +2,30 @@
  * The budget dial (issue #3737): default-closed, UTC-day windowed, and
  * measured via ObjectId time range (the `timestamp` field is a string on old
  * rows — Date-range matching silently returns nothing).
+ *
+ * Since #3826 the guard sums BOTH gemini_usage stores (Supabase primary +
+ * Mongo fallback) and FAILS CLOSED when the Supabase read errors — reading
+ * one store is how a $15 dial billed $2.3K. Tests inject the Supabase half
+ * via _setSupabaseSpendReaderForTests.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ObjectId } from 'mongodb';
 import {
   utcDayStart,
   getTodaySpendUsd,
   readDailyBudgetUsd,
   budgetAllowsDispatch,
+  _setSupabaseSpendReaderForTests,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/spend-guard.mjs';
+
+// Default: Supabase store empty and readable. Individual tests override.
+beforeEach(() => {
+  _setSupabaseSpendReaderForTests(async () => ({ usd: 0, rows: 0, costlessRows: 0, error: null }));
+});
+const supaStub = (usd: number, rows = 0, error: string | null = null) =>
+  _setSupabaseSpendReaderForTests(async () => ({ usd, rows, costlessRows: 0, error }));
 
 function makeDbStub({ spendUsd = 0, rows = 0, costlessRows = 0, budget }: {
   spendUsd?: number; rows?: number; costlessRows?: number; budget?: unknown;
@@ -65,7 +78,20 @@ describe('getTodaySpendUsd', () => {
   });
   it('empty day → zeros', async () => {
     const { db } = makeDbStub({});
-    expect(await getTodaySpendUsd(db)).toEqual({ usd: 0, rows: 0, costlessRows: 0 });
+    expect(await getTodaySpendUsd(db)).toEqual({ usd: 0, rows: 0, costlessRows: 0, meterError: null });
+  });
+  it('SUMS both stores — the stores are mutually exclusive per row (#3826)', async () => {
+    const { db } = makeDbStub({ spendUsd: 9, rows: 10 });
+    supaStub(830, 6000);
+    const spend = await getTodaySpendUsd(db);
+    expect(spend.usd).toBe(839);
+    expect(spend.rows).toBe(6010);
+  });
+  it('surfaces a Supabase read failure as meterError, never as zero', async () => {
+    const { db } = makeDbStub({ spendUsd: 9, rows: 10 });
+    supaStub(0, 0, 'Supabase read failed (500)');
+    const spend = await getTodaySpendUsd(db);
+    expect(spend.meterError).toBe('Supabase read failed (500)');
   });
 });
 
@@ -85,6 +111,18 @@ describe('budgetAllowsDispatch', () => {
   });
   it('refuses above the ceiling', async () => {
     const { db } = makeDbStub({ spendUsd: 9.99, rows: 200, budget: 5 });
+    expect(await budgetAllowsDispatch(db, 'test')).toBe(false);
+  });
+  it('spend in the PRIMARY store alone closes the dial (the #3826 blindness)', async () => {
+    // Mongo (fallback) shows $9 — exactly what the incident-day guard saw —
+    // while Supabase holds the real spend. The summed guard must refuse.
+    const { db } = makeDbStub({ spendUsd: 9, rows: 10, budget: 15 });
+    supaStub(830, 6000);
+    expect(await budgetAllowsDispatch(db, 'test')).toBe(false);
+  });
+  it('FAILS CLOSED when the primary store is unreadable', async () => {
+    const { db } = makeDbStub({ spendUsd: 0, rows: 0, budget: 15 });
+    supaStub(0, 0, 'Supabase read error: fetch failed');
     expect(await budgetAllowsDispatch(db, 'test')).toBe(false);
   });
   it('bypass (explicit --book operator run) skips both reads', async () => {
