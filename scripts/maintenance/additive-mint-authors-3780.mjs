@@ -44,24 +44,8 @@ const INPUT = (process.argv.find(a => a.startsWith('--input=')) || '').split('='
 const BACKUP = 'scripts/output/additive-mint-3780-backup.json';
 const SOURCE = 'additive-mint-3780';
 
-// ── the builder's clustering + slug rules, verbatim (build-authors-collection.mjs) ──
-const PARTICLES = new Set(['de','del','della','di','da','la','le','van','von','der','den','du','des','el','al','ibn','ben','a','ab','zu','of','the','don','fr','st','saint','y','e','pseudo']);
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-function canonicalKey(author) {
-  const s = norm(author).replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').replace(/[^a-z\s,]/g, ' ');
-  const toks = s.split(/[\s,]+/).filter(t => t.length >= 3 && !PARTICLES.has(t));
-  const stems = toks.map(t => t
-    .replace(/^j/, 'i').replace(/^gi/, 'i').replace(/v/g, 'u')
-    .replace(/(issimus|us|um|orum|arum|ibus|onis|ius|is|ae|i|o|a|e)$/, ''))
-    .filter(t => t.length >= 3).sort();
-  if (!stems.length) {
-    return (author || '').normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/\([^)]*\)/g, '').replace(/[\d,.;]/g, '').replace(/\s+/g, '').toLowerCase();
-  }
-  return stems.join(' ');
-}
-const authorSlug = (a) => (a || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-');
+// The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
+import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
 
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
