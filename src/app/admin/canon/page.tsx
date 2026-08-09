@@ -35,7 +35,16 @@ interface AuthorsData {
   top_unresolved: { author: string; books: number }[];
 }
 
+interface FtProcess {
+  live_total: number;
+  live_translated: number;
+  searched: number;
+  verdict_materialized: number;
+  badged: number;
+}
+
 interface FtData {
+  process?: FtProcess;
   badged_live: number;
   badged_all: number;
   verdict_on_badged_live: number;
@@ -363,6 +372,39 @@ export default function CanonDashboardPage() {
             title="First translations"
             sub="Badges resolved by graded verdicts on recorded search attempts — one writer (nightly reconcile), evidence over assertion."
           >
+            {ft.process && (
+              <div style={{ marginBottom: 10 }}>
+                <Card title="Process coverage — how much of the live corpus has been through FT" grow>
+                  <BarRow label="live books" value={ft.process.live_total} max={ft.process.live_total} color={ORDINAL_4[0]} />
+                  <BarRow
+                    label="searched (≥1 attempt)"
+                    value={ft.process.searched}
+                    max={ft.process.live_total}
+                    color={ORDINAL_4[1]}
+                    note={pct(ft.process.searched, ft.process.live_total)}
+                  />
+                  <BarRow
+                    label="verdict materialized"
+                    value={ft.process.verdict_materialized}
+                    max={ft.process.live_total}
+                    color={ORDINAL_4[2]}
+                    note={pct(ft.process.verdict_materialized, ft.process.live_total)}
+                  />
+                  <BarRow
+                    label="badged first translation"
+                    value={ft.process.badged}
+                    max={ft.process.live_total}
+                    color={ORDINAL_4[3]}
+                    note={pct(ft.process.badged, ft.process.live_total)}
+                  />
+                  <div style={{ fontSize: 12, color: INK_2, marginTop: 8 }}>
+                    Searched-but-no-verdict is mostly terminal, not pending: the search found a prior, so the book was never
+                    badged, and verdicts are only materialized where they defend a badge. The unsearched tail
+                    ({fmt(ft.process.live_total - ft.process.searched)} books) is what the census cron is closing.
+                  </div>
+                </Card>
+              </div>
+            )}
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
               <Tile label="Badged (live)" value={fmt(ft.badged_live)} sub={`${fmt(ft.badged_all)} incl. hidden`} />
               <Tile
