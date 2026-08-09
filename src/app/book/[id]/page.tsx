@@ -1337,7 +1337,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <div className="px-4 pb-4 md:px-6 md:pb-6">
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
-              <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
+              <Suspense fallback={null}><RelatedEditions
+                bookId={book.id}
+                workId={(book as unknown as { work_id?: string }).work_id!}
+                language={(book as unknown as { language?: string }).language}
+                editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+              /></Suspense>
             )}
             {embedPolicy.showIndexCatalogStatus && (
               <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
@@ -2002,7 +2008,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               >
                 {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
-                    <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                    <RelatedEditions
+                      bookId={book.id}
+                      workId={(book as unknown as { work_id?: string }).work_id!}
+                      language={(book as unknown as { language?: string }).language}
+                      editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                      editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+                    />
                   </Suspense>
                 )}
                 {embedPolicy.showIndexCatalogStatus && (
