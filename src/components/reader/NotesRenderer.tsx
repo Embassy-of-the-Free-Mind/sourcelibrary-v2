@@ -309,18 +309,25 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
 }
 
 // Handle <term> vocabulary chips when notes are hidden.
-// A trailing glossary entry is a <term> immediately followed by its defining <note>
+// A trailing glossary entry is a line of nothing but <term>+<note> pairs
 // (e.g. `<term>bite</term> <note>original: "morsus."</note>`). With notes off the
-// <note> renders as null, leaving the term chip dangling with no definition. Remove
-// the whole pair. A <term> followed by a <gloss> is the same shape inline in prose
-// (`(<term>feng hou</term> <gloss>beacon towers</gloss>)`) — there the term IS the
-// transcribed word, so keep it and drop only the AI's rendering of it, otherwise the
-// unwrapped gloss reads as a duplicate. Any remaining <term> is inline within running
-// prose — unwrap it to plain text so the sentence stays intact, minus the chip.
+// <note> renders as null, leaving the term chip dangling with no definition —
+// remove those lines whole. But the same pair also occurs INLINE mid-sentence
+// (`a <term>scheme of roundness</term> <note>original: "schema rotundationis"</note>
+// is produced`), where the term IS the translation of the word: deleting the pair
+// there deletes sentence content (#3811). So only whole glossary lines are dropped;
+// every other <term> is unwrapped to plain text (its <note>, if any, is removed
+// downstream by stripAiAnnotations). A <term> followed by a <gloss> keeps the term
+// and drops only the AI's rendering of it, otherwise the unwrapped gloss reads as
+// a duplicate.
 function preprocessTerms(text: string, showNotes: boolean): string {
   if (showNotes) return text;
+  const pair = '<term>[^\\n]*?<\\/term>\\s*<note>[^\\n]*?<\\/note>';
+  const glossaryLine = new RegExp(`^[\\s*\\->#\\d.]*(?:${pair}[\\s.,;:]*)+[\\s*]*$`, 'i');
   return text
-    .replace(/<term>[\s\S]*?<\/term>\s*<note>[\s\S]*?<\/note>/gi, '')
+    .split('\n')
+    .filter(line => !glossaryLine.test(line))
+    .join('\n')
     .replace(/(<term>[\s\S]*?<\/term>)\s*<gloss>[\s\S]*?<\/gloss>/gi, '$1')
     .replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
 }
