@@ -62,17 +62,17 @@ if (cmd === 'list') {
   const books = list(flag('--books'));
   const reason = flag('--reason') || `selective-unpause: ${tag}`;
   if (!collections.length && !books.length) { console.error('provide --collections and/or --books'); process.exit(1); }
-  await cfg.updateOne(CTRL, {
+  await updateConfigVersioned(db, 'processing_control', {
     $set: {
       [`allow_scopes.${tag}`]: { book_ids: books, collections, reason, set_at: new Date(), set_by: process.env.USER || 'claude-session' },
       updated_at: new Date(),
     },
-  }, { upsert: true });
+  }, `unpause-scope add ${tag}`);
   console.log(`✓ added/updated scope "${tag}" (books=${books.length}, collections=${collections.length}) — did NOT touch other scopes`);
   await show();
 } else if (cmd === 'remove') {
   if (!tag) { console.error('remove requires a <tag>'); process.exit(1); }
-  await cfg.updateOne(CTRL, { $unset: { [`allow_scopes.${tag}`]: '' }, $set: { updated_at: new Date() } });
+  await updateConfigVersioned(db, 'processing_control', { $unset: { [`allow_scopes.${tag}`]: '' }, $set: { updated_at: new Date() } }, `unpause-scope remove ${tag}`);
   console.log(`✓ removed scope "${tag}"`);
   await show();
 } else {
