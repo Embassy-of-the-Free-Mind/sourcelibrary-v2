@@ -100,3 +100,26 @@ The general shape: a contamination finding is about a **population**; a spending
 about a **specific field**. Getting from one to the other requires showing the population
 actually reaches the field. See `lesson_denormalized_counter_definitional_gap` for the
 neighbouring error, where a counter gap that looked like staleness was definitional.
+
+## A guard that reads a meter is itself an instrument — point it at the store production writes to
+Recorded 2026-08-09. Postmortem: #3843; incident #3826; fix #3835. The $15/day spend dial
+(`scripts/lib/spend-guard.mjs`) compared "today's spend" against its budget all day while the
+line billed ~$2.3K — because it summed **Mongo** `gemini_usage`, and the logger
+(`supabase-usage-logger.mjs`) writes **Supabase** first, falling back to Mongo only on error.
+The two stores are mutually exclusive per row; the guard saw the fallback trickle ($9.00) and
+green-lit dispatch. The "two stores — sum them" trap was already written down in the cost doc;
+what was new is that a *safety control* embodied it.
+
+- **Sum both `gemini_usage` stores, always.** The guard now does; anything else that meters
+  spend must too. Neither store alone is ever the number.
+- **An unreadable meter stops the line.** The guard fails closed on a Supabase read error or
+  pagination overflow — "cannot measure" must be distinguishable from "measured zero", and must
+  refuse, not allow. The pre-fix guard's log line printed a confident dollar figure from the
+  wrong store; an instrument that cannot report its own blindness will always fail silently.
+- **Every path that creates paid work asks the dial.** The incident's only live dispatcher
+  (translate-worker selfDispatch) was ungated; gates on "the orchestrator" are not gates on
+  spending. Grep for job-insert sites, not for phase names.
+- **Test a spend control with a positive control**: spend a known cent, watch the needle move
+  in the store production writes to, and cross-check the vendor's own meter (Cloud Monitoring
+  hourly buckets — day-aligned queries anchor to the query END time and silently become
+  rolling-24h windows). Verified 2026-08-09 for ~$0.05.
