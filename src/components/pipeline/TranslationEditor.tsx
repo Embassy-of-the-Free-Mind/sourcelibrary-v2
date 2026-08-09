@@ -32,6 +32,7 @@ import {
 import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
+import LexiconTapLayer from '@/components/reader/LexiconTapLayer';
 import AiBadge from '@/components/ui/AiBadge';
 import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
 import { usePairedEdition } from '@/hooks/usePairedEdition';
@@ -1190,6 +1191,14 @@ export default function TranslationEditor({
 
     return (
       <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
+        {/* Tap-a-word dictionary on the original-text pane. Gate on the
+            language of the EDITION whose text fills that pane (book.language
+            is the edition language — the OCR pane always shows edition text),
+            not on the work's source language. Latin only for now (#3823). */}
+        <LexiconTapLayer
+          targetSelector='[data-reader-section="ocr"] [data-reader-panel]'
+          enabled={book.language === 'Latin' && !paired}
+        />
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
