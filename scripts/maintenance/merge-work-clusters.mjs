@@ -13,7 +13,12 @@
  * HIGH (auto-written with backup):
  *   - canon gold seeds: the hand-verified workIds arrays in canon-works.ts
  *     (minus combined-volume ids shared between entries);
- *   - identical-title clusters (author surname + identical normalized title).
+ *   - identical-title clusters (author surname + identical normalized title);
+ *   - edition-conflict pairs (#3730 §3): one FULL-quality edition_key carrying
+ *     exactly two local work_ids, same author_id on every member, and both
+ *     work_ids single-titled across ALL their books (Unicode-aware) so the
+ *     merge cannot reach beyond the edition that evidenced it. QID pairs,
+ *     3+-way clusters and anything title-divergent stay human work.
  * MEDIUM (queued to `work_merge_queue`, status=pending — human review):
  *   - author-anchored title containment (the fit rule between clusters).
  *
@@ -34,12 +39,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   canonGoldClusters, identicalTitleClusters, containmentCandidates,
-  unionMergeClusters,
+  editionConflictClusters, unionMergeClusters,
 } from '../lib/work-merge-lib.mjs';
 import { norm as normTitle } from '../lib/work-identity-util.mjs';
 // Dynamic import: node (24+) type-strips the .ts natively, but a STATIC import
 // from an .mjs mis-detects its module format and drops the named exports.
 const { CANON_WORKS } = await import(new URL('../../src/lib/canon-works.ts', import.meta.url).href);
+const { normalizeEditionTitle } = await import(new URL('../../src/lib/edition-key.ts', import.meta.url).href);
 
 const APPLY = process.argv.includes('--apply');
 const OUT_DIR = path.join(process.cwd(), 'scripts', 'output');
@@ -55,7 +61,7 @@ async function main() {
   // cluster stays split under the surface (and FT priors keep hiding in it).
   const all = await books
     .find({ work_id: { $exists: true, $nin: [null, ''] } })
-    .project({ _id: 0, id: 1, work_id: 1, author: 1, author_id: 1, title: 1, work_title: 1, language: 1, visible: 1 })
+    .project({ _id: 0, id: 1, work_id: 1, author: 1, author_id: 1, title: 1, work_title: 1, language: 1, visible: 1, edition_key: 1, edition_key_quality: 1 })
     .toArray();
 
   // one representative per work_id (prefer a visible book — better titles),
@@ -88,12 +94,38 @@ async function main() {
 
   const identical = identicalTitleClusters(reps);
 
+  // ── edition-conflict lane (#3730 §3): one FULL-quality edition_key, two
+  // work_ids. Guards live in the lib; the two maps here feed them —
+  // Unicode-aware title variants per work_id (util `norm` is ASCII and would
+  // collapse every non-Latin title to '', faking single-variant works) and
+  // inbound book counts for the winner tiebreak.
+  const inbound = new Map();
+  const unicodeVariants = new Map();
+  for (const b of all) {
+    inbound.set(b.work_id, (inbound.get(b.work_id) || 0) + 1);
+    if (!unicodeVariants.has(b.work_id)) unicodeVariants.set(b.work_id, new Set());
+    unicodeVariants.get(b.work_id).add(normalizeEditionTitle(b.title));
+  }
+  const titleVariantsUnicode = new Map([...unicodeVariants].map(([w, s]) => [w, s.size]));
+  const byEditionKey = new Map();
+  for (const b of all) {
+    if (b.edition_key_quality !== 'full' || !b.edition_key) continue;
+    if (!byEditionKey.has(b.edition_key)) byEditionKey.set(b.edition_key, { key: b.edition_key, works: [], authorIds: [] });
+    const c = byEditionKey.get(b.edition_key);
+    c.works.push(b.work_id);
+    c.authorIds.push(b.author_id ?? null);
+  }
+  const editionConflicts = editionConflictClusters(
+    [...byEditionKey.values()].filter((c) => new Set(c.works).size > 1),
+    { titleVariants: titleVariantsUnicode, inbound },
+  );
+
   // cross-canon guard map (shared combined-volume ids resolve first-entry-wins;
   // any union spanning two canon entries is demoted, never auto-merged)
   const canonSlugByWorkId = new Map();
   for (const w of CANON_WORKS) for (const id of w.workIds) if (!canonSlugByWorkId.has(id)) canonSlugByWorkId.set(id, w.slug);
 
-  const { merges, demoted } = unionMergeClusters([...gold, ...identical], canonSlugByWorkId);
+  const { merges, demoted } = unionMergeClusters([...gold, ...identical, ...editionConflicts], canonSlugByWorkId, inbound);
 
   // ── MEDIUM lane (queue) ──
   // Skip pairs already unified by a HIGH merge.
@@ -171,7 +203,8 @@ async function main() {
     await db.collection('work_id_merges').insertMany(merges.map((m) => ({
       winner: m.winner, losers: m.losers, sources: m.sources,
       books_rewritten: affected.filter((a) => a.new_work_id === m.winner).length,
-      issue: 3759, backup: planPath, applied_at: now,
+      issue: m.sources.some((s) => s.startsWith('edition-conflict')) ? 3730 : 3759,
+      backup: planPath, applied_at: now,
     })));
   }
 

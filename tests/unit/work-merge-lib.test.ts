@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import {
   rankFormat, pickWinner, canonGoldClusters, identicalTitleKey,
   identicalTitleClusters, containmentPair, containmentCandidates,
-  unionMergeClusters,
+  editionConflictClusters, unionMergeClusters,
 } from '../../scripts/lib/work-merge-lib.mjs';
 import { CANON_WORKS, canonWorkForWorkId } from '@/lib/canon-works';
 
@@ -18,6 +18,62 @@ describe('pickWinner', () => {
   it('breaks QID ties by shortest id, deterministically', () => {
     expect(pickWinner(['Q125518202', 'Q16547641'])).toBe('Q16547641');
     expect(pickWinner(['Q16547641', 'Q125518202'])).toBe('Q16547641');
+  });
+  it('breaks same-format ties by inbound book count when a map is given', () => {
+    const inbound = new Map([['local:a:x:aaa-long-id', 5], ['local:a:x:bb', 1]]);
+    expect(pickWinner(['local:a:x:bb', 'local:a:x:aaa-long-id'], inbound)).toBe('local:a:x:aaa-long-id');
+    // format rank still dominates inbound count
+    expect(pickWinner(['local:n:x:popular', 'local:a:x:rare'], new Map([['local:n:x:popular', 9]]))).toBe('local:a:x:rare');
+  });
+});
+
+describe('edition-conflict lane (#3730 §3)', () => {
+  const maps = {
+    titleVariants: new Map([
+      ['local:a:christian-wolff:empirical-psychology', 1],
+      ['local:n:christian-wolff:empirica-psychologia', 1],
+      ['local:a:many-titles:w', 3],
+    ]),
+    inbound: new Map([
+      ['local:a:christian-wolff:empirical-psychology', 2],
+      ['local:n:christian-wolff:empirica-psychologia', 1],
+    ]),
+  };
+  const mech = {
+    key: 'psychologia empirica|wolff|1732|v',
+    works: ['local:a:christian-wolff:empirical-psychology', 'local:n:christian-wolff:empirica-psychologia'],
+    authorIds: ['christian-wolff', 'christian-wolff'],
+  };
+
+  it('merges the mechanical gloss/original pair, a: mint wins', () => {
+    const out = editionConflictClusters([mech], maps);
+    expect(out).toHaveLength(1);
+    expect(out[0].winner).toBe('local:a:christian-wolff:empirical-psychology');
+    expect(out[0].losers).toEqual(['local:n:christian-wolff:empirica-psychologia']);
+    expect(out[0].source).toBe('edition-conflict');
+  });
+
+  it('refuses a QID pair (external identity is not mechanical)', () => {
+    const out = editionConflictClusters([{ ...mech, works: ['Q123', mech.works[1]] }], maps);
+    expect(out).toHaveLength(0);
+  });
+
+  it('refuses 3+-way clusters (generic titles bridge distinct works)', () => {
+    const out = editionConflictClusters([{ ...mech, works: [...mech.works, 'local:a:christian-wolff:third'] }], maps);
+    expect(out).toHaveLength(0);
+  });
+
+  it('refuses when author_id is missing or disagrees', () => {
+    expect(editionConflictClusters([{ ...mech, authorIds: ['christian-wolff', null] }], maps)).toHaveLength(0);
+    expect(editionConflictClusters([{ ...mech, authorIds: ['christian-wolff', 'someone-else'] }], maps)).toHaveLength(0);
+  });
+
+  it('refuses when a work_id carries more than one title across ALL its books', () => {
+    const out = editionConflictClusters(
+      [{ ...mech, works: [mech.works[0], 'local:a:many-titles:w'], authorIds: ['christian-wolff', 'christian-wolff'] }],
+      maps,
+    );
+    expect(out).toHaveLength(0);
   });
 });
 
