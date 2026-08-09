@@ -187,7 +187,15 @@ async function worker() {
     // unique slug: base, then -2, -3… (collision check against the live collection)
     const base = buildSlug(b.title, author, b.display_title);
     let slug = base;
-    for (let n = 2; claimed.has(slug) || await books.findOne({ slug, id: { $ne: b.id } }, { projection: { _id: 1 } }); n++) slug = `${base}-${n}`;
+    for (let n = 2; ; n++) {
+      // Re-check `claimed` AFTER the await too: a sibling worker can claim the
+      // slug while this one is suspended on findOne (the E11000 the first run
+      // hit). claimed.add is synchronous-before-write, so the recheck is sound.
+      if (!claimed.has(slug)
+        && !(await books.findOne({ slug, id: { $ne: b.id } }, { projection: { _id: 1 } }))
+        && !claimed.has(slug)) break;
+      slug = `${base}-${n}`;
+    }
     claimed.add(slug);
 
     if (!APPLY) {
@@ -203,11 +211,11 @@ async function worker() {
       before: { author: BAD, slug: b.slug, work_id: b.work_id ?? null },
       after_author: author,
     }) + '\n');
-    const r = await books.updateOne(
+    const doUpdate = (s) => books.updateOne(
       { id: b.id, author: BAD },   // re-assert the guard at write time
       {
         $set: {
-          author, slug, ...identity,
+          author, slug: s, ...identity,
           updated_at: new Date(),
           'field_provenance.author': {
             source: 'mdz-manifest', script: 'repair-object-object-authors-3770.mjs', issue: 3770,
@@ -218,6 +226,18 @@ async function worker() {
         $unset: { work_id: '', work_slug: '', work_title: '', work_id_confidence: '', work_id_source: '' },
       },
     );
+    let r;
+    for (let n = 100; ; n++) {
+      try {
+        r = await doUpdate(slug);
+        break;
+      } catch (e) {
+        if (e.code !== 11000) throw e;
+        // belt-and-braces: the unique index won a race anyway — bump and retry
+        slug = `${base}-${n}`;
+        claimed.add(slug);
+      }
+    }
     if (r.modifiedCount) stats.repaired++; else { stats.guardMiss++; }
     if (stats.repaired % 200 === 0) console.log(`  …${stats.repaired} repaired`);
   }
