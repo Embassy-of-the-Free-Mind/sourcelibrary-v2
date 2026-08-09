@@ -44,7 +44,7 @@ import type { ResolvableBook } from '@/lib/first-translation/resolve';
 import { appendAttempt, makeAttemptId, type FirstTranslationAttempt, type PriorTranslation } from '@/lib/first-translation/attempt-log';
 import { renderRubric, routeBook, postSearchRoute } from '@/lib/first-translation/casebook';
 import {
-  SKEPTIC_PROMPT_VERSION, buildSkepticPrompt, parseSkepticResponse,
+  SKEPTIC_PROMPT_VERSION, buildSkepticPrompt, buildFormatPrompt, parseSkepticResponse,
   normalizeSkepticAttempt, type SkepticBook, type SkepticDirection,
 } from '@/lib/first-translation/skeptic';
 // @ts-expect-error — plain .mjs modules without type declarations (tsx resolves them)
@@ -64,6 +64,9 @@ const QUEUE = arg('queue') ?? 'badged-weak';
 const IDS = arg('ids')?.split(',').map((s) => s.trim()).filter(Boolean);
 const LIMIT = parseInt(arg('limit') ?? '0', 10);
 const MODEL = arg('model') ?? 'gemini-3.1-flash-lite';
+// Retry model for responses the primary returns UNGROUNDED (zero API-level
+// grounding metadata). --fallback-model=none disables the retry.
+const FALLBACK = arg('fallback-model') ?? 'gemini-3-flash-preview';
 const BUDGET = parseFloat(arg('budget-usd') ?? '0');
 const CONC = parseInt(arg('concurrency') ?? '4', 10);
 const TRANSCRIPTS = 'first_translation_transcripts'; // pure archive: no automated job reads it (#3778)
@@ -183,17 +186,17 @@ async function main() {
   let spent = 0;
   let rung1Applied = 0, rung2Logged = 0;
 
-  async function skepticCall(prompt: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number } | { error: string }> {
+  async function skepticCall(prompt: string, model: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number } | { error: string }> {
     for (let attempt = 0; attempt <= 2; attempt++) {
       try {
         const ai = new GoogleGenAI({ apiKey: nextKey() });
         const resp = await ai.models.generateContent({
-          model: MODEL, contents: prompt,
+          model, contents: prompt,
           config: { tools: [{ googleSearch: {} }], temperature: 0.1 },
         });
         const gm = (resp.candidates?.[0] as { groundingMetadata?: { webSearchQueries?: string[]; groundingChunks?: Array<{ web?: { uri?: string; title?: string } }> } })?.groundingMetadata ?? {};
         const u = resp.usageMetadata ?? {};
-        const cost = costOf(MODEL, u.promptTokenCount ?? 0, (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0));
+        const cost = costOf(model, u.promptTokenCount ?? 0, (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0));
         return {
           text: resp.text ?? '',
           queries: Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [],
@@ -212,12 +215,44 @@ async function main() {
     return { error: 'retries_exhausted' };
   }
 
+  /** Phase-2 formatter: NO tools (the JSON demand suppresses grounding). */
+  async function formatCall(prompt: string): Promise<{ text: string; cost: number } | { error: string }> {
+    for (let attempt = 0; attempt <= 2; attempt++) {
+      try {
+        const ai = new GoogleGenAI({ apiKey: nextKey() });
+        const resp = await ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0 } });
+        const u = resp.usageMetadata ?? {};
+        return {
+          text: resp.text ?? '',
+          cost: costOf(MODEL, u.promptTokenCount ?? 0, (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0)),
+        };
+      } catch (err) {
+        const msg = String((err as Error).message ?? err);
+        if (attempt < 2 && /fetch failed|ECONNRESET|timeout|503|500|overloaded|RESOURCE_EXHAUSTED|429/i.test(msg)) {
+          await new Promise((r) => setTimeout(r, (attempt + 1) * 2500)); continue;
+        }
+        return { error: msg.slice(0, 200) };
+      }
+    }
+    return { error: 'retries_exhausted' };
+  }
+
   const work = [...queue];
+  let processed = 0;
+  const progress = (row: LadderRow) => {
+    processed++;
+    // Every book on paid runs (the log is the live progress file for a
+    // multi-hour job); every 100th on free passes.
+    if (RUN || processed % 100 === 0) {
+      console.log(`[${processed}/${queue.length}] rung${row.rung} ${row.outcome} $${spent.toFixed(4)} ${row.id} ${(row.title ?? '').slice(0, 48)}`);
+    }
+  };
   async function worker() {
     while (work.length) {
       const b = work.shift()!;
       const row: LadderRow = { id: b.id, title: b.title, author: b.author, language: b.language, rung: 0, outcome: '', reasons: [] };
       rows.push(row);
+      try {
 
       /* rung 0 — history */
       const stored = b.first_translation as { resolver?: string; verdict?: string } | undefined;
@@ -259,14 +294,43 @@ async function main() {
         ? { kind: 'verify_prior', claimedPriors: priors.slice(0, 6) }
         : { kind: 'refute_first' };
       const prompt = buildSkepticPrompt(b as SkepticBook, renderRubric(b), direction);
-      const res = await skepticCall(prompt);
+      // FAIL-CLOSED ESCALATION (run-1 lesson): a response with zero API-level
+      // grounding is model memory wearing a search costume. Grounding on the
+      // primary model is STOCHASTIC (~2/3 per call, measured 2026-08-09), so
+      // retry the cheap rung up to 2 more times before the fallback model —
+      // the ladder's own logic applied to a single call.
+      const isUngrounded = (r: Awaited<ReturnType<typeof skepticCall>>) =>
+        !('error' in r) && r.queries.length === 0 && r.sources.length === 0;
+      let res = await skepticCall(prompt, MODEL);
+      let usedModel = MODEL;
+      let searchCost = 'error' in res ? 0 : res.cost;
+      if (!('error' in res)) spent += res.cost;
+      for (let retry = 0; retry < 2 && isUngrounded(res) && spent < BUDGET; retry++) {
+        const r2 = await skepticCall(prompt, MODEL);
+        if ('error' in r2) break;
+        searchCost += r2.cost; spent += r2.cost;
+        res = r2;
+      }
+      const primaryUngrounded = isUngrounded(res);
+      if (primaryUngrounded && FALLBACK !== 'none' && spent < BUDGET) {
+        const r3 = await skepticCall(prompt, FALLBACK);
+        if (!('error' in r3)) { searchCost += r3.cost; spent += r3.cost; res = r3; usedModel = FALLBACK; }
+      }
       if ('error' in res) {
         row.rung = 3; row.outcome = `skeptic_error:${res.error}`; row.reasons = ['rung2_error'];
         rung3Queue.push({ book_id: b.id, work: b.title, author: b.author, lang: b.language, direction: direction.kind, reasons: [`rung2_error:${res.error}`] });
         continue;
       }
-      spent += res.cost;
-      row.cost_usd = res.cost;
+
+      // Phase 2: prose → JSON contract, tools off, adds nothing.
+      const fmt = await formatCall(buildFormatPrompt(res.text));
+      if ('error' in fmt) {
+        row.rung = 3; row.outcome = `skeptic_error:format:${fmt.error}`; row.reasons = ['rung2_format_error'];
+        rung3Queue.push({ book_id: b.id, work: b.title, author: b.author, lang: b.language, direction: direction.kind, reasons: [`rung2_format_error:${fmt.error}`] });
+        continue;
+      }
+      spent += fmt.cost;
+      row.cost_usd = searchCost + fmt.cost;
 
       const attemptId = makeAttemptId(b.id, 'gemini_grounded_search', RUN_DATE);
       // Only reference a transcript that was actually persisted.
@@ -276,17 +340,19 @@ async function main() {
         // ledger row can reference it even if parsing below fails.
         await db.collection(TRANSCRIPTS).insertOne({
           attempt_id: attemptId, book_id: b.id, date: RUN_DATE, rung: 2,
-          prompt_version: SKEPTIC_PROMPT_VERSION, model: MODEL, prompt,
-          raw_response: res.text, grounding: { queries: res.queries, chunks: res.chunks },
-          cost_usd: res.cost,
+          prompt_version: SKEPTIC_PROMPT_VERSION, model: usedModel, prompt,
+          primary_model: MODEL, fallback_used: usedModel !== MODEL, primary_ungrounded: primaryUngrounded,
+          raw_search: res.text, raw_response: fmt.text,
+          grounding: { queries: res.queries, chunks: res.chunks },
+          cost_usd: searchCost + fmt.cost,
         });
         await db.collection('gemini_usage').insertOne({
-          timestamp: new Date(), type: 'ft_ladder_skeptic', model: MODEL, book_id: b.id,
-          cost_usd: res.cost, status: 'ok', endpoint: 'script/ft-ladder',
+          timestamp: new Date(), type: 'ft_ladder_skeptic', model: usedModel, book_id: b.id,
+          cost_usd: searchCost + fmt.cost, status: 'ok', endpoint: 'script/ft-ladder',
         });
       }
 
-      const parsed = parseSkepticResponse(res.text);
+      const parsed = parseSkepticResponse(fmt.text);
       if (!parsed) {
         row.rung = 3; row.outcome = 'skeptic_unparseable'; row.reasons = ['rung2_parse_failed'];
         rung3Queue.push({ book_id: b.id, work: b.title, author: b.author, lang: b.language, direction: direction.kind, reasons: ["rung2_parse_failed"], transcript_ref: transcriptRef });
@@ -303,7 +369,7 @@ async function main() {
           attempt_id: attemptId, book_id: b.id, work_id: b.work_id ?? null, date: RUN_DATE,
           ...normed.attempt,
           sources_checked: res.sources, queries: res.queries,
-          model: MODEL, cost_usd: res.cost,
+          model: usedModel, cost_usd: searchCost + fmt.cost,
           prompt_version: SKEPTIC_PROMPT_VERSION, transcript_ref: transcriptRef,
           notes: `[ft-ladder rung2 ${SKEPTIC_PROMPT_VERSION}] ${direction.kind}; ${parsed.reasoning ?? ''}`.slice(0, 480),
         };
@@ -333,6 +399,7 @@ async function main() {
           claimed_priors: normed.attempt.priors, reasons: escalate, transcript_ref: transcriptRef,
         });
       }
+      } finally { progress(row); }
     }
   }
   await Promise.all(Array.from({ length: Math.max(1, Math.min(CONC, work.length)) }, () => worker()));

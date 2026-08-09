@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  parseSkepticResponse, normalizeSkepticAttempt, buildSkepticPrompt,
+  parseSkepticResponse, normalizeSkepticAttempt, buildSkepticPrompt, buildFormatPrompt,
   SKEPTIC_PROMPT_VERSION, type SkepticResponse,
 } from '@/lib/first-translation/skeptic';
 import { deriveVerdictFromAttempts } from '@/lib/first-translation/derive-from-evidence';
@@ -90,6 +90,44 @@ describe('normalizeSkepticAttempt — legal enums only (the ft-search-unexamined
     expect(attempt.result).toBe('none');
     expect(attempt.verdict).toBe('uncertain');
     expect(attempt.evidence_strength).toBe('weak');
+  });
+});
+
+describe('ungrounded responses fail closed (run-1: 634/634 rows had zero API grounding)', () => {
+  const UNGROUNDED = { queries: [], sources: [] };
+
+  it('an ungrounded found — even with perfect-looking priors — is model knowledge: gemini_verifier, weak, flagged', () => {
+    // Run 1 proved the model self-reports plausible queries_run and real-looking
+    // URLs while executing ZERO searches. Without grounding, a URL is a token.
+    const { attempt, problems } = normalizeSkepticAttempt(resp({
+      result: 'complete_prior_found',
+      priors: [{ translator: 'J. Freake', year: 1651, english_title: 'Three Books of Occult Philosophy', completeness: 'complete', relationship: 'same_text', source_url: 'https://archive.org/x' }],
+    }), UNGROUNDED);
+    expect(attempt.method).toBe('gemini_verifier');
+    expect(attempt.evidence_strength).toBe('weak');
+    expect(problems).toContain('ungrounded_response');
+  });
+
+  it('actuation pin: an ungrounded-found-only ledger derives NOTHING (weak hint defers)', () => {
+    const row = toRow(resp({
+      result: 'complete_prior_found',
+      priors: [{ translator: 'T', year: 1992, english_title: 'X', completeness: 'complete', relationship: 'same_text', source_url: 'https://a/x' }],
+    }), UNGROUNDED);
+    expect(deriveVerdictFromAttempts([row], BOOK)).toBeNull();
+  });
+
+  it('v3 is two-phase: the search prompt asks for PROSE, never JSON (JSON suppresses grounding)', () => {
+    expect(SKEPTIC_PROMPT_VERSION).toMatch(/\/v3-/);
+    const p = buildSkepticPrompt({ id: 'x', title: 'T', author: 'A', language: 'Latin' }, 'R', { kind: 'refute_first' });
+    expect(p).toContain('PLAIN PROSE');
+    expect(p).not.toContain('Respond with ONLY JSON');
+  });
+
+  it('the phase-2 formatter is a formatter, not a second opinion', () => {
+    const f = buildFormatPrompt('Research report text.');
+    expect(f).toContain('ONLY facts the report explicitly states');
+    expect(f).toContain('Respond with ONLY JSON');
+    expect(f).toContain('Research report text.');
   });
 });
 

@@ -33,7 +33,20 @@
 import type { FirstTranslationAttempt, PriorTranslation } from './attempt-log';
 import type { PriorRelationship } from './types';
 
-export const SKEPTIC_PROMPT_VERSION = 'ft-ladder-skeptic/v1-2026-08-08';
+/**
+ * v3 (2026-08-09): TWO-PHASE. Run 1 (v1) proved gemini-3.1-flash-lite silently
+ * skips the googleSearch tool and fabricates queries_run when the prompt
+ * demands strict-JSON output — 634/634 responses ungrounded (rows deleted;
+ * backup in scripts/output/ft-ladder-run1-attempts-backup-*.json). v2's
+ * explicit search mandate changed nothing (10/10 still ungrounded); a matrix
+ * probe isolated the cause: the JSON contract itself suppresses tool use, and
+ * the same model grounds 3/3 with 11-13 chunks when asked for PROSE. So v3
+ * splits the rung: phase 1 is a grounded prose research call (tools on, no
+ * format demand), phase 2 converts that prose to the JSON contract (tools
+ * off). Grounding provenance always comes from phase 1's API metadata;
+ * normalizeSkepticAttempt still fails closed when it is empty.
+ */
+export const SKEPTIC_PROMPT_VERSION = 'ft-ladder-skeptic/v3-2026-08-09';
 
 /** The model's response contract. Kept in sync with the prompt below. */
 export interface SkepticResponse {
@@ -102,7 +115,7 @@ export function buildSkepticPrompt(
       ? `Stage 1 claims a PRIOR English translation of this work exists. BE SKEPTICAL — AI invents plausible translators and years. Verify whether EACH claimed prior below actually exists, and whether it is COMPLETE or only partial/excerpt, by locating the actual edition.\n\nCLAIMED PRIOR(S) UNDER TEST:\n${describeClaimed(direction.claimedPriors ?? [])}`
       : `We are about to claim this book is a FIRST English translation — that NO complete prior English translation exists. BE SKEPTICAL: try to REFUTE the claim by FINDING a prior English translation. AI tends to wrongly assume "no prior" — fight that.`;
 
-  return `You are a skeptical bibliographic verifier for a library's "first English translation" audit. Use Google Search to do REAL research, then report the search you actually ran.
+  return `You are a skeptical bibliographic verifier for a library's "first English translation" audit. Use Google Search to do REAL research, then report what your searches actually showed.
 
 WORK UNDER TEST:
 - Title: ${book.title ?? '?'}
@@ -114,14 +127,25 @@ ${mission}
 ${rubric}
 
 METHOD:
-1. Identify the work precisely; separate it from parent/sibling/derivative works, other same-title works, and other editions. A translation of a DIFFERENT work does not count.
-2. Search library catalogues (WorldCat), archive.org, Google Books, HathiTrust, publishers, and the tradition-appropriate sources named above. Weight library catalogues and scholarly publishers; distrust aggregator/forum/AI-mirror sites.
-3. For EVERY prior you find or verify: record translator, publication year (a number — mandatory), exact English title, completeness (complete|partial|excerpt|unknown), its relationship to OUR text (same_text|same_work_diff_edition|different_source_language|related_distinct_work|partial|adaptation), and a real URL.
-4. If you cannot settle the question (sources unreachable, identity unresolved, tradition catalogue-blind), the answer is "uncertain" — never round it to none_found.
+1. Execute at least 3 Google Search queries. Search library catalogues (WorldCat), archive.org, Google Books, HathiTrust, publishers, and the tradition-appropriate sources named above. Weight library catalogues and scholarly publishers; distrust aggregator/forum/AI-mirror sites. Do not report anything your searches did not just show you.
+2. Identify the work precisely; separate it from parent/sibling/derivative works, other same-title works, and other editions. A translation of a DIFFERENT work does not count.
+3. Report in PLAIN PROSE (no JSON): for EVERY prior translation you found, give the translator, publication year, exact English title, completeness (complete, partial, or excerpt), its relationship to OUR text (same text? same work in a different edition? a different source language? a related but distinct work?), and the URL where your search showed it. If your searches found no prior, say so and say where you looked. If you could not settle the question (sources unreachable, identity unresolved, tradition catalogue-blind), say you are uncertain — never round that to "none". Also note if our item is a multi-work container, carries a commentary, is itself a translation, is visual art, plain scripture, or already in English.`;
+}
+
+/**
+ * Phase 2: convert the phase-1 prose research report into the JSON contract.
+ * Runs WITHOUT tools (the JSON demand is what suppressed grounding in v1/v2),
+ * so it must add nothing: it is a formatter, not a second opinion.
+ */
+export function buildFormatPrompt(prose: string): string {
+  return `Below is a bibliographic research report. Convert it to JSON. Include ONLY facts the report explicitly states — do not add, infer, or complete anything from your own knowledge. If the report does not state a field, leave it empty.
+
+REPORT:
+${prose}
 
 Respond with ONLY JSON (\`\`\`json fences allowed):
-{"result":"complete_prior_found|only_partial_exists|none_found|not_applicable|uncertain","priors":[{"translator":"","year":0,"english_title":"","completeness":"complete|partial|excerpt|unknown","relationship":"same_text|same_work_diff_edition|different_source_language|related_distinct_work|partial|adaptation","source_url":"","publisher":""}],"queries_run":["every query, verbatim"],"sources_consulted":[{"url":"...","found":"<one line: what it showed>"}],"scope_flags":{"container":false,"witness":false},"reasoning":"<2-3 sentences>"}
-"not_applicable" only if our item is visual art, a plain scripture manuscript, or itself already in English.`;
+{"result":"complete_prior_found|only_partial_exists|none_found|not_applicable|uncertain","priors":[{"translator":"","year":0,"english_title":"","completeness":"complete|partial|excerpt|unknown","relationship":"same_text|same_work_diff_edition|different_source_language|related_distinct_work|partial|adaptation","source_url":"","publisher":""}],"queries_run":["queries the report says were run"],"sources_consulted":[{"url":"...","found":"<one line: what the report says it showed>"}],"scope_flags":{"container":false,"witness":false},"reasoning":"<2-3 sentences summarizing the report>"}
+result rules: complete_prior_found only if the report affirms a COMPLETE prior exists; only_partial_exists if every prior is partial/excerpt; none_found only if the report says the searches found no prior; not_applicable if the report says the item is visual art, plain scripture, or already English; uncertain if the report expresses uncertainty or could not settle the question.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -208,11 +232,20 @@ export function normalizeSkepticAttempt(
     : (resp.result === 'complete_prior_found' || resp.result === 'only_partial_exists' || priors.length > 0) ? 'found'
     : 'none';
 
+  // GROUNDING IS THE PROVENANCE, and it comes from the API's metadata, never
+  // the model's self-report. Run 1 (2026-08-08) proved a model can emit
+  // plausible queries_run and cited URLs while executing ZERO searches — so an
+  // ungrounded response is MODEL KNOWLEDGE and must be recorded as such:
+  // method 'gemini_verifier' (whose family without queries is model_knowledge),
+  // strength weak, flagged. Without grounding, a URL is just another token.
+  const grounded = grounding.queries.length > 0 || grounding.sources.length > 0;
+  if (!grounded) problems.push('ungrounded_response');
+
   // Evidence strength is COMPUTED, never model-reported, and capped at
   // moderate (a single instrument cannot be 'strong').
   const documented = grounding.queries.length >= 3 && grounding.sources.length >= 2;
   let evidence_strength: FirstTranslationAttempt['evidence_strength'] = 'weak';
-  if (resp.result === 'uncertain') {
+  if (!grounded || resp.result === 'uncertain') {
     evidence_strength = 'weak';
   } else if (result === 'found') {
     const gradeable = priors.length > 0 && yearless === 0
@@ -228,7 +261,7 @@ export function normalizeSkepticAttempt(
 
   return {
     attempt: {
-      method: 'gemini_grounded_search',
+      method: grounded ? 'gemini_grounded_search' : 'gemini_verifier',
       match_key: 'author_title',
       result,
       priors: priors.length ? priors : undefined,
