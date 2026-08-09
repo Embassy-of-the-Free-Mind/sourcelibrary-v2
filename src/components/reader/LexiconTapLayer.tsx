@@ -53,6 +53,30 @@ interface PopoverState {
 const cache = new Map<string, LookupResult>();
 const CACHE_CAP = 300;
 
+// One error report per page load, fire-and-forget, to the shared
+// application_errors intake — repeated failures (offline reader, dead
+// route) must not turn into a report storm.
+let reportedLookupError = false;
+function reportLookupError(word: string, detail: string) {
+  if (reportedLookupError) return;
+  reportedLookupError = true;
+  try {
+    fetch('/api/errors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `lexicon popover lookup failed: ${detail}`,
+        source: 'LexiconTapLayer',
+        url: `${location.pathname} (word: ${word})`,
+        userAgent: navigator.userAgent,
+      }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    /* best-effort */
+  }
+}
+
 const TIER_LABEL: Record<string, string> = {
   exact: 'dictionary form',
   variant: 'spelling variant',
@@ -165,7 +189,8 @@ export default function LexiconTapLayer({ targetSelector, enabled }: { targetSel
             setPopover((p) => (p && p.word === word ? { ...p, status: 'done', result } : p));
           }
         })
-        .catch(() => {
+        .catch((err: unknown) => {
+          reportLookupError(word, err instanceof Error ? err.message : String(err));
           if (requestSeq.current === seq) {
             setPopover((p) => (p && p.word === word ? { ...p, status: 'error' } : p));
           }
