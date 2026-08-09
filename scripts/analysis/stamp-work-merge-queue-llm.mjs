@@ -52,7 +52,8 @@ const SCHEMA = {
 function sideLine(s) {
   const langs = s.langs.size ? ` [${[...s.langs].join('/')}]` : '';
   const years = s.years.length ? ` (${Math.min(...s.years)}${Math.max(...s.years) !== Math.min(...s.years) ? '-' + Math.max(...s.years) : ''})` : '';
-  return `"${s.title}"${langs}${years}, ${s.n} book${s.n === 1 ? '' : 's'}`;
+  const titles = [...s.titles].slice(0, 3).map((t) => `"${t.slice(0, 90)}"`).join('; ');
+  return `${titles}${langs}${years}, ${s.n} book${s.n === 1 ? '' : 's'}`;
 }
 
 async function judgeBatch(pairs) {
@@ -62,18 +63,23 @@ async function judgeBatch(pairs) {
   const prompt = `You are a bibliographic cataloger applying FRBR Work-level identity. For each pair below, decide whether A and B are the SAME intellectual WORK — i.e. editions, printings, or translations of one work (titles may differ across languages), or DIFFERENT works.
 
 Rules:
+- CONTAINMENT IS NOT IDENTITY. If one side is a collection, anthology, combined volume, or collected edition ("Iliad AND Odyssey", "Opera omnia", "De officiis + Cato maior + Laelius") and the other is a single constituent work, they are DIFFERENT — a container is never the same work as one thing inside it.
 - Separate VOLUMES or PARTS of a multi-volume set are DIFFERENT works.
-- A commentary ON a work, an excerpt, or a collected edition (Opera omnia) containing it is DIFFERENT from the work itself.
+- A commentary ON a work, or an excerpt OF a work, is DIFFERENT from the whole.
+- Identical or near-identical titles in the same or different languages, with no containment signal, are usually the SAME work minted twice (e.g. an original-language title and its English gloss).
 - A generic title ("Fragments", "Letters", "Works") matched against a specific title is usually DIFFERENT unless the evidence is strong.
 - Use your bibliographic knowledge of original vs translated titles.
-- Answer "same" or "different" ONLY when confident; otherwise "unsure". Never guess a merge.
+- Base your reasoning ONLY on the listed titles/languages/years — do not invent facts about the books.
+- Answer "same" or "different" ONLY when the listed evidence clearly supports it; when both readings are plausible or the evidence is thin, answer "unsure". "unsure" is a good answer — it routes the pair to a human.
 
 Pairs:
 ${list}`;
 
   const body = {
     contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, thinkingConfig: { thinkingBudget: 0 }, temperature: 0 },
+    // default thinking budget left on: the container-vs-constituent rule needs
+    // it — with thinkingBudget 0 the trial run merged works into collections
+    generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, temperature: 0 },
   };
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
@@ -111,11 +117,11 @@ for (let i = 0; i < wids.length; i += 500) {
     { projection: { _id: 0, work_id: 1, title: 1, display_title: 1, language: 1, year: 1 } }
   ).toArray();
   for (const b of docs) {
-    if (!sideByWid.has(b.work_id)) sideByWid.set(b.work_id, { title: '', langs: new Set(), years: [], n: 0 });
+    if (!sideByWid.has(b.work_id)) sideByWid.set(b.work_id, { titles: new Set(), langs: new Set(), years: [], n: 0 });
     const s = sideByWid.get(b.work_id);
     s.n++;
     const t = b.display_title || b.title || '';
-    if (t.length > s.title.length) s.title = t;
+    if (t) s.titles.add(t);
     if (b.language) s.langs.add(b.language);
     if (typeof b.year === 'number') s.years.push(b.year);
   }
