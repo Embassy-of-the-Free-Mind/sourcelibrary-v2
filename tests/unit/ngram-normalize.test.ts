@@ -33,6 +33,7 @@ const STRIP_FIXTURES = [
   '<meta>This page continues the discussion of mercury from page 88.</meta>\nReal body text here.',
   'Note: The text in the image is in French, not Latin. I have transcribed it exactly as it appears.\n\nLe vrai texte commence ici.',
   '<summary>About alchemy</summary><language>Latin</language>Corpus text <note>a gloss</note> continues.',
+  '<lang>Hindustani</lang><image-desc type="woodcut">A pelican feeding her young</image-desc>Body survives.',
   '| Luigi Pulci | 493 |\n|---|---|\n# TABLE OF\n**Bold** and *italic* text',
   'Lacuna . . . . . . . . . . . . . . follows',
   '',

@@ -24,6 +24,8 @@
  * caveat as the book-level composer.
  */
 
+import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
+
 export const EMBED_MODEL = 'gemini-embedding-2-preview';
 export const EMBED_DIMS = 768;
 
@@ -38,11 +40,20 @@ const MAX_CHARS = 8000;
  * content from ADJACENT pages — a page-89 `<meta>` mentioning the mercury wheel
  * that is actually on page 88. Embedding them mislocates the source and
  * produces citations to words that are not on the page. (Nirmal, 2026-05-30.)
+ *
+ * The wrapper list is the canonical one (strip-editorial-wrappers), not a
+ * private subset: the old inline 4-tag copy here kept `<image-desc>` plate
+ * descriptions, `<warning>` remarks and `<scan-quality>good` as embedded and
+ * quotable text — the same misquote class, one layer down (#3820). Apparatus
+ * tags (running headers, signatures, catchwords, printed page numbers) are
+ * page furniture, not content, and are dropped too — same policy as the ngram
+ * normalizer. Everything else (note/term/margin/gloss/…) is unwrapped:
+ * content kept, tag removed.
  */
 export function cleanPageText(text) {
   if (!text || typeof text !== 'string') return '';
-  return text
-    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+  return stripEditorialWrappers(text)
+    .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
