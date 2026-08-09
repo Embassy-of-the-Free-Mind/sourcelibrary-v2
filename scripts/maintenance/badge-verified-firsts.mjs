@@ -25,6 +25,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { appendAttempt } from '../lib/ft-attempt-log.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
@@ -47,7 +48,6 @@ console.log(`Loaded ${rows.length} verified firsts${LIMIT ? `, capped to ${batch
 const c = await MongoClient.connect(process.env.MONGODB_URI);
 const db = c.db('bookstore');
 const books = db.collection('books');
-const attempts = db.collection('first_translation_attempts');
 
 const stats = { matched: 0, notFound: 0, alreadyFirst: 0, wroteVerdict: 0, wroteAttempt: 0, byVerdict: {} };
 for (const r of batch) {
@@ -94,9 +94,11 @@ for (const r of batch) {
   };
 
   if (APPLY) {
-    await attempts.updateOne({ attempt_id: aid }, { $set: attemptDoc }, { upsert: true });
+    // Append-only ledger: $setOnInsert via appendAttempt — a retry can neither duplicate nor mutate (#3785).
+    const wroteAttempt = await appendAttempt(db, attemptDoc);
     await books.updateOne({ _id: book._id }, { $set: { first_translation: ft } });
-    stats.wroteAttempt++; stats.wroteVerdict++;
+    if (wroteAttempt) stats.wroteAttempt++;
+    stats.wroteVerdict++;
   }
 }
 

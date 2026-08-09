@@ -26,6 +26,13 @@ describe('attemptFamily — independence by family, not raw method', () => {
     expect(attemptFamily(at({ method: 'human' }))).toBe('human');
   });
 
+  it('deterministic registry matchers are all ONE catalog family (#3785)', () => {
+    expect(attemptFamily(at({ method: 'tier0_linked' }))).toBe('catalog');
+    expect(attemptFamily(at({ method: 'tier1_catalog' }))).toBe('catalog');
+    // constituent_catalog_match was off-enum and fell to 'unknown' (familyTier 0).
+    expect(attemptFamily(at({ method: 'constituent_catalog_match' }))).toBe('catalog');
+  });
+
   it('three same-model-family absences = ONE independent family (no false confidence)', () => {
     const s = summarizePriorEvidence([
       at({ notes: '[legacy_ai] x' }), at({ notes: '[legacy_llm] y' }), at({ notes: '[legacy_tc] z' }),

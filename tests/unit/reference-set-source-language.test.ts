@@ -22,6 +22,11 @@ import {
   rowSourceLanguages,
   languageMismatch,
 } from '../../scripts/lib/source-language-match.mjs';
+import {
+  canonicalLanguage as canonicalLanguageTs,
+  rowSourceLanguages as rowSourceLanguagesTs,
+  languageMismatch as languageMismatchTs,
+} from '@/lib/first-translation/source-language-match';
 
 describe('the Wikidata regression — real rows from the 2026-07-31 run', () => {
   it('keeps Xenophon\'s Symposium against a Greek source', () => {
@@ -83,8 +88,10 @@ describe('UNKNOWN must never read as MISMATCH', () => {
   });
 
   it('skips the screen on a language outside the table', () => {
-    expect(languageMismatch('Latin', { original_language_label: 'Nahuatl' })).toBeNull();
-    expect(canonicalLanguage('Nahuatl')).toBeNull();
+    // (Nahuatl was the example here until #3785 added it to the table — the
+    // catalog stores hand-verified 'nah' rows. Quechua is genuinely unmapped.)
+    expect(languageMismatch('Latin', { original_language_label: 'Quechua' })).toBeNull();
+    expect(canonicalLanguage('Quechua')).toBeNull();
   });
 });
 
@@ -110,5 +117,35 @@ describe('canonical names collapse historical registers', () => {
 
   it('falls back to MARC codes when there is no label', () => {
     expect(rowSourceLanguages({ original_languages: ['gre', 'grc'] })).toEqual(['greek']);
+  });
+});
+
+describe('.mjs / .ts twin parity (#3785)', () => {
+  // src/lib/first-translation/source-language-match.ts mirrors the .mjs for
+  // TS consumers (tier0-catalog.ts). Parity is the point of the twin — a table
+  // edited in one file only is exactly the one-sided-normalizer bug class.
+  const samples = [
+    'Latin', 'la', 'lat', 'grc', 'Ancient Greek', 'fa', 'Persian', 'per',
+    'nah', 'Nahuatl', 'zz-unmapped', 'Q35497', 'enm', 'es', 'Spanish', '',
+    'bo', 'syc', 'hy', 'ave', 'myz', 'hai', 'lzh', 'Old Norse', "Ge'ez",
+  ];
+  it('canonicalLanguage agrees on every sample', () => {
+    for (const s of samples) {
+      expect(canonicalLanguageTs(s), `canonicalLanguage(${JSON.stringify(s)})`).toBe(canonicalLanguage(s));
+    }
+  });
+  it('rowSourceLanguages and languageMismatch agree', () => {
+    const rows = [
+      { original_languages: ['grc'] },
+      { original_languages: ['Q35497'], original_language_label: 'Ancient Greek' },
+      { original_languages: [] },
+      {},
+    ];
+    for (const row of rows) {
+      expect(rowSourceLanguagesTs(row)).toEqual(rowSourceLanguages(row));
+      for (const lang of ['Latin', 'Greek', null]) {
+        expect(languageMismatchTs(lang, row)).toBe(languageMismatch(lang, row));
+      }
+    }
   });
 });

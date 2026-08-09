@@ -1,62 +1,30 @@
 /**
- * source-language-match.mjs — do two records name the SAME source language? (#3459)
+ * Source-language matching — TS twin of `scripts/lib/source-language-match.mjs`.
  *
- * The reference set is built from two catalogues that identify a language in
- * incompatible ways, and nothing reconciled them:
+ * Keep in lockstep with the .mjs twin (same rule as scripts/lib/r2-key.mjs +
+ * src/lib/r2-key.ts): node scripts can't import .ts, Next/src can't import the
+ * scripts tree, so the logic lives twice and MUST stay identical. Edit both or
+ * neither.
  *
- *   LoC (MARC 041$h)  → three-letter bibliographic codes:  "grc", "per", "lat"
- *   Wikidata (P407)   → Q-numbers plus an English label:   "Q35497" / "Ancient Greek"
- *
- * The screen compared our book's language against `row.original_languages`
- * through a MARC-code table, so every Wikidata row failed it by construction:
- * `['gre','grc'].includes('Q35497')` is false, and the candidate was rejected as
- * WRONG_LANGUAGE. Measured on the 2026-07-31 run that discarded 228 candidates,
- * including Xenophon's *Symposium* (Greek→English) and every one of the six
- * *Rubáiyát of Omar Khayyám* records (Persian→English) — precisely the priors the
- * search exists to surface.
- *
- * Same family as every other defect in this area: it failed silently, on one
- * source only, and always toward a confident `none_found`.
- *
- * THE RULE THIS MODULE ENFORCES
- * -----------------------------
+ * THE RULE THIS MODULE ENFORCES (#3459/#3460)
+ * -------------------------------------------
  * Reject on language ONLY when both sides resolve to a known language and those
- * languages disagree. An unresolvable code, an absent field, or a language not in
- * the table means UNKNOWN — and unknown must never read as mismatch, because a
- * rejection here silently preserves a possibly-false badge.
+ * languages disagree. An unresolvable code, an absent field, or a language not
+ * in the table means UNKNOWN — and unknown must never read as mismatch, because
+ * a rejection here silently preserves a possibly-false badge (and the converse,
+ * comparing a normalized value against an unnormalized one, silently never
+ * matches — the #3460 "a guard must normalize BOTH sides" bug class).
  *
- * WHY THERE IS NO Q-NUMBER TABLE
- * ------------------------------
- * Deliberate. Every Wikidata row carries an English `original_language_label`
- * (14,924 of 14,924), so the label is the readable, checkable key and the QID is
- * redundant. A hand-written QID table would be a list of assertions nobody can
- * verify at a glance, and a single wrong entry produces exactly the failure this
- * module exists to remove — a real prior rejected as the wrong language. An
- * unrecognised Q-number therefore resolves to null and the screen is skipped,
- * which keeps the candidate open rather than closing the question.
+ * The table covers MARC-21 bibliographic codes, the ISO-639 buckets
+ * `translation_catalogs` stores (KNOWN_SOURCE_LANGUAGES in
+ * scripts/lib/translation-catalog-record.mjs), and the English labels
+ * catalogues return. Historical registers collapse into their parent:
+ * "Homeric Greek" and "Ancient Greek" are both `greek`, because a translation
+ * from either defeats a first-English-translation claim on a Greek text.
  */
 
-/**
- * Canonical language name → every spelling that denotes it: MARC-21 bibliographic
- * codes, ISO-639-1/2/3 codes, and the English labels catalogues return.
- *
- * Historical registers collapse into their parent: "Homeric Greek" and "Ancient
- * Greek" are both `greek`, because a translation from either defeats a
- * first-English-translation claim on a Greek text. The distinction matters to a
- * philologist and not to this question.
- *
- * 2026-08-09 (#3785): the short ISO codes ('la', 'grc', 'fa', …) were added so
- * this table covers every bucket `translation_catalogs` stores (the
- * KNOWN_SOURCE_LANGUAGES set in scripts/lib/translation-catalog-record.mjs) —
- * the Tier-0 matcher (src/lib/first-translation/tier0-catalog.ts) normalizes
- * BOTH sides of its language guard through this table. A bucket missing here
- * resolves to unknown, which never blocks — but it also never screens.
- *
- * TWIN FILE: src/lib/first-translation/source-language-match.ts mirrors this
- * module for TS/src consumers (node can't import .ts, Next can't import .mjs
- * scripts). Keep the two in lockstep, like scripts/lib/r2-key.mjs + src/lib/r2-key.ts.
- */
-const LANGUAGE_ALIASES = {
+/** Canonical language name → every spelling that denotes it. */
+const LANGUAGE_ALIASES: Record<string, string[]> = {
   greek: ['el', 'gre', 'grc', 'ancient greek', 'classical greek', 'homeric greek',
     'koine greek', 'medieval greek', 'byzantine greek', 'modern greek'],
   latin: ['la', 'lat', 'classical latin', 'medieval latin', 'late latin', 'new latin',
@@ -115,7 +83,7 @@ const LANGUAGE_ALIASES = {
 };
 
 /** every alias, lower-cased → canonical name. */
-const ALIAS_TO_CANONICAL = new Map();
+const ALIAS_TO_CANONICAL = new Map<string, string>();
 for (const [canonical, aliases] of Object.entries(LANGUAGE_ALIASES)) {
   ALIAS_TO_CANONICAL.set(canonical, canonical);
   for (const a of aliases) ALIAS_TO_CANONICAL.set(String(a).toLowerCase().trim(), canonical);
@@ -125,10 +93,11 @@ for (const [canonical, aliases] of Object.entries(LANGUAGE_ALIASES)) {
  * Resolve any spelling of a language to its canonical name, or null.
  *
  * Null means "we do not know what this is", and every caller must treat it as
- * unknown rather than as a mismatch. An unmapped Q-number is the case worth being
- * careful about: guessing there is how a real prior gets discarded.
+ * unknown rather than as a mismatch. An unmapped identifier (a Q-number, a
+ * mistyped code) is the case worth being careful about: guessing there is how a
+ * real prior gets discarded.
  */
-export function canonicalLanguage(value) {
+export function canonicalLanguage(value?: string | null): string | null {
   if (!value) return null;
   const key = String(value)
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -139,18 +108,24 @@ export function canonicalLanguage(value) {
   return key ? (ALIAS_TO_CANONICAL.get(key) ?? null) : null;
 }
 
+/** A reference-set / catalogue row that names one or more source languages. */
+export interface SourceLanguageRow {
+  original_language_label?: string | null;
+  original_languages?: string[] | null;
+}
+
 /**
  * The source languages a reference-set row claims, as canonical names.
  *
- * The English label is preferred over a Q-number for the reason given at the top
- * of this file. Returns [] when nothing resolves — which the caller must read as
- * "unknown", never as "no match".
+ * The English label is preferred over a Q-number (every Wikidata row carries
+ * one, and the label is the readable, checkable key). Returns [] when nothing
+ * resolves — which the caller must read as "unknown", never as "no match".
  */
-export function rowSourceLanguages(row) {
+export function rowSourceLanguages(row?: SourceLanguageRow | null): string[] {
   const raw = row?.original_language_label
     ? [row.original_language_label]
     : (row?.original_languages ?? []);
-  return [...new Set(raw.map(canonicalLanguage).filter(Boolean))];
+  return [...new Set(raw.map(canonicalLanguage).filter((v): v is string => !!v))];
 }
 
 /**
@@ -162,7 +137,10 @@ export function rowSourceLanguages(row) {
  * language, so an absent `original_language` genuinely means we do not know, and
  * rejecting on a guess discards real priors.
  */
-export function languageMismatch(bookOriginalLanguage, row) {
+export function languageMismatch(
+  bookOriginalLanguage: string | null | undefined,
+  row?: SourceLanguageRow | null,
+): string | null {
   const ours = canonicalLanguage(bookOriginalLanguage);
   if (!ours) return null;
   const theirs = rowSourceLanguages(row);

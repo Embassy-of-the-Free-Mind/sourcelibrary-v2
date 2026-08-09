@@ -331,6 +331,7 @@ const taxonomy = {
     gemini_grounded_search: 'Gemini call with Google-Search grounding enabled.',
     claude_subagent_verify: 'Independent Claude subagent verification (stage-2, /ft-verify).',
     llm_prior_adjudicate: 'LLM adjudication of a specific asserted prior.',
+    constituent_catalog_match: 'Deterministic registry match for one CONSTITUENT sub-work of a container (evidence scoped by attempt.constituent, not the whole book).',
     opus48_collection_scan: 'Collection-level Claude Opus scan (legacy instrument).',
   },
   attempt_result: {
