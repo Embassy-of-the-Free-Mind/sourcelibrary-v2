@@ -36,6 +36,7 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -183,6 +184,25 @@ console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? '
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
+
+// Pause + dial gate (#3826). This worker had NEITHER check — the reason its
+// cron line is hard-disabled (#PAUSED-3826#). Unattended runs (no explicit
+// --book) must honor the pause flag and the daily budget; an explicit
+// operator --book run bypasses, matching the spend-guard convention.
+{
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (!BOOK_ID) {
+    if (control?.paused) {
+      console.log('[embed-gemini] Pipeline paused — exiting.');
+      await mongoClient.close();
+      process.exit(0);
+    }
+    if (!await budgetAllowsDispatch(db, 'embed-gemini', { control })) {
+      await mongoClient.close();
+      process.exit(0);
+    }
+  }
+}
 
 // Build query — need pages with OCR or translation.
 // page_number > 0 skips hidden/deduped trailing pages (page_number ≤ 0).

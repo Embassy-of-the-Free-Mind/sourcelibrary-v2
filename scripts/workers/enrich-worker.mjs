@@ -41,6 +41,7 @@ import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
@@ -1488,6 +1489,20 @@ async function main() {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
+
+  // The dial caps money regardless of pause/scope state (#3826): a scope
+  // confines WHICH books, the budget caps HOW MUCH. Every Gemini call below
+  // is paid work.
+  if (!DRY_RUN && !await budgetAllowsDispatch(db, 'enrich-worker', { control })) {
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-enrich-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      actions: { skip_reason: 'budget ceiling' }, errors: [], error_count: 0,
+      summary: 'skipped: daily budget ceiling reached',
+    }).catch(() => {});
+    await client.close();
+    return;
   }
 
   let enriched = 0;
