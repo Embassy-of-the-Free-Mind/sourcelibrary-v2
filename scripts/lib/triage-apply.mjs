@@ -72,9 +72,15 @@ export async function recordRun(db, doc) {
   await db.collection('dedup_apply_runs').insertOne({ ...doc, at: new Date() });
 }
 
-/** /artwork/:id vs /book/:id — ANY resource_type value routes to /artwork. */
+/**
+ * ANY resource_type value routes to /artwork — and that route is
+ * /artwork/[slug], while books are /book/[id]. Verified 2026-08-09:
+ * /artwork/<id> 404s even for a visible artwork.
+ */
 export function pagePath(doc) {
-  return `${doc.resource_type ? '/artwork' : '/book'}/${doc.id}`;
+  return doc.resource_type || doc.content_type === 'artwork'
+    ? `/artwork/${doc.slug || doc.id}`
+    : `/book/${doc.id}`;
 }
 
 /**
