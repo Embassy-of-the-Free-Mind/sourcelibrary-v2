@@ -20,7 +20,7 @@
  * routing here or in ai-models.ts, change both or the suite fails.
  */
 
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 
@@ -257,6 +257,45 @@ export function assessTranslationHealth(ocrText, translationText) {
   return { healthy: true, reason: null };
 }
 
+// Refused output is stored truncated — a 350K-char loop is evidence of a loop,
+// not 350K chars of evidence. Original length is recorded alongside.
+const REFUSED_TEXT_CAP = 50000;
+
+/**
+ * Persist health-gate-refused output to page_revisions as evidence (#3826).
+ *
+ * The 2026-08-08 incident refused 5,352 generations and kept none of them:
+ * each cost real money (runaways bill 10-40× a normal page) and was reduced
+ * to a boolean flag. Keeping the text costs ~nothing and buys loop-detector
+ * tuning data, salvageable prefixes, and honest accounting. The row carries
+ * `source: 'health-gate-refused'` — page_revisions is ALWAYS segmented by
+ * source before measurement (data-provenance doc), so these rows can never
+ * contaminate the OCR-agreement corpus.
+ *
+ * Never throws; evidence loss must not block the refusal itself.
+ */
+export async function persistRefusedTranslation(db, page, text, reason, { jobId, model } = {}) {
+  try {
+    const raw = text || '';
+    await db.collection('page_revisions').insertOne({
+      id: randomBytes(6).toString('hex'),
+      page_id: page.id,
+      book_id: page.book_id,
+      field: 'translation',
+      data: raw.slice(0, REFUSED_TEXT_CAP),
+      source: 'health-gate-refused',
+      reason,
+      original_length: raw.length,
+      truncated: raw.length > REFUSED_TEXT_CAP,
+      model,
+      job_id: jobId,
+      created_at: new Date(),
+    });
+  } catch (e) {
+    console.error(`[health-gate] Failed to persist refused output for ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Edge cases (issue #3734): one definition of "is this page translatable",
 // replacing ~10 forked skip-lists across writers, and the blank-from-OCR
@@ -349,11 +388,13 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   const clean = sanitizeTranslationTags(text);
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
-  // or runaway translation. Checked before any DB access — an unhealthy result
-  // must leave no trace (no revision snapshot, no write).
+  // or runaway translation to pages. The refused text IS kept as evidence in
+  // page_revisions (source: 'health-gate-refused', #3826) — it cost real money
+  // and tunes the detector; only the reader-facing write is refused.
   if (refuseUnhealthy) {
     const health = assessTranslationHealth(page?.ocr?.data, clean);
     if (!health.healthy) {
+      await persistRefusedTranslation(db, page, clean, health.reason, { jobId, model });
       return { written: false, protected: false, unhealthy: true, reason: health.reason, text: clean };
     }
   }
