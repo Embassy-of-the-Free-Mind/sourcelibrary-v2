@@ -89,6 +89,79 @@ describe('proxy() on the ficinosociety alias', () => {
   });
 });
 
+describe('proxy() on preview deployments', () => {
+  // Preview URLs are public — the Vercel bot posts them on every PR of this
+  // public repo — and previews sit outside Cloudflare. The bug being pinned:
+  // an outside party read books through a stale worktree preview (2026-08-09).
+  const PREVIEW = 'https://sourcelibrary-v2-git-worktree-reader-1df8dc-dereklomas-projects.vercel.app';
+
+  it('refuses anonymous book content with a loud 403, not a redirect', async () => {
+    for (const p of ['/book/some-slug?page=3', '/api/books/abc123/text', '/embed/bph/reader/x']) {
+      const res = await proxy(req(`${PREVIEW}${p}`));
+      expect(res?.status, p).toBe(403);
+      // A 308 here would make an e2e run pointed at a preview silently crawl
+      // production — the refusal must terminate, never forward.
+      expect(res?.headers.get('location'), p).toBeNull();
+    }
+  });
+
+  it('lets a signed-in dev review the branch', async () => {
+    const res = await proxy(
+      req(`${PREVIEW}/book/some-slug`, { cookie: '__Secure-authjs.session-token=tok' })
+    );
+    expect(res?.status).not.toBe(403);
+  });
+
+  it('lets credentialed callers through to app-layer auth', async () => {
+    const res = await proxy(
+      req(`${PREVIEW}/api/books/abc123/text`, { authorization: 'Bearer whatever' })
+    );
+    expect(res?.status).not.toBe(403);
+  });
+
+  it('leaves non-content surfaces open for anonymous review', async () => {
+    for (const p of ['/', '/collections/hermetica', '/api/auth/session', '/_next/static/x.js']) {
+      const res = await proxy(req(`${PREVIEW}${p}`));
+      expect(res?.status, p).not.toBe(403);
+      expect(res?.status, p).not.toBe(308);
+    }
+  });
+
+  it('a forged embed Origin does not bypass the gate on /api/books', async () => {
+    // The embed-CORS branch passes /api/books through on an allowlisted
+    // Origin header — which the caller controls. The preview gate must run
+    // before it, so an allowlisted Origin buys a bot nothing here.
+    const prev = process.env.EMBED_ALLOWED_ORIGINS;
+    process.env.EMBED_ALLOWED_ORIGINS = 'partner.example.org';
+    try {
+      const res = await proxy(
+        req(`${PREVIEW}/api/books/abc123/text`, { origin: 'https://partner.example.org' })
+      );
+      expect(res?.status).toBe(403);
+      // Same request on the canonical host still gets its CORS pass-through.
+      const canonical = await proxy(
+        req('https://sourcelibrary.org/api/books/abc123/text', {
+          origin: 'https://partner.example.org',
+        })
+      );
+      expect(canonical?.headers.get('access-control-allow-origin')).toBe(
+        'https://partner.example.org'
+      );
+    } finally {
+      if (prev === undefined) delete process.env.EMBED_ALLOWED_ORIGINS;
+      else process.env.EMBED_ALLOWED_ORIGINS = prev;
+    }
+  });
+
+  it('does not touch the canonical host or the bare production alias policy', async () => {
+    const res = await proxy(req('https://sourcelibrary.org/book/some-slug'));
+    expect(res?.status).not.toBe(403);
+    // The bare alias keeps its own 308 policy from #3446.
+    const alias = await proxy(req('https://sourcelibrary-v2.vercel.app/book/some-slug'));
+    expect(alias?.status).toBe(308);
+  });
+});
+
 describe('isBlockedNetwork', () => {
   it('covers 43.172.0.0/15, both halves', () => {
     expect(isBlockedNetwork('43.172.195.14')).toBe(true);
