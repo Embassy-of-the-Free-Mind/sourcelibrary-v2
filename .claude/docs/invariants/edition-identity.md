@@ -58,16 +58,22 @@ write partial identity. The worker's `stale_missing` count in `cron_runs` is
 the alarm: a book >7 days old with no identity fields means the worker is not
 running. The integrity script proves stored == computed.
 
-**Dedup's edition-key tier runs in SHADOW (since 2026-08-08).** Every real
-`checkDuplicate()` call logs the edition-key tier's would-be verdict next to
-the live tier-2 verdict in `dedup_shadow_decisions` (`agree` compares tier 2
-only — fingerprint/IIIF are untouched by the flip). Read it with
-`scripts/audit/dedup-shadow-agreement.mjs`; the flip criterion is a week of
-agreement on real traffic (offline baseline: 99.94% over 20,326, PR #3787).
-Audit scripts replaying books already in the DB must pass
-`{ shadowLog: false }` or their self-matches pollute the stats. The shadow
-block is fenced — it must never fail or slow an import materially, and it
-DECIDES nothing until the flip PR swaps tier 2's implementation.
+**Dedup tier 2 IS the edition key (flipped 2026-08-08, #3730 §2).**
+`checkDuplicate()`'s tier 2 is `editionKeyTierMatches()` — stored-key prefix
+lookup, year/volume as a both-sides veto, a missing year non-distinguishing
+(the safe error is "assume duplicate"). It replaced the ASCII title+author
+match on Derek's call after the offline replay (99.94% agreement over 20,326
+real candidates, 0 regressions — PR #3787) rather than after the planned week
+of shadow traffic. The retired title+author tier still runs as the POST-FLIP
+shadow: both verdicts land in `dedup_shadow_decisions` (`regime:
+'edition_live'`), where a shadow-only row now means the OLD tier caught
+something the new one lets through — the regression signature. Read with
+`scripts/audit/dedup-shadow-agreement.mjs`; a clean week means the shadow
+block and `titleAuthorTierMatches()` get deleted. Audit scripts replaying
+books already in the DB must pass `{ shadowLog: false }`. The shadow block is
+fenced — it must never fail an import. Corollary of the flip: dedup recall now
+DEPENDS on Phase 0 stamping both `books` and `books_warehouse` — an unstamped
+row is invisible to tier 2 (tiers 1/3 still catch same-source re-imports).
 
 ## `edition_key_quality` is not decoration — gate on it
 
