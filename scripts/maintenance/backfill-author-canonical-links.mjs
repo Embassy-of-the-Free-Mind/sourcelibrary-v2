@@ -93,8 +93,17 @@ if (UNDO) {
 }
 
 // 1. Build NFD-normalized name -> [canonical docs] multimap from the thesaurus.
+//    Person docs by default. --include-institutions widens to is_person:false
+//    docs (corporate headings — a monastery collection, a learned society):
+//    the #3780 mint created those at scale, and a book whose author string IS
+//    the corporate heading should link to it — the read path renders them as
+//    Organization, never as a portrait-slot person (#3483). Tombstones stay out.
+const INCLUDE_INSTITUTIONS = process.argv.includes('--include-institutions');
 const allAuthors = await authors
-  .find({ is_person: { $ne: false } }, { projection: { slug: 1, canonical_name: 1, variants: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1 } })
+  .find({
+    ...(INCLUDE_INSTITUTIONS ? {} : { is_person: { $ne: false } }),
+    merged_into: { $exists: false },
+  }, { projection: { slug: 1, canonical_name: 1, variants: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1 } })
   .toArray();
 const nameMap = new Map();
 const entityToDocs = new Map(); // entity_id (string) -> [canonical docs] (for the entity-linked phase)
