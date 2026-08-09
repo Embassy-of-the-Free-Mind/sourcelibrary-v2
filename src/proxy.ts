@@ -4,7 +4,13 @@ import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
-import { shouldRedirectToCanonical, canonicalUrl, aliasPolicyForHost } from '@/lib/alias-host-scope';
+import {
+  shouldRedirectToCanonical,
+  canonicalUrl,
+  aliasPolicyForHost,
+  isPreviewGatedPath,
+  previewGateResponse,
+} from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 
@@ -636,6 +642,34 @@ export async function proxy(request: NextRequest) {
         'X-Robots-Tag': 'noindex, nofollow',
       },
     });
+  }
+
+  // Preview deployments sit outside Cloudflare and their URLs are public
+  // (the Vercel bot posts them on every PR of this public repo), so book
+  // content there is withheld from anonymous callers. A session cookie or an
+  // Authorization header passes — branch review by a signed-in dev, and any
+  // credentialed script, keep working. Placed HERE, before the embed-CORS
+  // branch, because that branch passes /api/books straight through on a
+  // forgeable Origin header. See alias-host-scope.ts for why this is a loud
+  // 403 and not a redirect.
+  if (
+    aliasPolicyForHost(request.headers.get('host') || '') === 'preview' &&
+    isPreviewGatedPath(pathname)
+  ) {
+    const hasSession =
+      request.cookies.has('__Secure-authjs.session-token') ||
+      request.cookies.has('authjs.session-token');
+    const hasAuthHeader = Boolean(request.headers.get('authorization'));
+    if (!hasSession && !hasAuthHeader) {
+      return new NextResponse(previewGateResponse(pathname), {
+        status: 403,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
   }
 
   // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
