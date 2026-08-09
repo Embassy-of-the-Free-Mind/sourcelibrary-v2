@@ -65,6 +65,27 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     .toUpperCase()
     .slice(0, 2) || session.user?.email?.[0]?.toUpperCase() || '?';
 
+  // The white-on-translucent-white styling below is only legible over the
+  // dark/transparent 'hero' headers. On the default cream header it rendered
+  // the initials fallback invisible (white text on a near-white bar) — which
+  // is what every reader sees whenever the Google avatar image fails to load,
+  // e.g. lh3.googleusercontent intermittently 503s in-browser.
+  const onDark = variant === 'hero';
+  const avatarBorder = isMember
+    ? 'var(--accent-gold)'
+    : onDark ? 'rgba(255,255,255,0.3)' : 'var(--border-light)';
+  const fallbackStyle = onDark
+    ? {
+        background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
+        color: '#fff',
+        borderColor: avatarBorder,
+      }
+    : {
+        background: isMember ? 'rgba(201,168,108,0.2)' : 'var(--bg-warm)',
+        color: 'var(--text-primary)',
+        borderColor: avatarBorder,
+      };
+
   return (
     <div ref={menuRef} className="relative">
       <button
@@ -79,17 +100,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             alt={session.user.name || 'User'}
             data-avatar="true"
             className="w-8 h-8 rounded-full border-2"
-            style={{ borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
+            style={{ borderColor: avatarBorder }}
             onError={handleImgError}
           />
         ) : (
           <div
             data-avatar="true"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium border-2"
-            style={{
-              background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
-              borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)',
-            }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium border-2"
+            style={fallbackStyle}
           >
             {initials}
           </div>
