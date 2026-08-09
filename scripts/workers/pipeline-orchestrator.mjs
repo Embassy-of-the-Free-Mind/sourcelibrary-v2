@@ -2589,6 +2589,42 @@ async function run() {
         console.log(`  FT-flagged: ${ftFlagged}/${log.enrolled}`);
       }
       console.log(`  Enrolled: ${log.enrolled}`);
+
+      // Convergence tail (#3756): the 14-day window turned "recent" into a
+      // permanent exclusion — 6,874 books / 2.37M pages could never enter the
+      // pipeline (archaeology I89). Enroll a small OLDEST-first batch each
+      // cycle too; archiving is free and the dial gates all paid phases, so
+      // this converges the stranded backlog at bounded pace with zero
+      // unbudgeted spend.
+      if (!DRY_RUN) {
+        const strays = await db.collection('books')
+          .find({
+            pipeline_auto: { $exists: false },
+            created_at: { $lt: cutoff },
+            'image_source.provider': { $nin: ART_PROVIDERS },
+          })
+          .project({ id: 1, language: 1 })
+          .sort({ created_at: 1 })
+          .limit(25)
+          .toArray();
+        const ENGLISH_VARIANTS_STRAY = ['english', 'eng', 'en'];
+        for (const book of strays) {
+          const lang = (book.language || '').toLowerCase();
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: {
+              pipeline_auto: {
+                status: 'queued', source: 'cron-convergence', queued_at: new Date(),
+                last_updated: new Date(), retry_count: 0,
+                likely_first_translation: !!lang && !ENGLISH_VARIANTS_STRAY.includes(lang),
+              },
+              updated_at: new Date(),
+            } }
+          );
+          log.enrolled++;
+        }
+        if (strays.length) console.log(`  Convergence-enrolled (oldest-first, pre-window): ${strays.length}`);
+      }
     }
 
     // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate).
@@ -5387,10 +5423,28 @@ Rules:
 
         if (!DRY_RUN) {
           await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
+          // Cost ledger (#3756): stamp what this book actually cost, from the
+          // usage meter — powers sponsor-a-book displays and unit economics.
+          // cost_usd is computed-not-billed; label the field accordingly.
+          try {
+            const [costAgg] = await db.collection('gemini_usage').aggregate([
+              { $match: { book_id: book.id } },
+              { $group: { _id: null, usd: { $sum: { $ifNull: ['$cost_usd', 0] } }, calls: { $sum: 1 } } },
+            ], { maxTimeMS: 30000 }).toArray();
+            if (costAgg) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { processing_cost_usd_estimate: Math.round(costAgg.usd * 100) / 100, processing_cost_stamped_at: new Date() } }
+              );
+            }
+          } catch { /* cost stamp is best-effort — never block finalize */ }
           // Auto-unhide: books that completed the full pipeline should be visible
+          // — UNLESS they are hidden for a stated reason (takedown, copyright,
+          // sponsor hold). A hidden_reason is a human decision; finalize must
+          // never overrule it (#3099 Kloss invariant; guard added at relight).
           await db.collection('books').updateOne(
-            { id: book.id, hidden: true },
-            { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+            { id: book.id, hidden: true, hidden_reason: { $exists: false } },
+            { $set: { hidden: false, visible: true, updated_at: new Date() } }
           );
         }
         log.finalized++;

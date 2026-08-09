@@ -1112,6 +1112,10 @@ async function enrichBook(db, book) {
       generated_at: new Date(),
       model: LITE_MODEL,
       source: 'ai',
+      // Derivation provenance (Vaughan/Sammelband lesson #3584): record WHICH
+      // pages this summary was derived from, so a wrong description can be
+      // traced to its input instead of trusted as catalog fact.
+      pages_sampled: batchExtractions.map((b) => b.pageRange).filter(Boolean),
     };
   }
 
