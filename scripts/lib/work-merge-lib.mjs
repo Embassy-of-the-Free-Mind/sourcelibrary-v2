@@ -27,10 +27,19 @@ export function rankFormat(w) {
   return 3; // legacy clean slug / cjk / other
 }
 
-export function pickWinner(wids) {
+/**
+ * Optional `inbound` (work_id -> book count) breaks format ties toward the id
+ * more books already carry — fewer rewrites, and the better-established mint
+ * survives (#3730 §3). Without it, behaviour is unchanged.
+ */
+export function pickWinner(wids, inbound) {
   return [...wids].sort((a, b) => {
     const r = rankFormat(a) - rankFormat(b);
     if (r) return r;
+    if (inbound) {
+      const ib = (inbound.get(b) || 0) - (inbound.get(a) || 0);
+      if (ib) return ib;
+    }
     if (a.length !== b.length) return a.length - b.length;
     return a < b ? -1 : 1;
   })[0];
@@ -192,7 +201,49 @@ export function containmentCandidates(reps, opts = {}) {
  * across canon works — that is how an Iliad edition would silently land on the
  * Odyssey page).
  */
-export function unionMergeClusters(clusters, canonSlugByWorkId = new Map()) {
+// ── edition-conflict lane (HIGH, #3730 §3) ──────────────────────────────────
+/**
+ * One edition, two works — the contradiction the edition layer surfaces for
+ * free. Auto-mergeable ONLY in the mechanical shape:
+ *
+ *   - exactly 2 distinct work_ids on one FULL-quality edition_key cluster
+ *     (3+-way clusters are where generic titles bridge genuinely different
+ *     works — e.g. seven "Hasidic discourses|schneersohn|1850" work_ids that
+ *     are different rebbes' discourse collections; always human work);
+ *   - both ids are local mints (a QID pair asserts external identity — queue);
+ *   - every member book carries the SAME non-null author_id;
+ *   - every book under EACH work_id — including books outside this edition
+ *     cluster — shares one normalized title (`titleVariants`, Unicode-aware).
+ *     This is the guard that stops a merge from propagating beyond the
+ *     edition that evidenced it: a work_id with other differently-titled
+ *     books is a broader cluster this edition cannot speak for.
+ *
+ * Typical survivor pair: `local:a:…:curiosa-physica` + `local:n:…:curious-physics`
+ * — one edition minted twice from the original title and its English gloss.
+ *
+ * `clusters`: [{ key, works: string[], authorIds: (string|null)[] }]
+ * `titleVariants`: work_id -> count of distinct normalized titles
+ * `inbound`: work_id -> book count (winner tiebreak after format rank)
+ */
+export function editionConflictClusters(clusters, { titleVariants, inbound }) {
+  const out = [];
+  for (const c of clusters) {
+    const wids = [...new Set(c.works)];
+    if (wids.length !== 2) continue;
+    if (!wids.every((w) => /^local:/.test(w))) continue;
+    const auths = [...new Set(c.authorIds || [])];
+    if (auths.length !== 1 || !auths[0]) continue;
+    if (!wids.every((w) => (titleVariants.get(w) || 0) === 1)) continue;
+    const winner = pickWinner(wids, inbound);
+    out.push({
+      source: 'edition-conflict', key: c.key, ids: wids,
+      winner, losers: wids.filter((w) => w !== winner),
+    });
+  }
+  return out;
+}
+
+export function unionMergeClusters(clusters, canonSlugByWorkId = new Map(), inbound) {
   const parent = new Map();
   const find = (x) => {
     while (parent.get(x) !== x) { parent.set(x, parent.get(parent.get(x))); x = parent.get(x); }
@@ -222,7 +273,7 @@ export function unionMergeClusters(clusters, canonSlugByWorkId = new Map()) {
     if (ids.length < 2) continue;
     const slugs = new Set(ids.map((id) => canonSlugByWorkId.get(id)).filter(Boolean));
     const plan = {
-      ids, winner: pickWinner(ids),
+      ids, winner: pickWinner(ids, inbound),
       sources: [...(sourcesByRoot.get(root) || [])].sort(),
     };
     plan.losers = ids.filter((i) => i !== plan.winner);
