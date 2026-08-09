@@ -256,6 +256,9 @@ export async function editionKeyTierMatches(
       { projection: VIS_PROJ }
     ).limit(25).toArray();
     for (const doc of rows) {
+      // The regex already guarantees a well-formed key on a real DB; the guard
+      // is for test doubles and any future caller passing a looser query.
+      if (typeof doc.edition_key !== 'string' || !doc.edition_key.includes('|')) continue;
       // Stored key: `title|surname|year|vN`. Normalized parts never contain
       // '|' (normalization strips punctuation), so positional split is safe.
       const segs = String(doc.edition_key).split('|');
