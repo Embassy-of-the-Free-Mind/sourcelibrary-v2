@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'nobody-knows-what-has-been-scanned',
+    title: 'Nobody Knows What Has Been Scanned',
+    subtitle:
+      'No institution on earth can answer whether a book has already been digitized. We had to harvest 3.5 million records to answer it for one library — and found 3,655 books nobody has scanned. The case for a global registry.',
+    date: '9 August 2026',
+    readTime: '6 min read',
+    tag: 'Essay',
+    tagColor: 'bg-amber-50 text-amber-700',
+    image: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg',
+    imageAlt:
+      "Engraved title page of Zwinger's Theatrum Humanae Vitae, 1604 — the largest encyclopedia of its age.",
+  },
+  {
     slug: 'reciting-not-reading',
     title: 'Reciting, Not Reading',
     subtitle:
