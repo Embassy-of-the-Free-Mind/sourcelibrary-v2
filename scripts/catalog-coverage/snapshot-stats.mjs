@@ -10,6 +10,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { computeUstcAuthorCoverage } from '../lib/ustc-author-coverage.mjs';
 
 const MONGO_URI = process.env.MONGODB_URI;
 if (!MONGO_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -52,6 +53,23 @@ async function main() {
   const enrichSnap = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
   const slOver90 = enrichSnap?.milestones?.over_90_pct || 0;
 
+  // Author coverage vs the USTC census — "we hold >=1 book by N of the census's
+  // distinct authors". Streams a 2.4M-row group; ~1-2 min, fine at 4:30am.
+  // exact = floor, cluster = estimate; see scripts/lib/ustc-author-coverage.mjs.
+  let authorCoverage = null;
+  try {
+    authorCoverage = await computeUstcAuthorCoverage(db);
+    await db.collection('catalog_coverage_meta').updateOne(
+      { _id: 'author_coverage' },
+      { $set: { ...authorCoverage, computed_at: new Date() } },
+      { upsert: true },
+    );
+  } catch (e) {
+    // Never let the author metric take down the whole snapshot — but never
+    // fail silently either: the field records the failure.
+    authorCoverage = { error: String(e.message || e) };
+  }
+
   const snapshot = {
     date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
     created_at: new Date(),
@@ -64,6 +82,7 @@ async function main() {
     with_translation: totals.translated,
     pct_translated: totals.editions > 0 ? +(totals.translated / totals.editions * 100).toFixed(2) : 0,
     in_source_library: totals.in_sl,
+    author_coverage: authorCoverage,
     // Live Source Library stats
     sl: {
       total_books: slBooks,
@@ -99,6 +118,11 @@ async function main() {
   console.log(`  Scanned: ${snapshot.with_scan.toLocaleString()} (${snapshot.pct_scanned}%)`);
   console.log(`  Translated: ${snapshot.with_translation.toLocaleString()} (${snapshot.pct_translated}%)`);
   console.log(`  In SL (census match): ${snapshot.in_source_library.toLocaleString()}`);
+  if (authorCoverage && !authorCoverage.error) {
+    console.log(`  Census authors held: ${authorCoverage.matched_exact.toLocaleString()}-${authorCoverage.matched_cluster.toLocaleString()} of ${authorCoverage.census_distinct_authors.toLocaleString()} (${authorCoverage.pct_authors_exact}-${authorCoverage.pct_authors_cluster}%; ${authorCoverage.pct_editions_exact}-${authorCoverage.pct_editions_cluster}% of authored editions)`);
+  } else if (authorCoverage?.error) {
+    console.log(`  Census authors held: FAILED — ${authorCoverage.error}`);
+  }
   console.log(`  Import candidates: ${snapshot.import_candidates.toLocaleString()}`);
   console.log(`  --- Source Library ---`);
   console.log(`  Books with pages: ${snapshot.sl.books_with_pages.toLocaleString()}`);
