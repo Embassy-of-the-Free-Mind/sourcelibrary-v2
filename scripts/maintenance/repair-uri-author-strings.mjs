@@ -49,7 +49,8 @@ async function resolveUri(uri) {
     const r = await fetch(`https://d-nb.info/gnd/${gnd}/about/lds.jsonld`, { headers: { Accept: 'application/json', 'User-Agent': UA }, signal: AbortSignal.timeout(20000) });
     if (!r.ok) throw new Error(`d-nb ${r.status}`);
     const d = await r.json();
-    const nodes = d['@graph'] || [d];
+    // d-nb.info lds.jsonld is a BARE ARRAY of nodes (no @graph wrapper)
+    const nodes = Array.isArray(d) ? d : d['@graph'] || [d];
     for (const n of nodes) {
       const name = n['preferredNameForThePerson'] || n['gndo:preferredNameForThePerson']
         || n['https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson'];
