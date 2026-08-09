@@ -63,3 +63,34 @@ the live numbers.
 CLAUDE.md check: up — nothing new unconditional (the health-gate/dial invariants live
 in pipeline-ops + the v2 architecture doc); down — the pipeline-ops "Where Everything
 Runs" reality note was corrected this session (#3791).
+
+---
+
+## Addendum — the back half of the session (same day)
+
+After the relight: **#3793** ntfy alerts on the batch/stall classes · **#3794**
+write-time sensors (`ocr.has_warning`, `summary.pages_sampled`) + snapshot sensors
+block · **#3797** completeness (LIVE BUG: Phase 9 auto-unhide lacked the
+hidden_reason guard — takedowns would have been force-published; fixed + deployed;
+plus cost-ledger stamp, oldest-first enrollment convergence, author-link nightly
+cron 05:40, warning-history backfill script) · **#3799** Line probe aligned to the
+peer session's #3747 blank-page redefinition (writers inherited via the shared
+builder — the one-door architecture prevented a drift incident) · **#3801**
+"everything versions": `system_config_revisions` trail + `set-dial.mjs` (THE
+versioned dial lever, `--history`) + `r2-version.mjs` prior-object preservation on
+repair overwrites.
+
+**Leaf-shift (#3368) EXECUTED** on the audited cohort (1,537 books; audit
+resumable for the tail): 8 text-shifted with revisions, ~20 image-repaired from
+the true IIIF sequence (dHash post-checks aligned, priors preserved under
+versions/), Cloudflare PURGED-verified + warmed. Continue with:
+`bulk-archive-alignment.mjs --all --resume` then both repair scripts `--from` the
+verdict file (all idempotent).
+
+Dial raised to **$15/day** (Derek). Boarded: 64 reader requests @100, ~179
+Derek-cohort @90. Transliteration found already re-enabled. Ops note: background
+node processes on this Mac get killed ~10 min — use self-timed foreground windows
+(`cmd & pid=$!; sleep 540; kill $pid`) with resumable jobs.
+
+Morning read: first snapshot's translated delta reads sharply NEGATIVE — the
+#3747 definitional correction, not lost work.
