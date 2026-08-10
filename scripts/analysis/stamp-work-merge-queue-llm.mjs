@@ -27,7 +27,7 @@ const MODEL = 'gemini-3.1-flash-lite';
 const GEN_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`;
 if (!KEY) { console.error('GEMINI_API_KEY[_TIER3] not set'); process.exit(1); }
 
-const BATCH = 20;
+const BATCH = 12; // richer per-side context now — keep prompts short of the empty-candidate zone
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const SCHEMA = {
@@ -49,11 +49,16 @@ const SCHEMA = {
   required: ['verdicts'],
 };
 
+// Long titles must NOT be truncated short: the audit's worst over-merges
+// (Polanus pars nona vs duodecima, Plutarch vol 1 vs 8, Boyle Opera Varia
+// tracts) all had their distinguishing volume/part marker beyond a 90-char
+// cut. The work_id slug is included too — it encodes volume digits and year
+// markers even when the sampled titles hide them.
 function sideLine(s) {
   const langs = s.langs.size ? ` [${[...s.langs].join('/')}]` : '';
   const years = s.years.length ? ` (${Math.min(...s.years)}${Math.max(...s.years) !== Math.min(...s.years) ? '-' + Math.max(...s.years) : ''})` : '';
-  const titles = [...s.titles].slice(0, 3).map((t) => `"${t.slice(0, 90)}"`).join('; ');
-  return `${titles}${langs}${years}, ${s.n} book${s.n === 1 ? '' : 's'}`;
+  const titles = [...s.titles].slice(0, 4).map((t) => `"${t.slice(0, 220)}"`).join('; ');
+  return `${titles}${langs}${years}, ${s.n} book${s.n === 1 ? '' : 's'}, id: ${s.wid}`;
 }
 
 async function judgeBatch(pairs) {
@@ -67,7 +72,8 @@ Rules:
 - Separate VOLUMES or PARTS of a multi-volume set are DIFFERENT works.
 - A commentary ON a work, or an excerpt OF a work, is DIFFERENT from the whole.
 - Identical or near-identical titles in the same or different languages, with no containment signal, are usually the SAME work minted twice (e.g. an original-language title and its English gloss).
-- A generic title ("Fragments", "Letters", "Works") matched against a specific title is usually DIFFERENT unless the evidence is strong.
+- A generic title ("Fragments", "Letters", "Works", "Theses theologicae") matched against a specific title could be the same item catalogued lazily OR a different one — answer "unsure" unless something pins it.
+- Check the ids and the FULL titles for volume/part/series markers (vol., tomus, pars, "1745-2", a year embedded in a serial id): identical wording with different part markers = DIFFERENT.
 - Use your bibliographic knowledge of original vs translated titles.
 - Base your reasoning ONLY on the listed titles/languages/years — do not invent facts about the books.
 - Answer "same" or "different" ONLY when the listed evidence clearly supports it; when both readings are plausible or the evidence is thin, answer "unsure". "unsure" is a good answer — it routes the pair to a human.
@@ -117,7 +123,7 @@ for (let i = 0; i < wids.length; i += 500) {
     { projection: { _id: 0, work_id: 1, title: 1, display_title: 1, language: 1, year: 1 } }
   ).toArray();
   for (const b of docs) {
-    if (!sideByWid.has(b.work_id)) sideByWid.set(b.work_id, { titles: new Set(), langs: new Set(), years: [], n: 0 });
+    if (!sideByWid.has(b.work_id)) sideByWid.set(b.work_id, { wid: b.work_id, titles: new Set(), langs: new Set(), years: [], n: 0 });
     const s = sideByWid.get(b.work_id);
     s.n++;
     const t = b.display_title || b.title || '';
