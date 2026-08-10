@@ -65,6 +65,15 @@ const IDS = arg('ids')?.split(',').map((s) => s.trim()).filter(Boolean);
 const LIMIT = parseInt(arg('limit') ?? '0', 10);
 const MODEL = arg('model') ?? 'gemini-3.1-flash-lite';
 const BUDGET = parseFloat(arg('budget-usd') ?? '0');
+/**
+ * Explicit positive thinking cap (tokens). Unset → the API default (dynamic).
+ * NEVER pass -1: `thinkingBudget: -1` silently SUPPRESSES grounding on
+ * flash-preview (the §8 hazard in the FT paper). A positive cap bounds the
+ * dominant cost driver — unbounded thinking ran ~$0.19/book on preview vs
+ * ~$0.002 for lean calls (measured 2026-08-10).
+ */
+const THINKING = arg('thinking-budget');
+const THINKING_BUDGET = THINKING !== undefined ? Math.max(0, parseInt(THINKING, 10) || 0) : undefined;
 const CONC = parseInt(arg('concurrency') ?? '4', 10);
 const TRANSCRIPTS = 'first_translation_transcripts'; // pure archive: no automated job reads it (#3778)
 
@@ -189,7 +198,10 @@ async function main() {
         const ai = new GoogleGenAI({ apiKey: nextKey() });
         const resp = await ai.models.generateContent({
           model: MODEL, contents: prompt,
-          config: { tools: [{ googleSearch: {} }], temperature: 0.1 },
+          config: {
+            tools: [{ googleSearch: {} }], temperature: 0.1,
+            ...(THINKING_BUDGET !== undefined ? { thinkingConfig: { thinkingBudget: THINKING_BUDGET } } : {}),
+          },
         });
         const gm = (resp.candidates?.[0] as { groundingMetadata?: { webSearchQueries?: string[]; groundingChunks?: Array<{ web?: { uri?: string; title?: string } }> } })?.groundingMetadata ?? {};
         const u = resp.usageMetadata ?? {};
