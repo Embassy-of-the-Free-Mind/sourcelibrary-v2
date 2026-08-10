@@ -17,6 +17,7 @@ interface WorkSide {
   workId: string;
   nBooks: number;
   nVisible: number;
+  bph: boolean;
   languages: string[];
   yearMin: number | null;
   yearMax: number | null;
@@ -42,6 +43,7 @@ interface MergeItem {
 interface KeeperMember {
   id: string;
   found: boolean;
+  bph: boolean;
   title: string;
   author: string;
   slug: string;
@@ -92,6 +94,7 @@ function WorkSideCard({ side, isSuggested }: { side: WorkSide; isSuggested: bool
         <a href={`/work/${encodeURIComponent(side.workId)}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-accent-rust hover:underline truncate">
           {side.workId}
         </a>
+        {side.bph && <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 whitespace-nowrap">BPH</span>}
         {isSuggested && <span className="text-[10px] uppercase tracking-wide text-emerald-700 whitespace-nowrap">suggested keep</span>}
       </div>
       <div className="text-xs text-stone-500 mb-2">
@@ -113,7 +116,7 @@ function WorkSideCard({ side, isSuggested }: { side: WorkSide; isSuggested: bool
   );
 }
 
-function WorkMergesTab() {
+function WorkMergesTab({ bph }: { bph: boolean }) {
   const [status, setStatus] = useState<Status>('pending');
   const [verdict, setVerdict] = useState<string>('');
   const [items, setItems] = useState<MergeItem[]>([]);
@@ -129,6 +132,7 @@ function WorkMergesTab() {
     try {
       const params = new URLSearchParams({ status, limit: String(LIMIT), skip: String(skip) });
       if (verdict) params.set('verdict', verdict);
+      if (bph) params.set('bph', '1');
       const res = await fetch(`/api/admin/work-merges?${params}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
@@ -140,8 +144,9 @@ function WorkMergesTab() {
     } finally {
       setLoading(false);
     }
-  }, [status, verdict, skip]);
+  }, [status, verdict, skip, bph]);
 
+  useEffect(() => { setSkip(0); }, [bph]);
   useEffect(() => { load(); }, [load]);
 
   async function act(item: MergeItem, action: 'approve' | 'reject', winner?: string) {
@@ -240,7 +245,7 @@ function WorkMergesTab() {
   );
 }
 
-function EditionKeepersTab() {
+function EditionKeepersTab({ bph }: { bph: boolean }) {
   const [status, setStatus] = useState<Status>('pending');
   const [bucket, setBucket] = useState<string>('human');
   const [items, setItems] = useState<KeeperItem[]>([]);
@@ -256,6 +261,7 @@ function EditionKeepersTab() {
     setLoading(true);
     try {
       const params = new URLSearchParams({ status, bucket, limit: String(LIMIT), skip: String(skip) });
+      if (bph) params.set('bph', '1');
       const res = await fetch(`/api/admin/edition-keepers?${params}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
@@ -268,8 +274,9 @@ function EditionKeepersTab() {
     } finally {
       setLoading(false);
     }
-  }, [status, bucket, skip]);
+  }, [status, bucket, skip, bph]);
 
+  useEffect(() => { setSkip(0); }, [bph]);
   useEffect(() => { load(); }, [load]);
 
   async function act(item: KeeperItem, action: 'keep' | 'dismiss', keeperId?: string) {
@@ -337,6 +344,7 @@ function EditionKeepersTab() {
                         {m.provider}{m.language ? ` · ${m.language}` : ''}{m.year ? ` · ${m.year}` : ''}
                         {!m.visible && <span className="text-rose-600"> · hidden</span>}
                         {m.ft && <span className="text-purple-600"> · FT</span>}
+                        {m.bph && <span className="text-amber-700"> · BPH</span>}
                       </div>
                     </div>
                   </div>
@@ -379,6 +387,11 @@ function EditionKeepersTab() {
 
 export default function IdentityReviewPage() {
   const [tab, setTab] = useState<'merges' | 'keepers'>('merges');
+  // ?bph=1 opens the page scoped to BPH/EFM holdings (shareable link for
+  // partner-collection reviewers). Client page, so location is available.
+  const [bph, setBph] = useState<boolean>(() =>
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('bph') === '1'
+  );
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
@@ -393,16 +406,20 @@ export default function IdentityReviewPage() {
         the <em>unsure</em> lane, not everything.
       </p>
 
-      <div className="flex gap-2 mb-6 border-b border-stone-200">
+      <div className="flex items-center gap-2 mb-6 border-b border-stone-200">
         {([['merges', 'Work merges'], ['keepers', 'Edition keepers']] as const).map(([key, label]) => (
           <button key={key} onClick={() => setTab(key)}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${tab === key ? 'border-accent-rust text-accent-rust' : 'border-transparent text-stone-500 hover:text-stone-800'}`}>
             {label}
           </button>
         ))}
+        <label className="ml-auto flex items-center gap-2 text-sm text-stone-600 cursor-pointer pb-1">
+          <input type="checkbox" checked={bph} onChange={(e) => setBph(e.target.checked)} />
+          BPH holdings only
+        </label>
       </div>
 
-      {tab === 'merges' ? <WorkMergesTab /> : <EditionKeepersTab />}
+      {tab === 'merges' ? <WorkMergesTab bph={bph} /> : <EditionKeepersTab bph={bph} />}
     </div>
   );
 }
