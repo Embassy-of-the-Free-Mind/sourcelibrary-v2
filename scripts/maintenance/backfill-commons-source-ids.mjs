@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 /**
- * Backfill structured Commons provenance on artwork docs (#3838, item 1).
+ * Backfill structured Commons provenance on artwork docs (#3838, items 1+4).
  *
- * For every artwork doc whose `commons_url` points at a true Wikimedia
- * Commons file page, write:
+ * For every artwork doc carrying ANY Commons file pointer — a
+ * `commons_url` file-page link, a `commons_title`/`commons_page_title`
+ * File: title, or a `commons_full_url` on upload.wikimedia.org (the ~9.4K
+ * pre-`commons_url` imports were reachable only through the last two) —
+ * write:
  *   - `source_ids.commons` — the CANONICAL File: title as Commons itself
  *     reports it (post-normalization, post-redirect), so the integrity
  *     detector (scripts/audit/artwork-image-integrity.mjs) has a stable,
@@ -13,6 +16,9 @@
  *     check with no image download (#3815, #3037).
  *   - `commons_width`/`commons_height` — only where missing (free in the
  *     same response).
+ *   - `commons_url` — only where missing, set to the canonical file-page
+ *     URL, so detectProvider()/sourceLink() route these docs like every
+ *     other Commons record.
  *
  * NEVER overwrites an existing `commons_sha1`. If the stored sha1 differs
  * from what Commons reports now, that is an integrity signal (Commons
@@ -41,19 +47,33 @@ const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// Resolve the File: title we believe this doc points at. Mirrors
-// fetchCommonsSource in scripts/lib/artwork-sources.mjs: prefer the stored
-// commons_title, else parse the commons_url.
+// Resolve the File: title we believe this doc points at. Order mirrors
+// fetchCommonsSource in scripts/lib/artwork-sources.mjs (commons_title
+// first — after an image upgrade it names the file we actually serve),
+// then the API-written commons_page_title, then URL parsing.
 function resolveFileTitle(doc) {
   if (doc.commons_title && /^File:/i.test(doc.commons_title)) {
     return doc.commons_title.replace(/_/g, ' ').trim();
   }
-  if (!doc.commons_url) return null;
-  let decoded;
-  try { decoded = decodeURIComponent(doc.commons_url); } catch { decoded = doc.commons_url; }
-  const m = decoded.match(/File:([^#]+)/i);
-  if (!m) return null;
-  return `File:${m[1].replace(/_/g, ' ').trim()}`;
+  if (doc.commons_page_title && /^File:/i.test(doc.commons_page_title)) {
+    return doc.commons_page_title.replace(/_/g, ' ').trim();
+  }
+  if (doc.commons_url) {
+    let decoded;
+    try { decoded = decodeURIComponent(doc.commons_url); } catch { decoded = doc.commons_url; }
+    const m = decoded.match(/File:([^#]+)/i);
+    if (m) return `File:${m[1].replace(/_/g, ' ').trim()}`;
+  }
+  if (doc.commons_full_url) {
+    // https://upload.wikimedia.org/wikipedia/commons/a/ab/Foo_Bar.jpg → File:Foo Bar.jpg
+    const m = doc.commons_full_url.match(/\/wikipedia\/commons\/[0-9a-f]\/[0-9a-f]{2}\/([^/?#]+)/i);
+    if (m) {
+      let name = m[1];
+      try { name = decodeURIComponent(name); } catch { /* keep raw */ }
+      return `File:${name.replace(/_/g, ' ').trim()}`;
+    }
+  }
+  return null;
 }
 
 async function fetchBatch(titles, attempt = 0) {
@@ -117,10 +137,17 @@ async function main() {
 
   const query = {
     resource_type: { $exists: true },
-    commons_url: /commons\.wikimedia\.org/i,
-    $or: [
-      { 'source_ids.commons': { $exists: false } },
-      { commons_sha1: { $in: [null, ''] } },
+    $and: [
+      { $or: [
+        { commons_url: /commons\.wikimedia\.org/i },
+        { commons_title: /^File:/i },
+        { commons_page_title: /^File:/i },
+        { commons_full_url: /upload\.wikimedia\.org/i },
+      ] },
+      { $or: [
+        { 'source_ids.commons': { $exists: false } },
+        { commons_sha1: { $in: [null, ''] } },
+      ] },
     ],
   };
 
@@ -129,7 +156,7 @@ async function main() {
   console.log(`${new Date().toISOString()} — ${total} docs in scope, processing ${LIMIT ? Math.min(LIMIT, total) : total}\n`);
 
   const docs = await books.find(query, {
-    projection: { _id: 1, id: 1, slug: 1, title: 1, commons_url: 1, commons_title: 1, commons_sha1: 1, source_ids: 1, commons_width: 1, commons_height: 1 },
+    projection: { _id: 1, id: 1, slug: 1, title: 1, commons_url: 1, commons_title: 1, commons_page_title: 1, commons_full_url: 1, commons_sha1: 1, source_ids: 1, commons_width: 1, commons_height: 1 },
   }).limit(LIMIT || 0).toArray();
 
   const stats = { processed: 0, updated: 0, sha1Written: 0, sha1Mismatch: 0, missing: 0, unresolvable: 0, noImageinfo: 0 };
@@ -188,6 +215,7 @@ async function main() {
         }
         if (!doc.commons_width && info.width) set.commons_width = info.width;
         if (!doc.commons_height && info.height) set.commons_height = info.height;
+        if (!doc.commons_url) set.commons_url = `https://commons.wikimedia.org/wiki/${page.title.replace(/ /g, '_')}`;
         ops.push({ updateOne: { filter: { _id: doc._id }, update: { $set: set } } });
       }
     }
