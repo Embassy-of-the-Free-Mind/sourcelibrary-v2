@@ -6,14 +6,18 @@
  * function returns the museum/Commons API's OWN account of what image
  * belongs to a given doc — never derived from our own slug or R2 keys.
  *
- * Provider coverage (2026-08-09): Cleveland, Met, AIC, and true Wikimedia
- * Commons file pages are supported. Rijksmuseum's public collection API
- * returns 410 Gone (deprecated, no working replacement found in a quick
- * check) and NGA's open data is a static CSV dump, not a live API — both
- * are reported as `unverifiable` rather than guessed at. ~1,892 Rijksmuseum
- * + ~590 NGA artwork docs are therefore NOT covered by this integrity check;
- * a follow-up would need a Rijksmuseum API key (dead endpoint otherwise) or
- * NGA's bulk opendata CSVs.
+ * Provider coverage (2026-08-10): Cleveland, Met, AIC, true Wikimedia
+ * Commons file pages, Rijksmuseum, and NGA.
+ *
+ * Rijksmuseum (#3838 item 2): the old www.rijksmuseum.nl/api is 410 Gone,
+ * but the Linked Art stack on data.rijksmuseum.nl resolves WITHOUT a key:
+ * objectNumber search → HumanMadeObject → shows[0] VisualItem →
+ * digitally_shown_by[0] DigitalObject → IIIF access point (iiif.micr.io,
+ * arbitrary sizes). Four requests per doc — sample, don't sweep blindly.
+ *
+ * NGA (#3838 item 3): no live API. fetchNgaSource needs the opendata
+ * published_images.csv preloaded into a Map (see loadNgaImagesCsv) —
+ * callers without it get `unverifiable`, never a guess.
  */
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org) bot';
@@ -30,6 +34,9 @@ export function detectProvider(doc) {
   if (doc.source_ids?.cleveland) return 'cleveland';
   if (doc.source_ids?.met) return 'met';
   if (doc.source_ids?.aic) return 'aic';
+  if (doc.source_ids?.rijksmuseum) return 'rijksmuseum';
+  if (doc.source_ids?.nga) return 'nga';
+  if (doc.source_ids?.commons) return 'commons';
   const link = sourceLink(doc);
   if (!link) return null;
   let host;
@@ -38,8 +45,8 @@ export function detectProvider(doc) {
   if (/metmuseum\.org$/i.test(host)) return 'met';
   if (/artic\.edu$/i.test(host)) return 'aic';
   if (/commons\.wikimedia\.org$/i.test(host)) return 'commons';
-  if (/rijksmuseum\.nl$/i.test(host)) return 'rijksmuseum'; // unverifiable — see header
-  if (/nga\.gov$/i.test(host)) return 'nga';                // unverifiable — see header
+  if (/rijksmuseum\.nl$/i.test(host)) return 'rijksmuseum';
+  if (/nga\.gov$/i.test(host)) return 'nga'; // verifiable only with the opendata CSV — see header
   if (/wellcomecollection\.org$/i.test(host)) return 'wellcome'; // not yet integrated
   return null;
 }
@@ -119,7 +126,10 @@ export async function fetchAicSource(doc) {
 export async function fetchCommonsSource(doc) {
   const link = sourceLink(doc);
   let fileTitle = null;
-  if (doc.commons_title && /^File:/i.test(doc.commons_title)) fileTitle = doc.commons_title;
+  // source_ids.commons is the canonical post-redirect title written by the
+  // #3838 backfill — prefer it when present.
+  if (doc.source_ids?.commons && /^File:/i.test(doc.source_ids.commons)) fileTitle = doc.source_ids.commons;
+  if (!fileTitle && doc.commons_title && /^File:/i.test(doc.commons_title)) fileTitle = doc.commons_title;
   if (!fileTitle && link) {
     const decoded = decodeURIComponent(link);
     const m = decoded.match(/File:([^&?#]+)/i);
@@ -135,12 +145,104 @@ export async function fetchCommonsSource(doc) {
   return { ok: true, imageUrl: info.thumburl || info.url, fullImageUrl: info.url, width: info.width, height: info.height };
 }
 
-export async function fetchSourceFor(provider, doc) {
+/**
+ * Rijksmuseum via the keyless Linked Art chain (#3838 item 2). `source_ids.
+ * rijksmuseum` is the museum's own object number (e.g. RP-P-OB-1482).
+ * Cross-checks that the resolved record's Identifier equals the requested
+ * object number before trusting its image.
+ */
+export async function fetchRijksmuseumSource(doc) {
+  const objnum = doc.source_ids?.rijksmuseum;
+  if (!objnum) return { ok: false, error: 'no source_ids.rijksmuseum' };
+  const ld = { 'Accept': 'application/ld+json' };
+  const search = await getJson(`https://data.rijksmuseum.nl/search/collection?objectNumber=${encodeURIComponent(objnum)}`);
+  if (!search.ok) return search;
+  const objId = search.json.orderedItems?.[0]?.id;
+  if (!objId) return { ok: false, error: `object number ${objnum} not found in Linked Art search` };
+
+  const getLd = async (url) => {
+    const res = await fetch(url, { headers: { 'User-Agent': UA, ...ld }, signal: AbortSignal.timeout(15000) });
+    if (!res.ok) return null;
+    return res.json();
+  };
+  const obj = await getLd(objId);
+  if (!obj) return { ok: false, error: `could not dereference ${objId}` };
+  const identifiers = (obj.identified_by || []).filter(i => i.type === 'Identifier').map(i => i.content);
+  if (identifiers.length && !identifiers.includes(objnum)) {
+    return { ok: false, error: `resolved record identifies as ${identifiers.join('/')}, not ${objnum}` };
+  }
+  const title = (obj.identified_by || []).find(i => i.type === 'Name')?.content || null;
+  const visualId = (obj.shows || [])[0]?.id;
+  if (!visualId) return { ok: false, error: 'no VisualItem on object' };
+  const visual = await getLd(visualId);
+  const digitalId = (visual?.digitally_shown_by || [])[0]?.id;
+  if (!digitalId) return { ok: false, error: 'no DigitalObject on VisualItem' };
+  const digital = await getLd(digitalId);
+  const fullImageUrl = (digital?.access_point || [])[0]?.id;
+  if (!fullImageUrl) return { ok: false, error: 'no access_point on DigitalObject' };
+  // micr.io serves IIIF Image API paths — swap /full/max/ for a cheap 800px rendition.
+  const imageUrl = fullImageUrl.replace('/full/max/', '/full/800,/');
+  return { ok: true, title, imageUrl, fullImageUrl };
+}
+
+/**
+ * NGA has no live API — the caller must preload the opendata
+ * published_images.csv (objectid → iiif thumb/full URLs) and pass the Map.
+ */
+export function loadNgaImagesCsvSync(path, fsMod) {
+  // RFC-4180 scan — assistivetext fields contain quoted commas AND newlines,
+  // so a line/comma split silently misaligns every row after the first one.
+  const text = fsMod.readFileSync(path, 'utf8');
+  const rows = [];
+  let fields = [], cur = '', inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQ) {
+      if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += ch;
+    } else if (ch === '"') inQ = true;
+    else if (ch === ',') { fields.push(cur); cur = ''; }
+    else if (ch === '\n') { fields.push(cur.replace(/\r$/, '')); rows.push(fields); fields = []; cur = ''; }
+    else cur += ch;
+  }
+  if (cur || fields.length) { fields.push(cur); rows.push(fields); }
+  const header = rows[0];
+  const iOid = header.indexOf('depictstmsobjectid');
+  const iIiif = header.indexOf('iiifurl');
+  const iThumb = header.indexOf('iiifthumburl');
+  const iSeq = header.indexOf('sequence');
+  const map = new Map();
+  for (let r = 1; r < rows.length; r++) {
+    const f = rows[r];
+    const oid = f[iOid];
+    if (!oid) continue;
+    if (map.has(oid) && f[iSeq] !== '0') continue; // prefer the primary image
+    map.set(oid, { iiifurl: f[iIiif], thumb: f[iThumb] });
+  }
+  return map;
+}
+
+export async function fetchNgaSource(doc, ctx = {}) {
+  const id = doc.source_ids?.nga;
+  if (!id) return { ok: false, error: 'no source_ids.nga' };
+  const img = ctx.ngaImages?.get(String(id));
+  if (!ctx.ngaImages) return { ok: false, error: 'nga images csv not loaded (pass ctx.ngaImages)' };
+  if (!img?.iiifurl) return { ok: false, error: `no published image for NGA object ${id}` };
+  return {
+    ok: true,
+    imageUrl: img.thumb || `${img.iiifurl}/full/!800,800/0/default.jpg`,
+    fullImageUrl: `${img.iiifurl}/full/max/0/default.jpg`,
+  };
+}
+
+export async function fetchSourceFor(provider, doc, ctx = {}) {
   switch (provider) {
     case 'cleveland': return fetchClevelandSource(doc);
     case 'met': return fetchMetSource(doc);
     case 'aic': return fetchAicSource(doc);
     case 'commons': return fetchCommonsSource(doc);
+    case 'rijksmuseum': return fetchRijksmuseumSource(doc);
+    case 'nga': return fetchNgaSource(doc, ctx);
     default: return { ok: false, error: `provider '${provider}' not integrated (see file header)` };
   }
 }
