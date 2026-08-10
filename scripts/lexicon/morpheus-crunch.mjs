@@ -51,6 +51,7 @@ const MARK = {
   '͂': '=', 'ͅ': '|', '̈': '+', '̄': '', '̆': '', // strip length marks
 };
 const LETTER_REV = Object.fromEntries(Object.entries(LETTER).map(([g, b]) => [b, g]));
+LETTER_REV.s = 'σ'; // ς overwrote σ in the reverse map; medial is the right default
 const MARK_REV = Object.fromEntries(Object.entries(MARK).filter(([, b]) => b).map(([g, b]) => [b, g]));
 
 export function toBetacode(unicode) {

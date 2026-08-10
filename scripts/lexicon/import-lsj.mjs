@@ -34,7 +34,10 @@ const GRAVE_TO_ACUTE = { 'ὰ': 'ά', 'ὲ': 'έ', 'ὴ': 'ή', 'ὶ': 'ί', '�
 export function normGreekKey(raw) {
   let s = raw.normalize('NFD').replace(/[̄̆]/g, '').normalize('NFC').toLowerCase();
   s = [...s].map((ch) => GRAVE_TO_ACUTE[ch] ?? ch).join('');
-  return s.replace(/[^\p{L}\p{N}]/gu, '');
+  // Fold final sigma into medial — positional variants of one letter, and the
+  // betacode round-trip can emit either in either position (the crunch output
+  // contains lemmas like προςέχω; keys must not care).
+  return s.replace(/ς/g, 'σ').replace(/[^\p{L}\p{N}]/gu, '');
 }
 
 async function main() {

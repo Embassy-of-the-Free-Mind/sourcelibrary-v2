@@ -22,9 +22,12 @@ import { lookupGreekWord } from '@/lib/lexicon/lookup-grc';
 export const dynamic = 'force-dynamic';
 
 const CACHE_HEADERS = {
-  // max-age matters: a Cache-Control without it survives CDN purges in
-  // browser caches (see lesson on s-maxage-only headers).
-  'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+  // Browser max-age is deliberately SHORT: the lexicon dataset is young and
+  // improving, and a long browser cache pins stale misses on readers after a
+  // re-import (an hour-old miss survived the sigma-fix rejoin in testing).
+  // The CDN keeps the long TTL — deploys purge it. max-age must be present:
+  // a Cache-Control without it survives CDN purges in browser caches.
+  'Cache-Control': 'public, max-age=60, s-maxage=86400, stale-while-revalidate=604800',
   'CDN-Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
 } as const;
 

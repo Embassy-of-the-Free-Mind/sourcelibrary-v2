@@ -260,7 +260,7 @@ export default function LexiconTapLayer({ targetSelector, enabled, lang = 'la' }
       )}
       {popover.status === 'done' && !match && (
         <div className="py-3 text-sm" style={{ color: 'var(--text-muted, #6b7280)' }}>
-          No entry found in Lewis &amp; Short. Abbreviations, names, and heavily contracted early modern forms often miss.
+          No entry found in {lang === 'grc' ? 'Liddell-Scott-Jones' : 'Lewis & Short'}. Abbreviations, names, and heavily contracted forms often miss.
         </div>
       )}
 
@@ -293,7 +293,7 @@ export default function LexiconTapLayer({ targetSelector, enabled, lang = 'la' }
               </button>
             ) : <span />}
             <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wide" style={{ color: 'var(--text-muted, #9ca3af)' }}>
-              <BookOpen className="w-3 h-3" /> Lewis &amp; Short
+              <BookOpen className="w-3 h-3" /> {lang === 'grc' ? 'Liddell-Scott-Jones' : 'Lewis & Short'}
             </span>
           </div>
           {alternates.length > 0 && (

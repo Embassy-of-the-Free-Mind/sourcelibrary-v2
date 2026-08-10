@@ -20,7 +20,9 @@ const GRAVE_TO_ACUTE: Record<string, string> = { 'ὰ': 'ά', 'ὲ': 'έ', 'ὴ'
 export function normGreekKey(raw: string): string {
   let s = raw.normalize('NFD').replace(/[̄̆]/g, '').normalize('NFC').toLowerCase();
   s = [...s].map((ch) => GRAVE_TO_ACUTE[ch] ?? ch).join('');
-  return s.replace(/[^\p{L}\p{N}]/gu, '');
+  // Fold final sigma into medial: positional variants of one letter, and the
+  // betacode round-trip can emit either in either position.
+  return s.replace(/ς/g, 'σ').replace(/[^\p{L}\p{N}]/gu, '');
 }
 
 interface GrcEntryDoc {
@@ -76,14 +78,14 @@ export async function lookupGreekWord(db: Db, rawWord: string): Promise<GrcLooku
   if (normalized.length < 1) return miss;
   const entries = db.collection<GrcEntryDoc>('lexicon_entries_grc');
 
-  const exact = await entries.find({ key_normalized: normalized }).limit(8).toArray();
+  // Both tiers fire concurrently; exact wins if it hits (one Atlas RTT, not two).
+  const [exact, mapped] = await Promise.all([
+    entries.find({ key_normalized: normalized }).limit(8).toArray(),
+    db.collection<{ form: string; keys: string[] }>('lexicon_lemma_map_grc').findOne({ form: normalized }),
+  ]);
   if (exact.length) {
     return { query, normalized, found: true, matches: rank(exact).slice(0, MAX_MATCHES).map((d) => toMatch(d, 'exact')) };
   }
-
-  const mapped = await db
-    .collection<{ form: string; keys: string[] }>('lexicon_lemma_map_grc')
-    .findOne({ form: normalized });
   if (mapped?.keys?.length) {
     const docs = await entries.find({ key: { $in: mapped.keys.slice(0, 8) } }).toArray();
     if (docs.length) {

@@ -33,6 +33,7 @@ import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPrefere
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import LexiconTapLayer from '@/components/reader/LexiconTapLayer';
+import AlpheiosLoader from '@/components/reader/AlpheiosLoader';
 import AiBadge from '@/components/ui/AiBadge';
 import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
 import { usePairedEdition } from '@/hooks/usePairedEdition';
@@ -1195,9 +1196,12 @@ export default function TranslationEditor({
             language of the EDITION whose text fills that pane (book.language
             is the edition language — the OCR pane always shows edition text),
             not on the work's source language. Latin only for now (#3823). */}
+        {/* PROTOTYPE comparison (#3823): Alpheios embedded vs our popover.
+            Alpheios is on; our LexiconTapLayer is off while we evaluate. */}
+        <AlpheiosLoader enabled={(book.language === 'Latin' || book.language === 'Greek') && !paired} />
         <LexiconTapLayer
           targetSelector='[data-reader-section="ocr"] [data-reader-panel]'
-          enabled={(book.language === 'Latin' || book.language === 'Greek') && !paired}
+          enabled={false}
           lang={book.language === 'Greek' ? 'grc' : 'la'}
         />
         {/* Header - Two rows on mobile, one row on desktop */}
@@ -1811,7 +1815,9 @@ export default function TranslationEditor({
                         )}
                       </>
                     ) : ocrText ? (
-                      <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
+                      // lang: Alpheios activates on its ISO 639-2 codes (lat/grc)
+                      // for the two languages it serves; the rest keep 639-1.
+                      <div className={`prose-manuscript leading-relaxed ${book.language === 'Latin' || book.language === 'Greek' ? 'alpheios-enabled' : ''}`} style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'lat' : book.language === 'Greek' ? 'grc' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} pageType={page.page_type} />
                       </div>
                     ) : (
