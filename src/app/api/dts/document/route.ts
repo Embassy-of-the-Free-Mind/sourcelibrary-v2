@@ -14,6 +14,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';import { getTenantContextFromRequest } from '@/lib/tenant-context';import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { dtsPageText } from '@/lib/dts-text';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -170,9 +171,7 @@ export async function GET(request: NextRequest) {
 
     if (mediaType === 'text/html') {
       const htmlParts = pages.map((p) => {
-        const text = edition === 'translation'
-          ? (p.translation?.data || '')
-          : (p.ocr?.data || '');
+        const text = dtsPageText(edition === 'translation' ? p.translation?.data : p.ocr?.data);
         const pageNum = p.page_number;
         return `<div class="dts-page" data-ref="${pageNum}" id="p${pageNum}">\n`
           + `<h3>Page ${pageNum}</h3>\n`
@@ -194,9 +193,7 @@ export async function GET(request: NextRequest) {
 
     // Default: text/plain
     const textParts = pages.map((p) => {
-      const text = edition === 'translation'
-        ? (p.translation?.data || '')
-        : (p.ocr?.data || '');
+      const text = dtsPageText(edition === 'translation' ? p.translation?.data : p.ocr?.data);
       return `--- Page ${p.page_number} ---\n${text}`;
     });
 
