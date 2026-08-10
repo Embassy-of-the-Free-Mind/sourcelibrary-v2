@@ -36,6 +36,10 @@ const flag = (name, dflt) => {
 };
 const MIN_COUNT = flag('min-count', 2);
 const LIMIT = flag('limit', Infinity);
+// Sharding: run N of these in parallel (emulated amd64 is slow per-process);
+// shard i takes lines where index % count === i and writes OUT.<i>.
+const SHARD_INDEX = flag('shard-index', -1);
+const SHARD_COUNT = flag('shard-count', 1);
 
 const LETTER = {
   α: 'a', β: 'b', γ: 'g', δ: 'd', ε: 'e', ζ: 'z', η: 'h', θ: 'q', ι: 'i',
@@ -78,16 +82,19 @@ export function fromBetacode(beta) {
 async function main() {
   const forms = [];
   const rl = readline.createInterface({ input: fs.createReadStream(IN) });
+  let lineNo = 0;
   for await (const line of rl) {
     const [form, countStr] = line.split('\t');
     if (Number(countStr) < MIN_COUNT) break; // file is frequency-sorted
-    forms.push(form);
+    if (SHARD_INDEX < 0 || lineNo % SHARD_COUNT === SHARD_INDEX) forms.push(form);
+    lineNo++;
     if (forms.length >= LIMIT) break;
   }
-  console.log(`${forms.length} forms to crunch (min-count ${MIN_COUNT})`);
+  const suffix = SHARD_INDEX >= 0 ? `.${SHARD_INDEX}` : '';
+  console.log(`${forms.length} forms to crunch (min-count ${MIN_COUNT}, shard ${SHARD_INDEX}/${SHARD_COUNT})`);
 
-  const out = fs.createWriteStream(OUT);
-  const skipped = fs.createWriteStream(SKIPPED);
+  const out = fs.createWriteStream(OUT + suffix);
+  const skipped = fs.createWriteStream(SKIPPED + suffix);
   const child = spawn('docker', [
     'run', '-i', '--rm', '--platform', 'linux/amd64',
     '-e', 'MORPHLIB=stemlib', 'perseidsproject/morpheus', 'bin/cruncher', '-S', '-n',
@@ -153,7 +160,7 @@ async function main() {
   await done;
   out.end();
   skipped.end();
-  console.log(`DONE: sent=${sent} withLemmas=${found} skipped=${skippedCount} → ${OUT}`);
+  console.log(`DONE: sent=${sent} withLemmas=${found} skipped=${skippedCount} → ${OUT}${suffix}`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

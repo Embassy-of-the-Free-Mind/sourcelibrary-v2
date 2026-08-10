@@ -1197,7 +1197,8 @@ export default function TranslationEditor({
             not on the work's source language. Latin only for now (#3823). */}
         <LexiconTapLayer
           targetSelector='[data-reader-section="ocr"] [data-reader-panel]'
-          enabled={book.language === 'Latin' && !paired}
+          enabled={(book.language === 'Latin' || book.language === 'Greek') && !paired}
+          lang={book.language === 'Greek' ? 'grc' : 'la'}
         />
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>

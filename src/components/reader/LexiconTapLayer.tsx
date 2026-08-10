@@ -138,7 +138,7 @@ function morphologyLine(m: LexiconMatch): string {
   return bits.join(' · ');
 }
 
-export default function LexiconTapLayer({ targetSelector, enabled }: { targetSelector: string; enabled: boolean }) {
+export default function LexiconTapLayer({ targetSelector, enabled, lang = 'la' }: { targetSelector: string; enabled: boolean; lang?: 'la' | 'grc' }) {
   const [popover, setPopover] = useState<PopoverState | null>(null);
   const [expanded, setExpanded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -172,19 +172,19 @@ export default function LexiconTapLayer({ targetSelector, enabled }: { targetSel
       setExpanded(false);
       setPopover({ word, x: e.clientX, y: e.clientY, status: 'loading', result: null });
 
-      const cached = cache.get(word.toLowerCase());
+      const cached = cache.get(`${lang}:${word.toLowerCase()}`);
       if (cached) {
         setPopover({ word, x: e.clientX, y: e.clientY, status: 'done', result: cached });
         return;
       }
-      fetch(`/api/lexicon/lookup?word=${encodeURIComponent(word)}&lang=la`)
+      fetch(`/api/lexicon/lookup?word=${encodeURIComponent(word)}&lang=${lang}`)
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${r.status}`))))
         .then((result: LookupResult) => {
           if (cache.size >= CACHE_CAP) {
             const first = cache.keys().next().value;
             if (first !== undefined) cache.delete(first);
           }
-          cache.set(word.toLowerCase(), result);
+          cache.set(`${lang}:${word.toLowerCase()}`, result);
           if (requestSeq.current === seq) {
             setPopover((p) => (p && p.word === word ? { ...p, status: 'done', result } : p));
           }
