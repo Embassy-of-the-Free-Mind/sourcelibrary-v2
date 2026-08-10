@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
@@ -70,7 +70,7 @@ function defaultWinner(a: WorkSide, b: WorkSide): string {
  * Lists queue rows with live book context; `verdict` filters on the optional
  * `llm` screening stamp (same|different|unsure|none).
  */
-export const GET = withAdminAuth(async (request) => {
+export const GET = withInnerCircleAuth(async (request) => {
   const url = new URL(request.url);
   const status = url.searchParams.get('status') || 'pending';
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '50', 10) || 50, 200);
@@ -142,7 +142,7 @@ export const GET = withAdminAuth(async (request) => {
  * admin. This is deliberate actuation-at-the-point-of-review (the #3726
  * Tier 3 shape): no second job reads these rows later.
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withInnerCircleAuth(async (request, session) => {
   const body = await request.json();
   const { id, action, winner: winnerParam, note } = body as { id?: string; action?: string; winner?: string; note?: string };
   if (!id || (action !== 'approve' && action !== 'reject')) {
