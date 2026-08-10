@@ -104,6 +104,45 @@ async function main() {
     console.log(`${provider}: ${stats[provider].scoped} scoped, ${stats[provider].written} ${DRY_RUN ? 'would write' : 'written'}, ${stats[provider].unparsed} unparsed`);
   }
 
+  // Second lane: some importer generations wrote the museum's own id into
+  // image_source.identifier with no URL anywhere (Met Egyptian-art batch:
+  // numeric objectID; Rijksmuseum KOG batch: object number). Both id shapes
+  // spot-verified against the live APIs 2026-08-10 (#3838).
+  for (const [provider, idRe] of [
+    ['met', /^\d{4,}$/],
+    ['rijksmuseum', RIJKS_OBJNUM],
+  ]) {
+    const query = {
+      resource_type: { $exists: true },
+      [`source_ids.${provider}`]: { $exists: false },
+      'image_source.provider': provider,
+      'image_source.identifier': { $exists: true, $nin: [null, ''] },
+    };
+    const docs = await books.find(query, {
+      projection: { _id: 1, id: 1, slug: 1, 'image_source.identifier': 1 },
+    }).limit(LIMIT || 0).toArray();
+    const key = `${provider}-identifier`;
+    stats[key] = { scoped: docs.length, written: 0, unparsed: 0 };
+
+    const ops = [];
+    for (const doc of docs) {
+      const ident = (doc.image_source?.identifier || '').trim();
+      if (!idRe.test(ident)) {
+        stats[key].unparsed++;
+        unparsed.push({ provider: key, id: doc.id || String(doc._id), slug: doc.slug, invalid: ident });
+        continue;
+      }
+      ops.push({ updateOne: { filter: { _id: doc._id }, update: { $set: { [`source_ids.${provider}`]: ident } } } });
+    }
+    if (ops.length && !DRY_RUN) {
+      const r = await books.bulkWrite(ops, { ordered: false });
+      stats[key].written = r.modifiedCount;
+    } else {
+      stats[key].written = ops.length;
+    }
+    console.log(`${key}: ${stats[key].scoped} scoped, ${stats[key].written} ${DRY_RUN ? 'would write' : 'written'}, ${stats[key].unparsed} unparsed`);
+  }
+
   if (unparsed.length) {
     console.log(`\n${unparsed.length} unparsed URL(s):`);
     for (const u of unparsed.slice(0, 15)) console.log(`  [${u.provider}] ${u.slug} — ${u.url}${u.invalid ? ` (extracted "${u.invalid}" failed validation)` : ''}`);

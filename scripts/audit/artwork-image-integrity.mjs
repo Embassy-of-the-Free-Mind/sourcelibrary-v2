@@ -37,8 +37,12 @@
  *     R2 thumb (scripts/lib/dhash.mjs); Hamming distance >= HASH_DIFF (16,
  *     see scripts/lib/page-alignment.mjs) is a confirmed mismatch, <= 12 is
  *     a match, the small band between is "ambiguous" (kept, not auto-fixed).
- *   - rijksmuseum / nga / wellcome: NOT integrated (see
- *     scripts/lib/artwork-sources.mjs header) — reported as `unverifiable`.
+ *   - rijksmuseum: dHash via the keyless Linked Art chain (4 requests/doc,
+ *     so sampled — --rijks-sample, default 100, 0 to skip).
+ *   - nga: dHash via opendata IIIF, exhaustive, only when
+ *     --nga-images-csv=<path to published_images.csv> is provided
+ *     (no live API); otherwise `unverifiable`.
+ *   - wellcome: NOT integrated — reported as `unverifiable`.
  *   - no recognizable source at all: reported as `no-source`.
  *
  * SCOPE (per #3815 instructions — full sweep of ~24.8K docs is too slow)
@@ -62,7 +66,10 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import { computeDHash } from '../lib/dhash.mjs';
 import { hammingHex, HASH_MATCH, HASH_DIFF } from '../lib/page-alignment.mjs';
-import { detectProvider, fetchSourceFor, fetchImageBuffer } from '../lib/artwork-sources.mjs';
+import { detectProvider, fetchSourceFor, fetchImageBuffer, loadNgaImagesCsvSync } from '../lib/artwork-sources.mjs';
+
+let NGA_IMAGES = null; // assigned in main() when --nga-images-csv is given
+
 
 const args = process.argv.slice(2);
 const argVal = (name, def) => {
@@ -70,6 +77,8 @@ const argVal = (name, def) => {
   return i >= 0 ? args[i + 1] : def;
 };
 const SAMPLE = parseInt(argVal('--sample', '300'), 10);
+const RIJKS_SAMPLE = parseInt(argVal('--rijks-sample', '100'), 10); // 4 requests/doc — sample, don't sweep
+const NGA_IMAGES_CSV = argVal('--nga-images-csv', null);
 const COMMONS_CAP = parseInt(argVal('--commons-cap', '0'), 10) || Infinity; // 0 = no cap
 const JSON_OUT = argVal('--json', null);
 const CONCURRENCY = parseInt(argVal('--concurrency', '4'), 10);
@@ -86,7 +95,7 @@ const books = db.collection('books');
 const PROJECTION = {
   _id: 1, id: 1, slug: 1, title: 1, author: 1, resource_type: 1,
   source_url: 1, commons_url: 1, commons_title: 1, source_ids: 1,
-  dedup_date: 1, dedup_reason: 1, visible: 1, hidden: 1,
+  dedup_date: 1, dedup_reason: 1, visible: 1, hidden: 1, source_unrecoverable: 1,
   thumbnail: 1, thumbnail_blob: 1, archived_full_url: 1, image_thumb: 1,
   image_width: 1, image_height: 1,
 };
@@ -102,12 +111,20 @@ async function checkOne(doc) {
   const provider = detectProvider(doc);
   const base = { id: doc.id || String(doc._id), slug: doc.slug, title: doc.title, provider };
 
-  if (!provider) return { ...base, status: 'no-source' };
-  if (provider === 'rijksmuseum' || provider === 'nga' || provider === 'wellcome') {
-    return { ...base, status: 'unverifiable', detail: `${provider} not integrated` };
+  if (!provider) {
+    // source_unrecoverable is the deliberate "we checked, there is no
+    // machine-verifiable pointer" marker (#3838 item 4) — distinct from an
+    // unexpected coverage gap.
+    return { ...base, status: doc.source_unrecoverable ? 'unrecoverable-marked' : 'no-source' };
+  }
+  if (provider === 'wellcome') {
+    return { ...base, status: 'unverifiable', detail: 'wellcome not integrated' };
+  }
+  if (provider === 'nga' && !NGA_IMAGES) {
+    return { ...base, status: 'unverifiable', detail: 'nga needs --nga-images-csv (opendata published_images.csv)' };
   }
 
-  const src = await fetchSourceFor(provider, doc);
+  const src = await fetchSourceFor(provider, doc, { ngaImages: NGA_IMAGES });
   if (!src.ok) return { ...base, status: 'source-error', detail: src.error };
 
   if (provider === 'cleveland') {
@@ -181,6 +198,11 @@ function shuffle(arr) {
 async function main() {
   console.log('=== Artwork image integrity sweep (#3815) ===\n');
 
+  if (NGA_IMAGES_CSV) {
+    NGA_IMAGES = loadNgaImagesCsvSync(NGA_IMAGES_CSV, fs);
+    console.log(`NGA published_images loaded: ${NGA_IMAGES.size} objects\n`);
+  }
+
   const allResults = [];
 
   // ── Cleveland: exhaustive, cheap ──────────────────────────────────────
@@ -206,6 +228,28 @@ async function main() {
   ).toArray();
   console.log(`\nAIC: ${aicDocs.length} docs (exhaustive, dHash)`);
   allResults.push(...await runBatch(aicDocs, 'aic'));
+
+  // ── Rijksmuseum: random sample (Linked Art chain = 4 requests/doc) ─────
+  if (RIJKS_SAMPLE > 0) {
+    const rijksIds = await books.find(
+      { resource_type: { $exists: true }, 'source_ids.rijksmuseum': { $exists: true } },
+      { projection: { _id: 1 } }
+    ).toArray();
+    const rijksSampleIds = shuffle(rijksIds).slice(0, RIJKS_SAMPLE).map(d => d._id);
+    const rijksDocs = await books.find({ _id: { $in: rijksSampleIds } }, { projection: PROJECTION }).toArray();
+    console.log(`\nRijksmuseum (random sample of ${rijksIds.length} with source_ids): ${rijksDocs.length} docs, dHash`);
+    allResults.push(...await runBatch(rijksDocs, 'rijksmuseum'));
+  }
+
+  // ── NGA: exhaustive when the opendata images CSV is provided ───────────
+  if (NGA_IMAGES) {
+    const ngaDocs = await books.find(
+      { resource_type: { $exists: true }, 'source_ids.nga': { $exists: true } },
+      { projection: PROJECTION }
+    ).toArray();
+    console.log(`\nNGA: ${ngaDocs.length} docs (exhaustive, dHash via opendata IIIF)`);
+    allResults.push(...await runBatch(ngaDocs, 'nga'));
+  }
 
   // ── Commons: dedup-touched exhaustive + random sample of the rest ─────
   const commonsQuery = { resource_type: { $exists: true }, commons_url: /commons\.wikimedia\.org/i };
