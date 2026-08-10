@@ -3,8 +3,10 @@
  *
  * Wraps steganographia.ts for use at API export boundaries.
  * Applies ZWC imprimatur marks to text leaving the system
- * (downloads, quotes, dataset API). Degrades gracefully if
- * PROVENANCE_SECRET_KEY is not set.
+ * (downloads, quotes, /text bulk egress, and — via markPageForReader —
+ * the reader page routes). Degrades gracefully if PROVENANCE_SECRET_KEY
+ * is not set. (The dataset API does NOT currently mark; an earlier
+ * version of this comment claimed it did.)
  *
  * The mark carries a *readable colophon* — a message in a bottle for
  * whoever (human or machine) decodes the zero-width run — alongside the
@@ -104,6 +106,42 @@ export function markForExport(text: string, bookId: string, opts?: { ref?: strin
     // Never let provenance marking break exports
     return text;
   }
+}
+
+/**
+ * Mark a page document's TRANSLATION for the reader path.
+ *
+ * The reader (server-rendered page HTML plus the /api/pages routes feeding
+ * page turns) is the main extraction surface now that the bulk fleets are
+ * blocked — and it served translation text with no mark at all. This weaves
+ * the standard imprimatur (light id-only mark on every page, readable
+ * colophon on ~1-in-COLOPHON_RATE) into `translation.data` on the way out.
+ *
+ * Three properties this depends on — keep them true:
+ * - DETERMINISTIC: content-keyed, never a per-request ref, so every viewer
+ *   gets identical bytes and the reader's 24h ISR/CDN caching is unaffected.
+ *   Do not thread `opts.ref` through here; a request-dependent mark on a
+ *   shared-cached body would cross-serve one caller's ref to everyone.
+ * - TRANSLATION ONLY: never the OCR. The OCR is a transcription of the
+ *   original; bidi/zero-width characters can be genuine content there, and
+ *   scholars diff it against the scans.
+ * - NON-MUTATING: returns a copy; callers may need the unmarked document too
+ *   (e.g. the JSON-LD excerpt stays clean for search snippets).
+ *
+ * The editor round-trip is closed at the write boundary: PATCH /api/pages
+ * strips zero-width marks from incoming translation text before storing, so
+ * a save of reader-served text cannot persist marks into the corpus (the
+ * "NEVER apply to text being stored" rule above, enforced rather than hoped).
+ */
+export function markPageForReader<
+  T extends { book_id?: unknown; translation?: { data?: unknown } | null }
+>(page: T, bookId?: string): T {
+  const id = bookId || (typeof page?.book_id === 'string' ? page.book_id : undefined);
+  const data = page?.translation?.data;
+  if (!id || typeof data !== 'string' || !data) return page;
+  const marked = markForExport(data, id);
+  if (marked === data) return page;
+  return { ...page, translation: { ...page.translation, data: marked } };
 }
 
 /**

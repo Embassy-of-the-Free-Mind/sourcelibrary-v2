@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPageAtVersion, getPagesAtVersion } from '@/lib/edition-reader';
+import { markForExport } from '@/lib/provenance';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -40,7 +41,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
       return NextResponse.json({
         page_id: allPageIds[0],
-        translation: result.translation,
+        // Reader-path provenance mark (invisible, deterministic) — this route
+        // feeds the version-pinned reader the same way /api/pages does.
+        translation: typeof result.translation === 'string'
+          ? markForExport(result.translation, bookId)
+          : result.translation,
         is_current_version: result.isCurrentVersion,
         edition: result.edition,
       });
@@ -54,7 +59,9 @@ export async function GET(request: NextRequest, context: RouteContext) {
         const r = results.get(id)!;
         return {
           page_id: id,
-          translation: r.translation,
+          translation: typeof r.translation === 'string'
+            ? markForExport(r.translation, bookId)
+            : r.translation,
           is_current_version: r.isCurrentVersion,
         };
       });
