@@ -89,17 +89,23 @@ async function main() {
 
   // 2. Lemma map: Morpheus lemma (unicode, maybe trailing homograph digit)
   //    → LSJ keys via the shared normalizer.
+  // Dedupe fully in memory (forms collide after normalization — merge key
+  // sets), then plain insertMany. Never upsert into an unindexed collection:
+  // each upsert filter collection-scans the growing table and the load goes
+  // quadratic (~21 docs/s observed the first time).
   const newMap = db.collection('lexicon_lemma_map_grc_new');
   await newMap.drop().catch(() => {});
   const rl = readline.createInterface({ input: fs.createReadStream(LEMMA_JSONL) });
-  let mapDocs = [];
+  const byForm = new Map();
   let mapped = 0, unjoined = 0, total = 0;
   const unjoinedSample = [];
   for await (const line of rl) {
     if (!line.trim()) continue;
     total++;
     const { form, lemmas } = JSON.parse(line);
-    const keys = new Set();
+    const normForm = normGreekKey(form);
+    if (!normForm) continue;
+    const keys = byForm.get(normForm) ?? new Set();
     for (const lemma of lemmas) {
       const bare = lemma.replace(/[0-9]+$/, '');
       for (const k of keyByNorm.get(normGreekKey(bare)) ?? []) {
@@ -112,15 +118,14 @@ async function main() {
       continue;
     }
     mapped++;
-    mapDocs.push({ form: normGreekKey(form), keys: [...keys] });
-    if (mapDocs.length >= 20000) {
-      // forms can collide after normalization; last write wins is fine here
-      await newMap.bulkWrite(mapDocs.map((d) => ({ updateOne: { filter: { form: d.form }, update: { $set: d }, upsert: true } })), { ordered: false });
-      mapDocs = [];
-      if (mapped % 200000 < 20000) console.log(`lemma map ${mapped} mapped / ${unjoined} unjoined`);
-    }
+    byForm.set(normForm, keys);
   }
-  if (mapDocs.length) await newMap.bulkWrite(mapDocs.map((d) => ({ updateOne: { filter: { form: d.form }, update: { $set: d }, upsert: true } })), { ordered: false });
+  const allDocs = [...byForm.entries()].map(([form, keys]) => ({ form, keys: [...keys] }));
+  console.log(`lemma map: ${allDocs.length} distinct normalized forms (${mapped} joined / ${unjoined} unjoined of ${total})`);
+  for (let i = 0; i < allDocs.length; i += 20000) {
+    await newMap.insertMany(allDocs.slice(i, i + 20000), { ordered: false });
+    if (i % 100000 < 20000) console.log(`  inserted ${Math.min(i + 20000, allDocs.length)}/${allDocs.length}`);
+  }
   await newMap.createIndex({ form: 1 }, { unique: true });
   await newMap.rename('lexicon_lemma_map_grc', { dropTarget: true });
 
