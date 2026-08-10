@@ -27,12 +27,20 @@ export const GET = withInnerCircleAuth(async (request) => {
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '30', 10) || 30, 100);
   const skip = Math.max(parseInt(url.searchParams.get('skip') || '0', 10) || 0, 0);
 
+  const bphOnly = url.searchParams.get('bph') === '1';
+
   const db = await getDb();
   const queue = db.collection('edition_keeper_queue');
 
   const filter: Record<string, unknown> = { status };
   if (bucket === 'human') filter.bucket = { $in: HUMAN_BUCKETS };
   else if (bucket !== 'all') filter.bucket = bucket;
+  if (bphOnly) {
+    const bphIds = await db.collection('books').distinct('id', {
+      $or: [{ held_by: 'bph' }, { 'image_source.provider': 'bph' }],
+    });
+    filter['members.id'] = { $in: bphIds };
+  }
 
   const [rows, total, statusCounts, bucketCounts] = await Promise.all([
     queue.find(filter).sort({ ft_flag: -1, _id: 1 }).skip(skip).limit(limit).toArray(),
@@ -51,7 +59,7 @@ export const GET = withInnerCircleAuth(async (request) => {
         { projection: {
           _id: 0, id: 1, title: 1, author: 1, slug: 1, language: 1, year: 1, visible: 1,
           pages_count: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1,
-          'image_source.provider': 1,
+          'image_source.provider': 1, held_by: 1,
           image_thumb: 1, image_display: 1, thumbnail: 1, thumbnail_blob: 1,
         } }
       ).toArray()
@@ -84,6 +92,8 @@ export const GET = withInnerCircleAuth(async (request) => {
         ocr: (live?.pages_ocr as number) || 0,
         translated: (live?.pages_translated as number) || 0,
         ft: live?.is_first_translation === true,
+        bph: Array.isArray(live?.held_by) ? (live!.held_by as string[]).includes('bph')
+          : ((live?.image_source as Record<string, string>)?.provider) === 'bph',
         provider: ((live?.image_source as Record<string, string>)?.provider) || '',
         thumb: live ? getBookThumbnailUrl(live as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') : null,
       };

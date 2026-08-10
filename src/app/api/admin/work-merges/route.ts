@@ -23,10 +23,17 @@ interface WorkSide {
   workId: string;
   nBooks: number;
   nVisible: number;
+  bph: boolean;
   languages: string[];
   yearMin: number | null;
   yearMax: number | null;
   samples: { id: string; title: string; slug: string; visible: boolean; thumb: string | null }[];
+}
+
+function isBphBook(b: Record<string, unknown>): boolean {
+  const held = b.held_by;
+  if (Array.isArray(held) && held.includes('bph')) return true;
+  return ((b.image_source as Record<string, string>)?.provider) === 'bph';
 }
 
 function summarizeSide(workId: string, books: Record<string, unknown>[]): WorkSide {
@@ -50,6 +57,7 @@ function summarizeSide(workId: string, books: Record<string, unknown>[]): WorkSi
     workId,
     nBooks: books.length,
     nVisible: books.filter((b) => b.visible === true).length,
+    bph: books.some(isBphBook),
     languages: [...langs].sort(),
     yearMin: years.length ? Math.min(...years) : null,
     yearMax: years.length ? Math.max(...years) : null,
@@ -77,6 +85,7 @@ export const GET = withInnerCircleAuth(async (request) => {
   const skip = Math.max(parseInt(url.searchParams.get('skip') || '0', 10) || 0, 0);
   const verdict = url.searchParams.get('verdict');
   const author = url.searchParams.get('author');
+  const bphOnly = url.searchParams.get('bph') === '1';
 
   const db = await getDb();
   const queue = db.collection('work_merge_queue');
@@ -85,6 +94,17 @@ export const GET = withInnerCircleAuth(async (request) => {
   if (verdict === 'none') filter['llm'] = { $exists: false };
   else if (verdict) filter['llm.verdict'] = verdict;
   if (author) filter['evidence.author'] = { $regex: author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' };
+
+  // BPH lane (#3846 follow-up): pairs where either side holds a BPH/EFM book.
+  // held_by is the canonical holdings marker; provider catches early imports
+  // that predate held_by backfill.
+  const BPH_BOOK = { $or: [{ held_by: 'bph' }, { 'image_source.provider': 'bph' }] };
+  if (bphOnly) {
+    const bphWids = await db.collection('books').distinct('work_id', {
+      ...BPH_BOOK, work_id: { $exists: true, $nin: [null, ''] },
+    });
+    filter.$or = [{ a: { $in: bphWids } }, { b: { $in: bphWids } }];
+  }
 
   const [rows, total, statusCounts] = await Promise.all([
     queue.find(filter).sort({ 'evidence.author': 1, _id: 1 }).skip(skip).limit(limit).toArray(),
@@ -99,6 +119,7 @@ export const GET = withInnerCircleAuth(async (request) => {
         { projection: {
           _id: 0, id: 1, work_id: 1, title: 1, slug: 1, language: 1, year: 1, visible: 1,
           pages_count: 1, image_thumb: 1, image_display: 1, thumbnail: 1, thumbnail_blob: 1,
+          held_by: 1, 'image_source.provider': 1,
         } }
       ).toArray()
     : [];
