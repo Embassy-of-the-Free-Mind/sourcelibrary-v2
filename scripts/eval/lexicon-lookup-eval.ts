@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { lookupLatinWord } from '../../src/lib/lexicon/lookup';
+import { lookupGreekWord, normGreekKey } from '../../src/lib/lexicon/lookup-grc';
 import { cleanOcrToken, normalizeLatin } from '../../src/lib/lexicon/normalize';
 
 const args = process.argv.slice(2);
@@ -26,6 +27,8 @@ function flag(name: string, dflt: number): number {
 }
 const N_BOOKS = flag('books', 25);
 const N_WORDS = flag('words', 500);
+const LANG = args.includes('--lang') ? args[args.indexOf('--lang') + 1] : 'la';
+const GREEK_TOKEN = /[Ͱ-Ͽἀ-῿]{2,}/u;
 
 const ROMAN_NUMERAL = /^[ivxlcdm]+$/;
 
@@ -45,7 +48,7 @@ async function main() {
         $match: {
           visible: true,
           pages_ocr: { $gt: 20 },
-          language: { $in: ['la', 'lat', 'Latin', 'latin'] },
+          language: LANG === 'grc' ? 'Greek' : { $in: ['la', 'lat', 'Latin', 'latin'] },
         },
       },
       { $sample: { size: N_BOOKS } },
@@ -83,8 +86,12 @@ async function main() {
         .replace(/<[^<>]{1,60}>/g, ' ')
         // rejoin line-break hyphenation: "ha-\nbentur" → habentur
         .replace(/[-­]\s*\n\s*/g, '');
-      for (const tok of text.split(/[\s.·:]+/)) {
+      for (const tok of text.split(/[\s.·:,;]+/)) {
         const w = cleanOcrToken(tok);
+        if (LANG === 'grc') {
+          if (GREEK_TOKEN.test(w) && normGreekKey(w).length >= 3) words.push(w);
+          continue;
+        }
         const norm = normalizeLatin(w);
         if (norm.length >= 3 && !ROMAN_NUMERAL.test(norm) && !/[\d<>="/]/.test(w)) {
           words.push(w);
@@ -111,7 +118,7 @@ async function main() {
   const hits: Array<{ word: string; headword: string; tier: string; title: string }> = [];
   let done = 0;
   for (const s of finalSamples) {
-    const res = await lookupLatinWord(db, s.word);
+    const res = LANG === 'grc' ? await lookupGreekWord(db, s.word) : await lookupLatinWord(db, s.word);
     if (res.found) {
       const m = res.matches[0];
       tierCounts[m.matchType] = (tierCounts[m.matchType] || 0) + 1;
@@ -129,6 +136,7 @@ async function main() {
   const scorecard = {
     date: new Date().toISOString().slice(0, 10),
     issue: 3823,
+    lang: LANG,
     sample: { books: books.length, words: n, selection: 'interior pages (15–85%), tokens ≥3 letters, non-numeric' },
     hitRate: +(found / n).toFixed(3),
     confidentHitRate: +(confident / n).toFixed(3),
@@ -136,7 +144,7 @@ async function main() {
     spotCheckHits: hits.sort(() => Math.random() - 0.5).slice(0, 40),
     misses,
   };
-  const outPath = path.join('scripts/eval/results', `lexicon-lookup-eval-${scorecard.date}.json`);
+  const outPath = path.join('scripts/eval/results', `lexicon-lookup-eval-${LANG}-${scorecard.date}.json`);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(scorecard, null, 2));
   console.log(`\nHit rate: ${(scorecard.hitRate * 100).toFixed(1)}% (confident tiers: ${(scorecard.confidentHitRate * 100).toFixed(1)}%)`);

@@ -80,13 +80,27 @@ export function fromBetacode(beta) {
 }
 
 async function main() {
+  // Resume: forms already present in any prior output are skipped.
+  const doneForms = new Set();
+  const resumeIdx = args.indexOf('--resume');
+  if (resumeIdx >= 0) {
+    const resumeFile = args[resumeIdx + 1];
+    if (fs.existsSync(resumeFile)) {
+      const rrl = readline.createInterface({ input: fs.createReadStream(resumeFile) });
+      for await (const line of rrl) {
+        try { doneForms.add(JSON.parse(line).form); } catch { /* partial line */ }
+      }
+      console.log(`resume: ${doneForms.size} forms already crunched`);
+    }
+  }
+
   const forms = [];
   const rl = readline.createInterface({ input: fs.createReadStream(IN) });
   let lineNo = 0;
   for await (const line of rl) {
     const [form, countStr] = line.split('\t');
     if (Number(countStr) < MIN_COUNT) break; // file is frequency-sorted
-    if (SHARD_INDEX < 0 || lineNo % SHARD_COUNT === SHARD_INDEX) forms.push(form);
+    if ((SHARD_INDEX < 0 || lineNo % SHARD_COUNT === SHARD_INDEX) && !doneForms.has(form)) forms.push(form);
     lineNo++;
     if (forms.length >= LIMIT) break;
   }
