@@ -123,6 +123,7 @@ it makes needs a person. Related: `.claude/docs/invariants/first-translation-cla
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
 - OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
+- **Grounded search: flash-lite does NOT ground** (0/189 measured 2026-08-10 — empty `groundingMetadata` while the prose claims "extensive searches"). Use `gemini-3-flash-preview` with an explicit positive `thinkingBudget` (512 → 6/6 grounded, ~$0.003/book; unbounded ≈ $0.19/book; `-1` silently suppresses grounding). Verify groundedness from `queries[]` on written rows, never from response prose.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## Conditional invariants — read the one matching what you're touching
