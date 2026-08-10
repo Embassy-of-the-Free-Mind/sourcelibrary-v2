@@ -376,7 +376,7 @@ const TOOLS: Tool[] = [
     name: "get_quote",
     title: "Get Quote",
     description:
-      "Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response, do not paraphrase or reconstruct from memory. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote and its page number. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]",
+      "Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response, do not paraphrase or reconstruct from memory. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote and its page number. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.",
     annotations: { title: "Get Quote", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,

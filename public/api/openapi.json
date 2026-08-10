@@ -449,6 +449,10 @@
                 "type": "string",
                 "description": "Original language text (Latin, German, etc.)"
               },
+              "romanized": {
+                "type": "string",
+                "description": "Romanization of the original, for non-Latin scripts (Greek, Hebrew, Arabic, Cyrillic, Sanskrit…). AI-generated reading apparatus, not a transcription — quote the source from original or translation. Present only where the page carries a romanization current with its OCR; omitted when include_original=false."
+              },
               "page": {
                 "type": "integer"
               },

@@ -402,6 +402,24 @@ const QUOTE_TIP =
   '> [exact translation text, verbatim]\n' +
   '> — [Author], p. [N]. [citation_link]';
 
+// Three-layer apparatus for non-Latin scripts (#3828). Only emitted when a
+// page actually carries a romanization, so a caller quoting a Latin book is
+// never told about a field that isn't there.
+const ROMANIZED_TIP =
+  'This page is in a non-Latin script and carries all three layers. Render as:\n' +
+  '> [original, verbatim]\n' +
+  '> [romanized]\n' +
+  '> [translation, verbatim]\n' +
+  '> — [Author], p. [N]. [citation_link]\n' +
+  'The `romanized` field is AI-generated reading apparatus, not a transcription — ' +
+  'never present it as the text printed on the page, and quote from `original` or ' +
+  '`translation` when quoting the source itself.';
+
+function hasRomanized(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return typeof quote?.romanized === 'string' && quote.romanized.length > 0;
+}
+
 async function getQuote(args: Record<string, unknown>) {
   const params = new URLSearchParams({ page: String(args.page) });
   // The quote API has always accepted this; the MCP tool never passed it, so
@@ -430,6 +448,7 @@ async function getQuote(args: Record<string, unknown>) {
   // get_book_text: one page is a citation, hundreds is a corpus pull.
   if (quote && typeof quote.translation === 'string') quote.translation = stripProvenanceMarks(quote.translation);
   if (quote && typeof quote.original === 'string') quote.original = stripProvenanceMarks(quote.original);
+  if (quote && typeof quote.romanized === 'string') quote.romanized = stripProvenanceMarks(quote.romanized);
   const ctx = result.context as Record<string, unknown> | undefined;
   if (ctx) {
     for (const k of ['previous_page', 'next_page']) {
@@ -442,7 +461,7 @@ async function getQuote(args: Record<string, unknown>) {
     ...withCitationLink(result),
     continuity,
     ...(hint ? { continuity_hint: hint } : {}),
-    tip: QUOTE_TIP,
+    tip: hasRomanized(result) ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
   };
 }
 
@@ -479,6 +498,7 @@ async function getQuotes(args: Record<string, unknown>) {
         );
         if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
+        if (q && typeof q.romanized === 'string') q.romanized = stripProvenanceMarks(q.romanized);
         const hint = continuityHint(continuity, page);
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
@@ -489,11 +509,13 @@ async function getQuotes(args: Record<string, unknown>) {
     })
   );
 
+  const anyRomanized = settled.some((s) => hasRomanized(s as Record<string, unknown>));
+
   return {
     book_id: bookId,
     pages_requested: pageNums,
     quotes: settled,
-    tip: QUOTE_TIP,
+    tip: anyRomanized ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
   };
 }
 
@@ -731,7 +753,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right. For several pages of one book at once, use get_quotes.',
+    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nFor several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -759,7 +781,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
-    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote.',
+    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription).',
     annotations: { title: 'Get Quotes (batch)', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,

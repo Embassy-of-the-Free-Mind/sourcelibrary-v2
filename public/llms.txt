@@ -138,8 +138,14 @@ GET /books/{book_id}/quote?page={page_number}
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | page | number | Page number (required) |
-| include_original | boolean | Include original language text (default true) |
+| include_original | boolean | Include original language text — and, for non-Latin scripts, its romanization (default true) |
 | include_context | boolean | Include adjacent pages for context |
+
+For pages in a non-Latin script (Greek, Hebrew, Arabic, Cyrillic, Sanskrit…) the
+quote also carries `romanized`, so a citation can be shown in three layers:
+original → romanized → translation. The romanization is AI-generated reading
+apparatus, not a transcription — quote the source from `original` or
+`translation`, never from `romanized`.
 
 **Example:**
 ```

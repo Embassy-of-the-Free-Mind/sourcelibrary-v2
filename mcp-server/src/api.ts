@@ -483,6 +483,19 @@ const QUOTE_TIP =
   "> [exact translation text, verbatim]\n" +
   "> — [Author], p. [N]. [citation_link]";
 
+// Three-layer apparatus for non-Latin scripts (#3828). Appended only when the
+// page actually carries a romanization, so a Latin-script quote is never told
+// about a field that isn't there.
+const ROMANIZED_TIP =
+  "This page is in a non-Latin script and carries all three layers. Render as:\n" +
+  "> [original, verbatim]\n" +
+  "> [romanized]\n" +
+  "> [translation, verbatim]\n" +
+  "> — [Author], p. [N]. [citation_link]\n" +
+  "The `romanized` field is AI-generated reading apparatus, not a transcription — " +
+  "never present it as the text printed on the page, and quote from `original` or " +
+  "`translation` when quoting the source itself.";
+
 export async function getQuote(args: {
   book_id: string;
   page: number;
@@ -490,7 +503,13 @@ export async function getQuote(args: {
   const params = new URLSearchParams({ page: String(args.page) });
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
-  return { ...withCitationLink(result), tip: QUOTE_TIP };
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const romanized = typeof quote?.romanized === "string" && quote.romanized.length > 0;
+
+  return {
+    ...withCitationLink(result),
+    tip: romanized ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
+  };
 }
 
 type ImageSource = "gallery" | "artworks" | "all";
