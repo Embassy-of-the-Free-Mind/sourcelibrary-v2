@@ -225,7 +225,12 @@ async function main() {
         row.outcome = `resolved:${stored.verdict} (resolver=${stored.resolver})`; continue;
       }
       const attempts = await attemptsCol.find({ book_id: b.id }).sort({ date: -1 }).limit(20).toArray();
-      if (attempts.some((a) => a.prompt_version === SKEPTIC_PROMPT_VERSION)) {
+      // Model-aware: the instrument is (prompt_version, model), not the prompt
+      // alone. gemini-3.1-flash-lite answers this prompt WITHOUT grounding
+      // (empty groundingMetadata on all 189 rows of the 2026-08-10 batch), and
+      // a prompt-only skip would let those ungrounded rows permanently block a
+      // grounded re-run on a model that actually searches.
+      if (attempts.some((a) => a.prompt_version === SKEPTIC_PROMPT_VERSION && a.model === MODEL)) {
         row.outcome = 'already_searched_this_prompt_version'; continue;
       }
 
