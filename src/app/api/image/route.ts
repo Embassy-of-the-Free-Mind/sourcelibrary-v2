@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import sharp from 'sharp';
+import sharp, { type OverlayOptions } from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
@@ -291,7 +291,7 @@ export async function GET(request: NextRequest) {
     const imgH = resizedMeta.height || width;
 
     // Apply provenance marks
-    const composites: sharp.OverlayOptions[] = [];
+    const composites: OverlayOptions[] = [];
     const visibleMark = await getProvenanceMark();
 
     if (visibleMark && imgW > 100 && imgH > 100) {

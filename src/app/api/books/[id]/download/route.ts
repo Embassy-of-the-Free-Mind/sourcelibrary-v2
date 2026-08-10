@@ -9,7 +9,7 @@ import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
-import sharp from 'sharp';
+import sharp, { type CreateText, type TextAlign } from 'sharp';
 import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
@@ -1945,8 +1945,8 @@ async function renderCoverText(
   if (opts?.letterSpacing) attrs.push(`letter_spacing="${Math.round(opts.letterSpacing * 1024)}"`);
   const markup = `<span ${attrs.join(' ')}>${content}</span>`;
 
-  const textInput: sharp.CreateText = {
-    text: markup, width: maxWidth, align: 'centre' as sharp.TextAlign, rgba: true, dpi: 72,
+  const textInput: CreateText = {
+    text: markup, width: maxWidth, align: 'centre' as TextAlign, rgba: true, dpi: 72,
     font: fontfile ? `Cormorant Garamond ${fontSize}` : `serif ${fontSize}`,
     ...(fontfile ? { fontfile } : {}),
   };

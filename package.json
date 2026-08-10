@@ -50,7 +50,6 @@
     "@types/openseadragon": "^5.0.2",
     "@types/three": "^0.183.1",
     "@vercel/blob": "^2.0.0",
-    "@xenova/transformers": "^2.17.2",
     "@xyflow/react": "^12.10.1",
     "abcjs": "^6.6.4",
     "archiver": "^7.0.1",
@@ -67,7 +66,7 @@
     "mongodb": "^6.21.0",
     "next": "^16.2.12",
     "next-auth": "^5.0.0-beta.32",
-    "nodemailer": "^8.0.11",
+    "nodemailer": "^9.0.5",
     "openai": "^6.10.0",
     "openseadragon": "^6.0.2",
     "pdfkit": "^0.18.0",
@@ -82,7 +81,7 @@
     "remark-gfm": "^4.0.1",
     "replicate": "^1.4.0",
     "resend": "^6.9.2",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.3",
     "sonner": "^2.0.7",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.4.0",
@@ -124,6 +123,7 @@
     "tsx": "^4.21.0",
     "twitter-api-v2": "^1.28.0",
     "typescript": "^5",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.0",
+    "@xenova/transformers": "^2.17.2"
   }
 }
