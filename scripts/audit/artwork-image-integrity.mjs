@@ -95,7 +95,7 @@ const books = db.collection('books');
 const PROJECTION = {
   _id: 1, id: 1, slug: 1, title: 1, author: 1, resource_type: 1,
   source_url: 1, commons_url: 1, commons_title: 1, source_ids: 1,
-  dedup_date: 1, dedup_reason: 1, visible: 1, hidden: 1,
+  dedup_date: 1, dedup_reason: 1, visible: 1, hidden: 1, source_unrecoverable: 1,
   thumbnail: 1, thumbnail_blob: 1, archived_full_url: 1, image_thumb: 1,
   image_width: 1, image_height: 1,
 };
@@ -111,7 +111,12 @@ async function checkOne(doc) {
   const provider = detectProvider(doc);
   const base = { id: doc.id || String(doc._id), slug: doc.slug, title: doc.title, provider };
 
-  if (!provider) return { ...base, status: 'no-source' };
+  if (!provider) {
+    // source_unrecoverable is the deliberate "we checked, there is no
+    // machine-verifiable pointer" marker (#3838 item 4) — distinct from an
+    // unexpected coverage gap.
+    return { ...base, status: doc.source_unrecoverable ? 'unrecoverable-marked' : 'no-source' };
+  }
   if (provider === 'wellcome') {
     return { ...base, status: 'unverifiable', detail: 'wellcome not integrated' };
   }
