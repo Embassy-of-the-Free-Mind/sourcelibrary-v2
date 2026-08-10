@@ -6,6 +6,7 @@ import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
@@ -19,6 +20,13 @@ interface QuoteResponse {
   quote: {
     translation: string;
     original?: string;
+    /**
+     * Romanization of the original for non-Latin scripts (#3828) — AI-derived
+     * apparatus, never a transcription, hence `romanized` and not
+     * `original_romanized`. Served only when the page carries a
+     * transliteration that is still current against its OCR.
+     */
+    romanized?: string;
     page: number;
     book_id: string;
     book_title: string;
@@ -124,6 +132,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // Include original text if requested
     if (includeOriginal && page.ocr?.data) {
       response.quote.original = stripEditorialWrappers(page.ocr.data).trim();
+      // …and, for non-Latin scripts, its romanization — the third layer of the
+      // citation (#3828). Rides the same flag as `original`: it is a reading of
+      // the original, so a caller that asked for translation only should not
+      // get the source text back in Latin letters.
+      const romanized = romanizedForQuote(page);
+      if (romanized) response.quote.romanized = romanized;
     }
 
     // Include context (adjacent pages) if requested
