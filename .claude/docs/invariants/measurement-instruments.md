@@ -40,6 +40,12 @@ Corollary for fixes: **a plausible non-fix is worse than no fix.** PR #3418 appl
 
 And **a field nothing writes looks identical to a field nothing needs.** `reading_history.referrer` was accepted by both routes, plumbed through the API client, projected into the GET response — and never sent by the reader, so all 6,659 rows were empty and "how do members reach a book" was unanswerable without one line of client code. Before concluding a signal is absent, check that something is actually emitting it.
 
+**The write-time filter passes residential proxies, so even the "clean" instrument carries a fleet slice (2026-08-09).** A JS-executing crawler fleet ran Jul 10–Aug 6 2026 (PostHog: CN/SG/HK desktop `$direct`, ~1 pageview/visitor, 15K→42K/day) and its residential-proxy exits in BR/FR/DE/MX/US sailed through `classifyRequest()` as human — Mongo's own country-by-day shows BR 3,030→269 and FR 1,642→~0 across the Aug 6→7 boundary when the fleet left. Consequences:
+
+- **The fleet leaving reads as a traffic cliff, and the fleet running reads as growth.** The "Aug 7 collapse" (20K→6K Mongo pageviews/day, DAU 4,372→~950) was contamination draining, not audience loss; every *referred* source (Google, Instagram, EFM, HN) was flat through the boundary. Referrer-stability across a step change is the cheap discriminator between "audience event" and "fleet event".
+- **Geo diversity is not evidence of humanity.** Many-countries-many-IPs is exactly what a residential proxy network produces; it defeats both per-IP caps and country-based reasoning. The fleet signature is behavioral: desktop + no referrer + one pageview per fingerprint at volume.
+- **Any Jul-10–Aug-6 window number (MAU, DAU, pageviews, country mix) is inflated** — quote post-Aug-7 baselines or segment out the direct/1-hit slice first. The two-instrument rule above still held: PostHog vs Mongo cross-check is what isolated the fleet in minutes.
+
 ## The measurement layer fails silently, and always toward good news
 Lessons from the 2026-07-28 usage review (#3399, #3400, #3405, #3408, #3409). Five instruments were checked; four were broken, and not one of them looked broken. A dead cost rollup reads `$0.00`. An unfiltered event stream reads as engagement. A frozen dashboard reads as stable. **Treat a monitoring gap as a defect with a blast radius, not a chore** — every one of these was feeding a decision.
 
