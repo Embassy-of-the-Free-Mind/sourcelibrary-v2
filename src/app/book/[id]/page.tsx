@@ -79,6 +79,7 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { markPageForReader } from '@/lib/provenance';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -740,7 +741,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         maxTimeMS: 5000,
       })
       .sort({ page_number: 1 }).limit(1000).toArray();
-    return <TextReader book={book as any} pages={JSON.parse(JSON.stringify(textPages))} collections={bookCollections} />;
+    // Text-only works serve their whole translation in one server render, so
+    // each page carries the reader-path provenance mark (deterministic,
+    // ISR-safe; runs once per revalidation, not per request).
+    const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
+      .map((p) => markPageForReader(p, book.id));
+    return <TextReader book={book as any} pages={markedTextPages as any} collections={bookCollections} />;
   }
 
   // Empty shell books (0 pages from failed imports) should 404

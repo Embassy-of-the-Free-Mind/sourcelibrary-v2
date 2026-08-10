@@ -10,6 +10,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { markPageForReader } from '@/lib/provenance';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -119,7 +120,15 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
   const serializedNavPages = JSON.parse(JSON.stringify(navPages)) as Page[];
 
   const bookPath = book.slug || scopedBookId;
+  // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
+  // zero-width characters so search snippet matching is untouched.
   const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org/book/${bookPath}/page/${pageId}`);
+
+  // The flight payload the reader (and anything scraping this URL) receives
+  // carries the invisible provenance imprimatur in the translation. It is
+  // deterministic — content-keyed, no per-request input — so this page stays
+  // safely ISR/CDN-cacheable. The editor save path strips it before storing.
+  const markedPage = markPageForReader(serializedPage, scopedBookId);
 
   return (
     <>
@@ -132,7 +141,7 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
       <PageEditorClient
         initialBook={book}
-        initialPage={serializedPage}
+        initialPage={markedPage}
         initialPageList={serializedNavPages}
       />
       {musicTranscriptions.length > 0 && (

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { markPageForReader } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -40,8 +41,10 @@ export async function POST(request: NextRequest) {
       { projection: { detected_images: 0 } }
     ).toArray();
 
-    // Strip MongoDB _id
-    const cleaned = pages.map(({ _id, ...rest }) => rest);
+    // Strip MongoDB _id; weave the reader-path provenance mark into each
+    // translation. Deterministic (content-keyed, no ref), so the shared
+    // s-maxage cache below serves identical bytes to every caller.
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest));
 
     return NextResponse.json({ pages: cleaned }, {
       headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
