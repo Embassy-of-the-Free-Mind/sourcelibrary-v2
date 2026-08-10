@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withInnerCircleAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
@@ -20,7 +20,7 @@ export const maxDuration = 30;
 
 const HUMAN_BUCKETS = ['TOSSUP', 'SUSPECT_NOT_SAME'];
 
-export const GET = withAdminAuth(async (request) => {
+export const GET = withInnerCircleAuth(async (request) => {
   const url = new URL(request.url);
   const status = url.searchParams.get('status') || 'pending';
   const bucket = url.searchParams.get('bucket') || 'human';
@@ -102,7 +102,7 @@ export const GET = withAdminAuth(async (request) => {
  * POST /api/admin/edition-keepers
  * Body: { editionKey, action: 'keep' | 'dismiss', keeperId?, note? }
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withInnerCircleAuth(async (request, session) => {
   const body = await request.json();
   const { editionKey, action, keeperId, note } = body as { editionKey?: string; action?: string; keeperId?: string; note?: string };
   if (!editionKey || (action !== 'keep' && action !== 'dismiss')) {

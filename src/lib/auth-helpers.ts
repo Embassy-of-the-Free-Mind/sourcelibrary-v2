@@ -113,6 +113,72 @@ export async function requireAuth(): Promise<Session> {
  * TODO (Phase 1): Callers in tenant layouts must pass loginPath = `/${tenantSlug}/login`,
  * reading tenantSlug from headers() set by proxy.ts.
  */
+/**
+ * Global inner-circle membership (#3846): a memberships doc
+ * `{ email, tenantId: null, role: 'inner_circle' | 'editor', status: 'active' }`
+ * grants access to the /curation/* surfaces and their APIs — nothing else.
+ *
+ * Deliberately NOT resolved into the session role: minting `editor` into the
+ * JWT would unlock every editor-gated surface (imports, metadata edits) for
+ * someone invited only to adjudicate identity queues. Also deliberately does
+ * not consult the x-tenant-id escalation withAuth performs — a tenant editor
+ * must not reach global actuation surfaces through a subdomain session.
+ * Checked live against the DB, so a grant applies without re-login (#3048
+ * rationale).
+ */
+async function isGlobalInnerCircle(email: string | null | undefined): Promise<boolean> {
+  if (!email) return false;
+  try {
+    const db = await getDb();
+    const record = await db.collection('memberships').findOne(
+      {
+        email: email.toLowerCase(),
+        tenantId: null,
+        role: { $in: ['inner_circle', 'editor'] },
+        status: { $in: ['active', 'pending'] },
+      },
+      { projection: { _id: 1 } }
+    );
+    return Boolean(record);
+  } catch {
+    return false;
+  }
+}
+
+/** Page-side gate for /curation/* layouts. Superadmins pass automatically. */
+export async function requireInnerCircle(loginPath = '/auth/signin'): Promise<Session> {
+  const session = await getSession();
+  if (!session?.user) {
+    redirect(loginPath);
+  }
+  const role = normalizeRole((session.user as any).role);
+  if ((ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL.admin) return session;
+  if (await isPlatformSuperadmin(session.user.email)) return session;
+  if (await isGlobalInnerCircle(session.user.email)) return session;
+  redirect('/unauthorized');
+}
+
+/** Route-side gate matching requireInnerCircle. No CRON bypass — nothing unattended may actuate these queues. */
+export function withInnerCircleAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
+): (request: NextRequest, context?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, context?: any) => {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized - Authentication required' }, { status: 401 });
+    }
+    const role = normalizeRole((session.user as any).role);
+    const allowed =
+      (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL.admin ||
+      (await isPlatformSuperadmin(session.user.email)) ||
+      (await isGlobalInnerCircle(session.user.email));
+    if (!allowed) {
+      return NextResponse.json({ error: 'Forbidden - inner-circle access required' }, { status: 403 });
+    }
+    return handler(request, session, context);
+  };
+}
+
 export async function requireRole(minRole: Role, loginPath = '/auth/signin'): Promise<Session> {
   const session = await getSession();
   if (!session?.user) {
@@ -168,10 +234,11 @@ export async function isInnerCircle(): Promise<boolean> {
   return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['editor'];
 }
 
-/**
- * Legacy compatibility alias for older server-component guards.
- */
-export const requireInnerCircle = () => requireRole('editor');
+// requireInnerCircle now lives above with real inner-circle semantics (#3846);
+// the legacy alias here mapped to requireRole('editor'), which never resolved
+// on the main site (superadmin-only in practice). Its four callsites
+// (/analytics, /experiments, /jobs, /traffic) now open to inner-circle
+// members as the name always promised.
 
 // --- Dual-mode identity resolution for engagement APIs ---
 
@@ -310,9 +377,6 @@ export const withEditorAuth = (h: (request: NextRequest, session: Session, conte
 // route applies it directly via applyWorkRevision.
 export const withContributorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'contributor' });
 
-// TODO: Remove withInnerCircleAuth — mapped to 'editor'. Verify each callsite matches
-// this permission level before removing.
-export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
 
 // TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.

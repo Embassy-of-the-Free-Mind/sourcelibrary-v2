@@ -71,6 +71,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // Inner-circle curation surfaces (#3846): identity adjudication over the
+  // whole corpus (work merges, edition keeper choices). Corpus-wide by
+  // construction and actuating, so a partner host must refuse it outright —
+  // the same reasoning as /review, with writes attached.
+  '/curation',
 ] as const;
 
 /**
