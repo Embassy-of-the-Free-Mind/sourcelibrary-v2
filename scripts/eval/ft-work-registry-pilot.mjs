@@ -135,7 +135,7 @@ for (const workId of workList) {
     continue;
   }
   const ft = verifiedBook.first_translation;
-  const status = VERDICT_TO_STATUS[ft.verdict] ?? 'under_review';
+  let status = VERDICT_TO_STATUS[ft.verdict] ?? 'under_review';
 
   // Entries: citable priors from the ledger rows behind the verified verdict.
   const bookIds = siblings.map((b) => b.id);
@@ -148,6 +148,14 @@ for (const workId of workList) {
   const entries = [];
   for (const a of found) {
     for (const p of a.priors ?? []) {
+      // Round-1 hygiene rules (card-round-1.md): NO CITATION → NO ENTRY.
+      // An entry must be locatable — a citation URL, or at least a named
+      // translator with a year. Placeholder prose ("None (complete edition)",
+      // "Partial translations of…") is extraction noise, not knowledge.
+      const locatable = p.source_url || (p.translator && p.pub_year);
+      const placeholder = /^\s*(none\b|no |n\/a|unknown\b|partial translations? of|various\b)/i
+        .test(p.english_title ?? '');
+      if (!locatable || placeholder) continue;
       const key = `${p.translator ?? ''}|${p.pub_year ?? ''}|${(p.english_title ?? '').slice(0, 40)}`;
       if (seen.has(key)) continue;
       seen.add(key);
@@ -165,6 +173,15 @@ for (const workId of workList) {
         verified: ['tier2_agent', 'human', 'claude_subagent_verify'].includes(a.method),
       });
     }
+  }
+
+  // Round-1 consistency rule: a card's status must be derivable from its own
+  // entries. `no_prior_known` with a COMPLETE entry is a contradiction — the
+  // Gangtey/Fries class. Partial-only entries may coexist with no_prior_known
+  // (they support first-complete, they don't defeat it).
+  if (status === 'no_prior_known'
+    && entries.some((e) => e.completeness === 'complete')) {
+    status = 'under_review';
   }
 
   const badge = computedBadge(status, entries);
