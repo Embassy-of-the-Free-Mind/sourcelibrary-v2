@@ -36,7 +36,8 @@ import readline from 'readline';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
-import { buildSearchEffort, SCREEN, VERDICT } from '../lib/search-effort.mjs';
+import { buildSearchEffort, effortToAttempt, SCREEN, VERDICT } from '../lib/search-effort.mjs';
+import { appendAttempt } from '../lib/ft-attempt-log.mjs';
 import {
   titleTokens as toks,
   bookTitleTokens,
@@ -847,6 +848,19 @@ await withMongo(async (db) => {
     written += res.upsertedCount + res.modifiedCount + res.matchedCount;
   }
   console.log(`APPLIED — ${written} search_efforts upserted (no badge was changed).`);
+
+  // ONE LEDGER (#3881 pass 1): every searchable effort also lands in
+  // `first_translation_attempts` as one compact row — the canonical ledger the
+  // derive/reconcile pipeline reads. search_efforts stays as the detail
+  // archive behind transcript_ref. Idempotent per effort ($setOnInsert).
+  // ACTUATION (#3776): the 05:30 derive reads these rows. They resolve to
+  // tier1_catalog, which the reconcile valve does not admit — no badge moves.
+  let ledgered = 0;
+  for (const e of efforts) {
+    const attempt = effortToAttempt(e);
+    if (attempt && await appendAttempt(db, attempt)) ledgered++;
+  }
+  console.log(`LEDGER — ${ledgered} attempt row(s) appended to first_translation_attempts (searchable efforts only; the 05:30 derive will read them).`);
 },
 /**
  * `noTimeout` is REQUIRED — this walks a whole cohort (5,947 badged / 10,126

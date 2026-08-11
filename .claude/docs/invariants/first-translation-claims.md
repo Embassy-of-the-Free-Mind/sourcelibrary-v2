@@ -8,6 +8,8 @@
 
 "First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
 
+**ONE LEDGER (#3881): `first_translation_attempts` is the canonical evidence ledger.** Every search by every instrument lands there as one row; `search_efforts` is the tier-1 **detail archive** behind it (same relationship `first_translation_transcripts` has to rung-2 rows — ledger row lean, deep artifact behind `transcript_ref`). The sweep dual-writes via `effortToAttempt()` in `scripts/lib/search-effort.mjs`; `not_searchable` efforts deliberately never enter the ledger ("we could not ask" must not read as "we asked"). Read `search_efforts` only through `latestEffortPerBook()`; do not add a second ledger, and a new instrument writes attempts, not a new collection.
+
 **Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
 layer, its measured reliability, and the invariants below in detail.
 
