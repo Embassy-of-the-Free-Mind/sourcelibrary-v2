@@ -19,7 +19,7 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
 import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
-import { pipeTableToHtml } from '@/lib/markdown-table-html';
+import { markdownToHtml } from '@/lib/export-markdown-html';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -160,90 +160,6 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('═'.repeat(60));
 
   return lines.join('\n');
-}
-
-// Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
-  // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
-
-  // Remove any standalone URLs
-  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
-
-  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
-  if (opts?.stripNotes) {
-    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
-    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
-    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
-    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
-  }
-
-  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
-  // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
-  html = html.replace(/<column-break\s*\/?>/gi, '');
-  // Strip ->...<- centering markers (OCR convention for centered text)
-  html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
-  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
-
-  // Escape HTML entities
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
-
-  // Convert legacy [[notes: ...]] to inline
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
-
-  // Convert bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Split by double newlines to create paragraphs
-  const blocks = html.split(/\n\n+/);
-
-  // Process each block
-  html = blocks.map(block => {
-    block = block.trim();
-    if (!block) return '';
-    // Don't wrap headers in paragraphs
-    if (block.startsWith('<h')) {
-      return block;
-    }
-    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
-    const table = pipeTableToHtml(block);
-    if (table) return table;
-    // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
-  }).filter(b => b).join('\n');
-
-  // Clean up empty paragraphs and whitespace issues
-  html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p><br\/><\/p>/g, '');
-
-  return html || '<p></p>';
 }
 
 // Custom CSS for EPUB styling
