@@ -339,6 +339,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Urb.gr.31",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -1135,6 +1142,69 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Mercurii Trismegisti Pymander, de potestate et sapientia Dei",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "6a19bfb49b13f9ea2b27283f",
+        "slug": "the-divine-pymander-of-hermes-mercurius-trismegistus-in-everard",
+        "title": "The Divine Pymander of Hermes Mercurius Trismegistus, in XVII Books",
+        "language": "English",
+        "translated": true
+      },
+      {
+        "id": "694f3d6ebe37f451a5324e95",
+        "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+        "title": "Complete Hermetica (1505 Paris Edition)",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "6952062aab34727b1f0432aa",
+        "slug": "poimandres-corpus-hermeticum-ficino",
+        "title": "The Divine Pymander",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "695230c6ab34727b1f044784",
+        "slug": "corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria",
+        "title": "Corpus Hermeticum with Pneumatica and Ocellus Lucanus",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "6953ab1077f38f6761bd67aa",
+        "slug": "ott-lat-2074-trismegistus",
+        "title": "The Hermetic Corpus",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69592b3b7c072c27f686e213",
+        "slug": "de-mysteriis-aegyptiorum-pimander-asclepius-porphyry",
+        "title": "On the Mysteries of the Egyptians - Pimander - Asclepius",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "6985ca72a57ab7da79b0fb13",
+        "slug": "poimandres-trismegistus",
+        "title": "Poimandres",
+        "language": "Greek-Latin",
+        "translated": true
+      },
+      {
+        "id": "6993890ece15387065946496",
+        "slug": "corpus-hermeticum-and-plotinus-enneads-cambridge-trinity-plotinus",
+        "title": "Corpus Hermeticum and Plotinus' Enneads (Cambridge, Trinity College, MS B.9.9)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69938e765d28b693146d0f99",
+        "slug": "poimandres-greek-editio-princeps-turnebus-trismegistus",
+        "title": "Poimandres",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -1429,6 +1499,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6993881f74305116d72cf3c3",
         "slug": "urb-gr-31-plato",
         "title": "Urb.gr.31",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21d4addb4fa7c305b4a88",
+        "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+        "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
         "language": "Greek",
         "translated": true
       }
@@ -1770,6 +1854,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69c4ec33a3a4a7c546ee6124",
         "slug": "pymander-asclepius-and-on-the-mysteries-of-the-egyptians-trismegistus",
         "title": "Pymander, Asclepius, and On the Mysteries of the Egyptians",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69c846296c6f3cc53c8516d9",
+        "slug": "pimander-asclepius-crater-hermetis-hermes-trismegistus",
+        "title": "Pimander. Asclepius. Crater Hermetis",
         "language": "Latin",
         "translated": true
       }
@@ -2978,6 +3069,55 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Moralia",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21dfa94025df5d290ae35",
+        "slug": "plutarchi-chaeronensis-moralia-vol-1-bernardakis-teubner-bernardakis",
+        "title": "Plutarch's Moralia, Vol. 1",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e58dbaba63c46019745",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-3-didot-greek-dubner",
+        "title": "Moralia, Vol. 3",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "6992d67f46b85e738a0c5ffa",
+        "slug": "plutarch-s-morals-vol-5-goodwin",
+        "title": "Plutarch's Morals, Vol. 5",
+        "language": "English",
+        "translated": true
       }
     ]
   },
@@ -3565,6 +3705,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Plato, Dialogues (Ficino translation, with De Amore)",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "6993899b74305116d72d25ac",
+        "slug": "plato-de-legibus-platonos-nomoi-ac-praeterea-alii-eiusdem-plato",
+        "title": "Plato De legibus . Platonos Nomoi . Ac praeterea alii eiusdem [Platonis] Dialogi tum gnesioi, tum nothoi, Definitiones, et epistolae",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -3738,6 +3892,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Apocrypha and Pseudepigrapha of the Old Testament, Vol. 2: Pseudepigrapha",
         "language": "Hebrew-Greek",
         "translated": true
+      },
+      {
+        "id": "69924661bc722ec0ee80b743",
+        "slug": "apocrypha-and-pseudepigrapha-of-the-old-testament-vol-1-ed",
+        "title": "Apocrypha and Pseudepigrapha of the Old Testament, Vol. 1: Apocrypha",
+        "language": "English",
+        "translated": true
       }
     ]
   },
@@ -3748,6 +3909,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       146,
       147,
+      151,
       210
     ],
     "status": "held",
@@ -4054,6 +4216,34 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "bodleian-library-ms-e-d-clarke-6-anonymous",
         "title": "The Four Gospels",
         "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcede3047130b1c3be94c",
+        "slug": "bodleian-library-ms-gr-th-f-1-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcf063047130b1c3be9d7",
+        "slug": "bodleian-library-ms-auct-t-inf-2-2-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69c1bd5e8522835be8469a23",
+        "slug": "ethiopic-ms-27-anonymous",
+        "title": "The Four Gospels",
+        "language": "Ge'ez",
+        "translated": true
+      },
+      {
+        "id": "69a5f25a0a8b44a5d9dc961e",
+        "slug": "new-testament-peshitta-anonymous",
+        "title": "The New Testament",
+        "language": "Syriac",
         "translated": true
       }
     ]
@@ -5040,21 +5230,21 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b21e1b94025df5d290b4cb",
         "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
         "title": "Moralia, Vol. 4",
-        "language": "Latin",
+        "language": "Greek",
         "translated": true
       },
       {
         "id": "69b21e0194025df5d290b059",
         "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
         "title": "Moralia, Vol. 2",
-        "language": "Latin",
+        "language": "Greek",
         "translated": true
       },
       {
         "id": "69b21e0f94025df5d290b2a7",
         "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
         "title": "Moralia, Vol. 3",
-        "language": "Latin",
+        "language": "Greek",
         "translated": true
       },
       {
@@ -5091,6 +5281,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
         "language": "Unknown",
         "translated": false
+      },
+      {
+        "id": "6992d67c46b85e738a0c5dde",
+        "slug": "plutarch-s-morals-vol-4-includes-isis-and-osiris-goodwin",
+        "title": "Plutarch's Morals, Vol. 4 (includes Isis and Osiris)",
+        "language": "English",
+        "translated": true
       }
     ]
   },
@@ -5358,6 +5555,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "new-testament-peshitta-anonymous",
         "title": "The New Testament",
         "language": "Syriac",
+        "translated": true
+      },
+      {
+        "id": "69920b83e0a548a13d8835ea",
+        "slug": "coptic-new-testament-sahidic-dialect-vol-3-ed",
+        "title": "Coptic New Testament, Sahidic Dialect (Vol. 3)",
+        "language": "Coptic",
         "translated": true
       }
     ]
@@ -5670,6 +5874,27 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "bodleian-library-ms-holkham-gr-114-anonymous",
         "title": "The Four Gospels",
         "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcede3047130b1c3be94c",
+        "slug": "bodleian-library-ms-gr-th-f-1-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcf063047130b1c3be9d7",
+        "slug": "bodleian-library-ms-auct-t-inf-2-2-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69c1bd5e8522835be8469a23",
+        "slug": "ethiopic-ms-27-anonymous",
+        "title": "The Four Gospels",
+        "language": "Ge'ez",
         "translated": true
       }
     ]
@@ -6143,6 +6368,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "M. Tullius Cicero Mannucciorum commentariis illustratus antiquaeq. lectioni restitutus. .. M. Tullii Ciceronis Operum tomus. nonus continens De philosophia volumen secundum, & in ipsum Aldi Mannuccij commentarium. ..",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b2233c56715b0e32476b05",
+        "slug": "cicero-philosophical-works-vol-1-academica-de-finibus-cicero",
+        "title": "Cicero, Philosophical Works Vol. 1",
+        "language": "Latin",
+        "translated": true
       }
     ]
   },
@@ -6344,43 +6576,12 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     ]
   },
   {
-    "work": "De dubitationibus et solutionibus",
-    "author": "Damascius",
-    "era": "Late Antique",
-    "episodes": [
-      75,
-      76
-    ],
-    "status": "held",
-    "held": [
-      {
-        "id": "6a3f02c397e91e1768f68448",
-        "slug": "problemes-et-solutions-touchant-les-premiers-principes-avec-damascius",
-        "title": "Problems and Solutions Concerning the First Principles",
-        "language": "French",
-        "translated": true
-      },
-      {
-        "id": "69a99cef6c7545e2236e177c",
-        "slug": "problemes-et-solutions-touchant-les-premiers-principes-vol-1-damascius",
-        "title": "Problems and Solutions Concerning First Principles, Volume 1",
-        "language": "French",
-        "translated": true
-      },
-      {
-        "id": "69a99d006c7545e2236e1a79",
-        "slug": "problemes-et-solutions-touchant-les-premiers-principes-vol-3-damascius",
-        "title": "Problems and Solutions Concerning First Principles, Volume 3",
-        "language": "Greek",
-        "translated": true
-      }
-    ]
-  },
-  {
     "work": "De principiis",
     "author": "Damascius",
     "era": "Late Antique",
     "episodes": [
+      75,
+      76,
       135,
       285
     ],
@@ -6405,6 +6606,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "problemes-et-solutions-touchant-les-premiers-principes-vol-3-damascius",
         "title": "Problems and Solutions Concerning First Principles, Volume 3",
         "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "6a3f02c397e91e1768f68448",
+        "slug": "problemes-et-solutions-touchant-les-premiers-principes-avec-damascius",
+        "title": "Problems and Solutions Concerning the First Principles",
+        "language": "French",
         "translated": true
       }
     ]
@@ -7016,6 +7224,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -7146,6 +7368,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
         "title": "Plato, Dialogues (Ficino translation, with De Amore)",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -7347,6 +7576,27 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "opera-latin-tr-marsilius-ficinus-plato-1",
         "title": "Works of Plato",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69937767b0a84a57639639fe",
+        "slug": "phaedo-plato",
+        "title": "Phaedo",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "6993837c50654cbbe2916b24",
+        "slug": "vat-gr-1-plato",
+        "title": "Vat.gr.1",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -7614,6 +7864,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
         "title": "Plato, Dialogues (Ficino translation, with De Amore)",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -7910,6 +8167,55 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "The Histories of Herodotus and Works of Plutarch and Gemistus Plethon",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e58dbaba63c46019745",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-3-didot-greek-dubner",
+        "title": "Moralia, Vol. 3",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "69b21e604522d8c1db3bcb46",
+        "slug": "plutarch-s-moralia-vol-1-loeb-197-1a-86a-babbitt",
+        "title": "Plutarch's Moralia, Vol. 1 (Loeb 197: 1A-86A)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fb1",
+        "slug": "plutarch-s-moralia-vol-2-loeb-222-86b-171f-babbitt",
+        "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
+        "language": "Unknown",
+        "translated": false
       }
     ]
   },
@@ -7992,6 +8298,48 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "The Histories of Herodotus and Works of Plutarch and Gemistus Plethon",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "69b21e604522d8c1db3bcb46",
+        "slug": "plutarch-s-moralia-vol-1-loeb-197-1a-86a-babbitt",
+        "title": "Plutarch's Moralia, Vol. 1 (Loeb 197: 1A-86A)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fb1",
+        "slug": "plutarch-s-moralia-vol-2-loeb-222-86b-171f-babbitt",
+        "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
+        "language": "Unknown",
+        "translated": false
       }
     ]
   },
@@ -8970,6 +9318,34 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "The Four Gospels",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69bfce7f8ab50eb88e8c85e3",
+        "slug": "bodleian-library-ms-e-d-clarke-6-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcf063047130b1c3be9d7",
+        "slug": "bodleian-library-ms-auct-t-inf-2-2-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69c1bd5e8522835be8469a23",
+        "slug": "ethiopic-ms-27-anonymous",
+        "title": "The Four Gospels",
+        "language": "Ge'ez",
+        "translated": true
+      },
+      {
+        "id": "69a5f25a0a8b44a5d9dc961e",
+        "slug": "new-testament-peshitta-anonymous",
+        "title": "The New Testament",
+        "language": "Syriac",
+        "translated": true
       }
     ]
   },
@@ -9120,6 +9496,41 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "bodleian-library-ms-holkham-gr-114-anonymous",
         "title": "The Four Gospels",
         "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfce7f8ab50eb88e8c85e3",
+        "slug": "bodleian-library-ms-e-d-clarke-6-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcede3047130b1c3be94c",
+        "slug": "bodleian-library-ms-gr-th-f-1-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69bfcf063047130b1c3be9d7",
+        "slug": "bodleian-library-ms-auct-t-inf-2-2-anonymous",
+        "title": "The Four Gospels",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69c1bd5e8522835be8469a23",
+        "slug": "ethiopic-ms-27-anonymous",
+        "title": "The Four Gospels",
+        "language": "Ge'ez",
+        "translated": true
+      },
+      {
+        "id": "69a5f25a0a8b44a5d9dc961e",
+        "slug": "new-testament-peshitta-anonymous",
+        "title": "The New Testament",
+        "language": "Syriac",
         "translated": true
       }
     ]
@@ -10077,38 +10488,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     ],
     "status": "acquire",
     "held": []
-  },
-  {
-    "work": "Talmud",
-    "author": "Anonymous",
-    "era": "Late Antique",
-    "episodes": [
-      151
-    ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69d5ac5f4dc55b8478ddd6b5",
-        "slug": "babylonian-talmud-vilna-romm-edition-1884-various-romm-press",
-        "title": "תלמוד בבלי (Babylonian Talmud — Vilna Romm Edition, 1884)",
-        "language": "Hebrew",
-        "translated": true
-      },
-      {
-        "id": "69ad70eac5001c07fa846ae5",
-        "slug": "new-edition-of-the-babylonian-talmud-vol-1-rodkinson",
-        "title": "New Edition of the Babylonian Talmud, Vol. 1",
-        "language": "English",
-        "translated": true
-      },
-      {
-        "id": "69b30036a1a4246ddb45bd26",
-        "slug": "talmudis-babylonici-codex-middoth-l-empereur",
-        "title": "Babylonian Talmud: Tractate Middoth",
-        "language": "Hebrew",
-        "translated": true
-      }
-    ]
   },
   {
     "work": "Tebesa Text",
@@ -11850,6 +12229,27 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "M. Tullius Cicero Mannucciorum commentariis illustratus antiquaeq. lectioni restitutus. .. M. Tullii Ciceronis Operum tomus. nonus continens De philosophia volumen secundum, & in ipsum Aldi Mannuccij commentarium. ..",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b2233c56715b0e32476b05",
+        "slug": "cicero-philosophical-works-vol-1-academica-de-finibus-cicero",
+        "title": "Cicero, Philosophical Works Vol. 1",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69dbc9421040d1d5e20a18ea",
+        "slug": "de-natura-deorum-add-de-divinatione-de-legibus-academica-de-cicero",
+        "title": "On the Nature of the Gods and Other Philosophical Works",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69dbc9451040d1d5e20a19f2",
+        "slug": "de-natura-deorum-add-de-divinatione-de-legibus-academica-de-cicero-1",
+        "title": "On the Nature of the Gods and Other Philosophical Works",
+        "language": "Latin",
+        "translated": true
       }
     ]
   },
@@ -12009,6 +12409,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6a084f0915c643eb1af43677",
         "slug": "m-tullius-cicero-mannucciorum-commentariis-illustratus-antiq-10",
         "title": "M. Tullius Cicero Mannucciorum commentariis illustratus antiquaeq. lectioni restitutus. .. M. Tullii Ciceronis Operum tomus. nonus continens De philosophia volumen secundum, & in ipsum Aldi Mannuccij commentarium. ..",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "6a0854ce15c643eb1af53c87",
+        "slug": "m-tullii-ciceronis-de-philosophia-prima-pars-volumen-secundu-2",
+        "title": "M. Tullii Ciceronis De philosophia, prima pars volumen secundum, ... Cum scholijs, & coniecturis Pauli Manutij. Corrigente Paulo Manutio Aldi filio M Tullii Ciceronis De philosophia volumen secundum, id est, De natura deorum libri 3. De diuinatione libri 2. De fato liber 1. De legibus libri 3. De uniuersitate liber 1. Q. Ciceron",
         "language": "Latin",
         "translated": true
       }
@@ -12317,6 +12724,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6991be162e5d8f25d7e87685",
         "slug": "arcana-coelestia-vol-x-swedenborg",
         "title": "Arcana Coelestia, Vol. X",
+        "language": "English",
+        "translated": true
+      },
+      {
+        "id": "6955953d7bd6d2cd1d61eeb5",
+        "slug": "swedenborg-works-vol-15-swedenborg",
+        "title": "Swedenborg Works Vol. 15",
         "language": "English",
         "translated": true
       }
@@ -15393,6 +15807,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -15502,6 +15930,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -15603,6 +16045,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -15720,6 +16176,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -15835,6 +16305,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -15959,6 +16443,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -16067,6 +16565,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -16183,6 +16695,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -16307,6 +16833,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -16423,6 +16963,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -16531,6 +17085,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
         "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864f97",
+        "slug": "philonis-judaei-opera-omnia-vol-7-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fa9",
+        "slug": "philonis-judaei-opera-omnia-vol-8-ed",
+        "title": "Philonis Judaei Opera Omnia (Vol. 8)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -16776,6 +17344,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Works of Plato",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -16891,6 +17466,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "opera-latin-tr-marsilius-ficinus-plato-1",
         "title": "Works of Plato",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -17022,6 +17604,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Plato, Dialogues (Ficino translation, with De Amore)",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21d4addb4fa7c305b4a88",
+        "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+        "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -17138,6 +17734,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Works of Plato",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -17253,6 +17856,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
         "title": "Plato, Dialogues (Ficino translation, with De Amore)",
         "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21d42ddb4fa7c305b4693",
+        "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+        "title": "The Works of Plato, Vol. 2 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21d4addb4fa7c305b4a88",
+        "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+        "title": "The Works of Plato, Vol. 3 (Stephanus edition)",
+        "language": "Greek",
         "translated": true
       }
     ]
@@ -17391,6 +18008,13 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Works of Plato",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21d36ddb4fa7c305b4440",
+        "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+        "title": "The Works of Plato, Vol. 1 (Stephanus edition)",
+        "language": "Greek",
+        "translated": true
       }
     ]
   },
@@ -17458,6 +18082,55 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "Moralia",
         "language": "Latin",
         "translated": true
+      },
+      {
+        "id": "69b21dfa94025df5d290ae35",
+        "slug": "plutarchi-chaeronensis-moralia-vol-1-bernardakis-teubner-bernardakis",
+        "title": "Plutarch's Moralia, Vol. 1",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "69b21e604522d8c1db3bcb46",
+        "slug": "plutarch-s-moralia-vol-1-loeb-197-1a-86a-babbitt",
+        "title": "Plutarch's Moralia, Vol. 1 (Loeb 197: 1A-86A)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fb1",
+        "slug": "plutarch-s-moralia-vol-2-loeb-222-86b-171f-babbitt",
+        "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
+        "language": "Unknown",
+        "translated": false
       }
     ]
   },
@@ -17669,6 +18342,48 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "The Histories of Herodotus and Works of Plutarch and Gemistus Plethon",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "69b21e604522d8c1db3bcb46",
+        "slug": "plutarch-s-moralia-vol-1-loeb-197-1a-86a-babbitt",
+        "title": "Plutarch's Moralia, Vol. 1 (Loeb 197: 1A-86A)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fb1",
+        "slug": "plutarch-s-moralia-vol-2-loeb-222-86b-171f-babbitt",
+        "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
+        "language": "Unknown",
+        "translated": false
       }
     ]
   },
@@ -17736,6 +18451,48 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "title": "The Histories of Herodotus and Works of Plutarch and Gemistus Plethon",
         "language": "Greek",
         "translated": true
+      },
+      {
+        "id": "69b21e0194025df5d290b059",
+        "slug": "plutarchi-chaeronensis-moralia-vol-2-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 2",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e0f94025df5d290b2a7",
+        "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 3",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69b21e1b94025df5d290b4cb",
+        "slug": "plutarchi-chaeronensis-moralia-vol-4-bernardakis-teubner-bernardakis",
+        "title": "Moralia, Vol. 4",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db97108ee26ccc99865031",
+        "slug": "plutarchi-chaeronensis-scripta-moralia-vol-2-didot-greek-dubner",
+        "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 2 (Didot, Greek/Latin)",
+        "language": "Unknown",
+        "translated": false
+      },
+      {
+        "id": "69b21e604522d8c1db3bcb46",
+        "slug": "plutarch-s-moralia-vol-1-loeb-197-1a-86a-babbitt",
+        "title": "Plutarch's Moralia, Vol. 1 (Loeb 197: 1A-86A)",
+        "language": "Greek",
+        "translated": true
+      },
+      {
+        "id": "69db96168ee26ccc99864fb1",
+        "slug": "plutarch-s-moralia-vol-2-loeb-222-86b-171f-babbitt",
+        "title": "Plutarch's Moralia, Vol. 2 (Loeb 222: 86B-171F)",
+        "language": "Unknown",
+        "translated": false
       }
     ]
   },
