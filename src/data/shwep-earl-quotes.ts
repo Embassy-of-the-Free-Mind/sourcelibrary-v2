@@ -2315,5 +2315,11 @@ export const SHWEP_EARL_QUOTES: Record<string, ShwepEarlQuote> = {
   },
   "326|Anonymous|Hygromanteia": {
     "quote": "Ioannis Marathakis. The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011."
+  },
+  "81|Eusebius of Caesarea|Ecclesiastical History": {
+    "quote": "Eusebius on Justin's lost Against all the Schools of Thought: HE IV.11.10. Justin himself refers to it at Apol. I.26."
+  },
+  "81|Justin Martyr|Apology": {
+    "quote": "Eusebius on Justin's lost Against all the Schools of Thought: HE IV.11.10. Justin himself refers to it at Apol. I.26."
   }
 };

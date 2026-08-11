@@ -2073,6 +2073,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "era": "Late Antique",
     "episodes": [
       64,
+      81,
       82,
       90,
       91,
@@ -4869,6 +4870,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "author": "Justin Martyr",
     "era": "Late Antique",
     "episodes": [
+      81,
       83,
       84,
       120
@@ -15005,16 +15007,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       121
     ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69f3378f876dd827cbc52461",
-        "slug": "mythographi-vaticani-mythographus-tertius-manuscript-1486-de-vegh",
-        "title": "Mythographi vaticani, mythographus tertius",
-        "language": "Latin",
-        "translated": true
-      }
-    ]
+    "status": "acquire",
+    "held": []
   },
   {
     "work": "Paraphrase of the Gospel of John",

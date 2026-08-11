@@ -450,6 +450,8 @@ async function stageEmit() {
 
   // author guard (shared with linkbib) — drop title-coincidence false positives
   const guarded = applyAuthorGuard(works);
+  const rejected = applyHandRejections(works);
+  if (rejected) console.log(`  hand-rejection map dropped ${rejected} holdings`);
   if (guarded) console.log(`  author guard dropped ${guarded} title-coincidence holdings`);
 
   // 4a — works DB (sorted: most-cited first). held carries slug + whether it's
@@ -591,6 +593,29 @@ const HAND_CURATED = new Set([76, 323]);
 // collected-edition gate), so emit must consult this map or regeneration silently
 // drops them. Applies only when the ranked card IS that book; if a better edition
 // outranks the volume, the deep link is moot and the override is skipped.
+// Hand-REJECTED holdings: matches a human verified as false against the source
+// citation. The automated passes (holdings / gap-audit+apply-recall / cluster-expand)
+// will keep re-proposing these — the confirmer accepts them every time — so the verdict
+// must outlive regeneration. Key "author|work" → slugs that are NOT that work.
+// Nonnos: Earl's "Nonnos 'Mythographos'" (ep 121) is the Pseudo-Nonnos scholia passage
+// quoted at Cumont 1896, 28 — not the Latin Vatican Mythographer III codex.
+const HAND_REJECTED_HOLDINGS = {
+  'Nonnos|Mythographus': ['mythographi-vaticani-mythographus-tertius-manuscript-1486-de-vegh'],
+};
+function applyHandRejections(works) {
+  let dropped = 0;
+  for (const w of works) {
+    const bad = HAND_REJECTED_HOLDINGS[`${w.author}|${w.work}`];
+    if (!bad) continue;
+    const badSet = new Set(bad);
+    const keep = (w.heldMeta || []).filter(m => !badSet.has(m.slug));
+    dropped += (w.heldMeta || []).length - keep.length;
+    w.heldMeta = keep;
+    w.held = keep.map(m => m.id);
+  }
+  return dropped;
+}
+
 const HAND_PAGE_LINKS = {
   '25|6a357e822aadc65cf0906d5f': '6a357e822aadc65cf0906d66',
   '60|69ac9c0399d9a0170d090ed2': '69ac9c0399d9a0170d090ede',
@@ -718,6 +743,7 @@ async function stageLinkBib() {
   console.log('Stage 5 LINKBIB');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
+  applyHandRejections(works);
 
   // Enrich heldMeta with pages_count (so bestEdition can score completeness) and capture
   // each held book's chapters (so a cited work can be deep-linked to the PART of a collected
@@ -884,6 +910,7 @@ async function stageGapAudit() {
   console.log('Stage 6 GAP AUDIT (full catalog, read-only)');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
+  applyHandRejections(works);
   const acquire = works.filter(w => !(w.held || []).length && (w.status || 'extant') !== 'lost');
   const items = LIMIT ? acquire.slice(0, LIMIT) : acquire;
   console.log(`  re-checking ${items.length} "acquire" works against the full catalog…`);
@@ -1065,6 +1092,7 @@ async function stageWorkIdAudit() {
   console.log('Stage 6d WORK-ID AUDIT (dupes + contradictions, read-only)');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
+  applyHandRejections(works);
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const heldIds = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
@@ -1202,6 +1230,7 @@ async function stageRelated() {
   console.log('Stage 7 RELATED (holdings adjacent to unmatched cited works)');
   const works = readJSON('works-held.json', []);
   applyAuthorGuard(works);
+  applyHandRejections(works);
   const targets = works.filter(w =>
     (w.status || 'extant') !== 'lost' &&
     !needsSecondaryReview(w) &&
