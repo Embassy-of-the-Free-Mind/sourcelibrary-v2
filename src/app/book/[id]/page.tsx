@@ -52,7 +52,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
-import TranslationCardPanel from '@/components/book/TranslationCardPanel';
+import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
 import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
 import {
   classifyFirstTranslationClaim,
@@ -1348,12 +1348,24 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
-            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) && (
+            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
               <TranslationCardPanel
                 card={translationCard}
                 book={book as { pages_translated?: number | null }}
                 showExternalLinks={embedPolicy.showExternalLinks}
               />
+            ) : (
+              // A catalog states its own coverage: a translated, non-English
+              // book with neither a card nor a book-grain verdict has simply
+              // not been researched — say so, or silence reads as "checked,
+              // nothing found" (#3881).
+              !translationCard
+              && !(book as { first_translation?: { verdict?: string } }).first_translation?.verdict
+              && !book.is_first_translation
+              && (book.pages_translated ?? 0) > 0
+              && book.language
+              && !['English', 'english', 'en', 'eng'].includes(book.language)
+              && <TranslationHistoryUnresearched />
             )}
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
