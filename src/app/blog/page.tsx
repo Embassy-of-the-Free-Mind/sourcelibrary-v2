@@ -26,6 +26,16 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'greek-lemma-table',
+    title: 'Resurrecting Morpheus',
+    subtitle:
+      'A 570,000-form Greek lemma table for early modern books, built by running a thirty-year-old open-source parser over our own corpus — and the single wrong sigma that silently hid a quarter of it.',
+    date: '10 August 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'nobody-knows-what-has-been-scanned',
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
