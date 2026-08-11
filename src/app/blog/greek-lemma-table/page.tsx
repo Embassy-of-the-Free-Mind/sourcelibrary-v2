@@ -189,8 +189,12 @@ export default function GreekLemmaTablePage() {
         Greek; the same build for Latin &mdash; where our collection is six times larger &mdash;
         carries 1.4 million forms mapped to Lewis &amp; Short. Both inherit only open licenses
         (MPL-2.0 machinery, CC&nbsp;BY&nbsp;4.0 lexicon data), so the tables can be republished,
-        embedded in other tools, or used to train whatever comes next. If either would be
-        useful to your project, write to us &mdash; they want to be shared.
+        embedded in other tools, or used to train whatever comes next. Both are published as a
+        citable dataset:{' '}
+        <a href="https://doi.org/10.5281/zenodo.21884364" className="text-accent-rust hover:underline">
+          doi.org/10.5281/zenodo.21884364
+        </a>
+        .
       </p>
 
       <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">What it makes possible</h2>
