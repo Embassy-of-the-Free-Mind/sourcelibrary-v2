@@ -81,6 +81,9 @@ let authorDocsChanged = 0;
 const touchedBookIds = [];
 
 // ---------------------------------------------------------------- books
+// Cast wide on selection and let the per-field logic decide: a book is a candidate if the
+// bigram appears in ANY repairable path, and the two nested arrays are checked separately
+// because a dotted query cannot reach into them.
 const bookQuery = {
   $or: [
     ...REPAIRABLE_BOOK_FIELDS.map((f) => ({ [f]: ANY_RULE })),
@@ -95,7 +98,9 @@ for (const book of books) {
   const set = {};
 
   for (const field of REPAIRABLE_BOOK_FIELDS) {
-    const before = book[field];
+    // Dotted paths (`summary.data`) resolve against nested objects. Mongo's $set accepts
+    // the same dotted form, so the write below needs no special handling.
+    const before = field.split('.').reduce((o, k) => (o == null ? undefined : o[k]), book);
     const after = repairMojibake(before);
     if (typeof before === 'string' && after !== before) {
       set[field] = after;

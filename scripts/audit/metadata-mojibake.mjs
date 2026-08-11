@@ -22,7 +22,12 @@
  *   node --env-file=.env.production.local scripts/audit/metadata-mojibake.mjs
  */
 import { MongoClient } from 'mongodb';
-import { MOJIBAKE_RULES, REPAIRABLE_BOOK_FIELDS, findMojibake } from '../lib/mojibake.mjs';
+import {
+  MOJIBAKE_RULES,
+  REPAIRABLE_BOOK_FIELDS,
+  findMojibakeInDocument,
+  isProvenancePath,
+} from '../lib/mojibake.mjs';
 
 const uri = process.env.MONGODB_URI;
 if (!uri) {
@@ -39,23 +44,30 @@ const db = client.db('bookstore');
 
 let findings = 0;
 
-const books = await db.collection('books')
-  .find({
-    $or: [
-      ...REPAIRABLE_BOOK_FIELDS.map((f) => ({ [f]: ANY_RULE })),
-      { 'source_work_dates.work_title': ANY_RULE },
-    ],
-  })
-  .project(Object.fromEntries([...REPAIRABLE_BOOK_FIELDS, 'source_work_dates', 'visible'].map((f) => [f, 1])))
-  .toArray();
+// Select on the fields we know how to query, then walk the WHOLE document. The selection
+// is a filter; the walk is the check. Doing it the other way round — checking only the
+// fields in a hand-written list — is exactly how the first pass reported CLEAN while the
+// damaged title was still rendering on the live page from `summary.data` (#3705).
+const bookQuery = {
+  $or: [
+    ...REPAIRABLE_BOOK_FIELDS.map((f) => ({ [f]: ANY_RULE })),
+    { 'source_work_dates.work_title': ANY_RULE },
+    { catalog_metadata: { $exists: true }, title: ANY_RULE },
+  ],
+};
+
+const books = await db.collection('books').find(bookQuery).toArray();
+
+let provenanceOnly = 0;
 
 for (const b of books) {
-  for (const f of REPAIRABLE_BOOK_FIELDS) {
-    const hits = findMojibake(b[f]);
-    if (hits.length === 0) continue;
+  for (const hit of findMojibakeInDocument(b)) {
+    // Provenance paths keep the damage on purpose — they record what the upstream
+    // catalogue said, and that record is the evidence the damage is not ours.
+    if (isProvenancePath(hit.path)) { provenanceOnly++; continue; }
     findings++;
-    console.log(`books/${b._id} ${f} (visible=${b.visible}): ${hits.map((h) => `${h.count}× ${h.from}`).join(', ')}`);
-    console.log(`   ${JSON.stringify(b[f]).slice(0, 160)}`);
+    console.log(`books/${b._id} ${hit.path} (visible=${b.visible})`);
+    console.log(`   ${JSON.stringify(hit.value).slice(0, 160)}`);
   }
 }
 
@@ -73,6 +85,9 @@ for (const a of authors) {
 }
 
 console.log('\n' + '='.repeat(60));
+if (provenanceOnly > 0) {
+  console.log(`(${provenanceOnly} occurrence(s) on provenance paths, retained by design — not findings)`);
+}
 if (findings === 0) {
   console.log('CLEAN — no confirmed mojibake in book or author metadata.');
 } else {
