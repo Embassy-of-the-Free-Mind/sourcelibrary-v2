@@ -21,6 +21,7 @@
  * The two Mongo-aggregation writers can't call this JS function (they build
  * docs server-side via `$project`); they must mirror `GALLERY_DOC_KEYS`.
  */
+import { coerceImageType } from './gallery-image-types.mjs';
 
 /** Resolve the full-page display image for the gallery doc's `image_url`.
  *  This is the image the on-the-fly magnifier lens crops from, so it must be
@@ -119,7 +120,10 @@ export function buildGalleryDoc({
     thumbnail_url: img.thumbnail_url ?? null,
     extracted_url: img.extracted_url ?? null,
     description: img.description || '',
-    type: img.type ?? null,
+    // Validated at the write boundary, not trusted from the detector: the model
+    // occasionally narrates its enum choice instead of making one, and that
+    // narration used to be stored as the value itself (#3419).
+    type: coerceImageType(img.type),
     bbox: img.bbox,
     rotation: img.rotation ?? null,
     gallery_quality: typeof galleryQuality === 'number' ? galleryQuality : (img.gallery_quality ?? null),
