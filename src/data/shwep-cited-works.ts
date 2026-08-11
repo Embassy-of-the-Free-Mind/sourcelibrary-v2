@@ -4931,8 +4931,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       325,
       326
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a357f112aadc65cf0908511",
+        "slug": "anecdota-atheniensia-anonymous",
+        "title": "Anecdota atheniensia",
+        "language": "Greek",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Mithras Liturgy",
@@ -17381,8 +17389,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       324
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6994400f06e186ed6c012a44",
+        "slug": "patrologia-syriaca-i-2-aphraates-demonstrationes-graffin",
+        "title": "Syriac Patrology I.2: Demonstrations of Aphrahat",
+        "language": "Syriac",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Testament of Adam",
@@ -17391,8 +17407,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       324
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6994400f06e186ed6c012a44",
+        "slug": "patrologia-syriaca-i-2-aphraates-demonstrationes-graffin",
+        "title": "Syriac Patrology I.2: Demonstrations of Aphrahat",
+        "language": "Syriac",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Sepher ha-Razim",

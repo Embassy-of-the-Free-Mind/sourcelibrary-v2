@@ -1240,5 +1240,45 @@ export const SHWEP_RESOLVED_LOCI: Record<string, ShwepResolvedLocus> = {
     "why": "The text explicitly mentions Aeschylus' death.",
     "locus": "confirmed",
     "mark": "Ch. iii."
+  },
+  "325|Anonymous|Hygromanteia": {
+    "bookId": "6a357f112aadc65cf0908511",
+    "slug": "anecdota-atheniensia-anonymous",
+    "title": "Anecdota atheniensia",
+    "pageId": "6a357f112aadc65cf0908522",
+    "pageNumber": 17,
+    "similarity": 1,
+    "why": "Delatte's text of the Hygromanteia (Epistle to Rehoboam): Solomon, planetary hours, demons begin here.",
+    "locus": "subject"
+  },
+  "326|Anonymous|Hygromanteia": {
+    "bookId": "6a357f112aadc65cf0908511",
+    "slug": "anecdota-atheniensia-anonymous",
+    "title": "Anecdota atheniensia",
+    "pageId": "6a357f112aadc65cf0908522",
+    "pageNumber": 17,
+    "similarity": 1,
+    "why": "Delatte's text of the Hygromanteia (Epistle to Rehoboam): Solomon, planetary hours, demons begin here.",
+    "locus": "subject"
+  },
+  "324|Anonymous|Testament of Adam": {
+    "bookId": "6994400f06e186ed6c012a44",
+    "slug": "patrologia-syriaca-i-2-aphraates-demonstrationes-graffin",
+    "title": "Syriac Patrology I.2: Demonstrations of Aphrahat",
+    "pageId": "6994400f06e186ed6c012cd5",
+    "pageNumber": 657,
+    "similarity": 1,
+    "why": "Kmosko's edition of the Testament of Adam begins here (hours of the day, Seth).",
+    "locus": "subject"
+  },
+  "324|Apollonios of Tyana|Book of Wisdom of Apollonios of Tyana": {
+    "bookId": "6994400f06e186ed6c012a44",
+    "slug": "patrologia-syriaca-i-2-aphraates-demonstrationes-graffin",
+    "title": "Syriac Patrology I.2: Demonstrations of Aphrahat",
+    "pageId": "6994400f06e186ed6c012d05",
+    "pageNumber": 705,
+    "similarity": 1,
+    "why": "Nau's Apotelesmata of Apollonius of Tyana begins here; his preface discusses the Book of Wisdom.",
+    "locus": "subject"
   }
 };
