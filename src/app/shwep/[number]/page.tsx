@@ -156,7 +156,10 @@ export default async function EpisodePage({ params }: Props) {
             </h2>
             <p className="text-sm text-stone-500 mb-3">
               We may still hold one of these inside a larger volume — collected works and
-              catalogues hide their contents from the matcher.
+              catalogues hide their contents from the matcher. Often the edition he cites
+              cannot be here at all (still in copyright); where we hold something a reader
+              of that work would want anyway — a commentary, the author&rsquo;s other
+              works, excerpts — it is listed beneath the name.
             </p>
             <ul className="text-[15px] text-stone-600 leading-relaxed columns-1 sm:columns-2 gap-8">
               {absentWorks.map(w => (
@@ -164,6 +167,19 @@ export default async function EpisodePage({ params }: Props) {
                   <span className="text-stone-800">{w.author}</span>
                   {w.author && w.work ? ', ' : ''}
                   <em>{w.work}</em>
+                  {w.related && w.related.length > 0 && (
+                    <ul className="mt-0.5 mb-2 ml-4 text-sm text-stone-500">
+                      {w.related.map(r => (
+                        <li key={r.url}>
+                          <span className="text-stone-400">{r.relation}:</span>{' '}
+                          <a href={r.url} className="text-accent-rust underline">
+                            {r.title}
+                          </a>
+                          {r.year ? <span className="text-stone-400"> ({r.year})</span> : null}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>

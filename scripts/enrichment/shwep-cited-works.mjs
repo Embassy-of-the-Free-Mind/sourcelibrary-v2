@@ -1177,6 +1177,95 @@ async function stageWorkIdAudit() {
   console.log(`  → ${path.join(CACHE, 'work-id-audit.md')}`);
 }
 
+// ── Stage 7: related holdings for unmatched works (#3887 follow-on) ──────────
+// When the cited edition cannot be in the library (in-copyright critical editions —
+// Chadwick, des Places, Saffrey-Westerink — or works with no PD edition at all, like
+// Sepher ha-Razim), the reader currently hits a dead end: a bare name in the "no copy
+// matched" list. This stage finds what we DO hold that genuinely relates to each such
+// work — a commentary on it, other works by its author, a volume containing excerpts,
+// the same tradition — and emits src/data/shwep-related-works.ts for the episode page.
+// Related ≠ edition: candidates the confirmer would accept as editions belong to the
+// holdings stages; this classifier is told to REJECT editions and loose topical noise.
+const RELATION_KINDS = ['commentary on it', 'by the same author', 'contains excerpts', 'a reply or continuation', 'the same tradition'];
+function relatedPrompt(work, author, cands) {
+  const list = cands.map((b, j) => `[${j}] "${(b.display_title || b.title || '').slice(0, 90)}" by ${b.author || '?'}${b.year ? ` (${b.year})` : ''} [${b.language || '?'}]`).join('\n');
+  return `A reader wants "${work}" by ${author}, which our library does NOT hold in a readable copy.
+From the candidate books below (all held and readable), pick AT MOST 3 that a scholar of that work would find genuinely useful as RELATED material, and label each with exactly one relation from: ${JSON.stringify(RELATION_KINDS)}.
+Keep ONLY candidates with a real scholarly connection to THIS work: a commentary or study OF it, another work BY its author, a volume containing excerpts or fragments of it, a direct reply/continuation, or a core text of the same specific tradition it belongs to.
+REJECT: books that merely share subject keywords; books about the same broad era or religion with no specific tie; and anything that IS an edition or translation of the work itself (those are handled elsewhere — if one appears, something upstream failed; do not select it).
+CANDIDATES:
+${list}
+Return ONLY JSON {"related":[{"i":<index>,"relation":"<one of the allowed labels>"}]} — empty list if nothing qualifies.`;
+}
+
+async function stageRelated() {
+  console.log('Stage 7 RELATED (holdings adjacent to unmatched cited works)');
+  const works = readJSON('works-held.json', []);
+  applyAuthorGuard(works);
+  const targets = works.filter(w =>
+    (w.status || 'extant') !== 'lost' &&
+    !needsSecondaryReview(w) &&
+    !(w.heldMeta || []).some(m => editionReadable(m)));
+  const items = LIMIT ? targets.slice(0, LIMIT) : targets;
+  console.log(`  ${items.length} cited works with no readable copy — searching for related holdings…`);
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db('bookstore');
+  const PROJ = { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, pages_translated: 1, pages_count: 1 };
+
+  let done = 0;
+  const out = {};
+  await mapPool(items, 6, async (w) => {
+    const forms = (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]).slice(0, 6);
+    const vec = await embed(`${forms.join('; ')} by ${w.author}`);
+    done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
+    if (!vec) return;
+    const { data } = await supabase.rpc('match_books_semantic', { query_embedding: JSON.stringify(vec), match_threshold: 0.2, match_count: 12 });
+    const ids = (data || []).map(r => { try { return new ObjectId(r.book_id); } catch { return null; } }).filter(Boolean);
+    if (!ids.length) return;
+    const have = new Set(w.held || []);
+    const rows = (await db.collection('books').find(
+      { _id: { $in: ids }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
+      { projection: PROJ }).toArray())
+      .filter(b => !have.has(b._id.toString()) && !EXCLUDE_LANGS.has(b.language));
+    if (!rows.length) return;
+    let picks = [];
+    try { picks = (await gemini(relatedPrompt(w.work, w.author, rows), 1024)).related || []; } catch { return; }
+    const rel = picks
+      .filter(p => Number.isInteger(p.i) && rows[p.i] && RELATION_KINDS.includes(p.relation))
+      .slice(0, 3)
+      .map(p => ({
+        id: rows[p.i]._id.toString(), slug: rows[p.i].slug || null,
+        title: (rows[p.i].display_title || rows[p.i].title || '').slice(0, 90),
+        author: rows[p.i].author || '', year: rows[p.i].year || null,
+        relation: p.relation,
+      }));
+    if (rel.length) out[`${w.author}|${w.work}`] = rel;
+  });
+  await client.close();
+
+  let ts = `/**
+ * Related holdings for cited works we do NOT hold in a readable copy — the cited
+ * edition may be in copyright (Chadwick, des Places…) or no PD edition exists at all.
+ * Keyed "author|work". At most 3 per work; each carries a one-phrase relation label
+ * chosen by the classifier from a fixed set (never free text). Generated by
+ * scripts/enrichment/shwep-cited-works.mjs --related (${MODEL}). Do not edit by hand.
+ */
+export interface ShwepRelatedHolding {
+  id: string;
+  slug: string | null;
+  title: string;
+  author: string;
+  year: number | null;
+  relation: string;
+}
+export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = ${JSON.stringify(out, null, 2)};
+`;
+  fs.writeFileSync(path.join(DATA_DIR, 'shwep-related-works.ts'), ts);
+  const n = Object.keys(out).length, tot = Object.values(out).reduce((s, a) => s + a.length, 0);
+  console.log(`  → related holdings for ${n}/${items.length} unmatched works (${tot} links) → shwep-related-works.ts`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 
 (async () => {
@@ -1191,7 +1280,8 @@ async function stageWorkIdAudit() {
   if (want('--gap-audit')) await stageGapAudit();
   if (want('--apply-recall')) await stageApplyRecall();
   if (want('--work-id-audit')) await stageWorkIdAudit();
+  if (want('--related')) await stageRelated();
   if (want('--emit')) await stageEmit();
   if (want('--linkbib')) await stageLinkBib();
-  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --cluster-expand | --gap-audit | --apply-recall | --work-id-audit | --emit | --linkbib | --all');
+  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --cluster-expand | --gap-audit | --apply-recall | --work-id-audit | --related | --emit | --linkbib | --all');
 })().catch(e => { console.error('Fatal:', e); process.exit(1); });

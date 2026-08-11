@@ -4,6 +4,7 @@ import { SHWEP_CITED_WORKS } from '@/data/shwep-cited-works';
 import { SHWEP_WORK_LANGUAGES } from '@/data/shwep-work-languages';
 import { SHWEP_RESOLVED_LOCI } from '@/data/shwep-resolved-loci';
 import { SHWEP_EARL_QUOTES } from '@/data/shwep-earl-quotes';
+import { SHWEP_RELATED_WORKS } from '@/data/shwep-related-works';
 
 /**
  * Works cited in a SHWEP episode, rendered as a bibliography rather than as the
@@ -88,6 +89,12 @@ export interface CitedWorkEntry {
   editions: EditionRef[];
   /** Editions held beyond `editions`, available behind a disclosure. */
   moreEditions: EditionRef[];
+  /**
+   * For a work we do NOT hold readable (the cited edition may be in copyright, or no
+   * PD edition exists): up to 3 holdings genuinely related to it — a commentary,
+   * the same author, excerpts, the same tradition — so the citation isn't a dead end.
+   */
+  related?: { title: string; author: string; year: number | null; url: string; relation: string }[];
 }
 
 /**
@@ -298,6 +305,21 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
     }
 
     const folded = foldCopies(refs);
+    const relatedRaw = SHWEP_RELATED_WORKS[`${w.author}|${w.work}`];
+    // Dedupe near-identical editions of one related work (three printings of
+    // Damascius' De principiis are one suggestion, not three).
+    const seenRelated = new Set<string>();
+    const related = folded.length === 0 && relatedRaw?.length
+      ? relatedRaw.filter(r => {
+          const k = normalizeTitle(r.title);
+          if (seenRelated.has(k)) return false;
+          seenRelated.add(k);
+          return true;
+        }).map(r => ({
+          title: r.title, author: r.author, year: r.year,
+          url: `/book/${r.slug || r.id}`, relation: r.relation,
+        }))
+      : undefined;
     const citedIds = earl?.citedEdition
       ? new Set(folded.filter(e => matchesCitedEdition(e, earl.citedEdition!, w.author, w.work)).map(e => e.id))
       : undefined;
