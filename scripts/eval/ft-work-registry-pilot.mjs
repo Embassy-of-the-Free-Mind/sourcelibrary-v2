@@ -13,11 +13,14 @@
  *                 the join would render instead (test 2: 0 after)
  *   legibility    each entry is a citable sentence a reader could check
  *
- * SAFE BY CONSTRUCTION: writes only the new `work_translation_history`
- * collection, which NOTHING reads yet — no cron, no render path, no derive.
- * (The #3776 rule: before writing to a store, ask what reads it and when it
- * next runs. Answer: nothing, never — until a reviewed PR wires the join.)
- * Dry-run by default; --apply writes; --wipe-pilot removes pilot docs.
+ * ⚠️ THIS COLLECTION IS LIVE (#3910/#3916): book pages render cards directly.
+ * Every --apply is reader-visible actuation (#3776). Two guards follow:
+ * dry-run is the default, and REVIEWED cards (review_note stamped
+ * 'card-round-N') are skipped wholesale — regeneration rebuilds entries from
+ * the append-only ledger, where spot-check-removed fabrications live forever,
+ * so overwriting a reviewed card silently restores them (happened 2026-08-11;
+ * caught in minutes, fixed by hand, guarded here). --wipe-pilot removes
+ * pilot-cast docs only.
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs                     # pilot cast, report only
@@ -123,7 +126,23 @@ let disagreeingBefore = 0;
 let entriesTotal = 0;
 const docs = [];
 
+// REVIEWED CARDS ARE HUMAN-EDITED STATE — the regenerator must never touch
+// them. On 2026-08-11 a reseed rebuilt entries from the ledger and RESTORED
+// two spot-check-removed fabrications onto a live card (the ledger is
+// append-only, so bad priors live there forever; the card's corrections do
+// not). A card whose review_note carries a round stamp is skipped wholesale.
+const reviewed = new Set(
+  (await registry
+    .find({ review_note: { $regex: 'card-round' } }, { projection: { _id: 1 } })
+    .toArray()).map((d) => d._id),
+);
+if (reviewed.size) console.log(`Protecting ${reviewed.size} reviewed card(s) from regeneration.`);
+
 for (const workId of workList) {
+  if (reviewed.has(workId)) {
+    console.log(`  SKIP ${workId} — reviewed card (spot-check corrections present)`);
+    continue;
+  }
   const siblings = await books.find(
     { work_id: workId, visible: true },
     { projection: { id: 1, title: 1, author: 1, language: 1, is_first_translation: 1, first_translation: 1, pages_translated: 1 } },
@@ -267,7 +286,7 @@ if (APPLY) {
   for (const d of docs) {
     await registry.updateOne({ _id: d._id }, { $set: d }, { upsert: true });
   }
-  console.log(`APPLIED — ${docs.length} work_translation_history docs upserted. Nothing reads this collection yet; wiring the join is a separate, reviewed PR.`);
+  console.log(`APPLIED — ${docs.length} work_translation_history docs upserted. THIS COLLECTION IS LIVE (book pages render cards since #3910/#3916) — treat every write as reader-visible.`);
 } else {
   console.log('DRY-RUN — no writes. Re-run with --apply to seed work_translation_history.');
 }
