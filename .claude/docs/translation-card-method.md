@@ -65,6 +65,7 @@ Invariants per round (inherited from the #2880 pilot discipline):
 |---|---|---|---|---|---|
 | 1 | 2026-08-11 | 12 | 1 wrong_attribution + 3 filler entries (0 fabricated) | 1 category error (0 missed priors) | `scripts/eval/results/card-round-1.md`; two suggester rules adopted (no citation → no entry; no gloss-matched attribution); card defect ≈17% [5–45%], all fixed same-day |
 | 2 | 2026-08-11 | 22 | 3 FABRICATED (real-author/invented-title, all hygiene-proof) + 4 wrong-text + 3 date fixes + 2 dedupe | 8/8 testable held; 1 category error; 1 untestable (unidentifiable text) | `scripts/eval/results/card-round-2.md`; 6 rules adopted incl. not_applicable→under_review (Dioscorides bug), work-node modeling, 2 new card states; **cumulative missed priors 0/14**; layering demonstrated: rules kill noise, verification kills fabrications |
+| 3 | 2026-08-11 | 28 | 2 FABRICATED (cum. 5) + **13 wrong-content pins** (unverified tail ~35% entry defect vs ~10% verified head) + Duckwitz misdescription | 0 clean misses (1 GRAIN refutation at cycle level); 5 unidentifiable; 2 more English originals (cum. 5) | `scripts/eval/results/card-round-3.md`; **4/5 QID cards MIS-KEYED** (Pymander card = Asclepius node!) → QID P31 audit rule; "…sogs" containers excluded as a class; per-work scholarly bibliographies (ETCSL) beat open-web search for entry verification |
 
 ## State
 
