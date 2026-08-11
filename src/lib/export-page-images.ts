@@ -54,6 +54,27 @@ export async function fetchAndCompressImage(url: string): Promise<Buffer | null>
 }
 
 /**
+ * Facsimile-PDF image variant. Unlike fetchAndCompressImage() above (600×900
+ * grayscale — sized for e-reader screens), the facsimile PDF is a print-shaped
+ * artifact whose scan fills a full A4 page, so it keeps COLOR and real
+ * resolution. Reader feedback (2026-08-10) flagged the washed-out gray scans
+ * as part of "the layout is off." 1600px on the long edge ≈ 260 DPI on the A4
+ * text block.
+ */
+export async function fetchFacsimilePdfImage(url: string): Promise<Buffer | null> {
+  try {
+    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
+    return await sharp(buffer)
+      .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 78, mozjpeg: true })
+      .toBuffer();
+  } catch (error) {
+    console.error(`Failed to fetch/process facsimile image: ${url}`, error);
+    return null;
+  }
+}
+
+/**
  * Resolve a page's export image via the canonical resolver (R2 display variant
  * first). `photo` is the SOURCE-provider URL — often a slow Internet Archive
  * fetch, and on split-from-spread pages it is the WRONG IMAGE ENTIRELY: the
@@ -166,12 +187,13 @@ export function generateImagesZipStream(pages: Page[]): archiver.Archiver {
 
 export async function* streamPageImagesOrdered(
   validPages: Page[],
+  fetchImage: (url: string) => Promise<Buffer | null> = fetchAndCompressImage,
 ): AsyncGenerator<{ page: Page; imageBuffer: Buffer | null }> {
   const stream = streamOrdered(
     validPages,
     page => {
       const url = pageExportImageUrl(page);
-      return url ? fetchAndCompressImage(url) : Promise.resolve(null);
+      return url ? fetchImage(url) : Promise.resolve(null);
     },
     { concurrency: 8, lookahead: 12 },
   );

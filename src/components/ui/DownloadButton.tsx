@@ -284,7 +284,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           </div>
 
           {hasTranslations && hasImages && !imageRestricted && (
-            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Page scans + translation"
+            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
               icon={<FileType className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}

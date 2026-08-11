@@ -18,7 +18,7 @@ import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { Readable } from 'stream';
-import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
+import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
 import {
   fetchAndCompressImage,
@@ -26,6 +26,7 @@ import {
   hasExportImage,
   fetchPageImagesOrdered,
   streamPageImagesOrdered,
+  fetchFacsimilePdfImage,
   generateImagesZipStream,
 } from '@/lib/export-page-images';
 
@@ -36,19 +37,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org'
 // one image per page; give the function room beyond the default window. This
 // route ran on the default window until #3909 while its twin had 300s.
 export const maxDuration = 300;
-
-/**
- * Budget for the image phase, in ms. `maxDuration` on this route is 300s; we
- * stop ADDING pages at 210s so there is room to finish the page in hand, write
- * the truncation notice and the colophon, and flush.
- *
- * A big book cannot be served whole in one request (a 4,198-page book would
- * need ~40 minutes of fetching), so the choice is between an opaque timeout and
- * an honest partial edition. Per CLAUDE.md "no silent caps": if coverage is
- * bounded, say what was dropped — here in the PDF itself, so the artifact
- * carries its own provenance rather than relying on a header nobody reads.
- */
-const FACSIMILE_IMAGE_BUDGET_MS = 210_000;
 
 // Index entry structure (from book index collection)
 interface ConceptEntry {
@@ -1163,161 +1151,6 @@ p:first-of-type { text-indent: 0; }
 
     archive.finalize();
   });
-}
-
-// Generate text-only English translation PDF — see the main download route
-// for the full rationale (streamed, Unicode font, quote-integrity cleanup).
-function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  const translatedPages = pages.filter(p => p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'English Translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    doc.addPage();
-
-    for (const page of translatedPages) {
-      if (!page.translation?.data) continue;
-      const text = cleanTranslationForPdf(page.translation.data, book.id);
-      if (!text) continue;
-
-      writePdfPageHeading(doc, fonts, page.page_number);
-      writePdfBody(doc, fonts, text, { fontSize: 11, lineGap: 3 });
-      doc.moveDown(0.8);
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: 'English translation',
-      translatedCount: translatedPages.length,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-translation stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
-}
-
-// Generate facsimile PDF (page scans + translation) — see the main download
-// route for the full rationale.
-function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  const validPages = pages.filter(p => pageExportImageUrl(p) || p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'Facsimile Edition — page scans with English translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    // Yields each page AS ITS IMAGE ARRIVES. `fetchPageImagesOrdered` awaited
-    // EVERY image before writing a byte, so the response sat silent for the
-    // whole fetch (231s on a 366-page book) and Cloudflare killed it, with
-    // every compressed image resident at once — #3597, fixed on the global
-    // route and never ported here (#3909).
-    console.log(`Streaming ${validPages.length} images for pdf-facsimile...`);
-    const startedAt = Date.now();
-    let written = 0;
-    let translated = 0;
-    let truncated = false;
-
-    const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-    const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
-
-    for await (const { page, imageBuffer } of streamPageImagesOrdered(validPages)) {
-      if (Date.now() - startedAt > FACSIMILE_IMAGE_BUDGET_MS) {
-        truncated = true;
-        break;
-      }
-      written++;
-      if (page.translation?.data) translated++;
-      doc.addPage();
-      writePdfPageHeading(doc, fonts, page.page_number);
-
-      if (imageBuffer) {
-        try {
-          doc.image(imageBuffer, { fit: [usableWidth, usableHeight * 0.6], align: 'center' });
-        } catch (e) {
-          console.error(`pdf-facsimile: failed to embed image for page ${page.page_number}:`, e);
-          doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-          doc.fillColor('#000000');
-        }
-      } else {
-        doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-        doc.fillColor('#000000');
-      }
-
-      if (page.translation?.data) {
-        const text = cleanTranslationForPdf(page.translation.data, book.id);
-        if (text) {
-          doc.moveDown(0.5);
-          writePdfBody(doc, fonts, text, { fontSize: 10.5, lineGap: 3 });
-        }
-      }
-    }
-
-    // A partial facsimile must say so in the artifact itself — it used to be
-    // labelled a complete "facsimile edition" with pages silently missing.
-    if (truncated) {
-      const firstMissing = validPages[written]?.page_number;
-      doc.addPage();
-      doc.font(fonts.bold).fontSize(14).text('This edition is incomplete', { align: 'center' });
-      doc.moveDown(1);
-      doc.font(fonts.regular).fontSize(11).text(
-        [
-          `This facsimile stops at page ${validPages[written - 1]?.page_number ?? written} of `
-          + `${validPages.length}. It was not truncated for editorial reasons: a single request `
-          + 'cannot fetch and lay out every page scan of a book this large within the time '
-          + 'available, so generation stopped rather than failing outright.',
-          '',
-          firstMissing !== undefined
-            ? `Pages from ${firstMissing} onward are not included here. They are all readable `
-              + `at ${BASE_URL}/book/${book.id}, and the text-only PDF and EPUB editions cover `
-              + 'the whole book.'
-            : '',
-          '',
-          'If you need the complete facsimile as a single file, please get in touch — we would '
-          + 'rather generate it for you offline than hand you a partial edition without saying so.',
-        ].filter(Boolean).join('\n'),
-        { lineGap: 3 },
-      );
-      console.warn(
-        `pdf-facsimile truncated: ${written}/${validPages.length} pages for book ${book.id} `
-        + `after ${Date.now() - startedAt}ms`,
-      );
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: truncated ? 'partial facsimile edition' : 'facsimile edition',
-      translatedCount: translated,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-facsimile stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
 }
 
 // Generate images-only EPUB (no translation, just the processed page images)
@@ -2685,8 +2518,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // ~100s origin window and die as a 524 saved as a corrupt file.
     if (isPdfTranslation || isPdfFacsimile) {
       const doc = isPdfFacsimile
-        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[])
-        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[]);
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+            hasImage: p => !!pageExportImageUrl(p as Page),
+            streamImages: ps => streamPageImagesOrdered(ps as Page[], fetchFacsimilePdfImage),
+          })
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+          });
       const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
       return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
         headers: {
