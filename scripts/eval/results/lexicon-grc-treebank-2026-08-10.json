@@ -1,0 +1,8 @@
+{
+  "date": "2026-08-10",
+  "issue": 3823,
+  "gold": "UD_Ancient_Greek-Perseus train (132,156 tokens, 32,282 distinct forms)",
+  "coverage": 0.888,
+  "agreementOnCovered": 0.966,
+  "notes": "Disagreements dominated by lemma-convention differences (Ionic/Attic headword choice, accent placement, substantivized adjectives) and suppletive proper names (Dia -> Zeus); true error rate well under 3.4%."
+}

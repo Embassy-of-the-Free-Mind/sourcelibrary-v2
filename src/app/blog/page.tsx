@@ -27,11 +27,11 @@ export interface BlogPost {
 export const posts: BlogPost[] = [
   {
     slug: 'greek-lemma-table',
-    title: 'Resurrecting Morpheus',
+    title: 'Every Shape of Every Word',
     subtitle:
-      'A 570,000-form Greek lemma table for early modern books, built by running a thirty-year-old open-source parser over our own corpus — and the single wrong sigma that silently hid a quarter of it.',
+      'We mapped 570,000 Greek word forms to their dictionary entries — the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
     date: '10 August 2026',
-    readTime: '8 min read',
+    readTime: '5 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
   },
