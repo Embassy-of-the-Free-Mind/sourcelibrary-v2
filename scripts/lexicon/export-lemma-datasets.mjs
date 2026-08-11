@@ -89,14 +89,38 @@ async function main() {
   console.log(`greek rows: ${nGrc}`);
 
   // ── Latin ──
-  async function* latRows() {
-    const cur = db.collection('lexicon_lemma_map').find({}).sort({ form: 1 });
-    for await (const d of cur) {
-      const lemmas = d.keys.map((k) => ({ headword: k.replace(/[0-9]+$/, ''), ls: k }));
-      yield JSON.stringify({ form: d.form, lemmas });
+  // Merge three sources so the table is complete STANDALONE (v2 fix — the
+  // site's lookup has exact-headword and irregular tiers in code, but a
+  // dataset consumer has neither): the generated paradigm map, a self-row
+  // for every headword (form == citation form), and the hand-tabled
+  // irregulars (sum/est/esse, fero, pronouns) that never enter the map.
+  const { irregularEntries } = await import('../../src/lib/lexicon/latin-morph.ts');
+  const latRows = new Map();
+  const addLat = (form, keys) => {
+    if (!form) return;
+    const set = latRows.get(form) ?? new Set();
+    for (const k of keys) set.add(k);
+    latRows.set(form, set);
+  };
+  const latByNorm = new Map();
+  for await (const e of db.collection('lexicon_entries').find({}, { projection: { key: 1, key_normalized: 1 } })) {
+    addLat(e.key_normalized, [e.key]);
+    const arr = latByNorm.get(e.key_normalized) ?? [];
+    arr.push(e.key);
+    latByNorm.set(e.key_normalized, arr);
+  }
+  for await (const d of db.collection('lexicon_lemma_map').find({})) addLat(d.form, d.keys);
+  for (const [form, lemmas] of irregularEntries()) {
+    const keys = lemmas.flatMap((l) => latByNorm.get(l.replace(/[0-9]+$/, '')) ?? (latByNorm.has(l) ? latByNorm.get(l) : []));
+    if (keys.length) addLat(form, keys);
+  }
+  async function* latIter() {
+    for (const form of [...latRows.keys()].sort()) {
+      const lemmas = [...latRows.get(form)].map((k) => ({ headword: k.replace(/[0-9]+$/, ''), ls: k }));
+      yield JSON.stringify({ form, lemmas });
     }
   }
-  const nLat = await gzWriteLines(path.join(OUT, 'latin-lemma-table.jsonl.gz'), latRows());
+  const nLat = await gzWriteLines(path.join(OUT, 'latin-lemma-table.jsonl.gz'), latIter());
   console.log(`latin rows: ${nLat}`);
   await client.close();
 
