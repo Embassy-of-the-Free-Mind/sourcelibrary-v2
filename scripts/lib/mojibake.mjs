@@ -78,7 +78,16 @@ export function findMojibake(value) {
 
 /**
  * Book fields safe to normalise: bibliographic metadata we author or copy from a
- * catalogue. Deliberately excludes anything derived from page images.
+ * catalogue, plus derived prose that quotes it. Deliberately excludes page text.
+ *
+ * Dotted paths are supported and resolved against nested objects.
+ *
+ * **This list was wrong once, and the way it was wrong is the point.** The first pass
+ * guessed six top-level fields, reported CLEAN, and left the damaged title rendering on
+ * the live page — because the AI-written `summary.data` quotes the title, and nobody had
+ * thought of it. Never trust a guessed field list: `findMojibakeInDocument()` below walks
+ * the whole document, and that is what the detector uses. This list only governs what the
+ * repairer WRITES.
  */
 export const REPAIRABLE_BOOK_FIELDS = [
   'title',
@@ -87,4 +96,65 @@ export const REPAIRABLE_BOOK_FIELDS = [
   'author',
   'description',
   'subtitle',
+  // Derived prose that embeds the title. This is what rendered the damage to readers
+  // after every "real" metadata field had already been fixed.
+  'summary.data',
+  // Top-level work title (distinct from source_work_dates[].work_title).
+  'work_title',
 ];
+
+/**
+ * Paths that record WHAT AN EXTERNAL SOURCE SAID, and must therefore keep the damage.
+ *
+ * `catalog_metadata.creator` and `author_link_provenance[].matched` are provenance: their
+ * whole job is to preserve the upstream string as received, so that a later question
+ * ("what did the catalogue actually give us?") has an answer. Repairing them would make
+ * the record lie about its own source — and would erase the evidence that the damage is
+ * upstream, which is the single most important fact about this defect.
+ *
+ * Same reasoning keeps the damaged string in a merged author's `variants[]`: it is a
+ * lookup key for records that still carry the old spelling, not a display value.
+ */
+export const PROVENANCE_PATHS = [
+  /^catalog_metadata\./,
+  /^author_link_provenance\[/,
+  /^variants\[/,
+  /^variant_slugs\[/,
+  /_provenance(\.|\[)/,
+  /^source_fingerprint$/,
+];
+
+/** True when a walked path records an external source rather than our own display value. */
+export function isProvenancePath(path) {
+  return PROVENANCE_PATHS.some((re) => re.test(path));
+}
+
+/**
+ * Walk an entire document and return every path holding a damaged string.
+ *
+ * Paths use `a.b[0].c` form. Array indices are preserved so a caller can address the
+ * exact element. This exists so a detector never depends on someone having remembered a
+ * field name.
+ *
+ * @param {unknown} doc
+ * @returns {{ path: string, value: string }[]}
+ */
+export function findMojibakeInDocument(doc) {
+  const out = [];
+  const visit = (node, path) => {
+    if (typeof node === 'string') {
+      if (findMojibake(node).length > 0) out.push({ path, value: node });
+      return;
+    }
+    if (Array.isArray(node)) {
+      node.forEach((v, i) => visit(v, `${path}[${i}]`));
+      return;
+    }
+    // Plain objects only — skip ObjectId, Date, Binary and friends.
+    if (node && typeof node === 'object' && node.constructor === Object) {
+      for (const [k, v] of Object.entries(node)) visit(v, path ? `${path}.${k}` : k);
+    }
+  };
+  visit(doc, '');
+  return out;
+}
