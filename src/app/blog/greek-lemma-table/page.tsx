@@ -112,12 +112,19 @@ export default function GreekLemmaTablePage() {
       </div>
 
       <p className="text-xl text-secondary leading-relaxed mb-8">
-        Open a Greek book printed in 1590 and try to look up a word. The dictionary lists
-        προσέχω &mdash; but the page in front of you says προσέχειν, or προσέσχομεν, or one of
-        several hundred other shapes that verb can take. Greek words change form constantly
-        &mdash; for tense, for case, for person &mdash; and dictionaries list each word only
-        once, under its <em>lemma</em>, the headword. Between the page and the dictionary
-        stands a gap that has stopped beginners cold for centuries.
+        Tap an unfamiliar word on a Kindle and a definition appears. It feels like nothing
+        &mdash; a solved problem. We wanted the same small magic for the oldest books in our
+        library: pages of Greek printed four centuries ago. Building it turned out to require
+        something unexpectedly large &mdash; a map of every shape of every word in the
+        language.
+      </p>
+      <p className="text-secondary leading-relaxed mb-6">
+        The problem is that Greek words refuse to hold still. A dictionary lists προσέχω,
+        &ldquo;to attend&rdquo; &mdash; but a real page almost never shows that form. It shows
+        προσέχειν, or προσέσχομεν, or one of several hundred other shapes the verb takes as it
+        changes for tense, person, and case. Dictionaries list each word exactly once, under
+        its <em>lemma</em>, the headword. Between the page and the dictionary stands a gap
+        &mdash; and on a book from 1590, no tap in the world could cross it.
       </p>
 
       <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The lifetime index</h2>
