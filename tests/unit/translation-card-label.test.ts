@@ -14,11 +14,10 @@ const card = (over: Partial<TranslationCard> = {}): TranslationCard => ({
 const englished = { pages_translated: 100 };
 
 describe('cardLabel — the one-sentence rule (#3881)', () => {
-  it('empty card + English rendering → the honest first sentence', () => {
+  it('empty card + English rendering → the plain catalog sentence', () => {
     const l = cardLabel(card(), englished)!;
     expect(l.register).toBe('first');
-    expect(l.sentence).toMatch(/No earlier English translation .* known to us/);
-    expect(l.searchSummary).toContain('Searched 4 catalogues');
+    expect(l.sentence).toBe('The first English translation of this work.');
   });
 
   it('empty card but NO English rendering → silence (nothing to badge)', () => {
@@ -34,7 +33,7 @@ describe('cardLabel — the one-sentence rule (#3881)', () => {
       ],
     }), englished)!;
     expect(l.register).toBe('priors');
-    expect(l.sentence).toContain('A (1650)');
+    expect(l.sentence).toBe('Earlier English translations: A (1650); B (1914).');
     expect(l.entries).toHaveLength(2);
   });
 

@@ -136,33 +136,34 @@ describe('firstTranslationBadge qualifies an in-progress translation', () => {
   });
 });
 
-describe('firstTranslationBadge states the search when the claim is a candidate', () => {
-  it('reports the search instead of asserting the negative', () => {
+describe('firstTranslationBadge speaks plain catalog voice in every register (2026-08-11)', () => {
+  // Policy reversal, deliberate (Derek): a catalog says "first edition" without
+  // an epistemology lecture. The claim register no longer changes the wording;
+  // provenance lives in the data, one click away, not in the label.
+  it('states the plain label regardless of claim register', () => {
     expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'candidate'))
-      .toBe('No prior translation found');
+      .toBe('First Translation');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'confirmed'))
+      .toBe('First Translation');
   });
 
-  it('keeps the in-progress qualifier', () => {
+  it('keeps the in-progress qualifier (reader service, not hedging)', () => {
     expect(firstTranslationBadge('confirmed_first', 'Latin', true, 'candidate'))
-      .toBe('No prior translation found, in progress');
+      .toBe('First Translation, in progress');
   });
 
-  it('does not draw distinctions the weak evidence cannot support', () => {
-    // complete / modern / from-source are gradations of a conclusion, not of the
-    // evidence behind it. Rendering them on a candidate dresses up a coin flip.
-    for (const d of ['first_complete_translation', 'first_modern_translation', 'first_from_source']) {
-      expect(firstTranslationBadge(d, 'Dutch', false, 'candidate')).toBe('No prior translation found');
-    }
+  it('draws the disposition distinctions in every register', () => {
+    expect(firstTranslationBadge('first_complete_translation', 'Dutch', false, 'candidate'))
+      .toBe('First Complete Translation');
+    expect(firstTranslationBadge('first_modern_translation', 'Dutch', false, 'candidate'))
+      .toBe('First Modern Translation');
+    expect(firstTranslationBadge('first_from_source', 'Dutch', false, 'candidate'))
+      .toBe('First from Dutch');
   });
 
-  it('DEFAULTS to the candidate register when the caller omits the claim', () => {
-    // The load-bearing default (#3459). Card surfaces render from
-    // `books_catalog`, which carries no evidence strength, so a caller that
-    // cannot supply the claim must not assert one by omission. If this ever
-    // flips to 'confirmed', every collection, catalogue and author card starts
-    // asserting a universal negative again.
-    expect(firstTranslationBadge('confirmed_first', 'Latin', false))
-      .toBe('No prior translation found');
-    expect(firstTranslationDescription('confirmed_first')).toContain('not proof');
+  it('description is plain and disclaimer-free', () => {
+    const d = firstTranslationDescription('confirmed_first');
+    expect(d).toBe('The first English translation of this text.');
+    expect(d).not.toMatch(/not proof|coin flip|weaker evidence/);
   });
 });
