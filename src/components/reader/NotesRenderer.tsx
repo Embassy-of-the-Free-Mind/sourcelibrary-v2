@@ -10,6 +10,7 @@ import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { applyNotesOff } from '@/lib/notes-off';
 
 /**
  * Page types where the entire "translation" is AI-generated description (no
@@ -308,57 +309,13 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   return result;
 }
 
-// Handle <term> vocabulary chips when notes are hidden.
-// A trailing glossary entry is a line of nothing but <term>+<note> pairs
-// (e.g. `<term>bite</term> <note>original: "morsus."</note>`). With notes off the
-// <note> renders as null, leaving the term chip dangling with no definition —
-// remove those lines whole. But the same pair also occurs INLINE mid-sentence
-// (`a <term>scheme of roundness</term> <note>original: "schema rotundationis"</note>
-// is produced`), where the term IS the translation of the word: deleting the pair
-// there deletes sentence content (#3811). So only whole glossary lines are dropped;
-// every other <term> is unwrapped to plain text (its <note>, if any, is removed
-// downstream by stripAiAnnotations). A <term> followed by a <gloss> keeps the term
-// and drops only the AI's rendering of it, otherwise the unwrapped gloss reads as
-// a duplicate.
-function preprocessTerms(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  const pair = '<term>[^\\n]*?<\\/term>\\s*<note>[^\\n]*?<\\/note>';
-  const glossaryLine = new RegExp(`^[\\s*\\->#\\d.]*(?:${pair}[\\s.,;:]*)+[\\s*]*$`, 'i');
-  return text
-    .split('\n')
-    .filter(line => !glossaryLine.test(line))
-    .join('\n')
-    .replace(/(<term>[\s\S]*?<\/term>)\s*<gloss>[\s\S]*?<\/gloss>/gi, '$1')
-    .replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
-}
-
-// Tags that mark text physically present on the page (a marginal note in the
-// original, a scribal insertion, an uncertain reading) as opposed to <note>/
-// <image-desc>, which are the AI's own commentary. Turning Notes off must never
-// delete a page mark's content — that is transcription, and on pages whose text
-// is mostly labels (maps, diagrams, plates) deleting it empties the page.
-// Unwrap them instead: the words stay, the highlight chip goes.
-const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
-
-function unwrapPageMarks(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  return text.replace(
-    new RegExp(`<(${PAGE_MARK_TAGS})(?:\\s[^>]*)?>([\\s\\S]*?)<\\/\\1>`, 'gi'),
-    '$2'
-  );
-}
-
-// The AI's own commentary — the only thing the Notes toggle should hide.
-// Removed here rather than left to the component's `showNotes ? … : null`
-// branches so that one pass decides what "notes off" means: whatever survives
-// this function is page text. Runs after unwrapPageMarks, so a note nested
-// inside a page mark is already flattened into it by normalizeAnnotationSpans.
-function stripAiAnnotations(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  return text
-    .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
-    .replace(/\n{3,}/g, '\n\n');
-}
+// What "notes off" means — the dangling-term rule, the page-mark unwrap, and the
+// AI-annotation strip — now lives in @/lib/notes-off so the reader and the
+// exports share one definition. It had been re-implemented on five surfaces and
+// drifted: #3811 fixed the reader deleting translated words, and the EPUB/HTML
+// download was still doing it (plus deleting page-mark content) months later
+// (#3870). Read the doc comments there; this component only decides WHEN to
+// apply it, never what it does.
 
 // On description-only pages (illustrations, diagrams, etc.) the entire "translation"
 // is AI-generated description. The model wraps some of it in <note>/<image-desc> and
@@ -897,10 +854,9 @@ export function prepareNotesMarkdown(
     (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
       DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
     !hasBodyTextOutsideNotes(withNormalizedSpans);
-  // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
-  const withTerms = preprocessTerms(withNormalizedSpans, showNotes);
-  // Keep transcribed page marks when notes are off; drop only the AI's commentary.
-  const withPageMarks = stripAiAnnotations(unwrapPageMarks(withTerms, showNotes), showNotes);
+  // Notes off: drop dangling vocabulary chips, keep transcribed page marks, drop
+  // only the AI's commentary. One shared definition — see @/lib/notes-off.
+  const withPageMarks = showNotes ? withNormalizedSpans : applyNotesOff(withNormalizedSpans);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
   const withDescription = isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withPageMarks) : withPageMarks;
   const withGreek = preprocessLatexGreek(withDescription);
