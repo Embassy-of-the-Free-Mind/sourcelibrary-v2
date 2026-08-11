@@ -345,6 +345,7 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
       held: editions.length > 0,
       editions,
       moreEditions,
+      related,
     });
   }
 
