@@ -18,6 +18,9 @@ export interface ShwepCitedWork {
   era: string;
   episodes: number[];
   status: 'held' | 'acquire';
+  /** Appears only in Secondary-literature sections with no edition citation — kept in
+   *  the DB but excluded from reader cards/links until a human confirms it (#3887). */
+  needs_review?: boolean;
   held: ShwepCitedHolding[];
 }
 export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
@@ -89,7 +92,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "plotinus-enneads-1492-aldine-edition-ficino-translation-trans",
         "title": "Plotinus — Enneads (1492 Aldine Edition, Ficino translation)",
         "language": "Latin",
-        "translated": true
+        "translated": false
       },
       {
         "id": "69a5e5e0006a409842217a26",
@@ -4952,7 +4955,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "6a357f112aadc65cf0908511",
         "slug": "anecdota-atheniensia-anonymous",
         "title": "Anecdota atheniensia",
-        "language": "Greek",
+        "language": "Lb",
         "translated": true
       }
     ]
@@ -5040,7 +5043,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "slug": "the-newe-testament-tyndale-1526-tyndale",
         "title": "The Newe Testament (Tyndale, 1526)",
         "language": "English",
-        "translated": true
+        "translated": false
       },
       {
         "id": "69aea5c81c89af5ce4bc1d8f",
@@ -13250,8 +13253,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       121
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69f3378f876dd827cbc52461",
+        "slug": "mythographi-vaticani-mythographus-tertius-manuscript-1486-de-vegh",
+        "title": "Mythographi vaticani, mythographus tertius",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Paraphrase of the Gospel of John",

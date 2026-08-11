@@ -170,6 +170,35 @@ function normalizeTitle(t: string) {
   return t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 60);
 }
 
+/**
+ * Does this edition match the edition the citation names ("Chester Charlton McCown",
+ * "Wright's Loeb")? Twin of citedEditionMatch in scripts/lib/holdings-resolver.mjs
+ * (#3888) — editor-name tokens (initials, joiners, publisher/place boilerplate, and
+ * the work's own author/title words dropped) matched against title/author/url, with a
+ * cited year required to agree ±1 when the edition has one. Change both together.
+ */
+const CITED_STOP = new Set([
+  'the', 'and', 'von', 'van', 'der', 'des', 'ed', 'eds', 'edition', 'editions', 'editor', 'editors',
+  'edited', 'trans', 'translation', 'translated', 'tr', 'rev', 'vol', 'volume', 'book', 'books', 'repr',
+  'press', 'university', 'library', 'classical', 'london', 'york', 'paris', 'berlin', 'leipzig',
+  'edinburgh', 'boston', 'chicago', 'cambridge', 'oxonii', 'lipsiae',
+]);
+const wordSet = (s: string) => new Set(
+  s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter(Boolean)
+);
+function matchesCitedEdition(e: EditionRef, citedEdition: string, workAuthor: string, workTitle: string): boolean {
+  const ownToks = wordSet(`${workAuthor} ${workTitle}`);
+  const yearM = citedEdition.match(/\b(1[4-9]\d\d|20\d\d)\b/);
+  const toks = citedEdition.toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]+/g, ' ')
+    .split(/\s+/).filter(t => t.length >= 3 && !/^\d+$/.test(t) && !CITED_STOP.has(t) && !ownToks.has(t));
+  if (!toks.length) return false;
+  const hay = ` ${(`${e.title} ${e.author || ''} ${e.url}`)
+    .toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]+/g, ' ')} `;
+  if (!toks.some(t => hay.includes(` ${t} `))) return false;
+  if (yearM && e.year && Math.abs(e.year - +yearM[1]) > 1) return false;
+  return true;
+}
+
 /** Fold near-identical rows (six incunable copies of one Traversarius printing) into one. */
 function foldCopies(editions: EditionRef[]): EditionRef[] {
   const byKey = new Map<string, EditionRef>();
@@ -191,8 +220,12 @@ function foldCopies(editions: EditionRef[]): EditionRef[] {
 
 const MAX_SHOWN = 3;
 
-function pickForDisplay(editions: EditionRef[]): { editions: EditionRef[]; moreEditions: EditionRef[] } {
+function pickForDisplay(editions: EditionRef[], citedIds?: Set<string>): { editions: EditionRef[]; moreEditions: EditionRef[] } {
+  // The edition HE names leads the stack when we hold it (#3888) — a scholar
+  // following "McCown" wants McCown first, whatever its typographic pedigree.
+  const cited = (e: EditionRef) => (citedIds?.has(e.id) ? 1 : 0);
   const ordered = [...editions].sort((a, b) => {
+    if (cited(a) !== cited(b)) return cited(b) - cited(a);
     const rank = ROLE_RANK[b.role] - ROLE_RANK[a.role];
     if (rank !== 0) return rank;
     if (a.translated !== b.translated) return a.translated ? -1 : 1;
@@ -211,7 +244,9 @@ function pickForDisplay(editions: EditionRef[]): { editions: EditionRef[]; moreE
 }
 
 export async function getWorksCitedForEpisode(episodeNumber: number): Promise<CitedWorkEntry[]> {
-  const works = SHWEP_CITED_WORKS.filter(w => w.episodes.includes(episodeNumber));
+  // needs_review rows (Secondary-section-only extractions with no edition citation,
+  // #3887) stay out of the reader page until a human confirms them.
+  const works = SHWEP_CITED_WORKS.filter(w => w.episodes.includes(episodeNumber) && !w.needs_review);
   if (works.length === 0) return [];
 
   const allIds = [...new Set(works.flatMap(w => w.held.map(h => h.id)))];
@@ -263,7 +298,10 @@ export async function getWorksCitedForEpisode(episodeNumber: number): Promise<Ci
     }
 
     const folded = foldCopies(refs);
-    const { editions, moreEditions } = pickForDisplay(folded);
+    const citedIds = earl?.citedEdition
+      ? new Set(folded.filter(e => matchesCitedEdition(e, earl.citedEdition!, w.author, w.work)).map(e => e.id))
+      : undefined;
+    const { editions, moreEditions } = pickForDisplay(folded, citedIds);
     entries.push({
       work: w.work,
       author: w.author,

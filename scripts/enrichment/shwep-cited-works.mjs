@@ -59,6 +59,16 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { COLLECTED_RX, isCollected, bestEdition, editionReadable, editionVisible } from '../lib/holdings-resolver.mjs';
 
+// Ranking context for bestEdition (#3888): the work's composition language and the
+// edition Earl's citation names, per episode. Both optional — absent files or keys
+// degrade to the legacy ranking. Loaded lazily by emit/linkbib.
+async function loadRankingContext(dataDir) {
+  let langs = {}, quotes = {};
+  try { langs = (await import(path.join(dataDir, 'shwep-work-languages.ts'))).SHWEP_WORK_LANGUAGES || {}; } catch {}
+  try { quotes = (await import(path.join(dataDir, 'shwep-earl-quotes.ts'))).SHWEP_EARL_QUOTES || {}; } catch {}
+  return { langs, quotes };
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', '..', 'src', 'data');
 const CACHE = '/tmp/shwep-cited';
@@ -502,15 +512,24 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = ${JSON.stringify(dbRows, null
     for (const r of rows) { pcById2.set(r._id.toString(), r.pages_count || 0); chaptersById2.set(r._id.toString(), r.chapters || []); }
     for (const w of works) for (const m of (w.heldMeta || [])) m.pages_count = pcById2.get(m.id) || m.pages_count || 0;
   }
+  // Edition choice is per (work, EPISODE): when Earl's citation for this episode
+  // names an edition we hold (citedEdition), that edition is the card — the McCown
+  // Testament of Solomon on ep 326 by design, not by coincidence of translation
+  // counts (#3888). workLanguage lets role/authority rank within a completeness tier.
+  const { langs, quotes } = await loadRankingContext(DATA_DIR);
   const perEp = {};
   for (const w of works) {
     if (!w.held.length || needsSecondaryReview(w)) continue;
-    const best = bestEdition(w.heldMeta) || (w.heldMeta || [])[0];
-    if (!best) continue;
-    let page = null;
-    if (isCollected(best)) { const ch = chapterMatch(w.title_forms || [w.work], chaptersById2.get(best.id)); if (ch && ch.pageId) page = ch.pageId; }
-    const card = page ? { id: best.id, page } : { id: best.id };
+    const workLanguage = langs[`${w.author}|${w.work}`];
     for (const ep of w.episodes) {
+      const citedEdition = quotes[`${ep}|${w.author}|${w.work}`]?.citedEdition;
+      const best = bestEdition(w.heldMeta, { workLanguage, citedEdition, workAuthor: w.author, workTitle: w.work })
+        || (w.heldMeta || [])[0];
+      if (!best) continue;
+      let page = null;
+      if (isCollected(best)) { const ch = chapterMatch(w.title_forms || [w.work], chaptersById2.get(best.id)); if (ch && ch.pageId) page = ch.pageId; }
+      if (!page) page = HAND_PAGE_LINKS[`${ep}|${best.id}`] || null;
+      const card = page ? { id: best.id, page } : { id: best.id };
       perEp[ep] = perEp[ep] || new Map();
       if (!perEp[ep].has(best.id)) perEp[ep].set(best.id, card);
     }
@@ -563,6 +582,33 @@ export const SHWEP_BOOK_MATCHES: Record<number, ShwepBookMatch[]> = {\n`;
 // verbatim as the quality bar.
 
 const HAND_CURATED = new Set([76, 323]);
+
+// Hand-verified chapter deep-links, keyed "episode|bookId" → pageId. These point a
+// card at the PART of a volume that carries the cited work (Hygromanteia = Anecdota
+// Atheniensia's "Treatise on Magic" chapter; Testament of Adam in Syriac Patrology
+// I.2; etc. — 2026-08-10 audit and earlier curation). chapterMatch cannot derive
+// them (title-token overlap misses, or the volume title no longer trips the
+// collected-edition gate), so emit must consult this map or regeneration silently
+// drops them. Applies only when the ranked card IS that book; if a better edition
+// outranks the volume, the deep link is moot and the override is skipped.
+const HAND_PAGE_LINKS = {
+  '25|6a357e822aadc65cf0906d5f': '6a357e822aadc65cf0906d66',
+  '60|69ac9c0399d9a0170d090ed2': '69ac9c0399d9a0170d090ede',
+  '83|69b2ff225545150b61b46d12': '69b2ff225545150b61b46e9a',
+  '97|69ac80931aa2dc787a684edc': '69ac80931aa2dc787a684f0c',
+  '116|69a956fa65ddd05bbcd3d7c8': '69a956fa65ddd05bbcd3d8c1',
+  '121|69ad747b059a2da73405f323': '69ad747b059a2da73405f3e9',
+  '122|69ad747b059a2da73405f323': '69ad747b059a2da73405f3e9',
+  '124|6a3f035097e91e1768f69f31': '6a3f035097e91e1768f69f87',
+  '128|69ad747b059a2da73405f323': '69ad747b059a2da73405f3e9',
+  '129|69ad747b059a2da73405f323': '69ad747b059a2da73405f3e9',
+  '132|69ad747b059a2da73405f323': '69ad747b059a2da73405f3e9',
+  '217|6a357f112aadc65cf0908511': '6a357f112aadc65cf0908522',
+  '266|69a956fa65ddd05bbcd3d7c8': '69a956fa65ddd05bbcd3d8c1',
+  '324|6994400f06e186ed6c012a44': '6994400f06e186ed6c012d05',
+  '325|6a357f112aadc65cf0908511': '6a357f112aadc65cf0908522',
+  '326|6a357f112aadc65cf0908511': '6a357f112aadc65cf0908522',
+};
 
 // Ranges [start,end) we must never splice a link into: every bracketed span `[...]`
 // (with or without a trailing `(url)`). This covers existing markdown links AND bare
@@ -698,28 +744,38 @@ async function stageLinkBib() {
   // (the readable bestEdition when we have it, else any held copy). `linkable` works can
   // be inline-linked; the rest — and any linkable work whose only mention is in a dated
   // citation — still need to reach the reader, via the supplementary card grid below.
+  // Edition choice is per (work, EPISODE) — the citation's named edition wins when
+  // held, then role/authority via the work's composition language (#3888).
+  const { langs, quotes } = await loadRankingContext(DATA_DIR);
   const byEp = {};
   for (const w of works) {
     const meta = w.heldMeta || [];
     if (!meta.length || needsSecondaryReview(w)) continue;
-    const best = bestEdition(meta);
-    const rep = best || meta[0];
-    // Page-precise deep link: if the chosen edition is a collected/omnibus volume and the
-    // cited work matches one of its chapters (a PART of the book), link straight to that
-    // treatise's page instead of the 800-page volume front.
-    let href = best ? bookHref(best) : null;
-    let chapterPage = null;
-    if (best && isCollected(best)) {
-      const ch = chapterMatch(w.title_forms || [w.work], chaptersById.get(best.id));
-      if (ch && ch.pageId) { href = `/book/${best.slug || best.id}/page/${ch.pageId}`; chapterPage = ch.pageId; }
+    const workLanguage = langs[`${w.author}|${w.work}`];
+    for (const ep of w.episodes) {
+      const citedEdition = quotes[`${ep}|${w.author}|${w.work}`]?.citedEdition;
+      const best = bestEdition(meta, { workLanguage, citedEdition, workAuthor: w.author, workTitle: w.work });
+      const rep = best || meta[0];
+      // Page-precise deep link: if the chosen edition is a collected/omnibus volume and the
+      // cited work matches one of its chapters (a PART of the book), link straight to that
+      // treatise's page instead of the 800-page volume front.
+      let href = best ? bookHref(best) : null;
+      let chapterPage = null;
+      if (best && isCollected(best)) {
+        const ch = chapterMatch(w.title_forms || [w.work], chaptersById.get(best.id));
+        if (ch && ch.pageId) { href = `/book/${best.slug || best.id}/page/${ch.pageId}`; chapterPage = ch.pageId; }
+      }
+      if (best && !chapterPage) {
+        const ov = HAND_PAGE_LINKS[`${ep}|${best.id}`];
+        if (ov) { href = `/book/${best.slug || best.id}/page/${ov}`; chapterPage = ov; }
+      }
+      (byEp[ep] = byEp[ep] || []).push({
+        work: w.work, author: w.author,
+        forms: (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]),
+        linkable: !!best, href,
+        repId: rep.id, repSlug: rep.slug || null, chapterPage,
+      });
     }
-    const entry = {
-      work: w.work, author: w.author,
-      forms: (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]),
-      linkable: !!best, href,
-      repId: rep.id, repSlug: rep.slug || null, chapterPage,
-    };
-    for (const ep of w.episodes) (byEp[ep] = byEp[ep] || []).push(entry);
   }
 
   const candidates = Object.keys(BIB).map(Number).filter(n => BIB[n] && byEp[n] && byEp[n].some(e => e.linkable)).sort((a, b) => a - b);
