@@ -195,6 +195,20 @@ for (const workId of workList) {
   totalSiblings += siblings.length;
   entriesTotal += entries.length;
 
+  // The reader-facing search record (#3881 provenance disclosure): which
+  // sources every attempt on this work's books consulted, and when the most
+  // recent search ran — across ALL attempts, not just the ones that found
+  // something.
+  const allAttempts = await attempts
+    .find({ book_id: { $in: bookIds } }, { projection: { sources_checked: 1, date: 1 } })
+    .toArray();
+  const sourceSet = new Set();
+  let lastSearched = null;
+  for (const a of allAttempts) {
+    for (const s of a.sources_checked ?? []) if (s) sourceSet.add(String(s));
+    if (a.date && (!lastSearched || String(a.date) > String(lastSearched))) lastSearched = a.date;
+  }
+
   docs.push({
     _id: workId,
     work_id: workId,
@@ -204,8 +218,9 @@ for (const workId of workList) {
     entries,
     search: {
       summary: `Verified at book grain by ${ft.resolver}; verdict ${ft.verdict} (${ft.evidence_strength}). Seeded from the attempts ledger.`,
-      attempt_count: await attempts.countDocuments({ book_id: { $in: bookIds } }),
-      last_searched: found[0]?.date ?? null,
+      sources: [...sourceSet].sort(),
+      attempt_count: allAttempts.length,
+      last_searched: lastSearched,
     },
     review: {
       verified_by: ft.resolver,

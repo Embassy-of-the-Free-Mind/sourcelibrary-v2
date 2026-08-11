@@ -47,8 +47,44 @@ export interface TranslationCard {
    */
   status: string;
   entries: CardEntry[];
-  search?: { summary?: string; attempt_count?: number; last_searched?: string | null };
+  search?: { summary?: string; sources?: string[]; attempt_count?: number; last_searched?: string | null };
   review?: { verified_by?: string; verified_at?: string | null };
+}
+
+/** Reader display names for the source ids the ledger records. */
+const SOURCE_NAMES: Record<string, string> = {
+  loc: 'Library of Congress',
+  estc: 'ESTC',
+  wikidata: 'Wikidata',
+  translation_catalogs: 'translation catalogues',
+  translation_classification: 'internal classification',
+  open_library: 'Open Library',
+  'archive.org': 'Internet Archive',
+  'wikipedia.org': 'Wikipedia',
+  'google.com': 'Google Search',
+};
+
+/**
+ * One factual line about the search behind a card — for the expanded view of
+ * the panel, never as a disclaimer beside the label. Returns null when the
+ * card records no search (nothing to show is better than an empty boast).
+ */
+export function searchRecordLine(card: TranslationCard | null | undefined): string | null {
+  const s = card?.search;
+  if (!s || !(s.attempt_count && s.attempt_count > 0)) return null;
+  const named = (s.sources ?? [])
+    .map((x) => SOURCE_NAMES[x] ?? x)
+    .filter((x, i, arr) => arr.indexOf(x) === i)
+    .slice(0, 6);
+  const when = s.last_searched
+    ? new Date(s.last_searched).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+    : null;
+  const bits = [
+    `${s.attempt_count} recorded ${s.attempt_count === 1 ? 'search' : 'searches'}`,
+    named.length ? `sources include ${named.join(', ')}` : null,
+    when ? `most recent ${when}` : null,
+  ].filter(Boolean);
+  return `Search record: ${bits.join(' · ')}.`;
 }
 
 export interface CardLabel {
