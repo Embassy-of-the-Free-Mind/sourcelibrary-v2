@@ -6076,7 +6076,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "era": "Late Antique",
     "episodes": [
       149,
-      150
+      150,
+      325
     ],
     "status": "acquire",
     "held": []
@@ -19726,15 +19727,5 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "translated": true
       }
     ]
-  },
-  {
-    "work": "Sepher ha-Razim",
-    "author": "Anonymous",
-    "era": "Late Antique",
-    "episodes": [
-      325
-    ],
-    "status": "acquire",
-    "held": []
   }
 ];
