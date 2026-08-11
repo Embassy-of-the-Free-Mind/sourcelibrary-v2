@@ -5,6 +5,7 @@ import { getSession } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { getPageImageUrl } from '@/lib/utils';
 import { remapBboxToMaster } from '@/lib/gallery-deepzoom-bbox';
+import { VALID_IMAGE_TYPES } from '@/lib/gallery-image-types';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -460,11 +461,6 @@ export async function PATCH(
     // Re-tag the image type (e.g. an ex-libris bookplate auto-classified as
     // "emblem"). Validate against the known type vocabulary; ex-libris and
     // bookplates are provenance, not the book's own illustrations.
-    const VALID_IMAGE_TYPES = new Set([
-      'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
-      'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece',
-      'musical_score', 'exlibris', 'bookplate', 'unknown',
-    ]);
     if (typeof body.type === 'string' && VALID_IMAGE_TYPES.has(body.type)) {
       updateFields[`detected_images.${detectionIndex}.type`] = body.type;
     }

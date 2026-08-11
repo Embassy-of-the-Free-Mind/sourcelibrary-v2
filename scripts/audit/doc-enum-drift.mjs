@@ -86,6 +86,18 @@ const REGISTRY = [
     doc: '.claude/docs/data-provenance.md',
     note: 'Per-page provenance for the live translation text.',
   },
+  {
+    // The "doc" here is the guard module itself, deliberately. For this field the
+    // question worth asking is not "is the prose current?" but "does production hold a
+    // value the write-time guard does not allow?" — pointing the check at the canonical
+    // vocabulary makes any such drift fail the run. Production carried 113 distinct
+    // values before #3419, 96 of them chunks of raw model output.
+    label: 'gallery_images.type',
+    collection: 'gallery_images',
+    field: 'type',
+    doc: 'src/lib/gallery-image-types.ts',
+    note: 'Illustration type vocabulary. A value outside this list means a writer bypassed coerceImageType() — the field is enum-shaped and the model will narrate into it given the chance (#3419).',
+  },
 ];
 
 async function main() {
