@@ -858,6 +858,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "author": "Anonymous",
     "era": "Late Antique",
     "episodes": [
+      63,
       100,
       101,
       102,
@@ -926,6 +927,20 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
         "id": "69b51e0c768235dc6598b8b8",
         "slug": "mercvrii-trismegisti-liber-de-potestate-et-sapientia-dei-hermes",
         "title": "The Book of the Power and Wisdom of God (Pimander)",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b4c08586a5921d5bc4427f",
+        "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+        "title": "Hermes Trismegistus (Ficino translation) & Various Ficino Works",
+        "language": "Latin",
+        "translated": true
+      },
+      {
+        "id": "69b4c08186a5921d5bc4418f",
+        "slug": "hermes-trismegistus-ficino-on-power-and-wisdom-of-god-with-ficino",
+        "title": "Hermes Trismegistus & Ficino, On Power and Wisdom of God (with other Ficino works)",
         "language": "Latin",
         "translated": true
       }
@@ -5714,74 +5729,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "held": []
   },
   {
-    "work": "Corpus Hermeticum",
-    "author": "Hermes Trismegistus",
-    "era": "Late Antique",
-    "episodes": [
-      63,
-      100
-    ],
-    "status": "held",
-    "held": [
-      {
-        "id": "69b51e1fcf111105c42975fb",
-        "slug": "divinvs-pymander-hermetis-mercvrii-trismegisti-opvs-vere-hermes",
-        "title": "The Divine Pymander of Hermes Mercurius Trismegistus",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b51e1fefd8df28f2db123d",
-        "slug": "divinus-pymander-hermetis-mercurii-trismegisti-tomvs-primvs-hermes",
-        "title": "The Divine Pymander of Hermes Mercurius Trismegistus",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b51e10efd8df28f2dafda0",
-        "slug": "mercurii-trismegisti-pimander-de-potestate-et-sapientia-dei-hermes",
-        "title": "Pimander, on the Power and Wisdom of God",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b51e13261c58d63664f271",
-        "slug": "il-pimandro-hermes",
-        "title": "The Poimandres",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "694f3d6cbe37f451a5324e10",
-        "slug": "corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus",
-        "title": "The Pimander of Hermes Trismegistus",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b51e0c768235dc6598b8b8",
-        "slug": "mercvrii-trismegisti-liber-de-potestate-et-sapientia-dei-hermes",
-        "title": "The Book of the Power and Wisdom of God (Pimander)",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b4c08586a5921d5bc4427f",
-        "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
-        "title": "Hermes Trismegistus (Ficino translation) & Various Ficino Works",
-        "language": "Latin",
-        "translated": true
-      },
-      {
-        "id": "69b4c08186a5921d5bc4418f",
-        "slug": "hermes-trismegistus-ficino-on-power-and-wisdom-of-god-with-ficino",
-        "title": "Hermes Trismegistus & Ficino, On Power and Wisdom of God (with other Ficino works)",
-        "language": "Latin",
-        "translated": true
-      }
-    ]
-  },
-  {
     "work": "Commentary on the Golden Verses of Pythagoras",
     "author": "Hierocles of Alexandria",
     "era": "Late Antique",
@@ -8683,8 +8630,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       156
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a357e63c6e2d5bb56a6300f",
+        "slug": "ante-nicene-christian-library-vol-3-clementine-recognitions-anonymous",
+        "title": "Ante-Nicene Christian Library Vol. 3: Clementine Recognitions",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Scholia in Luciani Peregrinum",
@@ -11381,8 +11336,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       25
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a357e822aadc65cf0906d5f",
+        "slug": "opere-di-giambattista-vico-includes-autobiography-vico",
+        "title": "Opere di Giambattista Vico (includes Autobiography)",
+        "language": "Italian",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "De deitate filii et spiritus sancti",
@@ -13912,8 +13875,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       124
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f035097e91e1768f69f31",
+        "slug": "st-paul-s-epistle-to-the-galatians-a-revised-text-with-lightfoot",
+        "title": "Saint Paul's Epistle to the Galatians",
+        "language": "Greek",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Satyricon",
@@ -16307,8 +16278,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       179
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a35c9aadf59c9f0ef280166",
+        "slug": "sancti-augustini-vita-scripta-a-possidio-episcopo-possidius",
+        "title": "Sancti Augustini vita scripta a Possidio episcopo",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Hymns",
@@ -17166,8 +17145,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       323
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a35c9b4df59c9f0ef280221",
+        "slug": "the-works-of-thomas-middleton-vol-7-incl-a-game-at-chess-middleton",
+        "title": "The Works of Thomas Middleton, Vol. 7 (incl. A Game at Chess)",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Pinax",
