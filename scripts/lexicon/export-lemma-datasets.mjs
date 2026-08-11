@@ -48,6 +48,12 @@ async function gzWriteLines(file, iter) {
 
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
+  const haveAll = ['README.md', 'greek-lemma-table.jsonl.gz', 'latin-lemma-table.jsonl.gz']
+    .every((f) => fs.existsSync(path.join(OUT, f)));
+  if (PUBLISH && haveAll) {
+    console.log('export files present — skipping regeneration');
+    return publishDeposit();
+  }
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db(process.env.MONGODB_DB || 'bookstore');
@@ -152,9 +158,14 @@ lineage. Generated ${new Date().toISOString().slice(0, 10)}.
   for (const f of fs.readdirSync(OUT)) console.log(f, (fs.statSync(path.join(OUT, f)).size / 1e6).toFixed(1) + 'MB');
 
   if (!PUBLISH) return console.log('EXPORT-DONE (no --publish)');
+  return publishDeposit();
+}
 
+async function publishDeposit() {
   // ── Zenodo deposit ──
-  const H = { Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}` };
+  // The stored token can carry a literal trailing "\n" from env-file quoting.
+  const token = (process.env.ZENODO_ACCESS_TOKEN || '').replace(/\\n/g, '').trim();
+  const H = { Authorization: `Bearer ${token}` };
   const dep = await fetch(`${ZENODO_API}/deposit/depositions`, {
     method: 'POST',
     headers: { ...H, 'Content-Type': 'application/json' },
