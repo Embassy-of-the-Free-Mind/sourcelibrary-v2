@@ -59,6 +59,20 @@ Invariants per round (inherited from the #2880 pilot discipline):
 - The **random slice is mandatory** — spot checks include cards nobody suspects,
   or correlated error hides.
 
+## The defeater policy (Derek, 2026-08-11)
+
+An entry **defeats** a first-translation claim only when it is formally
+published with a **durable identifier** — a DOI, an ISBN, or a formal
+press/journal imprint. Web-only translations (including AI-assisted ones) are
+**listed** on the card with their nature stated — the card records what
+exists — but they do not defeat: a claim of firstness needs an opponent that
+is itself citable. Decided on the Clavius case (round 4): a 2026 AI-assisted
+"reading grade" web translation, no DOI/ISBN — listed, labeled, non-defeating;
+and Source Library's own translation predated it by two months anyway.
+Corollary: our own claims earn the same standard — a card-backed first is
+fully defensible once the edition carries its DOI (the Zenodo scholarly-
+edition path).
+
 ## Running error rate
 
 | Round | Date | Cards | Entry-card errors | Empty-card errors | Notes |
