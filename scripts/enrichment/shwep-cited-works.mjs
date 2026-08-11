@@ -36,9 +36,14 @@
  *   node scripts/enrichment/shwep-cited-works.mjs --extract
  *   node scripts/enrichment/shwep-cited-works.mjs --dedupe
  *   node scripts/enrichment/shwep-cited-works.mjs --holdings
+ *   node scripts/enrichment/shwep-cited-works.mjs --cluster-expand   # work_id-sibling recall (#3887)
+ *   node scripts/enrichment/shwep-cited-works.mjs --gap-audit        # full-catalog lexical recall net
+ *   node scripts/enrichment/shwep-cited-works.mjs --apply-recall     # fold confirmed gap hits into holdings
+ *   node scripts/enrichment/shwep-cited-works.mjs --work-id-audit    # dupe rows + matcher-vs-work_id contradictions
  *   node scripts/enrichment/shwep-cited-works.mjs --emit
  *   node scripts/enrichment/shwep-cited-works.mjs --linkbib
- *   node scripts/enrichment/shwep-cited-works.mjs --all      # all stages in sequence
+ *   node scripts/enrichment/shwep-cited-works.mjs --all      # all of the above, in sequence —
+ *                     the recall + audit passes are STANDING parts of every refresh (#3887)
  *
  * Needs src/data/shwep-reading-lists.json (gitignored — copy from main checkout into
  * the worktree first). LINKBIB additionally reads src/data/shwep-bibliographies.ts
@@ -154,6 +159,15 @@ function applyAuthorGuard(works) {
   return dropped;
 }
 
+// A work that appears ONLY in Secondary-literature sections (per each reading list's
+// own headings) and is never cited via a specific edition is the title-similarity trap
+// shape: both 2026-08-11 false positives — "Poimandres" extracted from Reitzenstein's
+// monograph, "Nonnos Mythographos" via Cumont 1896 — were Secondary-section artifacts.
+// Such a work stays in the works DB (flagged needs_review) but gets no reader card or
+// inline link until a human confirms it. Extracts predating the sec field are treated
+// as primary (flag absent), so behavior is unchanged until the next --extract run.
+const needsSecondaryReview = w => w.secondary_only === true && w.edition_cited !== true;
+
 // Pick the single representative PUBLICLY-READABLE edition for inline reader links:
 // must be translated (pages_translated > 0; visibility already enforced at retrieval).
 // Holdings primitives live in the shared resolver so the works-catalog / translation
@@ -173,9 +187,11 @@ Also include any historical work NAMED IN THE EPISODE TITLE (the text the episod
 
 STRICTLY EXCLUDE: modern secondary scholarship that is NOT itself an edition/translation of a historical text; journals; encyclopedias/dictionaries; websites; podcasts; the host's cross-references to his own episodes; vague unidentifiable fragments.
 
-For each work give "work" (canonical English title of the historical work), "author" (canonical historical author, or "Anonymous"), "era" (Ancient Near Eastern / Classical Greek / Hellenistic / Roman / Late Antique / Medieval / Byzantine / Islamicate / Renaissance / Early Modern).
+For each work give "work" (canonical English title of the historical work), "author" (canonical historical author, or "Anonymous"), "era" (Ancient Near Eastern / Classical Greek / Hellenistic / Roman / Late Antique / Medieval / Byzantine / Islamicate / Renaissance / Early Modern), plus two provenance fields:
+- "sec": which part of the reading list the citation sits in, going by the list's OWN section headings: "P" if under a primary-sources/texts/editions heading, "S" if under a secondary-literature/studies heading, "U" if the list has no such sectioning or it is unclear.
+- "ed_cite": true if the entry cites a SPECIFIC edition/translation of this work (an editor or translator is named for IT), false if the work is only named inside the title or description of a modern study ABOUT it. A work mentioned only in passing inside secondary literature ("Reitzenstein, Poimandres") is ed_cite false.
 
-Return ONLY JSON: {"<episodeNumber>":[{"work","author","era"},...]} — empty list if none.
+Return ONLY JSON: {"<episodeNumber>":[{"work","author","era","sec","ed_cite"},...]} — empty list if none.
 
 EPISODES:
 `;
@@ -206,17 +222,27 @@ async function stageExtract(eps) {
 async function stageDedupe() {
   console.log('Stage 2 DEDUPE');
   const extracted = readJSON('extracted.json', {});
-  // collect raw works with episode refs
+  // collect raw works with episode refs (+ Primary/Secondary provenance, #3887)
   const raw = [];
-  for (const [ep, works] of Object.entries(extracted)) for (const w of works) raw.push({ ep: +ep, work: w.work, author: w.author, era: w.era });
-  // first pass: deterministic merge on normalized author+work
+  for (const [ep, works] of Object.entries(extracted)) for (const w of works) raw.push({ ep: +ep, work: w.work, author: w.author, era: w.era, sec: w.sec, ed_cite: w.ed_cite });
+  // first pass: deterministic merge on normalized author+work. A work is
+  // secondary_only when EVERY appearance sits in a Secondary-literature section
+  // (per the list's own headings); edition_cited when ANY appearance names a
+  // specific edition of it. Extracts predating the sec field count as primary.
   const byKey = new Map();
   for (const r of raw) {
     const key = `${norm(r.author)}|${norm(r.work)}`;
-    if (!byKey.has(key)) byKey.set(key, { work: r.work, author: r.author, era: r.era, episodes: new Set() });
-    byKey.get(key).episodes.add(r.ep);
+    if (!byKey.has(key)) byKey.set(key, { work: r.work, author: r.author, era: r.era, episodes: new Set(), allSecondary: true, anyEdCite: false });
+    const e = byKey.get(key);
+    e.episodes.add(r.ep);
+    if (r.sec !== 'S') e.allSecondary = false;
+    if (r.ed_cite === true) e.anyEdCite = true;
   }
-  let works = [...byKey.values()].map(w => ({ ...w, episodes: [...w.episodes].sort((a, b) => a - b) }));
+  let works = [...byKey.values()].map(w => ({
+    work: w.work, author: w.author, era: w.era,
+    episodes: [...w.episodes].sort((a, b) => a - b),
+    secondary_only: w.allSecondary, edition_cited: w.anyEdCite,
+  }));
   console.log(`  ${raw.length} raw → ${works.length} after exact-key merge`);
 
   // second pass: LLM canonicalisation — merge title/author variants of the same work.
@@ -240,7 +266,12 @@ ${listing}`;
       if (!members.length) return null;
       const eps = new Set(); let era = '';
       for (const i of members) { works[i].episodes.forEach(e => eps.add(e)); era = era || works[i].era; }
-      return { work: g.canonical_work, author: g.canonical_author, era, episodes: [...eps].sort((a, b) => a - b) };
+      return {
+        work: g.canonical_work, author: g.canonical_author, era,
+        episodes: [...eps].sort((a, b) => a - b),
+        secondary_only: members.every(i => works[i].secondary_only === true),
+        edition_cited: members.some(i => works[i].edition_cited === true),
+      };
     }).filter(Boolean);
     // any index the model forgot → keep as-is
     works.forEach((w, i) => { if (!seen.has(i)) merged.push(w); });
@@ -388,6 +419,7 @@ async function stageHoldings() {
     const heldMeta = heldBooks.map(b => ({
       id: b._id.toString(), slug: b.slug || null, title: b.display_title || b.title || '',
       author: b.author || '', year: b.year || null, language: b.language || '',
+      work_id: b.work_id || null,
       pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, pages_blank: b.pages_blank || 0,
     }));
     done++; if (done % 25 === 0) console.log(`  ${done}/${items.length}`);
@@ -418,6 +450,7 @@ async function stageEmit() {
     work: w.work, author: w.author, era: w.era,
     episodes: w.episodes,
     status: w.held.length ? 'held' : 'acquire',
+    ...(needsSecondaryReview(w) ? { needs_review: true } : {}),
     held: w.held.map(id => {
       const m = metaById.get(id) || {};
       return { id, slug: m.slug || null, title: m.title || id, language: m.language || '', translated: (m.pages_translated || 0) > 0 };
@@ -443,6 +476,9 @@ export interface ShwepCitedWork {
   era: string;
   episodes: number[];
   status: 'held' | 'acquire';
+  /** Appears only in Secondary-literature sections with no edition citation — kept in
+   *  the DB but excluded from reader cards/links until a human confirms it (#3887). */
+  needs_review?: boolean;
   held: ShwepCitedHolding[];
 }
 export const SHWEP_CITED_WORKS: ShwepCitedWork[] = ${JSON.stringify(dbRows, null, 2)};
@@ -468,7 +504,7 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = ${JSON.stringify(dbRows, null
   }
   const perEp = {};
   for (const w of works) {
-    if (!w.held.length) continue;
+    if (!w.held.length || needsSecondaryReview(w)) continue;
     const best = bestEdition(w.heldMeta) || (w.heldMeta || [])[0];
     if (!best) continue;
     let page = null;
@@ -499,6 +535,15 @@ export const SHWEP_BOOK_MATCHES: Record<number, ShwepBookMatch[]> = {\n`;
   md += `| Work | Author | Era | Episodes |\n|---|---|---|---|\n`;
   for (const w of gap) md += `| ${w.work} | ${w.author} | ${w.era} | ${w.episodes.length} (${w.episodes.slice(0, 8).join(', ')}${w.episodes.length > 8 ? '…' : ''}) |\n`;
   fs.writeFileSync(path.join(CACHE, 'acquire.md'), md);
+
+  // 4d — Secondary-section works held back from cards/links pending human review
+  const review = works.filter(needsSecondaryReview);
+  if (review.length) {
+    let rmd = `# Secondary-section works needing review (#3887)\n\nThese appear ONLY in Secondary-literature sections and are never cited via a specific edition — the title-similarity-trap shape. Confirm each against the actual citation before granting it a card.\n\n| Work | Author | Held | Episodes |\n|---|---|---|---|\n`;
+    for (const w of review) rmd += `| ${w.work} | ${w.author} | ${w.held.length ? 'yes' : 'no'} | ${w.episodes.slice(0, 8).join(', ')}${w.episodes.length > 8 ? '…' : ''} |\n`;
+    fs.writeFileSync(path.join(CACHE, 'secondary-review.md'), rmd);
+    console.log(`  secondary-section review: ${review.length} works held back from cards → ${path.join(CACHE, 'secondary-review.md')}`);
+  }
 
   const held = works.filter(w => w.held.length).length;
   console.log(`  works DB: ${works.length} (held ${held}, acquire ${works.length - held})`);
@@ -656,7 +701,7 @@ async function stageLinkBib() {
   const byEp = {};
   for (const w of works) {
     const meta = w.heldMeta || [];
-    if (!meta.length) continue;
+    if (!meta.length || needsSecondaryReview(w)) continue;
     const best = bestEdition(meta);
     const rep = best || meta[0];
     // Page-precise deep link: if the chosen edition is a collected/omnibus volume and the
@@ -888,15 +933,209 @@ async function stageApplyRecall() {
   console.log(`  merged ${merged}/${recall.length} recall hits into holdings → works-held.json`);
 }
 
+// ── Stage 6c: cluster-expansion for recall (#3887) ───────────────────────────
+// The embedding retrieval ranks sibling editions of a confirmed work poorly (the
+// omnibus-recall gap), but once the confirmer has accepted SOME editions of a work,
+// their `books.work_id` names the cluster — every other book in those clusters is a
+// high-prior candidate. Offer them through the SAME per-candidate confirmer (and the
+// emit-time author guard), so recall widens with precision unchanged. Idempotent:
+// only candidates not already held are offered. Writes works-held.json in place.
+async function stageClusterExpand() {
+  console.log('Stage 6c CLUSTER-EXPAND (work_id siblings of confirmed editions)');
+  const works = readJSON('works-held.json', []);
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db('bookstore');
+  const PROJ = { display_title: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, work_id: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
+
+  // work_id for every held edition (older works-held.json rows predate heldMeta.work_id)
+  const heldIds = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
+  const heldOids = heldIds.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean);
+  const widById = new Map();
+  if (heldOids.length) {
+    const rows = await db.collection('books').find({ _id: { $in: heldOids } }, { projection: { work_id: 1 } }).toArray();
+    for (const r of rows) widById.set(r._id.toString(), r.work_id || null);
+  }
+
+  const targets = works.filter(w => (w.held || []).length && (w.status || 'extant') !== 'lost');
+  let expandedWorks = 0, addedEditions = 0, offered = 0, done = 0;
+  await mapPool(targets, 6, async (w) => {
+    const have = new Set(w.held);
+    const wids = [...new Set((w.heldMeta || []).map(m => m.work_id || widById.get(m.id)).filter(Boolean))];
+    done++; if (done % 50 === 0) console.log(`  ${done}/${targets.length}`);
+    if (!wids.length) return;
+    const sibs = (await db.collection('books').find(
+      { work_id: { $in: wids }, visible: true, pages_count: { $gt: 0 } },
+      { projection: PROJ }).limit(40).toArray())
+      .filter(b => !have.has(b._id.toString()) && !EXCLUDE_LANGS.has(b.language))
+      .slice(0, 12);
+    if (!sibs.length) return;
+    offered += sibs.length;
+    const forms = (w.title_forms && w.title_forms.length ? w.title_forms : [w.work]).slice(0, 8);
+    let picks = [];
+    try { picks = (await gemini(confirmPrompt(forms, w.author, sibs), 2048)).matches || []; }
+    catch (e) { console.warn(`  confirm failed [${w.work}]: ${e.message}`); return; }
+    const accepted = picks.map(p => sibs[p]).filter(Boolean);
+    if (!accepted.length) return;
+    for (const b of accepted) {
+      const id = b._id.toString();
+      w.held.push(id);
+      w.heldMeta.push({
+        id, slug: b.slug || null, title: b.display_title || b.title || '',
+        author: b.author || '', year: b.year || null, language: b.language || '',
+        work_id: b.work_id || null,
+        pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, pages_blank: b.pages_blank || 0,
+      });
+    }
+    expandedWorks++; addedEditions += accepted.length;
+  });
+  await client.close();
+  writeJSON('works-held.json', works);
+  console.log(`  → offered ${offered} cluster siblings; confirmer accepted ${addedEditions} editions across ${expandedWorks} works`);
+}
+
+// ── Stage 6d: work_id cross-audit — dupes + contradictions (#3887) ───────────
+// The matcher and books.work_id are independent systems; where they disagree, one of
+// them is wrong — in BOTH directions in practice (a books-side Laws volume stamped
+// plato-republic; a matcher-side Corpus Hermeticum split across two rows). Read-only,
+// no LLM: writes /tmp/shwep-cited/work-id-audit.{json,md} for human/agent adjudication.
+//   DUPES: two work rows whose held sets share a work_id via NON-collected editions —
+//     the rows are almost certainly the same work and should merge (the CH case).
+//   CONTRADICTIONS: one work row whose non-collected held editions carry ≥2 distinct
+//     work_ids — either a matcher false positive (drop the edition from the row) or a
+//     books-side work_id error (fix books.work_id); each needs a judgment, and
+//     books-side fixes flow back to the catalog.
+async function stageWorkIdAudit() {
+  console.log('Stage 6d WORK-ID AUDIT (dupes + contradictions, read-only)');
+  const works = readJSON('works-held.json', []);
+  applyAuthorGuard(works);
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const heldIds = [...new Set(works.flatMap(w => (w.heldMeta || []).map(m => m.id)))];
+  const oids = heldIds.map(i => { try { return new ObjectId(i); } catch { return null; } }).filter(Boolean);
+  const widById = new Map();
+  if (oids.length) {
+    const rows = await client.db('bookstore').collection('books').find(
+      { _id: { $in: oids } }, { projection: { work_id: 1 } }).toArray();
+    for (const r of rows) widById.set(r._id.toString(), r.work_id || null);
+  }
+  await client.close();
+
+  // wid → [{wIdx, edition}] over non-collected editions only: a shared omnibus
+  // legitimately serves many cited works and proves nothing about row identity.
+  // NB even a non-collected volume can legitimately serve several rows (a
+  // five-dialogue Plato volume sits in the Phaedo AND Phaedrus rows; a Patrologia
+  // volume in every treatise row of its Father) — CONTAINMENT, not duplication.
+  // So sharing a wid is only a DUPE signal when the two ROW TITLES read as the
+  // same work (the CH split: "Corpus Hermeticum" under two authors), measured by
+  // work-title token overlap; everything else is counted as containment.
+  const byWid = new Map();
+  works.forEach((w, wIdx) => {
+    for (const m of (w.heldMeta || [])) {
+      const wid = m.work_id || widById.get(m.id);
+      if (!wid || isCollected(m)) continue;
+      if (!byWid.has(wid)) byWid.set(wid, []);
+      byWid.get(wid).push({ wIdx, m, wid });
+    }
+  });
+
+  const titleOverlap = (a, b) => {
+    const ta = new Set(titleToks(a)), tb = new Set(titleToks(b));
+    if (!ta.size || !tb.size) return norm(a) === norm(b) ? 1 : 0;
+    const inter = [...ta].filter(t => tb.has(t)).length;
+    return inter / Math.min(ta.size, tb.size);
+  };
+
+  const dupes = [];
+  let containment = 0;
+  for (const [wid, rows] of byWid) {
+    const wIdxs = [...new Set(rows.map(r => r.wIdx))];
+    if (wIdxs.length < 2) continue;
+    const flagged = [];
+    for (let i = 0; i < wIdxs.length; i++) for (let j = i + 1; j < wIdxs.length; j++) {
+      const A = works[wIdxs[i]], B = works[wIdxs[j]];
+      if (titleOverlap(A.work, B.work) >= 0.6) flagged.push([wIdxs[i], wIdxs[j]]);
+      else containment++;
+    }
+    if (!flagged.length) continue;
+    const idxs = [...new Set(flagged.flat())];
+    dupes.push({
+      work_id: wid,
+      rows: idxs.map(i => ({
+        work: works[i].work, author: works[i].author, episodes: works[i].episodes,
+        editions: rows.filter(r => r.wIdx === i).map(r => ({ slug: r.m.slug, title: r.m.title.slice(0, 60) })),
+      })),
+    });
+  }
+
+  // Contradictions, precision cut: an edition inside row R stamped with the wid
+  // that is the MAJORITY id of a DIFFERENT row R' — a genuine cross-assignment
+  // (the "Laws Vol. 2 stamped plato-republic" shape), where either the matcher
+  // put the edition in the wrong row or books.work_id names the wrong work.
+  // Minority wids that are no row's majority are usually multi-work volumes
+  // stamped with one member work — counted, detailed in the JSON, not in the md.
+  const majorityOf = works.map(w => {
+    const counts = new Map();
+    for (const m of (w.heldMeta || [])) {
+      const wid = m.work_id || widById.get(m.id);
+      if (!wid || isCollected(m)) continue;
+      counts.set(wid, (counts.get(wid) || 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  });
+  const rowByMajority = new Map();
+  majorityOf.forEach((wid, i) => { if (wid && !rowByMajority.has(wid)) rowByMajority.set(wid, i); });
+
+  const cross = [];
+  const minor = [];
+  works.forEach((w, wIdx) => {
+    const maj = majorityOf[wIdx];
+    for (const m of (w.heldMeta || [])) {
+      const wid = m.work_id || widById.get(m.id);
+      if (!wid || isCollected(m) || wid === maj) continue;
+      const otherIdx = rowByMajority.get(wid);
+      const entry = {
+        row: `${w.work} — ${w.author}`, row_majority: maj,
+        edition: { slug: m.slug, title: m.title.slice(0, 60) }, edition_work_id: wid,
+      };
+      if (otherIdx !== undefined && otherIdx !== wIdx) {
+        cross.push({ ...entry, work_id_belongs_to: `${works[otherIdx].work} — ${works[otherIdx].author}` });
+      } else minor.push(entry);
+    }
+  });
+
+  writeJSON('work-id-audit.json', { dupes, cross_assignments: cross, minority_wids: minor, containment_pairs: containment });
+  let md = `# work_id cross-audit — matcher vs books.work_id (#3887)\n\nNon-collected held editions only. ${containment} row-pairs share a wid via multi-work volumes (containment — suppressed); ${minor.length} minority wids match no other row (mostly multi-work volumes stamped with one member work — see JSON).\n\n`;
+  md += `## Merge candidates — ${dupes.length} row pair(s) that read as the SAME work\n\nShared specific work_id + near-identical row titles (the Corpus Hermeticum split shape). Merge the rows (union episodes/holdings) or record why they are genuinely distinct.\n\n`;
+  for (const d of dupes) {
+    md += `### \`${d.work_id}\`\n`;
+    for (const r of d.rows) md += `- **${r.work}** — ${r.author} (eps ${r.episodes.slice(0, 6).join(', ')}${r.episodes.length > 6 ? '…' : ''}): ${r.editions.map(e => e.slug).join(', ')}\n`;
+    md += `\n`;
+  }
+  md += `## Cross-assignments — ${cross.length} edition(s) stamped with ANOTHER row's work_id\n\nEither the matcher put the edition in the wrong row (remove it there) or \`books.work_id\` names the wrong work (fix the catalog). Both classes occurred on 2026-08-10/11; adjudicate each by reading the edition.\n\n`;
+  for (const c of cross) {
+    md += `- **${c.row}**: \`${c.edition.slug}\` ("${c.edition.title}") is stamped \`${c.edition_work_id}\` = **${c.work_id_belongs_to}** (row majority \`${c.row_majority}\`)\n`;
+  }
+  fs.writeFileSync(path.join(CACHE, 'work-id-audit.md'), md);
+  console.log(`  → ${dupes.length} merge candidates | ${cross.length} cross-assignments | ${minor.length} minority wids (JSON) | ${containment} containment pairs suppressed`);
+  console.log(`  → ${path.join(CACHE, 'work-id-audit.md')}`);
+}
+
 // ── main ─────────────────────────────────────────────────────────────────────
 
 (async () => {
+  // --all is the reading-room refresh; the recall + audit passes are STANDING parts
+  // of it (#3887), not occasional heroics: books too new to have embeddings are
+  // invisible to semantic retrieval ("acquire" is a decaying claim in a growing
+  // library), and the work_id cross-audit is what catches matcher/catalog drift.
   if (want('--extract')) { let eps = loadEpisodes(); if (LIMIT) eps = eps.slice(0, LIMIT); await stageExtract(eps); }
   if (want('--dedupe')) await stageDedupe();
   if (want('--holdings')) await stageHoldings();
-  if (args.includes('--gap-audit')) await stageGapAudit();
-  if (args.includes('--apply-recall')) await stageApplyRecall();
+  if (want('--cluster-expand')) await stageClusterExpand();
+  if (want('--gap-audit')) await stageGapAudit();
+  if (want('--apply-recall')) await stageApplyRecall();
+  if (want('--work-id-audit')) await stageWorkIdAudit();
   if (want('--emit')) await stageEmit();
   if (want('--linkbib')) await stageLinkBib();
-  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --gap-audit | --apply-recall | --emit | --linkbib | --all');
+  if (!args.length) console.log('Specify --extract | --dedupe | --holdings | --cluster-expand | --gap-audit | --apply-recall | --work-id-audit | --emit | --linkbib | --all');
 })().catch(e => { console.error('Fatal:', e); process.exit(1); });
