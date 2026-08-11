@@ -41,6 +41,7 @@
  *   node scripts/audit/author-vs-ai-metadata.mjs --class=person_vs_person
  */
 import { MongoClient } from 'mongodb';
+import { foldOrtho, sameNameForm } from '../lib/name-equivalence.mjs';
 
 const JSON_OUT = process.argv.includes('--json');
 const INCLUDE_HIDDEN = process.argv.includes('--all');
@@ -70,6 +71,23 @@ function overlap(a, b) {
   for (const t of A) if (B.has(t)) hits++;
   return hits / Math.min(A.size, B.size);
 }
+
+// ───────────────────────────────────────────────────────────────────────────────
+// NAME-FORM EQUIVALENCE.
+//
+// Exact token overlap treats a Latinised or vernacular form of a name as a
+// DIFFERENT PERSON. On the first production run that put 92 same-person pairs
+// into the queue — Cicéron/Cicero, Aristoteles/Aristotle, Boehme/Böhme,
+// Claude de Saumaise/Claudius Salmasius, Ovid/Publius Ovidius Naso — i.e. a
+// quarter of it was the corpus's own historiography, not a defect. This is the
+// mirror image of the non-Latin bug below: there the metric could not judge,
+// here it judged and was wrong.
+//
+// Two independent tests, either sufficient. The orthographic one lives in
+// scripts/lib/name-equivalence.mjs (unit-tested); the second asks the `authors`
+// thesaurus, which is the corpus's actual authority for identity and catches
+// pairs orthography cannot, like Paracelsus/Theophrastus von Hohenheim.
+// ───────────────────────────────────────────────────────────────────────────────
 
 // ───────────────────────────────────────────────────────────────────────────────
 // CLASSES. Order matters — each book takes the FIRST class it matches, so the
@@ -156,6 +174,28 @@ const classes = {
   person_vs_person: [],
 };
 
+// Thesaurus resolution, memoised — the same handful of strings recur across the
+// corpus, so this is a few dozen queries, not one per book.
+const authorsCol = db.collection('authors');
+const resolveCache = new Map();
+async function resolvePerson(s) {
+  if (resolveCache.has(s)) return resolveCache.get(s);
+  const doc = await authorsCol.findOne(
+    { $or: [{ canonical_name: s }, { variants: s }, { _id: foldOrtho(s).replace(/ /g, '-') }] },
+    { projection: { _id: 1 } },
+  );
+  const id = doc ? doc._id : null;
+  resolveCache.set(s, id);
+  return id;
+}
+async function sameThesaurusPerson(a, b) {
+  const x = await resolvePerson(a);
+  if (!x) return false;
+  return x === await resolvePerson(b);
+}
+
+let sameForm = 0;
+let sameThesaurus = 0;
 let compared = 0;
 let agree = 0;
 const cursor = books.find(query, {
@@ -171,6 +211,10 @@ for await (const b of cursor) {
   const cat = b.author;
   const ai = b.ai_metadata.author;
   if (overlap(cat, ai) > 0) { agree++; continue; }
+  // Same person under a different orthography — the corpus's own historiography,
+  // not a defect. Checked before any class assignment so it cannot leak into one.
+  if (sameNameForm(cat, ai)) { agree++; sameForm++; continue; }
+  if (await sameThesaurusPerson(cat, ai)) { agree++; sameThesaurus++; continue; }
 
   const row = {
     id: b.id || b._id.toString(),
@@ -214,7 +258,6 @@ for await (const b of cursor) {
 // handing a finding to a sibling audit that will not look at it is worse than
 // listing it twice. So: annotate, never exclude.
 // ───────────────────────────────────────────────────────────────────────────────
-const authorsCol = db.collection('authors');
 const anchorCache = new Map();
 for (const s of new Set(classes.person_vs_person.map((r) => r.catalogued))) {
   const n = norm(s);
@@ -230,6 +273,43 @@ for (const r of classes.person_vs_person) {
   // No authority record behind the catalogued name — it may not name a person at
   // all. Cross-reference #3434 / author-attribution.mjs when triaging these.
   r.unanchored_string = anchorCache.get(r.catalogued) === false;
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// CONTAMINATED ENRICHMENT — the AI side is not an authority either.
+//
+// Enrichment runs in batches, and a batch can carry ONE answer across every book
+// in it. Twelve books enriched 2026-04-13 all came back "Benedictus de Spinoza":
+// al-Battani's astronomy, al-Farghani's Elementa, Aldrovandi's Musaeum
+// Metallicum, Fabricius' surgery, Clavius' Gnomonices. Nothing about those rows
+// looks wrong in isolation — each is simply a book with a confident, specific,
+// completely unrelated author — so the defect is only visible ACROSS rows.
+//
+// Signature: one ai_metadata.author value asserted over books whose catalogued
+// authors are mutually unrelated (after name-form folding). A real author
+// legitimately spans several catalogued SPELLINGS of themselves; they do not
+// span al-Battani and Aldrovandi. Cicero survives this test, Spinoza does not.
+// ───────────────────────────────────────────────────────────────────────────────
+const CONTAMINATION_MIN_DISTINCT = 3;
+const byAiAuthor = new Map();
+for (const r of classes.person_vs_person) {
+  if (!byAiAuthor.has(r.ai_says)) byAiAuthor.set(r.ai_says, []);
+  byAiAuthor.get(r.ai_says).push(r);
+}
+const contaminated = new Set();
+for (const [aiName, group] of byAiAuthor) {
+  if (group.length < CONTAMINATION_MIN_DISTINCT) continue;
+  // Cluster the catalogued strings by name-form; count genuinely distinct people.
+  const clusters = [];
+  for (const r of group) {
+    if (!clusters.some((c) => sameNameForm(c, r.catalogued))) clusters.push(r.catalogued);
+  }
+  if (clusters.length >= CONTAMINATION_MIN_DISTINCT) {
+    contaminated.add(aiName);
+  }
+}
+for (const r of classes.person_vs_person) {
+  r.ai_value_suspect = contaminated.has(r.ai_says);
 }
 
 for (const rows of Object.values(classes)) {
@@ -254,13 +334,17 @@ if (JSON_OUT) {
     with_ai_author: withAi,
     compared,
     agree,
+    agree_same_name_form: sameForm,
+    agree_same_thesaurus_person: sameThesaurus,
+    ai_values_suspected_contaminated: [...contaminated],
     disagree,
     counts: Object.fromEntries(Object.entries(classes).map(([k, v]) => [k, v.length])),
     classes: ONLY_CLASS ? { [ONLY_CLASS]: classes[ONLY_CLASS] ?? [] } : classes,
   }, null, 2));
 } else {
   log(`  compared                 : ${compared.toLocaleString()}`);
-  log(`  agree (shared token)     : ${agree.toLocaleString()}`);
+  log(`  agree                     : ${agree.toLocaleString()}`
+    + ` (${sameForm} same name-form, ${sameThesaurus} same thesaurus person)`);
   log(`  disagree                 : ${disagree.toLocaleString()} (${(100 * disagree / compared).toFixed(1)}%)\n`);
 
   for (const [name, rows] of Object.entries(classes)) {
@@ -280,6 +364,7 @@ if (JSON_OUT) {
     for (const r of show) {
       const flags = [
         r.printer_as_author_suspect ? 'PRINTER?' : null,
+        r.ai_value_suspect ? 'AI-VALUE-SUSPECT' : null,
         r.unanchored_string ? 'no-authority-record' : null,
         r.anchored_by ? `anchored:${r.anchored_by}` : null,
       ].filter(Boolean).join(' ');
