@@ -61,7 +61,16 @@ const SOURCE_NAMES: Record<string, string> = {
   open_library: 'Open Library',
   'archive.org': 'Internet Archive',
   'wikipedia.org': 'Wikipedia',
+  'en.wikipedia.org': 'Wikipedia',
   'google.com': 'Google Search',
+  'books.google.com': 'Google Books',
+  'catalog.hathitrust.org': 'HathiTrust',
+  'babel.hathitrust.org': 'HathiTrust',
+  'openlibrary.org': 'Open Library',
+  'worldcat.org': 'WorldCat',
+  'search.worldcat.org': 'WorldCat',
+  'brill.com': 'Brill',
+  'wellcomecollection.org': 'Wellcome Collection',
 };
 
 /**
@@ -72,8 +81,19 @@ const SOURCE_NAMES: Record<string, string> = {
 export function searchRecordLine(card: TranslationCard | null | undefined): string | null {
   const s = card?.search;
   if (!s || !(s.attempt_count && s.attempt_count > 0)) return null;
+  // Ledger sources mix catalogue ids with raw grounding URLs; collapse URLs
+  // to their hostname so the line reads like a source list, not a link dump.
+  const toName = (x: string): string => {
+    if (SOURCE_NAMES[x]) return SOURCE_NAMES[x];
+    try {
+      const host = new URL(x).hostname.replace(/^www\./, '');
+      return SOURCE_NAMES[host] ?? host;
+    } catch {
+      return x;
+    }
+  };
   const named = (s.sources ?? [])
-    .map((x) => SOURCE_NAMES[x] ?? x)
+    .map(toName)
     .filter((x, i, arr) => arr.indexOf(x) === i)
     .slice(0, 6);
   const when = s.last_searched
