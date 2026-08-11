@@ -58,7 +58,6 @@ export interface CardLabel {
   register: 'first' | 'priors';
   /** Entries to show under the sentence (priors register only). */
   entries: CardEntry[];
-  searchSummary?: string;
 }
 
 /**
@@ -77,26 +76,29 @@ export function cardLabel(
 
   if (card.status === 'no_prior_known') {
     if (!((book.pages_translated ?? 0) > 0)) return null;
-    const summary = card.search?.summary;
+    // Plain catalog voice (2026-08-11): state the fact like a catalog states
+    // "first edition". The search record backs it, one click away — not as a
+    // disclaimer in the reader's face.
     return {
-      sentence: 'No earlier English translation of this work is known to us.',
+      sentence: 'The first English translation of this work.',
       register: 'first',
       entries: [],
-      searchSummary: summary,
     };
   }
 
   if (card.status === 'prior_exists') {
     const entries = (card.entries ?? []).filter((e) => e.title || e.translator);
     if (entries.length === 0) return null;
-    const earliest = entries
+    const named = entries
       .map((e) => ({ e, y: parseInt(String(e.year ?? '').match(/\d{4}/)?.[0] ?? '', 10) }))
       .filter((x) => Number.isFinite(x.y))
-      .sort((a, b) => a.y - b.y)[0];
-    const lead = earliest
-      ? `English translations of this work exist — the earliest known to us is ${earliest.e.translator ?? earliest.e.title} (${earliest.y}).`
-      : 'English translations of this work are known to us.';
-    return { sentence: lead, register: 'priors', entries, searchSummary: card.search?.summary };
+      .sort((a, b) => a.y - b.y)
+      .slice(0, 3)
+      .map((x) => `${x.e.translator ?? x.e.title} (${x.y})`);
+    const lead = named.length
+      ? `Earlier English translations: ${named.join('; ')}.`
+      : 'Earlier English translations exist.';
+    return { sentence: lead, register: 'priors', entries };
   }
 
   return null;

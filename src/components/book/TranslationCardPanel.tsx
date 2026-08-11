@@ -27,12 +27,13 @@ export default function TranslationCardPanel({
   return (
     <div className="mt-3 rounded border border-stone-700/40 bg-stone-800/20 px-3 py-2.5 text-sm">
       <div className="flex items-start gap-2">
-        {isFirst && (
+        {isFirst ? (
           <span className="mt-0.5 inline-block whitespace-nowrap rounded bg-amber-900/40 px-1.5 py-0.5 text-[10px] font-medium text-amber-300">
             First Translation
           </span>
+        ) : (
+          <p className="text-stone-300">{label.sentence}</p>
         )}
-        <p className="text-stone-300">{label.sentence}</p>
       </div>
 
       {label.entries.length > 0 && (
@@ -61,9 +62,6 @@ export default function TranslationCardPanel({
         </ul>
       )}
 
-      {label.searchSummary && (
-        <p className="mt-2 text-[11px] leading-snug text-stone-500">{label.searchSummary}</p>
-      )}
     </div>
   );
 }
