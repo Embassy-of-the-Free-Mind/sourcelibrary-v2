@@ -16,11 +16,17 @@ import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
-import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
 import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
-import { streamOrdered } from '@/lib/ordered-stream';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -879,108 +885,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
-// Resolve a page's export image via the canonical resolver (R2 display variant
-// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
-// fetch, and on split-from-spread pages it is the wrong image entirely).
-// Falls back to the legacy field priority this route used historically.
-function pageExportImageUrl(page: Page): string | null {
-  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
-  const resolved = getPageImageUrl(page, 'display') || legacy;
-  if (!resolved) return null;
-  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
-}
-
-// Prefetch page images with BOUNDED concurrency, preserving page order.
-// Serial fetching made a ~126-page book take >100s of response silence, so
-// Cloudflare cut the connection (HTTP 524) and readers saved the CF error
-// page as a corrupt .zip/.epub (footer feedback, 2026-07-02). Unbounded
-// Promise.all is the opposite failure: hundreds of concurrent image fetches.
-async function fetchPageImagesOrdered(
-  validPages: Page[],
-  concurrency = 8,
-): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
-  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
-  let next = 0;
-  async function worker() {
-    while (next < validPages.length) {
-      const i = next++;
-      const page = validPages[i];
-      const url = pageExportImageUrl(page);
-      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
-  return results;
-}
-
-/**
- * Ordered image fetch that yields each page AS IT ARRIVES, keeping only a
- * bounded look-ahead window resident.
- *
- * `fetchPageImagesOrdered()` above awaits EVERY image before returning, which
- * gives the streamed PDF two problems that only appear at real book sizes
- * (measured on a 366-page book, #3597):
- *
- *  - Nothing is written for the whole fetch (231s locally). The response
- *    "streams", but the producer blocks before emitting a body, so the
- *    connection sits silent and Cloudflare's ~100s window kills it long before
- *    `maxDuration` would.
- *  - Every compressed image is resident at once (74MB), and peak RSS hit 707MB
- *    against Vercel's 1024MB default. 6,987 visible books are LARGER than that
- *    test book, so this is the common case, not the tail.
- *
- * Yielding in order with a `lookahead` cap fixes both: the first page is
- * written as soon as one image lands, and at most `lookahead` buffers are held.
- * Each yielded buffer is dropped from the window so it can be collected once
- * the caller has embedded it.
- */
-async function* streamPageImagesOrdered(
-  validPages: Page[],
-): AsyncGenerator<{ page: Page; imageBuffer: Buffer | null }> {
-  const stream = streamOrdered(
-    validPages,
-    page => {
-      const url = pageExportImageUrl(page);
-      return url ? fetchAndCompressImage(url) : Promise.resolve(null);
-    },
-    { concurrency: 8, lookahead: 12 },
-  );
-  for await (const { item, value } of stream) {
-    yield { page: item, imageBuffer: value };
-  }
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -1241,45 +1145,6 @@ p:first-of-type { text-indent: 0; }
 
     archive.finalize();
   });
-}
-
-// Generate ZIP of all page images
-// Returns a live archiver stream so the response starts flowing immediately.
-// Buffering the whole zip meant zero bytes for the full build time; big books
-// crossed Cloudflare's ~100s origin window and died with a 524.
-function generateImagesZipStream(book: Book, pages: Page[]): archiver.Archiver {
-  const validPages = pages.filter(p => pageExportImageUrl(p));
-  const archive = archiver('zip', { zlib: { level: 6 } });
-
-  (async () => {
-    console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);
-    // Sliding window: ~8 fetches in flight, appended strictly in page order.
-    const inFlight: (Promise<Buffer | null> | undefined)[] = new Array(validPages.length);
-    let started = 0;
-    const startNext = () => {
-      if (started >= validPages.length) return;
-      const i = started++;
-      const url = pageExportImageUrl(validPages[i]);
-      inFlight[i] = url ? fetchAndCompressImage(url) : Promise.resolve(null);
-    };
-    for (let k = 0; k < Math.min(8, validPages.length); k++) startNext();
-
-    for (let i = 0; i < validPages.length; i++) {
-      const imageBuffer = await inFlight[i];
-      inFlight[i] = undefined;
-      startNext();
-      if (imageBuffer) {
-        const paddedNum = String(validPages[i].page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-    await archive.finalize();
-  })().catch(err => {
-    console.error('images-zip stream failed:', err);
-    archive.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return archive;
 }
 
 // Generate text-only English translation PDF: front matter, continuous
@@ -2788,10 +2653,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const archive = generateImagesZipStream(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
       return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
