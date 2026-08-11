@@ -26,27 +26,18 @@
  * type; y often stands for i; ae/oe are frequently written e; k and c alternate
  * in Germanic transcription. Without this, Bodino and Bodinus are strangers.
  */
-export const foldOrtho = (s) => String(s ?? '')
-  .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-  .replace(/ae/g, 'e').replace(/oe/g, 'e')
-  .replace(/[vu]/g, 'u').replace(/[ijy]/g, 'i').replace(/k/g, 'c')
-  .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+import { foldOrthography, foldLongS, PARTICLES, PRECISION_ENDINGS, stripEnding } from './latin-morphology.mjs';
+
+export const foldOrtho = foldOrthography;
 
 /**
  * Particles and role words. These recur across unrelated names, so leaving them
  * in manufactures agreement — every "de" would match every other "de".
  */
-export const NAME_STOP = new Set(['the', 'and', 'der', 'den', 'van', 'von', 'del', 'della',
-  'dei', 'de', 'di', 'du', 'la', 'le', 'el', 'trans', 'saint', 'sanctus', 'pseudo', 'attributed']);
+export const NAME_STOP = PARTICLES;
 
 /** Strip one Latin case ending so Bodinus/Bodini/Bodino share a stem. */
-export const latinStem = (w) => {
-  for (const suf of ['issimus', 'ensis', 'ibus', 'orum', 'arum', 'ius', 'eus', 'aus', 'us', 'um',
-    'is', 'os', 'as', 'es', 'ae', 'am', 'em', 'im', 'on', 'o', 'a', 'e', 'i', 's']) {
-    if (w.length - suf.length >= 4 && w.endsWith(suf)) return w.slice(0, -suf.length);
-  }
-  return w;
-};
+export const latinStem = (w) => stripEnding(w, PRECISION_ENDINGS, 4);
 
 /** Distinctive stems of a name: 4+ characters, particles dropped. */
 export const nameStems = (s) => new Set(foldOrtho(s).split(' ')
@@ -86,6 +77,16 @@ export function sameNameForm(a, b) {
   const A = nameStems(a);
   const B = nameStems(b);
   if (!A.size || !B.size) return false;
+  // The long s (ſ) is routinely transcribed "f", so a stem may only agree after
+  // repair: "Iofephus"/"Iosephus", "brandeburgenfis"/"brandeburgensis". Compare
+  // both forms — `author-reconcile` has done this since May and this module
+  // shipped without it, so OCR'd names failed to match their clean spelling.
+  for (const set of [A, B]) {
+    for (const t of [...set]) {
+      const repaired = foldLongS(t);
+      if (repaired && repaired.length >= 4) set.add(repaired);
+    }
+  }
   for (const t of A) {
     for (const u of B) {
       if (t === u) return true;

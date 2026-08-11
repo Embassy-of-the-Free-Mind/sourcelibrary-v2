@@ -42,6 +42,7 @@
 import { MongoClient } from 'mongodb';
 import { namesOnTitlePage } from '../lib/title-page-attribution.mjs';
 import { sameNameForm } from '../lib/name-equivalence.mjs';
+import { nominativise } from '../lib/nominativise.mjs';
 
 const JSON_OUT = process.argv.includes('--json');
 const ALL_AUTHORS = process.argv.includes('--all-authors');
@@ -153,6 +154,33 @@ for await (const b of cursor) {
 }
 
 const q = buckets.AUTHOR_ON_PAGE;
+
+// ── Nominativise the genitive captures, by THESAURUS LOOKUP not by grammar ──
+// A genitive names the right person in the wrong case ("Nicolai Clenardi").
+// Latin nominatives are not recoverable by rule, but the `authors` thesaurus
+// already stores curated nominative forms, and sameNameForm folds the endings —
+// so the lookup does the declension. No match is a legitimate answer: it means
+// the person is not in the thesaurus and the row still needs a human.
+const authorsCol = db.collection('authors');
+const candCache = new Map();
+async function findCandidates(stem) {
+  if (candCache.has(stem)) return candCache.get(stem);
+  const rx = new RegExp(stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+  const docs = await authorsCol.find({ $or: [{ canonical_name: rx }, { variants: rx }, { _id: rx }] },
+    { projection: { _id: 1, canonical_name: 1, variants: 1 }, limit: 25 }).toArray();
+  candCache.set(stem, docs);
+  return docs;
+}
+for (const r of q) {
+  if (!r.needs_nominative) continue;
+  const hit = await nominativise(r.proposed, findCandidates);
+  if (!hit) continue;
+  r.nominative = hit.nominative;
+  r.nominative_slug = hit.slug;
+  r.nominative_ambiguous = hit.ambiguous;
+  if (hit.ambiguous) r.nominative_alternatives = hit.alternatives;
+}
+
 q.sort((a, b) => String(a.catalogued).localeCompare(String(b.catalogued)));
 
 if (JSON_OUT) {
@@ -166,6 +194,8 @@ if (JSON_OUT) {
       ai_disagrees: q.filter((r) => r.ai_agrees === false).length,
     },
     needs_nominative: q.filter((r) => r.needs_nominative).length,
+    nominative_resolved: q.filter((r) => r.nominative).length,
+    nominative_ambiguous: q.filter((r) => r.nominative_ambiguous).length,
     author_on_page: q,
   }, null, 2));
 } else {
@@ -187,7 +217,12 @@ if (JSON_OUT) {
     log(`  ${r.id}  ${String(r.year ?? '----').slice(0, 4)}  ${String(r.catalogued).slice(0, 26).padEnd(26)} → ${r.proposed}`);
     log(`     ${r.title}`);
     if (r.ai_says) log(`     enrichment says: ${r.ai_says}${r.ai_agrees ? '  ✓ agrees' : '  ✗ differs'}`);
-    if (r.needs_nominative) log('     ⚠ genitive form — nominativise before writing');
+    if (r.needs_nominative && r.nominative) {
+      log(`     nominative: ${r.nominative} (${r.nominative_slug})`
+        + (r.nominative_ambiguous ? `  ⚠ AMBIGUOUS, also: ${r.nominative_alternatives.join(', ')}` : ''));
+    } else if (r.needs_nominative) {
+      log('     ⚠ genitive form, not in the thesaurus — needs a human');
+    }
     if (r.other_names?.length) log(`     also named: ${r.other_names.join(', ')}`);
   }
 

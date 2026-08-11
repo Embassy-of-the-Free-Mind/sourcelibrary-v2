@@ -80,6 +80,22 @@ describe('sameNameForm — non-Latin scripts are NOT judged', () => {
   });
 });
 
+describe('long-s OCR repair', () => {
+  // The early-modern long s (ſ) is routinely transcribed "f". `author-reconcile`
+  // has handled this since May; this module shipped without it, so an OCR'd name
+  // silently failed to match its clean spelling.
+  it('matches a long-s transcription against the clean form', () => {
+    expect(sameNameForm('Iofephus Scaliger', 'Iosephus Scaliger')).toBe(true);
+  });
+  it('matches a long-s toponym', () => {
+    expect(sameNameForm('Brandeburgenfis', 'Brandeburgensis')).toBe(true);
+  });
+  it('does not let the repair merge unrelated names', () => {
+    expect(sameNameForm('Fabricius', 'Sabricius')).toBe(true);   // one edit, ≥7 — same person in practice
+    expect(sameNameForm('Frischlin', 'Bobali')).toBe(false);
+  });
+});
+
 describe('withinOneEdit', () => {
   it('accepts a substitution', () => expect(withinOneEdit('aristotel', 'aristotal')).toBe(true));
   it('accepts an insertion', () => expect(withinOneEdit('dioscorid', 'dioscorids')).toBe(true));
