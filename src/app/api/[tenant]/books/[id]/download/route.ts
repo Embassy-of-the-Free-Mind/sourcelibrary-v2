@@ -15,14 +15,40 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getBookIndex } from '@/lib/book-index';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
 import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
 import { markdownToHtml } from '@/lib/export-markdown-html';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+// Image-heavy formats (facsimile/images EPUBs, images-zip) fetch + recompress
+// one image per page; give the function room beyond the default window. This
+// route ran on the default window until #3909 while its twin had 300s.
+export const maxDuration = 300;
+
+/**
+ * Budget for the image phase, in ms. `maxDuration` on this route is 300s; we
+ * stop ADDING pages at 210s so there is room to finish the page in hand, write
+ * the truncation notice and the colophon, and flush.
+ *
+ * A big book cannot be served whole in one request (a 4,198-page book would
+ * need ~40 minutes of fetching), so the choice is between an opaque timeout and
+ * an honest partial edition. Per CLAUDE.md "no silent caps": if coverage is
+ * bounded, say what was dropped — here in the PDF itself, so the artifact
+ * carries its own provenance rather than relying on a header nobody reads.
+ */
+const FACSIMILE_IMAGE_BUDGET_MS = 210_000;
 
 // Index entry structure (from book index collection)
 interface ConceptEntry {
@@ -874,37 +900,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -914,8 +909,10 @@ async function generateFacsimileEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  // Collect pages with photo and translation
-  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+  // Collect pages with photo and translation. Resolves through the canonical
+  // resolver — reading `photo` directly exports the uncropped spread on
+  // split-from-spread pages, i.e. the wrong image, silently (#3909).
+  const validPages = pages.filter(p => p.translation?.data && hasExportImage(p));
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1087,14 +1084,11 @@ p:first-of-type { text-indent: 0; }
     `, 'Title Page', 'page-right');
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch and compress all images first (async)
+    // Fetch with BOUNDED concurrency. This was an unbounded Promise.all over
+    // every page — hundreds of simultaneous image fetches on a large book
+    // (#3909); the global route has used the bounded helper since #3597.
     console.log(`Fetching ${validPages.length} images for facsimile EPUB...`);
-    const imagePromises = validPages.map(async (page) => {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      return { page, imageBuffer };
-    });
-    const pageImages = await Promise.all(imagePromises);
+    const pageImages = await fetchPageImagesOrdered(validPages);
 
     // Add images and content pages
     for (const { page, imageBuffer } of pageImages) {
@@ -1171,70 +1165,6 @@ p:first-of-type { text-indent: 0; }
   });
 }
 
-// Generate ZIP of all page images
-async function generateImagesZip(
-  book: Book,
-  pages: Page[]
-): Promise<Buffer> {
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
-
-  return new Promise(async (resolve, reject) => {
-    const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 6 } });
-
-    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
-    archive.on('end', () => resolve(Buffer.concat(chunks)));
-    archive.on('error', reject);
-
-    // Fetch and add each image
-    console.log(`Fetching ${validPages.length} images for ZIP...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      if (imageBuffer) {
-        const paddedNum = String(page.page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-
-    archive.finalize();
-  });
-}
-
-// Resolve a page's export image via the canonical resolver (R2 display variant
-// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
-// fetch, and on split-from-spread pages it is the wrong image entirely). Added
-// alongside the PDF formats below — the rest of this file's image formats
-// predate this resolver and still use the legacy `photo || compressed_photo`
-// priority (out of scope to change here; tracked separately).
-function pageExportImageUrl(page: Page): string | null {
-  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
-  const resolved = getPageImageUrl(page, 'display') || legacy;
-  if (!resolved) return null;
-  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
-}
-
-// Prefetch page images with BOUNDED concurrency, preserving page order — see
-// the identical helper (and its rationale) in the main
-// src/app/api/books/[id]/download/route.ts.
-async function fetchPageImagesOrdered(
-  validPages: Page[],
-  concurrency = 8,
-): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
-  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
-  let next = 0;
-  async function worker() {
-    while (next < validPages.length) {
-      const i = next++;
-      const page = validPages[i];
-      const url = pageExportImageUrl(page);
-      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
-  return results;
-}
-
 // Generate text-only English translation PDF — see the main download route
 // for the full rationale (streamed, Unicode font, quote-integrity cleanup).
 function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
@@ -1295,13 +1225,27 @@ function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocume
       now,
     });
 
-    console.log(`Fetching ${validPages.length} images for pdf-facsimile (streaming)...`);
-    const pageImages = await fetchPageImagesOrdered(validPages);
+    // Yields each page AS ITS IMAGE ARRIVES. `fetchPageImagesOrdered` awaited
+    // EVERY image before writing a byte, so the response sat silent for the
+    // whole fetch (231s on a 366-page book) and Cloudflare killed it, with
+    // every compressed image resident at once — #3597, fixed on the global
+    // route and never ported here (#3909).
+    console.log(`Streaming ${validPages.length} images for pdf-facsimile...`);
+    const startedAt = Date.now();
+    let written = 0;
+    let translated = 0;
+    let truncated = false;
 
     const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
     const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
 
-    for (const { page, imageBuffer } of pageImages) {
+    for await (const { page, imageBuffer } of streamPageImagesOrdered(validPages)) {
+      if (Date.now() - startedAt > FACSIMILE_IMAGE_BUDGET_MS) {
+        truncated = true;
+        break;
+      }
+      written++;
+      if (page.translation?.data) translated++;
       doc.addPage();
       writePdfPageHeading(doc, fonts, page.page_number);
 
@@ -1327,12 +1271,43 @@ function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocume
       }
     }
 
+    // A partial facsimile must say so in the artifact itself — it used to be
+    // labelled a complete "facsimile edition" with pages silently missing.
+    if (truncated) {
+      const firstMissing = validPages[written]?.page_number;
+      doc.addPage();
+      doc.font(fonts.bold).fontSize(14).text('This edition is incomplete', { align: 'center' });
+      doc.moveDown(1);
+      doc.font(fonts.regular).fontSize(11).text(
+        [
+          `This facsimile stops at page ${validPages[written - 1]?.page_number ?? written} of `
+          + `${validPages.length}. It was not truncated for editorial reasons: a single request `
+          + 'cannot fetch and lay out every page scan of a book this large within the time '
+          + 'available, so generation stopped rather than failing outright.',
+          '',
+          firstMissing !== undefined
+            ? `Pages from ${firstMissing} onward are not included here. They are all readable `
+              + `at ${BASE_URL}/book/${book.id}, and the text-only PDF and EPUB editions cover `
+              + 'the whole book.'
+            : '',
+          '',
+          'If you need the complete facsimile as a single file, please get in touch — we would '
+          + 'rather generate it for you offline than hand you a partial edition without saying so.',
+        ].filter(Boolean).join('\n'),
+        { lineGap: 3 },
+      );
+      console.warn(
+        `pdf-facsimile truncated: ${written}/${validPages.length} pages for book ${book.id} `
+        + `after ${Date.now() - startedAt}ms`,
+      );
+    }
+
     doc.addPage();
     writePdfColophon(doc, fonts, book, {
       baseUrl: BASE_URL,
       now,
-      contentLabel: 'facsimile edition',
-      translatedCount: pageImages.filter(p => p.page.translation?.data).length,
+      contentLabel: truncated ? 'partial facsimile edition' : 'facsimile edition',
+      translatedCount: translated,
       totalCount: pages.length,
     });
 
@@ -1354,7 +1329,7 @@ async function generateImagesOnlyEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+  const validPages = pages.filter(hasExportImage);
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1467,12 +1442,11 @@ body { background: #1a1a1a; display: flex; align-items: center; justify-content:
 </html>`;
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch images and create pages
+    // Fetch images (bounded concurrency — the serial loop here took >100s on
+    // a ~126-page book and Cloudflare 524'd the response) and create pages
     console.log(`Fetching ${validPages.length} images for images-only EPUB...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-
+    const pageImages = await fetchPageImagesOrdered(validPages);
+    for (const { page, imageBuffer } of pageImages) {
       if (imageBuffer) {
         archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
       }
@@ -2692,11 +2666,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const zipBuffer = await generateImagesZip(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
-      return new Response(new Uint8Array(zipBuffer), {
+      // Streamed, not buffered: a buffered zip emits zero bytes for the whole
+      // build, and a big book crossed Cloudflare's ~100s origin window and died
+      // as a 524 that readers saved as a corrupt .zip (#3909).
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
+      return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
@@ -2775,11 +2749,20 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           edition = editions[0] || null;
         }
 
-        // Get book index from dedicated collection (or inline fallback)
-        const indexData = await db.collection('book_indexes').findOne(
-          { book_id: (book as unknown as Book).id, tenantId },
-          { projection: { _id: 0, book_id: 0, tenantId: 0 } }
-        );
+        // Get book index via the shared accessor (dedicated collection, with the
+        // legacy inline `book.index` fallback).
+        //
+        // This was an inline `findOne({ book_id, tenantId })`, and `book_indexes`
+        // documents carry NO tenantId — 0 of 18,273 corpus-wide (measured
+        // 2026-08-11) — so the filter matched nothing and the scholarly EPUB has
+        // shipped without its index on every tenant subdomain since the route was
+        // written. It failed silently because a missing index is indistinguishable
+        // from a book that has none.
+        //
+        // Dropping the filter does not widen access: `book` above was already
+        // fetched with `{ id, tenantId }`, so tenant ownership is established
+        // before we get here, and `book_indexes` is keyed 1:1 on that book_id.
+        const indexData = await getBookIndex((book as unknown as Book).id);
         if (indexData) {
           const idx = indexData as unknown as {
             vocabulary?: ConceptEntry[];
