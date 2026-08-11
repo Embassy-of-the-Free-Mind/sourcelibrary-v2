@@ -75,17 +75,52 @@ for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
   if (touched) docsAffected++;
 }
 
-// How many books would be cut loose if a given variant stopped matching? This
-// is the number that decides whether a repair is safe, so it is measured
-// exactly rather than estimated — one query per distinct unsafe variant.
+// How many books would actually be CUT LOOSE if a variant stopped matching?
+//
+// The first version of this counted books whose `author` equals the variant and
+// called all 1,526 of them load-bearing. That conflated CARRYING the string with
+// DEPENDING on it. A book with an explicit `author_id` reaches its author by
+// foreign key and does not care what the variant says; only a book with NO
+// author_id is held on by the string alone.
+//
+// Measured against production the true figure is ZERO — the canonical-link
+// backfill already gave every one of them an FK — which inverts the conclusion:
+// de-matching these variants is SAFE today, and the earlier "1,526 books at
+// risk" was an artefact of the wrong denominator.
 const flat = Object.values(shapes).flat();
 const distinct = [...new Set(flat.map((r) => r.variant))];
 const carried = new Map();
-for (const v of distinct) carried.set(v, await books.countDocuments({ author: v }));
-for (const r of flat) r.books_carrying = carried.get(r.variant) ?? 0;
+const orphaning = new Map();
+for (const v of distinct) {
+  carried.set(v, await books.countDocuments({ author: v }));
+  orphaning.set(v, await books.countDocuments({
+    author: v,
+    $or: [{ author_id: { $exists: false } }, { author_id: null }, { author_id: '' }],
+  }));
+}
+for (const r of flat) {
+  r.books_carrying = carried.get(r.variant) ?? 0;
+  r.books_orphaned_if_dematched = orphaning.get(r.variant) ?? 0;
+}
 
-const loadBearing = flat.filter((r) => r.books_carrying > 0);
-const booksAtRisk = loadBearing.reduce((s, r) => s + r.books_carrying, 0);
+const loadBearing = flat.filter((r) => r.books_orphaned_if_dematched > 0);
+const booksAtRisk = loadBearing.reduce((s, r) => s + r.books_orphaned_if_dematched, 0);
+const booksCarrying = flat.reduce((s, r) => s + r.books_carrying, 0);
+
+// A single variant claimed by SEVERAL docs is a duplicate-author signal: the
+// same person exists twice and both copies list the string. Surfaced here
+// because this audit is already walking every variant.
+const claimants = new Map();
+for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
+  { projection: { canonical_name: 1, variants: 1, wikidata_id: 1 } })) {
+  for (const v of a.variants) {
+    if (!claimants.has(v)) claimants.set(v, []);
+    claimants.get(v).push({ slug: a._id, wikidata_id: a.wikidata_id ?? null });
+  }
+}
+const contested = [...claimants.entries()]
+  .filter(([, d]) => d.length > 1)
+  .map(([variant, docs]) => ({ variant, docs }));
 
 if (JSON_OUT) {
   console.log(JSON.stringify({
@@ -94,8 +129,10 @@ if (JSON_OUT) {
     benign_shapes: benign,
     unsafe: flat.length,
     docs_affected: docsAffected,
+    books_carrying_an_unsafe_variant: booksCarrying,
     load_bearing_variants: loadBearing.length,
-    books_at_risk: booksAtRisk,
+    books_orphaned_if_dematched: booksAtRisk,
+    contested_variants: contested,
     counts: Object.fromEntries(Object.entries(shapes).map(([k, v]) => [k, v.length])),
     shapes: ONLY ? { [ONLY]: shapes[ONLY] ?? [] } : shapes,
   }, null, 2));
@@ -108,10 +145,22 @@ if (JSON_OUT) {
   log(`  UNSAFE           : ${flat.length.toLocaleString()} across ${docsAffected.toLocaleString()} docs\n`);
   for (const [k, v] of Object.entries(shapes)) log(`    ${k.padEnd(18)} ${String(v.length).padStart(5)}`);
 
-  log(`\n  ⚠ ${loadBearing.length} of those variants are LOAD-BEARING — ${booksAtRisk} books`);
-  log('    currently join their author doc through a string that should not be');
-  log('    matched on. Removing one orphans its books: byline stays, author page');
-  log('    loses the book. Fix the MATCHING, not the data, or re-point first.');
+  log(`\n  books carrying an unsafe variant : ${booksCarrying}`);
+  log(`  …that would be ORPHANED by de-matching it : ${booksAtRisk}`);
+  if (booksAtRisk === 0) {
+    log('    → every one already has an explicit author_id, so de-matching is SAFE.');
+    log('      Carrying a string is not the same as depending on it.');
+  } else {
+    log(`    → ${loadBearing.length} variants are the ONLY link for those books.`);
+    log('      Give them an author_id BEFORE de-matching, or the byline stays');
+    log('      and the author page silently loses the book.');
+  }
+  log(`\n  variant strings claimed by MORE THAN ONE doc: ${contested.length}`);
+  log('    each is a duplicate-author signal — the same person exists twice');
+  for (const c of contested.slice(0, 8)) {
+    log(`      ${JSON.stringify(c.variant.slice(0, 46))}`);
+    log(`         ${c.docs.map((d) => `${d.slug}${d.wikidata_id ? ` [${d.wikidata_id}]` : ''}`).join('  ⟷  ')}`);
+  }
 
   for (const [name, rows] of Object.entries(shapes)) {
     if (ONLY && name !== ONLY) continue;
@@ -127,10 +176,11 @@ if (JSON_OUT) {
 
   log('\n\n══ SUMMARY ══');
   log(`  ${flat.length} variants should not be used as lookup keys.`);
-  log(`  ${loadBearing.length} of them are how ${booksAtRisk} books reach their author — re-point those first.`);
+  log(`  ${booksAtRisk} books would be orphaned by de-matching them (${booksCarrying} merely carry one).`);
+  log(`  ${contested.length} strings are claimed by two docs — duplicate people to merge.`);
   log('  The multi_person splits are candidate co-author records for #2916,');
   log('  not garbage: keep the information, stop matching on the string.');
 }
 
 await mc.close();
-process.exit(loadBearing.length === 0 ? 0 : 1);
+process.exit(loadBearing.length === 0 && contested.length === 0 ? 0 : 1);
