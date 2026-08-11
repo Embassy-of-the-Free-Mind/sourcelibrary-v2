@@ -614,6 +614,16 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  // The SHWEP reading-room preview alias fronts the whole site, but the link we
+  // hand out is the reading room — land the bare domain there so the handoff URL
+  // can't miss. 307 (not 308): the alias is temporary by nature, and the rest of
+  // the site stays reachable at its normal paths on this host.
+  if (host.startsWith('sourcelibrary-episode-sources.') && request.nextUrl.pathname === '/') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/shwep';
+    return NextResponse.redirect(url, 307);
+  }
+
   // --- Canonical author URL redirect (#2250) ---
   // One person = one /author/ URL. Variant slugs (name-order, Latinized, or
   // title-contaminated forms) 308 to the canonical slug from the authors
