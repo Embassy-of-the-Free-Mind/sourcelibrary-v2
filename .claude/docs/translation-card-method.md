@@ -63,7 +63,7 @@ Invariants per round (inherited from the #2880 pilot discipline):
 
 | Round | Date | Cards | Entry-card errors | Empty-card errors | Notes |
 |---|---|---|---|---|---|
-| 1 | 2026-08-11 | (in flight) | | | pilot-cast cards; first calibration |
+| 1 | 2026-08-11 | 12 | 1 wrong_attribution + 3 filler entries (0 fabricated) | 1 category error (0 missed priors) | `scripts/eval/results/card-round-1.md`; two suggester rules adopted (no citation → no entry; no gloss-matched attribution); card defect ≈17% [5–45%], all fixed same-day |
 
 ## State
 
