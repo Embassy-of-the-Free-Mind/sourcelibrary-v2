@@ -724,5 +724,12 @@ export const SHWEP_WORK_NOTES: Record<string, string> = {
   "322|Pliny the Elder|Natural History": "Cites H.N. 36, 137–138 on 'firestone' (pyritēs) and 166 on hephaistitis.",
   "322|Anonymous|Hermes to Asclepios, the Book Called Sacred": "Cites the text via Festugière's La révélation d’Hermes Trismegiste, pp. 140–143 (1944-1954) or pp. 156–159 (2014 edition).",
   "323|Pliny the Elder|Natural History": "Cited as an example of an eagle dropping a tortoise on Aeschylus' head (H.N. 10.3).",
-  "323|Thomas Middleton|A Game at Chess": "Cited as a work first performed in London in 1624."
+  "323|Thomas Middleton|A Game at Chess": "Cited as a work first performed in London in 1624.",
+  "324|Apollonios of Tyana|Book of Wisdom of Apollonios of Tyana": "This is the primary text translated for the episode.",
+  "324|Anonymous|Testament of Adam": "Cited for dating on page 990.",
+  "325|Anonymous|Greek Magical Papyri": "The episode cites PGM IV, 850–855 and PGM IV, 3018–3041 from Betz's translation.",
+  "325|Anonymous|Hygromanteia": "The episode cites this work regarding the debate over an originally-separate magical treatise and its dating and places of composition.",
+  "326|Anonymous|Greek Magical Papyri": "Cited for the snake-kharaktēr in PGM III.187–262, with line 196 specifically identifying the snake-image as a kharaktēr.",
+  "326|Anonymous|Testament of Solomon": "Cited as the edition by Chester Charlton McCown, edited from manuscripts at Mount Athos, Bologna, Holkham Hall, London, and others.",
+  "326|Anonymous|Hygromanteia": "Cited as the Magical Treatise of Solomon or Hygromanteia, edited by Ioannis Marathakis in the Sourceworks of Ceremonial Magic Series."
 };

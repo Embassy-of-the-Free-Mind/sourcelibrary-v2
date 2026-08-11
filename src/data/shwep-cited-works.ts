@@ -2723,7 +2723,9 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       137,
       141,
       149,
-      153
+      153,
+      325,
+      326
     ],
     "status": "held",
     "held": [
@@ -3587,7 +3589,8 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       150,
       151,
-      217
+      217,
+      326
     ],
     "status": "held",
     "held": [
@@ -4924,7 +4927,9 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "era": "Byzantine",
     "episodes": [
       217,
-      221
+      221,
+      325,
+      326
     ],
     "status": "acquire",
     "held": []
@@ -17365,6 +17370,36 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "era": "Late Antique",
     "episodes": [
       233
+    ],
+    "status": "acquire",
+    "held": []
+  },
+  {
+    "work": "Book of Wisdom of Apollonios of Tyana",
+    "author": "Apollonios of Tyana",
+    "era": "Late Antique",
+    "episodes": [
+      324
+    ],
+    "status": "acquire",
+    "held": []
+  },
+  {
+    "work": "Testament of Adam",
+    "author": "Anonymous",
+    "era": "Late Antique",
+    "episodes": [
+      324
+    ],
+    "status": "acquire",
+    "held": []
+  },
+  {
+    "work": "Sepher ha-Razim",
+    "author": "Anonymous",
+    "era": "Late Antique",
+    "episodes": [
+      325
     ],
     "status": "acquire",
     "held": []

@@ -2289,5 +2289,31 @@ export const SHWEP_EARL_QUOTES: Record<string, ShwepEarlQuote> = {
   },
   "323|Thomas Middleton|A Game at Chess": {
     "quote": "A Game at Chess by Thomas Middleton: first performed in London in…"
+  },
+  "324|Anonymous|Testament of Adam": {
+    "quote": "S. E. Robinson. The Testament of Adam. In James H. Charlesworth, editor, The Old Testament Pseudepigrapha, Volume One: Apocalyptic Literature and Testaments, pages 989–95. Hendrickson, Peabody, MA, 2021, citing p. 990 on dating.",
+    "citedEdition": "James H. Charlesworth"
+  },
+  "325|Anonymous|Greek Magical Papyri": {
+    "quote": "Hans Dieter Betz. The Greek Magical Papyri in Translation, Including the Demotic Spells, volume 1. University of Chicago Press, Chicago, IL, 1996 [we quote PGM IV,850–855, PGM IV, 3018–3041].",
+    "citedEdition": "Betz"
+  },
+  "325|Anonymous|Hygromanteia": {
+    "quote": "Ioannis Marathakis, editor. The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011.",
+    "citedEdition": "Ioannis Marathakis, editor"
+  },
+  "325|Anonymous|Sepher ha-Razim": {
+    "quote": "Michael A. Morgan. Sepher ha-Razim: The Book of the Mysteries, volume 25 of Texts and Translations. Scholars Press, Chico, CA, 1983.",
+    "citedEdition": "Morgan"
+  },
+  "326|Anonymous|Greek Magical Papyri": {
+    "quote": "That snake-kharaktēr from the Greek magical papyri: PGM III.187–262, with line 196 of text specifically calling the snake-image a kharaktēr."
+  },
+  "326|Anonymous|Testament of Solomon": {
+    "quote": "Chester Charlton McCown, editor. The Testament of Solomon: Edited from Manuscripts at Mount Athos, Bologna, Holkham Hall, Jerusalem, London, Milan, Paris and Vienna. J. C. Hinrichs, Leipzig, 1922.",
+    "citedEdition": "Chester Charlton McCown"
+  },
+  "326|Anonymous|Hygromanteia": {
+    "quote": "Ioannis Marathakis. The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011."
   }
 };

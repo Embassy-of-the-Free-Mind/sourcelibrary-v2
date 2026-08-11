@@ -214,4 +214,6 @@ export const SHWEP_BOOK_MATCHES: Record<number, ShwepBookMatch[]> = {
   321: [{"id":"6993898ace15387065947977"},{"id":"6958e856d3a89283348140e4"}],
   322: [{"id":"69b51e1fefd8df28f2db123d"},{"id":"6958e856d3a89283348140e4"},{"id":"69b2692ab42fc08a921c5c1b"},{"id":"69b3f71ca107e55a0ee1b43a"}],
   323: [{"id":"69b2692ab42fc08a921c5c1b"}],
+  325: [{"id":"6953ae8177f38f6761bd7f50"}],
+  326: [{"id":"6953ae8177f38f6761bd7f50"},{"id":"695936cf3b43cb6630c91ab8"}],
 };

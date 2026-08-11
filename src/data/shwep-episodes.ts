@@ -342,6 +342,10 @@ const postAntiquityEpisodes: ShwepEpisode[] = [
   { number: 323, title: "The Play's the Thing: Matthew Vadnais on (Ancient) Theatre, Initiation, and the Esotericism of Public Performance", url: "https://shwep.net/podcast/the-plays-the-thing-matthew-vadnais-on-ancient-theatre-initiation-and-the-esotericism-of-public-performance/", period: "post-antiquity", tags: ['Dionysus', 'theatre', 'Eleusinian Mysteries', 'initiation', 'Poetics'] },
   { number: 321, title: "Storytime: Reading the Hermetic Kyranides, Part I", url: "https://shwep.net/podcast/storytime-reading-the-hermetic-kyranides-part-i/", period: "post-antiquity", tags: ['Kyranides', 'Cyranides', 'Hermetica', 'Hermes Trismegistus'] },
   { number: 322, title: "Storytime: Reading the Hermetic Kyranides, Part II", url: "https://shwep.net/podcast/storytime-reading-the-hermetic-kyranides-part-ii/", period: "post-antiquity", tags: ['Kyranides', 'Cyranides', 'Hermetica', 'Hermes Trismegistus'] },
+  { number: 324, title: "Storytime: Reading the Book of Wisdom of Apollonios of Tyana", url: "https://shwep.net/podcast/storytime-reading-the-book-of-wisdom-of-apollonios-of-tyana/", period: "post-antiquity", tags: [] },
+  { number: 325, title: "Storytime: Reading the Solomonic Hygromanteia, Part I", url: "https://shwep.net/podcast/storytime-reading-the-solomonic-hygromanteia-part-i/", period: "post-antiquity", tags: [] },
+  { number: 326, title: "Storytime: Reading the Solomonic Hygromanteia, Part II", url: "https://shwep.net/podcast/storytime-reading-the-solomonic-hygromanteia-part-ii/", period: "post-antiquity", tags: [] },
+  { number: 327, title: "Storytime: Reading the Solomonic Hygromanteia, Part III", url: "https://shwep.net/podcast/storytime-reading-the-solomonic-hygromanteia-part-iii/", period: "post-antiquity", tags: [] },
 ];
 
 // ---------------------------------------------------------------------------

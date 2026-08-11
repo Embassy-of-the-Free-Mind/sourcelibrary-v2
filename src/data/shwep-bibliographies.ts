@@ -10127,4 +10127,79 @@ Schechner, ‘an action twice performed’: Schechner, Richard. “Behavior, Per
 Augusto Boal Theatre of the Oppressed: [https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed](https://en.wikipedia.org/wiki/Theatre_of_the_Oppressed)
 
 An eagle dropped a tortoise on Æschulus' head: e.g. Pliny, *H.N.* 10.3.`,
+  324: `### Works Cited in this Episode:
+
+Our Oddcast episode with Juan Acevedo can be found [here](https://shwep.net/oddcast/juan-acevedo-on-alphanumeric-cosmology/).
+
+### Primary:
+
+For once, I don’t have to cite every primary source referred to in the episode here! Please download the document below for substantiation of the claims made in the episode.
+
+### Secondary:
+
+Claes Blum. The Meaning of στοιχεῖον and its Derivatives in the Byzantine Age. *Eranos: acta philologica Suecana*, 44:316–25, 1946.
+
+Franciscus Boll, editor. Codices Germanici, volume VII of* Catalogus Codicum Astrologorum Graecorum*. Bruxellis, 1908.
+
+F. N. Nau, editor. *Patrologia Syriaca*. Firmin-Didot, Paris, 1907. On Apollonios’ writings: pp. 1369–70. On 1368 we get the possibly-genuine Apollonian authorship!
+
+David Pingree. Some of the Sources of the Ghāyat al-Ḥakīm. *Journal of the Warburg and Courtauld Institutes*, 43:1–15, 1980.
+
+S. E. Robinson. The Testament of Adam. In James H. Charlesworth, editor, *The Old Testament Pseudepigrapha, Volume One: Apocalyptic Literature and Testaments,* pages 989–95. Hendrickson, Peabody, MA, 2021, citing p. 990 on dating.
+
+### A Translation of the Text:
+
+[The Book of Wisdom of Apollonios of Tyana](https://media.shwep.net/wp-content/uploads/2026/05/26152119/The-Book-of-Wisdom-of-Apollonios-of-Tyana.pdf)`,
+  325: `### Works Cited in this Episode:
+
+### Primary:
+
+British Library (BL) MS Harleianus 5596 = Numéro diktyon: 39555. A list of appearances of versions of our Solomonic work in various MSS can be found on [Πίνακες](https://pinakes.irht.cnrs.fr/notices/oeuvre/14454/).
+
+### Secondary:
+
+Hans Dieter Betz. *The Greek Magical Papyri in Translation, Including the Demotic Spells*, volume 1. University of Chicago Press, Chicago, IL, 1996 [we quote PGM IV,850–855, PGM IV, 3018–3041].
+
+Richard Greenfield.* Traditions of Belief in Late Byzantine Demonology*. Hakkert, Amsterdam, 1988 [we quote pp. 159–61].
+
+Ioannis Marathakis, editor. *The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē*. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011.
+
+Michael A. Morgan. *Sepher ha-Razim: The Book of the Mysteries*, volume 25 of Texts and Translations. Scholars Press, Chico, CA, 1983.
+
+Richard Reitzenstein. *Poimandres: Studien zur griechisch-ägyptischen und fruhchristlichen Literatur*. Teubner, Leipzig, 1904 [we cite p. 187, n. 1: ‘Schon der Anfang … diese Schrift niemand zu zeigen, charakterisiert sie als Nachbildung Hermitischer Schriften’].
+
+Pablo A. Torijano. *Solomon the Esoteric King: From King to Magus, Development of a Tradition*. Brill, Leiden, 2002.
+
+On the debate over an originally-separate ‘magical treatise’ present within the *Hygromanteia*-family: Torijano 197, 210–15, Marathakis 36.
+
+On the dating and places of composition of the *Hygromanteia*, see Torijano 160, 170, 174, Marathakis 77.
+
+### Recommended Reading: See the bibliography to Episode 217`,
+  326: `### Works Cited in this Episode:
+
+### Primary:
+
+Harleianus 5569 on the British Library website: [https://searcharchives.bl.uk/catalog/040-001613254](https://searcharchives.bl.uk/catalog/040-001613254).
+
+*Pinakes* on the manuscript: [https://pinakes.irht.cnrs.fr/notices/cote/39555/.](https://pinakes.irht.cnrs.fr/notices/cote/39555/)
+
+That snake-*kharaktēr* from the Greek magical papyri: *PGM* III.187–262, with line 196 of text specifically calling the snake-image a *kharaktēr*.
+
+### Secondary:
+
+Richard Gordon. Signa nova et inaudita: The Theory and Practice of Invented Signs (Charaktēres) in Graeco-Egyptian Magical Texts. *MHNH*, 11:15–44, 2011.
+
+Richard Gordon. Charaktēres between Antiquity and Renaissance: Transmission and Reinvention. *Micrologus’ Library*, 60:253–300, 2014.
+
+Ioannis Marathakis. *The Magical Treatise of Solomon or Hygromanteia, also called the Apotelesmatikē Pragmateia, Epistle to Rehoboam, Solomōnikē*. Number 8 in Sourceworks of Ceremonial Magic Series. Golden Hoard Press, Singapore, 2011.
+
+Chester Charlton McCown, editor. *The Testament of Solomon: Edited from Manuscripts at Mount Athos, Bologna, Holkham Hall, Jerusalem, London, Milan, Paris and Vienna*. J. C. Hinrichs, Leipzig, 1922.
+
+A. Scott. *Origen and the Life of the Stars: A History of an Idea*. Clarendon, Oxford, 1991.
+
+Pablo A. Torijano. *Solomon the Esoteric King: From King to Magus, Development of a Tradition*. Brill, Leiden, 2002.
+
+Francis Yates. *Giordano Bruno and the Hermetic Tradition.* Routledge and Kegan Paul, London, 1964.
+
+### Recommended Reading: see the bibliography to Episode 127`,
 };

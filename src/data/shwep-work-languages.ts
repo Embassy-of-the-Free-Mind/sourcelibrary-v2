@@ -469,5 +469,8 @@ export const SHWEP_WORK_LANGUAGES: Record<string, string> = {
   "Zacharias Scholasticus|Ammonius": "Greek",
   "Zenobius|Paroemiographi Graeci": "Greek",
   "Zosimus of Panopolis|Collection des anciens alchimistes grecs": "Greek",
-  "Zosimus of Panopolis|Mushaf as-suwar": "Greek"
+  "Zosimus of Panopolis|Mushaf as-suwar": "Greek",
+  "Apollonios of Tyana|Book of Wisdom of Apollonios of Tyana": "Arabic",
+  "Anonymous|Testament of Adam": "Syriac",
+  "Anonymous|Sepher ha-Razim": "Hebrew"
 };
