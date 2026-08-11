@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'suda-benchmark',
+    title: 'Graded by the Suda',
+    subtitle:
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a model cannot grade its own family’s homework. Total API cost: $1.15.',
+    date: '11 August 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg',
+    imageAlt:
+      'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
+  },
+  {
     slug: 'nobody-knows-what-has-been-scanned',
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
