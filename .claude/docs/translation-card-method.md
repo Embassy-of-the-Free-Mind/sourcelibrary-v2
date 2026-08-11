@@ -59,6 +59,20 @@ Invariants per round (inherited from the #2880 pilot discipline):
 - The **random slice is mandatory** — spot checks include cards nobody suspects,
   or correlated error hides.
 
+## The defeater policy (Derek, 2026-08-11)
+
+An entry **defeats** a first-translation claim only when it is formally
+published with a **durable identifier** — a DOI, an ISBN, or a formal
+press/journal imprint. Web-only translations (including AI-assisted ones) are
+**listed** on the card with their nature stated — the card records what
+exists — but they do not defeat: a claim of firstness needs an opponent that
+is itself citable. Decided on the Clavius case (round 4): a 2026 AI-assisted
+"reading grade" web translation, no DOI/ISBN — listed, labeled, non-defeating;
+and Source Library's own translation predated it by two months anyway.
+Corollary: our own claims earn the same standard — a card-backed first is
+fully defensible once the edition carries its DOI (the Zenodo scholarly-
+edition path).
+
 ## Running error rate
 
 | Round | Date | Cards | Entry-card errors | Empty-card errors | Notes |
@@ -66,6 +80,7 @@ Invariants per round (inherited from the #2880 pilot discipline):
 | 1 | 2026-08-11 | 12 | 1 wrong_attribution + 3 filler entries (0 fabricated) | 1 category error (0 missed priors) | `scripts/eval/results/card-round-1.md`; two suggester rules adopted (no citation → no entry; no gloss-matched attribution); card defect ≈17% [5–45%], all fixed same-day |
 | 2 | 2026-08-11 | 22 | 3 FABRICATED (real-author/invented-title, all hygiene-proof) + 4 wrong-text + 3 date fixes + 2 dedupe | 8/8 testable held; 1 category error; 1 untestable (unidentifiable text) | `scripts/eval/results/card-round-2.md`; 6 rules adopted incl. not_applicable→under_review (Dioscorides bug), work-node modeling, 2 new card states; **cumulative missed priors 0/14**; layering demonstrated: rules kill noise, verification kills fabrications |
 | 3 | 2026-08-11 | 28 | 2 FABRICATED (cum. 5) + **13 wrong-content pins** (unverified tail ~35% entry defect vs ~10% verified head) + Duckwitz misdescription | 0 clean misses (1 GRAIN refutation at cycle level); 5 unidentifiable; 2 more English originals (cum. 5) | `scripts/eval/results/card-round-3.md`; **4/5 QID cards MIS-KEYED** (Pymander card = Asclepius node!) → QID P31 audit rule; "…sogs" containers excluded as a class; per-work scholarly bibliographies (ETCSL) beat open-web search for entry verification |
+| 4 | 2026-08-11 | 24 + 4 render | 3 FABRICATED (cum. 8; recent-date/hyper-specific signature) + 3 MISSED real translations found + 6 wrong-text + ~30 dupes collapsed | **FIRST REFUTATION**: Clavius via a 2026 AI-assisted 'reading-grade' web translation (POLICY: do AI translations defeat?); 2 more English originals (cum. 7; Westcott class ≈17 cards); 5 bundles | `scripts/eval/results/card-round-4.md`; pre-finding: reseed clobbered reviewed cards → guard shipped (#3928), post-write verification now standing; live-render bucket caught a category error IN PRODUCTION + raw-URL line (#3930); English-original screen now blocking; event-level dedupe rule |
 
 ## State
 

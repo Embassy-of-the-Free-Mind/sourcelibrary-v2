@@ -39,19 +39,6 @@ export const posts: BlogPost[] = [
       'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
   },
   {
-    slug: 'the-library-card',
-    title: 'The Library Card',
-    subtitle:
-      'We used to badge books as "first translations" — a claim about the absence of any prior, which no search can prove. We replaced the badge with one cited list of known English translations per work, spot-checked by adversarial verifiers who caught five fabrications and failed fourteen times to break an absence claim. It is live on every book page.',
-    date: '11 August 2026',
-    readTime: '7 min read',
-    tag: 'Essay',
-    tagColor: 'bg-amber-50 text-amber-700',
-    image: 'https://images.sourcelibrary.org/archived/6958ea099659a6529d577d58/1.jpg',
-    imageAlt:
-      'A page of the 1546 Latin De Materia Medica of Dioscorides — a work whose English translation history is now written on its card.',
-  },
-  {
     slug: 'nobody-knows-what-has-been-scanned',
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
