@@ -57,9 +57,15 @@ describe('download routes: shared export machinery', () => {
 
     it(`${rel} labels a truncated facsimile as partial`, () => {
       // "No silent caps": a bounded export must say what was dropped, in the
-      // artifact itself.
-      expect(src).toContain('partial facsimile edition');
-      expect(src).toContain('This edition is incomplete');
+      // artifact itself. The truncation notice lives in the SHARED facsimile
+      // generator (src/lib/pdf-export.ts) — the route must build its PDFs
+      // through it, not re-implement one beside the call site (the same rule
+      // as the image helpers above).
+      expect(src).toContain('generatePdfFacsimileStream');
+      expect(src).not.toMatch(/function\s+generatePdfFacsimileStream\s*\(/);
+      const pdfLib = read('src/lib/pdf-export.ts');
+      expect(pdfLib).toContain('partial facsimile edition');
+      expect(pdfLib).toContain('This edition is incomplete');
     });
 
     it(`${rel} does not filter book_indexes by a field it does not have`, () => {
