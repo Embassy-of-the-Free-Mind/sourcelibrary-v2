@@ -71,7 +71,11 @@ const VERDICT_TO_STATUS = {
   first_modern: 'prior_exists',      // antiquated prior — entries carry the year
   first_complete: 'prior_exists',    // partial prior — entries carry completeness
   first_from_source: 'prior_exists', // different-source-language prior
-  not_applicable: 'not_a_single_work',
+  // Round-2 fix (card-round-2, Dioscorides): book-grain not_applicable usually
+  // means "THIS EDITION is itself a translation" — an edition fact, not a
+  // work-grain claim. Promoting it to not_a_single_work mislabeled a canonical
+  // single work. A human (or a sibling original-language edition) decides.
+  not_applicable: 'under_review',
   needs_review: 'under_review',
   unverifiable: 'under_review',
 };
@@ -179,7 +183,7 @@ for (const workId of workList) {
   // entries. `no_prior_known` with a COMPLETE entry is a contradiction — the
   // Gangtey/Fries class. Partial-only entries may coexist with no_prior_known
   // (they support first-complete, they don't defeat it).
-  if (status === 'no_prior_known'
+  if ((status === 'no_prior_known' || status === 'not_a_single_work')
     && entries.some((e) => e.completeness === 'complete')) {
     status = 'under_review';
   }
