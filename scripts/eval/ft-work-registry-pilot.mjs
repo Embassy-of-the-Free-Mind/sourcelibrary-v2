@@ -20,8 +20,9 @@
  * Dry-run by default; --apply writes; --wipe-pilot removes pilot docs.
  *
  * Usage:
- *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs           # report only
- *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs --apply   # seed the collection
+ *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs                     # pilot cast, report only
+ *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs --apply             # seed the pilot cast
+ *   node --env-file=.env.production.local scripts/eval/ft-work-registry-pilot.mjs --all-verified --apply   # phase 1: EVERY verified-layer work
  */
 import fs from 'fs';
 import path from 'path';
@@ -32,6 +33,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const APPLY = process.argv.includes('--apply');
 const WIPE = process.argv.includes('--wipe-pilot');
+const ALL_VERIFIED = process.argv.includes('--all-verified');
 const NOW = new Date().toISOString();
 
 /**
@@ -100,13 +102,24 @@ if (WIPE) {
   process.exit(0);
 }
 
+// Phase 1 (#3881): --all-verified seeds EVERY work with a verified-layer
+// resolution, not just the hand-picked cast. Same safety: only the unread
+// collection is written; a wrong seed is visible (test 2 canary), not active.
+const workList = ALL_VERIFIED
+  ? await books.distinct('work_id', {
+      'first_translation.resolver': { $in: ['tier2_agent', 'human'] },
+      work_id: { $exists: true, $nin: [null, ''] },
+    })
+  : PILOT_WORKS;
+console.log(`Seeding ${workList.length} work(s) (${ALL_VERIFIED ? 'ALL verified-layer' : 'pilot cast'})`);
+
 const report = { generated_at: NOW, works: [], totals: {} };
 let totalSiblings = 0;
 let disagreeingBefore = 0;
 let entriesTotal = 0;
 const docs = [];
 
-for (const workId of PILOT_WORKS) {
+for (const workId of workList) {
   const siblings = await books.find(
     { work_id: workId, visible: true },
     { projection: { id: 1, title: 1, author: 1, language: 1, is_first_translation: 1, first_translation: 1, pages_translated: 1 } },
@@ -179,7 +192,8 @@ for (const workId of PILOT_WORKS) {
       basis_attempt_id: ft.best_attempt_id ?? null,
       seeded_from_book: verifiedBook.id,
     },
-    pilot: true,
+    pilot: !ALL_VERIFIED,
+    seeded_from: ALL_VERIFIED ? 'phase1-verified-layer' : 'pilot-cast',
     seeded_at: NOW,
   });
 
