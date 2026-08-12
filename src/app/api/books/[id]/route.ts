@@ -39,6 +39,13 @@ export const GET = withApiAuth(async (
     const bookProjection = pagesMode === 'nav' ? {
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
       published: 1, year: 1, language: 1, doi: 1,
+      // The edition-vs-work language distinction (#3942). `language` is the
+      // MANIFESTATION language — what is printed on these leaves — while
+      // `original_language` names the work when it differs (de Slane's French
+      // Muqaddimah: language French, original_language Arabic). Without these
+      // three, every MCP caller saw one scalar and had no way to tell a
+      // translation-of-a-translation from a source text.
+      original_language: 1, text_role: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
       categories: 1, reading_summary: 1,
       chapters: 1,
