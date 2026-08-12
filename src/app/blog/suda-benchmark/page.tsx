@@ -175,12 +175,15 @@ export default function SudaBenchmarkPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Second: the reference makes mistakes too.</strong> In 6 of 49 entries the judges
-          found the scholarly translation erring against its own Greek &mdash; small things, an
-          imported word, a stretched construal, the ordinary residue of any twenty-five-year
-          project. We say this with gratitude, not glee: the Suda On Line is the only reason this
-          measurement exists, and we will report what we found upstream, with the evidence, the way
-          their own contributors would. When a machine translation and a human translation can each
+          <strong>Second: the reference makes mistakes too.</strong> In 5 of 49 entries the judges
+          found the scholarly translation erring against its own Greek &mdash; small things, a word
+          construed against its attested sense, a misparsed genitive, the ordinary residue of any
+          twenty-five-year project. (We first counted six. On re-examination with SOL&rsquo;s own
+          annotations in view, one claim dissolved &mdash; the error in that entry was ours, and we
+          have corrected this paragraph accordingly. Every surviving claim was re-adjudicated the
+          same way, with instructions to extend SOL maximal charity.) We say this with gratitude,
+          not glee: the Suda On Line is the only reason this measurement exists, and we will report
+          what we found upstream, with the evidence, the way their own contributors would. When a machine translation and a human translation can each
           be checked against the Greek, each becomes an error-detector for the other. That
           reciprocity &mdash; not replacement &mdash; is the actual relationship between AI
           translation and scholarship that this experiment demonstrates.
