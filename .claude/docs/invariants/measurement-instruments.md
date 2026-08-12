@@ -129,3 +129,49 @@ what was new is that a *safety control* embodied it.
   in the store production writes to, and cross-check the vendor's own meter (Cloud Monitoring
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
+
+## An activity count is not a quality metric, and "carrying" is not "depending"
+
+2026-08-12 (#3894, #3945). An attribution workstream ran for a day reporting
+**"records corrected"** — 28, then 63, then 142. Every number was true and none
+was a measurement: no denominator, no baseline, and **structurally unable to
+come back negative**. When a real metric was finally built
+(`scripts/audit/attribution-health.mjs`, `.claude/docs/attribution-health.md`),
+its first act was to score those same 142 corrections as a **net regression**:
+35 records up a tier, **42 down**. Correcting a byline had cleared `author_id`
+wherever the right person had no thesaurus doc, trading a *wrong but reachable*
+attribution for a *right but unreachable* one. The activity count concealed that
+completely — it could only ever go up.
+
+**If a number cannot fall, it is a report of effort, not of quality.** Before
+quoting progress, ask what would make this number get worse, and if there is no
+answer, build the one that can.
+
+Three numbers from that single workstream were wrong before they were caught,
+each by the same mechanism — a plausible count taken without its denominator:
+
+- **"1,526 books at risk"** if unsafe author-name variants stopped being matched
+  on. The count was books whose `author` *equalled* such a variant. But a book
+  with an explicit `author_id` reaches its author by foreign key and does not
+  care what the variant says; only a book with **no** `author_id` depends on the
+  string. True figure: **zero**. **Carrying a value is not depending on it** —
+  measure the dependency, never the co-occurrence.
+- **"6,025 unusable author strings"** (16% of the visible corpus) from a test
+  asking whether the author string opens some book's title. It flagged every
+  author whose name heads their own book. `author-attribution.mjs` has carried
+  the guard against exactly this since #3434; omitting it reproduced the bug the
+  guard exists to prevent. True figure after that guard **and** after excluding
+  artworks — where the "author" is the artist and titles conventionally open
+  with the artist's name — was **68**.
+- **"142 records corrected"**, above.
+
+**Scope is part of the instrument.** That artwork case is not a detail: 3,606 of
+the 3,674 remaining "defects" were `resource_type`-bearing records with a
+different identity model. A metric over a mixed corpus measures the mixture.
+State the population in the script's own output, as the OCR loop does
+(`ocr-quality-measurement-loop.md`), so the denominator travels with the number.
+
+**Corollary for repairs that clear a field.** Nulling a foreign key to avoid a
+wrong link is the right call — but it is a *cost*, and it will not appear in any
+count of records fixed. Emit it: this run should have reported "22 bylines
+corrected, 22 author pages lost" from the start.
