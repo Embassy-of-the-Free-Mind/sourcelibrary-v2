@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ShapeCloud from './ShapeCloud';
 
 export const metadata: Metadata = {
   title: 'Every Shape of Every Word - Research Notes - Source Library',
@@ -30,59 +31,6 @@ export const metadata: Metadata = {
     canonical: '/blog/greek-lemma-table',
   },
 };
-
-// The ten Greek lemmas with the most attested shapes in our corpus
-// (aggregated from lexicon_lemma_map_grc, 2026-08-10; homograph entries merged).
-const SHAPE_DATA = [
-  { headword: 'εἰμί', gloss: 'to be', forms: 1474 },
-  { headword: 'ποιέω', gloss: 'to make, do', forms: 1138 },
-  { headword: 'ἵημι', gloss: 'to send, let go', forms: 1019 },
-  { headword: 'ἵστημι', gloss: 'to set, stand', forms: 1018 },
-  { headword: 'δίδωμι', gloss: 'to give', forms: 962 },
-  { headword: 'τίθημι', gloss: 'to place', forms: 957 },
-  { headword: 'ἄγω', gloss: 'to lead', forms: 938 },
-  { headword: 'ἔχω', gloss: 'to have, hold', forms: 872 },
-  { headword: 'αἴρω', gloss: 'to lift', forms: 813 },
-  { headword: 'δέω', gloss: 'to bind; to need', forms: 753 },
-];
-
-function ShapesFigure() {
-  const max = SHAPE_DATA[0].forms;
-  const barH = 22;
-  const gap = 14;
-  const labelW = 200;
-  const chartW = 640;
-  const H = SHAPE_DATA.length * (barH + gap) + 8;
-  return (
-    <figure className="my-10">
-      <svg viewBox={`0 0 ${chartW} ${H}`} role="img" aria-label="Bar chart: the ten Greek dictionary words with the most attested spellings and inflected shapes in the Source Library corpus, from εἰμί with 1,474 shapes to δέω with 753" className="w-full h-auto">
-        {SHAPE_DATA.map((d, i) => {
-          const y = i * (barH + gap);
-          const w = Math.round((d.forms / max) * (chartW - labelW - 64));
-          return (
-            <g key={d.headword}>
-              <text x={labelW - 12} y={y + barH / 2} textAnchor="end" dominantBaseline="central" fontSize="15" fill="#44403c" fontWeight="600" lang="grc">
-                {d.headword}
-                <tspan fontWeight="400" fill="#78716c" fontSize="12" fontStyle="italic">
-                  {'  '}{d.gloss}
-                </tspan>
-              </text>
-              <rect x={labelW} y={y} width={w} height={barH} rx="4" fill="#c45d3a" opacity={0.9} />
-              <text x={labelW + w + 8} y={y + barH / 2} dominantBaseline="central" fontSize="13" fill="#57534e">
-                {d.forms.toLocaleString()}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
-      <figcaption className="text-sm text-stone-500 mt-3">
-        The ten dictionary words with the most attested shapes in our Greek books. The verb
-        &ldquo;to be&rdquo; alone appears in 1,474 distinct forms &mdash; each one a way a reader
-        can fail to find it in a dictionary.
-      </figcaption>
-    </figure>
-  );
-}
 
 export default function GreekLemmaTablePage() {
   return (
@@ -144,7 +92,7 @@ export default function GreekLemmaTablePage() {
         one for our Greek collection.
       </p>
 
-      <ShapesFigure />
+      <ShapeCloud />
 
       <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Built from our own shelves</h2>
       <p className="text-secondary leading-relaxed mb-6">
