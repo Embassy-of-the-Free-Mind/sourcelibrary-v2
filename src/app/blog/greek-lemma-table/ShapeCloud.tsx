@@ -19,9 +19,35 @@ const WORDS: Array<{ headword: keyof typeof shapeData; gloss: string }> = [
 
 const GOLDEN = 137.508;
 
+// Scholarly romanization for normalized polytonic Greek (lowercase input).
+const ROM: Record<string, string> = {
+  α: 'a', β: 'b', γ: 'g', δ: 'd', ε: 'e', ζ: 'z', η: 'ē', θ: 'th', ι: 'i',
+  κ: 'k', λ: 'l', μ: 'm', ν: 'n', ξ: 'x', ο: 'o', π: 'p', ρ: 'r', σ: 's',
+  ς: 's', τ: 't', υ: 'y', φ: 'ph', χ: 'ch', ψ: 'ps', ω: 'ō', ϝ: 'w',
+};
+const VOWELS = 'αεηιου';
+
+export function romanize(word: string): string {
+  const nfd = word.normalize('NFD');
+  const rough = nfd.includes('̔'); // rough breathing anywhere → initial h
+  const iotaSub = nfd.includes('ͅ');
+  const base = nfd.replace(/[̀-ͯͅ]/g, '');
+  let out = '';
+  for (let i = 0; i < base.length; i++) {
+    const ch = base[i];
+    const next = base[i + 1];
+    if (ch === 'γ' && next && 'γκξχ'.includes(next)) { out += 'n'; continue; }
+    if (ch === 'υ' && i > 0 && VOWELS.includes(base[i - 1]) && base[i - 1] !== 'υ') { out += 'u'; continue; }
+    out += ROM[ch] ?? ch;
+  }
+  if (iotaSub) out += 'i';
+  return (rough ? 'h' : '') + out;
+}
+
 export default function ShapeCloud() {
   const [word, setWord] = useState<(typeof WORDS)[number]>(WORDS[0]);
   const [picked, setPicked] = useState<{ form: string; count: number } | null>(null);
+  const [roman, setRoman] = useState(false);
 
   const { forms, total } = shapeData[word.headword];
   const placed = useMemo(() => {
@@ -32,10 +58,11 @@ export default function ShapeCloud() {
     const rects: Array<{ x: number; y: number; w: number; h: number }> = [
       { x: 350 - 62, y: 265 - 62, w: 124, h: 124 },
     ];
-    const out: Array<{ form: string; count: number; x: number; y: number; size: number }> = [];
+    const out: Array<{ form: string; count: number; label: string; x: number; y: number; size: number }> = [];
     (forms as Array<[string, number]>).forEach(([form, count], i) => {
       const size = 8.5 + 18 * Math.sqrt(Math.log(count + 1) / Math.log(max + 1));
-      const w = form.length * size * 0.55 + 4;
+      const label = roman ? romanize(form) : form;
+      const w = label.length * size * 0.55 + 4;
       const h = size * 1.08;
       for (let t = i; t < i + 900; t++) {
         const angle = (t * GOLDEN * Math.PI) / 180;
@@ -49,14 +76,14 @@ export default function ShapeCloud() {
         );
         if (!hit) {
           rects.push(box);
-          out.push({ form, count, x, y, size });
+          out.push({ form, count, label, x, y, size });
           return;
         }
       }
       // no space left — drop the tail form rather than overlap
     });
     return out;
-  }, [forms]);
+  }, [forms, roman]);
 
   return (
     <figure className="my-10">
@@ -75,9 +102,20 @@ export default function ShapeCloud() {
             lang="grc"
           >
             {w.headword}
+            <span className="opacity-70" lang="grc-Latn"> {romanize(w.headword)}</span>
             <span className="opacity-70"> · {shapeData[w.headword].total} shapes</span>
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => { setRoman((v) => !v); }}
+          aria-pressed={roman}
+          className={`ml-auto px-3 py-1.5 rounded-full text-sm border transition-colors ${
+            roman ? 'bg-stone-700 text-white border-stone-700' : 'bg-white text-stone-600 border-stone-300 hover:border-stone-500'
+          }`}
+        >
+          {roman ? 'Greek letters' : 'Roman letters'}
+        </button>
       </div>
       <div className="rounded-lg border border-stone-200 bg-white overflow-hidden">
         <svg viewBox="0 0 700 530" className="w-full h-auto" role="img" aria-label={`Word cloud: the attested shapes of ${word.headword} in the Source Library corpus, sized by frequency`}>
@@ -97,14 +135,17 @@ export default function ShapeCloud() {
                 onMouseEnter={() => setPicked({ form: p.form, count: p.count })}
                 onClick={() => setPicked({ form: p.form, count: p.count })}
               >
-                {p.form}
+                {p.label}
               </text>
             ))}
             <circle cx={350} cy={265} r={54} fill="#fef9ef" stroke="#e7e5e4" />
-            <text x={350} y={256} textAnchor="middle" fontSize="26" fontWeight="700" fill="#c45d3a" lang="grc">
+            <text x={350} y={250} textAnchor="middle" fontSize="26" fontWeight="700" fill="#c45d3a" lang="grc">
               {word.headword}
             </text>
-            <text x={350} y={280} textAnchor="middle" fontSize="12" fill="#78716c" fontStyle="italic">
+            <text x={350} y={270} textAnchor="middle" fontSize="13" fill="#a8a29e">
+              {romanize(word.headword)}
+            </text>
+            <text x={350} y={287} textAnchor="middle" fontSize="12" fill="#78716c" fontStyle="italic">
               {word.gloss}
             </text>
           </g>
@@ -113,9 +154,11 @@ export default function ShapeCloud() {
           {picked ? (
             <>
               <span lang="grc" className="font-semibold text-stone-800">{picked.form}</span>
-              {' '}appears <span className="font-semibold">{picked.count.toLocaleString()}</span> times
-              across our Greek books &mdash; every one of them findable under{' '}
-              <span lang="grc" className="font-semibold text-stone-800">{word.headword}</span>.
+              {' '}<span className="text-stone-500">({romanize(picked.form)})</span> appears{' '}
+              <span className="font-semibold">{picked.count.toLocaleString()}</span> times across
+              our Greek books &mdash; every one of them findable under{' '}
+              <span lang="grc" className="font-semibold text-stone-800">{word.headword}</span>{' '}
+              <span className="text-stone-500">({romanize(word.headword)})</span>.
             </>
           ) : (
             <>Hover or tap a shape. Showing the {placed.length} most frequent of {total} shapes
