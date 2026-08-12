@@ -243,14 +243,37 @@ export default function SudaBenchmarkPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          So the honest version of the numbers above is that they are a <em>screen</em>, not a
-          census: <strong>66 recitation candidates found at roughly one-third sensitivity</strong>,
-          which makes the true rate some multiple of the observed one, still small but not
-          measured. The flags remain useful &mdash; they are a worklist, and each one now goes to a
-          cross-family judge for verification. What they are not is a quality statistic. The rates
-          this project reports will come from a verified sample, judged by the judges that can
-          actually do the task, with the confidence intervals that a sample honestly implies. A
-          cheap sweep is a good way to find candidates and a bad way to count them.
+          So the numbers above are a <em>screen</em>, not a census. We then sent all sixty-six
+          recitation candidates to cross-family judges, one entry each, and the screen came out
+          worse than its sensitivity alone suggested: <strong>two of the sixty-six were
+          real</strong>. One is lovely &mdash; our Greek reads &delta;&oacute;&rho;&upsilon;,{' '}
+          <em>spear</em>, and our English says a small Persian <em>sword</em>, which is what an
+          akinakes actually was. In the other, our page reads &ldquo;died aged 58,&rdquo; the
+          reading Adler prints, while our English gives 69, the age every reference book assigns
+          Aeschylus. Both contradict our own scan in the direction of received knowledge. That is
+          the fingerprint.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The other sixty-four failed in one consistent way, and it is the more interesting half.
+          The screen had flagged any disagreement between our English and the scholars&rsquo;,
+          without regard to direction &mdash; and most of those disagreements turned out to be our
+          translation faithfully following a <em>corrupted</em> line of our own scan, and so
+          departing from Adler. That is the mirror image of recitation: evidence the translator was
+          reading the page rather than remembering the book. A detector built to catch a machine
+          trusting its memory had mostly caught the machine trusting its eyes. It also, while
+          failing, handed us something useful &mdash; a list of real scanning errors, spotted in
+          passing by judges who were busy rejecting the flag attached to them.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Which leaves the honest position on the number itself: we do not know it. Three
+          recitation cases are now confirmed in this corpus. The pilot&rsquo;s rate of one in
+          forty-nine carries, at that sample size, a confidence interval running from roughly 0.4%
+          to 11% &mdash; somewhere between a hundred and three thousand entries, which is less a
+          measurement than an admission. Getting it properly will take a verified sample judged by
+          judges that can do the task. A cheap sweep turned out to be a fair way to find candidates
+          and a bad way to count them &mdash; and the two it did find were worth the dollar.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -313,6 +336,12 @@ export default function SudaBenchmarkPage() {
             Scored against the gold labels it missed all three known events, and on seeded
             contradictions it caught four of twelve. Its clean-rate and recitation percentages were
             removed as statistics and are now described as candidates at measured low sensitivity.
+          </li>
+          <li>
+            <strong>12 August 2026 &mdash; all 66 recitation candidates verified; 2 were real.</strong>{' '}
+            Cross-family judges cleared 64 of them, most because our translation had faithfully
+            followed a corrupted scan rather than a remembered text. The section now reports the
+            verified outcome and states plainly that the corpus-wide rate remains unmeasured.
           </li>
         </ul>
 
