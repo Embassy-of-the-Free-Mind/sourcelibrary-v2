@@ -125,6 +125,11 @@ for (const fix of FIXES) {
   await B.updateOne({ _id }, {
     $set: {
       ...fix.set,
+      // sync-books-catalog.mjs runs incrementally on `updated_at > lastSync`, so
+      // a correction that does not bump it is invisible to the Supabase mirror
+      // FOREVER — the card surfaces would have kept serving "German" and
+      // "Arabic" while Atlas held the fix, and nothing would report the drift.
+      updated_at: new Date(),
       'field_provenance.language': {
         source: 'manual',
         value: fix.set.language,
