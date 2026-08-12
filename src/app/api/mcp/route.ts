@@ -8,6 +8,7 @@ import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
+import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -132,7 +133,13 @@ async function searchPassages(args: Record<string, unknown>) {
       book_id: r.book_id,
       title: r.display_title || r.title,
       author: r.author,
-      original_language: r.language,
+      // This is the EDITION's language — what is printed on the leaf the
+      // snippet came from. It was called `original_language` and described as
+      // "the book's source language", which is false for every translated
+      // edition in the corpus (#3942); the search index carries no work
+      // language, so the honest fix here is to stop claiming one. Call
+      // get_book for the work language.
+      language: r.language,
       snippet_language: snippetLanguage,
       published: r.published,
       page: r.page_number,
@@ -156,7 +163,7 @@ async function searchPassages(args: Record<string, unknown>) {
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
     passages,
-    tip: 'original_language is the book\'s source language; snippet_language is the language of the snippet text (English for translations/summaries, source language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording. snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -180,7 +187,8 @@ async function searchConcept(args: Record<string, unknown>) {
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
-    original_language: r.book_language,
+    // Edition language, not the work's — see the note in searchPassages (#3942).
+    language: r.book_language,
     snippet_language: 'English',
     published: r.book_year,
     page: r.page_number,
@@ -201,7 +209,7 @@ async function searchConcept(args: Record<string, unknown>) {
     total_matches: passages.length,
     returned: passages.length,
     passages,
-    tip: 'original_language is the book\'s source language; semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -273,6 +281,12 @@ async function getBook(args: Record<string, unknown>) {
     ...(coverThumb ? { cover_thumb_url: coverThumb } : {}),
     ...(coverFull ? { cover_image_url: coverFull } : {}),
     language: result.language, published: result.published, year: result.year,
+    // Edition language vs work language (#3942). `language` above is what is
+    // printed on these leaves; `work_language` appears only when the work was
+    // written in another one, with `translation_note` spelling out the chain.
+    // Serving one flattened scalar is what let de Slane's French Muqaddimah be
+    // cited as an Arabic source.
+    ...languageApparatusFields(result as LanguageApparatusSource),
     categories: result.categories, pages_count: result.pages_count,
     pages_translated: result.pages_translated, doi: result.doi,
     reading_summary: result.reading_summary, chapters: result.chapters,
@@ -427,6 +441,23 @@ function hasRomanized(result: Record<string, unknown>): boolean {
   return typeof quote?.romanized === 'string' && quote.romanized.length > 0;
 }
 
+// Where the cited edition is itself a translation, `original` holds the
+// translator's words, not the author's (#3942). The quote API computes the note
+// (see languageApparatus); this lifts it into the tip so a caller composing a
+// citation cannot miss it — the failure this fixes is silent, and the reader
+// who is misled is downstream of the agent, not the agent itself.
+const TRANSLATED_ORIGINAL_TIP =
+  'CITATION WARNING — this edition is a translation. The `original` field below is NOT the ' +
+  'author\'s own language; see `translation_note` for the chain. Attribute the wording to the ' +
+  'translator, and do not present this passage as evidence of what the author wrote in their own ' +
+  'tongue. To find an original-language witness, call list_editions with this book_id.';
+
+function translationNote(result: Record<string, unknown>): string | null {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const note = quote?.translation_note;
+  return typeof note === 'string' && note ? note : null;
+}
+
 async function getQuote(args: Record<string, unknown>) {
   const params = new URLSearchParams({ page: String(args.page) });
   // The quote API has always accepted this; the MCP tool never passed it, so
@@ -467,11 +498,15 @@ async function getQuote(args: Record<string, unknown>) {
   }
   const hint = continuityHint(continuity, Number(args.page));
 
+  const tips = [QUOTE_TIP];
+  if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
+  if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
+
   return {
     ...withCitationLink(result),
     continuity,
     ...(hint ? { continuity_hint: hint } : {}),
-    tip: hasRomanized(result) ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
+    tip: tips.join('\n\n'),
   };
 }
 
@@ -522,12 +557,20 @@ async function getQuotes(args: Record<string, unknown>) {
   );
 
   const anyRomanized = settled.some((s) => hasRomanized(s as Record<string, unknown>));
+  // Every page here is from ONE book, so the edition-language warning is either
+  // true of all of them or none — and a dossier is precisely where a translated
+  // edition gets quoted at length as an author's own words (#3942).
+  const anyTranslated = settled.some((s) => translationNote(s as Record<string, unknown>));
+
+  const tips = [QUOTE_TIP];
+  if (anyRomanized) tips.push(ROMANIZED_TIP);
+  if (anyTranslated) tips.push(TRANSLATED_ORIGINAL_TIP);
 
   return {
     book_id: bookId,
     pages_requested: pageNums,
     quotes: settled,
-    tip: anyRomanized ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
+    tip: tips.join('\n\n'),
   };
 }
 
@@ -759,7 +802,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where they differ the response also carries `work_language`, `text_role` (original / period-translation / modern-translation) and a `translation_note` — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the edition is in the work\'s own language. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -789,7 +832,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nFor several pages of one book at once, use get_quotes.',
+    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nTRANSLATED EDITIONS: `original` means the text printed on this leaf, which on a translated edition is the TRANSLATOR\'s language, not the author\'s. When the response carries `translation_note`, the chain is stated there — attribute the wording to the translator and do not offer the passage as evidence of what the author wrote in their own tongue. Call list_editions to find an original-language witness of the same work.\nFor several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,

@@ -12,6 +12,7 @@ import { getPageImageUrl } from '@/lib/page-image-url';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
 import { isBookReadable } from '@/lib/book-access';
+import { languageApparatusFields } from '@/lib/edition-language';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -34,7 +35,23 @@ interface QuoteResponse {
     display_title?: string;
     author: string;
     published: string;
+    /**
+     * Language of the leaves in THIS scan. On a translated edition it is the
+     * translator's language, not the author's — which is why the three
+     * apparatus fields below ride alongside it (#3942). Kept as `language`
+     * rather than renamed, so existing clients keep reading a true value.
+     */
     language: string;
+    /** Language of the work, when it differs from `language`. */
+    work_language?: string;
+    /** original | period-translation | modern-translation, when classified. */
+    text_role?: string;
+    /**
+     * Set only where `original` below is a translator's text rather than the
+     * author's. A quote is a claim about who wrote the words; where the chain
+     * runs English←French←Arabic the citation has to say so.
+     */
+    translation_note?: string;
     /** Display-sized scan of the cited leaf (≤1200px, browser-safe). Only when ?include_image=true. */
     page_image_url?: string;
   };
@@ -128,6 +145,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         author: book.author,
         published: book.published,
         language: book.language,
+        ...languageApparatusFields(book),
       },
       citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
       license: CONTENT_LICENSE,
