@@ -29,7 +29,7 @@ export const posts: BlogPost[] = [
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:
-      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a model cannot grade its own family’s homework. Total API cost: $1.15.',
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently — its incapacity arrives dressed as approval. Total API cost: $1.15.',
     date: '11 August 2026',
     readTime: '9 min read',
     tag: 'Research',
@@ -37,6 +37,18 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg',
     imageAlt:
       'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
+  },
+  {
+    slug: 'greek-lemma-table',
+    title: 'Every Shape of Every Word',
+    subtitle:
+      'We mapped 570,000 Greek word forms to their dictionary entries — the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
+    date: '10 August 2026',
+    readTime: '5 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg',
+    imageAlt: 'A Greek page of the Divini Platonis Opera omnia, 1590.',
   },
   {
     slug: 'nobody-knows-what-has-been-scanned',

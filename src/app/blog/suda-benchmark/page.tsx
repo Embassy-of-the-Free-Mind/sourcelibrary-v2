@@ -175,28 +175,49 @@ export default function SudaBenchmarkPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Second: the reference makes mistakes too.</strong> In 6 of 49 entries the judges
-          found the scholarly translation erring against its own Greek &mdash; small things, an
-          imported word, a stretched construal, the ordinary residue of any twenty-five-year
-          project. We say this with gratitude, not glee: the Suda On Line is the only reason this
-          measurement exists, and we will report what we found upstream, with the evidence, the way
-          their own contributors would. When a machine translation and a human translation can each
+          <strong>Second: the reference makes mistakes too.</strong> In 5 of 49 entries the judges
+          found the scholarly translation erring against its own Greek &mdash; small things, a word
+          construed against its attested sense, a misparsed genitive, the ordinary residue of any
+          twenty-five-year project. (We first counted six. On re-examination with SOL&rsquo;s own
+          annotations in view, one claim dissolved &mdash; the error in that entry was ours, and we
+          have corrected this paragraph accordingly. Every surviving claim was re-adjudicated the
+          same way, with instructions to extend SOL maximal charity.) We say this with gratitude,
+          not glee: the Suda On Line is the only reason this measurement exists, and we will report
+          what we found upstream, with the evidence, the way their own contributors would. When a machine translation and a human translation can each
           be checked against the Greek, each becomes an error-detector for the other. That
           reciprocity &mdash; not replacement &mdash; is the actual relationship between AI
           translation and scholarship that this experiment demonstrates.
         </p>
 
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Third, and to us most instructive: a judge that cannot do the task does not say
+          so &mdash; it says &ldquo;faithful.&rdquo;</strong> Before scaling the grading, we tested
+          whether a cheap model from the same family as our translator could stand in for the
+          expensive judges. Given the identical entries, the identical rubric, and errors we knew
+          were present because they were already catalogued, it called 47 of 49 entries clean
+          &mdash; missing 90% of the faults, with zero false alarms. Agreement with the gold
+          labels: &kappa; = 0.107, barely above chance. A bigger model of the same family with four
+          times the thinking budget did no better. We initially read this as the obvious morality
+          tale &mdash; a model going easy on its own family&rsquo;s homework &mdash; and an earlier
+          version of this paragraph said exactly that.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>Third, and to us most important: a model cannot grade its own family&rsquo;s
-          homework.</strong> Before scaling the grading, we tested whether a cheap model from the
-          same family as our translator could stand in for the expensive cross-family judges. Given
-          the identical entries, the identical rubric, and errors we knew were present because they
-          were already catalogued, it called 47 of 49 entries clean &mdash; missing 90% of the
-          faults, with zero false alarms. Agreement with the gold labels: &kappa; = 0.107, barely
-          above chance. Escalating to the bigger model of the same family with four times the
-          thinking budget changed nothing. The misses all point one direction: pure leniency toward
-          its own family&rsquo;s output. It is hard to imagine a cleaner argument that AI systems
-          must be evaluated by their rivals, never by their relatives.
+          Then we ran the control an honest reviewer would demand, and the morality tale fell
+          apart. We had fresh translations of the same entries made by the judge&rsquo;s rival
+          family, and had both families grade the identical artifacts: on focused
+          Greek-plus-translation pairs, the cheap judge found errors at the same rate as its
+          expensive rival &mdash; including, decisively, <em>6 of 7 known error-entries in its own
+          family&rsquo;s work</em> once we re-presented them in the focused format. The blindness
+          was never loyalty. It was task collapse: our original test asked the judge to first
+          locate one entry&rsquo;s translation inside a full translated page and then grade it, and
+          the cheap model cannot do that composite task &mdash; so it silently returned
+          &ldquo;faithful,&rdquo; forty-seven times, instead of once saying &ldquo;I
+          can&rsquo;t.&rdquo; The practical rule survives in sharper form: validate a cheap judge
+          on the exact task format you will deploy it on, because its incapacity will arrive
+          dressed as approval. And the methodological rule above it: when a result flatters your
+          suspicion of someone else&rsquo;s model, that is precisely the result to attack with a
+          control.
         </p>
 
         {/* ── The census ── */}

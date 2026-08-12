@@ -8,6 +8,7 @@ import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
+import { getPageImageUrl } from '@/lib/page-image-url';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { withApiAuth } from '@/lib/api-auth';
 import { isBookReadable } from '@/lib/book-access';
@@ -34,6 +35,8 @@ interface QuoteResponse {
     author: string;
     published: string;
     language: string;
+    /** Display-sized scan of the cited leaf (≤1200px, browser-safe). Only when ?include_image=true. */
+    page_image_url?: string;
   };
   citation: Citation;
   license: ContentLicense;
@@ -51,6 +54,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     const pageNumber = parseInt(searchParams.get('page') || '1');
     const includeOriginal = searchParams.get('include_original') !== 'false';
     const includeContext = searchParams.get('include_context') === 'true';
+    const includeImage = searchParams.get('include_image') === 'true';
 
     if (isNaN(pageNumber) || pageNumber < 1) {
       return NextResponse.json({ error: 'Invalid page number' }, { status: 400 });
@@ -128,6 +132,14 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
       license: CONTENT_LICENSE,
     };
+
+    // Include the scan image of the cited leaf if requested. Display size only
+    // (≤1200px via the canonical resolver) — the quote path is a citation
+    // apparatus, not a download channel.
+    if (includeImage) {
+      const imageUrl = getPageImageUrl(page, 'display');
+      if (imageUrl) response.quote.page_image_url = imageUrl;
+    }
 
     // Include original text if requested
     if (includeOriginal && page.ocr?.data) {

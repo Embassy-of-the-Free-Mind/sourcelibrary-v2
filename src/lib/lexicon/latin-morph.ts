@@ -108,6 +108,11 @@ export function irregularLemmas(normalizedWord: string): string[] {
   return IRR[normalizedWord] ?? [];
 }
 
+/** The full irregular table, for exports (form → lemma headwords). */
+export function irregularEntries(): ReadonlyArray<[string, string[]]> {
+  return Object.entries(IRR);
+}
+
 // ---------------------------------------------------------------------------
 // Shared paradigm ending tables (normalized orthography).
 // ---------------------------------------------------------------------------
