@@ -52,6 +52,8 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
+import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
 import {
   classifyFirstTranslationClaim,
   type ScreenedBook,
@@ -426,7 +428,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -479,8 +481,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     }, tenantId).catch(() => null)
     : Promise.resolve(null); // Already have full book from Atlas
 
+  // The work's Translation Card, if one exists (#3881). Best-effort: a miss
+  // or an error renders the legacy panel, never an error state.
+  const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
+
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
     fullBookPromise,
     // Use page_number >= 0 to skip archived-spread pages (negative numbers).
     // This uses the {book_id, page_number} compound index efficiently.
@@ -549,6 +555,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .toArray()
         .catch(() => [])
       : Promise.resolve([]),
+    cardPromise,
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
@@ -631,7 +638,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 
   const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
 }
 
 // Skeleton for book info while loading
@@ -694,7 +701,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
 
   // What we can honestly SAY about this book's first-translation status (#3459).
   // The flag decides whether a claim appears at all; this decides its register —
@@ -1341,6 +1348,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
+            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+              <TranslationCardPanel
+                card={translationCard}
+                book={book as { pages_translated?: number | null }}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              />
+            ) : (
+              // A catalog states its own coverage: a translated, non-English
+              // book with neither a card nor a book-grain verdict has simply
+              // not been researched — say so, or silence reads as "checked,
+              // nothing found" (#3881).
+              !translationCard
+              && !(book as { first_translation?: { verdict?: string } }).first_translation?.verdict
+              && !book.is_first_translation
+              && (book.pages_translated ?? 0) > 0
+              && book.language
+              && !['English', 'english', 'en', 'eng'].includes(book.language)
+              && <TranslationHistoryUnresearched />
+            )}
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions
@@ -1838,13 +1864,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 )}
               </div>
 
-              {/* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
-                  Renders the "First Translation" or "Existing translations" badge,
-                  or null when neither applies. */}
-              <FirstTranslationEvidence
-                book={book as never}
-                showExternalLinks={embedPolicy.showExternalLinks}
-              />
+              {/* The Translation Card (#3881): when this book's work has a
+                  clean, reviewed card, the card IS the first-translation
+                  surface — one sentence + cited entries. One decision point:
+                  card renders → legacy panel does not (no side-by-side
+                  contradiction). No card / unclean card → exactly the legacy
+                  render this page had before. */}
+              {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+                <TranslationCardPanel
+                  card={translationCard}
+                  book={book as { pages_translated?: number | null }}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              ) : (
+                /* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
+                    Renders the "First Translation" or "Existing translations" badge,
+                    or null when neither applies. */
+                <FirstTranslationEvidence
+                  book={book as never}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              )}
 
               {/* Dedication */}
               <div className="mt-3">

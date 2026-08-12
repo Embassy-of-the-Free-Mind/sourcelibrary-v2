@@ -1,0 +1,188 @@
+#!/usr/bin/env node
+/**
+ * Repair `gallery_images.type` rows that hold raw model output instead of a type (#3419).
+ *
+ * 99 rows carry a chunk of the extraction model's response — up to 4,152 characters,
+ * including its own visible deliberation about which enum value to pick. Three shorter
+ * malformed values sit in the same family and are easy to miss because they look almost
+ * valid: `"diagram,"`, `"diagramBase64EncodedImage:null,"`, `"diagramBase64EncodedImageData:null,"`.
+ *
+ * ## How a blob is resolved
+ *
+ * Order matters, cheapest and most certain first:
+ *
+ *   1. `coerceImageType` — catches the trailing-punctuation near-misses outright.
+ *   2. An explicit self-report inside the blob. Several say what they decided in so many
+ *      words: `I will use 'diagram'`, `Type: diagram.`, `the type must be ... 'diagram'`.
+ *      That is the model's own conclusion, not our inference, so it is safe to take.
+ *   3. A single unambiguous vocabulary word. If exactly ONE valid type appears anywhere
+ *      in the blob, take it. If two or more appear, we cannot tell which was meant, so
+ *      we do not guess.
+ *   4. Otherwise `unknown`.
+ *
+ * Step 3 is the only inferential step, and it is deliberately conservative: requiring
+ * uniqueness is what stops `"...emblem or portrait, I think portrait..."` from being
+ * silently resolved to whichever word the regex happened to hit first.
+ *
+ * The original value is preserved on `type_raw` (truncated) so the reclassification work
+ * in #2221 can still see what the model actually said. Rows already carrying `type_raw`
+ * are left alone, which makes the script re-runnable.
+ *
+ * Usage:
+ *   node --env-file=.env.production.local scripts/maintenance/repair-gallery-image-types.mjs
+ *   node --env-file=.env.production.local scripts/maintenance/repair-gallery-image-types.mjs --apply
+ */
+import { MongoClient } from 'mongodb';
+import { VALID_IMAGE_TYPES, coerceImageType } from '../lib/gallery-image-types.mjs';
+
+const APPLY = process.argv.includes('--apply');
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error('MONGODB_URI is not set. Run with: node --env-file=.env.production.local …');
+  process.exit(1);
+}
+
+const TYPES = [...VALID_IMAGE_TYPES];
+
+/** Patterns where the model states its own conclusion. */
+const SELF_REPORT = [
+  /I\s+will\s+use\s+['"`]?(\w+)['"`]?/i,
+  /the\s+type\s+(?:must\s+be|is)\s+['"`]?(\w+)['"`]?/i,
+  /(?:^|[^a-z])type\s*[:=]?\s*['"`]?([a-z_]+)['"`]?/i,
+];
+
+/**
+ * Most of these blobs are underscore-joined description slugs
+ * (`woodcut_illustration_of_a_courtyard_scene_...`). `_` is a word character, so
+ * `\bwoodcut\b` does NOT match inside one — matching on the raw string sends 59 clearly
+ * readable rows to `unknown`. Normalise separators before any pattern work.
+ *
+ * `musical_score` is the one vocabulary term containing an underscore, so it is protected
+ * before the rest are flattened.
+ */
+function normalizeForMatching(text) {
+  return text
+    .replace(/musical_score/gi, 'musical score')
+    .replace(/_/g, ' ')
+    .replace(/musical score/gi, 'musical_score');
+}
+
+function resolveType(raw) {
+  // 1. Straight coercion — handles the trailing-punctuation family.
+  const direct = coerceImageType(raw);
+  if (direct && direct !== 'unknown') return { value: direct, basis: 'coerce' };
+
+  const text = normalizeForMatching(String(raw));
+
+  // 2. Leading token. A blob that OPENS with a vocabulary word followed by a separator is
+  //    a type with the description run on after it — the model answered, then kept
+  //    talking. This is the single most reliable signal in the corpus and must be tried
+  //    before any whole-string scan, which would call the same row ambiguous.
+  const lead = text.match(/^\s*([a-z_]+)(?=$|[^a-z_])/i);
+  if (lead && VALID_IMAGE_TYPES.has(lead[1].toLowerCase())) {
+    return { value: lead[1].toLowerCase(), basis: 'leading-token' };
+  }
+
+  // 3. Run-on field name. A distinct family opens `<type>Status: <type>, bbox: {...}` —
+  //    `diagramStatus: diagram, ...`, `symbolStatus: symbol; ...`, `emblemStatus: emblem, ...`.
+  //    That is a serialisation defect (the value ran into the NEXT field's name), not
+  //    narration, and the type is unambiguously the prefix. Without this rule the trailing
+  //    JSON mentions several vocabulary words and the whole-string scan calls the row
+  //    ambiguous — three of the first eight rows spot-checked were recoverable this way.
+  const runOn = text.match(/^\s*([a-z_]+?)(?:Status|Type|Base64)\b/i);
+  if (runOn && VALID_IMAGE_TYPES.has(runOn[1].toLowerCase())) {
+    return { value: runOn[1].toLowerCase(), basis: 'run-on-field' };
+  }
+
+  // 3. The model's own stated conclusion.
+  for (const re of SELF_REPORT) {
+    const m = text.match(re);
+    if (m && VALID_IMAGE_TYPES.has(m[1].toLowerCase())) {
+      return { value: m[1].toLowerCase(), basis: 'self-report' };
+    }
+  }
+
+  // 4. Exactly one vocabulary word present anywhere.
+  const present = TYPES.filter((t) => t !== 'unknown' && new RegExp(`\\b${t}\\b`, 'i').test(text));
+  if (present.length === 1) return { value: present[0], basis: 'unique-mention' };
+
+  // 5. Give up honestly rather than pick one.
+  return { value: 'unknown', basis: present.length > 1 ? `ambiguous(${present.join('/')})` : 'no-signal' };
+}
+
+const client = new MongoClient(uri);
+await client.connect();
+const db = client.db('bookstore');
+const gi = db.collection('gallery_images');
+
+// Two populations:
+//   a. never repaired — a `type` outside the vocabulary. Selected by "not a valid value"
+//      rather than by length, because the three near-misses (`"diagram,"`) are short and a
+//      length threshold would leave exactly the values that look almost right.
+//   b. already repaired to `unknown`, but `type_raw` was preserved. When a resolver rule
+//      improves, those rows can be re-decided from the original text at no cost. This is
+//      the whole reason type_raw is kept, and it is why "unknown" must never be treated as
+//      a terminal answer.
+const candidates = await gi
+  .find(
+    {
+      $or: [
+        { type: { $nin: [...TYPES, null] } },
+        { type: 'unknown', type_raw: { $exists: true } },
+      ],
+    },
+    { projection: { type: 1, type_raw: 1, book_id: 1 } },
+  )
+  .toArray();
+
+console.log(`candidate rows (unrepaired + re-decidable unknowns): ${candidates.length}\n`);
+
+const basisTally = {};
+const valueTally = {};
+let repaired = 0;
+let skipped = 0;
+
+for (const row of candidates) {
+  // Always resolve from the ORIGINAL text. On a re-run `type` already holds our verdict,
+  // so re-reading it would just re-confirm `unknown` forever.
+  const source = row.type_raw !== undefined ? row.type_raw : row.type;
+  const { value, basis } = resolveType(source);
+
+  // A re-run that reaches the same verdict is a no-op, not a write.
+  if (row.type_raw !== undefined && value === row.type) {
+    skipped++;
+    continue;
+  }
+  basisTally[basis] = (basisTally[basis] || 0) + 1;
+  valueTally[value] = (valueTally[value] || 0) + 1;
+  repaired++;
+
+  const preview = String(source).replace(/\s+/g, ' ').slice(0, 90);
+  console.log(`${row._id}  ${basis.padEnd(22)} -> ${value.padEnd(13)} | ${preview}`);
+
+  if (APPLY) {
+    const set = {
+      type: value,
+      type_repaired_at: new Date(),
+      type_repair_basis: basis,
+    };
+    // Write type_raw ONCE, on first repair only. On a re-run `row.type` holds our own
+    // previous verdict ("unknown"), so re-deriving type_raw from it would overwrite the
+    // original with the repair — destroying the only record of what the model said and,
+    // with it, the ability to re-decide the row ever again. Same shape as the
+    // archived_photo invariant in CLAUDE.md: a wrong write that erases its own repair path.
+    // Bounded: enough to review the decision, not enough to re-store a 4KB blob.
+    if (row.type_raw === undefined) set.type_raw = String(row.type).slice(0, 500);
+
+    await gi.updateOne({ _id: row._id }, { $set: set });
+  }
+}
+
+console.log('\n' + '='.repeat(60));
+console.log(APPLY ? 'APPLIED' : 'DRY RUN (pass --apply to write)');
+console.log(`  repaired: ${repaired}`);
+console.log(`  skipped (already has type_raw): ${skipped}`);
+console.log('  by basis:', JSON.stringify(basisTally));
+console.log('  by resolved value:', JSON.stringify(valueTally));
+
+await client.close();

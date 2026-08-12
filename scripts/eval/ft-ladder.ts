@@ -365,20 +365,15 @@ async function main() {
   console.log(`  rung-3 (claude) queue: ${rung3Queue.length} | rung-4 (human) queue: ${rung4Queue.length}`);
   if (RUN) console.log(`  rung-2 spend: $${spent.toFixed(4)} of $${BUDGET} budget${spent >= BUDGET ? '  ← BUDGET EXHAUSTED, queue truncated' : ''}`);
 
+  // RUN REPORTS, not queues (#3881 pass 2). Timestamped so same-day runs never
+  // clobber each other. The canonical rung-3/-4 worklist is rebuilt from the
+  // ledger at any moment by scripts/eval/ft-rung3-queue.ts — never feed these
+  // files to ft-verify.
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const reportPath = path.join(OUT_DIR, `ft-ladder-${DATE}.json`);
-  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, rows }, null, 1));
-  console.log(`\nWrote ${reportPath}`);
-  if (rung3Queue.length) {
-    const p = path.join(OUT_DIR, `ft-ladder-rung3-queue-${DATE}.json`);
-    fs.writeFileSync(p, JSON.stringify(rung3Queue, null, 1));
-    console.log(`Wrote ${p} — feed to the ft-verify skill (Claude subagents).`);
-  }
-  if (rung4Queue.length) {
-    const p = path.join(OUT_DIR, `ft-ladder-rung4-human-${DATE}.json`);
-    fs.writeFileSync(p, JSON.stringify(rung4Queue, null, 1));
-    console.log(`Wrote ${p} — policy holds for Derek.`);
-  }
+  const RUN_STAMP = RUN_DATE.replace(/[:.]/g, '-');
+  const reportPath = path.join(OUT_DIR, `ft-ladder-report-${RUN_STAMP}.json`);
+  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, rows, rung3: rung3Queue, rung4: rung4Queue }, null, 1));
+  console.log(`\nWrote ${reportPath} (run report — the canonical queue is \`npx tsx scripts/eval/ft-rung3-queue.ts\`).`);
 
   if (APPLY && (rung1Applied || rung2Logged)) {
     console.log(`\n⚠ ACTUATION NOTICE: ingested ${rung1Applied + rung2Logged} row(s) into first_translation_attempts `

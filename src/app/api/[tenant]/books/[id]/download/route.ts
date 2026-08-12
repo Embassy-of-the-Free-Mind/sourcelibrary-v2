@@ -15,14 +15,28 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getBookIndex } from '@/lib/book-index';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
-import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
-import { pipeTableToHtml } from '@/lib/markdown-table-html';
+import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
+import { markdownToHtml } from '@/lib/export-markdown-html';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  fetchFacsimilePdfImage,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+// Image-heavy formats (facsimile/images EPUBs, images-zip) fetch + recompress
+// one image per page; give the function room beyond the default window. This
+// route ran on the default window until #3909 while its twin had 300s.
+export const maxDuration = 300;
 
 // Index entry structure (from book index collection)
 interface ConceptEntry {
@@ -160,90 +174,6 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('═'.repeat(60));
 
   return lines.join('\n');
-}
-
-// Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
-  // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
-
-  // Remove any standalone URLs
-  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
-
-  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
-  if (opts?.stripNotes) {
-    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
-    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
-    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
-    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
-  }
-
-  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
-  // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
-  html = html.replace(/<column-break\s*\/?>/gi, '');
-  // Strip ->...<- centering markers (OCR convention for centered text)
-  html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
-  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
-
-  // Escape HTML entities
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
-
-  // Convert legacy [[notes: ...]] to inline
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
-
-  // Convert bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Split by double newlines to create paragraphs
-  const blocks = html.split(/\n\n+/);
-
-  // Process each block
-  html = blocks.map(block => {
-    block = block.trim();
-    if (!block) return '';
-    // Don't wrap headers in paragraphs
-    if (block.startsWith('<h')) {
-      return block;
-    }
-    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
-    const table = pipeTableToHtml(block);
-    if (table) return table;
-    // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
-  }).filter(b => b).join('\n');
-
-  // Clean up empty paragraphs and whitespace issues
-  html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p><br\/><\/p>/g, '');
-
-  return html || '<p></p>';
 }
 
 // Custom CSS for EPUB styling
@@ -958,37 +888,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -998,8 +897,10 @@ async function generateFacsimileEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  // Collect pages with photo and translation
-  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+  // Collect pages with photo and translation. Resolves through the canonical
+  // resolver — reading `photo` directly exports the uncropped spread on
+  // split-from-spread pages, i.e. the wrong image, silently (#3909).
+  const validPages = pages.filter(p => p.translation?.data && hasExportImage(p));
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1171,14 +1072,11 @@ p:first-of-type { text-indent: 0; }
     `, 'Title Page', 'page-right');
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch and compress all images first (async)
+    // Fetch with BOUNDED concurrency. This was an unbounded Promise.all over
+    // every page — hundreds of simultaneous image fetches on a large book
+    // (#3909); the global route has used the bounded helper since #3597.
     console.log(`Fetching ${validPages.length} images for facsimile EPUB...`);
-    const imagePromises = validPages.map(async (page) => {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      return { page, imageBuffer };
-    });
-    const pageImages = await Promise.all(imagePromises);
+    const pageImages = await fetchPageImagesOrdered(validPages);
 
     // Add images and content pages
     for (const { page, imageBuffer } of pageImages) {
@@ -1255,180 +1153,6 @@ p:first-of-type { text-indent: 0; }
   });
 }
 
-// Generate ZIP of all page images
-async function generateImagesZip(
-  book: Book,
-  pages: Page[]
-): Promise<Buffer> {
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
-
-  return new Promise(async (resolve, reject) => {
-    const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 6 } });
-
-    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
-    archive.on('end', () => resolve(Buffer.concat(chunks)));
-    archive.on('error', reject);
-
-    // Fetch and add each image
-    console.log(`Fetching ${validPages.length} images for ZIP...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      if (imageBuffer) {
-        const paddedNum = String(page.page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-
-    archive.finalize();
-  });
-}
-
-// Resolve a page's export image via the canonical resolver (R2 display variant
-// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
-// fetch, and on split-from-spread pages it is the wrong image entirely). Added
-// alongside the PDF formats below — the rest of this file's image formats
-// predate this resolver and still use the legacy `photo || compressed_photo`
-// priority (out of scope to change here; tracked separately).
-function pageExportImageUrl(page: Page): string | null {
-  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
-  const resolved = getPageImageUrl(page, 'display') || legacy;
-  if (!resolved) return null;
-  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
-}
-
-// Prefetch page images with BOUNDED concurrency, preserving page order — see
-// the identical helper (and its rationale) in the main
-// src/app/api/books/[id]/download/route.ts.
-async function fetchPageImagesOrdered(
-  validPages: Page[],
-  concurrency = 8,
-): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
-  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
-  let next = 0;
-  async function worker() {
-    while (next < validPages.length) {
-      const i = next++;
-      const page = validPages[i];
-      const url = pageExportImageUrl(page);
-      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
-  return results;
-}
-
-// Generate text-only English translation PDF — see the main download route
-// for the full rationale (streamed, Unicode font, quote-integrity cleanup).
-function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  const translatedPages = pages.filter(p => p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'English Translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    doc.addPage();
-
-    for (const page of translatedPages) {
-      if (!page.translation?.data) continue;
-      const text = cleanTranslationForPdf(page.translation.data, book.id);
-      if (!text) continue;
-
-      writePdfPageHeading(doc, fonts, page.page_number);
-      writePdfBody(doc, fonts, text, { fontSize: 11, lineGap: 3 });
-      doc.moveDown(0.8);
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: 'English translation',
-      translatedCount: translatedPages.length,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-translation stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
-}
-
-// Generate facsimile PDF (page scans + translation) — see the main download
-// route for the full rationale.
-function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  const validPages = pages.filter(p => pageExportImageUrl(p) || p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'Facsimile Edition — page scans with English translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    console.log(`Fetching ${validPages.length} images for pdf-facsimile (streaming)...`);
-    const pageImages = await fetchPageImagesOrdered(validPages);
-
-    const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-    const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
-
-    for (const { page, imageBuffer } of pageImages) {
-      doc.addPage();
-      writePdfPageHeading(doc, fonts, page.page_number);
-
-      if (imageBuffer) {
-        try {
-          doc.image(imageBuffer, { fit: [usableWidth, usableHeight * 0.6], align: 'center' });
-        } catch (e) {
-          console.error(`pdf-facsimile: failed to embed image for page ${page.page_number}:`, e);
-          doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-          doc.fillColor('#000000');
-        }
-      } else {
-        doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-        doc.fillColor('#000000');
-      }
-
-      if (page.translation?.data) {
-        const text = cleanTranslationForPdf(page.translation.data, book.id);
-        if (text) {
-          doc.moveDown(0.5);
-          writePdfBody(doc, fonts, text, { fontSize: 10.5, lineGap: 3 });
-        }
-      }
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: 'facsimile edition',
-      translatedCount: pageImages.filter(p => p.page.translation?.data).length,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-facsimile stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
-}
-
 // Generate images-only EPUB (no translation, just the processed page images)
 async function generateImagesOnlyEpubDownload(
   book: Book,
@@ -1438,7 +1162,7 @@ async function generateImagesOnlyEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+  const validPages = pages.filter(hasExportImage);
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1551,12 +1275,11 @@ body { background: #1a1a1a; display: flex; align-items: center; justify-content:
 </html>`;
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch images and create pages
+    // Fetch images (bounded concurrency — the serial loop here took >100s on
+    // a ~126-page book and Cloudflare 524'd the response) and create pages
     console.log(`Fetching ${validPages.length} images for images-only EPUB...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-
+    const pageImages = await fetchPageImagesOrdered(validPages);
+    for (const { page, imageBuffer } of pageImages) {
       if (imageBuffer) {
         archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
       }
@@ -2776,11 +2499,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const zipBuffer = await generateImagesZip(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
-      return new Response(new Uint8Array(zipBuffer), {
+      // Streamed, not buffered: a buffered zip emits zero bytes for the whole
+      // build, and a big book crossed Cloudflare's ~100s origin window and died
+      // as a 524 that readers saved as a corrupt .zip (#3909).
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
+      return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
@@ -2795,8 +2518,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // ~100s origin window and die as a 524 saved as a corrupt file.
     if (isPdfTranslation || isPdfFacsimile) {
       const doc = isPdfFacsimile
-        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[])
-        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[]);
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+            hasImage: p => !!pageExportImageUrl(p as Page),
+            streamImages: ps => streamPageImagesOrdered(ps as Page[], fetchFacsimilePdfImage),
+          })
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+          });
       const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
       return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
         headers: {
@@ -2859,11 +2588,20 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           edition = editions[0] || null;
         }
 
-        // Get book index from dedicated collection (or inline fallback)
-        const indexData = await db.collection('book_indexes').findOne(
-          { book_id: (book as unknown as Book).id, tenantId },
-          { projection: { _id: 0, book_id: 0, tenantId: 0 } }
-        );
+        // Get book index via the shared accessor (dedicated collection, with the
+        // legacy inline `book.index` fallback).
+        //
+        // This was an inline `findOne({ book_id, tenantId })`, and `book_indexes`
+        // documents carry NO tenantId — 0 of 18,273 corpus-wide (measured
+        // 2026-08-11) — so the filter matched nothing and the scholarly EPUB has
+        // shipped without its index on every tenant subdomain since the route was
+        // written. It failed silently because a missing index is indistinguishable
+        // from a book that has none.
+        //
+        // Dropping the filter does not widen access: `book` above was already
+        // fetched with `{ id, tenantId }`, so tenant ownership is established
+        // before we get here, and `book_indexes` is keyed 1:1 on that book_id.
+        const indexData = await getBookIndex((book as unknown as Book).id);
         if (indexData) {
           const idx = indexData as unknown as {
             vocabulary?: ConceptEntry[];

@@ -18,3 +18,23 @@ Each time, two artifacts produced by **different code at different times** were 
 - **Ordering matters as much as mapping.** OCR that runs *before* archival reads the source URL; OCR that runs *after* reads the archived image. If those disagree, a book OCR'd in two passes gets pages transcribed **twice** while their neighbours are never transcribed at all — real duplicate text and real gaps that re-archiving alone cannot repair (see #3362's ordering hazard).
 
 Full postmortem: `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`.
+
+---
+
+**The same shape on artwork provenance fields (#3838, 2026-08-10):** on artwork
+docs, `commons_title`, `commons_url`, and `commons_sha1` are written by
+different code at different times and are NOT guaranteed to name the same
+Commons file. The image-upgrade path (`image_upgrade_source: "Commons
+alternate"`, May–June 2026) re-points `commons_title` at a higher-quality
+duplicate file without refreshing `commons_url` or `commons_sha1` — measured
+2026-08-10, **440** of ~11.2K true-Commons artwork docs disagree. Inside that
+set, sha1 equality compares the wrong file: 362 of 367 apparent "sha1
+divergences" were this, not wrong images (dHash confirmed the served images
+match the upgraded file). So: **never use `commons_sha1` equality (dedup #3037,
+integrity checks) without first checking that `commons_title` and `commons_url`
+name the same file**, or test membership of the stored sha1 in the file's
+*version history* (batchable: `prop=imageinfo&iiprop=sha1&iilimit=20`). And
+never refresh a stale sha1 without dHash-verifying our stored image against the
+newly named file first — an unverified refresh fabricates provenance.
+`source_ids.commons` (the canonical post-redirect title, written 2026-08-09/10)
+is the authoritative pointer; `fetchCommonsSource` prefers it.

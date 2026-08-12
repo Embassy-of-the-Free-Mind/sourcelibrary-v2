@@ -43,7 +43,10 @@ const BOOK_ID = getArg('book-id');
 const SKIP_THUMBNAILS = hasFlag('skip-thumbnails');
 const DRY_RUN = hasFlag('dry-run');
 const JPEG_QUALITY = parseInt(getArg('quality') || '85', 10);
-const MAX_DIMENSION = parseInt(getArg('max-dim') || '3000', 10); // cap huge pages
+// Archive at source fidelity by default: no resolution cap. Storage is cheap
+// ($0.015/GB/mo); source resolution is the product (#3897). Pass --max-dim=N only
+// for a pathological source. 0 = uncapped.
+const MAX_DIMENSION = parseInt(getArg('max-dim') || '0', 10);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -198,9 +201,9 @@ async function jp2ToJpeg(jp2Path) {
 
   let sharpPipeline = sharp(bmpPath);
 
-  // Get dimensions and cap if too large
+  // Cap only when explicitly requested via --max-dim
   const meta = await sharpPipeline.metadata();
-  if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
+  if (MAX_DIMENSION > 0 && (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION)) {
     sharpPipeline = sharp(bmpPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
   }
 
@@ -217,13 +220,15 @@ async function jp2ToJpeg(jp2Path) {
  * Handles full-res IIIF URLs by requesting a capped size.
  */
 async function fetchPageImage(photoUrl, iaId) {
-  // Cap any IIIF URL (IA, NDL, Bodleian, Gallica, MDZ, Vatican, e-rara,
-  // Allard Pierson, etc.) to a sane max dimension. The shared shape is
-  // `…/full/<size>/<rotation>/<quality>.<format>` so a regex on the
-  // `/full/<size>/` segment is portable across providers.
+  // Fetch source fidelity by default: leave the IIIF size segment alone unless
+  // --max-dim was passed. Note IA's IIIF v3 zip-path endpoint accepts ONLY
+  // `full/max` — a `!W,H` rewrite there is an HTTP 400, so capping happens
+  // post-download via sharp in that case anyway.
   let url = photoUrl;
-  if (/\/full\/[^/]+\/[0-9]+\/[a-z]+\.(jpe?g|png|tif)/i.test(url) ||
-      (url.includes('archive.org') && url.includes('/page/'))) {
+  if (MAX_DIMENSION > 0 &&
+      (/\/full\/[^/]+\/[0-9]+\/[a-z]+\.(jpe?g|png|tif)/i.test(url) ||
+       (url.includes('archive.org') && url.includes('/page/'))) &&
+      !url.includes('iiif.archive.org/image/iiif/3/')) {
     url = url.replace(/\/full\/[^/]+\//, `/full/!${MAX_DIMENSION},${MAX_DIMENSION}/`);
   }
 
@@ -242,7 +247,7 @@ async function fetchPageImage(photoUrl, iaId) {
     // Convert to JPEG at target quality (input might be any format)
     let sharpInst = sharp(buf);
     const meta = await sharpInst.metadata();
-    if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
+    if (MAX_DIMENSION > 0 && (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION)) {
       sharpInst = sharp(buf).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
     }
     return await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();

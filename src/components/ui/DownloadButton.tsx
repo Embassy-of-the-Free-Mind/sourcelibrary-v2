@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/track-event';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap, FileType } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
 
@@ -251,7 +251,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 {purchasing ? 'Redirecting...' : 'Unlock premium formats ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; parallel-text and scholarly editions included with purchase.' : 'Text formats below are already free — this unlocks facsimiles, parallel text, and scholarly editions.'}
+                {ncImagesFree ? 'Page scans are free; scholarly editions included with purchase.' : 'Text formats below are already free — this unlocks facsimiles and scholarly editions.'}
               </p>
             </div>
           )}
@@ -284,7 +284,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           </div>
 
           {hasTranslations && hasImages && !imageRestricted && (
-            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Page scans + translation"
+            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
               icon={<FileType className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
@@ -309,29 +309,21 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          {/* Menu consolidation (#3920): epub-parallel and epub-parallel-fxl rows
+              removed (76 and 5 clicks/90d; both sold the same proposition as
+              epub-both, and the facing-page facsimile PDF covers the FXL desire).
+              epub-scholarly and epub-bilingual merged into ONE Scholarly row —
+              bilingual when the book has OCR, translation-only otherwise. All
+              format keys remain valid on the routes for old links and scripts. */}
           {hasTranslations && hasOcr && (
-            <FormatOption format="epub-both" label="Complete (Both)" desc="E-reader format"
+            <FormatOption format="epub-both" label="Complete (Both)" desc="Original + translation, page by page"
               icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
-          {hasTranslations && hasOcr && (
-            <FormatOption format="epub-parallel" label="Parallel Text" desc="Original + translation, page by page — works in all readers"
-              icon={<Layers className="w-4 h-4 text-accent-rust" />}
-              onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
-          )}
-          {hasTranslations && hasOcr && (
-            <FormatOption format="epub-parallel-fxl" label="Facing Pages" desc="Fixed layout — Apple Books & similar"
-              icon={<Columns className="w-4 h-4 text-accent-rust" />}
-              onDownload={handleDownload} downloading={downloading} />
-          )}
           {hasTranslations && (
-            <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
+            <FormatOption format={hasOcr ? 'epub-bilingual' : 'epub-scholarly'} label="Scholarly Edition"
+              desc={hasOcr ? 'Original + translation with introduction & apparatus' : 'With introduction & apparatus'}
               icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
-              onDownload={handleDownload} downloading={downloading} />
-          )}
-          {hasTranslations && hasOcr && (
-            <FormatOption format="epub-bilingual" label="Bilingual Scholarly" desc="Original + translation with apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-accent-rust shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
@@ -349,11 +341,10 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                   <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
                 )}
               </div>
+              {/* epub-images row removed (#3920) — 44 clicks/90d vs 191 for the
+                  ZIP; the key stays valid on the routes. */}
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload} downloading={downloading} />
-              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book (fixed layout)"
-                icon={<BookOpen className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
           )}

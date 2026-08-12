@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'suda-benchmark',
+    title: 'Graded by the Suda',
+    subtitle:
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently — its incapacity arrives dressed as approval. Total API cost: $1.15.',
+    date: '11 August 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg',
+    imageAlt:
+      'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
+  },
+  {
     slug: 'greek-lemma-table',
     title: 'Every Shape of Every Word',
     subtitle:
@@ -34,6 +47,8 @@ export const posts: BlogPost[] = [
     readTime: '5 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg',
+    imageAlt: 'A Greek page of the Divini Platonis Opera omnia, 1590.',
   },
   {
     slug: 'nobody-knows-what-has-been-scanned',

@@ -35,24 +35,21 @@
  */
 
 // ─── Layer 1: string normalization (matches the doc) ──────────────────────
-export function norm(s) {
-  if (!s) return '';
-  return String(s).normalize('NFKD').replace(/[̀-ͯ]/g, '')
-    .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
-}
+import { foldAccents, foldLongS, PARTICLES, RECALL_ENDINGS } from './latin-morphology.mjs';
 
-// Particles / honorifics that are never the surname.
-const PARTICLES = new Set([
-  'de', 'del', 'della', 'di', 'da', 'la', 'le', 'van', 'von', 'der', 'den',
-  'du', 'des', 'el', 'al', 'ibn', 'ben', 'a', 'ab', 'zu', 'of', 'the',
-  'don', 'fr', 'st', 'saint', 'pseudo',
-]);
+export const norm = foldAccents;
+
+// Particles / honorifics that are never the surname — shared, see
+// scripts/lib/latin-morphology.mjs.
 
 // ─── Latin morphological stemming ──────────────────────────────────────────
 // Fold inflectional endings so picus/pico/pici/picum all reach a common stem.
 // Conservative: only strips when ≥3 chars remain. Returns the token plus every
 // plausible stem (recall-first; collisions are resolved downstream).
-const LATIN_ENDINGS = /(?:issimus|issima|orum|arum|ibus|ensis|enses|onis|ones|ius|eus|aeus|aei|ane|us|um|os|is|es|em|ae|i|o|a|e)$/;
+// RECALL_ENDINGS is this module's list, kept deliberately separate from the
+// precision-first list used by name-equivalence.mjs — see latin-morphology.mjs
+// for why unioning them would be a regression for both callers.
+const LATIN_ENDINGS = RECALL_ENDINGS;
 
 export function stems(tokenRaw) {
   const out = new Set();
@@ -60,8 +57,8 @@ export function stems(tokenRaw) {
   if (token.length < 3) return out;
   const bases = new Set([token]);
   // Long-s OCR confusion (ſ→f): "brandeburgenfis" → "brandeburgensis".
-  const longS = token.replace(/f/g, 's');
-  if (longS !== token) bases.add(longS);
+  const longS = foldLongS(token);
+  if (longS) bases.add(longS);
   for (const base of bases) {
     out.add(base);
     const m = base.match(LATIN_ENDINGS);

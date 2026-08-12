@@ -3,23 +3,20 @@
  *
  * Centralizes the mapping so all UI components stay in sync.
  *
- * THE COPY RULE (#3459). "First English translation" asserts an unprovable
- * universal negative: no catalogue can establish one, it can only return
- * *nothing found*. Our reference set's measured recall is 27% — three of every
- * four known prior English translations are invisible to it — and a sampled
- * check puts the positive predictive value of a `none_found` near 50%.
+ * THE COPY RULE (revised 2026-08-11, Derek): plain catalog voice. A library
+ * catalog says "first edition" without an epistemology lecture, and everyone
+ * understands the implicit "as far as the record shows." We say "First
+ * Translation" the same way. The evidence — every search, every source, every
+ * screening decision — lives in the data (`work_translation_history`,
+ * `first_translation_attempts`) one click away for anyone who wants it; it
+ * does not live in the reader's face as a disclaimer. State the fact plainly;
+ * keep the provenance available; correct the card when someone shows us a
+ * prior. (The previous two-register system — assertive vs. hedged wording by
+ * evidence strength — read as a library afraid of its own catalog.)
  *
- * So the copy states the SEARCH, which is a bounded, dated act we actually
- * performed and can show, rather than the negative, which is a claim about the
- * world that no search supports. "No prior English translation found" is true
- * at any recall; "this is the first" is not.
- *
- * Two registers, and which one a book gets is decided by evidence strength in
- * `classifyFirstTranslationClaim`, never by the badge flag alone:
- *
- *   confirmed → strong/moderate evidence. The assertive label stands.
- *   candidate → weak or unrecorded evidence (88% of badged books, measured
- *               2026-08-07). Reports the search and its limits.
+ * The one qualifier we keep is `inProgress` (#3435): "in progress" on a
+ * barely-translated book is reader service, not epistemic hedging — it stops
+ * the bibliographic claim from implying a readable English edition exists.
  */
 
 import type { FirstTranslationClaim } from './first-translation/candidate';
@@ -28,43 +25,17 @@ type Disposition = 'confirmed_first' | 'first_from_source' | 'first_complete_tra
 
 /**
  * Returns the short badge label for a first-translation book.
- * Pass the book's language to get "First Translation from Latin" etc.
+ * Pass the book's language to get "First from Latin" etc.
  *
- * `inProgress` marks a book whose translation is real but far from complete
- * (#3435 — 244 badged books are under 10% translated). The bibliographic claim
- * is unchanged; the label stops implying a readable English edition exists.
- * "First Complete Translation" collapses to "First Translation, in progress",
- * because calling a 6%-translated book *complete* is the specific claim the
- * coverage gate exists to prevent.
- *
- * `claim` decides the register. A `candidate` never gets an assertive label,
- * however strong the disposition reads — the disposition records what a search
- * concluded, not how well it was evidenced, and conflating the two is what put
- * an unqualified "First Translation" on 5,243 weakly-evidenced books.
- *
- * ⚠️ IT DEFAULTS TO `candidate`, AND THAT DIRECTION IS THE POINT. A caller that
- * cannot supply the claim has, by definition, not established the evidence —
- * the collection, catalogue, author and exhibition cards all render from
- * `books_catalog`, which carries `ft_disposition` but no evidence strength, so
- * none of them can tell a cross-checked first from a legacy shim. Defaulting to
- * the assertive label would let every one of those surfaces assert a universal
- * negative by omission, which is precisely how this area fails (see
- * `.claude/docs/invariants/first-translation-claims.md`: every defect here
- * failed toward a confident clean negative). Opt IN to `confirmed`; never
- * inherit it.
+ * The `claim` parameter is retained for call-site compatibility but no longer
+ * changes the register: badged books get the plain catalog label.
  */
 export function firstTranslationBadge(
   disposition?: string,
   language?: string,
   inProgress?: boolean,
-  claim: FirstTranslationClaim = 'candidate',
+  _claim: FirstTranslationClaim = 'candidate',
 ): string {
-  if (claim === 'candidate') {
-    // Deliberately one label, not a family. The disposition's shades
-    // (complete / modern / from-source) are distinctions the weak evidence
-    // cannot support, so drawing them here would dress up a coin flip.
-    return inProgress ? 'No prior translation found, in progress' : 'No prior translation found';
-  }
   if (inProgress) {
     return disposition === 'first_from_source' && language
       ? `First from ${language}, in progress`
@@ -94,33 +65,22 @@ export function translationProgressNote(coverage: number): string {
 }
 
 /**
- * The expanded description shown in the book detail panel.
- *
- * For a `candidate` this is the search statement — what we looked for, and the
- * two things a reader needs in order to weigh it: that a catalogue can only
- * report absence, and that ours is thin for exactly the period most of this
- * corpus comes from. Stating the limit is not a hedge; it is the claim.
- *
- * Defaults to `candidate` for the same reason `firstTranslationBadge` does.
+ * The expanded description shown in the book detail panel. Plain catalog
+ * voice; the search record backs it one click away.
  */
 export function firstTranslationDescription(
   disposition?: string,
-  claim: FirstTranslationClaim = 'candidate',
+  _claim: FirstTranslationClaim = 'candidate',
 ): string {
-  if (claim === 'candidate') {
-    return 'We searched the catalogues for an earlier English translation of this text and found none. That is a record of the search, not proof that none exists — catalogue coverage of early printed books is thin, and an absence there is weaker evidence than a find.';
-  }
   switch (disposition as Disposition) {
-    case 'confirmed_first':
-      return 'No prior complete English translation of this text has been found.';
     case 'first_from_source':
-      return 'English translations of this work exist from another source language, but this specific text has never been translated.';
+      return 'English translations of this work exist from another source language; this is the first English translation of this text.';
     case 'first_complete_translation':
-      return 'Only partial translations or excerpts exist. This is the first complete English translation.';
+      return 'Earlier English translations were partial. This is the first complete English translation.';
     case 'first_modern_translation':
-      return 'Only antiquated translations exist. This is the first modern English translation.';
+      return 'The first modern English translation.';
     default:
-      return 'No prior English translation of this text was found.';
+      return 'The first English translation of this text.';
   }
 }
 
@@ -133,7 +93,6 @@ export function firstTranslationDescription(
  * qualifier.
  */
 export function firstTranslationClause(claim: FirstTranslationClaim): string | null {
-  if (claim === 'confirmed') return 'First English translation';
-  if (claim === 'candidate') return 'No prior English translation found';
+  if (claim === 'confirmed' || claim === 'candidate') return 'First English translation';
   return null;
 }

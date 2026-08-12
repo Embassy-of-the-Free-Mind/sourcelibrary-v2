@@ -7,6 +7,7 @@
  * with the `.mjs` twin — the guard test `tests/unit/gallery-doc-schema.test.ts`
  * pins the key set across both.
  */
+import { coerceImageType } from './gallery-image-types';
 
 /** Minimal page shape needed to build a gallery doc. */
 export interface GalleryDocPage {
@@ -141,7 +142,10 @@ export function buildGalleryDoc({
     thumbnail_url: img.thumbnail_url ?? null,
     extracted_url: img.extracted_url ?? null,
     description: img.description || '',
-    type: img.type ?? null,
+    // Validated at the write boundary, not trusted from the detector: the model
+    // occasionally narrates its enum choice instead of making one, and that
+    // narration used to be stored as the value itself (#3419).
+    type: coerceImageType(img.type),
     bbox: img.bbox,
     rotation: img.rotation ?? null,
     gallery_quality:
