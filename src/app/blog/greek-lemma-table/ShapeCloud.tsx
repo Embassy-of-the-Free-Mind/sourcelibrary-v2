@@ -26,12 +26,36 @@ export default function ShapeCloud() {
   const { forms, total } = shapeData[word.headword];
   const placed = useMemo(() => {
     const max = forms[0][1] as number;
-    return (forms as Array<[string, number]>).map(([form, count], i) => {
-      const angle = (i * GOLDEN * Math.PI) / 180;
-      const r = 62 + 15.5 * Math.sqrt(i + 1);
-      const size = 10 + 21 * Math.sqrt(Math.log(count + 1) / Math.log(max + 1));
-      return { form, count, x: 350 + r * Math.cos(angle), y: 265 + r * 0.82 * Math.sin(angle), size };
+    // Collision-aware spiral: each label walks outward along the golden-angle
+    // spiral until its estimated box clears everything already placed (and
+    // the center medallion). Deterministic — no randomness.
+    const rects: Array<{ x: number; y: number; w: number; h: number }> = [
+      { x: 350 - 62, y: 265 - 62, w: 124, h: 124 },
+    ];
+    const out: Array<{ form: string; count: number; x: number; y: number; size: number }> = [];
+    (forms as Array<[string, number]>).forEach(([form, count], i) => {
+      const size = 8.5 + 18 * Math.sqrt(Math.log(count + 1) / Math.log(max + 1));
+      const w = form.length * size * 0.55 + 4;
+      const h = size * 1.08;
+      for (let t = i; t < i + 900; t++) {
+        const angle = (t * GOLDEN * Math.PI) / 180;
+        const r = 38 + 5.3 * Math.sqrt(t + 1);
+        const x = 350 + r * Math.cos(angle);
+        const y = 265 + r * 0.8 * Math.sin(angle);
+        const box = { x: x - w / 2, y: y - h / 2, w, h };
+        if (box.x < 6 || box.y < 6 || box.x + box.w > 694 || box.y + box.h > 524) continue;
+        const hit = rects.some(
+          (q) => box.x < q.x + q.w && q.x < box.x + box.w && box.y < q.y + q.h && q.y < box.y + box.h
+        );
+        if (!hit) {
+          rects.push(box);
+          out.push({ form, count, x, y, size });
+          return;
+        }
+      }
+      // no space left — drop the tail form rather than overlap
     });
+    return out;
   }, [forms]);
 
   return (
