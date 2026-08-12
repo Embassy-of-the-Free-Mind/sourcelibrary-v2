@@ -29,7 +29,7 @@ export const posts: BlogPost[] = [
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:
-      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a model cannot grade its own family’s homework. Total API cost: $1.15.',
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently — its incapacity arrives dressed as approval. Total API cost: $1.15.',
     date: '11 August 2026',
     readTime: '9 min read',
     tag: 'Research',
