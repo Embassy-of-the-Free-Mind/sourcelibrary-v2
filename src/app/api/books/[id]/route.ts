@@ -42,6 +42,10 @@ export const GET = withApiAuth(async (
       pages_count: 1, pages_translated: 1,
       categories: 1, reading_summary: 1,
       chapters: 1,
+      // Cover art (all four fields of the cover-write contract, see
+      // src/lib/cover-fields.ts) — the MCP get_book tool attaches the cover
+      // as an inline image block (#3937).
+      thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
       // Needed by the MCP list_editions tool to find sibling editions of the
       // same work without a second lookup.
       work_id: 1,
