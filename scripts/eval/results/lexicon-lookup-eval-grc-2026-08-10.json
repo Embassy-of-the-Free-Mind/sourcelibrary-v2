@@ -1,0 +1,617 @@
+{
+  "date": "2026-08-10",
+  "issue": 3823,
+  "lang": "grc",
+  "sample": {
+    "books": 25,
+    "words": 440,
+    "selection": "interior pages (15–85%), tokens ≥3 letters, non-numeric"
+  },
+  "hitRate": 0.798,
+  "confidentHitRate": 0.3,
+  "tierCounts": {
+    "lemma": 219,
+    "exact": 132,
+    "miss": 89
+  },
+  "spotCheckHits": [
+    {
+      "word": "ποιητικῶς",
+      "headword": "ποιητικός",
+      "tier": "lemma",
+      "title": "Andocides: Orationes"
+    },
+    {
+      "word": "ἠλπίκατε",
+      "headword": "ἐλπίζω",
+      "tier": "lemma",
+      "title": "[Gospels of Luke and John in Greek]"
+    },
+    {
+      "word": "μήτε",
+      "headword": "μήτε",
+      "tier": "exact",
+      "title": "Justini Philosophi et Martyris Opera"
+    },
+    {
+      "word": "ἅπαντας",
+      "headword": "ἅπᾱς",
+      "tier": "lemma",
+      "title": "[Gospels of Luke and John in Greek]"
+    },
+    {
+      "word": "τῆς",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "μης",
+      "headword": "μείς",
+      "tier": "lemma",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "πανηγύρεως",
+      "headword": "πᾰνήγῠρις",
+      "tier": "lemma",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "δοκεῖτε",
+      "headword": "δοκέω",
+      "tier": "lemma",
+      "title": "[Gospels of Luke and John in Greek]"
+    },
+    {
+      "word": "ἀποπεπτωκότας",
+      "headword": "ἀποπίπτω",
+      "tier": "lemma",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "ἕλκει",
+      "headword": "ἑλκέω",
+      "tier": "lemma",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "μεταλλικὰ",
+      "headword": "μεταλλικός",
+      "tier": "lemma",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "περὶ",
+      "headword": "περί",
+      "tier": "exact",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "καθαρος",
+      "headword": "ἄγχῐ",
+      "tier": "lemma",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "λεγομένην",
+      "headword": "λέγω",
+      "tier": "lemma",
+      "title": "Justini Philosophi et Martyris Opera"
+    },
+    {
+      "word": "τὴν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "ἀδικεῖν",
+      "headword": "ἀδῐκέω",
+      "tier": "lemma",
+      "title": "Andocides: Orationes"
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "τοῦ",
+      "headword": "τις",
+      "tier": "lemma",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "ἐναντίων",
+      "headword": "ἐναντίος",
+      "tier": "lemma",
+      "title": "Platonos, Thoukydidous, kai Demosthenous, Epitaphioi logoi. "
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Bodleian Library MS. Holkham Gr. 76"
+    },
+    {
+      "word": "δούλῳ",
+      "headword": "δοῦλος",
+      "tier": "lemma",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "πρὸς",
+      "headword": "πρός",
+      "tier": "exact",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "καὶ",
+      "headword": "καί",
+      "tier": "exact",
+      "title": "Fragmenta philosophorum graecorum"
+    },
+    {
+      "word": "γενέσθαι",
+      "headword": "γίγνομαι",
+      "tier": "lemma",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "ἀνώνυμον",
+      "headword": "ἀνώνῠμος",
+      "tier": "lemma",
+      "title": "Plotini Enneades (13th c. copy B)"
+    },
+    {
+      "word": "τοὺς",
+      "headword": "ὦμος",
+      "tier": "lemma",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "χῶρον",
+      "headword": "χῶρος",
+      "tier": "lemma",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "κακια",
+      "headword": "ἑβδομάς",
+      "tier": "lemma",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "καὶ",
+      "headword": "καί",
+      "tier": "exact",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "θείᾳ",
+      "headword": "θεία",
+      "tier": "lemma",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "καὶ",
+      "headword": "καί",
+      "tier": "exact",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "Ἕκτορος",
+      "headword": "ἕκτωρ",
+      "tier": "lemma",
+      "title": "Omerou ilias. = Homeri ilias"
+    },
+    {
+      "word": "Ἀπολλώνιος",
+      "headword": "Ἀπολλώνιος",
+      "tier": "exact",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "ζητεῖτε",
+      "headword": "ζητέω",
+      "tier": "lemma",
+      "title": "[Gospels of Luke and John in Greek]"
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Fragmenta philosophorum graecorum"
+    },
+    {
+      "word": "τῶν",
+      "headword": "ὁ",
+      "tier": "lemma",
+      "title": "Plotini Enneades (13th c. copy B)"
+    },
+    {
+      "word": "τοῦ",
+      "headword": "τις",
+      "tier": "lemma",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "αὑτὸν",
+      "headword": "ἑαυτοῦ",
+      "tier": "lemma",
+      "title": "Bodleian Library MS. Holkham Gr. 76"
+    }
+  ],
+  "misses": [
+    {
+      "word": "κατεδύντες",
+      "title": "Omerou ilias. = Homeri ilias"
+    },
+    {
+      "word": "Τρώων",
+      "title": "Omerou ilias. = Homeri ilias"
+    },
+    {
+      "word": "περιττοσυλλάβως",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "γνῷ",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "προστάττει",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "ἤνωρον",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "τύθρας",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "πολυσωμένα",
+      "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine"
+    },
+    {
+      "word": "ἀργυρίτιδος",
+      "title": "Peri hylīs iatrikīs [...];De materia medica [...]. Peri dīlī"
+    },
+    {
+      "word": "ΚΕΦ",
+      "title": "Peri hylīs iatrikīs [...];De materia medica [...]. Peri dīlī"
+    },
+    {
+      "word": "ἥτις",
+      "title": "Peri hylīs iatrikīs [...];De materia medica [...]. Peri dīlī"
+    },
+    {
+      "word": "οὔτ",
+      "title": "Description of Greece (1491 MS, Grec 1410)"
+    },
+    {
+      "word": "περιθρέξω",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "εος",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "κέχαρκα",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "Προψω",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "προϋποστήσω",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "έος",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "προϋπῆρχον",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "θρώπε",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "προέφηνα",
+      "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+    },
+    {
+      "word": "μωϋσῇ",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "ἀποκτενόντων",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "συνεχειν",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "παῦλε",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "κατασχέσει",
+      "title": "Novum Testamentum Graece (Editio Octava Critica Maior)"
+    },
+    {
+      "word": "φαί",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "χιχο",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "Παῖτος",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "βίσκον",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "Μενεκλῆς",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "Πτολεμαίου",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "ἐγδοῦναι",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "κζc",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "συντελέσομεν",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "Ἀπολλοφάνης",
+      "title": "Zenon Papyri Vol. I - Cairo Museum"
+    },
+    {
+      "word": "ἐκπεπόμφεσαν",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "στρατιῶται",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "στρατιωτῶν",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "κατασπαθίζειν",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "σπαθισμός",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "σφοδρῶς",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "σπαθιάς",
+      "title": "Leonis Diaconi Historia"
+    },
+    {
+      "word": "Ιεροσολυμα",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "αληθειαι",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "συγγραφεως",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "οψιν",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "Αιγυπτος",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "σοφων",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "επανερχεται",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "Ἰσραὴλ",
+      "title": "Evagrius Ponticus. Abhandlungen der Königlichen Gesellschaft"
+    },
+    {
+      "word": "ἤσπαιρε",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "Ἀντίλοχος",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "Ἕλενος",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "μεῖν",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "ὀϊστῷ",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "νεμέσα",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "Μυρμιδόνεσσι",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "μελανόχροες",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "ὕστατα",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "κόρσην",
+      "title": "Homeri Ilias (1517 Aldine Edition)"
+    },
+    {
+      "word": "συμμίξαντες",
+      "title": "Platonos, Thoukydidous, kai Demosthenous, Epitaphioi logoi. "
+    },
+    {
+      "word": "φάσκοντες",
+      "title": "Bodleian Library MS. Holkham Gr. 76"
+    },
+    {
+      "word": "καδμείαν",
+      "title": "Bodleian Library MS. Holkham Gr. 76"
+    },
+    {
+      "word": "αἰσθητῷ",
+      "title": "Plotini Enneades (13th c. copy B)"
+    },
+    {
+      "word": "Ὀλύμπιον",
+      "title": "Fragmenta philosophorum graecorum"
+    },
+    {
+      "word": "Ξενιάδῃ",
+      "title": "Fragmenta philosophorum graecorum"
+    },
+    {
+      "word": "παραπρεσβείας",
+      "title": "Andocides: Orationes"
+    },
+    {
+      "word": "συμβουλευτικόν",
+      "title": "Andocides: Orationes"
+    },
+    {
+      "word": "Ἰσαίου",
+      "title": "Andocides: Orationes"
+    },
+    {
+      "word": "σοφούς",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "ἀπεχώμεθά",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "πνι",
+      "title": "Origenes: Contra Celsum (Greek Critical Edition)"
+    },
+    {
+      "word": "Ἀθηναίοις",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "ὅσον",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "Κρησὶ",
+      "title": "Historiae Commentitiae"
+    },
+    {
+      "word": "συνιστάμεραι",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "φερά",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "Φύσιντα",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "ἠλίου",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "ἠρεμέντι",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "ἐστήθετα",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "πνεύσθαι",
+      "title": "Mathesis (De nativitatibus libri VIII). Ed: Franciscus Niger"
+    },
+    {
+      "word": "σχήματος",
+      "title": "Justini Philosophi et Martyris Opera"
+    },
+    {
+      "word": "πρωῒ",
+      "title": "Justini Philosophi et Martyris Opera"
+    },
+    {
+      "word": "ἐνεπεπλήκει",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "Συηναῖοι",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "Καλασíριδος",
+      "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+    },
+    {
+      "word": "μετ",
+      "title": "[Gospels of Luke and John in Greek]"
+    }
+  ]
+}

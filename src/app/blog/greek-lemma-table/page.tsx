@@ -132,8 +132,9 @@ export default function GreekLemmaTablePage() {
       </p>
       <p className="text-secondary leading-relaxed mb-6">
         Against our own pages &mdash; real OCR of real early modern printing, not clean modern
-        editions &mdash; a word tapped at random resolves to a dictionary entry about 80% of
-        the time, with misses dominated by names and abbreviations rather than ordinary text.
+        editions &mdash; a word tapped at random resolves to a dictionary entry 80% of the time
+        for Greek and 76% for Latin, with misses dominated by names and abbreviations rather
+        than ordinary text.
       </p>
 
       <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">What the dataset is, exactly</h2>
@@ -142,7 +143,7 @@ export default function GreekLemmaTablePage() {
         dictionary headword(s) it can belong to with their Liddell-Scott-Jones entry
         references, and how many times the form is attested across our books. 568,918 rows for
         Greek; the same build for Latin &mdash; where our collection is six times larger &mdash;
-        carries 1.4 million forms mapped to Lewis &amp; Short. Both inherit only open licenses
+        carries 1.47 million forms mapped to Lewis &amp; Short. Both inherit only open licenses
         (MPL-2.0 machinery, CC&nbsp;BY&nbsp;4.0 lexicon data), so the tables can be republished,
         embedded in other tools, or used to train whatever comes next. Both are published as a
         citable dataset:{' '}
