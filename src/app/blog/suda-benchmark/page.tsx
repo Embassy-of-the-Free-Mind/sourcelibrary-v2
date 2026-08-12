@@ -224,29 +224,42 @@ export default function SudaBenchmarkPage() {
         <h2 className="text-2xl font-serif text-primary mt-12 mb-4">The census</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The same cheap model, though, went two-for-two on the coarse checks it could do &mdash;
-          spotting the one misaligned entry and the one recitation case. So we gave it the job it
-          could actually hold: a categorical census of all 27,149 aligned entries. Is the
-          translation present? Is the alignment right? Does the English contradict the Greek in the
-          direction of received knowledge?
+          The same cheap model had gone two-for-two on the coarse checks in the small test, so we
+          gave it what looked like the job it could hold: a categorical sweep of all 27,149 aligned
+          entries, twenty-four at a time. Is the translation present? Is the alignment right? Does
+          the English contradict the Greek in the direction of received knowledge? It returned
+          97.4% of entries clean, with 446 flagged translation-not-found, 342 for alignment, and 66
+          for possible recitation, for $1.11.
         </p>
 
-        <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-2">
-          <li><strong>97.4%</strong> of entries fully clean;</li>
-          <li><strong>1.6%</strong> flagged translation-not-found;</li>
-          <li><strong>1.3%</strong> flagged for alignment review;</li>
-          <li>
-            <strong>0.24%</strong> flagged for possible recitation &mdash; the corpus-wide rate,
-            consistent with the pilot&rsquo;s 1-in-49.
-          </li>
-        </ul>
+        <p className="text-secondary leading-relaxed mb-6">
+          Then we did to the sweep what we had just done to the judge, and it failed too. The 49
+          gold-labelled entries were inside those 27,149, so the sweep could be scored against
+          them: it missed all three of the known events &mdash; the real recitation case, the real
+          misalignment &mdash; and added one false alarm. We then seeded twelve entries with a
+          deliberate contradiction, a name in the English that the Greek does not contain, and ran
+          them through both call formats. The twenty-four-at-a-time format caught four of twelve.
+          One entry per call caught five. Neither is a measuring instrument.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          So the honest version of the numbers above is that they are a <em>screen</em>, not a
+          census: <strong>66 recitation candidates found at roughly one-third sensitivity</strong>,
+          which makes the true rate some multiple of the observed one, still small but not
+          measured. The flags remain useful &mdash; they are a worklist, and each one now goes to a
+          cross-family judge for verification. What they are not is a quality statistic. The rates
+          this project reports will come from a verified sample, judged by the judges that can
+          actually do the task, with the confidence intervals that a sample honestly implies. A
+          cheap sweep is a good way to find candidates and a bad way to count them.
+        </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Every flag is a candidate, not a conviction &mdash; each gets cross-family verification
-          before anything changes. The whole census cost <strong>$1.11</strong>. With the
-          validation runs included, everything in this note that touched a paid API cost $1.15
-          &mdash; against the sixteen years of volunteer labor it is measured with, which is the
-          juxtaposition of our era in one line.
+          Everything in this note that touched a paid API cost <strong>$1.18</strong>, the sweep
+          included &mdash; and the experiments that demolished two of our own conclusions cost
+          about four cents of that. Against the sixteen years of volunteer labour all of it is
+          measured with, the asymmetry is the fact of our era; it is also, we think, the reason to
+          be slow about believing cheap numbers. The scholarship was the expensive part and it is
+          the part that held.
         </p>
 
         {/* ── What happens with it ── */}
@@ -272,7 +285,38 @@ export default function SudaBenchmarkPage() {
           how we intend to grade ourselves anyway.
         </p>
 
-        <p className="text-muted text-sm leading-relaxed mt-12 mb-2">
+        <h2 className="text-2xl font-serif text-primary mt-12 mb-4">Corrections</h2>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          This note is a running record of an investigation, and the investigation kept overturning
+          it. Every change to a factual claim is logged here rather than made quietly; the evidence
+          for each is in the public issue linked below.
+        </p>
+
+        <ul className="list-disc pl-6 text-secondary leading-relaxed mb-8 space-y-2">
+          <li>
+            <strong>12 August 2026 &mdash; errors found in the reference: 6 &rarr; 5.</strong> The
+            six claims were re-adjudicated with the Suda On Line&rsquo;s own annotations restored
+            and instructions to extend it maximal charity. One dissolved: SOL&rsquo;s reading
+            faithfully rendered the transmitted Greek and <em>our</em> translation had normalised
+            it. Five survived.
+          </li>
+          <li>
+            <strong>12 August 2026 &mdash; &ldquo;a model cannot grade its own family&rsquo;s
+            homework&rdquo; withdrawn.</strong> A control &mdash; the same cheap judge, its
+            rival&rsquo;s translations, and its own family&rsquo;s work re-presented as focused
+            pairs &mdash; showed the blindness was task collapse on our packet format, not
+            loyalty. The section now reports the corrected finding.
+          </li>
+          <li>
+            <strong>12 August 2026 &mdash; the 27,149-entry census demoted to a screen.</strong>
+            Scored against the gold labels it missed all three known events, and on seeded
+            contradictions it caught four of twelve. Its clean-rate and recitation percentages were
+            removed as statistics and are now described as candidates at measured low sensitivity.
+          </li>
+        </ul>
+
+        <p className="text-muted text-sm leading-relaxed mb-2">
           Read the Suda:{' '}
           <Link href="/book/suidae-lexicon-suidas">sourcelibrary.org/book/suidae-lexicon-suidas</Link>.
           The Suda On Line lives at{' '}
