@@ -263,8 +263,15 @@ async function listBooks(args: Record<string, unknown>) {
 
 async function getBook(args: Record<string, unknown>) {
   const result = await apiGet(`/books/${args.book_id}`, new URLSearchParams({ pages: 'nav' })) as Record<string, unknown>;
+  // Cover art, preferring the canonical R2 fields (see src/lib/cover-fields.ts).
+  // cover_thumb_url is the small variant used for the inline image block; the
+  // full display URL rides alongside for callers that want to link it.
+  const coverThumb = (result.image_thumb || result.thumbnail_blob || result.image_display || result.thumbnail) as string | undefined;
+  const coverFull = (result.image_display || result.thumbnail || result.image_thumb || result.thumbnail_blob) as string | undefined;
   return {
     id: result.id, title: result.display_title || result.title, author: result.author,
+    ...(coverThumb ? { cover_thumb_url: coverThumb } : {}),
+    ...(coverFull ? { cover_image_url: coverFull } : {}),
     language: result.language, published: result.published, year: result.year,
     categories: result.categories, pages_count: result.pages_count,
     pages_translated: result.pages_translated, doi: result.doi,
@@ -427,6 +434,9 @@ async function getQuote(args: Record<string, unknown>) {
   // sentence. Opt-in, because it triples the payload on a call that is usually
   // fine as-is — 18.6% of adjacent prose pairs span the break, not 100%.
   if (args.context === true) params.set('include_context', 'true');
+  // Opt-in scan of the cited leaf (#3937): the response then carries
+  // quote.page_image_url and the MCP layer attaches the image inline.
+  if (args.include_image === true) params.set('include_image', 'true');
 
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
@@ -486,7 +496,9 @@ async function getQuotes(args: Record<string, unknown>) {
   const settled = await Promise.all(
     pageNums.map(async (page) => {
       try {
-        const result = await apiGet(`/books/${bookId}/quote`, new URLSearchParams({ page: String(page) })) as Record<string, unknown>;
+        const quoteParams = new URLSearchParams({ page: String(page) });
+        if (args.include_image === true) quoteParams.set('include_image', 'true');
+        const result = await apiGet(`/books/${bookId}/quote`, quoteParams) as Record<string, unknown>;
         // Same continuity signal get_quote returns. This is the tool where it
         // matters MOST — a batch is how a caller assembles a multi-page dossier,
         // which is exactly where a sentence running across a leaf gets quoted as
@@ -533,14 +545,25 @@ async function searchImages(args: Record<string, unknown>) {
   const limit = Math.min(Number(args.limit) || 20, 50);
   params.set('limit', String(limit));
 
-  // Search both gallery illustrations AND artworks (paintings/prints) in parallel
+  // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
+  // The artwork lane supports type/subject/figure/symbol/year filters and MUST
+  // receive them — before #3936 it got only q+limit, so every filter silently
+  // no-opped through the artwork half of the merge. It has no concept of
+  // "images inside a book" (its book_id means "this artwork"), so a book_id
+  // request is gallery-only.
   const artworkParams = new URLSearchParams();
   if (args.query) artworkParams.set('q', String(args.query));
+  if (args.type) artworkParams.set('type', String(args.type));
+  if (args.subject) artworkParams.set('subject', String(args.subject));
+  if (args.figure) artworkParams.set('figure', String(args.figure));
+  if (args.symbol) artworkParams.set('symbol', String(args.symbol));
+  if (args.year_from) artworkParams.set('year_from', String(args.year_from));
+  if (args.year_to) artworkParams.set('year_to', String(args.year_to));
   artworkParams.set('limit', String(limit));
 
   const [galleryResult, artworkResult] = await Promise.all([
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
-    args.query
+    args.query && !args.book_id
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
@@ -569,13 +592,26 @@ async function searchImages(args: Record<string, unknown>) {
     url: item.url,
   })) || [];
 
-  // Artworks first (exact matches), then gallery illustrations
-  const allImages = [...artworks, ...galleryImages].slice(0, limit);
+  // Gallery illustrations first — the in-book plates are this library's
+  // distinctive asset. Artworks (museum layer) follow. The old artwork-first
+  // order meant small-limit calls returned ONLY artworks and a caller could
+  // conclude the 110K book illustrations don't exist (#3936 symptom 3).
+  const allImages = [...galleryImages, ...artworks].slice(0, limit);
 
+  const total = (galleryResult.total as number || 0) + artworks.length;
   return {
-    total: (galleryResult.total as number || 0) + artworks.length,
+    total,
     showing: allImages.length,
     images: allImages,
+    // An empty scoped result must SAY so — silently returning nothing (or,
+    // worse, unscoped results) is how the book_id no-op went unnoticed.
+    ...(allImages.length === 0
+      ? {
+          note: args.book_id
+            ? 'This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates.'
+            : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
+        }
+      : {}),
   };
 }
 
@@ -723,7 +759,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -761,6 +797,7 @@ const TOOLS: Tool[] = [
         book_id: { type: 'string', description: 'The book ID' },
         page: { type: 'number', description: 'Page number' },
         context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
+        include_image: { type: 'boolean', description: 'Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it. The image arrives as an MCP image block you can view and the user sees rendered.' },
       },
       required: ['book_id', 'page'],
     },
@@ -790,6 +827,7 @@ const TOOLS: Tool[] = [
         pages: { type: 'array', items: { type: 'number' }, description: 'Explicit list of page numbers (e.g. [12, 40, 41]). Use this OR from/to.' },
         from: { type: 'number', description: 'Start page (inclusive) of a range. Use with to.' },
         to: { type: 'number', description: 'End page (inclusive) of a range. Use with from.' },
+        include_image: { type: 'boolean', description: 'Also return page scans as inline images (display size). The first 5 pages of the batch get inline image blocks; every entry still carries its page_image_url in the JSON.' },
       },
       required: ['book_id'],
     },
@@ -797,16 +835,17 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
+    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images you can see and show the user. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates.',
     annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
-        type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram)' },
+        type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
         subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
-        book_id: { type: 'string' }, limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
+        limit: { type: 'number', description: 'Max results (default 20, max 50)' },
       },
     },
   },
@@ -934,6 +973,81 @@ async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: 
   } catch {
     return null;
   }
+}
+
+// Try candidate URLs in order until one fetches within the size cap — lets a
+// caller prefer a mid-size variant but still get SOMETHING when it's oversized.
+async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<{ data: string; mimeType: string } | null> {
+  for (const url of urls) {
+    if (!url) continue;
+    const img = await fetchImageBase64(url);
+    if (img) return img;
+  }
+  return null;
+}
+
+// ── Inline image attachments (#3937: "pics in Claude sessions") ────
+//
+// Tools whose results carry imagery return image URLs in their JSON; this layer
+// turns the first few into MCP `image` content blocks so Claude clients
+// (claude.ai, Desktop, Claude Code) render them inline. audience includes
+// 'assistant' deliberately — the model should SEE the plates it is citing,
+// not just relay them (the old ['user']-only annotation let clients withhold
+// them from the model).
+const MAX_INLINE_IMAGES = 5;
+const IMAGE_AUDIENCE = { audience: ['user', 'assistant'] };
+
+interface ImageAttachment {
+  /** Candidate URLs, tried in order (first that fetches under the size cap wins). */
+  urls: Array<string | undefined | null>;
+  /** Text block rendered directly after the image — caption + link. */
+  caption: string;
+}
+
+function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
+  if (!result || typeof result !== 'object') return [];
+  const r = result as Record<string, unknown>;
+
+  if (name === 'search_images' && Array.isArray(r.images)) {
+    return (r.images as Array<Record<string, unknown>>)
+      .slice(0, MAX_INLINE_IMAGES)
+      .filter((img) => typeof img.image_url === 'string')
+      .map((img) => ({
+        urls: [img.image_url as string],
+        caption: `${(img.description as string) || 'Image'}\n${img.url as string}`,
+      }));
+  }
+
+  if (name === 'get_quote') {
+    const quote = r.quote as Record<string, unknown> | undefined;
+    if (typeof quote?.page_image_url === 'string') {
+      return [{
+        urls: [quote.page_image_url],
+        caption: `Scan of the cited leaf — p. ${quote.page}, ${quote.author || quote.book_title}`,
+      }];
+    }
+    return [];
+  }
+
+  if (name === 'get_quotes' && Array.isArray(r.quotes)) {
+    return (r.quotes as Array<Record<string, unknown>>)
+      .map((entry) => entry.quote as Record<string, unknown> | undefined)
+      .filter((q): q is Record<string, unknown> => typeof q?.page_image_url === 'string')
+      .slice(0, MAX_INLINE_IMAGES)
+      .map((q) => ({
+        urls: [q.page_image_url as string | undefined],
+        caption: `Scan of the cited leaf — p. ${q.page}, ${q.author || q.book_title}`,
+      }));
+  }
+
+  if (name === 'get_book' && typeof r.cover_thumb_url === 'string') {
+    return [{
+      urls: [r.cover_thumb_url, r.cover_image_url as string | undefined],
+      caption: `Cover — ${r.title}${r.author ? `, ${r.author}` : ''}`,
+    }];
+  }
+
+  return [];
 }
 
 // ── Create a fresh MCP server instance (stateless per-request) ─────
@@ -1081,22 +1195,22 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       if (noResultsHint) metaPayload.no_results_hint = noResultsHint;
       const meta = Object.keys(metaPayload).length > 0 ? { _meta: metaPayload } : {};
 
-      // search_images: return image content blocks alongside text metadata
-      if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
-        const imageResult = result as { total: unknown; showing: unknown; images: Array<{ image_url: string; description: string; book: { title: string }; url: string; [k: string]: unknown }> };
+      // Attach inline image blocks for tools whose results carry imagery
+      // (search_images results, get_quote/get_quotes page scans, get_book
+      // covers) — see collectImageAttachments (#3937).
+      const attachments = collectImageAttachments(name, result);
+      if (attachments.length > 0) {
         const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
 
-        // Text summary first
-        content.push({ type: 'text' as const, text: JSON.stringify({ total: imageResult.total, showing: imageResult.showing, images: imageResult.images }, null, 2) });
+        // Text summary first, then image + caption pairs
+        content.push({ type: 'text' as const, text: JSON.stringify(result, null, 2) });
 
-        // Fetch actual images in parallel (limit to first 5 to keep response size manageable)
-        const imagesToFetch = imageResult.images.slice(0, 5);
-        const fetched = await Promise.all(imagesToFetch.map(img => fetchImageBase64(img.image_url)));
-        for (let i = 0; i < imagesToFetch.length; i++) {
+        const fetched = await Promise.all(attachments.map((a) => fetchFirstImage(a.urls)));
+        for (let i = 0; i < attachments.length; i++) {
           const img = fetched[i];
           if (img) {
-            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: { audience: ['user'] } });
-            content.push({ type: 'text' as const, text: `${imagesToFetch[i].description || 'Image'}\n${imagesToFetch[i].url}` });
+            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
+            content.push({ type: 'text' as const, text: attachments[i].caption });
           }
         }
 

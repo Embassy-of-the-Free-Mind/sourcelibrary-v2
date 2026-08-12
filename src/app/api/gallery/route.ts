@@ -342,7 +342,11 @@ export async function GET(request: NextRequest) {
     // search (book_embeddings, 17K rows) to find books about the topic, then show
     // their top images. This bridges the gap between book content and image metadata.
     // e.g. "vulva" → semantic search finds anatomy books → shows their illustrations.
-    if (searchQuery && items.length < 3 && offset === 0) {
+    // Skipped when bookId is set: this fallback pulls images from OTHER books by
+    // construction, so under a book filter it silently un-scopes the response —
+    // a caller asking "images in this book" got corpus-wide results with no
+    // signal the filter was dropped (#3936).
+    if (searchQuery && !bookId && items.length < 3 && offset === 0) {
       try {
         const { semanticBookSearch } = await import('@/lib/semantic-search');
         const contextBooks = await semanticBookSearch(searchQuery, 8, { threshold: 0.5 });
@@ -386,7 +390,10 @@ export async function GET(request: NextRequest) {
       const clipOnlyIds = [...clipScores.keys()].filter(id => !textIds.has(id));
 
       if (clipOnlyIds.length > 0) {
-        // Fetch full docs for CLIP-only matches
+        // Fetch full docs for CLIP-only matches. clipTextSearch itself is
+        // corpus-wide, so the caller's filters MUST be re-applied here — before
+        // #3936 this fetch dropped bookId/type/year and visually-similar images
+        // from unrelated books leaked past an explicit book filter.
         const clipDocs = await db.collection('gallery_images')
           .find({
             id: { $in: clipOnlyIds },
@@ -394,6 +401,17 @@ export async function GET(request: NextRequest) {
             gallery_quality: { $gte: minQuality },
             book_visible: true,
             extracted_url: { $ne: null },
+            ...(bookId ? { book_id: bookId } : {}),
+            ...(imageType ? { type: imageType } : {}),
+            ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
+            ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
+            ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
+            ...(yearStart !== null || yearEnd !== null ? {
+              book_year: {
+                ...(yearStart !== null ? { $gte: yearStart } : {}),
+                ...(yearEnd !== null ? { $lte: yearEnd } : {}),
+              },
+            } : {}),
           }, { projection: { _id: 0 } })
           .toArray();
 
