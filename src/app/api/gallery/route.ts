@@ -511,10 +511,17 @@ export async function GET(request: NextRequest) {
     // Illustration search is keyword/Atlas; artwork search is semantic, so the
     // artworks it returns are the genuinely on-topic ones (e.g. "John the Apostle"
     // → paintings/prints of him), surfaced at the top.
+    // UNFILTERED searches only (#3936): this lane injects corpus-wide artworks
+    // and other books' plates, and replaces `total` with a corpus-wide $text
+    // count — under bookId (or any structural filter) that silently un-scopes
+    // the whole response. A book-scoped call returned total:37526 from a book
+    // with zero images because of exactly this block.
     let outItems: any[] = mappedItems; // eslint-disable-line @typescript-eslint/no-explicit-any
     let searchHasMore = hasMore;
     let displayTotal = total;
-    if (searchQuery && offset === 0) {
+    const structurallyFiltered = Boolean(bookId || imageType || subjectFilter || figureFilter || symbolFilter || collectionSlug || libraryFilter)
+      || yearStart !== null || yearEnd !== null;
+    if (searchQuery && offset === 0 && !structurallyFiltered) {
       try {
         const tenantF = tenantId ? { tenantId } : {};
         const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
