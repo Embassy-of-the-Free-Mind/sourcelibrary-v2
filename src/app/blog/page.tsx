@@ -39,6 +39,18 @@ export const posts: BlogPost[] = [
       'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
   },
   {
+    slug: 'greek-lemma-table',
+    title: 'Every Shape of Every Word',
+    subtitle:
+      'We mapped 570,000 Greek word forms to their dictionary entries — the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
+    date: '10 August 2026',
+    readTime: '5 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg',
+    imageAlt: 'A Greek page of the Divini Platonis Opera omnia, 1590.',
+  },
+  {
     slug: 'nobody-knows-what-has-been-scanned',
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
