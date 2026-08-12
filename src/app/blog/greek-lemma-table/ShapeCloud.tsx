@@ -28,20 +28,38 @@ const ROM: Record<string, string> = {
 const VOWELS = 'αεηιου';
 
 export function romanize(word: string): string {
+  // Per-character mark handling (a word-level pass gets three things wrong:
+  // iota subscripts land at the word end, initial ῥ becomes h…r instead of
+  // rh, and stripping the diaeresis merges the very diphthong it blocks).
   const nfd = word.normalize('NFD');
-  const rough = nfd.includes('̔'); // rough breathing anywhere → initial h
-  const iotaSub = nfd.includes('ͅ');
-  const base = nfd.replace(/[̀-ͯͅ]/g, '');
-  let out = '';
-  for (let i = 0; i < base.length; i++) {
-    const ch = base[i];
-    const next = base[i + 1];
-    if (ch === 'γ' && next && 'γκξχ'.includes(next)) { out += 'n'; continue; }
-    if (ch === 'υ' && i > 0 && VOWELS.includes(base[i - 1]) && base[i - 1] !== 'υ') { out += 'u'; continue; }
-    out += ROM[ch] ?? ch;
+  const tokens: Array<{ base: string; iotaSub: boolean; diaeresis: boolean; rough: boolean }> = [];
+  for (const ch of nfd) {
+    if (/[̀-ͯͅ]/.test(ch)) {
+      const t = tokens[tokens.length - 1];
+      if (!t) continue;
+      if (ch === 'ͅ') t.iotaSub = true;
+      else if (ch === '̈') t.diaeresis = true;
+      else if (ch === '̔') t.rough = true;
+    } else {
+      tokens.push({ base: ch, iotaSub: false, diaeresis: false, rough: false });
+    }
   }
-  if (iotaSub) out += 'i';
-  return (rough ? 'h' : '') + out;
+  const rough = tokens.some((t) => t.rough);
+  const initialRho = tokens[0]?.base === 'ρ' && tokens[0].rough;
+  let out = '';
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i];
+    const next = tokens[i + 1];
+    if (i === 0 && initialRho) { out += 'rh'; continue; }
+    if (t.base === 'γ' && next && 'γκξχ'.includes(next.base)) { out += 'n'; if (t.iotaSub) out += 'i'; continue; }
+    if (
+      t.base === 'υ' && i > 0 && VOWELS.includes(tokens[i - 1].base) &&
+      tokens[i - 1].base !== 'υ' && !t.diaeresis
+    ) { out += 'u'; if (t.iotaSub) out += 'i'; continue; }
+    out += ROM[t.base] ?? t.base;
+    if (t.iotaSub) out += 'i';
+  }
+  return (rough && !initialRho ? 'h' : '') + out;
 }
 
 export default function ShapeCloud() {
