@@ -175,8 +175,10 @@ export const POST = withAuth(
     // Key the proposal the same way a revision is keyed: by UBN when the record
     // has one, by uuid for the 2,012 that don't. Both columns carry a FK to
     // bph_works, so putting a uuid in `ubn` would be rejected outright.
-    const pendingKey =
-      catalogKeyColumn(ubn) === 'uuid' ? { ubn: null, work_uuid: ubn } : { ubn, work_uuid: null };
+    // work_uuid is only sent when it is actually needed, so a ubn-keyed
+    // proposal still inserts cleanly on an environment where
+    // add-bph-uuid-keyed-revisions.sql hasn't been applied yet.
+    const pendingKey = catalogKeyColumn(ubn) === 'uuid' ? { ubn: null, work_uuid: ubn } : { ubn };
     const { data: inserted, error: insertErr } = await supabaseAdmin
       .from('bph_works_pending_changes')
       .insert({

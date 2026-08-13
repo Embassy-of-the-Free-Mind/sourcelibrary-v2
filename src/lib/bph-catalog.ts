@@ -302,25 +302,59 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     ...provenancePatch,
   };
 
-  const insertRevision = () =>
-    supabaseAdmin!
-      .from('bph_works_revisions')
-      .insert({
-        id: revisionId,
-        // A revision targets a work by UBN or by uuid — never neither (there is
-        // a CHECK constraint saying so). Manuscripts and photographs have no
-        // UBN at all, so `ubn` is null for those and `work_uuid` carries the
-        // link. See scripts/migration/add-bph-uuid-keyed-revisions.sql.
-        ubn: isUuidKeyed ? (current?.ubn as string | null) ?? null : ubn,
-        work_uuid: workUuid,
-        change_type: changeType,
-        field_changes: liveFieldChanges,
-        editor_email: editorEmail,
-        proposed_by: proposedBy,
-        source_pending_id: sourcePendingId,
-        applied_at: appliedAt,
-        note,
-      });
+  // A revision targets a work by UBN or by uuid — never neither (there is a
+  // CHECK constraint saying so). Manuscripts and photographs have no UBN at
+  // all, so `ubn` is null for those and `work_uuid` carries the link. See
+  // scripts/migration/add-bph-uuid-keyed-revisions.sql.
+  const revisionRow = {
+    id: revisionId,
+    ubn: isUuidKeyed ? (current?.ubn as string | null) ?? null : ubn,
+    work_uuid: workUuid,
+    change_type: changeType,
+    field_changes: liveFieldChanges,
+    editor_email: editorEmail,
+    proposed_by: proposedBy,
+    source_pending_id: sourcePendingId,
+    applied_at: appliedAt,
+    note,
+  };
+
+  /**
+   * Insert the revision, degrading if the work_uuid migration hasn't run on
+   * this environment yet.
+   *
+   * Without this, deploying the code before applying the migration would break
+   * EVERY catalogue edit, not just the manuscript ones — an unknown column
+   * fails the insert, and the insert is the gate the whole mutation path sits
+   * behind. A ubn-keyed edit works perfectly well on the old schema, so it
+   * should keep working; only the uuid-keyed rows genuinely need the column,
+   * and they are unreachable on the old schema anyway (the FK would reject
+   * them). Mirrors the same graceful-degradation pattern used by the catalogue
+   * read routes for un-run migrations.
+   */
+  const insertRevision = async () => {
+    const first = await supabaseAdmin!.from('bph_works_revisions').insert(revisionRow);
+    if (!first.error) return first;
+    const msg = (first.error.message || '').toLowerCase();
+    const missingColumn =
+      msg.includes('work_uuid') && (msg.includes('does not exist') || msg.includes('could not find'));
+    if (!missingColumn) return first;
+    if (isUuidKeyed) {
+      // No ubn to fall back on: this row is only reachable through the new
+      // schema. Report the real cause rather than a confusing FK error.
+      return {
+        ...first,
+        error: {
+          ...first.error,
+          message:
+            'This record has no UBN, which needs scripts/migration/add-bph-uuid-keyed-revisions.sql to be applied first. ' +
+            first.error.message,
+        },
+      };
+    }
+    const { work_uuid: _dropped, ...legacyRow } = revisionRow;
+    return supabaseAdmin!.from('bph_works_revisions').insert(legacyRow);
+  };
 
   if (changeType === 'create') {
     // 2a. The revisions table has a FK on ubn → bph_works(ubn), so the row

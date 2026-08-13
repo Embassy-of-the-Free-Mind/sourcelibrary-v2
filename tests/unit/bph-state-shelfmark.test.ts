@@ -26,6 +26,11 @@ const FIXTURES = [
   '|',
   '||',
   'ja',
+  'Ja',
+  '  JA  ',
+  'ja|PH3018',
+  'PHja22',
+  'Jakarta',
   'PH3018',
   'PH1883-B',
   'PH3154-C',
@@ -74,7 +79,20 @@ describe('normalizeStateShelfMark behavior', () => {
     expect(ts('zie PH3301')).toBe('zie PH3301');
   });
 
-  it('leaves "ja" alone — emptying it would discard a real (if crude) signal', () => {
-    expect(ts('ja')).toBe('ja');
+  it('translates "ja" to "yes" rather than emptying it', () => {
+    // "ja" is not a shelf mark, but it is the only record that these 31 copies
+    // ARE on loan from the state collection — so it is translated, not dropped.
+    // José Bouman, 2026-08-12: "This set of 31 is owned by the State, therefore
+    // the 'Ja'. Better change it to 'yes'."
+    expect(ts('ja')).toBe('yes');
+    expect(ts('Ja')).toBe('yes');
+    expect(ts('  JA  ')).toBe('yes');
+  });
+
+  it('translates "ja" per segment, and never inside a real shelf mark', () => {
+    expect(ts('ja|PH3018')).toBe('yes|PH3018');
+    // Substring safety: a real mark that merely contains the letters is intact.
+    expect(ts('PHja22')).toBe('PHja22');
+    expect(ts('Jakarta')).toBe('Jakarta');
   });
 });

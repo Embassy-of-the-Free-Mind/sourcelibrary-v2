@@ -45,7 +45,7 @@ export const POST = withAuth(
     // 1. Fetch the pending row and lock-check that it's still pending.
     const { data: pendingRow, error: fetchErr } = await supabaseAdmin
       .from('bph_works_pending_changes')
-      .select('id, ubn, work_uuid, change_type, proposer_email, field_changes, note, status')
+      .select('id, ubn, change_type, proposer_email, field_changes, note, status')
       .eq('id', id)
       .maybeSingle();
     if (fetchErr) {
@@ -57,7 +57,6 @@ export const POST = withAuth(
     const row = pendingRow as {
       id: string;
       ubn: string | null;
-      work_uuid: string | null;
       change_type: string;
       proposer_email: string;
       field_changes: Record<string, { to: unknown; source?: string; evidence?: string; from?: unknown }>;
@@ -80,8 +79,19 @@ export const POST = withAuth(
     }
     // A proposal is keyed by UBN, or by uuid for the 2,012 records that have
     // no UBN (manuscripts, photographs). Requiring a UBN here rejected every
-    // contributor correction to a manuscript.
-    const workKey = row.ubn || row.work_uuid;
+    // contributor correction to a manuscript. work_uuid is read separately so
+    // an environment without add-bph-uuid-keyed-revisions.sql still approves
+    // ubn-keyed proposals normally.
+    let workUuidFromRow: string | null = null;
+    if (!row.ubn) {
+      const { data: extra } = await supabaseAdmin
+        .from('bph_works_pending_changes')
+        .select('work_uuid')
+        .eq('id', id)
+        .maybeSingle();
+      workUuidFromRow = (extra as { work_uuid?: string | null } | null)?.work_uuid ?? null;
+    }
+    const workKey = row.ubn || workUuidFromRow;
     if (!workKey) {
       return NextResponse.json({ error: 'Pending edit targets no work (neither UBN nor uuid)' }, { status: 400 });
     }
