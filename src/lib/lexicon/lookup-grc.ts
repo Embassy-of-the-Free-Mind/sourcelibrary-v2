@@ -117,7 +117,12 @@ export async function lookupGreekWord(db: Db, rawWord: string): Promise<GrcLooku
   if (mapped?.keys?.length) {
     const docs = await entries.find({ key: { $in: mapped.keys.slice(0, 8) } }).toArray();
     if (docs.length) {
-      return { query, normalized, found: true, matches: rank(docs).slice(0, MAX_MATCHES).map((d) => toMatch(d, 'lemma')) };
+      // Preserve the map's key order — it is frequency-ranked at build time
+      // (rank-grc-lemma-keys.mjs); alphabetical re-sorting is how ἐστίν once
+      // led with εἴλω instead of εἰμί.
+      const pos = new Map(mapped.keys.map((k, i) => [k, i]));
+      docs.sort((a, b) => (pos.get(a.key) ?? 99) - (pos.get(b.key) ?? 99));
+      return { query, normalized, found: true, matches: docs.slice(0, MAX_MATCHES).map((d) => toMatch(d, 'lemma')) };
     }
   }
 
