@@ -84,6 +84,11 @@ const SAMPLE = Number(argVal('--sample') || 3000);
 // ratcheted DOWN deliberately, never drift up unnoticed.
 const MAX_FIELDS = Number(argVal('--max-fields') || 410);
 
+// Retired fields: consolidated away and never allowed back. A reappearance
+// means some writer re-grew a field a consolidation removed (this happened to
+// tenant_id within 3 months of PR #2085) — fail loudly. Comma-separated.
+const FORBID = (argVal('--forbid') || '').split(',').map((s) => s.trim()).filter(Boolean);
+
 // Collections worth watching by default. Everything else needs --all.
 const WATCHED = ['books', 'deleted_books', 'books_warehouse', 'pages', 'first_translation_attempts', 'entities'];
 
@@ -386,6 +391,18 @@ async function main() {
     if (WATCHED.includes(name) && census.fields.length > MAX_FIELDS) {
       console.log(`\n   !! ${census.fields.length} fields exceeds the --max-fields ceiling of ${MAX_FIELDS}`);
       breach = true;
+    }
+
+    if (FORBID.length) {
+      // Exact countDocuments, not the sample: a retired field re-growing on
+      // 0.1% of docs is precisely the case the sample would miss.
+      for (const f of FORBID) {
+        const n = await db.collection(name).countDocuments({ [f]: { $exists: true } });
+        if (n > 0) {
+          console.log(`\n   !! RETIRED field '${f}' is BACK on ${name}: ${n.toLocaleString()} docs. A writer re-grew it — find and strip the writer, then re-clean.`);
+          breach = true;
+        }
+      }
     }
 
     report.collections.push({ ...census, buckets: Object.fromEntries(Object.entries(buckets).map(([k, v]) => [k, v.length])), spellingPairs: spellings, partialPairs: partials, families: familyReport, nested });

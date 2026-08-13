@@ -1,0 +1,58 @@
+name: Field sprawl watch
+
+# The ratchet half of issue #3969 ("a sweep must record a ROW, not a COLUMN").
+#
+# Two things can only be caught by a standing watch, because the sessions that
+# cause them are gone by the time the damage is visible:
+#   1. The field count on a watched collection drifting UP — some sweep wrote
+#      its verdict as a new column again.
+#   2. A RETIRED field reappearing — a consolidation being silently undone by
+#      a reused writer. This is not hypothetical: tenant_id was cleaned off
+#      45K books + 6.4M pages in PR #2085 and was back on 20K books + 1.4M
+#      pages within 3 months (PR #3983 stripped the writers).
+#
+# Read-only. Findings go to a tracking issue, not a red X on someone's PR
+# (same reasoning as corpus-integrity-watch.yml). Ratchet --max-fields DOWN
+# after each #3969 family consolidation; add each retired field to --forbid.
+
+on:
+  schedule:
+    # Weekly, Tuesdays 07:30 UTC.
+    - cron: '30 7 * * 2'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  field-sprawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Audit field sprawl on watched collections
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/field-sprawl.mjs \
+            --collection books \
+            --max-fields 400 \
+            --forbid tenant_id,hide_reason > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          tail -60 report.txt
+      - name: File findings
+        if: steps.run.outputs.fired != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Field sprawl breach on books — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "Either the field count exceeded the ceiling (a sweep wrote a COLUMN again) or a retired field reappeared (a consolidation is being undone by a reused writer). See issue #3969 for the playbook: find the writer, strip it, re-clean — do not just raise the ceiling." \
+            "$(tail -60 report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
