@@ -159,8 +159,19 @@ interface SlBook {
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
-  // Either a UBN or, for the 2,012 records Memorix issues no UBN for, a uuid.
-  const col = catalogKeyColumn(ubn);
+  const row = await fetchWorkBy(catalogKeyColumn(ubn), ubn);
+  if (row) return row;
+  // Second chance on the primary key. `bph_works.id` is a DIFFERENT uuid from
+  // `bph_works.uuid`, and until 2026-08-13 the workspace worklist built its
+  // sample links from `id` — so every link a librarian copied or bookmarked out
+  // of "Needs your attention" addresses a key `catalogKeyColumn` sends to the
+  // `uuid` column, where it matches nothing (José Bouman, 2026-08-12). The RPC
+  // now emits `uuid`, but those older links are already out in the world.
+  if (catalogKeyColumn(ubn) === 'uuid') return fetchWorkBy('id', ubn);
+  return null;
+}
+
+async function fetchWorkBy(col: 'ubn' | 'uuid' | 'id', ubn: string): Promise<BphWorkRow | null> {
   // Try with the external-link columns first; if the column doesn't exist yet
   // (migration not applied on this environment), retry without them so the
   // page still renders.

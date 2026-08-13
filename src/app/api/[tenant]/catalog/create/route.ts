@@ -33,6 +33,9 @@ import { getDb } from '@/lib/mongodb';
 
 const EDITABLE_SET = new Set<string>(EDITABLE_BPH_FIELDS);
 
+/** Record types Memorix issues no UBN for. Mirrors TYPES_WITHOUT_UBN in the form. */
+const UBN_OPTIONAL_TYPES = new Set(['manuscript', 'photocopy']);
+
 interface CreatePayload {
   ubn?: string;
   fieldChanges?: Record<string, { to: unknown; source?: string; evidence?: string }>;
@@ -112,16 +115,37 @@ export const POST = withAuth(
       return NextResponse.json({ error: 'Body is not valid JSON' }, { status: 400 });
     }
 
+    // Manuscripts and photographs have NO UBN — Memorix issues none, and the
+    // BPH writes UBNs into the physical book by hand, so inventing one would
+    // put a number in ink inside an object that is not supposed to carry one
+    // (José Bouman, 2026-08-13). Those records are keyed by a minted uuid and
+    // found by their manuscript number / shelf mark instead.
     const ubn = typeof payload.ubn === 'string' ? payload.ubn.trim() : '';
-    if (!ubn) {
-      return NextResponse.json({ error: 'A UBN (catalogue id) is required' }, { status: 400 });
-    }
-    if (!isValidUbn(ubn)) {
+    if (ubn && !isValidUbn(ubn)) {
       return NextResponse.json(
         { error: 'UBN may only contain letters, numbers, dot, dash and underscore (no spaces or slashes)' },
         { status: 400 },
       );
     }
+    const recordType = (payload.fieldChanges?.record_type?.to ?? null) as string | null;
+    if (!ubn && !UBN_OPTIONAL_TYPES.has(recordType ?? '')) {
+      return NextResponse.json(
+        {
+          error:
+            'A UBN (catalogue id) is required for printed books. Set the record type to Manuscript or Photograph if this object has no UBN.',
+        },
+        { status: 400 },
+      );
+    }
+    if (!ubn && !String(payload.fieldChanges?.shelf_mark?.to ?? '').trim()) {
+      return NextResponse.json(
+        { error: 'A record with no UBN needs a shelf mark (its manuscript number) — it is the only way to find the object.' },
+        { status: 400 },
+      );
+    }
+    // The key the revision hangs off. A uuid here makes applyWorkRevision write
+    // the row with ubn = NULL; see src/lib/bph-catalog.ts.
+    const key = ubn || crypto.randomUUID();
 
     const rawChanges = payload?.fieldChanges;
     if (!rawChanges || typeof rawChanges !== 'object' || Object.keys(rawChanges).length === 0) {
@@ -167,13 +191,15 @@ export const POST = withAuth(
 
     try {
       const result = await applyWorkRevision({
-        ubn,
+        ubn: key,
         changeType: 'create',
         fieldChanges,
         editorEmail: userEmail,
         note: typeof payload.note === 'string' ? payload.note : null,
       });
-      return NextResponse.json({ ok: true, mode: 'created', ubn, ...result });
+      // `key` is what the record is addressable by; `ubn` stays for callers
+      // that expect it and is empty for the no-UBN types.
+      return NextResponse.json({ ok: true, mode: 'created', ubn, key, ...result });
     } catch (err) {
       if (err instanceof BphCatalogError) {
         const msg = err.message;

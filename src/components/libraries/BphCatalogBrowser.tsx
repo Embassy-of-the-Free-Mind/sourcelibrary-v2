@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
-import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 // Book URL helper moved inline to use basePath
@@ -382,6 +382,21 @@ export default function BphCatalogBrowser({
     return params;
   }, []);
 
+  /**
+   * The current selection as a spreadsheet. Same query string the results came
+   * from, minus paging — the export is the whole selection, not the page on
+   * screen. Asked for by José Bouman (BPH), 2026-08-12: "Is it possible to
+   * export a search selection? […] This is an important feature, that we
+   * often! use!"
+   */
+  const exportHref = useMemo(() => {
+    const params = buildParams(searchQuery, sort, keyword, 0, adv);
+    params.delete('limit');
+    params.delete('offset');
+    const qs = params.toString();
+    return `/api/catalog/bph/export${qs ? `?${qs}` : ''}`;
+  }, [buildParams, searchQuery, sort, keyword, adv]);
+
   const fetchWorks = useCallback(async (q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     // Cancel any in-flight request so fast typing doesn't show stale results
     // when an earlier query resolves after a later one.
@@ -664,6 +679,16 @@ export default function BphCatalogBrowser({
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
+          {total > 0 && (
+            <a
+              href={exportHref}
+              className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
+              title={`Download all ${total.toLocaleString('en-US')} results as a spreadsheet`}
+            >
+              <Download className="w-3.5 h-3.5" />
+              Export
+            </a>
+          )}
           <div className="flex items-center gap-3 ml-auto">
             {/* Sort control — sits to the LEFT of the list/grid toggle. Drives
                 the same `sort` state as the list-view column headers, so it

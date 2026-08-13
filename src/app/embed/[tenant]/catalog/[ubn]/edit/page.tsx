@@ -7,6 +7,7 @@ import { ROLE_LEVEL } from '@/lib/auth';
 import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import { getDb } from '@/lib/mongodb';
 import { EDITABLE_BPH_FIELDS } from '@/lib/bph-catalog';
+import { catalogKeyColumn } from '@/lib/bph-catalog-key';
 import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
 
 /**
@@ -72,18 +73,26 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   // from 20260624000000), retry without them. The form silently shows those
   // fields empty, and a save would fail at write time with the same error —
   // the right behaviour (don't pretend to save what we can't write).
-  const maybeMissingCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'collection', 'impressum_original', 'contributors', 'exhibition_history'];
-  const cols = ['ubn', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id'].join(', ');
-  const fallbackCols = ['ubn', ...EDITABLE_BPH_FIELDS.filter((c) => !maybeMissingCols.includes(c)), 'field_provenance', 'sl_book_id'].join(', ');
+  // `record_type` and `full_title` are newer whitelist entries; drop them too
+  // if their migration hasn't run on this environment.
+  const maybeMissingCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'collection', 'impressum_original', 'contributors', 'exhibition_history', 'record_type', 'full_title'];
+  const cols = ['ubn', 'uuid', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id'].join(', ');
+  const fallbackCols = ['ubn', 'uuid', ...EDITABLE_BPH_FIELDS.filter((c) => !maybeMissingCols.includes(c)), 'field_provenance', 'sl_book_id'].join(', ');
+  // Address by UBN or, for the 2,012 records that have none, by uuid — the same
+  // shape rule the detail route uses. This page queried `ubn` unconditionally
+  // until 2026-08-13, so every manuscript and photograph 404'd here even after
+  // #3654 made them viewable: "It is not possible to click on titles with a
+  // shelf mark M (+number) […] to edit them" (José Bouman, 2026-07-31).
+  const keyCol = catalogKeyColumn(ubn);
   let { data, error } = await supabase
     .from('bph_works')
     .select(cols)
-    .eq('ubn', ubn)
+    .eq(keyCol, ubn)
     .maybeSingle();
   if (error) {
     const msg = (error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {
-      const retry = await supabase.from('bph_works').select(fallbackCols).eq('ubn', ubn).maybeSingle();
+      const retry = await supabase.from('bph_works').select(fallbackCols).eq(keyCol, ubn).maybeSingle();
       data = retry.data;
       error = retry.error;
     }
@@ -91,7 +100,11 @@ export default async function EditCatalogEntryPage({ params }: Props) {
 
   if (error || !data) notFound();
 
-  const work = data as unknown as Record<string, unknown> & { ubn: string };
+  const work = data as unknown as Record<string, unknown> & { ubn: string | null; uuid: string | null; shelf_mark?: string | null };
+  // The key the form saves back through: UBN when the record has one, else the
+  // uuid. Never null — a row with neither key is unaddressable, and production
+  // has zero of those (verified across all 29,881 rows, 2026-08-13).
+  const workKey = work.ubn || work.uuid || ubn;
 
   return (
     <div className="bg-cream min-h-screen">
@@ -106,11 +119,14 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           Edit catalogue entry
         </h1>
         <p className="text-sm text-muted mb-6">
-          UBN {work.ubn} · Signed in as {session.user.email}
+          {/* Manuscripts and photographs have no UBN — naming one would be a
+              lie, and the shelf mark is what a librarian actually uses to find
+              the object on the shelf. */}
+          {work.ubn ? `UBN ${work.ubn}` : `Shelf mark ${work.shelf_mark || '—'} · no UBN`} · Signed in as {session.user.email}
         </p>
 
         <BphWorkEditForm
-          ubn={work.ubn}
+          ubn={workKey}
           tenant={tenant}
           initial={work}
           editorEmail={session.user.email || ''}
