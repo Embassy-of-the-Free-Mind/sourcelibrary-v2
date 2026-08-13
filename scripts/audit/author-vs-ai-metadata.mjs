@@ -41,7 +41,7 @@
  *   node scripts/audit/author-vs-ai-metadata.mjs --class=person_vs_person
  */
 import { MongoClient } from 'mongodb';
-import { foldOrtho, sameNameForm } from '../lib/name-equivalence.mjs';
+import { foldOrtho, sameNameForm, stripRelator } from '../lib/name-equivalence.mjs';
 
 const JSON_OUT = process.argv.includes('--json');
 const INCLUDE_HIDDEN = process.argv.includes('--all');
@@ -103,12 +103,30 @@ function overlap(a, b) {
  * That is exactly what the first run of this audit did — 39 non-Latin names
  * reported as anonymous books.
  */
-const PLACEHOLDER = /^(unknown|anonymous|anon|various|n\s*a|none|untitled|s\s*n|sine nomine|no author|not stated|\[?unknown author\]?|unbekannt|onbekend)$/;
+const PLACEHOLDER = /^(unknown|anonymous|anon|n\s*a|none|untitled|s\s*n|sine nomine|no author|not stated|\[?unknown author\]?|unbekannt|onbekend)$/;
 const isPlaceholder = (s) => {
   const raw = String(s ?? '').trim();
   if (!raw) return true;
   return PLACEHOLDER.test(norm(s));
 };
+
+/**
+ * A DELIBERATE COLLECTIVE attribution — not a placeholder (#3950).
+ *
+ * "Various" used to live in PLACEHOLDER above, which asserted that a book so
+ * catalogued has no attribution and that any specific name enrichment offers is
+ * an improvement. For a genuine multi-author anthology the opposite is true:
+ * "Various" is the accurate answer, and a single cherry-picked contributor is a
+ * worse one. Two cases in the #3894 triage turned on this — an alchemical
+ * anthology and "Various Armenian Historians" — where the worker correctly KEPT
+ * the vaguer catalogued value against a specific AI proposal.
+ *
+ * 119 visible books carry a collective byline (48 distinct strings), against
+ * 1,901 genuinely unknown ones. Conflating them made every one of the 119 read
+ * as a filling opportunity.
+ */
+const COLLECTIVE = /^(various|multiple authors|diverse|verschiedene|divers auteurs|collective|anthology|mixed authors|several authors)\b/i;
+const isCollective = (s) => COLLECTIVE.test(String(s ?? '').trim());
 
 /**
  * Whether the Latin-token metric can judge this pair AT ALL.
@@ -129,6 +147,23 @@ const latinShare = (s) => {
   return letters.filter((c) => /[a-zA-Z]/.test(c)).length / letters.length;
 };
 const isUndecidableScript = (cat, ai) => latinShare(cat) < 0.5 || latinShare(ai) < 0.5;
+
+/**
+ * The second way the metric can fail to judge: every token is BELOW the 3-char
+ * floor, so the comparable set is empty (#3950).
+ *
+ * `Yi I`, `Li Bo`, `O Sa-gi` — romanised Korean and Chinese names whose parts are
+ * one or two characters. `tokens()` drops everything under 3 (rightly: "de",
+ * "van" and initials would otherwise manufacture agreement), which leaves NOTHING
+ * to compare, and `overlap()` returns 0 — indistinguishable from real
+ * disagreement. `Yi, I 1536-1584` vs `Yi I` sat in the review queue as two people
+ * on the strength of an empty set.
+ *
+ * This is the same lesson as the non-Latin case above and the ayn/hamza elision
+ * in name-equivalence: TEST WHETHER THE METRIC CAN JUDGE, not whether the strings
+ * differ. An empty comparable set means unjudged; it never means different.
+ */
+const noComparableTokens = (cat, ai) => tokens(cat).size === 0 || tokens(ai).size === 0;
 
 /**
  * An institution, collection or corporate body. These overlap #3483's `is_person`
@@ -241,6 +276,7 @@ log(`  …carrying ai_metadata.author : ${withAi.toLocaleString()} (${(100 * wit
 
 const classes = {
   placeholder_filled: [],
+  collective_vs_specific: [],
   undecidable_script: [],
   institutional: [],
   person_vs_person: [],
@@ -280,8 +316,11 @@ const cursor = books.find(query, {
 
 for await (const b of cursor) {
   compared++;
-  const cat = b.author;
-  const ai = b.ai_metadata.author;
+  // A trailing MARC relator is a ROLE, not part of the name (#3950). Strip it
+  // from both sides before every comparison, or `Grosseteste, Robert 1175?-1253
+  // creator` never matches `Robert Grosseteste`.
+  const cat = stripRelator(b.author);
+  const ai = stripRelator(b.ai_metadata.author);
   if (overlap(cat, ai) > 0) { agree++; continue; }
   // Same person under a different orthography — the corpus's own historiography,
   // not a defect. Checked before any class assignment so it cannot leak into one.
@@ -300,7 +339,8 @@ for await (const b of cursor) {
   };
 
   if (isPlaceholder(cat)) { classes.placeholder_filled.push(row); continue; }
-  if (isUndecidableScript(cat, ai)) { classes.undecidable_script.push(row); continue; }
+  if (isCollective(cat)) { classes.collective_vs_specific.push(row); continue; }
+  if (isUndecidableScript(cat, ai) || noComparableTokens(cat, ai)) { classes.undecidable_script.push(row); continue; }
   if (isInstitutional(cat)) { classes.institutional.push(row); continue; }
 
   // THE RESIDUE. A catalogued person contradicted by a different page-derived
@@ -405,7 +445,8 @@ for (const rows of Object.values(classes)) {
 // ───────────────────────────────────────────────────────────────────────────────
 const DESCRIPTIONS = {
   placeholder_filled: 'catalogued as a placeholder; the AI SUPPLIED a name — an opportunity, not a defect',
-  undecidable_script: 'a non-Latin name on one or both sides — the Latin-token metric cannot judge these',
+  collective_vs_specific: 'catalogued as a COLLECTIVE ("Various"); the AI proposed one name — for a real anthology the vaguer value is the TRUER one, so this is not a filling opportunity',
+  undecidable_script: 'the Latin-token metric CANNOT JUDGE these — a non-Latin name on one side, or every token below the 3-char floor (romanised CJK/Korean). Unjudged, not equivalent',
   institutional: 'corporate/collection heading — belongs with the is_person work (#3483), not a byline fix',
   person_vs_person: 'REVIEW QUEUE: a catalogued person contradicted by a different page-derived person',
 };

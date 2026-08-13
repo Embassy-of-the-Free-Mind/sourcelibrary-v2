@@ -53,6 +53,25 @@ apparent defect. Artworks need their own instrument.
 - contradicted: 246 of 4,313 books that have a second opinion
 - integrity: 48 `author_id` values pointing at a missing doc, 3 at a tombstone
 
+### The T0/T2 boundary moved on 2026-08-13 (#3950) — do not read it as a regression
+
+`Various` used to be an exact-match placeholder, so `Various poets`,
+`Various Authors` and `Various (Sangam anthology)` fell through to **T2
+UNLINKED** — "a plausible name with no `author_id`", which none of them is.
+Prefix-matching the collective forms moved **59 books from T2 to T0**, and T0
+now reports how many of itself are deliberate collectives (**119 of 1,747**).
+
+**No headline number changed**: reachable and anchored are computed from T3+T4,
+which this does not touch. Ledger rows before and after are comparable on the
+headline and NOT comparable on the T0/T2 split.
+
+A collective stays in T0 on purpose. The ladder measures whether a byline gets a
+reader to an author page, and `Various` does not, however true it is — but the
+audit no longer reports those books as *missing* an attribution, because the
+cataloguer answered the question and the answer is that there is no one author.
+This is the reachability/correctness split the tiers already promise, applied to
+T0.
+
 ## The first thing it measured was a regression
 
 Over the 133 records corrected on 2026-08-11: **35 moved up a tier, 42 moved

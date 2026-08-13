@@ -22,7 +22,7 @@
  * the queue silently, where a false split only costs a human ten seconds.
  */
 import { describe, it, expect } from 'vitest';
-import { sameNameForm, withinOneEdit, nameStems } from '../../scripts/lib/name-equivalence.mjs';
+import { sameNameForm, withinOneEdit, nameStems, foldOrtho } from '../../scripts/lib/name-equivalence.mjs';
 
 describe('sameNameForm — one person, many name-forms', () => {
   const SAME: Array<[string, string, string]> = [
@@ -103,6 +103,31 @@ describe('withinOneEdit', () => {
   it('accepts equality', () => expect(withinOneEdit('cicero', 'cicero')).toBe(true));
   it('rejects two edits', () => expect(withinOneEdit('aristotel', 'aristotaal')).toBe(false));
   it('rejects a length gap over one', () => expect(withinOneEdit('cicero', 'ciceronis')).toBe(false));
+});
+
+describe('transliteration marks are elided, not treated as separators (#3950)', () => {
+  // ʻ ʿ ʾ and the plain apostrophe all transcribe ayn/hamza INSIDE a word. While
+  // they became a space, "Saʻdī" shattered into "sa"+"di" — both below every
+  // length floor in this module — so the stem set came back EMPTY and two
+  // spellings of one poet read as two people. An empty set is "cannot judge",
+  // and downstream it reads as guaranteed disagreement.
+  it('matches the same name across ayn/hamza codepoints', () => {
+    expect(sameNameForm('Saʻdī', 'Saʿdī')).toBe(true);
+    expect(sameNameForm('Saʻdī', "Sa'dī")).toBe(true);
+    expect(sameNameForm('Saʻdī', 'Saʾdī')).toBe(true);
+  });
+  it('leaves a short transliteration with a usable stem', () => {
+    expect(foldOrtho('Saʻdī')).toBe('sadi');
+    expect(nameStems('Saʻdī').size).toBeGreaterThan(0);
+  });
+  it('folds an elided apostrophe the same way regardless of form', () => {
+    expect(foldOrtho("O'Brien")).toBe(foldOrtho('OBrien'));
+  });
+  // The floors still have to hold: elision must not become a way to merge people.
+  it('still refuses two genuinely different names carrying the mark', () => {
+    expect(sameNameForm('Saʻdī', 'Ḥāfiẓ')).toBe(false);
+    expect(sameNameForm('al-Ashʿarī', 'al-Ghazālī')).toBe(false);
+  });
 });
 
 describe('particles cannot carry a match on their own', () => {
