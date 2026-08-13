@@ -639,13 +639,44 @@ async function searchImages(args: Record<string, unknown>) {
   // distinctive asset. Artworks (museum layer) follow. The old artwork-first
   // order meant small-limit calls returned ONLY artworks and a caller could
   // conclude the 110K book illustrations don't exist (#3936 symptom 3).
-  const allImages = [...galleryImages, ...artworks].slice(0, limit);
+  const allImages: Array<Record<string, unknown>> = [...galleryImages, ...artworks].slice(0, limit);
+
+  // Embeddable bytes (#3937 item 5): a sandboxed agent (no egress) can SEE the
+  // inline image blocks but cannot fetch the CDN URLs to embed images in a
+  // deliverable (HTML deck, report, artifact — artifact CSP blocks remote
+  // images entirely). Opt-in data URIs in the JSON close that gap. Downscaling
+  // goes through /api/image (sharp, allowlisted hosts) so the payload stays
+  // bounded; capped at THUMBNAIL_BASE64_MAX results because six ~150KB data
+  // URIs is already a ~1MB tool result.
+  let thumbNote: string | null = null;
+  if (args.include_thumbnail_base64 === true && allImages.length > 0) {
+    const toEmbed = allImages.slice(0, THUMBNAIL_BASE64_MAX);
+    const fetched = await Promise.all(
+      toEmbed.map((img) => {
+        const src = typeof img.image_url === 'string' ? img.image_url : null;
+        if (!src) return Promise.resolve(null);
+        const proxied = `${API_BASE}/image?url=${encodeURIComponent(src)}&w=${THUMBNAIL_BASE64_WIDTH}&q=${THUMBNAIL_BASE64_QUALITY}`;
+        // Fall back to the raw URL if the proxy refuses (host not allowlisted);
+        // fetchImageBase64's 1MB cap still bounds the payload.
+        return fetchFirstImage([proxied, src]);
+      }),
+    );
+    for (let i = 0; i < toEmbed.length; i++) {
+      const img = fetched[i];
+      if (img) toEmbed[i].thumbnail_data_uri = `data:${img.mimeType};base64,${img.data}`;
+    }
+    const embedded = fetched.filter(Boolean).length;
+    thumbNote = allImages.length > THUMBNAIL_BASE64_MAX
+      ? `thumbnail_data_uri embedded on the first ${embedded} of ${allImages.length} results (capped to bound payload size). Call again with a smaller limit or paginate to embed others.`
+      : `thumbnail_data_uri embedded on ${embedded} of ${allImages.length} results.`;
+  }
 
   const total = (galleryResult.total as number || 0) + artworks.length;
   return {
     total,
     showing: allImages.length,
     images: allImages,
+    ...(thumbNote ? { thumbnails_note: thumbNote } : {}),
     // An empty scoped result must SAY so — silently returning nothing (or,
     // worse, unscoped results) is how the book_id no-op went unnoticed.
     ...(allImages.length === 0
@@ -889,6 +920,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON — for building self-contained deliverables (HTML decks, artifacts, PDFs) from a sandboxed environment where CDN URLs cannot be fetched. First 6 results only, and inline image blocks are suppressed in this mode to keep the payload bounded. Typical flow: search WITHOUT this flag first to see candidates, then re-call with it (small limit) for the images you chose.' },
       },
     },
   },
@@ -1039,6 +1071,12 @@ async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<
 // them from the model).
 const MAX_INLINE_IMAGES = 5;
 const IMAGE_AUDIENCE = { audience: ['user', 'assistant'] };
+
+// Embeddable-thumbnail knobs (#3937 item 5). ~1000px q70 JPEG keeps a plate
+// legible in a slide while a full batch stays near ~1MB of base64.
+const THUMBNAIL_BASE64_MAX = 6;
+const THUMBNAIL_BASE64_WIDTH = 1000;
+const THUMBNAIL_BASE64_QUALITY = 70;
 
 interface ImageAttachment {
   /** Candidate URLs, tried in order (first that fetches under the size cap wins). */
@@ -1240,8 +1278,14 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 
       // Attach inline image blocks for tools whose results carry imagery
       // (search_images results, get_quote/get_quotes page scans, get_book
-      // covers) — see collectImageAttachments (#3937).
-      const attachments = collectImageAttachments(name, result);
+      // covers) — see collectImageAttachments (#3937). Skipped when the caller
+      // asked for embeddable base64 in the JSON instead: doubling ~1MB of data
+      // URIs with up to 5MB of image blocks would blow past client tool-result
+      // limits, and the documented flow is see-first (blocks), then re-call
+      // with include_thumbnail_base64 for the chosen few.
+      const attachments = argsObj?.include_thumbnail_base64 === true
+        ? []
+        : collectImageAttachments(name, result);
       if (attachments.length > 0) {
         const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
 
