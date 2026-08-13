@@ -148,6 +148,78 @@ const isInstitutional = (s) => INST_WORD.test(String(s ?? '')) || INST_STEM.test
 const PRINTER_HINT = /\b(manuzio|manutius|manucci|mannucci|aldina|torresan|estienne|stephanus|plantin|elzevir|elsevier|froben|giunt|gryphius|wechel|oporinus|blaeu|bodoni|didot)\b/i;
 
 // ───────────────────────────────────────────────────────────────────────────────
+// DESCRIPTION ADRIFT — the second contamination signature (#3949).
+//
+// The cross-row test below catches a repeated NAME. It cannot see the other
+// shape: the AI DESCRIPTION is about a completely different book. Van Helmont's
+// *Philosophia naturalis reformata* is described as a Dutch tragicomedy about
+// Jacqueline of Hainaut; Rothmann's *Chiromantia medica* (1650) is described as
+// a Varenius geography. One row each, so no repeated name, so invisible above.
+//
+// STEMS, NOT TOKENS. The title is usually Latin and the description is English,
+// so exact overlap is worthless — philosophia/philosophy, aristotelicae/
+// Aristotelian and medica/medical must count as echoes. Longest common prefix
+// of 5 is the cheapest thing that gets those and does not fire on unrelated
+// words.
+//
+// TWO POSITIVES, NOT ONE. "Description shares no stem with the title" ALONE is
+// useless: measured over the corpus it fires on 2,002 of 12,125 judged books
+// (16.5%), nearly all of them correct — a German title with an English
+// description legitimately shares nothing, and a good description paraphrases
+// rather than repeats. Requiring that the description also fails to name the
+// book's own AUTHOR cuts that to 709, which is still mostly benign, because a
+// perfectly good description need not name anyone.
+//
+// So this is not a standing corpus check. It is an ANNOTATION on the residue,
+// where the byline is ALREADY contradicted — there, "the description is
+// anchored to neither the title nor the byline" is evidence the whole
+// ai_metadata row is about another book, rather than evidence about prose
+// style. Both of #3949's reproducible cases are caught this way.
+//
+// #3949 also lists *Theatrum Sympatheticum* ×3 as described from della Porta's
+// *Magia naturalis*. Measured 2026-08-13: it is ONE copy of six, not three —
+// and it is the one spelled *Theatrum sympateticum*, so a search on the correct
+// spelling finds five accurate descriptions and concludes the case is not real.
+// (It carries "a comprehensive twenty-book treatise… optics and alchemy to
+// agriculture and cryptography", which is Magia naturalis exactly.) This
+// detector catches it, which is the point: matching by title spelling is what
+// missed it, and matching by whether the description is anchored to the book
+// does not care how the title is spelled.
+// ───────────────────────────────────────────────────────────────────────────────
+const DESC_STOP = new Set([
+  'the', 'and', 'for', 'with', 'from', 'that', 'this', 'work', 'book', 'volume', 'century',
+  'edition', 'treatise', 'collection', 'author', 'authors', 'first', 'text', 'published',
+  'siue', 'sive', 'seu', 'quo', 'quae', 'qui', 'cum', 'per', 'libri', 'liber', 'opus',
+  'des', 'der', 'die', 'und', 'von', 'les', 'una', 'del', 'della', 'sur',
+]);
+const stemTokens = (s, min = 3) =>
+  [...new Set(norm(s).split(' ').filter((w) => w.length > min && !DESC_STOP.has(w)))];
+
+const commonPrefix = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[i] === b[i]) i++; return i; };
+const echoCount = (needles, hay) => needles.filter((t) => hay.some((d) => commonPrefix(t, d) >= 5)).length;
+
+/**
+ * Is the description anchored to this book at all? Returns null when the test
+ * cannot be applied — a non-Latin title or byline (norm() would empty it, the
+ * same trap that filed the CJK corpus as "placeholder"), a placeholder byline
+ * with no person to look for, or a title too short to carry a distinctive stem.
+ * Abstaining is not a pass: it means unjudged, and the caller must not read a
+ * missing flag as a clean one.
+ */
+function descriptionAnchoring(title, author, desc) {
+  if (!desc) return null;
+  const rawAuthor = String(author ?? '').trim();
+  if (!rawAuthor || isPlaceholder(rawAuthor)) return null;
+  if (latinShare(title) < 0.5 || latinShare(rawAuthor) < 0.5) return null;
+  const T = stemTokens(title);
+  const A = stemTokens(rawAuthor, 2);
+  if (T.length < 2 || !A.length) return null;
+  const D = stemTokens(desc);
+  if (!D.length) return null;
+  return { title_hits: echoCount(T, D), author_hits: echoCount(A, D) };
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
 const db = mc.db('bookstore');
@@ -240,6 +312,11 @@ for await (const b of cursor) {
   // contradicted is worth surfacing — it is how a wrong value gets entrenched.
   const anchored = (b.author_link_provenance || []).find((p) => p?.anchored);
   row.anchored_by = anchored ? `${anchored.run}/${anchored.confidence ?? '?'}` : null;
+  // #3949: is the AI description about THIS book? null = could not judge.
+  const anchoring = descriptionAnchoring(b.title, cat, b.ai_metadata?.description);
+  row.description_adrift = anchoring === null
+    ? null
+    : anchoring.title_hits === 0 && anchoring.author_hits === 0;
   classes.person_vs_person.push(row);
 }
 
@@ -308,8 +385,17 @@ for (const [aiName, group] of byAiAuthor) {
     contaminated.add(aiName);
   }
 }
+// Two independent reasons to distrust the ai_metadata row. Kept as separate
+// fields as well as an OR, because they mean different things: `repeated_name`
+// is a batch that carried one answer across many books, `description_adrift` is
+// a single row describing another book entirely. Collapsing them to one boolean
+// would make the queue unable to say WHY it distrusts a row.
 for (const r of classes.person_vs_person) {
-  r.ai_value_suspect = contaminated.has(r.ai_says);
+  const reasons = [];
+  if (contaminated.has(r.ai_says)) reasons.push('repeated_name');
+  if (r.description_adrift === true) reasons.push('description_adrift');
+  r.suspect_reasons = reasons;
+  r.ai_value_suspect = reasons.length > 0;
 }
 
 for (const rows of Object.values(classes)) {
@@ -326,6 +412,10 @@ const DESCRIPTIONS = {
 
 const disagree = Object.values(classes).reduce((s, r) => s + r.length, 0);
 const residue = classes.person_vs_person;
+// Report the abstentions alongside the hits: a missing `description_adrift` flag
+// means UNJUDGED, not clean, and a count that hides that reads as coverage.
+const residueAdrift = residue.filter((r) => r.description_adrift === true).length;
+const residueUnjudged = residue.filter((r) => r.description_adrift === null).length;
 
 if (JSON_OUT) {
   console.log(JSON.stringify({
@@ -337,6 +427,8 @@ if (JSON_OUT) {
     agree_same_name_form: sameForm,
     agree_same_thesaurus_person: sameThesaurus,
     ai_values_suspected_contaminated: [...contaminated],
+    description_adrift: residueAdrift,
+    description_unjudged: residueUnjudged,
     disagree,
     counts: Object.fromEntries(Object.entries(classes).map(([k, v]) => [k, v.length])),
     classes: ONLY_CLASS ? { [ONLY_CLASS]: classes[ONLY_CLASS] ?? [] } : classes,
@@ -364,7 +456,7 @@ if (JSON_OUT) {
     for (const r of show) {
       const flags = [
         r.printer_as_author_suspect ? 'PRINTER?' : null,
-        r.ai_value_suspect ? 'AI-VALUE-SUSPECT' : null,
+        r.ai_value_suspect ? `AI-VALUE-SUSPECT(${r.suspect_reasons.join('+')})` : null,
         r.unanchored_string ? 'no-authority-record' : null,
         r.anchored_by ? `anchored:${r.anchored_by}` : null,
       ].filter(Boolean).join(' ');
@@ -375,6 +467,10 @@ if (JSON_OUT) {
 
   log('\n\n══ SUMMARY ══');
   for (const [name, rows] of Object.entries(classes)) log(`  ${name.padEnd(22)} : ${rows.length}`);
+  log(`\n  ai_metadata rows distrusted : ${residue.filter((r) => r.ai_value_suspect).length}`);
+  log(`    repeated name across books : ${residue.filter((r) => r.suspect_reasons.includes('repeated_name')).length}`);
+  log(`    description about another book : ${residueAdrift}`);
+  log(`    (description test could not judge ${residueUnjudged} rows — unjudged, NOT clean)`);
   log(`\n  ${residue.length === 0
     ? 'CLEAN — no unexplained person-vs-person disagreement'
     : `${residue.length} to review. Verify each against the TITLE PAGE before writing anything — `
