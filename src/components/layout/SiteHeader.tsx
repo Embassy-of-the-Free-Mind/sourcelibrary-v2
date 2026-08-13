@@ -34,9 +34,21 @@ function buildNavLinks(t: NavStrings): NavLink[] {
         { label: t.works, href: '/works' },
       ],
     },
-    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    // Points at the /explore hub, not /explore/map. The hub carries the entity
+    // stats, the century heatmap, and cards for all three visualizations; the
+    // nav used to skip past it straight to the map, which is why the hub drew
+    // 13 pageviews in the 30 days to 2026-08-13 while the map drew 262 and the
+    // timeline and constellation together drew 139. Linking the room instead of
+    // one corner of it is the whole change.
+    { label: t.explore, href: '/explore', activePrefix: '/explore' },
     { label: t.librarian, href: '/librarian' },
-    { label: t.podcast, href: '/podcast' },
+    // No Podcast item. Measured over the same 30 days, the header was the only
+    // sitewide English entry point to /podcast and it produced 113 plays, of
+    // which 66 (58%) were the one episode featured on the /es homepage — i.e.
+    // the editorial placement, not the nav, is what makes people listen. The
+    // homepage feature is now rendered for both locales (HomeView), which is
+    // where that traffic is meant to come from. Episodes also stay reachable
+    // from their librarian threads and the footer.
   ];
 }
 

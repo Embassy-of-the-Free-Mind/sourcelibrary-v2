@@ -72,9 +72,8 @@ export interface NavStrings {
   browse: string;
   catalogue: string;
   works: string;
-  map: string;
+  explore: string;
   librarian: string;
-  podcast: string;
   search: string;
   menu: string;
   support: string;
@@ -87,9 +86,8 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     browse: 'Browse',
     catalogue: 'Catalogue',
     works: 'Works',
-    map: 'Map',
+    explore: 'Explore',
     librarian: 'Librarian',
-    podcast: 'Podcast',
     search: 'Search',
     menu: 'Navigation menu',
     support: 'Support',
@@ -100,9 +98,10 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
     browse: 'Explorar',
     catalogue: 'Catálogo',
     works: 'Obras',
-    map: 'Mapa',
+    // NOT 'Explorar' — that is already this nav's label for Browse. The hub is
+    // a set of interactive visualizations, so name it for what it holds.
+    explore: 'Visualizaciones',
     librarian: 'Bibliotecario',
-    podcast: 'Podcast',
     search: 'Buscar',
     menu: 'Menú de navegación',
     support: 'Donar',
@@ -125,6 +124,9 @@ export interface FooterStrings {
   gallery: string;
   collections: string;
   search: string;
+  // Kept reachable here after the header nav item was retired — the podcast is
+  // otherwise only linked from the homepage feature and its librarian thread.
+  podcast: string;
   favorites: string;
   // About column
   about: string;
@@ -233,6 +235,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     gallery: 'Gallery',
     collections: 'Collections',
     search: 'Search',
+    podcast: 'Podcast',
     favorites: 'Favorites',
     about: 'About',
     vision: 'Our Vision',
@@ -263,6 +266,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     gallery: 'Galería',
     collections: 'Colecciones',
     search: 'Buscar',
+    podcast: 'Pódcast',
     favorites: 'Favoritos',
     about: 'Acerca de',
     vision: 'Nuestra visión',
