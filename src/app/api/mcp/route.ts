@@ -9,6 +9,7 @@ import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
+import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -909,8 +910,11 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see — but some chat clients show them only inside the collapsed tool-result view, so never tell the user images are "rendered above"; describe what you see and give each image\'s url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates.',
+    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image\'s url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates.',
     annotations: { title: 'Search Images', ...READ_ONLY },
+    // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
+    // resource and render the gallery grid in the conversation (#3978).
+    _meta: { ui: { resourceUri: GALLERY_VIEWER_RESOURCE_URI } },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -1201,7 +1205,19 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
 function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
-    { capabilities: { tools: {}, resources: {} } },
+    {
+      capabilities: {
+        tools: {},
+        resources: {},
+        // MCP Apps extension (2026-01-26 spec): tells hosts we serve
+        // `text/html;profile=mcp-app` UI resources, so clients that support
+        // in-chat apps (claude.ai web + desktop) render the gallery viewer
+        // instead of hiding images in the tool-result accordion (#3978).
+        extensions: {
+          'io.modelcontextprotocol/ui': { mimeTypes: [MCP_APP_MIME_TYPE] },
+        },
+      },
+    },
   );
 
   /**
@@ -1223,6 +1239,13 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       description: 'What the corpus holds, which search tool to reach for, how citation and provenance work, and the failure modes worth knowing before you spend calls. Read this first if you are doing sustained research rather than a single lookup.',
       mimeType: 'text/plain',
     },
+    {
+      uri: GALLERY_VIEWER_RESOURCE_URI,
+      name: 'Gallery viewer (MCP App)',
+      title: 'In-chat image gallery for search_images',
+      description: 'UI resource rendered by MCP Apps-capable hosts as an in-chat image grid for search_images results. Not meant to be read as a document.',
+      mimeType: MCP_APP_MIME_TYPE,
+    },
   ] as const;
 
   server.setRequestHandler(ListResourcesRequestSchema, async () => ({
@@ -1233,6 +1256,24 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     const uri = request.params.uri;
     const known = RESOURCES.find((r) => r.uri === uri);
     if (!known) throw new Error(`Unknown resource: ${uri}`);
+    // The MCP App is served inline — a ui:// URI is not fetchable. Its CSP
+    // meta is load-bearing: resourceDomains maps to the iframe's img-src, so
+    // dropping images.sourcelibrary.org here silently blanks every thumbnail.
+    if (uri === GALLERY_VIEWER_RESOURCE_URI) {
+      return {
+        contents: [{
+          uri,
+          mimeType: MCP_APP_MIME_TYPE,
+          text: GALLERY_VIEWER_HTML,
+          _meta: {
+            ui: {
+              csp: { resourceDomains: ['https://images.sourcelibrary.org'] },
+              prefersBorder: true,
+            },
+          },
+        }],
+      };
+    }
     const resp = await fetch(uri, { signal: AbortSignal.timeout(8000) });
     if (!resp.ok) throw new Error(`Could not read ${uri}: HTTP ${resp.status}`);
     return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
