@@ -121,22 +121,35 @@ export default function SudaBenchmarkPage() {
           scholars&rsquo; translation, or the two editions genuinely disagreeing.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-6">The verdict on our translation:</p>
+        <p className="text-secondary leading-relaxed mb-6">
+          The first pass judged 49 entries chosen to be interesting &mdash; long, quotation-heavy,
+          the kind where translation goes wrong. That is the right way to <em>find</em> failure
+          modes and the wrong way to <em>count</em> them, so we later drew 150 more entries
+          uniformly at random from all 27,149 and judged those too. The corpus figures below come
+          from the random draw; the error taxonomy comes from both.
+        </p>
 
         <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-2">
           <li>
-            <strong>28 of 49 entries fully faithful; 21 with minor issues; none with major
-            errors.</strong> The 64 individual faults catalogued are dominated by flattened nuance
-            and small mistranslations &mdash; a Greek second-person rendered as third, an
-            &ldquo;in part&rdquo; dropped &mdash; not fabrication.
+            <strong>77% of entries fully faithful, 21% with minor issues, 2% with major
+            errors</strong> (95% intervals: 70&ndash;83%, 15&ndash;28%, 0.7&ndash;5.7%). The faults
+            are dominated by flattened nuance and small mistranslations &mdash; a Greek
+            second-person rendered as third, an &ldquo;in part&rdquo; dropped &mdash; not
+            fabrication. The three major failures are all the same shape: a garbled word read as
+            a different real word and rendered fluently. In one, the OCR&rsquo;s corrupt
+            &epsilon;&xi;&iota; was taken for the numeral <em>six</em> and became &ldquo;six books
+            of erotic works.&rdquo;
           </li>
           <li>
             <strong>Recitation &mdash; translating from memory instead of from the page &mdash;
-            appeared exactly once in 49 entries.</strong> Readers of{' '}
+            did not appear at all in the 150 random entries</strong> (95% interval 0&ndash;2.5%,
+            so at most a few hundred entries in the whole book). It is real but rare: three
+            confirmed cases have surfaced across every pass, including one where our OCR reads
+            &mu;&epsilon;&iota;&zeta;&omicron;&nu;, &ldquo;greater,&rdquo; and our English asserts
+            what Adler&rsquo;s text says instead. Readers of{' '}
             <Link href="/blog/reciting-not-reading">our earlier note on models reciting canonical
-            texts</Link> will know why we hunt this failure specifically: in one entry, our OCR
-            reads &mu;&epsilon;&iota;&zeta;&omicron;&nu; (&ldquo;greater&rdquo;) but our English
-            asserts what Adler&rsquo;s text says instead. The model knew the passage too well.
+            texts</Link> will know why we hunt this failure specifically: it is the one that cannot
+            be caught by reading the English alone.
           </li>
           <li>
             The judges also documented the opposite &mdash; <em>anti</em>-recitation: our
@@ -149,11 +162,25 @@ export default function SudaBenchmarkPage() {
         </ul>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Forty-nine entries is a pilot, not a proof &mdash; the error bars on those percentages
-          are about &plusmn;14 points, and we are growing the gold set. But the shape of the result
-          matches what we found reading pages by hand: reliable for reading and finding, with a
-          known failure mode &mdash; confident fluency over corrupt input &mdash; concentrated
-          exactly where the OCR met the hardest Greek.
+          Two hundred judged entries is a sample, not a census, and the intervals above say so. But
+          the shape of the result matches what we found reading pages by hand: reliable for reading
+          and finding, with a known failure mode &mdash; confident fluency over corrupt input
+          &mdash; concentrated exactly where the OCR met the hardest Greek. The interesting-entry
+          pass and the random pass disagreed by twenty points on how often we are perfectly
+          faithful, which is worth stating plainly: <em>how you choose what to check determines
+          what you find</em>, and only one of those two designs can be quoted as a rate.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          One more check belongs here, because a reader should have thought of it. Our judges were
+          shown the scholars&rsquo; translation while grading ours, and the Suda On Line is in
+          every model&rsquo;s training data &mdash; so perhaps they were scoring agreement with
+          SOL and calling it fidelity. We tested it: half the random sample was judged with
+          SOL&rsquo;s translation in the packet, half with it removed, assigned at random. The
+          verdicts came out identical, seventeen flagged entries in each arm. The judges were
+          reading the Greek. (One difference did show up: the blind judges catalogued half again
+          as many individual faults &mdash; seeing the answer makes a grader less curious about
+          the details, without changing the grade.)
         </p>
 
         {/* ── The graders graded ── */}
@@ -267,13 +294,14 @@ export default function SudaBenchmarkPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Which leaves the honest position on the number itself: we do not know it. Three
-          recitation cases are now confirmed in this corpus. The pilot&rsquo;s rate of one in
-          forty-nine carries, at that sample size, a confidence interval running from roughly 0.4%
-          to 11% &mdash; somewhere between a hundred and three thousand entries, which is less a
-          measurement than an admission. Getting it properly will take a verified sample judged by
-          judges that can do the task. A cheap sweep turned out to be a fair way to find candidates
-          and a bad way to count them &mdash; and the two it did find were worth the dollar.
+          Which leaves the number itself. We went and got it the slow way: 150 entries drawn at
+          random, judged one at a time by judges that can do the task. None of them showed
+          recitation &mdash; an interval of 0 to 2.5%, so at most a few hundred entries across the
+          whole book, and probably far fewer. Three confirmed cases have surfaced in total, from
+          every pass combined. That is the honest shape of it: the failure is real, we can show you
+          it happening, and it is rare. A cheap sweep turned out to be a fair way to find
+          candidates and a bad way to count them &mdash; and the two it did find were worth the
+          dollar.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -342,6 +370,16 @@ export default function SudaBenchmarkPage() {
             Cross-family judges cleared 64 of them, most because our translation had faithfully
             followed a corrupted scan rather than a remembered text. The section now reports the
             verified outcome and states plainly that the corpus-wide rate remains unmeasured.
+          </li>
+          <li>
+            <strong>13 August 2026 &mdash; corpus rates replaced with a random sample; the
+            anchoring objection tested and answered.</strong> The published fidelity figures came
+            from 49 deliberately interesting entries. We drew 150 at random and judged those: 77%
+            fully faithful rather than 57%, with major errors at 2% where the first pass had found
+            none, and no recitation at all (interval 0&ndash;2.5%, superseding the earlier
+            0.4&ndash;11%). Half that sample was judged blind to the scholars&rsquo; translation as
+            a control; the verdicts were identical, so the judges were reading the Greek and not
+            the answer key.
           </li>
         </ul>
 
