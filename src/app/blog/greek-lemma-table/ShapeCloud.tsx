@@ -64,7 +64,7 @@ export function romanize(word: string): string {
 
 export default function ShapeCloud() {
   const [word, setWord] = useState<(typeof WORDS)[number]>(WORDS[0]);
-  const [picked, setPicked] = useState<{ form: string; count: number } | null>(null);
+  const [picked, setPicked] = useState<{ form: string; count: number; parse: string } | null>(null);
   const [roman, setRoman] = useState(false);
 
   const { forms, total } = shapeData[word.headword];
@@ -76,8 +76,8 @@ export default function ShapeCloud() {
     const rects: Array<{ x: number; y: number; w: number; h: number }> = [
       { x: 350 - 62, y: 265 - 62, w: 124, h: 124 },
     ];
-    const out: Array<{ form: string; count: number; label: string; x: number; y: number; size: number }> = [];
-    (forms as Array<[string, number]>).forEach(([form, count], i) => {
+    const out: Array<{ form: string; count: number; parse: string; label: string; x: number; y: number; size: number }> = [];
+    (forms as Array<[string, number, string?]>).forEach(([form, count, parse], i) => {
       const size = 8.5 + 18 * Math.sqrt(Math.log(count + 1) / Math.log(max + 1));
       const label = roman ? romanize(form) : form;
       const w = label.length * size * 0.55 + 4;
@@ -94,7 +94,7 @@ export default function ShapeCloud() {
         );
         if (!hit) {
           rects.push(box);
-          out.push({ form, count, label, x, y, size });
+          out.push({ form, count, parse: parse ?? '', label, x, y, size });
           return;
         }
       }
@@ -150,8 +150,8 @@ export default function ShapeCloud() {
                 opacity={picked && picked.form !== p.form ? 0.35 : 0.9}
                 style={{ cursor: 'pointer', transition: 'opacity 200ms, fill 200ms' }}
                 lang="grc"
-                onMouseEnter={() => setPicked({ form: p.form, count: p.count })}
-                onClick={() => setPicked({ form: p.form, count: p.count })}
+                onMouseEnter={() => setPicked({ form: p.form, count: p.count, parse: p.parse })}
+                onClick={() => setPicked({ form: p.form, count: p.count, parse: p.parse })}
               >
                 {p.label}
               </text>
@@ -172,11 +172,14 @@ export default function ShapeCloud() {
           {picked ? (
             <>
               <span lang="grc" className="font-semibold text-stone-800">{picked.form}</span>
-              {' '}<span className="text-stone-500">({romanize(picked.form)})</span> appears{' '}
-              <span className="font-semibold">{picked.count.toLocaleString()}</span> times across
-              our Greek books &mdash; every one of them findable under{' '}
-              <span lang="grc" className="font-semibold text-stone-800">{word.headword}</span>{' '}
-              <span className="text-stone-500">({romanize(word.headword)})</span>.
+              {' '}<span className="text-stone-500">({romanize(picked.form)})</span>
+              {picked.parse && (
+                <> &mdash; <span className="text-accent-rust">{picked.parse}</span> of{' '}
+                <span lang="grc" className="font-semibold text-stone-800">{word.headword}</span>,{' '}
+                <span className="italic">{word.gloss}</span></>
+              )}
+              {'. '}Appears <span className="font-semibold">{picked.count.toLocaleString()}</span>{' '}
+              times across our Greek books.
             </>
           ) : (
             <>Hover or tap a shape. Showing the {placed.length} most frequent of {total} shapes
