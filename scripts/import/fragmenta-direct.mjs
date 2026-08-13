@@ -121,7 +121,7 @@ async function importItem(db, m) {
   const slug = await uniqueSlug(db, slugify(`${m.text}-fragmenta-${m.signum}`));
   const now = new Date();
   const bookDoc = {
-    _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+    _id: bookId, id: bookIdStr, slug,
     title: m.title, display_title: m.text, author: m.author,
     language: 'Latin', original_language: 'Latin',
     published: m.dateLabel, year: m.year,
@@ -150,7 +150,7 @@ async function importItem(db, m) {
     created_at: now, updated_at: now,
   };
   await db.collection('books').insertOne(bookDoc);
-  const docs = pages.map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookIdStr, page_number: k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo_original, created_at: now, updated_at: now }; });
+  const docs = pages.map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: bookIdStr, page_number: k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo_original, created_at: now, updated_at: now }; });
   await db.collection('pages').insertMany(docs, { ordered: false });
   console.log(`  ✓ inserted ${slug} (${bookIdStr}) — ${pages.length} pages, hidden`);
   console.log(`    https://sourcelibrary.org/book/${slug}`);

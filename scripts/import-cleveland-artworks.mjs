@@ -194,7 +194,6 @@ function buildDoc(obj, slug, resourceType, displayUrl, thumbUrl, width, height) 
   return {
     id: generateId(),
     slug,
-    tenant_id: 'default',
     title,
     display_title: title,
     author: artist,

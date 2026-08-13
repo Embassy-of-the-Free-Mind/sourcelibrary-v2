@@ -112,7 +112,7 @@ for (const c of cands) {
   const now = new Date();
   const normTitle = normalizeTitle(title), normAuthor = normalizeAuthor(author);
   const doc = {
-    _id: bookId, id: bookId.toHexString(), slug, tenant_id: 'default',
+    _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),

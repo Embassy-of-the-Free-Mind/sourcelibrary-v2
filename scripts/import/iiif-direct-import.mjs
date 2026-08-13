@@ -132,7 +132,7 @@ async function processEntry(db, entry, idx) {
     const bookIdStr = bookId.toHexString();
     const slug = await ensureUniqueSlug(db, generateSlug(entry.title, entry.author));
     const bookDoc = {
-      _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+      _id: bookId, id: bookIdStr, slug,
       title: entry.title || 'Unknown', author: entry.author || 'Unknown',
       language: entry.language || 'Unknown', published: entry.year ? String(entry.year) : 'Unknown',
       categories: [], collections: entry.collections || [],
@@ -155,7 +155,7 @@ async function processEntry(db, entry, idx) {
     for (let start = 0; start < pages.length; start += 500) {
       const chunk = pages.slice(start, start + 500).map((p, j) => {
         const pageId = new ObjectId();
-        return { _id: pageId, id: pageId.toHexString(), tenant_id: 'default', book_id: bookIdStr,
+        return { _id: pageId, id: pageId.toHexString(), book_id: bookIdStr,
           page_number: start + j + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo,
           created_at: new Date(), updated_at: new Date() };
       });

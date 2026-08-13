@@ -125,7 +125,7 @@ async function main() {
     }
 
     const bookDoc = {
-      _id: bookId, id: bookIdStr, slug: album.bookSlug, tenant_id: 'default',
+      _id: bookId, id: bookIdStr, slug: album.bookSlug,
       title: album.title, display_title: album.title,
       author: f0.author,
       language: 'Japanese', original_language: 'Japanese',
@@ -157,7 +157,7 @@ async function main() {
     const pageDocs = fragments.map((f, i) => {
       const pid = new ObjectId();
       return {
-        _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookIdStr,
+        _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: i + 1,
         photo: archived[i].photo, thumbnail: archived[i].thumbnail,
         photo_original: f.commons_full_url,

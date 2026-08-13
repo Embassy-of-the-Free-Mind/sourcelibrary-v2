@@ -106,7 +106,7 @@ for (const c of cands) {
   const bookId = new ObjectId();
   const facsimile = isArtwork || FACSIMILE;
   const doc = {
-    _id: bookId, id: bookId.toHexString(), slug, tenant_id: 'default',
+    _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
@@ -139,7 +139,7 @@ for (const c of cands) {
     if (!isArtwork) {
       const CHUNK = 500;
       for (let s = 0; s < pages.length; s += CHUNK) {
-        const pdocs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: doc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }; });
+        const pdocs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: doc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }; });
         await db.collection('pages').insertMany(pdocs, { ordered: false });
       }
     }

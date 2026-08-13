@@ -246,7 +246,6 @@ async function main() {
         _id: bookId,
         id: bookIdStr,
         slug,
-        tenant_id: 'default',
         title,
         author,
         language,
@@ -290,7 +289,6 @@ async function main() {
           return {
             _id: pageId,
             id: pageId.toHexString(),
-            tenant_id: 'default',
             book_id: bookIdStr,
             page_number: start + j + 1,
             photo: p.photo,

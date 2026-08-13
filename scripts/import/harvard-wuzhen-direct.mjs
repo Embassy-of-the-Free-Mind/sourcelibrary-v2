@@ -83,7 +83,7 @@ async function main() {
   const now = new Date();
 
   const bookDoc = {
-    _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+    _id: bookId, id: bookIdStr, slug,
     title, display_title, author,
     language: 'Chinese', original_language: 'Chinese',
     published: '明萬曆 Ming Wanli (1573–1620)',
@@ -116,7 +116,7 @@ async function main() {
   for (let s = 0; s < pages.length; s += CHUNK) {
     const docs = pages.slice(s, s + CHUNK).map((p, k) => {
       const pid = new ObjectId();
-      return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookIdStr,
+      return { _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: s + k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo,
         created_at: now, updated_at: now };
     });

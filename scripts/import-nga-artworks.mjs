@@ -283,7 +283,6 @@ async function main() {
       const doc = {
         id: generateId(),
         slug,
-        tenant_id: 'default',
         title,
         display_title: title,
         author: artist,

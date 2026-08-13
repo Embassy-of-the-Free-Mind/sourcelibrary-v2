@@ -101,7 +101,7 @@ async function importItem(db, it) {
     const bookId = new ObjectId(); const idStr = bookId.toHexString();
     const slug = await uniqueSlug(db, it.slug_base); const now = new Date();
     await db.collection('books').insertOne({
-      _id: bookId, id: idStr, slug, tenant_id: 'default',
+      _id: bookId, id: idStr, slug,
       title: it.title, display_title: it.display_title, author: it.author,
       language: it.language, original_language: it.language, published: it.published, year: it.year,
       categories: [], collections: [], thumbnail: pages[0] || '',
@@ -121,7 +121,7 @@ async function importItem(db, it) {
     });
     const CHUNK = 500;
     for (let s = 0; s < pages.length; s += CHUNK) {
-      const docs = pages.slice(s, s + CHUNK).map((photo, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: idStr, page_number: s + k + 1, photo, thumbnail: photo, photo_original: photo, created_at: now, updated_at: now }; });
+      const docs = pages.slice(s, s + CHUNK).map((photo, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: idStr, page_number: s + k + 1, photo, thumbnail: photo, photo_original: photo, created_at: now, updated_at: now }; });
       await db.collection('pages').insertMany(docs, { ordered: false });
     }
     console.log(`  ✓ inserted ${slug} (${idStr}) — ${pages.length} pages, hidden`);

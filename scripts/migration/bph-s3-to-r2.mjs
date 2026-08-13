@@ -134,7 +134,6 @@ function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
   return {
     _id: new ObjectId(id),
     id,
-    tenant_id: 'default',
     book_id: bookId,
     page_number: pageNumber,
     photo: photoUrl,
@@ -176,7 +175,6 @@ function makeBookRecord(meta) {
   return {
     _id: new ObjectId(id),
     id,
-    tenant_id: 'default',
     title: meta.title || 'Untitled',
     display_title: meta.display_title || meta.title,
     author: meta.author || 'Unknown',

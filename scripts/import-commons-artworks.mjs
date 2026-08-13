@@ -559,7 +559,6 @@ async function main() {
       const doc = {
         id: generateId(),
         slug: `art-${slug}`,
-        tenant_id: 'default',
         title: info.title || info.commonsTitle.replace('File:', '').replace(/\.[^.]+$/, ''),
         display_title: info.title || undefined,
         author: cat.artist,

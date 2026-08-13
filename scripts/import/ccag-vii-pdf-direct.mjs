@@ -220,7 +220,6 @@ async function main() {
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title: BOOK_META.title,
     display_title: BOOK_META.display_title,
     author: BOOK_META.author,
@@ -294,7 +293,6 @@ async function main() {
       docs.push({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: p + 1,
         photo: pageUrls[p].url,

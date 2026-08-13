@@ -312,7 +312,6 @@ async function main() {
       const pageDoc = {
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: 1,
         photo: null,
@@ -333,7 +332,6 @@ async function main() {
         _id: bookId,
         id: bookIdStr,
         slug,
-        tenant_id: 'default',
         title,
         author: origPlace ? `${origPlace} (${objectType})` : objectType,
         language: 'Egyptian hieroglyphs',

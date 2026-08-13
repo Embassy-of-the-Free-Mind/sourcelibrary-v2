@@ -106,7 +106,6 @@ async function main() {
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title: entry.title,
     display_title: entry.display_title,
     author: entry.author,
@@ -155,7 +154,6 @@ async function main() {
       pageDocs.push({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: p + 1,
         photo: getPageUrl(p),

@@ -390,7 +390,6 @@ async function createArtworkDoc(db, artwork, entry) {
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title: artwork.title,
     display_title: artwork.title,
     author: artwork.author || 'Unknown artist',
