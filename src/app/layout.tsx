@@ -75,6 +75,14 @@ export const metadata: Metadata = {
         { url: '/api/feed/gallery', title: 'Source Library Gallery' },
         { url: '/api/feed/blog', title: 'Source Library - Research Notes' },
       ],
+      // The podcast feeds were the only ones the site did not advertise, so a
+      // podcast app pointed at sourcelibrary.org had nothing to autodiscover
+      // even though both feeds have been serving 200s. RSS 2.0, not Atom —
+      // they are podcast feeds with enclosures, and Apple/Spotify want RSS.
+      'application/rss+xml': [
+        { url: '/api/podcast/feed.xml', title: 'Source Library - Deep Dive Podcast' },
+        { url: '/api/podcast/feed.es.xml', title: 'Source Library - Pódcast en español' },
+      ],
     },
   },
   keywords: [
