@@ -58,7 +58,21 @@ const LEDGER = '.claude/docs/attribution-health-ledger.jsonl';
 const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 
 /** Placeholders — a value that names nobody. */
-const PLACEHOLDER = /^(unknown|anonymous|anon|various|n\/?a|none|untitled|\[?s\.?\s*n\.?\]?|sine nomine|no author|not stated|unbekannt|onbekend|\[?unknown author\]?)$/i;
+const PLACEHOLDER = /^(unknown|anonymous|anon|n\/?a|none|untitled|\[?s\.?\s*n\.?\]?|sine nomine|no author|not stated|unbekannt|onbekend|\[?unknown author\]?)$/i;
+
+/**
+ * A DELIBERATE COLLECTIVE attribution (#3950). "Various" used to sit in
+ * PLACEHOLDER above, which scored a correctly-catalogued anthology as T0 ABSENT
+ * — "nothing to search for" — when in fact the cataloguer answered the question
+ * and the answer is that there is no single author.
+ *
+ * These STILL COUNT AS T0 for the headline, and that is deliberate: the tier
+ * ladder measures whether a byline gets a reader to an author page, and
+ * "Various" does not, however true it is. What changes is that the audit no
+ * longer reports them as missing attributions. Reachability and correctness are
+ * different questions, and this is a book that is correct and unreachable.
+ */
+const COLLECTIVE = /^(various|multiple authors|diverse|verschiedene|divers auteurs|collective|anthology|mixed authors|several authors)\b/i;
 
 /**
  * Strings that are not names at all. Each pattern is a defect class this
@@ -165,6 +179,7 @@ let contradicted = 0;
 let comparable = 0;
 let danglingLink = 0;
 let tombstoneLink = 0;
+let collective = 0;
 
 const cursor = books.find(scope, {
   projection: { author: 1, author_id: 1, 'ai_metadata.author': 1 },
@@ -173,6 +188,7 @@ for await (const b of cursor) {
   total++;
   const a = typeof b.author === 'string' ? b.author.trim() : '';
 
+  if (COLLECTIVE.test(a)) { tiers.T0_ABSENT++; collective++; continue; }
   if (!a || PLACEHOLDER.test(a)) { tiers.T0_ABSENT++; continue; }
 
   const bad = NOT_A_NAME.find((p) => p.re.test(a)) || (titleish.has(a) ? { tag: 'work-title-as-author' } : null);
@@ -210,6 +226,10 @@ const result = {
     unusable: tiers.T1_UNUSABLE,
   },
   unusable_by: unusableBy,
+  // Of T0, how many are a DELIBERATE collective rather than a missing answer.
+  // Same tier (still unreachable), different meaning — do not read T0 as a
+  // backlog of books nobody has attributed.
+  t0_collective: collective,
   contradictions: { comparable, contradicted },
   integrity: { dangling_author_id: danglingLink, links_to_tombstone: tombstoneLink },
 };
@@ -218,7 +238,12 @@ if (JSON_OUT) console.log(JSON.stringify(result, null, 2));
 else {
   log(`══ attribution health — ${result.scope} books ══\n`);
   log(`  books measured : ${total.toLocaleString()}\n`);
-  for (const [k, v] of Object.entries(tiers)) log(`    ${k.padEnd(14)} ${String(v).padStart(7)}  ${pct(v)}`);
+  for (const [k, v] of Object.entries(tiers)) {
+    log(`    ${k.padEnd(14)} ${String(v).padStart(7)}  ${pct(v)}`);
+    if (k === 'T0_ABSENT' && collective) {
+      log(`      of which ${collective} are a DELIBERATE collective ("Various") — correct, and still unreachable`);
+    }
+  }
   log(`\n  HEADLINE`);
   log(`    reachable (T3+) : ${result.headline.reachable_pct}%   — the byline leads to an author page`);
   log(`    anchored  (T4)  : ${result.headline.anchored_pct}%   — that identity is checkable outside this project`);

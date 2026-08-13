@@ -30,10 +30,33 @@
  */
 
 /** Accent-fold, lowercase, punctuation to space. The common floor. */
+/**
+ * Apostrophe-family marks that transliteration uses INSIDE a word: ayn and hamza
+ * (ʻ ʿ ʾ ʼ), the typographic quotes, and the bare ASCII apostrophe.
+ *
+ * These must be ELIDED, not turned into a space (#3950). Every other punctuation
+ * mark here separates two things that really are separate; these sit inside a
+ * single name. Replacing them with a space shatters short transliterations into
+ * sub-floor fragments — `Saʻdī` becomes "sa"+"di", and since every length floor
+ * in this module and its callers is 3 or 4, BOTH fragments are then discarded
+ * and the name reduces to the empty set. An empty set is not "no match", it is
+ * "cannot judge", and it reads downstream as guaranteed disagreement: that is
+ * why `Saʻdī` vs `Saʿdī` — the same name, one codepoint apart — sat in the
+ * person-vs-person queue as though it were two people.
+ *
+ * Elision is not a loosened floor. It changes what counts as ONE token, so the
+ * name arrives at the floors intact ("sadi", 4 chars) instead of pre-shattered.
+ * Names where the mark really does join separable parts (O'Brien → obrien) fold
+ * to the same string either way.
+ */
+const ELIDED_MARKS = /[ʻʼʾʿ‘’ʹʺ`´′']/g;
+
 export function foldAccents(s) {
   if (!s) return '';
   return String(s).normalize('NFKD').replace(/[̀-ͯ]/g, '')
-    .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+    .toLowerCase()
+    .replace(ELIDED_MARKS, '')
+    .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 /**

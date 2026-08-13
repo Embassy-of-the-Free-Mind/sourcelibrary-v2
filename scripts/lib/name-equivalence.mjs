@@ -36,6 +36,32 @@ export const foldOrtho = foldOrthography;
  */
 export const NAME_STOP = PARTICLES;
 
+/**
+ * MARC relator terms a catalogue appends to a heading to say what the person DID
+ * — `Grosseteste, Robert 1175?-1253 creator`, `Zang Maoxun (臧懋循), compiler`.
+ *
+ * Strip these before comparing two names (#3950): the term is a role, not part
+ * of the name, and leaving it in makes an otherwise identical heading read as a
+ * mismatch. Stripping cannot create a false merge — it only removes a role
+ * token that neither name owns.
+ *
+ * This list is deliberately WIDER than `attribution-health.mjs`'s
+ * `relator-artifact` tag, and the two must not be unified. That audit uses its
+ * pattern to route a string to T1 UNUSABLE — worse than absent — which is right
+ * for a bare `creator` and wrong for `Zang Maoxun (臧懋循), compiler`, a real
+ * person wearing a role annotation. Widening the detector would demote seven
+ * perfectly usable bylines; widening the stripper is free.
+ */
+export const RELATOR_TERMS = /[,;]?\s*\b(creator|contributor|author|editor|compiler|translator|printer|publisher|engraver|illustrator|annotator|commentator|former owner|dedicatee|attributed name)\b\s*\.?\s*$/i;
+
+/** Drop a trailing MARC relator term. Returns the name unchanged if there is none. */
+export function stripRelator(s) {
+  let out = String(s ?? '').trim();
+  // Loop: catalogues stack them ("… editor, translator").
+  for (let i = 0; i < 3 && RELATOR_TERMS.test(out); i++) out = out.replace(RELATOR_TERMS, '').trim();
+  return out.replace(/[,;]\s*$/, '').trim();
+}
+
 /** Strip one Latin case ending so Bodinus/Bodini/Bodino share a stem. */
 export const latinStem = (w) => stripEnding(w, PRECISION_ENDINGS, 4);
 
