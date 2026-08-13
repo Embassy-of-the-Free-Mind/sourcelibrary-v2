@@ -41,12 +41,30 @@
  * READ-ONLY — it never writes. Exits non-zero if a threshold is breached, so it
  * can gate CI or run as a standing cron.
  *
+ * PREVENTION — why this script also emits a validator
+ *   Detection after the fact is the weak half. The strong half is a MongoDB
+ *   `$jsonSchema` validator with `additionalProperties: false`: it blesses the
+ *   fields that exist today and REJECTS the next new one, at the database,
+ *   where no script can route around it. Measured 2026-08-13: zero of the 155
+ *   collections here carry a validator, and the application credential holds
+ *   `readWriteAnyDatabase` — which does NOT include `collMod`. That is the
+ *   point. The 543 scripts that write to `books` can neither add a field past
+ *   the validator nor remove the validator; installing it takes a dbAdmin
+ *   credential used once, by hand.
+ *
+ *   `--emit-validator` writes that schema. It runs a FULL field enumeration,
+ *   never a sample: a field on three documents can be missed by a 3,000-doc
+ *   sample, and a validator generated from a sample would reject writes to a
+ *   legitimate existing field. Same class of bug this script exists to find.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs
  *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs --collection books
  *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs --all
  *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs --json out.json
  *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs --max-fields 420
+ *   node --env-file=.env.production.local scripts/audit/field-sprawl.mjs \
+ *       --collection books --emit-validator books-validator.json
  */
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
@@ -57,6 +75,7 @@ const argVal = (flag) => {
   return i > -1 ? argv[i + 1] : null;
 };
 const JSON_OUT = argVal('--json');
+const EMIT_VALIDATOR = argVal('--emit-validator');
 const ONE = argVal('--collection');
 const ALL = argv.includes('--all');
 const SAMPLE = Number(argVal('--sample') || 3000);
@@ -241,6 +260,44 @@ async function nestedCensus(db, name, parents) {
 
 const bucketOf = (pct) => (pct < 1 ? '<1%' : pct < 10 ? '1-10%' : pct < 50 ? '10-50%' : pct < 99 ? '50-99%' : '>=99%');
 
+/**
+ * Every top-level field name in the collection — a FULL scan, deliberately.
+ * A validator built from a sample would omit fields on a handful of documents
+ * and then reject legitimate writes to them.
+ */
+async function allFieldNames(col) {
+  const rows = await col
+    .aggregate([{ $project: { k: { $objectToArray: '$$ROOT' } } }, { $unwind: '$k' }, { $group: { _id: '$k.k' } }], {
+      allowDiskUse: true,
+      maxTimeMS: 900000,
+    })
+    .toArray();
+  return rows.map((r) => r._id).sort();
+}
+
+/**
+ * A `$jsonSchema` that accepts exactly today's fields and nothing else. Emitted
+ * in `warn` mode: violations are logged by the server, writes still succeed.
+ * Watch the Atlas log, then flip `validationAction` to `error` once quiet.
+ *
+ * `validationLevel: "moderate"` applies the rule to inserts and to updates of
+ * documents that already validate — so a legacy document that somehow falls
+ * outside the schema can still be repaired rather than becoming unwritable.
+ */
+function buildValidator(fields, retired = []) {
+  const properties = {};
+  for (const f of fields) properties[f] = {};
+  return {
+    _generated_by: 'scripts/audit/field-sprawl.mjs --emit-validator',
+    _note: 'Blesses the fields that exist today and rejects the next new one. Shrink `properties` as concept families are consolidated; a name moved to `_retired` must never come back.',
+    _retired: retired,
+    collMod: null, // filled in by the caller with the collection name
+    validator: { $jsonSchema: { bsonType: 'object', additionalProperties: false, properties } },
+    validationLevel: 'moderate',
+    validationAction: 'warn',
+  };
+}
+
 async function main() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
@@ -332,6 +389,25 @@ async function main() {
     }
 
     report.collections.push({ ...census, buckets: Object.fromEntries(Object.entries(buckets).map(([k, v]) => [k, v.length])), spellingPairs: spellings, partialPairs: partials, families: familyReport, nested });
+  }
+
+  if (EMIT_VALIDATOR) {
+    if (!ONE) {
+      console.error('\n--emit-validator needs exactly one --collection: a validator is per-collection.');
+      await client.close();
+      process.exit(2);
+    }
+    console.log(`\nenumerating every field on ${ONE} (full scan, not a sample)…`);
+    const names = await allFieldNames(db.collection(ONE));
+    const doc = buildValidator(names);
+    doc.collMod = ONE;
+    fs.writeFileSync(EMIT_VALIDATOR, JSON.stringify(doc, null, 2));
+    console.log(`wrote ${EMIT_VALIDATOR} — ${names.length} fields blessed`);
+    console.log(`\nTo install (needs a dbAdmin credential; the app user is readWriteAnyDatabase and`);
+    console.log(`cannot run collMod — which is exactly why a sweep cannot route around it):`);
+    console.log(`  mongosh "<admin-uri>" --eval 'db.runCommand(${JSON.stringify({ collMod: ONE, validator: '<validator from the file>', validationLevel: 'moderate', validationAction: 'warn' })})'`);
+    console.log(`\nIt lands in WARN mode: violations are logged, writes still succeed. Watch the`);
+    console.log(`Atlas log for a week, fix what shows up, then flip validationAction to "error".`);
   }
 
   if (JSON_OUT) {
