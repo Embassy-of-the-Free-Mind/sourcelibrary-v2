@@ -24,6 +24,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
@@ -31,7 +32,7 @@ import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/tr
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
-import { createHash, randomBytes } from 'crypto';
+import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs';
@@ -54,34 +55,14 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 /**
- * Save current page content as a revision before overwriting.
- * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ * Save current page content as a revision before overwriting — delegates to the
+ * shared helper (scripts/lib/page-revisions.mjs). This worker's inline copy
+ * predated the #3240 refinements (marker-text skip, reason, source_language,
+ * batch_job_id preference) and never received them (#3977). Sole call site is
+ * the preview-model realtime re-OCR path.
  */
 async function saveRevisionBeforeOverwrite(db, pageId, field) {
-  try {
-    const page = await db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { book_id: 1, ocr: 1, translation: 1 } }
-    );
-    if (!page) return;
-    const fieldData = page[field];
-    if (!fieldData?.data) return; // No existing content — first write
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: pageId,
-      book_id: page.book_id,
-      field,
-      data: fieldData.data,
-      source: fieldData.source || 'ai',
-      model: fieldData.model,
-      language: fieldData.language,
-      prompt_version: fieldData.prompt_version,
-      original_date: fieldData.updated_at,
-      created_at: new Date(),
-    });
-  } catch (e) {
-    // Non-fatal — don't block pipeline on revision failure
-  }
+  return saveRevisionShared(db, pageId, field, { reason: 'reocr_realtime' });
 }
 
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
