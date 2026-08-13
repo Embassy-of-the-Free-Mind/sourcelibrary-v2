@@ -125,7 +125,7 @@ for (const c of cands) {
   const bookId = new ObjectId();
   const now = new Date();
   const bookDoc = {
-    _id: bookId, id: bookId.toHexString(), slug, tenant_id: 'default',
+    _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
@@ -154,7 +154,7 @@ for (const c of cands) {
     await db.collection('books').insertOne(bookDoc);
     const CHUNK = 500;
     for (let s = 0; s < pages.length; s += CHUNK) {
-      const docs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookDoc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }; });
+      const docs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: bookDoc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }; });
       await db.collection('pages').insertMany(docs, { ordered: false });
     }
     await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: bookDoc.id, imported_at: now } });

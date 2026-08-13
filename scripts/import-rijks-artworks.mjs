@@ -446,7 +446,6 @@ async function main() {
       const doc = {
         id: generateId(),
         slug,
-        tenant_id: 'default',
         title: obj.title,
         display_title: obj.title,
         author: target.artistName,

@@ -141,7 +141,6 @@ async function importBook(client: MongoClient, book: BookImport) {
   const bookDoc = {
     _id: bookId,
     id: bookIdStr,
-    tenant_id: 'default',
     title: book.title,
     display_title: null,
     author: book.author,
@@ -181,7 +180,6 @@ async function importBook(client: MongoClient, book: BookImport) {
     pageDocs.push({
       _id: pageId,
       id: pageId.toHexString(),
-      tenant_id: 'default',
       book_id: bookIdStr,
       page_number: i + 1,
       photo: getPageImageUrl(i),

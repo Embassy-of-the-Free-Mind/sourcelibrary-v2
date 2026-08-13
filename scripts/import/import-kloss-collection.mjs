@@ -244,7 +244,6 @@ async function importRecord(db, record, index, total) {
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title,
       display_title: null,
       author,
@@ -308,7 +307,6 @@ async function importRecord(db, record, index, total) {
       pageDocs.push({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: i + 1,
         photo: photoUrl,

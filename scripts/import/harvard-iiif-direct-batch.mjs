@@ -70,7 +70,7 @@ async function main(){
     const bookId=new ObjectId(), id=bookId.toHexString(), now=new Date();
     const slug=await uniqueSlug(db, slugify(b.title.split('—')[1]||b.title));
     await db.collection('books').insertOne({
-      _id:bookId, id, slug, tenant_id:'default', title:b.title, display_title:label||b.title.split('—')[0].trim(),
+      _id:bookId, id, slug, title:b.title, display_title:label||b.title.split('—')[0].trim(),
       author:b.author, language:'Chinese', original_language:'Chinese', published:b.published,
       categories:[], collections:b.colls, thumbnail:pages[0]?.thumbnail||'',
       pages_count:pages.length, pages_ocr:0, pages_translated:0, pages_archived:0, content_type:'book',
@@ -85,7 +85,7 @@ async function main(){
       created_at:now, updated_at:now,
     });
     for (let s=0;s<pages.length;s+=500){ const docs=pages.slice(s,s+500).map((p,k)=>{ const pid=new ObjectId();
-      return { _id:pid, id:pid.toHexString(), tenant_id:'default', book_id:id, page_number:s+k+1, photo:p.photo, thumbnail:p.thumbnail, photo_original:p.photo, created_at:now, updated_at:now }; });
+      return { _id:pid, id:pid.toHexString(), book_id:id, page_number:s+k+1, photo:p.photo, thumbnail:p.thumbnail, photo_original:p.photo, created_at:now, updated_at:now }; });
       await db.collection('pages').insertMany(docs,{ordered:false}); }
     console.log(`✓ ${b.fhcl} → ${slug} (${pages.length}p)`); results.push({fhcl:b.fhcl,ok:true,pages:pages.length,slug});
     await new Promise(x=>setTimeout(x,2000));

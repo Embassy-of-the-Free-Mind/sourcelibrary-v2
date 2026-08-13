@@ -91,7 +91,6 @@ async function main() {
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title: '三才圖會 鳥獸三卷-四卷',
       display_title: 'Sancai Tuhui — Birds & Beasts, Juan 91-92 (National Archives of Japan)',
       author: '王圻、王思義',

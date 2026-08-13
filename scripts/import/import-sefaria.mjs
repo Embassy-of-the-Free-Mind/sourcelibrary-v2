@@ -195,7 +195,7 @@ async function importWork(db, w) {
   const now = new Date();
 
   const bookDoc = {
-    _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+    _id: bookId, id: bookIdStr, slug,
     title: w.title, display_title: w.display_title, author: w.author,
     language: w.language, original_language: w.language,
     published: w.published, categories: [], collections: w.collections || [],
@@ -233,7 +233,7 @@ async function importWork(db, w) {
   const pageDocs = pages.map((p, idx) => {
     const pid = new ObjectId();
     const doc = {
-      _id: pid, id: pid.toHexString(), tenant_id: 'default',
+      _id: pid, id: pid.toHexString(),
       book_id: bookIdStr, page_number: idx + 1,
       source_ref: p.source_ref,
       created_at: now, updated_at: now,

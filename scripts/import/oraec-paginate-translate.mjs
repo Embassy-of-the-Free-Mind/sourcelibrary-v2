@@ -143,7 +143,6 @@ async function processBook(db, bookId) {
     const pageDoc = {
       _id: pageId,
       id: pageId.toHexString(),
-      tenant_id: 'default',
       book_id: bid,
       page_number: pageNum,
       // First page gets the archived image, rest get null

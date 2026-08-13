@@ -176,7 +176,7 @@ async function main() {
   const now = new Date();
 
   const bookDoc = {
-    _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+    _id: bookId, id: bookIdStr, slug,
     title, display_title, author,
     language: 'Greek', original_language: 'Greek',
     text_role: 'original',
@@ -217,7 +217,7 @@ async function main() {
       const pid = new ObjectId();
       const r2url = uploaded[gi];
       return {
-        _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookIdStr,
+        _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: gi + 1,
         page_label: p.name || null,
         photo: IC_BASE + p.src,          // provenance: original Internet Culturale source
