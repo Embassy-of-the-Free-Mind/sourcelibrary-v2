@@ -2073,7 +2073,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "era": "Late Antique",
     "episodes": [
       64,
-      81,
       82,
       90,
       91,
@@ -4870,7 +4869,6 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "author": "Justin Martyr",
     "era": "Late Antique",
     "episodes": [
-      81,
       83,
       84,
       120
@@ -5033,8 +5031,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       79,
       112
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ad65f175811c30866e28cb",
+        "slug": "numenius-of-apamea-the-father-of-neo-platonism-apamea",
+        "title": "Numenius of Apamea: The Father of Neo-Platonism",
+        "language": "English",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Natural History",
@@ -8606,8 +8612,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       157,
       159
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ac7ed220878c5c9ba5194b",
+        "slug": "collection-des-anciens-alchimistes-grecs-premiere-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 1",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "69ac7ed620878c5c9ba51ad0",
+        "slug": "collection-des-anciens-alchimistes-grecs-seconde-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 2",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "On the Letter Omega",
@@ -8617,8 +8638,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       122,
       158
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ac7ed220878c5c9ba5194b",
+        "slug": "collection-des-anciens-alchimistes-grecs-premiere-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 1",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "69ac7ed620878c5c9ba51ad0",
+        "slug": "collection-des-anciens-alchimistes-grecs-seconde-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 2",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "The Final Account",
@@ -8628,8 +8664,23 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
       157,
       158
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69ac7ed220878c5c9ba5194b",
+        "slug": "collection-des-anciens-alchimistes-grecs-premiere-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 1",
+        "language": "French",
+        "translated": true
+      },
+      {
+        "id": "69ac7ed620878c5c9ba51ad0",
+        "slug": "collection-des-anciens-alchimistes-grecs-seconde-livraison-ruelle",
+        "title": "Collection of Ancient Greek Alchemists, Part 2",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Historia nova",
@@ -11781,8 +11832,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       126
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02af97e91e1768f67e3a",
+        "slug": "vie-de-porphyre-le-philosophe-neo-platonicien-avec-les-bidez",
+        "title": "Life of Porphyry the Neoplatonist Philosopher",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "De spiritu et anima",
@@ -18498,8 +18557,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       76
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02af97e91e1768f67e3a",
+        "slug": "vie-de-porphyre-le-philosophe-neo-platonicien-avec-les-bidez",
+        "title": "Life of Porphyry the Neoplatonist Philosopher",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Introduction to the Tetrabiblos",
@@ -18561,8 +18628,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       126
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "6a3f02af97e91e1768f67e3a",
+        "slug": "vie-de-porphyre-le-philosophe-neo-platonicien-avec-les-bidez",
+        "title": "Life of Porphyry the Neoplatonist Philosopher",
+        "language": "French",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "On the Styx",
@@ -19336,8 +19411,16 @@ export const SHWEP_CITED_WORKS: ShwepCitedWork[] = [
     "episodes": [
       213
     ],
-    "status": "acquire",
-    "held": []
+    "status": "held",
+    "held": [
+      {
+        "id": "69a910df469f44cea7833bcf",
+        "slug": "physici-et-medici-graeci-minores-ideler",
+        "title": "Minor Greek Physicists and Physicians",
+        "language": "Latin",
+        "translated": true
+      }
+    ]
   },
   {
     "work": "Anthology",

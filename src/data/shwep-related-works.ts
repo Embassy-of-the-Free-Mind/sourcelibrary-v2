@@ -14,31 +14,29 @@ export interface ShwepRelatedHolding {
   relation: string;
 }
 export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
-  "Numenius of Apamea|Fragments": [
+  "Anonymous|Sefer ha-Razim": [
     {
-      "id": "6a3f02bb97e91e1768f68204",
-      "slug": "fragmenta-philosophorum-graecorum-mullach",
-      "title": "Fragments of Greek Philosophers",
-      "author": "Mullach, F. W. A. (Friedrich Wilhelm August), b. 1807",
-      "year": 1881,
-      "relation": "contains excerpts"
+      "id": "69b3e67c304c1c6b3950b7c3",
+      "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
+      "title": "Book of Creation and Jewish Mystical Texts",
+      "author": "Various",
+      "year": 1350,
+      "relation": "the same tradition"
     },
     {
-      "id": "69a5e5e385fa13e734e41894",
-      "slug": "procli-opera-grec-1839-proclus",
-      "title": "Commentary on Plato's Timaeus",
-      "author": "Proclus",
-      "year": 1360,
+      "id": "69c1bae58522835be845b540",
+      "slug": "incantations-and-amulets-anonymous",
+      "title": "Incantations and amulets (Gaster Hebrew MS 177)",
+      "author": "Anonymous",
+      "year": 1650,
       "relation": "the same tradition"
-    }
-  ],
-  "Anonymous|Allogenes": [
+    },
     {
-      "id": "69ae939373fc4632370d4aec",
-      "slug": "koptisch-gnostische-schriften-schmidt",
-      "title": "Coptic Gnostic Writings",
-      "author": "Carl Schmidt",
-      "year": 1905,
+      "id": "69c1bb8e8522835be84603f3",
+      "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
+      "title": "Magical incantations, medial prescriptions and amulets (Gaster Hebrew MS 1485)",
+      "author": "Anonymous",
+      "year": 1650,
       "relation": "the same tradition"
     }
   ],
@@ -57,6 +55,16 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Marcus Cornelius Fronto: Correspondence with Marcus Aurelius, Lucius Verus, and Others, Vo",
       "author": "Fronto; trans. C.R. Haines",
       "year": 1919,
+      "relation": "the same tradition"
+    }
+  ],
+  "Anonymous|Allogenes": [
+    {
+      "id": "69ae939373fc4632370d4aec",
+      "slug": "koptisch-gnostische-schriften-schmidt",
+      "title": "Coptic Gnostic Writings",
+      "author": "Carl Schmidt",
+      "year": 1905,
       "relation": "the same tradition"
     }
   ],
@@ -86,32 +94,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
-  "Anonymous|Sefer ha-Razim": [
-    {
-      "id": "69b3e67c304c1c6b3950b7c3",
-      "slug": "collection-of-kabbalah-and-hekhalot-texts-ms-michael-9-various",
-      "title": "Book of Creation and Jewish Mystical Texts",
-      "author": "Various",
-      "year": 1350,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69c1bae58522835be845b540",
-      "slug": "incantations-and-amulets-anonymous",
-      "title": "Incantations and amulets (Gaster Hebrew MS 177)",
-      "author": "Anonymous",
-      "year": 1650,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69c1bb8e8522835be84603f3",
-      "slug": "magical-incantations-medial-prescriptions-and-amulets-anonymous",
-      "title": "Magical incantations, medial prescriptions and amulets (Gaster Hebrew MS 1485)",
-      "author": "Anonymous",
-      "year": 1650,
-      "relation": "the same tradition"
-    }
-  ],
   "Damascius|In Parmenidem": [
     {
       "id": "69a9768ee12635ded71c4e2f",
@@ -136,6 +118,42 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Damascius",
       "year": 1898,
       "relation": "by the same author"
+    }
+  ],
+  "Kartir|Kartir Inscriptions": [
+    {
+      "id": "699243d2bc722ec0ee80a13d",
+      "slug": "the-dinkard-acts-of-the-religion-of-zoroaster-sanjana",
+      "title": "The Dinkard: Acts of the Religion of Zoroaster",
+      "author": "Peshotun Dustoor Behramjee Sanjana",
+      "year": 1874,
+      "relation": "the same tradition"
+    }
+  ],
+  "Olympiodorus the Younger|Commentary on the Alcibiades": [
+    {
+      "id": "69b52cceb3537347e51e316d",
+      "slug": "olympiodorus-scholia-on-aristotle-s-meteorology-neoplatonic-aristotle",
+      "title": "Olympiodorus, Scholia on Aristotle's Meteorology (Neoplatonic)",
+      "author": "Olympiodorus; Aristotle",
+      "year": 1450,
+      "relation": "by the same author"
+    },
+    {
+      "id": "6a0856a515c643eb1af596e8",
+      "slug": "olympiodorou-philosophou-alexandreos-eis-ta-meteora-tou-aris",
+      "title": "Olympiodōrou philosophou Alexandreōs eis ta Meteōra tou Aristotelous ypomnemata. Ioannou G",
+      "author": "Olympiodorus : Alexandrinus filosofo (filosofo)",
+      "year": 1551,
+      "relation": "by the same author"
+    },
+    {
+      "id": "6990592aaaa7f10ed4cfaa42",
+      "slug": "procli-diadochi-in-platonis-timaeum-commentaria-vol-ii-diehl",
+      "title": "Commentary on Plato's Timaeus, Volume II",
+      "author": "Proclus (ed. Ernst Diehl)",
+      "year": 1904,
+      "relation": "the same tradition"
     }
   ],
   "Damascius|In Phaedonem": [
@@ -190,42 +208,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "contains excerpts"
     }
   ],
-  "Kartir|Kartir Inscriptions": [
-    {
-      "id": "699243d2bc722ec0ee80a13d",
-      "slug": "the-dinkard-acts-of-the-religion-of-zoroaster-sanjana",
-      "title": "The Dinkard: Acts of the Religion of Zoroaster",
-      "author": "Peshotun Dustoor Behramjee Sanjana",
-      "year": 1874,
-      "relation": "the same tradition"
-    }
-  ],
-  "Olympiodorus the Younger|Commentary on the Alcibiades": [
-    {
-      "id": "69b52cceb3537347e51e316d",
-      "slug": "olympiodorus-scholia-on-aristotle-s-meteorology-neoplatonic-aristotle",
-      "title": "Olympiodorus, Scholia on Aristotle's Meteorology (Neoplatonic)",
-      "author": "Olympiodorus; Aristotle",
-      "year": 1450,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6a0856a515c643eb1af596e8",
-      "slug": "olympiodorou-philosophou-alexandreos-eis-ta-meteora-tou-aris",
-      "title": "Olympiodōrou philosophou Alexandreōs eis ta Meteōra tou Aristotelous ypomnemata. Ioannou G",
-      "author": "Olympiodorus : Alexandrinus filosofo (filosofo)",
-      "year": 1551,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6990592aaaa7f10ed4cfaa42",
-      "slug": "procli-diadochi-in-platonis-timaeum-commentaria-vol-ii-diehl",
-      "title": "Commentary on Plato's Timaeus, Volume II",
-      "author": "Proclus (ed. Ernst Diehl)",
-      "year": 1904,
-      "relation": "the same tradition"
-    }
-  ],
   "Porphyry|Ad Gaurum": [
     {
       "id": "6955770557e3b773024f2d40",
@@ -241,42 +223,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Life of Porphyry the Neoplatonist Philosopher",
       "author": "Bidez, Joseph, 1867-1945",
       "year": 1913,
-      "relation": "the same tradition"
-    }
-  ],
-  "Al-Kulayni|Al-Kāfī": [
-    {
-      "id": "69d5ac2ed0bd3547a565582f",
-      "slug": "the-catalogue-al-nadim",
-      "title": "كتاب الفهرست (The Catalogue)",
-      "author": "Ibn al-Nadim",
-      "year": 1872,
-      "relation": "the same tradition"
-    }
-  ],
-  "Zosimus of Panopolis|Matters Alchemical": [
-    {
-      "id": "69ae9bbbad53d7103d61fcfb",
-      "slug": "zosimi-panopolitani-de-zymotechnia-panopolis",
-      "title": "On the Art of Fermentation",
-      "author": "Zosimos of Panopolis",
-      "year": 1814,
-      "relation": "by the same author"
-    },
-    {
-      "id": "69b4c048978ca9526eda33a3",
-      "slug": "democritus-sacred-art-of-alchemy-with-synesius-commentary-synesius",
-      "title": "Democritus, Sacred Art of Alchemy (with Synesius commentary)",
-      "author": "Pseudo-Democritus; Synesius",
-      "year": 1550,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69b4c04d978ca9526eda33f7",
-      "slug": "sacred-art-of-the-philosophers-greek-alchemical-anthology-various",
-      "title": "Sacred Art of the Philosophers (Greek alchemical anthology)",
-      "author": "Various",
-      "year": 1495,
       "relation": "the same tradition"
     }
   ],
@@ -298,32 +244,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Zosimus of Panopolis|On the Letter Omega": [
-    {
-      "id": "6994383a6879ff0184cb803a",
-      "slug": "collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot",
-      "title": "Collection of the Ancient Greek Alchemists, Vols. 2-3",
-      "author": "Marcellin Berthelot",
-      "year": 1888,
-      "relation": "contains excerpts"
-    },
-    {
-      "id": "69ac7ed620878c5c9ba51ad0",
-      "slug": "collection-des-anciens-alchimistes-grecs-seconde-livraison-ruelle",
-      "title": "Collection of Ancient Greek Alchemists, Part 2",
-      "author": "Marcellin Berthelot & Charles-Émile Ruelle",
-      "year": 1888,
-      "relation": "contains excerpts"
-    },
-    {
-      "id": "69b4c04d978ca9526eda33f7",
-      "slug": "sacred-art-of-the-philosophers-greek-alchemical-anthology-various",
-      "title": "Sacred Art of the Philosophers (Greek alchemical anthology)",
-      "author": "Various",
-      "year": 1495,
-      "relation": "the same tradition"
-    }
-  ],
   "Al-Suyuti|Itqān fi ‘ulūm al-Qur'ān": [
     {
       "id": "6a06cde4c749b698e5b2cc6a",
@@ -334,21 +254,13 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
-  "Anonymous|Anonymous Prolegomena to Platonic Philosophy": [
+  "Al-Kulayni|Al-Kāfī": [
     {
-      "id": "69a5e5d91d73f9668388ef2b",
-      "slug": "plotini-enneades-13th-c-copy-a-plotinus",
-      "title": "The Enneads",
-      "author": "Plotinus",
-      "year": 1200,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "6a3f02cd97e91e1768f685fb",
-      "slug": "initia-philosophi-ac-theologi-ex-platonicis-fontibus-ducta-412-485",
-      "title": "Beginnings of Philosophy and Theology from Platonic Sources",
-      "author": "Proclus (412-485)",
-      "year": 1820,
+      "id": "69d5ac2ed0bd3547a565582f",
+      "slug": "the-catalogue-al-nadim",
+      "title": "كتاب الفهرست (The Catalogue)",
+      "author": "Ibn al-Nadim",
+      "year": 1872,
       "relation": "the same tradition"
     }
   ],
@@ -378,13 +290,21 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Cambridge Gloss on the Apocalypse": [
+  "Anonymous|Anonymous Prolegomena to Platonic Philosophy": [
     {
-      "id": "6a0c53f399c52ea845a06406",
-      "slug": "medieval-commentary-on-the-apocalypse-of-john-anonymous",
-      "title": "Medieval Commentary on the Apocalypse of John",
-      "author": "Anonymous",
-      "year": 1400,
+      "id": "69a5e5d91d73f9668388ef2b",
+      "slug": "plotini-enneades-13th-c-copy-a-plotinus",
+      "title": "The Enneads",
+      "author": "Plotinus",
+      "year": 1200,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "6a3f02cd97e91e1768f685fb",
+      "slug": "initia-philosophi-ac-theologi-ex-platonicis-fontibus-ducta-412-485",
+      "title": "Beginnings of Philosophy and Theology from Platonic Sources",
+      "author": "Proclus (412-485)",
+      "year": 1820,
       "relation": "the same tradition"
     }
   ],
@@ -406,6 +326,16 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
+  "Anonymous|Corpus inscriptionum et monumentorum religionis Mithriacæ": [
+    {
+      "id": "6992545159cdabeb78f1dc13",
+      "slug": "religion-und-kultus-der-romer-wissowa",
+      "title": "Religion and Cult of the Romans",
+      "author": "Georg Wissowa",
+      "year": 1902,
+      "relation": "the same tradition"
+    }
+  ],
   "Anonymous|Books of Jeu": [
     {
       "id": "69a5ea03d507939f0352c8df",
@@ -416,12 +346,12 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Corpus inscriptionum et monumentorum religionis Mithriacæ": [
+  "Anonymous|Epidauran Miracle Inscriptions": [
     {
-      "id": "6992545159cdabeb78f1dc13",
-      "slug": "religion-und-kultus-der-romer-wissowa",
-      "title": "Religion and Cult of the Romans",
-      "author": "Georg Wissowa",
+      "id": "6a3f024697e91e1768f66b92",
+      "slug": "inscriptiones-graecae-volume-4-fraenkel",
+      "title": "Greek Inscriptions Volume 4",
+      "author": "Maximilianus Fraenkel",
       "year": 1902,
       "relation": "the same tradition"
     }
@@ -452,13 +382,21 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Epidauran Miracle Inscriptions": [
+  "Anonymous|Gospel of Truth": [
     {
-      "id": "6a3f024697e91e1768f66b92",
-      "slug": "inscriptiones-graecae-volume-4-fraenkel",
-      "title": "Greek Inscriptions Volume 4",
-      "author": "Maximilianus Fraenkel",
-      "year": 1902,
+      "id": "69ae939373fc4632370d4aec",
+      "slug": "koptisch-gnostische-schriften-schmidt",
+      "title": "Coptic Gnostic Writings",
+      "author": "Carl Schmidt",
+      "year": 1905,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "6a3f02d297e91e1768f68766",
+      "slug": "koptisch-gnostische-schriften-hrsg-im-auftrage-der-schmidt",
+      "title": "Coptic-Gnostic Writings",
+      "author": "Schmidt, Carl, 1868-1938",
+      "year": 1905,
       "relation": "the same tradition"
     }
   ],
@@ -488,24 +426,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Gospel of Truth": [
-    {
-      "id": "69ae939373fc4632370d4aec",
-      "slug": "koptisch-gnostische-schriften-schmidt",
-      "title": "Coptic Gnostic Writings",
-      "author": "Carl Schmidt",
-      "year": 1905,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "6a3f02d297e91e1768f68766",
-      "slug": "koptisch-gnostische-schriften-hrsg-im-auftrage-der-schmidt",
-      "title": "Coptic-Gnostic Writings",
-      "author": "Schmidt, Carl, 1868-1938",
-      "year": 1905,
-      "relation": "the same tradition"
-    }
-  ],
   "Anonymous|Greek Musical Writings": [
     {
       "id": "6955742bf63a757109172ca1",
@@ -532,6 +452,16 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Paul of Tarento; Friar Elias; Various",
       "year": 1415,
       "relation": "contains excerpts"
+    }
+  ],
+  "Anonymous|Letter of Peter to Philip": [
+    {
+      "id": "69d5ae22d0bd3547a5656c4d",
+      "slug": "acts-of-the-apostles-manchester-ethiopic-ms-6-anonymous",
+      "title": "ገድለ ሐዋርያት (Acts of the Apostles — Manchester Ethiopic MS 6)",
+      "author": "Anonymous",
+      "year": 1400,
+      "relation": "the same tradition"
     }
   ],
   "Anonymous|Magical Book of Mary and the Angels": [
@@ -570,16 +500,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Letter of Peter to Philip": [
-    {
-      "id": "69d5ae22d0bd3547a5656c4d",
-      "slug": "acts-of-the-apostles-manchester-ethiopic-ms-6-anonymous",
-      "title": "ገድለ ሐዋርያት (Acts of the Apostles — Manchester Ethiopic MS 6)",
-      "author": "Anonymous",
-      "year": 1400,
-      "relation": "the same tradition"
-    }
-  ],
   "Anonymous|Narratio de aedificatione Sanctae Sophiae": [
     {
       "id": "6a3f025497e91e1768f66fb0",
@@ -605,6 +525,16 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Exposition on Aristotle's On the Soul",
       "author": "Offredus, Apollinaris",
       "year": 1496,
+      "relation": "the same tradition"
+    }
+  ],
+  "Anonymous|Cambridge Gloss on the Apocalypse": [
+    {
+      "id": "6a0c53f399c52ea845a06406",
+      "slug": "medieval-commentary-on-the-apocalypse-of-john-anonymous",
+      "title": "Medieval Commentary on the Apocalypse of John",
+      "author": "Anonymous",
+      "year": 1400,
       "relation": "the same tradition"
     }
   ],
@@ -656,24 +586,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Sophia of Jesus Christ": [
-    {
-      "id": "69ae939373fc4632370d4aec",
-      "slug": "koptisch-gnostische-schriften-schmidt",
-      "title": "Coptic Gnostic Writings",
-      "author": "Carl Schmidt",
-      "year": 1905,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "6a3f02d297e91e1768f68766",
-      "slug": "koptisch-gnostische-schriften-hrsg-im-auftrage-der-schmidt",
-      "title": "Coptic-Gnostic Writings",
-      "author": "Schmidt, Carl, 1868-1938",
-      "year": 1905,
-      "relation": "the same tradition"
-    }
-  ],
   "Anonymous|Secundus the Silent Philosopher": [
     {
       "id": "69dbc9b71040d1d5e20a597e",
@@ -692,21 +604,21 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Anonymous|Syriac Legend of Alexander’s Gate": [
+  "Anonymous|Sophia of Jesus Christ": [
     {
-      "id": "69c1bd308522835be8468096",
-      "slug": "romance-of-alexander-anonymous",
-      "title": "Romance of Alexander (Armenian MS 3)",
-      "author": "Anonymous",
-      "year": 1544,
+      "id": "69ae939373fc4632370d4aec",
+      "slug": "koptisch-gnostische-schriften-schmidt",
+      "title": "Coptic Gnostic Writings",
+      "author": "Carl Schmidt",
+      "year": 1905,
       "relation": "the same tradition"
     },
     {
-      "id": "69d66bfd4da4f8dce52f24d4",
-      "slug": "pseudo-callisthenes-romance-of-alexander-armenian-version-pseudo-callisthenes",
-      "title": "Pseudo-Callisthenes — Romance of Alexander (Armenian version, 1646)",
-      "author": "Pseudo-Callisthenes",
-      "year": 1646,
+      "id": "6a3f02d297e91e1768f68766",
+      "slug": "koptisch-gnostische-schriften-hrsg-im-auftrage-der-schmidt",
+      "title": "Coptic-Gnostic Writings",
+      "author": "Schmidt, Carl, 1868-1938",
+      "year": 1905,
       "relation": "the same tradition"
     }
   ],
@@ -726,6 +638,24 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Roth-Scholtz, Friedrich (1687-1736)",
       "year": 1728,
       "relation": "contains excerpts"
+    }
+  ],
+  "Anonymous|Syriac Legend of Alexander’s Gate": [
+    {
+      "id": "69c1bd308522835be8468096",
+      "slug": "romance-of-alexander-anonymous",
+      "title": "Romance of Alexander (Armenian MS 3)",
+      "author": "Anonymous",
+      "year": 1544,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "69d66bfd4da4f8dce52f24d4",
+      "slug": "pseudo-callisthenes-romance-of-alexander-armenian-version-pseudo-callisthenes",
+      "title": "Pseudo-Callisthenes — Romance of Alexander (Armenian version, 1646)",
+      "author": "Pseudo-Callisthenes",
+      "year": 1646,
+      "relation": "the same tradition"
     }
   ],
   "Anonymous|Tosefta Hagigah": [
@@ -836,6 +766,32 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
+  "Apollonius of Tyana|Book of Wisdom and of the Science of Talismans": [
+    {
+      "id": "69520ee0ab34727b1f044285",
+      "slug": "picatrix-the-goal-of-the-wise-al-majriti",
+      "title": "The Goal of the Wise",
+      "author": "Pseudo-Maslama al-Majriti",
+      "year": 1500,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "695361cd9c494f9f9f042f19",
+      "slug": "ghayat-al-hakim-arabic-ms-al-majriti",
+      "title": "The Goal of the Wise (Ghayat al-Hakim)",
+      "author": "Maslama al-Majriti",
+      "year": 960,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "69b3e596c94a4ff7cce22d4f",
+      "slug": "collection-of-magical-and-other-treatises-ascribed-to-trismegistus",
+      "title": "Collected Treatises on Magic and Nature",
+      "author": "Hermes Trismegistus",
+      "year": 1325,
+      "relation": "the same tradition"
+    }
+  ],
   "Anonymous|Zostrianos": [
     {
       "id": "69ae939373fc4632370d4aec",
@@ -888,32 +844,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Apollonius of Tyana|Book of Wisdom and of the Science of Talismans": [
-    {
-      "id": "69520ee0ab34727b1f044285",
-      "slug": "picatrix-the-goal-of-the-wise-al-majriti",
-      "title": "The Goal of the Wise",
-      "author": "Pseudo-Maslama al-Majriti",
-      "year": 1500,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "695361cd9c494f9f9f042f19",
-      "slug": "ghayat-al-hakim-arabic-ms-al-majriti",
-      "title": "The Goal of the Wise (Ghayat al-Hakim)",
-      "author": "Maslama al-Majriti",
-      "year": 960,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69b3e596c94a4ff7cce22d4f",
-      "slug": "collection-of-magical-and-other-treatises-ascribed-to-trismegistus",
-      "title": "Collected Treatises on Magic and Nature",
-      "author": "Hermes Trismegistus",
-      "year": 1325,
-      "relation": "the same tradition"
-    }
-  ],
   "Pseudo-Augustine|De spiritu et anima": [
     {
       "id": "69dbc7ed1040d1d5e2095820",
@@ -930,6 +860,24 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Augustine of Hippo",
       "year": 1180,
       "relation": "the same tradition"
+    }
+  ],
+  "Evagrius of Pontus|Epistula fidei": [
+    {
+      "id": "69a5f366d4c2e3cf8ecb8a85",
+      "slug": "theological-and-philosophical-anthology-various",
+      "title": "Theological and Philosophical Anthology",
+      "author": "Various",
+      "year": 800,
+      "relation": "contains excerpts"
+    },
+    {
+      "id": "69a5f3b61cf742c3604134ce",
+      "slug": "syriac-theological-anthology-various",
+      "title": "Syriac Theological Anthology",
+      "author": "Various",
+      "year": 1200,
+      "relation": "contains excerpts"
     }
   ],
   "Elias|In Categorias": [
@@ -958,22 +906,14 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Evagrius of Pontus|Epistula fidei": [
+  "George Pachymeres|Paraphrasis in opera S. Dionysii Areopagitae": [
     {
-      "id": "69a5f366d4c2e3cf8ecb8a85",
-      "slug": "theological-and-philosophical-anthology-various",
-      "title": "Theological and Philosophical Anthology",
-      "author": "Various",
-      "year": 800,
-      "relation": "contains excerpts"
-    },
-    {
-      "id": "69a5f3b61cf742c3604134ce",
-      "slug": "syriac-theological-anthology-various",
-      "title": "Syriac Theological Anthology",
-      "author": "Various",
-      "year": 1200,
-      "relation": "contains excerpts"
+      "id": "69a5e5e385fa13e734e41894",
+      "slug": "procli-opera-grec-1839-proclus",
+      "title": "Commentary on Plato's Timaeus",
+      "author": "Proclus",
+      "year": 1360,
+      "relation": "the same tradition"
     }
   ],
   "Evagrius of Pontus|Kephalaia Gnostika": [
@@ -991,16 +931,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Mystical Theology and The Celestial Hierarchy",
       "author": "Pseudo-Dionysius the Areopagite",
       "year": 1505,
-      "relation": "the same tradition"
-    }
-  ],
-  "George Pachymeres|Paraphrasis in opera S. Dionysii Areopagitae": [
-    {
-      "id": "69a5e5e385fa13e734e41894",
-      "slug": "procli-opera-grec-1839-proclus",
-      "title": "Commentary on Plato's Timaeus",
-      "author": "Proclus",
-      "year": 1360,
       "relation": "the same tradition"
     }
   ],
@@ -1032,6 +962,36 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
+  "Ibn Bahlul|Kitab ad-Dala'il": [
+    {
+      "id": "69d5ac2ed0bd3547a565582f",
+      "slug": "the-catalogue-al-nadim",
+      "title": "كتاب الفهرست (The Catalogue)",
+      "author": "Ibn al-Nadim",
+      "year": 1872,
+      "relation": "the same tradition"
+    }
+  ],
+  "Ibn Kathīr|Al-Bidāyah wa l-Nihāyah": [
+    {
+      "id": "69e961342beefe2f6f72a891",
+      "slug": "muruj-al-dhahab-meadows-of-gold-al-masudi",
+      "title": "مروج الذهب (Murūj al-Dhahab / Meadows of Gold)",
+      "author": "Al-Masudi",
+      "year": 1841,
+      "relation": "the same tradition"
+    }
+  ],
+  "Ibn Qūlawayh|Kāmil al-Ziyārāt": [
+    {
+      "id": "69d5ac2ed0bd3547a565582f",
+      "slug": "the-catalogue-al-nadim",
+      "title": "كتاب الفهرست (The Catalogue)",
+      "author": "Ibn al-Nadim",
+      "year": 1872,
+      "relation": "the same tradition"
+    }
+  ],
   "Iamblichus|In Platonis dialogos commentariorum fragmenta": [
     {
       "id": "69d13d751c2a66dc094b168d",
@@ -1058,26 +1018,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
-  "Ibn Bahlul|Kitab ad-Dala'il": [
-    {
-      "id": "69d5ac2ed0bd3547a565582f",
-      "slug": "the-catalogue-al-nadim",
-      "title": "كتاب الفهرست (The Catalogue)",
-      "author": "Ibn al-Nadim",
-      "year": 1872,
-      "relation": "the same tradition"
-    }
-  ],
-  "Ibn Kathīr|Al-Bidāyah wa l-Nihāyah": [
-    {
-      "id": "69e961342beefe2f6f72a891",
-      "slug": "muruj-al-dhahab-meadows-of-gold-al-masudi",
-      "title": "مروج الذهب (Murūj al-Dhahab / Meadows of Gold)",
-      "author": "Al-Masudi",
-      "year": 1841,
-      "relation": "the same tradition"
-    }
-  ],
   "Jābir ibn Ḥayyān|Kitāb Usṭuqus al-uss al-thānī": [
     {
       "id": "6953619d9c494f9f9f042608",
@@ -1094,34 +1034,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Ibn al-Nadim",
       "year": 1872,
       "relation": "contains excerpts"
-    }
-  ],
-  "Ibn Qūlawayh|Kāmil al-Ziyārāt": [
-    {
-      "id": "69d5ac2ed0bd3547a565582f",
-      "slug": "the-catalogue-al-nadim",
-      "title": "كتاب الفهرست (The Catalogue)",
-      "author": "Ibn al-Nadim",
-      "year": 1872,
-      "relation": "the same tradition"
-    }
-  ],
-  "John Chrysostom|Adversus Oppugnatores Vitae Monasticae": [
-    {
-      "id": "69b3004ca1a4246ddb45c267",
-      "slug": "lucubrationes-1527-chrysostom",
-      "title": "Lucubrations",
-      "author": "John Chrysostom",
-      "year": 1527,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6a0854c249638a50931c0a1b",
-      "slug": "sancti-ioannis-chrysostomi-de-virginitate-liber-a-iulio-pogi",
-      "title": "Sancti Ioannis Chrysostomi De virginitate liber, a Iulio Pogiano conuersus.",
-      "author": "Manuzio, Paolo",
-      "year": 1562,
-      "relation": "by the same author"
     }
   ],
   "John Chrysostom|Adversus Judaeos": [
@@ -1147,6 +1059,58 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "De fide catholica contra Judaeos",
       "author": "Isidorus Hispalensis",
       "year": 1485,
+      "relation": "the same tradition"
+    }
+  ],
+  "John Chrysostom|Adversus Oppugnatores Vitae Monasticae": [
+    {
+      "id": "69b3004ca1a4246ddb45c267",
+      "slug": "lucubrationes-1527-chrysostom",
+      "title": "Lucubrations",
+      "author": "John Chrysostom",
+      "year": 1527,
+      "relation": "by the same author"
+    },
+    {
+      "id": "69c8072e6c6f3cc53c8457b9",
+      "slug": "greek-omilia-chrysostomus",
+      "title": "[Greek: Omilia]",
+      "author": "Johannes Chrysostomus",
+      "year": 1619,
+      "relation": "by the same author"
+    },
+    {
+      "id": "69a9573465ddd05bbcd3e514",
+      "slug": "historia-lausiaca-meursius",
+      "title": "The Lausiac History",
+      "author": "Palladius (ed. Johannes Meursius)",
+      "year": 1616,
+      "relation": "the same tradition"
+    }
+  ],
+  "Leontius of Byzantium|Complete Works": [
+    {
+      "id": "69942f83b2f6748db4ac128c",
+      "slug": "maximus-confessor-opuscula-theologica-et-polemica-confessor",
+      "title": "Theological and Polemical Opuscula",
+      "author": "Maximus Confessor",
+      "year": 1860,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "69c7978d6a0f3d112fafa0cf",
+      "slug": "greek-kata-haireseon-oudoekonta-panarion-contra-octoginta-epiphanius",
+      "title": "[Greek: Kata haireseon oudoekonta ... Panarion Contra octoginta haereses opus eximium, Pan",
+      "author": "Epiphanius",
+      "year": 1544,
+      "relation": "the same tradition"
+    },
+    {
+      "id": "69c8168e6c6f3cc53c848b0c",
+      "slug": "opera-alexandrinus-2",
+      "title": "Opera",
+      "author": "Cyrillus Alexandrinus",
+      "year": 1566,
       "relation": "the same tradition"
     }
   ],
@@ -1212,32 +1176,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Leontius of Byzantium|Complete Works": [
-    {
-      "id": "69942f83b2f6748db4ac128c",
-      "slug": "maximus-confessor-opuscula-theologica-et-polemica-confessor",
-      "title": "Theological and Polemical Opuscula",
-      "author": "Maximus Confessor",
-      "year": 1860,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69c7978d6a0f3d112fafa0cf",
-      "slug": "greek-kata-haireseon-oudoekonta-panarion-contra-octoginta-epiphanius",
-      "title": "[Greek: Kata haireseon oudoekonta ... Panarion Contra octoginta haereses opus eximium, Pan",
-      "author": "Epiphanius",
-      "year": 1544,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "69c8168e6c6f3cc53c848b0c",
-      "slug": "opera-alexandrinus-2",
-      "title": "Opera",
-      "author": "Cyrillus Alexandrinus",
-      "year": 1566,
-      "relation": "the same tradition"
-    }
-  ],
   "Libanius|Orations": [
     {
       "id": "69c64199b463eebe7caac809",
@@ -1286,32 +1224,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Maximus the Confessor|Capita theologica et oeconomica": [
-    {
-      "id": "69942e31d607f8e57e4b7df0",
-      "slug": "de-variis-difficilibus-locis-ss-pp-dionysii-et-gregorii-oehler",
-      "title": "On Various Difficult Passages of the Holy Fathers Dionysius and Gregory",
-      "author": "Maximus the Confessor; ed. F. Oehler",
-      "year": 1857,
-      "relation": "by the same author"
-    },
-    {
-      "id": "69942f83b2f6748db4ac128c",
-      "slug": "maximus-confessor-opuscula-theologica-et-polemica-confessor",
-      "title": "Theological and Polemical Opuscula",
-      "author": "Maximus Confessor",
-      "year": 1860,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6a3f034a97e91e1768f69bc7",
-      "slug": "ta-heuriskomena-panta-leontius",
-      "title": "The Collected Works of Leontius of Byzantium",
-      "author": "Leontius, Byzantinus, approximately 485- approximately543",
-      "year": 1865,
-      "relation": "the same tradition"
-    }
-  ],
   "Michael Psellos|Epistle on Chrysopoeia": [
     {
       "id": "69938921ce15387065946912",
@@ -1336,6 +1248,32 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "author": "Michael Psellos",
       "year": 1050,
       "relation": "by the same author"
+    }
+  ],
+  "Maximus the Confessor|Capita theologica et oeconomica": [
+    {
+      "id": "69942e31d607f8e57e4b7df0",
+      "slug": "de-variis-difficilibus-locis-ss-pp-dionysii-et-gregorii-oehler",
+      "title": "On Various Difficult Passages of the Holy Fathers Dionysius and Gregory",
+      "author": "Maximus the Confessor; ed. F. Oehler",
+      "year": 1857,
+      "relation": "by the same author"
+    },
+    {
+      "id": "69942f83b2f6748db4ac128c",
+      "slug": "maximus-confessor-opuscula-theologica-et-polemica-confessor",
+      "title": "Theological and Polemical Opuscula",
+      "author": "Maximus Confessor",
+      "year": 1860,
+      "relation": "by the same author"
+    },
+    {
+      "id": "6a3f034a97e91e1768f69bc7",
+      "slug": "ta-heuriskomena-panta-leontius",
+      "title": "The Collected Works of Leontius of Byzantium",
+      "author": "Leontius, Byzantinus, approximately 485- approximately543",
+      "year": 1865,
+      "relation": "the same tradition"
     }
   ],
   "Michael Psellos|Orationes forenses et acta": [
@@ -1418,6 +1356,16 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
+  "Nonnos|Mythographus": [
+    {
+      "id": "6a0b43bd1615109dc53af146",
+      "slug": "mythologiae-sive-explicationum-fabularum-libri-x-1581-conti",
+      "title": "Mythologiae sive Explicationum Fabularum libri X (1581 expanded edition)",
+      "author": "Natale Conti",
+      "year": 1581,
+      "relation": "the same tradition"
+    }
+  ],
   "Nicephorus Callistus Xanthopoulos|Ecclesiastical History": [
     {
       "id": "69942abcd607f8e57e4b4de1",
@@ -1441,32 +1389,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Ecclesiastical Histories in Greek and Latin, Vol. 1",
       "author": "Eusebius; Socrates Scholasticus; Sozomen; ed. Henricus Valesius; Gulielmus Reading",
       "year": 1720,
-      "relation": "the same tradition"
-    }
-  ],
-  "Olympiodorus|In Gorgiam": [
-    {
-      "id": "69b52cceb3537347e51e316d",
-      "slug": "olympiodorus-scholia-on-aristotle-s-meteorology-neoplatonic-aristotle",
-      "title": "Olympiodorus, Scholia on Aristotle's Meteorology (Neoplatonic)",
-      "author": "Olympiodorus; Aristotle",
-      "year": 1450,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6a0856a515c643eb1af596e8",
-      "slug": "olympiodorou-philosophou-alexandreos-eis-ta-meteora-tou-aris",
-      "title": "Olympiodōrou philosophou Alexandreōs eis ta Meteōra tou Aristotelous ypomnemata. Ioannou G",
-      "author": "Olympiodorus : Alexandrinus filosofo (filosofo)",
-      "year": 1551,
-      "relation": "by the same author"
-    },
-    {
-      "id": "69b43d4dee0300187dbd1906",
-      "slug": "porphyry-isagoge-neoplatonic-commentaries-proclus-ammonius-ammonius",
-      "title": "Porphyry Isagoge & Neoplatonic Commentaries (Proclus, Ammonius)",
-      "author": "Porphyry; Proclus; Ammonius",
-      "year": 1350,
       "relation": "the same tradition"
     }
   ],
@@ -1522,6 +1444,32 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
+  "Olympiodorus|In Gorgiam": [
+    {
+      "id": "69b52cceb3537347e51e316d",
+      "slug": "olympiodorus-scholia-on-aristotle-s-meteorology-neoplatonic-aristotle",
+      "title": "Olympiodorus, Scholia on Aristotle's Meteorology (Neoplatonic)",
+      "author": "Olympiodorus; Aristotle",
+      "year": 1450,
+      "relation": "by the same author"
+    },
+    {
+      "id": "6a0856a515c643eb1af596e8",
+      "slug": "olympiodorou-philosophou-alexandreos-eis-ta-meteora-tou-aris",
+      "title": "Olympiodōrou philosophou Alexandreōs eis ta Meteōra tou Aristotelous ypomnemata. Ioannou G",
+      "author": "Olympiodorus : Alexandrinus filosofo (filosofo)",
+      "year": 1551,
+      "relation": "by the same author"
+    },
+    {
+      "id": "69b43d4dee0300187dbd1906",
+      "slug": "porphyry-isagoge-neoplatonic-commentaries-proclus-ammonius-ammonius",
+      "title": "Porphyry Isagoge & Neoplatonic Commentaries (Proclus, Ammonius)",
+      "author": "Porphyry; Proclus; Ammonius",
+      "year": 1350,
+      "relation": "the same tradition"
+    }
+  ],
   "Paul the Apostle|Epistle to the Ephesians": [
     {
       "id": "69b630131c1c21a3737fd9ca",
@@ -1566,32 +1514,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Proclus|On the Hieratic Art of the Hellenes": [
-    {
-      "id": "6952ca6a77f38f6761bc3f19",
-      "slug": "elements-of-theology-and-physics-proclus",
-      "title": "Elements of Theology and Physics",
-      "author": "Proclus",
-      "year": 1618,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6952ca6e77f38f6761bc3fb2",
-      "slug": "life-of-proclus-by-marinus-neapolis",
-      "title": "The Life of Proclus",
-      "author": "Marinus of Neapolis",
-      "year": 1814,
-      "relation": "by the same author"
-    },
-    {
-      "id": "69d13d751c2a66dc094b168d",
-      "slug": "de-mysteriis-liber-parthey-critical-edition-parthey",
-      "title": "On the Mysteries",
-      "author": "Iamblichus; ed. Gustav Parthey",
-      "year": 1857,
-      "relation": "the same tradition"
-    }
-  ],
   "Pseudo-Plutarch|De vita et poesi Homeri": [
     {
       "id": "69938a885d28b693146cec8f",
@@ -1615,6 +1537,32 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "title": "Scholia palaia te, kai panu ophelima eis ten tou Omerou Iliada, kai eis ten Odyssea. Inter",
       "author": "Didymus : Chalcenterus",
       "year": 1521,
+      "relation": "the same tradition"
+    }
+  ],
+  "Proclus|On the Hieratic Art of the Hellenes": [
+    {
+      "id": "6952ca6a77f38f6761bc3f19",
+      "slug": "elements-of-theology-and-physics-proclus",
+      "title": "Elements of Theology and Physics",
+      "author": "Proclus",
+      "year": 1618,
+      "relation": "by the same author"
+    },
+    {
+      "id": "6952ca6e77f38f6761bc3fb2",
+      "slug": "life-of-proclus-by-marinus-neapolis",
+      "title": "The Life of Proclus",
+      "author": "Marinus of Neapolis",
+      "year": 1814,
+      "relation": "by the same author"
+    },
+    {
+      "id": "69d13d751c2a66dc094b168d",
+      "slug": "de-mysteriis-liber-parthey-critical-edition-parthey",
+      "title": "On the Mysteries",
+      "author": "Iamblichus; ed. Gustav Parthey",
+      "year": 1857,
       "relation": "the same tradition"
     }
   ],
@@ -1682,29 +1630,39 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "by the same author"
     }
   ],
-  "Stephanos of Alexandria|On the Great and Sacred Art of Making Gold": [
+  "Virgilius Maro Grammaticus|Opera Omnia": [
     {
-      "id": "6994383a6879ff0184cb803a",
-      "slug": "collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot",
-      "title": "Collection of the Ancient Greek Alchemists, Vols. 2-3",
-      "author": "Marcellin Berthelot",
-      "year": 1888,
-      "relation": "contains excerpts"
+      "id": "69dbca6e1040d1d5e20ac348",
+      "slug": "etymologiae-isidorus-hispalensis-1",
+      "title": "Etymologiae",
+      "author": "Isidorus Hispalensis",
+      "year": 1489,
+      "relation": "the same tradition"
     },
     {
-      "id": "69a979e9daf647306a736c91",
-      "slug": "collection-des-anciens-alchimistes-grecs-vol-3-berthelot",
-      "title": "Collection of the Ancient Greek Alchemists, Volume 3",
-      "author": "Marcellin Berthelot",
-      "year": 1888,
-      "relation": "contains excerpts"
+      "id": "69dbca711040d1d5e20ac4f7",
+      "slug": "etymologiae-isidorus-hispalensis-2",
+      "title": "Etymologiae",
+      "author": "Isidorus Hispalensis",
+      "year": 1499,
+      "relation": "the same tradition"
+    }
+  ],
+  "Thomas Digges|A Perfit Description of the Coelestiall Orbes": [
+    {
+      "id": "69a5f6d51cf742c360414674",
+      "slug": "pantometria-a-geometrical-treatize-of-measuring-digges",
+      "title": "Pantometria — A Geometrical Treatize of Measuring",
+      "author": "Leonard Digges; Thomas Digges",
+      "year": 1591,
+      "relation": "by the same author"
     },
     {
-      "id": "69b4c04d978ca9526eda33f7",
-      "slug": "sacred-art-of-the-philosophers-greek-alchemical-anthology-various",
-      "title": "Sacred Art of the Philosophers (Greek alchemical anthology)",
-      "author": "Various",
-      "year": 1495,
+      "id": "6990689d8034a3640265bc68",
+      "slug": "cosmographicus-liber-apian",
+      "title": "Cosmographic Book (Cosmographicus Liber)",
+      "author": "Peter Apian",
+      "year": 1524,
       "relation": "the same tradition"
     }
   ],
@@ -1734,42 +1692,6 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "commentary on it"
     }
   ],
-  "Zenobius|Paroemiographi Graeci": [
-    {
-      "id": "69b304445facc83a9a3dbf99",
-      "slug": "proverbia-graeca-apostolius",
-      "title": "Greek Proverbs",
-      "author": "Michael Apostolius",
-      "year": 1619,
-      "relation": "the same tradition"
-    },
-    {
-      "id": "6a3f035f97e91e1768f6a310",
-      "slug": "corpus-paroemiographorum-graecorum-ediderunt-e-l-a-leutsch-leutsch",
-      "title": "Corpus of Greek Proverb Writers",
-      "author": "Leutsch, Ernst Ludwig von, 1808-1887",
-      "year": 1839,
-      "relation": "the same tradition"
-    }
-  ],
-  "Thomas Digges|A Perfit Description of the Coelestiall Orbes": [
-    {
-      "id": "69a5f6d51cf742c360414674",
-      "slug": "pantometria-a-geometrical-treatize-of-measuring-digges",
-      "title": "Pantometria — A Geometrical Treatize of Measuring",
-      "author": "Leonard Digges; Thomas Digges",
-      "year": 1591,
-      "relation": "by the same author"
-    },
-    {
-      "id": "6990689d8034a3640265bc68",
-      "slug": "cosmographicus-liber-apian",
-      "title": "Cosmographic Book (Cosmographicus Liber)",
-      "author": "Peter Apian",
-      "year": 1524,
-      "relation": "the same tradition"
-    }
-  ],
   "Zosimus of Panopolis|Mushaf as-suwar": [
     {
       "id": "6953619d9c494f9f9f042608",
@@ -1788,21 +1710,21 @@ export const SHWEP_RELATED_WORKS: Record<string, ShwepRelatedHolding[]> = {
       "relation": "the same tradition"
     }
   ],
-  "Virgilius Maro Grammaticus|Opera Omnia": [
+  "Zenobius|Paroemiographi Graeci": [
     {
-      "id": "69dbca6e1040d1d5e20ac348",
-      "slug": "etymologiae-isidorus-hispalensis-1",
-      "title": "Etymologiae",
-      "author": "Isidorus Hispalensis",
-      "year": 1489,
+      "id": "69b304445facc83a9a3dbf99",
+      "slug": "proverbia-graeca-apostolius",
+      "title": "Greek Proverbs",
+      "author": "Michael Apostolius",
+      "year": 1619,
       "relation": "the same tradition"
     },
     {
-      "id": "69dbca711040d1d5e20ac4f7",
-      "slug": "etymologiae-isidorus-hispalensis-2",
-      "title": "Etymologiae",
-      "author": "Isidorus Hispalensis",
-      "year": 1499,
+      "id": "6a3f035f97e91e1768f6a310",
+      "slug": "corpus-paroemiographorum-graecorum-ediderunt-e-l-a-leutsch-leutsch",
+      "title": "Corpus of Greek Proverb Writers",
+      "author": "Leutsch, Ernst Ludwig von, 1808-1887",
+      "year": 1839,
       "relation": "the same tradition"
     }
   ]

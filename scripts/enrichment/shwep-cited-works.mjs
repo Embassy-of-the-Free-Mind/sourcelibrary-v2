@@ -633,6 +633,9 @@ const HAND_PAGE_LINKS = {
   '324|6994400f06e186ed6c012a44': '6994400f06e186ed6c012d05',
   '325|6a357f112aadc65cf0908511': '6a357f112aadc65cf0908522',
   '326|6a357f112aadc65cf0908511': '6a357f112aadc65cf0908522',
+  // Stephanos of Alexandria, De magna et sacra arte = chapter of Ideler,
+  // Physici et medici graeci minores vol. II (containment verified 2026-08-13)
+  '213|69a910df469f44cea7833bcf': '69a910df469f44cea7833c9e',
 };
 
 // Ranges [start,end) we must never splice a link into: every bracketed span `[...]`
