@@ -1,0 +1,162 @@
+{
+  "authors": {
+    "wang-zhi-2": {
+      "_id": "wang-zhi-2",
+      "canonical_name": "王質 (Wang Zhi)",
+      "slug": "wang-zhi-2",
+      "variants": [
+        "王質",
+        "王質 (Wang Zhi)"
+      ],
+      "variant_slugs": [
+        "wang-zhi"
+      ],
+      "book_count": null,
+      "viaf_id": null,
+      "wikidata_id": "Q11573215",
+      "entity_ids": [],
+      "source": "additive-mint-3780",
+      "built_at": "2026-08-09T05:28:56.440Z",
+      "anchored_by": "grounded-reconciliation",
+      "wikidata_birth_year": 511,
+      "wikidata_death_year": 570
+    },
+    "lu-ji-2": {
+      "_id": "lu-ji-2",
+      "canonical_name": "陸璣 (Lu Ji)",
+      "slug": "lu-ji-2",
+      "variants": [
+        "陸璣",
+        "陸璣 (Lu Ji)"
+      ],
+      "variant_slugs": [
+        "lu-ji"
+      ],
+      "book_count": null,
+      "viaf_id": "111313427",
+      "wikidata_id": "Q2326363",
+      "entity_ids": [],
+      "source": "additive-mint-3780",
+      "built_at": "2026-08-09T05:28:56.440Z",
+      "anchored_by": "grounded-reconciliation",
+      "wikidata_birth_year": 261,
+      "wikidata_death_year": 303,
+      "birth_place": {
+        "city": "Suzhou",
+        "lat": 31.3,
+        "lng": 120.619444444,
+        "country": "People's Republic of China"
+      }
+    },
+    "zhu-xi": {
+      "_id": "zhu-xi",
+      "canonical_name": "Zhu Xi",
+      "slug": "zhu-xi",
+      "variants": [
+        "Zhu Xi (朱熹, 1130–1200)",
+        "Zhu Xi (朱熹)",
+        "Zhu Xi",
+        "Zhu Su",
+        "朱熹",
+        "朱熹 (Zhu Xi)"
+      ],
+      "variant_slugs": [
+        "zhu-xi-1130-1200",
+        "zhu-xi",
+        "zhu-su"
+      ],
+      "book_count": 3,
+      "viaf_id": null,
+      "wikidata_id": "Q9397",
+      "entity_ids": [
+        "69995ac38eb174f845dada89"
+      ],
+      "source": "build-authors-collection",
+      "built_at": "2026-05-30T11:04:17.386Z",
+      "birth_place": {
+        "city": "Youxi County",
+        "lat": 26.17254,
+        "lng": 118.18485,
+        "country": "People's Republic of China"
+      },
+      "death_place": {
+        "city": "People's Republic of China",
+        "lat": 35.844722222,
+        "lng": 103.451944444,
+        "country": "People's Republic of China"
+      },
+      "merged_from": [
+        "朱熹 (Zhu Xi)"
+      ]
+    },
+    "persius": {
+      "_id": "persius",
+      "canonical_name": "Pers, Dirck Pietersz",
+      "slug": "persius",
+      "variants": [
+        "D.P. Pers",
+        "Dirck Pietersz Pers",
+        "Pers, Dirck Pietersz"
+      ],
+      "variant_slugs": [
+        "persius",
+        "d-p-pers"
+      ],
+      "book_count": 3,
+      "viaf_id": null,
+      "wikidata_id": "Q123451539",
+      "entity_ids": [],
+      "source": "build-authors-collection",
+      "built_at": "2026-05-30T11:04:17.394Z",
+      "identity_note": "Slug minted by normalising the author string \"D.P. Pers\" into \"Persius\". This is the Amsterdam printer-poet (1581-1659), author of Bellerophon (1614), NOT Aulus Persius Flaccus (Q332785).",
+      "updated_at": "2026-08-12T05:47:21.083Z"
+    },
+    "persius-2": {
+      "_id": "persius-2",
+      "canonical_name": "Persius",
+      "slug": "persius-2",
+      "variants": [
+        "Aulus Persius Flaccus",
+        "Persius Flaccus, Aulus"
+      ],
+      "variant_slugs": [
+        "aulus-persius-flaccus",
+        "persius-flaccus-aulus"
+      ],
+      "book_count": 1,
+      "viaf_id": null,
+      "wikidata_id": "Q332785",
+      "entity_ids": [
+        "69952b5ffb05b02a153a3e9b"
+      ],
+      "source": "build-authors-collection",
+      "built_at": "2026-05-30T11:04:17.396Z",
+      "birth_place": {
+        "city": "Volterra",
+        "lat": 43.4,
+        "lng": 10.866666666,
+        "country": "Italy"
+      },
+      "death_place": {
+        "city": "Rome",
+        "lat": 41.893055555,
+        "lng": 12.482777777,
+        "country": "Italy"
+      }
+    }
+  },
+  "books": {
+    "6992ca83d4d545ae73fee34e": {
+      "author_id": "zhu-xi"
+    },
+    "69b1cb62915284fbb7d2a9ce": {
+      "author_id": "persius"
+    }
+  },
+  "deleted": {
+    "dirck-pietersz-pers": true
+  },
+  "runs": [
+    "2026-08-13T14:19:03.451Z"
+  ]
+}

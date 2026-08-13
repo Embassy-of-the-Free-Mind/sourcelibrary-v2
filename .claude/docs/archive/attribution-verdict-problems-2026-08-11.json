@@ -1,0 +1,182 @@
+[
+ {
+  "id": "69af3d757d9ffe835043f0e2",
+  "why": "OTHER but no author given"
+ },
+ {
+  "id": "6a267f3e88f11913ee9c8b61",
+  "why": "proposed author NOT present in the title",
+  "author": "Pyrophilus",
+  "title": "Das Fundament der Lehre vom Stein der Weisen, Oder des Urältesten Philosophi Hermetis Tris",
+  "conf": "medium",
+  "evidence": "Description: \"The author Pyrophilus argues for the validity of metallic transmutation\" — 1736 German alchemical tract under this pseudonym."
+ },
+ {
+  "id": "69f3275452a77bb28fdb70f3",
+  "why": "proposed author NOT present in the title",
+  "author": "Chŏng Pʻo",
+  "title": "SЕЏlgok sigo, [2-kwЕЏn",
+  "conf": "high",
+  "evidence": "Catalogued string is mojibake of the same name (\"ChЕЏng, PК»o\"); ai_says is the correctly-encoded form."
+ },
+ {
+  "id": "69aea5c81c89af5ce4bc1d8f",
+  "why": "proposed author NOT present in the title",
+  "author": "Leander van Ess",
+  "title": "Novum Testamentum Graece (Editio Octava Critica Maior)",
+  "conf": "medium",
+  "evidence": "Year 1827 predates Tischendorf (b.1815); matches van Ess's known 1827 Greek NT on Complutensian/Erasmian tradition."
+ },
+ {
+  "id": "69b632071c1c21a37380c672",
+  "why": "proposed author NOT present in the title",
+  "author": "Hugo de Prato Florido",
+  "title": "Sermones dominicales super evangelia et epistolas",
+  "conf": "medium",
+  "evidence": "\"Sermones dominicales super evangelia et epistolas\" is the well-attested incunable title of Hugo de Prato Florido's sermon collection."
+ },
+ {
+  "id": "69b51e50cf111105c429a8b0",
+  "why": "proposed author NOT present in the title",
+  "author": "Catholic Church",
+  "title": "Breviarium Romanum. Pars Hiemalis : Ex Decreto Sacrosancti Concilij Trid. restitutum ; [In",
+  "conf": "medium",
+  "evidence": "Title \"Breviarium Romanum...Ex Decreto Sacrosancti Concilij Trid. restitutum\" names no personal author, only Trent's decree."
+ },
+ {
+  "id": "69b51e57cf111105c429b041",
+  "why": "proposed author NOT present in the title",
+  "author": "Catholic Church",
+  "title": "Breviarium monasticum Pauli V. pont. max. jussu editum, pro omnibus sub regula S.P. Benedi",
+  "conf": "medium",
+  "evidence": "\"Pauli V. pont. max. jussu editum\" = published BY ORDER of Paul V — he authorizes it, he doesn't author it."
+ },
+ {
+  "id": "69b51e53ff09e4fe943abd4e",
+  "why": "proposed author NOT present in the title",
+  "author": "Catholic Church",
+  "title": "Breviarium Romanum. 4",
+  "conf": "medium",
+  "evidence": "ai_description cites decrees from BOTH Urbanus VIII and Innocentius XI — no single pope is the author."
+ },
+ {
+  "id": "69b51e57768235dc65990c8b",
+  "why": "proposed author NOT present in the title",
+  "author": "Catholic Church",
+  "title": "Breviaire Romain, Suivant la réformation du saint Concile de Trente, .... [4], Partie D'Hy",
+  "conf": "high",
+  "evidence": "\"Suivant la réformation du saint Concile de Trente\" — official liturgy of the Church, no personal author named."
+ },
+ {
+  "id": "69b51e52768235dc6599035c",
+  "why": "proposed author NOT present in the title",
+  "author": "Catholic Church",
+  "title": "Breviarium Romanum. 1",
+  "conf": "high",
+  "evidence": "Generic \"Breviarium Romanum. 1\" title; standard corporate authorship for the Roman Breviary."
+ },
+ {
+  "id": "69b51d37261c58d6366491e1",
+  "why": "proposed author NOT present in the title",
+  "author": "Georg Willer",
+  "title": "Catalogus novus nundinarum vernalium, Francofurti ad Moenam, Anno M.DCX. celebratarum ...",
+  "conf": "medium",
+  "evidence": "Title is a Frankfurt spring fair trade catalog (1610), a genre traditionally issued under Willer's press, not Khunrath (d.1605)."
+ },
+ {
+  "id": "69b51d52f23ccdcced3077a3",
+  "why": "proposed author NOT present in the title",
+  "author": "Sigismund Latomus",
+  "title": "Catalogus universalis pro nundinis Francofurtensis autumnalis, de anno M.DC.XIV : Hoc est:",
+  "conf": "medium",
+  "evidence": "Title is a Frankfurt autumn fair trade catalog (1614), unrelated to alchemist Khunrath; Latomus was a contemporary Frankfurt fair-catalog printer."
+ },
+ {
+  "id": "69b2f47c5ef23d31023f7535",
+  "why": "proposed author NOT present in the title",
+  "author": "Enimundus Bonefidius",
+  "title": "Iuris Orientalis Libri III",
+  "conf": "medium",
+  "evidence": "Catalogued itself marks Estienne '(ed.)'; description names Bonefidius as compiler of the Byzantine constitutions."
+ },
+ {
+  "id": "69a553210aade5c1d01ff134",
+  "why": "proposed author NOT present in the title",
+  "author": "Im Bang and Yi Ryuk",
+  "title": "Korean Folk Tales: Imps, Ghosts, and Fairies",
+  "conf": "medium",
+  "evidence": "Description: 'compiled from manuscripts of scholars Im Bang and Yi Ryuk' translated by James Gale."
+ },
+ {
+  "id": "69b51e9e9a81ef7feb3d81a2",
+  "why": "proposed author NOT present in the title",
+  "author": "Anonymous",
+  "title": "Methodus Confessionis : Hoc Est, Ars, sive ratio, & brevis quaedam quia confitendi, in pec",
+  "conf": "medium",
+  "evidence": "Title/description: confession manual 'revised for the students of the College of Navarre', no personal author named."
+ },
+ {
+  "id": "69b51ea8ff09e4fe943b2b66",
+  "why": "proposed author NOT present in the title",
+  "author": "Godefridus Henschenius, Daniel Papebrochius, Franciscus Baertius, Conradus Janningus, and Joannes Baptista Sollerius",
+  "title": "Acta Sanctorvm : Quotquot toto orbe coluntur, vel à Catholicis Scriptoribus celebrantur. [",
+  "conf": "medium",
+  "evidence": "Title 'Acta Sanctorvm' is unrelated to catalogued 'Llull Ars Magna'; description names the actual Bollandist compilers of this volume."
+ },
+ {
+  "id": "69b51ea69a81ef7feb3d879c",
+  "why": "proposed author NOT present in the title",
+  "author": "Jaime Custurer",
+  "title": "Dissertaciones historicas ...",
+  "conf": "high",
+  "evidence": "'Dissertaciones historicas' defending Llull's cult was written BY Custurer; Llull is the subject, not the author."
+ },
+ {
+  "id": "69b51e46ff09e4fe943ab13c",
+  "why": "proposed author NOT present in the title",
+  "author": "Laurentius Beyerlinck",
+  "title": "Opus Chronographicvm Orbis Vniversi A Mvndi Exordio Vsqve Ad Annvm M.DC.XI. : Continens Hi",
+  "conf": "medium",
+  "evidence": "Title 'Opus Chronographicvm Orbis Vniversi...vsqve ad annvm 1611' matches Beyerlinck's known chronicle; catalogued name is an unrelated Kabbalah author."
+ },
+ {
+  "id": "69b51dfe768235dc6598b0a8",
+  "why": "proposed author NOT present in the title",
+  "author": "Johann Ephraim Scheibel",
+  "title": "Einleitung zur mathematischen Bücherkentnis. [4.] 1789/98 = St. 19 - 20",
+  "conf": "high",
+  "evidence": "Title 'Einleitung zur mathematischen Bücherkentnis' is Scheibel's known bibliographic series; unrelated to 17th-c. Robert Fludd."
+ },
+ {
+  "id": "69b51dfd47b06ecd581880bc",
+  "why": "OTHER but no author given"
+ },
+ {
+  "id": "69b51e71768235dc65993773",
+  "why": "proposed author NOT present in the title",
+  "author": "Joannes Nepomucenus Mederer",
+  "title": "Annales Ingolstadiensis Academiae. Pars II, Ab Anno 1572. Ad Annvm 1672.",
+  "conf": "high",
+  "evidence": "Title 'Annales Ingolstadiensis Academiae...1572...1672' matches Mederer's 1782 university history; catalogued names are figures within its narrative period."
+ },
+ {
+  "id": "6a084e7649638a50931b5263",
+  "why": "proposed author NOT present in the title",
+  "author": "Publius Ovidius Naso",
+  "title": "Publii Ouidii Nasonis Heroidum epistolae. Auli Sabini. Epistolae tres. P.O.N. Elegiarum. L",
+  "conf": "high",
+  "evidence": "Title opens 'Publii Ouidii Nasonis' (genitive of Ovid) and lists several of his works; Sabinus's epistles are a minor addition."
+ },
+ {
+  "id": "69f33b6d876dd827cbc58d42",
+  "why": "proposed author NOT present in the title",
+  "author": "Yi I",
+  "title": "Kyŏngmong yogyŏl",
+  "conf": "high",
+  "evidence": "Description: 'written by the Korean scholar Yi I' — same person as catalogued 'Yi, I 1536-1584'."
+ },
+ {
+  "id": "6a0974dcf14f992996682c1c",
+  "why": "OTHER but no author given"
+ }
+]
