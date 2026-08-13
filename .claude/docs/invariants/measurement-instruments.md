@@ -175,3 +175,50 @@ State the population in the script's own output, as the OCR loop does
 wrong link is the right call — but it is a *cost*, and it will not appear in any
 count of records fixed. Emit it: this run should have reported "22 bylines
 corrected, 22 author pages lost" from the start.
+
+## A model used as a judge or a screen is an instrument — validate it on the exact task, with seeded positives
+
+Added 2026-08-13 from the Suda–SOL benchmark (#3884; handoff
+`.claude/handoffs/2026-08-13-suda-benchmark-verification.md`). Three published
+findings were retracted in one session, all the same shape as the analytics
+failures above: **the instrument failed silently, in the direction that
+flattered the conclusion.**
+
+- **A cheap judge that cannot do the task answers "clean", not "I can't."**
+  `gemini-3.1-flash-lite` scored κ=0.107 against cross-family gold labels,
+  calling 47/49 entries faithful where 21 had catalogued errors — zero false
+  positives, ~90% misses. We first read this as same-family leniency and
+  published that. It was **task collapse**: the packet asked it to locate one
+  entry's translation inside a full page *and then* grade it. Given focused
+  Greek+translation pairs the same model detects 6/7 known issue-entries **in
+  its own family's output**. A format change swung recall from ~10% to ~85%
+  with no error, no warning, and no drop in confidence.
+- **Validate on the format you will deploy, not a nearby one.** The categorical
+  census was blessed on per-entry packets and then run page-grouped (mean 23.8
+  entries/call). Scored against the 49 gold entries it already covered, it
+  missed **all three** known events and added a false positive; verifying its
+  66 recitation flags gave **3% precision**.
+- **Use seeded positives, not just spot agreement.** Twelve entries with an
+  injected translation-vs-Greek contradiction measured sensitivity directly:
+  4/12 page-grouped, 5/12 single-entry. Agreement on a handful of easy cases
+  (2/2, which is what we had) is not evidence of sensitivity.
+- **A screen generates candidates; a verified sample generates rates.** Never
+  quote a screen's clean-rate. Rates come from a sample judged by an instrument
+  validated on that task, with intervals.
+- **Sampling design is part of the instrument.** Our first gold set was
+  stratified toward long narrative entries — right for *finding* failure modes,
+  invalid as a rate. Uniform resampling moved "fully faithful" 57% → 77% and
+  surfaced major errors (2%) the stratified pass reported as zero. If a number
+  will be quoted as a rate, draw uniformly and say so.
+- **Anchoring is testable, so test it rather than arguing about it.** Half of a
+  150-entry sample was judged with the reference translation visible, half
+  without, randomized: verdicts identical (17/75 each, z=0.00) — the objection
+  was answered in the same run that produced the rates, for free. (Blind judges
+  did catalogue 62 discrete faults vs 41: seeing the answer reduces granular
+  scrutiny without changing the verdict.)
+
+**The meta-rule, and the expensive one:** when a result flatters a suspicion —
+about a rival vendor's model, about someone else's scholarship, about your own
+pipeline being fine — that is the result to attack with a control first. Every
+retraction this session was predicted by an adversarial self-critique pass that
+cost nothing; running the controls it named cost about four cents.
