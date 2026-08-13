@@ -9,6 +9,7 @@ import {
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
+import { catalogKeyColumn } from '@/lib/bph-catalog-key';
 
 /**
  * POST /api/[tenant]/catalog/[ubn]/edit
@@ -171,10 +172,15 @@ export const POST = withAuth(
         { status: 500 },
       );
     }
+    // Key the proposal the same way a revision is keyed: by UBN when the record
+    // has one, by uuid for the 2,012 that don't. Both columns carry a FK to
+    // bph_works, so putting a uuid in `ubn` would be rejected outright.
+    const pendingKey =
+      catalogKeyColumn(ubn) === 'uuid' ? { ubn: null, work_uuid: ubn } : { ubn, work_uuid: null };
     const { data: inserted, error: insertErr } = await supabaseAdmin
       .from('bph_works_pending_changes')
       .insert({
-        ubn,
+        ...pendingKey,
         change_type: 'edit',
         proposer_email: userEmail,
         proposer_user_id: userId,

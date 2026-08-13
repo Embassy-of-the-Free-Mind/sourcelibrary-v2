@@ -22,6 +22,17 @@
 -- So each category below is scoped to something a librarian would genuinely
 -- act on, and every one carries samples so the number is never just a number.
 --
+-- EVERY SAMPLE CARRIES `uuid`, AND THAT IS THE ONLY KEY THE SITE CAN RESOLVE.
+-- `bph_works.id` and `bph_works.uuid` are two DIFFERENT uuids on every row, and
+-- /catalog/{key} routes a uuid-shaped key to the `uuid` column (see
+-- src/lib/bph-catalog-key.ts). Three of the categories below select exactly the
+-- rows where `ubn IS NULL`, so their links can only fall back to a uuid — and
+-- while these samples emitted `id`, all 2,012 of them 404'd. José Bouman,
+-- 2026-08-12: "I cannot access these by clicking on them, so I can't see what
+-- is the case" — reported against this worklist, one week after the catalogue
+-- browser's own null-ubn links were fixed in #3654. Same symptom, second path.
+-- `id` is kept in the payload for debugging; never build a link from it.
+--
 -- Run via Supabase SQL editor or psql:
 --   psql "$DATABASE_URL" -f scripts/migration/add-bph-worklist-rpc.sql
 
@@ -48,7 +59,7 @@ LANGUAGE sql STABLE AS $$
          'Manuscripts on the shelf with no title and no UBN',
          'Real objects we hold and can locate, but which the catalogue barely describes. Each needs a title and a number.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', present_location)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', present_location)
                   ORDER BY shelf_mark) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, row_number() OVER (ORDER BY w.shelf_mark) rn
@@ -68,7 +79,7 @@ LANGUAGE sql STABLE AS $$
          'Printed records with no title, shelf mark or UBN',
          'Probably residue from an old import rather than real holdings. Needs a decision: complete them, or remove them.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', author)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', author)
                   ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, row_number() OVER (ORDER BY w.id) rn
@@ -87,7 +98,7 @@ LANGUAGE sql STABLE AS $$
          'Records with no UBN',
          'These cannot be found by catalogue number, only by title. Mostly photocopies and manuscripts.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
                   ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.id) rn
@@ -102,7 +113,7 @@ LANGUAGE sql STABLE AS $$
          'State Collection shelf mark still reads "ja"',
          'Same import fault as the "neen" values that were cleared on 30 July. Emptying these would lose the only record that the copy IS on loan from the State Collection, so it needs your decision.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
                   ORDER BY ubn) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.ubn) rn
