@@ -18,8 +18,16 @@ Chrome/Edge's built-in translator replaces every text node with a nested `<font 
 
 **Verifying:** Chrome's built-in translator can't be driven from CDP and the Google Translate *widget* is blocked by our CSP (`translate-pa.googleapis.com` absent from `script-src`; the built-in translator is browser-level and unaffected, so real users are fine). Model it with a MutationObserver that wraps text nodes in `<font><font>` — but **apply the batches asynchronously**, never synchronously inside the observer callback: sync surgery lands inside React's commit, which no real translator does, and it manufactures staleness on correct builds. Always run the unfixed build through the same harness as a negative control; if the old code passes too, the harness proves nothing.
 
-## Social-card metadata invariant
-Next.js merges page `metadata` shallowly per top-level key. Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):
+## Shallow-metadata-merge invariant (social cards, feed links)
+**Next.js merges page `metadata` shallowly per top-level key: a page that declares a key replaces the root layout's ENTIRE object for that key.** This has now bitten two different keys, so treat it as a property of every key you set, not a fact about `openGraph`. The failure is always silent — the page renders, nothing errors, the tag is simply gone.
+
+### `alternates` — feed autodiscovery (2026-08-13, PR #3965)
+`src/app/page.tsx` and `src/app/es/page.tsx` declare `alternates` for `canonical` + hreflang `languages`, which dropped the layout's `alternates.types` — so the homepage, the most-linked page on the site, advertised **no feed `<link>` tags at all**, including the three Atom feeds declared months earlier. Found only because a newly-added podcast RSS feed appeared on `/podcast` (which declares no `alternates` and inherits correctly) but not on `/`.
+
+The feed list is now `FEED_TYPES` in `src/lib/feed-links.ts`, spread into the layout and both homepages. **Any route that sets `alternates` must spread `FEED_TYPES` into its own `types`.** Scope of the remaining exposure: **174 files** under `src/app` declare `alternates` and still drop the links — issue #3968 tracks the sweep and proposes a `buildMetadata()` helper so the key can't be declared bare. Verify with `curl -s <url> | grep -o '<link rel="alternate" type="application/[^>]*>'` — expect five (3 Atom + 2 RSS); a browser tells you nothing.
+
+### `openGraph` / `twitter` — social cards
+Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151/#3152):
 - A page that defines `openGraph` **replaces the root layout's entire openGraph object, images included** — title/description-only blocks ship NO `og:image` at all (blank share cards on FB/LinkedIn/Slack/iMessage).
 - The root layout's `twitter.images` (generic logo) **wins over per-page `openGraph.images` on X** — a correct og image still cards as the logo unless the page sets its own `twitter.images`.
 
