@@ -30,6 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePageEs() {
-  const data = await getHomeData();
+  const data = await getHomeData('es');
   return <HomeView data={data} lang="es" />;
 }

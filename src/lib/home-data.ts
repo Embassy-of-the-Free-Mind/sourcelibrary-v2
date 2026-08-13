@@ -6,6 +6,7 @@ import { sortCollections, withTimeout, coverOverride } from '@/lib/collections-u
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
+import { type HomeLang } from '@/lib/home-i18n';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -626,9 +627,9 @@ const BLOG_POSTS: HomeBlogPost[] = [
   },
 ];
 
-// ---------- Spanish podcast (featured on /es) ----------
+// ---------- Featured podcast episode (both homepages) ----------
 
-export interface SpanishPodcastSource {
+export interface PodcastSource {
   bookId: string;
   slug?: string;
   title: string;
@@ -636,20 +637,40 @@ export interface SpanishPodcastSource {
   origin?: string;
 }
 
-export interface SpanishPodcast {
+export interface FeaturedPodcast {
   threadId: string;
   title: string;
   topic: string;
   audioUrl: string;
   heroImageUrl: string | null;
-  sources: SpanishPodcastSource[];
+  sources: PodcastSource[];
 }
 
-// Latest published Spanish-language deep-dive episode, for the /es feature.
-async function getSpanishPodcast(): Promise<SpanishPodcast | null> {
+// Latest published deep-dive episode in the homepage's own language.
+//
+// This began as a Spanish-only feature. It is now rendered on both homepages
+// because the measurement said the placement is the thing that works: in the
+// 30 days to 2026-08-13 the podcast drew 113 plays, and 66 of them (58%) were
+// this one featured Spanish episode — which also had the best completion rate
+// of any episode (33% vs 29% overall). The other ten-plus episodes, reachable
+// only from the header nav, averaged about five plays each. So the nav item was
+// retired (SiteHeader) and English got the placement that actually earns
+// listens. A language with no published episode simply renders nothing.
+//
+// The language match is NOT `{ language }`. English threads carry no `language`
+// field at all — measured 2026-08-13, all six published English deep-dives have
+// it absent while the single Spanish one has `language: 'es'`. `language: 'en'`
+// therefore matches zero documents, and the English feature would have rendered
+// nothing forever while looking perfectly correct in code review. Absent means
+// English here, so `en` has to accept the missing field.
+async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast | null> {
   const db = await getReadDb();
+  const languageMatch =
+    language === 'en'
+      ? { $or: [{ language: 'en' }, { language: { $exists: false } }, { language: null }] }
+      : { language };
   const thread = await db.collection('embassy_threads').findOne(
-    { language: 'es', 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
+    { ...languageMatch, 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
     {
       projection: { title: 1, heroImage: 1, 'podcasts.deep-dive': 1 },
       sort: { 'podcasts.deep-dive.generatedAt': -1 },
@@ -679,19 +700,22 @@ export interface HomeData {
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
-  spanishPodcast: SpanishPodcast | null;
+  featuredPodcast: FeaturedPodcast | null;
 }
 
-export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishPodcast] = await Promise.all([
+// `lang` selects the podcast episode's language and nothing else — every other
+// query is language-agnostic, which is what keeps the two homepages structurally
+// identical (see the note at the top of this file).
+export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
-    withTimeout(getSpanishPodcast(), 8000, null),
+    withTimeout(getFeaturedPodcast(lang), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast };
 }

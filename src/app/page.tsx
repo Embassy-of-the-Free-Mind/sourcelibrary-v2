@@ -19,6 +19,6 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const data = await getHomeData();
+  const data = await getHomeData('en');
   return <HomeView data={data} lang="en" />;
 }

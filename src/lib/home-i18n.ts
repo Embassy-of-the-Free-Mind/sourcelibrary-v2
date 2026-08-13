@@ -112,7 +112,7 @@ export interface HomeStrings {
   byYear: string;
   byImages: string;
 
-  // Spanish podcast feature (rendered only on /es)
+  // Featured podcast episode (rendered on both homepages)
   podcastEyebrow: string;
   podcastListen: string;
   podcastSourcesLabel: string;
@@ -218,9 +218,11 @@ const en: HomeStrings = {
   byYear: 'year',
   byImages: 'images',
 
-  podcastEyebrow: 'Spanish podcast',
+  podcastEyebrow: 'Deep dive podcast',
   podcastListen: 'Listen to the episode',
-  podcastSourcesLabel: 'The four books in this episode',
+  // Not "the four books" — the source count varies per episode, and the label
+  // is rendered from whatever `sources` the thread actually carries.
+  podcastSourcesLabel: 'The books in this episode',
   podcastFullEpisode: 'Full episode & transcript',
 
   inSpiritOf: 'In the spirit of',
@@ -327,7 +329,7 @@ const es: HomeStrings = {
 
   podcastEyebrow: 'Pódcast en español',
   podcastListen: 'Escuchar el episodio',
-  podcastSourcesLabel: 'Los cuatro libros de este episodio',
+  podcastSourcesLabel: 'Los libros de este episodio',
   podcastFullEpisode: 'Episodio completo y transcripción',
 
   inSpiritOf: 'En el espíritu de',
