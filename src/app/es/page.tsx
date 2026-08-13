@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
+import { FEED_TYPES } from '@/lib/feed-links';
 
 // Spanish-language edition of the homepage — a real, server-rendered, indexable
 // route (not a client string swap), sharing the same data + body as `/`.
@@ -18,6 +19,9 @@ export const metadata: Metadata = {
       es: '/es',
       'x-default': '/',
     },
+    // See src/lib/feed-links.ts — declaring `languages` here replaces the
+    // layout's whole `alternates`, feed links included.
+    types: FEED_TYPES,
   },
   openGraph: {
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
