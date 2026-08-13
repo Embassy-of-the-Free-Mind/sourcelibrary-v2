@@ -173,10 +173,29 @@ function nearDuplicateCandidates(fields) {
  * every rare field looks identically rare and the gap ratio is meaningless.
  * The candidate list is short — count those fields exactly.
  */
-async function scoreNearDuplicates(col, candidates) {
+async function scoreNearDuplicates(col, candidates, census) {
   const exact = new Map();
   const need = new Set(candidates.flatMap((c) => [c.a, c.b]));
-  for (const f of need) exact.set(f, await col.countDocuments({ [f]: { $exists: true } }));
+  const sampled = new Map(census.fields.map((f) => [f.name, f.count]));
+
+  // An unindexed `{field: {$exists: true}}` count is a collection scan, so on a
+  // 19M-document collection like `pages` this would run for hours. Cap each
+  // count and fall back to the sampled estimate, which is good enough for
+  // ranking even though it bottoms out on rare fields.
+  const BIG = 500_000;
+  const huge = census.docs > BIG;
+  let degraded = 0;
+  for (const f of need) {
+    if (huge) { exact.set(f, sampled.get(f) ?? 0); degraded++; continue; }
+    try {
+      exact.set(f, await col.countDocuments({ [f]: { $exists: true } }, { maxTimeMS: 20000 }));
+    } catch {
+      exact.set(f, sampled.get(f) ?? 0);
+      degraded++;
+    }
+  }
+  if (degraded) console.log(`   (note: ${degraded} field counts are sampled estimates, not exact — collection too large to scan)`);
+
   return candidates
     .map((c) => {
       const a_count = exact.get(c.a), b_count = exact.get(c.b);
@@ -257,7 +276,7 @@ async function main() {
       console.log('   ' + buckets['<1%'].sort().join(', '));
     }
 
-    const pairs = await scoreNearDuplicates(db.collection(name), nearDuplicateCandidates(census.fields));
+    const pairs = await scoreNearDuplicates(db.collection(name), nearDuplicateCandidates(census.fields), census);
     const line = (p) => `   ${p.a} (${p.a_count.toLocaleString()})  vs  ${p.b} (${p.b_count.toLocaleString()})`;
 
     // Class 1: same word, two spellings. Always dangerous, whatever the fill
