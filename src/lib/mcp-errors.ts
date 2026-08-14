@@ -24,7 +24,8 @@ export type McpErrorCode =
   | 'rate_limited'      // slow down; retry_after is set
   | 'auth_required'     // needs an account or key, retrying will not help
   | 'not_found'         // the book or page does not exist
-  | 'no_translation'    // the page exists but has no translation yet
+  | 'no_translation'    // the page exists, is transcribed, but is not translated
+  | 'not_transcribed'   // the page exists but has no text at all yet
   | 'too_large'         // the request asked for more than one call may return
   | 'invalid_request'   // the arguments are wrong; an identical retry cannot work
   | 'transient';        // upstream hiccup; a retry is reasonable
@@ -79,6 +80,25 @@ export function classifyApiError(err: unknown): McpErrorPayload {
       error: 'auth_required',
       message: 'This resource needs an authenticated caller.',
       recovery: 'Retrying will not help. Ask the user to sign in, or use a public tool such as search_translations.',
+    };
+  }
+
+  // Checked BEFORE no_translation, and it exists because #3939 made that
+  // branch's message assert a language: an English-original leaf is now served
+  // as a quote, so a `no_translation` answer means the source is foreign. That
+  // sentence is false for a page holding NO text — an un-OCR'd leaf in a book
+  // whose processing has not reached it (pages_ocr < pages_count, the common
+  // case on a large volume). Measured on production 2026-08-14: p. 40 of *News
+  // from Nowhere*, 25 of 296 pages transcribed, was described to the caller as
+  // being "in a language other than English". Distinct code, because the
+  // recovery differs — a foreign page is readable now via get_book_text, an
+  // untranscribed one is not readable at all yet.
+  if (lower.includes('has not been transcribed')) {
+    return {
+      error: 'not_transcribed',
+      message: 'This page exists but holds no text yet: the scan has not been transcribed. This says nothing about the language of the page or the rest of the book.',
+      has_original: false,
+      recovery: 'Call get_book and compare pages_ocr with pages_count — the book is partly processed, and pages within the transcribed range work. Do NOT tell the user the page is in another language or that the text does not exist; it has not been read yet.',
     };
   }
 

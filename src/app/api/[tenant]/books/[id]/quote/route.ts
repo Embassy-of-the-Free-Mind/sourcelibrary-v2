@@ -250,10 +250,15 @@ export async function GET(request: NextRequest, context: RouteContext) {
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
     if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
+      const hasOriginal = !!page.ocr?.data;
       return NextResponse.json({
-        error: 'No translation available for this page',
+        // See the main route: an untranscribed leaf is not a foreign leaf, and
+        // since #3939 the "no translation" wording implies foreignness.
+        error: hasOriginal
+          ? 'No translation available for this page'
+          : 'No text available for this page: the scan has not been transcribed',
         page_number: pageNumber,
-        has_original: !!page.ocr?.data,
+        has_original: hasOriginal,
       }, { status: 404 });
     }
 
