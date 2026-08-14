@@ -139,6 +139,47 @@ test after changing the grouping.
 A scan that *fails to run* also alerts: a silent detector and an untouched
 catalogue look identical from outside.
 
+### If you are writing a migration that touches `bph_works`, read this first
+
+**A bulk `UPDATE` on `bph_works` pages a human at 04:30 unless it writes
+revisions.** The monitor is doing its job when this happens — the alert cannot
+tell your migration from a stray credential, and that is the entire point — but
+an alert nobody predicted burns someone's morning and, repeated, trains everyone
+to wave the channel away.
+
+Happened 2026-08-14: `add-bph-uuid-keyed-revisions.sql` (PR #3985) backfilled
+`bph_works.uuid` on the 107 rows that had none, so a UNIQUE constraint could be
+added. `uuid` is in the `identifiers` group, the migration wrote no revisions,
+and the scan reported **105 unexplained changes** (105 flagged `changed`; the
+other 2 were records created that afternoon, new to the baseline, so they logged
+as `inserted` and were explained by their own create revisions). Nothing was
+wrong with the data — but nobody knew that until it had been chased.
+
+The contrast in the same night's scan is the lesson, because the same session
+produced both: `scripts/maintenance/translate-ja-state-shelfmark.mjs` changed 31
+rows and wrote a revision per row, and all 31 events came back
+`explanation = revision` with `revision_id` set. Same author, same evening, one
+noisy and one silent — the difference was purely whether history was written.
+
+So, before applying a migration that writes catalogue columns, do one of:
+
+1. **Write a revision row per record** (`editor_email: 'system:<migration>'`),
+   the way `clear-neen-state-shelfmark.mjs` and `translate-ja-state-shelfmark.mjs`
+   do. Best option: the change becomes individually reversible as well as
+   explained.
+2. **Pre-declare it** — tell whoever watches ntfy what is about to move and how
+   many rows, so the morning alert is a confirmation instead of a mystery.
+3. **Mark the events reviewed afterwards** with a note naming the migration
+   (`reviewed_at` / `reviewed_by` / `note`), which is what was done above. This
+   is the fallback, not the plan: it clears the board only after someone has
+   already paid the investigation cost.
+
+Never resolve an unexplained event by pattern-matching on count or timing alone.
+Confirm which columns actually moved — group membership is in
+`add-bph-integrity-monitor.sql` — and sweep only the events you have accounted
+for. In the incident above the review script asserted the bucket contained
+*only* identifiers-only events before touching any of them.
+
 ## Re-drill periodically
 
 The point of a drill is that it decays. Re-run steps 1–3 above (scratch table, then
