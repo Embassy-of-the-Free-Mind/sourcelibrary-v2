@@ -92,6 +92,44 @@ export function languageApparatusFields(
 }
 
 /**
+ * The language pair for a scholarly edition's `citation` block (#3959).
+ *
+ * `editions[].citation.original_language` predates this vocabulary and means
+ * something narrower than its name suggests: the language of the leaves WE
+ * translated from. On de Slane's French *Muqaddimah* that is "French", which is
+ * a true statement about our English translation's source and says nothing about
+ * the work being Arabic. So the field is under-specified, not wrong.
+ *
+ * It is also persisted into `books.editions[]` and travels into minted DOI
+ * citation payloads, so the fix is strictly ADDITIVE:
+ *
+ *  - `original_language` is passed through VERBATIM from `books.language`, with
+ *    no normalisation. Running it through `displayLanguage()` would rewrite
+ *    "lat" to "Latin" and "Ancient Greek" to "Greek" on every future edition,
+ *    silently changing what an already-published citation series claims.
+ *  - `work_language` is new, normalised, and omitted when it carries no
+ *    information — so a citation for a translation-of-a-translation can state
+ *    the whole chain while historic rows keep reading exactly as minted.
+ *
+ * TWIN FILE: scripts/lib/edition-citation-language.mjs mirrors this function for
+ * the batch DOI minters (node can't import .ts). Keep the two in lockstep, like
+ * scripts/lib/r2-key.mjs + src/lib/r2-key.ts.
+ */
+export interface CitationLanguageFields {
+  /** Language of the leaves this English translation was made FROM. Verbatim. */
+  original_language: string;
+  /** Language of the WORK, when it differs from the translation source. */
+  work_language?: string;
+}
+
+export function citationLanguageFields(book: LanguageApparatusSource): CitationLanguageFields {
+  const fields: CitationLanguageFields = { original_language: book.language ?? '' };
+  const { work_language } = languageApparatus(book);
+  if (work_language) fields.work_language = work_language;
+  return fields;
+}
+
+/**
  * True when a caller quoting this book's `original` field would be quoting a
  * translator rather than the author — the case the citation apparatus has to
  * disclose.

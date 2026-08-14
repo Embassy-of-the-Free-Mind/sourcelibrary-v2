@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  citationLanguageFields,
   languageApparatus,
   languageApparatusFields,
   servesTranslatedOriginal,
@@ -90,5 +91,50 @@ describe('languageApparatus', () => {
     expect('edition_language' in f).toBe(false);
     expect(f.work_language).toBe('Arabic');
     expect(f.translation_note).toBeTruthy();
+  });
+});
+
+// #3959 — these values are persisted into books.editions[] and travel into
+// minted DOI citation payloads, so the tests that matter most are the ones
+// pinning what must NOT change.
+describe('citationLanguageFields', () => {
+  it('states the whole chain for a translation of a translation', () => {
+    const f = citationLanguageFields(IBN_KHALDUN);
+    // The language we translated FROM, under the name the schema already used.
+    expect(f.original_language).toBe('French');
+    // The language of the work, which the old block could not express at all.
+    expect(f.work_language).toBe('Arabic');
+  });
+
+  it('passes original_language through VERBATIM, without normalising it', () => {
+    // The load-bearing assertion. Normalising this field would rewrite "lat" to
+    // "Latin" on every future edition, silently changing what an already-minted
+    // citation series claims. Only the NEW field is normalised.
+    expect(citationLanguageFields({ language: 'lat' }).original_language).toBe('lat');
+    expect(citationLanguageFields({ language: 'Ancient Greek' }).original_language).toBe('Ancient Greek');
+    const f = citationLanguageFields({ language: 'fre', original_language: 'ara' });
+    expect(f.original_language).toBe('fre');
+    expect(f.work_language).toBe('Arabic');
+  });
+
+  it('omits work_language when it carries no information', () => {
+    // Absent, not null: an absent field reads as "this edition is in the work's
+    // own language", while work_language: null invites a citation renderer to
+    // print "null" into a published payload.
+    for (const book of [
+      { language: 'Latin' },
+      { language: 'Latin', original_language: 'Latin' },
+      { language: 'Latin', original_language: 'lat' },
+      { language: 'French', original_language: 'unknown' },
+      { language: 'English', text_role: 'modern-translation' },
+    ]) {
+      expect('work_language' in citationLanguageFields(book)).toBe(false);
+    }
+  });
+
+  it('never emits undefined for original_language on a language-less record', () => {
+    // The field is non-optional in TranslationEdition and gets serialised into a
+    // citation; an undefined here would render as "undefined" beside a DOI.
+    expect(citationLanguageFields({}).original_language).toBe('');
   });
 });
