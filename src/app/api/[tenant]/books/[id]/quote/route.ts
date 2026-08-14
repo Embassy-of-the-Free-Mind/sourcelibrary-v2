@@ -4,8 +4,8 @@ import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
-import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { resolveQuoteText, OCR_ORIGINAL_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
@@ -30,8 +30,21 @@ interface Citation {
 
 interface QuoteResponse {
   quote: {
-    translation: string;
+    /**
+     * Our English translation of the leaf. ABSENT on an English-original page,
+     * where there is no translation because none is needed — read `text_source`
+     * and quote from `original` there (#3939).
+     */
+    translation?: string;
     original?: string;
+    /**
+     * Which field holds the quotable text: `translation` normally,
+     * `ocr_original` where the leaf is already English and the transcription IS
+     * the citable text.
+     */
+    text_source: QuoteTextSource;
+    /** Set only when text_source is `ocr_original` — see OCR_ORIGINAL_NOTE. */
+    transcription_note?: string;
     /**
      * Romanization of the original for non-Latin scripts (#3828) — AI-derived
      * apparatus, never a transcription, hence `romanized` and not
@@ -230,10 +243,17 @@ export async function GET(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    if (!page.translation?.data) {
+    // Translation when we have one; the OCR transcription when the leaf is
+    // already English and therefore is itself the citable text (#3939).
+    const quotable = resolveQuoteText(page, book.id);
+
+    // A caller that explicitly said include_original=false wants English we
+    // produced, so an English-original page has nothing to give it either.
+    if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
       return NextResponse.json({
         error: 'No translation available for this page',
         page_number: pageNumber,
+        has_original: !!page.ocr?.data,
       }, { status: 404 });
     }
 
@@ -246,8 +266,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
       quote: {
         // Editorial annotation blocks (<meta>/<summary>/… and the OCR page
         // envelope) describe the page — they are never verbatim source text
-        // and must not be served as quotable content (PR #2232).
-        translation: markForExport(stripEditorialWrappers(page.translation.data).trim(), book.id),
+        // and must not be served as quotable content (PR #2232). Stripped in
+        // resolveQuoteText, for both text sources.
+        ...(quotable.source === 'translation' ? { translation: quotable.text } : {}),
+        text_source: quotable.source,
+        ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -286,11 +309,16 @@ export async function GET(request: NextRequest, context: RouteContext) {
         }),
       ]);
 
-      const prevText = (prevPage as unknown as Page | null)?.translation?.data;
-      const nextText = (nextPage as unknown as Page | null)?.translation?.data;
+      // Same resolution as the cited page — on an English-original book the
+      // neighbours have no translation either, and context is what lets a
+      // sentence spanning the leaf break be quoted whole (#3939).
+      const neighbour = (p: unknown) => {
+        const pg = p as Page | null;
+        return pg ? resolveQuoteText(pg, resolvedBookId)?.text : undefined;
+      };
       response.context = {
-        previous_page: prevText ? markForExport(stripEditorialWrappers(prevText).trim(), book.id) : undefined,
-        next_page: nextText ? markForExport(stripEditorialWrappers(nextText).trim(), book.id) : undefined,
+        previous_page: neighbour(prevPage),
+        next_page: neighbour(nextPage),
       };
     }
 
