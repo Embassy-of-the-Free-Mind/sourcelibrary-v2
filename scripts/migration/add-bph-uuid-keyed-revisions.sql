@@ -46,8 +46,26 @@
 -- The 107 uuid-less rows are backfilled below so the UNIQUE constraint can be
 -- added; they are all UBN-keyed printed books whose links do not change.
 --
--- Run via Supabase SQL editor or psql:
---   psql "$SUPABASE_DB_URL" -f scripts/migration/add-bph-uuid-keyed-revisions.sql
+-- THIS MIGRATION PAGES A HUMAN. Step 1 writes `uuid` on 107 rows without
+-- writing any revision rows, and `uuid` sits in the integrity monitor's
+-- `identifiers` hash group — so the 04:30 scan reports them as UNEXPLAINED and
+-- ntfy alerts. That is the monitor working correctly (it cannot tell this from
+-- a stray credential), but it cost an investigation on 2026-08-14 because
+-- nobody predicted it. If you re-run this on another environment, tell whoever
+-- watches the channel first, and mark the resulting events reviewed with a note
+-- naming this file. See "If you are writing a migration that touches
+-- bph_works" in .claude/docs/bph-catalogue-disaster-recovery.md.
+--
+-- Applied to production 2026-08-13 ~22:55Z. The uuid backfill is one-way: it
+-- only fills nulls, so re-running is a no-op rather than a re-randomisation.
+--
+-- Run via Supabase SQL editor, or through the IPv4 SESSION pooler — the stored
+-- SUPABASE_DB_URL points at db.<ref>.supabase.co, which no longer resolves, and
+-- at port 6543, the TRANSACTION pooler, which refuses DDL. Session pooler is
+-- port 5432, user postgres.<ref>; this project answers on aws-1-eu-west-1. See
+-- scripts/migration/add-index-catalog-author-held.mjs for the region-probing
+-- connection helper. The backfill in step 5 runs ~3 minutes and exceeds the
+-- default statement_timeout — SET statement_timeout first or it rolls back.
 
 BEGIN;
 
