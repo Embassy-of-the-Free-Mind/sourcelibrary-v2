@@ -141,12 +141,19 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
     if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
+      const hasOriginal = !!page.ocr?.data;
       return NextResponse.json({
-        error: 'No translation available for this page',
+        // Two different facts, and they need different sentences: an
+        // untranscribed leaf holds no text at all, while "no translation" now
+        // implies a foreign source (an English one is served as a quote —
+        // #3939). Conflating them told callers an un-OCR'd page was foreign.
+        error: hasOriginal
+          ? 'No translation available for this page'
+          : 'No text available for this page: the scan has not been transcribed',
         page_number: pageNumber,
         // Lets the caller fall back to the original language instead of reading
         // this as "the page is missing" (see src/lib/mcp-errors.ts).
-        has_original: !!page.ocr?.data,
+        has_original: hasOriginal,
       }, { status: 404 });
     }
 

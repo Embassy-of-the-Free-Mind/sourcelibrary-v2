@@ -496,6 +496,24 @@ const ROMANIZED_TIP =
   "never present it as the text printed on the page, and quote from `original` or " +
   "`translation` when quoting the source itself.";
 
+// An ENGLISH-ORIGINAL page carries no translation and never will — the leaf is
+// already in the reader's language (#3939), so the quote API serves the
+// transcription as `original` with text_source: "ocr_original". Without this the
+// package would hand back that response under QUOTE_TIP, which points at a
+// `translation` field that is not there: the caller either quotes nothing or
+// presents the page's own words as our translation of it. Every surface reads
+// its own copy of this guidance and fixes do not propagate — the in-app server
+// (src/app/api/mcp/route.ts) carries the same tip.
+const OCR_ORIGINAL_TIP =
+  "This page is an ENGLISH ORIGINAL: the text printed on the leaf is already English, so there is " +
+  "no translation and none is needed (this is why the book reports pages_translated: 0). The " +
+  "verbatim text is in `original`. Copy it exactly and attribute it as the source's own words — " +
+  "never call it a translation. Render as:\n" +
+  "> [exact original text, verbatim]\n" +
+  "> — [Author], p. [N]. [citation_link]\n" +
+  "It is an uncorrected AI transcription, preserving period spelling, long-s (ſ) and printer marks: " +
+  "keep them as they stand, or say that any modernization is yours.";
+
 export async function getQuote(args: {
   book_id: string;
   page: number;
@@ -505,10 +523,14 @@ export async function getQuote(args: {
 
   const quote = result.quote as Record<string, unknown> | undefined;
   const romanized = typeof quote?.romanized === "string" && quote.romanized.length > 0;
+  const ocrOriginal = quote?.text_source === "ocr_original";
+
+  const tips = [ocrOriginal ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  if (romanized) tips.push(ROMANIZED_TIP);
 
   return {
     ...withCitationLink(result),
-    tip: romanized ? `${QUOTE_TIP}\n\n${ROMANIZED_TIP}` : QUOTE_TIP,
+    tip: tips.join("\n\n"),
   };
 }
 
