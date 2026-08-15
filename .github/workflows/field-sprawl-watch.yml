@@ -43,6 +43,7 @@ jobs:
           node scripts/audit/field-sprawl.mjs \
             --collection books \
             --max-fields 400 \
+            --max-nested 65 \
             --forbid tenant_id,hide_reason > report.txt 2>&1
           echo "fired=$?" >> "$GITHUB_OUTPUT"
           tail -60 report.txt
