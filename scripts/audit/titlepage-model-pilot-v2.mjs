@@ -110,13 +110,13 @@
  */
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { attributionWindowOf } from '../lib/title-page-ocr.mjs';
 import { sameNameForm, foldOrtho } from '../lib/name-equivalence.mjs';
 
 const N = Number((process.argv.find((a) => a.startsWith('--n=')) || '').split('=')[1] || 100);
 const MODELS_ARG = (process.argv.find((a) => a.startsWith('--models=')) || '').split('=')[1] || 'lite,preview';
-const PROMPT_VERSION = 'titlepage-role-v2-window';
+const PROMPT_VERSION = 'titlepage-role-v3-namedquote';
 const MODEL_IDS = { lite: 'gemini-3.1-flash-lite', preview: 'gemini-3-flash-preview' };
 const API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('No GEMINI_API_KEY'); process.exit(1); }
@@ -200,6 +200,37 @@ function quoteIsOnPage(quote, prose) {
   return norm(prose).includes(q);
 }
 
+/**
+ * Does the quoted line actually NAME the person it is cited for?
+ *
+ * The on-page check above proves the quote is real. It does not prove the quote
+ * is EVIDENCE. A line can be verbatim from the page and still not mention the
+ * person: Francisco Hernández was cited to "Médico e Historiador de Su Majestad
+ * Felipe II, Rey de España y de las Indias" — true text, no name in it. That is
+ * worse than no citation, because it looks checkable.
+ *
+ * Returns true / false / null, and NULL IS NOT FALSE. The first cut of this
+ * check flagged 7 rows and 5 were its own blindness, not bad citations —
+ * "Boetii" vs "Boethius" (th/t), "ABDALLAH BEN AHMED" vs "Abd Allah ibn Ahmad"
+ * (transliteration), and a Devanagari quote that folds to nothing. Rejecting
+ * those would discard correct evidence for being written in another script,
+ * which is the same mistake as reading an empty token set as disagreement.
+ */
+function quoteSupportsName(quote, name) {
+  const latinShare = (x) => {
+    const L = String(x ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/\p{L}/gu) || [];
+    return L.length ? L.filter((ch) => /[a-zA-Z]/.test(ch)).length / L.length : 0;
+  };
+  // Either side substantially non-Latin: fold() empties it, so abstain.
+  if (latinShare(quote) < 0.6 || latinShare(name) < 0.6) return null;
+  const q = foldOrtho(quote);
+  const parts = foldOrtho(name).split(' ').filter((w) => w.length >= 4);
+  if (!q || !parts.length) return null;
+  // A 4-char prefix absorbs declension and abbreviation without merging people:
+  // "boethius" -> "boet" matches "opera boetii"; "allah" matches "abdallah".
+  return parts.some((p) => q.includes(p.slice(0, 4)));
+}
+
 function agrees(extracted, knownName, knownDoc) {
   if (!extracted) return false;
   if (sameNameForm(extracted, knownName)) return true;
@@ -223,14 +254,39 @@ const anchored = await authorsCol.find(
 ).toArray();
 const byId = new Map(anchored.map((a) => [a._id, a]));
 
-const control = await books.aggregate([
+/**
+ * PIN THE SAMPLE, or no two runs are comparable.
+ *
+ * $sample draws a fresh 100 books every run, so a change in the headline mixes
+ * the effect of the change with sampling noise — and at n~55 fired the standard
+ * error on precision is around 4 points, which is larger than any improvement
+ * measured here so far. The v1-to-v2 comparison in this branch was reported as
+ * if it were an effect; it was two different sets of books and cannot carry that
+ * claim. Pinning is the fix: draw once, reuse, and compare prompts on identical
+ * books.
+ */
+const SAMPLE_FILE = 'scripts/output/titlepage-pilot-sample.json';
+let pinned = null;
+if (existsSync(SAMPLE_FILE)) {
+  pinned = JSON.parse(readFileSync(SAMPLE_FILE, 'utf8'));
+  if (pinned.n !== N) { console.log(`  pinned sample is n=${pinned.n}, requested ${N} — ignoring the pin`); pinned = null; }
+  else console.log(`  reusing pinned sample from ${SAMPLE_FILE} (drawn ${pinned.drawn_at})`);
+}
+
+const control = pinned ? await books.find({ id: { $in: pinned.control } }, { projection: { id: 1, title: 1, author: 1, author_id: 1 } }).toArray() : await books.aggregate([
   { $match: { ...TEXT_VISIBLE, author_id: { $in: [...byId.keys()] }, author: { $type: 'string', $ne: '' } } },
   { $sample: { size: N } }, { $project: { id: 1, title: 1, author: 1, author_id: 1 } },
 ]).toArray();
-const target = await books.aggregate([
+const target = pinned ? await books.find({ id: { $in: pinned.target } }, { projection: { id: 1, title: 1, author: 1 } }).toArray() : await books.aggregate([
   { $match: { ...TEXT_VISIBLE, $or: [{ author_id: { $in: [null] } }, { author_id: { $exists: false } }] } },
   { $sample: { size: N } }, { $project: { id: 1, title: 1, author: 1 } },
 ]).toArray();
+
+if (!pinned) {
+  mkdirSync('scripts/output', { recursive: true });
+  writeFileSync(SAMPLE_FILE, JSON.stringify({ n: N, drawn_at: new Date().toISOString(), control: control.map((b) => b.id), target: target.map((b) => b.id) }, null, 1));
+  console.log(`  drew a NEW sample and pinned it to ${SAMPLE_FILE} — later runs will reuse it`);
+}
 
 // Resolve every title page BEFORE any model call, then close Mongo.
 //
@@ -293,7 +349,16 @@ for (const key of MODELS_ARG.split(',').map((s) => s.trim()).filter(Boolean)) {
       const dropped = out.names.length - cited.length;
       if (dropped) s[pop].quote_rejected += dropped;
 
-      const authors = cited.filter((x) => String(x.role).toLowerCase() === 'author');
+      // Second gate: the quote must NAME the person. Unjudged (null) passes but
+      // is recorded, so "we could not check this one" never reads as "checked".
+      const supported = cited.filter((x) => {
+        const v = quoteSupportsName(x.quoted_line, x.name_nominative);
+        x.quote_supports = v;
+        if (v === false) { s[pop].quote_unsupported = (s[pop].quote_unsupported ?? 0) + 1; return false; }
+        if (v === null) s[pop].quote_unjudged = (s[pop].quote_unjudged ?? 0) + 1;
+        return true;
+      });
+      const authors = supported.filter((x) => String(x.role).toLowerCase() === 'author');
       if (!authors.length) { s[pop].no_author++; continue; }
       s[pop].fired++;
 
@@ -305,6 +370,7 @@ for (const key of MODELS_ARG.split(',').map((s) => s.trim()).filter(Boolean)) {
           title: String(b.title).slice(0, 120), catalogued_author: b.author ?? null,
           proposed: a.name_nominative, as_printed: a.name_as_printed,
           role: a.role, quoted_line: a.quoted_line, model_confidence: a.confidence,
+          quote_supports_name: a.quote_supports,
         });
       }
       if (pop === 'control') {
@@ -334,9 +400,11 @@ for (const [key, s] of Object.entries(stats)) {
   console.log(`   CONTROL  named an author on ${s.control.fired}/${control.length}`);
   console.log(`            agrees ${s.control.agree}  disagrees ${s.control.disagree}   ← PRECISION ${judged ? ((100 * s.control.agree) / judged).toFixed(1) + '%' : 'n/a'}`);
   console.log(`            page names no author: ${s.control.no_author}   no OCR page: ${s.control.no_page}   parse fail: ${s.control.parse_failed ?? 0}`);
-  console.log(`            proposals DROPPED for an unverifiable quote: ${s.control.quote_rejected}`);
+  console.log(`            proposals DROPPED, quote not on cited page : ${s.control.quote_rejected}`);
+  console.log(`            proposals DROPPED, quote does not name them: ${s.control.quote_unsupported ?? 0}`);
+  console.log(`            kept but UNJUDGED (other script)           : ${s.control.quote_unjudged ?? 0}`);
   console.log(`   TARGET   named an author on ${s.target.fired}/${target.length}   ← YIELD ${((100 * s.target.fired) / target.length).toFixed(1)}%`);
-  console.log(`            page names no author: ${s.target.no_author}   quote-rejected: ${s.target.quote_rejected}`);
+  console.log(`            page names no author: ${s.target.no_author}   quote not on page: ${s.target.quote_rejected}   does not name them: ${s.target.quote_unsupported ?? 0}   unjudged: ${s.target.quote_unjudged ?? 0}`);
   console.log(`   tokens   in ${s.tokens_in.toLocaleString()}  out ${s.tokens_out.toLocaleString()}`);
   if (s.disagreements.length) {
     console.log('   disagreements (some are the extractor, some are the CATALOGUE):');
