@@ -171,6 +171,9 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **or using a model as a judge/screen** → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 
+**Writing a sweep, an import, or a new field**
+- Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
+
 ## Domain Context
 
 Detect the work domain from the user's prompt and load the right context automatically:

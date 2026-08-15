@@ -84,6 +84,16 @@ const SAMPLE = Number(argVal('--sample') || 3000);
 // ratcheted DOWN deliberately, never drift up unnoticed.
 const MAX_FIELDS = Number(argVal('--max-fields') || 410);
 
+// Ceiling on sub-keys inside a single object-valued field. The validator's
+// additionalProperties:false only binds the top level, so a free-form object
+// is the unguarded floor below it. 0 disables. Baseline 2026-08-14: the worst
+// is books.metadata at 60, so 65 leaves headroom and still catches growth.
+// NOTE: nestedCensus samples 1500 docs, so these counts JITTER a few either
+// way between runs (field_provenance read 37 then 39 minutes apart). Leave
+// several sub-keys of slack when ratcheting or the gate flakes on sampling
+// noise rather than on real drift.
+const MAX_NESTED = Number(argVal('--max-nested') || 0);
+
 // Retired fields: consolidated away and never allowed back. A reappearance
 // means some writer re-grew a field a consolidation removed (this happened to
 // tenant_id within 3 months of PR #2085) — fail loudly. Comma-separated.
@@ -386,6 +396,18 @@ async function main() {
       for (const n of nested) console.log(`   ${n.parent.padEnd(26)} on ${String(n.docs).padStart(7)} docs, ${n.subKeys} sub-keys`);
       const total = census.fields.length + nested.reduce((s, n) => s + n.subKeys, 0);
       console.log(`\n   TOTAL addressable fields (top-level + nested): ${total}`);
+
+      // A $jsonSchema validator with additionalProperties:false constrains only
+      // the TOP level — a free-form object field is an unguarded floor below it,
+      // where the next sweep can put its column instead. Ceiling it too.
+      if (MAX_NESTED) {
+        for (const n of nested) {
+          if (n.subKeys > MAX_NESTED) {
+            console.log(`\n   !! nested '${n.parent}' has ${n.subKeys} sub-keys, over the --max-nested ceiling of ${MAX_NESTED}`);
+            breach = true;
+          }
+        }
+      }
     }
 
     if (WATCHED.includes(name) && census.fields.length > MAX_FIELDS) {
