@@ -20,6 +20,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { parseArgs } from 'util';
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const { values: args } = parseArgs({ options: {
   work: { type: 'string' }, search: { type: 'string' }, max: { type: 'string', default: '20' },
@@ -82,7 +83,7 @@ async function createTextBook(doc) {
   const bookId = new ObjectId(); const now = new Date();
   let slug = slugify(doc.work), n = 1;
   while (await db.collection('books').findOne({ slug })) { slug = `${slugify(doc.work)}-${++n}`; }
-  const pageDocs = doc.parts.map((p, i) => ({
+  const pageDocs = doc.parts.map((p, i) => makePageDoc({
     _id: new ObjectId(), id: new ObjectId().toHexString(), book_id: bookId.toHexString(),
     page_number: i + 1,
     part_title: p.title === doc.work ? null : p.title.replace(doc.work + '/', ''),
@@ -90,7 +91,7 @@ async function createTextBook(doc) {
     ocr: { data: p.text, language: 'jv', source: 'wikisource', updated_at: now },
     created_at: now, updated_at: now,
   }));
-  await db.collection('books').insertOne({
+  await db.collection('books').insertOne(makeBookDoc({
     _id: bookId, id: bookId.toHexString(), slug,
     title: doc.work, display_title: doc.work, author: 'Anonymous',
     language: 'Javanese', published: null,
@@ -103,7 +104,7 @@ async function createTextBook(doc) {
     status: args.publish ? 'published' : 'imported', hidden: !args.publish, visible: !!args.publish,
     pipeline_auto: { status: 'complete', ocr_deferred: true, ocr_deferred_reason: 'text-only work (romanized Javanese); English translation is a separate text-translate pass', source: 'wikisource-text-import', last_updated: now },
     created_at: now, updated_at: now,
-  });
+  }));
   await db.collection('pages').insertMany(pageDocs);
   console.log(`    ✓ imported text book: /book/${slug} (${pageDocs.length} parts)${args.publish ? ' [PUBLISHED]' : ' [hidden]'}`);
 }

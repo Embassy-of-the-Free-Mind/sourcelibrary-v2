@@ -22,6 +22,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const HANDLES = process.argv.slice(2).filter(a => /^\d+$/.test(a));
@@ -120,7 +121,7 @@ async function importItem(db, m) {
   const bookIdStr = bookId.toHexString();
   const slug = await uniqueSlug(db, slugify(`${m.text}-fragmenta-${m.signum}`));
   const now = new Date();
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId, id: bookIdStr, slug,
     title: m.title, display_title: m.text, author: m.author,
     language: 'Latin', original_language: 'Latin',
@@ -148,9 +149,9 @@ async function importItem(db, m) {
     normalized_title: slugify(m.text).replace(/-/g, ' '),
     normalized_author: slugify(m.author).replace(/-/g, ' '),
     created_at: now, updated_at: now,
-  };
+  });
   await db.collection('books').insertOne(bookDoc);
-  const docs = pages.map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: bookIdStr, page_number: k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo_original, created_at: now, updated_at: now }; });
+  const docs = pages.map((p, k) => { const pid = new ObjectId(); return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: bookIdStr, page_number: k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo_original, created_at: now, updated_at: now }); });
   await db.collection('pages').insertMany(docs, { ordered: false });
   console.log(`  ✓ inserted ${slug} (${bookIdStr}) — ${pages.length} pages, hidden`);
   console.log(`    https://sourcelibrary.org/book/${slug}`);

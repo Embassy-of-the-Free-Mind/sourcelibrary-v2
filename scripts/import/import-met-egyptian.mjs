@@ -12,6 +12,7 @@
  *   --dry-run              Print what would be imported without writing
  */
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -244,7 +245,7 @@ async function main() {
       const bookIdStr = bookId.toHexString();
       const slug = await generateSlug(db, title);
 
-      const bookDoc = {
+      const bookDoc = makeBookDoc({
         _id: bookId,
         id: bookIdStr,
         slug,
@@ -307,14 +308,14 @@ async function main() {
         met_department: obj.department || null,
         created_at: new Date(),
         updated_at: new Date(),
-      };
+      });
 
       await db.collection('books').insertOne(bookDoc);
 
       // Create page documents
       const pageDocs = images.map((imgUrl, idx) => {
         const pageId = new ObjectId();
-        return {
+        return makePageDoc({
           _id: pageId,
           id: pageId.toHexString(),
           book_id: bookIdStr,
@@ -324,7 +325,7 @@ async function main() {
           photo_original: imgUrl,
           created_at: new Date(),
           updated_at: new Date(),
-        };
+        });
       });
 
       await db.collection('pages').insertMany(pageDocs, { ordered: false });

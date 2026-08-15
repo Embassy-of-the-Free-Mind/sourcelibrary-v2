@@ -22,6 +22,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
+import { makeBookDoc } from '../lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -386,7 +387,7 @@ async function createArtworkDoc(db, artwork, entry) {
     if (yearMatch) year = parseInt(yearMatch[1], 10);
   }
 
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId,
     id: bookIdStr,
     slug,
@@ -445,7 +446,7 @@ async function createArtworkDoc(db, artwork, entry) {
     normalized_author: normAuthor,
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 
   await db.collection('books').insertOne(bookDoc);
   return { status: 'ok', id: bookIdStr, title: artwork.title };

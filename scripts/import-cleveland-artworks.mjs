@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const CMA_API = 'https://openaccess-api.clevelandart.org/api/artworks';
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
@@ -191,7 +192,7 @@ function buildDoc(obj, slug, resourceType, displayUrl, thumbUrl, width, height) 
     ? String(obj.creation_date_earliest)
     : yearMatch?.[0] || '';
 
-  return {
+  return makeBookDoc({
     id: generateId(),
     slug,
     title,
@@ -238,7 +239,7 @@ function buildDoc(obj, slug, resourceType, displayUrl, thumbUrl, width, height) 
       access_date: new Date().toISOString(),
     },
     harvested_at: new Date(),
-  };
+  });
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────

@@ -28,6 +28,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
@@ -280,7 +281,7 @@ async function main() {
         }
       }
 
-      const doc = {
+      const doc = makeBookDoc({
         id: generateId(),
         slug,
         title,
@@ -327,7 +328,7 @@ async function main() {
         // Wikidata cross-reference if available
         ...(obj.wikidataid && { wikidata_id: obj.wikidataid }),
         harvested_at: new Date(),
-      };
+      });
 
       try {
         await books.insertOne(doc);

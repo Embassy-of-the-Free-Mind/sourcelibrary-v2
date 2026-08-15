@@ -26,6 +26,7 @@
  *   node scripts/import/import-umn-health-texts.mjs [--limit N]      # import hidden
  */
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const HOST = 'https://cdm16022.contentdm.oclc.org';
 const ALIAS = 'p16022coll362';
@@ -120,7 +121,7 @@ async function main() {
       let b = slugify(title) || `umn-health-${it.pointer}`; let slug = b; let n = 1;
       while (await books.findOne({ slug })) { slug = `${b}-${++n}`; }
 
-      await books.insertOne({
+      await books.insertOne(makeBookDoc({
         _id: bookId, id: idStr, slug,
         title, display_title: title, author: md(meta, 'Creator') || 'Unknown',
         language, original_language: language,
@@ -149,12 +150,12 @@ async function main() {
         pipeline_auto: { status: 'parked', reason: 'awaiting kuzushiji OCR benchmark', last_updated: new Date() },
         source_fingerprint: fp,
         created_at: new Date(), updated_at: new Date(),
-      });
+      }));
 
       const CHUNK = 200;
       for (let s = 0; s < pages.length; s += CHUNK) {
         // pages collection has a UNIQUE index on `id` — must set a distinct id per doc.
-        const docs = pages.slice(s, s + CHUNK).map(p => ({ _id: new ObjectId(), id: new ObjectId().toHexString(), book_id: idStr, ...p }));
+        const docs = pages.slice(s, s + CHUNK).map(p => makePageDoc({ _id: new ObjectId(), id: new ObjectId().toHexString(), book_id: idStr, ...p }));
         await pagesCol.insertMany(docs, { ordered: false });
       }
       imported++; totalPages += pages.length;

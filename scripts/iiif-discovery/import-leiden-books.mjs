@@ -37,6 +37,7 @@
 import { ObjectId } from 'mongodb';
 import { chromium } from 'playwright';
 import { getScriptClient } from '../lib/mongo.mjs';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -124,7 +125,7 @@ for (const c of cands) {
   const slug = await uniqueSlug(slugify(title));
   const bookId = new ObjectId();
   const now = new Date();
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
@@ -149,12 +150,12 @@ for (const c of cands) {
     ...(c.metadata?.subject_geographic ? { subject_geographic: c.metadata.subject_geographic } : {}),
     source_fingerprint: fp, normalized_title: normalizeTitle(title), normalized_author: normalizeAuthor(author),
     created_at: now, updated_at: now,
-  };
+  });
   try {
     await db.collection('books').insertOne(bookDoc);
     const CHUNK = 500;
     for (let s = 0; s < pages.length; s += CHUNK) {
-      const docs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: bookDoc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }; });
+      const docs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: bookDoc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }); });
       await db.collection('pages').insertMany(docs, { ordered: false });
     }
     await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: bookDoc.id, imported_at: now } });

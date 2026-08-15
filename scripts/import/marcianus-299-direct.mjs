@@ -25,6 +25,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 
@@ -175,7 +176,7 @@ async function main() {
   const slug = await uniqueSlug(db, slugify('marcianus-graecus-299-greek-alchemists'));
   const now = new Date();
 
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId, id: bookIdStr, slug,
     title, display_title, author,
     language: 'Greek', original_language: 'Greek',
@@ -206,7 +207,7 @@ async function main() {
     normalized_title: 'marcianus graecus 299',
     normalized_author: 'zosimos of panopolis',
     created_at: now, updated_at: now,
-  };
+  });
   await db.collection('books').insertOne(bookDoc);
   console.log(`\nInserted book ${bookIdStr} slug=${slug}`);
 
@@ -216,7 +217,7 @@ async function main() {
       const gi = s + k;
       const pid = new ObjectId();
       const r2url = uploaded[gi];
-      return {
+      return makePageDoc({
         _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: gi + 1,
         page_label: p.name || null,
@@ -226,7 +227,7 @@ async function main() {
         thumbnail: r2url,
         image_width: p.w || null, image_height: p.h || null,
         created_at: now, updated_at: now,
-      };
+      });
     });
     await db.collection('pages').insertMany(docs, { ordered: false });
     console.log(`  inserted pages ${s + 1}-${s + docs.length}`);
