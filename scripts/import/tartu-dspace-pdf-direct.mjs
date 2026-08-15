@@ -23,6 +23,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 // Optional: --items <path.json> supplies the import list (array of item objects with the
@@ -100,7 +101,7 @@ async function importItem(db, it) {
 
     const bookId = new ObjectId(); const idStr = bookId.toHexString();
     const slug = await uniqueSlug(db, it.slug_base); const now = new Date();
-    await db.collection('books').insertOne({
+    await db.collection('books').insertOne(makeBookDoc({
       _id: bookId, id: idStr, slug,
       title: it.title, display_title: it.display_title, author: it.author,
       language: it.language, original_language: it.language, published: it.published, year: it.year,
@@ -118,10 +119,10 @@ async function importItem(db, it) {
       status: 'draft', hidden: true, visible: false, source_fingerprint: fp,
       normalized_title: slugify(it.display_title).replace(/-/g, ' '), normalized_author: slugify(it.author).replace(/-/g, ' '),
       created_at: now, updated_at: now,
-    });
+    }));
     const CHUNK = 500;
     for (let s = 0; s < pages.length; s += CHUNK) {
-      const docs = pages.slice(s, s + CHUNK).map((photo, k) => { const pid = new ObjectId(); return { _id: pid, id: pid.toHexString(), book_id: idStr, page_number: s + k + 1, photo, thumbnail: photo, photo_original: photo, created_at: now, updated_at: now }; });
+      const docs = pages.slice(s, s + CHUNK).map((photo, k) => { const pid = new ObjectId(); return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: idStr, page_number: s + k + 1, photo, thumbnail: photo, photo_original: photo, created_at: now, updated_at: now }); });
       await db.collection('pages').insertMany(docs, { ordered: false });
     }
     console.log(`  ✓ inserted ${slug} (${idStr}) — ${pages.length} pages, hidden`);

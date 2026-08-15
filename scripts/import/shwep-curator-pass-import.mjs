@@ -17,6 +17,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -160,7 +161,7 @@ function buildBookDoc({ entry, pageCount, pageCountSource, thumbnail, slug, iaMe
     bookId,
     bookIdStr,
     fingerprint,
-    bookDoc: {
+    bookDoc: makeBookDoc({
       _id: bookId,
       id: bookIdStr,
       slug,
@@ -200,7 +201,7 @@ function buildBookDoc({ entry, pageCount, pageCountSource, thumbnail, slug, iaMe
       normalized_author: normalizeAuthor(entry.author),
       created_at: new Date(),
       updated_at: new Date(),
-    },
+    }),
   };
 }
 
@@ -308,7 +309,7 @@ async function main() {
         const pageDocs = [];
         for (let p = start; p < Math.min(start + CHUNK, pageCount); p++) {
           const pageId = new ObjectId();
-          pageDocs.push({
+          pageDocs.push(makePageDoc({
             _id: pageId,
             id: pageId.toHexString(),
             book_id: bookIdStr,
@@ -318,7 +319,7 @@ async function main() {
             photo_original: getPageUrl(p),
             created_at: new Date(),
             updated_at: new Date(),
-          });
+          }));
         }
         await db.collection('pages').insertMany(pageDocs, { ordered: false });
       }

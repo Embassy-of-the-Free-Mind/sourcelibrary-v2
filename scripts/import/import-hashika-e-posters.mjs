@@ -21,6 +21,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from '../lib/book-docs.mjs';
 
 const HOST = 'https://cdm16022.contentdm.oclc.org';
 const ALIAS = 'p16022coll127';
@@ -134,7 +135,7 @@ async function main() {
       let b = slugify(title) || `hashika-e-${ptr}`; let slug = `art-${b}`; let n = 1;
       while (await books.findOne({ slug })) { slug = `art-${b}-${++n}`; }
 
-      await books.insertOne({
+      await books.insertOne(makeBookDoc({
         _id: bookId, id: bookId.toHexString(), slug,
         title, display_title: title, author: 'Anonymous',
         language: 'Japanese', original_language: 'Japanese',
@@ -166,7 +167,7 @@ async function main() {
         },
         source_fingerprint: fingerprint,
         created_at: new Date(), updated_at: new Date(),
-      });
+      }));
       imported++;
       console.log(`  ✓ ${slug} — "${title}" (${date}) ${meta0.width}x${meta0.height}`);
     } catch (e) { failed++; console.log(`  ✗ ${ptr}: ${e.message}`); }

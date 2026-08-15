@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const SEARCH_BASE = 'https://data.rijksmuseum.nl/search/collection';
 const RESOLVER = 'https://id.rijksmuseum.nl';
@@ -443,7 +444,7 @@ async function main() {
         }
       }
 
-      const doc = {
+      const doc = makeBookDoc({
         id: generateId(),
         slug,
         title: obj.title,
@@ -501,7 +502,7 @@ async function main() {
           access_date: new Date().toISOString(),
         },
         harvested_at: new Date(),
-      };
+      });
 
       await books.insertOne(doc);
       const icLabel = iiif.iconclassCodes?.length > 0 ? ` [IC: ${iiif.iconclassCodes.join(', ')}]` : '';

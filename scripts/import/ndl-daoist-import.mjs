@@ -15,6 +15,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
@@ -266,7 +267,7 @@ async function main() {
 
     const now = new Date();
 
-    const bookDoc = {
+    const bookDoc = makeBookDoc({
       _id: bookId,
       id: bookIdStr,
       slug,
@@ -327,7 +328,7 @@ async function main() {
       status: 'draft',
       created_at: now,
       updated_at: now,
-    };
+    });
 
     // 5. Insert book
     await booksCol.insertOne(bookDoc);
@@ -336,7 +337,7 @@ async function main() {
     // 6. Create pages
     const pageDocs = pageImages.map((img, i) => {
       const pageId = new ObjectId();
-      return {
+      return makePageDoc({
         _id: pageId,
         id: pageId.toHexString(),
         book_id: bookIdStr,
@@ -346,7 +347,7 @@ async function main() {
         photo_original: img.photo,
         created_at: now,
         updated_at: now,
-      };
+      });
     });
 
     await pagesCol.insertMany(pageDocs);

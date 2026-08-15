@@ -28,6 +28,7 @@ import { createReadStream, readdirSync, readFileSync, statSync, existsSync } fro
 import { basename, join, extname } from 'path';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 // --- Config ---
 const CONCURRENCY = parseInt(process.env.CONCURRENCY || '20');
@@ -109,7 +110,7 @@ function pagePaths(bookId, pageNumber) {
 // --- Create page record ---
 function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
   const id = new ObjectId().toHexString();
-  return {
+  return makePageDoc({
     _id: new ObjectId(id),
     id,
     book_id: bookId,
@@ -121,13 +122,13 @@ function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
     summary: null,
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 }
 
 // --- Create book record ---
 function makeBookRecord(meta) {
   const id = new ObjectId().toHexString();
-  return {
+  return makeBookDoc({
     _id: new ObjectId(id),
     id,
     title: meta.title || 'Untitled',
@@ -151,7 +152,7 @@ function makeBookRecord(meta) {
     pipeline_auto: true,
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 }
 
 // --- Concurrency limiter ---

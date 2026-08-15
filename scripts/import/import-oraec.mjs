@@ -26,6 +26,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -309,7 +310,7 @@ async function main() {
     try {
       const slug = await generateSlug(db, title);
 
-      const pageDoc = {
+      const pageDoc = makePageDoc({
         _id: pageId,
         id: pageId.toHexString(),
         book_id: bookIdStr,
@@ -325,10 +326,10 @@ async function main() {
         },
         created_at: new Date(),
         updated_at: new Date(),
-      };
+      });
       await db.collection('pages').insertOne(pageDoc);
 
-      const bookDoc = {
+      const bookDoc = makeBookDoc({
         _id: bookId,
         id: bookIdStr,
         slug,
@@ -382,7 +383,7 @@ async function main() {
         normalized_author: normalizeAuthor(author),
         created_at: new Date(),
         updated_at: new Date(),
-      };
+      });
 
       try {
         await db.collection('books').insertOne(bookDoc);

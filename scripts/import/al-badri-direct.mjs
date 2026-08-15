@@ -15,6 +15,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
@@ -102,7 +103,7 @@ async function main() {
   const bookId = new ObjectId();
   const bookIdStr = bookId.toHexString();
 
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId,
     id: bookIdStr,
     slug,
@@ -141,7 +142,7 @@ async function main() {
     normalized_author: 'muhammad ibn ahmad al badri al dimashqi',
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 
   await db.collection('books').insertOne(bookDoc);
   console.log(`Inserted book ${bookIdStr} slug=${slug}`);
@@ -151,7 +152,7 @@ async function main() {
     const pageDocs = [];
     for (let p = start; p < Math.min(start + CHUNK, PAGE_COUNT); p++) {
       const pageId = new ObjectId();
-      pageDocs.push({
+      pageDocs.push(makePageDoc({
         _id: pageId,
         id: pageId.toHexString(),
         book_id: bookIdStr,
@@ -161,7 +162,7 @@ async function main() {
         photo_original: getPageUrl(p),
         created_at: new Date(),
         updated_at: new Date(),
-      });
+      }));
     }
     await db.collection('pages').insertMany(pageDocs, { ordered: false });
     console.log(`Inserted pages ${start + 1}-${start + pageDocs.length}`);

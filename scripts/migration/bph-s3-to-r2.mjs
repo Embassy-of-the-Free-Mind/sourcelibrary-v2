@@ -22,6 +22,7 @@ import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
 import { join } from 'path';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 // --- Config ---
 const CONCURRENCY = 20; // pages in parallel per book
@@ -131,7 +132,7 @@ function pagePaths(bookId, pageNumber) {
 // --- Make page record ---
 function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
   const id = new ObjectId().toHexString();
-  return {
+  return makePageDoc({
     _id: new ObjectId(id),
     id,
     book_id: bookId,
@@ -143,7 +144,7 @@ function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
     summary: null,
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 }
 
 // --- Provenance helper ---
@@ -172,7 +173,7 @@ function makeBookRecord(meta) {
     date: now.toISOString(),
   };
 
-  return {
+  return makeBookDoc({
     _id: new ObjectId(id),
     id,
     title: meta.title || 'Untitled',
@@ -219,7 +220,7 @@ function makeBookRecord(meta) {
     },
     created_at: new Date(),
     updated_at: new Date(),
-  };
+  });
 }
 
 // --- Concurrency limiter ---

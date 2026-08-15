@@ -29,6 +29,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const ARGS = process.argv.slice(2);
 const PROBE = ARGS.includes('--probe');
@@ -194,7 +195,7 @@ async function importWork(db, w) {
   const slug = await generateUniqueSlug(db, slugify(`${w.display_title}-${w.author}`));
   const now = new Date();
 
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId, id: bookIdStr, slug,
     title: w.title, display_title: w.display_title, author: w.author,
     language: w.language, original_language: w.language,
@@ -226,18 +227,18 @@ async function importWork(db, w) {
     normalized_title: slugify(w.title).replace(/-/g, ' '),
     normalized_author: slugify(w.author).replace(/-/g, ' '),
     created_at: now, updated_at: now,
-  };
+  });
 
   await db.collection('books').insertOne(bookDoc);
 
   const pageDocs = pages.map((p, idx) => {
     const pid = new ObjectId();
-    const doc = {
+    const doc = makePageDoc({
       _id: pid, id: pid.toHexString(),
       book_id: bookIdStr, page_number: idx + 1,
       source_ref: p.source_ref,
       created_at: now, updated_at: now,
-    };
+    });
     // Omit empty ocr/translation entirely (empty strings trigger false completion).
     if (p.heData) doc.ocr = { data: p.heData, language: w.language, model: null, source: 'manual', updated_at: now };
     if (p.enData) doc.translation = { data: p.enData, language: 'English', model: null, source: 'manual', updated_at: now };

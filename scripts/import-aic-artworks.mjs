@@ -16,6 +16,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const AIC_API = 'https://api.artic.edu/api/v1';
 const AIC_IIIF = 'https://www.artic.edu/iiif/2';
@@ -282,7 +283,7 @@ async function main() {
           }
         }
 
-        const doc = {
+        const doc = makeBookDoc({
           id: generateId(),
           slug,
           title,
@@ -332,7 +333,7 @@ async function main() {
             access_date: new Date().toISOString(),
           },
           harvested_at: new Date(),
-        };
+        });
 
         try {
           await books.insertOne(doc);

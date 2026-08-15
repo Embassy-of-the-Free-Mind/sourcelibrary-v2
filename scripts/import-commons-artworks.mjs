@@ -27,6 +27,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
@@ -556,7 +557,7 @@ async function main() {
       }
 
       // Build the book document
-      const doc = {
+      const doc = makeBookDoc({
         id: generateId(),
         slug: `art-${slug}`,
         title: info.title || info.commonsTitle.replace('File:', '').replace(/\.[^.]+$/, ''),
@@ -625,7 +626,7 @@ async function main() {
           attribution: info.credit || info.artist || '',
           access_date: new Date(),
         },
-      };
+      });
 
       if (dryRun) {
         console.log(`  [DRY] ${doc.slug} — ${doc.title} (${info.width}x${info.height})`);

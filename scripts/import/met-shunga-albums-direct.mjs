@@ -28,6 +28,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
@@ -124,7 +125,7 @@ async function main() {
       await new Promise(r => setTimeout(r, 500));
     }
 
-    const bookDoc = {
+    const bookDoc = makeBookDoc({
       _id: bookId, id: bookIdStr, slug: album.bookSlug,
       title: album.title, display_title: album.title,
       author: f0.author,
@@ -150,20 +151,20 @@ async function main() {
       status: 'draft', hidden: true, visible: false,
       source_fingerprint: fp,
       created_at: now, updated_at: now,
-    };
+    });
     await books.insertOne(bookDoc);
     console.log(`  inserted book ${bookIdStr} slug=${album.bookSlug}`);
 
     const pageDocs = fragments.map((f, i) => {
       const pid = new ObjectId();
-      return {
+      return makePageDoc({
         _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: i + 1,
         photo: archived[i].photo, thumbnail: archived[i].thumbnail,
         photo_original: f.commons_full_url,
         source_page: { artwork_slug: f.slug, met_page: pageNums[i] },
         created_at: now, updated_at: now,
-      };
+      });
     });
     await db.collection('pages').insertMany(pageDocs, { ordered: false });
     console.log(`  inserted ${pageDocs.length} pages`);

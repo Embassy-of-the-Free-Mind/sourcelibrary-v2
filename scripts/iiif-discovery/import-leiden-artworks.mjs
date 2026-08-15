@@ -36,6 +36,7 @@
 
 import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
+import { makeBookDoc } from '../lib/book-docs.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -111,7 +112,7 @@ for (const c of cands) {
   const bookId = new ObjectId();
   const now = new Date();
   const normTitle = normalizeTitle(title), normAuthor = normalizeAuthor(author);
-  const doc = {
+  const doc = makeBookDoc({
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
@@ -143,7 +144,7 @@ for (const c of cands) {
     ...(c.metadata?.reference ? { provenance_reference: c.metadata.reference } : {}),
     source_fingerprint: fp, normalized_title: normTitle, normalized_author: normAuthor,
     created_at: now, updated_at: now,
-  };
+  });
   try {
     await db.collection('books').insertOne(doc);
     await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: doc.id, imported_at: now } });

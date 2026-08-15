@@ -18,6 +18,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { makePageDoc } from '../lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
@@ -140,7 +141,7 @@ async function processBook(db, bookId) {
     }
 
     const pageId = new ObjectId();
-    const pageDoc = {
+    const pageDoc = makePageDoc({
       _id: pageId,
       id: pageId.toHexString(),
       book_id: bid,
@@ -162,7 +163,7 @@ async function processBook(db, bookId) {
       },
       created_at: new Date(),
       updated_at: new Date(),
-    };
+    });
 
     await db.collection('pages').insertOne(pageDoc);
     process.stdout.write(`  [${pageNum}/${numPages}] sentences ${start + 1}-${end} ✓\n`);

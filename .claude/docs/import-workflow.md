@@ -68,8 +68,17 @@ Applies to all contributors — human and AI.
 - `scripts/import/al-badri-direct.mjs` — original direct-insert pattern (bundled IA item).
 - `scripts/import/daoist-alchemy-ia-batch{,-2}.mjs` — batch-via-API examples.
 - `src/lib/dedup.ts` — fingerprint + normalize + `checkDuplicate` + `scanForDuplicates`.
+- `scripts/lib/book-docs.mjs` — `makeBookDoc`/`makePageDoc`, the whitelisted doc constructors.
 - `.claude/docs/chinese-iiif-sources.md` — per-source IIIF manifest patterns + gotchas.
 - `.claude/docs/daoist-alchemy-acquisition-list.md` — a worked want→dedupe→get example.
+
+## Building the insert docs
+Build every `books`/`pages` insert document with `makeBookDoc()` / `makePageDoc()` from
+`scripts/lib/book-docs.mjs` — never a bare object literal. Unknown keys throw, so a 478th
+field cannot ship silently the way the first 477 did; adding one is then a reviewed edit
+to the whitelist. All 50 direct-import scripts already do this — copy the nearest one.
+The rule, the incident behind it, and where per-book *actions* go instead (rows via
+`scripts/lib/sweep-log.mjs`) are in `.claude/docs/invariants/field-sprawl.md`.
 
 ## Invariants (don't violate)
 - Imports land HIDDEN; flip visible only after QA. Always set `visible`/`hidden` as a pair.

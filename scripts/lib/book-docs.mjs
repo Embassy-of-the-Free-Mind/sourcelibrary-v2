@@ -13,10 +13,14 @@
  * scripts wrote as of 2026-08-13 (AST scan of the insertOne/insertMany
  * literals in scripts/import/*.mjs, scripts/import-*-artworks.mjs,
  * scripts/iiif-discovery/import-*.mjs — artwork importers insert into `books`
- * too, hence the artwork/museum fields). They describe what imports DO write,
- * not what they SHOULD; known duplicate families (pageCount vs pages_count,
- * place_of_publication vs place_published) are kept so existing scripts can
- * adopt this without churn, and get consolidated by #3969 Track B.
+ * too, hence the artwork/museum fields), widened on 2026-08-14 by the 50
+ * scripts that actually adopted the constructors: the first scan read only
+ * top-level literal keys, so keys reached through a helper's `return {…}`, a
+ * conditional spread, or a `.ts` importer were invisible until the call threw.
+ * They describe what imports DO write, not what they SHOULD; known duplicate
+ * families (pageCount vs pages_count, place_of_publication vs place_published,
+ * image_full vs commons_full_url) are kept so existing scripts can adopt this
+ * without churn, and get consolidated by #3969 Track B.
  *
  * Adding a field here is a deliberate, reviewed act — that is the point.
  * Retired fields (see RETIRED_FIELDS) are refused with a pointed message and
@@ -43,15 +47,22 @@ export const BOOK_FIELDS = Object.freeze([
   // identity
   '_id', 'id', 'slug',
   // core bibliographic
-  'title', 'display_title', 'author', 'language', 'original_language',
-  'published', 'year', 'original_work_year', 'publisher',
+  'title', 'display_title', 'display_author', 'original_title',
+  'author', 'language', 'original_language',
+  'published', 'year', 'original_work_year', 'date_earliest', 'date_latest',
+  'publisher',
   'place_published', 'place_of_publication', // known duplicate family — #3969 Track B
-  'categories', 'collections', 'description', 'notes',
+  'categories', 'collections', 'curator_notes', 'description', 'faceted_tags',
+  'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
-  'is_translation', 'text_role', 'text_source', 'content_type', 'work_id',
+  'is_translation', 'text_role', 'text_source', 'translation_status',
+  'content_type', 'work_id',
   // provenance / source
   'ia_identifier', 'source_fingerprint', 'image_source', 'contributing_library',
+  'provider', 'held_by', 'current_location', 'attribution_note',
   'dublin_core', 'catalog_metadata', 'catalog_ids', 'field_provenance',
+  'enrichment', 'linked_art', 'wikidata_id',
+  'harvested_at', 'harvest_source', 'harvest_category',
   'metadata', 'metadata_quality', 'shelfmark', 'subject_geographic',
   'provenance_reference', 'acquisition_campaign',
   // pipeline / status
@@ -63,11 +74,17 @@ export const BOOK_FIELDS = Object.freeze([
   'pages_count', 'pageCount', // known duplicate family — #3969 Track B
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
   // images / artwork (artwork docs live in `books` with resource_type set)
-  'thumbnail', 'resource_type', 'image_display', 'image_source_url',
-  'image_width', 'image_height', 'medium', 'dimensions', 'department',
+  'thumbnail', 'thumbnail_blob', 'resource_type', 'image_display',
+  'image_full', 'image_source_url', 'image_thumb', 'archived_full_url',
+  'image_width', 'image_height', 'full_width', 'full_height',
+  'medium', 'dimensions', 'dimensions_display', 'department',
   'accession_number', 'micrio_id',
-  'commons_full_url', 'commons_page_title', 'commons_description',
-  'commons_categories', 'commons_width', 'commons_height',
+  'commons_assessment', 'commons_attribution_required', 'commons_categories',
+  'commons_copyrighted', 'commons_credit', 'commons_description',
+  'commons_full_url', 'commons_height', 'commons_license', 'commons_license_id',
+  'commons_license_url', 'commons_mediatype', 'commons_page_title',
+  'commons_restrictions', 'commons_sha1', 'commons_title', 'commons_upload_date',
+  'commons_uploader', 'commons_url', 'commons_usage_terms', 'commons_width',
   'met_object_id', 'met_classification', 'met_department', 'met_dimensions',
   'met_dynasty', 'met_medium', 'met_period', 'met_reign',
   'rijksmuseum_id',
@@ -88,7 +105,7 @@ export const PAGE_FIELDS = Object.freeze([
   'thumbnail', 'image_thumb', 'thumbnail_blob',
   'image_width', 'image_height', 'width', 'height',
   // text
-  'ocr', 'translation', 'transliteration',
+  'ocr', 'summary', 'translation', 'transliteration',
   // pipeline
   'status', 'archive_metadata',
   // timestamps
