@@ -20,7 +20,50 @@ const LINE_HEIGHTS = [1.5, 1.6, 1.7, 1.8, 1.9];
 
 function RowLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-sans text-[12px] text-[var(--text-secondary)]">{children}</span>
+    <span className="font-sans text-[12.5px] text-[var(--text-secondary)]">{children}</span>
+  );
+}
+
+/** The group a set of segmented choices sits in — one hairline box, no gaps. */
+function SegGroup({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex overflow-hidden" style={{ border: '1px solid var(--border-medium)' }}>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * One choice in a segmented control. Selection is a filled, inverted chip
+ * rather than an underline: at a glance the chosen value is the dark one, in
+ * every theme (the fill and its text both come from theme tokens, so night
+ * mode inverts them together).
+ */
+function SegButton({
+  selected, onClick, children, className = '', title,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+  className?: string;
+  title?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      title={title}
+      className={`px-2.5 py-1.5 font-sans text-[12px] leading-none transition-colors border-l first:border-l-0 ${className}`}
+      style={{
+        borderColor: 'var(--border-medium)',
+        background: selected ? 'var(--text-primary)' : 'transparent',
+        color: selected ? 'var(--bg-cream)' : 'var(--text-muted)',
+        fontWeight: selected ? 500 : 400,
+      }}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -39,138 +82,160 @@ export default function ReaderSettingsControls({
     0,
   );
 
-  const rowH = compact ? 'min-h-[44px]' : 'min-h-[38px]';
+  const rowH = compact ? 'min-h-[48px]' : 'min-h-[42px]';
+  const row = `flex items-center justify-between gap-3 ${rowH}`;
 
   return (
     <div className="flex flex-col">
       {/* Theme */}
-      <div className={`flex items-center justify-between gap-3 ${rowH}`}>
+      <div className={row}>
         <RowLabel>Theme</RowLabel>
-        <div className="flex border border-[var(--border-medium)]">
+        <SegGroup>
           {THEMES.map(t => (
-            <button
+            <SegButton
               key={t.key}
-              type="button"
+              selected={settings.theme === t.key}
               onClick={() => onChange({ theme: t.key })}
-              aria-pressed={settings.theme === t.key}
-              className="px-3 py-1.5 font-sans text-[12px] flex items-center gap-1.5 border-l first:border-l-0 border-[var(--border-medium)]"
-              style={settings.theme === t.key ? { boxShadow: 'inset 0 -2px 0 var(--accent-rust)' } : undefined}
+              className="flex items-center gap-1.5"
             >
               <span
-                className="inline-block w-3 h-3 border border-[var(--border-medium)]"
-                style={{ background: t.swatch }}
+                className="inline-block w-3 h-3 border"
+                style={{ background: t.swatch, borderColor: 'rgba(120,110,96,0.5)' }}
               />
               {t.label}
-            </button>
+            </SegButton>
           ))}
-        </div>
+        </SegGroup>
       </div>
 
       {/* Text size */}
-      <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
+      <div className={`${row} border-t border-[var(--border-light)]`}>
         <RowLabel>Text size</RowLabel>
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            aria-label="Smaller text"
-            disabled={scaleIdx === 0}
-            onClick={() => onChange({ textScale: TEXT_SCALES[Math.max(0, scaleIdx - 1)] })}
-            className="w-9 h-9 flex items-center justify-center font-body text-[13px] hover:bg-black/5 disabled:opacity-30"
-          >
-            A
-          </button>
-          <span className="font-sans text-[11px] text-[var(--text-muted)] w-8 text-center">
-            {Math.round(settings.textScale * 100)}%
-          </span>
-          <button
-            type="button"
-            aria-label="Larger text"
-            disabled={scaleIdx === TEXT_SCALES.length - 1}
-            onClick={() => onChange({ textScale: TEXT_SCALES[Math.min(TEXT_SCALES.length - 1, scaleIdx + 1)] })}
-            className="w-9 h-9 flex items-center justify-center font-body text-[18px] hover:bg-black/5 disabled:opacity-30"
-          >
-            A
-          </button>
+        <div className="flex items-center">
+          <SegGroup>
+            <SegButton
+              selected={false}
+              onClick={() => onChange({ textScale: TEXT_SCALES[Math.max(0, scaleIdx - 1)] })}
+              title="Smaller text"
+              className={`w-9 font-body ${scaleIdx === 0 ? 'opacity-30 pointer-events-none' : ''}`}
+            >
+              <span className="text-[12px]" aria-label="Smaller text">A</span>
+            </SegButton>
+            <span
+              className="w-[52px] flex items-center justify-center font-sans text-[11.5px] tabular-nums border-l"
+              style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+            >
+              {Math.round(settings.textScale * 100)}%
+            </span>
+            <SegButton
+              selected={false}
+              onClick={() => onChange({ textScale: TEXT_SCALES[Math.min(TEXT_SCALES.length - 1, scaleIdx + 1)] })}
+              title="Larger text"
+              className={`w-9 font-body ${scaleIdx === TEXT_SCALES.length - 1 ? 'opacity-30 pointer-events-none' : ''}`}
+            >
+              <span className="text-[17px]" aria-label="Larger text">A</span>
+            </SegButton>
+          </SegGroup>
         </div>
       </div>
 
       {/* Line width */}
       {!compact && (
-        <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
+        <div className={`${row} border-t border-[var(--border-light)]`}>
           <RowLabel>Line width</RowLabel>
-          <div className="flex">
+          <SegGroup>
             {LINE_WIDTHS.map(w => (
-              <button
+              <SegButton
                 key={w}
-                type="button"
+                selected={settings.lineWidth === w}
                 onClick={() => onChange({ lineWidth: w })}
-                aria-pressed={settings.lineWidth === w}
-                className={`px-2.5 py-1 font-sans text-[12px] capitalize ${settings.lineWidth === w ? 'text-[var(--text-primary)] underline decoration-[var(--accent-rust)] underline-offset-4' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
+                className="capitalize"
               >
                 {w === 'comfortable' ? 'Normal' : w}
-              </button>
+              </SegButton>
             ))}
-          </div>
+          </SegGroup>
         </div>
       )}
 
       {/* Typeface */}
-      <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
+      <div className={`${row} border-t border-[var(--border-light)]`}>
         <RowLabel>Typeface</RowLabel>
-        <div className="flex">
+        <SegGroup>
           {(['serif', 'sans'] as const).map(t => (
-            <button
+            <SegButton
               key={t}
-              type="button"
+              selected={settings.typeface === t}
               onClick={() => onChange({ typeface: t })}
-              aria-pressed={settings.typeface === t}
-              className={`px-2.5 py-1 text-[13px] ${t === 'serif' ? 'font-body' : 'font-sans'} ${settings.typeface === t ? 'text-[var(--text-primary)] underline decoration-[var(--accent-rust)] underline-offset-4' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
+              className={t === 'serif' ? 'font-body' : 'font-sans'}
             >
               {t === 'serif' ? 'Serif' : 'Sans'}
-            </button>
+            </SegButton>
           ))}
-        </div>
+        </SegGroup>
       </div>
 
       {/* Line height */}
       {!compact && (
-        <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
+        <div className={`${row} border-t border-[var(--border-light)]`}>
           <RowLabel>Line height</RowLabel>
-          <div className="flex items-center gap-1">
+          <SegGroup>
             {LINE_HEIGHTS.map(lh => (
-              <button
+              <SegButton
                 key={lh}
-                type="button"
+                selected={settings.lineHeight === lh}
                 onClick={() => onChange({ lineHeight: lh })}
-                aria-pressed={settings.lineHeight === lh}
-                className={`px-1.5 py-1 font-sans text-[12px] ${settings.lineHeight === lh ? 'text-[var(--text-primary)] underline decoration-[var(--accent-rust)] underline-offset-4' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
+                className="tabular-nums"
               >
                 {lh}
-              </button>
+              </SegButton>
             ))}
-          </div>
+          </SegGroup>
         </div>
       )}
 
       {/* Notes (inline editorial notes + glosses in the text) */}
-      <div className={`flex items-center justify-between gap-3 ${rowH} border-t border-[var(--border-light)]`}>
+      <div className={`${row} border-t border-[var(--border-light)]`}>
         <RowLabel>Notes</RowLabel>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={settings.glosses}
-          onClick={() => onChange({ glosses: !settings.glosses })}
-          className="relative w-10 h-[22px] border border-[var(--border-medium)] transition-colors"
-          style={{ background: settings.glosses ? 'var(--accent-rust)' : 'var(--bg-warm)' }}
-        >
-          {/* Knob colour is literal: the night theme rewrites .bg-white, which
-              turned the knob dark against the rust track. */}
-          <span
-            className="absolute top-[2px] w-4 h-4 border border-[var(--border-medium)] transition-all"
-            style={{ left: settings.glosses ? 20 : 2, background: '#fdfcf9' }}
-          />
-        </button>
+        <SettingsSwitch
+          on={settings.glosses}
+          onToggle={() => onChange({ glosses: !settings.glosses })}
+          label="Show notes and glosses in the text"
+        />
       </div>
     </div>
+  );
+}
+
+/**
+ * The house switch. Off reads as an empty well, on as a filled track — the
+ * knob is literal cream because the night theme rewrites .bg-white and turned
+ * it dark against the track.
+ */
+export function SettingsSwitch({ on, onToggle, label }: {
+  on: boolean; onToggle: () => void; label: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      onClick={onToggle}
+      className="relative w-[42px] h-[24px] shrink-0 border transition-colors"
+      style={{
+        borderColor: on ? 'var(--text-primary)' : 'var(--border-medium)',
+        background: on ? 'var(--text-primary)' : 'var(--bg-warm)',
+      }}
+    >
+      <span
+        className="absolute top-[2px] w-[18px] h-[18px] transition-all"
+        style={{
+          left: on ? 21 : 2,
+          background: '#fdfcf9',
+          border: `1px solid ${on ? 'var(--text-primary)' : 'var(--border-medium)'}`,
+        }}
+      />
+    </button>
   );
 }

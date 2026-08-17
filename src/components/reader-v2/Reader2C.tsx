@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import { useReaderV2 } from './useReaderV2';
-import ReaderSettingsControls from './ReaderSettingsControls';
+import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS,
   resolveScanUrls, PaneMenu, type PaneMenuItem, buildTextMenuItems, ViewToggleGroup, onInk,
@@ -34,6 +34,8 @@ import {
 
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
+/** Mobile toolbar height: the pane chips row (44) + the tool row (52) + hairline. */
+const MOBILE_TOOLBAR_H = 97;
 
 type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'more' | null;
 
@@ -127,56 +129,84 @@ const AaGlyph = <span className="font-body leading-none"><span className="text-[
  * reachable on a phone without stealing reading width.
  */
 function MobileToolbar({
-  panel, onTogglePanel, stripVisible, onToggleStrip,
+  panel, onTogglePanel, views, onToggleView,
 }: {
   panel: LeftPanel;
   onTogglePanel: (p: Exclude<LeftPanel, null>) => void;
-  stripVisible: boolean;
-  onToggleStrip: () => void;
+  views: ReaderState['views'];
+  onToggleView: ReaderState['toggleView'];
 }) {
-  // Five slots, grouped by how often a reader reaches for them. Everything
-  // else (settings, guide, info, cite) sits one tap away behind More.
+  // Four slots: the three tools a reader reaches for constantly, then More.
+  // Everything else (settings, guide, pages, info, cite) is one tap behind it.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
     ['contents', 'Contents', <List key="i" size={19} />],
     ['search', 'Search', <Search key="i" size={19} />],
     ['librarian', 'Ask', <MessageCircle key="i" size={19} />],
   ];
   return (
-    <div
-      className="flex items-center w-full"
-      style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}`, height: 52 }}
-      role="toolbar"
-      aria-label="Reader tools"
-    >
-      {tools.map(([key, label, icon]) => (
+    <div style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}` }}>
+      {/* Which panes are showing — the one control a reader changes mid-page,
+          so it lives with the thumb, not up in the title bar. */}
+      <div className="flex px-2 pt-2 pb-1.5 gap-1" role="group" aria-label="Visible panes">
+        {(['scan', 'ocr', 'en'] as const).map(v => {
+          const on = views[v];
+          return (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={on}
+              onClick={() => onToggleView(v)}
+              className="flex-1 h-[30px] font-sans text-[11px] font-medium tracking-[0.06em] uppercase border transition-colors"
+              style={{
+                borderColor: on ? '#fdfcf9' : onInk(0.22),
+                background: on ? '#fdfcf9' : 'transparent',
+                color: on ? INK : onInk(0.6),
+              }}
+            >
+              {v === 'scan' ? 'Scan' : v === 'ocr' ? 'OCR' : 'English'}
+            </button>
+          );
+        })}
+      </div>
+      <div
+        className="flex items-center w-full"
+        style={{ height: 52, borderTop: `1px solid ${onInk(0.1)}` }}
+        role="toolbar"
+        aria-label="Reader tools"
+      >
+        {tools.map(([key, label, icon]) => (
+          <ToolButton
+            key={key}
+            label={label}
+            icon={icon}
+            active={panel === key}
+            onClick={() => onTogglePanel(key)}
+          />
+        ))}
         <ToolButton
-          key={key}
-          label={label}
-          icon={icon}
-          active={panel === key}
-          onClick={() => onTogglePanel(key)}
+          label="More"
+          icon={<MoreHorizontal size={19} />}
+          active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
+          onClick={() => onTogglePanel('more')}
         />
-      ))}
-      <ToolButton
-        label="Pages"
-        icon={<GalleryHorizontal size={19} />}
-        active={stripVisible}
-        onClick={onToggleStrip}
-      />
-      <ToolButton
-        label="More"
-        icon={<MoreHorizontal size={19} />}
-        active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
-        onClick={() => onTogglePanel('more')}
-      />
+      </div>
     </div>
   );
+}
+
+interface GuideSection {
+  title: string;
+  startPage: number;
+  endPage: number;
+  summary: string;
+  concepts?: string[];
+  quotes?: Array<{ text: string; page: number; significance?: string }>;
 }
 
 interface GuideData {
   overview?: string;
   themes?: string[];
-  sections?: Array<{ title: string; startPage: number; endPage: number; summary: string }>;
+  sections?: GuideSection[];
 }
 
 /** What the guide is, shown when a book has none yet (and in brief when it does). */
@@ -185,16 +215,20 @@ const GUIDE_BLURB_2 = 'It is not the printed table of contents. The contents lis
 const GUIDE_BLURB_3 = 'Guides come from an AI-assisted enrichment pass that runs after a book is transcribed and translated, so they appear once enough of the book has been through that pipeline.';
 
 /** Reading guide, from book.reading_summary / index.bookSummary — fetched on open. */
-function GuidePanel({ bookId, bookPath, bookTitle, onGoToPageNumber }: {
+function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }: {
   bookId: string;
   bookPath: string;
   bookTitle: string;
+  /** The reader's own nav list — section thumbnails come from it, no extra fetch */
+  pageList: Page[];
   onGoToPageNumber: (n: number) => void;
 }) {
   const [loading, setLoading] = useState(true);
   const [guide, setGuide] = useState<GuideData | null>(null);
   const [requested, setRequested] = useState(false);
   const [requesting, setRequesting] = useState(false);
+  const [openSection, setOpenSection] = useState<number | null>(null);
+  const [overviewOpen, setOverviewOpen] = useState(false);
 
   // Requests ride the same queue as every other reader request (translation,
   // corrections): the feedback collection, which is triaged into issues.
@@ -278,18 +312,35 @@ function GuidePanel({ bookId, bookPath, bookTitle, onGoToPageNumber }: {
       </div>
     );
   }
+  const overviewParas = guide.overview ? guide.overview.split('\n\n').filter(Boolean) : [];
+  const hasMoreOverview = overviewParas.length > 1;
+
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
-      {guide.overview && (
-        <p className="font-body text-[14.5px] leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-          {guide.overview.split('\n\n')[0]}
-        </p>
+    <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-6" style={{ overscrollBehavior: 'contain' }}>
+      {!!overviewParas.length && (
+        <div className="mb-4">
+          {(overviewOpen ? overviewParas : overviewParas.slice(0, 1)).map((p, i) => (
+            <p key={i} className="font-body text-[14.5px] leading-relaxed mb-2 last:mb-0" style={{ color: 'var(--text-secondary)' }}>
+              {p}
+            </p>
+          ))}
+          {hasMoreOverview && (
+            <button
+              type="button"
+              onClick={() => setOverviewOpen(v => !v)}
+              className="mt-1.5 font-sans text-[12px] underline underline-offset-2 transition-colors hover:text-[var(--text-primary)]"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {overviewOpen ? 'Show less' : `Read the full overview (${overviewParas.length - 1} more)`}
+            </button>
+          )}
+        </div>
       )}
       {!!guide.themes?.length && (
         <div className="flex flex-wrap gap-1.5 mb-5">
           {guide.themes.slice(0, 8).map(t => (
             <span key={t} className="font-sans text-[11px] px-2 py-1 border"
-              style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>
+              style={{ borderColor: 'var(--border-light)', color: 'var(--text-muted)' }}>
               {t}
             </span>
           ))}
@@ -297,33 +348,95 @@ function GuidePanel({ bookId, bookPath, bookTitle, onGoToPageNumber }: {
       )}
       {!!guide.sections?.length && (
         <>
-          <CapsLabel className="block mb-2" style={{ color: 'var(--text-muted)' }}>Sections</CapsLabel>
-          {guide.sections.map((s, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => onGoToPageNumber(s.startPage)}
-              className="w-full text-left py-2.5 border-t hover:bg-[var(--bg-white)] transition-colors"
-              style={{ borderColor: 'var(--border-light)' }}
-            >
-              <span className="block font-body text-[14px]" style={{ color: 'var(--text-primary)' }}>{s.title}</span>
-              <span className="block font-sans text-[11px] mb-1" style={{ color: 'var(--accent-rust)' }}>
-                pp. {s.startPage}–{s.endPage}
-              </span>
-              <span className="block font-sans text-[12px] leading-snug line-clamp-3" style={{ color: 'var(--text-muted)' }}>
-                {s.summary}
-              </span>
-            </button>
-          ))}
+          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Sections</CapsLabel>
+          {guide.sections.map((s, i) => {
+            const open = openSection === i;
+            // Same thumbnail rule as the book page's sections list: the first
+            // page in the section that has an image and isn't blank.
+            const thumbPage = pageList.find(p =>
+              p.page_number != null && p.page_number >= s.startPage && p.page_number <= s.endPage
+              && p.page_type !== 'blank' && getPageThumbUrl(p as unknown as Record<string, unknown>));
+            const thumb = thumbPage ? getPageThumbUrl(thumbPage as unknown as Record<string, unknown>) : null;
+            return (
+              <div key={i} className="border-t" style={{ borderColor: 'var(--border-light)' }}>
+                <button
+                  type="button"
+                  onClick={() => setOpenSection(open ? null : i)}
+                  aria-expanded={open}
+                  className="w-full text-left py-3 flex items-start gap-3 transition-colors hover:bg-[var(--bg-white)]"
+                >
+                  <span
+                    className="shrink-0 w-[38px] h-[50px] overflow-hidden border flex items-center justify-center"
+                    style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }}
+                  >
+                    {thumb && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={thumb} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                    )}
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block font-body text-[14px] leading-snug" style={{ color: 'var(--text-primary)' }}>{s.title}</span>
+                    <span className="block font-sans text-[11px] mt-0.5" style={{ color: 'var(--text-faint)' }}>
+                      pp. {s.startPage}–{s.endPage}
+                    </span>
+                    {!open && (
+                      <span className="block font-sans text-[12px] leading-snug mt-1 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
+                        {s.summary}
+                      </span>
+                    )}
+                  </span>
+                  <ChevronRightSmall
+                    size={14}
+                    className="shrink-0 mt-1 transition-transform"
+                    style={{ color: 'var(--text-faint)', transform: open ? 'rotate(90deg)' : 'none' }}
+                  />
+                </button>
+                {open && (
+                  <div className="pb-4 pl-[50px]">
+                    <p className="font-sans text-[12.5px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      {s.summary}
+                    </p>
+                    {!!s.concepts?.length && (
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {s.concepts.map(c => (
+                          <span key={c} className="font-sans text-[11px] px-2 py-1 border"
+                            style={{ borderColor: 'var(--border-light)', color: 'var(--text-muted)' }}>
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {!!s.quotes?.length && (
+                      <div className="mt-3 flex flex-col gap-2.5">
+                        {s.quotes.slice(0, 3).map((q, qi) => (
+                          <div key={qi} className="pl-2.5" style={{ borderLeft: '2px solid var(--border-medium)' }}>
+                            <p className="font-body text-[13px] italic leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                              &ldquo;{q.text}&rdquo;
+                            </p>
+                            <span className="font-sans text-[11px]" style={{ color: 'var(--text-faint)' }}>p. {q.page}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => onGoToPageNumber(s.startPage)}
+                      className="mt-3 px-3 py-2 border font-sans text-[12px] transition-colors hover:bg-[var(--bg-white)]"
+                      style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+                    >
+                      Read this section →
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </>
       )}
       <div className="mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-        <p className="font-sans text-[11.5px] leading-relaxed mb-2" style={{ color: 'var(--text-faint)' }}>
+        <p className="font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
           Written by an AI-assisted enrichment pass over the transcription and translation, not the printed contents.
         </p>
-        <a href={`/book/${bookPath}/guide`} className="font-sans text-[12px] underline" style={{ color: 'var(--accent-rust)' }}>
-          Full reading guide →
-        </a>
       </div>
     </div>
   );
@@ -582,20 +695,35 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
     }
   };
 
+  const empty = messages.length === 0;
+
   return (
+    // Before the first question the composer follows the suggestions instead of
+    // sitting at the far bottom of an empty panel, where a tall desktop drawer
+    // put it below the fold and the field read as missing.
     <div className="flex flex-col min-h-0 flex-1">
-      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-4 pb-3" style={{ overscrollBehavior: 'contain' }}>
-        {messages.length === 0 && (
+      <div
+        ref={scrollRef}
+        className={`overflow-y-auto px-4 pb-3 ${empty ? 'shrink-0' : 'flex-1 min-h-0'}`}
+        style={{ overscrollBehavior: 'contain' }}
+      >
+        {empty && (
           <>
             <p className="font-sans text-[12.5px] leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>
               Ask about this page, the book, its author, or any concept in the text.
             </p>
+            <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Or start here</CapsLabel>
             <div className="flex flex-col gap-1.5">
               {LIBRARIAN_SUGGESTIONS.map(s => (
                 <button key={s} type="button" onClick={() => ask(s)}
-                  className="text-left px-2.5 py-2 border font-sans text-[12.5px] hover:bg-[var(--bg-white)] transition-colors"
-                  style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}>
+                  className="group flex items-center justify-between gap-2 text-left px-3 py-2.5 border font-sans text-[12.5px] hover:bg-[var(--bg-white)] transition-colors"
+                  style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
                   {s}
+                  <ChevronRightSmall
+                    size={13}
+                    className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ color: 'var(--text-faint)' }}
+                  />
                 </button>
               ))}
             </div>
@@ -624,10 +752,10 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
         )}
       </div>
       <form
-        className="shrink-0 px-4 pb-4"
+        className={`shrink-0 px-4 ${empty ? 'pt-3 pb-3' : 'pb-4'}`}
         onSubmit={e => { e.preventDefault(); ask(input); }}
       >
-        <div className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--accent-rust)]"
+        <div className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--text-muted)]"
           style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)' }}>
           <input
             value={input}
@@ -644,6 +772,9 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
           </button>
         </div>
       </form>
+      {/* Takes the slack an empty conversation leaves, so the composer stays
+          put under the suggestions rather than being pushed to the bottom */}
+      {empty && <div className="flex-1 min-h-0" />}
     </div>
   );
 }
@@ -771,16 +902,17 @@ function BookSearchPanel({
 
   return (
     <div className="flex flex-col min-h-0 flex-1">
-      <div className="px-4 pb-2">
-        {/* The field autofocuses, so the global focus-visible ring drew a rust
-            box inside it on open. Emphasis lives on the wrapper's border. */}
+      <div className="px-4 pt-3 pb-2">
+        {/* The field autofocuses, so a focus ring would flash on every open.
+            Focus reads as a quiet darkening of the wrapper border instead —
+            never the accent, which shouted on a panel nobody had typed in. */}
         <div
-          className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--accent-rust)]"
+          className="flex items-center gap-2 px-2.5 py-2 border transition-colors focus-within:border-[var(--text-muted)]"
           style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)' }}
         >
           {searching
-            ? <Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} />
-            : <Search size={14} style={{ color: 'var(--text-muted)' }} />}
+            ? <Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-faint)' }} />
+            : <Search size={14} style={{ color: 'var(--text-faint)' }} />}
           {/* 16px on phones: anything smaller makes iOS Safari zoom on focus */}
           <input
             ref={inputRef}
@@ -805,11 +937,16 @@ function BookSearchPanel({
             key={r.pageId}
             type="button"
             onClick={() => onGoTo(r.pageId)}
-            className="w-full text-left px-4 py-2.5 border-b hover:bg-[var(--bg-white)]"
+            className="group w-full text-left px-4 py-3 border-b transition-colors hover:bg-[var(--bg-white)]"
             style={{ borderColor: 'var(--border-light)' }}
           >
-            <span className="block font-sans text-[11px] mb-0.5" style={{ color: 'var(--accent-rust)' }}>
-              Page {r.pageNumber}
+            <span className="flex items-center justify-between gap-2 mb-1">
+              <CapsLabel style={{ color: 'var(--text-faint)' }}>Page {r.pageNumber}</CapsLabel>
+              <ChevronRightSmall
+                size={13}
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ color: 'var(--text-faint)' }}
+              />
             </span>
             {r.matches.slice(0, 2).map((m, i) => (
               <span key={i} className="block font-body text-[13.5px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
@@ -908,7 +1045,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  */
 function PanelContent({
   panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
-  editing, onToggleEdit, shareUrl,
+  editing, onToggleEdit, shareUrl, stripVisible, onToggleStrip,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -923,10 +1060,27 @@ function PanelContent({
   editing: boolean;
   onToggleEdit: () => void;
   shareUrl: string;
+  stripVisible: boolean;
+  onToggleStrip: () => void;
 }) {
   if (panel === 'more') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
+        {/* The page strip lost its toolbar slot when the pane chips took one;
+            it is a toggle, not a panel, so it stays a switch rather than a row
+            that opens something. */}
+        <div
+          className="w-full px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b"
+          style={{ borderColor: 'var(--border-light)' }}
+        >
+          <span className="min-w-0">
+            <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>Page thumbnails</span>
+            <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>
+              The filmstrip above the toolbar
+            </span>
+          </span>
+          <SettingsSwitch on={stripVisible} onToggle={onToggleStrip} label="Show page thumbnails" />
+        </div>
         {MORE_TOOLS.map(([key, label, hint]) => (
           <button
             key={key}
@@ -970,32 +1124,24 @@ function PanelContent({
         {/* The section title left the top bar; this is where a reader asks
             for it back. */}
         <div
-          className="flex items-center justify-between gap-3 px-4 min-h-[44px] border-b"
+          className="flex items-center justify-between gap-3 px-4 min-h-[48px] border-b"
           style={{ borderColor: 'var(--border-light)' }}
         >
-          <span className="font-sans text-[12px]" style={{ color: 'var(--text-secondary)' }}>
-            Show section title
+          <span className="min-w-0">
+            <span className="block font-sans text-[12.5px]" style={{ color: 'var(--text-secondary)' }}>
+              Show section title
+            </span>
+            <span className="block font-sans text-[11px] truncate" style={{ color: 'var(--text-faint)' }}>
+              {r.currentChapter
+                ? (r.currentChapter.titleEn || r.currentChapter.title)
+                : 'No section covers this page'}
+            </span>
           </span>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={r.settings.showSection}
-            onClick={() => r.updateSettings({ showSection: !r.settings.showSection })}
-            className="relative w-10 h-[22px] border transition-colors shrink-0"
-            style={{
-              borderColor: 'var(--border-medium)',
-              background: r.settings.showSection ? 'var(--accent-rust)' : 'var(--bg-warm)',
-            }}
-          >
-            <span
-              className="absolute top-[2px] w-4 h-4 border transition-all"
-              style={{
-                left: r.settings.showSection ? 20 : 2,
-                background: '#fdfcf9',
-                borderColor: 'var(--border-medium)',
-              }}
-            />
-          </button>
+          <SettingsSwitch
+            on={r.settings.showSection}
+            onToggle={() => r.updateSettings({ showSection: !r.settings.showSection })}
+            label="Show the section title in the top bar"
+          />
         </div>
         {r.chapters.length ? (
           <ChapterList
@@ -1020,6 +1166,7 @@ function PanelContent({
         bookId={r.book.id}
         bookPath={r.bookPath}
         bookTitle={r.book.display_title || r.book.title}
+        pageList={r.pageList}
         onGoToPageNumber={(n) => { onClose(); r.goToPageNumber(n); }}
       />
     );
@@ -1347,6 +1494,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     editing,
     onToggleEdit: () => setEditing(v => !v),
     shareUrl,
+    stripVisible,
+    onToggleStrip: toggleStrip,
   };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
@@ -1620,10 +1769,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 boxShadow: '24px 0 48px -28px rgba(30,20,8,0.5)',
               }}
             >
-              <div className="flex items-center justify-between px-4 pt-3.5 pb-2 shrink-0">
-                <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
+              <div
+                className="flex items-center justify-between px-4 h-[46px] shrink-0 border-b"
+                style={{ borderColor: 'var(--border-light)' }}
+              >
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
-                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)]"><X size={15} /></button>
+                  className="w-7 h-7 -mr-1.5 flex items-center justify-center transition-colors text-[var(--text-faint)] hover:text-[var(--text-primary)]"><X size={15} /></button>
               </div>
               <PanelContent panel={leftPanel} {...panelProps} />
             </div>
@@ -1684,30 +1836,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               )}
             </a>
             <UserMenu variant="hero" />
-          </div>
-          {/* View chips — a slim segmented control; the toolbar carries the
-              large tap targets, so these stay out of the way */}
-          <div className="flex px-3 pb-2">
-            {(['scan', 'ocr', 'en'] as const).map((v, i) => {
-              const on = r.views[v];
-              return (
-                <button
-                  key={v}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => r.toggleView(v)}
-                  className="flex-1 h-[24px] font-sans text-[10px] font-medium uppercase tracking-[0.08em] border transition-colors"
-                  style={{
-                    borderColor: on ? onInk(0.3) : onInk(0.16),
-                    background: on ? onInk(0.14) : 'transparent',
-                    color: on ? '#fdfcf9' : onInk(0.5),
-                    marginLeft: i === 0 ? 0 : -1,
-                  }}
-                >
-                  {v === 'scan' ? 'Scan' : v === 'ocr' ? 'OCR' : 'English'}
-                </button>
-              );
-            })}
           </div>
         </header>
 
@@ -1823,13 +1951,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <div
             className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up"
             style={{
-              bottom: 52 + (stripVisible ? 96 : 0),
+              bottom: MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
               maxHeight: '62dvh',
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
           >
-            <div className="flex items-center justify-between px-4 pt-3 pb-1.5 shrink-0">
+            <div
+              className="flex items-center justify-between px-4 h-[48px] shrink-0 border-b"
+              style={{ borderColor: 'var(--border-light)' }}
+            >
               <div className="flex items-center gap-1.5 min-w-0">
                 {MORE_TOOLS.some(([k]) => k === leftPanel) && (
                   <button type="button" aria-label="Back to More" onClick={() => setLeftPanel('more')}
@@ -1837,7 +1968,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     <ChevronLeft size={16} />
                   </button>
                 )}
-                <CapsLabel style={{ color: 'var(--accent-rust)' }}>{leftPanelTitle}</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
               </div>
               <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
                 className="w-11 h-11 -mr-2 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
@@ -1864,8 +1995,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <MobileToolbar
             panel={leftPanel}
             onTogglePanel={togglePanel}
-            stripVisible={stripVisible}
-            onToggleStrip={toggleStrip}
+            views={r.views}
+            onToggleView={r.toggleView}
           />
         </div>
       </div>
