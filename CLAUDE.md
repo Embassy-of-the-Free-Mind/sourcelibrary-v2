@@ -169,6 +169,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 **Measuring anything**
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **or using a model as a judge/screen** → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
+- Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 
 ## Domain Context
 
