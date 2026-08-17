@@ -103,7 +103,7 @@ describe('Embassy API', () => {
       expect(messages[1].authorName).toBe('The Librarian');
     });
 
-    it('allows unauthenticated requests as an anonymous, unlisted thread', async () => {
+    it('lists an anonymous visitor\'s thread, with no creator attached', async () => {
       const { auth } = await import('@/lib/auth');
       (auth as any).mockResolvedValueOnce(null);
 
@@ -117,14 +117,38 @@ describe('Embassy API', () => {
       expect(res.status).toBe(200);
       expect(data.threadId).toBeDefined();
 
-      // Anonymous threads carry a null creatorId and are 'unlisted' — they
-      // never surface in the public Recent feed or anyone's "mine" list, even
-      // when the request asked for 'public'.
+      // Anonymous threads used to be forced 'unlisted' regardless of what was
+      // asked, because listing meant publishing a name. It no longer does —
+      // names are stripped server-side — so a visitor's conversation joins the
+      // Recent feed like anyone else's, still carrying a null creatorId.
       const db = getTestDb();
       const thread = await db.collection('embassy_threads').findOne({
         _id: new ObjectId(data.threadId),
       });
       expect(thread!.creatorId).toBeNull();
+      expect(thread!.visibility).toBe('public');
+    });
+
+    it('honours an anonymous opt-out as unlisted, not private', async () => {
+      const { auth } = await import('@/lib/auth');
+      (auth as any).mockResolvedValueOnce(null);
+
+      const req = makeRequest('/api/embassy/chat', {
+        message: 'Something personal',
+        visibility: 'private',
+      });
+
+      const res = await chatPost(req as any);
+      const data = await res.json();
+      expect(res.status).toBe(200);
+
+      // 'private' would lock the visitor out of their own conversation: a null
+      // creatorId can never match a session id, so the detail route would 404
+      // the person who wrote it.
+      const db = getTestDb();
+      const thread = await db.collection('embassy_threads').findOne({
+        _id: new ObjectId(data.threadId),
+      });
       expect(thread!.visibility).toBe('unlisted');
     });
 
@@ -278,7 +302,10 @@ describe('Embassy API', () => {
 
       expect(res.status).toBe(200);
       expect(data.threads).toHaveLength(1);
-      expect(data.threads[0].creatorName).toBe('Scholar');
+      // The feed shows the conversation, never who had it. 'Scholar' is the
+      // stored creatorName; a stranger must not receive it.
+      expect(data.threads[0].creatorName).toBe('A reader');
+      expect(JSON.stringify(data)).not.toContain('Scholar');
       expect(data.threads[0].preview.question).toContain('philosopher');
       expect(data.threads[0].preview.answer).toContain('alchemical');
     });
