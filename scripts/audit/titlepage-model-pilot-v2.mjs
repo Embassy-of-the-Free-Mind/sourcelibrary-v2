@@ -234,6 +234,25 @@ function quoteSupportsName(quote, name) {
   return parts.some((p) => q.includes(p.slice(0, 4)));
 }
 
+/**
+ * THIS COMPARATOR CANNOT JUDGE A NON-LATIN CORPUS, and it will not tell you so.
+ *
+ * `foldOrtho` strips non-Latin to the empty string, so a bare CJK catalogued
+ * name — 薛己, 魏源, 吳士玉, 章潢 — folds to "" and scores as a MISMATCH against
+ * a correct romanised proposal, by construction. On the non-Latin control, 12 of
+ * 30 rows had one side fold to empty; only 17 were genuinely judgeable, and the
+ * headline it produced (42.9%) was a floor rather than an estimate. Hand
+ * adjudication put the real figure nearer 52%.
+ *
+ * Two of the rows it scored as disagreements were the prompt working perfectly:
+ *   茅元儀 → Mao Yuanyi   from 「防風茅元儀輯」  (輯 = compiled)
+ *   江少虞 → Jiang Shaoyu from 「宋江少虞撰」   (撰 = composed)
+ *
+ * Before quoting any non-Latin precision number, give this function a way to
+ * compare across scripts — a romanisation table, or the thesaurus variants,
+ * which already hold both forms for many people. Until then every non-Latin
+ * figure out of this file is a LOWER BOUND and must be reported as one.
+ */
 function agrees(extracted, knownName, knownDoc) {
   if (!extracted) return false;
   if (sameNameForm(extracted, knownName)) return true;
