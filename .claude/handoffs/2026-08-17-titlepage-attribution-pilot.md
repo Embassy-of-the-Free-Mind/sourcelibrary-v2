@@ -46,6 +46,19 @@ where flash-lite fired", so it can never be the reader that declines); the
 adjudicator shares a model family with one reader; the 28 concordant rows were
 never checked.
 
+**And the window is shared.** Both readers — and the adjudicators — saw the same
+5 pages, selected by `attributionWindow()` from the OCR `<page-type>` tags. That
+isolates judgement, which is what makes the comparison fair, and it means a
+SELECTION error is invisible: if the byline sits on page 7 and the filter stopped
+at 5, both readers say "nobody named", they agree, and the row never reaches
+adjudication. So the finding is *flash-lite invents names off pages that don't
+carry them* — **not** that those books are anonymous. Checked: 16 of the 17
+subagent wins had a real title-page in the window, and fallback rates are
+identical across concordant (11%) and discordant (10%) rows, so selection does
+not explain the discordance. It remains an unmeasured source of SHARED error.
+Cheap test: re-run a slice at a 12-page window and see whether any "nobody
+named" verdict flips.
+
 ## Where to pick up
 
 1. **Two-tier design** — flash-lite for coverage, subagents for adjudication where
