@@ -156,11 +156,11 @@ function MobileToolbar({
               type="button"
               aria-pressed={on}
               onClick={() => onToggleView(v)}
-              className="flex-1 h-[30px] font-sans text-[11px] font-medium tracking-[0.06em] uppercase border transition-colors"
+              className="flex-1 h-[28px] font-sans text-[10.5px] font-medium tracking-[0.06em] uppercase border transition-colors"
               style={{
-                borderColor: on ? '#fdfcf9' : onInk(0.22),
-                background: on ? '#fdfcf9' : 'transparent',
-                color: on ? INK : onInk(0.6),
+                borderColor: on ? onInk(0.82) : onInk(0.22),
+                background: on ? onInk(0.82) : 'transparent',
+                color: on ? INK : onInk(0.55),
               }}
             >
               {v === 'scan' ? 'Scan' : v === 'ocr' ? 'OCR' : 'English'}

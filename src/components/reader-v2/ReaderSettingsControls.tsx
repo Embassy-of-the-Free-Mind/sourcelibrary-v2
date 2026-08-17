@@ -20,7 +20,7 @@ const LINE_HEIGHTS = [1.5, 1.6, 1.7, 1.8, 1.9];
 
 function RowLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-sans text-[12.5px] text-[var(--text-secondary)]">{children}</span>
+    <span className="font-sans text-[12.5px] whitespace-nowrap text-[var(--text-secondary)]">{children}</span>
   );
 }
 
