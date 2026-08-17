@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   title: 'Where Source Library Came From - Research Notes - Source Library',
   description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations — the origin story of Source Library.',
   openGraph: {
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
+    images: [{ url: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
     title: 'Where Source Library Came From',
     description: 'From a single untranslated Ficino manuscript to 5,000+ books — the origin story of Source Library.',
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
+    images: [{ url: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
   },
   alternates: {
     canonical: '/blog/origin-story',
@@ -26,7 +26,7 @@ export default function OriginStoryPage() {
         <ContentHeader
           title="Where Source Library Came From"
           subtitle="From one untranslated Ficino manuscript to 5,000 books and the ambition to translate the Renaissance"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg"
+          image="https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg"
           imageAlt="Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind"
         >
           <p className="text-stone-400 text-sm mt-4">15 March 2026 &middot; 8 min read</p>
@@ -62,7 +62,7 @@ export default function OriginStoryPage() {
         <figure className="my-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg"
+            src="https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg"
             alt="Bronze bust of Marsilio Ficino labeled 'Divinus Interpres' with a laptop open to Plotinus translation work, at the Embassy of the Free Mind in Amsterdam"
             className="w-full max-w-md mx-auto rounded-lg shadow-md"
           />
@@ -251,7 +251,7 @@ export default function OriginStoryPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-liber-de-voluptate.pdf"
+              href="https://images.sourcelibrary.org/blog/ficino-liber-de-voluptate.pdf"
               className="inline-flex items-center gap-2 bg-stone-800 text-white px-5 py-2.5 rounded-lg hover:bg-stone-700 transition-colors text-sm font-medium"
             >
               Download the translation (PDF)

@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
     description: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg' }],
   },
   alternates: {
     canonical: '/blog/philosophers-stone',
@@ -27,7 +27,7 @@ export default function PhilosophersStonePage() {
         <ContentHeader
           title="What Is the Philosopher's Stone? Eight Answers from the Primary Sources"
           subtitle="The most famous concept in alchemy means radically different things depending on which century, which tradition, and which text you pick up"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg"
+          image="https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg"
           imageAlt="Frontispiece engraving from Lambspringk's De Lapide Philosophico, 1625"
         >
           <p className="text-stone-400 text-sm mt-4">27 February 2026 &middot; 20 min read</p>
@@ -73,7 +73,7 @@ export default function PhilosophersStonePage() {
           <Link href="/book/69804b952c52aad359879321?page=6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518"
+              src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518"
               alt="Frontispiece engraving from Lambspringk's De Lapide Philosophico showing a philosopher standing beside an alchemical furnace, Frankfurt 1625"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -126,7 +126,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/69804b952c52aad359879321?page=12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515"
                 alt="Allegorical engraving of two fish swimming in a sea, representing Soul and Spirit, from Lambspringk 1625"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -164,7 +164,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/69804b952c52aad359879321?page=20">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508"
                 alt="Engraving of a stag and unicorn facing each other in a wooded landscape, representing Soul and Spirit in Lambspringk 1625"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -201,7 +201,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/69804b952c52aad359879321?page=26">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512"
                 alt="Winged dragon biting its own tail (ouroboros) in a forest, from Lambspringk 1625"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -423,7 +423,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/6952d13377f38f6761bc5e29?page=9">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177"
                 alt="Circular emblem from Kelly's Alchemical Writings with Latin motto 'Sic Pace beamur, propitioque Deo'"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -470,7 +470,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/6952d13377f38f6761bc5e29?page=190">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284"
                 alt="Alchemical emblem depicting the Trinity as a three-headed figure within a celestial sphere, from Kelly's Theatre of Terrestrial Astronomy"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -628,7 +628,7 @@ export default function PhilosophersStonePage() {
             <Link href="/book/69804b952c52aad359879321?page=34">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514"
                 alt="King seated on a dragon within a classical portico, Lambspringk 1625"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />

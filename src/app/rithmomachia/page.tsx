@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description: 'A mathematical board game played across Europe for six centuries. Now playable online, grounded in five Renaissance primary sources.',
     images: [
       {
-        url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+        url: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
         width: 1200,
         height: 630,
       },
