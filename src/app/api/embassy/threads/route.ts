@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
+import { attribution, LISTED_VISIBILITY } from '@/lib/embassy/thread-visibility';
 
 /**
  * GET /api/embassy/threads — List Embassy threads.
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
     filter = { creatorId: session.user.id, messageCount: { $gte: 2 } };
   } else {
-    filter = { visibility: 'public', messageCount: { $gte: 2 } };
+    filter = { visibility: LISTED_VISIBILITY, messageCount: { $gte: 2 } };
   }
 
   const threads = await db.collection('embassy_threads')
@@ -49,7 +50,11 @@ export async function GET(request: NextRequest) {
       return {
         id: thread._id.toString(),
         title: thread.title,
-        creatorName: thread.creatorName,
+        // Only the reader's own list carries a name. The public feed is
+        // anonymised here rather than in the sidebar that renders it — the
+        // 2026-07-30 leak was in this payload, so a component-level fix would
+        // still be one `curl` away.
+        creatorName: attribution(thread.creatorName, mine),
         messageCount: thread.messageCount,
         createdAt: thread.createdAt,
         lastMessageAt: thread.lastMessageAt,

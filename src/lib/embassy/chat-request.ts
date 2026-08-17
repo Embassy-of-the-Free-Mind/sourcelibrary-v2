@@ -23,13 +23,15 @@ export const chatRequestSchema = z.object({
     .min(1, 'Message cannot be empty')
     .max(5000, 'That message is too long for the Librarian — please keep it under 5,000 characters, or share the text a section at a time.'),
   history: z.array(messageSchema).max(50).optional(),
-  // Default PRIVATE. A Librarian thread is published in the public "Recent"
-  // feed under the reader's real account name, so publishing has to be
-  // something they chose, not something they failed to opt out of. The old
-  // default was 'public', which put 515 conversations and 10 readers' full
-  // names into that feed — a reader wrote in asking why her questions carried
-  // her first and last name.
-  visibility: z.enum(['public', 'private']).default('private'),
+  // The reader's listing choice, not a name-sharing choice — those were the
+  // same switch until now and that is what went wrong twice. Publishing under
+  // real account names put 515 conversations and 10 readers' full names in the
+  // Recent feed, and a reader wrote in asking why her questions carried her
+  // first and last name. Defaulting to private then emptied the feed to zero
+  // for good. Names are now stripped server-side on every surface but the
+  // reader's own (see lib/embassy/thread-visibility), which is what lets the
+  // default go back to listed. 'private' here means "don't list it".
+  visibility: z.enum(['public', 'private']).default('public'),
   stream: z.boolean().optional(),
   // Optional collection slug/topic to weight the search toward. Set by the
   // "Ask the Librarian" entry point on a collection page; the Librarian biases

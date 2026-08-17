@@ -389,9 +389,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   useEffect(() => {
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
-  // Private until the reader says otherwise — the toggle beneath the composer
-  // publishes the thread under their account name, so it must be opt-in.
-  const [visibility, setVisibility] = useState<'public' | 'private'>('private');
+  // Listed by default. The toggle beneath the composer controls whether the
+  // conversation appears in Recent — it never controls a name, because the
+  // server strips those from every surface but the reader's own.
+  const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   // Research notebook accumulated live across the thread (from notebook_update).
   const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
   const [notebookTopic, setNotebookTopic] = useState<string | undefined>();
@@ -458,6 +459,20 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setListening(true);
     inputRef.current?.focus();
   }, [listening, stopDictation]);
+
+  // Flip the listing toggle. If the conversation already exists it has to be
+  // written through immediately: the old toggle only ever fed the create call,
+  // so a reader who turned listing off mid-conversation changed nothing and
+  // was never told.
+  const setListed = useCallback((listed: boolean) => {
+    setVisibility(listed ? 'public' : 'private');
+    if (!threadId) return;
+    fetch(`/api/embassy/threads/${threadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listed }),
+    }).catch(() => { });
+  }, [threadId]);
 
   // Fetch public threads
   useEffect(() => {
@@ -1177,15 +1192,17 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      {isSignedIn && (
-                        <button
-                          onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
-                          className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
-                        >
-                          <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                          <span className="text-[9px]">{visibility === 'public' ? '(shown in Recent, under your name)' : '(only you)'}</span>
-                        </button>
-                      )}
+                      <button
+                        onClick={() => setListed(visibility !== 'public')}
+                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                      >
+                        <span>{visibility === 'public' ? 'Listed' : 'Not listed'}</span>
+                        <span className="text-[9px]">
+                          {visibility === 'public'
+                            ? '(shown in Recent, never under your name)'
+                            : isSignedIn ? '(only you)' : '(not shown to anyone else)'}
+                        </span>
+                      </button>
                       <span className="text-[9px] text-[#c0b8b0] font-mono">v5</span>
                     </div>
                   </div>
@@ -1195,7 +1212,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       <Link href="/auth/signin?callbackUrl=/librarian" className="text-[#9e4a3a] hover:underline">
                         Sign in
                       </Link>
-                      {' '}(free) to save your conversations and keep them private.
+                      {' '}(free) to keep your conversations and come back to them later.
                     </p>
                   )}
                 </div>
@@ -1224,6 +1241,12 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     </button>
                   )}
                 </div>
+
+                {sidebarTab === 'recent' && (
+                  <p className="text-[10px] text-[#b0a89c] font-sans mb-3 leading-relaxed">
+                    What other readers are asking, shown without their names.
+                  </p>
+                )}
 
                 {(() => {
                   const allThreads = sidebarTab === 'mine' ? myThreads : threads;
