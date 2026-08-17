@@ -35,6 +35,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { activeSweeps } from '../lib/sweep-heartbeat.mjs';
 
 function arg(flag, dflt) {
   const i = process.argv.indexOf(flag);
@@ -57,13 +58,25 @@ try {
   const db = client.db(process.env.DB_NAME || 'bookstore');
   const since = new Date(Date.now() - WINDOW_MIN * 60_000);
 
-  // Indexed-ish and bounded: we only need "are there many", not the exact count.
+  // Signal 1 — the precise one: sweeps that announce themselves. One tiny doc
+  // per sweep, so this is instant and tells you WHICH sweep, on which host.
+  const live = await activeSweeps(db);
+  for (const s of live) {
+    console.log(`heartbeat: ${s.sweep} alive on ${s.host} (pid ${s.pid}, last beat ${Math.round(s.ageMs / 1000)}s ago)` +
+      (s.progress?.books_done !== undefined ? ` — ${s.progress.books_done} books done` : ''));
+  }
+
+  // Signal 2 — the general one: has anything bulk-written entities recently,
+  // including a writer that never called the heartbeat. Backed by
+  // entities_updated_at_idx; without that index this is a 1M-doc scan that
+  // times out under load (the quiet case is the expensive one, since proving
+  // ZERO matches cannot short-circuit).
   const recent = await db.collection('entities').countDocuments(
     { updated_at: { $gte: since } },
     { maxTimeMS: 20000, limit: THRESHOLD + 1 },
   );
 
-  const active = recent > THRESHOLD;
+  const active = live.length > 0 || recent > THRESHOLD;
   console.log(`entities updated in the last ${WINDOW_MIN}m: ${recent}${recent > THRESHOLD ? '+' : ''} (threshold ${THRESHOLD})`);
 
   if (active) {
