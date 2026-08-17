@@ -116,6 +116,8 @@ import { sameNameForm, foldOrtho } from '../lib/name-equivalence.mjs';
 
 const N = Number((process.argv.find((a) => a.startsWith('--n=')) || '').split('=')[1] || 100);
 const MODELS_ARG = (process.argv.find((a) => a.startsWith('--models=')) || '').split('=')[1] || 'lite,preview';
+const LANGS = (process.argv.find((a) => a.startsWith('--languages=')) || '').split('=')[1];
+const PROMPT_FILE = (process.argv.find((a) => a.startsWith('--prompt-file=')) || '').split('=')[1];
 const PROMPT_VERSION = 'titlepage-role-v3-namedquote';
 const MODEL_IDS = { lite: 'gemini-3.1-flash-lite', preview: 'gemini-3-flash-preview' };
 const API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -157,6 +159,7 @@ function tp_render(win) {
   return win.map((w) => `--- PAGE ${w.page_number} [${w.page_type}${w.untyped_fallback ? ', UNTYPED GUESS' : ''}] ---\n${w.prose.slice(0, 2600)}`).join('\n\n');
 }
 
+const ACTIVE_PROMPT = PROMPT_FILE ? readFileSync(new URL(PROMPT_FILE, import.meta.url), 'utf8') : PROMPT;
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -167,7 +170,7 @@ async function readTitlePage(model, prose, tries = 3) {
     try {
       res = await ai.models.generateContent({
         model,
-        contents: `${PROMPT}\n\n${prose}`,
+        contents: `${ACTIVE_PROMPT}\n\n${prose}`,
         config: { temperature: 0, maxOutputTokens: 1200 },
       });
       break;
@@ -265,7 +268,7 @@ const byId = new Map(anchored.map((a) => [a._id, a]));
  * claim. Pinning is the fix: draw once, reuse, and compare prompts on identical
  * books.
  */
-const SAMPLE_FILE = 'scripts/output/titlepage-pilot-sample.json';
+const SAMPLE_FILE = (process.argv.find((a) => a.startsWith('--sample-file=')) || '').split('=')[1] || 'scripts/output/titlepage-pilot-sample.json';
 let pinned = null;
 if (existsSync(SAMPLE_FILE)) {
   pinned = JSON.parse(readFileSync(SAMPLE_FILE, 'utf8'));
@@ -274,11 +277,11 @@ if (existsSync(SAMPLE_FILE)) {
 }
 
 const control = pinned ? await books.find({ id: { $in: pinned.control } }, { projection: { id: 1, title: 1, author: 1, author_id: 1 } }).toArray() : await books.aggregate([
-  { $match: { ...TEXT_VISIBLE, author_id: { $in: [...byId.keys()] }, author: { $type: 'string', $ne: '' } } },
+  { $match: { ...TEXT_VISIBLE, author_id: { $in: [...byId.keys()] }, author: { $type: 'string', $ne: '' }, ...(LANGS ? { language: { $in: LANGS.split(',').map((x) => x.trim()) } } : {}) } },
   { $sample: { size: N } }, { $project: { id: 1, title: 1, author: 1, author_id: 1 } },
 ]).toArray();
 const target = pinned ? await books.find({ id: { $in: pinned.target } }, { projection: { id: 1, title: 1, author: 1 } }).toArray() : await books.aggregate([
-  { $match: { ...TEXT_VISIBLE, $or: [{ author_id: { $in: [null] } }, { author_id: { $exists: false } }] } },
+  { $match: { ...TEXT_VISIBLE, $or: [{ author_id: { $in: [null] } }, { author_id: { $exists: false } }], ...(LANGS ? { language: { $in: LANGS.split(',').map((x) => x.trim()) } } : {}) } },
   { $sample: { size: N } }, { $project: { id: 1, title: 1, author: 1 } },
 ]).toArray();
 
