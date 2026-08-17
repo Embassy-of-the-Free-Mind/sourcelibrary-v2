@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef, use } from 'react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -18,8 +17,12 @@ interface ThreadMessage {
 interface ThreadData {
   id: string;
   title: string;
+  // 'A reader' for everyone but the author — the API anonymises before it
+  // serves, so this is never a real name unless isOwner is true.
   creatorName: string;
-  creatorId?: string;
+  creatorId?: string | null;
+  isOwner?: boolean;
+  visibility?: 'public' | 'private' | 'unlisted';
   messageCount: number;
   createdAt: string;
 }
@@ -740,7 +743,6 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
 
 export default function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const { data: session } = useSession();
   const router = useRouter();
   const [thread, setThread] = useState<ThreadData | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
@@ -815,7 +817,29 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
             <p className="text-[12px] text-[#8a8480] font-sans">
               {thread.creatorName} &middot; {formatDate(thread.createdAt)}
             </p>
-            {session?.user?.id && thread.creatorId === session.user.id && (
+            {thread.isOwner && (
+              <button
+                onClick={async () => {
+                  const listed = thread.visibility === 'public';
+                  const res = await fetch(`/api/embassy/threads/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ listed: !listed }),
+                  });
+                  if (res.ok) {
+                    const data = await res.json();
+                    setThread(t => (t ? { ...t, visibility: data.visibility } : t));
+                  }
+                }}
+                className="text-[11px] text-[#b0a89c] hover:text-[#6b6560] font-sans transition-colors"
+                title={thread.visibility === 'public'
+                  ? 'Listed in Recent, without your name. Click to remove it.'
+                  : 'Not listed. Click to add it to Recent, without your name.'}
+              >
+                {thread.visibility === 'public' ? 'Listed' : 'Not listed'}
+              </button>
+            )}
+            {thread.isOwner && (
               <button
                 onClick={async () => {
                   if (!confirm('Delete this conversation? This cannot be undone.')) return;
@@ -866,7 +890,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
         </div>
 
         {/* Podcast section */}
-        <PodcastPlayer threadId={id} isOwner={!!session?.user?.id && session.user.id === thread.creatorId} />
+        <PodcastPlayer threadId={id} isOwner={!!thread.isOwner} />
 
         {/* Illustrations from cited books */}
         <IllustrationGallery threadId={id} />
