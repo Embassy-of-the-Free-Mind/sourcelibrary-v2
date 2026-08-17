@@ -63,3 +63,51 @@ The read: **flash-lite for coverage, subagents for adjudication.** Run the cheap
 pass to find candidates, and spend subagents on the rows where a relationship
 judgement is actually at stake — which is precisely the queue this whole pilot
 was trying to produce.
+
+---
+
+## Sampling caveat — added after the fact, and it matters
+
+**The twenty were not randomly sampled.** They are the first twenty of a filtered
+list (Latin-script, no real byline), in whatever order eight concurrent workers
+appended results — which tracks the Mongo cursor, roughly insertion order. A
+convenience sample, and it should have been drawn properly the first time.
+
+Checking the twenty against the other 141 in the same pool:
+
+|                     | chosen 20 | other 141 |
+|---|---|---|
+| median year         | 1598      | 1613      |
+| Latin               | 50%       | 53%       |
+| BSB Munich          | 40%       | 25%       |
+| evidence on a **title page** | **40%** | **60%** |
+
+Year and language track. Two things do not: the chosen books lean BSB-heavy, and
+— the one that matters — **60% of their evidence came from somewhere other than
+a title page** (preface, dedication, body text) against 40% in the rest of the
+pool. Those are exactly the pages where the hard relationship calls live: a
+preface signature, a dedication signed by the author, a name discussed in the
+body. So the sample is **harder than the pool average**, not easier, and both
+scores are probably pessimistic. The subagent advantage was measured on the
+difficult slice, which is the right place to measure it but not a substitute for
+a random draw.
+
+## The statistics, stated honestly
+
+Paired (same books, both readers), McNemar exact test on the 8 discordant pairs
+— 7 favouring subagents, 1 favouring flash-lite:
+
+> **two-sided p = 0.070 — NOT significant at 0.05.**
+
+Unpaired, the 95% Wilson intervals **overlap**: subagents 89% [67%, 97%],
+flash-lite 56% [34%, 75%].
+
+So: the direction is consistent, the mechanism is understood and specific (the
+"nobody is named" class, six cases, each with the right role identified), and the
+effect is large — but n=18 scored rows cannot carry a significance claim. **The
+89-vs-56 headline is suggestive, not established.**
+
+What would establish it: a genuine random draw from the 161-book pool, ideally
+n=50, adjudicated blind — and adjudicated by someone other than the person who
+wrote the truth table, since two of the two "misses" turned out to be my
+labelling calls rather than the subagent's errors.
