@@ -34,7 +34,7 @@
 
 import { list } from '@vercel/blob';
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
-import { createWriteStream, existsSync, mkdirSync } from 'fs';
+import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { spawnSync } from 'child_process';
 import path from 'path';
 
@@ -64,11 +64,35 @@ function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`);
 }
 
+/**
+ * Both listings checkpoint their pagination cursor every 100k keys and append
+ * on resume. Without this a kill at minute 38 of a ~50-minute run threw away
+ * the whole phase — which is exactly what happened on the first real run, and
+ * a job long enough to be interrupted is a job that must survive being
+ * interrupted.
+ */
+function readCursor(file) {
+  const f = `${file}.cursor`;
+  if (!existsSync(f)) return null;
+  try {
+    const s = JSON.parse(readFileSync(f, 'utf8'));
+    // Trim any partial trailing line the kill may have left mid-write.
+    sh(`tail -c 1 "${file}" | grep -q '' || true`);
+    sh(`perl -i -ne 'print if /\\n$/ || eof' "${file}" 2>/dev/null || true`);
+    return s;
+  } catch { return null; }
+}
+function writeCursor(file, state) {
+  writeFileSync(`${file}.cursor`, JSON.stringify(state));
+}
+
 /** Stream every Blob object under PREFIX to a TSV of `key\tsize`. */
 async function dumpBlob() {
   if (existsSync(`${BLOB_TSV}.done`)) { log(`blob listing already complete — skipping`); return; }
-  const out = createWriteStream(BLOB_TSV);
-  let cursor, n = 0, bytes = 0;
+  const resume = readCursor(BLOB_TSV);
+  let cursor = resume?.cursor, n = resume?.n ?? 0, bytes = resume?.bytes ?? 0;
+  if (resume) log(`  blob: resuming from ${n.toLocaleString()} keys`);
+  const out = createWriteStream(BLOB_TSV, { flags: resume ? 'a' : 'w' });
   do {
     const res = await list({ cursor, limit: 1000, prefix: PREFIX });
     for (const b of res.blobs) {
@@ -76,18 +100,24 @@ async function dumpBlob() {
       n++; bytes += b.size ?? 0;
     }
     cursor = res.cursor;
-    if (n % 100000 === 0) log(`  blob: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
+    if (n % 100000 < 1000) {
+      log(`  blob: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
+      await new Promise(r => out.write('', r));
+      writeCursor(BLOB_TSV, { cursor, n, bytes });
+    }
   } while (cursor);
   await new Promise(r => out.end(r));
-  createWriteStream(`${BLOB_TSV}.done`).end(String(n));
+  writeFileSync(`${BLOB_TSV}.done`, String(n));
   log(`blob listing done: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
 }
 
 /** Stream every R2 object under PREFIX to a TSV of `key\tsize`. */
 async function dumpR2() {
   if (existsSync(`${R2_TSV}.done`)) { log(`r2 listing already complete — skipping`); return; }
-  const out = createWriteStream(R2_TSV);
-  let token, n = 0, bytes = 0;
+  const resume = readCursor(R2_TSV);
+  let token = resume?.cursor, n = resume?.n ?? 0, bytes = resume?.bytes ?? 0;
+  if (resume) log(`  r2: resuming from ${n.toLocaleString()} keys`);
+  const out = createWriteStream(R2_TSV, { flags: resume ? 'a' : 'w' });
   do {
     const res = await r2.send(new ListObjectsV2Command({
       Bucket: BUCKET, Prefix: PREFIX, MaxKeys: 1000, ContinuationToken: token,
@@ -97,10 +127,14 @@ async function dumpR2() {
       n++; bytes += o.Size ?? 0;
     }
     token = res.IsTruncated ? res.NextContinuationToken : undefined;
-    if (n % 100000 === 0) log(`  r2: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
+    if (n % 100000 < 1000) {
+      log(`  r2: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
+      await new Promise(r => out.write('', r));
+      writeCursor(R2_TSV, { cursor: token, n, bytes });
+    }
   } while (token);
   await new Promise(r => out.end(r));
-  createWriteStream(`${R2_TSV}.done`).end(String(n));
+  writeFileSync(`${R2_TSV}.done`, String(n));
   log(`r2 listing done: ${n.toLocaleString()} keys, ${(bytes / 1e9).toFixed(1)} GB`);
 }
 
