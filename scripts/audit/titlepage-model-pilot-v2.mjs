@@ -194,9 +194,9 @@ async function readTitlePage(model, prose, tries = 3) {
  * checking it costs a substring test.
  */
 function quoteIsOnPage(quote, prose) {
-  const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const norm = (s) => String(s ?? '').toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu, ' ').replace(/\s+/gu, ' ').trim();
   const q = norm(quote);
-  if (q.length < 6) return false;
+  if (q.length < 4) return false;
   return norm(prose).includes(q);
 }
 

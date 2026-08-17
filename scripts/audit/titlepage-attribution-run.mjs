@@ -31,20 +31,35 @@ import { foldOrtho } from '../lib/name-equivalence.mjs';
 const LIMIT = Number((process.argv.find((a) => a.startsWith('--limit=')) || '').split('=')[1] || 0);
 const CONC = Number((process.argv.find((a) => a.startsWith('--concurrency=')) || '').split('=')[1] || 8);
 const MODEL = 'gemini-3.1-flash-lite';
-const PROMPT_VERSION = 'titlepage-role-v3-namedquote';
-const OUT = 'scripts/output/titlepage-attribution-proposals.jsonl';
+const PROMPT_VERSION = (process.argv.find((a) => a.startsWith('--prompt=')) || '').split('=')[1] || 'titlepage-role-v3-namedquote';
+const OUT = (process.argv.find((a) => a.startsWith('--out=')) || '').split('=')[1] || 'scripts/output/titlepage-attribution-proposals.jsonl';
+const LANGS = (process.argv.find((a) => a.startsWith('--languages=')) || '').split('=')[1];
+const PROMPT_FILE = (process.argv.find((a) => a.startsWith('--prompt-file=')) || '').split('=')[1] || './titlepage-prompt-v3.txt';
 const API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('No GEMINI_API_KEY'); process.exit(1); }
 
-const PROMPT = readFileSync(new URL('./titlepage-prompt-v3.txt', import.meta.url), 'utf8');
+const PROMPT = readFileSync(new URL(PROMPT_FILE, import.meta.url), 'utf8');
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function tpRender(win) {
   return win.map((w) => `--- PAGE ${w.page_number} [${w.page_type}${w.untyped_fallback ? ', UNTYPED GUESS' : ''}] ---\n${w.prose.slice(0, 2600)}`).join('\n\n');
 }
-const normQ = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
-function quoteIsOnPage(q, prose) { const n = normQ(q); return n.length >= 6 && normQ(prose).includes(n); }
+/**
+ * SCRIPT-AWARE, and it has to be.
+ *
+ * This normaliser used to strip to [a-z0-9], which reduces EVERY Chinese,
+ * Arabic, Hebrew and Tibetan quote to the empty string. `quoteIsOnPage` then
+ * failed its length test and discarded the proposal — so on the non-Latin run
+ * it threw away 541 of 624 proposals (87%) for being written in a script it
+ * could not read, and reported them as unverifiable. The prompt was fine; the
+ * verifier was blind.
+ *
+ * \p{L}\p{N} keeps letters and numbers from every script. The floor drops to 4
+ * because a CJK character is a word, not a letter, and six of them is a clause.
+ */
+const normQ = (s) => String(s ?? '').toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu, ' ').replace(/\s+/gu, ' ').trim();
+function quoteIsOnPage(q, prose) { const n = normQ(q); return n.length >= 4 && normQ(prose).includes(n); }
 const latinShare = (x) => {
   const L = String(x ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').match(/\p{L}/gu) || [];
   return L.length ? L.filter((c) => /[a-zA-Z]/.test(c)).length / L.length : 0;
@@ -94,6 +109,11 @@ const q = {
   visible: true, resource_type: { $exists: false }, pages_ocr: { $gt: 0 },
   $or: [{ author_id: { $in: [null] } }, { author_id: { $exists: false } }],
 };
+// Re-runs are scoped by language: the v3 prompt taught European attribution
+// grammar only and returned "no author named" for 93% of non-Latin-script books
+// against 47% of Latin ones, so those books need a different prompt, not a
+// second look with the same one.
+if (LANGS) { q.language = { $in: LANGS.split(',').map((s) => s.trim()) }; console.log(`language filter: ${LANGS}`); }
 const total = await db.collection('books').countDocuments(q);
 console.log(`target population: ${total.toLocaleString()} books that reach no author page`);
 
@@ -162,5 +182,11 @@ console.log(`  author proposed        : ${proposals} rows`);
 console.log(`  page names no author   : ${noAuthor}`);
 console.log(`  proposals dropped      : ${dropped} (quote not on cited page, or does not name them)`);
 console.log(`  model call failures    : ${failed}`);
+// Verified against ai.google.dev/gemini-api/docs/pricing on 2026-08-17.
+// I had been carrying $0.10/$0.40 from memory and under-reported a run by 2.7x.
+// Batch pricing is half of this and this job has no latency requirement.
+const RATE_IN = 0.25, RATE_OUT = 1.50; // gemini-3.1-flash-lite, paid standard, per 1M
+const cost = (tokIn / 1e6) * RATE_IN + (tokOut / 1e6) * RATE_OUT;
 console.log(`  tokens                 : in ${tokIn.toLocaleString()}  out ${tokOut.toLocaleString()}`);
+console.log(`  cost (standard tier)   : $${cost.toFixed(2)}   (batch would be $${((tokIn / 1e6) * 0.125 + (tokOut / 1e6) * 0.75).toFixed(2)})`);
 console.log(`\n  evidence: ${OUT}  — NOT written to Mongo`);
