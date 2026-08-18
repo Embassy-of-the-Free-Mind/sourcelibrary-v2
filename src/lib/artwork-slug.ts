@@ -29,6 +29,34 @@ export interface ArtworkCandidate {
   visible?: boolean | null;
 }
 
+/**
+ * Where a `/book/<id>` request should be sent instead, or null to render it as a book.
+ *
+ * `/book/[id]` renders artworks too (BookInfo branches to <ArtworkInfo> on
+ * `resource_type`), so every artwork had two fully-rendering URLs, each emitting a
+ * self-referential canonical. This is the predicate that collapses them onto /artwork.
+ *
+ * It has to agree with BOTH ends or it strands a working page:
+ *   - the `isVisualArt` branch in src/app/book/[id]/page.tsx — what /book renders as art
+ *   - getArtwork() in src/app/artwork/[slug]/page.tsx — what /artwork will accept:
+ *     `resource_type` present, `content_type !== 'book'`, and matched BY SLUG ONLY
+ * Anything failing either test keeps its /book rendering. A redirect into a 404 is
+ * strictly worse than the duplicate URL this cleans up, so every branch here fails
+ * toward "keep rendering where you are".
+ */
+export function artworkRedirectSlug(book: {
+  content_type?: string | null;
+  resource_type?: string | null;
+  slug?: string | null;
+}): string | null {
+  // 'text' is handled by TextReader upstream; 'book' is refused by /artwork outright.
+  if (book.content_type === 'text' || book.content_type === 'book') return null;
+  // Mirrors isVisualArt: a resource_type that is neither of the two textual kinds.
+  if (!book.resource_type || book.resource_type === 'printed_book' || book.resource_type === 'manuscript') return null;
+  // /artwork resolves by slug ($in on [slug, `art-${slug}`]), never by id.
+  return book.slug || null;
+}
+
 // Unconstrained in T so callers keep their own document type (the route passes
 // raw Mongo documents straight through to the renderer); the two fields it
 // actually reads are narrowed internally.

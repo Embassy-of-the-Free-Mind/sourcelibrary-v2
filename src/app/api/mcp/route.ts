@@ -665,9 +665,12 @@ async function searchImages(args: Record<string, unknown>) {
     url: item.source === 'artwork'
       ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
       : `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    // A standalone artwork IS its own record — there is no separate book to
+    // point at, so book_url mirrors the canonical /artwork URL rather than
+    // minting a second /book/<id> twin for the client to cite.
     book_url: item.bookId
       ? (item.source === 'artwork'
-        ? `https://sourcelibrary.org/book/${item.bookId}`
+        ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
         : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
       : undefined,
   })) || [];
