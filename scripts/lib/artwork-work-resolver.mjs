@@ -142,7 +142,23 @@ export function buildIndex(books) {
   return { byTitle, byAuthor, byAuthorToken, titleKeys: [...byTitle.keys()] };
 }
 
-/** Best book by this person, or null. Fuzzy on name form; strict on agreement. */
+/**
+ * Best book by this person, or null. Fuzzy on name form; strict on agreement.
+ *
+ * DEFECT THE COVERAGE RULE FIXES (found reading the queue, 2026-08-19): a
+ * single shared given name was enough for authorsAgree, so the token path
+ * matched "Paolo Veronese" → "Giovanni Paolo Lomazzo", "Gospel of John" →
+ * "John Dee", "Matthäus Merian" → "Schorer, Matthäus", "Ezekiel 37" →
+ * "Burridge, Ezekiel" — 3,947 of 4,911 token-matched queue rows shared only
+ * ONE token, and a read of that bucket put its wrong-rate near 85%. So a
+ * candidate must now share >= 2 distinctive tokens, OR the two names must
+ * consist of exactly the same distinctive tokens ("Rudolf II" ↔ "Rudolf, II."
+ * — one token each, fully covered). One shared token with unexplained extras
+ * on either side is how every observed mismatch happened. Under-merge over
+ * mis-merge (#2218): the cost is epithet forms like "Bonaventure of
+ * Bagnoregio" vs the catalogue's apparatus-laden heading, which belong to the
+ * thesaurus-alias join, not this string walk.
+ */
 export function findByPerson(index, name) {
   const tokens = authorKey(name).split(' ').filter((w) => w.length >= 4);
   if (tokens.length < 1) return null;
@@ -152,6 +168,8 @@ export function findByPerson(index, name) {
       if (!authorsAgree(name, b.author)) continue;
       const shared = new Set(authorKey(b.author).split(' ').filter((w) => w.length >= 4));
       const overlap = tokens.filter((w) => shared.has(w)).length;
+      const covered = overlap >= 2 || (overlap === tokens.length && overlap === shared.size);
+      if (!covered) continue;
       const prev = seen.get(b.id);
       if (!prev || overlap > prev.overlap || (overlap === prev.overlap && linkQuality(b) > linkQuality(prev.book))) {
         seen.set(b.id, { book: b, overlap });

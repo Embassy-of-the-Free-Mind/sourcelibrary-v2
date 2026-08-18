@@ -103,3 +103,38 @@ describe('authorsAgree', () => {
     expect(authorsAgree('Marsilio Ficino', 'Ficino, Marsilio')).toBe(true);
   });
 });
+
+describe('one shared given name is not a person match (2026-08-19 queue read)', () => {
+  // Every case below is a live queue row that resolved WRONG: the token path
+  // accepted any candidate sharing a single >=4-char name token. 3,947 of
+  // 4,911 author-token rows shared only one token; a read of that bucket put
+  // its wrong-rate near 85%.
+  const painters = buildIndex([
+    book({ title: 'Trattato dell arte della pittura', author: 'Giovanni Paolo Lomazzo' }),
+    book({ title: 'Private Diary of Dr. John Dee', author: 'John Dee' }),
+    book({ title: 'De transactionibus theses LXIV', author: 'Schorer, Matthäus' }),
+    book({ title: 'Historia nuperae rerum mutationis in Anglia', author: 'Burridge, Ezekiel' }),
+    book({ title: 'Berg-Ordnung im Hertzogthum Schlesien', author: 'Rudolf, II.' }),
+    book({ title: 'Opera Omnia Erasmi', author: 'Erasmus von Rotterdam' }),
+  ]);
+
+  it('refuses a match on a shared given name alone', () => {
+    expect(resolveName(painters, 'Paolo Veronese')).toBeNull();
+    expect(resolveName(painters, 'Matthäus Merian')).toBeNull();
+  });
+
+  it('refuses biblical book titles that carry a personal name', () => {
+    expect(resolveName(painters, 'Gospel of John')).toBeNull();
+    expect(resolveName(painters, 'Ezekiel 37')).toBeNull();
+  });
+
+  it('still accepts full mutual coverage on a single distinctive token', () => {
+    // "Rudolf II" and the catalogue's "Rudolf, II." are the same one-token name.
+    expect(resolveName(painters, 'Rudolf II')?.kind).toBe('author');
+  });
+
+  it('still accepts two-token agreement across language forms', () => {
+    // enrichment "Erasmus of Rotterdam" vs catalogue "Erasmus von Rotterdam"
+    expect(resolveName(painters, 'Erasmus of Rotterdam')?.kind).toBe('author');
+  });
+});
