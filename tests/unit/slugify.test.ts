@@ -33,6 +33,47 @@ describe('generateBookSlug', () => {
       .toBe('corpus-hermeticum');
   });
 
+  /**
+   * Latin letters NFD cannot decompose (æ, œ, ß, ø, þ, ð, ł, đ, ſ) were DELETED by the
+   * `[^a-z0-9]` strip rather than transliterated — `Ægyptiaca` became `gyptiaca`. Two
+   * properties matter: the letter survives at all, and it does not SPLIT the word it
+   * sits inside (a run of stripped characters collapses to one hyphen).
+   */
+  it('transliterates æ rather than deleting it (Kircher, Oedipus Ægyptiacus)', () => {
+    expect(generateBookSlug('Ægyptiaca', 'Athanasius Kircher')).toBe('aegyptiaca-kircher');
+    expect(generateBookSlug('De priori iustitiæ christianæ parte, quæ', 'Jean Calvin'))
+      .toBe('de-priori-iustitiae-christianae-parte-quae-calvin');
+  });
+
+  it('does not split a word around the letter (ß was breaking Straßburg in two)', () => {
+    expect(generateBookSlug('Straßburg', 'Johann Grüninger')).toBe('strassburg-gruninger');
+  });
+
+  it('handles œ, þ/ð, ł, đ', () => {
+    expect(generateBookSlug('Œuvres complètes', 'Blaise Pascal')).toBe('oeuvres-completes-pascal');
+    expect(generateBookSlug('Þriðja bók', 'Snorri Sturluson')).toBe('thridja-bok-sturluson');
+    expect(generateBookSlug('Łukasz', 'Jan Kowalski')).toBe('lukasz-kowalski');
+    expect(generateBookSlug('Đại Việt', 'Ngo Si Lien')).toBe('dai-viet-lien');
+  });
+
+  it('transliterates the long s used throughout early-modern printing', () => {
+    expect(generateBookSlug('Ars ſignorum', 'George Dalgarno')).toBe('ars-signorum-dalgarno');
+  });
+
+  it('leaves ASCII and combining-diacritic slugs byte-identical', () => {
+    // Guard on the far larger set of already-published URLs: this change must be
+    // forward-only for new imports, never a rewrite of live slugs.
+    expect(generateBookSlug('Atalanta Fugiens', 'Michael Maier')).toBe('atalanta-fugiens-maier');
+    expect(generateBookSlug('Über die Natur', 'Johann Müller')).toBe('uber-die-natur-muller');
+    expect(generateBookSlug('Kāmasūtra of Vātsyāyana', 'Vātsyāyana'))
+      .toBe('kamasutra-of-vatsyayana-vatsyayana');
+  });
+
+  it('still degrades a wholly non-Latin title to the author segment', () => {
+    // Deliberate documented behaviour — not something this map should change.
+    expect(generateBookSlug('Τμῆμα πρῶτον', 'Markos Mousouros')).toBe('mousouros');
+  });
+
   it('handles Anonymous author (keeps it in slug unlike Unknown)', () => {
     // extractLastName returns 'anonymous' (lowercased), but only 'unknown' is stripped
     expect(generateBookSlug('Some Text', 'Anonymous'))
