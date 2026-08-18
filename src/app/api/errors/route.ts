@@ -49,6 +49,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true, skipped: 'noise' });
     }
 
+    // Bound the write. This endpoint is public, unauthenticated, and its traffic
+    // RISES exactly when the database is unhealthy (every failing page reports).
+    // With no deadline each request holds a connection for the full maxDuration,
+    // so a stampede converts into connection-pool exhaustion — which is how
+    // 2026-08-18 took out unrelated API routes and production builds. Failing a
+    // log write fast is strictly better than holding a connection to complete it.
     const db = await getDb();
     await db.collection('application_errors').insertOne({
       message: String(message).slice(0, 2000),
@@ -59,7 +65,7 @@ export async function POST(request: NextRequest) {
       user_agent: userAgent ? String(userAgent).slice(0, 500) : undefined,
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip'),
       timestamp: new Date(),
-    });
+    }, { maxTimeMS: 2000 });
 
     return NextResponse.json({ ok: true });
   } catch (error) {
