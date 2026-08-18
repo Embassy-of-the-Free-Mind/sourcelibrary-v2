@@ -61,9 +61,9 @@ jobs:
           set +e
           node scripts/audit/field-sprawl.mjs \
             --collection books \
-            --max-fields 385 \
+            --max-fields 383 \
             --max-nested 65 \
-            --forbid tenant_id,hide_reason,ft_prediction,ft_candidate,translation_audit_2026_06,existing_translation,translated_from,superseded_by,translation_requested_by_reader,work_authority,wikidata_work_ids,language_relabeled_from,language_relabeled_at,language_correction,language_corrected_at,language_corrected_by,author_corrected_2026_06_30,title_corrected_2026_06_30,bibliographic_correction,acquisition_wave,acquisition_priority,priority_translation,forshaw_relevance,pipeline_hold,pipeline_priority_at,pipeline_priority_reason,current_job_id,enrichment_phase,warehouse_reason,ia_identifier_previous,ia_repoint_reason,ica_records,dedup_note,deletion_batch,published_location,published_place,related_artwork,morgan_accession,morgan_bibid,resourced_from,rights_note,rights_status,author_original,thumbnail_page_id,former_resource_type,modern_typeset,split_warnings,unhidden_note,part_number,source_notes,summary_updated_at,cover_page_id > report.txt 2>&1
+            --forbid tenant_id,hide_reason,pageCount,page_count,ft_prediction,ft_candidate,translation_audit_2026_06,existing_translation,translated_from,superseded_by,translation_requested_by_reader,work_authority,wikidata_work_ids,language_relabeled_from,language_relabeled_at,language_correction,language_corrected_at,language_corrected_by,author_corrected_2026_06_30,title_corrected_2026_06_30,bibliographic_correction,acquisition_wave,acquisition_priority,priority_translation,forshaw_relevance,pipeline_hold,pipeline_priority_at,pipeline_priority_reason,current_job_id,enrichment_phase,warehouse_reason,ia_identifier_previous,ia_repoint_reason,ica_records,dedup_note,deletion_batch,published_location,published_place,related_artwork,morgan_accession,morgan_bibid,resourced_from,rights_note,rights_status,author_original,thumbnail_page_id,former_resource_type,modern_typeset,split_warnings,unhidden_note,part_number,source_notes,summary_updated_at,cover_page_id > report.txt 2>&1
           echo "fired=$?" >> "$GITHUB_OUTPUT"
           tail -60 report.txt
       - name: File findings
