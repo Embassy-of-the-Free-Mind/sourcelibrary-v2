@@ -41,6 +41,50 @@ Adding a field is meant to be deliberate, not blocked. The path:
 2. If the validator is installed in `error` mode, re-emit and reinstall it — `field-sprawl.mjs --collection books --emit-validator <file>`, then `scripts/output/install-books-validator.mjs` with a dbAdmin credential. In `warn` mode nothing is required; the write succeeds and is logged.
 3. Ask once whether it should be a field at all. If it records *what a job did*, it is a row (`sweep_log`). If it describes *what the book is*, it is a field.
 
+## The tooling trap that nearly deleted live fields
+
+**`git grep -E "\bfield\b"` matches NOTHING in this repo and exits 1.** BSD ERE
+has no `\b`. Verified 2026-08-17: that pattern finds nothing in
+`src/lib/types/book.ts`, a file that plainly contains `pages_count`; `git grep
+-P` finds it.
+
+This is the worst possible failure for an audit, because **a silent false
+negative is indistinguishable from "nothing references this field"** — the exact
+conclusion a deletion decision rests on. Two independent reader surveys used it
+and both produced orphan lists containing live fields. Re-checking 61 candidates
+with `-P` removed six that were genuinely read (`free_tier`, `material`,
+`last_updated`, `cover`, `translator`, `archived_reason`).
+
+**Use `git grep -P` for any word-boundary search here, and never accept an empty
+result as evidence without a positive control** — run the same pattern against a
+string you know exists first. A probe that has only ever returned "nothing" has
+not been shown to work.
+
+Related: a reader can also hide where no grep will look —
+- **read only by a cron.** `photo` is read solely by `sync-books-catalog.mjs`,
+  feeding public listing thumbnails through Supabase. It passes any `src/`-only
+  search as unused.
+- **read dynamically.** `book[someVar]` cannot be found by name. Measured: none
+  in `src/`, and the `scripts/` cases all iterate lists they define themselves.
+
+## Deleting a field safely
+
+The property to test is not "nothing reads it" — that is what grep just failed
+to establish. It is **reversibility**:
+
+1. Write the restore path FIRST (`scripts/maintenance/restore-orphan-book-fields.mjs`),
+   and have it fill only fields that are currently ABSENT so it can never
+   clobber a newer value.
+2. Preserve every removed value as a `sweep_log` row keyed to the book, before
+   unsetting anything.
+3. Prove the round-trip on a canary batch: snapshot → delete → verify gone →
+   restore → verify **byte-identical**.
+4. Only then run the full deletion, and verify residual counts independently
+   rather than trusting the script's own report.
+
+Done this way a deletion is an experiment, not a decision. The 2026-08-17 run
+removed 3,467 instances of 50 fields from 2,120 books on exactly this basis.
+
 ## Traps that each cost a round
 
 - **Gap ratio does not rank danger.** `deleted_reason` and `deletion_reason` are a perfect duplicate on the same 15 books.
