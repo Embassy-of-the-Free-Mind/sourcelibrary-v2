@@ -74,3 +74,33 @@ describe('getEffectiveByline carries the institutional relation', () => {
     expect(unknown.institutional).toBeNull();
   });
 });
+
+describe('every authorship emitter agrees with bylineClaimsAuthorship', () => {
+  // Fixing schema.org JSON-LD alone left `citation_author` (Google Scholar),
+  // og `article:author` and `DC.creator` still asserting that a holding
+  // monastery WROTE the book — the same defect in three more vocabularies,
+  // across ~470 books. These pin the contract all four emitters now share.
+  const holders = ['Thadrak Temple', 'Neyphug Monastery', 'Beinecke Library, Yale University'];
+  const issuers = ['British and Foreign Bible Society', 'Pali Text Society'];
+  const authoring = ['Council of Trent (1545-1563)', 'Indian Hemp Drugs Commission', 'Dante Alighieri'];
+
+  it('never claims authorship for a holder', () => {
+    for (const h of holders) expect(bylineClaimsAuthorship(h)).toBe(false);
+  });
+
+  it('never claims authorship for an issuer', () => {
+    for (const i of issuers) expect(bylineClaimsAuthorship(i)).toBe(false);
+  });
+
+  it('does claim authorship for a corporate author and for a person', () => {
+    for (const a of authoring) expect(bylineClaimsAuthorship(a)).toBe(true);
+  });
+
+  it('routes a holder to provenance and everything else non-authoring to publisher', () => {
+    // DublinCoreMeta branches on exactly this: holder -> DCTERMS.provenance,
+    // any other non-authoring body -> DC.publisher.
+    expect(institutionalByline('Thadrak Temple')?.role).toBe('holder');
+    expect(institutionalByline('Beinecke Library, Yale University')?.role).toBe('holder');
+    expect(institutionalByline('Pali Text Society')?.role).toBe('issuer');
+  });
+});

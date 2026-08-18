@@ -273,14 +273,21 @@ function getDescription(book: Book, translatedCount: number, pageCount: number):
 
   // "by X" is an authorship claim in prose. A holding monastery or an issuing
   // Bible society did not write the book, so name the relation instead.
+  //
+  // The parts are joined with spaces, so a bare qualifier ran straight into the
+  // title — "…rGyud 'bum Ka manuscript collection Thadrak Temple". Punctuate
+  // the non-author cases so the relation reads as an aside rather than as more
+  // title.
   const bylineName = formatAuthor(book.author).name || book.author;
   if (bylineName) {
     const inst = institutionalByline(book.author);
-    parts.push(
-      !inst || inst.role === 'corporate-author'
-        ? `by ${bylineName}`
-        : `${inst.qualifier || 'from'} ${bylineName}`,
-    );
+    if (!inst || inst.role === 'corporate-author') {
+      parts.push(`by ${bylineName}`);
+    } else if (inst.role === 'holder') {
+      parts.push(`— ${bylineName} ${inst.qualifier || 'collection'}`);
+    } else {
+      parts.push(`— ${inst.qualifier || 'issued by'} ${bylineName}`);
+    }
   }
 
   if (book.published) {
