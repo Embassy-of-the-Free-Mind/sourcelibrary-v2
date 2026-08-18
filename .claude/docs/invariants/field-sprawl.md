@@ -131,6 +131,35 @@ value, not the field name.
 Rule of thumb for routing: **fields that merely duplicate a fact belong to #3969;
 fields that disagree about one belong to #4043.**
 
+## Three problems look identical from a distance — measure which one you have
+
+"The author field is a mess" covered three different defects with three different
+costs, and reading them as one wasted most of a session. Establish which shape you
+are in **before** planning any work, because only the first needs a person at all.
+
+1. **Value drift** — the columns disagree, and resolving them needs domain
+   knowledge. The imprint family: 2,533 books with two or more place fields, 1,634
+   agreeing. Expensive; the residue cannot be automated (#4043).
+2. **Column drift with a decided winner** — the columns *agree*, and the canonical
+   one is already documented; only the migration is unfinished. `author_id` vs
+   `author_entity_id` sampled **3,000/3,000 in agreement**, with 8,595 books
+   carrying only the transitional key and 43 files still referencing it. Cheap and
+   purely mechanical — no adjudication, no queue, no review.
+3. **A scoping bug wearing drift's clothes** — the field is fine and a population
+   was never scanned. 69,245 books carry an author string and *neither* key,
+   because the thesaurus builder and the link backfill were scoped to
+   `visible: true` while imports land hidden by invariant (#3769).
+
+**The cheap test that separates them: where two fields are both present, do they
+agree?** Perfect agreement means (2) — finish the migration. Real disagreement
+means (1) — measure the shapes first. And always compare the linked population
+against the one you measured independently; a gap that large is (3), and no amount
+of column work touches it.
+
+Sizing them against each other is the whole point: here the consolidation was
+8,595 books and the coverage gap was 69,245 — seven times larger, and invisible to
+anyone reasoning about field names.
+
 ## The near-duplicate pass cannot see an independently-named family
 
 `FAMILIES` is not a convenience — it is the only way some families surface. The
