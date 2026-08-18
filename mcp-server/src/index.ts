@@ -310,7 +310,7 @@ const TOOLS: Tool[] = [
     name: "get_book",
     title: "Get Book",
     description:
-      "Get a book's AI-generated summary, chapter list, index stats, edition metadata, DOI, page counts, and processing status. THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book's argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.",
+      "Get a book's AI-generated summary, chapter list, index stats, edition metadata, DOI, page counts, processing status, and cover image (attached inline so you and the user can see the book). THIS IS THE RIGHT FIRST CALL whenever the user has named a specific author or work — the summary is typically a multi-paragraph orientation covering the book's argument, structure, and significance, often answering the question without any further searching. Pair with get_book_text to read selected chapters, or search_within_book to locate passages inside it.",
     annotations: { title: "Get Book", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
@@ -389,6 +389,10 @@ const TOOLS: Tool[] = [
           type: "number",
           description: "Page number to quote from",
         },
+        include_image: {
+          type: "boolean",
+          description: "Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it.",
+        },
       },
       required: ["book_id", "page"],
     },
@@ -399,7 +403,7 @@ const TOOLS: Tool[] = [
     name: "search_images",
     title: "Search Images",
     description:
-      "Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Filter by type, subject, figure, symbol, year, book, or text query. Each result has a `source` field — `gallery` (illustration in a book) or `artwork` (standalone museum work). Use `type=painting` or `type=fresco` to find standalone works; `type=woodcut`, `type=engraving`, `type=emblem` etc. surface mostly book illustrations. The `source` parameter narrows the search: 'all' (default), 'gallery' (illustrations only), or 'artworks' (standalone works only).",
+      "Search the visual collection: 50,000+ illustrations extracted from book pages PLUS 23,000+ standalone artworks (paintings, frescoes, prints, sculptures from Met, Rijksmuseum, Wikimedia, NGA). Filter by type, subject, figure, symbol, year, book, or text query. Each result has a `source` field — `gallery` (illustration in a book) or `artwork` (standalone museum work). Use `type=painting` or `type=fresco` to find standalone works; `type=woodcut`, `type=engraving`, `type=emblem` etc. surface mostly book illustrations. The `source` parameter narrows the search: 'all' (default), 'gallery' (illustrations only), or 'artworks' (standalone works only). The first few results also return as inline images YOU can see — some chat clients show them only inside the collapsed tool-result view, so never tell the user images are \"rendered above\"; describe what you see and give each image's url link instead. If images.length is 0, read the note field — an empty result under book_id means that book has no EXTRACTED images yet, not that the physical book has no plates.",
     annotations: { title: "Search Images", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
@@ -609,6 +613,80 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
+// ── Inline image attachments (#3937: parity with the remote server) ──
+//
+// Tools whose results carry imagery return image URLs in their JSON; this
+// layer turns the first few into MCP `image` content blocks so clients
+// render them inline. audience includes 'assistant' so the model can SEE
+// the plates it cites, not just relay them.
+const MAX_INLINE_IMAGES = 5;
+const IMAGE_AUDIENCE = { audience: ["user", "assistant"] };
+
+async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
+  try {
+    const resp = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!resp.ok) return null;
+    const contentType = resp.headers.get("content-type") || "image/jpeg";
+    const mimeType = contentType.split(";")[0].trim();
+    const buffer = await resp.arrayBuffer();
+    // Skip images larger than 1MB to keep responses reasonable
+    if (buffer.byteLength > 1_000_000) return null;
+    return { data: Buffer.from(buffer).toString("base64"), mimeType };
+  } catch {
+    return null;
+  }
+}
+
+// Try candidate URLs in order until one fetches within the size cap.
+async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<{ data: string; mimeType: string } | null> {
+  for (const url of urls) {
+    if (!url) continue;
+    const img = await fetchImageBase64(url);
+    if (img) return img;
+  }
+  return null;
+}
+
+interface ImageAttachment {
+  urls: Array<string | undefined | null>;
+  caption: string;
+}
+
+function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
+  if (!result || typeof result !== "object") return [];
+  const r = result as Record<string, unknown>;
+
+  if (name === "search_images" && Array.isArray(r.images)) {
+    return (r.images as Array<Record<string, unknown>>)
+      .slice(0, MAX_INLINE_IMAGES)
+      .filter((img) => typeof img.image_url === "string")
+      .map((img) => ({
+        urls: [img.image_url as string],
+        caption: `${(img.description as string) || (img.title as string) || "Image"}\n${img.url as string}`,
+      }));
+  }
+
+  if (name === "get_quote") {
+    const quote = r.quote as Record<string, unknown> | undefined;
+    if (typeof quote?.page_image_url === "string") {
+      return [{
+        urls: [quote.page_image_url],
+        caption: `Scan of the cited leaf — p. ${quote.page}, ${quote.author || quote.book_title}`,
+      }];
+    }
+    return [];
+  }
+
+  if (name === "get_book" && typeof r.cover_thumb_url === "string") {
+    return [{
+      urls: [r.cover_thumb_url, r.cover_image_url as string | undefined],
+      caption: `Cover — ${r.title}${r.author ? `, ${r.author}` : ""}`,
+    }];
+  }
+
+  return [];
+}
+
 // Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
@@ -666,6 +744,25 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text" as const, text: result }] };
     }
 
+    // Attach inline image blocks for tools whose results carry imagery
+    // (search_images results, get_quote page scans, get_book covers).
+    const attachments = collectImageAttachments(name, result);
+    if (attachments.length > 0) {
+      const content: Array<
+        { type: "text"; text: string } |
+        { type: "image"; data: string; mimeType: string; annotations?: { audience: string[] } }
+      > = [{ type: "text" as const, text: JSON.stringify(result, null, 2) }];
+      const fetched = await Promise.all(attachments.map((a) => fetchFirstImage(a.urls)));
+      for (let i = 0; i < attachments.length; i++) {
+        const img = fetched[i];
+        if (img) {
+          content.push({ type: "image" as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
+          content.push({ type: "text" as const, text: attachments[i].caption });
+        }
+      }
+      return { content };
+    }
+
     return {
       content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
     };
@@ -689,7 +786,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error(`Source Library MCP server v4.5.0 running (${TOOLS.length} tools)`);
+  console.error(`Source Library MCP server v4.6.0 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {
