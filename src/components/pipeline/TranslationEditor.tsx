@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
@@ -1542,7 +1543,7 @@ export default function TranslationEditor({
                   author={book.author || 'Anonymous'}
                   year={book.published}
                   publisher={book.publisher}
-                  placePublished={book.place_published}
+                  placePublished={resolveImprintPlace(book)?.display}
                   format={book.format}
                   ustcId={book.ustc_id}
                   language={book.language}

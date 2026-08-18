@@ -41,6 +41,9 @@ interface Book {
   ft_claim?: 'confirmed' | 'candidate';
   publisher?: string;
   place_of_publication?: string;
+  publication_place?: string;
+  place_published?: string;
+  place?: string;
   image_source?: { contributing_library?: string; provider_name?: string };
   // Used to split the bibliography (texts) from visual works (artworks).
   // See isArtworkRecord() — older records use resource_type instead.
@@ -104,7 +107,9 @@ const BOOK_PROJECTION = {
   'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
   'first_translation.our_completeness': 1,
   'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
-  publisher: 1, place_of_publication: 1, resource_type: 1, content_type: 1,
+  // The whole imprint-place family (#4043) — the resolver reads all four.
+  publisher: 1, place_of_publication: 1, publication_place: 1, place_published: 1, place: 1,
+  resource_type: 1, content_type: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 

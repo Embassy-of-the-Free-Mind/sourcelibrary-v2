@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { citationYear, citationYearOrNd } from '@/lib/publication-date';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
@@ -111,7 +112,10 @@ function generateCitations(
   // printing being translated — the bibliographic record of the original work,
   // distinct from the Source Library translation credit. Mirrors the "Cite"
   // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
-  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
+  // Family resolver (#4043) — `place_published` alone misses the catalogue
+  // and OCR columns; 3,300 visible books held a place and cited none.
+  const imprintPlace = resolveImprintPlace(book)?.display;
+  const pubImprint = [imprintPlace, book.publisher].filter(Boolean).join(': ');
   const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
   const imprintStr = imprint ? `${imprint}. ` : '';
 
@@ -132,7 +136,7 @@ function generateCitations(
     `  title = {${title}},`,
     `  year = {${year}},`,
   ];
-  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
+  if (imprintPlace) bibtexLines.push(`  address = {${imprintPlace}},`);
   bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
   bibtexLines.push(`  translator = {Source Library},`);
   if (doi) {
