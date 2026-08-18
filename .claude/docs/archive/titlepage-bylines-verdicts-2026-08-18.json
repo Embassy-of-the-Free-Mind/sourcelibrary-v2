@@ -1,0 +1,2911 @@
+{
+ "generated_at_note": "2026-08-18; pool = PR #3982 frozen benchmark pool of 161",
+ "pool": 161,
+ "adjudicated": 161,
+ "clean": [
+  {
+   "book_id": "69592ae97c072c27f686dc7c",
+   "title": "Opera",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1500,
+   "flash_lite": "Publius Ovidius Naso",
+   "author": "Publius Ovidius Naso",
+   "as_printed": "PVBLII OVIDII NASONIS",
+   "quoted_line": "PVBLII OVIDII NASONIS EPISTOLA- RVM HEROIDVM LIBER PRIMVS.",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The work's own incipit heading names the author in the Latin genitive — 'Publii Ovidii Nasonis Epistolarum Heroidum liber primus' — i.e. the Heroides of Ovid.",
+   "caveat": "No title page is present in the pages given; the attribution comes from the incipit heading of the Heroides. The catalogue title 'Opera' suggests a collected-works volume, so this answer belongs to the Heroides specifically and other works bound in the same volume may have other authors. All personal names in the body (Penelope, Ulysses, Priam, Hector, Nestor, etc.) are characters inside the verse, not agents of the book.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Publius Ovidius Naso",
+    "evidence": "PVBLII OVIDII NASONIS EPISTOLA- RVM HEROIDVM LIBER PRIMVS.",
+    "reasoning": "The cited line is a possessive genitive (Publii Ovidii Nasonis) governing 'Epistolarum Heroidum liber primus', which assigns authorship rather than a printing, editing, or translating role, and the following text is the authentic opening of Ovid's Heroides 1 (Penelope to Ulysses). 'Opera' here is a single author's collected works, not a multi-hand anthology, so no role, homonym, or name-form objection survives."
+   }
+  },
+  {
+   "book_id": "69dbcb511040d1d5e20b5c8e",
+   "title": "Positiones circa libros Physicorum et De anima Aristotelis",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1494,
+   "flash_lite": "Balthasar Schellig",
+   "author": "Balthasar Schellig",
+   "as_printed": "Frater Balthasar Schellig",
+   "quoted_line": "Frater Balthasar Schellig - Positiones circa libros phisicorū et de aia Are-stotelis iuxta ordinariū et dis-putatiū pcessum magistrorū Colonie in bursa montis",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title page names Frater Balthasar Schellig directly above the title of the Positiones, and the preface is written in the first person by a master of the Bursa Montis at Cologne, consistent with his authorship.",
+   "caveat": "The preface is dated 'Ex bursa Montis. viij. ydus Decembris Anno. ccccxcij' (1492), two years before the catalogue year 1494 — a normal gap between composition and this printing. Aristotle, Thomas Aquinas and Henricus Borychem appear only as the authorities the work follows or imitates, not as its author.",
+   "other_names": [
+    {
+     "name": "Aristoteles",
+     "role": "subject"
+    },
+    {
+     "name": "Thomas Aquinas",
+     "role": "subject"
+    },
+    {
+     "name": "Henricus Borychem",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Balthasar Schellig",
+    "evidence": "Frater Balthasar Schellig - Positiones circa libros phisicorū et de aia Are-stotelis ... ad opponēdū et respōdēdū nō minus utiles ꝗ necessarie.",
+    "reasoning": "The name stands in the nominative directly before the title with no role word (no 'apud', 'excudebat', 'emendatus a', 'interprete'), the standard incunable author form, and 'Frater' is only a religious style. The preface speaks in the author's first person ('laborem assumpsi ... ex pleriscque collegi autoribus ... imitari conabar') and names Henricus Borychem only as an admired model, not as the author."
+   }
+  },
+  {
+   "book_id": "69b630301c1c21a3737fe842",
+   "title": "[Titre de départ :] Conjuctiones titulorum sive rubricarum utriusque juris recte atque ordine digestae opera Theodori Straitmanni jurisconsulti.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1580,
+   "flash_lite": "Theodorus Straitmannus",
+   "author": "Theodorus Straitmannus",
+   "as_printed": "THEODORI STRAITMANNI IVRISCONSVLTI",
+   "quoted_line": "ORDINE DIGESTÆ OPERA THEODORI STRAIT- MANNI IVRIS- CONSVLTI.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title page states the work was compiled 'opera Theodori Straitmanni iurisconsulti' — the genitive after 'opera' names Straitmann as the jurist by whose work the tables were arranged.",
+   "caveat": "Only a caption title (titre de départ) and the opening of the table survive in the given pages — no imprint, dedication or preface, so no printer or dedicatee can be identified; 'opera' plus 'recte atque ordine digestae' frames him as compiler-arranger of legal titles rather than author of an original discursive work, though he is the only person the book names.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Theodorus Straitmannus",
+    "evidence": "CONIVNCTIO-NES TITVLORVM SI-VE RVBRICARVM VTRIVS-QVE IVRIS RECTE ATQVE ORDINE DIGESTAE OPERA THEODORI STRAIT-MANNI IVRIS-CONSVLTI.",
+    "reasoning": "The title-page formula \"digestae opera Theodori Straitmanni iurisconsulti\" attributes the arranging labour of the whole compilation to Straitmann himself, with no printer (apud/excudebat), translator (interprete) or emendator construction present, and the rest of the front matter is his own table of legal titles rather than texts by other hands. The printed genitive resolves to the nominative Theodorus Straitmannus, so the attribution survives."
+   }
+  },
+  {
+   "book_id": "69f335e7876dd827cbc4f69a",
+   "title": "Ephemeridos belli Troiani",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1465,
+   "flash_lite": "Dictys Cretensis",
+   "author": "Dictys Cretensis",
+   "as_printed": "DICTYS CRETENSIS",
+   "quoted_line": "DICTYS CRETENSIS DE BELLO TROIANO - DICTYS CRE TENSIS DE BEL LO TROIANO",
+   "page": 11,
+   "confidence": "high",
+   "reasoning": "The heading/incipit names the work as Dictys Cretensis de bello Troiano, i.e. the book presents Dictys of Crete as its author, and the following prologue narrates the discovery of Dictys' own tablets in his tomb.",
+   "caveat": "The attribution comes from a handwritten heading/incipit rather than a printed title page; Dictys Cretensis is a traditional/pseudonymous attribution, reported here as the book gives it. Names in the prologue narrative (Nero, Eupraxides, Rutilius Rufus) belong to the story of the text's discovery, not to its attribution.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Dictys Cretensis",
+    "evidence": "DICTYS CRETENSIS DE BELLO TROIANO - DICTYS CRE TENSIS DE BEL LO TROIANO",
+    "reasoning": "The cited line is the work's own title heading in the standard author + 'de' + subject form, naming Dictys Cretensis as author of the Ephemeris belli Troiani, which matches the catalogue title and the tablet-discovery prologue on page 12. Dictys is a pseudepigraphic persona rather than a historical writer, but he is the name the book itself asserts and the accepted authority-file byline, and no printer, editor, or translator (e.g. Lucius Septimius) is named in the transcribed front matter."
+   }
+  },
+  {
+   "book_id": "6a08526b49638a50931ba288",
+   "title": "1:Prima pars, academicarum quaestionum editionis primae liber secundus, editionis secundae liber primus, De finibus bonorum & malorum libri 5., Tusculanarum quaestionum libri 5. Cum scholiis Pauli Manutii. Index rerum, et verborum.",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1565,
+   "flash_lite": "Marcus Tullius Cicero",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS DE PHILOSOPHIA, PRIMA PARS",
+   "page": 8,
+   "confidence": "high",
+   "reasoning": "The title-page opens with Cicero's name in the genitive governing the work's title, the standard early-modern formula for authorship.",
+   "caveat": "Paulus Manutius supplies the scholia and signs the dedicatory preface, so he is the editor of this Aldine edition, not its author; the volume gathers several Ciceronian philosophical works (Academica, De finibus, Tusculanae) under one title, all by Cicero. Benedictus Accoltus (Cardinal) is merely mentioned as a participant in the anecdote of Manutius's preface and has no bibliographic role.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus",
+     "role": "printer"
+    },
+    {
+     "name": "Diego Hurtado de Mendoza",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS DE PHILOSOPHIA, PRIMA PARS, Academicarum quaestionum editionis primae liber secundus ... Cum scholiis Pauli Manutii. ALDVS VENETIIS, M. D. LXV.",
+    "reasoning": "The genitive 'M. Tvllii Ciceronis' governs the titles of the works themselves (Academica, De finibus, Tusculanae), which is the standard Latin authorial construction, and every contained work is genuinely Cicero's. The competing names are role-bound and do not displace him: Paulus Manutius supplies the scholia and dedicatory preface (editor), Aldus is the Venetian printer, and Diego Hurtado de Mendoza is the dedicatee."
+   }
+  },
+  {
+   "book_id": "6a08524f15c643eb1af4c9d1",
+   "title": "De vitis sanctorum ab Aloysio Lipomano, episcopo Veronae, ... olim conscriptis nunc primùm à F. Laurentio Surio Carthusiano emendati, & auctis, Tomus primus sextus. .. 3",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1581,
+   "flash_lite": "Aloysius Lippomanus",
+   "author": "Aloysius Lipomanus",
+   "as_printed": "ALOYSIO LIPPOMANO EPISCOPO VERONENSI AUCTORE",
+   "quoted_line": "DE VITIS SANCTORUM ALOYSIO LIPPOMANO EPISCOPO VERONENSI AUCTORE TOMUS TERTIUS",
+   "page": 6,
+   "confidence": "high",
+   "reasoning": "Both title-pages name Aloysius Lipomanus, bishop of Verona, as the one who composed the lives (\"ab Aloysio Lipomano ... olim conscriptis\"; \"AUCTORE\"), with Laurentius Surius named only as the one who corrected and enlarged them.",
+   "caveat": "This is volume 3 (Tomus tertius, May-June) of a multi-volume set, Venice 1581; the dedication to Cardinal Marcus Antonius Amulius is written in the first person by the editor Surius (he refers to his four volumes of Councils), so the prefatory matter is Surius's while the work itself is Lipomano's.",
+   "other_names": [
+    {
+     "name": "Laurentius Surius",
+     "role": "editor"
+    },
+    {
+     "name": "Marcus Antonius Amulius",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Aloysius Lipomanus",
+    "evidence": "DE VITIS SANCTORUM ALOYSIO LIPPOMANO EPISCOPO VERONENSI AUCTORE TOMUS TERTIUS",
+    "reasoning": "The page-6 title page uses the ablative of agent with 'auctore', which names the author, and the fuller page-5 title confirms the lives were 'ab Aloysio Lipomano ... olim conscriptis' with Laurentius Surius only 'emendatis, & auctis' (editor). Lipomano is therefore the author and Surius the emendator, so the attribution survives; nominative form is Aloysius Lipomanus."
+   }
+  },
+  {
+   "book_id": "6a08569515c643eb1af59560",
+   "title": "De gradibus medicinarum",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1497,
+   "flash_lite": "Laurentius Maiolus",
+   "author": "Laurentius Maiolus",
+   "as_printed": "LAVRENTIVS MAIOLVS GENVENSIS",
+   "quoted_line": "LAVRENTIVS MAIOLVS GENVENSIS IL- LVSTRISSIMO ET EXCELLENTISSIMO DV- CI LVDOVICO MARIAE SFORTIAE PERPE- TVAM FOELICITATEM.",
+   "page": 4,
+   "confidence": "high",
+   "reasoning": "The dedication is signed by Laurentius Maiolus of Genoa, the handwritten title gives the genitive 'Maioli Laurentii: De gradibus medicinarum', and the preface heading reads 'Laurentii eiusdem prologus in totum opus'.",
+   "caveat": "The printed title-page (page 3) OCRs the name as 'LAVRENTIVS MAVTIVS', a misreading of Maiolus; the Greek Pindar quotation and the reference to Aristotle in the preface are cited matter, not attributions.",
+   "other_names": [
+    {
+     "name": "Ludovicus Maria Sfortia (Ludovico Maria Sforza)",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Laurentius Maiolus",
+    "evidence": "Laurentii eiusdem prologus in totum opus continens necessitatem & utilitatem ipsius praesupposita auctoris intentione.",
+    "reasoning": "The dedication is written in the first person by Laurentius Maiolus, who presents 'haec scripta nostra de artificiali graduum inuentione in medicinis' as his own work to Ludovico Sforza, and the next leaf heads the prologue as by 'Laurentii eiusdem' with the 'auctoris intentio'. The manuscript title-page independently reads 'Maioli Laurentii: De gradibus medicinarum, Venetiis 1497', so this is an author genitive, not a printer, editor or dedicatee role."
+   }
+  },
+  {
+   "book_id": "6a195c313e125aa8d6dff77d",
+   "title": "Candi Prambanan",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1950,
+   "flash_lite": "Inajati Adrisijanti",
+   "author": "Inajati Adrisijanti",
+   "as_printed": "Prof. Dr. Inajati Adrisijanti",
+   "quoted_line": "Prepared by Prof. Dr. Inajati Adrisijanti (Dept. of Archaeology, Gadjah Mada University) Andi Putranto, S.S. (Dept. of Archaeology, Gadjah Mada University) Vinsensius Ngesti W. (Dept. of Archaeology, Gadjah Mada University)",
+   "page": 2,
+   "confidence": "high",
+   "reasoning": "Both title-pages state the report was \"Prepared by\" three named archaeologists, with Inajati Adrisijanti listed first.",
+   "caveat": "The scanned front matter does not match the catalogue record: the catalogue calls this a Dutch 1950 work titled 'Candi Prambanan', but the pages are an English 2011 Global Heritage Fund site conservation assessment report on the Prambanan Temple Compound. Authorship is corporate/collaborative — all three named preparers are co-authors, not one principal; 'Prof. Dr.' and 'S.S.' are titles, not names.",
+   "other_names": [
+    {
+     "name": "Andi Putranto",
+     "role": "author"
+    },
+    {
+     "name": "Vinsensius Ngesti W.",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Inajati Adrisijanti",
+    "evidence": "Prepared for Global Heritage Fund by Prof. Dr. Inajati Adrisijanti, Andi Putranto S.S., and Vinsensius Ngesti W. Yogyakarta, Indonesia May 2011",
+    "reasoning": "Both title pages name her as the first of three preparers (authors) of the report itself, not as printer, editor, translator or dedicatee, and Global Heritage Fund is the commissioning body rather than an author. The only real doubt is the catalogue's mismatched metadata (Dutch/1950/'Candi Prambanan' vs an English 2011 report), which affects the record's title and date, not who wrote the scanned text."
+   }
+  },
+  {
+   "book_id": "6a1958043e125aa8d6dfeb81",
+   "title": "De inlandsche rangen en titels op Java en Madoera",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1900,
+   "flash_lite": "Lodewijk Willem Christiaan van den Berg",
+   "author": "L. W. C. van den Berg",
+   "as_printed": "Mr. L. W. C. VAN DEN BERG",
+   "quoted_line": "DE INLANDSCHE RANGEN EN TITELS OP JAVA EN MADOERA DOOR Mr. L. W. C. VAN DEN BERG",
+   "page": 6,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work \"DOOR Mr. L. W. C. VAN DEN BERG\" and he signs the second-edition preface \"Delft, 31 December 1901. L. W. C. VAN DEN BERG\".",
+   "caveat": "Prefaces name A. B. Cohen Stuart, E. Netscher and R. Friederich only as earlier scholars whose attempts the author describes, and Dr J. G. H. Gunning as a consulted specialist for Sanskrit/Old-Javanese etymologies — none of them wrote this work. Catalogue year 1900 conflicts with the printed imprint date 1902 (second, revised edition; first edition preface dated Batavia 1887).",
+   "other_names": [
+    {
+     "name": "Martinus Nijhoff",
+     "role": "printer"
+    },
+    {
+     "name": "J. G. H. Gunning",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "L. W. C. van den Berg",
+    "evidence": "DE INLANDSCHE RANGEN EN TITELS OP JAVA EN MADOERA DOOR Mr. L. W. C. VAN DEN BERG",
+    "reasoning": "Dutch \"door\" on the title page names the author directly, and \"Mr.\" is the Dutch law degree honorific, not a role. The signed prefaces ('Toen mij ... werd opgedragen ... mijne krachten aan dit onderwerp te beproeven', ending 'Delft, 31 December 1901. L. W. C. VAN DEN BERG.') confirm he wrote and revised the work; Martinus Nijhoff is the publisher and the Minister of Colonies merely ordered the printing."
+   }
+  },
+  {
+   "book_id": "6a1d6d5f4808313bd55d16e0",
+   "title": "Geestelijke stroomingen onder de bevolking op Java",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1920,
+   "flash_lite": "N. Adriani",
+   "author": "N. Adriani",
+   "as_printed": "Dr. N. ADRIANI",
+   "quoted_line": "Geestelijke Stroomingen onder de bevolking op Java DOOR Dr. N. ADRIANI.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page names the work and then \"DOOR Dr. N. ADRIANI\" (Dutch for \"by\"), which assigns authorship directly.",
+   "caveat": "The title-page is dated 1916 while the catalogue record says 1920; Kohnstamm and De Sopper are editors of the series \"Synthese\" (this is Tweede Deel VI), not of this individual essay's text.",
+   "other_names": [
+    {
+     "name": "Ph. Kohnstamm",
+     "role": "editor"
+    },
+    {
+     "name": "A. J. de Sopper",
+     "role": "editor"
+    },
+    {
+     "name": "De Erven F. Bohn",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "N. Adriani",
+    "evidence": "Geestelijke Stroomingen onder de bevolking op Java DOOR Dr. N. ADRIANI.",
+    "reasoning": "Dutch 'DOOR' ('by') directly under the catalogued title assigns authorship of this part to Adriani, while the only other names, Kohnstamm and De Sopper, are marked 'ONDER REDACTIE VAN' (series editors) of the Synthese series. The catalogued item is the individually authored fascicle, not the multi-hand series, so no role error, homonym, or anthology problem applies."
+   }
+  },
+  {
+   "book_id": "6a1966a33e125aa8d6e002cb",
+   "title": "De Javaansche danskunst",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1920,
+   "flash_lite": "Th. B. van Lelyveld",
+   "author": "Th. B. van Lelyveld",
+   "as_printed": "TH. B. VAN LELYVELD",
+   "quoted_line": "TH. B. VAN LELYVELD DE JAVAANSCHE DANSKUNST ,,HADI POESTAKA'' — 1922 — DEN HAAG",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The name stands alone above the title on the title-page, in the standard author position, with no editorial or translational verb attached.",
+   "caveat": "The catalogue records the byline as Unknown and the year as 1920, but the title-page imprint reads 1922; 'Hadi Poestaka' is the publishing house and N.V. Drukkerij Ten Hagen the printer, not persons.",
+   "other_names": [
+    {
+     "name": "„Hadi Poestaka” Boekhandel en Uitgevers-Maatschappij, Den Haag",
+     "role": "printer"
+    },
+    {
+     "name": "N.V. Drukkerij Ten Hagen, Den Haag",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Th. B. van Lelyveld",
+    "evidence": "TH. B. VAN LELYVELD DE JAVAANSCHE DANSKUNST ,,HADI POESTAKA'' — 1922 — DEN HAAG",
+    "reasoning": "The name stands alone above the title in the standard Dutch author-position on the title page, while the other names on the page ('Hadi Poestaka', 'N.V. Drukkerij Ten Hagen') are explicitly the publisher and printer. No role word (vertaald, bewerkt, uitgegeven door) attaches to Van Lelyveld, and the form is a plain personal name with initials."
+   }
+  },
+  {
+   "book_id": "6a1d6f1a4808313bd55d1f42",
+   "title": "Het Inlandsche gemeentewezen op Java en Madoera",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1920,
+   "flash_lite": "L. W. C. van den Berg",
+   "author": "L. W. C. van den Berg",
+   "as_printed": "Mr. L. W. C. VAN DEN BERG",
+   "quoted_line": "Het inlandsche Gemeentewezen op Java en Madoera DOOR Mr. L. W. C. VAN DEN BERG.",
+   "page": 2,
+   "confidence": "high",
+   "reasoning": "The title-page names him directly after \"DOOR\" (Dutch for \"by\"), the standard authorship formula, repeated identically on three title-page scans.",
+   "caveat": "\"Mr.\" is the Dutch legal title Meester in de Rechten, not part of the name. The title-page imprint reads 'S GRAVENHAGE, MARTINUS NIJHOFF 1901, which conflicts with the catalogue year 1920; the work is stated to be an offprint (Overgedrukt) from Bijdragen tot de Taal-, Land- en Volkenkunde van Ned.-Indie, 6e Volgr., Deel VIII. One OCR line carries a stray \"1706\" that is transcription noise, not a date on the page.",
+   "other_names": [
+    {
+     "name": "Martinus Nijhoff",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "L. W. C. van den Berg",
+    "evidence": "Het inlandsche Gemeentewezen op Java en Madoera DOOR Mr. L. W. C. VAN DEN BERG.",
+    "reasoning": "Dutch \"DOOR\" means \"by\" and directly assigns authorship, with the printer/publisher named separately as Martinus Nijhoff; \"Mr.\" is the Dutch law degree (meester in de rechten), not a role marker. The work is a single-author offprint from the Bijdragen, so no anthology or role confusion applies (the catalogue year 1920 vs the printed 1901 is a metadata issue, not an authorship one)."
+   }
+  },
+  {
+   "book_id": "6a1d6f0a4808313bd55d1ed1",
+   "title": "De inlandsche dorpsgemeenschap op Java",
+   "catalogued": null,
+   "language": "Dutch",
+   "year": 1920,
+   "flash_lite": "T. J. Bezemer",
+   "author": "T. J. Bezemer",
+   "as_printed": "T. J. BEZEMER",
+   "quoted_line": "De Inlandsche Dorpsgemeenschap op Java DOOR T. J. BEZEMER BAARN HOLLANDIA-DRUKKERIJ 1916",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The main title-page gives the title followed by \"DOOR T. J. BEZEMER\" (Dutch \"by\"), which names him as the author of the work.",
+   "caveat": "The first title-page is the series title-page (Serie II E 3 No. 7, \"onder redactie van R. A. van Sandick\"), so Van Sandick edits the series, not this individual monograph; S. P. Ham is named only inside a quoted citation in the introduction and is not a contributor to this book. Title page reads 1916, while the catalogue record says 1920.",
+   "other_names": [
+    {
+     "name": "R. A. van Sandick",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "T. J. Bezemer",
+    "evidence": "De Inlandsche Dorpsgemeenschap op Java DOOR T. J. BEZEMER BAARN HOLLANDIA-DRUKKERIJ 1916",
+    "reasoning": "The title page uses Dutch \"door\" (= \"by\") directly linking the title to T. J. Bezemer, while the printer is separately named as Hollandia-Drukkerij Baarn; the only other name, R. A. van Sandick, is explicitly the series editor (\"onder redactie van\") on the series wrapper, not this volume's author. The attribution survives: it is a single-author monograph in a numbered series, and the byline form is nominative."
+   }
+  },
+  {
+   "book_id": "69bda143f6d63c919748f149",
+   "title": "Von den Träumen und Nachtwandlern",
+   "catalogued": null,
+   "language": "German",
+   "year": 1784,
+   "flash_lite": "Justus Christian Hennings",
+   "author": "Justus Christian Hennings",
+   "as_printed": "Justus Christian Hennings Hofr. und Prof. in Jena",
+   "quoted_line": "Von den T r ä u m e n u n d Nachtwandlern. Herausgegeben v o n Justus Christian Hennings Hofr. und Prof. in Jena.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page names Hennings as the person issuing the work and he signs the dedication (\"Ew. Wohlgebohrnen gehorsamsten Diener Justus Christian Hennings\"), which the rules treat as the author's signature.",
+   "caveat": "The title-page verb is \"Herausgegeben von\" (edited/issued by) rather than an explicit authorial formula; his signature closing the dedication is what settles it as authorship. \"Hofr. und Prof. in Jena\" is an office, not part of the name.",
+   "other_names": [
+    {
+     "name": "David Friedrich Oehler",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Carl Ludolf Hoffmanns sel. Wittwe und Erben",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Justus Christian Hennings",
+    "evidence": "Nehmen Sie, Wohlgebohrner Herr, gegenwärtige geringe Schrift als ein Zeichen meiner Hochachtung und Freundschaft auf ... Ew. Wohlgebohrnen gehorsamsten Diener Justus Christian Hennings.",
+    "reasoning": "The title-page formula \"Herausgegeben von\" alone would suggest an editor role, but Hennings signs the dedication in the first person as the presenter of \"gegenwärtige geringe Schrift\" (this present work), which is the authorial voice and no other name appears anywhere. The attribution survives the attack; only the printer (Carl Ludolf Hoffmanns sel. Wittwe und Erben) and the dedicatee (David Friedrich Oehler) occupy the other roles."
+   }
+  },
+  {
+   "book_id": "6a09711dbf2196cdca9059ed",
+   "title": "Epistolarum Pauli. Manutij libri. 10. duobus. nuper. additis. Eiusdem quae Praefationes appellantur. Vol. 1.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1571,
+   "flash_lite": "Paulus Manutius",
+   "author": "Paulus Manutius",
+   "as_printed": "PAVLI. MANVTII",
+   "quoted_line": "PAVLI. MANVTII PRAEFATIONES QVIBVS. LIBRI AD.ILLVSTRES.VIROS AVT. AD. AMICOS MISSI COMMENDANTVR",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work as the 'Praefationes' of Pauli Manutii in the genitive, and the dedications and prefaces that follow are written in his own voice from Venice.",
+   "caveat": "Page 2 is a second title-page ('AD M. ANTONIVM MURETUM EPISTOLARUM FAMILIARIUM LIBER PRIMUS ... VENETIIS M. D. LXXVI'), so the volume appears to bind Manutius's Epistolae familiares together with his Praefationes; the answer covers both, since both are by Manutius, but the 1576 imprint conflicts with the catalogue year 1571.",
+   "other_names": [
+    {
+     "name": "Matthaeus Senarega",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Carolus Pisaurius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus Antonius Muretus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus Tullius Cicero",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Paulus Manutius",
+    "evidence": "PAVLI. MANVTII PRAEFATIONES QVIBVS. LIBRI AD.ILLVSTRES.VIROS AVT. AD. AMICOS MISSI COMMENDANTVR",
+    "reasoning": "The genitive 'Pauli Manutii' governs 'Praefationes' and 'Epistolarum ... libri', naming him as the author of the letters and prefaces, not as printer (no 'apud'/'excudebat' formula attaches to him here). The first-person dedication on page 3, written by a Venetian host in whose house Matthaeus Senarega lives, is consistent with Manutius as the writing voice; Muretus appears only as an addressee ('AD M. ANTONIVM MVRETVM'), not as emendator."
+   }
+  },
+  {
+   "book_id": "6a1d6d6c4808313bd55d1719",
+   "title": "De sĕḍĕkahs en slamĕtans in de desa en de daarbij gewoonlijk door den Javaan gegeven andere festiviteiten",
+   "catalogued": null,
+   "language": "Dutch",
+   "year": 1910,
+   "flash_lite": "L. Th. Mayer",
+   "author": "L. Th. Mayer",
+   "as_printed": "L. Th. MAYER en J. F. A. C. van MOLL",
+   "quoted_line": "DE SĘDĘKAHS EN SLAMĘTANS IN DE DESA en de daarbij gewoonlijk door den Javaan gegeven andere festiviteiten DOOR L. Th. MAYER en J. F. A. C. van MOLL.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The printed title-page names two authors after \"DOOR\" (Dutch for \"by\"), and the preface closes \"De schrijvers\" (the writers), confirming joint authorship.",
+   "caveat": "Two co-authors, not one: L. Th. Mayer AND J. F. A. C. van Moll — the author field holds only the first. The title-page imprint reads 1909 while the catalogue record says 1910. Page 2 is a Leiden University library ownership/provenance stamp, not part of the printed work.",
+   "other_names": [
+    {
+     "name": "J. F. A. C. van Moll",
+     "role": "author"
+    },
+    {
+     "name": "G. C. T. van Dorp & Co.",
+     "role": "printer"
+    },
+    {
+     "name": "Bibliotheek der Rijksuniversiteit te Leiden",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "L. Th. Mayer",
+    "evidence": "DE SĘDĘKAHS EN SLAMĘTANS IN DE DESA en de daarbij gewoonlijk door den Javaan gegeven andere festiviteiten DOOR L. Th. MAYER en J. F. A. C. van MOLL.",
+    "reasoning": "The Dutch \"door\" on the title page assigns authorship directly to Mayer (with co-author van Moll), and the preface is signed \"De schrijvers\" — plural authors of a single co-written work, not an anthology; the publisher named is G. C. T. van Dorp & Co. Mayer is a real personal name in nominative form, so the only caveat is that the byline is incomplete without van Moll."
+   }
+  },
+  {
+   "book_id": "6a1d6d9b4808313bd55d17ea",
+   "title": "Iets over Java's overgang tot het Mohammedanisme",
+   "catalogued": null,
+   "language": "Dutch",
+   "year": 1880,
+   "flash_lite": "H. Zeydner",
+   "author": "H. Zeydner",
+   "as_printed": "H. ZEYDNER",
+   "quoted_line": "Lichtstralen op den Akker der Wereld. --- III. Iets over Java's overgang tot het Mohammedanisme. - door H. ZEYDNER.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page attributes the work with the Dutch authorial preposition 'door' (by) to H. Zeydner.",
+   "caveat": "The second title-page carries 'B. VELDHUIS', which stands in the imprint position (the Kampen publishing house) rather than as a second author; both pages belong to the same work, part III of the series 'Lichtstralen op den Akker der Wereld'.",
+   "other_names": [
+    {
+     "name": "B. Veldhuis",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "H. Zeydner",
+    "evidence": "III. Iets over Java's overgang tot het Mohammedanisme. - door H. ZEYDNER.",
+    "reasoning": "Dutch 'door' means 'by' and attaches Zeydner directly to the catalogued piece (no. III of the series), which is the standard author formula, not a printer, editor or translator marker. The other name on page 2, B. Veldhuis, appears without 'door' and in publisher position, so it does not compete for authorship."
+   }
+  },
+  {
+   "book_id": "69b4d65c853c26e0d1561406",
+   "title": "Hungariae Descriptio",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1570,
+   "flash_lite": "Wolfgang Lazius",
+   "author": "Wolfgangus Lazius",
+   "as_printed": "WOLFGANGO LAZIO AVCT.",
+   "quoted_line": "Latin map 61 HVNGARIAE DESCRIPTIO, WOLFGANGO LAZIO AVCT. - Cum Privilegio",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The map's title cartouche gives the ablative-of-agent formula \"Wolfgango Lazio auct(ore)\", naming Wolfgang Lazius as the author of the Hungariae Descriptio.",
+   "caveat": "Both pages are states/impressions of the same map sheet; no printer, engraver, or dedicatee is named in the transcribed matter beyond the privilege note \"Cum Privilegio\".",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Wolfgangus Lazius",
+    "evidence": "HVNGARIAE DESCRIPTIO, WOLFGANGO LAZIO AVCT. - Cum Privilegio",
+    "reasoning": "\"Wolfgango Lazio auct.\" is the standard cartographic ablative of agent (auctore) naming Lazius as the maker of this map, not a printer, editor, or translator formula. The catalogued item is the single sheet Hungariae Descriptio (both transcribed pages are the same map), so the Ortelius-atlas context does not displace Lazius as the author of this work."
+   }
+  },
+  {
+   "book_id": "69c63cd593cbf3c0fd742523",
+   "title": "Les vies des plus celèbres et anciens poètes provensaux",
+   "catalogued": "Unknown",
+   "language": "French",
+   "year": 1575,
+   "flash_lite": "Jean de Nostradamus",
+   "author": "Jean de Nostradamus",
+   "as_printed": "Iean de Nostradamus",
+   "quoted_line": "D E V. M. - Humble subiect Iean de Nostradamus.",
+   "page": 13,
+   "confidence": "high",
+   "reasoning": "The title-page is anonymous, but the dedication to the Queen of France is signed 'Humble subiect Iean de Nostradamus' and its writer speaks throughout in the first person as the one who gathered and translated the Provencal poets' lives.",
+   "caveat": "Usually catalogued under the standard form 'Jean de Nostredame' (brother of the astrologer Michel de Nostredame/Nostradamus, who is named on p.12 only as the person who urged him to publish, not as a contributor). He calls the work a 'recueil & traduction' from Provencal, so he is compiler-translator as well as author. The dedicatee is given only by office ('LA TRES CHRESTIENNE ROYNE DE FRANCE', i.e. Catherine de Medicis) and is not named. Names in the Proesme au Lecteur (le Monge des isles d'or, Hugues de sainct Cesari, le Monge de Montmaiour) are cited sources, not this book's authors.",
+   "other_names": [
+    {
+     "name": "Alexandre Marsilii",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Jean de Nostradamus",
+    "evidence": "D E V. M. - Humble subiect Iean de Nostradamus.",
+    "reasoning": "The dedication he signs claims the work in the first person as his own labour ('Lequel recueil & traduction... ce mien petit labeur', gathered by him and urged on by 'feu mon frere maistre Michel de Nostradamus'), so the signature is the author's, not a printer's, dedicatee's, or licenser's. The name is printed in nominative form and matches the known author of the Vies des plus celebres poetes provensaux."
+   }
+  },
+  {
+   "book_id": "6a06f5e04dcc6d5d8f0385fa",
+   "title": "M. Tullii Ciceronis Orationum pars 2. Cum correctionibus Pauli Manutii.",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1562,
+   "flash_lite": "Marcus Tullius Cicero",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS ORATIONVM PARS II. - Cum correctionibus Pauli Manutii.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"M. Tullii Ciceronis Orationum pars II\" names Cicero as the author of the orations, with Paulus Manutius credited only for the corrections.",
+   "caveat": "Paulus Manutius signs both dedications (pp. 15-16) as the editor, not as author of the orations; he is also the Aldine printer at Venice, though no explicit \"apud\" imprint appears in the transcribed lines. \"Rex Christianissimus\" is an office, not a name.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Gulielmus Landus Neapolitanus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Guillaume du Bellay, seigneur de Langey",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS ORATIONVM PARS II. - Cum correctionibus Pauli Manutii. VENETIIS, M. D. LXII.",
+    "reasoning": "The title page uses the genitive 'M. Tvllii Ciceronis' governing 'orationum', which names Cicero as the author of the speeches, while Paulus Manutius appears only in 'cum correctionibus Pauli Manutii' and as the signer of the dedications, i.e. the editor. The volume is one author's orations in a second part, not an anthology, so the attribution survives."
+   }
+  },
+  {
+   "book_id": "6a08571015c643eb1af5aa63",
+   "title": "Francisci Philippi Pedimontii Ecphrasis in Horatii Flacci artem poeticam",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1546,
+   "flash_lite": "Franciscus Philippus Pedimontius",
+   "author": "Franciscus Philippus Pedimontius",
+   "as_printed": "FRANCISCI PHILIPPI PEDIMONTII",
+   "quoted_line": "FRANCISCI PHILIPPI PEDIMONTII ECPHRASIS IN HORATII FLACCI ARTEM POETICAM.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page genitive names Pedimontius as author of the Ecphrasis, and the dedication on page 3 is signed in the nominative \"FRANCISCVS PHILIPPVS PEDIMONTIVS S. D.\", with the preface speaking in the first person of his own commentary.",
+   "caveat": "Horatius (Horace) is the subject/expounded author, not the author of this work. Page 2 is a garbled OCR duplicate of the same title-page (dated M D X L I X vs M. D. XLVI on page 1) - likely a second scan or a variant issue, not a separate work. \"ALDI FILII\" on the title-page indicates the Aldine press (the sons of Aldus Manutius) as printer, and \"Cum priuilegio Pauli III. Pont. Max. & Senatus Veneti\" is a printing privilege, not authorship.",
+   "other_names": [
+    {
+     "name": "Quintus Horatius Flaccus",
+     "role": "subject"
+    },
+    {
+     "name": "Ranutius Farnesius (Ranuccio Farnese), Cardinal of Naples",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldi filii (the sons of Aldus Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Paulus III, Pontifex Maximus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Franciscus Philippus Pedimontius",
+    "evidence": "PATRONO'QVE OPTIMO FRANCI-SCVS PHILIPPVS PEDI-MONTIVS S. D.",
+    "reasoning": "The title-page genitive 'Francisci Philippi Pedimontii Ecphrasis' assigns the Ecphrasis (a commentary on Horace's Ars poetica) to him, and the dedication to Cardinal Ranuccio Farnese is signed by him in the nominative, speaking in the first person about composing the work ('nostram hanc lucubratiunculam', 'sepe uero meam interposuisse sententiam'). Horace is the commented author, not the author of this book, and 'Aldi filii' names the printer (Paulus Manutius), neither of which displaces Pedimontius."
+   }
+  },
+  {
+   "book_id": "69a5e483006a4098422174aa",
+   "title": "Reg.lat.1228",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1656,
+   "flash_lite": "Marianus Stephanellus",
+   "author": "Marianus Stephanellus",
+   "as_printed": "D. D. MARIANI STEPHANELLI PATAVINI",
+   "quoted_line": "Latin text LECTIONES EXCELLENTISSIMI D. D. MARIANI STEPHANELLI PATAVINI - Publicæ practicæ in p.º loco profitentis sup. tractatu de BALNEIS.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The heading gives the work as the Lectiones of Marianus Stephanellus of Padua in the genitive ('LECTIONES ... MARIANI STEPHANELLI PATAVINI'), which assigns authorship of the lectures to him.",
+   "caveat": "This is a manuscript (Reg.lat.1228), not a printed book, so there is no imprint or printer; 'Patavini' is a place-epithet (of Padua) and 'Publicae practicae in primo loco profitentis' is his professorial office, not a name.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Marianus Stephanellus",
+    "evidence": "LECTIONES EXCELLENTISSIMI D. D. MARIANI STEPHANELLI PATAVINI - Publicæ practicæ in p.º loco profitentis sup. tractatu de BALNEIS.",
+    "reasoning": "The heading is a possessive genitive (MARIANI STEPHANELLI PATAVINI, with the concordant genitive participle 'profitentis') governing 'LECTIONES', naming him as the lecturer whose lectures the text is, not a printer, editor, translator, or dedicatee. The following text continues in his first-person lecturing voice ('pertractare intendimus... comparabimus nostris balneis Patavinis'), consistent with a Paduan professor of practical medicine; the only residual doubt is that a manuscript of lectures may be a student's reportatio, which does not change the authorial attribution."
+   }
+  },
+  {
+   "book_id": "6a06d3a39a48d5139996365b",
+   "title": "2: De philosophia volumen secundum, id est, De natura deorum libri 3. De diuinatione libri 2. De fato liber 1. De legibus libri 3. De vniuersitate liber 1. Q. C",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1541,
+   "flash_lite": "Marcus Tullius Cicero",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS DE PHI LOSOPHIA VOLVMEN SE CVNDVM, IDEST,",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work in the Latin genitive as Cicero's philosophical works, second volume, and the preface calls them \"Ciceronis libros de philosophia\".",
+   "caveat": "The volume also contains one work by Cicero's brother Quintus (De petitione consulatus ad Marcum fratrem), so it is a collected volume with a second author. Paulus Manutius (Aldus's son) is the Aldine editor-printer who emended the text from a manuscript codex belonging to Bernardino Maffei, and who signs the dedicatory preface to Cardinal Marcello Cervini.",
+   "other_names": [
+    {
+     "name": "Quintus Tullius Cicero",
+     "role": "author"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Marcellus Cervinus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Bernardinus Maffeus",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS DE PHI LOSOPHIA VOLVMEN SE CVNDVM, IDEST, ... PAVLVS MANVTIVS ALDI F. VENETIIS. M. D. XLI.",
+    "reasoning": "The title-page genitive \"M. Tullii Ciceronis\" governs the whole volume and names the author, while Paulus Manutius appears only as the editor-printer (\"collatis libris manuscriptis ... emendata\", and in his own prefatory \"nunc edemus Ciceronis libros de philosophia\"). The one appended piece by Quintus Cicero is explicitly distinguished as \"Q. Ciceronis de petitione consulatus\" and does not displace the volume-level attribution."
+   }
+  },
+  {
+   "book_id": "6a196a2e3e125aa8d6e00883",
+   "title": "Eenige weinig bekende Javaansche legenden",
+   "catalogued": null,
+   "language": "Dutch",
+   "year": 1910,
+   "flash_lite": "H. A. van Hien",
+   "author": "H. A. van Hien",
+   "as_printed": "H. A. van HIEN",
+   "quoted_line": "good Dutch printed title-page 31 - Eenige weinig bekende DOOR H. A. van HIEN. BANDOENG. „FORTUNA.” 1912.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page gives the authorship formula \"DOOR H. A. van Hien\" (Dutch \"door\" = \"by\"), and the same line repeats on a second title-page.",
+   "caveat": "Catalogue byline says \"Unknown\" and dates the book 1910, but both title-pages read 1912 and name van Hien; the OCR truncates the title after \"Eenige weinig bekende\". „FORTUNA.” at Bandoeng is the printer/publisher imprint, not a person.",
+   "other_names": [
+    {
+     "name": "Fortuna (Bandoeng)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "H. A. van Hien",
+    "evidence": "Eenige weinig bekende DOOR H. A. van HIEN. BANDOENG. „FORTUNA.” 1912.",
+    "reasoning": "Dutch \"door\" means \"by\" and directly assigns authorship, with \"Fortuna\" Bandoeng as the separate publisher, so no role error is possible; the name is in ordinary nominative form and appears identically on two title pages. H. A. van Hien is a known Dutch-Indies author of Javanese folklore works, and the only discrepancy is the catalogue year (1910 vs the printed 1912), which does not bear on attribution."
+   }
+  }
+ ],
+ "flagged": [
+  {
+   "book_id": "69b51e5dff09e4fe943ad1f2",
+   "title": "Oupnek'hat : (id est, Secretum tegendum): continens ... doctrinam, è 4 sacris Indorum libris ... excerptam .... 2. (1802). - XVI, 880, 36 S.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1802,
+   "flash_lite": "Abraham Hyacinthe Anquetil-Duperron",
+   "author": "Anquetil Duperron",
+   "as_printed": "ANQUETIL DUPERRON",
+   "quoted_line": "ANQUETIL DUPERRON INDIAE SAPIENTIBUS - S. D.",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "The title page credits the work to the study and labour of \"Indicopleustes\" (a pseudonym), and the dedication on page 9 is signed by that same man under his real name, Anquetil Duperron, who describes himself as the aged Frenchman who travelled India.",
+   "caveat": "The book is a Latin translation of the Persian Upanishads, so Anquetil Duperron is author-translator-annotator rather than author of the underlying text ('e Persico idiomate ... in Latinum conversum; et notis ... illustratum'); the title page names him only by the pseudonym/epithet 'Indicopleustes'. Volume 2 of a two-volume set. The dedicatees, 'Indiae Sapientibus' / 'BRAHMANES', are a collective, not a named person.",
+   "other_names": [
+    {
+     "name": "Indicopleustes",
+     "role": "author"
+    },
+    {
+     "name": "Fratres Levrault",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "699065ffef12272ffdc94bc3",
+   "title": "Alchemical and Medical Illustrations",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1400,
+   "flash_lite": "Franciscus Balduinus",
+   "author": "Franciscus Balduinus",
+   "as_printed": "FRANC. BALDVINVS",
+   "quoted_line": "CLARISS. VIRO, D. FRANCISCO LAVBESPI- NIO REGIO SVPPRAEFECTO BITVRIGVM IVRISCONSVLTO, FRANC. BALDVINVS.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The dedicatory address names its addressee in the dative and its writer in the nominative, 'FRANC. BALDVINVS', who then speaks in the first person about the theses he is publishing for public disputation at Bourges.",
+   "caveat": "The catalogue metadata ('Alchemical and Medical Illustrations', Unknown, Latin/1400) does not match these pages at all: this is a 16th-century set of legal theses (on D. 22.1, De usuris) for a public disputation in the schools of Bourges, i.e. Francois Baudouin, law professor at Bourges. Page 6 is a different piece (an 'Examen' with 25 numbered heads, recited 'in Scholis Vaticanis'), so the volume may be a Sammelband; my answer belongs to the work beginning on page 5. 'Regio Supraefecto Biturigum Iurisconsulto' is an office, not a name.",
+   "other_names": [
+    {
+     "name": "Franciscus Laubespinius",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b4d63af22c8341a90b9be5",
+   "title": "Mirandulae Viridarium illustrium poetarum : cum ipsorum concordantiis",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1507,
+   "flash_lite": "Octavianus Mirandula",
+   "author": "Octavianus Mirandula",
+   "as_printed": "Octauianus Mirandula Canonicus Regularis Lateranenfis",
+   "quoted_line": "Reuerẽdo i xp̃o pr̃i &.D.colendiff.D.Octauiano Arcim/ boldo pth. apoftolico Octauianus Mirandula Canonicus Regularis Lateranenfis. fœlicitatem optat.",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "Octavianus Mirandula signs the dedication and the address to the reader as the compiler of the collected poetic sententiae, and Beroaldus's commendatory letter confirms he 'collegit: excerpsitq;' the work.",
+   "caveat": "The work is a compilation/anthology of extracts from many poets, so Mirandula is author in the sense of compiler-editor; Philippus Beroaldus contributed only the commendatory letter to the reader on page 12, not the work itself. Names cited inside that letter (Plinius, Caesar, Divus Augustinus) are exempla, not contributors.",
+   "other_names": [
+    {
+     "name": "Octavianus Arcimboldus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Philippus Beroaldus",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b51d07261c58d6366488c5",
+   "title": "De Arte Chemica : Libri Dvo ... Qvorvm Prior De veritate & antiquitate artis Chemicae ... ex varijs autoribus per Robertum Vallensem selecta. Posterior. Ioan. Chrysippi Faniani de arte metallicae metamorphoseos liber singularis",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1601,
+   "flash_lite": "Robertus Vallensis",
+   "author": "Robertus Vallensis",
+   "as_printed": "ROBERTVS VALLEN-SIS RVGL. EBROIC.",
+   "quoted_line": "ROBERTVS VALLEN- SIS RVGL. EBROIC. MEDICI- NAE CHEMICAE STVDIOSO.",
+   "page": 4,
+   "confidence": "medium",
+   "reasoning": "The preface carries a nominative authorial address heading, \"Robertus Vallensis Rugl. Ebroic. medicinae chemicae studioso\", i.e. Robert Vallensis addressing the student of chemical medicine, and the catalogue title confirms the first book was selected/compiled by him.",
+   "caveat": "Two works bound as one volume (LIBRI DVO): the answer is for the PRIOR book, compiled by Vallensis ex variis autoribus (so compiler/editor as much as author); the POSTERIOR book is Ioannes Chrysippus Fanianus's De arte metallicae metamorphoseos liber singularis, named only in the catalogue title, since the transcribed title-page truncates both the PRIOR and POSTERIOR descriptions. Plato, Naso (Ovid), Hermes and Ptolemy in the preface are cited matter, not this book's authors.",
+   "other_names": [
+    {
+     "name": "Iacobus Foillet",
+     "role": "printer"
+    },
+    {
+     "name": "Ioannes Chrysippus Fanianus",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b630821c1c21a373802a59",
+   "title": "Statuta noviter edicta per illustr[issimum] et revenderendissum in Christo patrem et domi[num domin]um Johannem de SaBaudia episcopum et principem gebennensem dignissimum.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1490,
+   "flash_lite": "Johannes de Sabaudia",
+   "author": "Iohannes de Sabaudia",
+   "as_printed": "iohannem de Sabaudia Episcopum & principem Gebennñ.",
+   "quoted_line": "¶ Statuta nouiter edicta per Illustrẽ principe Re- uerendissimum In Xpo patrem & domi. io- hannem de Sabaudia Episcopum & principem Ge- bennñ. dignissimum.",
+   "page": 3,
+   "confidence": "high",
+   "reasoning": "The title states the statutes were newly issued by Johannes de Sabaudia, Bishop and Prince of Geneva, and the text immediately continues in his own first-person voice ('Iohannes de sabaudia ... Episcopus & princeps Gebennarum ... Statuimus & ordinamus'), so he is the promulgating author.",
+   "caveat": "This is a legislative text (diocesan statutes) rather than a literary work: the named person is the issuing authority who speaks throughout in the first person, not a literary author. 'Episcopus & princeps Gebennarum' is an office/place, not a second name; no printer, editor, or translator is named in the front matter given.",
+   "other_names": [],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69c889b46c6f3cc53c85a494",
+   "title": "Sepher Ietzirah ([Hebrew: Sefer jezirah]). Traduction du livre cabalistique de la création",
+   "catalogued": "Unknown",
+   "language": "French",
+   "year": 1913,
+   "flash_lite": "Calomira de Cimara",
+   "author": "Calomira de Cimara",
+   "as_printed": "C-sse Calomira de Cimara",
+   "quoted_line": "C-SSE CALOMIRA DE CIMARA (ספר יצירה) TRADUCTION DU LIVRE CABALISTIQUE DE LA CRÉATION AVEC ANNOTATIONS PRISES D'ANCIENS COMMENTAIRES ET DEUX TABLEAUX EXPLICATIFS INÉDITS",
+   "page": 4,
+   "confidence": "medium",
+   "reasoning": "The Comtesse Calomira de Cimara heads the title-page and signs the second title-page as the person responsible for this volume — the French translation, the annotations drawn from old commentaries, and the two unpublished tables.",
+   "caveat": "Her stated role is translator/annotator, not original author: the volume's own second title-page says the underlying Sepher Yetzirah is 'que les hébreux attribuent à Abraham et rédigé, (selon les critiques modernes) par Rabi Akiva'. So if the catalogue wants the author of the ancient text, that is Abraham (traditional) / Rabbi Akiva (modern attribution, as the book reports it); if it wants the person who made this 1913 book, it is Calomira de Cimara. Not a Sammelband — all pages belong to one work. Henri et Hector Durville are the Paris publishers; the Jassy house N. V. Stephaniu & Cie printed it. The dedication is to the author's mother, unnamed.",
+   "other_names": [
+    {
+     "name": "Rabi Akiva",
+     "role": "author"
+    },
+    {
+     "name": "Abraham",
+     "role": "author"
+    },
+    {
+     "name": "Henri Durville",
+     "role": "printer"
+    },
+    {
+     "name": "Hector Durville",
+     "role": "printer"
+    },
+    {
+     "name": "N. V. Stephaniu & Cie",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b4d650853c26e0d1560ae0",
+   "title": "Auriferae artis, quam chemiam vocant, antiquissimi authores, sive turba philosophorum. 2. Quod cont. Morieni Romani scripta de Re metallica ... - 1572. - 568 S.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1572,
+   "flash_lite": "Morienus Romanus",
+   "author": "Morienus Romanus",
+   "as_printed": "Morieni Romani",
+   "quoted_line": "QVOD CONTINET Morieni Romani scripta de Re Metallica, at- que de Occulta summaq́; antiquorum Medicina, cum alijs authoribus, quos versa pagina indicat.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Morieni Romani scripta\" names Morienus Romanus as the writer of the texts this volume contains, and the preface repeats \"LIBER DE COMPOSITIONE ALCHEMIAE, quem edidit Morienus Romanus\".",
+   "caveat": "This is volume 2 of a printed collection (Auriferae artis... volumen secundum), an anthology that also carries \"alijs authoribus, quos versa pagina indicat\" — so the answer belongs specifically to the leading work, Morienus's Liber de compositione alchemiae, not to the whole volume. The preface's discussion of the three Hermeses (Enoch, Noe, Hermes Trismegistus), including the claim that Hermes \"hunc librum primus inuenit & edidit\", is narrative matter about legendary predecessors, not a byline.",
+   "other_names": [
+    {
+     "name": "Robertus Castrensis",
+     "role": "translator"
+    },
+    {
+     "name": "Calid, rex Aegyptiorum",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Petrus Perna",
+     "role": "printer"
+    },
+    {
+     "name": "Hermes Trismegistus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69c898306c6f3cc53c85ca46",
+   "title": "Elfin music: an anthology of English fairy poetry",
+   "catalogued": "Unknown",
+   "language": "English",
+   "year": 1888,
+   "flash_lite": "Arthur Edward Waite",
+   "author": "Arthur Edward Waite",
+   "as_printed": "ARTHUR EDWARD WAITE",
+   "quoted_line": "ELFIN MUSIC: AN ANTHOLOGY OF ENGLISH FAIRY POETRY. SELECTED AND ARRANGED, WITH AN INTRODUCTION, BY ARTHUR EDWARD WAITE.",
+   "page": 7,
+   "confidence": "medium",
+   "reasoning": "The title-page gives the whole book to Waite (\"selected and arranged, with an introduction, by\"), and he signs the dedication and writes the introduction in the first person.",
+   "caveat": "This is an anthology: the poems are by other hands (Chaucer, Spenser, etc.), so Waite is strictly compiler/editor plus author of the introduction — if the caller needs a strict role rather than a main entry, he is the editor and the verse itself is anonymous/various. The dedication on p.4 is a handwritten presentation inscription in this copy, not printed matter. The epigraph is credited to \"The Ettrick Shepherd\" (James Hogg) and is quoted matter, not an attribution.",
+   "other_names": [
+    {
+     "name": "William Sharp",
+     "role": "editor"
+    },
+    {
+     "name": "Lucasta",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Walter Scott",
+     "role": "printer"
+    },
+    {
+     "name": "Thomas Whittaker",
+     "role": "printer"
+    },
+    {
+     "name": "W. J. Gage and Co",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69c868986c6f3cc53c856721",
+   "title": "Annales mac[onniques]",
+   "catalogued": "Unknown",
+   "language": "English",
+   "year": 1807,
+   "flash_lite": "Caillot",
+   "author": "Caillot",
+   "as_printed": "PAR CAILLOT, R:. C:.",
+   "quoted_line": "ANNALES MAÇ:., DÉDIÉES A SON ALTESSE SÉRÉNISSIME LE PRINCE CAMBACÉRÈS, Archi-Chancelier de l'Empire, en G:. M:. de l'O:. M:. en France. PAR CAILLOT, R:. C:. TOME I.",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "The volume-I title page attributes the work with \"PAR CAILLOT\", the French equivalent of \"auctore\", so Caillot is the author as the book gives him.",
+   "caveat": "Caillot is also the printer-bookseller of the volume (\"Chez CAILLOT, Imprimeur-Libraire\"), so the same name fills both roles; no forename is printed. A second title page (page 10) gives a different imprint, \"Imprimerie de la Rue de la Harpe\", with no author named — the pages may come from more than one volume of this 6-volume set. \"R:. C:.\" and the Cambacérès titles are masonic offices, not names.",
+   "other_names": [
+    {
+     "name": "Cambacérès",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Caillot",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer",
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b51e05efd8df28f2daf369",
+   "title": "Verzeichniß über 250 Nummern von gebundenen chemischen und alchimistischen Büchern und Schriften welche größtentheils von seltenem Gehalte sind",
+   "catalogued": null,
+   "language": "German",
+   "year": 1806,
+   "flash_lite": "Giovanni Aurelio Augurello",
+   "author": "Joseph Mozler",
+   "as_printed": "Joseph Mozler, Antiquar",
+   "quoted_line": "Freysingen im Monat Junius 1806. - Joseph Mozler, Antiquar.",
+   "page": 4,
+   "confidence": "high",
+   "reasoning": "The catalogue's opening notice is written in the first person ('von mir', 'bey mir zu haben') and signed with place and date by the antiquarian Joseph Mozler, who is therefore the compiler the book names as its own author.",
+   "caveat": "This is a bookseller's sale catalogue, so Mozler is its compiler/author rather than the author of any work in it; all other personal names on these pages belong to catalogued or cited books (Augurellus, Weigel, Leo X, Samuel Heyl, Robert Fludd) and are not this book's contributors.",
+   "other_names": [],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b51ed29a81ef7feb3db42e",
+   "title": "Collectanea de rebus hibernicis. 6. 1804",
+   "catalogued": null,
+   "language": "English",
+   "year": 1804,
+   "flash_lite": "Charles Vallancey",
+   "author": "Charles Vallancey",
+   "as_printed": "CHARLES VALLANCEY",
+   "quoted_line": "Moſt obedient ſervant, CHARLES VALLANCEY. DUBLIN, JUNE 6, 1804.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page byline is anonymous (\"BY AUTHOR OF THE VINDICATION OF THE ANCIENT HISTORY OF IRELAND\"), but the dedication that presents this volume of the Collectanea is signed CHARLES VALLANCEY.",
+   "caveat": "The title page names no author, giving only 'BY AUTHOR OF THE VINDICATION OF THE ANCIENT HISTORY OF IRELAND...'; the attribution rests on the signed dedication. Two overlapping dedication settings appear in the scans (p.10 addressed to the Lord Bishop of Cloyne, pp.11-12 to Charles, Lord Bishop of Kildare) - apparently duplicate/variant leaves of the same volume, and only the Kildare one carries the signature. Bedell, Archbishop Daniel, Robert Boyle, Pinkerton and Seneca are mentioned or quoted in the dedication and proem and are not contributors to this work.",
+   "other_names": [
+    {
+     "name": "Charles, Lord Bishop of Kildare",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Lord Bishop of Cloyne",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Graisberry and Campbell",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee"
+   ]
+  },
+  {
+   "book_id": "69b51e8b768235dc659956ae",
+   "title": "Storia Letteraria D'Italia : divisa in tre libri. 5, Dal Settembre del MDCCLI Al Marzo MDCCLII",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1753,
+   "flash_lite": "Francesco Antonio Zaccaria",
+   "author": "Francesco Antonio Zaccaria",
+   "as_printed": "P. FRANCESCO ANTONIO ZACCARIA",
+   "quoted_line": "STORIA LETTERARIA D'ITALIA SOTTO LA DIREZIONE DEL P. FRANCESCO ANTONIO ZACCARIA",
+   "page": 5,
+   "confidence": "medium",
+   "reasoning": "The only person named in a responsibility role is Zaccaria, given on a series title-page as the one under whose direction the Storia Letteraria d'Italia is produced, and the preface speaks in an editorial first-person plural ('abbiam giudicato') with no other signature.",
+   "caveat": "The formula is 'sotto la direzione del' (under the direction of), i.e. directorship of a serial rather than an explicit 'author' statement, and it appears on the title-page of the PRECEDING volume (Sept MDCCL–Mar MDCCLI) bound in front; the title-pages of this volume itself (V, Sept MDCCLI–Mar MDCCLII, Venice 1753) name no author at all, only the ducal protector and the printing house.",
+   "other_names": [
+    {
+     "name": "Francesco III, Duke of Modena",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Stamperia Poletti",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee"
+   ]
+  },
+  {
+   "book_id": "69dbc8271040d1d5e2097634",
+   "title": "Articella seu Opus artis medicinae. Ed: Franciscus Argilagnes. Con: Johannitius: Isagoge ad Tegni Galeni. Philaretus: De pulsibus; Theophilus Protospatharius: De urinis. Hippocrates: Aphorismi (comm: Galenus; tr: Constantinus Africanus); Prognostica (comm: Galenus); De regimine acutorum morborum (comm: Galenus; tr: Gerardus Cremonensis); Pseudo- Hippocrates, Epidemiae, Lib. VI (comm: Johannes Alexandrinus; tr: Simon a Cordo); Hippocrates: De natura foetus (tr: Bartholomaeus de Messana). Galenus: Liber Tegni, sive Ars medica (comm: Hali; tr: Gerardus Cremonensis). Gentilis Fulginas: De divisione librorum Galeni. Hippocrates: Medicinae lex (tr: Arnaldus de Villa Nova). Iusiurandum (tr: Petrus Paulus Vergerius)",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1487,
+   "flash_lite": "Joannitius",
+   "author": "Johannitius",
+   "as_printed": "Joannitij",
+   "quoted_line": "Isagoge Joannitij in Medicinis",
+   "page": 2,
+   "confidence": "medium",
+   "reasoning": "The only title-page text transcribed is the genitive \"Isagoge Joannitij in Medicinis\", which attributes the opening work to Johannitius; no other author is named on the pages given.",
+   "caveat": "This is the Articella, a composite medical anthology, so the attribution belongs only to its first item (Johannitius, Isagoge); the volume as a whole has no single author on the pages given, and the further works (Hippocrates, Galen, Philaretus, Theophilus, etc.) and the editor Franciscus Argilagnes appear only in the catalogue record, not in the transcribed front matter. \"Monasterium Althominster\" is an institutional ownership inscription (a monastery, not a person), and \"GW 2680\" / \"Hain 1870\" are later bibliographic references, not part of the book's own text.",
+   "other_names": [],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69e010a7c47b5c9f88213ad4",
+   "title": "Mandalay Thathanawin (မန္တလေးသာသနာဝင်, Burmese Buddhist History)",
+   "catalogued": "Unknown",
+   "language": "Burmese",
+   "year": 1900,
+   "flash_lite": "Kailasa",
+   "author": "Ashin Kelasa (အရှင်ကေလာသ)",
+   "as_printed": "အရှင်ကေလာသ ဓမ္မာစရိယ ဂဏဝါစက B-A-HONS. ဝိဇ္ဇာဂုဏ်ထူး (သီရိလင်္ကာ)",
+   "quoted_line": "အရှင်ကေလာသ ဓမ္မာစရိယ ဂဏဝါစက B-A-HONS. ဝိဇ္ဇာဂုဏ်ထူး (သီရိလင်္ကာ) ပြုစုရေးသားသည်။။",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page names Ashin Kelasa followed by the verb ပြုစုရေးသားသည် (\"compiled and wrote\"), the Burmese authorship formula.",
+   "caveat": "Catalogue metadata (byline Unknown, year 1900) is wrong: page 2 gives a first printing of 3,000 copies in December 1980, Rangoon. ဓမ္မာစရိယ / ဂဏဝါစက / B.A. Hons (Sri Lanka) are titles and degrees, not names, and သာသနာရေးဦးစီးဌာန (Department of Religious Affairs) is an institution. U Myint Maung is named as publisher (Assistant Director), a role not in the given list, tagged here as publisher.",
+   "other_names": [
+    {
+     "name": "Daw Tin Hla (ဒေါ်တင်လှ)",
+     "role": "printer"
+    },
+    {
+     "name": "U Myint Maung (ဦးမြင့်မောင်)",
+     "role": "publisher"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06cc83c749b698e5b293e0",
+   "title": "2: Pauli Manutii Scholia, quibus et loci familiarium epistolarum difficiliores explicantur, et castigationum, quae in iisdem epistolis factae sunt, ratio redditur.",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1543,
+   "flash_lite": "Paulus Manutius",
+   "author": "Paulus Manutius",
+   "as_printed": "PAVLI MANVTII",
+   "quoted_line": "PAVLI MANVTII SCHOLIA, QVI- BVS ET LOCI FAMILIARIVM EPISTOLARVM DIFFICILIO- RES EXPLICANTVR",
+   "page": 8,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work in the genitive as the Scholia of Paulus Manutius, and the dedication to students of letters is signed PAVLVS MANVTIVS ALDI F.",
+   "caveat": "Paul III (Pontifex Maximus) and the Venetian Senate appear only as grantors of the printing privilege, not as author, dedicatee or printer; the dedication is addressed to 'literarum studiosis' (students of letters), a group rather than a named dedicatee. Cicero is the author of the Familiar Letters being annotated, not of this work.",
+   "other_names": [
+    {
+     "name": "Marcus Tullius Cicero",
+     "role": "subject"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-subject"
+   ]
+  },
+  {
+   "book_id": "6a08551d15c643eb1af54d46",
+   "title": "De vitis sanctorum ab Aloysio Lipomano, episcopo Veronae, ... olim conscriptis nunc primùm à F. Laurentio Surio Carthusiano emendati, & auctis, Tomus primus sextus. ..",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1581,
+   "flash_lite": "Aloysius Lippomanus",
+   "author": "Aloysius Lipomanus",
+   "as_printed": "ALOYSIO LIPOMANO, EPISCOPO VERONAE",
+   "quoted_line": "DE VITIS SANCTORVM AB ALOYSIO LIPOMANO, EPISCOPO VERONAE, VIRO DOCTISSIMO, OLIM CONSCRIPTIS: NVNC PRIMVM A F. LAVRENTIO SVRIVM Carthusiano emendatis, & auctis",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The title-page states the lives of the saints were formerly written (\"olim conscriptis\") by Aloysius Lipomanus, bishop of Verona, and only afterwards emended and enlarged by Surius, so Lipomanus is the author and Surius the editor.",
+   "caveat": "Two title-pages are present with differing imprints (VENETIIS M D LXXXI on p.7, VENETIIS M D LXXI on p.8) and slightly different wording (p.8 says the work was \"ab eodem auctore recognita et locupletata\", i.e. revised by Lipomanus himself, and does not name Surius); both belong to Tomus sextus of the same work. No printer is named in the transcribed matter. Augustine and Antonius on p.10 appear only as cited exempla, not as contributors.",
+   "other_names": [
+    {
+     "name": "Laurentius Surius",
+     "role": "editor"
+    },
+    {
+     "name": "Ernestus, Count Palatine, Duke of Bavaria",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08559515c643eb1af56586",
+   "title": "Eleganze, insieme con la copia della lingua toscana e latina, scielte da Aldo Manutio. Vtilissime al comporre nell'una e l'altra lingua",
+   "catalogued": "Unknown",
+   "language": "Italian",
+   "year": 1568,
+   "flash_lite": "Aldo Manuzio",
+   "author": "Aldo Manuzio",
+   "as_printed": "Aldo Manutio",
+   "quoted_line": "CON LA COPIA DELLA LINGVA TOSCANA, E L A T I N A, - Scielte da Aldo Manutio.",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page credits the compilation \"Scielte da Aldo Manutio\" and the dedication of 31 May 1568 is signed \"Di V.S. molto illust. affett. seruitore, Aldo Manutio\", so the book presents Aldo Manuzio (the Younger) as its author-compiler.",
+   "caveat": "Three different title-pages appear (1569 'Le piacenti insidie con la carta geografica di Toscana' also ascribed to Aldo Manutio, 1563 'Eleganze', and a 1590 reissue), so the scans mix variant/bound-together title-leaves; the answer belongs to the 'Eleganze insieme con la copia della lingua toscana e latina', whose dedication Manuzio signs. The work is a compilation of selected phrases, so 'scielte da' is compiler-authorship rather than original composition. Agostino Ferentilli is named only in passing in the dedication as the informant who described the dedicatee, not as a contributor.",
+   "other_names": [
+    {
+     "name": "Feliciano, Barone di Erberstan (Herberstein)",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08539b15c643eb1af503fb",
+   "title": "Eleganze insieme con la copia della lingua toscana, e latina, scielte da Aldo Manutio. ... Con tre nuoue tauole. La prima, de' capi, la seconda, delle locutioni volgari; la terza, delle locutioni latine",
+   "catalogued": "Unknown",
+   "language": "Italian",
+   "year": 1575,
+   "flash_lite": "Aldus Manutius",
+   "author": "Aldus Manutius (the Younger)",
+   "as_printed": "Aldo Manutio",
+   "quoted_line": "ELEGANTIE IN LATINVM CON LV COPIA Della Lingua Toscana, e Latina, Scritte da Aldo Manutio.",
+   "page": 4,
+   "confidence": "high",
+   "reasoning": "The second title-page says the Eleganze were 'Scritte da Aldo Manutio' (written by), and the dedication to Pier Francesco Zini is signed 'Aldo Manutio', so the book names him as its author.",
+   "caveat": "Two title-pages are present (Venice 1575 and Venice 1570), so this may be a Sammelband or a reissue with an earlier title-page bound in; the 1575 title-page words his role as 'Scielte da Aldo Manutio' (selected/compiled by), an editorial framing, while the 1570 one says 'Scritte da' (written by). 'MAXIMILIANI II EX PRIVILEGIO IMP. CAES. AVG.' is the imperial printing privilege of Emperor Maximilian II, not an authorship statement.",
+   "other_names": [
+    {
+     "name": "Pier Francesco Zini",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08549c15c643eb1af5334b",
+   "title": "XFrancisci Luisini Vtinensis In librum Q. Horatii Flacci De arte poetica commentarius",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1554,
+   "flash_lite": "Francesco Luisini",
+   "author": "Franciscus Luisinus",
+   "as_printed": "FRANCISCI LVISINI VTINENSIS",
+   "quoted_line": "FRANCISCI LVISINI VTINENSIS IN LIBRVM Q. HORATII FLACCI DE ARTE POETICA COMMENTARIVS.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page gives the commentary in the genitive of Francesco Luisini of Udine, and the dedication to Cardinal Cornaro is signed FRANCISCVS LVISINVS S. P. D., who speaks throughout of 'meum hunc commentarium'.",
+   "caveat": "Page 2 carries a second, differently worded title-page (IN LIBRUM I. Q. DE VITA ET MORIBUS COMMENTARIUS, Venetiis M.D.LIII) under the same author's name — possibly a companion piece bound in, an OCR-garbled variant title, or a Sammelband; the answer belongs to the De arte poetica commentary of 1554 named on page 1 and confirmed by the dedication.",
+   "other_names": [
+    {
+     "name": "Quintus Horatius Flaccus",
+     "role": "subject"
+    },
+    {
+     "name": "Aloysius Cornelius (Luigi Cornaro)",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "mentioned"
+    },
+    {
+     "name": "Federicus Cornelius",
+     "role": "mentioned"
+    },
+    {
+     "name": "Iulius III",
+     "role": "mentioned"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69f33b4e876dd827cbc58b00",
+   "title": "Argumenta in librum Psalmorum, Estheræ Inglis manu exarata Londini 1606",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1606,
+   "flash_lite": "Esther Inglis",
+   "author": "Esther Inglis",
+   "as_printed": "ESTHERÆ INGLIS",
+   "quoted_line": "ARGVMENTA IN LIBRVM PSALMORVM, ESTHERÆ INGLIS MANV EXARATA, LONDINI, 1606.",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Estheræ Inglis manu exarata\" names Esther Inglis as the maker of the book, and she signs the French dedication \"Vre treshumble seruante. ESTHER INGLIS.\"",
+   "caveat": "\"Manu exarata\" means written out by her hand: Esther Inglis was a calligrapher, so she is the scribe/maker of this manuscript rather than necessarily the composer of the Psalm arguments themselves, which the book leaves unattributed. This is a handwritten manuscript, not a printed book, so there is no printer.",
+   "other_names": [
+    {
+     "name": "Thomas Egerton, Baron Ellesmere",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a084dfa15c643eb1af40840",
+   "title": "Epitome orthographiae Aldi. Manutii Paulli. F. Aldi. N. Ex libris antiquis grammaticis etymologia graeca consuetudine ... Reliqua 6 pagella indicabit",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1590,
+   "flash_lite": "Aldus Manutius",
+   "author": "Aldus Manutius (the Younger)",
+   "as_printed": "ALDI. MANVTII. PAVLLI. F. ALDI. N.",
+   "quoted_line": "E P I T O M E O R T H O G R A P H I A E A L D I . M A N V T I I . P A V L L I . F . A L D I . N .",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work in the genitive as the Orthographia of Aldus Manutius, son of Paulus and grandson of Aldus, and the dedication on pages 7-9 is signed 'Aldus Manutius Paulli F.' in the first person as the compiler of the book.",
+   "caveat": "Two title-pages are present: the 1590 'Epitome orthographiae' (page 5) and an earlier 1561 'Orthographiae ratio, ab Aldo Manutio Pauli F.' (page 6); the dedication is dated Venice, Kal. Ian. 1561, so this may be a Sammelband or a reissue binding the 1561 Ratio with the 1590 Epitome. Both are by the same Aldus Manutius the Younger, so the attribution is unaffected. 'Apud Aldum' is the Aldine press imprint, which in this period is the author himself.",
+   "other_names": [
+    {
+     "name": "Franciscus Morandus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "subject"
+    },
+    {
+     "name": "Aldus",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer",
+    "also-subject",
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b51deb47b06ecd58186c4c",
+   "title": "Deutsches Theatrum Chemicum : Auf welchem der berühmtesten Philosophen und Alchymisten Schrifften, Die von dem Stein der Weisen, von Verwandlung der schlechten ",
+   "catalogued": null,
+   "language": "German",
+   "year": 1728,
+   "flash_lite": "Herrenstadio-Silesius",
+   "author": "Herrenstadio-Silesius",
+   "as_printed": "Herrenstadio-Silesium",
+   "quoted_line": "vorgestellet werden durch Herrenstadio-Silesium. Nürnberg, bey Adam Jonathan Felseckern, 1728.",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The title-page gives only one personal name for the work's making — the pseudonym \"Herrenstadio-Silesium\" after \"vorgestellet werden durch\" — and the preface is written in that same first person (\"unser Theatr. Chem.\"), so the book presents him as its maker.",
+   "caveat": "This is an anthology of other philosophers' alchemical writings, so \"vorgestellet werden durch\" makes him compiler/editor as much as author; the name is a pseudonym (\"the man from Herrnstadt in Silesia\", conventionally identified with Friedrich Roth-Scholtz), reported here as printed per instruction. CHRYSOG. de PURIS on page 9 appears only inside a marginal citation to another page of the work and is not an author of this book.",
+   "other_names": [
+    {
+     "name": "Adam Jonathan Felsecker",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b630801c1c21a373802a4b",
+   "title": "Sequuntur Statuta per illustrum principem dominum d. Karolum secundum Sabaudie etc. ducem modernum condita.",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1513,
+   "flash_lite": "Carolus Sabaudiae",
+   "author": "Carolus II, dux Sabaudiae (Charles II, Duke of Savoy)",
+   "as_printed": "Carolus dux sabaudie",
+   "quoted_line": "Carolus dux sabaudie &c Licet in generali Reformatione statutorum nostrorū per nos nouissime facta mature et cōsulte pcesserimus ad ea omnia que istic edicta et decreta fuerūt",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "The work is a body of ducal statutes promulgated in the Duke's own first-person voice ('statutorum nostrorum per nos ... facta', 'ex nostra certa scientia ... declaramus hoc edicto'), matching the catalogue title's 'per ... Karolum secundum Sabaudie ducem condita'.",
+   "caveat": "This is a legislative text, so 'author' means the promulgating sovereign rather than a literary writer; the long list of names in the 10 October 1513 colophon are councillors present at the promulgation (witnesses/office-holders), not contributors. Io. Maria de Savinte, ducal secretary, signs the declaration on p.9 and 'Mulliet'/'Clulliet'/'Sawinis' are chancery attestation signatures.",
+   "other_names": [
+    {
+     "name": "Ludovicus Cruse (Louis Cruse)",
+     "role": "printer"
+    },
+    {
+     "name": "Iohannes de Sabaudia, episcopus Gebennensis (John of Savoy, Bishop of Geneva)",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Io. Maria de Savinte, Ducalis Secretarius",
+     "role": "editor"
+    },
+    {
+     "name": "Philippus de Sabaudia, comes Gebennensis",
+     "role": "subject"
+    },
+    {
+     "name": "Franciscus de Lucemburgo, vicecomes Martigniaci",
+     "role": "subject"
+    },
+    {
+     "name": "Anthonius de Gingino, dominus Divonae, praeses",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "possibly-declined"
+   ]
+  },
+  {
+   "book_id": "6a0856ac15c643eb1af59806",
+   "title": "De quaesitis per. epistolam libri. 3. Aldi. Manutij Paulli. F. Aldi. N",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1576,
+   "flash_lite": "Aldus Manutius",
+   "author": "Aldus Manutius",
+   "as_printed": "ALDI MANVTII PAVLLI F. ALDI N.",
+   "quoted_line": "good Latin mixed title-page - DE QVAESITIS PER EPISTOLAM LIBRI III ALDI MANVTII PAVLLI F. ALDI N. VENETIIS ∞.D.LXXVI",
+   "page": 3,
+   "confidence": "high",
+   "reasoning": "The title page gives the work in the genitive as \"De quaesitis per epistolam libri III Aldi Manutii Paulli F. Aldi N.\", and the dedication on page 9 is signed by the same man, \"Aldus Manutius, Paulli F. Aldi N.\" — i.e. Aldus Manutius the Younger, son of Paulus and grandson of the elder Aldus.",
+   "caveat": "Sammelband: page 4 is a separate title page for Q. Aurelius Symmachus, Epistolarum libri X (Venice, Aldine press) bound with this work; the answer belongs to De quaesitis per epistolam. VENETIIS is a place, not a printer, and \"Venetiarum Principem\" / \"Cardinalem\" are offices.",
+   "other_names": [
+    {
+     "name": "Quintus Aurelius Symmachus",
+     "role": "subject"
+    },
+    {
+     "name": "Aloysius Mocenicus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus Antonius Amulius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paullus Manutius",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-subject",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b51ed0c35d928cea4ef504",
+   "title": "Collectanea de rebus hibernicis. 4. 1786 = Nr. 13 - 14",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1786,
+   "flash_lite": "Charles Vallancey",
+   "author": "Charles Vallancey",
+   "as_printed": "C. VALLANCEY, L. L. D.",
+   "quoted_line": "Collectanea de Rebus Hibernicis. NUMB. XIII. VOL. IV. BY C. VALLANCEY, L. L. D.",
+   "page": 13,
+   "confidence": "high",
+   "reasoning": "The Numb. XIII title-page carries the byline \"BY C. VALLANCEY, L. L. D.\", and the dedication is signed CHARLES VALLANCEY.",
+   "caveat": "Volume IV binds together Numbers XIII (1784 title-page) and XIV; only the Numb. XIII title-page carries the byline, and the Numb. XIV / general vol. IV title-page (page 7, 1786) is anonymous — Vallancey is the author/compiler of the Collectanea series. The epigraph names on page 13 (Bochart, Strabo, Abbe de Fontenu, Isaiah, Proverbs) are quoted matter, not contributors.",
+   "other_names": [
+    {
+     "name": "W. Spotswood",
+     "role": "printer"
+    },
+    {
+     "name": "Luke White",
+     "role": "bookseller"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b51de1cf111105c429258a",
+   "title": "Joh. Michaelis Faustij, Med. Doct. Physici Francofurt. Ordinarij, Academ. Leopoldino Imperialis Theophili, Compendium Alchymist. Novum, Sive Pandora Explicata &",
+   "catalogued": null,
+   "language": "German",
+   "year": 1706,
+   "flash_lite": "Johannes Michael Faust",
+   "author": "Johann Michael Faust",
+   "as_printed": "Joh. Michaelis Faustij, Med. Doct. Physici Francofurt. Ordinarij, Academ. Leopoldino Imperialis Theophili",
+   "quoted_line": "Vorrede / Joh. Michael Fausten / D.",
+   "page": 15,
+   "confidence": "high",
+   "reasoning": "The title-page names him in the Latin genitive as the work's author (\"Joh. Michaelis Faustij ... Compendium Alchymist. Novum\") and he signs the German preface \"Joh. Michael Fausten / D.\"",
+   "caveat": "The book is Faust's expanded edition and commentary on the older anonymous alchemical text 'Pandora' (printed at Basel in 1588 by Sebastian Henricpetri, named in the preface only as a reference to that earlier edition); Basilius (Valentinus) appears on page 14 only as a quoted epigraph from the Currus Triumphalis Antimonii, not as an author of this book.",
+   "other_names": [
+    {
+     "name": "Johann Zieger",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer"
+   ]
+  },
+  {
+   "book_id": "69c866e36c6f3cc53c85648f",
+   "title": "Allgemeines Hand- und Taschenbuch oder Universalphysik",
+   "catalogued": null,
+   "language": "German",
+   "year": 1803,
+   "flash_lite": "Adam Michael Birkholz",
+   "author": "Adam Michael Birkholz",
+   "as_printed": "Adam Michael Birkholz",
+   "quoted_line": "Den Lichtsmanen des verewigten und verklärten ANDREAS v. NITSCHE werden diese Urwahrheiten vom Seyn, Leben und Bewegen als das schönste Denkmal und beste Dankopfer dargebracht von Adam Michael Birkholz",
+   "page": 6,
+   "confidence": "high",
+   "reasoning": "The dedication leaf is signed \"dargebracht von Adam Michael Birkholz\", i.e. he presents these \"Urwahrheiten\" — the work's own text — making him its author, since no other byline appears on any title-page.",
+   "caveat": "None of the four title-pages carries a byline; authorship rests solely on the dedication signature. The leaves look like a Sammelband or a bound-together series: pages 7 and 9 are Leipzig/Richter 1803 title-pages of the Universalkatechismus and the Universalphysik, page 8 is a fragmentary law-related title, and page 10 is a different 1801 Leipzig imprint (Universallexikon, J. G. Buchhandlung); the answer belongs to the Birkholz-dedicated Leipzig 1803 group. Virgil is only an epigraph (Georgics II, 490 ff.), not a contributor.",
+   "other_names": [
+    {
+     "name": "Andreas von Nitsche",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Carl Friedrich Enoch Richter",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69f33704876dd827cbc51619",
+   "title": "Sermons against the Turks",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1481,
+   "flash_lite": "Franciscus de Assisio",
+   "author": "Franciscus de Assisio",
+   "as_printed": "Francisci de Assisio Ordinis Minorum",
+   "quoted_line": "Oratio Francisci de Assisio Ordinis Minorum habita Romae pro defensione fidei christianae 1480",
+   "page": 7,
+   "confidence": "medium",
+   "reasoning": "The handwritten title-page lists two orations, and the first is given in the Latin genitive as the oration of Franciscus de Assisio of the Order of Friars Minor, delivered at Rome in 1480.",
+   "caveat": "This is a Sammelband: the same title-page lists a second, separate oration by Stephanus Thegliarius, Archbishop of Antibari (Rome, 1481), so the answer applies only to the first work. The title-page is a later handwritten one, not printed, and 'de Assisio' is a place of origin rather than a family name.",
+   "other_names": [
+    {
+     "name": "Stephanus Thegliarius",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b51d48f23ccdcced3071e8",
+   "title": "Turba Philosophorum, Das ist, Das Buch von der güldenen Kunst : neben andern Authoribus, welche mit einander 36 Bücher in sich haben ; darinn die besten urältes",
+   "catalogued": null,
+   "language": "German",
+   "year": 1613,
+   "flash_lite": "Morienus Romanus",
+   "author": "Morienus Romanus",
+   "as_printed": "MORIENI ROMANI",
+   "quoted_line": "welches in sich hellt die Schrifften MORIENI ROMANI, von den Metallischen dingen / unnd von der verborgenen unnd höchsten Artzney der alten Philosophorum",
+   "page": 5,
+   "confidence": "high",
+   "reasoning": "The title-page of this second part says it contains the writings of Morienus Romanus (Latin genitive MORIENI ROMANI), Germanized by Philippus Morgenstern, and the preface confirms Morienus Romanus issued the book to King Calid.",
+   "caveat": "Sammelband/multi-part collection: the catalogue title is Turba Philosophorum, but these pages are the title-page and preface of 'Das ander Theil' (the second part), whose text is Morienus Romanus; the title-page adds 'mit andern Authoribus' listed on a following leaf not transcribed here. The preface's first-person voice ('I undertook to bring this great work from Arabic into Latin') is Robertus Castrensis, the Latin translator, not the author.",
+   "other_names": [
+    {
+     "name": "Philippus Morgenstern",
+     "role": "translator"
+    },
+    {
+     "name": "Robertus Castrensis",
+     "role": "translator"
+    },
+    {
+     "name": "Johann Schröter",
+     "role": "printer"
+    },
+    {
+     "name": "Calid",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Hermes Trismegistus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "69b51cee47b06ecd58182536",
+   "title": "Aureum Vellus, oder Güldin Schatz und Kunstkammer. [1,1]",
+   "catalogued": null,
+   "language": "German",
+   "year": 1598,
+   "flash_lite": "Salomon Trismosinus",
+   "author": "Salomon Trismosin",
+   "as_printed": "Salomone Trismosino",
+   "quoted_line": "Von Dem Edlen/ Hocherleuchten/ Fürtreffenli-chen/ bewertẽ Philosopho Salomone Trismosino (so deß grossen Philosophi vnd Medici Theophrasti Paracelsi Prae-ceptor gewesen) in sonderbare vnderschiedliche Tractät-lein disponiert/ vnd in das Teutsch gebracht.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page names Salomon Trismosin (ablative 'Salomone Trismosino') as the philosopher who arranged the collected writings into separate tracts and rendered them into German, i.e. the work's author-compiler as the book itself gives it.",
+   "caveat": "Trismosin is a pseudonymous/legendary figure and his role is compiler-translator of older Egyptian/Arab/Chaldean writings as well as author; the person who actually gathered the originals and put them in print is left anonymous ('Durch einen der Kunst liebhabern'), and the imprint gives only a place ('Getruckt zu Rorschach am Bodensee'), no printer's name. Page 2 is a second title-page belonging to the same 1598 Aureum Vellus compilation.",
+   "other_names": [
+    {
+     "name": "Theophrastus Paracelsus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69f33393876dd827cbc4ba61",
+   "title": "Anthology of devotional prose and verse",
+   "catalogued": null,
+   "language": "Middle English",
+   "year": 1425,
+   "flash_lite": "Augustinus",
+   "author": "Augustinus",
+   "as_printed": "Sancti Augustini",
+   "quoted_line": "Meditaciones Sancti Augustini in Anglico.",
+   "page": 6,
+   "confidence": "medium",
+   "reasoning": "The handwritten title-page names the work in the Latin genitive, \"Meditaciones Sancti Augustini\", assigning authorship of the Meditations to St Augustine.",
+   "caveat": "The only evidence is a single handwritten Latin title-page line on a Middle English manuscript catalogued as an anthology, so the ascription may cover only the first item of a composite volume rather than the whole book; the medieval Meditationes circulating under Augustine's name are in fact pseudo-Augustinian, and \"in Anglico\" implies an English translation whose translator is not named.",
+   "other_names": [],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a26c223aad44c98627c1d9e",
+   "title": "Hermetico-Spagyrisches Lustgärtlein : Darinnen Hundert vnd Sechtzig vnterschiedliche, schöne, Kunstreiche, Chymico-Sophische Emblemata, oder Geheymnußreiche Spr",
+   "catalogued": null,
+   "language": "German",
+   "year": 1625,
+   "flash_lite": "Lucas Jennis",
+   "author": "Lucas Jennis",
+   "as_printed": "L. JENNIS",
+   "quoted_line": "Damit GOTT befolen. - L. JENNIS.",
+   "page": 5,
+   "confidence": "medium",
+   "reasoning": "The title-page names no author, but the preface to the reader is signed \"L. JENNIS\", who in the first person describes assembling the 160 emblems and the four large figures and having the Latin captions translated and printed opposite them.",
+   "caveat": "Jennis is the Frankfurt publisher/printer, and the work he signs for is compilatory: he states the 160 emblems were previously used in Johann Daniel Mylius's Opus medico-chymicum and that he had their texts translated — so his role is compiler/editor/publisher as much as author, and the title-page itself is anonymous. He also presents the book as a supplement to the preceding DYAS CHYMICA TRIPARTITA.",
+   "other_names": [
+    {
+     "name": "Lucas Jennis",
+     "role": "printer"
+    },
+    {
+     "name": "Johann Daniel Mylius",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer",
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a084ee115c643eb1af42de4",
+   "title": "In M. Tullii Ciceronis orationes Paulli Manutij commentarius ...",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1579,
+   "flash_lite": "Paulus Manutius",
+   "author": "Paulus Manutius",
+   "as_printed": "Paulli Manutii",
+   "quoted_line": "I N M · T V L L I I C I C E R O N I S O R A T I O N V M V O L V M E N · T E R T I V M Paulli Manutii Commentarius",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Paulli Manutii Commentarius\" names Manutius as author of the commentary that is this volume's own contribution, Cicero's orations being the text commented upon.",
+   "caveat": "Two authors are on the title page: Cicero (genitive \"M. Tullii Ciceronis Orationum\") wrote the orations printed here; Manutius wrote the commentary, which is the work the catalogue title describes. The dedication to Francesco de' Medici is unsigned in these pages and mentions a Life of Cosimo I in progress, which points to the Aldine house (Aldus Manutius the Younger) rather than Paulus, who died in 1574 - so the 1579 dedication may not be Paulus's own.",
+   "other_names": [
+    {
+     "name": "Marcus Tullius Cicero",
+     "role": "author"
+    },
+    {
+     "name": "Francesco de' Medici",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Luigi d'Este",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Cosimo de' Medici",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer",
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b62fff1c1c21a3737fd436",
+   "title": "Juris civilis initia et progressus. Ad leges XII. Tabularum brevis commentatio. Ex Ulpiani Fragmentorum Tituli XXIX. selectis notis illustrati. Gaii ex veteris ",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1572,
+   "flash_lite": "Iohannes Crispinus",
+   "author": "Ioannes Crispinus",
+   "as_printed": "I. CRISPINVS",
+   "quoted_line": "I. CRISPINUS Studiofis.",
+   "page": 3,
+   "confidence": "medium",
+   "reasoning": "The only person speaking in the book's own voice is I. Crispinus, whose preface to students announces that he supplied the selected notes and added this commentatio as an appendix to his edition of the Institutiones, so the book presents him as the author/compiler of the work at hand.",
+   "caveat": "The title-page transcription is badly damaged and carries no byline, so the attribution rests entirely on the preface heading, where only the initial 'I.' is printed (conventionally expanded to Ioannes/Jean Crespin, the Geneva printer-editor); his role is arguably editorial rather than authorial, since the volume prints ancient juristic texts (Ulpian's Fragmenta, Gaius) illustrated with his selected notes.",
+   "other_names": [
+    {
+     "name": "Ulpianus",
+     "role": "subject"
+    },
+    {
+     "name": "Gaius",
+     "role": "subject"
+    },
+    {
+     "name": "Pomponius",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "69b4d63cf22c8341a90b9e32",
+   "title": "Verae Alchemiae Artis'qve Metallicae, Citra Aenigmata, Doctrina, Certvs'qve Modus : scriptis tum nouis tum ueteribus nunc primùm & fideliter maiori ex parte edi",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1561,
+   "flash_lite": "Guglielmo Gratarolo",
+   "author": "Guilielmus Gratarolus",
+   "as_printed": "Gulielmus Gratarolus Medicus & Philosophus",
+   "quoted_line": "Domino suo gratiosissimo & obseruandissimo Gulielmus Gratarolus Medicus & Philosophus S. D. P.",
+   "page": 7,
+   "confidence": "medium",
+   "reasoning": "The title-page names nobody, but Gratarolus signs both the dedication and the preface to the reader and says the volume was compiled by him (\"ex uarijs doctorum hominum & expertorum scriptis ... a me concinnatum\"), so he is the person the book presents as responsible for it.",
+   "caveat": "This is a compiled anthology of alchemical texts, mostly by other (largely unnamed) hands; Gratarolus's own grammar is that of a compiler-editor who collected, corrected and published them, not of the author of the individual treatises. The catalogue byline is empty. Arnaldus de Villanova is named on the preface page as the author of some pieces printed in the volume (his 'Perfecti magisterij opusculum', 'Lumen luminum, & flos florum', emended from an old manuscript). Solomon and Galen appear only as cited authorities. No printer is named; imprint is Basel 1561.",
+   "other_names": [
+    {
+     "name": "Ferdinandus, Comes in Ortenburg, Baro in Freyenstain & Karlspach",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Arnaldus de Villanova",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6970e36e9b09d309d780a294",
+   "title": "Alphabetische naamlyst der voornaamste Ketteren",
+   "catalogued": "Unknown",
+   "language": "Dutch",
+   "year": 1751,
+   "flash_lite": "J. A. D.",
+   "author": "J. A. D.",
+   "as_printed": "J. A. D.",
+   "quoted_line": "UEd. Dienſtwilligſte Dienaar J. A. D. Leiden uit myn Studeer- kamer den 12. Maart 1751.",
+   "page": 8,
+   "confidence": "medium",
+   "reasoning": "The title page names no author, but the preface closes with the signature \"J. A. D.\" of the man who says he drew the work from other authors and collected it himself, so the book attributes itself to those initials.",
+   "caveat": "Only initials are given, so no nominative full name can be recovered from the book itself. The title page's \"Met AANMERKINGEN door S. S. Theol. Cand.\" is not a second person's name: \"S.S. Theol. Cand.\" is the standard abbreviation for the degree Sanctissimae Theologiae Candidatus, and the annotator's actual name appears to have dropped out of the OCR line; it may well be the same J. A. D. The imprint line likewise lost the Dordrecht booksellers' names.",
+   "other_names": [],
+   "screen_reasons": [
+    "not-a-usable-name",
+    "reference-genre"
+   ]
+  },
+  {
+   "book_id": "6a08550c15c643eb1af5483d",
+   "title": "Libri de re rustica. M. Catonis lib 1. M. Terentii Varronis lib. 3. L. Iunii Moderati Columellae lib. 12. Eiusdem de arboribus liber separatus ab alijs ... Palladii lib. 14. De duobus dierum generibus simulque de umbris, & horis, quae apud Palladium, in alia epistola ad lectorem. Georgij Alexandrini enarrationes priscarum dictio",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1514,
+   "flash_lite": "Cato, Marcus Porcius",
+   "author": "Marcus Porcius Cato",
+   "as_printed": "M. CATONIS",
+   "quoted_line": "LIBRI DE RE RVSTICA M. CATONIS LIB. I. M. TERENTII VARRONIS LIB. III. L. IVNII MODERATI COLVMELLAE LIB. XII.",
+   "page": 13,
+   "confidence": "high",
+   "reasoning": "The title-page names four ancient agricultural writers in the genitive as authors of the books collected here, Cato standing first; no single author is claimed for the volume as a whole.",
+   "caveat": "This is a composite collection (the Aldine Scriptores rei rusticae, Venice 1514), not a single-author work: Cato, Varro, Columella and Palladius are all authors of their own books within it, so 'author' should be read as the first of four rather than as the author of the whole. Fra Giovanni Giocondo of Verona ('Iucundus Veronensis') signs the dedicatory preface to Leo X and states that he collated and emended the texts ('accurateque emendaui') and gave them to Aldus to print, so he is the editor, not the author. Giorgio Alessandrino supplied the glossary of archaic words. Virgil, Curius and Cincinnatus appear only inside quoted or illustrative matter and are excluded; Publius Silvinus is the dedicatee of Columella's books as discussed in Aldus's note to the reader.",
+   "other_names": [
+    {
+     "name": "Marcus Terentius Varro",
+     "role": "author"
+    },
+    {
+     "name": "Lucius Iunius Moderatus Columella",
+     "role": "author"
+    },
+    {
+     "name": "Palladius (Rutilius Taurus Aemilianus Palladius)",
+     "role": "author"
+    },
+    {
+     "name": "Iucundus Veronensis (Giovanni Giocondo da Verona)",
+     "role": "editor"
+    },
+    {
+     "name": "Georgius Alexandrinus (Giorgio Alessandrino)",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Leo X, Pontifex Maximus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Publius Silvinus",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "multi-author-title"
+   ]
+  },
+  {
+   "book_id": "69b51e0047b06ecd581886ec",
+   "title": "Fachkatalog der Drucke der Bibliothek des Hochstifts Passau, Band 1: Biblia Sacra ... - BSB Cbm Cat. 549(1",
+   "catalogued": null,
+   "language": "German",
+   "year": 1799,
+   "flash_lite": "August Buchner",
+   "author": "Buchner",
+   "as_printed": "Buchner",
+   "quoted_line": "Latin text XV. Conscripsit ... Buchner . 1800",
+   "page": 1,
+   "confidence": "medium",
+   "reasoning": "The only personal name in the front matter appears with the verb \"conscripsit\" (\"he compiled/wrote\"), which attributes the catalogue's compilation to Buchner.",
+   "caveat": "OCR is extremely sparse and garbled: only a surname survives (no forename, so the nominative cannot be expanded safely), the ellipsis hides intervening words, and the same line is repeated on page 3 with the year read as 1600 vs 1800 while the catalogue record says 1799 - so the attribution rests on a single damaged line.",
+   "other_names": [],
+   "screen_reasons": [
+    "reference-genre"
+   ]
+  },
+  {
+   "book_id": "69b51e0befd8df28f2daf767",
+   "title": "Verzeichniss der altdeutschen Bilder und einiger andern, dem Museum zu Frankfurt am Main zuständigen Gemälde",
+   "catalogued": null,
+   "language": "German",
+   "year": 1820,
+   "flash_lite": "Georg Schütz",
+   "author": "Georg Schütz",
+   "as_printed": "Georg Schütz",
+   "quoted_line": "FRANKFURT , den 20. Jänner 1820. Georg Schütz , Maler und Vorsteher der zweiten Klasse des Museums.",
+   "page": 8,
+   "confidence": "high",
+   "reasoning": "The title-page carries no byline, but the preface closes with the signature of Georg Schütz, who states he undertook the commission to lay this Verzeichniss before the art public, making him the compiler-author of the catalogue.",
+   "caveat": "\"Maler und Vorsteher der zweiten Klasse des Museums\" is his office, not part of his name; the imprint \"gedruckt mit Andreäischen Schriften\" names the Andreä printing house/types rather than a personal printer, so that attribution is indirect.",
+   "other_names": [
+    {
+     "name": "Andreä",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "reference-genre"
+   ]
+  },
+  {
+   "book_id": "69b51e5d9a81ef7feb3d3c2d",
+   "title": "Versuch einer Beschreibung sehenswürdiger Bibliotheken Teutschlands nach alphabetischer Ordnung der Städte. 4, Welcher die Supplemente zu den drey ersten Bänden und ein vollständiges Register enthält",
+   "catalogued": null,
+   "language": "German",
+   "year": 1791,
+   "flash_lite": "Friedrich Karl Gottlob Hirsching",
+   "author": "Friedrich Karl Gottlob Hirsching",
+   "as_printed": "Friedrich Karl Gottlob Hirsching",
+   "quoted_line": "Hirsch. Suppl. zur Bibl. Gesch. a Zusätze - und zu den der von Friedrich Karl Gottlob Hirsching.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page names the work as by (\"von\") Friedrich Karl Gottlob Hirsching, and the running head abbreviates the same name (\"Hirsch. Suppl. zur Bibl. Gesch.\"), consistent with the unsigned first-person preface describing the supplement volume to his own Bibliotheken-Geschichte.",
+   "caveat": "The title-page OCR is badly garbled and word order is scrambled, so the exact printed phrasing cannot be reconstructed; no printer, place, or dedicatee survives in the transcription.",
+   "other_names": [],
+   "screen_reasons": [
+    "reference-genre"
+   ]
+  },
+  {
+   "book_id": "6a243ff90f0e4f405e6367a1",
+   "title": "Tagebuch über eine mit besonderer Beziehung auf Landwirthschaft unternommene Reise durch Bayern, Sachsen-Altenburg, Königr. Sachsen, Böhmen, Mähren und Oestreich",
+   "catalogued": null,
+   "language": "German",
+   "year": 1845,
+   "flash_lite": "G. A. Holland",
+   "author": "G. A. Holland",
+   "as_printed": "G. A. Holland",
+   "quoted_line": "Hohenheim, den 19. Mai 1845. G. A. Holland.",
+   "page": 4,
+   "confidence": "high",
+   "reasoning": "The preface, written in the first person about the author's own journey and its publication, closes with the signature 'G. A. Holland' at Hohenheim, 19 May 1845, matching the title-page byline's office as an accountant at the Hohenheim agricultural institute.",
+   "caveat": "The title-page byline is damaged in the OCR: 'von [ ] Buchhalter an dem Königlichen land- und forstwirthschaftlichen Institute zu Hohenheim' — the personal name after 'von' dropped out, leaving only the office, so the author is recovered from the preface signature. No printer or publisher name survives (only the place 'Reutlingen'); the title page also omits the word 'Reise' after 'unternommene'.",
+   "other_names": [],
+   "screen_reasons": [
+    "reference-genre"
+   ]
+  },
+  {
+   "book_id": "6a0855d315c643eb1af570eb",
+   "title": "Libri de re rustica. M. Catonis lib. 1. M. Terentii Varronis lib. 3. L. Iunii Moderati Columellae lib. 12. Eiusdem de arboribus liber separatus ab alijs. Pallad",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1533,
+   "flash_lite": "Marcus Porcius Cato",
+   "author": "Marcus Porcius Cato",
+   "as_printed": "M. CATONIS",
+   "quoted_line": "LIBRI DE RE RVSTICA. M. CATONIS LIB. I. M. TERENTII VARRONIS LIB. III. L. IVNII MODERATI COLVMELLAE LIB. XII. Eiusdem de arboribus liber separatus ab alijs. PALLADII LIB. XIIII.",
+   "page": 6,
+   "confidence": "medium",
+   "reasoning": "The title page lists four ancient agricultural writers in the genitive as authors of the books collected here, with Cato named first; no single author governs the volume.",
+   "caveat": "This is the Aldine collection of the Scriptores rei rusticae (Venice 1533), a four-author corpus — Cato, Varro, Columella and Palladius — so naming one 'the' author is arbitrary; Cato is simply first on the title page, while the press's preface foregrounds Columella ('denuo Moderatum Columellam cum aliis ... recognitum'). The first preface is signed by Aldus (the press), the second is the unsigned Aldine address 'STVDIOSIS S.'; both are printer's prefaces, not authorial ones. Fortunatus is named only as the author of an expositio on Columella's carmen that this edition deliberately omitted, and Virgil only as a quoted verse — neither is a contributor to this book.",
+   "other_names": [
+    {
+     "name": "Marcus Terentius Varro",
+     "role": "author"
+    },
+    {
+     "name": "Lucius Iunius Moderatus Columella",
+     "role": "author"
+    },
+    {
+     "name": "Palladius (Rutilius Taurus Aemilianus Palladius)",
+     "role": "author"
+    },
+    {
+     "name": "Aldus (Aldine press, Venice)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "multi-author-title"
+   ]
+  }
+ ],
+ "declined": [
+  {
+   "book_id": "69804b93374856599c34762b",
+   "title": "Een korte verhandeling van de liefde Godts",
+   "reasoning": "The title-page names no person: the work is credited only to \"een gering Lief-hebber GODTS en des Naasten\" (a humble lover of God and of his neighbour), an anonymous self-description, and the preface is unsigned in the pages given."
+  },
+  {
+   "book_id": "69a027907a1dc5d92b41908f",
+   "title": "[Greek Symphonia. Novi Testamenti concordantiae graecae. [Door Xystus Betuleius]",
+   "reasoning": "The work is the Bible, whose text the title page attributes to no human author; the only person named on the title page is Sebastian Castellio, and the grammar makes him the translator (\"Interprete\"), not the author."
+  },
+  {
+   "book_id": "699ef9ff1ac826c051774733",
+   "title": "Der Signatstern",
+   "reasoning": "The title-page names only the title, plates, place, year and publisher (\"Berlin 1803, bei C. G. Schöne\") with no author, and the preface names Stark only as the man whose Templar-Clerics system the book prints, not as its writer."
+  },
+  {
+   "book_id": "69b3f749a107e55a0ee1c8ea",
+   "title": "Tractatus de alchimia; Operationes chemicae; Opus XII mensium (VCF 11)",
+   "reasoning": "The codex description itself declares the chymical contents to be of an uncertain author (\"Incerti multa Chymica\"), and no one is named as having written the work."
+  },
+  {
+   "book_id": "69b4d662853c26e0d156156e",
+   "title": "Theatrum Mundi",
+   "reasoning": "The title-page names only the translator, the preface-writer and the privilege; the dedication refers to the underlying French author merely as \"einem guthertzigen Manne\" (a good-hearted man), so the book itself leaves its author anonymous."
+  },
+  {
+   "book_id": "69b51df5261c58d63664d47a",
+   "title": "Catalogus librorum per quinquennium a Commissione Aulica prohibitorum",
+   "reasoning": "No person is named as author anywhere in the front matter; the title-page attributes the list only to the Commissio Aulica, a court body rather than a person, and names only the bookshop where it was sold."
+  },
+  {
+   "book_id": "69b51dfd768235dc6598af5b",
+   "title": "Bibliotheca A Philippo Ludovico Wittwero, Medicinae Doctore, Reip. Norimbergensis Physico Ordinario, Academiae Naturae Scrutatorum Caesareo-Leopoldinae, Societati Oeconomicae Burghausensi, Nec Non Societati Quae Ad Pegnesum Est Florigerae Adscripto : Summo Olim Studio Multisque Impensis Collecta, Libros Exquisitissimos Ad Medicinam Non Solum, Sed Ad Alia Quoque Scientiarum Artiumque Genera Spectantes Complectens, a. d. XV. Sept. et seqq. A. MDCCLXXXXIIII. Norimbergae Publicae Auctionis Ritu Divendenda. [1]",
+   "reasoning": "The book is an auction catalogue of Philipp Ludwig Wittwer's library whose preface is signed only by an unnamed \"Editor\" writing in the first person plural, so no person is named as author."
+  },
+  {
+   "book_id": "69b51e8f47b06ecd5819360d",
+   "title": "Fachkatalog der Drucke, nach 1810 - BSB Cbm Cat. 619",
+   "reasoning": "The title-page names no author or compiler — it only identifies the work as a catalogue of the library of the late academician Wilh. Ritter, who is the collection's owner and the book's subject, not its writer."
+  },
+  {
+   "book_id": "69b51ddcefd8df28f2dac4a6",
+   "title": "Bibliotheca Nicolaiana",
+   "reasoning": "This is an anonymous 1698 Amsterdam auction sale-catalogue: the title-page credits the collecting only to an unnamed \"nobilissimus juvenis\", and the preface to the reader is unsigned, so no compiler or author is named."
+  },
+  {
+   "book_id": "69b51ec3ff09e4fe943b458e",
+   "title": "Bibliotheca Heinsiana Sive Catalogus Librorum, Quos, magno studio, & sumtu, dum viveret, collegit Vir Illustris Nicolaus Heinsius, Dan. Fil.. 1",
+   "reasoning": "The front matter names no author: it is an auction/sale catalogue of the library that Nicolaus Heinsius collected, so his name appears in the genitive of ownership ('Quos ... collegit Vir Illustris Nicolaus Heinsius'), not as the writer of the catalogue, and the compiler is unnamed."
+  },
+  {
+   "book_id": "69b525a195677df8153c67d0",
+   "title": "Het ontwaakte varken aan het Menniste tabak- en brandewyns-swyn, stierman van het Menniste bootje alias Berichterus Peto-Pypo-Polyphilos, Secundus.",
+   "reasoning": "The only page given is a title page that names no author, no 'auctore' phrase and no signature; the sole personal designation is the pseudonymous opponent the pamphlet is addressed to."
+  },
+  {
+   "book_id": "69b51ee0c35d928cea4f1287",
+   "title": "Allgemeine musikalische Zeitung. 19. 1817 ## 04.06.1817",
+   "reasoning": "The title-page names only the periodical, its volume year, a person's name with no authorial grammar, and the Leipzig publisher, so no author is stated for this annual volume of a journal."
+  },
+  {
+   "book_id": "69c802f46c6f3cc53c844964",
+   "title": "[Syriac] Liber sacrosancti evangelii de Jesu Christo",
+   "reasoning": "The work is the Syriac Gospel text ('Book of the holy Gospel of our Lord Jesus Christ'), and no person is named as its author; Widmanstetter's genitive attaches only to the DEDICATIO he signs, not to the work."
+  },
+  {
+   "book_id": "69c74aec6a0f3d112faf8263",
+   "title": "[Arabic] Evangelium infantiae vel liber apocryphus de infantia servatoris",
+   "reasoning": "No page names an author of the work itself: the title page gives only the Arabic/Latin title and the Utrecht imprint, and the only signatory, Henricus Sike, describes himself as bringing an apocryphal little book to light (\"libellum apocryphum ... in lucem protrahimus\"), i.e. as its editor/translator, not its author."
+  },
+  {
+   "book_id": "69b525a395677df8153c694c",
+   "title": "De rechte woorde getrocke uyt de Copye van de Resolutie van doctor Galenus Abrahamsz ende de sijne. Op den 21. Februwary is voorgelesen, en den 28. des selfde maent schriftelijck overgelevert, in het welck het gevoelen van Galenus en de sijne wert ghetoont.",
+   "reasoning": "The only front-matter page is the title/opening text, which names no author, compiler or printer — it presents itself as extracted words taken out of a copy of the resolution of Galenus Abrahamsz and his followers, i.e. an anonymously issued piece printing (and implicitly attacking) their positions."
+  },
+  {
+   "book_id": "69c89d196c6f3cc53c85d762",
+   "title": "Codex Nasaraeus, liber Adami appellatus, Syriace transcriptus",
+   "reasoning": "The title-page names no author of the work itself — Matthias Norberg appears only as the man who transcribed it into Syriac characters and rendered it into Latin ('syriace transscriptus ... latineque redditus a Matth. Norberg'), so the text (the Mandaean 'Book of Adam') is presented anonymously."
+  },
+  {
+   "book_id": "69c866316c6f3cc53c856381",
+   "title": "Aesch mezareph or purifying fire. A chymico-kabalistic treatise collected from the Kabala denudata of Knorr von Rosenroth. Translated by a lover of Philalethes, 1714",
+   "reasoning": "The title-page and preface name only an editor, a translator and the source compilation; the treatise itself is presented as an anonymous Hebrew/Chaldee work with no author claimed."
+  },
+  {
+   "book_id": "69c753296a0f3d112faf861b",
+   "title": "Continuatio Catalogi librorum Zetznerianorum ad annum 1641",
+   "reasoning": "This is a publisher's stock catalogue of the Zetzner firm; no person is named as its author, and every personal name on the pages belongs to a listed book, not to this one."
+  },
+  {
+   "book_id": "69bd9e066120d54bd037a8ad",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in quatuor partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- quartum]",
+   "reasoning": "The title page names no author: it advertises an anthology of treatises by \"selected authors\" (selectorum auctorum) gathered together, and the only person named anywhere is Lazarus Zetzner, the Strasbourg bookseller-publisher at whose expense it was printed and who signs the preface to the reader as its compiler."
+  },
+  {
+   "book_id": "69bda15df6d63c919748fa18",
+   "title": "Gallerie der neuen Propheten, apokalyptischen Träumer, Geisterseher und Revolutionsprediger : ein Beytrag zur Geschichte der menschlichen Narrheit",
+   "reasoning": "The title-page gives only title, place, bookseller and year with no byline, and the preface is written in the first person but carries no signature, so the book names nobody as its author."
+  },
+  {
+   "book_id": "69b51dd1ff09e4fe943a969e",
+   "title": "Index Librorvm Prohibitorvm : Actorum XIX. Mvlti Avtem Ex Eis Qvi Fverant Curiosa sectati, contulerunt Libros & combusserunt coram omnibus",
+   "reasoning": "No person is named as having written the work: the title-page says only that the Index was issued by command of Pope Alexander VII (\"ALEXANDRI VII, PONTIFICIS MAXIMI IVSSV EDITVS\"), an official corporate compilation of the Roman Congregation of the Index rather than an authored book."
+  },
+  {
+   "book_id": "69bd9d5d6120d54bd03763d7",
+   "title": "Artis auriferae quam chemiam vocant, volumen primum [- secundum]",
+   "reasoning": "The title page names no author at all: it advertises an anonymous compilation (\"QVOD Continet Turbam PHILOSOPHORVM, aliosq; antiquiss. AVTORES\") followed only by the imprint, and the preface is signed impersonally \"TYPOGRAPHVS LECTORIBVS S. P. D.\""
+  },
+  {
+   "book_id": "69b51d1647b06ecd58183704",
+   "title": "Theatrvm Chemicvm : Praecipvos Selectorvm Avctorvm Tractatvs De Chemiae Et Lapidis Philosophici Antiqvitate, veritate, iure, praestantia & operationibus, continens ; In Gratiam Verae Chemiae, Et Medicinae Chemicae studiosorum ... congestum, et in tres partes seu volumina digestum ; Singvlis Volvminibvs, Svo Avctorvm Et Librorvm Catalogo Primis pagellis: rerum vero & verborum Indice postremis annexo. 2",
+   "reasoning": "The title-page presents the volume as a compilation of tracts by various selected authors (\"praecipuos selectorum auctorum tractatus ... congestum\") and names no author or compiler, only the printer and the bookseller."
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- sextum]",
+   "reasoning": "The title-page names no author: the volume is a compilation of tracts by 'selecti auctores' (congestum/digestum), and the only person named in the front matter, Lazarus Zetzner, signs the dedication describing himself as the one who had the works collected and arranged, i.e. compiler-publisher rather than author."
+  },
+  {
+   "book_id": "69b51ce104616a7c1dfb25ef",
+   "title": "Theatrum Mundi",
+   "reasoning": "The title-page names only the translator, the preface-writer and the printing privilege, and the dedication explicitly calls the original author merely \"einem gutherzigen Manne\" who wrote it in French, so the book never names its author."
+  },
+  {
+   "book_id": "69b51deb768235dc6598931e",
+   "title": "Deutsches Theatrum Chemicum : Auf welchem der berühmtesten Philosophen und Alchymisten Schrifften, Die von dem Stein der Weisen, von Verwandlung der schlechten Metalle in bessere, von Kräutern, von Thieren, von Gesund- und Sauer-Brunnen, von warmen Bädern, von herrlichen Artzneyen und von andern grossen Geheimnüssen der Natur handeln, welche bißhero entweder niemahls gedruckt, oder doch sonsten sehr rar worden sind. vorgestellet werden. Zweyter Theil",
+   "reasoning": "The title page names no author of the text itself — the volume is a collection of the writings of famous philosophers and alchemists, merely 'vorgestellet ... durch Herrenstadio Silesium', i.e. presented/compiled by Herrenstadius Silesius, which is a compiler's role, not authorship."
+  },
+  {
+   "book_id": "69b51dbccf111105c428f121",
+   "title": "Theatrvm Chemicvm : Praecipvos Selectorvm Avctorvm Tractatvs De Chemiae Et Lapidis Philosophici Antiqvitate, veritate, jure, praestantia & operationibus continens ; In Gratiam Verae Chemiae, Et medicinae Chemicae studiosorum ... congestum, et in tres partes seu volumina digestum ; Singvlis Volvminibvs, Svo Avctorvm Et Librorvm Catalogo Primis pagellis: rerum vero & verborum Indice postremis annexo. 5. (1622). - 1009 S.",
+   "reasoning": "The title-page names no author at all: the book presents itself as an anonymous compilation of 'praecipuos selectorum auctorum tractatus' gathered ('congestum') into volumes, with only the publisher named in the imprint."
+  },
+  {
+   "book_id": "69b51ed29a81ef7feb3db651",
+   "title": "Bibliothecae Samuelis S.R.I. Com. Teleki de Szék. 1, Auctores Classicos Graecos et Latinos ex optimis editionibus ordine chronologico dispositos eorumque Opera et Fragmenta coniunctim edita; Patres denique et Scriptores Ecclesiasticos Veteres complexa. Cum brevi vitarum descriptione, et notatione temporis, quo quisque circiter vixerit, adiectis passim Eruditorum iudiciis",
+   "reasoning": "The only genitive on the title-page governs 'Bibliothecae' — it names whose LIBRARY is catalogued (Count Samuel Teleki de Szék), not who wrote the catalogue, and no 'auctore', compiler statement, or signed preface appears in the pages given."
+  },
+  {
+   "book_id": "69b51db6768235dc65986aba",
+   "title": "Turba Philosophorum, Das ist, Das Buch von der güldenen Kunst : neben andern Authoribus, welche mit einander 36 Bücher in sich haben ; darinn die besten urältesten Philosophi zusam[m]en getragen welche tractiren alle einhellig von der Universal-Medicin ; in zwey Bücher abgetheilt .... [1]",
+   "reasoning": "The Turba Philosophorum is an anonymous compilation of 36 older philosophers' tracts; the only person the title page attaches to the making of the book is Philipp Morgenstern, and the title's own grammar makes him the one who gathered and divided the texts ('zusammen getragen ... in zwey Buecher abgetheilt ... durch Philippum Morgenstern'), i.e. compiler/editor rather than author."
+  },
+  {
+   "book_id": "69b51d4af23ccdcced3073c3",
+   "title": "Turba Philosophorum, Das ist, Das Buch von der güldenen Kunst : neben andern Authoribus, welche mit einander 36 Bücher in sich haben ; darinn die besten urältesten Philosophi zusam[m]en getragen welche tractiren alle einhellig von der Universal-Medicin ; in zwey Bücher abgetheilt .... [1]",
+   "reasoning": "The title-page names no author for the Turba Philosophorum itself — it is a compilation of 36 older treatises, and the only person credited is Philipp Morgenstern with \"durch\", i.e. as the compiler/editor who gathered and put the collection through the press, which the preface confirms (\"mir nicht gebüret ... andere zu lehren ... sondern die Lehrer der guten Künste ... in Truck zu verfertigen\")."
+  },
+  {
+   "book_id": "69dbc82a1040d1d5e2097978",
+   "title": "Articella seu Opus artis medicinae. Ed: (with marginalia) Gregorius a Vulpe, from the edition of Franciscus Argilagnes. Con: Johannitius: Isagoge ad Tegni Galeni. Philaretus: De pulsibus; Theophilus Protospatharius: De urinis. Hippocrates: Aphorismi (comm: Galenus; tr: Constantinus Africanus); Prognostica (comm: Galenus); De regimine acutorum morborum (comm: Galenus; tr: Gerardus Cremonensis); Pseudo- Hippocrates, Epidemiae, Lib. VI (comm: Johannes Alexandrinus; tr: Simon a Cordo); Hippocrates: De natura foetus (tr: Bartholomaeus de Messana). Galenus: Liber Tegni, sive Ars medica (comm: Hali; tr: Gerardus Cremonensis). Gentilis Fulginas: De divisione librorum Galeni. Hippocrates: Medicinae lex (tr: Arnaldus de Villa Nova). Iusiurandum (tr: Petrus Paulus Vergerius)",
+   "reasoning": "The Articella is an anonymous compilation of separate medical texts; the only person the front matter names in his own voice is Gregorius a Vulpe, who says in the dedication that the work merely came into his hands to be corrected and that he collected notes for the margins, which makes him editor rather than author."
+  },
+  {
+   "book_id": "69b51dd0efd8df28f2dab684",
+   "title": "Theatrum sympatheticum, in quo symphatiae actiones variae singulares et admirandae tam Macro quam Microcosmicae exhibentur",
+   "reasoning": "The main title-page gives no author in any authorial construction — only the title, the contents, the edition statement and the imprint — and the printer's preface (Typographus Lectori) speaks of assembling several treatises by other men into one volume, so the collection itself is anonymous/editorial."
+  },
+  {
+   "book_id": "69dbca071040d1d5e20a89de",
+   "title": "Flores poetarum de virtutibus et vitiis, sive Sententiae",
+   "reasoning": "The title-page gives only the title 'Flores poetarum de virtutibus 7 viciis' followed by moralising sententiae, with no auctore, genitive author name, or signature anywhere in the front matter."
+  },
+  {
+   "book_id": "69b51e0c47b06ecd58189009",
+   "title": "Liber Rosarius uel thesaurus thesaurorum. Arnaldi de villa noua epistola super alkymia ad regem Neapolitanum. Hoannes de Rupescissa de consideratione quintae essentiae omnium rerum. Raymundus Ganfridi de opere lunae et solis. Clangor buccinae. Turba philosophorum siue liber qui dicitur Codex ueritatis. Lilium e spinis euulsum. Extracta philosophica. Lulli repertorium - BSB Clm 25115",
+   "reasoning": "The incipit names no author of the work itself: it presents the book as a compilation abbreviated from the books of the philosophers ('ex libris philosophorum abreuiatus est'), with 'Rogerii de Bacham' standing in the genitive after 'sententiis' as a source-authority excerpted, not as the writer of this book."
+  },
+  {
+   "book_id": "69dbc8231040d1d5e2097282",
+   "title": "Articella seu Opus artis medicinae. Con: Johannitius: Isagoge ad Tegni Galeni. Philaretus: De pulsibus; Theophilus Protospatharius: De urinis. Hippocrates: Aphorismi (comm: Galenus; tr: Constantinus Africanus); Prognostica (comm: Galenus); De regimine acutorum morborum (comm: Galenus; tr: Gerardus Cremonensis). Galenus: Liber Tegni, sive Ars medica (comm: Hali; tr: Gerardus Cremonensis)",
+   "reasoning": "The pages given are a later hand's manuscript contents-and-bibliography note plus a running heading; no printed statement anywhere names an author of the volume itself, which is an anonymous compilation (Articella) of works by several ancient authors."
+  },
+  {
+   "book_id": "69b6577118b87551bfce96e8",
+   "title": "Apologia modesta et christiana, ad acta conventus quindecim theologorum Torgae nuper habiti : ex qua liquet quid in Ecclesiis Helvetiae, et illis adiunctae Genevensi, itemque Sabaudicis, Polonicis, Scoticis quae Helveticarum Confessioni diserte subscripserunt, a quibus etiam nec Gallicae nec Anglicanae ullo modo dissentiunt, De Sacra Coena Domini ex uno Domini ipsius verbo dictum scriptumque sit, et quibus apud illustrissimos Augustanae Confessionis principes christianasque respublicas calumniis affecti sint fideles tum mortui tum vivi servi Dei nuper in illo Torgensi Conventu, indicta causa, nullaque praeeunte iuridica causae congnitione, pro impiis et sceleratis damnati",
+   "reasoning": "The 1575 title-page names only the printer (\"EXCVDEBAT EVSTATHIVS VIGNON\") and no author, byline, \"auctore\", or signed preface appears anywhere in the front matter, so the Apologia modesta et christiana is presented anonymously."
+  },
+  {
+   "book_id": "69dbca3c1040d1d5e20aa4de",
+   "title": "Herbarius latinus (with German synonyms)",
+   "reasoning": "The book names no author: the handwritten title-page says only that the author entitled it 'Aggregator practicus de simplicibus' without giving his name, the colophon gives place and year only, and the preface speaks in the first person while naming no one."
+  },
+  {
+   "book_id": "69f331a6876dd827cbc4927d",
+   "title": "De imitatione Christi et contemptu omnium vanitatum mundi",
+   "reasoning": "The only front-matter page given carries a handwritten ownership inscription dated 1664, not an authorial statement, so the book as given names nobody as its author."
+  },
+  {
+   "book_id": "69f334d9876dd827cbc4da2c",
+   "title": "Esposizione sopra la Cantica",
+   "reasoning": "The front matter is an accessus to a vernacular exposition of the Song of Songs and names no author, editor or scribe for the exposition itself; the only 'auctor' named is Solomon, and the text names him explicitly as author of the biblical book being expounded, not of this commentary."
+  },
+  {
+   "book_id": "69f3391e876dd827cbc547fb",
+   "title": "[Collection containing 1 Mass, 2 Glorias, 1 Sanctus (fragmentary), 1 Te Deum, 3 hymns, 42 motets, 7 German sacred pieces, 23 French secular pieces, 6 German secular pieces, 1 Italian secular piece, 1 Latin secular piece, 2 textless pieces",
+   "reasoning": "The front matter is a handwritten index and part-book openings of a compiled music manuscript; no person is named as having written or compiled the collection."
+  },
+  {
+   "book_id": "6a08552715c643eb1af55019",
+   "title": "In omnes de arte rhetorica M. Tullij Ciceronis libros, item in eos ad C. Herennium scriptos, doctissimorum uirorum commentaria, in unum ueluti corpus redacta, ac separatim à Ciceronis contextu, quem à diuersis impressum nemo iam in sua bibliotheca non habet, ne quis inani sumptu grauaretur, edita. ... Accessit in omnes libros",
+   "reasoning": "The title page presents the book as a compilation of commentaries by many unnamed 'most learned men' gathered into one corpus, with their names deferred to a catalogue on the following page, so no single author is claimed for the volume."
+  },
+  {
+   "book_id": "6a08538d15c643eb1af50286",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo secondo",
+   "reasoning": "The title page names no author: it is a letter anthology by 'diversi nobilissimi huomini', and the only name attached to the making of the book is Paolo Manuzio, who signs the dedication as the man who collected and printed the letters."
+  },
+  {
+   "book_id": "6a08543515c643eb1af520a5",
+   "title": "In omnes De arte rhetorica M. Tullij Ciceronis libros, item in eos ad C. Herennium scriptos, doctissimorum uirorum commentaria, in unum ueluti corpus redacta, ac separatim a' Ciceronis contextu, quem a' diuersis impressum nemo iam in sua bibliotheca non habet, ne quis inani sumptu grauaretur, edita. Auctorum uero, quorum in sing",
+   "reasoning": "The title-page names no single author: the volume is a collected corpus of commentaries by unnamed \"doctissimi uiri\" on Cicero's rhetorical works, with the contributors listed only in a catalogue on the following page."
+  },
+  {
+   "book_id": "6a08528515c643eb1af4d18e",
+   "title": "Lettere volgari di diversi nobilissimi huomini, et eccellentissimi ingegni, scritte in diverse materie, ...",
+   "reasoning": "The title page declares the book a collection of letters by 'diversi nobilissimi huomini' — an anthology of many hands with no single author named; Antonio Manutio signs the dedication only as the compiler who gathered and selected them ('quanta fatica io habbia durato a raccorle')."
+  },
+  {
+   "book_id": "6a08542815c643eb1af51f22",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie. ... Libro primo",
+   "reasoning": "The title page names no author because the book is an anthology of letters by many hands (\"di diversi nobilissimi huomini\"), and the only person who signs the front matter, Paolo Manuzio, describes himself as having gathered and printed the letters (\"mi sono imaginato di raccogliere, & far stampare alcune lettere\"), i.e. as compiler, not author."
+  },
+  {
+   "book_id": "6a08563515c643eb1af584f9",
+   "title": "Lettere volgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo",
+   "reasoning": "The title page names no author: the book is a collection of letters by \"diuersi nobilissimi huomini\", and the only person named in the front matter is Paolo Manutio, who signs the dedication as the man who gathered and printed the letters, not as their author."
+  },
+  {
+   "book_id": "6a1008f3f7172929509672d0",
+   "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+   "reasoning": "The title page names no author of the work itself: it is a collection of texts by 'plusieurs Philosophes', and the only personal attribution, the initials 'Mr. J. M. D. R.', governs 'Revûë, corrigée & augmentée ... avec des Figures & des Notes', i.e. an editorial rather than authorial role."
+  },
+  {
+   "book_id": "6a1009aef71729295096b10f",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in tres partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- tertium] / Volumen secundum.",
+   "reasoning": "The title-page names no author at all: it advertises a compilation of treatises by 'selected authors' (congestum, digestum) with no compiler, editor or author named, and the only personal name in the front matter belongs to the signed prefatory epistle, not to the volume itself."
+  },
+  {
+   "book_id": "6a10098ef71729295096aa5e",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- sextum] / Volumen secundum.",
+   "reasoning": "The title-page presents the volume as an anonymous compilation of treatises by \"selected authors\" (praecipuos selectorum auctorum tractatus ... congestum) and names no compiler or author, only the publisher; no other page supplies an author for the volume itself."
+  },
+  {
+   "book_id": "6a1009edf71729295096d027",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- sextum] / Volumen quartum.",
+   "reasoning": "The title-page names no author: the volume declares itself a compilation containing the treatises of selected authors ('praecipuos selectorum auctorum tractatus ... continens'), and the only person named in the front matter is Lazarus Zetzner, who signs the preface as the compiler-publisher, not as the writer of the texts."
+  },
+  {
+   "book_id": "6a19526a3e125aa8d6dfe297",
+   "title": "Babad Tanah Djawi",
+   "reasoning": "The title-page names no author for the Babad Tanah Djawi itself — it is an anonymous Javanese chronicle — and every person named is given an editorial, publishing or printing role."
+  },
+  {
+   "book_id": "6a100987f71729295096a71b",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- sextum] / Volumen primum.",
+   "reasoning": "The title-page names no author: it advertises an anthology of tracts by 'selected authors' gathered ('congestum') into six volumes, and the only person signing the front matter, Lazarus Zetznerus, describes himself as the one who had others' works collected and arranged, i.e. the compiler."
+  },
+  {
+   "book_id": "6a267b646c1f37c9c4f319c1",
+   "title": "Laboratorium Chymicorum Vulgarium",
+   "reasoning": "The title-page explicitly declares the work to be by an anonymous author ('authore anonymo'), naming no person as writer."
+  },
+  {
+   "book_id": "6a267cd16c1f37c9c4f37452",
+   "title": "Der vertrauliche Brieff-Wechsel Zweyer Liebhaber der Alchymie wird denen Fratribus Roseae Crucis zur Entscheidung überlaßen von einem Wahrheitssuchenden Biedermann",
+   "reasoning": "The title-page names no person: the work is issued only \"von einem Wahrheitsuchenden Biedermann\" (\"by a truth-seeking honest man\"), a descriptive anonymity formula rather than a personal name or pseudonymous proper name, and no signature, \"auctore\", or genitive author appears anywhere in the front matter."
+  },
+  {
+   "book_id": "6a267e646c1f37c9c4f3c6d5",
+   "title": "Kurtze und wahrhafftige Erzehlung des betrübten und gar traurigen Zustandes des König-Reichs Böhmen, in welchem es, insonderheit in den letzten Verfolguns Jahren der Religion halben gerathen",
+   "reasoning": "The title-page names no person: authorship is given only by the anonymous formula \"Von Einem Den solche Verfolgung hart mitgetroffen\" (by one whom that persecution struck hard), and no printer, editor, or dedicatee is named anywhere in the front matter."
+  },
+  {
+   "book_id": "6a26bb2517b820d9cae8d72f",
+   "title": "Sphaerae Atqve Astrorvm coelestium ratio, natura, &amp; motus : ad totius mundi fabricationis cognitionem fundamenta",
+   "reasoning": "The title page carries no author at all — only the printer's name VALDERVS — and the signed preface is the printer Johannes Valderus addressing the reader and listing the several separate treatises the volume gathers, so the book names no single author of its own."
+  },
+  {
+   "book_id": "6a26c0910e247ebad6df1c9b",
+   "title": "Astrologia Theologizata, Hoc Est: Quod Externus Homo Cum Omnibus Operibus, Quantumvis lumine naturae in omni scientiarum genere splendibus, deponi, abnegari &amp; plane emori: Internus Autem Per Lumen Gratiae Assumi, Confessione &amp; vita praedicari, &amp; soli Deo ad regni coelestis haereditatem capiendam vivere debeat",
+   "reasoning": "The title-page explicitly attributes the work to an unnamed writer ('by a certain anonymous philosopher'), and no personal name appears anywhere in the front matter except the printer's."
+  },
+  {
+   "book_id": "6a26c0b70e247ebad6df225f",
+   "title": "Ein trewhertziger Raht an Ihre Kay. May., auß was hochbedencklichen Ursachen der anjetzo fürgehende Aufstand in Böhmen nicht per Arma, sondern durch gütige Wege zu stillen",
+   "reasoning": "The title-page names no person: the work is credited only to an anonymous self-description, 'a well-meaning upright patriot and lover of peace'."
+  },
+  {
+   "book_id": "6a26c384aad44c98627ca27a",
+   "title": "Eine warhafftige Prophezeihung von dem Böhmer-Lande, dem Christseligen Kayser Karolo dem Vierdten, Weyland Könige von Böhmen : Welche ein Blindgeborner-Mensch Anno 1350. dem Kayser eröffnet",
+   "reasoning": "The title-page of the catalogued work names no author at all — it presents the prophecy as copied from an ancient draft and uttered by an unnamed blind-born man to Emperor Charles IV, with no auctore, durch, or signature."
+  },
+  {
+   "book_id": "6a26c1e3aad44c98627c0f39",
+   "title": "Trewhertzige Warnung An alle Lutherische Christen in Böhmen, Mähren, Schlesien vnd andern Ländern, Daß sie für Annehmung der irrigen vnd hochschädlichen Calvinischen Religion bestes fleisses sich hüten sollen",
+   "reasoning": "The 1621 title-page names no author: the attribution formula \"Gestellet Durch die ...\" breaks off into the privilege line, and \"Electoris Saxoniae\" is an office, not a personal name."
+  },
+  {
+   "book_id": "6a26c490aad44c98627d0650",
+   "title": "Impostura Theophrasti Redivivi Nuper Detecta, Iam Enecta: i.e. Sonnenklare Chymische Demonstration, Das M. Eliae Heßlings, gewesenen Würtemb. Aurachischen Dorffpfarrers letzteres Vorgeben, in dem er sein vermeinten auffs new vermumbten Azoth, unter dem Namen Theophrasti redivivi, illustrati, coronati &amp; defensi, de novo vor das wahre Chymische Universal zu spargiren und trotziglich zu beharren sich understeht, auch sey und bleibe so wohl, als sein erster Azoth, ein pur lauter falsche verführische Quecksilberische Quacksalberey",
+   "reasoning": "The title page credits the work to the collective body of Ducal Württemberg court physicians, an office rather than any named person, and no individual is signed to the preface."
+  },
+  {
+   "book_id": "6a1009c3f71729295096b78b",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, contin",
+   "reasoning": "The title-page names no author — the volume is a collection of treatises by 'selected authors' (selectorum auctorum) gathered and arranged into four parts, with only the bookseller Lazarus Zetzner named, at the imprint ('Sumptibus Lazari Zetzneri Bibliopolae') and as signer of the preface to the reader."
+  },
+  {
+   "book_id": "6a267d116c1f37c9c4f385ad",
+   "title": "Chymischer Monden-Schein",
+   "reasoning": "The title-page byline is a deliberate anonymity formula — the work is credited only to \"one who does not deny, will not hide, nor can hide the truth\" — and no name signs the unsigned preface."
+  },
+  {
+   "book_id": "6a08537715c643eb1af4ff40",
+   "title": "Lettere volgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo secondo",
+   "reasoning": "The title page presents the book as an anthology of letters \"di diversi nobilissimi huomini, et eccellentiss. ingegni\" with no single author named; the dedication is signed by Antonio Manutio, who describes gathering and selecting the letters (\"quanta fatica io habbia durato a raccorle\") and dedicating \"le opere della stampa mia\", i.e. as compiler-editor and printer, not as author."
+  },
+  {
+   "book_id": "69c888a16c6f3cc53c85a348",
+   "title": "Saturn Gnosis. Offizielles Publikationsorgan der deutschen Gross-Loge Fraternitas Saturni Orient Berlin",
+   "reasoning": "The title page names no author, only an editor/publisher ('HERAUSGEGEBEN VON DIREKTOR EUGEN GROSCHE'), as is normal for a periodical issue, and the unsigned preface 'Zum Geleit' is written in the first-person plural of the lodge."
+  },
+  {
+   "book_id": "697c8e0fbaa544415f85b6c6",
+   "title": "Die Lehren der Rosenkreuzer aus dem 16ten und 17ten Jahrhundert. Oder einfältig ABC Büchlein für junge Schüler",
+   "reasoning": "The title page of the catalogued work names no author: the teachings are presented as the Rosicrucians' own, merely made public for the first time by an unnamed \"Bruder der Fraternitaet Christi / des Rosenkreuzes\" signing only \"P. F.\" and augmented with figures by \"P. S.\""
+  },
+  {
+   "book_id": "6a267ce06c1f37c9c4f37796",
+   "title": "Chymisches Lust-Gärtlein",
+   "reasoning": "The 1747 title-page gives no personal name, only the anonymous formula \"by a lover of the wisdom that lies hidden\", and the preface is signed impersonally by \"Der Verleger\" (the publisher)."
+  },
+  {
+   "book_id": "6a267ffa88f11913ee9cb23c",
+   "title": "Historiographisches, Satirisches, Alchemistisches, Briefe, Bibliographisches - Mscr.Dresd.F.45",
+   "reasoning": "Both handwritten title-pages give only dialogue titles naming the interlocutors and subjects (Queen of Sweden, Donna Olimpia, Pasquino and Marforio), with no author, 'auctore', or signature anywhere — as is normal for anonymous pasquinade dialogues."
+  },
+  {
+   "book_id": "69c884a06c6f3cc53c8599e5",
+   "title": "Pistis sophia. A gnostic gospel (with extracts from the books of the saviour appended)",
+   "reasoning": "The title-page names nobody as having written the work — the Pistis Sophia is given anonymously, and every person named is credited with a version, a check, or an introduction rather than authorship."
+  },
+  {
+   "book_id": "69b51dceff09e4fe943a931a",
+   "title": "Theatrum Chemicum, Praecipuos Selectorum Auctorum Tractatus De Chemiae Et Lapidis Philosophici Antiquitate, veritate, iure, praestantia, & operationibus, contin",
+   "reasoning": "The title page presents the work as an anthology of tracts by various selected authors with no single author named, and the only person named in the front matter, Lazarus Zetzner, describes himself in the dedication as the one who collected and arranged the pieces ('unum in corpus ... digeri, disponique curavi'), i.e. compiler/editor rather than author."
+  },
+  {
+   "book_id": "69c894b76c6f3cc53c85c180",
+   "title": "Metropolitan college transactions 1962",
+   "reasoning": "The title-page names only an office-holder (Supreme Magus) and an Editor, with no one credited as having written the work, so the transactions are corporately authored / anonymous."
+  },
+  {
+   "book_id": "6a26c543aad44c98627d5396",
+   "title": "Alchymistisch Siebengestirn : d.i. Sieben schöne u. auserlesene Tractätlein vom Stein der Weisen",
+   "reasoning": "The collective title-page and the unsigned preface name no author — the volume is an anonymous compilation of seven tracts 'aus dem Latein ins Hochdeutsche treulich übergesetzet' by an unnamed translator, with only the Hamburg publishers named."
+  },
+  {
+   "book_id": "69b418d62b0edf3eaa2de08d",
+   "title": "Letter to the Rosicrucian Brotherhood (PH422)",
+   "reasoning": "The text is an anonymous open letter to the Rosicrucian fraternity that names no author anywhere; it closes only with the initials \"M. K. E.\", which identify no recoverable person."
+  },
+  {
+   "book_id": "6a1009a5f71729295096b046",
+   "title": "Historische Wunder-Beschreibung von der sogenannten schönen Melusina, Königs Helmas in Albanien Tochter, welche eine Sirene und Meer-Wunder gewesen, und ihrer H",
+   "reasoning": "No one is named as having written the work: the title page carries no byline and the preface's first-person speaker names himself only as the man who FOUND the story already written in French/Italian and rendered it into German, so the underlying history is presented as anonymous."
+  },
+  {
+   "book_id": "6a26c01c0e247ebad6defca4",
+   "title": "Occulta Philosophia : Von den verborgenen Philosophischen Geheimnussen der heimlichen Goldblumen und Lapidis Philosophorum ...",
+   "reasoning": "The title-page names no author of the dialogue itself — only the printer and the earlier philosophers (Hermes Trismegistus, Basilius Valentinus) whose Emerald Tablet, parables, symbols and 18 figures are reproduced — and the dedication breaks off before any signature."
+  },
+  {
+   "book_id": "69b631a81c1c21a373809577",
+   "title": "Horae beatae Mariae virginis",
+   "reasoning": "The front matter names no author: page 15 is a later manuscript gift/ownership inscription and page 17 is the January calendar of a Book of Hours, a text that circulated anonymously."
+  },
+  {
+   "book_id": "6a267bc06c1f37c9c4f33b1d",
+   "title": "Die Mit dem Marte genau-vereinigte Venus: Oder Tractatus Physico-Chymicus",
+   "reasoning": "The title page names no author at all — the work is presented as an anonymous compilation of 'Verschiedener Autorum Meynungen' gathered from various books and manuscripts, with only the publisher named in the imprint."
+  },
+  {
+   "book_id": "69b4d652853c26e0d1560d3d",
+   "title": "Auriferae artis, quam chemiam vocant, antiquissimi authores, sive turba philosophorum. [1]",
+   "reasoning": "The title-page names no author: the book is an anthology of \"antiquissimi authores\" (the ancient authors themselves) issued by the printer Petrus Perna, whose preface is signed only \"Typographus lectoribus\"."
+  },
+  {
+   "book_id": "697c8e0f150e68b9f40701f8",
+   "title": "Gebet-Buechlein",
+   "reasoning": "The title page names no author, describing the compiler only as \"einer Christum und sein Wort liebhabenden Seelen\" (a soul loving Christ and his Word), an anonymous formula rather than a name."
+  },
+  {
+   "book_id": "69b51ec4ff09e4fe943b4713",
+   "title": "Duarum epistolarum à Georgio Morlaeo et Episcapo Wintoniensi ad Ianum Ulitium datarum Revisio",
+   "reasoning": "The title-page gives the author only as the anonymity formula \"AUCTORE N.N.\" (nomen nescio), and the unsigned preface names no writer, so the book is deliberately anonymous."
+  },
+  {
+   "book_id": "6a26c217aad44c98627c1b6e",
+   "title": "Nachtrab Anhaltischer Cantzley: Das ist, Unterschiedliche Legationes, der vornembsten Pfältzischen Räthen sonderlich aber D. Ludovici Cammerarii, welche Sie die",
+   "reasoning": "The 1624 title-page names no author at all — it presents the volume as documents taken from the Heidelberg registry and published anonymously ('Alles auß den Originalien, welche in der Heydelbergischen Registratur befunden worden, in öffentlichen Truck gegeben'), with no auctore, no compiler's name and no printer."
+  }
+ ],
+ "refuted": [
+  {
+   "book_id": "69771d5c7e1d5a07ae945890",
+   "title": "Biblia Veteris Testamenti ... Biblische Historien",
+   "catalogued": "Unknown",
+   "language": "Latin-German",
+   "year": 1557,
+   "flash_lite": "Petrus Artopaeus",
+   "author": "Petrus Artopaeus",
+   "as_printed": "Petrus Artopæus",
+   "quoted_line": "ILLVSTRISSIMO PRINCIPI POMERANIAE &c. D. Ioanni Friderico, Domino suo Clementissimo Petrus Artopæus, S. D.",
+   "page": 4,
+   "confidence": "medium",
+   "reasoning": "The title-page names no author, but the dedicatory epistle/verses are signed 'Petrus Artopæus, S. D.', the signature closing the dedication, which the rules treat as the author.",
+   "caveat": "The title-page itself is anonymous; attribution rests solely on the dedication signature, so Artopaeus may be author only of the accompanying verse text to the picture-Bible rather than of the whole compilation. 'PRINCIPI POMERANIAE' is a title/place, not a name; Hector is named only inside the verse as a literary example.",
+   "other_names": [
+    {
+     "name": "Ioannes Fridericus (Johann Friedrich), Prince of Pomerania",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Heirs of Christian Egenolph (Heredes Chr. Egenolphi)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "role-error",
+    "better_answer": null,
+    "evidence": "ILLVSTRISSIMO PRINCIPI POMERANIAE &c. D. Ioanni Friderico, Domino suo Clementissimo Petrus Artopæus, S. D.",
+    "reasoning": "The only appearance of the name is as the signer of a dedicatory greeting (\"S. D.\" = salutem dicit) to Duke Johann Friedrich, which identifies the dedicator/contributor of the prefatory verses, not the author; the title page (\"BIBLIA VETERIS TESTAMENti & Historię, artificiosis picturis effigiata ... Apud Heredes Chr. Egenolphi\") names no author at all and the contents are scripture illustrated with woodcuts by other hands. No genitive or comparable authorial formula attaches Artopaeus to the work itself, so a public byline is not supported by the front matter."
+   }
+  },
+  {
+   "book_id": "697b079711cc8928b55ea3b2",
+   "title": "Duplex confessio Valdensium",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1512,
+   "flash_lite": "Jacobus Ziegler",
+   "author": "Iacobus Ziegler",
+   "as_printed": "Iacobus Ziegler ex Landau Bauariae",
+   "quoted_line": "Propterea ego Iacobus Ziegler ex Landau Bauariae illam ipſorū Chriſtianam Modeſtiam & Apoſtolicum inſtitutum ſequutus Solenni more proteſtor.",
+   "page": 18,
+   "confidence": "medium",
+   "reasoning": "Ziegler signs the volume's protestatio in the first person and claims the five books against the Pighards as his own ('quinq; libris meis'), and the contents list on page 13 attributes those books to him in the genitive.",
+   "caveat": "This is a composite volume ('IN HOC VOLVMINE HAEC CONTINENTVR'): the catalogue title-work, the Duplex Confessio Valdensium sent to the King of Hungary, is itself ANONYMOUS — a Waldensian confession with no named author — as is the Excusacio Valdensium; the volume also carries epistles by Augustinus de Olomucz. My answer names the author of the volume's signed preface and of its principal polemical part (the five books), not of the Duplex Confessio itself. The unsigned argumentum on page 13 speaks of 'labores nostros' and is most likely also Ziegler's, but is not signed.",
+   "other_names": [
+    {
+     "name": "Augustinus de Olomucz",
+     "role": "author"
+    },
+    {
+     "name": "Valdenses (Waldensians) / Pighardi",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "IN HOC VOLVMINE HAEC CONTINENTVR, Duplex Cōfessio Valdensiū ad Regem Vngarie missa, Augustini de Olomucz ... Epistole cōtra perfidiam Valdensium, ... Excusacio Valdensium cōtra binas litteras Doctoris Augustini, Iacobi Zigleri ex Landau Bauarie contra Heresim Valdensium Libri quinquꝫ",
+    "reasoning": "The contents leaf shows this is a composite volume of several distinct works by different hands — the Waldensian confession and apology, Augustinus de Olomucz's letters, and Ziegler's five books — so no single author owns the book. Ziegler's protestatio on p.18 claims only his own quinque libri ('quinq; libris meis'), not the Duplex confessio that gives the volume its catalogue title."
+   }
+  },
+  {
+   "book_id": "69c7ff196c6f3cc53c843a6a",
+   "title": "Protevangelion sive de natalibus Jesu Christi",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1552,
+   "flash_lite": "Theodorus Bibliander",
+   "author": "Iacobus minor",
+   "as_printed": "diui Iacobi minoris, consobrini & fratris Domini Iesu, apostoli primarij, & episcopi Christianorum primi Hierosolymis",
+   "quoted_line": "Proteuangelion - SIVE DE NATALIBVS IESV Christi, & ipsius matris Virginis Ma- riæ, sermo historicus diui Iacobi mino- ris, consobrini & fratris Domini Iesu, a- postoli primarij, & episcopi Chri- stianorum primi Hiero- solymis.",
+   "page": 7,
+   "confidence": "high",
+   "reasoning": "The title-page assigns the Protevangelion in the genitive to James the Less ('sermo historicus diui Iacobi minoris'), and the preface repeats that Bibliander prefixed to Mark's gospel the 'sermonem historicum diui Iacobi apostoli, de natalibus Domini Iesu'.",
+   "caveat": "The volume is a composite of three items: the Protevangelion ascribed to James (this answer), the Gospel history 'quam scripsit beatus Marcus', and Bibliander's own 'Vita Ioannis Marci euangelistae' plus indices. The ascription to James is the book's own (pseudepigraphic) claim, reported as printed; the Latin text is Postel's translation.",
+   "other_names": [
+    {
+     "name": "Theodorus Bibliander",
+     "role": "editor"
+    },
+    {
+     "name": "Guilelmus Postellus",
+     "role": "translator"
+    },
+    {
+     "name": "Ioannes Gastius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "EVANGELICA HISTORIA, quam scripsit beatus Marcus ... Vita Ioannis Marci euangelistae, collecta ex probatioribus autoribus, per Theodorum Bibliandrum. Indices rerum ac uerborum ... concinnati per eundem.",
+    "reasoning": "The title page describes a composite Basel volume of at least three works by different hands - the pseudonymous sermo ascribed to James, the Gospel of Mark, and Bibliander's Vita of John Mark plus his indices - so no single author's byline fits, and the preface confirms Bibliander is the compiler and Guillaume Postel the Latin translator ('a Guilhelmo Postello ... conuersum in Latinam linguam'). 'Diui Iacobi minoris' is moreover a devotional pseudepigraphic ascription for the apocryphal Protevangelium, not evidence of authorship."
+   }
+  },
+  {
+   "book_id": "69b51db6ff09e4fe943a7b47",
+   "title": "Turba Philosophorum, Das ist, Das Buch von der güldenen Kunst : neben andern Authoribus, welche mit einander 36 Bücher in sich haben ; darinn die besten urältesten Philosophi zusam[m]en getragen welche tractiren alle einhellig von der Universal-Medicin ; in zwey Bücher abgetheilt .... 2, Das ander Theil Der güldinen kunst die sie sonst Chymia nennen : welches in sich hellt die Schrifften Morieni Romani, von den Metallischen dingen ..., mit andern Authoribus ...",
+   "catalogued": null,
+   "language": "German",
+   "year": 1613,
+   "flash_lite": "Morienus Romanus",
+   "author": "Morienus Romanus",
+   "as_printed": "MORIENI ROMANI",
+   "quoted_line": "welches in sich hellt die Schrifften MORIENI ROMANI, von den Metallischen dingen / unnd von der verborgenen und höchsten Artzney der alten Philoso-phorum",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page names the volume's contents as the writings of Morienus Romanus in the genitive, and the preface confirms \"Das Buch von der zurichtung der güldinen Kunst / welches Morienus Romanus hat lassen außgehen an den Calid der Egypter König\".",
+   "caveat": "This is volume 2 of a compilation (\"mit andern Authoribus\", 36 books in the set), so the answer applies to the leading/title work, the Liber de compositione alchemiae of Morienus; other tracts in the same volume have their own authors. The preface is the translator Robertus Castrensis speaking in the first person about his Arabic-to-Latin rendering, and the German is Philipp Morgenstern's; Hermes/Enoch/Noe/Mercurius appear only as discussed figures in that preface, not as authors of this book.",
+   "other_names": [
+    {
+     "name": "Robertus Castrensis",
+     "role": "translator"
+    },
+    {
+     "name": "Philippus Morgenstern",
+     "role": "translator"
+    },
+    {
+     "name": "Johann Schröter",
+     "role": "printer"
+    },
+    {
+     "name": "Calid",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Hermes Trismegistus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "welches in sich hellt die Schrifften MORIENI ROMANI, von den Metallischen dingen / unnd von der verborgenen und höchsten Artzney der alten Philoso-phorum, mit andern Authoribus, die da auff dem nachfolgenden Blatt ange-zeigt werden. - Verteutscht durch PHILIPPUM Morgenstern",
+    "reasoning": "This is volume 2 of the Turba Philosophorum compilation (36 books 'neben andern Authoribus'), and its own title page says it contains Morienus's writings only 'mit andern Authoribus, die da auff dem nachfolgenden Blatt angezeigt werden' — a multi-hand anthology, not one author's book. The only individual named for the volume as a whole is the German translator Philipp Morgenstern ('Verteutscht durch'), a translator role, so no single author byline is warranted."
+   }
+  },
+  {
+   "book_id": "69b51ed047b06ecd58196c42",
+   "title": "Collectanea de rebus hibernicis. 5. 1790",
+   "catalogued": null,
+   "language": "English",
+   "year": 1790,
+   "flash_lite": "Charles Vallancey",
+   "author": "Charles Vallancey",
+   "as_printed": "COLONEL CHARLES VALLANCEY, L.L.D.",
+   "quoted_line": "By COLONEL CHARLES VALLANCEY , L.L.D. Fellow of the Royal Society, and of the Societies of Antiquaries of London, Edinburgh, and Perth; Member of the Royal Irish Academy, and of the Phil. Soc. of Philadelphia, &c.",
+   "page": 11,
+   "confidence": "high",
+   "reasoning": "The English title-page gives the volume \"By Colonel Charles Vallancey\", and he signs the dedication as the work's author.",
+   "caveat": "Joseph C. Walker, M.R.I.A. is named on the same title-page as a second contributing author (\"ALSO, By JOSEPH C. WALKER\"), so this volume of the collection is by two hands, Vallancey principal.",
+   "other_names": [
+    {
+     "name": "Joseph C. Walker",
+     "role": "author"
+    },
+    {
+     "name": "Francis, Lord Rawdon",
+     "role": "dedicatee"
+    },
+    {
+     "name": "R. Marchbank",
+     "role": "printer"
+    },
+    {
+     "name": "Horace",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "By COLONEL CHARLES VALLANCEY , L.L.D. ... A L S O, By JOSEPH C. WALKER , M. R. I. A.",
+    "reasoning": "The Collectanea de rebus hibernicis is a serial miscellany, and this volume's own title page names a second contributor, Joseph C. Walker, alongside Vallancey, so the volume is not one author's book. Vallancey is its compiler/editor and a contributor, which is not the same as sole authorship of the volume."
+   }
+  },
+  {
+   "book_id": "69b51cf647b06ecd58182836",
+   "title": "Avrevm Vellvs, Oder Güldin Schatz vnd Kunstkammer : Darinnen der aller fürnembsten, fürtreffenlichsten, ausserlesenesten, herrlichsten vnd bewehrtesten Auctorum Schrifften Bücher .... 1",
+   "catalogued": null,
+   "language": "German",
+   "year": 1599,
+   "flash_lite": "Salomon Trismosinus",
+   "author": "Salomon Trismosin",
+   "as_printed": "Salomone Trismosino",
+   "quoted_line": "Oder Von Dem Edlen/ Hocherleuchten/ fürtref- fenlichen / bewehrten Philosopho Salomone Trismosino (so des grossen Philosophi vnd Medici Theophrasti Paracelsi Præceptor gewesen) in sonderbare vnterschiedliche Tractetlein disponirt/ vnd in das Teutsch gebracht.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page attributes the work to the philosopher Salomon Trismosin, who is said to have arranged it into separate tracts and put it into German; the collector who gathered the manuscripts is left anonymous.",
+   "caveat": "This is a compilation: the title-page also advertises 'andern Philosophischen / alter vnnd newer Scribenten sonderbaren Tractetlein', so later pieces in the volume are by other, unnamed authors, and the person who assembled the originals is named only as 'einen der Kunst Liebhabern' (an anonymous lover of the art). Paracelsus appears only in a parenthetical claim that Trismosin was his teacher. Alphidius and Rasis in the preface are cited authorities, not contributors.",
+   "other_names": [
+    {
+     "name": "Theophrastus Paracelsus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "in sonderbare vnterschiedliche Tractetlein disponirt/ vnd in das Teutsch gebracht. Sampt andern Philosophischen / alter vnnd newer Scribenten sonderbaren Tractetlein/ ... Durch einen der Kunst Liebhabern ... die Originalia vnd Handschrifften zusammen gebracht",
+    "reasoning": "The title page describes a compiled volume of tracts by many old and new writers, assembled from originals and manuscripts by an unnamed 'Kunst Liebhaber', so no single author owns the book. Trismosin is credited only with having the material 'disponirt' (arranged) and 'in das Teutsch gebracht' (rendered into German) — a compiler/translator role, not authorship of the volume."
+   }
+  },
+  {
+   "book_id": "69dbc8291040d1d5e20977ea",
+   "title": "Articella seu Opus artis medicinae. Ed: (with marginalia) Gregorius a Vulpe, from the edition of Franciscus Argilagnes. Con: Johannitius: Isagoge ad Tegni Galeni. Philaretus: De pulsibus; Theophilus Protospatharius: De urinis. Hippocrates: Aphorismi (comm: Galenus; tr: Constantinus Africanus); Prognostica (comm: Galenus); De regimine acutorum morborum (comm: Galenus; tr: Gerardus Cremonensis); Pseudo- Hippocrates, Epidemiae, Lib. VI (comm: Johannes Alexandrinus; tr: Simon a Cordo); Hippocrates: De natura foetus (tr: Bartholomaeus de Messana). Galenus: Liber Tegni, sive Ars medica (comm: Hali; tr: Gerardus Cremonensis). Gentilis Fulginas: De divisione librorum Galeni. Hippocrates: Medicinae lex (tr: Arnaldus de Villa Nova). Iusiurandum (tr: Petrus Paulus Vergerius)",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1491,
+   "flash_lite": "Gregorius a Vulpe",
+   "author": "Hippocrates",
+   "as_printed": "Aphorism. Hippocratis",
+   "quoted_line": "ARTICELLA - Articella, seu Aphorism. Hippocratis.",
+   "page": 5,
+   "confidence": "medium",
+   "reasoning": "The title page names the book only by the genitive \"Aphorism. Hippocratis\", attributing the leading text to Hippocrates, while the volume as a whole is a compilation whose parts have their own authors.",
+   "caveat": "The Articella is a composite medical corpus, not a single-author work: the preface's own contents list assigns the first pieces to Johannitius, Philaretus and Theophilus before reaching Hippocrates' Aphorisms, and Gregorius a Vulpe of Vicenza signs the dedicatory epistle as the editor who assembled and corrected it, not as author.",
+   "other_names": [
+    {
+     "name": "Gregorius a Vulpe Vincentinus",
+     "role": "editor"
+    },
+    {
+     "name": "Marinus Georgius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Johannitius",
+     "role": "author"
+    },
+    {
+     "name": "Philaretus",
+     "role": "author"
+    },
+    {
+     "name": "Theophilus",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "Ista sunt opera que in hoc preclaro libro continentur. Primo est liber Ioannitii qui dicitur isagoge in greco. Secundo libellus de pulsibus philareti. Tertio est libellus Theophili de vrinis. Quarto sunt hipocratis aphorizmi i ordine collecti",
+    "reasoning": "The Articella is a multi-author medical compendium: the preface's own table of contents lists Johannitius, Philaretus, Theophilus, Galen and others alongside the Hippocratic Aphorisms, so Hippocrates authored only part of it. The title-page phrase names one constituent text in the genitive, not the author of the volume, which is edited by Gregorius a Vulpe from Argilagnes' edition."
+   }
+  },
+  {
+   "book_id": "69f32c8234076d2bddeb3629",
+   "title": "[Miscellanea medica]",
+   "catalogued": "Unknown",
+   "language": "Latin",
+   "year": 1200,
+   "flash_lite": "Constantinus",
+   "author": "Constantinus",
+   "as_printed": "Constantini monachi medici",
+   "quoted_line": "poor Latin handwritten title-page Liber graduum Constantini monachi medici",
+   "page": 3,
+   "confidence": "medium",
+   "reasoning": "The handwritten title-page gives the work as 'Liber graduum Constantini monachi medici' — a possessive genitive naming Constantinus the monk-physician (Constantinus Africanus) as the author of the Liber graduum.",
+   "caveat": "The catalogue title is 'Miscellanea medica' and this is a manuscript volume, so it may be a composite codex: the attribution covers the Liber graduum only, not necessarily the other items bound with it. The title-page is a later handwritten addition in poor Latin, not a printed statement; 'monachi medici' is a description of Constantinus, not a second person.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "CATALOGUE TITLE : [Miscellanea medica] / \"poor Latin handwritten title-page Liber graduum Constantini monachi medici\"",
+    "reasoning": "The volume is catalogued as a medical miscellany (a composite codex of many hands), and the only evidence is a later, poor-Latin handwritten label naming a single item within it, Constantinus Africanus's Liber graduum, not the whole book. A one-work label on a miscellany cannot carry a volume-level byline, so the mononym \"Constantinus\" should not be published as the author."
+   }
+  },
+  {
+   "book_id": "69f339f3876dd827cbc57926",
+   "title": "Regula, habitus, et professio virginum, Sanctae Justinae Venetiarum manuscript, [ca. 1550]",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1550,
+   "flash_lite": "Augustinus Hipponensis",
+   "author": "Augustinus Hipponensis",
+   "as_printed": "beatissimi Augustini Hyponensis episcopi patris nostri",
+   "quoted_line": "Incipit regula beatissimi Augustini Hyponensis episcopi patris nostri",
+   "page": 2,
+   "confidence": "medium",
+   "reasoning": "The manuscript opens with an incipit attributing the Rule in the genitive to Augustine, bishop of Hippo, so the text itself names him as the author of the work it begins with.",
+   "caveat": "Composite/compilation manuscript: only the opening Regula is attributed to Augustine; page 3 begins a separate, anonymous conventual item ('Incipit ordo seruandus, quando induuntur habitu regulari'), and the habitus/professio material for the nuns of Santa Giustina of Venice names no author at all. There is no title page, imprint, dedication or scribe's signature in the pages given.",
+   "other_names": [
+    {
+     "name": "Sancta Justina Venetiarum",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "Incipit ordo seruandus, quando induuntur habitu regulari.",
+    "reasoning": "The genitive rightly marks Augustine as author of the Regula, but the Regula is only the first item in a composite convent manuscript (Regula, habitus, et professio virginum) whose subsequent texts — the ordo for clothing novices and the profession rite of Santa Giustina — are the house's own liturgical compilation, not Augustine's work. A single Augustine byline for the whole volume would misattribute the anonymous conventual material that makes up the rest of it."
+   }
+  },
+  {
+   "book_id": "69f32c236a46ec94ec81a2f7",
+   "title": "Liber evangelistarum",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1150,
+   "flash_lite": "Victor",
+   "author": "Victor of Capua",
+   "as_printed": "Victoris episcopi capue",
+   "quoted_line": "Incipit prefacio Victoris episcopi capue.",
+   "page": 5,
+   "confidence": "medium",
+   "reasoning": "The only person the text names in its own voice as having written any part of the book is Victor, bishop of Capua, in the genitive heading of the preface that opens the volume.",
+   "caveat": "Victor authored the PREFACE and assembled/edited this gospel harmony; the harmony itself is explicitly anonymous — the preface says the copy reached him without a title and he could not find the author's name ('absente titulo non invenire nomen auctoris'), then argues from Eusebius and from history that it was compiled either by Ammonius of Alexandria or by Tatian. If the question is who wrote the harmonized gospel text, the correct answer is 'unknown / traditionally Tatian'; Victor is the answer only at the level of this book as issued.",
+   "other_names": [
+    {
+     "name": "Tatian",
+     "role": "subject"
+    },
+    {
+     "name": "Ammonius of Alexandria",
+     "role": "subject"
+    },
+    {
+     "name": "Eusebius of Caesarea",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "role-error",
+    "better_answer": null,
+    "evidence": "Incipit prefacio Victoris episcopi capue. Cum fortuito in manus meas incideret unum ex quatuor evangelium compositum absente titulo non invenire nomen auctoris",
+    "reasoning": "The genitive governs 'prefacio', not the book: Victor of Capua wrote only the preface to this gospel harmony, and in that very preface he says he found the work anonymous and traces its compilation to Ammonius of Alexandria or Tatian. The book itself is a harmony of the four evangelists, so the byline would falsely credit its prefator as its author."
+   }
+  },
+  {
+   "book_id": "69f3378f876dd827cbc52461",
+   "title": "Mythographi vaticani, mythographus tertius",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1486,
+   "flash_lite": "Alexander Neckam",
+   "author": "Alexander Neckam",
+   "as_printed": "Neckam, Alexander",
+   "quoted_line": "good Latin handwritten title-page Neckam, Alexander Mithologie, sive Sintellarium.",
+   "page": 3,
+   "confidence": "medium",
+   "reasoning": "The only front-matter page given is a handwritten title-page reading \"Neckam, Alexander / Mithologie, sive Sintellarium\", which names Alexander Neckam as the author of the work titled there.",
+   "caveat": "The attribution is in manuscript, not print — the title-page is a hand-written label (likely a later cataloguer's or owner's hand), so it is an external ascription rather than the book's own printed statement; the catalogue byline is \"Unknown\" and the identification of the Third Vatican Mythographer with Neckam is a long-disputed scholarly attribution. Only one page of front matter was supplied, so no imprint, dedication or colophon could be checked.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "wrong-person",
+    "better_answer": null,
+    "evidence": "good Latin handwritten title-page Neckam, Alexander Mithologie, sive Sintellarium.",
+    "reasoning": "The name is not printed by the book but written by a later hand in inverted catalogue form (\"Neckam, Alexander\"), i.e. a cataloguer's conjecture inside the book rather than an authorial statement. The work is the anonymous Third Vatican Mythographer, whose old attribution to Alexander Neckam has been rejected by modern scholarship (Albericus is the usual alternative), so no byline should be published."
+   }
+  },
+  {
+   "book_id": "69b51e60ff09e4fe943addad",
+   "title": "Die Vnuerfelschete Augspurgische Confessio",
+   "catalogued": null,
+   "language": "German",
+   "year": 1566,
+   "flash_lite": "Joachimus Magdeburgius",
+   "author": "Joachimus Magdeburgius",
+   "as_printed": "Joachimi Magdeburgij",
+   "quoted_line": "Sampt einer Vermanung Joachimi Magdeburgij / an eine Erfa= me Landfchafft Defterreich.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Vermanung Joachimi Magdeburgij\" names him as writer, and he signs the dedication in the nominative (\"Joachimus Magdeburgius ... Wuenschet allen ... Christen in Oesterreich\") and carries the Vorrede.",
+   "caveat": "Composite volume: the Augsburg Confession and the Schmalkaldic Articles are printed confessional documents whose authors are not named anywhere in this front matter; Magdeburg is named only as author of the accompanying Vermanung plus the dedication and preface, so he is the editor-compiler-author of this edition rather than of the confessional texts themselves. No printer is named (imprint reads only \"Gedruckt im Jar / M. D. Lxvi\"). The dedicatee is a corporate body, \"ein Ersame Landschafft in Oesterreich\" (the Estates of Austria), not a person. Scriptural names in the epigraphs and marginal proof-texts (Petrus, Esaias, Paulus, Philippus) are cited matter and are ignored.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "Die Unuerfelfchete Augfpurgifche Confeffio Und Schmalcaldifche Artickel / Sampt einer Vermanung Joachimi Magdeburgij / an eine Erfa=me Landfchafft Defterreich.",
+    "reasoning": "The genitive 'Joachimi Magdeburgij' governs only 'einer Vermanung' — an admonition appended 'Sampt' (together with) the main texts — so it names the author of one supplementary piece, not of the volume. The volume's principal contents are the Augsburg Confession and the Schmalkaldic Articles, confessional documents by other hands (Melanchthon, Luther), so Magdeburg is at most compiler/editor of the collection."
+   }
+  },
+  {
+   "book_id": "69b51ebdff09e4fe943b3e60",
+   "title": "Oracula magica Zoroastris : cum scholiis Plethonis et Pselli nunc primum editi",
+   "catalogued": null,
+   "language": "Latin",
+   "year": 1607,
+   "flash_lite": "Zoroaster",
+   "author": "Zoroaster",
+   "as_printed": "ZOROASTRIS",
+   "quoted_line": "ORACVLA MAGICA ZOROASTRIS CVM SCHOLIIS PLETHONIS ET Pselli nunc primum editi.",
+   "page": 1,
+   "confidence": "high",
+   "reasoning": "The title-page genitive 'Oracula magica Zoroastris' assigns the oracles themselves to Zoroaster, while Plethon and Psellus supply scholia and Opsopoeus supplies the editorial labour ('Studio Johannis Opsopoei').",
+   "caveat": "The attribution to Zoroaster is the traditional pseudepigraphic ascription of the Chaldean Oracles, reported here as printed; no modern author is named. 'E Bibliotheca Regia' is a library, not a person, and no printer is named in the surviving front matter.",
+   "other_names": [
+    {
+     "name": "Johannes Opsopoeus",
+     "role": "editor"
+    },
+    {
+     "name": "Georgius Gemistus Pletho",
+     "role": "editor"
+    },
+    {
+     "name": "Michael Psellus",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "ORACVLA MAGICA ZOROASTRIS CVM SCHOLIIS PLETHONIS ET Pselli nunc primum editi. - E BIBLIOTHECA REGIA. Studio Johannis Opsopoei. M. D C. VII.",
+    "reasoning": "The volume is a compiled edition — oracles pseudepigraphically ascribed to Zoroaster printed together with the scholia of Plethon and Psellus, assembled from a royal manuscript by the editor Johannes Opsopoeus ('studio') — so no single person authored the book. 'Zoroastris' is a legendary attribution attached to the oracle text, not a verifiable authorship statement, and publishing it as the byline would assert authorship the title page does not support."
+   }
+  },
+  {
+   "book_id": "69b51e60cf111105c429b889",
+   "title": "Die Vnuerfelschete Augspurgische Confessio[n]",
+   "catalogued": null,
+   "language": "German",
+   "year": 1566,
+   "flash_lite": "Joachim Magdeburg",
+   "author": "Joachimus Magdeburgius",
+   "as_printed": "Joachimi Magdeburgij",
+   "quoted_line": "Sampt einer Vermanung Joachimi Magdeburgij / an eine Ersa= me Landschafft Oesterreich.",
+   "page": 5,
+   "confidence": "medium",
+   "reasoning": "The title-page names Joachim Magdeburgius in the genitive as author of the appended Vermanung, and he signs the dedication in the nominative ('Joachimus Magdeburgius ... Wuenschet') and writes the Vorrede, so he is the only person the book presents as its writer.",
+   "caveat": "Composite volume: the two main texts, the Augsburg Confession and the Schmalkaldic Articles, are corporate confessional documents printed here without any named author (Melanchthon and Luther are nowhere named); Magdeburgius is named only for the appended admonition plus the dedication and preface, so he is the volume's editor/compiler-author rather than author of the confessions themselves. No printer or place is given, only 'Gedruckt im Jar M.D.Lxvi'. The dedicatee 'ein Ersame Landschafft in Oesterreich' is a corporate body (the Estates of Austria), not a person. All other names in the front matter (Petrus, Paulus, Esaias, Abraham, Philippus, Christ) come from scriptural quotation or citation and are excluded.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "Die Unuerfelschete Augspurgische Confessio Und Schmalcaldische Artickel / Sampt einer Vermanung Joachimi Magdeburgij / an eine Ersame Landschafft Oesterreich.",
+    "reasoning": "The genitive 'Joachimi Magdeburgij' governs only 'einer Vermanung' — an admonition appended 'sampt' (together with) the main texts, which are the Augsburg Confession and the Smalcald Articles, confessional documents by other hands (Melanchthon, Luther). Magdeburg is the author of a subsidiary exhortation and the signer of the dedication, i.e. the volume's editor/contributor, not the author of the book."
+   }
+  }
+ ]
+}
