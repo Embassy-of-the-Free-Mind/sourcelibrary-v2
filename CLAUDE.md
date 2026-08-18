@@ -171,6 +171,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 **Measuring anything**
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **or using a model as a judge/screen** → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
+- Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 
 **Writing a sweep, an import, or a new field**
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
