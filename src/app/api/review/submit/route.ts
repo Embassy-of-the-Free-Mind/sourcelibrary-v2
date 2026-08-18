@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { isValidRating, QUEUE_KEYS } from '@/lib/review-queue';
+import { isValidRating, isValidVolunteerId, QUEUE_KEYS } from '@/lib/review-queue';
 
 export const maxDuration = 5;
 
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
   if (rating === null && note === null) {
     return NextResponse.json({ error: 'a rating or a note is required' }, { status: 400 });
   }
-  if (!/^[0-9a-f-]{36}$/i.test(volunteerId)) {
+  if (!isValidVolunteerId(volunteerId)) {
     return NextResponse.json({ error: 'invalid volunteer_id' }, { status: 400 });
   }
 
