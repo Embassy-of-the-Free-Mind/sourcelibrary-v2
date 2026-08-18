@@ -64,6 +64,15 @@ const css = `
   .sub { color: var(--muted); font-size: 11px; margin-top: 3px; }
   .sub a { color: var(--muted); }
   .empty { color: var(--muted); padding: 18px 6px; font-style: italic; }
+  #linkbar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    margin: 0 0 10px; padding: 8px 10px; font-size: 12.5px;
+    background: var(--card); border: 1px solid var(--border);
+  }
+  #linkbar input {
+    flex: 1; min-width: 200px; font: inherit; color: var(--fg);
+    background: var(--bg); border: 1px solid var(--border); padding: 4px 6px;
+  }
   a { color: inherit; text-decoration: none; }
   a:hover .cap, .sub a:hover { text-decoration: underline; }
 `;
