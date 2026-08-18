@@ -38,3 +38,35 @@ never refresh a stale sha1 without dHash-verifying our stored image against the
 newly named file first — an unverified refresh fabricates provenance.
 `source_ids.commons` (the canonical post-redirect title, written 2026-08-09/10)
 is the authoritative pointer; `fetchCommonsSource` prefers it.
+
+---
+
+**The ordering hazard has a quiet form: OCR stranded on pre-split spreads (2026-08-18).**
+`books.pages_ocr` counts **reader-visible** pages, so a book OCR'd *and translated* as spreads
+and only later run through the splitting pass reports **`pages_ocr: 0`** — while the full text
+sits on the soft-hidden originals (`page_number < 0`). Splitting writes two single pages per
+spread, soft-hides the source, and does not carry the text across; the halves are never OCR'd.
+
+Confirmed: `/book/vat-gr-370-pseudo-dionysius` — counter says 514 pp / 0 OCR, the `pages`
+collection holds **257 OCR'd + 244 translated** on hidden records. `/book/kmastra-of-vtsyyana-with-jayamagal-commentary`
+— counter 390 / 0, actually **195 + 195**.
+
+- **The tell is arithmetic: `pages_count == 2 × (pages with page_number < 0)`.** Secondary
+  tells: visible pages carry `split_from_spread` / `split_side` / `split_position` /
+  `split_method` / `spread_source`; hidden ones carry `ocr.data` + `translation.data`; the
+  hidden page's `photo` still points at the original source (vatlib, archive.org) while the
+  visible half points at an R2 `…/sp<hash>` derivative.
+- **Never scope OCR/translation work from `pages_ocr` alone.** Count
+  `pages{book_id, page_number: {$lt: 0}, 'ocr.data': {$exists: true, $nin: [null, '']}}` first.
+  A non-zero answer means the text is already bought and paid for, and the fix is remapping it
+  onto the halves (split at `split_position`) or serving the spread view — **not** a re-OCR.
+  Commissioning one would pay twice for text we hold.
+- **Extent is not established, and is probably small** — 0 of 60 sampled 0-OCR books had
+  stranded text, but that sample was the first 60 of a natural-order scan, not random. Treat
+  this as a per-book check before scoping, not a corpus-wide sweep.
+- A corpus-wide aggregate over `pages` **times out** (`MaxTimeMSExpired`). Drive the check from
+  the books side and verify per indexed `book_id`.
+
+This is the same shape as the entries above — two artifacts produced by different code at
+different times, assumed to correspond — except nothing looks broken from either side: the
+reader shows real page images, and the text is intact where it was written.
