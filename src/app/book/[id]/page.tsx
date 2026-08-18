@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -2378,7 +2378,10 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // reason: /artwork has no preview twin, so a redirect would 404 the editor.
   if (!isEmbedded && !previewProposed && !allowHidden) {
     const artSlug = artworkRedirectSlug(earlyBook as unknown as { content_type?: string; resource_type?: string; slug?: string });
-    if (artSlug) redirect(`/artwork/${artSlug}`);
+    // 308, not 307: this is a canonicalization, so search engines must transfer
+    // authority to /artwork rather than keep indexing both. redirect() defaults to
+    // a temporary 307, which consolidates nothing — the whole point of the change.
+    if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
   }
 
   return (
