@@ -401,7 +401,6 @@ async function createArtworkDoc(db, artwork, entry) {
     thumbnail: artwork.url,
     image_display: artwork.url,
     image_source_url: artwork.url,
-    pageCount: 1,
     pages_count: 1,
     pages_ocr: 0,
     pages_translated: 0,
