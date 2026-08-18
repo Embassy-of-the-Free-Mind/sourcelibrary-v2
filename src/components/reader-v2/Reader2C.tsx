@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -14,7 +14,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import { useReaderV2 } from './useReaderV2';
@@ -36,6 +36,10 @@ const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
+/** Drawer header tint — a shade deeper than the panel, so content passes under it. */
+const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4%)';
+/** Mobile sheets that always take the full height — lists and conversations. */
+const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian', 'more']);
 
 type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'more' | null;
 
@@ -70,7 +74,7 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
 const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
-  ['views', 'Scan, text & translation', 'Choose which panes are showing'],
+  ['contents', 'Contents', 'The book’s own table of contents, as printed'],
   ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
@@ -155,11 +159,11 @@ function MobileToolbar({
   stripVisible: boolean;
   onToggleStrip: () => void;
 }) {
-  // Four slots. Pages, Contents and Search are the three a reader reaches for
-  // constantly; everything else — panes, the librarian, settings, the guide —
-  // is one tap behind More, so nothing here competes for the thumb.
+  // Four slots. Pages, the pane picker and Search are what a reader reaches
+  // for constantly; everything else — contents, the librarian, settings, the
+  // guide — is one tap behind More, so nothing here competes for the thumb.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
-    ['contents', 'Contents', <List key="i" size={19} />],
+    ['views', 'Views', <Columns3 key="i" size={19} />],
     ['search', 'Search', <Search key="i" size={19} />],
   ];
   return (
@@ -704,7 +708,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
     <div className="flex flex-col min-h-0 flex-1">
       <div
         ref={scrollRef}
-        className={`overflow-y-auto px-4 pb-3 ${empty ? 'shrink-0' : 'flex-1 min-h-0'}`}
+        className={`overflow-y-auto px-4 pt-3 pb-3 ${empty ? 'shrink-0' : 'flex-1 min-h-0'}`}
         style={{ overscrollBehavior: 'contain' }}
       >
         {empty && (
@@ -1063,7 +1067,7 @@ function PanelContent({
 }) {
   if (panel === 'more') {
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-3" style={{ overscrollBehavior: 'contain' }}>
         {MORE_TOOLS.map(([key, label, hint]) => (
           <button
             key={key}
@@ -1103,7 +1107,7 @@ function PanelContent({
   }
   if (panel === 'contents') {
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto pt-2" style={{ overscrollBehavior: 'contain' }}>
         {r.chapters.length ? (
           <ChapterList
             chapters={r.chapters}
@@ -1126,7 +1130,7 @@ function PanelContent({
     ];
     const shown = PANES.filter(([k]) => r.views[k]).length;
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-3" style={{ overscrollBehavior: 'contain' }}>
         {PANES.map(([key, label, hint]) => {
           const on = r.views[key];
           // The reader must keep at least one pane, or the page goes blank.
@@ -1188,8 +1192,8 @@ function PanelContent({
   }
   if (panel === 'cite') {
     return (
-      <div className="flex-1 overflow-y-auto px-4 pb-4" style={{ overscrollBehavior: 'contain' }}>
-        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-4" style={{ overscrollBehavior: 'contain' }}>
+        <p className="font-body text-[14px] leading-relaxed mb-3 break-words" style={{ color: 'var(--text-secondary)' }}>
           {citation}
         </p>
         <button
@@ -1209,7 +1213,7 @@ function PanelContent({
   }
   // settings
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto px-[18px] pt-1 pb-4" style={{ overscrollBehavior: 'contain' }}>
+    <div className="flex-1 min-h-0 overflow-y-auto px-[18px] pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
       <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} />
     </div>
   );
@@ -1419,6 +1423,35 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     };
   }, []);
 
+  /**
+   * The mobile sheet grows and shrinks with whichever tool is open. A sheet
+   * with no height of its own snaps between sizes, so measure what the content
+   * wants — the header plus its scroller's full content — and animate to it.
+   */
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const [sheetHeight, setSheetHeight] = useState<number | null>(null);
+  useLayoutEffect(() => {
+    if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
+    const cap = Math.round(window.innerHeight * (keyboardInset > 0 ? 0.58 : 0.72));
+    // Lists and conversations always want the full sheet; the short, fixed
+    // panels size to their own content so they don't sit in a half-empty box.
+    if (SHEET_FILLS.has(leftPanel)) { setSheetHeight(cap); return; }
+    const sheet = sheetRef.current;
+    if (!sheet) return;
+    const measure = () => {
+      const header = sheet.firstElementChild as HTMLElement | null;
+      const body = sheet.lastElementChild as HTMLElement | null;
+      if (!header || !body) return;
+      setSheetHeight(Math.min(cap, Math.ceil(header.offsetHeight + body.scrollHeight)));
+    };
+    measure();
+    // Content can arrive after the open (a fetch, a copied-state swap), so
+    // watch the subtree rather than measuring once.
+    const mo = new MutationObserver(measure);
+    mo.observe(sheet, { childList: true, subtree: true, characterData: true });
+    return () => mo.disconnect();
+  }, [leftPanel, keyboardInset, isDesktop]);
+
   // Mobile title bar yields to the reading: it slides away as you read down
   // and comes back the moment you scroll up. The threshold keeps a jittery
   // finger from flickering it, and the top of the page always shows it.
@@ -1499,7 +1532,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   const leftPanelTitle = leftPanel ? LEFT_PANEL_TITLES[leftPanel] : '';
   const leftPanelBlurb = leftPanel ? LEFT_PANEL_BLURBS[leftPanel] : undefined;
-  const leftPanelWidth = leftPanel === 'librarian' || leftPanel === 'guide' ? 340 : 300;
+  // One width for every drawer — the widest any of them needed. A rail whose
+  // panel jumps between two widths as you move down it reads as a wobble.
+  const leftPanelWidth = 340;
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
 
@@ -1792,7 +1827,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 boxShadow: '24px 0 48px -28px rgba(30,20,8,0.5)',
               }}
             >
-              <div className="shrink-0 px-4 pt-3.5 pb-3 border-b" style={{ borderColor: 'var(--border-light)' }}>
+              {/* Tinted so the title block reads as a header the content
+                  passes under, rather than the first row of the list. */}
+              <div className="shrink-0 px-4 pt-3.5 pb-3 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
                 <div className="flex items-start justify-between gap-3">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                   <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
@@ -1804,11 +1841,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
               </div>
-              {/* The rule under the title needs air beneath it, or the first
-                  row of the panel reads as part of the header. */}
-              <div className="flex-1 min-h-0 flex flex-col pt-2.5">
-                <PanelContent panel={leftPanel} {...panelProps} />
-              </div>
+              <PanelContent panel={leftPanel} {...panelProps} />
             </div>
           )}
         </div>
@@ -1903,7 +1936,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-8">
-                <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17} />
+                <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
               </div>
             </section>
           )}
@@ -1920,7 +1953,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-6">
-                <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16.5} />
               </div>
             </section>
           )}
@@ -1970,27 +2003,33 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             its results stay on screen. */}
         {leftPanel && !isDesktop && (
           <div
-            className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up"
+            ref={sheetRef}
+            className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up transition-[height,bottom] duration-200 ease-out"
             style={{
               bottom: keyboardInset > 0
                 ? keyboardInset
                 : MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
+              height: sheetHeight ?? undefined,
               maxHeight: keyboardInset > 0 ? '58dvh' : '72dvh',
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
           >
-            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)' }}>
+            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
+              {/* Back out of a tool opened from More. It was a bare chevron the
+                  size of an icon; on a phone it needs a label and an edge. */}
+              {MORE_TOOLS.some(([k]) => k === leftPanel) && (
+                <button
+                  type="button"
+                  onClick={() => setLeftPanel('more')}
+                  className="mb-2 -ml-1 inline-flex items-center gap-1 pl-1 pr-2.5 h-8 border font-sans text-[12px] transition-colors active:bg-[var(--bg-white)]"
+                  style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+                >
+                  <ChevronLeft size={15} /> More
+                </button>
+              )}
               <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  {MORE_TOOLS.some(([k]) => k === leftPanel) && (
-                    <button type="button" aria-label="Back to More" onClick={() => setLeftPanel('more')}
-                      className="w-8 h-8 -ml-2 -mt-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-                      <ChevronLeft size={16} />
-                    </button>
-                  )}
-                  <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                </div>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
                   className="w-9 h-9 -mt-2 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
@@ -2000,14 +2039,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </p>
               )}
             </div>
-            <div className="flex-1 min-h-0 flex flex-col pt-2">
-              <PanelContent panel={leftPanel} {...panelProps} />
-            </div>
+            <PanelContent panel={leftPanel} {...panelProps} />
           </div>
         )}
 
-        {stripVisible && keyboardInset === 0 && (
-          <div className="shrink-0 h-[96px]">
+        {/* Kept mounted and collapsed by height. Unmounting it meant rebuilding
+            a thumbnail for every page in the book on each tap of Pages, which
+            is where the delay came from — the toggle now animates instead. */}
+        <div
+          className="shrink-0 overflow-hidden transition-[height] duration-200 ease-out"
+          style={{ height: stripVisible && keyboardInset === 0 ? 96 : 0 }}
+          aria-hidden={!stripVisible}
+        >
+          <div className="h-[96px]">
             <Filmstrip
               pageList={r.pageList}
               currentPageId={r.currentPageId}
@@ -2018,7 +2062,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               onGoTo={r.goToPage}
             />
           </div>
-        )}
+        </div>
 
         <div className="shrink-0">
           <MobileToolbar
