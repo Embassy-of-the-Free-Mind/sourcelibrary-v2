@@ -21,8 +21,6 @@ export interface ReaderSettings {
   typeface: 'serif' | 'sans';
   lineHeight: number;
   glosses: boolean;
-  /** Show the current section title in the bar (toggled from Contents) */
-  showSection: boolean;
 }
 
 export interface ViewState {
@@ -40,7 +38,6 @@ export const DEFAULT_SETTINGS: ReaderSettings = {
   typeface: 'serif',
   lineHeight: 1.7,
   glosses: true,
-  showSection: false,
 };
 
 function loadStored<T>(key: string, fallback: T): T {
@@ -197,7 +194,6 @@ export function useReaderV2(
   }, []);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [focusMode, setFocusMode] = useState(false);
 
   // ── keyboard ───────────────────────────────────────────────────────────
   useEffect(() => {
@@ -206,16 +202,11 @@ export function useReaderV2(
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
       if (e.key === 'ArrowRight') { goNext(); }
       else if (e.key === 'ArrowLeft') { goPrev(); }
-      else if (e.key === 'f' || e.key === 'F') { setFocusMode(v => !v); }
-      else if (e.key === 'Escape') { setFocusMode(false); setSettingsOpen(false); }
+      else if (e.key === 'Escape') { setSettingsOpen(false); }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [goNext, goPrev]);
-
-  // Focus mode exits via Esc, F, or the on-screen exit pill (rendered by the
-  // variant) — not on pointer move, which made it impossible to stay focused
-  // while using a mouse and read as "no way out" when it misfired.
 
   // Editing (or a refresh) hands back an updated page: sync cache + state.
   const applyPageUpdate = useCallback((page: Page) => {
@@ -255,7 +246,6 @@ export function useReaderV2(
     goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage, applyPageUpdate,
     views, toggleView,
     settings, updateSettings, settingsOpen, setSettingsOpen,
-    focusMode, setFocusMode,
     chapters, currentChapter,
   };
 }

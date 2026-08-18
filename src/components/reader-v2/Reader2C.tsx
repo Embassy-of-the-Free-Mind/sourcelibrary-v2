@@ -34,10 +34,10 @@ import {
 
 const INK = 'var(--bg-dark)';
 const STRIP_KEY = 'sl-reader-v2c-strip';
-/** Mobile toolbar height: the pane chips row (44) + the tool row (52) + hairline. */
-const MOBILE_TOOLBAR_H = 97;
+/** Mobile toolbar height — one row of four tools. */
+const MOBILE_TOOLBAR_H = 52;
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
@@ -48,14 +48,33 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   cite: 'Cite this page',
   share: 'Save & share',
   settings: 'Reading settings',
+  views: 'Scan, text & translation',
   more: 'More',
+};
+
+/**
+ * One line under each drawer title saying what the tool actually reads, so a
+ * reader knows whether it is the book's own words or ours before they trust it.
+ */
+const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
+  contents: 'The book’s own table of contents, as printed.',
+  search: 'Searches the transcribed text and the descriptions of the illustrations.',
+  guide: 'Our summary of the book, written by AI over the transcription — not the printed contents.',
+  librarian: 'Answers from AI, grounded in this page and the book around it.',
+  info: 'What this page is, and the edition it was scanned from.',
+  cite: 'A citation that points at this exact page.',
+  share: 'Save this page to your library, or send it on.',
+  settings: 'How the text is set. Your choices are remembered on this device.',
+  views: 'Which panes are showing.',
 };
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
 const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
+  ['views', 'Scan, text & translation', 'Choose which panes are showing'],
+  ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
-  ['share', 'Save & share', 'Save this page, copy the link, post it'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
+  ['share', 'Save & share', 'Save this page, copy the link, post it'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
 ];
@@ -129,67 +148,48 @@ const AaGlyph = <span className="font-body leading-none"><span className="text-[
  * reachable on a phone without stealing reading width.
  */
 function MobileToolbar({
-  panel, onTogglePanel, views, onToggleView,
+  panel, onTogglePanel, stripVisible, onToggleStrip,
 }: {
   panel: LeftPanel;
   onTogglePanel: (p: Exclude<LeftPanel, null>) => void;
-  views: ReaderState['views'];
-  onToggleView: ReaderState['toggleView'];
+  stripVisible: boolean;
+  onToggleStrip: () => void;
 }) {
-  // Four slots: the three tools a reader reaches for constantly, then More.
-  // Everything else (settings, guide, pages, info, cite) is one tap behind it.
+  // Four slots. Pages, Contents and Search are the three a reader reaches for
+  // constantly; everything else — panes, the librarian, settings, the guide —
+  // is one tap behind More, so nothing here competes for the thumb.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
     ['contents', 'Contents', <List key="i" size={19} />],
     ['search', 'Search', <Search key="i" size={19} />],
-    ['librarian', 'Ask', <MessageCircle key="i" size={19} />],
   ];
   return (
-    <div style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}` }}>
-      {/* Which panes are showing — the one control a reader changes mid-page,
-          so it lives with the thumb, not up in the title bar. */}
-      <div className="flex px-2 pt-2 pb-1.5 gap-1" role="group" aria-label="Visible panes">
-        {(['scan', 'ocr', 'en'] as const).map(v => {
-          const on = views[v];
-          return (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={on}
-              onClick={() => onToggleView(v)}
-              className="flex-1 h-[28px] font-sans text-[10.5px] font-medium tracking-[0.06em] uppercase border transition-colors"
-              style={{
-                borderColor: on ? onInk(0.82) : onInk(0.22),
-                background: on ? onInk(0.82) : 'transparent',
-                color: on ? INK : onInk(0.55),
-              }}
-            >
-              {v === 'scan' ? 'Scan' : v === 'ocr' ? 'OCR' : 'English'}
-            </button>
-          );
-        })}
-      </div>
-      <div
-        className="flex items-center w-full"
-        style={{ height: 52, borderTop: `1px solid ${onInk(0.1)}` }}
-        role="toolbar"
-        aria-label="Reader tools"
-      >
-        {tools.map(([key, label, icon]) => (
-          <ToolButton
-            key={key}
-            label={label}
-            icon={icon}
-            active={panel === key}
-            onClick={() => onTogglePanel(key)}
-          />
-        ))}
+    <div
+      className="flex items-center w-full"
+      style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}`, height: MOBILE_TOOLBAR_H }}
+      role="toolbar"
+      aria-label="Reader tools"
+    >
+      <ToolButton
+        label="Pages"
+        icon={<GalleryHorizontal size={19} />}
+        active={stripVisible}
+        onClick={onToggleStrip}
+      />
+      {tools.map(([key, label, icon]) => (
         <ToolButton
-          label="More"
-          icon={<MoreHorizontal size={19} />}
-          active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
-          onClick={() => onTogglePanel('more')}
+          key={key}
+          label={label}
+          icon={icon}
+          active={panel === key}
+          onClick={() => onTogglePanel(key)}
         />
-      </div>
+      ))}
+      <ToolButton
+        label="More"
+        icon={<MoreHorizontal size={19} />}
+        active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
+        onClick={() => onTogglePanel('more')}
+      />
     </div>
   );
 }
@@ -1045,7 +1045,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  */
 function PanelContent({
   panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
-  editing, onToggleEdit, shareUrl, stripVisible, onToggleStrip,
+  editing, onToggleEdit, shareUrl,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -1060,27 +1060,10 @@ function PanelContent({
   editing: boolean;
   onToggleEdit: () => void;
   shareUrl: string;
-  stripVisible: boolean;
-  onToggleStrip: () => void;
 }) {
   if (panel === 'more') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
-        {/* The page strip lost its toolbar slot when the pane chips took one;
-            it is a toggle, not a panel, so it stays a switch rather than a row
-            that opens something. */}
-        <div
-          className="w-full px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b"
-          style={{ borderColor: 'var(--border-light)' }}
-        >
-          <span className="min-w-0">
-            <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>Page thumbnails</span>
-            <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>
-              The filmstrip above the toolbar
-            </span>
-          </span>
-          <SettingsSwitch on={stripVisible} onToggle={onToggleStrip} label="Show page thumbnails" />
-        </div>
         {MORE_TOOLS.map(([key, label, hint]) => (
           <button
             key={key}
@@ -1121,28 +1104,6 @@ function PanelContent({
   if (panel === 'contents') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
-        {/* The section title left the top bar; this is where a reader asks
-            for it back. */}
-        <div
-          className="flex items-center justify-between gap-3 px-4 min-h-[48px] border-b"
-          style={{ borderColor: 'var(--border-light)' }}
-        >
-          <span className="min-w-0">
-            <span className="block font-sans text-[12.5px]" style={{ color: 'var(--text-secondary)' }}>
-              Show section title
-            </span>
-            <span className="block font-sans text-[11px] truncate" style={{ color: 'var(--text-faint)' }}>
-              {r.currentChapter
-                ? (r.currentChapter.titleEn || r.currentChapter.title)
-                : 'No section covers this page'}
-            </span>
-          </span>
-          <SettingsSwitch
-            on={r.settings.showSection}
-            onToggle={() => r.updateSettings({ showSection: !r.settings.showSection })}
-            label="Show the section title in the top bar"
-          />
-        </div>
         {r.chapters.length ? (
           <ChapterList
             chapters={r.chapters}
@@ -1154,6 +1115,44 @@ function PanelContent({
             No table of contents for this book yet.
           </p>
         )}
+      </div>
+    );
+  }
+  if (panel === 'views') {
+    const PANES: Array<[keyof ReaderState['views'], string, string]> = [
+      ['scan', 'Original scan', 'The page as it was photographed'],
+      ['ocr', `${r.book.language || 'Original'} transcription`, 'The printed text, read by machine'],
+      ['en', 'English translation', 'Translated with AI assistance'],
+    ];
+    const shown = PANES.filter(([k]) => r.views[k]).length;
+    return (
+      <div className="flex-1 min-h-0 overflow-y-auto pb-3" style={{ overscrollBehavior: 'contain' }}>
+        {PANES.map(([key, label, hint]) => {
+          const on = r.views[key];
+          // The reader must keep at least one pane, or the page goes blank.
+          const locked = on && shown === 1;
+          return (
+            <div
+              key={key}
+              className="w-full px-4 min-h-[60px] py-2.5 flex items-center justify-between gap-3 border-b"
+              style={{ borderColor: 'var(--border-light)' }}
+            >
+              <span className="min-w-0">
+                <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>{label}</span>
+                <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
+                  {locked ? 'The last pane showing' : hint}
+                </span>
+              </span>
+              <span className={locked ? 'opacity-40' : undefined}>
+                <SettingsSwitch
+                  on={on}
+                  onToggle={() => { if (!locked) r.toggleView(key); }}
+                  label={`Show the ${label.toLowerCase()}`}
+                />
+              </span>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -1210,18 +1209,8 @@ function PanelContent({
   }
   // settings
   return (
-    <div className="flex-1 overflow-y-auto px-[18px] pb-4" style={{ overscrollBehavior: 'contain' }}>
+    <div className="flex-1 min-h-0 overflow-y-auto px-[18px] pt-1 pb-4" style={{ overscrollBehavior: 'contain' }}>
       <ReaderSettingsControls settings={r.settings} onChange={r.updateSettings} />
-      <button
-        type="button"
-        onClick={() => { onClose(); r.setFocusMode(true); }}
-        className="w-full flex items-center justify-between min-h-[38px] border-t font-sans text-[12px]"
-        style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}
-      >
-        Focus mode
-        <kbd className="px-1.5 py-0.5 border font-sans text-[11px]"
-          style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>F</kbd>
-      </button>
     </div>
   );
 }
@@ -1402,7 +1391,49 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
     mobileMainRef.current?.scrollTo({ top: 0 });
+    setBarHidden(false);
   }, [r.currentPageId]);
+
+  /**
+   * How much of the viewport the on-screen keyboard is covering. The layout
+   * viewport does not shrink when the keyboard opens on iOS, so a sheet
+   * anchored to the bottom ends up underneath it — which is what made the
+   * mobile search panel go strange the moment the field took focus. The
+   * visual viewport does shrink, and the difference is the inset.
+   */
+  const [keyboardInset, setKeyboardInset] = useState(0);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const onResize = () => {
+      const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      // Below ~120px it is browser chrome moving, not a keyboard.
+      setKeyboardInset(inset > 120 ? Math.round(inset) : 0);
+    };
+    vv.addEventListener('resize', onResize);
+    vv.addEventListener('scroll', onResize);
+    onResize();
+    return () => {
+      vv.removeEventListener('resize', onResize);
+      vv.removeEventListener('scroll', onResize);
+    };
+  }, []);
+
+  // Mobile title bar yields to the reading: it slides away as you read down
+  // and comes back the moment you scroll up. The threshold keeps a jittery
+  // finger from flickering it, and the top of the page always shows it.
+  const [barHidden, setBarHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const onMobileScroll = useCallback(() => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    const y = el.scrollTop;
+    const delta = y - lastScrollY.current;
+    if (y < 48) setBarHidden(false);
+    else if (delta > 6) setBarHidden(true);
+    else if (delta < -6) setBarHidden(false);
+    lastScrollY.current = y;
+  }, []);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
@@ -1459,7 +1490,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     });
   }, [citation]);
 
-  const chromeHidden = r.focusMode;
   const pageNum = r.currentPage?.page_number ?? '—';
   const scan = resolveScanUrls(r.currentPage);
   const readerHref = `/book/${r.bookPath}/page/${r.currentPageId}`;
@@ -1468,6 +1498,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
 
   const leftPanelTitle = leftPanel ? LEFT_PANEL_TITLES[leftPanel] : '';
+  const leftPanelBlurb = leftPanel ? LEFT_PANEL_BLURBS[leftPanel] : undefined;
   const leftPanelWidth = leftPanel === 'librarian' || leftPanel === 'guide' ? 340 : 300;
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
@@ -1494,8 +1525,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     editing,
     onToggleEdit: () => setEditing(v => !v),
     shareUrl,
-    stripVisible,
-    onToggleStrip: toggleStrip,
   };
 
   const editorTextarea = (field: 'ocr' | 'translation') => (
@@ -1518,7 +1547,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       >
         {/* Top bar — full width, single identity lockup top-left */}
         <header
-          className={`col-span-2 flex items-center gap-3 px-4 transition-opacity duration-300 ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}
+          className="col-span-2 flex items-center gap-3 px-4"
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           <Logo white compact />
@@ -1543,17 +1572,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </span>
           )}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact />
-          {/* Section title, only when the reader asks for it (Contents panel).
-              It is the one optional item in the bar, so it yields space first:
-              without min-w-0 it held its full width and wrapped "Sign in". */}
-          {r.settings.showSection && r.currentChapter && (
-            <span
-              className="font-sans text-[12.5px] min-w-0 max-w-[240px] truncate hidden xl:block"
-              style={{ color: onInk(0.62) }}
-            >
-              {r.currentChapter.titleEn || r.currentChapter.title}
-            </span>
-          )}
           <div className="flex items-stretch">
             <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
               <button type="button" aria-label="Previous page" onClick={r.goPrev}
@@ -1627,7 +1645,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
         {/* Tool rail */}
         <nav
-          className={`row-span-2 flex flex-col items-center pt-3 gap-1 transition-opacity duration-300 ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}
+          className="row-span-2 flex flex-col items-center pt-3 gap-1"
           style={{ background: INK, borderRight: `1px solid ${onInk(0.12)}` }}
           aria-label="Reader tools"
         >
@@ -1774,35 +1792,31 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 boxShadow: '24px 0 48px -28px rgba(30,20,8,0.5)',
               }}
             >
-              <div
-                className="flex items-center justify-between px-4 h-[46px] shrink-0 border-b"
-                style={{ borderColor: 'var(--border-light)' }}
-              >
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
-                  className="w-7 h-7 -mr-1.5 flex items-center justify-center transition-colors text-[var(--text-faint)] hover:text-[var(--text-primary)]"><X size={15} /></button>
+              <div className="shrink-0 px-4 pt-3.5 pb-3 border-b" style={{ borderColor: 'var(--border-light)' }}>
+                <div className="flex items-start justify-between gap-3">
+                  <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+                  <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
+                    className="w-7 h-7 -mt-1.5 -mr-1.5 shrink-0 flex items-center justify-center transition-colors text-[var(--text-faint)] hover:text-[var(--text-primary)]"><X size={15} /></button>
+                </div>
+                {leftPanelBlurb && (
+                  <p className="mt-1.5 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+                    {leftPanelBlurb}
+                  </p>
+                )}
               </div>
-              <PanelContent panel={leftPanel} {...panelProps} />
+              {/* The rule under the title needs air beneath it, or the first
+                  row of the panel reads as part of the header. */}
+              <div className="flex-1 min-h-0 flex flex-col pt-2.5">
+                <PanelContent panel={leftPanel} {...panelProps} />
+              </div>
             </div>
-          )}
-
-          {/* Focus-mode exit — the one control that stays when chrome hides */}
-          {chromeHidden && (
-            <button
-              type="button"
-              onClick={() => r.setFocusMode(false)}
-              className="absolute bottom-4 right-4 z-50 px-3 py-2 font-sans text-[12px] rv2-pop"
-              style={{ background: INK, color: onInk(0.85), opacity: 0.85 }}
-            >
-              Exit focus mode <kbd className="ml-1 px-1 border font-sans text-[10.5px]" style={{ borderColor: onInk(0.3) }}>Esc</kbd>
-            </button>
           )}
         </div>
 
         {/* Filmstrip — page control, collapses smoothly */}
         <div
-          className={`col-start-2 min-w-0 overflow-hidden transition-[height] duration-300 ease-out ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}
-          style={{ height: stripVisible && !chromeHidden ? 92 : 0 }}
+          className="col-start-2 min-w-0 overflow-hidden transition-[height] duration-300 ease-out"
+          style={{ height: stripVisible ? 92 : 0 }}
         >
           <div className="h-[92px]">
             <Filmstrip
@@ -1820,7 +1834,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
       <div className="lg:hidden flex flex-col h-[100dvh]">
-        <header className={`shrink-0 transition-opacity ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`} style={{ background: INK, color: '#fdfcf9' }}>
+        <header
+          className="shrink-0 overflow-hidden transition-[height] duration-200 ease-out"
+          style={{ background: INK, color: '#fdfcf9', height: barHidden ? 0 : 52 }}
+        >
           <div className="flex items-center gap-2.5 h-[52px] px-3">
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
             <Logo white mini />
@@ -1834,11 +1851,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
                 {r.book.display_title || r.book.title}
               </div>
-              {r.settings.showSection && r.currentChapter && (
-                <div className="font-sans text-[10.5px] truncate" style={{ color: onInk(0.5) }}>
-                  {r.currentChapter.titleEn || r.currentChapter.title}
-                </div>
-              )}
             </a>
             <UserMenu variant="hero" />
           </div>
@@ -1850,6 +1862,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           data-reader-panels-container
           className="flex-1 min-h-0 overflow-y-auto flex flex-col"
           style={{ overscrollBehavior: 'contain', background: lastSurface }}
+          onScroll={onMobileScroll}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -1951,39 +1964,50 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           </div>
         </main>
 
-        {/* Tool panel — rises from the toolbar, clearing the filmstrip */}
+        {/* Tool panel — rises from the toolbar, clearing the filmstrip. While
+            the keyboard is up it sits directly on the keyboard instead (the
+            toolbar and strip are behind it), so the field being typed in and
+            its results stay on screen. */}
         {leftPanel && !isDesktop && (
           <div
             className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up"
             style={{
-              bottom: MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
-              maxHeight: '62dvh',
+              bottom: keyboardInset > 0
+                ? keyboardInset
+                : MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
+              maxHeight: keyboardInset > 0 ? '58dvh' : '72dvh',
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
           >
-            <div
-              className="flex items-center justify-between px-4 h-[48px] shrink-0 border-b"
-              style={{ borderColor: 'var(--border-light)' }}
-            >
-              <div className="flex items-center gap-1.5 min-w-0">
-                {MORE_TOOLS.some(([k]) => k === leftPanel) && (
-                  <button type="button" aria-label="Back to More" onClick={() => setLeftPanel('more')}
-                    className="w-8 h-8 -ml-2 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-                    <ChevronLeft size={16} />
-                  </button>
-                )}
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)' }}>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  {MORE_TOOLS.some(([k]) => k === leftPanel) && (
+                    <button type="button" aria-label="Back to More" onClick={() => setLeftPanel('more')}
+                      className="w-8 h-8 -ml-2 -mt-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                      <ChevronLeft size={16} />
+                    </button>
+                  )}
+                  <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+                </div>
+                <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
+                  className="w-9 h-9 -mt-2 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
-              <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
-                className="w-11 h-11 -mr-2 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+              {leftPanelBlurb && (
+                <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+                  {leftPanelBlurb}
+                </p>
+              )}
             </div>
-            <PanelContent panel={leftPanel} {...panelProps} />
+            <div className="flex-1 min-h-0 flex flex-col pt-2">
+              <PanelContent panel={leftPanel} {...panelProps} />
+            </div>
           </div>
         )}
 
-        {stripVisible && (
-          <div className={`shrink-0 h-[96px] ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}>
+        {stripVisible && keyboardInset === 0 && (
+          <div className="shrink-0 h-[96px]">
             <Filmstrip
               pageList={r.pageList}
               currentPageId={r.currentPageId}
@@ -1996,12 +2020,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           </div>
         )}
 
-        <div className={`shrink-0 transition-opacity ${chromeHidden ? 'opacity-0 pointer-events-none' : ''}`}>
+        <div className="shrink-0">
           <MobileToolbar
             panel={leftPanel}
             onTogglePanel={togglePanel}
-            views={r.views}
-            onToggleView={r.toggleView}
+            stripVisible={stripVisible}
+            onToggleStrip={toggleStrip}
           />
         </div>
       </div>
