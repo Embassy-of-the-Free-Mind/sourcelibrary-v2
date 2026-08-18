@@ -23,7 +23,8 @@
 
 import { MongoClient } from 'mongodb';
 
-const SWEEP = 'orphan-field-deletion-2026-08';
+// --sweep <name>: restore a different deletion run through the same replay.
+const SWEEP = (() => { const i = process.argv.indexOf('--sweep'); return i > -1 ? process.argv[i + 1] : 'orphan-field-deletion-2026-08'; })();
 const APPLY = process.argv.includes('--apply');
 const BOOK_ID = (() => { const i = process.argv.indexOf('--book-id'); return i > -1 ? process.argv[i + 1] : null; })();
 

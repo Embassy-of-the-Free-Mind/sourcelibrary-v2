@@ -39,6 +39,8 @@
 export const RETIRED_FIELDS = Object.freeze({
   tenant_id: 'retired by PR #2085 + PR #3983 — canonical tenant membership is tenantId (UUID), set by partner-assignment maintenance, never by imports',
   tenantId: 'set only by partner-assignment maintenance, never by imports (issue #3969 family 1)',
+  pageCount: 'retired #3969 family 3 — canonical is pages_count. On 186 books this held a stale PRE-SPLIT count, about half the truth',
+  page_count: 'retired #3969 family 3 — canonical is pages_count',
   hide_reason: 'orphan sweep column, writer lost to history — use hidden_reason, and record sweep verdicts as rows via scripts/lib/sweep-log.mjs (issue #3969 family 2)',
 });
 
@@ -71,7 +73,7 @@ export const BOOK_FIELDS = Object.freeze([
   'needs_splitting', 'needs_splitting_reason',
   'archive_status', 'archive_completed_at', 'archive_metadata',
   // page accounting
-  'pages_count', 'pageCount', // known duplicate family — #3969 Track B
+  'pages_count',
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
   // images / artwork (artwork docs live in `books` with resource_type set)
   'thumbnail', 'thumbnail_blob', 'resource_type', 'image_display',
