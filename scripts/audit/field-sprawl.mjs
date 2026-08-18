@@ -121,6 +121,14 @@ const FAMILIES = {
     'first translation': ['is_first_translation', 'translation_verification', 'first_translation', 'translation_census', 'prior_translation', 'is_translation', 'first_translation_assessed_at', 'first_translation_reasoning', 'first_translation_assessment', 'translation_stale_reason', 'translation_audit_2026_06', 'translator_author_screen', 'ft_prediction', 'translation_status'],
     'external identifiers (per-provider)': ['bsb_id', 'mdz_id', 'erara_id', 'erara_doi', 'wikidata_id', 'etcsl_id', 'cdli_witnesses', 'gallica_ark', 'google_books_id', 'bodleian_uuid', 'met_object_id', 'doi', 'vatican_mss_id', 'cambridge_id', 'loc_lccn', 'berlpap_url_id', 'rijksmuseum_id', 'micrio_id', 'morgan_bibid', 'oraec_id', 'wellcome_id', 'wellcome_b_number'],
     'external identifiers (generic containers that never replaced them)': ['catalog_refs', 'catalog_ids', 'shelfmark', 'external_id', 'external_source', 'accession_number', 'inventory_number', 'catalog_numbers', 'external_url', 'original_id'],
+    // Undeclared until 2026-08-18, and invisible to the near-duplicate pass
+    // because these names are not spelling variants of each other. The pairwise
+    // name heuristic cannot see a family whose members were named independently
+    // — declare those here or they never surface. Values DISAGREE across these
+    // fields (2,533 books hold two or more place fields; 539 name different
+    // cities), so this family needs adjudication, not just a merge:
+    // scripts/audit/imprint-reconciliation.mjs measures it. See #4043.
+    'imprint / publication': ['publication_place', 'place_of_publication', 'place_published', 'place', 'printer', 'publisher', 'format'],
   },
 };
 
