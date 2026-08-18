@@ -3,6 +3,7 @@ import { CONTENT_LICENSE } from '@/lib/license-info';
 import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { institutionalByline, bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -38,19 +39,46 @@ export default function SchemaOrgMetadata({
     ? `${baseUrl}/encyclopedia/${encodeURIComponent(cleanAuthor)}`
     : undefined;
 
+  /**
+   * `author` USED TO BE EMITTED AS `Person` UNCONDITIONALLY, which told search
+   * engines that Thadrak Temple is a human being who wrote the Tantra
+   * collection — 142 books — and the same of the Council of Trent, the Indian
+   * Hemp Drugs Commission and the Bible societies. That is #3483's defect
+   * (institutions rendered as schema.org `Person`) reappearing here, reached
+   * through `books.author` rather than through the thesaurus.
+   *
+   * Two independent corrections, because they are two different mistakes:
+   *   - an organisation is an `Organization`, never a `Person`; and
+   *   - a HOLDER or an ISSUER did not write the book, so no `author` should be
+   *     asserted for it at all. A monastery that keeps a manuscript is
+   *     provenance; the volume itself is a collective work with no one author.
+   * A hand-typed corporate author (a council's own canons) keeps its `author`
+   * slot and only changes @type.
+   */
+  const institutional = institutionalByline(book.author);
+  const authorNode = cleanAuthor && bylineClaimsAuthorship(book.author)
+    ? {
+        '@type': institutional ? 'Organization' : 'Person',
+        name: cleanAuthor,
+        ...(authorEncyclopediaUrl && !institutional && {
+          '@id': `${authorEncyclopediaUrl}#entity`,
+          url: authorEncyclopediaUrl,
+        }),
+      }
+    : undefined;
+  // A holder/issuer still belongs in the record — just not as the author.
+  const provenanceNode = institutional && !bylineClaimsAuthorship(book.author)
+    ? { '@type': 'Organization', name: cleanAuthor }
+    : undefined;
+
   // Original work metadata
   const originalWork = {
     '@type': 'Book',
     '@id': `${baseUrl}/book/${bookPath}#original`,
     name: book.title,
-    author: {
-      '@type': 'Person',
-      name: cleanAuthor,
-      ...(authorEncyclopediaUrl && {
-        '@id': `${authorEncyclopediaUrl}#entity`,
-        url: authorEncyclopediaUrl,
-      }),
-    },
+    ...(authorNode && { author: authorNode }),
+    ...(provenanceNode && institutional?.role === 'holder' && { provider: provenanceNode }),
+    ...(provenanceNode && institutional?.role !== 'holder' && { publisher: provenanceNode }),
     inLanguage: book.language,
     ...(book.published && { datePublished: book.published }),
     ...(compositionLayer && { dateCreated: compositionLayer.date_display }),
@@ -243,7 +271,17 @@ function getDescription(book: Book, translatedCount: number, pageCount: number):
     parts.push(book.title);
   }
 
-  parts.push(`by ${formatAuthor(book.author).name || book.author}`);
+  // "by X" is an authorship claim in prose. A holding monastery or an issuing
+  // Bible society did not write the book, so name the relation instead.
+  const bylineName = formatAuthor(book.author).name || book.author;
+  if (bylineName) {
+    const inst = institutionalByline(book.author);
+    parts.push(
+      !inst || inst.role === 'corporate-author'
+        ? `by ${bylineName}`
+        : `${inst.qualifier || 'from'} ${bylineName}`,
+    );
+  }
 
   if (book.published) {
     parts.push(`(${book.published})`);
