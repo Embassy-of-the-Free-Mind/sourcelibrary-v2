@@ -2,12 +2,13 @@ import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
+import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
@@ -2341,6 +2342,21 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
     notFound();
+  }
+
+  // Artworks have their own canonical route. /book/<slug> renders them too
+  // (BookInfo branches to <ArtworkInfo> on resource_type), so every artwork had
+  // TWO fully-rendering URLs, each emitting a self-referential canonical — the
+  // duplicate-content shape Google penalises. Send the /book form to /artwork.
+  //
+  // Deliberately NOT applied when embedded: `/embed/[tenant]/book/[slug]` re-exports
+  // this component, and there is no `/embed/[tenant]/artwork` route — redirecting a
+  // partner subdomain's reader out of its embed shell breaks the tenant lockdown.
+  // Editor preview routes (previewProposed/allowHidden) are excluded for the same
+  // reason: /artwork has no preview twin, so a redirect would 404 the editor.
+  if (!isEmbedded && !previewProposed && !allowHidden) {
+    const artSlug = artworkRedirectSlug(earlyBook as unknown as { content_type?: string; resource_type?: string; slug?: string });
+    if (artSlug) redirect(`/artwork/${artSlug}`);
   }
 
   return (
