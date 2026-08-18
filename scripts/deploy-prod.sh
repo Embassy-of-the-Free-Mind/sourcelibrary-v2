@@ -113,8 +113,13 @@ npx tsc --noEmit
 #    Do NOT let a nonzero exit from the CLI abort the script before the purge:
 #    `vercel --prod` can deploy SUCCESSFULLY and then exit nonzero on a
 #    post-deploy status-poll timeout (ETIMEDOUT against api.vercel.com — bit us
-#    2026-06-04). Skipping the purge is far worse than purging after a failed
-#    deploy (a purge is always safe; stale HTML pointing at purged CSS is not).
+#    2026-06-04), and skipping the purge after a real deploy leaves the
+#    stale-HTML/dead-CSS gap this script exists to close.
+#
+#    This used to be justified as "a purge is always safe". It is not, and that
+#    belief cost us on 2026-08-18: a purge is only safe when the deploy actually
+#    shipped AND the origin can re-render what it evicts. Both are now checked —
+#    the ship test is below, the origin-health gate lives in purge-warm.sh.
 #    Resolve the CLI: prefer a global `vercel`, fall back to `npx vercel` so the
 #    script self-heals if ~/.npm-global/bin/vercel ever goes dangling (a removed
 #    global package left a broken symlink behind — bit us 2026-06-26).
@@ -126,39 +131,78 @@ else
 fi
 echo "▸ Deploying to production (${VERCEL[*]} --prod)…"
 DEPLOY_EXIT=0
-"${VERCEL[@]}" --prod || DEPLOY_EXIT=$?
-if [ "$DEPLOY_EXIT" -ne 0 ]; then
-  echo "  ⚠ vercel exited $DEPLOY_EXIT — verifying whether the deployment actually shipped…" >&2
-  PROD_OK=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "https://sourcelibrary.org/" || echo 000)
-  echo "  prod / responds: HTTP $PROD_OK — continuing to purge + warm regardless." >&2
-fi
+DEPLOY_LOG="$(mktemp -t deploy-prod)"
+trap 'rm -f "$DEPLOY_LOG"' EXIT
+"${VERCEL[@]}" --prod 2>&1 | tee "$DEPLOY_LOG" || DEPLOY_EXIT=${PIPESTATUS[0]}
 
-# 6. Purge the CDN so cached HTML can't outlive the assets it references.
-echo "▸ Purging Cloudflare cache (purge_everything)…"
-PURGE=$(curl -s -X POST \
-  "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
-  -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  --data '{"purge_everything":true}')
-if echo "$PURGE" | grep -q '"success":true'; then
-  echo "  ✓ Cloudflare cache purged."
+# DID IT ACTUALLY SHIP?
+#
+# The old check here curled `https://sourcelibrary.org/` and, on HTTP 200,
+# announced "continuing to purge + warm regardless". That test cannot fail: a
+# 200 from the alias only proves the PREVIOUS deployment is still serving, which
+# is exactly as true when the build died as when it succeeded. On 2026-08-18 it
+# reported "shipped" for three consecutive builds that all failed prerendering,
+# and purged the CDN each time.
+#
+# Ask Vercel about the deployment we just created instead. `vercel --prod` prints
+# its URL, so inspect that specific deployment rather than the alias.
+DEPLOY_SHIPPED="unknown"
+DEPLOY_URL="$(grep -oE 'https://[a-z0-9-]+\.vercel\.app' "$DEPLOY_LOG" | tail -1 || true)"
+if [ "$DEPLOY_EXIT" -ne 0 ]; then
+  echo "  ⚠ vercel exited $DEPLOY_EXIT — asking Vercel whether the deployment shipped…" >&2
+  if [ -n "$DEPLOY_URL" ]; then
+    INSPECT="$("${VERCEL[@]}" inspect "$DEPLOY_URL" 2>&1 || true)"
+    if grep -qE '●[[:space:]]*Ready' <<<"$INSPECT"; then
+      DEPLOY_SHIPPED="yes"
+      echo "  → $DEPLOY_URL is Ready: it SHIPPED despite the nonzero exit (post-deploy poll timeout)." >&2
+    elif grep -qE '●[[:space:]]*(Error|Canceled)' <<<"$INSPECT"; then
+      DEPLOY_SHIPPED="no"
+      echo "  → $DEPLOY_URL reports Error/Canceled: the build FAILED, nothing new is live." >&2
+    else
+      echo "  → could not read a state from 'vercel inspect $DEPLOY_URL'." >&2
+    fi
+  else
+    echo "  → no deployment URL in the CLI output to inspect." >&2
+  fi
 else
-  echo "  ✗ Cloudflare purge failed: $PURGE" >&2
-  echo "    (Pages may serve stale HTML/dead CSS until this is re-run.)" >&2
-  exit 1
+  DEPLOY_SHIPPED="yes"
 fi
 
-# 7. Re-warm top pages so the next visitor gets a fresh, styled page from cache.
-echo "▸ Warming caches (/api/deploy-warm)…"
-WARM_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-  "https://sourcelibrary.org/api/deploy-warm" \
-  -H "Authorization: Bearer ${CRON_SECRET}" \
-  -H "Content-Type: application/json" \
-  --max-time 300 || true)
-echo "  deploy-warm → HTTP $WARM_CODE"
+# A FAILED BUILD MUST NOT PURGE.
+#
+# The original rationale ("a purge is always safe; stale HTML pointing at purged
+# CSS is not") holds only while the ORIGIN CAN REFILL THE CACHE. When the build
+# failed, no new asset hashes exist, so there is no stale-HTML/dead-CSS gap to
+# close — the purge has nothing to fix and every cached page to lose. And if the
+# origin is unhealthy (see the health gate below), purging is actively harmful.
+if [ "$DEPLOY_SHIPPED" = "no" ]; then
+  echo "" >&2
+  echo "✗ Build failed — skipping the Cloudflare purge and the warm." >&2
+  echo "  Nothing new shipped, so there is no dead-CSS gap to close, and purging" >&2
+  echo "  would evict good cached pages for no benefit." >&2
+  echo "  Inspect the failure:  ${VERCEL[*]} inspect --logs $DEPLOY_URL" >&2
+  exit "$DEPLOY_EXIT"
+fi
+# 6. Purge + warm, behind an origin-health gate.
+#
+#    Delegated to scripts/purge-warm.sh so the SAME gate and the same purge run
+#    whether they are reached through a deploy or invoked standalone for
+#    recovery. The gate refuses to purge when the origin cannot re-render — see
+#    that script for why `/` is the wrong thing to probe.
+echo "▸ Purging + warming…"
+PW_EXIT=0
+./scripts/purge-warm.sh || PW_EXIT=$?
+if [ "$PW_EXIT" -ne 0 ]; then
+  echo "" >&2
+  echo "⚠ The deployment SHIPPED but the purge/warm did not complete." >&2
+  echo "  Until it runs, cached HTML can point at asset hashes this deploy replaced" >&2
+  echo "  (the unstyled-page failure this script exists to prevent)." >&2
+  echo "  Re-run once the cause is cleared:  npm run deploy:purge-warm" >&2
+  exit "$PW_EXIT"
+fi
 
 if [ "$DEPLOY_EXIT" -ne 0 ]; then
-  echo "⚠ Purge + warm completed, but the vercel CLI exited $DEPLOY_EXIT — verify the deployment shipped (vercel ls sourcelibrary-v2 | head -2)." >&2
-  exit "$DEPLOY_EXIT"
+  echo "✓ Deploy shipped (vercel CLI exited $DEPLOY_EXIT on a post-deploy poll, but the deployment is Ready) → purged → warmed."
+  exit 0
 fi
 echo "✓ Production deploy complete (deployed → purged → warmed)."
