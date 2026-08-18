@@ -63,7 +63,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
 const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
   contents: 'The book’s own table of contents, as printed.',
   search: 'Searches the transcribed text and the descriptions of the illustrations.',
-  guide: 'Our summary of the book, written by AI over the transcription — not the printed contents.',
+  guide: 'Our summary of the book, written by AI over the transcription. Not the printed contents.',
   librarian: 'Answers from AI, grounded in this page and the book around it.',
   info: 'What this page is, and the edition it was scanned from.',
   cite: 'A citation that points at this exact page.',
@@ -437,11 +437,6 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
           })}
         </>
       )}
-      <div className="mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
-        <p className="font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-          Written by an AI-assisted enrichment pass over the transcription and translation, not the printed contents.
-        </p>
-      </div>
     </div>
   );
 }
@@ -506,7 +501,7 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
   const rowCls = 'w-full text-left px-4 min-h-[46px] flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto pb-4" style={{ overscrollBehavior: 'contain' }}>
+    <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
       <button type="button" onClick={toggleLike} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <Heart size={16} fill={liked ? 'var(--accent-rust)' : 'none'} style={{ color: liked ? 'var(--accent-rust)' : 'var(--text-muted)' }} />
@@ -613,7 +608,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
   ];
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
+    <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-6" style={{ overscrollBehavior: 'contain' }}>
       {summary && (
         <div className="mb-4 p-3 border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }}>
           <CapsLabel className="block mb-1.5" style={{ color: 'var(--accent-gold-dark)' }}>This page</CapsLabel>
@@ -622,7 +617,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           </p>
         </div>
       )}
-      <CapsLabel className="block mb-2" style={{ color: 'var(--text-muted)' }}>This edition</CapsLabel>
+      <CapsLabel className="block mt-1 mb-2.5" style={{ color: 'var(--text-muted)' }}>This edition</CapsLabel>
       {!fullBook && (
         <div className="py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
       )}
@@ -676,8 +671,8 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            Machine transcription and translation carry errors. The scan is the source — read it
-            alongside the text where a reading matters.
+            Machine transcription and translation carry errors. The scan is the source, so read it
+            alongside the text wherever a reading matters.
           </p>
         </>
       )}
@@ -1044,14 +1039,16 @@ function Filmstrip({
               title={`Page ${p.page_number}`}
               aria-current={isCurrent ? 'page' : undefined}
             >
+              {/* The ring is an inset shadow, not an outline: the strip is a
+                  horizontal scroller, which clips anything drawn outside its
+                  box, and that took the top edge of the ring away. */}
               <span
                 className="block overflow-hidden"
                 style={{
                   width: compact ? 38 : 42,
                   height: compact ? 50 : 54,
                   background: isCurrent ? 'var(--bg-warm)' : 'rgba(245,240,232,0.42)',
-                  outline: isCurrent ? '2px solid var(--accent-rust)' : 'none',
-                  outlineOffset: 1,
+                  boxShadow: isCurrent ? 'inset 0 0 0 2px var(--accent-rust)' : 'none',
                 }}
               >
                 {thumb && (
@@ -1371,7 +1368,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       draftsRef.current.delete(r.currentPageId);
       setEditing(false);
     } catch {
-      setSaveError('Save failed — you need editor access (sign in on this preview).');
+      setSaveError('Save failed. You need editor access; sign in on this preview.');
     } finally {
       setSaving(false);
     }

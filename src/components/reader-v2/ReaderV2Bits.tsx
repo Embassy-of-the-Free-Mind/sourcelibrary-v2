@@ -639,7 +639,9 @@ export function ViewToggleGroup({
             type="button"
             aria-pressed={on}
             onClick={() => onToggle(it.key)}
-            className={`font-sans text-[13px] ${compact ? 'px-2.5 py-1.5' : 'px-3 py-[7px]'} border transition-colors`}
+            // Height is explicit so the group lines up with the pager beside
+            // it; padding-derived heights drifted apart by a pixel or two.
+            className={`font-sans text-[13px] flex items-center justify-center border transition-colors ${compact ? 'px-2.5 h-[32px]' : 'px-3 h-[36px]'}`}
             style={{
               borderColor: on ? onInk(0.3) : onInk(0.16),
               background: on ? onInk(0.14) : 'transparent',
