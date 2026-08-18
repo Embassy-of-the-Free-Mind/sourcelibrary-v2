@@ -6,6 +6,7 @@
  * "Translated by Source Library" over an English book the translator's own
  * work — see the credit logic below and #3724.
  */
+import { resolveImprintPlace } from '@/lib/imprint';
 import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { getShortUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
@@ -66,7 +67,11 @@ export function generateCitations(
   // printing being translated — the bibliographic record of the original work,
   // distinct from the Source Library translation credit. Mirrors the "Cite"
   // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
-  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
+  // Place comes through the family resolver (#4043): four columns hold this
+  // fact, and citation surfaces reading only `place_published` left 3,300
+  // visible books citing no place while we held one.
+  const imprintPlace = resolveImprintPlace(book)?.display;
+  const pubImprint = [imprintPlace, book.publisher].filter(Boolean).join(': ');
   const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
   const imprintStr = imprint ? `${imprint}. ` : '';
 
@@ -114,7 +119,7 @@ export function generateCitations(
     `  title = {${title}},`,
     `  year = {${year}},`,
   ];
-  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
+  if (imprintPlace) bibtexLines.push(`  address = {${imprintPlace}},`);
   bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
   if (renderingCredit) bibtexLines.push(`  translator = {Source Library},`);
   if (doi) {

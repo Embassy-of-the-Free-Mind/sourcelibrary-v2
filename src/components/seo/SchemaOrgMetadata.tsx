@@ -4,6 +4,7 @@ import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils'
 import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { institutionalByline, bylineClaimsAuthorship } from '@/lib/corporate-bylines';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -88,10 +89,11 @@ export default function SchemaOrgMetadata({
         name: book.publisher,
       },
     }),
-    ...(book.place_published && {
+    // Family resolver (#4043) — the place may live in a sibling column.
+    ...(resolveImprintPlace(book) && {
       locationCreated: {
         '@type': 'Place',
-        name: book.place_published,
+        name: resolveImprintPlace(book)!.display,
       },
     }),
     ...(book.ustc_id && {

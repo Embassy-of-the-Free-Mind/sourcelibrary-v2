@@ -7,6 +7,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
@@ -990,7 +991,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           collections: (book as unknown as { collections?: string[] }).collections,
           language: book.language,
           year: relatedYear,
-          place: book.place_published,
+          place: resolveImprintPlace(book)?.display, // family resolver, #4043
         }, renderableCover, 12).catch(() => [] as CatalogBook[])
       : [] as CatalogBook[];
     const hasRelated = tagRelated.length > 0;
@@ -1041,7 +1042,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Publisher / place only — the DATE is surfaced separately as a labelled
     // chip (heroDate) so it's clear, not buried at the end of the impressum.
     const impressum = (() => {
-      const place = book.place_published?.trim();
+      const place = resolveImprintPlace(book)?.display; // family resolver, #4043
       const publisher = book.publisher?.trim();
       return [place, publisher].filter(Boolean).join(': ');
     })();
@@ -1156,7 +1157,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     if (histInformative) {
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
-      const detail = compDate ? undefined : ([book.place_published, book.publisher].filter(Boolean).join(' · ') || undefined);
+      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
       rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: 'Published', detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
@@ -1475,7 +1476,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
@@ -1631,7 +1632,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
@@ -1806,7 +1807,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   format as BphCatalogBrowser.formatImpressum so the book page
                   and catalogue rows line up. */}
               {(() => {
-                const place = book.place_published?.trim();
+                const place = resolveImprintPlace(book)?.display; // family resolver, #4043
                 const publisher = book.publisher?.trim();
                 const year = book.published ? String(book.published).trim() : '';
                 const placePub = [place, publisher].filter(Boolean).join(': ');
@@ -2029,7 +2030,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       author={book.author}
                       year={book.published}
                       publisher={book.publisher}
-                      placePublished={book.place_published}
+                      placePublished={resolveImprintPlace(book)?.display}
                       format={book.format}
                       ustcId={book.ustc_id}
                       language={book.language}

@@ -59,7 +59,12 @@ export interface Book {
 
   // USTC catalog fields
   ustc_id?: string;           // USTC catalog number (e.g., "2029384")
-  place_published?: string;   // City of publication (e.g., "Hamburg")
+  place_published?: string;   // City of publication (e.g., "Hamburg") — import tier
+  /** Same fact, other writers (#4043). Read via resolveImprintPlace() in
+   *  src/lib/imprint.ts — never pick one of these by hand. */
+  place_of_publication?: string;  // ocr/mixed tier
+  publication_place?: string;     // catalogue tier (BPH + USTC)
+  place?: string;                 // stray (1 document)
   publisher?: string;         // Printer/Publisher name
   format?: string;            // Book format (folio, quarto, octavo, etc.)
 
