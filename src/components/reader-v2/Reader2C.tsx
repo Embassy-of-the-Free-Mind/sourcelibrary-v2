@@ -14,9 +14,10 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Crosshair,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
+import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import {
@@ -588,6 +589,35 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 }
 
 /**
+ * Trace: click a phrase in one pane to light up the span it came from in the
+ * other. Same shape as the Notes toggle it sits beside, because they are the
+ * same kind of thing — a way of reading, switched on for as long as you want it.
+ */
+function TraceToggle({ on, onToggle, loading, language }: {
+  on: boolean; onToggle: () => void; loading: boolean; language?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={on}
+      className="flex items-center gap-1 font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
+      style={{
+        color: on ? 'var(--accent-rust)' : 'var(--text-faint)',
+        background: on ? 'color-mix(in srgb, var(--accent-rust) 12%, transparent)' : 'transparent',
+        borderColor: on ? 'color-mix(in srgb, var(--accent-rust) 40%, transparent)' : 'transparent',
+      }}
+      title={on
+        ? 'Turn tracing off'
+        : `Trace: click any phrase to see it in the ${language || 'original'}`}
+    >
+      <Crosshair size={12} className={on && loading ? 'animate-pulse' : undefined} />
+      Trace
+    </button>
+  );
+}
+
+/**
  * Copy this pane's text. It sits beside Notes as its own control rather than
  * behind a ⋯ menu: it was the only action in that menu, and a menu holding one
  * item costs a click to tell you so.
@@ -1148,13 +1178,13 @@ function Filmstrip({
       style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}` }}
     >
       <button type="button" aria-label="Previous page" onClick={onPrev}
-        className="shrink-0 flex items-center justify-center mx-1.5 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
+        className="shrink-0 flex items-center justify-center mx-1.5 mt-1 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
         style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronLeft size={15} />
       </button>
       <div
         ref={innerRef}
-        className="flex-1 flex items-start gap-2 overflow-x-auto px-1"
+        className="flex-1 flex items-start gap-2.5 overflow-x-auto px-2 py-1"
         style={{ overscrollBehavior: 'contain', scrollbarWidth: 'none' }}
       >
         {pageList.map((p) => {
@@ -1170,16 +1200,18 @@ function Filmstrip({
               title={`Page ${p.page_number}`}
               aria-current={isCurrent ? 'page' : undefined}
             >
-              {/* The ring is an inset shadow, not an outline: the strip is a
-                  horizontal scroller, which clips anything drawn outside its
-                  box, and that took the top edge of the ring away. */}
+              {/* A ring drawn OUTSIDE the page, in brand rust, so the current
+                  page is findable at a glance in a strip of near-identical
+                  grey thumbnails. The scroller carries padding to match: it
+                  clips anything outside its box, which is what ate the top
+                  edge of this ring when it was an outline on a flush thumb. */}
               <span
                 className="block overflow-hidden"
                 style={{
                   width: compact ? 38 : 42,
                   height: compact ? 50 : 54,
                   background: isCurrent ? 'var(--bg-warm)' : 'rgba(245,240,232,0.42)',
-                  boxShadow: isCurrent ? 'inset 0 0 0 2px var(--accent-rust)' : 'none',
+                  boxShadow: isCurrent ? '0 0 0 3px #9e4a3a' : 'none',
                 }}
               >
                 {thumb && (
@@ -1198,7 +1230,7 @@ function Filmstrip({
         })}
       </div>
       <button type="button" aria-label="Next page" onClick={onNext}
-        className="shrink-0 flex items-center justify-center mx-1.5 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
+        className="shrink-0 flex items-center justify-center mx-1.5 mt-1 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
         style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronRight size={15} />
       </button>
@@ -1440,6 +1472,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Filmstrip visibility — toggled from the bottom of the rail, persisted.
   const [stripVisible, setStripVisible] = useState(true);
   const [lightbox, setLightbox] = useState(false);
+  // Tracing needs both texts on screen and a real translation to align to; an
+  // English book has nothing to trace between.
+  const [traceOn, setTraceOn] = useState(false);
+  const [traceStatus, setTraceStatus] = useState<TraceStatus>('idle');
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       try { if (window.localStorage.getItem(STRIP_KEY) === '0') setStripVisible(false); } catch { /* private mode */ }
@@ -1708,6 +1744,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // height so a short page never shows a white band.
   const lastSurface = r.views.en ? SURFACE.translation : r.views.ocr ? SURFACE.ocr : SURFACE.scanBed;
 
+  // Trace aligns the transcription against the English, so it needs both panes
+  // showing, both texts present, and a book that isn't already in English.
+  const isEnglishBook = (r.book.language || '').toLowerCase().startsWith('english');
+  const traceEligible = !isEnglishBook && !editing
+    && !!r.currentPage.ocr?.data && !!r.currentPage.translation?.data
+    && r.views.ocr && r.views.en;
+  const traceActive = traceOn && traceEligible;
+
   const panelProps = {
     r, citation, copied,
     onCopyCitation: copyCitation,
@@ -1925,6 +1969,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             >
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
+                  {traceEligible && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
+                      loading={traceStatus === 'loading'} language={r.book.language} />
+                  )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
@@ -1952,6 +2000,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section className="flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
+                  {traceEligible && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
+                      loading={traceStatus === 'loading'} language={r.book.language} />
+                  )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   <CopyTextButton page={r.currentPage} kind="translation" />
                 </div>
@@ -2089,6 +2141,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
+                  {traceEligible && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
+                      loading={traceStatus === 'loading'} language={r.book.language} />
+                  )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
@@ -2106,6 +2162,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <AiChip short />
                 </div>
                 <div className="flex items-center gap-1">
+                  {traceEligible && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
+                      loading={traceStatus === 'loading'} language={r.book.language} />
+                  )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   <CopyTextButton page={r.currentPage} kind="translation" />
                 </div>
@@ -2231,6 +2291,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           />
         </div>
       </div>
+
+      {/* Trace mode: transcription↔translation span highlighting (#3091) */}
+      <TraceAlignment
+        bookId={r.book.id}
+        pageId={r.currentPageId}
+        active={traceActive}
+        onStatusChange={setTraceStatus}
+      />
 
       {lightbox && (
         <ScanLightbox
