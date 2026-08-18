@@ -3,3 +3,8 @@ astrologuy
 tools-standlone-gemini-page-split
 ocr-output
 .claude
+
+# Local datasets / scratch — never part of a deploy (35K+ files broke the upload, 2026-08-18)
+scripts/output
+scripts/eval/results
+.sibling-bak
