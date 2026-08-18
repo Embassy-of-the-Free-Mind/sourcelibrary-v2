@@ -37,7 +37,10 @@
  *                    keeper's — sha1 says these are NOT copies of the keeper
  *                    (artwork identity is sha1-exact; title-similarity dedup
  *                    is the known fabricator). Candidates for UNMARKING as
- *                    duplicates, pending eyeball.
+ *                    duplicates, pending eyeball. Requires every hash in the
+ *                    cluster to be TRUSTWORTHY (not from the image-upgrade
+ *                    set, #3838) — inside that set the same image can carry
+ *                    two different sha1s and the bucket's argument collapses.
  *   RESTORE_CANDIDATE keeper hidden with NO reason, small cluster — dup
  *                    resolution normally keeps the keeper visible, so a
  *                    reasonless dark keeper looks like an accident. Restoring
@@ -68,10 +71,48 @@ const rows = await books.aggregate([
   { $match: { $or: [{ keeper: null }, { 'keeper.visible': { $ne: true } }] } },
   { $project: {
     _id: 0, id: 1, title: 1, content_type: 1, commons_sha1: 1, hidden_reason: 1,
+    commons_title: 1, commons_url: 1, image_upgrade_source: 1,
     keeper_id: '$keeper.id', keeper_title: '$keeper.title', keeper_sha1: '$keeper.commons_sha1',
     keeper_reason: '$keeper.hidden_reason', keeper_type: '$keeper.content_type',
+    keeper_commons_title: '$keeper.commons_title', keeper_commons_url: '$keeper.commons_url',
+    keeper_upgrade_source: '$keeper.image_upgrade_source',
   } },
 ]).toArray();
+
+/**
+ * `commons_sha1` DESCRIBES THE ORIGINAL IMPORT FILE, NOT NECESSARILY THE ONE WE SERVE.
+ *
+ * The image-upgrade path (`image_upgrade_source: "Commons alternate"`, runs of
+ * May–June 2026) re-points a doc at a higher-quality Commons duplicate and
+ * records that in `commons_title`, leaving `commons_url` and `commons_sha1` on
+ * the original. 440 of ~11.2K true-Commons artwork docs are in that state
+ * (measured 2026-08-09; `.claude/docs/invariants/paired-artifacts.md`, #3838).
+ *
+ * That matters HERE specifically, because SUSPECT_NOT_DUP is the one bucket
+ * whose whole argument is "the hashes differ, so these are not copies" — and
+ * inside the upgrade set two records of the SAME image can carry different
+ * `commons_sha1`. The unmark lane acts on that verdict and restores visibility,
+ * so an ungated call re-publishes a genuine duplicate.
+ *
+ * This audit was written 2026-08-09 and the finding landed 08-10, so the gate
+ * was simply missing; it was re-derived by hand before the 2026-08-18 run
+ * (0 of 9 keepers and 0 of 521 pointers were affected — the trap was empty that
+ * time, which is luck, not a reason to keep re-deriving it).
+ *
+ * A doc is UNJUDGEABLE on hash evidence when it was upgraded, when its title and
+ * url name different files, or when it has no hash at all — and unjudgeable is
+ * not the same as "not a duplicate" (the repo has this lesson in three other
+ * places). Such clusters fall through to KEEPER_CHOICE, which is a human lane.
+ */
+const commonsFile = (s) => decodeURIComponent(String(s ?? '').split('/').pop() ?? '')
+  .replace(/^File:/, '').replace(/\s+/g, '_');
+function hashIsTrustworthy(doc, prefix = '') {
+  const p = (k) => doc[prefix ? `${prefix}${k}` : k];
+  if (p('image_upgrade_source')) return false;
+  const title = p('commons_title'), url = p('commons_url');
+  if (title && url && commonsFile(title) !== commonsFile(url)) return false;
+  return true;
+}
 
 // Cluster by keeper.
 const byKeeper = new Map();
@@ -82,6 +123,7 @@ for (const r of rows) {
       keeper_id: r.keeper_id ?? null, keeper_title: (r.keeper_title || '').slice(0, 70),
       keeper_reason: r.keeper_reason || null, keeper_sha1: r.keeper_sha1 || null,
       keeper_type: r.keeper_type || null, pointers: [],
+      keeper_hash_trustworthy: hashIsTrustworthy(r, 'keeper_'),
     });
   }
   byKeeper.get(k).pointers.push(r);
@@ -108,8 +150,13 @@ function classify(c) {
   const repointable = withSha.filter((p) => visibleBySha.has(p.commons_sha1));
   if (repointable.length && repointable.length === c.pointers.length) return 'REPOINT';
   if (c.pointers.length >= ALBUM_FANIN && withSha.length === 0) return 'ALBUM_PARKING';
-  if (withSha.length && c.keeper_sha1 && withSha.every((p) => p.commons_sha1 !== c.keeper_sha1)) return 'SUSPECT_NOT_DUP';
-  if (withSha.length && !c.keeper_sha1 && withSha.length === new Set(withSha.map((p) => p.commons_sha1)).size && withSha.length === c.pointers.length && c.pointers.length > 1) return 'SUSPECT_NOT_DUP';
+  // SUSPECT_NOT_DUP is a claim about hashes, so every hash it rests on must
+  // describe the file we actually serve — see hashIsTrustworthy above. One
+  // untrustworthy hash anywhere in the cluster disqualifies the whole verdict,
+  // because the bucket's argument is "ALL of these differ from the keeper".
+  const hashesTrustworthy = c.keeper_hash_trustworthy && c.pointers.every((p) => hashIsTrustworthy(p));
+  if (hashesTrustworthy && withSha.length && c.keeper_sha1 && withSha.every((p) => p.commons_sha1 !== c.keeper_sha1)) return 'SUSPECT_NOT_DUP';
+  if (hashesTrustworthy && withSha.length && !c.keeper_sha1 && withSha.length === new Set(withSha.map((p) => p.commons_sha1)).size && withSha.length === c.pointers.length && c.pointers.length > 1) return 'SUSPECT_NOT_DUP';
   if (!c.keeper_reason && c.pointers.length < ALBUM_FANIN) return 'RESTORE_CANDIDATE';
   return 'KEEPER_CHOICE';
 }
