@@ -1501,6 +1501,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
                     </Link>
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                  {/* The name stays clickable and searchable — a byline is how a
+                      reader REACHES a book, and for the Bhutanese manuscript
+                      volumes the monastery is the only handle they have. What
+                      changes is that the page no longer implies it WROTE the
+                      book. See src/lib/corporate-bylines.ts. */}
+                  {heroByline.institutional && heroByline.institutional.qualifier && (
+                    <span className="normal-case tracking-normal font-normal opacity-70"> · {heroByline.institutional.qualifier}</span>
+                  )}
                 </div>
               )}
               <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
