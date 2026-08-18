@@ -47,6 +47,14 @@ const argVal = (f, d) => { const i = process.argv.indexOf(f); return i > -1 ? pr
 const LIMIT = Number(argVal('--limit', 0)) || 0;
 const MIN_SCORE = Number(argVal('--min-score', 0.34));
 const OUT = argVal('--out', `scripts/eval/results/card-prior-candidates.md`);
+// --record: also write a DURABLE, NON-RENDERED record of this catalogue check
+// onto each probed card (`search.catalogue_checks`). Deliberately not
+// `search.sources` or `search.last_searched`, both of which the reader-facing
+// searchRecordLine() renders: sources is capped at the FIRST 6 names so an
+// append would usually be invisible, and bumping last_searched would claim a
+// freshness this mechanical cross-check did not earn. Rendering this evidence
+// is a separate, reviewed decision — the method's actuation moment.
+const RECORD = process.argv.includes('--record');
 
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -178,5 +186,42 @@ for (const { card, scored } of results) {
 }
 writeFileSync(OUT, lines.join('\n'));
 console.log(`wrote ${OUT}`);
+
+if (RECORD) {
+  const { recordSweepAction } = await import('../lib/sweep-log.mjs');
+  const SWEEP = 'card-catalogue-check-2026-08';
+  const checkedAt = new Date();
+  const byCard = new Map(results.map((r) => [r.card._id, r.scored]));
+  let written = 0;
+
+  for (const card of cards) {
+    if (surnameOf(card.author).length < 4) continue;   // never probed
+    const hits = byCard.get(card._id) || [];
+    const entry = {
+      catalogue: 'loc_mdsconnect+estc',
+      records_searched: 149096,
+      checked_at: checkedAt,
+      method: 'anchored author surname + MARC uniform_title/title token overlap',
+      min_score: MIN_SCORE,
+      result: hits.length ? 'candidates_found' : 'no_match',
+      ...(hits.length ? { candidates: hits.map(({ r, score }) => ({ lccn: r.lccn, year: r.year, title: r.title, uniform_title: r.uniform_title, score: Number(score.toFixed(2)) })) } : {}),
+    };
+
+    // Preserve the prior value first — same discipline as the field deletion.
+    await recordSweepAction(db, {
+      sweep: SWEEP,
+      book_id: card._id,
+      action: hits.length ? 'catalogue-check-candidates' : 'catalogue-check-no-match',
+      detail: { prior_catalogue_checks: card.search?.catalogue_checks ?? null, added: entry },
+    });
+
+    await db.collection('work_translation_history').updateOne(
+      { _id: card._id },
+      { $push: { 'search.catalogue_checks': entry } },
+    );
+    written += 1;
+  }
+  console.log(`recorded catalogue_checks on ${written} cards (non-rendered; sweep_log sweep='${SWEEP}')`);
+}
 
 await client.close();

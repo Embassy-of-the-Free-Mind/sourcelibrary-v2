@@ -16,6 +16,9 @@ name: Field sprawl watch
 # after each #3969 family consolidation; add each retired field to --forbid.
 
 on:
+  # The static lint below needs no database, so it gates every PR — the moment
+  # a new field write is cheapest to notice. The DB census stays weekly.
+  pull_request:
   schedule:
     # Weekly, Tuesdays 07:30 UTC.
     - cron: '30 7 * * 2'
@@ -26,7 +29,23 @@ permissions:
   issues: write
 
 jobs:
+  # Static gate: a $set of an unknown `books` field fails HERE, on the PR that
+  # introduces it — a week before the census would notice, and before the write
+  # ever runs. No database, no secrets, seconds to run.
+  field-write-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Lint for new books field writes
+        run: node scripts/audit/new-field-writes.mjs --baseline scripts/lib/books-field-write-baseline.json
+
   field-sprawl:
+    # The census reads production, so it stays on the schedule rather than
+    # running against the DB on every pull request.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
