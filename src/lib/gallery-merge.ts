@@ -48,7 +48,13 @@ export function artworkToGalleryItem(a: any) {
     description: a.summary || a.display_title || a.title || '',
     type: a.resource_type,
     source: 'artwork' as const,
-    link: `/book/${a.slug || a.id}`,
+    // /artwork is the canonical route for a standalone artwork. This field is
+    // consumed by GalleryClient tiles AND handed to MCP clients verbatim as the
+    // public URL, so a `/book/...` here is how AI answers ended up citing the
+    // non-canonical twin. `/artwork` also resolves on tenant subdomains.
+    // Falls back to the id only when a slug is missing — /artwork matches by
+    // slug, so an id-only record has to keep the /book form.
+    link: a.slug ? `/artwork/${a.slug}` : `/book/${a.id}`,
     likeCount: 0,
     likedByVisitor: false,
   };

@@ -368,8 +368,16 @@ export async function listBooks(args: {
 export async function getBook(args: { book_id: string }) {
   const result = await apiGet(`/books/${args.book_id}`, new URLSearchParams({ pages: "nav" })) as Record<string, unknown>;
 
+  // Cover art, preferring the canonical R2 fields (cover-write contract).
+  // cover_thumb_url feeds the inline image block in index.ts; the full
+  // display URL rides alongside for callers that want to link it.
+  const coverThumb = (result.image_thumb || result.thumbnail_blob || result.image_display || result.thumbnail) as string | undefined;
+  const coverFull = (result.image_display || result.thumbnail || result.image_thumb || result.thumbnail_blob) as string | undefined;
+
   return {
     id: result.id,
+    ...(coverThumb ? { cover_thumb_url: coverThumb } : {}),
+    ...(coverFull ? { cover_image_url: coverFull } : {}),
     title: result.display_title || result.title,
     original_title: result.title !== (result.display_title || result.title) ? result.title : undefined,
     author: result.author,
@@ -517,8 +525,12 @@ const OCR_ORIGINAL_TIP =
 export async function getQuote(args: {
   book_id: string;
   page: number;
+  include_image?: boolean;
 }) {
   const params = new URLSearchParams({ page: String(args.page) });
+  // Opt-in scan of the cited leaf (#3937): the response then carries
+  // quote.page_image_url and index.ts attaches the image inline.
+  if (args.include_image === true) params.set("include_image", "true");
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
   const quote = result.quote as Record<string, unknown> | undefined;
@@ -678,8 +690,11 @@ export async function searchImages(args: {
 
   // For 'all', request both halves at full limit, then interleave so the
   // caller never sees a single source dominate just because it returns first.
+  // Under book_id the artwork lane is skipped: artworks don't belong to books
+  // (the artwork API's book_id means "this artwork"), so including them can
+  // only un-scope a book-filtered call (#3936).
   const wantGallery = source === "all" || source === "gallery";
-  const wantArtworks = source === "all" || source === "artworks";
+  const wantArtworks = (source === "all" || source === "artworks") && !args.book_id;
 
   const [galleryItems, artworkItems] = await Promise.all([
     wantGallery
@@ -712,5 +727,14 @@ export async function searchImages(args: {
     source,
     counts: { gallery: galleryItems.length, artworks: artworkItems.length },
     images,
+    // An empty scoped result must SAY so — silence is how the book_id no-op
+    // went unnoticed on the remote server (#3936).
+    ...(images.length === 0
+      ? {
+          note: args.book_id
+            ? "This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates."
+            : "No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.",
+        }
+      : {}),
   };
 }
