@@ -84,6 +84,54 @@ function render(result) {
 app.ontoolresult = (result) => render(result);
 app.onhostcontextchanged = (ctx) => applyTheme(ctx);
 
+// Route card clicks through the host: sandboxed iframes generally swallow
+// target=_blank, so a plain anchor renders a gallery you can look at but not
+// leave. app.openLink({uri}) is the spec's way to ask the host to open the
+// book/gallery page in the user's browser. The anchors stay in the DOM as a
+// fallback for permissive hosts and for right-click/copy-link.
+// Show a copyable-link strip when the host can't open a URL for us. This is
+// the ONLY fallback: window.open from a sandboxed iframe doesn't navigate —
+// Chrome degrades it to a FILE DOWNLOAD of the target page, which is worse
+// than doing nothing (field-tested 2026-08-18). The reason string doubles as
+// the payload for an upstream bug report.
+function showLinkBar(href, reason) {
+  let bar = document.getElementById('linkbar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'linkbar';
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+  bar.innerHTML = '<span>This chat can’t open links (' + reason + ') — copy it: </span>';
+  const input = document.createElement('input');
+  input.readOnly = true;
+  input.value = href;
+  input.addEventListener('focus', () => input.select());
+  bar.appendChild(input);
+  input.focus();
+}
+
+document.addEventListener('click', (ev) => {
+  const a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+  if (!a) return;
+  const href = a.getAttribute('href');
+  ev.preventDefault();
+  if (!href || href === '#') return;
+  // SDK signature is { url }, NOT { uri } — the hosted API doc says uri, the
+  // shipped SDK's own example says url, and the SDK wins (v2 of this handler
+  // passed uri: clicks silently did nothing). openLink RESOLVES with
+  // { isError } rather than rejecting, so every failure path needs handling.
+  const caps = app.getHostCapabilities ? app.getHostCapabilities() : null;
+  if (caps && !caps.openLinks) { showLinkBar(href, 'openLinks unsupported'); return; }
+  try {
+    app.openLink({ url: href }).then(
+      (res) => { if (res && res.isError) showLinkBar(href, 'host declined'); },
+      (err) => showLinkBar(href, 'request failed: ' + (err && err.message ? err.message : err)),
+    );
+  } catch (err) {
+    showLinkBar(href, 'sdk threw: ' + (err && err.message ? err.message : err));
+  }
+});
+
 app.connect().then(() => {
   applyTheme(app.getHostContext ? app.getHostContext() : null);
 }).catch((err) => {

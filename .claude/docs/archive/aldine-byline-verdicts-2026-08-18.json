@@ -1,0 +1,2131 @@
+{
+ "measured": "2026-08-18",
+ "lane": "aldine-imprint-correction",
+ "pool": 67,
+ "clean": [
+  {
+   "book_id": "6a097473f14f992996681366",
+   "title": "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. Aristotelis moralia magna, et moralia eudem. et moralia nicomach. et rei familiaris, ciuilisque disciplinam continens tomus 5.",
+   "year": 1552,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aristoteles",
+   "as_printed": "ARISTOTE LIS / ΑΡΙΣΤΟΤΕ ΛΟΥΣ",
+   "quoted_line": "ΑΡΙΣΤΟΤΕ ΛΟΥΣ ΤᾺ ἨΘΙΚᾺ ΜΕΓΑΛΑ, ΚΑῚ ἨΘΙΚᾺ ΕΥΔΗΜ, ΚΑῚ ἨΘΙΚᾺ ΝΙΚΟΜΑΧ. ΚΑῚ ὈΙΚΟΝΟΜΙΚᾺ ΚΑῚ ΠΟΛΙΤΙΚᾺ ΠΕΡΙΕΧΩΝ ΤΌΜΟΣ Ἐ. ARISTOTE LIS MORALIA MAGNA, ET MORALIA EVDEM. ET MORALIA NICOMACH. ET REI FAMILIARIS, CIVILIS QVE DISCIPLINAM CON= TINENS TOMVS V.",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the genitive in both Greek and Latin (Aristotelous / Aristotelis), i.e. Aristotle's Magna Moralia, Eudemian and Nicomachean Ethics, Economics and Politics.",
+   "caveat": "Volume 5 of the Aldine Aristotle (Venice, 1552, 'Aldi filii'); the preface to readers is signed by the publisher Federicus Turrisanus, not by an author, and Camotius is named there as the scholar whose arrangement shaped the volume.",
+   "other_names": [
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "printer"
+    },
+    {
+     "name": "Aldi filii (sons of Aldus Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Camotius (Giovanni Battista Camozzi)",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Aristoteles",
+    "evidence": "ΑΡΙΣΤΟΤΕΛΟΥΣ ΤᾺ ἨΘΙΚᾺ ΜΕΓΑΛΑ ... ARISTOTELIS MORALIA MAGNA, ET MORALIA EVDEM. ET MORALIA NICOMACH. ... TOMVS V. ALDI FILII VENETIIS M.D.LII.",
+    "reasoning": "The title page names the author in the genitive in both Greek and Latin (Aristotelous / Aristotelis) governing the entire volume, while ALDI FILII is the Aldine imprint and Federicus Turrisanus signs only the publisher's preface ('Volumen Aristotelis quintum uobis exhibemus'). Every contained work (Magna Moralia, Eudemian and Nicomachean Ethics, Oeconomica, Politica) belongs to the single Aristotelian corpus, so this is one author's book and the nominative form Aristoteles is correct."
+   }
+  },
+  {
+   "book_id": "6a0859d149638a50931c857b",
+   "title": "Il libro del cortegiano del conte Baldesar Castiglione.",
+   "year": 1547,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Baldassare Castiglione",
+   "as_printed": "BALDESAR CASTIGLIONE",
+   "quoted_line": "IL LIBRO DEL CORTEGIANO DEL CONTE BALDESAR CASTIGLIONE, di nuouo rincontrato con l'originale scrit= to di mano de l'auttore",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page assigns the work to 'del conte Baldesar Castiglione', and the dedication speaks in his own first person ('fui stimolato a scriuere questi libri del Cortegiano').",
+   "caveat": "The catalogue byline lists only the printers (Aldo Manuzio / Andrea Torresano); the author appears on the title-page, not in that byline. Vittoria Colonna, Guidobaldo da Montefeltro and Francesco Maria della Rovere occur only as narrative figures inside the dedication, in no authorial role.",
+   "other_names": [
+    {
+     "name": "Michele Da Silva (Michel de Selva), Bishop of Viseu",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldi Filii (sons of Aldus Manutius)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Baldassare Castiglione",
+    "evidence": "IL LIBRO DEL CORTEGIANO DEL CONTE BALDESAR CASTIGLIONE, di nuouo rincontrato con l'originale scritto di mano de l'auttore",
+    "reasoning": "The title page names Castiglione possessively as the work's author and points to the autograph 'originale scritto di mano de l'auttore', while ALDI FILII M.D.XLVII is the imprint (the sons of Aldus), not an authorship claim. The dedication to Michel de Silva is written in Castiglione's own first person ('fui stimolato ... a scriuere questi libri del Cortegiano'), confirming the role."
+   }
+  },
+  {
+   "book_id": "6a085a9949638a50931c9c45",
+   "title": "Il libro del cortegiano del conte Baldesar Castiglione.",
+   "year": 1541,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Baldassare Castiglione",
+   "as_printed": "BALDESAR CASTIGLIONE",
+   "quoted_line": "IL LIBRO DEL CORTEGIANO DEL CONTE BALDESAR CASTIGLIO NE, NVOVAMENTE STAMPA TO, ET CON SOMMA DI= LIGENZA RE= VISTO.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names the work as the book of the courtier 'del conte Baldesar Castiglione', and the dedication speaks in his own voice about being moved to write these books of the Cortegiano.",
+   "caveat": "The Seneca line on page 7 is a quoted motto, not an attribution, and the same page carries a much later ownership inscription dated 1874. The title page imprint 'ALDVS M.D.XLI' is the Aldine press (per the catalogue, Aldo Manuzio's heirs with Andrea Torresani), not a personal name given in full on the page.",
+   "other_names": [
+    {
+     "name": "Michel de Silva",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Joannis Nencini",
+     "role": "owner"
+    },
+    {
+     "name": "Aldus",
+     "role": "printer"
+    },
+    {
+     "name": "Guidobaldo da Montefeltro",
+     "role": "subject"
+    },
+    {
+     "name": "Francesco Maria della Rovere",
+     "role": "subject"
+    },
+    {
+     "name": "Vittoria Colonna",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Baldassare Castiglione",
+    "evidence": "fui stimolato da quella memoria à scriuere questi libri del Cortegiano (dedication, p. 16), with title-page 'IL LIBRO DEL CORTEGIANO DEL CONTE BALDESAR CASTIGLIONE'",
+    "reasoning": "The title-page 'del conte Baldesar Castiglione' is possessive-authorial, not a role phrase, and the signed first-person dedication to Michel de Silva states outright that the writer composed these books of the Cortegiano, naming Vittoria Colonna's unauthorised copy of his own manuscript. 'ALDVS M.D.XLI' on the same page is the Aldine imprint, so the current byline is the printer and the replacement is correct; 'Baldassare Castiglione' is the standard nominative form of the printed 'Baldesar'."
+   }
+  },
+  {
+   "book_id": "6a08599c49638a50931c8204",
+   "title": "Exquisitae in Porphirium commentationes Danielis Barbari p. V. artium doctoris. ...",
+   "year": 1542,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Daniel Barbarus",
+   "as_printed": "DANIELIS BAR-BARI P. V. ARTI-VM DOCTO-RIS",
+   "quoted_line": "EXQVISITAE IN PORPHI- RIVM COMMENTATIO- NES DANIELIS BAR- BARI P. V. ARTI- VM DOCTO- RIS.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names the commentaries as those of Danielis Barbari in the genitive, and the dedication on p. 18 is signed DANIEL BARBARVS.",
+   "caveat": "Page 15 is a garbled duplicate/variant transcription of the same title page (its 'M. D. XIII.' is an OCR corruption of M. D. XLII); the imprint year is 1542.",
+   "other_names": [
+    {
+     "name": "Porphyrius",
+     "role": "subject"
+    },
+    {
+     "name": "Aldus (Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Benedictus Accoltus (Benedetto Accolti), Cardinal of Ravenna",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paulus III",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Daniel Barbarus",
+    "evidence": "REVERENDISSIMO ET ILLVSTRISSIMO S.R.E. PRESBITERO, CARDINALI RAVENNAE, BENEDICTO ACCOLTO DANIEL BARBARVS S. D.",
+    "reasoning": "The genitive 'Danielis Barbari' governs the volume's own title noun 'commentationes' — he is author of the commentary, not an editor, and no role formula (apud, excudebat, corrigente, interprete) attaches to his name. The dedication to Cardinal Benedetto Accolti is signed in the nominative DANIEL BARBARVS, confirming the writing voice; Aldus appears only as imprint and privilege holder."
+   }
+  },
+  {
+   "book_id": "6a085a5049638a50931c8f5b",
+   "title": "Le terze rime di Dante.",
+   "year": 1502,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Dante Alighieri",
+   "as_printed": "DANTE ALAGHIERI",
+   "quoted_line": "LO'NFERNO E'L PVRGATORIO E'L PARADISO DI DANTE ALAGHIERI.",
+   "page": 17,
+   "confidence": "high",
+   "reasoning": "The printed title-page names the three canticles as \"di Dante Alaghieri\", the Italian possessive assigning authorship of the work to Dante.",
+   "caveat": "The Seneca tag on page 7 (\"OTIVM SINE LITERIS MORS EST Seneca\") is a quoted motto, not an authorship statement; the catalogue byline credits Aldo Manuzio and Andrea Torresano, who are the printers and are not named anywhere in the transcribed front matter.",
+   "other_names": [
+    {
+     "name": "Joannes Nencini",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Dante Alighieri",
+    "evidence": "LO'NFERNO E'L PVRGATORIO E'L PARADISO DI DANTE ALAGHIERI.",
+    "reasoning": "The possessive \"di Dante Alaghieri\" governs the whole volume (all three canticles of the Commedia), which is an authorial attribution, not a printer, editor, or translator formula; the 1502 Aldine Terze Rime is Dante's text, with Bembo as unnamed editor and Manuzio/Torresani only as the imprint. \"Alaghieri\" is the period spelling of the same man, so the nominative byline Dante Alighieri is correct."
+   }
+  },
+  {
+   "book_id": "6a06d3219a48d51399962e21",
+   "title": "Il sacro regno de'l gran Patritio, de'l vero reggimento, e de la vera felicità de'l principe, e beatitudine humana.",
+   "year": 1553,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Francesco Patrizi",
+   "as_printed": "gran Patritio",
+   "quoted_line": "IL SACRO REGNO DE'L GRAN PATRITIO, DE'L VERO REGGIMENTO, E DE LA VERA FELICITA' DE'L PRINCIPE, E BEATITUDINE HVMANA.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title page assigns the work to 'il gran Patritio' and the preface confirms he composed it ('compose questo libro'; 'pare che Patritio habbia preso l'essempio da lei in far questa opera'), while the preface writer Giovanni Fabrini says only that he put it into the vernacular.",
+   "caveat": "The book names the author only as 'Patritio'; identification with Francesco Patrizi of Siena (author of the Latin De regno et regis institutione) is external. Giovanni Fabrini da Fighine is the Italian translator, not the author ('l'ho fatto uolgare'). The catalogue byline (Manuzio/Torresano) is a printer attribution absent from the transcribed pages — the imprint reads only 'IN VINEGIA, M.D.LIII' — and the dedication is dated Venice, 6 October 1547, earlier than the title-page year, so this front matter may be carried over from an earlier edition. Names inside the dedication's argument (Epicureo, Socrate, Artaserse) are exempla, not persons connected to the book.",
+   "other_names": [
+    {
+     "name": "Giovanni Fabrini da Fighine",
+     "role": "translator"
+    },
+    {
+     "name": "Cosimo de' Medici, Duke of Florence",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "medium",
+    "failure_mode": "none",
+    "better_answer": "Francesco Patrizi",
+    "evidence": "compose questo libro, doue egli insegna guarire l'animo di questi tempestosi mostri ... E io, accio che ei possa essere la comune medicina di tutti, l'ho fatto uolgare ... penetri la fama de'l gran Patritio",
+    "reasoning": "The preface separates the author (Patritio, who 'compose questo libro' and 'habbia preso l'essempio da lei in far questa opera') from its signer Giovanni Fabrini da Fighine, who only turned it into the vernacular and dedicated it to Cosimo de' Medici, so the title's genitive governs the whole volume and names its author. The only residual risk is homonymy (this is Francesco Patrizi of Siena, not the Cherso philosopher), but the proposed nominative name form is itself correct."
+   }
+  },
+  {
+   "book_id": "6a06d1b49a48d5139996012a",
+   "title": "Il Petrarca.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Francesco Petrarca",
+   "as_printed": "IL PETRARCA",
+   "quoted_line": "good Italian printed title-page IL PETRARCA. IN VENETIA, M. D. XLVI.",
+   "page": 14,
+   "confidence": "medium",
+   "reasoning": "The only front matter given is a title-page reading \"IL PETRARCA\", the standard Italian convention of naming the work by its author, so the book presents Petrarch as its author.",
+   "caveat": "Only one page (the title-page) was transcribed; the name appears as the title itself rather than in an explicit authorial formula (no \"auctore\" or genitive), and no printer, editor, or dedicatee is named on the page — \"IN VENETIA\" is a place, not a person. The catalogue byline credits Aldo Manuzio and Andrea Torresano as printers, but the transcribed page does not say so.",
+   "other_names": [],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Francesco Petrarca",
+    "evidence": "IL PETRARCA. IN VENETIA, M. D. XLVI.",
+    "reasoning": "The title is the author's own name used metonymically for his vernacular Rime and Trionfi, the standard sixteenth-century Italian designation, and the 1546 Venetian Aldine 'Il Petrarca' is that text; the current byline is only the press partnership. No role word (apud, corrigente, interprete) or multi-work announcement appears in the front matter, so nothing displaces Petrarca as author."
+   }
+  },
+  {
+   "book_id": "6a06d74e9a48d51399966cfc",
+   "title": "Orbecche tragedia di m. Giouanbattista Giraldi Cinthio da Ferrara.",
+   "year": 1543,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Giovanni Battista Giraldi Cinzio",
+   "as_printed": "M. GIOVANBATTIS TA GIRALDI CINTHIO DA FERRARA",
+   "quoted_line": "ORBECCHE TRAGEDIA DI M. GIOVANBATTIS TA GIRALDI CINTHIO DA FERRARA.",
+   "page": 16,
+   "confidence": "high",
+   "reasoning": "The title-page names him as author of the tragedy Orbecche, and the dedication to Duke Ercole II is signed 'Giovanbatista Cinthio Giraldi', who speaks throughout as the work's composer.",
+   "caveat": "The front matter is Italian, not Latin as the catalogue record states; the catalogue byline (Aldo Manuzio / Andrea Torresani) is the printing house, not the author, and no printer is actually named in the transcribed pages. 'Signoria di Vinegia' is a state, not a person.",
+   "other_names": [
+    {
+     "name": "Ercole II d'Este, Duke of Ferrara",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Girolamo Maria Contugo",
+     "role": "subject"
+    },
+    {
+     "name": "Sebastiano Clarignano da Montefalco",
+     "role": "subject"
+    },
+    {
+     "name": "Cardinal of Ravenna",
+     "role": "subject"
+    },
+    {
+     "name": "Cardinal Salviati",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Giovanni Battista Giraldi Cinzio",
+    "evidence": "ORBECCHE TRAGEDIA DI M. GIOVANBATTIS TA GIRALDI CINTHIO DA FERRARA. ... Di Vostra Illustrissima Signoria Servitore Giovanbatista Cinthio Giraldi.",
+    "reasoning": "The title page assigns the single work (the tragedy Orbecche) to Giraldi Cinzio with authorial 'di', and the dedication to Duke Ercole II d'Este is signed by him in the first person as the man who composed the tragedy in under two months and names his other tragedies Altile, Cleopatra and Didone. No printer, editor or translator formula intervenes; the Aldine byline is merely the imprint."
+   }
+  },
+  {
+   "book_id": "6a06cd0dc749b698e5b2a892",
+   "title": "Commentaria in primam d. Ioannis epistolam, Io. Baptista Folengio monacho Mantuano auctore.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Ioannes Baptista Folengius",
+   "as_printed": "IOANNE BAPTISTA FOLEN=GIO MONACHO MANTVANO AVCTORE",
+   "quoted_line": "COMMENTARIA IN PRIMAM DIVI IOANNIS EPISTOLAM, IOANNE BAPTISTA FOLEN= GIO MONACHO MANTVANO AVCTORE.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page names him in the ablative with \"auctore\", and he signs the dedication in the nominative as \"Ioannes Baptista Folengius\".",
+   "caveat": "\"Divi Ioannis\" in the title is the biblical John whose epistle is commented on, not a contributor; Paul III appears only as the grantor of the ten-year printing privilege, and no printer is named in the transcribed front matter (the catalogue byline credits Aldo Manuzio and Andrea Torresano).",
+   "other_names": [
+    {
+     "name": "Reginald Pole",
+     "role": "dedicatee"
+    },
+    {
+     "name": "John the Evangelist",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Ioannes Baptista Folengius",
+    "evidence": "COMMENTARIA IN PRIMAM DIVI IOANNIS EPISTOLAM, IOANNE BAPTISTA FOLEN= GIO MONACHO MANTVANO AVCTORE.",
+    "reasoning": "The ablative + AVCTORE construction explicitly names Folengio as the author of the whole commentary, not an editor or printer, and the dedication to Cardinal Reginald Pole is signed by Ioannes Baptista Folengius in the nominative, who calls the work his own 'quinquemestri partu'. The proposed nominative form matches the dedication's own spelling, and no Manuzio is named as author anywhere in the front matter."
+   }
+  },
+  {
+   "book_id": "6a08598b49638a50931c7dde",
+   "title": "M. Antonii Flaminii In librum Psalmorum breuis explanatio ad Alexandrum Farnesium, cardinalem amplissimum.",
+   "year": 1545,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Antonius Flaminius",
+   "as_printed": "M. ANTONII FLAMINII",
+   "quoted_line": "M. ANTONII FLAMINII IN LIBRVM PSALMORVM BRE= VIS EXPLANATIO AD ALEXANDRVM FARNE= SIVM, CARDINALEM AMPLISSIMVM.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page gives the work in the genitive (\"M. Antonii Flaminii ... explanatio\") and the dedication on page 15 is signed \"M. ANTONIVS FLAMINIVS, S. P. D.\", so Flaminio both wrote the commentary and signed its dedication.",
+   "caveat": "Page 13 shows an \"Ex libris\" inscription but no owner name survives in the OCR; the body of the dedication is largely illegible though its heading and signature are clear. The catalogue byline credits Manuzio and Torresano, who are the printers, not the author.",
+   "other_names": [
+    {
+     "name": "Alexander Farnesius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Antonius Flaminius",
+    "evidence": "ALEXANDRO FARNESIO, CAR= DINALI AMPLISSIMO, M. ANTONIVS FLAMI= NIVS, S. P. D.",
+    "reasoning": "The title-page genitive \"M. ANTONII FLAMINII\" governs the whole volume (the brevis explanatio on the Psalms), not a part, and the dedication is signed by him in the nominative to Farnese, who is only the dedicatee. \"ALDVS\" plus the Venetian privilege marks the Aldine press as printer, and no Manuzio is credited with the text."
+   }
+  },
+  {
+   "book_id": "6a06ccc8c749b698e5b29c34",
+   "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, & con figure proprie della lingua uolgare, ristampate di nuouo, & con molto studio ricorrette.",
+   "year": 1554,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONE",
+   "quoted_line": "LE EPISTOLE FAMIGLIARI DI CICERONE, - tradotte secondo i ueri sensi dell'auttore, et con figure proprie della lingua uolgare, Ristampate di nuouo, et con molto studio ricorrette.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Le epistole famigliari DI CICERONE\" names Cicero as the author of the letters this volume prints in Italian translation.",
+   "caveat": "The TRANSLATOR is deliberately anonymous: on page 17 he writes \"nella quale non ho uoluto porre il nome mio\" (I did not wish to put my name to it), keeping it hidden until readers have judged the work, so no translator can be named from these pages. The catalogue byline (Aldo Manuzio / Andrea Torresano) reflects the Aldine press and appears nowhere in the transcribed front matter. Apelles is named only inside a rhetorical simile and is not a person of this book.",
+   "other_names": [
+    {
+     "name": "Francesco Cusano",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paolo Manuzio",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "LE EPISTOLE FAMIGLIARI DI CICERONE, tradotte secondo i ueri sensi dell'auttore",
+    "reasoning": "\"di Cicerone\" is possessive and names the author of the letters themselves; \"tradotte\" marks the volume as a translation of his text, and the anonymous translator deliberately withholds his own name (\"non ho uoluto porre il nome mio\"), while Paolo Manuzio appears only as a consulted advisor. The book therefore names Cicero and no one else as author, so the attribution survives."
+   }
+  },
+  {
+   "book_id": "6a06d1129a48d5139995e33a",
+   "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locorum correctione illustratae, cum suis commentarijs separatim impressis, auctore Paulo Manutio Aldi filio.",
+   "year": 1548,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS EPISTOLAE ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locorum correctione illustratae, Cum suis commentariis separatim impressis, auctore Paulo Manutio Aldi filio.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"M. Tullii Ciceronis Epistolae\" assigns the letters themselves to Cicero, while the \"auctore Paulo Manutio\" phrase attaches only to the separately printed commentaries.",
+   "caveat": "The \"auctore\" tag on the title page belongs to the accompanying commentaries, not to the letters; Paulus Manutius is the corrector/commentator (he says in the address to readers that he undertook their emendation) and also the Venetian printer whose name stands as the imprint (\"PAVLVS MANVTIVS ALDI FILIVS. VENETIIS, M.D.XLVIII\"). \"Aldi filius\" is a patronymic identifying him as son of Aldus Manutius, not a separate contributor. Atticus, M. Brutus and Quintus are the letters' addressees, not authors.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Guillelmus Pellicerius (Guillaume Pellicier)",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS EPISTOLAE ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locorum correctione illustratae, Cum suis commentariis separatim impressis, auctore Paulo Manutio Aldi filio.",
+    "reasoning": "The leading genitive M. Tullii Ciceronis governs Epistolae, naming Cicero as author of the volume, while the ablative 'auctore Paulo Manutio' attaches only to the 'commentariis separatim impressis' — a separately printed commentary, not this book. The preface confirms Manuzio's role here is emendator ('ad earum emendationem'), and the nominative form Marcus Tullius Cicero is correct."
+   }
+  },
+  {
+   "book_id": "6a06d1d99a48d51399960a48",
+   "title": "M. Tullii Ciceronis Orationum pars 2. Corrigente Paulo Manutio, Aldi filio.",
+   "year": 1550,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS ORATIONVM PARS II. - ALDI FILII CORRIGENTE PAVLO MANVTIO, ALDI FILIO. VENETIIS, M. D. L.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page genitive 'M. Tullii Ciceronis Orationum pars II' assigns the orations to Cicero, while Paulus Manutius appears only as corrector ('corrigente').",
+   "caveat": "The catalogue byline (Aldo Manuzio & Andreas Torresanus) does not match the book's own front matter: Paulus Manutius is named as editor/corrector and no printer is named beyond the imprint 'Venetiis, M.D.L.'. The dedicatee's office ('apud Subalpinas gentes pro Rege') and 'Rex Christianissimus' are titles, not names.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Gulielmus Bellaius Langeus",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS ORATIONVM PARS II. ... CORRIGENTE PAVLO MANVTIO, ALDI FILIO. VENETIIS, M. D. L.",
+    "reasoning": "The genitive 'M. Tullii Ciceronis' governs the whole volume ('Orationum pars II'), so Cicero is the author, while the ablative absolute 'corrigente Paulo Manutio' explicitly casts Manutius as emendator only — confirmed by the dedication where Paulus Manutius signs as the man who purged the text of errors and published it. It is a single-author collection of Cicero's own orations, not a Sammelband, and 'Marcus Tullius Cicero' is the correct nominative form."
+   }
+  },
+  {
+   "book_id": "6a06f1604dcc6d5d8f0363f9",
+   "title": "3]: De claris oratoribus, Ciceronis liber, qui inscribitur Brutus. Variae lectiones ex antiquis libris, & ex ingenio. ...",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONIS",
+   "quoted_line": "DE CLARIS ORATORIBVS, CICERONIS LIBER, QVI INSCRIBITVR BRVTVS.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page genitive \"Ciceronis liber\" assigns authorship of the Brutus to Cicero, while Paulus Manutius is named only as corrector.",
+   "caveat": "The catalogue byline (Aldo Manuzio & Andrea Torresano) reflects the Aldine press, not the author; the title-page itself names no printer beyond the place and date (Venetiis, 1546). Aldus Manutius appears on the page only as a patronymic identifying Paulus (\"ALDI FILIO\"), not in a role of his own.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "DE CLARIS ORATORIBVS, CICERONIS LIBER, QVI INSCRIBITVR BRVTVS. ... CORRIGENTE PAVLO MANVTIO, ALDI FILIO.",
+    "reasoning": "The genitive CICERONIS governs LIBER, i.e. the whole volume (Cicero's Brutus), so it names the author, while the ablative absolute CORRIGENTE PAVLO MANVTIO marks Paulus Manutius only as emendator of the variae lectiones. The current byline is the Aldine imprint, not an author."
+   }
+  },
+  {
+   "book_id": "6a0852a949638a50931bb199",
+   "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, et con figure proprie della lingua uolgare.",
+   "year": 1545,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "Cicerone",
+   "quoted_line": "LE EPISTOLE FAMIGLIARI DI CICERONE, TRADOTTE SECONDO I VERI SENSI DELL'AVTTORE, ET CON FIGVRE PROPRIE DELLA LINGVA VOL GARE.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title page names the work as the Epistole famigliari OF Cicero, i.e. Cicero wrote the letters, the book being an Italian rendering of them.",
+   "caveat": "The TRANSLATOR is deliberately anonymous: in the preface (p.15) he states he withheld his name ('nella quale non ho uoluto porre il nome mio... mi sono configliato di tener sepolto il mio nome'), comparing himself to Apelles hiding behind his paintings, so no translator name appears anywhere in the front matter. If 'who wrote this book' is taken to mean who produced this Italian text, the answer is: nobody is named. 'Sommo Pontefice' and 'illustrissima Signoria di Vinegia' are an office and a state, not persons. Paolo Manuzio is named only as a consultant on obscure passages, not as editor of record.",
+   "other_names": [
+    {
+     "name": "Francesco Cufano",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paolo Manuzio",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus (Aldo Manuzio)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "LE EPISTOLE FAMIGLIARI DI CICERONE, TRADOTTE SECONDO I VERI SENSI DELL'AVTTORE",
+    "reasoning": "The title-page genitive 'di Cicerone' governs the whole volume (the Epistolae ad Familiares), and 'tradotte' marks it as a vernacular rendering of his text rather than a new work; the anonymous translator explicitly withheld his own name ('non ho uoluto porre il nome mio') and Paolo Manuzio appears only as a consultant on obscure passages. Manuzio and Torresano are the imprint, so replacing the byline with Cicero is correct."
+   }
+  },
+  {
+   "book_id": "6a0853c249638a50931bda8e",
+   "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locorum correctione illustratae, ut, post omneis omnium editiones, exeant emendatissime. In quas omneis epistolas commentarij, separatim impressi, propediem edentur, auctore Paulo Manutio Aldi filio.",
+   "year": 1544,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS EPISTOLAE ad Atticum, ad M. Brutum, ad Quintum fratrem",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names Cicero in the genitive as author of the collected letters, while Paulus Manutius appears as the corrector of the text and author of separately printed commentaries.",
+   "caveat": "The title page's 'auctore Paulo Manutio Aldi filio' attaches to the forthcoming, separately printed commentaries ('In quas omnes epistolas commentarii, separatim impressi, propediem edentur'), not to this volume of letters; Manutius also signs the dedication. Atticus, M. Brutus and Quintus are the letters' addressees, not contributors.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius (Paolo Manuzio)",
+     "role": "editor"
+    },
+    {
+     "name": "Gulielmus Pellicerrius (Guillaume Pellicier), Bishop of Montpellier",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS EPISTOLAE ad Atticum, ad M. Brutum, ad Quintum fratrem",
+    "reasoning": "The title opens with the possessive genitive M. Tullii Ciceronis governing Epistolae, i.e. the whole contents of the volume, so Cicero is the author; Paulus Manutius is only the corrector who signs the dedication and the auctor of the commentarii that are separatim impressi and not yet published. The attack fails because the Manutius genitive governs a part that is not in this book, and the current byline is merely the Aldine imprint."
+   }
+  },
+  {
+   "book_id": "6a085aba49638a50931c9f7e",
+   "title": "M. Tullii Ciceronis Orationum pars 1. Corrigente Paulo Manutio, Aldi filio.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS O R A T I O N V M P A R S I.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work in the genitive, \"M. Tullii Ciceronis Orationum pars I\" — the orations of Cicero — with Paulus Manutius named only as corrector.",
+   "caveat": "\"ALDVS\" on the title-page is the Aldine press device/imprint, not an authorship statement; the catalogue byline (Aldo Manuzio & Andreas Torresanus) reflects the printing house, not the author.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Benedictus Accoltus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Marcus Tullius Cicero",
+    "evidence": "M. TVLLII CICERONIS O R A T I O N V M P A R S I. ... CORRIGENTE PAVLO MANVTIO, ALDI FILIO.",
+    "reasoning": "The title-page genitive 'M. Tullii Ciceronis' governs the whole volume ('Orationum pars I'), so Cicero is the author, while the ablative absolute 'Corrigente Paulo Manutio' marks Paulus Manutius only as emendator, and the dedication is his editorial preface to Cardinal Accolti. The current byline is the Aldine imprint rather than an author, and 'Marcus Tullius Cicero' is the correct nominative form."
+   }
+  },
+  {
+   "book_id": "6a06d3849a48d5139996348c",
+   "title": "Natalis Comitum Veneti De venatione, libri 4. Hieronymi Ruscellii scholiis breuissimis illustrati.",
+   "year": 1551,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Natalis Comes",
+   "as_printed": "NATALIS COMITVM VENETI",
+   "quoted_line": "NATALIS COMITVM VENETI DE VENA- TIONE, LIBRI IIII.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page names Natalis Comes (Natale Conti) of Venice as author of the four books De venatione, and he signs the dedication to Cardinal Giulio della Rovere writing in the first person as the work's composer.",
+   "caveat": "The catalogue byline lists only the Aldine printers, not the author; Hieronymus Ruscellius supplied only the brief scholia, and the dedicatee's advisors Ioannes Iacobus Leonardus and Horatius Carpineus are named in passing with no role in the book's making.",
+   "other_names": [
+    {
+     "name": "Hieronymus Ruscellius",
+     "role": "editor"
+    },
+    {
+     "name": "Aldi filii (sons of Aldus Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Iulius Robore (Giulio della Rovere), Cardinal of Urbino",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Natalis Comes",
+    "evidence": "ILLVSTRISS. IVLIO ROBORIS CARdinali Reuerendiss. Vrbini, Natalis Comitum, Salutem. ... sub tua potissimum tutela de uenationibus libellum edidi",
+    "reasoning": "The dedication is signed in the nominative by Natalis Comitum (Natale Conti, 'of the Conti family') and speaks in the first person of composing and issuing this libellus on hunting, so the title-page name governs the whole volume. Ruscelli supplied only the scholia and 'Aldi filii' is the imprint; the standard nominative authority form is Natalis Comes."
+   }
+  },
+  {
+   "book_id": "6a06d39b9a48d5139996355a",
+   "title": "Libro dell'arte della guerra di Nicolo' Machiauelli cittadino, et secretario fiorentino.",
+   "year": 1540,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Niccolo Machiavelli",
+   "as_printed": "NICOLO' MACHIAVELLI CITTADINO, ET SECRETARIO FIORENTINO",
+   "quoted_line": "LIBRO DELL'ARTE DELLA GVERRA DI NICOLO' MACHIAVELLI CITTADINO, ET SECRETARIO FIORENTINO.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page names the work as 'Libro dell'arte della guerra di Nicolo' Machiavelli', and the preface repeats 'PROEMIO DI NICOLO' MACHIAuelli ... sopra il libro dell'arte della Guerra', written in the first person to its dedicatee.",
+   "caveat": "The catalogue byline credits the Aldine printers (Manuzio/Torresano), not the author, and the 'Latin' language tag is wrong - the text is Italian. 'AL DVS M. D. XL.' is the Aldine imprint. Fabrizio Colonna and Cosimo (Rucellai) are the dialogue's interlocutors, not authors.",
+   "other_names": [
+    {
+     "name": "Lorenzo di Filippo Strozzi",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus (Aldine press)",
+     "role": "printer"
+    },
+    {
+     "name": "Fabrizio Colonna",
+     "role": "subject"
+    },
+    {
+     "name": "Cosimo Rucellai",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Niccolò Machiavelli",
+    "evidence": "LIBRO DELL'ARTE DELLA GVERRA DI NICOLO' MACHIAVELLI CITTADINO, ET SECRETARIO FIORENTINO. — AL DVS M. D. XL.",
+    "reasoning": "The title-page genitive governs the whole volume and the proem is signed in the first person by the same man ('deliberai ... di scriuere ... dell'arte della guerra quello che io ne intenda'), addressed to his dedicatee Lorenzo Strozzi, so the name is the author and not a printer, editor or dedicatee. The Aldine byline is only the 1540 imprint; no Manuzio wrote this text."
+   }
+  },
+  {
+   "book_id": "6a08550049638a50931c1056",
+   "title": "Libro dell'arte della guerra di Nicolo Machiauelli cittadino, et secretario fiorentino.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Niccolò Machiavelli",
+   "as_printed": "NICOLO MACHIAVEL-LI CITTADINO, ET SECRETARIO FIORENTINO",
+   "quoted_line": "LIBRO DELL'ARTE DELLA GVER- RA DI NICOLO MACHIAVEL- LI CITTADINO, ET SE- CRETARIO FIO- RENTINO.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work as \"Libro dell'arte della guerra di Nicolo Machiavelli\" (genitive of authorship) and the preface is headed \"PROEMIO DI NICOLO' MACHIAVELLI\", written in the first person by the author.",
+   "caveat": "No imprint appears on the transcribed pages; the printers named in the catalogue byline (Manuzio/Torresano) are not attested in the text given.",
+   "other_names": [
+    {
+     "name": "Lorenzo di Filippo Strozzi",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Niccolò Machiavelli",
+    "evidence": "PROEMIO DI NICOLO' MACHIAVELLI ... deliberai ... di scriuere ... dell'arte della guerra quello che io ne intenda",
+    "reasoning": "The title page's \"di Nicolo Machiavelli\" is possessive authorship, and the preface is written in Machiavelli's own first person, dedicating the work to Lorenzo Strozzi and stating he resolved to write on the art of war. No printer, editor, or translator formula appears, and the volume contains a single work."
+   }
+  },
+  {
+   "book_id": "6a085a6249638a50931c93c1",
+   "title": "Recens Lutheranarum assertionum oppugnatio, per magistrum Petrum Aurelium Sanutum Venetum Augustinianum.",
+   "year": 1543,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Petrus Aurelius Sanutus Venetus",
+   "as_printed": "PETRVM AVRELIVM SANVTVM VENETVM AVGVSTINIANVM",
+   "quoted_line": "RECENS LVTHERANARVM ASSERTIONVM OPPVGNATIO, PER MAGISTRVM PETRVM AVRELIVM SANVTVM VENETVM AVGVSTINIANVM.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page names him in the accusative after \"per\" as the author of the Oppugnatio, he signs the dedication to Paul III in the nominative (\"Petrus Aurelius Sanutus Venetus, Augustiniani ordinis\"), and the colophon licence calls the tract \"Venerabilis Magistri Petri Aurelii Sanuti Augustiniani Tractatus theologicus\".",
+   "caveat": "Page 11 is a garbled/duplicate transcription of the same title-page: it gives \"MAGISTRUM PETRUM VALERIANUM MUTINENSEM\" and the year M.D.XIII, both of which conflict with the clean title-page (p. 10), the dedication (p. 12) and the colophon (p. 15) — treat that name and date as OCR corruption, not a second person. \"Augustinianum\" is his order, not part of the name. The colophon also names the Venetian Council of Ten officials who licensed the book (Iacobus Maurus, Sebastianus Malipetrus, Laurentius Barbadicus, Laurentius Rocha secretary, and Federicus Valaressus as attesting nobleman); they are censors/licensers, not contributors to the text. \"teste Paulo\" in the dedication is a citation of St Paul, not a person connected with this book.",
+   "other_names": [
+    {
+     "name": "Paulus III (Pope Paul III)",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus (Aldine press, Venice)",
+     "role": "printer"
+    },
+    {
+     "name": "Martinus Lutherus (Luther)",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Petrus Aurelius Sanutus Venetus",
+    "evidence": "diuina prouidentia Pontifici Maximo exiguus Christi domini seruus Petrus Aurelius Sanutus Venetus, Augustiniani ordinis ... salutem",
+    "reasoning": "The dedication to Paul III is signed in the nominative by Petrus Aurelius Sanutus Venetus as the writer, and the Venetian licence calls the work 'Venerabilis Magistri Petri Aurelii Sanuti Augustiniani Tractatus theologicus' — author, not editor or printer; 'ALDVS VENETIIS' on the title page is the imprint. The stray page-11 transcription naming Petrus Valerianus Mutinensis is garbled and contradicts the 1543 date, so it does not establish a second hand."
+   }
+  },
+  {
+   "book_id": "6a085a5a49638a50931c915c",
+   "title": "Statii Syluarum libri 5. Achilleidos libri 12. Thebaidos libri 2. Orthographia et flexus dictionum graecarum omnium apud Statium cum accentib. et generib. ex uarijs utriusque linguae authoribus.",
+   "year": 1519,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Publius Papinius Statius",
+   "as_printed": "STATII",
+   "quoted_line": "good Latin printed title-page - STATII SYLVARVM LIBRI V. ACHILLEIDOS LIBRI XII. THEBAIDOS LIBRI II.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names the works in the author's genitive (\"Statii Sylvarum libri V\"), and both dedications refer to the text as \"hoc Statij carmen de bello thebano\" and \"Papinii libros\", confirming Publius Papinius Statius.",
+   "caveat": "Two dedications are bound in: Francesco Asolano's to the Marini brothers for this 1519 Aldine reprint, and a reprinted earlier letter from Aldus Manutius to Giovanni Pontano; neither dedicator is the author. The catalogue byline (Manuzio/Torresani) records the press, not the author.",
+   "other_names": [
+    {
+     "name": "Franciscus Asulanus (Francesco Torresani d'Asola)",
+     "role": "editor"
+    },
+    {
+     "name": "Domitius Marinus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paschalis Marinus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Giovanni Pontano",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Publius Papinius Statius",
+    "evidence": "Quare cum Papinii libros haberem in manibus, statui eos typis nostris excusos sub tuo nomine publicare",
+    "reasoning": "The title-page genitive STATII governs the whole volume (Silvae, Achilleid, Thebaid), and Aldus's own dedication calls the contents 'Papinii libros' that he merely printed ('typis nostris excusos'), while Francesco Asolano's dedication calls it 'hoc Statij carmen ... eiusdem authoris'. The Manuzio/Torresani byline is the imprint, and the appended Orthographia is editorial apparatus, not a rival authorship claim."
+   }
+  },
+  {
+   "book_id": "6a06f5b34dcc6d5d8f038348",
+   "title": "Terentii comoediae, multo, quam antea, diligentius emendatae.",
+   "year": 1541,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Publius Terentius Afer",
+   "as_printed": "TERENTII",
+   "quoted_line": "TERENTII COMOEDIAE, MVLTO, QVAM ANTEA, DI LIGENTIVS EMEN DATAE.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work in the Latin genitive as the comedies of Terence, and the dedication throughout discusses Terence as the poet whose text is here edited.",
+   "caveat": "The title-page reads M. D. XLI (1541) while the colophon on page 8 reads M. D. LII (1552), so the gathered pages may come from two different Aldine issues of Terence; the catalogue byline names printers (Manuzio/Torresani), not the author.",
+   "other_names": [
+    {
+     "name": "Franciscus Asulanus (Francesco Torresani d'Asola)",
+     "role": "editor"
+    },
+    {
+     "name": "Jean Grolier",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paulus Manutius (Aldo Paolo Manuzio, Aldi filius)",
+     "role": "printer"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Andreas Torresanus (Andreas pater)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": false,
+    "confidence": "high",
+    "failure_mode": "none",
+    "better_answer": "Publius Terentius Afer",
+    "evidence": "TERENTII COMOEDIAE, MVLTO, QVAM ANTEA, DILIGENTIVS EMENDATAE. ... ALDVS PAVLVS MANVTIVS ALDI filius. M. D. XLI.",
+    "reasoning": "The title page carries an authorial genitive (\"Terentii comoediae\" = the comedies of Terence) with the Manuzio name in the printer's position and the past participle \"emendatae\" marking the Aldine role as corrector, not author; the dedication by Franciscus Asulanus confirms this, calling Terence the poet whose confused verses Aldus and his heirs merely restored (\"restituit horum multos Aldus sororius meus\", \"sub tuo nomine Terentium edimus\"). The volume is the single-author comedy corpus of one hand, so the byline should be the nominative Publius Terentius Afer."
+   }
+  }
+ ],
+ "flagged": [
+  {
+   "book_id": "6a06ca41c749b698e5b2883f",
+   "title": "Pontani Opera. Vrania, siue de stellis libri quinque. Meteororum liber unus. De hortis hesperidum libri duo. Lepidina siue postorales |! pompae septem. Item Meliseus, Maeon Acon. Hendecasyllaborum ...",
+   "year": 1505,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Iohannes Iovianus Pontanus",
+   "as_printed": "Iouiani Pontani",
+   "quoted_line": "Quare Iouiani Pontani poēmata, quae et meo, et doctorum omnium iudicio, cum antiquis certant, sub tuo nomine publicamus, tibique muneri mittimus.",
+   "page": 13,
+   "confidence": "high",
+   "reasoning": "Aldus's dedication names the works being published as the poems of Pontanus in the genitive ('Iouiani Pontani poēmata'), and closes by calling Urania, the Meteora, the Horti Hesperidum and Lepidina the works of 'Pontani nostri'.",
+   "caveat": "Only the dedication leaf is transcribed, so the attribution rests on the publisher's letter rather than a title page; Aldus signs as printer/publisher, not author, and the catalogue byline (Manuzio & Torresanus) records the press, not the writer.",
+   "other_names": [
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Iohannes Collaurius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Maximilianus Caesar",
+     "role": "subject"
+    },
+    {
+     "name": "Matthaeus Longius",
+     "role": "subject"
+    },
+    {
+     "name": "Johannes Fruticenus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee"
+   ]
+  },
+  {
+   "book_id": "6a06ccb5c749b698e5b295c2",
+   "title": "Aristotelous Ten peri historias ton zoon pragmateian, kai t'alla tes toiautes pragmateias xyngene biblia periechon tomos 3. Aristotelis De historia animalium disciplinam et reliquos huic disciplina...",
+   "year": 1553,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aristoteles",
+   "as_printed": "ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS",
+   "quoted_line": "ΑΡΙΣΤΟΤΕ= ΛΟΥΣ ΤΗΝ ΠΕΡΙ ΙΣΤΟΡΙΑΣ ΤΩΝ ΖΩΩΝ ΠΡΑΓΜΑΤΕΙΑΝ ... ARISTOTE= LIS DE HISTORIA ANIMALIVM DISCI= PLINAM ET RELIQVOS HVIC DI= SCIPLINAE AGNATOS LIBROS CONTINENS TOMVS III.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the Greek and Latin genitive (Aristotelous / Aristotelis), i.e. Aristotle's treatise on the history of animals, volume 3, and the preface calls it \"Tertium Aristotelis tomum\".",
+   "caveat": "Volume 3 of a multi-volume Aldine Aristotle; the preface itself warns that the two books De plantis appended at the end are ascribed to Aristotle but are not his. The catalogue byline (Manuzio / Torresani) names the printing house, not the author.",
+   "other_names": [
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "printer"
+    },
+    {
+     "name": "Aldi filii (the sons of Aldus Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Camotius (Giovanni Battista Camozzi)",
+     "role": "editor"
+    },
+    {
+     "name": "Theophrastus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "quote-not-on-page"
+   ]
+  },
+  {
+   "book_id": "6a06d01d9a48d5139995d458",
+   "title": "Prisciani grammatici Caesariensis Libri omnes. De octo partibus orationis, 16. deque earundem constructione 2. De duodecim primis Aeneidos librorum carminibus. De accentibus. De ponderibus, & mensu...",
+   "year": 1527,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Priscianus Caesariensis",
+   "as_printed": "PRISCIANI GRAMMATICI CAESARIENSIS",
+   "quoted_line": "PRISCIANI GRAMMATICI CAESARIENSIS LIBRI OMNES.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names the work in the genitive as the complete works of Priscian the grammarian of Caesarea, and the preface confirms it by saying the editor undertook to emend \"Prisciani Caesariensis ... scripta omnia\".",
+   "caveat": "The catalogue byline (Manuzio/Torresano) names the printing house, not the author; Aldus Manutius had died in 1515, so the \"ALDVS\" signing the title-page address on this 1527 edition is the firm's voice, and in the preface Aldus is mentioned only as the man who once bought the manuscript in Gaul. The volume also carries a bound-in text by Rufinus (de metris comicis et oratorijs numeris), so answers about that piece would differ.",
+   "other_names": [
+    {
+     "name": "Donatus Veronensis (Bernardinus Donatus of Verona)",
+     "role": "editor"
+    },
+    {
+     "name": "Andreas Asulanus (Andrea Torresano d'Asola)",
+     "role": "printer"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Rufinus",
+     "role": "author"
+    },
+    {
+     "name": "Hermogenes",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06d16d9a48d5139995f063",
+   "title": "2: Secundo volumine haec continentur. M.T.C. de natura deorum libri 3. De diuinatione libri 2. De fato liber 1. Scipionis somnium, quod è sex de rep. libris superest. De legibus libri 3. De Vniuers...",
+   "year": 1523,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. T. C.",
+   "quoted_line": "good Latin printed text - M. T. C. OPERA PHILOSOPHICA",
+   "page": 2,
+   "confidence": "high",
+   "reasoning": "The title page/half-title heads the volume \"M. T. C. OPERA PHILOSOPHICA\" — the standard Aldine abbreviation for Marcus Tullius Cicero, matching the catalogue title's \"M.T.C. de natura deorum libri 3\" etc.",
+   "caveat": "The Seneca on page 7 (\"OTIVM SINE LITERIS MORS EST\") is a quoted motto/epigraph, not this book's author. \"Ex Libris Joannis Nencini 1874\" is a later ownership inscription, 351 years after the imprint. The two printers come from the catalogue byline, not from the transcribed pages — no imprint statement appears in the OCR given. This is volume 2 of a multi-volume collected philosophical works, so the pages cover several Ciceronian works bound together rather than one.",
+   "other_names": [
+    {
+     "name": "Joannes Nencinus",
+     "role": "owner"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Andreas Torresanus de Asula",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a06d1769a48d5139995f220",
+   "title": "In hoc volumine haec continentur. C. Suetonij Tranquilli 12. Caesares. Sexti Aurelij Victoris a D. Caesare Augusto usque ad Theodosium excerpta. Eutropij de gestis Romanorum Lib. 10. Pauli Diaconi ...",
+   "year": 1521,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Gaius Suetonius Tranquillus",
+   "as_printed": "C. Suetonij Tranquilli",
+   "quoted_line": "In hoc volumine haec continentur. C. Suetonij Tranquilli 12. Caesares.",
+   "page": null,
+   "confidence": "medium",
+   "reasoning": "The volume's own title formula lists its contents in the genitive of each ancient author, the first and principal being Suetonius's twelve Caesars; the only transcribed scan pages are a dedication signed by the editor Egnatius, who is not the author of the texts printed here.",
+   "caveat": "This is a composite volume of four ancient works (Suetonius, Aurelius Victor, Eutropius, Paulus Diaconus) issued together, so 'the author' is only the author of the leading text; the transcribed pages themselves (12, 13, 16) contain no title page at all, only Egnatius's dedicatory letter to Grolier, so the authorship reading rests on the volume's title formula rather than on a scanned page.",
+   "other_names": [
+    {
+     "name": "Sextus Aurelius Victor",
+     "role": "author"
+    },
+    {
+     "name": "Eutropius",
+     "role": "author"
+    },
+    {
+     "name": "Paulus Diaconus",
+     "role": "author"
+    },
+    {
+     "name": "Ioannes Baptista Egnatius",
+     "role": "editor"
+    },
+    {
+     "name": "Ioannes Grolierius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Andreas Torresanus de Asula",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a06d2cd9a48d51399962622",
+   "title": "Ammoniou tou Hermeiou Eis tas pente phonas tou Porphyriou Hypomnema. Ammonii Hermiae In quinque voces Porphyrii commentarius, correctionibus quamplurimis, et locorum imaginibus illustratus.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Ammonius Hermiae",
+   "as_printed": "Ammonius Hermias",
+   "quoted_line": "huius πέντε φωναῖς, ac illius τῷ περὶ ἑρμηνείας, atque τῷ εἰς κατηγορίας quam lucem dederit Ammonius Hermias, ex his hypomnematibus facile percipi potest.",
+   "page": 8,
+   "confidence": "high",
+   "reasoning": "The dedication credits the commentary (hypomnemata) on Porphyry's five voices to Ammonius Hermias, matching the title's genitive \"Ammonii Hermiae ... commentarius\"; the dedicator Petrus Rhosithinus presents himself only as the corrector of the text.",
+   "caveat": "The signer of the dedication, Petrus Rhosithinus, is the editor rather than the author — he writes \"Nos ea commentaria ... integritati restituerimus, quibusque erroribus repurgauerimus\". The catalogue byline (Manuzio/Torresano) is the printing house, not an author; no imprint page was among the transcribed pages.",
+   "other_names": [
+    {
+     "name": "Petrus Rhosithinus",
+     "role": "editor"
+    },
+    {
+     "name": "Franciscus Lauredanus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Porphyrius",
+     "role": "subject"
+    },
+    {
+     "name": "Aristoteles",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "possibly-declined"
+   ]
+  },
+  {
+   "book_id": "6a06d64a9a48d5139996633f",
+   "title": "Il libro del cortegiano del conte Baldessar Castiglione.",
+   "year": 1545,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Baldassare Castiglione",
+   "as_printed": "BALDESSAR CASTIGLIONE",
+   "quoted_line": "IL LIBRO DEL CORTEGIANO DEL CONTE BALDESSAR CASTIGLIONE, - Nuouamente ristampato. IN VENETIA, M. D. XLV.",
+   "page": 16,
+   "confidence": "high",
+   "reasoning": "The title page gives the work as \"del conte Baldessar Castiglione\" and the dedication speaks in the first person as the man who wrote these books of the Cortegiano at the court of Urbino.",
+   "caveat": "The catalogue byline names Aldo Manuzio and Andrea Torresani (the Venetian printing house) and gives the language as Latin; both are wrong for the text itself, which is Italian and whose printer is not named on the pages transcribed.",
+   "other_names": [
+    {
+     "name": "Michele da Silva",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Alfonso Ariosto",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Guidobaldo da Montefeltro",
+     "role": "subject"
+    },
+    {
+     "name": "Francesco Maria della Rovere",
+     "role": "subject"
+    },
+    {
+     "name": "Vittoria Colonna",
+     "role": "subject"
+    },
+    {
+     "name": "Giuliano de' Medici",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06d79b9a48d51399966dfe",
+   "title": "Tractatus de nullitatibus processuum ac sententiarum, causarum patronis, cæterisque legum studiosis, & in foro praesertim Romano uersantibus non minus utilis quam necessarius ... a d. Sebastiano Va...",
+   "year": 1554,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Sebastianus Vantius",
+   "as_printed": "SEBASTIANVS VANTIVS",
+   "quoted_line": "ILLVSTR. AC REVEREN. FVLVIO CORNEO EPISCOP. PERVS. SEBASTIANVS VANTIVS. - S.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The dedication is signed in the nominative by Sebastianus Vantius to the dative dedicatee Fulvius Corneus, and the title page's truncated \"a D. [Sebastiano Vantio]\" agrees.",
+   "caveat": "The preface calls the dedicatee \"quasi illius praecipuo authori\" (as if the work's chief author) - that is rhetorical thanks for commissioning it, not an authorship claim. Popes Paul III and Julius III are named only as praised contemporaries in the dedication prose. The catalogue byline credits Aldo Manuzio and Andrea Torresano, who are the Aldine printers rather than authors, and no imprint appears on the transcribed pages.",
+   "other_names": [
+    {
+     "name": "Fulvius Corneus (Fulvio Corneo), Bishop of Perugia",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06d8a39a48d51399968859",
+   "title": "M. Tullii Ciceronis Orationum uolumen primum...",
+   "year": 1540,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. TVLLII CICERONIS",
+   "quoted_line": "M. TVLLII CICERONIS ORA- tionum uolumen primum , in quo multa , quae in aliarum editionum libris cor- rupte legebantur , ex diligenti uetustorum exemplarium collatione sunt emendata.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title page gives the work in the genitive as Cicero's orations, and the preface calls it \"haec prima Ciceronis orationum pars\", so Cicero is the author while Paulus Manutius signs only as the emending editor.",
+   "caveat": "Paulus Manutius (Aldi filius) is the Aldine editor/printer, not the author: the title says the text was emended \"ex diligenti uetustorum exemplarium collatione\" and he signs the dedication to Cardinal Benedetto Accolti. The catalogue byline (Aldo Manuzio & Andrea Torresano) names the press, not the author.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Paulus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Benedictus Accoltus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06d9ba9a48d51399968eef",
+   "title": "1: M.T. Ciceronis De philosophia volumen primum, in quo haec continentur. Academicarum quaestionum. Editionis primae liber secundus. Editionis secundae liber primus. De finibus bonorum & malorum li...",
+   "year": 1523,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "M. T. CICERONIS",
+   "quoted_line": "M. T. CICERONIS DE PHILOSOPHIA VOLVMEN PRIMVM, IN QVO HAEC CONTINENTVR.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title page names the work in the genitive as Cicero's philosophical volume, and the preface describes M. Cicero composing these philosophical books.",
+   "caveat": "The catalogue byline (Manuzio / Torresanus) records the Aldine printers, not the author; the preface to the reader is signed by Franciscus Asulanus, the editor.",
+   "other_names": [
+    {
+     "name": "Franciscus Asulanus",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a06f4c24dcc6d5d8f036f9c",
+   "title": "Isocrates nuper accurate recognitus, et auctus. Isokrates. Isocrates. Alkidamas. Alcidamas. Gorgias. Gorgias. Aristeides. Aristides. Arpokration. Harpocration.",
+   "year": 1534,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Isocrates",
+   "as_printed": "ΙΣΟΚΡΑΤΗΣ. / ISOCRATES.",
+   "quoted_line": "ISOCRATES NVPER ACCVRATE RECOGNITVS, ET AVCTVS.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names Isocrates as the work whose orations are printed, and the dedication refers to \"has Isocratis orationes diligentius recognitas\", i.e. the orations of Isocrates, with the other authors' pieces explicitly added as appendices.",
+   "caveat": "This is a composite Aldine volume: the main text is Isocrates, with appended orations by Alcidamas, Gorgias and Aristides (two, including the praise of Rome) plus Harpocration's lexicon, all named on the title page and in the dedication. The dedication is signed by Aldus Manutius and dated Venice, April 1513, while the title page reads M.D.XXXIIII — a reprint carrying the earlier Aldine preface.",
+   "other_names": [
+    {
+     "name": "Alcidamas",
+     "role": "author"
+    },
+    {
+     "name": "Gorgias",
+     "role": "author"
+    },
+    {
+     "name": "Aristides",
+     "role": "author"
+    },
+    {
+     "name": "Harpocration",
+     "role": "author"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Joannes Baptista Egnatius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus Musurus",
+     "role": "editor"
+    },
+    {
+     "name": "Andreas Torresanus de Asula",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a06f5734dcc6d5d8f037e00",
+   "title": "In hoc volumine haec continentur. Aurelii Cornelii Celsii Medicinae libri. 8. quam emendatissimi, Graecis etiam omnibus dictionibus restitutis. Quinti Sereni Liber de medicina et ipse castigatiss. ...",
+   "year": 1528,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aulus Cornelius Celsus",
+   "as_printed": "AVRELII CORNELII CELSI",
+   "quoted_line": "AVRELII CORNELII CELSI MEDICINAE LIBRI. VIII. QVAM EMENDATISSIMI",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title page gives the work in the genitive as \"Aurelii Cornelii Celsi Medicinae libri VIII\", i.e. the eight books of medicine written by Celsus, and the preface repeats that Franciscus Asulanus undertook to publish \"Celsi Cornelij de medicina libros\".",
+   "caveat": "Sammelband: this answer is for the first work, Celsus's De medicina; the volume also prints Quintus Serenus's Liber de medicina, a separate work by a different author. The imprint spells the praenomen \"Aurelii\" (the standard form is Aulus). Egnatius signs the dedication but describes his own role as emending Celsus (\"quicquid opellae in Celso emendando impendi\"), so he is the editor, not the author.",
+   "other_names": [
+    {
+     "name": "Quintus Serenus (Serenus Sammonicus)",
+     "role": "author"
+    },
+    {
+     "name": "Ioannes Baptista Egnatius Venetus (Giovanni Battista Egnazio)",
+     "role": "editor"
+    },
+    {
+     "name": "Hercules Gonzaga (Ercole Gonzaga), Cardinal",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Franciscus Asulanus (Francesco Torresani d'Asola)",
+     "role": "printer"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a06f8094dcc6d5d8f038d86",
+   "title": "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. Aristotelis moralia magna, et moralia eudem. et moralia nicomach. et rei famil...",
+   "year": 1552,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aristoteles",
+   "as_printed": "ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS",
+   "quoted_line": "ΑΡΙΣΤΟΤΕ- ΛΟΥΣ ΤΑ' ΗΘΙΚΑ' ΜΕΓΑ'ΛΑ, ΚΑΙ' ΗΘΙΚΑ' ΕΥΔΗΜ. ... ARISTOTE- LIS MORALIA MAGNA, ET MORALIA EVDEM. ET MORALIA NICOMACH.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the Greek and Latin genitive of Aristotle's name (ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS), i.e. Aristotle wrote the treatises gathered in this fifth volume.",
+   "caveat": "Volume 5 of a multi-volume Aldine Aristotle, collecting several distinct treatises (Magna Moralia, Eudemian and Nicomachean Ethics, Oeconomica, Politica) under one title-page; the preface is signed by the Aldine press's Federicus Turrisanus, who is not the author.",
+   "other_names": [
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "printer"
+    },
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "editor"
+    },
+    {
+     "name": "Camotius (Giovanni Battista Camozzi)",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "quote-not-on-page"
+   ]
+  },
+  {
+   "book_id": "6a084c2249638a50931b3871",
+   "title": "Le pistole di Cicerone ad Attico, fatte uolgari da M. Matteo Senarega.",
+   "year": 1555,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "Cicerone",
+   "quoted_line": "LE PISTOLE DI Cicerone ad Attico, FATTE VOLGARI DA M. MATTEO SENAREGA.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work as Cicero's letters to Atticus, with Matteo Senarega named only as the one who made them volgari, and the dedication confirms Senarega merely carried them over 'di lingua latina nella nostra uolgare'.",
+   "caveat": "Possible Sammelband: page 11 is a second title-page for a different work, 'De gli elementi di Cicerone ad Herennio libri quattro fatti volgari dal M. M. Abresca' (Rhetorica ad Herennium, also given to Cicero); this answer belongs to the Pistole ad Attico. The dedicatee's given name is not printed, only the surname Sauli, Archbishop of Genoa.",
+   "other_names": [
+    {
+     "name": "Matteo Senarega",
+     "role": "translator"
+    },
+    {
+     "name": "Sauli, Arcivescovo di Genova",
+     "role": "dedicatee"
+    },
+    {
+     "name": "M. Abresca",
+     "role": "translator"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a084c6f49638a50931b3d2f",
+   "title": "Ammoniou tou Hermeiou Eis to tou Aristotelous peri ermeneias ypomnema. Ammonii Hermiae in Aristotelis De interpretatione librum commentarius.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Ammonius Hermiae",
+   "as_printed": "AMMONII HERMIAE / ΑΜΜΩΝΙΟΥ ΤΟΥ ΕΡΜΕΙΟΥ",
+   "quoted_line": "ΑΜΜΩΝΙΟΥ ΤΟΥ ΕΡΜΕΙΟΥ ΕΙΣ ΤΟ ΤΟΥ ΑΡΙΣΤΟΤΕΛΟΥΣ ΠΕΡΙ ΕΡΜΗΝΕΙΑΣ ΥΠΟΜΝΗΜΑ. AMMONII HERMIAE IN ARI- STOTELIS DE INTERPRE- TATIONE LIBRVM COM- MENTARIVS. AL DVS VENETIIS. M. D. XLVI.",
+   "page": 18,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the genitive of Ammonius son of Hermeias (Ammonii Hermiae ... in Aristotelis De interpretatione librum commentarius), so he wrote the commentary.",
+   "caveat": "The catalogue byline credits Aldo Manuzio and Andrea Torresani, who are the printer-publishers (ALDVS VENETIIS), not the author; Aristotle appears as the subject whose text is commented on.",
+   "other_names": [
+    {
+     "name": "Aristotle",
+     "role": "subject"
+    },
+    {
+     "name": "Aldus (Aldo Manuzio)",
+     "role": "printer"
+    },
+    {
+     "name": "Andrea Torresani de Asula",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "possibly-declined"
+   ]
+  },
+  {
+   "book_id": "6a08509049638a50931b6c36",
+   "title": "Oratione di Cicerone, in difesa di Milone, tradotta di latino in uolgare da Giacomo Bonfadio.",
+   "year": 1554,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONE",
+   "quoted_line": "ORATIONE DI CICERONE, IN DIFE- SA DI MILONE, Tradotta di latino in uolgare da Giacomo Bonfadio.",
+   "page": 16,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work as the oration OF Cicero in defence of Milo, turned from Latin into the vernacular by Bonfadio, so Cicero is the author and Bonfadio the translator.",
+   "caveat": "The dedication (p.18) is the translator's own, addressed to Conte Fortunato Martinengo, and mentions Giovambattista Grimaldi only as the household Bonfadio had just left, not as a contributor; 'OTIVM SINE LITERIS MORS EST Seneca' on p.7 is a printed motto (quoted matter) and 'Ex Libris Ioannis Nenini 1874' on the same page is a later ownership inscription. Aldus Manutius and Andreas Torresanus appear only in the catalogue byline, not in the transcribed pages.",
+   "other_names": [
+    {
+     "name": "Giacomo Bonfadio",
+     "role": "translator"
+    },
+    {
+     "name": "Fortunato Martinengo",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Titus Annius Milo",
+     "role": "subject"
+    },
+    {
+     "name": "Ioannes Neninus",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08511549638a50931b7fd1",
+   "title": "4!: Orator Ciceronis ad M. Brutum. ...",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONIS",
+   "quoted_line": "O R A T O R C I C E R O N I S A D M . B R V T V M .",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page genitive 'Orator Ciceronis ad M. Brutum' names Cicero as the author of the work, with Paulus Manutius named only as corrector.",
+   "caveat": "Page 7's 'OTIVM SINE LITERIS MORS EST Seneca' is a quoted epigraph, not an authorship statement; page 13 begins a second Ciceronian oration, so this may be a Sammelband of Cicero texts - the answer refers to the Orator ad M. Brutum on page 12.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Marcus Junius Brutus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a0851bb49638a50931b901a",
+   "title": "Aristotelous Pasan logiken, retoriken, kai poietiken pragmateian periechon tomos. 1. Aristotelis Omnem logicam, rhetoricam, et poeticam disciplinam continens tomus 1.",
+   "year": 1551,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aristoteles",
+   "as_printed": "ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS",
+   "quoted_line": "ΑΡΙΣΤΟΤΕΛΟΥΣ - ΛΟΥΣ ΠΑΣΑΝ ΛΟΓΙΚΗΝ, ΡΗΤΟΡΙΚΗΝ, ΚΑΙ ΠΟΙΗΤΙΚΗΝ ΠΡΑΓΜΑ- ΤΕΙΑΝ ΓΕΡΙΕΧΩΝ ΤΟΜΟΣ Α'. LIS OMNEM LOGICAM, RHETORI- CAM, ET POETICAM DISCI- PLINAM CONTINENS. TOMVS I. ALDI FILII",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page names the work in the Greek and Latin genitive (ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS ... continens tomus I), i.e. Aristotle wrote the works it contains, and the preface calls him 'omnis philosophiae princeps' whose books are being reissued.",
+   "caveat": "The catalogue byline (Aldo Manuzio / Andreas Torresanus de Asula) names the printing house, not the author; the Aldine imprint appears as 'ALDI FILII' (the sons of Aldus) and the preface is signed by Federicus Turrisanus. This is vol. 1 of a multi-volume Aristotle (logic, rhetoric, poetics), so it is a collected edition of several Aristotelian works rather than a Sammelband of different authors.",
+   "other_names": [
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "printer"
+    },
+    {
+     "name": "Ioannes Baptista Camotius (Giovanni Battista Camozzi)",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Theophrastus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a0852b149638a50931bb440",
+   "title": "1: M. Tullii Ciceronis De philosophia, prima pars, id est, academicarum quaestionum editionis primae liber secundus, editionis secundae liber primus, De finibus bonorum & malorum libri 5. Tusculanarum quaestionum libri 5. Cum scholijs, & coniecturis Paulij Manutij. ... .",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "TVSCVLANARVM QVAESTIONVM CICERONIS",
+   "quoted_line": "T V S C V L A N A R V M Q V A E S T I O = N V M C I C E R O N I S A D M. B R V T V M L I B R I V.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the genitive as Cicero's own - the five books of the Tusculan Disputations of Cicero addressed to M. Brutus.",
+   "caveat": "The title-page shown (page 10) belongs to the Tusculanae quaestiones; the catalogue title indicates a composite volume of Cicero's philosophical works (Academica, De finibus, Tusculanae), all Cicero's, issued with Paulus Manutius's scholia. Page 11 is a fragmentary second title-page dated M.D.LXVI, so a later work may be bound in.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Marcus Junius Brutus",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08534849638a50931bc770",
+   "title": "Le occorrenze humane per Nicolo Liburnio composte.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Nicolò Liburnio",
+   "as_printed": "NICOLO. LIBVRNIO",
+   "quoted_line": "LE OCCORRENZE HVMANE PER NICOLO. LIBVRNIO COMPOSTE.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The printed title-page says the work was composed by Nicolò Liburnio, and the dedication is headed 'Dedicatione di Nicolo Liburnio nell'opera delle sue Occorrenze Humane'.",
+   "caveat": "Probable Sammelband: page 11 carries a second title-page reading 'NICOLO MACHIAVELLI COMPOSTI', i.e. a Machiavelli work bound with this one; this answer belongs to 'Le occorrenze humane'. The dedication also names Girolamo Donato, Michele da Silva and Girolamo Pesaro only as patrons the author served or praises, not as contributors.",
+   "other_names": [
+    {
+     "name": "Luigi Pisano",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldus (Aldine press; Aldo Manuzio / Andrea Torresano)",
+     "role": "printer"
+    },
+    {
+     "name": "Niccolò Machiavelli",
+     "role": "author"
+    },
+    {
+     "name": "Giovanni Nencini",
+     "role": "owner"
+    },
+    {
+     "name": "Paolo III",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08535749638a50931bcaf0",
+   "title": "Mousaiou Poiemation ta kath' Hero kai Leandron. Orpheos Argonautika. Tou autou Hymnoi Orpheus peri lithon. Musæi opusculum de Herone & Leandro. Orphei argonautica. Eiusdem hymni. Orpheus de lapidibus.",
+   "year": 1517,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Musaeus",
+   "as_printed": "Μουσαίου / Musaei",
+   "quoted_line": "Μουσαίου ποιημάτιον τὰ καθ' Ηρώ καὶ Λέανδρον. ... Musaei opusculum de Herone & Leandro.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title page names the first work in the genitive — Μουσαίου ποιημάτιον / Musaei opusculum de Herone & Leandro — so Musaeus is given as its author, and the Greek preface signed by Aldus is the printer-editor's address, not an authorial claim.",
+   "caveat": "This volume prints several works: Musaeus' Hero and Leander (the answer above) followed by three works attributed on the same title page to Orpheus (Argonautica, Hymni, De lapidibus); the catalogue byline naming Manuzio and Torresanus is the imprint, not authorship.",
+   "other_names": [
+    {
+     "name": "Orpheus",
+     "role": "author"
+    },
+    {
+     "name": "Aldus Manutius (Aldus Romanus)",
+     "role": "printer"
+    },
+    {
+     "name": "Andreas Torresanus de Asula",
+     "role": "printer"
+    },
+    {
+     "name": "Joannes Nencini",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [
+    "quote-not-on-page",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08536f49638a50931bcda3",
+   "title": "[2]: Quae hoc libro continentur. Sedulii mirabiliam diuinorum libri quatuor carmine heroico. Eiusdem Elegia, in qua finis pentametri est similis principio hexametri. Eiusdem hymnus de Christo ab incarnatione, usque ad ascensionem. Iuuenci de Euangelica historia libri quatuor. Aratoris cardinalis historiae apostolicae libri duo. ... Lactantii Firmiani de Resurrectione Elegia ... Cyprianus de ligno Crucis uersu heroico ... Vita S. Martini episcopi a Seuero Sulpitio prosa oratione ... Vita S. Nicolai e graeco in latinum a Leonardo Iustiniano patritio Veneto",
+   "year": 1501,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Constantinus Lascaris",
+   "as_printed": "Constantini Lascaris Constantinopolitani",
+   "quoted_line": "Constantini Lascaris Constantinopolitani prooemium de nomine, & uerbo Liber tertius.",
+   "page": 8,
+   "confidence": "medium",
+   "reasoning": "The only transcribed front-matter page is a printed preface headed with the Latin genitive \"Constantini Lascaris Constantinopolitani prooemium\", and the first-person text (\"tertium componere de nomine, & uerbo... tantum accepi laborem\") is the author speaking, so the book as given names Constantinus Lascaris of Constantinople as its author.",
+   "caveat": "The single transcribed page does NOT belong to the catalogued work: the catalogue title is the Aldine collection of Christian poets (Sedulius, Iuvencus, Arator, etc., 1501), while page 8 is the proem to Book 3 (de nomine et uerbo) of Constantinus Lascaris's Greek grammar. Either the scans are of a Sammelband/misbound volume or the front matter was captured from the wrong item; my answer is for the Lascaris grammar preface actually transcribed, not for the Sedulius/Iuvencus collection. No author attribution for the catalogued poets' volume appears in the pages provided.",
+   "other_names": [],
+   "screen_reasons": [
+    "role-conflict",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08537c49638a50931bcf2a",
+   "title": "Demosthenis Orationes quatuor contra Philippum, à Paulo Manutio latinitate donatae.",
+   "year": 1551,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Demosthenes",
+   "as_printed": "DEMOSTHENIS",
+   "quoted_line": "D E M O S T H E N I S ORATIONES QVATVOR CONTRA PHILIP P V M, A' Paulo Manutio latinitate donatæ.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page genitive 'Demosthenis Orationes quatuor contra Philippum' names Demosthenes as author of the orations, with Paulus Manutius credited only for rendering them into Latin ('latinitate donatae').",
+   "caveat": "Page 1 is a handwritten title-page listing both 'Demosthenes Oratio IV' and 'Nili (S.) Oratio', so the volume is likely a Sammelband; this answer belongs to the Demosthenes item printed at Venice 1551 apud Aldi filios.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "translator"
+    },
+    {
+     "name": "Ioannes Morvillerius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldi filii",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a08541349638a50931beb41",
+   "title": "Arcadia del Sannazaro.",
+   "year": 1514,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Jacopo Sannazaro",
+   "as_printed": "Sannazaro",
+   "quoted_line": "ARCADIA DEL SANNAZARO AL DVS",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The Italian title-page names the work as 'Arcadia del Sannazaro', and Aldus's Latin dedication addresses Sannazaro as the man who composed it ('licet tu oli Arcadia et prosa, et thusis numeris docte, et eleganter composueris: et sit illa, ut est, tua').",
+   "caveat": "The dedication is BY the printer Aldus Manutius TO the author Sannazaro, so Sannazaro is both author and dedicatee; the signature closing this dedication is the printer's, not the author's. Seneca (title-page motto) and Petrarch (comparison in the dedication) are cited matter, not contributors.",
+   "other_names": [
+    {
+     "name": "Aldus Pius Manutius",
+     "role": "printer"
+    },
+    {
+     "name": "Jacopo Sannazaro",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Girolamo Borgia",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08553349638a50931c19da",
+   "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, & con figure proprie della lingua uolgare, ristampate di nuouo, & con molto studio ricorrette.",
+   "year": 1548,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONE",
+   "quoted_line": "LE EPISTOLE FAMIGLIARI DI CICERONE, ALDI FILII",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title page assigns the work to Cicero by the possessive construction 'Le epistole famigliari DI Cicerone' — it is his Epistolae ad familiares in Italian dress.",
+   "caveat": "The Italian TRANSLATOR is deliberately anonymous: in the preface he writes 'nella quale non ho uoluto porre il nome mio, per attendere il giudicio, che ne faranno gli huomini' (p.18), likening himself to Apelles hiding behind his painting; the dedication to Francesco Cusano is unsigned in the pages given. So the book names Cicero as author of the letters but names nobody as the author of this rendering. Paolo Manuzio is named only as a consultant the translator conferred with on obscure passages, not as an editor of record.",
+   "other_names": [
+    {
+     "name": "Francesco Cusano",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldi filii (the sons of Aldus Manutius)",
+     "role": "printer"
+    },
+    {
+     "name": "Paolo Manuzio",
+     "role": "editor"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08561349638a50931c26f9",
+   "title": "Aristotelous Ta Problemata meta ton tou Alex. Aphrodis. Problematon, kai Ta mechanika kai ten meta Ta physika pragmateian periechon tomos 4. Aristotelis Problemata cum Alex. Aphrodis. Probl. et Mechanica, et Metaphysices disciplinam continens tomus 4.",
+   "year": 1552,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aristoteles",
+   "as_printed": "ΑΡΙΣΤΟΤΕΛΟΥΣ / ARISTOTELIS",
+   "quoted_line": "ΑΡΙΣΤΟΤΕ ΛΟΥΣ ΤΑ ΠΡΟΒΛΗΜΑΤΑ ΜΕΤΑ ΤΩΝ ΤΟΥ ΑΛΕΞ. ΑΦΡΟΔΙΣ. ΠΡΟΒΛΗΜΑΤΩΝ, ΚΑΙ ΤΑ ΜΗΧΑΝΙΚΑ ... ARISTOTE LIS PROBLEMATA CVM ALEX. APHRO= DIS. PROBL. ET MECHANICA",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page names the work in the Greek and Latin genitive ('Aristotelous ta problemata' / 'Aristotelis Problemata'), which assigns authorship of the volume's principal texts to Aristotle.",
+   "caveat": "This is volume 4 of a multi-volume Aristotle set and is itself composite: it prints Aristotle's Problemata, Mechanica and Metaphysics together with the Problemata of Alexander of Aphrodisias, so Alexander authors the interleaved second text, not the whole. The preface is signed by Federico Torresani (Federicus Turrisanus) of the Aldine press ('Aldi filii', Venice 1552) writing as publisher/printer to readers, not as author. 'Cammotius' (G. B. Camozzi) appears only as a cited authority inside that preface and is therefore given no role.",
+   "other_names": [
+    {
+     "name": "Alexander Aphrodisiensis",
+     "role": "author"
+    },
+    {
+     "name": "Federicus Turrisanus (Federico Torresani)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "quote-not-on-page",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a0856da49638a50931c30af",
+   "title": "Introduttorio nuouo intitolato Corona preciosa, per imparare, legere, scriuere, parlare, & intendere la lingua greca uolgare & literale, & la lingua latina, & il uolgare italico ... compilato per lo ingenioso huomo Stephano da Sabio stampatore da libri greci & latini nella inclita citta di Vineggia.",
+   "year": 1527,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Stefano da Sabio (Stephanus a Sabio)",
+   "as_printed": "Stephano da Sabio",
+   "quoted_line": "cōpilato p lo ingenioso huomo Stephano da Sabio stampature da libri greci & latini nella inclita Citta di Vineggia.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page credits the compilation to Stephano da Sabio in all three languages (Italian \"compilato per\", Greek \"συντεθειμένον ... παρϠ ... Στεφάνου τοῦ ἐξαβίου\", Latin \"Compilatum, atque in lucem editum ingenio, & industria Stephani à Sabio\"), and he signs the dedication to Doge Andrea Gritti in the first person as its maker.",
+   "caveat": "The catalogue byline (Aldo Manuzio / Andrea Torresani) is not supported by the front matter — no Aldine name appears on any of these pages. Stefano da Sabio is both compiler and printer (\"Stampatore di letere Grece & Latine\"). Pietro Borrane da Bersago is credited only with help on the Greek abbreviations; Arsenio Apostoli, Archbishop of Malvasia, is named merely as Borrane's teacher, not as a contributor. The closing sonnet is signed by Iacomo Eterno Senese, a commendatory poet.",
+   "other_names": [
+    {
+     "name": "Andrea Gritti",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Stefano da Sabio",
+     "role": "printer"
+    },
+    {
+     "name": "Pietro Borrane da Bersago",
+     "role": "editor"
+    },
+    {
+     "name": "Iacomo Eterno Senese",
+     "role": "contributor (commendatory verse)"
+    }
+   ],
+   "screen_reasons": [
+    "also-printer",
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a08589949638a50931c6808",
+   "title": "Lucanus.",
+   "year": 1502,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Annaeus Lucanus",
+   "as_printed": "LVCANVS",
+   "quoted_line": "good Latin printed title-page - L V C A N V S.",
+   "page": 14,
+   "confidence": "high",
+   "reasoning": "The title-page gives the work simply as LVCANVS and Aldus's dedication says he is publishing \"Anneum Lucanum\" (accusative) in Morosini's name, so Lucan is the author and Aldus only the printer/editor.",
+   "caveat": "Nero, Socer and Gener appear only inside the quoted epitaph verses (\"Corduba me genuit, rapuit Nero...\") closing the dedication, so they are cited matter, not agents of this book.",
+   "other_names": [
+    {
+     "name": "Aldus Manutius Romanus",
+     "role": "printer"
+    },
+    {
+     "name": "Marcus Antonius Maurocenus",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee"
+   ]
+  },
+  {
+   "book_id": "6a085ab149638a50931c9f35",
+   "title": "Platonos, Thoukydidous, kai Demosthenous, Epitaphioi logoi. Platonis, Thucydidis, et Demosthenis Funebres orationes.",
+   "year": 1549,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Plato",
+   "as_printed": "ΠΛΑΤΩΝΟΣ, ΘΟΥΚΥΔΙΔΟΥΣ, ΚΑΙ ΔΗΜΟΣΘΕΝΟΥΣ / PLATONIS, THVCYDIDIS, ET DEMOSTHENIS",
+   "quoted_line": "ΠΛΑΤΩΝΟΣ, ΘΟΥΚΥΔΙΔΟΥΣ, ΚΑΙ ΔΗΜΟΣΘΕΝΟΥΣ, ΕΠΙΤΑ- ΦΙΟΙ ΛΟΓΟΙ. PLATONIS, THVCYDIDIS, ET DEMOSTHENIS FVNE- BRES ORATIONES.",
+   "page": 16,
+   "confidence": "high",
+   "reasoning": "The title page gives three Greek genitives (Platonis, Thucydidis, et Demosthenis Funebres orationes), naming Plato, Thucydides and Demosthenes as the authors of the funeral orations printed here, with Plato first.",
+   "caveat": "This is an anthology with three co-equal authors, not a single-author work; Plato is simply named first. It is also a Sammelband: page 17 is a second, separate title page for DEMOSTHENIS ORATIONES ... with the Life of Demosthenes and the Life of Libanius by Libanius, a different work bound with the Epitaphioi logoi. The 'OTIVM SINE LITERIS MORS EST Seneca' on page 7 is a quoted motto, not an authorship statement. The catalogue byline (Manuzio/Torresanus) is publisher information, not stated on these pages beyond 'apud Aldi filios'.",
+   "other_names": [
+    {
+     "name": "Thucydides",
+     "role": "author"
+    },
+    {
+     "name": "Demosthenes",
+     "role": "author"
+    },
+    {
+     "name": "Libanius",
+     "role": "author"
+    },
+    {
+     "name": "Aldi filii (the sons of Aldus)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a085bfd49638a50931cc74d",
+   "title": "Martialis.",
+   "year": 1501,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Martialis",
+   "as_printed": "MARTIALIS.",
+   "quoted_line": "good Latin mixed title-page - MARTIALIS. ---",
+   "page": 10,
+   "confidence": "medium",
+   "reasoning": "The only transcribed front-matter line is the title page bearing the single word MARTIALIS., which names the epigrammatist as the work's author.",
+   "caveat": "Only one title-page line was transcribed, with no auctore/genitive construction, colophon, or dedication to corroborate; the printers Aldo Manuzio and Andrea Torresani appear only in the catalogue byline, not in the transcribed text, so they are not reported as names the book itself gives.",
+   "other_names": [],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a085cd949638a50931cdecf",
+   "title": "Rhetoricorum ad C. Herennium libri 4. Incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De Claris oratoribus, liber 1. Orator ad Brutum, Topica ad Trebatium, Oratoriae partitiones, Initium libri de optimo genere oratorum. Corrigente Paulo Manutio, Aldi filio.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONIS",
+   "quoted_line": "C I C E R O N I S De Inuentione libri II. De Oratore, ad Q. fratrem libri III.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page names Cicero in the genitive as author of the rhetorical works making up the bulk of the volume, while the opening Rhetorica ad Herennium is explicitly disclaimed as anonymous ('INCERTO AVCTORE').",
+   "caveat": "Composite volume: the first item, Rhetoricorum ad C. Herennium libri IIII, is printed as anonymous ('incerto auctore') and is NOT attributed to Cicero here; the Cicero attribution covers De inventione, De oratore, Brutus, Orator, Topica, Partitiones oratoriae and the De optimo genere oratorum fragment. 'ALDI FILIO' identifies Paulus Manutius as Aldus's son — a filiation, not a role for Aldus himself; no printer is named on the page beyond the Venice imprint.",
+   "other_names": [
+    {
+     "name": "Paulus Manutius",
+     "role": "editor"
+    },
+    {
+     "name": "Quintus Tullius Cicero",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Marcus Iunius Brutus",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Gaius Trebatius Testa",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": [
+    "also-dedicatee",
+    "sammelband"
+   ]
+  },
+  {
+   "book_id": "6a0970e7bf2196cdca904fb1",
+   "title": "Le epistole famig. di Cicerone, tradotte secondo i veri sensi dell'auttore, et con figure proprie della lingua volgare, ristampate, & con molto studio riuedute, & corrette.",
+   "year": 1545,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Marcus Tullius Cicero",
+   "as_printed": "CICERONE",
+   "quoted_line": "LE EPISTOLE FAMIG. DI CICERONE, TRADOTTE SECONDO I VERI SENSI DELL'AVTTORE",
+   "page": 9,
+   "confidence": "high",
+   "reasoning": "The title-page assigns the letters to Cicero by the possessive 'di Cicerone', and the preface writer speaks of himself only as the translator of 'l'epistole famigliari di Cicerone'.",
+   "caveat": "The Italian TRANSLATOR is deliberately anonymous: the dedication states 'non ho uoluto porre il nome mio, per attendere il giudicio, che ne faranno gli huomini' (p.13), so no translator name is given. 'ALDVS' on p.10 is the Aldine house device/imprint, not a personal signature; the catalogue byline (Aldo Manuzio / Andrea Torresano) is publisher attribution, not authorship. Demosthenes, Aeschines, Horace and Apelles in the preface are cited examples, not contributors.",
+   "other_names": [
+    {
+     "name": "Francesco Cusano",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Paolo Manuzio",
+     "role": "editor"
+    },
+    {
+     "name": "Aldus (Aldine press)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a097138bf2196cdca905d8f",
+   "title": "Giocasta. Tragedia di M. Lodouico Dolce.",
+   "year": 1549,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Lodovico Dolce",
+   "as_printed": "M. LODOVICO DOLCE",
+   "quoted_line": "G I O C A S T A. T R A G E D I A D I M. L O D O V I C O D O L C E. ALDI FILII IN VINEGIA, M. D. XLIX.",
+   "page": 8,
+   "confidence": "high",
+   "reasoning": "The title-page gives the tragedy as \"di M. Lodovico Dolce\" and the dedication is signed LODOVICO DOLCE, who calls the play \"nuouo parto mio\".",
+   "caveat": "Dolce's dedication credits the plot to Euripides (\"gia di Euripide inuentione, et hora nuouo parto mio\"), so the work is a free Italian reworking of a Greek original; \"ALDI FILII\" on the title-page is the Aldine press (sons of Aldus), matching the catalogue byline Manuzio/Torresano, and is the printer, not an author.",
+   "other_names": [
+    {
+     "name": "Euripides",
+     "role": "subject"
+    },
+    {
+     "name": "Giovanni de Morvillier",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Aldi Filii (sons of Aldus Manutius)",
+     "role": "printer"
+    }
+   ],
+   "screen_reasons": [
+    "role-conflict"
+   ]
+  },
+  {
+   "book_id": "6a0974b6f14f99299668289d",
+   "title": "In hoc volumine haec continentur. Neruae & Traiani, atque Adriani Caesarum uitae ex Dione, Georgio Merula interprete. Aelius Spartianus. Iulius Capitolinus. Lampridius. Flauius Vopiscus. Trebellius Pollio. Vulcatius Gallicanus. Ab Ioanne Baptista Egnatio Veneto diligentissime castigati. Heliogabali principis ad meretrices elegantissima oratio. Eiusdem Io. Baptistae Egnatij de Caesaribus libri tres ... Eiusdem in Spartiani, Lampridijque uitas, & reliquorum annotationes. Aristidis Smyrnaei Oratio de laudibus urbis Romae à Scipione Carteromacho in Latinum uersa. In extrema operis parte addita Conflagratio Veseui montis ex Dione, Georgio Merula interprete.",
+   "year": 1519,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Ioannes Baptista Egnatius",
+   "as_printed": "IOANNIS BAPTISTAE EGNATII VENETI",
+   "quoted_line": "IOANNIS BAPTISTAE EGNATII VENETI IN ROMANORVM PRINCIPVM LIBRVM PRIMVM PRAE- FATIO.",
+   "page": 12,
+   "confidence": "medium",
+   "reasoning": "The dedication is issued in his own name (\"IOANNES BAPTISTA EGNATIVS VENETVS ... IACOBO MINVTIO SAL.\") and the preface stands in his genitive with first-person authorial claims (\"perscripsimus\", \"a nobis addita\"), so the front matter given is by Egnatius for his own De Caesaribus / Romanorum principum libri.",
+   "caveat": "This is a composite volume (Sammelband). The answer belongs to Egnatius's own work, De Caesaribus libri tres (the dedication and preface transcribed here); for the bulk of the volume - the imperial lives of the Historia Augusta - Egnatius is only the corrector (\"Ab Ioanne Baptista Egnatio Veneto diligentissime castigati\") and the authors are Aelius Spartianus, Iulius Capitolinus, Aelius Lampridius, Flavius Vopiscus, Trebellius Pollio and Vulcacius Gallicanus, with further pieces translated from Dio by Georgius Merula and from Aristides by Scipio Carteromachus. The catalogue byline (Manuzio / Torresanus) names the printers, who are not named in the transcribed pages.",
+   "other_names": [
+    {
+     "name": "Aelius Spartianus",
+     "role": "author"
+    },
+    {
+     "name": "Iulius Capitolinus",
+     "role": "author"
+    },
+    {
+     "name": "Aelius Lampridius",
+     "role": "author"
+    },
+    {
+     "name": "Flavius Vopiscus",
+     "role": "author"
+    },
+    {
+     "name": "Trebellius Pollio",
+     "role": "author"
+    },
+    {
+     "name": "Vulcacius Gallicanus",
+     "role": "author"
+    },
+    {
+     "name": "Cassius Dio",
+     "role": "author"
+    },
+    {
+     "name": "Aristides Smyrnaeus",
+     "role": "author"
+    },
+    {
+     "name": "Georgius Merula",
+     "role": "translator"
+    },
+    {
+     "name": "Scipio Carteromachus",
+     "role": "translator"
+    },
+    {
+     "name": "Ioannes Baptista Egnatius",
+     "role": "editor"
+    },
+    {
+     "name": "Iacobus Minutius",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Heliogabalus",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [
+    "also-editor",
+    "role-conflict",
+    "sammelband"
+   ]
+  }
+ ],
+ "self_named": [
+  {
+   "book_id": "6a06d1929a48d5139995f8a0",
+   "title": "Eleganze, insieme con la copia della lingua toscana, e latina, scielte da Aldo Manutio, utilissime al comporre nell'una e l'altra lingua.",
+   "year": 1559,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aldo Manuzio",
+   "as_printed": "Aldo Manutio",
+   "quoted_line": "ELEGANZE, INSIEME CON LA COPIA della lingua Toscana, e Latina, Scielte da Aldo Manutio, utilissime al comporre nell' una e l'altra lingua.",
+   "page": 10,
+   "confidence": "high",
+   "reasoning": "The title-page credits the work to Aldo Manutio as the one who made the selection ('Scielte da Aldo Manutio'), and he is the only person the book names as responsible for the text.",
+   "caveat": "The title's verb is 'scielte da' (selected/compiled by), which is compilatory rather than strictly authorial, so 'compiler/editor' would also fit. The dedication is unsigned in the transcribed portion but is written by a very young author whose father is living and is called 'eccellente in tutte tre le lingue' - that fits Aldo Manuzio the Younger (son of Paulus Manutius), not his grandfather Aldus the Elder (d. 1515) whom the catalogue byline names. The byline's second name, Andrea Torresano, does not appear on the transcribed pages.",
+   "other_names": [
+    {
+     "name": "Pietro Francesco Zini",
+     "role": "dedicatee"
+    }
+   ],
+   "screen_reasons": []
+  }
+ ],
+ "declined": [
+  {
+   "book_id": "6a06d1879a48d5139995f762",
+   "title": "Iuuenalis. Persius.",
+   "reasoning": "The only two transcribed pages contain nothing but modern ProQuest/Early European Books digitisation boilerplate, so the book's own front matter names no author anywhere in the evidence given."
+  },
+  {
+   "book_id": "6a06f2fbf27801273413e9c6",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+   "reasoning": "The title page names no author, only the contents ('LETTERE VOLGARI DI DIVERSI NOBILISSIMI HVOMINI'), and the one person named in the front matter, Paolo Manuzio, describes himself in the dedication as the collector and publisher of other men's letters ('mi sono imaginato di raccogliere, et far stampare alcune lettere d'huomini prudenti'), i.e. editor rather than author."
+  },
+  {
+   "book_id": "6a08537649638a50931bcec7",
+   "title": "Libri tre delle cose de Turchi. Nel primo si descriue il viaggio da Venetia à Costantinopoli, con gli nomi de luoghi antichi & moderni: Nel secondo la Porta, cioe la corte de Soltan Soleymano, signor de Turchi: Nel terzo il modo del reggere il stato & imperio suo.",
+   "reasoning": "The only page given is the title-page, which describes the work's three books and then carries the Aldine imprint 'ALDVS', but names no one as having written it."
+  },
+  {
+   "book_id": "6a0853d249638a50931bded0",
+   "title": "Viaggi fatti da Vinetia, alla Tana, in Persia, in India, et in Costantinopoli: con la descrittione particolare di città, luoghi, siti, costumi, & della Porta del gran Turco: & di tutte le intrate, spese, & modo di gouerno suo, & della ultima impresa contra portoghesi.",
+   "reasoning": "The title-page names no author, and the only named agent, Antonio Manutio, describes himself in the dedication as having corrected and re-ordered narratives by earlier writers ('molto alterati dalla integrita de loro primi auttori'), which is an editorial rather than authorial claim."
+  },
+  {
+   "book_id": "6a0856e849638a50931c3199",
+   "title": "Vita, gesti, costumi, discorsi, lettere di Marco Aurelio ... con la gionta di molte cose, che nello spagnuolo non erano, e delle cose spagnuole, che mancauano nella tradottione italiana.",
+   "reasoning": "No personal name is given as author anywhere in the front matter: the title-page carries only the title and the Aldine imprint, and the prologue is headed only \"prologo de l'autore Spagnuolo\" - an unnamed Spanish author."
+  },
+  {
+   "book_id": "6a085a3a49638a50931c8d0f",
+   "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+   "reasoning": "The title page names no author because the book is an anthology of letters by 'diversi nobilissimi huomini', and the only person who claims responsibility is Paolo Manuzio, who signs the dedication saying he conceived of collecting and printing the letters ('mi sono imaginato di raccogliere, et far stampare alcune lettere d'huomini prudeti'), i.e. compiler/editor rather than author."
+  }
+ ],
+ "refuted": [
+  {
+   "book_id": "6a08548049638a50931bfdd9",
+   "title": "Due orationi, l'vna di Eschine contra di Tesifonte, l'altra di Demosthene a' sua difesa. Di greco in uolgare nuouamente tradotte per un gentilhuomo firentino.",
+   "year": 1554,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Aeschines",
+   "as_printed": "Eschine",
+   "quoted_line": "DVE ORATIONI, L'VNA DI ESCHINE CONTRA DI TESIFONTE, L'ALTRA DI DEMOSTHENE A SVA DIFESA",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title page assigns each oration by possessive to its speaker, so the first work is Aeschines' and the second Demosthenes'.",
+   "caveat": "Two works in one volume: Aeschines (first oration) and Demosthenes (second); the answer above names the first. The translator is not named, only described as 'un gentilhuomo firentino'. Only the title page was transcribed and its text is cut off mid-line after 'A L', so any dedication, preface signature or imprint is unseen; Manuzio and Torresano come from the catalogue byline, not from the transcribed page.",
+   "other_names": [
+    {
+     "name": "Demosthenes",
+     "role": "author"
+    },
+    {
+     "name": "Ctesiphon",
+     "role": "subject"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "DVE ORATIONI, L'VNA DI ESCHINE CONTRA DI TESIFONTE, L'ALTRA DI DEMOSTHENE A SVA DIFESA ... Di greco in uolgare nuouamente tradotte per un gentilhuomo firentino.",
+    "reasoning": "The title page announces two orations by two different hands, Aeschines against Ctesiphon and Demosthenes in his own defence, so Aeschines wrote only half the volume and cannot stand as its byline. The only other named agent is the anonymous 'gentilhuomo firentino' translator, so the book names no single author."
+   }
+  },
+  {
+   "book_id": "6a08571149638a50931c37dc",
+   "title": "Stanze pastorali, del conte Baldesar Castiglione, et del signor Cesare Gonzaga, con le rime di m. Anton Giacomo Corso.",
+   "year": 1553,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Baldassare Castiglione",
+   "as_printed": "DEL CONTE BALDESAR CASTIGLIONE",
+   "quoted_line": "STANZE PASTORALI, DEL CONTE BALDESAR CASTIGLIONE, ET DEL SI= GNOR CESARE GONZAGA, CON LE RIME DI M. ANTON GIACOMO CORSO.",
+   "page": 12,
+   "confidence": "high",
+   "reasoning": "The title-page names the Stanze pastorali as 'del conte Baldesar Castiglione', with Cesare Gonzaga as co-author and Anton Giacomo Corso supplying the appended rime.",
+   "caveat": "Multi-author volume: the Stanze are by Castiglione and Gonzaga jointly (the dedication calls them 'd'ambidue loro composte' and 'gli autori d'esse'), while the Rime are Corso's own, so one author cannot represent the whole book. Page 13 shows an incongruous title-page reading 'STANZE PASTORALI DEL CONTE BALDASSAR CASTIGLIONE CON LE ANNOTAZIONI DI GIOVANNI GORIO', which does not match the 1553 Aldine imprint and looks like a later edition's title mixed into the scans, so Gorio is uncertain.",
+   "other_names": [
+    {
+     "name": "Cesare Gonzaga",
+     "role": "author"
+    },
+    {
+     "name": "Anton Giacomo Corso",
+     "role": "author"
+    },
+    {
+     "name": "Bernardo",
+     "role": "dedicatee"
+    },
+    {
+     "name": "Giovanni Gorio",
+     "role": "editor"
+    },
+    {
+     "name": "Aldi Filii",
+     "role": "printer"
+    },
+    {
+     "name": "Giovanni Nencini",
+     "role": "owner"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "high",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": null,
+    "evidence": "STANZE PASTORALI, DEL CONTE BALDESAR CASTIGLIONE, ET DEL SIGNOR CESARE GONZAGA, CON LE RIME DI M. ANTON GIACOMO CORSO. — confirmed by the dedication: \"le bellissime stanze, d'ambidue loro composte\" and \"non men che gli autori d'esse\".",
+    "reasoning": "The title page names three hands — the Stanze pastorali jointly composed by Castiglione and Cesare Gonzaga (the dedication says plainly \"d'ambidue loro composte\", \"gli autori d'esse\"), plus a separate set of Rime by Anton Giacomo Corso, who also signs the dedication as the volume's editor/dedicator. Bylining the volume to Castiglione alone would erase a co-author and a second author whose work occupies part of the book."
+   }
+  },
+  {
+   "book_id": "6a084e5849638a50931b507e",
+   "title": "Pretiosa margarita nouella de thesauro, ac pretiosissimo philosophorum lapide [Boni Ferrariensis]. Artis huius diuinae typus, & methodus collectanea ex Arnaldo, Rhaymundo, Rhasi, Alberto, & Michaele Scoto; per Ianum Lacininium Calabrum nunc primum, cum lucupletissimo indice, in lucem edita.",
+   "year": 1546,
+   "catalogued": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+   "author": "Bonus Ferrariensis",
+   "as_printed": "Boni Ferrarensis",
+   "quoted_line": "Quo fit ut cum ex Gallia Cisalpina Pataunium redierim illa doctissimi uiri Boni Ferrarensis quaestio luculentissima, de alchimiae possibilitate atque",
+   "page": 14,
+   "confidence": "medium",
+   "reasoning": "The title-page names no author, but Lacinius's address to the reader attributes the work itself to \"doctissimi uiri Boni Ferrarensis\" in the genitive, while Lacinius presents himself as the one bringing it to light.",
+   "caveat": "The author's name appears only inside the editor's prefatory address, not on the title-page; the title-page as OCR'd is anonymous apart from the papal privilege of Paul III (a privilege, not a dedication). Pierius Roseus signs only a commendatory epigram to the reader, not the treatise.",
+   "other_names": [
+    {
+     "name": "Ianus Lacinius Calaber",
+     "role": "editor"
+    },
+    {
+     "name": "Pierius Roseus",
+     "role": "author"
+    }
+   ],
+   "screen_reasons": [],
+   "refuter": {
+    "refuted": true,
+    "confidence": "medium",
+    "failure_mode": "not-one-authors-book",
+    "better_answer": "Petrus Bonus",
+    "evidence": "Artis huius diuinae typus, & methodus collectanea ex Arnaldo, Rhaymundo, Rhasi, Alberto, & Michaele Scoto; per Ianum Lacininium Calabrum nunc primum, cum lucupletissimo indice, in lucem edita.",
+    "reasoning": "The title announces a compiled volume - the Pretiosa margarita plus collectanea drawn from Arnald, Raymond, Rhazes, Albertus and Michael Scot, assembled and issued by Janus Lacinius Calaber, whose address to the reader on p. 14 merely reports encountering 'illa doctissimi uiri Boni Ferrarensis quaestio', so Bonus authored the principal text but not the book as printed. If any single byline is written it should be the full nominative 'Petrus Bonus' with Lacinius credited as editor; the byname 'Bonus Ferrariensis' alone misdescribes a multi-hand edited compilation."
+   }
+  }
+ ],
+ "pending": []
+}
