@@ -118,7 +118,7 @@ for (const c of cands) {
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
     thumbnail: thumbUrl, image_display: displayUrl, image_source_url: fullUrl, commons_full_url: fullUrl,
-    pageCount: 1, pages_count: 1, pages_ocr: 0, pages_translated: 0,
+    pages_count: 1, pages_ocr: 0, pages_translated: 0,
     content_type: 'artwork', resource_type: RESOURCE_TYPE,
     status: PUBLISH ? 'live' : 'draft', hidden: !PUBLISH, visible: PUBLISH,
     // Keep out of the OCR/translation cron: 'leiden' isn't in the orchestrator's

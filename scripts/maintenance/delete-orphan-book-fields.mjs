@@ -70,6 +70,16 @@ export const ORPHAN_FIELDS = [
 ];
 
 const APPLY = process.argv.includes('--apply');
+// --fields a,b : delete a DIFFERENT set through the same proven machinery
+// (preserve to sweep_log, then $unset, canary-able, reversible via
+// restore-orphan-book-fields.mjs). Reusing this beats writing a second deleter
+// per family, which is how two implementations drift apart.
+const FIELDS_OVERRIDE = (() => {
+  const i = process.argv.indexOf('--fields');
+  return i > -1 ? process.argv[i + 1].split(',').map((f) => f.trim()).filter(Boolean) : null;
+})();
+// --sweep <name> : label the sweep_log rows for this run.
+const SWEEP_OVERRIDE = (() => { const i = process.argv.indexOf('--sweep'); return i > -1 ? process.argv[i + 1] : null; })();
 // --limit N: canary mode. Delete from at most N books, so the sweep_log
 // round-trip can be proved on a small set before the full run.
 const LIMIT = (() => { const i = process.argv.indexOf('--limit'); return i > -1 ? Number(process.argv[i + 1]) : 0; })();
@@ -81,13 +91,15 @@ await client.connect();
 const db = client.db(process.env.DB_NAME || 'bookstore');
 const books = db.collection('books');
 
-console.log(`Orphan field deletion — ${ORPHAN_FIELDS.length} fields`);
+const FIELDS = FIELDS_OVERRIDE || ORPHAN_FIELDS;
+const SWEEP_NAME = SWEEP_OVERRIDE || SWEEP;
+console.log(`Book field deletion — ${FIELDS.length} field(s), sweep '${SWEEP_NAME}'`);
 console.log(`Mode: ${APPLY ? 'APPLY' : 'DRY-RUN'}\n`);
 
 // Exact per-field counts. Sampling is not admissible for a deletion decision:
 // on this collection a 3,000-doc sample missed ~95 fields entirely.
 const counts = [];
-for (const f of ORPHAN_FIELDS) {
+for (const f of FIELDS) {
   const n = await books.countDocuments({ [f]: { $exists: true } }, { maxTimeMS: 60000 });
   counts.push([f, n]);
 }
@@ -97,10 +109,10 @@ for (const [f, n] of counts) console.log(`  ${f.padEnd(34)} ${n}`);
 const live = counts.filter(([, n]) => n > 0);
 const totalFieldInstances = counts.reduce((s, [, n]) => s + n, 0);
 const affected = await books.countDocuments(
-  { $or: ORPHAN_FIELDS.map((f) => ({ [f]: { $exists: true } })) },
+  { $or: FIELDS.map((f) => ({ [f]: { $exists: true } })) },
   { maxTimeMS: 120000 },
 );
-console.log(`\nfields with >0 docs : ${live.length} of ${ORPHAN_FIELDS.length}`);
+console.log(`\nfields with >0 docs : ${live.length} of ${FIELDS.length}`);
 console.log(`field instances     : ${totalFieldInstances}`);
 console.log(`distinct books      : ${affected}`);
 
@@ -111,19 +123,19 @@ if (!APPLY) {
 }
 
 // Preserve first, delete second — and one row per BOOK, carrying every value.
-const findOpts = { projection: Object.fromEntries([['id', 1], ...ORPHAN_FIELDS.map((f) => [f, 1])]) };
+const findOpts = { projection: Object.fromEntries([['id', 1], ...FIELDS.map((f) => [f, 1])]) };
 if (LIMIT) findOpts.limit = LIMIT;
-const cursor = books.find({ $or: ORPHAN_FIELDS.map((f) => ({ [f]: { $exists: true } })) }, findOpts);
+const cursor = books.find({ $or: FIELDS.map((f) => ({ [f]: { $exists: true } })) }, findOpts);
 if (LIMIT) console.log(`\nCANARY: limiting to ${LIMIT} books.`);
 
 let rows = 0, unset = 0;
 for await (const book of cursor) {
   const removed = {};
-  for (const f of ORPHAN_FIELDS) if (f in book) removed[f] = book[f];
+  for (const f of FIELDS) if (f in book) removed[f] = book[f];
   if (!Object.keys(removed).length) continue;
 
   await recordSweepAction(db, {
-    sweep: SWEEP,
+    sweep: SWEEP_NAME,
     book_id: book.id || String(book._id),
     action: 'orphan-fields-removed',
     detail: { removed },
@@ -141,7 +153,7 @@ console.log(`\nsweep_log rows written : ${rows}`);
 console.log(`books modified         : ${unset}`);
 
 let residual = 0;
-for (const f of ORPHAN_FIELDS) residual += await books.countDocuments({ [f]: { $exists: true } }, { maxTimeMS: 60000 });
+for (const f of FIELDS) residual += await books.countDocuments({ [f]: { $exists: true } }, { maxTimeMS: 60000 });
 // In canary mode a non-zero residual is the expected result, not a fault — the
 // run deliberately stopped early. Only a full run can claim "clean", and a
 // check that cries wolf is one people learn to ignore.
@@ -149,6 +161,6 @@ const residualNote = LIMIT
   ? '(expected — canary run stopped early)'
   : residual === 0 ? '(clean)' : '(!! investigate)';
 console.log(`residual instances     : ${residual} ${residualNote}`);
-console.log(`\nRecover a book's values: db.sweep_log.find({ sweep: '${SWEEP}', book_id: '<id>' })`);
+console.log(`\nRecover a book's values: db.sweep_log.find({ sweep: '${SWEEP_NAME}', book_id: '<id>' })`);
 
 await client.close();
