@@ -106,3 +106,54 @@ counts looked fine throughout. Read the queue before trusting any number in it.
   most are in `scripts/import/`, where a bad slug becomes a permanent URL.
 - 22,767 books with >20pp OCR have no `visible` field at all — intentional QA
   gate or drift is undetermined, and nobody can currently tell.
+
+---
+
+## Session 2 (2026-08-19, late): queue read + identity backfills — DONE
+
+**The 50-row read (step 2 above) — reject rates by bucket, not overall:**
+- work links (30 read): 0 wrong. Caveats only: multi-volume sets always pick one
+  volume (every "Ovid, Metamorphoses" → Aldine Vol. 3), and generic scripture
+  ("New Testament") lands on whatever edition we hold (a German NT). Ranking
+  refinements, not wrong links.
+- author links via `author-name` exact key (13 read): 0 wrong.
+- author links via `author-token` (12 read): **10 wrong (~85%)** — every wrong
+  row in the whole sample. One shared given-name token was enough: "Gospel of
+  John" → John Dee, "Paolo Veronese" → Lomazzo, "Matthäus Merian" → Schorer,
+  "Ezekiel 37" → Burridge. 3,947 of 4,911 token rows shared only ONE token.
+
+**Fixed in `artwork-work-resolver.mjs`** (pinned by 4 new tests, 16/16 green):
+token matches now need ≥2 shared distinctive tokens, or full mutual coverage
+("Rudolf II" ↔ "Rudolf, II." still links). Queue after the fix: 2,569 book /
+4,962 author-only / 4,982 unresolved — bad author links became honest
+unresolveds, and freed strings became correct work links ("Book of Tobit" →
+our Aramaic Tobit).
+
+**Ladder step 1 — `authors.aliases[]` backfilled:** 4,129 of 4,586 QID-anchored
+authors now carry Wikidata labels+aliases (16 languages). P31 verified per QID;
+9 non-person QIDs refused and reported (Vishnu, Chiron, Liezi→the *book*,
+Pers→the publishing firm) in `scripts/output/author-aliases-backfill-report.json`.
+Nothing in src/ reads `authors.aliases` yet — inert until a reader opts in.
+sweep_log: `author-aliases-wikidata-2026-08`, 4,129 rows + 1 repair row.
+
+**Ladder step 2 — artwork `author_id`:** `backfill-author-canonical-links.mjs`
+grew an `--artworks` lane (the old live filter requires `pages_count>0`, which
+only 97 of 24,912 artworks pass — the scoping-bug shape). Applied 46/46 links
+(run id `backfill-2250-artworks`, reversible). Small on purpose: reading the
+69-row dry run caught **Wikidata aliases linking the wrong person** — Caccini's
+genuine historical nickname "Giulio Romano" staged 21 painter references onto
+the composer, and `jordanes` carried the PAINTER Jacob Jordaens' QID (Q270658;
+now repaired to Q131548 — P31 can't catch wrong-person, only wrong-kind). New
+guard: alias-only matches need a shared rare token (thesaurus freq ≤3 — admits
+surnames, refuses given names).
+
+**The real artwork gap is a MINT gap, not a match gap.** The thesaurus is built
+from text authors; Raphael (1,032 artworks), Goltzius (852), Sadeler (445),
+Merian (349), Callot (307), Rembrandt (201), Titian (118)… have no author doc
+at all. Top-400 unlinked painters cover 9,824 visible artworks —
+`scripts/output/artwork-painter-mint-candidates.json`. Minting is a public-
+surface decision (new /author/ pages) — propose via issue, don't bulk-run.
+
+**Next:** (a) painter mint decision; (b) make the RESOLVER consult
+authors.aliases for person references (it still walks books.author strings);
+(c) work-QID lookup (ladder step 3); (d) then the write path per above.
