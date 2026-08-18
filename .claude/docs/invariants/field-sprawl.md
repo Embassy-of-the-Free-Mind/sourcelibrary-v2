@@ -92,8 +92,19 @@ those columns *say*, and a consolidation that assumes they say the same thing
 loses data silently. Measured on the imprint family, 2026-08-18
 (`scripts/audit/imprint-reconciliation.mjs`, #4043): **2,533** books carry two or
 more place fields, only 1,634 agree once case and catalogue apparatus are
-normalised, and **539 name flatly different cities**. Of 916 books holding both
+normalised, and **539 land in the `disjoint` bucket**. Of 916 books holding both
 printer fields, **151** agree.
+
+**But `disjoint` is a verdict about strings, not about bibliography, and reading
+it as one overstates the conflict roughly twofold.** Classified 2026-08-18,
+those 539 are: ~10% a *no-place marker against a city* (`s.l. (Germany)` vs
+`Danzig`), **≥40% an exonym or orthographic variant** (`Roma`/`Rome`,
+`Nürnberg`/`Nuremberg`, `Strassburg`/`Strasbourg`, `z.p.`/`n.p.`), and at most
+~50% genuinely different places — a ceiling, because the residue still visibly
+contains exonyms the edit distance missed (`Venezia`/`Venice`). Only that last
+bucket needs a person. **Before sizing a review queue off a normaliser's
+output, classify what the disagreements ARE**: a queue of 539 that is really
+~270 sends someone to adjudicate Rome against Roma.
 
 **Some of that disagreement is knowledge, not error.** *De occulta philosophia*
 holds `[Cologne]` in one field and `Lyon` in another — a fictitious imprint and
@@ -104,6 +115,18 @@ the most interesting bibliography we hold. So: measure the disagreement shapes
 choosing a canonical field, and check whether the conflict encodes a distinction
 worth keeping — *stated* vs *established* vs *conjectural* — rather than one
 value being wrong. Normalisation for comparison must never be written back.
+
+**A field's tier does not tell you the value's ROLE, so tier precedence is not a
+merge rule.** The obvious hypothesis — catalogue beats OCR beats import — is
+falsified in the destructive direction on 54 measured books: the *catalogue*
+field holds `s.l. (Germany)` (a true statement that the title page names no
+place) while the *import* field holds `Danzig`, `Prague`, `Frankfurt`,
+`Amsterdam`, `Eichstätt`. Catalogue-wins overwrites a real city with "place
+unknown". The same field also carries plainly established values (`Roma`,
+`Strasbourg`), so the role is a property of the **value's own shape** — `s.l.` /
+`n.p.` / `z.p.` and `[…?]` mark *stated-absent* and *conjectural*; a bare
+place-name marks an assertion — and never of the column it sits in. Read the
+value, not the field name.
 
 Rule of thumb for routing: **fields that merely duplicate a fact belong to #3969;
 fields that disagree about one belong to #4043.**
