@@ -517,7 +517,7 @@ export function ViewToggleGroup({
             onClick={() => onToggle(it.key)}
             // Height is explicit so the group lines up with the pager beside
             // it; padding-derived heights drifted apart by a pixel or two.
-            className={`font-sans text-[13px] flex items-center justify-center border transition-colors ${compact ? 'px-2.5 h-[32px]' : 'px-3 h-[36px]'}`}
+            className={`font-sans text-[13px] flex items-center justify-center border transition-colors ${compact ? 'px-2.5 h-[36px]' : 'px-3 h-[36px]'}`}
             style={{
               borderColor: on ? onInk(0.3) : onInk(0.16),
               background: on ? onInk(0.14) : 'transparent',
