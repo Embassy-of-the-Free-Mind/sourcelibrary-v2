@@ -486,7 +486,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Origin',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg',
+    image: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg',
     imageAlt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind',
   },
   {
@@ -508,7 +508,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg',
     imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being, 1617',
   },
   // Hidden: needs rewrite with proper import session data
@@ -520,7 +520,7 @@ export const posts: BlogPost[] = [
   //   readTime: '12 min read',
   //   tag: 'Methodology',
   //   tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-  //   image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+  //   image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg',
   //   imageAlt: 'Page from a 16th-century manuscript showing mechanical diagrams',
   // },
   {
@@ -531,7 +531,7 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+    image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg',
     imageAlt: 'Page from a 16th-century Greek manuscript of Hero of Alexandria\'s Pneumatica, showing mechanical diagrams',
   },
   {
@@ -542,7 +542,7 @@ export const posts: BlogPost[] = [
     readTime: '12 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg',
+    image: 'https://images.sourcelibrary.org/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg',
     imageAlt: 'Page spread from Einleitung zum wahren und gründlichen Erkänntnis des grossen Geheimnisses der Gottseligkeit, an early modern German alchemical text',
   },
   {
@@ -553,7 +553,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg',
+    image: 'https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg',
     imageAlt: 'Code of Hammurabi stele detail showing cuneiform inscription, ca. 1750 BCE',
   },
   {
@@ -564,7 +564,7 @@ export const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
     imageAlt: 'Copperplate engraving of a Rithmomachia game board from Selenus, Das Schach- oder König-Spiel, 1616',
   },
   {
@@ -575,7 +575,7 @@ export const posts: BlogPost[] = [
     readTime: '22 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg',
+    image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg',
     imageAlt: 'Page from a 16th-century Greek manuscript showing Hero of Alexandria\'s Aeolipile diagram',
   },
   {
@@ -586,7 +586,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
+    image: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
     imageAlt: 'Frontispiece engraving from Lambspringk\'s De Lapide Philosophico, Frankfurt 1625',
   },
   {
@@ -597,7 +597,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg',
     imageAlt: 'Title page of Symbola Aureae Mensae by Michael Maier, with twelve alchemist portrait medallions, 1617',
   },
   {
@@ -608,7 +608,7 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Visual essay',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg',
     imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being with celestial spheres and zodiac signs, 1617',
   },
   {
@@ -619,7 +619,7 @@ export const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg',
     imageAlt: 'Illustration of a jinn from the Book of Wonders, 14th century',
   },
   {
@@ -630,7 +630,7 @@ export const posts: BlogPost[] = [
     readTime: '22 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg',
     imageAlt: 'Zodiac Man (Homo Signorum) from a medieval astrological manuscript',
   },
   {
@@ -641,7 +641,7 @@ export const posts: BlogPost[] = [
     readTime: '14 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
+    image: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
     imageAlt: 'Frontispiece of Kircher\'s Oedipus Aegyptiacus, 1653',
   },
   {
@@ -652,7 +652,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg',
     imageAlt: 'The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450',
   },
   {
@@ -663,7 +663,7 @@ export const posts: BlogPost[] = [
     readTime: '16 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg',
     imageAlt: 'He Tu (River Map) diagram from Chinese cosmological tradition',
   },
   {
@@ -685,7 +685,7 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg',
     imageAlt: 'Title page of Aurora by Jakob Bohme, with cosmic diagram and Fraktur typography',
   },
   {
@@ -696,7 +696,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/7.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg',
     imageAlt: 'Title page of Atalanta Fugiens by Michael Maier, with allegorical scenes',
   },
   {
@@ -721,7 +721,7 @@ export default function BlogPage() {
         <ContentHeader
           title="Research Notes"
           subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
+          image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         >
           <p className="text-stone-400 text-sm mt-4">

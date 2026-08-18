@@ -13,7 +13,7 @@ const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Hand-coloured volvelle (perpetual calendar wheel) from the astrology collection.
 const HERO_IMAGE =
-  'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg';
+  'https://images.sourcelibrary.org/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg';
 
 export interface SupportStats {
   totalBooks: number;

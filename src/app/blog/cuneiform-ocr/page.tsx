@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Can AI Read Cuneiform?',
     description: 'Eight experiments testing Gemini and Claude on cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg' }],
   },
   alternates: {
     canonical: '/blog/cuneiform-ocr',
@@ -26,7 +26,7 @@ export default function CuneiformOcrPage() {
         <ContentHeader
           title="Can AI Read Cuneiform?"
           subtitle="Testing Gemini and Claude on the oldest writing system on Earth"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
+          image="https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
           imageAlt="Code of Hammurabi stele detail showing cuneiform inscription, ca. 1750 BCE"
         >
           <p className="text-stone-400 text-sm mt-4">9 March 2026 &middot; 35 min read</p>
@@ -53,7 +53,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
               alt="Ur III administrative tablet from Drehem, ca. 2100 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -64,7 +64,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P213189-w8UjEixlGUhd3n1Ko2sTlXgFQzDFkl.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P213189-w8UjEixlGUhd3n1Ko2sTlXgFQzDFkl.jpg"
               alt="Cruciform Monument of Manishtushu, ca. 2270 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -75,7 +75,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
               alt="Code of Hammurabi stele detail, ca. 1792-1750 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -86,7 +86,7 @@ export default function CuneiformOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P394421-zaEjwIliiQ1tieTAKP05Cve64ZgMak.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P394421-zaEjwIliiQ1tieTAKP05Cve64ZgMak.jpg"
               alt="Neo-Assyrian medical tablet K.2421+, ca. 668-631 BCE"
               className="w-full rounded-lg shadow-md aspect-square object-cover"
             />
@@ -245,7 +245,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
+            src="https://images.sourcelibrary.org/blog/cuneiform/P102318-r7lQSIt2HO5oRGeNDZnfAmebq92DUU.jpg"
             alt="Ur III administrative tablet P102318 from Drehem, showing both obverse and reverse faces"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
@@ -381,7 +381,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
+            src="https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
             alt="Code of Hammurabi stele, showing relief sculpture and cuneiform text"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
@@ -423,7 +423,7 @@ export default function CuneiformOcrPage() {
         <figure className="my-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P213189_d-MshZ02KE9TpgRclT4CiGWdAPqSHCQM.jpg"
+            src="https://images.sourcelibrary.org/blog/cuneiform/P213189_d-MshZ02KE9TpgRclT4CiGWdAPqSHCQM.jpg"
             alt="Detail of the Cruciform Monument of Manishtushu showing cuneiform inscription"
             className="w-full max-w-lg mx-auto rounded-lg shadow-md"
           />
@@ -1019,7 +1019,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P250675-y3DQ1O3o1o7YC2uXIvAZ4z5d4m1AAR.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P250675_raw.jpg"
               alt="P250675 full CDLI composite photograph"
               className="w-full rounded-lg shadow-md"
             />
@@ -1030,7 +1030,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p250675_obverse.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p250675_obverse.jpg"
               alt="P250675 obverse face crop"
               className="w-full rounded-lg shadow-md"
             />
@@ -1041,7 +1041,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p250675_linestrip.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p250675_linestrip.jpg"
               alt="P250675 individual line strip"
               className="w-full rounded-lg shadow-md"
             />
@@ -1100,7 +1100,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_full.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_full.jpg"
               alt="P100500 full CDLI composite photograph"
               className="w-full rounded-lg shadow-md"
             />
@@ -1111,7 +1111,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_obverse.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_obverse.jpg"
               alt="P100500 obverse face crop"
               className="w-full rounded-lg shadow-md"
             />
@@ -1122,7 +1122,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_reverse.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_reverse.jpg"
               alt="P100500 reverse face crop"
               className="w-full rounded-lg shadow-md"
             />
@@ -1189,7 +1189,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_obverse.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_obverse.jpg"
               alt="Raw obverse crop — baseline"
               className="w-full rounded-lg shadow-md"
             />
@@ -1200,7 +1200,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_sharpen.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_sharpen.jpg"
               alt="Sharpened — unsharp mask"
               className="w-full rounded-lg shadow-md"
             />
@@ -1211,7 +1211,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_graynorm.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_graynorm.jpg"
               alt="Grayscale with histogram normalization"
               className="w-full rounded-lg shadow-md"
             />
@@ -1222,7 +1222,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_clahe.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_clahe.jpg"
               alt="CLAHE local contrast enhancement"
               className="w-full rounded-lg shadow-md"
             />
@@ -1236,7 +1236,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_invert.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_invert.jpg"
               alt="Inverted — dark background reveals wedge impressions"
               className="w-full rounded-lg shadow-md"
             />
@@ -1247,7 +1247,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_upscale2x.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_upscale2x.jpg"
               alt="2x bicubic upscale"
               className="w-full rounded-lg shadow-md"
             />
@@ -1258,7 +1258,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_combined.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_combined.jpg"
               alt="Combined grayscale + CLAHE + sharpen + normalize"
               className="w-full rounded-lg shadow-md"
             />
@@ -1269,7 +1269,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/p100500_upscale_clahe.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/p100500_upscale_clahe.jpg"
               alt="Upscale 2x + CLAHE + sharpen — best performing technique"
               className="w-full rounded-lg shadow-md"
             />
@@ -1952,7 +1952,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P250675_raw.jpg"
+              src="https://images.sourcelibrary.org/blog/cuneiform/P250675_raw.jpg"
               alt="Cuneiform tablet P250675 (CUSAS 35, 426) — obverse face, Old Akkadian period"
               className="w-full rounded-lg shadow-md"
             />

@@ -76,7 +76,7 @@ const captureEquality: Scenario = {
   ],
   explanation: 'Equality is the most common capture. All five sources list the same capturable values: 9, 16, 25, 36, 49, 64, 81 — numbers that appear on both sides.',
   illustration: {
-    imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/39.jpg',
+    imageUrl: 'https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg',
     caption: 'Board with pieces in starting position (Boissiere, 1554)',
     source: 'boissiere',
     page: 39,
@@ -215,7 +215,7 @@ const captureSiege: Scenario = {
   ],
   explanation: 'Barozzi reveals that 153 and 190 are mathematically uncapturable — no combination of opposing pieces can sum, subtract, multiply, or divide to reach these values. Siege is the only option, making positional play essential.',
   illustration: {
-    imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/499.jpg',
+    imageUrl: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg',
     caption: 'Perspective view with pyramid "towers" (Selenus, 1616)',
     source: 'selenus',
     page: 499,
@@ -305,7 +305,7 @@ const victoryHarmonic: Scenario = {
   ],
   explanation: 'Selenus demonstrates that 3, 4, 6 encodes the musical fifth (3:2), fourth (4:3), and octave (6:3). Buxerius confirms: "These ratios, if examined by weight or measured in strings, always provide Musical Harmony." You don\'t just win — you play a chord.',
   illustration: {
-    imageUrl: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    imageUrl: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
     caption: 'The game board — copperplate engraving (Selenus, 1616)',
     source: 'selenus',
     page: 498,

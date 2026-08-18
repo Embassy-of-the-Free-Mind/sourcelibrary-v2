@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
@@ -20,15 +21,32 @@ async function getStats() {
     const db = await getReadDb();
     // Use fast queries: estimatedDocumentCount + dashboard_snapshot (avoid distinct + countDocuments)
     const [snapshot, totalPages, galleryCount] = await Promise.all([
-      db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }),
+      // Age-guarded. This page recruits volunteers with "N texts", and it spent
+      // 138 days advertising 13,713 against a real 22,069 because it read the
+      // snapshot document straight and the snapshot had no writer.
+      readFreshDashboardSnapshot(db),
       db.collection('pages').estimatedDocumentCount(),
       db.collection('gallery_images').estimatedDocumentCount(),
     ]);
-    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
-    const totalBooks = snap?.canon?.total_books ?? 0;
+
+    // On a stale or missing snapshot, count directly rather than render a zero.
+    // This is an ISR path (revalidate = 6h), not the request path, so the two
+    // counts are affordable — and a wrong small number here reads as "the
+    // library is tiny", which is the opposite of what the page is for.
+    const canon = snapshot?.data.canon;
+    const [totalBooks, translatedCount] = canon
+      ? [canon.total_books, canon.readable_books]
+      : await Promise.all([
+        db.collection('books').countDocuments({ visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 30000 }),
+        db.collection('books').countDocuments(
+          { visible: true, pages_count: { $gt: 0 }, is_fully_translated: true },
+          { maxTimeMS: 30000 },
+        ),
+      ]);
+
     return {
       totalBooks,
-      translatedCount: snap?.canon?.readable_books ?? totalBooks,
+      translatedCount: translatedCount || totalBooks,
       totalPages,
       galleryCount,
       languageCount: 90, // approximate — avoids slow distinct() on 28K docs

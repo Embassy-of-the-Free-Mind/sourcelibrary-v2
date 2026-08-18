@@ -39,11 +39,13 @@ interface DashboardData {
     cost_per_page_30d: number;
     total_cost_30d: number;
     pages_translated_30d: number;
+    truncated?: boolean;
   };
   invisible?: CollectionStats;
   warehouse?: CollectionStats;
   _snapshot?: {
     updated_at: string;
+    age_ms?: number;
     stale: boolean;
   };
 }
@@ -52,7 +54,9 @@ function timeAgo(dateStr: string) {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
   if (seconds < 60) return 'Updated just now';
   if (seconds < 3600) return `Updated ${Math.floor(seconds / 60)}m ago`;
-  return `Updated ${Math.floor(seconds / 3600)}h ago`;
+  const hours = Math.floor(seconds / 3600);
+  if (hours < 48) return `Updated ${hours}h ago`;
+  return `Updated ${Math.floor(hours / 24)}d ago`;
 }
 
 function fmt(n: number) {
@@ -91,6 +95,8 @@ export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [computing, setComputing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshError, setRefreshError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -114,11 +120,48 @@ export default function AdminDashboard() {
     return () => { cancelled = true; };
   }, []);
 
+  // The 202 branch has always told the operator to "hit the refresh button".
+  // There was no refresh button, and no cron either, which is how the snapshot
+  // reached 138 days old without anyone being able to do anything about it.
+  async function refresh() {
+    setRefreshing(true);
+    setRefreshError(null);
+    try {
+      const r = await fetch('/api/admin/dashboard', { method: 'POST' });
+      if (!r.ok) throw new Error(`Refresh failed (${r.status})`);
+      const json = await r.json();
+      setData({ ...json.data, _snapshot: { updated_at: new Date().toISOString(), age_ms: 0, stale: false } });
+      setComputing(false);
+    } catch (e) {
+      setRefreshError(e instanceof Error ? e.message : 'Refresh failed');
+    } finally {
+      setRefreshing(false);
+    }
+  }
+
+  const refreshButton = (
+    <button
+      onClick={refresh}
+      disabled={refreshing}
+      style={{
+        background: '#21262d', border: '1px solid #30363d', borderRadius: 6,
+        color: refreshing ? '#8b949e' : '#c9d1d9', padding: '6px 12px',
+        fontSize: 12, cursor: refreshing ? 'default' : 'pointer',
+      }}
+    >
+      {refreshing ? 'Recomputing…' : 'Refresh'}
+    </button>
+  );
+
   if (computing) {
     return (
       <div style={{ padding: '60px 32px', textAlign: 'center', color: '#8b949e' }}>
-        <div>Computing dashboard snapshot...</div>
-        <div style={{ fontSize: 12, marginTop: 8 }}>This takes about a minute on first run. Will auto-refresh.</div>
+        <div>No dashboard snapshot yet.</div>
+        <div style={{ fontSize: 12, margin: '8px 0 16px' }}>
+          The hourly cron writes it; this recomputes now (~10s).
+        </div>
+        {refreshButton}
+        {refreshError && <div style={{ fontSize: 12, color: '#f85149', marginTop: 10 }}>{refreshError}</div>}
       </div>
     );
   }
@@ -152,13 +195,24 @@ export default function AdminDashboard() {
             Source Library at a glance
           </p>
         </div>
-        {data._snapshot?.updated_at && (
-          <div style={{ fontSize: 12, color: '#8b949e', textAlign: 'right' }}>
-            {timeAgo(data._snapshot.updated_at)}
-            {data._snapshot.stale && ' · refreshing...'}
-          </div>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {data._snapshot?.updated_at && (
+            <div style={{
+              fontSize: 12, textAlign: 'right',
+              color: data._snapshot.stale ? '#d29922' : '#8b949e',
+            }}>
+              {timeAgo(data._snapshot.updated_at)}
+              {/* Say "stale", never "refreshing…" — nothing was refreshing, and
+                  the reassuring word is why 138-day-old numbers read as live. */}
+              {data._snapshot.stale && ' · stale'}
+            </div>
+          )}
+          {refreshButton}
+        </div>
       </div>
+      {refreshError && (
+        <div style={{ fontSize: 12, color: '#f85149', marginBottom: 16 }}>{refreshError}</div>
+      )}
 
       {/* Row 1: The Canon */}
       <div style={{ marginBottom: 28 }}>
@@ -288,6 +342,11 @@ export default function AdminDashboard() {
               <div style={{ fontSize: 12, color: '#8b949e' }}>pages</div>
             </div>
           </div>
+          {economics.truncated && (
+            <div style={{ fontSize: 11, color: '#d29922', marginTop: 10 }}>
+              Cost query hit its page cap — these are a floor, not a total.
+            </div>
+          )}
         </div>
       </div>
 

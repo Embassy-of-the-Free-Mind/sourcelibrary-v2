@@ -84,18 +84,21 @@ export async function storagePut(
     return r2Put(r2, pathname, body, options);
   }
 
-  // R2 not configured — this should not happen in production
-  console.warn('[storage] WARNING: R2 not configured, falling back to Vercel Blob. This costs money — check R2 env vars.');
-
-  // Fallback to Vercel Blob
-  const { put } = await import('@vercel/blob');
-  const blob = await put(pathname, Buffer.isBuffer(body) ? body : Buffer.from(body as Uint8Array), {
-    access: options.access || 'public',
-    contentType: options.contentType,
-    addRandomSuffix: options.addRandomSuffix ?? false,
-    allowOverwrite: options.allowOverwrite,
-  });
-  return { url: blob.url, pathname: blob.pathname };
+  // R2 not configured. This used to fall through to Vercel Blob behind a
+  // console.warn — which is a silent failure wearing a warning's clothes:
+  // nothing reads server logs on the happy path, the write appears to succeed,
+  // and the object lands in the store we are trying to retire while the row
+  // records a blob.vercel-storage.com URL that no later R2 sweep will find.
+  //
+  // A misconfiguration must not be able to quietly resurrect the old backend.
+  // Fail here instead: the caller sees a real error, and the fix (set the R2
+  // env vars) is named in it.
+  throw new Error(
+    `[storage] R2 is not configured (R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / ` +
+    `R2_SECRET_ACCESS_KEY / R2_BUCKET_NAME) — refusing to write "${pathname}". ` +
+    `Vercel Blob is retired (#3645); writing there costs money and strands the ` +
+    `object outside R2. Set the R2 environment variables.`,
+  );
 }
 
 // --- Path helpers ---

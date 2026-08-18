@@ -11,7 +11,8 @@ export type CronName =
   | 'social-post'
   | 'social-reset'
   | 'daily-pipeline-report'
-  | 'storage-stats';
+  | 'storage-stats'
+  | 'dashboard-snapshot';
 
 export type CronRunStatus = 'success' | 'partial' | 'failed';
 
