@@ -588,9 +588,19 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           const thematicIds = thematicCol?.image_ids as string[] | undefined;
           if (thematicIds && thematicIds.length > 0) {
             galleryTotalCount = thematicIds.length;
-            // Resolve a sample of image IDs for rendering (full set available via gallery page)
+            // Resolve a sample of image IDs for rendering (full set available via gallery page).
+            // `book_visible: true` is REQUIRED here and is not redundant: image_ids is a
+            // materialized snapshot frozen when the thematic gallery was seeded, so hiding a
+            // book afterwards does not remove its images from the list. Without this filter the
+            // page renders art from hidden books — how 38 images from the Kloss/CMC takedown
+            // (2026-07-08) were still being served on /collections/freemasonry six weeks later.
+            // Every other gallery surface already filters on this field; this path was the
+            // outlier. See .claude/docs/invariants/visibility-and-stats.md.
             return db.collection('gallery_images')
-              .find({ id: { $in: thematicIds.slice(0, 60) } }, { projection: { _id: 0 } })
+              .find(
+                { id: { $in: thematicIds.slice(0, 60) }, book_visible: true },
+                { projection: { _id: 0 } },
+              )
               .toArray();
           }
           if (collection.curated_gallery_images?.length > 0) {
