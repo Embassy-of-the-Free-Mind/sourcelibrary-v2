@@ -411,7 +411,7 @@ async function main() {
     }
 
     if (WATCHED.includes(name) && census.fields.length > MAX_FIELDS) {
-      console.log(`\n   !! ${census.fields.length} fields exceeds the --max-fields ceiling of ${MAX_FIELDS}`);
+      console.log(`\n   !! ${census.fields.length} SAMPLED fields exceeds the --max-fields ceiling of ${MAX_FIELDS}`);
       breach = true;
     }
 
@@ -438,6 +438,21 @@ async function main() {
     }
     console.log(`\nenumerating every field on ${ONE} (full scan, not a sample)…`);
     const names = await allFieldNames(db.collection(ONE));
+
+    // The ceiling above was checked against the SAMPLED census, which sees far
+    // fewer fields than exist — reported by Mayank on #4002, who expected a
+    // breach at 476 and got exit 0 because the gate read ~395. Two different
+    // counts in one run is a trip hazard precisely at the moment someone flips
+    // the validator to `error`, where a wrong field list becomes 500s. So the
+    // authoritative count gets the same ceiling, and both are printed together.
+    const sampledCount = report.collections.find((c) => c.name === ONE)?.fields?.length;
+    if (sampledCount !== undefined) {
+      console.log(`\nfield count: ${sampledCount} sampled (${SAMPLE} docs) vs ${names.length} FULL — the validator is built from the FULL count.`);
+    }
+    if (WATCHED.includes(ONE) && names.length > MAX_FIELDS) {
+      console.log(`   !! ${names.length} FULL fields exceeds the --max-fields ceiling of ${MAX_FIELDS}`);
+      breach = true;
+    }
     const doc = buildValidator(names);
     doc.collMod = ONE;
     fs.writeFileSync(EMIT_VALIDATOR, JSON.stringify(doc, null, 2));
