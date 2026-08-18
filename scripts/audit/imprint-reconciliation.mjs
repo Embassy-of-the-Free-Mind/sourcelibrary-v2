@@ -13,11 +13,13 @@
  *     printer               1,019 books      catalogue name-forms ("Aa, Pieter (I) van der")
  *     publisher            15,042 books      TWO populations: name-forms AND raw imprint strings
  *
- *   779 books carry two place fields and 380 of those pairs hold DIFFERENT
- *   values. A consolidation that picks a field wins or loses those 380 books
- *   silently, and a facet built over the un-merged fields would publish the
- *   disagreement to readers. So the merge needs an adjudication rule first, and
- *   the rule needs to be measured before it is written.
+ *   2,533 books carry two or more place fields. Only 1,634 agree once case,
+ *   diacritics and catalogue apparatus are normalised; 539 name flatly
+ *   DIFFERENT cities. Of 916 books holding both printer fields, 151 agree.
+ *   A consolidation that picks a field wins or loses those books silently, and
+ *   a facet built over the un-merged fields would publish the disagreement to
+ *   readers. So the merge needs an adjudication rule first, and the rule needs
+ *   to be measured before it is written.
  *
  * WHAT THIS REPORTS
  *   1. Coverage and overlap for every field in the family.
@@ -60,8 +62,14 @@ const MONGODB_DB = process.env.MONGODB_DB || 'bookstore';
  * The order is a HYPOTHESIS this script exists to test, not a settled rule.
  * It says: a value a human catalogue asserted beats one a model read off a
  * title page, which beats one an importer copied from provider metadata.
- * `writer` names the script that populates each field, since `field_provenance`
- * covers only 58 books and cannot answer it yet.
+ * `writer` names the script that populates each field, because the provenance
+ * layer cannot answer it reliably yet: `books.field_provenance` is on 69,778
+ * books, but written by 81 independent writers in 164 key shapes, only 23.7%
+ * of which name the script that wrote them (#3471). Do NOT read the standalone
+ * `field_provenance` COLLECTION for this — it holds 58 rows in a different
+ * shape, and measuring it instead of the embedded field is how one session
+ * concluded the layer was never populated. See
+ * .claude/docs/invariants/field-sprawl.md.
  */
 const PLACE_FIELDS = [
   { field: 'publication_place', writer: 'enrichment/enrich-from-catalogs.mjs (BPH + USTC)', tier: 'catalogue' },
