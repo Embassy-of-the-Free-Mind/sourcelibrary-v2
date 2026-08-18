@@ -85,6 +85,52 @@ to establish. It is **reversibility**:
 Done this way a deletion is an experiment, not a decision. The 2026-08-17 run
 removed 3,467 instances of 50 fields from 2,120 books on exactly this basis.
 
+## Merging columns is only safe while they AGREE
+
+This doc is about one concept spread across N **columns**. The other half is what
+those columns *say*, and a consolidation that assumes they say the same thing
+loses data silently. Measured on the imprint family, 2026-08-18
+(`scripts/audit/imprint-reconciliation.mjs`, #4043): **2,533** books carry two or
+more place fields, only 1,634 agree once case and catalogue apparatus are
+normalised, and **539 name flatly different cities**. Of 916 books holding both
+printer fields, **151** agree.
+
+**Some of that disagreement is knowledge, not error.** *De occulta philosophia*
+holds `[Cologne]` in one field and `Lyon` in another — a fictitious imprint and
+its true printing; others read `s.l. (Germany)` against `[Halle? Helmstedt?]`,
+two sources hedging differently about an unsigned book. Picking a winner deletes
+the most interesting bibliography we hold. So: measure the disagreement shapes
+(identical-after-normalising / containment / partial overlap / disjoint) before
+choosing a canonical field, and check whether the conflict encodes a distinction
+worth keeping — *stated* vs *established* vs *conjectural* — rather than one
+value being wrong. Normalisation for comparison must never be written back.
+
+Rule of thumb for routing: **fields that merely duplicate a fact belong to #3969;
+fields that disagree about one belong to #4043.**
+
+## The near-duplicate pass cannot see an independently-named family
+
+`FAMILIES` is not a convenience — it is the only way some families surface. The
+automatic pass compares field NAMES (edit distance + token subset), so it caught
+`archive_reason` vs `archived_reason` and even the false friend `published` vs
+`publisher`, while never flagging `publication_place` / `place_of_publication` /
+`place_published` / `place`, which are the same concept named four ways by four
+writers. If you consolidate a family, **declare it in `FAMILIES` first**; if you
+suspect one, do not wait for the detector to nominate it.
+
+## A concept can live in a collection AND an embedded field of the same name
+
+`field_provenance` is both: a standalone collection holding **58** rows, and
+`books.field_provenance` on **69,778** books (~134,488 stamps, 81 writers, 164
+key shapes — #3471). Measuring the collection and reporting on "the provenance
+layer" produced a confident, exactly-backwards diagnosis in one session: *never
+populated* instead of *heavily used and drifted*. A small count from the wrong
+container is indistinguishable from an unfinished backfill.
+
+Before quoting coverage for any concept, check both shapes —
+`countDocuments({ <name>: { $exists: true } })` on `books` as well as the
+collection — and say which one you measured.
+
 ## Traps that each cost a round
 
 - **Gap ratio does not rank danger.** `deleted_reason` and `deletion_reason` are a perfect duplicate on the same 15 books.
