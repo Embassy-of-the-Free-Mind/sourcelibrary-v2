@@ -1529,7 +1529,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             className="min-w-0 max-w-[52%] no-underline group flex items-baseline gap-2.5 px-1.5 py-1 ml-1 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
             title="Back to the book page"
           >
-            <span className="font-body text-[15.5px] leading-none truncate shrink" style={{ color: '#fdfcf9' }}>
+            <span className="font-body text-[15.5px] leading-none truncate shrink min-w-0" style={{ color: '#fdfcf9' }}>
               {r.book.display_title || r.book.title}
             </span>
             <span className="font-sans text-[11.5px] leading-none truncate shrink-0 max-w-[45%]" style={{ color: onInk(0.5) }}>
@@ -1543,9 +1543,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </span>
           )}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact />
-          {/* Section title, only when the reader asks for it (Contents panel) */}
+          {/* Section title, only when the reader asks for it (Contents panel).
+              It is the one optional item in the bar, so it yields space first:
+              without min-w-0 it held its full width and wrapped "Sign in". */}
           {r.settings.showSection && r.currentChapter && (
-            <span className="font-sans text-[12.5px] max-w-[240px] truncate" style={{ color: onInk(0.62) }}>
+            <span
+              className="font-sans text-[12.5px] min-w-0 max-w-[240px] truncate hidden xl:block"
+              style={{ color: onInk(0.62) }}
+            >
               {r.currentChapter.titleEn || r.currentChapter.title}
             </span>
           )}
@@ -1615,7 +1620,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           ) : null}
-          <div className="ml-1">
+          <div className="ml-1 shrink-0 whitespace-nowrap">
             <UserMenu variant="hero" />
           </div>
         </header>
