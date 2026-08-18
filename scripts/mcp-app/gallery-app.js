@@ -84,6 +84,23 @@ function render(result) {
 app.ontoolresult = (result) => render(result);
 app.onhostcontextchanged = (ctx) => applyTheme(ctx);
 
+// Route card clicks through the host: sandboxed iframes generally swallow
+// target=_blank, so a plain anchor renders a gallery you can look at but not
+// leave. app.openLink({uri}) is the spec's way to ask the host to open the
+// book/gallery page in the user's browser. The anchors stay in the DOM as a
+// fallback for permissive hosts and for right-click/copy-link.
+document.addEventListener('click', (ev) => {
+  const a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+  if (!a) return;
+  const href = a.getAttribute('href');
+  if (!href || href === '#') { ev.preventDefault(); return; }
+  ev.preventDefault();
+  app.openLink({ uri: href }).catch(() => {
+    // Host refused or doesn't support openLink — try the anchor's own path.
+    window.open(href, '_blank', 'noopener');
+  });
+});
+
 app.connect().then(() => {
   applyTheme(app.getHostContext ? app.getHostContext() : null);
 }).catch((err) => {
