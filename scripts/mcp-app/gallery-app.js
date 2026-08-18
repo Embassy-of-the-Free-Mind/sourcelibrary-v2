@@ -95,10 +95,19 @@ document.addEventListener('click', (ev) => {
   const href = a.getAttribute('href');
   if (!href || href === '#') { ev.preventDefault(); return; }
   ev.preventDefault();
-  app.openLink({ uri: href }).catch(() => {
-    // Host refused or doesn't support openLink — try the anchor's own path.
-    window.open(href, '_blank', 'noopener');
-  });
+  // SDK signature is { url }, NOT { uri } — the hosted API doc says uri, the
+  // shipped SDK's own example says url, and the SDK wins (v1 of this handler
+  // passed uri: clicks silently did nothing). openLink RESOLVES with
+  // { isError } rather than rejecting, so the fallback must check both paths.
+  const fallback = () => { try { window.open(href, '_blank', 'noopener'); } catch { /* sandbox may refuse */ } };
+  try {
+    app.openLink({ url: href }).then(
+      (res) => { if (res && res.isError) fallback(); },
+      fallback,
+    );
+  } catch {
+    fallback();
+  }
 });
 
 app.connect().then(() => {
