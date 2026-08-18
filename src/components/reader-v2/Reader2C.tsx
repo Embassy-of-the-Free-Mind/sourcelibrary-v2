@@ -39,7 +39,7 @@ const MOBILE_TOOLBAR_H = 52;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
-const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian', 'more']);
+const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
 type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'more' | null;
 
@@ -642,6 +642,44 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             DOI {b.doi as string}
           </a>
         </p>
+      )}
+
+      {/* Provenance. A library that publishes machine-made text owes the
+          reader the record of how it was made, in the same place as the rest
+          of the bibliographic record — not tucked in a pane menu. */}
+      {(page.ocr?.model || page.translation?.model) && (
+        <>
+          <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>How this page was made</CapsLabel>
+          <dl>
+            <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
+              <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>Scan</dt>
+              <dd style={{ color: 'var(--text-secondary)' }}>
+                Photographed from the printed edition
+                {page.page_number != null ? `, p. ${page.page_number}` : ''}
+              </dd>
+            </div>
+            {page.ocr?.model && (
+              <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
+                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>Transcript</dt>
+                <dd style={{ color: 'var(--text-secondary)' }}>
+                  Read from the scan by {page.ocr.model}
+                </dd>
+              </div>
+            )}
+            {page.translation?.model && (
+              <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
+                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>English</dt>
+                <dd style={{ color: 'var(--text-secondary)' }}>
+                  Translated from the transcript by {page.translation.model}
+                </dd>
+              </div>
+            )}
+          </dl>
+          <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
+            Machine transcription and translation carry errors. The scan is the source — read it
+            alongside the text where a reading matters.
+          </p>
+        </>
       )}
     </div>
   );
@@ -1525,7 +1563,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   const pageNum = r.currentPage?.page_number ?? '—';
   const scan = resolveScanUrls(r.currentPage);
-  const readerHref = `/book/${r.bookPath}/page/${r.currentPageId}`;
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
@@ -1542,13 +1579,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // height so a short page never shows a white band.
   const lastSurface = r.views.en ? SURFACE.translation : r.views.ocr ? SURFACE.ocr : SURFACE.scanBed;
 
-  const scanMenuItems: PaneMenuItem[] = [
-    ...(scan.native ? [
-      { label: 'Open full resolution', href: scan.native },
-      { label: 'Download scan', href: scan.native },
-    ] : []),
-    ...(r.currentPage?.page_number != null ? [{ label: 'Page', info: `p. ${r.currentPage.page_number}` }] : []),
-  ];
+  // Actions only — the page number is already in the pager and the filmstrip.
+  // Full resolution opens in its own tab so the reader stays where it was;
+  // a bare image file has no chrome of its own to get back from.
+  const scanMenuItems: PaneMenuItem[] = scan.native ? [
+    { label: 'Open full resolution', href: scan.native, newTab: true },
+    { label: 'Download scan', href: scan.native, download: true },
+  ] : [];
 
   const panelProps = {
     r, citation, copied,
@@ -1768,7 +1805,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
-                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, 'ocr')} />
                 </div>
               ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
@@ -1795,7 +1832,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
-                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, 'translation')} />
                 </div>
               ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English</CapsLabel>
@@ -1932,7 +1969,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
-                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'ocr', readerHref)} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, 'ocr')} />
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-8">
@@ -1949,7 +1986,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
                 <div className="flex items-center gap-1">
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
-                  <PaneMenu items={buildTextMenuItems(r.currentPage, r.book, 'translation', readerHref)} />
+                  <PaneMenu items={buildTextMenuItems(r.currentPage, 'translation')} />
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-6">

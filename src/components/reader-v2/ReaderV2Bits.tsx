@@ -496,6 +496,10 @@ export interface PaneMenuItem {
   label: string;
   onClick?: () => void;
   href?: string;
+  /** Open in a new tab, so the reader is still there to come back to */
+  newTab?: boolean;
+  /** Save the file rather than navigate to it */
+  download?: boolean;
   /** Static informational row (model name, language) — not clickable */
   info?: string;
 }
@@ -552,7 +556,18 @@ export function PaneMenu({ items, onInkBar = false }: { items: PaneMenuItem[]; o
             const style = { color: 'var(--text-secondary)' };
             if (it.href) {
               return (
-                <a key={i} href={it.href} className={cls} style={style} role="menuitem">{it.label}</a>
+                <a
+                  key={i}
+                  href={it.href}
+                  className={cls}
+                  style={style}
+                  role="menuitem"
+                  {...(it.newTab ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  {...(it.download ? { download: '' } : {})}
+                  onClick={() => setOpen(false)}
+                >
+                  {it.label}
+                </a>
               );
             }
             return (
@@ -579,9 +594,16 @@ export function PaneMenu({ items, onInkBar = false }: { items: PaneMenuItem[]; o
   );
 }
 
-/** Menu items shared by both variants for a page's text panes. */
+/**
+ * Menu items shared by both variants for a page's text panes.
+ *
+ * Actions only. The language is already named in the pane header, and how the
+ * text was made — which model read or translated it — is provenance, so it
+ * lives in Edition & page info with the rest of the record rather than in a
+ * menu a reader has to find.
+ */
 export function buildTextMenuItems(
-  page: Page, book: Book, kind: 'ocr' | 'translation', readerHref: string,
+  page: Page, kind: 'ocr' | 'translation',
 ): PaneMenuItem[] {
   const data = kind === 'ocr' ? page.ocr : page.translation;
   const items: PaneMenuItem[] = [];
@@ -591,11 +613,6 @@ export function buildTextMenuItems(
       onClick: () => { navigator.clipboard?.writeText(stripEditorialWrappers(data.data).trim()); },
     });
   }
-  if (data?.model) items.push({ label: 'Model', info: data.model });
-  if (data?.language || (kind === 'ocr' && book.language)) {
-    items.push({ label: 'Language', info: (data?.language || book.language) as string });
-  }
-  items.push({ label: 'Trace mode (current reader)', href: readerHref });
   return items;
 }
 
