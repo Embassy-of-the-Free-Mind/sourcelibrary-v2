@@ -3,9 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
-import { MoreHorizontal, Check } from 'lucide-react';
 import type { ReaderSettings } from './useReaderV2';
 
 // Shared presentational pieces for the v2 reader design previews. All values
@@ -150,7 +148,7 @@ const LENS_MAG_MAX = 6;
  * of leaping.
  */
 export function ScanViewer({
-  page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll,
+  page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
 }: {
   page: Page;
   book: Book;
@@ -158,6 +156,8 @@ export function ScanViewer({
   onZoomChange: (z: number) => void;
   /** Reading lens: off by default, toggled from the pane header. */
   lensOn?: boolean;
+  /** Load the archived resolution from the start (the full-screen view) */
+  fullRes?: boolean;
   /** The scroller, exposed so the reader can sync it with the text panes. */
   scrollRef?: React.RefObject<HTMLDivElement | null>;
   onScroll?: () => void;
@@ -399,7 +399,7 @@ export function ScanViewer({
     );
   }
   const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
-  const src = zoom > 1.5 && native ? native : display;
+  const src = (fullRes || zoom > 1.5) && native ? native : display;
 
   return (
     <div
@@ -490,130 +490,6 @@ export function ScanViewer({
       )}
     </div>
   );
-}
-
-export interface PaneMenuItem {
-  label: string;
-  onClick?: () => void;
-  href?: string;
-  /** Open in a new tab, so the reader is still there to come back to */
-  newTab?: boolean;
-  /** Save the file rather than navigate to it */
-  download?: boolean;
-  /** Static informational row (model name, language) — not clickable */
-  info?: string;
-}
-
-/**
- * The `⋯` menu on a pane/bar: copy text, provenance info, links into the
- * current reader for flows the preview doesn't duplicate (Trace, Edit).
- */
-export function PaneMenu({ items, onInkBar = false }: { items: PaneMenuItem[]; onInkBar?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    function onDown(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener('mousedown', onDown);
-    return () => document.removeEventListener('mousedown', onDown);
-  }, [open]);
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        aria-label="More options"
-        aria-expanded={open}
-        onClick={() => setOpen(v => !v)}
-        className="w-[30px] h-[30px] flex items-center justify-center"
-        style={{ color: onInkBar ? onInk(0.72) : 'var(--text-muted)' }}
-      >
-        <MoreHorizontal size={16} />
-      </button>
-      {open && (
-        <div
-          className="absolute top-full right-0 mt-1 w-[240px] border z-50 py-1 rv2-pop"
-          style={{
-            background: SURFACE.popover, borderColor: 'var(--border-medium)',
-            boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)',
-          }}
-          role="menu"
-        >
-          {items.map((it, i) => {
-            if (it.info !== undefined) {
-              return (
-                <div key={i} className="px-3.5 py-1.5 flex items-baseline justify-between gap-3 font-sans text-[12px]">
-                  <span style={{ color: 'var(--text-faint)' }}>{it.label}</span>
-                  <span className="truncate" style={{ color: 'var(--text-secondary)' }}>{it.info}</span>
-                </div>
-              );
-            }
-            const cls = 'w-full flex items-center justify-between gap-2 text-left px-3.5 py-2 font-sans text-[13px] hover:bg-[var(--bg-warm)] no-underline';
-            const style = { color: 'var(--text-secondary)' };
-            if (it.href) {
-              return (
-                <a
-                  key={i}
-                  href={it.href}
-                  className={cls}
-                  style={style}
-                  role="menuitem"
-                  {...(it.newTab ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  {...(it.download ? { download: '' } : {})}
-                  onClick={() => setOpen(false)}
-                >
-                  {it.label}
-                </a>
-              );
-            }
-            return (
-              <button
-                key={i}
-                type="button"
-                role="menuitem"
-                className={cls}
-                style={style}
-                onClick={() => {
-                  it.onClick?.();
-                  setCopiedIdx(i);
-                  setTimeout(() => { setCopiedIdx(null); setOpen(false); }, 700);
-                }}
-              >
-                {it.label}
-                {copiedIdx === i && <Check size={13} style={{ color: 'var(--accent-rust)' }} />}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Menu items shared by both variants for a page's text panes.
- *
- * Actions only. The language is already named in the pane header, and how the
- * text was made — which model read or translated it — is provenance, so it
- * lives in Edition & page info with the rest of the record rather than in a
- * menu a reader has to find.
- */
-export function buildTextMenuItems(
-  page: Page, kind: 'ocr' | 'translation',
-): PaneMenuItem[] {
-  const data = kind === 'ocr' ? page.ocr : page.translation;
-  const items: PaneMenuItem[] = [];
-  if (data?.data) {
-    items.push({
-      label: `Copy ${kind === 'ocr' ? 'transcription' : 'translation'} text`,
-      onClick: () => { navigator.clipboard?.writeText(stripEditorialWrappers(data.data).trim()); },
-    });
-  }
-  return items;
 }
 
 /** Adjoining multi-toggle group on the ink bar (Scan / OCR / English). */
