@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Press Releases — Source Library',
     description: 'Official announcements from Source Library and the Embassy of the Free Mind.',
-    images: [{ url: 'https://sourcelibrary.org/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 
