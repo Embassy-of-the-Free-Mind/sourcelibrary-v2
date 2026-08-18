@@ -20,18 +20,21 @@ Build import documents with `makeBookDoc()` / `makePageDoc()` from `scripts/lib/
 
 `books` reached **477 top-level fields with only 17 on ≥99% of documents**, ~140 written by a single sweep and then abandoned. Compare `books_warehouse`, the newest book collection: 129 fields, 25 core. The difference is not complexity; it is accretion.
 
+**Current state: 423 fields** (2026-08-18), after three families were consolidated and 53 dead fields deleted. The live count is tracked in `scripts/lib/books-known-fields.json` — read it rather than any number written in prose, including this one.
+
 ## The lesson that cost the most: consolidation without enforcement is a treadmill
 
 PR #2085 (2026-05-27) fully consolidated the tenant family — 45K books and 6.4M pages cleaned, writers stripped from `src/`, readers migrated, canonical field declared. It explicitly left the "one-shot historical import scripts" alone as already-run.
 
 **Those scripts are the standard route for 429-prone sources and are reused constantly.** Within three months the field was back on 20,010 books and 4,156,480 pages (#3983 stripped 62 write sites across 36 scripts; the data was re-cleaned 2026-08-13/14).
 
-So: **a cleanup is not done when the data is clean. It is done when something standing prevents the regrowth.** The four layers, strongest first:
+So: **a cleanup is not done when the data is clean. It is done when something standing prevents the regrowth.** The five layers, strongest first:
 
 1. **The DB refuses it.** `$jsonSchema` + `additionalProperties: false` on `books`. Installing it needs `dbAdmin`; the app credential is `readWriteAnyDatabase` and cannot run `collMod` — that privilege split is what makes it a boundary rather than a convention. Generate with `field-sprawl.mjs --emit-validator` (full scan only — a sampled validator rejects legitimate writes to ~80 rare fields).
-2. **The easy path is the correct path.** The constructors above. One hand-rolled literal per script is why one bug shipped 62 times.
-3. **CI notices drift.** `field-sprawl-watch.yml`, weekly. `--max-fields` ratchets DOWN after each consolidation; `--forbid` lists retired names and fails on reappearance.
-4. **This document.** Weakest layer; the other three exist because it is.
+2. **A PR that adds a field fails.** `scripts/audit/new-field-writes.mjs` flags any `$set` of an unknown top-level `books` field, on every `pull_request`, in ~12s with no database. This is the layer that catches the ACTUAL mechanism of sprawl: the constructors below guard inserts, but the ~140 dead fields came from maintenance sweeps doing `$set`. Baseline in `books-field-write-baseline.json` — a list to shrink, never grow.
+3. **The easy path is the correct path.** The constructors above. One hand-rolled literal per script is why one bug shipped 62 times.
+4. **CI notices drift.** `field-sprawl-watch.yml`, weekly. `--max-fields` ratchets DOWN after each consolidation; `--forbid` lists retired names and fails on reappearance.
+5. **This document.** Weakest layer; the others exist because it is.
 
 ## Adding a legitimate field
 
