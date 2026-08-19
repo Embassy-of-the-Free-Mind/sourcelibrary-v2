@@ -603,9 +603,11 @@ function TraceToggle({ on, onToggle, loading, language }: {
       aria-pressed={on}
       className="flex items-center gap-1 font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
       style={{
-        color: on ? 'var(--accent-rust)' : 'var(--text-faint)',
-        background: on ? 'color-mix(in srgb, var(--accent-rust) 12%, transparent)' : 'transparent',
-        borderColor: on ? 'color-mix(in srgb, var(--accent-rust) 40%, transparent)' : 'transparent',
+        // Gold, like Notes and like the highlight the trace itself paints —
+        // rust read as a warning about the text rather than a way of reading it.
+        color: on ? 'var(--accent-gold-dark)' : 'var(--text-faint)',
+        background: on ? 'color-mix(in srgb, var(--accent-gold) 15%, transparent)' : 'transparent',
+        borderColor: on ? 'color-mix(in srgb, var(--accent-gold) 45%, transparent)' : 'transparent',
       }}
       title={on
         ? 'Turn tracing off'
@@ -1210,19 +1212,29 @@ function Filmstrip({
                 style={{
                   width: compact ? 38 : 42,
                   height: compact ? 50 : 54,
-                  background: isCurrent ? 'var(--bg-warm)' : 'rgba(245,240,232,0.42)',
-                  boxShadow: isCurrent ? '0 0 0 3px #9e4a3a' : 'none',
+                  background: isCurrent ? '#fdfcf9' : 'rgba(245,240,232,0.30)',
+                  boxShadow: isCurrent ? '0 0 0 3px #c2412c, 0 0 0 5px rgba(194,65,44,0.28)' : 'none',
                 }}
               >
                 {thumb && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={thumb} alt="" loading="lazy" decoding="async"
                     className="w-full h-full object-cover" draggable={false}
-                    style={{ opacity: isCurrent ? 1 : 0.75 }} />
+                    style={{
+                      // The neighbours recede so the current page is the only
+                      // one at full strength: the ring alone was not enough to
+                      // find it in a row of near-identical grey pages.
+                      opacity: isCurrent ? 1 : 0.42,
+                      filter: isCurrent ? 'none' : 'grayscale(0.5)',
+                    }} />
                 )}
               </span>
-              <span className="font-sans text-[9.5px] tabular-nums"
-                style={{ color: isCurrent ? '#fdfcf9' : onInk(0.42) }}>
+              <span
+                className="font-sans text-[9.5px] tabular-nums px-1"
+                style={isCurrent
+                  ? { color: '#fdfcf9', background: '#c2412c', fontWeight: 600 }
+                  : { color: onInk(0.38) }}
+              >
                 {p.page_number}
               </span>
             </button>
@@ -1973,6 +1985,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           )}
           {r.views.ocr && (
             <section
+              data-reader-section="ocr"
               className="flex-1 min-w-0 flex flex-col border-r"
               style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}
             >
@@ -1996,6 +2009,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               ) : (
                 <div
                   ref={ocrRef}
+                  data-reader-panel
                   onScroll={() => syncFrom('ocr')}
                   className="flex-1 min-h-0 overflow-y-auto px-[30px] py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
@@ -2006,7 +2020,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </section>
           )}
           {r.views.en && (
-            <section className="flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
+            <section data-reader-section="translation" className="flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   {traceEligible && (
@@ -2026,6 +2040,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               ) : (
                 <div
                   ref={enRef}
+                  data-reader-panel
                   onScroll={() => syncFrom('en')}
                   className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
@@ -2146,7 +2161,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </section>
           )}
           {r.views.ocr && (
-            <section className="border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
+            <section data-reader-section="ocr" className="border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
@@ -2158,13 +2173,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
               </div>
-              <div className="px-[22px] pt-4 pb-8">
+              <div data-reader-panel className="px-[22px] pt-4 pb-8">
                 <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
               </div>
             </section>
           )}
           {r.views.en && (
-            <section className="border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
+            <section data-reader-section="translation" className="border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>English</CapsLabel>
@@ -2179,7 +2194,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <CopyTextButton page={r.currentPage} kind="translation" />
                 </div>
               </div>
-              <div className="px-[22px] pt-4 pb-6">
+              <div data-reader-panel className="px-[22px] pt-4 pb-6">
                 <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16.5} />
               </div>
             </section>
