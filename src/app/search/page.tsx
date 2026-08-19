@@ -1629,7 +1629,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                 <>
                   {catalogResults.slice(0, 5).map(work => (
                     <BphCatalogResultCard
-                      key={work.ubn}
+                      key={work.ubn || work.uuid}
                       work={work}
                       query={query}
                       tenant={tenant}
