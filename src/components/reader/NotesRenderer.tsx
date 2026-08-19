@@ -11,6 +11,7 @@ import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
 import { applyNotesOff } from '@/lib/notes-off';
+import AiBadge from '@/components/ui/AiBadge';
 
 /**
  * Page types where the entire "translation" is AI-generated description (no
@@ -321,9 +322,20 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
 // is AI-generated description. The model wraps some of it in <note>/<image-desc> and
 // leaves the rest as plain prose, producing inconsistent half-highlighting. Since
 // there is no source text to distinguish from, unwrap those tags so the whole
-// description reads uniformly as plain text.
+// description reads uniformly.
+//
+// Unwrapping removes the per-chip highlight, so the *frame* has to carry the
+// provenance instead — see AiDescriptionFrame. Without it the AI's own prose
+// renders identically to transcribed text, which is what #2791 fixed for title
+// pages and what #4069 reported again on a pure `diagram` page: "the notes
+// aren't rendered with highlights". Uniform-and-marked, never unmarked.
 function unwrapDescriptionNotes(text: string): string {
   return text.replace(/<(note|image-desc)>([\s\S]*?)<\/\1>/gi, '$2');
+}
+
+/** "diagram" → "Diagram", "musical-score" → "Musical Score". */
+function formatPageTypeLabel(pageType: string): string {
+  return pageType.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 // Decide whether a page really is "description only". The page_type heuristic
@@ -820,6 +832,28 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 }
 
 /**
+ * The highlight for a description-only page, carried by the frame rather than by
+ * per-chip <note> spans (those are unwrapped — see unwrapDescriptionNotes).
+ *
+ * Same tokens as the inline `image-description` block above: accent-gold tint,
+ * hairline accent-gold border, plus the shared AiBadge provenance chip. No new
+ * design primitives.
+ */
+function AiDescriptionFrame({ pageTypeLabel, children }: { pageTypeLabel: string; children: ReactNode }) {
+  return (
+    <div className="rounded-lg border border-accent-gold/20 bg-accent-gold/8 px-4 py-3">
+      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-accent-gold-dark">
+        <AiBadge title="AI-generated description of the page image — not text from the book" />
+        <span>{pageTypeLabel} — description</span>
+      </div>
+      {/* The body keeps the normal reading colour — a long description tinted
+          gold is hard to read, and the badge + tinted frame already mark it. */}
+      {children}
+    </div>
+  );
+}
+
+/**
  * The full text pipeline, as a pure function so it can be exercised directly in
  * tests (the reader itself needs a DOM; this does not). Returns the markdown
  * string handed to the renderer, the extracted metadata panel content, and
@@ -919,7 +953,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   if (isDescriptionOnly && !showNotes) {
     return (
       <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
-        {(metadata.pageType || pageType || 'Image').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} page — toggle Notes to see description
+        {formatPageTypeLabel(metadata.pageType || pageType || 'Image')} page — toggle Notes to see description
       </div>
     );
   }
@@ -980,8 +1014,15 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
       {/* Collapsible metadata panel - hidden when showMetadata is false */}
       {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 
-      {/* Main text rendered as markdown */}
-      {columnSegments ? (
+      {/* Main text rendered as markdown. On a description-only page every word
+          is the AI's, and unwrapDescriptionNotes has removed the per-note
+          highlight chips — so the whole body goes inside one marked frame
+          (#4069). Ordinary pages are untouched: their notes keep their chips. */}
+      {isDescriptionOnly ? (
+        <AiDescriptionFrame pageTypeLabel={formatPageTypeLabel(metadata.pageType || pageType || 'Image')}>
+          <ColumnMarkdown text={processedText} showNotes={showNotes} withNotes={withNotes} />
+        </AiDescriptionFrame>
+      ) : columnSegments ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-0 border-stone-200 md:[&>*:first-child]:border-r md:[&>*:first-child]:pr-6">
           {columnSegments.map((segment, i) => (
             <div key={i}>
