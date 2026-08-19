@@ -384,6 +384,13 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
+  // A list has three states, not one. Collapsing them was the whole of #4070:
+  // an in-flight or failed fetch left the array empty, and empty rendered as
+  // "No conversations yet" — telling a reader with 112 conversations that they
+  // had none. Never infer emptiness from an array that hasn't loaded.
+  const [threadsState, setThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [myThreadsState, setMyThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [reloadMine, setReloadMine] = useState(0);
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
   // Default to "My Conversations" once signed in
   useEffect(() => {
@@ -476,10 +483,20 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
   // Fetch public threads
   useEffect(() => {
+    let live = true;
+    setThreadsState('loading');
     fetch('/api/embassy/threads?limit=50')
-      .then(r => r.json())
-      .then(data => { if (data.threads) setThreads(data.threads); })
-      .catch(() => { });
+      .then(async r => {
+        if (!r.ok) throw new Error(`threads ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setThreads(data.threads ?? []);
+        setThreadsState('ready');
+      })
+      .catch(() => { if (live) setThreadsState('error'); });
+    return () => { live = false; };
   }, []);
 
   // Blend up to two real visitor questions into the suggestion chips once
@@ -493,15 +510,30 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setSuggestions(pickSuggestions(6, extras));
   }, [threads]);
 
-  // Fetch user's own threads when signed in
+  // Fetch the reader's own threads once the session resolves. While NextAuth is
+  // still deciding (`status === 'loading'`) this list is NOT empty — it is
+  // unknown, so it stays in the loading state rather than claiming there is no
+  // history.
   useEffect(() => {
-    if (status === 'authenticated') {
-      fetch('/api/embassy/threads?mine=true&limit=20')
-        .then(r => r.json())
-        .then(data => { if (data.threads) setMyThreads(data.threads); })
-        .catch(() => { });
+    if (status !== 'authenticated') {
+      if (status === 'unauthenticated') setMyThreadsState('ready');
+      return;
     }
-  }, [status]);
+    let live = true;
+    setMyThreadsState('loading');
+    fetch('/api/embassy/threads?mine=true&limit=20')
+      .then(async r => {
+        if (!r.ok) throw new Error(`mine ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setMyThreads(data.threads ?? []);
+        setMyThreadsState('ready');
+      })
+      .catch(() => { if (live) setMyThreadsState('error'); });
+    return () => { live = false; };
+  }, [status, reloadMine]);
 
   // Auto-scroll
   useEffect(() => {
@@ -1249,11 +1281,46 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                 )}
 
                 {(() => {
-                  const allThreads = sidebarTab === 'mine' ? myThreads : threads;
+                  const isMine = sidebarTab === 'mine';
+                  const allThreads = isMine ? myThreads : threads;
+                  const listState = isMine ? myThreadsState : threadsState;
+                  // Session still resolving means "we don't know yet", not "none".
+                  const loading = listState === 'loading' || (isMine && status === 'loading');
+
+                  if (loading) {
+                    return (
+                      <div className="space-y-3" aria-busy="true">
+                        {[0, 1, 2].map(i => (
+                          <div key={i} className="py-3 border-b border-[#e8e4dc] animate-pulse">
+                            <div className="h-3 bg-[#e8e4dc] rounded w-5/6 mb-2" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-full mb-1.5" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-2/3" />
+                          </div>
+                        ))}
+                        <span className="sr-only">Loading conversations…</span>
+                      </div>
+                    );
+                  }
+
+                  if (listState === 'error') {
+                    return (
+                      <p className="text-[#8a8480] text-sm font-body">
+                        Couldn&rsquo;t load {isMine ? 'your conversations' : 'recent conversations'}.{' '}
+                        <button
+                          onClick={() => { if (isMine) setReloadMine(n => n + 1); else window.location.reload(); }}
+                          className="text-[#9e4a3a] hover:underline"
+                        >
+                          Try again
+                        </button>
+                        .
+                      </p>
+                    );
+                  }
+
                   if (allThreads.length === 0) {
                     return (
                       <p className="text-[#8a8480] text-sm font-body">
-                        {sidebarTab === 'mine'
+                        {isMine
                           ? 'No conversations yet. Ask the Librarian something!'
                           : 'No conversations yet. Be the first to ask the Librarian something.'}
                       </p>

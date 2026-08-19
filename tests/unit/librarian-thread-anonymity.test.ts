@@ -66,6 +66,11 @@ function fakeDb() {
               skip: () => ({ limit: () => ({ toArray: async () => [thread] }) }),
             }),
           }),
+          // The list route joins the first two messages in one pipeline rather
+          // than one query per thread, so the fake returns them pre-joined.
+          aggregate: () => ({
+            toArray: async () => [{ ...thread, firstMessages: MESSAGES }],
+          }),
         };
       }
       return {
