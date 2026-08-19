@@ -58,8 +58,16 @@ than a gap.
 
 ## Queue
 
-### 1. "Can I get your feedback?" — READY, awaiting send
+### 1. "Can I get your feedback?" — SENT 2026-08-19
 `scripts/email/feedback-newsletter-2026-08.body.html`
+
+Sent 2026-08-19 13:28 UTC as subject "Can I get your feedback on Source
+Library?" (Resend broadcast `77b35192`, 5,538 contacts), after a nine-day
+stall on a Resend contacts-quota block (2026-08-10) resolved by a billing fix.
+Two things learned at send time, both already fixed: the book count had
+drifted (19,420 → 22,069, re-measured per the rule above, PR #3880), and a
+single `@example.com` test contact in the audience makes Resend 422 the whole
+broadcast (filtered at three layers, PR #4077).
 
 Ask: **report anything that looks wrong.** Shows the three places to leave
 feedback, with screenshots, and makes the trust argument (don't trust any
