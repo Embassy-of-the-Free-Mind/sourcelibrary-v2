@@ -5,8 +5,8 @@ import Reader2C from '@/components/reader-v2/Reader2C';
 // Design preview route for reader redesign variant 2c "Study Desk".
 // Additive and noindex — the production reader at /book/[id]/page/[pageId]
 // is untouched. See design_handoff_reader_page README (2026-08).
-export const dynamic = 'force-dynamic';
-
+// No force-dynamic: /book/:path* is CDN-cached 24h, which would silently
+// override it (see tests/unit/dynamic-routes-not-edge-cached.test.ts).
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
