@@ -40,6 +40,7 @@ export async function getScriptClient(opts = {}) {
     maxPoolSize = 1,
     timeoutMs = DEFAULT_TIMEOUT_MS,
     noTimeout = false,
+    socketTimeoutMs = 30_000,
   } = opts;
 
   const uri = process.env.MONGODB_URI;
@@ -53,7 +54,7 @@ export async function getScriptClient(opts = {}) {
     minPoolSize: 0,
     serverSelectionTimeoutMS: 10_000,
     connectTimeoutMS: 10_000,
-    socketTimeoutMS: 30_000,
+    socketTimeoutMS: socketTimeoutMs,
     maxIdleTimeMS: 60_000,
   });
 

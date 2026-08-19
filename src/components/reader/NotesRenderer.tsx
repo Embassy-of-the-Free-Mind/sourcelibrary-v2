@@ -10,6 +10,8 @@ import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { applyNotesOff } from '@/lib/notes-off';
+import AiBadge from '@/components/ui/AiBadge';
 
 /**
  * Page types where the entire "translation" is AI-generated description (no
@@ -308,58 +310,32 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   return result;
 }
 
-// Handle <term> vocabulary chips when notes are hidden.
-// A trailing glossary entry is a <term> immediately followed by its defining <note>
-// (e.g. `<term>bite</term> <note>original: "morsus."</note>`). With notes off the
-// <note> renders as null, leaving the term chip dangling with no definition. Remove
-// the whole pair. A <term> followed by a <gloss> is the same shape inline in prose
-// (`(<term>feng hou</term> <gloss>beacon towers</gloss>)`) — there the term IS the
-// transcribed word, so keep it and drop only the AI's rendering of it, otherwise the
-// unwrapped gloss reads as a duplicate. Any remaining <term> is inline within running
-// prose — unwrap it to plain text so the sentence stays intact, minus the chip.
-function preprocessTerms(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  return text
-    .replace(/<term>[\s\S]*?<\/term>\s*<note>[\s\S]*?<\/note>/gi, '')
-    .replace(/(<term>[\s\S]*?<\/term>)\s*<gloss>[\s\S]*?<\/gloss>/gi, '$1')
-    .replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
-}
-
-// Tags that mark text physically present on the page (a marginal note in the
-// original, a scribal insertion, an uncertain reading) as opposed to <note>/
-// <image-desc>, which are the AI's own commentary. Turning Notes off must never
-// delete a page mark's content — that is transcription, and on pages whose text
-// is mostly labels (maps, diagrams, plates) deleting it empties the page.
-// Unwrap them instead: the words stay, the highlight chip goes.
-const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
-
-function unwrapPageMarks(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  return text.replace(
-    new RegExp(`<(${PAGE_MARK_TAGS})(?:\\s[^>]*)?>([\\s\\S]*?)<\\/\\1>`, 'gi'),
-    '$2'
-  );
-}
-
-// The AI's own commentary — the only thing the Notes toggle should hide.
-// Removed here rather than left to the component's `showNotes ? … : null`
-// branches so that one pass decides what "notes off" means: whatever survives
-// this function is page text. Runs after unwrapPageMarks, so a note nested
-// inside a page mark is already flattened into it by normalizeAnnotationSpans.
-function stripAiAnnotations(text: string, showNotes: boolean): string {
-  if (showNotes) return text;
-  return text
-    .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
-    .replace(/\n{3,}/g, '\n\n');
-}
+// What "notes off" means — the dangling-term rule, the page-mark unwrap, and the
+// AI-annotation strip — now lives in @/lib/notes-off so the reader and the
+// exports share one definition. It had been re-implemented on five surfaces and
+// drifted: #3811 fixed the reader deleting translated words, and the EPUB/HTML
+// download was still doing it (plus deleting page-mark content) months later
+// (#3870). Read the doc comments there; this component only decides WHEN to
+// apply it, never what it does.
 
 // On description-only pages (illustrations, diagrams, etc.) the entire "translation"
 // is AI-generated description. The model wraps some of it in <note>/<image-desc> and
 // leaves the rest as plain prose, producing inconsistent half-highlighting. Since
 // there is no source text to distinguish from, unwrap those tags so the whole
-// description reads uniformly as plain text.
+// description reads uniformly.
+//
+// Unwrapping removes the per-chip highlight, so the *frame* has to carry the
+// provenance instead — see AiDescriptionFrame. Without it the AI's own prose
+// renders identically to transcribed text, which is what #2791 fixed for title
+// pages and what #4069 reported again on a pure `diagram` page: "the notes
+// aren't rendered with highlights". Uniform-and-marked, never unmarked.
 function unwrapDescriptionNotes(text: string): string {
   return text.replace(/<(note|image-desc)>([\s\S]*?)<\/\1>/gi, '$2');
+}
+
+/** "diagram" → "Diagram", "musical-score" → "Musical Score". */
+function formatPageTypeLabel(pageType: string): string {
+  return pageType.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 // Decide whether a page really is "description only". The page_type heuristic
@@ -856,6 +832,28 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 }
 
 /**
+ * The highlight for a description-only page, carried by the frame rather than by
+ * per-chip <note> spans (those are unwrapped — see unwrapDescriptionNotes).
+ *
+ * Same tokens as the inline `image-description` block above: accent-gold tint,
+ * hairline accent-gold border, plus the shared AiBadge provenance chip. No new
+ * design primitives.
+ */
+function AiDescriptionFrame({ pageTypeLabel, children }: { pageTypeLabel: string; children: ReactNode }) {
+  return (
+    <div className="rounded-lg border border-accent-gold/20 bg-accent-gold/8 px-4 py-3">
+      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-accent-gold-dark">
+        <AiBadge title="AI-generated description of the page image — not text from the book" />
+        <span>{pageTypeLabel} — description</span>
+      </div>
+      {/* The body keeps the normal reading colour — a long description tinted
+          gold is hard to read, and the badge + tinted frame already mark it. */}
+      {children}
+    </div>
+  );
+}
+
+/**
  * The full text pipeline, as a pure function so it can be exercised directly in
  * tests (the reader itself needs a DOM; this does not). Returns the markdown
  * string handed to the renderer, the extracted metadata panel content, and
@@ -890,10 +888,9 @@ export function prepareNotesMarkdown(
     (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
       DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
     !hasBodyTextOutsideNotes(withNormalizedSpans);
-  // Drop dangling vocabulary chips when notes are off (see preprocessTerms).
-  const withTerms = preprocessTerms(withNormalizedSpans, showNotes);
-  // Keep transcribed page marks when notes are off; drop only the AI's commentary.
-  const withPageMarks = stripAiAnnotations(unwrapPageMarks(withTerms, showNotes), showNotes);
+  // Notes off: drop dangling vocabulary chips, keep transcribed page marks, drop
+  // only the AI's commentary. One shared definition — see @/lib/notes-off.
+  const withPageMarks = showNotes ? withNormalizedSpans : applyNotesOff(withNormalizedSpans);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
   const withDescription = isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withPageMarks) : withPageMarks;
   const withGreek = preprocessLatexGreek(withDescription);
@@ -956,7 +953,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   if (isDescriptionOnly && !showNotes) {
     return (
       <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
-        {(metadata.pageType || pageType || 'Image').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} page — toggle Notes to see description
+        {formatPageTypeLabel(metadata.pageType || pageType || 'Image')} page — toggle Notes to see description
       </div>
     );
   }
@@ -1017,8 +1014,15 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
       {/* Collapsible metadata panel - hidden when showMetadata is false */}
       {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 
-      {/* Main text rendered as markdown */}
-      {columnSegments ? (
+      {/* Main text rendered as markdown. On a description-only page every word
+          is the AI's, and unwrapDescriptionNotes has removed the per-note
+          highlight chips — so the whole body goes inside one marked frame
+          (#4069). Ordinary pages are untouched: their notes keep their chips. */}
+      {isDescriptionOnly ? (
+        <AiDescriptionFrame pageTypeLabel={formatPageTypeLabel(metadata.pageType || pageType || 'Image')}>
+          <ColumnMarkdown text={processedText} showNotes={showNotes} withNotes={withNotes} />
+        </AiDescriptionFrame>
+      ) : columnSegments ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-0 border-stone-200 md:[&>*:first-child]:border-r md:[&>*:first-child]:pr-6">
           {columnSegments.map((segment, i) => (
             <div key={i}>

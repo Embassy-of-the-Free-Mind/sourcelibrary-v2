@@ -96,8 +96,10 @@ export async function selectBestCover(
     throw new Error(`Book not found for cover selection. Book ID: ${bookId}`);
   }
 
+  // `page_number >= 0` excludes archived spreads (negative numbers), which
+  // would otherwise sort first and crowd real leaves out of the sample.
   const pages = await db.collection('pages')
-    .find({ book_id: bookId })
+    .find({ book_id: bookId, page_number: { $gte: 0 } })
     .sort({ page_number: 1 })
     .limit(maxPages)
     .toArray();

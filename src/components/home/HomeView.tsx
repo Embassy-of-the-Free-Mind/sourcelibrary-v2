@@ -18,7 +18,7 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, spanishPodcast } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
   return (
@@ -28,17 +28,21 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {/* Video Hero */}
       <HeroSection lang={lang} />
 
-      {/* Spanish podcast feature — the first real Spanish content a /es visitor
-          meets. Only rendered on /es, so the English homepage is unchanged. */}
-      {lang === 'es' && spanishPodcast && (
+      {/* Featured podcast episode, in the page's own language.
+          Was /es-only; now on both homepages, and it is the podcast's primary
+          entry point since the header nav item was retired (see SiteHeader).
+          Renders nothing when that language has no published episode, which is
+          currently the state of several languages — an empty section is correct,
+          not a bug. */}
+      {featuredPodcast && (
         <section className="py-14 md:py-20" style={{ background: 'var(--bg-dark)' }}>
           <div className="px-6 md:px-12 max-w-[1100px] mx-auto">
             <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 items-center">
-              {spanishPodcast.heroImageUrl && (
-                <Link href={`/podcast/${spanishPodcast.threadId}`} className="block rounded-xl overflow-hidden bg-black/30">
+              {featuredPodcast.heroImageUrl && (
+                <Link href={`/podcast/${featuredPodcast.threadId}`} className="block rounded-xl overflow-hidden bg-black/30">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/api/image?url=${encodeURIComponent(spanishPodcast.heroImageUrl)}&w=720&q=85`}
+                    src={`/api/image?url=${encodeURIComponent(featuredPodcast.heroImageUrl)}&w=720&q=85`}
                     alt=""
                     className="w-full max-h-[360px] object-contain"
                     loading="lazy"
@@ -50,23 +54,23 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                   {t.podcastEyebrow}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-display mb-4 leading-snug" style={{ color: '#f5f0e8' }}>
-                  {spanishPodcast.title}
+                  {featuredPodcast.title}
                 </h2>
                 <p className="text-base leading-relaxed mb-5" style={{ color: '#b8b2a8' }}>
-                  {spanishPodcast.topic}
+                  {featuredPodcast.topic}
                 </p>
 
-                <audio controls preload="none" src={spanishPodcast.audioUrl} className="w-full mb-5">
-                  <a href={spanishPodcast.audioUrl}>{t.podcastListen}</a>
+                <audio controls preload="none" src={featuredPodcast.audioUrl} className="w-full mb-5">
+                  <a href={featuredPodcast.audioUrl}>{t.podcastListen}</a>
                 </audio>
 
-                {spanishPodcast.sources.length > 0 && (
+                {featuredPodcast.sources.length > 0 && (
                   <div className="mb-5">
                     <p className="text-xs uppercase tracking-wider mb-2" style={{ color: '#8a8480' }}>
                       {t.podcastSourcesLabel}
                     </p>
                     <ul className="space-y-1.5">
-                      {spanishPodcast.sources.map((s) => (
+                      {featuredPodcast.sources.map((s) => (
                         <li key={s.bookId}>
                           <Link
                             href={`/book/${s.slug || s.bookId}`}
@@ -87,7 +91,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 )}
 
                 <Link
-                  href={`/podcast/${spanishPodcast.threadId}`}
+                  href={`/podcast/${featuredPodcast.threadId}`}
                   className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-full transition-all hover:brightness-110"
                   style={{ background: 'var(--accent-rust)', color: '#fff' }}
                 >

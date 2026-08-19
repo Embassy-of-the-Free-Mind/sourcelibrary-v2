@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       'With 4,200+ translated books — 2,400+ for the first time ever — Source Library surpasses every comparable collection. And it\'s free.',
     images: [
       {
-        url: 'https://sourcelibrary.org/og-image.png',
+        url: 'https://sourcelibrary.org/og-image.jpg',
         width: 1200,
         height: 630,
       },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://sourcelibrary.org/og-image.png' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg' }],
   },
   alternates: {
     canonical: '/blog/worlds-largest-collection',

@@ -27,7 +27,20 @@ export function trackEvent(
     // nobody could reach — which is exactly what it turned out to be (#3448).
     | 'welcome_view'
     | 'welcome_save'
-    | 'welcome_skip',
+    | 'welcome_skip'
+    // Outbound conversion clicks, fired by <OutboundLink>. `donate_click` is a
+    // handoff to a payment destination (NAF's DonorPerfect form, the Embassy's
+    // Stripe link); `inquiry_click` is a handoff to email for a partnership,
+    // licensing, dataset, or library ask. Both leave our origin, so the click is
+    // the last thing we can see — the gift itself lands in someone else's system
+    // with no webhook back to us. Never treat the count as revenue.
+    | 'donate_click'
+    | 'inquiry_click'
+    // give_nav_click: a press on a control that navigates to /give, carrying
+    // `source` ('header' | 'footer'). The referrer cannot answer this — see the
+    // note in analytics-event-allowlist.ts. Relies on this function's sendBeacon
+    // transport to survive the navigation it triggers.
+    | 'give_nav_click',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;

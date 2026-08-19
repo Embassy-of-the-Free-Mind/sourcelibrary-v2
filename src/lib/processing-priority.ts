@@ -94,6 +94,21 @@ const LANGUAGE_SCORES: Record<string, number> = {
   'Portuguese': 9,
   // Already readable — just OCR, skip translation
   'English': 2,
+  // Loop-prone scripts on the current translation lane (#3826): measured
+  // 2026-08-08/09 at $0.08–0.10/page (20–26× Latin) with high recitation-loop
+  // rates on both OCR and translation. Deprioritized until a dedicated
+  // non-Latin lane exists — raise these when that lane lands.
+  'Tibetan': 4,
+  'Syriac': 5,
+  "Ge'ez": 5,
+  'Geez': 5,
+  'Georgian': 5,
+  'Javanese': 4,
+  'Egyptian hieroglyphs': 4,
+  'Avestan': 4,
+  'Armenian': 6,
+  'Sanskrit': 6,
+  'Pali': 6,
 };
 
 function scoreLanguagePriority(language: string): { score: number; reasoning: string } {

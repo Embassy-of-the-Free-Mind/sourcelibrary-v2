@@ -17,6 +17,7 @@ import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
+import { catalogKeyColumn } from '@/lib/bph-catalog-key';
 
 // Catalogue entry routing
 // - BPH (providerKey === 'bph'): legacy `bph_works` table + bespoke fields
@@ -44,6 +45,23 @@ function normalizeUbn(raw: string): string {
   }
 }
 
+/**
+ * 2,012 catalogue rows have NO ubn at all — every one of the 110 `Fot`
+ * photographs and 442 of the `M ` manuscripts among them. Memorix simply does
+ * not issue a UBN for those record types. Since this route keyed on `ubn`, and
+ * the browser's `detailUrl()` returns null without one, those records had no
+ * address anywhere on the site: they rendered as plain text in the catalogue and
+ * could not be opened. Reported twice by BPH staff — José Bouman 2026-07-31
+ * ("not possible to click on titles with a shelf mark M (+number), nor on those
+ * with shelfmark Fot (+ number)") and Natalie Koch 2026-08-05 ("the manuscript
+ * records aren't clickable yet").
+ *
+ * They all carry a `uuid`, so the route accepts either key. A UBN is a short
+ * digit string and a uuid is 8-4-4-4-12 hex, so the two can never be confused.
+ */
+// Rule + collision proof live in src/lib/bph-catalog-key.ts, pinned by
+// tests/unit/bph-catalog-key.test.ts.
+
 interface FieldProvenance {
   source: string;
   evidence?: string;
@@ -51,7 +69,12 @@ interface FieldProvenance {
 }
 
 interface BphWorkRow {
-  ubn: string;
+  ubn: string | null;
+  // Present on every row; the only key the 2,012 UBN-less records have.
+  uuid: string | null;
+  // Manuscript records carry their title here rather than in `title`, which is
+  // null on all 812 of them. Without this fallback they render "(untitled)".
+  full_title: string | null;
   title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
@@ -136,11 +159,25 @@ interface SlBook {
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
+  const row = await fetchWorkBy(catalogKeyColumn(ubn), ubn);
+  if (row) return row;
+  // Second chance on the primary key. `bph_works.id` is a DIFFERENT uuid from
+  // `bph_works.uuid`, and until 2026-08-13 the workspace worklist built its
+  // sample links from `id` — so every link a librarian copied or bookmarked out
+  // of "Needs your attention" addresses a key `catalogKeyColumn` sends to the
+  // `uuid` column, where it matches nothing (José Bouman, 2026-08-12). The RPC
+  // now emits `uuid`, but those older links are already out in the world.
+  if (catalogKeyColumn(ubn) === 'uuid') return fetchWorkBy('id', ubn);
+  return null;
+}
+
+async function fetchWorkBy(col: 'ubn' | 'uuid' | 'id', ubn: string): Promise<BphWorkRow | null> {
   // Try with the external-link columns first; if the column doesn't exist yet
   // (migration not applied on this environment), retry without them so the
   // page still renders.
   const select = `
-      ubn, title, parallel_title, uniform_title,
+      ubn, uuid, full_title,
+      title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
       author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,
       place, printer, publisher, variant_printer, variant_publisher,
@@ -167,15 +204,15 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
   );
-  const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
+  const first = await supabase.from('bph_works').select(select).eq(col, ubn).maybeSingle();
   if (first.error) {
     const msg = (first.error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {
-      const retry = await supabase.from('bph_works').select(fallbackSelect).eq('ubn', ubn).maybeSingle();
+      const retry = await supabase.from('bph_works').select(fallbackSelect).eq(col, ubn).maybeSingle();
       if (retry.error) {
         const retryMsg = (retry.error.message || '').toLowerCase();
         if (retryMsg.includes('does not exist') || retryMsg.includes('could not find')) {
-          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq('ubn', ubn).maybeSingle();
+          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq(col, ubn).maybeSingle();
           return (retry2.data as BphWorkRow | null) ?? null;
         }
         return null;
@@ -319,7 +356,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const work = await fetchWork(ubn);
   if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
-  const title = work.title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
+  const title = work.title || work.full_title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
   const author = work.author || work.variant_author || '';
   const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '—'}.`;
   return { title: `${title} - BPH catalogue`, description };
@@ -362,7 +399,8 @@ export default async function CatalogEntryPage({ params }: Props) {
   // usePathname() is the same mistake that broke #3383.)
   const requestHeaders = await headers();
   const requestHost = requestHeaders.get('host') || '';
-  const publicPath = `/catalog/${encodeURIComponent(work.ubn)}`;
+  // UBN-less records (manuscripts, photographs) are addressed by uuid.
+  const publicPath = `/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}`;
   const signInHref = buildSignInHref(
     requestHost,
     requestHost ? `https://${requestHost}${publicPath}` : publicPath
@@ -379,7 +417,9 @@ export default async function CatalogEntryPage({ params }: Props) {
     ? await fetchExternalBook(work.sl_external_book_id)
     : null;
 
-  const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
+  // Manuscripts keep their title in full_title; `title` is null on all 812.
+  const displayTitle = work.title || work.full_title || work.parallel_title || work.uniform_title
+    || (work.shelf_mark ? `(untitled — ${work.shelf_mark})` : `(untitled — ${work.ubn || work.uuid})`);
   const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
@@ -407,7 +447,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             New search
           </a>
         </div>
-        <CatalogEditorNav role={role} ubn={work.ubn} editLabel={editLabel} />
+        <CatalogEditorNav role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}
@@ -727,7 +767,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             <>
               {' '}
               <a
-                href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+                href={`/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}/edit`}
                 className="text-accent-rust hover:underline"
               >
                 {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}

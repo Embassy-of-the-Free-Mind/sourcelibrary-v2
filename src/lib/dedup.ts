@@ -11,11 +11,12 @@
  */
 
 import type { Db } from 'mongodb';
+import { buildEditionKey } from './edition-key';
 
 export interface DedupMatch {
   matchedBookId: string;
   matchedTitle: string;
-  matchType: 'source_fingerprint' | 'title_author' | 'iiif_manifest';
+  matchType: 'source_fingerprint' | 'title_author' | 'iiif_manifest' | 'edition_key';
   confidence: 'exact' | 'high' | 'medium';
   /** Whether the already-existing match is public. Hidden matches still count as
    * duplicates — this lets callers/auditors distinguish a live dup from a backlog one. */
@@ -129,9 +130,15 @@ export function extractVolume(title?: string | null): number | null {
 /**
  * Best-effort publication year for edition comparison. Prefers a numeric
  * `year`, else parses the first 3–4 digit run out of `published`.
+ *
+ * Negative years are BCE and are returned as-is. They used to be rejected by a
+ * `> 0` guard, which then fell through to digit-scraping `published` — and for
+ * an ancient object that string is prose, so "Ur III / Old Babylonian
+ * (c. 2100–1600 BCE)" scraped to the year 2100 CE. Trusting the numeric field
+ * is strictly more correct for the ~600 live books dated BCE.
  */
 export function editionYear(book: { year?: number | null; published?: string | null }): number | null {
-  if (typeof book.year === 'number' && book.year > 0) return book.year;
+  if (typeof book.year === 'number' && Number.isFinite(book.year) && book.year !== 0) return book.year;
   if (book.published) {
     const m = String(book.published).match(/\b(\d{3,4})\b/);
     if (m) return parseInt(m[1], 10);
@@ -193,15 +200,166 @@ export function sourceFingerprint(book: {
   return null;
 }
 
+// NOTE: dedup does NOT filter on `visible`. A duplicate is a duplicate whether
+// or not the existing copy is public — and imports land hidden, so a
+// visible-only check is blind to the entire hidden backlog (the regime we now
+// import into at volume). We surface the match's visibility instead of hiding it.
+const VIS_PROJ = { id: 1, title: 1, display_title: 1, year: 1, published: 1, visible: 1, hidden: 1, edition_key: 1 };
+
+// Check BOTH the live library and the warehouse. `books_warehouse` holds books
+// we've already acquired + archived that are awaiting promotion to `books`
+// (pipeline Phase 1.95). A duplicate there is still a duplicate — skipping the
+// warehouse re-acquires ~items we already hold. (issue: warehouse dedup gap)
+const COLLECTIONS: Array<'books' | 'books_warehouse'> = ['books', 'books_warehouse'];
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * The edition-key tier (#3730 §2) — the intended REPLACEMENT for tier 2's
+ * normalized title+author match, running in shadow until it earns the flip.
+ *
+ * Matches on the stored `edition_key` (`title|surname|year|vN`, Unicode-aware
+ * — see src/lib/edition-key.ts): every stored key sharing the candidate's
+ * `title|surname|` prefix matches unless BOTH sides state a different year or
+ * volume. A missing year/volume is non-distinguishing — the safe error is
+ * "assume duplicate", exactly tier 2's veto rule. Full-quality vs full-quality
+ * thereby reduces to exact key equality.
+ *
+ * Why it should win (shadow-measured 2026-08-08, PR #3787 — 99.94% agreement
+ * over 20,326 real candidates, 0 unexplained regressions):
+ *   - non-Latin titles: ASCII `normalized_title` is empty/garbage for them;
+ *     the edition key keeps any Unicode letter (6 catches in the sample);
+ *   - author forms: the surname unifies what whole-name matching splits
+ *     (Erhard/Erhardus, Niclaus/Nicolaus);
+ *   - volume window: every volume of a set shares one normalized_title, so
+ *     tier 2's 5-row window fills with wrong volumes and vetoes them all —
+ *     the key carries the volume, so the lookup lands on the right printing.
+ *
+ * The candidate's key is computed on the fly; the stored side was stamped by
+ * Phase 0 (identity-worker covers `books` AND `books_warehouse`).
+ */
+export async function editionKeyTierMatches(
+  db: Db,
+  book: { title?: string | null; display_title?: string | null; author?: string | null; year?: number | null; published?: string | null }
+): Promise<DedupMatch[]> {
+  const ek = buildEditionKey(book);
+  if (!ek.key) return [];
+  const { title, author, year, volume } = ek.parts;
+  const prefix = new RegExp(`^${escapeRegex(`${title}|${author}|`)}`);
+
+  const matches: DedupMatch[] = [];
+  for (const cn of COLLECTIONS) {
+    const rows = await db.collection(cn).find(
+      { edition_key: prefix },
+      { projection: VIS_PROJ }
+    ).limit(25).toArray();
+    for (const doc of rows) {
+      // The regex already guarantees a well-formed key on a real DB; the guard
+      // is for test doubles and any future caller passing a looser query.
+      if (typeof doc.edition_key !== 'string' || !doc.edition_key.includes('|')) continue;
+      // Stored key: `title|surname|year|vN`. Normalized parts never contain
+      // '|' (normalization strips punctuation), so positional split is safe.
+      const segs = String(doc.edition_key).split('|');
+      const volSeg = segs[segs.length - 1] || '';
+      const yearSeg = segs[segs.length - 2] || '';
+      const tmYear = yearSeg === '' ? null : parseInt(yearSeg, 10);
+      const tmVol = volSeg === 'v' ? null : parseInt(volSeg.slice(1), 10);
+      if (year != null && tmYear != null && year !== tmYear) continue;
+      if (volume != null && tmVol != null && volume !== tmVol) continue;
+      const id = doc.id || doc._id.toString();
+      if (matches.some(m => m.matchedBookId === id)) continue;
+      matches.push({
+        matchedBookId: id,
+        matchedTitle: doc.title,
+        matchType: 'edition_key',
+        confidence: 'high',
+        matchedVisible: doc.visible === true,
+        matchedCollection: cn,
+      });
+    }
+  }
+  return matches;
+}
+
+/**
+ * The RETIRED tier 2 — normalized title+author with year/volume veto. Kept
+ * (not deleted) for one release cycle as the post-flip shadow: it runs on
+ * every real decision and its would-be verdict is logged next to the edition
+ * tier's, so a regression in the flip shows up in `dedup_shadow_decisions`
+ * as a LIVE-ONLY-inverted row instead of as silently re-acquired duplicates.
+ * Remove together with the shadow block once the post-flip week is clean.
+ *
+ * Known, measured weaknesses (why it lost the tier-2 slot — PR #3787):
+ * ASCII-blind to non-Latin titles, whole-name author matching splits
+ * catalogue name variants, and the 5-row window goes blind on multi-volume
+ * sets. See `editionKeyTierMatches()` above.
+ */
+export async function titleAuthorTierMatches(
+  db: Db,
+  book: { title: string; author: string; display_title?: string; year?: number; published?: string }
+): Promise<DedupMatch[]> {
+  const normTitle = normalizeTitle(book.title);
+  const normAuthor = normalizeAuthor(book.author);
+  const candYear = editionYear(book);
+  const candVol = extractVolume(book.display_title) ?? extractVolume(book.title);
+  const matches: DedupMatch[] = [];
+
+  if (normTitle.length < 5) return matches;
+  for (const cn of COLLECTIONS) {
+    const titleMatches = await db.collection(cn).find(
+      {
+        normalized_title: normTitle,
+        normalized_author: normAuthor,
+      },
+      { projection: VIS_PROJ }
+    ).limit(5).toArray();
+
+    for (const tm of titleMatches) {
+      const id = tm.id || tm._id.toString();
+      if (matches.some(m => m.matchedBookId === id)) continue;
+
+      // Different edition? Only conclude so when BOTH sides carry the signal —
+      // a missing year/volume can't distinguish editions, so fall back to
+      // treating the title+author collision as a duplicate (the safe error).
+      const tmYear = editionYear(tm as { year?: number | null; published?: string | null });
+      const tmVol = extractVolume(tm.display_title) ?? extractVolume(tm.title);
+      const differentYear = candYear != null && tmYear != null && candYear !== tmYear;
+      const differentVolume = candVol != null && tmVol != null && candVol !== tmVol;
+      if (differentYear || differentVolume) continue;
+
+      matches.push({
+        matchedBookId: id,
+        matchedTitle: tm.title,
+        matchType: 'title_author',
+        confidence: 'high',
+        matchedVisible: tm.visible === true,
+        matchedCollection: cn,
+      });
+    }
+  }
+  return matches;
+}
+
 /**
  * Check if a book is a duplicate before importing.
  *
  * Runs three tiers of matching:
  *   1. Source fingerprint — exact match on provider-specific IDs
- *   2. Title+Author — normalized fuzzy match
+ *   2. Edition key — stored-identity match (FLIPPED 2026-08-08, #3730 §2;
+ *      replaced the normalized title+author match after an offline replay of
+ *      20,326 real candidates showed 99.94% agreement and 0 regressions)
  *   3. IIIF manifest URL — exact match
  *
  * Returns all matches found (caller decides whether to block import).
+ *
+ * Plus a SHADOW pass: the RETIRED title+author tier still runs on every real
+ * call and both verdicts land in `dedup_shadow_decisions` (`regime:
+ * 'edition_live'`) — the rollback trigger for the flip, read by
+ * scripts/audit/dedup-shadow-agreement.mjs. Callers replaying books that are
+ * ALREADY in the database (audit scripts) must pass `{ shadowLog: false }` or
+ * every replay self-match pollutes the stats.
  */
 export async function checkDuplicate(
   db: Db,
@@ -230,21 +388,10 @@ export async function checkDuplicate(
     dublin_core?: {
       dc_identifier?: string[];
     };
-  }
+  },
+  opts: { shadowLog?: boolean } = {}
 ): Promise<DedupResult> {
   const matches: DedupMatch[] = [];
-
-  // NOTE: dedup does NOT filter on `visible`. A duplicate is a duplicate whether
-  // or not the existing copy is public — and imports land hidden, so a
-  // visible-only check is blind to the entire hidden backlog (the regime we now
-  // import into at volume). We surface the match's visibility instead of hiding it.
-  const VIS_PROJ = { id: 1, title: 1, display_title: 1, year: 1, published: 1, visible: 1, hidden: 1 };
-
-  // Check BOTH the live library and the warehouse. `books_warehouse` holds books
-  // we've already acquired + archived that are awaiting promotion to `books`
-  // (pipeline Phase 1.95). A duplicate there is still a duplicate — skipping the
-  // warehouse re-acquires ~items we already hold. (issue: warehouse dedup gap)
-  const COLLECTIONS: Array<'books' | 'books_warehouse'> = ['books', 'books_warehouse'];
   const seen = (id: string) => matches.some(m => m.matchedBookId === id);
 
   // Tier 1: Source fingerprint match (exact)
@@ -269,53 +416,14 @@ export async function checkDuplicate(
     }
   }
 
-  // Tier 2: Normalized title+author match (high)
-  //
-  // Holding multiple EDITIONS of one work is a first-class case here (the
-  // work_id / original_edition_id / text_role layers exist for exactly this).
-  // A normalized title+author collision is therefore only a duplicate when the
-  // candidate and the match are the SAME edition. Two records that differ in
-  // publication year — or in volume, which normalizeTitle() strips out — are
-  // distinct editions and must be allowed through. (Tiers 1 and 3 still
-  // hard-block a true same-item re-import regardless of year.)
-  const normTitle = normalizeTitle(book.title);
-  const normAuthor = normalizeAuthor(book.author);
-  const candYear = editionYear(book);
-  const candVol = extractVolume(book.display_title) ?? extractVolume(book.title);
-
-  if (normTitle.length >= 5) {
-    for (const cn of COLLECTIONS) {
-      const titleMatches = await db.collection(cn).find(
-        {
-          normalized_title: normTitle,
-          normalized_author: normAuthor,
-        },
-        { projection: VIS_PROJ }
-      ).limit(5).toArray();
-
-      for (const tm of titleMatches) {
-        const id = tm.id || tm._id.toString();
-        if (seen(id)) continue;
-
-        // Different edition? Only conclude so when BOTH sides carry the signal —
-        // a missing year/volume can't distinguish editions, so fall back to
-        // treating the title+author collision as a duplicate (the safe error).
-        const tmYear = editionYear(tm as { year?: number | null; published?: string | null });
-        const tmVol = extractVolume(tm.display_title) ?? extractVolume(tm.title);
-        const differentYear = candYear != null && tmYear != null && candYear !== tmYear;
-        const differentVolume = candVol != null && tmVol != null && candVol !== tmVol;
-        if (differentYear || differentVolume) continue;
-
-        matches.push({
-          matchedBookId: id,
-          matchedTitle: tm.title,
-          matchType: 'title_author',
-          confidence: 'high',
-          matchedVisible: tm.visible === true,
-          matchedCollection: cn,
-        });
-      }
-    }
+  // Tier 2: Edition-key match (high) — the identity layer deciding, not a
+  // string heuristic. Holding multiple EDITIONS of one work stays first-class:
+  // the key carries year and volume, and a both-sides difference in either
+  // means distinct editions, allowed through; a MISSING year/volume stays
+  // non-distinguishing (the safe error is "assume duplicate"). Tiers 1 and 3
+  // still hard-block a true same-item re-import regardless of year.
+  for (const em of await editionKeyTierMatches(db, book)) {
+    if (!seen(em.matchedBookId)) matches.push(em);
   }
 
   // Tier 3: IIIF manifest URL match (exact)
@@ -338,6 +446,34 @@ export async function checkDuplicate(
           matchedCollection: cn,
         });
       }
+    }
+  }
+
+  // SHADOW pass — logs, never decides. Roles are SWAPPED since the flip: the
+  // edition tier is live, the retired title+author tier is the shadow. A
+  // shadow-only row here means the OLD tier would have flagged something the
+  // NEW one lets through — the regression signature to watch for a week.
+  // Awaited (fire-and-forget dies with the serverless invocation) but fully
+  // fenced: no failure here may affect the import verdict.
+  if (opts.shadowLog !== false) {
+    try {
+      const shadow = await titleAuthorTierMatches(db, book);
+      const liveTier2 = matches.filter(m => m.matchType === 'edition_key');
+      await db.collection('dedup_shadow_decisions').insertOne({
+        at: new Date(),
+        regime: 'edition_live',
+        title: String(book.title || '').slice(0, 200),
+        author: String(book.author || '').slice(0, 120),
+        year: editionYear(book),
+        live_tier2: liveTier2.map(m => m.matchedBookId),
+        live_other_tiers: matches.filter(m => m.matchType !== 'edition_key').map(m => m.matchedBookId),
+        shadow: shadow.map(m => m.matchedBookId),
+        // Compares the flipped tier against the tier it replaced —
+        // fingerprint/IIIF are untouched by the flip.
+        agree: (liveTier2.length > 0) === (shadow.length > 0),
+      });
+    } catch {
+      // Shadow logging must never fail an import.
     }
   }
 

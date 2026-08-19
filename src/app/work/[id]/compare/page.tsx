@@ -1,11 +1,16 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import CompareClient from './CompareClient';
+import { editionYear } from '@/lib/dedup';
+import { canonWork, workEditionsFilter } from '@/lib/canon-works';
+import { workAliasTarget } from '@/lib/work-alias';
 
-export const revalidate = false;
+// Must be a finite number — `false` would cache a bad render forever (same
+// rule as the parent work page; see CLAUDE.md on ISR + fallible fetches).
+export const revalidate = 21600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
@@ -53,7 +58,7 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
   const editions = await db
     .collection('books')
     .find(
-      { $or: [{ work_slug: workId }, { work_id: workId }], visible: true },
+      workEditionsFilter(workId),
       {
         projection: {
           id: 1,
@@ -68,12 +73,21 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
           chapters: 1,
           thumbnail: 1, image_display: 1,
           thumbnail_blob: 1, image_thumb: 1,
-          work_title: 1,
+          work_title: 1, year: 1,
         },
-        sort: { published: 1 },
       }
     )
     .toArray();
+  // Same fix as /work/[id]: `published` is free text, so the old
+  // `sort: { published: 1 }` was a lexical sort that placed "550" after "1750".
+  editions.sort((a, b) => {
+    const ya = editionYear(a as { year?: number | null; published?: string | null });
+    const yb = editionYear(b as { year?: number | null; published?: string | null });
+    if (ya === null && yb === null) return 0;
+    if (ya === null) return 1;
+    if (yb === null) return -1;
+    return ya - yb;
+  });
   return editions.map((e) => ({
     id: (e.id || e._id?.toString()) as string,
     slug: e.slug as string,
@@ -100,7 +114,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id: rawId } = await params;
   // Decode non-ASCII work_id (CJK / accented) before use — see /work/[id]/page.tsx.
   const id = decodeURIComponent(rawId);
-  const title = workTitle(id);
+  const title = canonWork(id)?.title || workTitle(id);
   return {
     title: `Compare Translations — ${title} | Source Library`,
     description: `Compare translations across editions of ${title}. View original language texts alongside AI and human translations side by side.`,
@@ -112,10 +126,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CompareWorkPage({ params }: PageProps) {
   const { id: rawId } = await params;
   const id = decodeURIComponent(rawId);
+  if (!canonWork(id)) {
+    // retired work_id (merged cluster, #3759) — follow the alias, keep old
+    // URLs alive; before the editions query so a legacy work_slug match
+    // can't pin a fragment page (same ordering as the parent work page)
+    const target = await workAliasTarget(await getReadDb(), id);
+    if (target) redirect(`/work/${encodeURIComponent(target)}/compare`);
+  }
   const editions = await getEditionsForCompare(id);
   if (editions.length < 2) notFound();
 
-  const title = workTitleFromEditions(editions, id);
+  const title = canonWork(id)?.title || workTitleFromEditions(editions, id);
   const translatedEditions = editions.filter((e) => e.pages_translated > 0);
 
   return (

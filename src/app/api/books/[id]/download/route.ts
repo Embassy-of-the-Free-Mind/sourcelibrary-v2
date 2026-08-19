@@ -9,18 +9,25 @@ import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
-import sharp from 'sharp';
+import sharp, { type CreateText, type TextAlign } from 'sharp';
 import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
-import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
-import { createPdfDocument, writePdfTitlePage, writePdfPageHeading, writePdfColophon, cleanTranslationForPdf, writePdfBody } from '@/lib/pdf-export';
-import { pipeTableToHtml } from '@/lib/markdown-table-html';
-import { streamOrdered } from '@/lib/ordered-stream';
+import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
+import { markdownToHtml } from '@/lib/export-markdown-html';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  fetchFacsimilePdfImage,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -165,90 +172,6 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('═'.repeat(60));
 
   return lines.join('\n');
-}
-
-// Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
-  // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
-
-  // Remove any standalone URLs
-  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
-
-  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
-  if (opts?.stripNotes) {
-    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
-    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
-    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
-    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
-  }
-
-  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
-  // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
-  html = html.replace(/<column-break\s*\/?>/gi, '');
-  // Strip ->...<- centering markers (OCR convention for centered text)
-  html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
-  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
-
-  // Escape HTML entities
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
-
-  // Convert legacy [[notes: ...]] to inline
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
-
-  // Convert bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Split by double newlines to create paragraphs
-  const blocks = html.split(/\n\n+/);
-
-  // Process each block
-  html = blocks.map(block => {
-    block = block.trim();
-    if (!block) return '';
-    // Don't wrap headers in paragraphs
-    if (block.startsWith('<h')) {
-      return block;
-    }
-    // GFM pipe tables become real tables, not pipe-soup inside a <p>.
-    const table = pipeTableToHtml(block);
-    if (table) return table;
-    // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
-  }).filter(b => b).join('\n');
-
-  // Clean up empty paragraphs and whitespace issues
-  html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p><br\/><\/p>/g, '');
-
-  return html || '<p></p>';
 }
 
 // Custom CSS for EPUB styling
@@ -963,108 +886,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
-// Resolve a page's export image via the canonical resolver (R2 display variant
-// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
-// fetch, and on split-from-spread pages it is the wrong image entirely).
-// Falls back to the legacy field priority this route used historically.
-function pageExportImageUrl(page: Page): string | null {
-  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
-  const resolved = getPageImageUrl(page, 'display') || legacy;
-  if (!resolved) return null;
-  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
-}
-
-// Prefetch page images with BOUNDED concurrency, preserving page order.
-// Serial fetching made a ~126-page book take >100s of response silence, so
-// Cloudflare cut the connection (HTTP 524) and readers saved the CF error
-// page as a corrupt .zip/.epub (footer feedback, 2026-07-02). Unbounded
-// Promise.all is the opposite failure: hundreds of concurrent image fetches.
-async function fetchPageImagesOrdered(
-  validPages: Page[],
-  concurrency = 8,
-): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
-  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
-  let next = 0;
-  async function worker() {
-    while (next < validPages.length) {
-      const i = next++;
-      const page = validPages[i];
-      const url = pageExportImageUrl(page);
-      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
-  return results;
-}
-
-/**
- * Ordered image fetch that yields each page AS IT ARRIVES, keeping only a
- * bounded look-ahead window resident.
- *
- * `fetchPageImagesOrdered()` above awaits EVERY image before returning, which
- * gives the streamed PDF two problems that only appear at real book sizes
- * (measured on a 366-page book, #3597):
- *
- *  - Nothing is written for the whole fetch (231s locally). The response
- *    "streams", but the producer blocks before emitting a body, so the
- *    connection sits silent and Cloudflare's ~100s window kills it long before
- *    `maxDuration` would.
- *  - Every compressed image is resident at once (74MB), and peak RSS hit 707MB
- *    against Vercel's 1024MB default. 6,987 visible books are LARGER than that
- *    test book, so this is the common case, not the tail.
- *
- * Yielding in order with a `lookahead` cap fixes both: the first page is
- * written as soon as one image lands, and at most `lookahead` buffers are held.
- * Each yielded buffer is dropped from the window so it can be collected once
- * the caller has embedded it.
- */
-async function* streamPageImagesOrdered(
-  validPages: Page[],
-): AsyncGenerator<{ page: Page; imageBuffer: Buffer | null }> {
-  const stream = streamOrdered(
-    validPages,
-    page => {
-      const url = pageExportImageUrl(page);
-      return url ? fetchAndCompressImage(url) : Promise.resolve(null);
-    },
-    { concurrency: 8, lookahead: 12 },
-  );
-  for await (const { item, value } of stream) {
-    yield { page: item, imageBuffer: value };
-  }
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -1325,216 +1146,6 @@ p:first-of-type { text-indent: 0; }
 
     archive.finalize();
   });
-}
-
-// Generate ZIP of all page images
-// Returns a live archiver stream so the response starts flowing immediately.
-// Buffering the whole zip meant zero bytes for the full build time; big books
-// crossed Cloudflare's ~100s origin window and died with a 524.
-function generateImagesZipStream(book: Book, pages: Page[]): archiver.Archiver {
-  const validPages = pages.filter(p => pageExportImageUrl(p));
-  const archive = archiver('zip', { zlib: { level: 6 } });
-
-  (async () => {
-    console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);
-    // Sliding window: ~8 fetches in flight, appended strictly in page order.
-    const inFlight: (Promise<Buffer | null> | undefined)[] = new Array(validPages.length);
-    let started = 0;
-    const startNext = () => {
-      if (started >= validPages.length) return;
-      const i = started++;
-      const url = pageExportImageUrl(validPages[i]);
-      inFlight[i] = url ? fetchAndCompressImage(url) : Promise.resolve(null);
-    };
-    for (let k = 0; k < Math.min(8, validPages.length); k++) startNext();
-
-    for (let i = 0; i < validPages.length; i++) {
-      const imageBuffer = await inFlight[i];
-      inFlight[i] = undefined;
-      startNext();
-      if (imageBuffer) {
-        const paddedNum = String(validPages[i].page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-    await archive.finalize();
-  })().catch(err => {
-    console.error('images-zip stream failed:', err);
-    archive.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return archive;
-}
-
-// Generate text-only English translation PDF: front matter, continuous
-// flowing translation text with a "PAGE N" heading before each page, then a
-// colophon. Streamed the same way as generateImagesZipStream — the returned
-// PDFDocument is itself a Readable; content is appended asynchronously after
-// the caller starts piping it to the response, so we never buffer the whole
-// document before the first byte goes out.
-function generatePdfTranslationStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  const translatedPages = pages.filter(p => p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'English Translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    doc.addPage();
-
-    for (const page of translatedPages) {
-      if (!page.translation?.data) continue;
-      const text = cleanTranslationForPdf(page.translation.data, book.id);
-      if (!text) continue;
-
-      writePdfPageHeading(doc, fonts, page.page_number);
-      writePdfBody(doc, fonts, text, { fontSize: 11, lineGap: 3 });
-      doc.moveDown(0.8);
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: 'English translation',
-      translatedCount: translatedPages.length,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-translation stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
-}
-
-/**
- * Budget for the image phase, in ms. `maxDuration` on this route is 300s; we
- * stop ADDING pages at 210s so there is room to finish the page in hand, write
- * the truncation notice and the colophon, and flush.
- *
- * A big book cannot be served whole in one request (a 4,198-page book would
- * need ~40 minutes of fetching), so the choice is between an opaque timeout and
- * an honest partial edition. Per CLAUDE.md "no silent caps": if coverage is
- * bounded, say what was dropped — here in the PDF itself, so the artifact
- * carries its own provenance rather than relying on a header nobody reads.
- */
-const FACSIMILE_IMAGE_BUDGET_MS = 210_000;
-
-// Generate facsimile PDF: title page, then per book page a "PAGE N" heading,
-// the page scan image, and the translation text flowing beneath it (onto
-// continuation pages as needed — pdfkit auto-paginates flowing text). Reuses
-// pageExportImageUrl() (canonical split-page-aware resolver) and
-// streamPageImagesOrdered() (bounded look-ahead, yields as images arrive).
-// Streamed the same way as generatePdfTranslationStream.
-function generatePdfFacsimileStream(book: Book, pages: Page[]): PDFKit.PDFDocument {
-  const now = new Date().toISOString().split('T')[0];
-  const { doc, fonts } = createPdfDocument(book);
-
-  // Pages with an image or a translation are worth a spread; pages with
-  // neither carry nothing to show.
-  const validPages = pages.filter(p => pageExportImageUrl(p) || p.translation?.data);
-
-  (async () => {
-    writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'Facsimile Edition — page scans with English translation',
-      baseUrl: BASE_URL,
-      now,
-    });
-
-    console.log(`Streaming ${validPages.length} images for pdf-facsimile...`);
-    const startedAt = Date.now();
-    let written = 0;
-    let translated = 0;
-    let truncated = false;
-
-    const usableWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-    const usableHeight = doc.page.height - doc.page.margins.top - doc.page.margins.bottom;
-
-    for await (const { page, imageBuffer } of streamPageImagesOrdered(validPages)) {
-      if (Date.now() - startedAt > FACSIMILE_IMAGE_BUDGET_MS) {
-        truncated = true;
-        break;
-      }
-      written++;
-      if (page.translation?.data) translated++;
-      doc.addPage();
-      writePdfPageHeading(doc, fonts, page.page_number);
-
-      if (imageBuffer) {
-        try {
-          doc.image(imageBuffer, { fit: [usableWidth, usableHeight * 0.6], align: 'center' });
-        } catch (e) {
-          console.error(`pdf-facsimile: failed to embed image for page ${page.page_number}:`, e);
-          doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-          doc.fillColor('#000000');
-        }
-      } else {
-        doc.font(fonts.italic).fontSize(10).fillColor('#999999').text('[Image unavailable]');
-        doc.fillColor('#000000');
-      }
-
-      if (page.translation?.data) {
-        const text = cleanTranslationForPdf(page.translation.data, book.id);
-        if (text) {
-          doc.moveDown(0.5);
-          writePdfBody(doc, fonts, text, { fontSize: 10.5, lineGap: 3 });
-        }
-      }
-    }
-
-    if (truncated) {
-      const firstMissing = validPages[written]?.page_number;
-      doc.addPage();
-      doc.font(fonts.bold).fontSize(14).text('This edition is incomplete', { align: 'center' });
-      doc.moveDown(1);
-      doc.font(fonts.regular).fontSize(11).text(
-        [
-          `This facsimile stops at page ${validPages[written - 1]?.page_number ?? written} of `
-          + `${validPages.length}. It was not truncated for editorial reasons: a single request `
-          + 'cannot fetch and lay out every page scan of a book this large within the time '
-          + 'available, so generation stopped rather than failing outright.',
-          '',
-          firstMissing !== undefined
-            ? `Pages from ${firstMissing} onward are not included here. They are all readable `
-              + `at ${BASE_URL}/book/${book.id}, and the text-only PDF and EPUB editions cover `
-              + 'the whole book.'
-            : '',
-          '',
-          'If you need the complete facsimile as a single file, please get in touch — we would '
-          + 'rather generate it for you offline than hand you a partial edition without saying so.',
-        ].filter(Boolean).join('\n'),
-        { lineGap: 3 },
-      );
-      console.warn(
-        `pdf-facsimile truncated: ${written}/${validPages.length} pages for book ${book.id} `
-        + `after ${Date.now() - startedAt}ms`,
-      );
-    }
-
-    doc.addPage();
-    writePdfColophon(doc, fonts, book, {
-      baseUrl: BASE_URL,
-      now,
-      contentLabel: truncated ? 'partial facsimile edition' : 'facsimile edition',
-      translatedCount: translated,
-      totalCount: pages.length,
-    });
-
-    doc.end();
-  })().catch(err => {
-    console.error('pdf-facsimile stream failed:', err);
-    doc.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return doc;
 }
 
 // Generate images-only EPUB (no translation, just the processed page images)
@@ -1945,8 +1556,8 @@ async function renderCoverText(
   if (opts?.letterSpacing) attrs.push(`letter_spacing="${Math.round(opts.letterSpacing * 1024)}"`);
   const markup = `<span ${attrs.join(' ')}>${content}</span>`;
 
-  const textInput: sharp.CreateText = {
-    text: markup, width: maxWidth, align: 'centre' as sharp.TextAlign, rgba: true, dpi: 72,
+  const textInput: CreateText = {
+    text: markup, width: maxWidth, align: 'centre' as TextAlign, rgba: true, dpi: 72,
     font: fontfile ? `Cormorant Garamond ${fontSize}` : `serif ${fontSize}`,
     ...(fontfile ? { fontfile } : {}),
   };
@@ -2872,10 +2483,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const archive = generateImagesZipStream(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
       return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
@@ -2892,8 +2500,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // book and die as a 524 saved as a corrupt file.
     if (isPdfTranslation || isPdfFacsimile) {
       const doc = isPdfFacsimile
-        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[])
-        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[]);
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+            hasImage: p => !!pageExportImageUrl(p as Page),
+            streamImages: ps => streamPageImagesOrdered(ps as Page[], fetchFacsimilePdfImage),
+          })
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+          });
       const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
       return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
         headers: {

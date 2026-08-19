@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { LayoutGrid, List } from 'lucide-react';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import { bookUrl } from '@/lib/slugify';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 type ViewMode = 'grid' | 'list';
@@ -29,8 +30,12 @@ interface AuthorBook {
   translation_percent?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   publisher?: string;
   place_of_publication?: string;
+  publication_place?: string;
+  place_published?: string;
+  place?: string;
 }
 
 export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
@@ -123,7 +128,7 @@ export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
                 const pct = book.translation_percent ?? 0;
                 const hasOriginalTitle = book.display_title && book.title !== book.display_title;
                 const publisher = book.publisher?.split('|')[0]?.trim();
-                const place = book.place_of_publication;
+                const place = resolveImprintPlace(book)?.display; // family resolver, #4043
 
                 return (
                   <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
@@ -137,7 +142,7 @@ export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
                         </span>
                         {book.is_first_translation && (
                           <span className="inline-block ml-2 bg-accent-gold/15 text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle" style={{ color: 'var(--accent-gold-dark)' }}>
-                            {firstTranslationBadge(book.ft_disposition, book.language)}
+                            {firstTranslationBadge(book.ft_disposition, book.language, undefined, book.ft_claim)}
                           </span>
                         )}
                         {hasOriginalTitle && (

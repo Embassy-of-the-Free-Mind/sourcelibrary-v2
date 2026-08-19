@@ -13,6 +13,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
 import { isBookReadable } from '@/lib/book-access';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -317,10 +318,11 @@ export async function GET(
         value: { none: [book.published] },
       });
     }
-    if (book.place_published) {
+    const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+    if (imprintPlace) {
       metadata.push({
         label: { en: ['Place of Publication'] },
-        value: { none: [book.place_published] },
+        value: { none: [imprintPlace] },
       });
     }
     if (book.publisher) {

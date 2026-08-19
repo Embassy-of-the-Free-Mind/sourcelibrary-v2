@@ -79,9 +79,12 @@ export function stripAnnotations(text: string): string {
     // Remove full XML tag pairs and their content for meta/structural tags.
     // summary/keywords/vocab are editorial page-level descriptions — never
     // verbatim source, must not be embedded or quoted (Nirmal misquote, 2026-05-30).
-    .replace(/<(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    // image-desc/scan-quality/script/columns and the `lang` alias joined the
+    // list in #3820 — they are the same class, and their absence here let AI
+    // plate descriptions into alignment embeddings and Librarian source cards.
+    .replace(/<(meta|summary|keywords|vocab|language|lang|page-type|page-num|header|sig|folio|warning|image-desc|scan-quality|script|columns)(?:\s[^>]*)?>[^]*?<\/\1>/g, '')
     // Remove self-closing and opening-only structural tags
-    .replace(/<\/?(?:meta|summary|keywords|vocab|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    .replace(/<\/?(?:meta|summary|keywords|vocab|language|lang|page-type|page-num|header|sig|folio|warning|image-desc|scan-quality|script|columns)(?:\s[^>]*)?>/g, '')
     // Keep content-bearing tags (note, margin, gloss, term, etc.) but strip the tags themselves
     .replace(/<\/?[a-z-]+>/g, '')
     // Clean up whitespace

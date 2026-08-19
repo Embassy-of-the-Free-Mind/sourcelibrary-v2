@@ -74,7 +74,7 @@ export default function VolunteerForm() {
           Help check a few pages now &rarr;
         </a>
         <p className="text-sm text-green-700 mt-4">
-          A few seconds each, no signup. Or just{' '}
+          A few seconds each, signed in so your work is yours. Or just{' '}
           <a href="/" className="underline hover:text-green-900">open a book and read</a>.
         </p>
       </div>

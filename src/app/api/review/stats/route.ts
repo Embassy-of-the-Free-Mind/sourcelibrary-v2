@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { isValidVolunteerId } from '@/lib/review-queue';
 
 export const maxDuration = 5;
 
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest) {
     .not('note', 'is', null);
 
   let mine: number | null = null;
-  if (volunteerId && /^[0-9a-f-]{36}$/i.test(volunteerId)) {
+  if (volunteerId && isValidVolunteerId(volunteerId)) {
     const { count } = await supabaseAdmin
       .from('volunteer_ratings')
       .select('id', { count: 'exact', head: true })

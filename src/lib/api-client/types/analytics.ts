@@ -23,6 +23,18 @@ export interface TrackEventRequest {
 }
 
 export interface UsageStats {
+  /**
+   * Provenance of `summary`. Those totals come from a periodic rollup, not a
+   * live count. `source: 'none'` means the rollup was missing or too stale to
+   * serve, so `summary` is zeroes — render that as "unavailable", never as
+   * real figures.
+   */
+  snapshot?: {
+    source: 'analytics_usage' | 'dashboard_snapshot' | 'none';
+    updatedAt: string | null;
+    ageMs: number | null;
+    stale: boolean;
+  };
   summary: {
     totalBooks: number;
     totalPages: number;

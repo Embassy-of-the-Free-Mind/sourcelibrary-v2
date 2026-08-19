@@ -12,6 +12,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 // an exact match — and it must not silently drop answers it fails to recognise,
 // which would quietly defeat the entire reason the field is free text.
 let docs: Record<string, unknown>[] = [];
+let volunteerDocs: Record<string, unknown>[] = [];
 let welcomedCount = 0;
 let pendingCount = 0;
 
@@ -24,12 +25,17 @@ vi.mock('@/lib/auth-helpers', () => ({
 
 vi.mock('@/lib/mongodb', () => ({
   getDb: vi.fn(async () => ({
-    collection: () => ({
-      find: () => ({
-        sort: () => ({ toArray: async () => docs }),
-      }),
+    // The route reads two collections now: `users` for what people wrote, and
+    // `volunteers` for whether they raised a hand and whether we replied. The
+    // cursor has to answer both `.sort().toArray()` and a bare `.toArray()`.
+    collection: (name: string) => ({
+      find: () => {
+        const rows = name === 'volunteers' ? volunteerDocs : docs;
+        return { sort: () => ({ toArray: async () => rows }), toArray: async () => rows };
+      },
       countDocuments: async (q: Record<string, unknown>) =>
         'welcomedAt' in q && q.welcomedAt === null ? pendingCount : welcomedCount,
+      updateOne: async () => ({ matchedCount: 1 }),
     }),
   })),
 }));
@@ -58,7 +64,7 @@ async function call() {
   return res.json();
 }
 
-beforeEach(() => { docs = []; welcomedCount = 0; pendingCount = 0; });
+beforeEach(() => { docs = []; volunteerDocs = []; welcomedCount = 0; pendingCount = 0; });
 afterEach(() => { vi.clearAllMocks(); });
 
 describe('/api/admin/introductions', () => {
@@ -168,5 +174,44 @@ describe('language tally — counts mentions, not exact matches', () => {
 
     expect(names).toContain('English');
     expect(names).not.toContain('Russian');
+  });
+});
+
+describe('the volunteer join', () => {
+  it('marks who volunteered and whether we have replied', async () => {
+    docs = [
+      intro({ _id: 'u1', email: 'raised@example.com' }),
+      intro({ _id: 'u2', email: 'justwrote@example.com' }),
+    ];
+    volunteerDocs = [{ email: 'raised@example.com', contacted: false, created_at: new Date() }];
+
+    const body = await call();
+    const raised = body.introductions.find((i: { email: string }) => i.email === 'raised@example.com');
+    const wrote = body.introductions.find((i: { email: string }) => i.email === 'justwrote@example.com');
+
+    expect(raised.volunteered).toBe(true);
+    expect(raised.contacted).toBe(false);
+    expect(wrote.volunteered).toBe(false);
+    expect(body.totals.volunteered).toBe(1);
+    // The actionable number: raised a hand, no reply yet.
+    expect(body.totals.awaiting_reply).toBe(1);
+  });
+
+  it('drops someone out of the awaiting count once replied to', async () => {
+    docs = [intro({ email: 'raised@example.com' })];
+    volunteerDocs = [{ email: 'raised@example.com', contacted: true, created_at: new Date() }];
+
+    const body = await call();
+    expect(body.totals.volunteered).toBe(1);
+    expect(body.totals.awaiting_reply).toBe(0);
+    expect(body.introductions[0].contacted).toBe(true);
+  });
+
+  it('matches on email case-insensitively — signup and account casing differ', async () => {
+    docs = [intro({ email: 'Reader@Example.com' })];
+    volunteerDocs = [{ email: 'reader@example.com', contacted: false, created_at: new Date() }];
+
+    const body = await call();
+    expect(body.introductions[0].volunteered).toBe(true);
   });
 });

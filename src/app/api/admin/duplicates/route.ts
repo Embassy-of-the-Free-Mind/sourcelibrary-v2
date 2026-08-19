@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
-import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
+import { isTrustedEditionKey } from '@/lib/edition-key';
 
 export const maxDuration = 30;
 
@@ -24,14 +24,12 @@ interface BookSummary {
   slug: string;
 }
 
-function extractVolume(title: string): string | null {
-  const m = title.match(/\b(?:vol(?:ume)?|tomus?|band|tome?|part|teil|livre|liber|pars|fascicul)\.?\s*(\d+|[ivxlcdm]+)\b/i);
-  if (m) return m[1].toLowerCase();
-  const m2 = title.match(/[.,;:\-–—]\s*(\d+)\s*$/);
-  if (m2) return m2[1];
-  return null;
-}
-
+/**
+ * Volume guessed from an Internet Archive identifier ("...v02...", "...02cat").
+ * Kept as a SPLITTER only: it can rescue a multi-volume set whose volume never
+ * made it into the title, but it is a regex over an opaque string and must
+ * never be the thing that merges two books.
+ */
 function extractVolumeFromIdentifier(iaId: string | undefined): string | null {
   if (!iaId) return null;
   const m = iaId.match(/[a-z](\d{2})[a-z]/i);
@@ -90,6 +88,7 @@ export const GET = withAdminAuth(async (request) => {
     { projection: {
       id: 1, title: 1, author: 1, slug: 1,
       normalized_title: 1, normalized_author: 1,
+      edition_key: 1, edition_key_quality: 1, edition_external_ids: 1,
       source_fingerprint: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1,
       'image_source.provider': 1, 'image_source.iiif_manifest': 1,
@@ -145,60 +144,90 @@ export const GET = withAdminAuth(async (request) => {
     }
   }
 
-  // Tier 3: Title+Author (volume-aware)
-  if (tierFilter === 'all' || tierFilter === 'high' || tierFilter === 'medium') {
-    const taMap = new Map<string, Record<string, unknown>[]>();
+  // Tier 3: USTC edition authority.
+  // Where a USTC number is verified edition-level (`ustc_scope: 'edition'` —
+  // the USTC record's own year agrees with ours), two books carrying it are the
+  // same printing by authority, not by heuristic. That outranks any string
+  // match, so it sits with the exact tiers. Ids whose scope is 'unverified' are
+  // deliberately ignored here: the AI matcher was willing to match a book to a
+  // different printing of the same work, so an unverified id is a work-level
+  // pointer and merging on it would destroy real editions.
+  if (tierFilter === 'all' || tierFilter === 'exact') {
+    const ustcMap = new Map<string, Record<string, unknown>[]>();
     for (const b of books) {
-      const nt = b.normalized_title as string;
-      if (!nt || nt.length < 5 || ['unknown', 'untitled'].includes(nt)) continue;
-      const key = `${nt}|||${(b.normalized_author as string) || ''}`;
-      if (!taMap.has(key)) taMap.set(key, []);
-      taMap.get(key)!.push(b);
+      const ext = b.edition_external_ids as { ustc?: string; ustc_scope?: string } | undefined;
+      if (!ext?.ustc || ext.ustc_scope !== 'edition') continue;
+      if (!ustcMap.has(ext.ustc)) ustcMap.set(ext.ustc, []);
+      ustcMap.get(ext.ustc)!.push(b);
+    }
+    for (const [ustc, group] of ustcMap) {
+      if (group.length < 2) continue;
+      const keeper = pickKeeper(group);
+      if (groups.some(g => g.keeper.id === toSummary(keeper).id)) continue;
+      groups.push({
+        tier: 'ustc_edition',
+        confidence: 'exact',
+        reason: `Same USTC edition record (USTC ${ustc}), year-verified`,
+        keeper: toSummary(keeper),
+        dupes: group.filter(b => b.id !== keeper.id).map(toSummary),
+      });
+    }
+  }
+
+  // Tier 4: the materialized edition layer (#3258 workstream A).
+  //
+  // Replaces this route's old private title+author+volume matcher — the THIRD
+  // divergent implementation of "same edition" in the codebase, which is why
+  // the same corpus read as 456 or 296 clusters depending on who you asked.
+  // `edition_key` is strictly more discriminating than what it replaces: it
+  // adds the publication year (so two printings of one title stop reading as
+  // copies) and relaxes the author to a surname (so "Lobel, Matthias de" and
+  // "Matthias de Lobel" stop reading as two editions).
+  if (tierFilter === 'all' || tierFilter === 'high' || tierFilter === 'medium') {
+    const edMap = new Map<string, Record<string, unknown>[]>();
+    for (const b of books) {
+      const key = b.edition_key as string | undefined;
+      if (!key) continue;
+      if (!edMap.has(key)) edMap.set(key, []);
+      edMap.get(key)!.push(b);
     }
 
-    for (const [key, group] of taMap) {
+    for (const [, group] of edMap) {
       if (group.length < 2) continue;
 
-      // Volume-aware filtering
-      const withVols = group.map(b => {
-        const vol = extractVolume((b.title as string) || '') ||
-                    extractVolumeFromIdentifier((b.ia_identifier as string) || (b.image_source as Record<string, string>)?.identifier);
-        return { book: b, vol };
+      // The IA-identifier volume guess survives as a splitter only: if every
+      // member reveals a DIFFERENT volume there, this is a multi-volume set
+      // whose volumes never reached the title, not a pile of copies.
+      const idVols = group.map(b =>
+        extractVolumeFromIdentifier((b.ia_identifier as string) || (b.image_source as Record<string, string>)?.identifier)
+      );
+      const known = idVols.filter(Boolean);
+      if (known.length === group.length && new Set(known).size === group.length) continue;
+
+      const providers = new Set(group.map(b => (b.image_source as Record<string, string>)?.provider));
+      const pageCounts = group.map(b => b.pages_count as number).filter(Boolean);
+      const pcSim = pageCounts.length >= 2 ? Math.min(...pageCounts) / Math.max(...pageCounts) : null;
+
+      // Two independent signals of confidence: how much of the key is actually
+      // evidenced (a key with no year merges every printing of that title), and
+      // whether the two scans are even the same length.
+      const trusted = isTrustedEditionKey(group[0].edition_key_quality as string);
+      const confidence = trusted && pcSim !== null && pcSim > 0.6 ? 'high' as const : 'medium' as const;
+      if (tierFilter !== 'all' && tierFilter !== confidence) continue;
+
+      const keeper = pickKeeper(group);
+      if (groups.some(g => g.keeper.id === toSummary(keeper).id)) continue;
+      const providerList = [...providers].join(', ');
+      const quality = group[0].edition_key_quality as string;
+      groups.push({
+        tier: providers.size > 1 ? 'cross_source_edition' : 'same_source_edition',
+        confidence,
+        reason: `Same edition key${trusted ? '' : ` (${quality} — weak key, verify before merging)`}` +
+          `${providers.size > 1 ? ` across ${providerList}` : ` within ${providerList}`}` +
+          `${pcSim ? ` (${(pcSim * 100).toFixed(0)}% page similarity)` : ''}`,
+        keeper: toSummary(keeper),
+        dupes: group.filter(b => b.id !== keeper.id).map(toSummary),
       });
-      const vols = withVols.map(w => w.vol).filter(Boolean);
-      const uniqueVols = new Set(vols);
-      if (vols.length === group.length && uniqueVols.size === group.length) continue;
-
-      // Group by volume to find collisions
-      const volBuckets = new Map<string, Record<string, unknown>[]>();
-      for (const w of withVols) {
-        const v = w.vol || '__none__';
-        if (!volBuckets.has(v)) volBuckets.set(v, []);
-        volBuckets.get(v)!.push(w.book);
-      }
-
-      for (const [, subgroup] of volBuckets) {
-        if (subgroup.length < 2) continue;
-        const providers = new Set(subgroup.map(b => (b.image_source as Record<string, string>)?.provider));
-        const pageCounts = subgroup.map(b => b.pages_count as number).filter(Boolean);
-        let pcSim: number | null = null;
-        if (pageCounts.length >= 2) {
-          pcSim = Math.min(...pageCounts) / Math.max(...pageCounts);
-        }
-
-        const confidence = pcSim !== null && pcSim > 0.6 ? 'high' as const : 'medium' as const;
-        if (tierFilter !== 'all' && tierFilter !== confidence) continue;
-
-        const keeper = pickKeeper(subgroup);
-        const providerList = [...providers].join(', ');
-        groups.push({
-          tier: providers.size > 1 ? 'cross_source_title' : 'same_source_title',
-          confidence,
-          reason: `Same title+author${providers.size > 1 ? ` across ${providerList}` : ` within ${providerList}`}${pcSim ? ` (${(pcSim * 100).toFixed(0)}% page similarity)` : ''}`,
-          keeper: toSummary(keeper),
-          dupes: subgroup.filter(b => b.id !== keeper.id).map(toSummary),
-        });
-      }
     }
   }
 
@@ -248,6 +277,7 @@ export const POST = withAdminAuth(async (request) => {
       hidden: true, visible: false,
       hidden_reason: 'duplicate',
       hidden_at: now,
+      updated_at: now, // books_catalog sync keys on this — without it the flip never reaches Supabase
       ...(keeperId ? { duplicate_of: keeperId } : {}),
     }}
   );

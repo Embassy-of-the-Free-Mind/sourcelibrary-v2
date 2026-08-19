@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc } from './lib/book-docs.mjs';
 
 const MET_API = 'https://collectionapi.metmuseum.org/public/collection/v1';
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
@@ -302,10 +303,9 @@ async function main() {
       }
     }
 
-    const doc = {
+    const doc = makeBookDoc({
       id: generateId(),
       slug,
-      tenant_id: 'default',
       title,
       display_title: title,
       author: artist,
@@ -349,7 +349,7 @@ async function main() {
         access_date: new Date().toISOString(),
       },
       harvested_at: new Date(),
-    };
+    });
 
     try {
       await books.insertOne(doc);

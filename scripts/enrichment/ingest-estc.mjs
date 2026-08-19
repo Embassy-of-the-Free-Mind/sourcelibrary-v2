@@ -60,12 +60,16 @@
  */
 import fs from 'fs';
 import path from 'path';
+import readline from 'readline';
 import { fileURLToPath } from 'url';
+import { withMongo } from '../lib/mongo.mjs';
 
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
 const OUT_DIR = argOf('--out') ?? path.join(process.cwd(), 'scripts', 'output', 'estc');
 const ONLY_PREFIX = argOf('--prefix');
 const DELAY_MS = parseInt(argOf('--delay') ?? '400', 10);
+const LOAD = process.argv.includes('--load');
+const LOAD_ONLY = process.argv.includes('--load-only');
 
 const ENDPOINT = 'https://datb.cerl.org/estc/_search';
 const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set ingest)';
@@ -144,31 +148,79 @@ async function partition(prefix, hits, depth = 0) {
     leaves.push(...await partition(prefix + ch, n, depth + 1));
   }
   // Arithmetic, not trust: an id belongs to exactly one child, so the children
-  // must account for the parent exactly. Anything else means the wildcard is not
-  // behaving as a prefix and the partition cannot be called complete.
-  if (childSum !== hits) {
-    throw new Error(`partition of ${prefix}* is lossy: children sum ${childSum} vs parent ${hits}`);
+  // must account for the parent. Directional for the same reason as
+  // harvestLeaf — children SHORT of the parent means the wildcard is not
+  // behaving as a prefix and records are unreachable, which is fatal. Children
+  // OVER the parent means the live index grew between the two counts; the
+  // partition still covers everything, so it is reported, not thrown.
+  if (childSum < hits) {
+    throw new Error(
+      `partition of ${prefix}* is lossy: children sum ${childSum} vs parent ${hits} — `
+      + `${hits - childSum} records unreachable`,
+    );
+  }
+  if (childSum > hits) {
+    console.warn(`  ⚠ partition of ${prefix}*: children sum ${childSum} vs parent ${hits} — index grew between counts`);
   }
   return leaves;
 }
 
-/** Page one leaf completely, asserting we received what it promised. */
-async function harvestLeaf(leaf, sink) {
+/**
+ * Page one leaf completely, asserting we received what it promised.
+ *
+ * THE ASSERTION IS DIRECTIONAL, AND THAT IS THE POINT.
+ *
+ * The hazard this whole script exists to prevent is SILENT TRUNCATION — `from`
+ * past 10,000 returns HTTP 200 with no rows, so a naive harvester records
+ * nothing for most of the catalogue and every book downstream reads
+ * `none_found`. That failure is always `got < hits`. It stays fatal.
+ *
+ * `got > hits` cannot be that failure: we hold a superset of what was promised,
+ * so nothing is missing. CERL is a LIVE index and `hits` was read during
+ * partitioning, minutes before the paging — a record added or moved in between
+ * gives exactly this. Observed 2026-08-07 on the first full run: leaf `R5*`
+ * collected 2,284 against a promised 2,283 and killed a harvest that was 34%
+ * done and correct. Failing closed on the safe direction is not caution, it is
+ * a false alarm that costs the run.
+ *
+ * So: under-collection throws, over-collection is deduped by id (the ids are
+ * what the partition's own arithmetic rests on, so they are exact), counted, and
+ * reported. Drift is never swallowed — `main` prints the total at the end.
+ */
+export async function harvestLeaf(leaf, sink, drift = { leaves: 0, records: 0, dupes: 0 }, fetchPage = search) {
   // `exactOnly` leaves are the single record whose id IS the prefix; querying
   // them with a wildcard would re-collect the whole subtree.
   const query = leaf.exactOnly ? `id:${leaf.prefix}` : `id:${leaf.prefix}*`;
+  const ids = new Set();
   let got = 0;
+  let dupes = 0;
   for (let from = 0; from < leaf.hits; from += PAGE) {
     if (from >= FROM_CAP) throw new Error(`leaf ${leaf.prefix}* exceeds the ${FROM_CAP} cap — partition bug`);
-    const { rows } = await search(query, from, PAGE);
+    const { rows } = await fetchPage(query, from, PAGE);
     if (!rows.length) throw new Error(`leaf ${leaf.prefix}* returned 0 rows at from=${from} of ${leaf.hits}`);
-    for (const row of rows) sink(row);
-    got += rows.length;
+    for (const row of rows) {
+      // A record shifting position under a live index can surface twice across a
+      // page boundary. Deduping by id keeps `got` a count of DISTINCT records,
+      // so the comparison below measures coverage rather than paging noise.
+      if (row.id && ids.has(row.id)) { dupes++; continue; }
+      if (row.id) ids.add(row.id);
+      sink(row);
+      got++;
+    }
     await sleep(DELAY_MS);
   }
-  if (got !== leaf.hits) {
-    throw new Error(`leaf ${leaf.prefix}*: collected ${got} but it reported ${leaf.hits}`);
+  if (got < leaf.hits) {
+    throw new Error(
+      `leaf ${leaf.prefix}*: collected ${got} but it reported ${leaf.hits} — `
+      + `${leaf.hits - got} records missing, refusing to record a short leaf`,
+    );
   }
+  if (got > leaf.hits) {
+    drift.leaves++;
+    drift.records += got - leaf.hits;
+    console.warn(`  ⚠ leaf ${leaf.prefix}*: index grew under us — ${got} collected vs ${leaf.hits} promised (superset, kept)`);
+  }
+  if (dupes) drift.dupes += dupes;
   return got;
 }
 
@@ -222,7 +274,11 @@ export function toReferenceRow(row) {
   const authors = names.filter((n) => !/translator|printer|bookseller|publisher|engraver/i.test(n));
 
   return {
-    lccn: '',                                   // ESTC has none; the id is the identifier
+    // NO `lccn` KEY AT ALL — not `''`. `reference_translations` carries a
+    // UNIQUE SPARSE index on `lccn`, and sparse skips only missing/null: an
+    // empty string is a value, so 22,538 rows sharing `''` would collide on the
+    // second upsert. The identifier here is `estc_id` (the ESTC S/R/T/N-number),
+    // which is a citable access point in its own right.
     estc_id: row.id,
     author: authors[0] ?? '',
     added_entries: [...authors.slice(1), ...translators],
@@ -251,7 +307,18 @@ const isEnglishTranslation = (r) => Boolean(r.translation_evidence) && /eng/i.te
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 const IS_MAIN = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
-if (IS_MAIN) await main();
+if (IS_MAIN) {
+  if (LOAD_ONLY) {
+    // Load an artifact that already exists, without the ~15-minute partition
+    // pass. The harvest is idempotent, but re-walking 427 prefixes to reach a
+    // file sitting on disk is pure latency.
+    const existing = fs.readdirSync(OUT_DIR).filter((f) => /^estc-translations\..*\.jsonl$/.test(f)).sort();
+    if (!existing.length) throw new Error(`no estc-translations.*.jsonl in ${OUT_DIR} — run the harvest first`);
+    await loadIntoMongo(path.join(OUT_DIR, existing[existing.length - 1]));
+  } else {
+    await main();
+  }
+}
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -272,8 +339,15 @@ async function main() {
 
   const promised = leaves.reduce((s, l) => s + l.hits, 0);
   console.log(`\n${leaves.length} leaves, ${promised.toLocaleString()} records promised`);
-  if (!ONLY_PREFIX && Math.abs(promised - total) > 1) {
+  // Directional here too. SHORT of the total is an incomplete partition and is
+  // fatal at any size. OVER the total is the live index having grown during the
+  // ~15-minute partitioning pass — harmless, but say by how much, because a
+  // silently-tolerated drift is how a real partition bug would hide.
+  if (!ONLY_PREFIX && promised < total) {
     throw new Error(`partition covers ${promised} of ${total} — refusing to harvest an incomplete set`);
+  }
+  if (!ONLY_PREFIX && promised > total) {
+    console.warn(`  ⚠ partition promises ${promised} vs a reported total of ${total} — index grew during partitioning (+${promised - total})`);
   }
 
   // ── RESUMABLE, per leaf ───────────────────────────────────────────────────
@@ -290,15 +364,42 @@ async function main() {
   const partsDir = path.join(OUT_DIR, 'leaves');
   fs.mkdirSync(partsDir, { recursive: true });
 
+  // ONE definition of a leaf's filename, used by the writer AND the reader.
+  //
+  // These were built independently and drifted: the writer appended `.exact` for
+  // an `exactOnly` leaf, the concatenator did not, and its `existsSync` turned
+  // the mismatch into a silent skip. All 37 exact leaves were dropped from the
+  // final file on the 2026-08-07 run — visible only because 2 of them happened
+  // to carry English translations (`N4`, `T17`), so the artifact came out at
+  // 22,536 rows against 22,538 collected. Same shape as the R2 key incident in
+  // CLAUDE.md: two sites deriving one path, and nothing comparing them.
+  const leafPathOf = (leaf) =>
+    path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
+
   let seen = 0, kept = 0, skipped = 0;
   const evidence = {};
   const started = Date.now();
+  // How far the live index moved under the harvest. Tolerated, never swallowed:
+  // reported at the end so a genuine partition bug cannot hide inside "drift".
+  const drift = { leaves: 0, records: 0, dupes: 0 };
 
   for (const [i, leaf] of leaves.entries()) {
-    const leafPath = path.join(partsDir, `${leaf.prefix}${leaf.exactOnly ? '.exact' : ''}.jsonl`);
+    const leafPath = leafPathOf(leaf);
     if (fs.existsSync(leafPath)) {
-      const done = fs.readFileSync(leafPath, 'utf8').split('\n').filter(Boolean).length;
-      kept += done; seen += leaf.hits; skipped++;
+      // Re-tally the evidence breakdown from the resumed rows. Counting only
+      // `kept` here made the printed breakdown cover fresh leaves ONLY: the
+      // 2026-08-07 run reported 22,538 translations but 15,518 + 166 = 15,684
+      // in the by-evidence lines, the 6,854 difference being exactly what the
+      // 146 resumed leaves held. A total whose own parts do not sum to it
+      // invites the reader to trust the wrong one.
+      const lines = fs.readFileSync(leafPath, 'utf8').split('\n').filter(Boolean);
+      for (const line of lines) {
+        try {
+          const k = String(JSON.parse(line).translation_evidence ?? '').split(':')[0];
+          if (k) evidence[k] = (evidence[k] || 0) + 1;
+        } catch { /* a malformed row would have failed its own leaf's rename */ }
+      }
+      kept += lines.length; seen += leaf.hits; skipped++;
       continue;
     }
     const tmp = `${leafPath}.partial`;
@@ -312,7 +413,7 @@ async function main() {
       const k = row.translation_evidence.split(':')[0];
       evidence[k] = (evidence[k] || 0) + 1;
       out.write(JSON.stringify(row) + '\n');
-    });
+    }, drift);
     await new Promise((r) => out.end(r));
     fs.renameSync(tmp, leafPath);   // atomic: only a verified leaf gets its name
 
@@ -323,15 +424,43 @@ async function main() {
       + `${String(leaf.hits).padStart(6)} rows, kept ${leafKept}  |  total kept ${kept.toLocaleString()}  ETA ~${eta}m`);
   }
   if (skipped) console.log(`\n  (${skipped} leaf/leaves already on disk — resumed)`);
+  if (drift.leaves || drift.dupes) {
+    console.log(
+      `\n  index drift: ${drift.leaves} leaf/leaves grew (+${drift.records} records), `
+      + `${drift.dupes} duplicate id(s) collapsed across page boundaries.`,
+    );
+    console.log('  (a superset is safe — a SHORT leaf would have thrown)');
+  }
 
   // Concatenate the verified leaves into the reference-set file.
+  //
+  // A missing leaf here is a BUG, not a condition to tolerate: every leaf in
+  // `leaves` was either harvested and renamed into place this run, or found on
+  // disk and skipped. `existsSync`-and-continue is what let the `.exact` path
+  // mismatch drop 37 leaves without a word.
   const outPath = path.join(OUT_DIR, `estc-translations.${SNAPSHOT}.jsonl`);
   const final = fs.createWriteStream(outPath);
+  let written = 0;
   for (const leaf of leaves) {
-    const p = path.join(partsDir, `${leaf.prefix}.jsonl`);
-    if (fs.existsSync(p)) final.write(fs.readFileSync(p));
+    const p = leafPathOf(leaf);
+    if (!fs.existsSync(p)) {
+      throw new Error(`leaf file missing at concatenation: ${p} — refusing to write a short reference set`);
+    }
+    const buf = fs.readFileSync(p);
+    written += buf.toString('utf8').split('\n').filter(Boolean).length;
+    final.write(buf);
   }
   await new Promise((r) => final.end(r));
+
+  // Reconcile the ARTIFACT against the count, which the script never did on its
+  // own output — the one place a silent shortfall would survive every upstream
+  // guard and still reach the reference set.
+  const onDisk = fs.readFileSync(outPath, 'utf8').split('\n').filter(Boolean).length;
+  if (onDisk !== kept || written !== kept) {
+    throw new Error(
+      `reference set does not reconcile: ${onDisk} rows on disk, ${written} concatenated, ${kept} counted`,
+    );
+  }
 
   console.log(`\n\n─── ESTC reference set ───────────────────────────────────────`);
   console.log(`  records examined        : ${seen.toLocaleString()}`);
@@ -340,4 +469,68 @@ async function main() {
   console.log(`\n  BOUNDARY: ESTC covers imprints 1473-1800 only. A translation`);
   console.log(`  published after 1800 is absent by construction, not by evidence.`);
   console.log(`\nWrote ${outPath}`);
+
+  if (LOAD) await loadIntoMongo(outPath);
+}
+
+/**
+ * Upsert the harvested rows into Mongo `reference_translations`.
+ *
+ * KEYED ON `estc_id`, NOT `lccn`. The LoC loader's key is the LCCN and its
+ * fallback is `nolccn:${title}:${year}` — which for ESTC would collide any two
+ * records sharing a title and year, of which a short-title catalogue of the hand
+ * press era has many. `estc_id` is present on 100% of rows and unique by
+ * construction (the id-prefix partition's arithmetic depends on it).
+ *
+ * `noTimeout` is REQUIRED, not tuning: `withMongo` kills the process after 300s,
+ * and a watchdog firing mid-load exits 0 having written a PREFIX of the set. A
+ * short reference set does not error — it fails to find priors, which reads as
+ * `none_found`, which reads as "first translation". That exact failure left
+ * 120,976 of 126,558 LoC rows loaded on 2026-08-04 while the log looked clean.
+ */
+async function loadIntoMongo(outPath) {
+  if (!fs.existsSync(outPath)) {
+    throw new Error(`nothing to load: ${outPath} does not exist — run the harvest first`);
+  }
+  const expected = fs.readFileSync(outPath, 'utf8').split('\n').filter(Boolean).length;
+  console.log(`\nLoading ${expected.toLocaleString()} rows into Mongo \`reference_translations\`…`);
+
+  await withMongo(async (db) => {
+    const coll = db.collection('reference_translations');
+    await coll.createIndex({ estc_id: 1 }, { unique: true, sparse: true });
+
+    const before = await coll.countDocuments({ source: 'estc' });
+    let batch = [];
+    let loaded = 0;
+    const flush = async () => {
+      if (!batch.length) return;
+      await coll.bulkWrite(batch, { ordered: false });
+      loaded += batch.length;
+      batch = [];
+    };
+    const rl = readline.createInterface({ input: fs.createReadStream(outPath), crlfDelay: Infinity });
+    for await (const line of rl) {
+      if (!line.trim()) continue;
+      const row = JSON.parse(line);
+      if (!row.estc_id) throw new Error(`row without estc_id — refusing to load an unidentifiable record: ${line.slice(0, 120)}`);
+      // Belt and braces against the sparse-unique `lccn` index: an older
+      // artifact may still carry `lccn: ''`, which would collide across every
+      // ESTC row. Absent means absent.
+      if (!row.lccn) delete row.lccn;
+      batch.push({ updateOne: { filter: { estc_id: row.estc_id }, update: { $set: row }, upsert: true } });
+      if (batch.length >= 1000) await flush();
+    }
+    await flush();
+
+    // Reconcile against the DESTINATION, not the log — the same rule the
+    // concatenator now follows. A partial load is invisible from its own output.
+    const after = await coll.countDocuments({ source: 'estc' });
+    console.log(`  upserted ${loaded.toLocaleString()} · source:'estc' rows ${before.toLocaleString()} → ${after.toLocaleString()}`);
+    if (after !== expected) {
+      throw new Error(
+        `load does not reconcile: ${after} rows with source:'estc' in Mongo vs ${expected} in the artifact`,
+      );
+    }
+    console.log(`  ✓ reconciled: ${after.toLocaleString()} rows`);
+  }, { noTimeout: true });
 }

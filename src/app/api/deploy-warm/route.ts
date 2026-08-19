@@ -161,16 +161,33 @@ export async function POST(request: NextRequest) {
   ]);
   const allContentPaths = [...STATIC_PAGES, ...collectionPaths, ...bookPaths, ...browsePaths];
 
-  // 2. Revalidate all ISR-cached pages so Next.js drops stale HTML
-  //    Without this, warming re-caches old HTML that references deleted JS chunks,
-  //    causing raw RSC payload to render instead of the page.
+  // 2. Revalidate the static pages we are about to warm, so they pick up the
+  //    current deployment's chunks.
+  //
+  //    We deliberately do NOT revalidate the /book, /collections and /browse
+  //    route segments wholesale any more. That existed to stop cached HTML
+  //    referencing deleted JS chunks — but Vercel Skew Protection now keeps a
+  //    prior deployment's assets resolvable for 48h, which is longer than the
+  //    24h `CDN-Cache-Control: max-age=86400` we set on those routes in
+  //    next.config.ts. Stale HTML therefore resolves against assets that still
+  //    exist, and no invalidation is needed to prevent it.
+  //
+  //    The window sizing is load-bearing: skew max-age MUST stay > the CDN TTL.
+  //    It was 12h against a 24h TTL, and that 12h gap is what produced the
+  //    recurring "page renders fully unstyled after a deploy" reports.
+  //
+  //    Cost, for context: invalidating three whole subtrees on every deploy
+  //    (106 deploys/30d) meant the ISR cache was emptied faster than it could
+  //    be read — 54.6M ISR writes against 16.8M reads in Jul 2026, $282 of
+  //    writes buying $8 of reads, plus the full-render CPU and origin transfer
+  //    behind them. See #3645.
+  //
+  //    Content freshness is unaffected: edits revalidate through their own
+  //    paths (/api/books/[id], /api/admin/revalidate*, collections publish),
+  //    and anything else refreshes on its normal `revalidate` window.
+  //
   //    Skip in ?check mode — just report current warmth without invalidating.
   if (!checkOnly) {
-    // Revalidate entire route segments — covers ALL books/collections/browse,
-    // not just the ones we warm. Prevents stale RSC on the long tail.
-    revalidatePath('/book', 'layout');
-    revalidatePath('/collections', 'layout');
-    revalidatePath('/browse', 'layout');
     for (const path of STATIC_PAGES) {
       revalidatePath(path);
     }

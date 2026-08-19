@@ -6,6 +6,7 @@ import { sortCollections, withTimeout, coverOverride } from '@/lib/collections-u
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
+import { type HomeLang } from '@/lib/home-i18n';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -515,43 +516,43 @@ async function getBookCounts(): Promise<HomeCounts> {
 // Last updated: 2026-05-01 from production DB.
 
 const FALLBACK_COLLECTIONS: CollectionForGrid[] = [
-  { slug: 'natural-philosophy', name: 'Natural Philosophy & Science', subtitle: 'From Aristotle to Newton', description: '', book_count: 1720, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d0fa77f38f6761bc5aef/24.jpg', languages: ['Latin', 'Chinese', 'English'] },
-  { slug: 'theology', name: 'Theology & Religious Thought', subtitle: 'Scholasticism, Reformation & Apologetics', description: '', book_count: 1633, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/e48a21de-4db2-4c94-a71a-e952b9fa5393/69500507f426a210d109c2be-0.jpg', languages: ['Latin', 'English', 'German'] },
-  { slug: 'classical-philosophy', name: 'Classical Philosophy', subtitle: 'Ancient Greek & Roman Thought', description: '', book_count: 1485, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69568900be7c607c5f03c2d7/69569e3b1479a63c11092796-0.jpg', languages: ['Greek', 'Latin', 'English'] },
-  { slug: 'alchemy', name: 'Alchemy', subtitle: 'The Art of Transmutation', description: '', book_count: 1209, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044158-0.jpg', languages: ['Latin', 'German', 'English'] },
-  { slug: 'indic-traditions', name: 'Indic Traditions', subtitle: 'Vedas, Yoga, Tantra & Buddhist Texts', description: '', book_count: 864, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991d8978c1030b12444c035/6991d8978c1030b12444c04c-1.jpg', languages: ['Sanskrit', 'English', 'Tamil'] },
-  { slug: 'chinese-classics', name: 'Chinese Classics', subtitle: 'Confucian, Daoist & Buddhist Texts', description: '', book_count: 585, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6992cacfd4d545ae73feeb33/dunhuang-hero.jpg', languages: ['Chinese', 'English', 'French'] },
-  { slug: 'magic', name: 'Magic & Occult Arts', subtitle: 'Grimoires, Natural Magic & Ceremonial Practice', description: '', book_count: 679, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', languages: ['Latin', 'English', 'French'] },
-  { slug: 'medicine', name: 'Medicine & Natural History', subtitle: 'From Hippocrates to Paracelsus', description: '', book_count: 1191, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e4b-0.jpg', languages: ['Latin', 'Chinese', 'English'] },
-  { slug: 'art-illustrated', name: 'Art & Illustrated Books', subtitle: 'Illustrated Books, Emblems & Visual Knowledge', description: '', book_count: 1404, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/e532b010-6d2e-40ca-9f95-c67e74c5ee61/695004b4f426a210d10975f4-0.jpg', languages: ['Chinese', 'Latin', 'Italian'] },
-  { slug: 'secret-societies', name: 'Secret Societies', subtitle: 'Freemasonry, Rosicrucians & Fraternal Orders', description: '', book_count: 670, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952587bab34727b1f045546/6959068695a91542b28bd761-0.jpg', languages: ['German', 'Latin', 'French'] },
-  { slug: 'leonardo-da-vinci', name: 'Leonardo da Vinci', subtitle: 'Manuscripts, codices, treatises, and anatomical drawings', description: '', book_count: 48, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991e93135ed50020acc1458/8.jpg', languages: ['Italian', 'French', 'English'] },
-  { slug: 'hermetica', name: 'Hermetica', subtitle: 'Hermetic Philosophy & Prisca Theologia', description: '', book_count: 1191, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520176ab34727b1f04136b/69520177ab34727b1f041503-0.jpg', languages: ['Latin', 'German', 'English'] },
-  { slug: 'kabbalah', name: 'Kabbalah', subtitle: 'Jewish Mysticism & Christian Cabala', description: '', book_count: 471, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/4d4089b9-9227-4cc5-b0a2-9b06ee731061/6950050cf426a210d109ca95-0.jpg', languages: ['Latin', 'Hebrew', 'German'] },
-  { slug: 'astrology', name: 'Astrology & Divination', subtitle: 'Celestial Science & the Mantic Arts', description: '', book_count: 1484, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg', languages: ['Sanskrit', 'Latin', 'Chinese'] },
-  { slug: 'mysticism', name: 'Mysticism', subtitle: 'Direct Experience of the Divine', description: '', book_count: 1200, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6991d89d8c1030b12444c140/6991d89e8c1030b12444c146-0.jpg', languages: ['German', 'English', 'Latin'] },
-  { slug: 'sacred-texts', name: 'Sacred Texts', subtitle: 'Foundational Scriptures of the World\'s Traditions', description: '', book_count: 1513, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69528b19ab34727b1f04f2fe/69528b19ab34727b1f04f306-0.jpg', languages: ['English', 'Latin', 'Greek'] },
-  { slug: 'renaissance-philosophy', name: 'Renaissance Philosophy', subtitle: 'Humanism, Neoplatonism & the Dignity of Man', description: '', book_count: 1099, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/f20894c1-495f-4afe-815b-e8bf3c8938a5/695004b9f426a210d1097a97-0.jpg', languages: ['Latin', 'English', 'Italian'] },
-  { slug: 'demonology', name: 'Demonology & Witchcraft', subtitle: 'Witch Trials, Possession & the Demonic', description: '', book_count: 298, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952db2477f38f6761bc70c4/6952db2477f38f6761bc70cc-0.jpg', languages: ['English', 'Latin', 'German'] },
-  { slug: 'literature', name: 'Literature & Poetry', subtitle: 'From Gilgamesh to the Divine Comedy', description: '', book_count: 1588, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/a0461b95-c56a-463a-beed-a6a2fb11cec2/695004c2f426a210d1097f09-0.jpg', languages: ['Greek', 'English', 'Latin'] },
-  { slug: 'herbalism', name: 'Herbalism & Botany', subtitle: 'Herbals, Materia Medica & the Science of Plants', description: '', book_count: 388, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958dec2cf7070242ed42151/100.jpg', languages: ['Italian', 'Chinese', 'Latin'] },
-  { slug: 'music-sound', name: 'Music & Sound', subtitle: 'Pythagorean Harmonics to Baroque Music Theory', description: '', book_count: 320, hero_image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/e48a21de-4db2-4c94-a71a-e952b9fa5393/7.jpg', languages: ['Latin', 'Chinese', 'Greek'] },
+  { slug: 'natural-philosophy', name: 'Natural Philosophy & Science', subtitle: 'From Aristotle to Newton', description: '', book_count: 1720, hero_image: 'https://images.sourcelibrary.org/archived/6952d0fa77f38f6761bc5aef/24.jpg', languages: ['Latin', 'Chinese', 'English'] },
+  { slug: 'theology', name: 'Theology & Religious Thought', subtitle: 'Scholasticism, Reformation & Apologetics', description: '', book_count: 1633, hero_image: 'https://images.sourcelibrary.org/gallery/e48a21de-4db2-4c94-a71a-e952b9fa5393/69500507f426a210d109c2be-0.jpg', languages: ['Latin', 'English', 'German'] },
+  { slug: 'classical-philosophy', name: 'Classical Philosophy', subtitle: 'Ancient Greek & Roman Thought', description: '', book_count: 1485, hero_image: 'https://images.sourcelibrary.org/gallery/69568900be7c607c5f03c2d7/69569e3b1479a63c11092796-0.jpg', languages: ['Greek', 'Latin', 'English'] },
+  { slug: 'alchemy', name: 'Alchemy', subtitle: 'The Art of Transmutation', description: '', book_count: 1209, hero_image: 'https://images.sourcelibrary.org/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044158-0.jpg', languages: ['Latin', 'German', 'English'] },
+  { slug: 'indic-traditions', name: 'Indic Traditions', subtitle: 'Vedas, Yoga, Tantra & Buddhist Texts', description: '', book_count: 864, hero_image: 'https://images.sourcelibrary.org/gallery/6991d8978c1030b12444c035/6991d8978c1030b12444c04c-1.jpg', languages: ['Sanskrit', 'English', 'Tamil'] },
+  { slug: 'chinese-classics', name: 'Chinese Classics', subtitle: 'Confucian, Daoist & Buddhist Texts', description: '', book_count: 585, hero_image: 'https://images.sourcelibrary.org/gallery/6992cacfd4d545ae73feeb33/dunhuang-hero.jpg', languages: ['Chinese', 'English', 'French'] },
+  { slug: 'magic', name: 'Magic & Occult Arts', subtitle: 'Grimoires, Natural Magic & Ceremonial Practice', description: '', book_count: 679, hero_image: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', languages: ['Latin', 'English', 'French'] },
+  { slug: 'medicine', name: 'Medicine & Natural History', subtitle: 'From Hippocrates to Paracelsus', description: '', book_count: 1191, hero_image: 'https://images.sourcelibrary.org/gallery/6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1/695004d8f426a210d1099e4b-0.jpg', languages: ['Latin', 'Chinese', 'English'] },
+  { slug: 'art-illustrated', name: 'Art & Illustrated Books', subtitle: 'Illustrated Books, Emblems & Visual Knowledge', description: '', book_count: 1404, hero_image: 'https://images.sourcelibrary.org/gallery/e532b010-6d2e-40ca-9f95-c67e74c5ee61/695004b4f426a210d10975f4-0.jpg', languages: ['Chinese', 'Latin', 'Italian'] },
+  { slug: 'secret-societies', name: 'Secret Societies', subtitle: 'Freemasonry, Rosicrucians & Fraternal Orders', description: '', book_count: 670, hero_image: 'https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd761-0.jpg', languages: ['German', 'Latin', 'French'] },
+  { slug: 'leonardo-da-vinci', name: 'Leonardo da Vinci', subtitle: 'Manuscripts, codices, treatises, and anatomical drawings', description: '', book_count: 48, hero_image: 'https://images.sourcelibrary.org/archived/6991e93135ed50020acc1458/8.jpg', languages: ['Italian', 'French', 'English'] },
+  { slug: 'hermetica', name: 'Hermetica', subtitle: 'Hermetic Philosophy & Prisca Theologia', description: '', book_count: 1191, hero_image: 'https://images.sourcelibrary.org/gallery/69520176ab34727b1f04136b/69520177ab34727b1f041503-0.jpg', languages: ['Latin', 'German', 'English'] },
+  { slug: 'kabbalah', name: 'Kabbalah', subtitle: 'Jewish Mysticism & Christian Cabala', description: '', book_count: 471, hero_image: 'https://images.sourcelibrary.org/gallery/4d4089b9-9227-4cc5-b0a2-9b06ee731061/6950050cf426a210d109ca95-0.jpg', languages: ['Latin', 'Hebrew', 'German'] },
+  { slug: 'astrology', name: 'Astrology & Divination', subtitle: 'Celestial Science & the Mantic Arts', description: '', book_count: 1484, hero_image: 'https://images.sourcelibrary.org/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg', languages: ['Sanskrit', 'Latin', 'Chinese'] },
+  { slug: 'mysticism', name: 'Mysticism', subtitle: 'Direct Experience of the Divine', description: '', book_count: 1200, hero_image: 'https://images.sourcelibrary.org/gallery/6991d89d8c1030b12444c140/6991d89e8c1030b12444c146-0.jpg', languages: ['German', 'English', 'Latin'] },
+  { slug: 'sacred-texts', name: 'Sacred Texts', subtitle: 'Foundational Scriptures of the World\'s Traditions', description: '', book_count: 1513, hero_image: 'https://images.sourcelibrary.org/gallery/69528b19ab34727b1f04f2fe/69528b19ab34727b1f04f306-0.jpg', languages: ['English', 'Latin', 'Greek'] },
+  { slug: 'renaissance-philosophy', name: 'Renaissance Philosophy', subtitle: 'Humanism, Neoplatonism & the Dignity of Man', description: '', book_count: 1099, hero_image: 'https://images.sourcelibrary.org/gallery/f20894c1-495f-4afe-815b-e8bf3c8938a5/695004b9f426a210d1097a97-0.jpg', languages: ['Latin', 'English', 'Italian'] },
+  { slug: 'demonology', name: 'Demonology & Witchcraft', subtitle: 'Witch Trials, Possession & the Demonic', description: '', book_count: 298, hero_image: 'https://images.sourcelibrary.org/gallery/6952db2477f38f6761bc70c4/6952db2477f38f6761bc70cc-0.jpg', languages: ['English', 'Latin', 'German'] },
+  { slug: 'literature', name: 'Literature & Poetry', subtitle: 'From Gilgamesh to the Divine Comedy', description: '', book_count: 1588, hero_image: 'https://images.sourcelibrary.org/gallery/a0461b95-c56a-463a-beed-a6a2fb11cec2/695004c2f426a210d1097f09-0.jpg', languages: ['Greek', 'English', 'Latin'] },
+  { slug: 'herbalism', name: 'Herbalism & Botany', subtitle: 'Herbals, Materia Medica & the Science of Plants', description: '', book_count: 388, hero_image: 'https://images.sourcelibrary.org/archived/6958dec2cf7070242ed42151/100.jpg', languages: ['Italian', 'Chinese', 'Latin'] },
+  { slug: 'music-sound', name: 'Music & Sound', subtitle: 'Pythagorean Harmonics to Baroque Music Theory', description: '', book_count: 320, hero_image: 'https://images.sourcelibrary.org/archived/e48a21de-4db2-4c94-a71a-e952b9fa5393/7.jpg', languages: ['Latin', 'Chinese', 'Greek'] },
 ];
 
 // Hardcoded discover books — shown when getDiscoverBooks() times out during DB stress.
 // Curated selection of translated books across diverse subjects/languages.
 // Last updated: 2026-03-10 from production DB.
 const FALLBACK_DISCOVER_BOOKS = [
-  { id: '6991e7a99d63c80e615599b5', slug: 'codex-atlanticus-partial-vinci', title: 'Codex Atlanticus (partial)', display_title: 'The Atlantic Codex', author: 'Leonardo da Vinci', language: 'Italian', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991e7a99d63c80e615599b5/5.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6991e7a99d63c80e615599b5/5.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '695937303b43cb6630c91e62', slug: 'the-sword-of-moses-trans', title: 'The Sword of Moses (Harba de-Mosheh)', display_title: 'The Sword of Moses', author: 'Moses (attr.) / Moses Gaster (trans.)', language: 'Syriac', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/695937303b43cb6630c91e62/695937303b43cb6630c91e63-0.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/695937303b43cb6630c91e62/1.jpg', is_first_translation: false, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '6953aeb177f38f6761bd85d1', slug: 'hekate-selene-artemis-in-greek-magical-papyri-hopfner', title: 'Hekate-Selene-Artemis in Greek Magical Papyri', display_title: 'Hekate-Selene-Artemis and Related Deities in the Greek Magical Papyri', author: 'Theodor Hopfner', language: 'German', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953aeb177f38f6761bd85d1/4.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6953aeb177f38f6761bd85d1/1.jpg', is_first_translation: true, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
-  { id: '695931d4b91a6184ea9433a8', slug: 'amulet-composed-by-al-buni-al-buni', title: 'Amulette composée par Al-Buni', display_title: 'The Amulet of Al-Buni', author: 'Ahmad al-Buni', language: 'Arabic', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695931d4b91a6184ea9433a8/4.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/695931d4b91a6184ea9433a8/1.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '6991d89d8c1030b12444c140', slug: 'chakra-and-nadi-in-the-shaiva-tradition', title: 'Chakra and Nadi in the Shaiva Tradition', display_title: 'Energy Centers and Channels in the Shiva Tradition', author: 'Unknown', language: 'Hindi', published: 'undated', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991d89d8c1030b12444c140/6.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6991d89d8c1030b12444c140/6.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '6953c83377f38f6761bdbf5a', slug: 'gheranda-samhita-the-collection-of-gheranda-gheranda', title: 'Gheranda Samhita', display_title: 'The Collection of Gheranda', author: 'Gheranda', language: 'Sanskrit', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953c83377f38f6761bdbf5a/1.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6953c83377f38f6761bdbf5a/1.jpg', is_first_translation: false, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
-  { id: '6991d8a38c1030b12444c221', slug: 'vajramrtatantra-ms-or-158-1', title: 'Vajramratatantra', display_title: 'Treatise on the Nectar of the Thunderbolt', author: 'Unknown', language: 'Sanskrit', published: 'undated', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991d8a38c1030b12444c221/4.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6991d8a38c1030b12444c221/1.jpg', is_first_translation: true, pages_count: 12, pages_translated: 12, pages_ocr: 12, translation_percent: 100 },
-  { id: '69907cf65f855ec553e784e3', slug: 'shani-chakram', title: 'Shani Chakram (Saturn)', display_title: 'The Wheel of Saturn', author: 'Unknown', language: 'Sanskrit', published: '1800', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69907cf65f855ec553e784e3/3.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/69907cf65f855ec553e784e3/3.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '6992ca1cd4d545ae73fed82b', slug: 'dunhuang-illustrated-scroll', title: 'Pelliot chinois 4518 (Dunhuang Illustrated Scroll)', display_title: 'Dunhuang Monastic Ledger and Rhyme Dictionary Prefaces', author: 'Unknown', language: 'Chinese', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6992ca1cd4d545ae73fed82b/1.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6992ca1cd4d545ae73fed82b/1.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
-  { id: '69906828249ce014347d5b4d', slug: 'the-great-journey-of-yoga-brhadyogayatra-varahamihira', title: 'Brhadyogayatra of Varahamihira', display_title: 'The Great Journey of Yoga (Brhadyogayatra)', author: 'Varahamihira', language: 'Sanskrit', published: 'Unknown', thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906828249ce014347d5b4d/4.jpg', thumbnail_blob: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/69906828249ce014347d5b4d/1.jpg', is_first_translation: false, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
+  { id: '6991e7a99d63c80e615599b5', slug: 'codex-atlanticus-partial-vinci', title: 'Codex Atlanticus (partial)', display_title: 'The Atlantic Codex', author: 'Leonardo da Vinci', language: 'Italian', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/archived/6991e7a99d63c80e615599b5/5.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6991e7a99d63c80e615599b5/5.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '695937303b43cb6630c91e62', slug: 'the-sword-of-moses-trans', title: 'The Sword of Moses (Harba de-Mosheh)', display_title: 'The Sword of Moses', author: 'Moses (attr.) / Moses Gaster (trans.)', language: 'Syriac', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/gallery/695937303b43cb6630c91e62/695937303b43cb6630c91e63-0.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/695937303b43cb6630c91e62/1.jpg', is_first_translation: false, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '6953aeb177f38f6761bd85d1', slug: 'hekate-selene-artemis-in-greek-magical-papyri-hopfner', title: 'Hekate-Selene-Artemis in Greek Magical Papyri', display_title: 'Hekate-Selene-Artemis and Related Deities in the Greek Magical Papyri', author: 'Theodor Hopfner', language: 'German', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/archived/6953aeb177f38f6761bd85d1/4.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6953aeb177f38f6761bd85d1/1.jpg', is_first_translation: true, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
+  { id: '695931d4b91a6184ea9433a8', slug: 'amulet-composed-by-al-buni-al-buni', title: 'Amulette composée par Al-Buni', display_title: 'The Amulet of Al-Buni', author: 'Ahmad al-Buni', language: 'Arabic', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/archived/695931d4b91a6184ea9433a8/4.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/695931d4b91a6184ea9433a8/1.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '6991d89d8c1030b12444c140', slug: 'chakra-and-nadi-in-the-shaiva-tradition', title: 'Chakra and Nadi in the Shaiva Tradition', display_title: 'Energy Centers and Channels in the Shiva Tradition', author: 'Unknown', language: 'Hindi', published: 'undated', thumbnail: 'https://images.sourcelibrary.org/archived/6991d89d8c1030b12444c140/6.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6991d89d8c1030b12444c140/6.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '6953c83377f38f6761bdbf5a', slug: 'gheranda-samhita-the-collection-of-gheranda-gheranda', title: 'Gheranda Samhita', display_title: 'The Collection of Gheranda', author: 'Gheranda', language: 'Sanskrit', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/archived/6953c83377f38f6761bdbf5a/1.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6953c83377f38f6761bdbf5a/1.jpg', is_first_translation: false, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
+  { id: '6991d8a38c1030b12444c221', slug: 'vajramrtatantra-ms-or-158-1', title: 'Vajramratatantra', display_title: 'Treatise on the Nectar of the Thunderbolt', author: 'Unknown', language: 'Sanskrit', published: 'undated', thumbnail: 'https://images.sourcelibrary.org/archived/6991d8a38c1030b12444c221/4.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6991d8a38c1030b12444c221/1.jpg', is_first_translation: true, pages_count: 12, pages_translated: 12, pages_ocr: 12, translation_percent: 100 },
+  { id: '69907cf65f855ec553e784e3', slug: 'shani-chakram', title: 'Shani Chakram (Saturn)', display_title: 'The Wheel of Saturn', author: 'Unknown', language: 'Sanskrit', published: '1800', thumbnail: 'https://images.sourcelibrary.org/archived/69907cf65f855ec553e784e3/3.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/69907cf65f855ec553e784e3/3.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '6992ca1cd4d545ae73fed82b', slug: 'dunhuang-illustrated-scroll', title: 'Pelliot chinois 4518 (Dunhuang Illustrated Scroll)', display_title: 'Dunhuang Monastic Ledger and Rhyme Dictionary Prefaces', author: 'Unknown', language: 'Chinese', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/thumbnails/6992ca1cd4d545ae73fed82b/1.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/6992ca1cd4d545ae73fed82b/1.jpg', is_first_translation: true, pages_count: 10, pages_translated: 10, pages_ocr: 10, translation_percent: 100 },
+  { id: '69906828249ce014347d5b4d', slug: 'the-great-journey-of-yoga-brhadyogayatra-varahamihira', title: 'Brhadyogayatra of Varahamihira', display_title: 'The Great Journey of Yoga (Brhadyogayatra)', author: 'Varahamihira', language: 'Sanskrit', published: 'Unknown', thumbnail: 'https://images.sourcelibrary.org/archived/69906828249ce014347d5b4d/4.jpg', thumbnail_blob: 'https://images.sourcelibrary.org/thumbnails/69906828249ce014347d5b4d/1.jpg', is_first_translation: false, pages_count: 11, pages_translated: 11, pages_ocr: 11, translation_percent: 100 },
 ] as unknown as Book[];
 
 const SORTED_FALLBACK_COLLECTIONS = sortCollections([...FALLBACK_COLLECTIONS]);
@@ -592,7 +593,7 @@ const BLOG_POSTS: HomeBlogPost[] = [
     readTime: '22 min read',
     tagKey: 'deepDive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg',
+    image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg',
   },
   {
     slug: 'philosophers-stone',
@@ -602,7 +603,7 @@ const BLOG_POSTS: HomeBlogPost[] = [
     readTime: '20 min read',
     tagKey: 'deepDive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
+    image: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
   },
   {
     slug: 'rithmomachia',
@@ -612,7 +613,7 @@ const BLOG_POSTS: HomeBlogPost[] = [
     readTime: '18 min read',
     tagKey: 'collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
   },
   {
     slug: 'first-translations',
@@ -622,13 +623,13 @@ const BLOG_POSTS: HomeBlogPost[] = [
     readTime: '14 min read',
     tagKey: 'collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
+    image: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
   },
 ];
 
-// ---------- Spanish podcast (featured on /es) ----------
+// ---------- Featured podcast episode (both homepages) ----------
 
-export interface SpanishPodcastSource {
+export interface PodcastSource {
   bookId: string;
   slug?: string;
   title: string;
@@ -636,20 +637,40 @@ export interface SpanishPodcastSource {
   origin?: string;
 }
 
-export interface SpanishPodcast {
+export interface FeaturedPodcast {
   threadId: string;
   title: string;
   topic: string;
   audioUrl: string;
   heroImageUrl: string | null;
-  sources: SpanishPodcastSource[];
+  sources: PodcastSource[];
 }
 
-// Latest published Spanish-language deep-dive episode, for the /es feature.
-async function getSpanishPodcast(): Promise<SpanishPodcast | null> {
+// Latest published deep-dive episode in the homepage's own language.
+//
+// This began as a Spanish-only feature. It is now rendered on both homepages
+// because the measurement said the placement is the thing that works: in the
+// 30 days to 2026-08-13 the podcast drew 113 plays, and 66 of them (58%) were
+// this one featured Spanish episode — which also had the best completion rate
+// of any episode (33% vs 29% overall). The other ten-plus episodes, reachable
+// only from the header nav, averaged about five plays each. So the nav item was
+// retired (SiteHeader) and English got the placement that actually earns
+// listens. A language with no published episode simply renders nothing.
+//
+// The language match is NOT `{ language }`. English threads carry no `language`
+// field at all — measured 2026-08-13, all six published English deep-dives have
+// it absent while the single Spanish one has `language: 'es'`. `language: 'en'`
+// therefore matches zero documents, and the English feature would have rendered
+// nothing forever while looking perfectly correct in code review. Absent means
+// English here, so `en` has to accept the missing field.
+async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast | null> {
   const db = await getReadDb();
+  const languageMatch =
+    language === 'en'
+      ? { $or: [{ language: 'en' }, { language: { $exists: false } }, { language: null }] }
+      : { language };
   const thread = await db.collection('embassy_threads').findOne(
-    { language: 'es', 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
+    { ...languageMatch, 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
     {
       projection: { title: 1, heroImage: 1, 'podcasts.deep-dive': 1 },
       sort: { 'podcasts.deep-dive.generatedAt': -1 },
@@ -679,19 +700,22 @@ export interface HomeData {
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
-  spanishPodcast: SpanishPodcast | null;
+  featuredPodcast: FeaturedPodcast | null;
 }
 
-export async function getHomeData(): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishPodcast] = await Promise.all([
+// `lang` selects the podcast episode's language and nothing else — every other
+// query is language-agnostic, which is what keeps the two homepages structurally
+// identical (see the note at the top of this file).
+export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
-    withTimeout(getSpanishPodcast(), 8000, null),
+    withTimeout(getFeaturedPodcast(lang), 8000, null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast };
 }

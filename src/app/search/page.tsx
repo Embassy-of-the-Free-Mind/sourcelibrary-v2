@@ -57,6 +57,10 @@ interface CategoryOption { value: string; label: string; icon?: string; }
 
 interface BphCatalogMatch {
   ubn: string;
+  /** Manuscripts/photographs get no UBN from Memorix; uuid is their only key. */
+  uuid?: string | null;
+  /** Where manuscript records keep their title; `title` is null on them. */
+  full_title?: string | null;
   title: string | null;
   parallel_title?: string | null;
   uniform_title?: string | null;
@@ -1625,7 +1629,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false }: { 
                 <>
                   {catalogResults.slice(0, 5).map(work => (
                     <BphCatalogResultCard
-                      key={work.ubn}
+                      key={work.ubn || work.uuid}
                       work={work}
                       query={query}
                       tenant={tenant}
@@ -2179,7 +2183,7 @@ function BphCatalogResultCard({ work, query, tenant, digitizedAlsoInBooks }: {
   tenant?: string;
   digitizedAlsoInBooks: boolean;
 }) {
-  const title = work.title || work.parallel_title || work.uniform_title || '(untitled)';
+  const title = work.title || work.full_title || work.parallel_title || work.uniform_title || '(untitled)';
   const author = work.author || work.variant_author;
   const meta = [
     author,
@@ -2187,9 +2191,12 @@ function BphCatalogResultCard({ work, query, tenant, digitizedAlsoInBooks }: {
     work.place,
   ].filter(Boolean).join(' · ');
   const isDigitized = !!work.sl_book_id;
+  // Manuscripts and photographs get no UBN from Memorix — `uuid` is their only
+  // key, and the /catalog/[ubn] route accepts either (see BphCatalogBrowser).
+  const catalogKey = work.ubn || work.uuid;
   const href = isDigitized && work.sl_book_id
     ? tenantBookUrl({ id: work.sl_book_id, slug: work.sl_book_slug || work.sl_book_id }, tenant)
-    : `/catalog/${encodeURIComponent(work.ubn)}`;
+    : `/catalog/${encodeURIComponent(catalogKey || '')}`;
   const [imgError, setImgError] = useState(false);
 
   // Don't double-show digitized works that already appear in book results — render

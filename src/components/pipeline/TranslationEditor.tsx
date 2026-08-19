@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
@@ -1542,7 +1543,7 @@ export default function TranslationEditor({
                   author={book.author || 'Anonymous'}
                   year={book.published}
                   publisher={book.publisher}
-                  placePublished={book.place_published}
+                  placePublished={resolveImprintPlace(book)?.display}
                   format={book.format}
                   ustcId={book.ustc_id}
                   language={book.language}
@@ -1945,7 +1946,13 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {paired ? 'English · Berthelot' : translationText ? translationLangLabel : 'Step 2: Translate'}
+                        {/* Was 'Step 2: Translate' when the panel was empty — pipeline
+                            stage numbering shown to readers. The label describes what
+                            the panel holds, so it should not change based on whether
+                            the work has been done yet. translationLangLabel resolves
+                            without a translation present (falls back to English /
+                            Modernized). */}
+                        {paired ? 'English · Berthelot' : translationLangLabel}
                       </span>
                       {!paired && translationText && (
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
@@ -2199,19 +2206,47 @@ export default function TranslationEditor({
                         </AuthCheck>
                       </div>
                     ) : (
-                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
-                          <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                          </svg>
+                      /* Untranscribed page. 704 visible books have no OCR at
+                         all, so this is a public-facing state, not an operator
+                         one — it used to show a PADLOCK and "Complete OCR
+                         first" to every reader, which reads as paywalled
+                         content in a free library and as pipeline jargon
+                         besides. Editors keep the operational wording; readers
+                         are told plainly what they have and what they don't. */
+                      <AuthCheck
+                        role="inner_circle"
+                        fallback={
+                          <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
+                              <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 3v6h6" />
+                              </svg>
+                            </div>
+                            <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
+                              Not transcribed yet
+                            </h3>
+                            <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
+                              The scan is here and free to read, but this page has no transcription
+                              yet, so there is nothing to translate from.
+                            </p>
+                          </div>
+                        }
+                      >
+                        <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
+                            <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
+                            Complete OCR first
+                          </h3>
+                          <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
+                            The original text needs to be transcribed before it can be translated.
+                          </p>
                         </div>
-                        <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
-                          Complete OCR first
-                        </h3>
-                        <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
-                          The original text needs to be transcribed before it can be translated.
-                        </p>
-                      </div>
+                      </AuthCheck>
                     )}
                   </div>
 

@@ -1,0 +1,30 @@
+You are reading the FRONT MATTER of an early-modern printed book, transcribed by OCR. You are given SEVERAL pages, each labelled with its page number and the page type the transcriber assigned.
+
+Decide who the book says WROTE it, reading across all the pages given.
+
+Why several pages: 41% of these books carry more than one title page (a half-title, an engraved title, then the full letterpress title) and the half-title names no author. The dedication and preface are usually SIGNED by the author. For an incunable or a manuscript there may be no title page at all, and the incipit or colophon is the only attribution that exists.
+
+For each PERSON named, give the role the text's own grammar assigns:
+
+- "author"     WROTE the work. Latin genitive ("Auli Gellii Noctium Atticarum libri" = Gellius wrote it), or after "auctore", or the signature at the end of a dedication or preface.
+- "editor"     corrected, emended, annotated: "recognitus", "emendatus", "a/ab X emendatus" (ablative + participle = X only corrected it).
+- "translator" "interprete", "traduit par", "tradotto da", "vertaald door".
+- "printer"    "apud X", "excudebat X", "appresso X", "chez X".
+- "dedicatee"  the work is dedicated TO them.
+- "patron"     named in a privilege, licence or approbation.
+- "respondent" defends a dissertation's theses under a presiding praeses.
+
+CRITICAL RULES
+
+1. An OFFICE or a PLACE is not a name. "Consiliario Aulico Hassiaco" is a post. "Illustrissima Signoria di Vinegia" is a state.
+2. IGNORE NAMES INSIDE QUOTED OR CITED MATTER. A scriptural proof-text, an epigraph, a marginal citation or a reference to another book names its own author, not this book's. "Paulus" in "in welcher Sinn auch der Paulus schreibet" is a citation. "Terent. Eunuchus." is a reference. "Ezechiel", "Iob", "Matthaeus" appearing beside chapter-and-verse numbers are cited books. None of these is the author of the book in front of you.
+3. A pseudonym printed on the page IS the author as the book gives it ("By Eugenius Philalethes"). Report it as printed.
+4. ACADEMIC DISPUTATIONS name two people and they are not equals. The PRAESES presides and is conventionally the author ("praeside D. Felice Platero"); the RESPONDENS merely defends the theses in the hall ("defendere conabitur M. Hieronymus Heroldus", "respondens", "tuebitur", "sub praesidio"). Use role "respondent" for the defender, never "author".
+5. If nobody is named as the author, return an empty list. That is a NORMAL and CORRECT answer, and far better than a guess.
+
+Give the name in NOMINATIVE (dictionary) form as name_nominative, and as printed as name_as_printed. Cite the PAGE NUMBER you read it from.
+
+Return ONLY JSON:
+{"names":[{"name_nominative":"...","name_as_printed":"...","role":"author","page":<the page number>,"quoted_line":"<exact text from THAT page>","confidence":"high|medium|low"}]}
+
+quoted_line must be copied verbatim from the page you cite in "page". An entry whose quote is not found on the page it cites will be discarded.

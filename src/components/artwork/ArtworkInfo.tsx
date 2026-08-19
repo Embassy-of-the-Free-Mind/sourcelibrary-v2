@@ -64,10 +64,34 @@ interface ArtworkInfoProps {
   isEmbedded?: boolean;
 }
 
+// Build a museum-record link from structured source_ids (#3838) for artworks
+// that carry no source URL at all (NGA matches, Met Egyptian-art and
+// Rijksmuseum KOG batches). Met/AIC routes are their documented public URLs;
+// the Rijksmuseum object-number route 301s to the canonical object page; the
+// NGA pattern is Wikidata P4683's formatter URL (nga.gov fingerprint-blocks
+// non-browser clients, so it can't be curl-verified — browser-checked only).
+function museumRecordLink(book: unknown): { url: string; label: string } | null {
+  const ids = (book as { source_ids?: Record<string, string> }).source_ids || {};
+  if (ids.met) return { url: `https://www.metmuseum.org/art/collection/search/${encodeURIComponent(ids.met)}`, label: 'The Metropolitan Museum of Art' };
+  if (ids.rijksmuseum) return { url: `https://www.rijksmuseum.nl/en/collection/${encodeURIComponent(ids.rijksmuseum)}`, label: 'Rijksmuseum' };
+  if (ids.nga) return { url: `https://www.nga.gov/collection/art-object-page.${encodeURIComponent(ids.nga)}.html`, label: 'National Gallery of Art' };
+  if (ids.aic) return { url: `https://www.artic.edu/artworks/${encodeURIComponent(ids.aic)}`, label: 'Art Institute of Chicago' };
+  if (ids.commons && /^File:/i.test(ids.commons)) {
+    return { url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(ids.commons.replace(/ /g, '_'))}`, label: 'Wikimedia Commons' };
+  }
+  return null;
+}
+
 export default function ArtworkInfo({ book, collections, prevWork, nextWork, navByCollection, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
   const displayImage = book.thumbnail || (book as any).thumbnail_blob || '';
   const thumbImage = (book as any).thumbnail_blob || '';
   const commonsUrl = (book as any).commons_url || '';
+  const sourceRecord = museumRecordLink(book);
+  // One source link for the whole page: the stored source URL when we have
+  // one, else a museum-record link built from source_ids.
+  const sourceHref = commonsUrl || (book as any).source_url || sourceRecord?.url || '';
+  const sourceName = (book.image_source as any)?.provider_name
+    || (commonsUrl ? 'Wikimedia Commons' : sourceRecord?.label || 'Source record');
   const commonsFullUrl = (book as any).commons_full_url || '';
   const commonsLicense = (book as any).commons_license || 'Public domain';
   const medium = (book as any).medium || '';
@@ -216,8 +240,8 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
                   <span className="hidden sm:inline">Download</span>
                 </a>
               )}
-              {commonsUrl && (
-                <a href={commonsUrl} target="_blank" rel="noopener noreferrer"
+              {sourceHref && (
+                <a href={sourceHref} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-stone-300 hover:text-white hover:bg-white/10 rounded-md transition-colors">
                   <ExternalLink className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Source</span>
@@ -458,9 +482,9 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
               <div>
                 <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Source</span>
                 <p className="mt-0.5">
-                  {commonsUrl ? (
-                    <a href={commonsUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
-                      {(book.image_source as any)?.provider_name || 'Wikimedia Commons'}
+                  {sourceHref ? (
+                    <a href={sourceHref} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
+                      {sourceName}
                     </a>
                   ) : (
                     (book.image_source as any)?.provider_name || 'Unknown'

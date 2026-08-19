@@ -21,7 +21,7 @@ import {
   isFirstTranslation,
   FIRST_TRANSLATION_READABLE_MIN,
 } from '@/lib/first-translation/derive';
-import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
 import type { FirstTranslationBook } from '@/lib/first-translation/types';
 
 /** A badged book with strong evidence — the only thing varying is coverage. */
@@ -117,21 +117,53 @@ describe('isPublicFirst excludes barely-translated books from the headline', () 
 
 describe('firstTranslationBadge qualifies an in-progress translation', () => {
   it('reads plainly when the translation is done', () => {
-    expect(firstTranslationBadge('confirmed_first', 'Latin', false)).toBe('First Translation');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'confirmed')).toBe('First Translation');
   });
 
   it('says so when it is not', () => {
-    expect(firstTranslationBadge('confirmed_first', 'Latin', true)).toBe('First Translation, in progress');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', true, 'confirmed')).toBe('First Translation, in progress');
   });
 
   it('never calls a partly-translated book COMPLETE', () => {
     // The specific claim the gate exists to prevent: "First Complete
     // Translation" on a book that is 6% translated.
-    expect(firstTranslationBadge('first_complete_translation', 'Latin', true))
+    expect(firstTranslationBadge('first_complete_translation', 'Latin', true, 'confirmed'))
       .not.toContain('Complete');
   });
 
   it('keeps the source-language wording when qualifying', () => {
-    expect(firstTranslationBadge('first_from_source', 'Dutch', true)).toBe('First from Dutch, in progress');
+    expect(firstTranslationBadge('first_from_source', 'Dutch', true, 'confirmed')).toBe('First from Dutch, in progress');
+  });
+});
+
+describe('firstTranslationBadge speaks plain catalog voice in every register (2026-08-11)', () => {
+  // Policy reversal, deliberate (Derek): a catalog says "first edition" without
+  // an epistemology lecture. The claim register no longer changes the wording;
+  // provenance lives in the data, one click away, not in the label.
+  it('states the plain label regardless of claim register', () => {
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'candidate'))
+      .toBe('First Translation');
+    expect(firstTranslationBadge('confirmed_first', 'Latin', false, 'confirmed'))
+      .toBe('First Translation');
+  });
+
+  it('keeps the in-progress qualifier (reader service, not hedging)', () => {
+    expect(firstTranslationBadge('confirmed_first', 'Latin', true, 'candidate'))
+      .toBe('First Translation, in progress');
+  });
+
+  it('draws the disposition distinctions in every register', () => {
+    expect(firstTranslationBadge('first_complete_translation', 'Dutch', false, 'candidate'))
+      .toBe('First Complete Translation');
+    expect(firstTranslationBadge('first_modern_translation', 'Dutch', false, 'candidate'))
+      .toBe('First Modern Translation');
+    expect(firstTranslationBadge('first_from_source', 'Dutch', false, 'candidate'))
+      .toBe('First from Dutch');
+  });
+
+  it('description is plain and disclaimer-free', () => {
+    const d = firstTranslationDescription('confirmed_first');
+    expect(d).toBe('The first English translation of this text.');
+    expect(d).not.toMatch(/not proof|coin flip|weaker evidence/);
   });
 });

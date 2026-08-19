@@ -24,12 +24,15 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
-import { createHash, randomBytes } from 'crypto';
+import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs';
@@ -52,34 +55,14 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 /**
- * Save current page content as a revision before overwriting.
- * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ * Save current page content as a revision before overwriting — delegates to the
+ * shared helper (scripts/lib/page-revisions.mjs). This worker's inline copy
+ * predated the #3240 refinements (marker-text skip, reason, source_language,
+ * batch_job_id preference) and never received them (#3977). Sole call site is
+ * the preview-model realtime re-OCR path.
  */
 async function saveRevisionBeforeOverwrite(db, pageId, field) {
-  try {
-    const page = await db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { book_id: 1, ocr: 1, translation: 1 } }
-    );
-    if (!page) return;
-    const fieldData = page[field];
-    if (!fieldData?.data) return; // No existing content — first write
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: pageId,
-      book_id: page.book_id,
-      field,
-      data: fieldData.data,
-      source: fieldData.source || 'ai',
-      model: fieldData.model,
-      language: fieldData.language,
-      prompt_version: fieldData.prompt_version,
-      original_date: fieldData.updated_at,
-      created_at: new Date(),
-    });
-  } catch (e) {
-    // Non-fatal — don't block pipeline on revision failure
-  }
+  return saveRevisionShared(db, pageId, field, { reason: 'reocr_realtime' });
 }
 
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
@@ -481,10 +464,7 @@ async function probeDbHealth(db) {
   return grade;
 }
 
-// Page types to skip for translation (mirrors defaults.ts)
-const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate',
-];
+// Page types to skip for translation: canonical list from translate-core (#3734).
 
 // Languages that get inline transliteration before translation.
 // Currently Greek only — other scripts are handled by the translator directly.
@@ -559,12 +539,9 @@ function hashString(str) {
 
 const TRANSLATE_MODEL_FLASH = 'gemini-3-flash-preview';
 const TRANSLATE_MODEL_LITE = 'gemini-3.1-flash-lite';
-function getTranslateModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return TRANSLATE_MODEL_FLASH;
-  return TRANSLATE_MODEL_LITE;
-}
-const TRANSLATE_MODEL = TRANSLATE_MODEL_FLASH; // Legacy fallback
-const TRANSLATE_PROMPT_VERSION = 'v10';
+// Model routing imported from translate-core (issue #3725). The local copy
+// this replaces routed ONLY on provider — it would have stamped non-Latin-
+// script (e.g. Tibetan) jobs with the lite model that hallucinates on them.
 const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
@@ -648,156 +625,9 @@ async function transliteratePage(db, page, sourceScript) {
   return { inputTokens, outputTokens, costUsd };
 }
 
-// ── Direct translation (Gemini realtime, FIFO per book) ──
-
-// Translation prompt loaded from DB prompts collection (single source of truth).
-// Returns { text, id, name, version, content_hash } so callers can stamp
-// prompt_id / prompt_hash / prompt_name on each page write.
-let _cachedTranslationPrompt = null;
-async function getTranslationPromptFromDb(db) {
-  if (_cachedTranslationPrompt) return _cachedTranslationPrompt;
-  const prompt = await db.collection('prompts').findOne(
-    { type: 'translation', is_default: true },
-    { sort: { version: -1 } }
-  );
-  if (!prompt?.content) throw new Error('No default translation prompt found in DB');
-  console.log(`[pipeline] Loaded translation prompt v${prompt.version} from DB`);
-  _cachedTranslationPrompt = {
-    text: prompt.content,
-    id: prompt._id?.toString(),
-    name: prompt.name,
-    version: String(prompt.version ?? 1),
-    content_hash: prompt.content_hash,
-  };
-  return _cachedTranslationPrompt;
-}
-
-// English modernization prompt loaded from DB (single source of truth)
-let _cachedEnglishPrompt = null;
-async function getEnglishModernizationPromptFromDb(db) {
-  if (_cachedEnglishPrompt) return _cachedEnglishPrompt;
-  const prompt = await db.collection('prompts').findOne(
-    { type: 'english_modernization', is_default: true },
-    { sort: { version: -1 } }
-  );
-  if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
-  console.log(`[pipeline] Loaded english modernization prompt v${prompt.version} from DB`);
-  _cachedEnglishPrompt = {
-    text: prompt.content,
-    id: prompt._id?.toString(),
-    name: prompt.name,
-    version: String(prompt.version ?? 1),
-    content_hash: prompt.content_hash,
-  };
-  return _cachedEnglishPrompt;
-}
-
-function extractTranslationMetadata(text) {
-  const result = {};
-  const summaryMatch = text.match(/<summary>([\s\S]*?)<\/summary>/i);
-  if (summaryMatch) {
-    const s = summaryMatch[1].trim();
-    if (s.length > 0) result.translation_summary = s;
-  }
-  const keywordsMatch = text.match(/<keywords>([\s\S]*?)<\/keywords>/i);
-  if (keywordsMatch) {
-    const raw = keywordsMatch[1].trim();
-    if (raw.length > 0) {
-      const kw = raw.split(/[,;]\s*|\s+-\s+/).map(k => k.trim()).filter(k => k.length > 0);
-      if (kw.length > 0) result.translation_keywords = [...new Set(kw)];
-    }
-  }
-  return result;
-}
-
-/**
- * Translate a single page via direct Gemini realtime call.
- * Returns the translation text (for use as context for the next page).
- */
-async function translatePage(db, page, sourceLanguage, previousTranslation) {
-  const apiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
-  const url = `${GEMINI_API_BASE}/models/${TRANSLATE_MODEL}:generateContent?key=${apiKey}`;
-
-  const isEnglish = sourceLanguage.toLowerCase() === 'english';
-  const translationPrompt = await getTranslationPromptFromDb(db);
-  const englishPrompt = await getEnglishModernizationPromptFromDb(db);
-  const basePromptRef = isEnglish ? englishPrompt : translationPrompt;
-  let prompt = basePromptRef.text
-    .replace('{source_language}', sourceLanguage)
-    .replace('{target_language}', 'English');
-
-  prompt += isEnglish
-    ? `\n\n**Text to modernize:**\n${page.ocr.data}`
-    : `\n\n**Text to translate:**\n${page.ocr.data}`;
-
-  if (previousTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
-  }
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      safetySettings: [
-        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-      ],
-    }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Gemini ${response.status}: ${errText.substring(0, 300)}`);
-  }
-
-  const data = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  const usage = data.usageMetadata || {};
-  const inputTokens = usage.promptTokenCount || 0;
-  const outputTokens = usage.candidatesTokenCount || 0;
-
-  if (!text) throw new Error('Empty response from Gemini');
-
-  // Extract metadata from translation output
-  const meta = extractTranslationMetadata(text);
-
-  // Save revision before overwriting, then write translation
-  await saveRevisionBeforeOverwrite(db, page.id, 'translation');
-  await db.collection('pages').updateOne(
-    { id: page.id },
-    {
-      $set: {
-        'translation.data': text,
-        'translation.language': 'English',
-        'translation.model': TRANSLATE_MODEL,
-        'translation.updated_at': new Date(),
-        'translation.source': 'ai',
-        'translation.prompt_version': basePromptRef.version || TRANSLATE_PROMPT_VERSION,
-        'translation.prompt_id': basePromptRef.id,
-        'translation.prompt_hash': basePromptRef.content_hash,
-        'translation.prompt_name': basePromptRef.name,
-        ...meta,
-        updated_at: new Date(),
-      },
-    }
-  );
-
-  // Log usage (fire-and-forget)
-  const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-  logUsageAsync({
-    type: 'translation', mode: 'realtime', model: TRANSLATE_MODEL,
-    book_id: page.book_id, page_ids: [page.id],
-    input_tokens: inputTokens, output_tokens: outputTokens,
-    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
-  }, db);
-
-  return { text, inputTokens, outputTokens, costUsd };
-}
+// The realtime translatePage lane that lived here was dead code — a fully
+// armed second writer never called from any phase. Translation is dispatched
+// to translate-worker.mjs (Phase 4) and written through translate-core (#3725).
 
 // Sources whose pages need archiving
 const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian|cdli\.earth|contentdm\.oclc\.org|digitalcollections\.manchester|viewer\.cbl\.ie|universiteitleiden|digi\.ub\.uni-heidelberg|iiif\.qdl\.qa|permalinkbnd\.bnportugal|dl\.ndl\.go\.jp/;
@@ -2740,6 +2570,42 @@ async function run() {
         console.log(`  FT-flagged: ${ftFlagged}/${log.enrolled}`);
       }
       console.log(`  Enrolled: ${log.enrolled}`);
+
+      // Convergence tail (#3756): the 14-day window turned "recent" into a
+      // permanent exclusion — 6,874 books / 2.37M pages could never enter the
+      // pipeline (archaeology I89). Enroll a small OLDEST-first batch each
+      // cycle too; archiving is free and the dial gates all paid phases, so
+      // this converges the stranded backlog at bounded pace with zero
+      // unbudgeted spend.
+      if (!DRY_RUN) {
+        const strays = await db.collection('books')
+          .find({
+            pipeline_auto: { $exists: false },
+            created_at: { $lt: cutoff },
+            'image_source.provider': { $nin: ART_PROVIDERS },
+          })
+          .project({ id: 1, language: 1 })
+          .sort({ created_at: 1 })
+          .limit(25)
+          .toArray();
+        const ENGLISH_VARIANTS_STRAY = ['english', 'eng', 'en'];
+        for (const book of strays) {
+          const lang = (book.language || '').toLowerCase();
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: {
+              pipeline_auto: {
+                status: 'queued', source: 'cron-convergence', queued_at: new Date(),
+                last_updated: new Date(), retry_count: 0,
+                likely_first_translation: !!lang && !ENGLISH_VARIANTS_STRAY.includes(lang),
+              },
+              updated_at: new Date(),
+            } }
+          );
+          log.enrolled++;
+        }
+        if (strays.length) console.log(`  Convergence-enrolled (oldest-first, pre-window): ${strays.length}`);
+      }
     }
 
     // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate).
@@ -3938,7 +3804,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2)) {
+    if (shouldRun(2) && await budgetAllowsDispatch(db, 'Phase 2 (OCR submit)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -4015,7 +3881,9 @@ Rules:
                 },
               },
             }},
-            { $sort: { _priority: 1, hidden: 1 } },
+            // processing_priority (#3756): explicit queue weight, higher first
+            // (absent sorts last under -1). Existing ordering kept as tiebreak.
+            { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
             { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
@@ -4120,7 +3988,8 @@ Rules:
               },
             },
           }},
-          { $sort: { _priority: 1, hidden: 1 } },
+          // processing_priority (#3756): explicit queue weight, higher first.
+          { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
@@ -4544,7 +4413,7 @@ Rules:
     // ── Phase 4: Dispatch translation to Lambda via SQS FIFO ──
     // Hetzner focuses on OCR; Lambdas scale out translation.
     // Creates a job record, enqueues pages to SQS FIFO, Lambdas process sequentially per book.
-    if (shouldRun(4)) {
+    if (shouldRun(4) && await budgetAllowsDispatch(db, 'Phase 4 (translation dispatch)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
       // Zombie job reaper: cancel ANY job stuck in processing with no update for >1h.
@@ -4650,8 +4519,11 @@ Rules:
           }}}},
           { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
           { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
-          // BPH priority until backlog cleared, then first translations, then speed tier
-          { $sort: { _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+          // processing_priority (#3756/#3750) leads: explicit queue weight, higher
+          // first (reader requests board at 100). Then BPH until backlog cleared,
+          // then first translations, then speed tier. Descending sort puts books
+          // without the field last.
+          { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
@@ -4671,9 +4543,12 @@ Rules:
             }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
-            { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            // processing_priority + pages_translated must survive the projection
+            // for the sort below to see them (#3756).
+            { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
-            { $sort: { _isBph: 1, pages_translated: -1 } },
+            // Reader requests first (#3750) — see the fresh-books sort above.
+            { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
           if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
@@ -5529,10 +5404,28 @@ Rules:
 
         if (!DRY_RUN) {
           await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
+          // Cost ledger (#3756): stamp what this book actually cost, from the
+          // usage meter — powers sponsor-a-book displays and unit economics.
+          // cost_usd is computed-not-billed; label the field accordingly.
+          try {
+            const [costAgg] = await db.collection('gemini_usage').aggregate([
+              { $match: { book_id: book.id } },
+              { $group: { _id: null, usd: { $sum: { $ifNull: ['$cost_usd', 0] } }, calls: { $sum: 1 } } },
+            ], { maxTimeMS: 30000 }).toArray();
+            if (costAgg) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { processing_cost_usd_estimate: Math.round(costAgg.usd * 100) / 100, processing_cost_stamped_at: new Date() } }
+              );
+            }
+          } catch { /* cost stamp is best-effort — never block finalize */ }
           // Auto-unhide: books that completed the full pipeline should be visible
+          // — UNLESS they are hidden for a stated reason (takedown, copyright,
+          // sponsor hold). A hidden_reason is a human decision; finalize must
+          // never overrule it (#3099 Kloss invariant; guard added at relight).
           await db.collection('books').updateOne(
-            { id: book.id, hidden: true },
-            { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+            { id: book.id, hidden: true, hidden_reason: { $exists: false } },
+            { $set: { hidden: false, visible: true, updated_at: new Date() } }
           );
         }
         log.finalized++;

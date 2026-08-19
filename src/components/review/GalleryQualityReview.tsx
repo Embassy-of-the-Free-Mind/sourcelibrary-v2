@@ -78,6 +78,8 @@ export default function GalleryQualityReview() {
       onRetry={() => q.fetchNext(q.volunteerId)}
       body={body}
       submitting={q.submitting}
+      canSubmit={q.canSubmit}
+      authStatus={q.authStatus}
       note={q.note}
       onNoteChange={q.setNote}
       onNoteSubmit={q.submitNote}

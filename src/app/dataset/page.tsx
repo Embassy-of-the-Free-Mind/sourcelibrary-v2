@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getReadDb } from '@/lib/mongodb';
@@ -260,12 +261,15 @@ export default async function DatasetPage() {
         </p>
 
         <div className="flex flex-wrap gap-4 mt-8">
-          <a
+          <OutboundLink
             href="mailto:team@sourcelibrary.org?subject=Dataset%20Access%20Request"
+            surface="dataset"
+            channel="email"
+            intent="inquiry"
             className="px-6 py-3 bg-[#1a1a18] text-white rounded-full text-sm font-medium hover:bg-[#333] transition-colors"
           >
             Request access
-          </a>
+          </OutboundLink>
           <a
             href="/api/dataset/v1/stats"
             className="px-6 py-3 border border-[#ccc] text-[#444] rounded-full text-sm font-medium hover:border-[#999] transition-colors"

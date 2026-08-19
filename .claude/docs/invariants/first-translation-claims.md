@@ -8,18 +8,94 @@
 
 "First English translation" asserts an **unprovable universal negative**. No search establishes one; a catalogue returns only *nothing found*. The fix (#3459) is to stop asserting the negative and publish the **search**: a bounded, dated, reproducible act recorded in `search_efforts` — proposition, reference set with per-source snapshot dates and declared gaps, every query verbatim, every candidate **with its screening reason**, and the git SHA that produced it.
 
+**ONE LEDGER (#3881): `first_translation_attempts` is the canonical evidence ledger.** Every search by every instrument lands there as one row; `search_efforts` is the tier-1 **detail archive** behind it (same relationship `first_translation_transcripts` has to rung-2 rows — ledger row lean, deep artifact behind `transcript_ref`). The sweep dual-writes via `effortToAttempt()` in `scripts/lib/search-effort.mjs`; `not_searchable` efforts deliberately never enter the ledger ("we could not ask" must not read as "we asked"). Read `search_efforts` only through `latestEffortPerBook()`; do not add a second ledger, and a new instrument writes attempts, not a new collection.
+
 **Full doc: `.claude/docs/first-translation-reference-set.md`** — the evidence
 layer, its measured reliability, and the invariants below in detail.
 
-That machinery is only honest if you know the set's **recall**, and ours is **27%**
-(was 22%; `scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed
-priors in `translation_classification`) — three of four known prior translations are
-invisible to it. A sampled check of the queue puts `none_found`'s **positive
-predictive value at ~50%**: a coin flip. So:
+That machinery is only honest if you know the set's **recall**, and ours is **32.1%**
+(22% → 27% with MARC 240 containment → 32.1% on 2026-08-07 with ESTC added;
+`scripts/eval/ft-reference-set-recall.mjs`, measured against the attributed priors in
+`translation_classification`) — **two of every three** known prior translations are
+still invisible to it. A sampled check of the queue puts `none_found`'s **positive
+predictive value at ~50%**: a coin flip.
+
+**Do not read the improvement as the problem receding.** ESTC covers imprints
+1473–1800 while 80.8% of this corpus's known Latin/Greek priors are post-1950
+imprints, so the remaining loss sits in modern scholarly publishing that no
+early-modern catalogue can reach. Adding sources of the same kind will not close
+it. So:
 
 - **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
 - **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
 - **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
+
+**That distinction breaks at the PAYLOAD layer too, not just the evidence layer** (#3686,
+2026-08-07). Book surfaces are served from two sources for the same object: the Supabase
+`books_catalog` mirror (a projection, ~50ms) and the Atlas doc (complete, 1–5s). A pure
+classifier cannot tell which it received. `classifyFirstTranslationClaim` run inside
+`generateMetadata` — which resolves through `getCachedBookLookup`, i.e. the catalog row —
+returned `candidate` for **every** book, because the row carries `is_first_translation`
+but not `first_translation.evidence_strength`, and the classifier's "field absent" branch
+*was* its "evidence weak" branch. The assertive claim silently vanished from the meta
+description of the 627 books that had earned it. **Before classifying, assert the payload
+can answer** (`book.first_translation !== undefined`), fetch when it cannot, and fail
+toward the weaker claim. Check what `BOOK_SELECT` / `BOOK_DETAIL_SELECT` in
+`src/lib/books-catalog.ts` *omit*, not just what they carry.
+
+Two corollaries that cost real work here:
+
+- **A default is indistinguishable from a measurement**, so pick the direction that cannot lie. `firstTranslationBadge` and `firstTranslationDescription` default to `candidate`: every card surface renders from the catalog and none can evidence a first, so an assertive default would let all of them assert a universal negative by omission.
+- **A one-sided check on a two-sided change is a coin flip you will read as a pass.** The bug above and a successful fix produced identical output on the candidate direction. It surfaced only on the positive control — the book that should *still* assert. Test both registers.
+
+**And a state's name is a claim about its gate.** `classifyFirstTranslationClaim` gated
+`confirmed` on `isFirstTranslation()` — the *render* rule (first-family verdict, visible,
+some translated pages), which says nothing about evidence. That made 5,684 of 5,932 badged
+books (95.8%) `confirmed` while only 689 carried strong or moderate evidence, so the state
+resolved to "we badged it": the very claim it existed to qualify. Same family as a metric's
+name being a claim about its denominator. When a state promises "earned by evidence", the
+gate must read evidence.
+
+**A prior only defeats a claim if it is COMPLETE and of the SAME text — and the grader
+checked neither** (2026-08-08, #3753). `deriveVerdictFromEvidence` graded the defeat
+branch on a found sighting and the priors' *years alone*. So an `excerpt` defeated a
+claim exactly as a complete edition did, and `prior_relationship` — documented in
+`types.ts` as the field that "determines whether the candidate defeats first" — was
+**hardcoded to `same_text`**, the value that always defeats, while the ingest dropped the
+verifier's actual judgement. Of 429 books graded `not_first`, **31 had no complete prior
+anywhere** (7 already demoted) and **44 had priors of unknown completeness** (36 already
+demoted). Three books verified hours earlier as *badge stands* were demoted overnight.
+
+Two rules follow, and both are about registers, not facts:
+
+- **Judgement must be a field or it does not exist.** Forty verification rounds concluded
+  "this prior does not defeat the claim" — in `notes`, as prose, where no grader can read
+  it. Record the *relationship* (`different_source_language`, `related_distinct_work`),
+  not just the citation. Absent relationship still defaults to defeating, deliberately:
+  most rows predate the field and reversing them silently would be its own mass rewrite.
+- **"All fragments" and "we could not tell" are different verdicts.** Every prior known
+  partial → `first_complete`, a *badgeable* first-family claim (ours may be the first
+  complete edition). Any completeness unknown → `needs_review`. Collapsing them repeats
+  the error one level up.
+
+**A verification queue built from "obvious" over-claims is mostly correct badges.** 39 of
+59 verified by independent subagents, each chosen *because* it looked like a certain
+demote: **25 badges stood, 6 demotes held.** Not one failure was a search failure — every
+one was *which text is this exactly*: Boethius **plus Waleys**, Coornhert's **Dutch**
+Odyssey, Traversari's **Latin** Diogenes, volume 2 **of** the Hagakure, one juan **of** a
+106-juan encyclopedia, *usuras* vs *cambios*, *Shaʿarei Ẓedek* vs *Orah* (and a third
+unrelated text of the same title). Screen before verifying —
+`scripts/audit/ft-demote-queue-screen.mjs` cut 59 to 2 for free, and both its "no signal"
+cases were genuine badge-removals.
+
+**Fabricated priors are the norm here, and the hardest shape is well-formed.** Six
+observed: no named translator; an amalgam ("Hadock **(or** Gibbons)" — two real
+translators of two different works); a *study* counted as a translation (the NLM's own
+catalogue files Savage-Smith as a work *about* the treatise); a wrong date (Read
+1946→"1936"); **a real scholar attached to a nonexistent work** ("Deitz and Monfasani
+1997", "Del Soldato 2010" — absent from their own bibliographies), which defeats every
+structural detector; and a fabrication sitting *beside* a genuine defeater, so finding
+one fabrication does not clear a book.
 
 **Every bug in this area fails toward a confident clean negative.** Fourteen defects in one session, not one of which produced a false positive. A null is the cheap answer at every layer: an inverted year comparison, a capped fallback threshold, a throttled endpoint returning HTTP 200 with HTML, a schema mismatch between two extractors. The only thing that caught them was the **recorded reason on each rejected candidate** — a system that logs only what it found cannot be debugged.
 
@@ -50,6 +126,6 @@ Three specific traps, each of which cost real work:
 - **Provenance cannot tell you what you translated.** Re-hosted scholarly editions (Budge, Langdon) carry `translation.model` and `source:"ai"` exactly like our own work, because our pipeline OCR'd their printed *English* and re-rendered it. The signal that works is the OCR model's own declaration inside `ocr.data` (`<language>English</language>`) — `scripts/lib/english-source-detect.mjs`. The `pages.ocr.language` column is null on exactly the older ingests where it matters. And strip editorial wrappers before measuring any page text, or you measure our own annotations (that bug shipped here and inflated a count 6×).
 
 - **UNKNOWN must never read as MISMATCH.** The source-language screen compared MARC codes against Wikidata **Q-numbers** (`['gre','grc'].includes('Q35497')` is false), so it rejected every Wikidata row whose language it knew — 228 real priors, including Xenophon's *Symposium* and all six *Rubáiyát*. Reject only when **both** sides resolve to a known value and disagree; an unreadable identifier is unknown (`scripts/lib/source-language-match.mjs`). Deliberately no QID table — a hand-written list of unverifiable assertions reproduces the bug on its first wrong entry.
-- **`books.language` is the language of the WORK, not of the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition.
+- **`books.language` is not reliable evidence of what is printed on the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition. *(Corrected 2026-08-12, #3942: this bullet used to read "`books.language` is the language of the WORK, not of the pages we hold", which inverted the actual contract and read as licence for the mislabel. `resolveLanguage()` in `src/lib/resolve-language.ts` (#2185) defines `language` as the MANIFESTATION language — the leaves in this scan — with `original_language` carrying the work when the two differ. The observation behind the old wording is real and unchanged: plenty of records violate that contract, which is exactly why you screen the pages instead of trusting either field. Where the record is right, `languageApparatus()` in `src/lib/edition-language.ts` is what serves the distinction.)*
 
 Full postmortem: private ops repo, `~/sourcelibrary-ops/handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.

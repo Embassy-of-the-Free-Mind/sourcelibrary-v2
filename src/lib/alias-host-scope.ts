@@ -92,25 +92,70 @@ const DEPLOYMENT_ALLOWED_EXACT = new Set([
 ]);
 
 /**
- * Matched EXACTLY, never by substring. Preview deployments
- * (`sourcelibrary-v2-git-*.vercel.app`, `*-dereklomas-projects.vercel.app`)
- * must keep serving the whole site or branch review stops working — they are a
- * known, accepted exposure, and a `host.includes('vercel.app')` test here would
- * take them all out.
+ * Matched EXACTLY, never by substring. A `host.includes('vercel.app')` test
+ * here would catch every preview deployment too — those get their own,
+ * lighter policy below rather than this allowlist.
  */
 export const DEPLOYMENT_ALIAS_HOSTS = new Set(['sourcelibrary-v2.vercel.app']);
 
-export type AliasPolicy = 'society' | 'deployment';
+/**
+ * Preview deployments (`sourcelibrary-v2-git-*.vercel.app` and the
+ * team-scoped `*-dereklomas-projects.vercel.app`) were a known, accepted
+ * exposure: they must serve the whole site or branch review stops working,
+ * and they sit outside Cloudflare, so the edge layer of the crawler gate is
+ * absent there. What ended the acceptance (2026-08-09): this repo is public
+ * and the Vercel bot posts every preview URL on its PR, so the set of
+ * unguarded doors is enumerable by anyone — and the traffic detector caught
+ * an outside party reading books through a stale worktree preview.
+ *
+ * The preview policy gates CONTENT for ANONYMOUS callers only. A request
+ * carrying a session cookie (a signed-in dev — email sign-in works on any
+ * host) or an Authorization header (API key / CRON_SECRET, verified at the
+ * app layer) passes untouched, so branch review still works. Everything
+ * that isn't book content — UI pages, assets, auth, APIs the pages need —
+ * is untouched for everyone.
+ *
+ * Anonymous content requests get a 403 with a pointer at the canonical
+ * domain, NOT a 308. A redirect would keep a shared link working, but it
+ * would also make an e2e run pointed at a preview silently crawl
+ * PRODUCTION — the exact trap the deployment allowlist above documents.
+ * A loud refusal is the honest failure mode.
+ */
+const PREVIEW_HOST_RE = /^sourcelibrary-v2-git-[a-z0-9-]+\.vercel\.app$|-dereklomas-projects\.vercel\.app$/;
+
+/**
+ * Content surfaces gated for anonymous callers on preview hosts: the reader,
+ * the book APIs beneath it, and the embed reading rooms. Additive by design —
+ * if a new content surface appears, add its prefix here.
+ */
+const PREVIEW_GATED_PREFIXES = ['/book', '/api/books', '/embed'];
+
+export type AliasPolicy = 'society' | 'deployment' | 'preview';
 
 /** Which scoping policy applies to this host, if any. Ports are ignored. */
 export function aliasPolicyForHost(host: string): AliasPolicy | null {
   const bare = (host || '').split(',')[0].trim().toLowerCase().replace(/:\d+$/, '');
   if (!bare) return null;
   if (DEPLOYMENT_ALIAS_HOSTS.has(bare)) return 'deployment';
+  if (PREVIEW_HOST_RE.test(bare)) return 'preview';
   if (bare.includes('ficinosociety.org') || bare.includes('ficino.sourcelibrary.org')) {
     return 'society';
   }
   return null;
+}
+
+/** Is this a content path the preview policy withholds from anonymous callers? */
+export function isPreviewGatedPath(pathname: string): boolean {
+  return PREVIEW_GATED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'));
+}
+
+/** Plain-text body for the anonymous-on-preview refusal. */
+export function previewGateResponse(pathname: string): string {
+  return [
+    'This is a preview deployment — book content is not served here to anonymous visitors.',
+    `Read this page on the canonical site: https://${CANONICAL_HOST}${pathname}`,
+    'Reviewing a branch? Sign in on this host (email sign-in works on previews), or send an Authorization header.',
+  ].join('\n');
 }
 
 /**
@@ -121,6 +166,10 @@ export function shouldRedirectToCanonical(
   pathname: string,
   policy: AliasPolicy = 'society'
 ): boolean {
+  // Preview hosts never redirect — their gate is the anonymous-content 403
+  // above, precisely so a misdirected crawl fails loudly instead of silently
+  // landing on production.
+  if (policy === 'preview') return false;
   const exact = policy === 'deployment' ? DEPLOYMENT_ALLOWED_EXACT : ALIAS_ALLOWED_EXACT;
   const prefixes = policy === 'deployment' ? DEPLOYMENT_ALLOWED_PREFIXES : ALIAS_ALLOWED_PREFIXES;
   if (exact.has(pathname)) return false;

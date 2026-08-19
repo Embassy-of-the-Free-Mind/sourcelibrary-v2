@@ -16,6 +16,7 @@
 
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -180,7 +181,7 @@ for (let i = 0; i < candidates.length; i++) {
     const bookId = new ObjectId();
     const slug = slugify(`${pressmark}-idp-dunhuang`);
 
-    const book = {
+    const book = makeBookDoc({
       _id: bookId,
       id: bookId.toHexString(),
       title: pressmark,
@@ -229,7 +230,7 @@ for (let i = 0; i < candidates.length; i++) {
       pipeline_status: 'archive_complete',
       created_at: new Date(),
       updated_at: new Date(),
-    };
+    });
 
     // 3. Download images and upload to R2
     const pages = [];
@@ -246,7 +247,7 @@ for (let i = 0; i < candidates.length; i++) {
 
         if (img.index === 0) thumbnailUrl = photoUrl;
 
-        pages.push({
+        pages.push(makePageDoc({
           _id: new ObjectId(),
           id: new ObjectId().toHexString(),
           book_id: bookId.toHexString(),
@@ -263,7 +264,7 @@ for (let i = 0; i < candidates.length; i++) {
           },
           created_at: new Date(),
           updated_at: new Date(),
-        });
+        }));
       } catch (imgErr) {
         console.log(`    Image ${img.index} failed: ${imgErr.message}`);
       }

@@ -72,13 +72,21 @@ export interface CatalogBookDetail extends CatalogBook {
   source_work_dates: Array<{ type: string; date_display: string; author?: string }> | null;
   ft_disposition: string | null;
   ft_reasoning: string | null;
+  // Graded FT verdict + screens (#3726 Tier 3): raw projections of
+  // books.first_translation.* and the #3524 screens, so card surfaces can
+  // compute the claim register via ftRenderProps without an Atlas fetch.
+  ft_verdict: string | null;
+  ft_evidence_strength: string | null;
+  ft_our_completeness: string | null;
+  ft_source_screen: string | null;
+  ft_translator_screen: string | null;
   description: string | null;
   subject_keywords: string[] | null;
   created_at: string | null;
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published';
+const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 

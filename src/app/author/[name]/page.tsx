@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import { translationPercent } from '@/lib/translation-percent';
+import { ftRenderProps } from '@/lib/first-translation/render';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -36,8 +38,12 @@ interface Book {
   summary?: { data: string } | string;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   publisher?: string;
   place_of_publication?: string;
+  publication_place?: string;
+  place_published?: string;
+  place?: string;
   image_source?: { contributing_library?: string; provider_name?: string };
   // Used to split the bibliography (texts) from visual works (artworks).
   // See isArtworkRecord() — older records use resource_type instead.
@@ -94,20 +100,39 @@ const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
-  summary: 1, is_first_translation: 1, ft_disposition: 1,
-  publisher: 1, place_of_publication: 1, resource_type: 1, content_type: 1,
+  summary: 1, is_first_translation: 1,
+  // What ftRenderProps needs to pick the claim register (#3726 Tier 3). The
+  // old `ft_disposition: 1` projected a field Mongo books never had.
+  'translation_verification.disposition': 1,
+  'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
+  'first_translation.our_completeness': 1,
+  'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
+  // The whole imprint-place family (#4043) — the resolver reads all four.
+  publisher: 1, place_of_publication: 1, publication_place: 1, place_published: 1, place: 1,
+  resource_type: 1, content_type: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 
 function computeBooks(raw: any[]): Book[] {
-  return raw.map((b: any) => ({
-    ...b,
-    pages_count: b.pages_count || 0,
-    pages_translated: b.pages_translated || 0,
-    translation_percent: b.pages_ocr > 0
-      ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
-      : 0,
-  }));
+  return raw.map((b: any) => {
+    const ft = ftRenderProps(b);
+    const {
+      first_translation: _ft, translation_verification: _tv,
+      source_language_screen: _sls, translator_author_screen: _tas,
+      ...rest
+    } = b;
+    return {
+      ...rest,
+      pages_count: b.pages_count || 0,
+      pages_translated: b.pages_translated || 0,
+      // Shared definition. The formula that stood here divided by
+      // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books because
+      // "blank" leaves do get translated. See src/lib/translation-percent.ts.
+      translation_percent: translationPercent(b),
+      ft_disposition: ft.disposition,
+      ft_claim: ft.claim,
+    };
+  });
 }
 
 /**

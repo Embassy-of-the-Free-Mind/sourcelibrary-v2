@@ -27,6 +27,7 @@ import type { FirstTranslationAttempt, PriorTranslation } from './attempt-log';
 import { makeAttemptId } from './attempt-log';
 import type { FirstTranslation, MatchKey } from './types';
 import { evaluatePrior, type CitedPriorInput } from '../ft-prior-guard';
+import { canonicalLanguage } from './source-language-match';
 
 /** A candidate prior row as returned from `translation_catalogs`. */
 export interface CatalogPrior {
@@ -50,25 +51,27 @@ export interface CatalogPrior {
 /** Injected I/O: given a book, return candidate priors from the registry. */
 export type CatalogLookup = (book: ResolvableBook) => Promise<CatalogPrior[]>;
 
-/** Normalize a language label (ISO code or name) to a comparison key. */
+/**
+ * Normalize a language label (ISO code, MARC code, or display name) to a
+ * canonical comparison key, or '' when unknown.
+ *
+ * Delegates to the SHARED source-language-match table so BOTH sides of the
+ * guard normalize identically (#3460/#3785): `translation_catalogs` stores ISO
+ * buckets ('la', 'grc', 'fa' — see translation-catalog-record.mjs), books
+ * store names ('Latin') — the private one-sided map this replaced silently
+ * never matched the buckets outside its ten entries, and compared unmapped raw
+ * strings as if they were languages. '' means UNKNOWN, and the caller must
+ * never read unknown as mismatch.
+ *
+ * A compound like "latin-german" keys on its first segment, matching the
+ * toSourceIso() convention: the leading language is the one translated from.
+ */
 export function langKey(l?: string | null): string {
   if (!l) return '';
-  const s = l.toLowerCase().trim();
-  const map: Record<string, string> = {
-    la: 'latin', lat: 'latin', latin: 'latin',
-    el: 'greek', grc: 'greek', gre: 'greek', greek: 'greek', 'ancient greek': 'greek',
-    he: 'hebrew', heb: 'hebrew', hebrew: 'hebrew',
-    ar: 'arabic', ara: 'arabic', arabic: 'arabic',
-    sa: 'sanskrit', san: 'sanskrit', sanskrit: 'sanskrit',
-    zh: 'chinese', chi: 'chinese', chinese: 'chinese', 'classical chinese': 'chinese',
-    de: 'german', ger: 'german', german: 'german',
-    fr: 'french', fre: 'french', french: 'french',
-    it: 'italian', ita: 'italian', italian: 'italian',
-    nl: 'dutch', dut: 'dutch', dutch: 'dutch',
-  };
-  // strip a compound like "latin-german" to its first token for a coarse compare
-  const first = s.split(/[-/;,]/)[0].trim();
-  return map[s] ?? map[first] ?? first;
+  const direct = canonicalLanguage(l);
+  if (direct) return direct;
+  const first = String(l).split(/[-/;,]/)[0].trim();
+  return (first && canonicalLanguage(first)) || '';
 }
 
 function toCited(p: CatalogPrior): CitedPriorInput {
@@ -98,9 +101,13 @@ function toPrior(p: CatalogPrior): PriorTranslation {
 /** Is this catalog row a trustworthy, decisive defeat of a first-translation claim? */
 export function isDecisivePrior(book: ResolvableBook, p: CatalogPrior): boolean {
   const bookLang = langKey(book.original_language ?? book.language);
+  const priorLang = langKey(p.source_language);
   // Same source-language: a Greek→En translation does NOT defeat a Latin→En first.
-  // (If either side is unknown we don't block on it, but completeness + guard still apply.)
-  const sameLang = !p.source_language || !bookLang || langKey(p.source_language) === bookLang;
+  // Both sides pass through the SAME normalizer, and UNKNOWN never reads as
+  // MISMATCH (#3460 discipline): block only when both sides RESOLVE to a known
+  // language and disagree. If either side is unknown we don't block on it, but
+  // completeness + the evidence-quality guard still apply.
+  const sameLang = !priorLang || !bookLang || priorLang === bookLang;
   // Only a COMPLETE prior defeats a first; partial/excerpt/unknown does not.
   const complete = p.completeness === 'complete';
   // Evidence-quality guard (#2579): not an anthology / self-match / namesake.

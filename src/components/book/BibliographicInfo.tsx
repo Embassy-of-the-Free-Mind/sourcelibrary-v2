@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
 import { getEffectiveByline } from '@/lib/byline';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 const FIELD_LABELS: Record<string, string> = {
   display_title: 'Display Title',
@@ -148,9 +149,10 @@ export default function BibliographicInfo({
       parts.push(`_${book.title}_`);
     }
 
-    // Publication info
+    // Publication info — place via the family resolver (#4043)
     const pubParts: string[] = [];
-    if (book.place_published) pubParts.push(book.place_published);
+    const citePlace = resolveImprintPlace(book)?.display;
+    if (citePlace) pubParts.push(citePlace);
     if (book.publisher) pubParts.push(book.publisher);
     if (book.published) pubParts.push(book.published);
     if (pubParts.length > 0) {
@@ -181,7 +183,8 @@ export default function BibliographicInfo({
     }
   };
 
-  const hasExtraInfo = book.place_published || book.publisher || book.format || book.ustc_id;
+  const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  const hasExtraInfo = imprintPlace || book.publisher || book.format || book.ustc_id;
 
   return (
     <div className="mt-4">
@@ -302,10 +305,10 @@ export default function BibliographicInfo({
             )}
 
             {/* Publication details */}
-            {book.place_published && (
+            {imprintPlace && (
               <div className="flex gap-2">
                 <span className="text-stone-500 w-24 flex-shrink-0">Place:</span>
-                <span className="text-stone-200">{book.place_published}</span>
+                <span className="text-stone-200">{imprintPlace}</span>
               </div>
             )}
 

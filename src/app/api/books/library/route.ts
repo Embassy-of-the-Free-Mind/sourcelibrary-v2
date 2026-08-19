@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
+import { translationPercent } from '@/lib/translation-percent';
+import { buildSortStage, type SortOption } from '@/lib/book-sort';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -14,30 +16,6 @@ const browseCache = new Map<string, { data: string; timestamp: number }>();
 const BROWSE_CACHE_TTL = 60_000; // 1 minute
 const MAX_CACHE_ENTRIES = 50;
 
-type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc' | 'date_asc' | 'date_desc';
-
-function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<string, 1 | -1> } {
-  switch (sort) {
-    case 'recent':
-      return { $sort: { last_processed: -1, title: 1 } as Record<string, 1 | -1> };
-    case 'title-asc':
-      return { $sort: { sort_title: 1 } as Record<string, 1 | -1> };
-    case 'title-desc':
-      return { $sort: { sort_title: -1 } as Record<string, 1 | -1> };
-    case 'date_asc':
-      return { $sort: { year: 1, title: 1 } as Record<string, 1 | -1> };
-    case 'date_desc':
-      return { $sort: { year: -1, title: 1 } as Record<string, 1 | -1> };
-    case 'recent-translation':
-    default:
-      // When viewing a collection, sort by relevance score first
-      if (collection) {
-        return { $sort: { _collection_relevance: -1, has_translations: -1, title: 1 } as Record<string, 1 | -1> };
-      }
-      return { $sort: { is_bph_translated: -1, quality_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
-  }
-}
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
@@ -48,6 +26,10 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category') || '';
     const collection = searchParams.get('collection') || '';
     const library = searchParams.get('library') || '';
+    // Every edition of one work. Handled as a post-$search $match like
+    // `collection`, so it needs no Atlas index mapping. 98.5% of live books
+    // carry a work_id, which is what makes this cheap.
+    const workId = searchParams.get('work_id') || '';
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
@@ -67,7 +49,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -96,6 +78,7 @@ export async function GET(request: NextRequest) {
           isFirstTranslation: firstTranslation || undefined,
         }),
         ...(collection ? [{ $match: { collections: collection } }] : []),
+        ...(workId ? [{ $match: { work_id: workId } }] : []),
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
@@ -108,6 +91,7 @@ export async function GET(request: NextRequest) {
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });
       if (collection) matchConditions.push({ collections: collection });
+      if (workId) matchConditions.push({ work_id: workId });
       if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
@@ -119,6 +103,12 @@ export async function GET(request: NextRequest) {
     const addFields: Record<string, unknown> = {
       id: { $ifNull: ['$id', { $toString: '$_id' }] },
     };
+
+    // Carry Atlas Search's relevance out of $search so the sort can use it.
+    // Only valid in a pipeline that actually began with $search.
+    if (search.trim()) {
+      addFields.search_score = { $meta: 'searchScore' };
+    }
 
     // Only add computed fields required by the active sort
     if (sort === 'title-asc' || sort === 'title-desc') {
@@ -174,7 +164,7 @@ export async function GET(request: NextRequest) {
     const [books, countResult] = await Promise.all([
       db.collection('books').aggregate([
         ...basePipeline,
-        buildSortStage(sort, collection || undefined),
+        buildSortStage(sort, collection || undefined, Boolean(search.trim())),
         { $skip: skip },
         { $limit: limit },
         { $project: bookProject },
@@ -204,6 +194,11 @@ export async function GET(request: NextRequest) {
 
     const booksWithTenantSlug = books.map((book: any) => ({
       ...book,
+      // Computed, not projected. The stored `translation_percent` is absent on
+      // 8,928 of 19,419 live books — its writer (`sync-page-counts`) is archived
+      // — and this route feeds MCP `list_books`, so callers were getting nothing
+      // usable back (#3652 B). See src/lib/translation-percent.ts.
+      translation_percent: translationPercent(book),
       tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
     }));
 

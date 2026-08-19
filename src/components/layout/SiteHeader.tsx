@@ -9,6 +9,7 @@ import { Search, ChevronDown } from 'lucide-react';
 import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { trackEvent } from '@/lib/track-event';
 
 interface NavLink {
   label: string;
@@ -30,11 +31,24 @@ function buildNavLinks(t: NavStrings): NavLink[] {
       children: [
         { label: t.browse, href: '/browse' },
         { label: t.catalogue, href: '/catalog' },
+        { label: t.works, href: '/works' },
       ],
     },
-    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    // Points at the /explore hub, not /explore/map. The hub carries the entity
+    // stats, the century heatmap, and cards for all three visualizations; the
+    // nav used to skip past it straight to the map, which is why the hub drew
+    // 13 pageviews in the 30 days to 2026-08-13 while the map drew 262 and the
+    // timeline and constellation together drew 139. Linking the room instead of
+    // one corner of it is the whole change.
+    { label: t.explore, href: '/explore', activePrefix: '/explore' },
     { label: t.librarian, href: '/librarian' },
-    { label: t.podcast, href: '/podcast' },
+    // No Podcast item. Measured over the same 30 days, the header was the only
+    // sitewide English entry point to /podcast and it produced 113 plays, of
+    // which 66 (58%) were the one episode featured on the /es homepage — i.e.
+    // the editorial placement, not the nav, is what makes people listen. The
+    // homepage feature is now rendered for both locales (HomeView), which is
+    // where that traffic is meant to come from. Episodes also stay reachable
+    // from their librarian threads and the footer.
   ];
 }
 
@@ -91,9 +105,32 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // pages that render SiteHeader directly and stay reachable there (e.g.
   // /author/[name]).
   const isTenantHost = useIsEmbedded();
-  const NAV_LINKS = buildNavLinks(t).filter(
-    link => !(isTenantHost && isGlobalOnlyNavHref(link.href))
-  );
+  // Dropdown children get the same treatment as top-level links. They used to
+  // be rendered unfiltered, which was harmless only because no child pointed at
+  // a global-only path; `/works` under Browse is the first that does, and an
+  // unfiltered child would put a proxy-404 link in a partner's own header —
+  // the one thing the shared list exists to prevent.
+  const NAV_LINKS = buildNavLinks(t)
+    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(link.href)))
+    .map(link =>
+      link.children && isTenantHost
+        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(child.href)) }
+        : link
+    );
+  // The Support button is deliberately NOT in buildNavLinks: it is an action,
+  // not a destination among peers, and it renders as a pill after the nav rather
+  // than as another link in the row. It goes through the same tenant filter,
+  // which is what keeps it off partner subdomains (`/give` is on the global-only
+  // list — a BPH visitor asked for money on BPH's own domain would reasonably
+  // think the money went to BPH).
+  //
+  // Why it exists at all: measured over the 30 days to 2026-08-05, /support drew
+  // 60 of 330,698 pageviews (0.018%) while /book/* drew 217,490. The site had no
+  // giving link anywhere above the footer's third column, so two-thirds of all
+  // traffic never saw an ask. Every comparable library puts one in the header —
+  // Wikipedia's "Donate" is the first item in its article nav, ahead of "Create
+  // account"; the Internet Archive's sits in its sitewide bar.
+  const showSupport = !(isTenantHost && isGlobalOnlyNavHref('/give'));
   // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
   // support) — the thin-i18n bargain (#2763). On deep English-only pages the
   // toggle is hidden, so clicking ES never bounces the reader to the `/es`
@@ -215,6 +252,28 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               );
             })}
           </nav>
+
+          {/* Support — a pill, at every breakpoint including mobile, where most
+              reading happens. Ordered before the language toggle and search so
+              it does not get pushed off a narrow viewport. */}
+          {showSupport && (
+            <Link
+              href="/give"
+              // Fired here, at the control, because nothing downstream can
+              // reconstruct it: /api/track collapses self-referrals to 'direct'
+              // and client-side navigation preserves the original external
+              // referrer, so an arrival at /give cannot be attributed after the
+              // fact. trackEvent uses sendBeacon, which survives this navigation.
+              onClick={() => trackEvent('give_nav_click', { source: 'header', url: '/give' })}
+              className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium tracking-wide transition-colors ${
+                isWhiteText
+                  ? 'border-white/40 text-white hover:bg-white hover:text-dark'
+                  : 'border-accent-rust text-accent-rust hover:bg-accent-rust hover:text-white'
+              }`}
+            >
+              {t.support}
+            </Link>
+          )}
 
           {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
           {showLangToggle && (

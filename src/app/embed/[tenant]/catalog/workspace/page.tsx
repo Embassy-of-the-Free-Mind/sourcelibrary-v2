@@ -41,7 +41,11 @@ interface WorklistRow {
   label: string;
   detail: string;
   n: number;
-  samples: Array<{ ubn: string | null; id: string; shelf_mark: string | null; hint: string | null }>;
+  // `uuid` is the linkable key when `ubn` is null; `id` is a different uuid and
+  // is carried for debugging only. Optional because the pending_contributions
+  // category comes from bph_works_pending_changes, which has no uuid column —
+  // its rows always carry a ubn, so they never need the fallback.
+  samples: Array<{ ubn: string | null; uuid?: string | null; id: string; shelf_mark: string | null; hint: string | null }>;
 }
 
 interface RevisionRow {
@@ -234,11 +238,16 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                   {w.samples.slice(0, 12).map((s, i) => (
                     <a
                       key={`${w.category}-${s.id}-${i}`}
-                      href={`/catalog/${encodeURIComponent(s.ubn || s.id)}`}
+                      // ubn → uuid, never `id`. Three of these categories select
+                      // exactly the rows where ubn IS NULL, so the fallback is
+                      // the link for all 2,012 of them; `bph_works.id` is a
+                      // DIFFERENT uuid from `bph_works.uuid` and resolves to
+                      // nothing (José Bouman, 2026-08-12). See the RPC header.
+                      href={`/catalog/${encodeURIComponent(s.ubn || s.uuid || s.id)}`}
                       className="text-accent-rust hover:underline"
                       title={s.hint || undefined}
                     >
-                      {s.ubn || s.shelf_mark || s.id.slice(0, 8)}
+                      {s.ubn || s.shelf_mark || (s.uuid || s.id).slice(0, 8)}
                     </a>
                   ))}
                   {Number(w.n) > 12 && <span className="text-muted">+{n(Number(w.n) - 12)} more</span>}

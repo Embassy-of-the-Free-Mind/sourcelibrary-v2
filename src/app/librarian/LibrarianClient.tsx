@@ -384,14 +384,22 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
+  // A list has three states, not one. Collapsing them was the whole of #4070:
+  // an in-flight or failed fetch left the array empty, and empty rendered as
+  // "No conversations yet" — telling a reader with 112 conversations that they
+  // had none. Never infer emptiness from an array that hasn't loaded.
+  const [threadsState, setThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [myThreadsState, setMyThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [reloadMine, setReloadMine] = useState(0);
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
   // Default to "My Conversations" once signed in
   useEffect(() => {
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
-  // Private until the reader says otherwise — the toggle beneath the composer
-  // publishes the thread under their account name, so it must be opt-in.
-  const [visibility, setVisibility] = useState<'public' | 'private'>('private');
+  // Listed by default. The toggle beneath the composer controls whether the
+  // conversation appears in Recent — it never controls a name, because the
+  // server strips those from every surface but the reader's own.
+  const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   // Research notebook accumulated live across the thread (from notebook_update).
   const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
   const [notebookTopic, setNotebookTopic] = useState<string | undefined>();
@@ -459,12 +467,36 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     inputRef.current?.focus();
   }, [listening, stopDictation]);
 
+  // Flip the listing toggle. If the conversation already exists it has to be
+  // written through immediately: the old toggle only ever fed the create call,
+  // so a reader who turned listing off mid-conversation changed nothing and
+  // was never told.
+  const setListed = useCallback((listed: boolean) => {
+    setVisibility(listed ? 'public' : 'private');
+    if (!threadId) return;
+    fetch(`/api/embassy/threads/${threadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listed }),
+    }).catch(() => { });
+  }, [threadId]);
+
   // Fetch public threads
   useEffect(() => {
+    let live = true;
+    setThreadsState('loading');
     fetch('/api/embassy/threads?limit=50')
-      .then(r => r.json())
-      .then(data => { if (data.threads) setThreads(data.threads); })
-      .catch(() => { });
+      .then(async r => {
+        if (!r.ok) throw new Error(`threads ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setThreads(data.threads ?? []);
+        setThreadsState('ready');
+      })
+      .catch(() => { if (live) setThreadsState('error'); });
+    return () => { live = false; };
   }, []);
 
   // Blend up to two real visitor questions into the suggestion chips once
@@ -478,15 +510,30 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setSuggestions(pickSuggestions(6, extras));
   }, [threads]);
 
-  // Fetch user's own threads when signed in
+  // Fetch the reader's own threads once the session resolves. While NextAuth is
+  // still deciding (`status === 'loading'`) this list is NOT empty — it is
+  // unknown, so it stays in the loading state rather than claiming there is no
+  // history.
   useEffect(() => {
-    if (status === 'authenticated') {
-      fetch('/api/embassy/threads?mine=true&limit=20')
-        .then(r => r.json())
-        .then(data => { if (data.threads) setMyThreads(data.threads); })
-        .catch(() => { });
+    if (status !== 'authenticated') {
+      if (status === 'unauthenticated') setMyThreadsState('ready');
+      return;
     }
-  }, [status]);
+    let live = true;
+    setMyThreadsState('loading');
+    fetch('/api/embassy/threads?mine=true&limit=20')
+      .then(async r => {
+        if (!r.ok) throw new Error(`mine ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setMyThreads(data.threads ?? []);
+        setMyThreadsState('ready');
+      })
+      .catch(() => { if (live) setMyThreadsState('error'); });
+    return () => { live = false; };
+  }, [status, reloadMine]);
 
   // Auto-scroll
   useEffect(() => {
@@ -1177,15 +1224,17 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      {isSignedIn && (
-                        <button
-                          onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
-                          className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
-                        >
-                          <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                          <span className="text-[9px]">{visibility === 'public' ? '(shown in Recent, under your name)' : '(only you)'}</span>
-                        </button>
-                      )}
+                      <button
+                        onClick={() => setListed(visibility !== 'public')}
+                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                      >
+                        <span>{visibility === 'public' ? 'Listed' : 'Not listed'}</span>
+                        <span className="text-[9px]">
+                          {visibility === 'public'
+                            ? '(shown in Recent, never under your name)'
+                            : isSignedIn ? '(only you)' : '(not shown to anyone else)'}
+                        </span>
+                      </button>
                       <span className="text-[9px] text-[#c0b8b0] font-mono">v5</span>
                     </div>
                   </div>
@@ -1195,7 +1244,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       <Link href="/auth/signin?callbackUrl=/librarian" className="text-[#9e4a3a] hover:underline">
                         Sign in
                       </Link>
-                      {' '}(free) to save your conversations and keep them private.
+                      {' '}(free) to keep your conversations and come back to them later.
                     </p>
                   )}
                 </div>
@@ -1225,12 +1274,53 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                   )}
                 </div>
 
+                {sidebarTab === 'recent' && (
+                  <p className="text-[10px] text-[#b0a89c] font-sans mb-3 leading-relaxed">
+                    What other readers are asking, shown without their names.
+                  </p>
+                )}
+
                 {(() => {
-                  const allThreads = sidebarTab === 'mine' ? myThreads : threads;
+                  const isMine = sidebarTab === 'mine';
+                  const allThreads = isMine ? myThreads : threads;
+                  const listState = isMine ? myThreadsState : threadsState;
+                  // Session still resolving means "we don't know yet", not "none".
+                  const loading = listState === 'loading' || (isMine && status === 'loading');
+
+                  if (loading) {
+                    return (
+                      <div className="space-y-3" aria-busy="true">
+                        {[0, 1, 2].map(i => (
+                          <div key={i} className="py-3 border-b border-[#e8e4dc] animate-pulse">
+                            <div className="h-3 bg-[#e8e4dc] rounded w-5/6 mb-2" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-full mb-1.5" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-2/3" />
+                          </div>
+                        ))}
+                        <span className="sr-only">Loading conversations…</span>
+                      </div>
+                    );
+                  }
+
+                  if (listState === 'error') {
+                    return (
+                      <p className="text-[#8a8480] text-sm font-body">
+                        Couldn&rsquo;t load {isMine ? 'your conversations' : 'recent conversations'}.{' '}
+                        <button
+                          onClick={() => { if (isMine) setReloadMine(n => n + 1); else window.location.reload(); }}
+                          className="text-[#9e4a3a] hover:underline"
+                        >
+                          Try again
+                        </button>
+                        .
+                      </p>
+                    );
+                  }
+
                   if (allThreads.length === 0) {
                     return (
                       <p className="text-[#8a8480] text-sm font-body">
-                        {sidebarTab === 'mine'
+                        {isMine
                           ? 'No conversations yet. Ask the Librarian something!'
                           : 'No conversations yet. Be the first to ask the Librarian something.'}
                       </p>

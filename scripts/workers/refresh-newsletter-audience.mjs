@@ -29,7 +29,9 @@ const AUDIENCE_NAME = process.env.NEWSLETTER_AUDIENCE_NAME || 'Source Library Ne
 const H = { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' };
 
 const norm = (e) => (e || '').trim().toLowerCase();
-const valid = (e) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+// example.com/.test/.invalid are test artifacts; Resend refuses to send a
+// broadcast if the audience contains ANY such address (422), so never sync them.
+const valid = (e) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e) && !/@(?:[^@\s]+\.)?example\.com$|\.(?:test|invalid|localhost)$/.test(e);
 
 if (!MONGODB_URI || !RESEND_API_KEY) {
   console.error('Missing MONGODB_URI or RESEND_API_KEY in env. Aborting.');

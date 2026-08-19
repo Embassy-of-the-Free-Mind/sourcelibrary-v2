@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
@@ -184,7 +185,7 @@ export default function LicensingPage() {
             (Latin, classical Chinese, Sanskrit, Tibetan, Syriac), none of it in
             Common Crawl. Corpus partners additionally receive priority input on what
             gets translated next through our{' '}
-            <a href="mailto:team@sourcelibrary.org?subject=AI%20Partnership" className="text-accent-rust hover:underline">sponsorship program</a>.
+            <OutboundLink href="mailto:team@sourcelibrary.org?subject=AI%20Partnership" surface="licensing_sponsorship" channel="email" intent="inquiry" className="text-accent-rust hover:underline">sponsorship program</OutboundLink>.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
             Two properties of licensed data worth knowing. <strong>It&rsquo;s
@@ -210,7 +211,7 @@ export default function LicensingPage() {
           <h2 className="text-2xl text-primary mb-4">Licensing &amp; partnerships</h2>
           <p className="text-secondary leading-relaxed">
             For an AI-training or bulk-dataset license, or a research partnership,
-            contact <a href="mailto:team@sourcelibrary.org?subject=AI%20Licensing%20Inquiry" className="text-accent-rust hover:underline">team@sourcelibrary.org</a> with
+            contact <OutboundLink href="mailto:team@sourcelibrary.org?subject=AI%20Licensing%20Inquiry" surface="licensing_inquiry" channel="email" intent="inquiry" className="text-accent-rust hover:underline">team@sourcelibrary.org</OutboundLink> with
             the subject &ldquo;AI Licensing Inquiry.&rdquo; We respond within a day.
           </p>
         </section>

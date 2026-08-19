@@ -7,6 +7,7 @@ import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/li
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { chatRequestSchema } from '@/lib/embassy/chat-request';
+import { threadVisibility } from '@/lib/embassy/thread-visibility';
 import { toUserId } from '@/lib/user-id';
 
 export const dynamic = 'force-dynamic';
@@ -116,6 +117,18 @@ export async function POST(request: NextRequest) {
     }
     activeThreadId = threadId;
 
+    // Apply the listing toggle to a conversation already under way. It used to
+    // be read only in the create branch below, so a reader who turned listing
+    // off after saying something personal was silently ignored — the one
+    // moment the control most needs to work.
+    const desired = threadVisibility(userId, visibility === 'public');
+    if (thread.visibility !== desired) {
+      await db.collection('embassy_threads').updateOne(
+        { _id: new ObjectId(threadId) },
+        { $set: { visibility: desired } },
+      );
+    }
+
     await db.collection('embassy_messages').insertOne({
       threadId: new ObjectId(threadId),
       authorType: 'human',
@@ -125,16 +138,16 @@ export async function POST(request: NextRequest) {
       createdAt: now,
     });
   } else {
-    // Create new thread. Anonymous threads are 'unlisted' (null creatorId,
-    // so they can't be claimed via the "mine" filter and aren't surfaced in
-    // the public Recent feed) — the conversation still continues in-session
-    // via threadId. Signed-in users keep their public/private choice.
+    // Listed by default for everyone, signed in or not — no name travels with
+    // it (see lib/embassy/thread-visibility). Opting out lands on 'private'
+    // for a signed-in reader and 'unlisted' for an anonymous one, which keeps
+    // the conversation reachable by id so they can get back to it.
     const result = await db.collection('embassy_threads').insertOne({
       type: 'chat',
       title: message.slice(0, 120),
       creatorId: userId,
       creatorName: displayName,
-      visibility: userId ? visibility : 'unlisted',
+      visibility: threadVisibility(userId, visibility === 'public'),
       aiEnabled: true,
       messageCount: 0,
       createdAt: now,

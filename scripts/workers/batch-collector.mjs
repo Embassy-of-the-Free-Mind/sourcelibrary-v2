@@ -17,47 +17,27 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { randomBytes } from 'crypto';
+
 import { GoogleGenAI } from '@google/genai';
 import { completeBatchUsage, sumBatchResponseUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 
 /**
- * Save current page content as a revision before overwriting.
- * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ * Save current page content as a revision before overwriting — delegates to the
+ * shared helper (scripts/lib/page-revisions.mjs). This worker's inline copy
+ * predated the #3240 refinements (marker-text skip, reason, source_language,
+ * batch_job_id preference) and never received them (#3977).
  */
 async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
-  try {
-    const page = await db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { book_id: 1, ocr: 1, translation: 1 } }
-    );
-    if (!page) return;
-    const fieldData = page[field];
-    if (!fieldData?.data) return; // No existing content — first write
-
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: pageId,
-      book_id: page.book_id,
-      field,
-      data: fieldData.data,
-      source: fieldData.source || 'ai',
-      model: fieldData.model,
-      language: fieldData.language,
-      prompt_version: fieldData.prompt_version,
-      edited_by: fieldData.edited_by,
-      job_id: jobId,
-      original_date: fieldData.updated_at,
-      created_at: new Date(),
-    });
-  } catch (e) {
-    // Non-fatal — don't block collection on revision failure
-    console.error(`  [revision] Failed for ${pageId}/${field}: ${e.message?.slice(0, 50)}`);
-  }
+  return saveRevisionShared(db, pageId, field, {
+    jobId,
+    reason: field === 'ocr' ? 'reocr_batch' : 'retranslate_batch',
+  });
 }
 
 // ── Config ──
@@ -292,9 +272,25 @@ async function closeUsagePlaceholder(db, job, reason, status = 'failed') {
 
 // ── Process one job ──
 
+// Types this collector knows how to save. Everything else is refused (#3725).
+const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extraction']);
+
 async function processOneJob(db, job) {
   const jobName = job.job_name || job.gemini_job_name;
   if (!jobName) return { status: 'skipped' };
+
+  // Type allowlist (#3725): the save path below treats anything that isn't
+  // 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
+  // submitter would silently write model output into translation.data.
+  // Refuse to collect unknown types and mark the job so it stops re-matching.
+  if (!KNOWN_JOB_TYPES.has(job.type)) {
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
+    await db.collection('batch_jobs').updateOne(
+      { _id: job._id },
+      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
+    );
+    return { status: 'unknown_type' };
+  }
 
   const result = await getJobData(jobName);
   if (!result) return { status: 'not_found', jobName };
@@ -456,22 +452,32 @@ async function processOneJob(db, job) {
       }
     }
 
+    // Human-edit guard (#3749): pages whose ocr/translation was written or
+    // corrected by a person (source 'manual' or edited_by) are protected —
+    // batch results submitted before the edit must not clobber them.
+    let humanEditedIds = new Set();
+    let protectedCount = 0;
+
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
     if (job.type !== 'image_extraction') {
-      const nullFixOps = pageResults.map(({ pageId }) => ({
-        updateOne: {
-          filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
-          update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
-        },
-      }));
+      const field = job.type === 'ocr' ? 'ocr' : 'translation';
+      humanEditedIds = await findHumanEditedPageIds(db, pageResults.map(r => r.pageId), field);
+
+      const nullFixOps = pageResults
+        .filter(({ pageId }) => !humanEditedIds.has(pageId))
+        .map(({ pageId }) => ({
+          updateOne: {
+            filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
+            update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
+          },
+        }));
       if (nullFixOps.length > 0) {
         await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
       }
 
       // Save revisions for pages that already have content (non-blocking, parallel)
-      const field = job.type === 'ocr' ? 'ocr' : 'translation';
       const revisionPromises = pageResults
-        .filter(r => r.text.length <= HALLUCINATION_LIMIT)
+        .filter(r => r.text.length <= HALLUCINATION_LIMIT && !humanEditedIds.has(r.pageId))
         .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
       await Promise.allSettled(revisionPromises);
     }
@@ -488,6 +494,11 @@ async function processOneJob(db, job) {
 
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
+      if (humanEditedIds.has(pageId)) {
+        console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
+        protectedCount++;
+        continue;
+      }
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
       // Per-page stamp only — the job totals are summed per response above.
@@ -501,6 +512,7 @@ async function processOneJob(db, job) {
 
         const setObj = {
           'ocr.data': text,
+          'ocr.has_warning': /<warning[\s>]/i.test(text), // write-time sensor (see collect-batch-results)
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
@@ -677,10 +689,12 @@ async function processOneJob(db, job) {
     }
 
     // Update batch_jobs status — mark as 'failed' if zero pages saved
-    const finalStatus = successCount > 0 ? 'saved' : 'failed';
-    const errorDetail = successCount === 0 && recitationCount > 0
-      ? `All ${recitationCount} pages blocked by RECITATION filter`
-      : successCount === 0 ? `All ${failCount} pages failed` : undefined;
+    // (pages skipped by the human-edit guard count as handled, not failed)
+    const finalStatus = successCount > 0 || protectedCount > 0 ? 'saved' : 'failed';
+    const errorDetail = finalStatus !== 'failed' ? undefined
+      : recitationCount > 0
+        ? `All ${recitationCount} pages blocked by RECITATION filter`
+        : `All ${failCount} pages failed`;
 
     const costUsd = calculateCost(job.model, totalInputTokens, totalOutputTokens);
 
@@ -692,6 +706,7 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(protectedCount > 0 && { protected_pages: protectedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,

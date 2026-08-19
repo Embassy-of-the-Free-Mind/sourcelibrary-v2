@@ -36,7 +36,8 @@ import readline from 'readline';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
-import { buildSearchEffort, SCREEN, VERDICT } from '../lib/search-effort.mjs';
+import { buildSearchEffort, effortToAttempt, SCREEN, VERDICT } from '../lib/search-effort.mjs';
+import { appendAttempt } from '../lib/ft-attempt-log.mjs';
 import {
   titleTokens as toks,
   bookTitleTokens,
@@ -52,6 +53,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const BULK_DIR = path.join(OUT_DIR, 'loc-bulk');
 const WIKIDATA_DIR = path.join(OUT_DIR, 'wikidata');
+const ESTC_DIR = path.join(OUT_DIR, 'estc');
 const DATE = new Date().toISOString().slice(0, 10);
 const WIKIDATA_SNAPSHOT = DATE;
 
@@ -285,6 +287,15 @@ const files = loadReferenceSet();
 const wikidataFiles = fs.existsSync(WIKIDATA_DIR)
   ? fs.readdirSync(WIKIDATA_DIR).filter((f) => f.endsWith('.jsonl')).map((f) => path.join(WIKIDATA_DIR, f))
   : [];
+// Third source (#3522). ESTC is not "more records" — it is the catalogue that
+// records what LoC omits for 1473-1800, which is where this corpus lives and
+// where LoC is structurally thin (~96% of its English records declare no
+// translation marker at all). Its `search_titles` carries the MARC 240 uniform
+// title with `$l English` as a matter of course, which is the exact key
+// work-identity-match.mjs is built and gold-tested against.
+const estcFiles = fs.existsSync(ESTC_DIR)
+  ? fs.readdirSync(ESTC_DIR).filter((f) => /^estc-translations\..*\.jsonl$/.test(f)).map((f) => path.join(ESTC_DIR, f))
+  : [];
 const bySurname = new Map();
 // Title-token index. An anonymous work has no author access point, but its TITLE
 // is one — and 771 of the 991 books previously reported "not searchable" had a
@@ -295,14 +306,17 @@ const byCjkGram = new Map();
 let rowCount = 0;
 
 let wikidataRows = 0;
-for (const file of [...files, ...wikidataFiles]) {
+let estcRows = 0;
+for (const file of [...files, ...wikidataFiles, ...estcFiles]) {
   const isWikidata = wikidataFiles.includes(file);
+  const isEstc = estcFiles.includes(file);
   const rl = readline.createInterface({ input: fs.createReadStream(file), crlfDelay: Infinity });
   for await (const line of rl) {
     if (!line.trim()) continue;
     const row = JSON.parse(line);
     rowCount++;
     if (isWikidata) wikidataRows++;
+    if (isEstc) estcRows++;
     for (const name of [row.author, ...(row.added_entries || [])].filter(Boolean)) {
       const sn = surname(name);
       if (!sn || sn.length < 3) continue;
@@ -349,8 +363,35 @@ function titlePool(bookToks) {
 }
 
 const REFERENCE_SET = {
-  version: `loc-2016.p${files.length}.v1`,
+  // The version names the GENERATION, and adding a source mints a new one — an
+  // effort recorded against `loc-2016.p43.v1` was answered by a set that could
+  // not see 1473-1800, and must not be read as though it could. `search_efforts`
+  // is immutable so a stale negative re-opens; `screening_decisions` is keyed on
+  // (work, prior) and is re-applied across generations, so human judgement
+  // survives the bump while machine negatives do not.
+  version: `loc-2016.p${files.length}.v1`,   // overwritten below — see the note there
   sources: [
+  ...(estcFiles.length ? [{
+    id: 'estc',
+    name: 'English Short Title Catalogue (via CERL)',
+    endpoint: 'https://datb.cerl.org/estc/_search',
+    snapshot_date: '2026-08-07',
+    record_count: 0, // set below, once counted
+    coverage: 'English translations among English imprints 1473-1800, declared by a '
+      + 'MARC 240 uniform title with `$l English` or by a translator relator term. '
+      + '22,538 of 487,427 records examined (4.6%)',
+    known_gaps: [
+      'BOUNDARY: covers imprints 1473-1800 ONLY. A translation published after 1800 '
+        + 'is absent BY CONSTRUCTION, not by evidence — and 80.8% of this corpus\'s '
+        + 'known Latin/Greek priors are post-1950 imprints. ESTC complements LoC at '
+        + 'the early-modern end; it does not replace it.',
+      'English imprints only — a prior English translation printed at Amsterdam, '
+        + 'Leiden or Paris (common for exile and Catholic presses) is out of scope',
+      'no LCCN and no Q-number; the citable identifier is the ESTC S/R/T/N-number',
+      'ESTC records the IMPRINT, so a translation reprinted without a new edition '
+        + 'statement may appear once rather than per issue',
+    ],
+  }] : []),
   ...(wikidataFiles.length ? [{
     id: 'wikidata',
     name: 'Wikidata — English editions of non-English works (P629)',
@@ -418,10 +459,20 @@ const REFERENCE_SET = {
 };
 const WD = REFERENCE_SET.sources.find((s) => s.id === 'wikidata');
 if (WD) WD.record_count = wikidataRows;
-REFERENCE_SET.version = `loc-2016.p${files.length}${wikidataFiles.length ? `+wd-${WIKIDATA_SNAPSHOT}` : ''}.v2`;
+const ES = REFERENCE_SET.sources.find((s) => s.id === 'estc');
+if (ES) ES.record_count = estcRows;
+// This assignment is the one that counts — it overwrites the literal above, so
+// a source added to `sources` without being named HERE is silently invisible in
+// the version string, and every effort it answers would be filed under a
+// generation that never saw it.
+REFERENCE_SET.version = `loc-2016.p${files.length}`
+  + `${wikidataFiles.length ? `+wd-${WIKIDATA_SNAPSHOT}` : ''}`
+  + `${estcFiles.length ? '+estc-2026-08-07' : ''}`
+  + `.v${estcFiles.length ? '3' : '2'}`;
 
 console.log(`Reference set ${REFERENCE_SET.version}: ${rowCount.toLocaleString()} English translations, `
-  + `${bySurname.size.toLocaleString()} distinct surnames (${files.length}/43 parts)\n`);
+  + `${bySurname.size.toLocaleString()} distinct surnames (${files.length}/43 parts`
+  + `${estcRows ? `, ${estcRows.toLocaleString()} ESTC` : ''})\n`);
 
 await withMongo(async (db) => {
   // Re-apply durable screening judgements. Without this, every new snapshot or
@@ -595,11 +646,17 @@ await withMongo(async (db) => {
       for (const run of cjkRuns(`${book.title} ${book.work_title || ''}`)) {
         for (let i = 0; i + 3 <= run.length; i++) grams.add(run.slice(i, i + 3));
       }
+      // Dedupe on a key that EVERY source has. This was `r.lccn`, which is
+      // absent on Wikidata and ESTC rows alike — so `seen.add(undefined)` on the
+      // first such row collapsed every subsequent one to a duplicate and dropped
+      // the whole non-LoC pool to a single record. Silent, and in the direction
+      // this subsystem always fails: fewer candidates found, read as no prior.
       const seen = new Set();
       for (const g of grams) {
         for (const r of byCjkGram.get(g) || []) {
-          if (seen.has(r.lccn)) continue;
-          seen.add(r.lccn); pool.push(r);
+          const key = r.lccn || r.estc_id || r.wikidata_edition || `${r.source}:${r.title}:${r.year}`;
+          if (seen.has(key)) continue;
+          seen.add(key); pool.push(r);
         }
       }
       queries.push({
@@ -656,9 +713,17 @@ await withMongo(async (db) => {
           // unrecoverable — the two catalogues were distinguishable only by an
           // empty LCCN, and recall cannot be measured per-source at all.
           source: row.source,
+          // Every source's own citable identifier. ESTC records carry no LCCN
+          // and no Q-number, so without this branch an ESTC candidate would
+          // arrive with `{wikidata_edition: undefined, wikidata_work: undefined}`
+          // — an unciteable prior, which defeats the entire reason for adding
+          // the source. An ESTC S/R/T/N-number resolves at
+          // estc.bl.uk / datb.cerl.org and is a standard bibliographic citation.
           identifiers: row.lccn
             ? { lccn: row.lccn }
-            : { wikidata_edition: row.wikidata_edition, wikidata_work: row.wikidata_work },
+            : row.estc_id
+              ? { estc_id: row.estc_id }
+              : { wikidata_edition: row.wikidata_edition, wikidata_work: row.wikidata_work },
           title: row.title,
           uniform_title: row.uniform_title || undefined,
           year: row.year,
@@ -783,6 +848,19 @@ await withMongo(async (db) => {
     written += res.upsertedCount + res.modifiedCount + res.matchedCount;
   }
   console.log(`APPLIED — ${written} search_efforts upserted (no badge was changed).`);
+
+  // ONE LEDGER (#3881 pass 1): every searchable effort also lands in
+  // `first_translation_attempts` as one compact row — the canonical ledger the
+  // derive/reconcile pipeline reads. search_efforts stays as the detail
+  // archive behind transcript_ref. Idempotent per effort ($setOnInsert).
+  // ACTUATION (#3776): the 05:30 derive reads these rows. They resolve to
+  // tier1_catalog, which the reconcile valve does not admit — no badge moves.
+  let ledgered = 0;
+  for (const e of efforts) {
+    const attempt = effortToAttempt(e);
+    if (attempt && await appendAttempt(db, attempt)) ledgered++;
+  }
+  console.log(`LEDGER — ${ledgered} attempt row(s) appended to first_translation_attempts (searchable efforts only; the 05:30 derive will read them).`);
 },
 /**
  * `noTimeout` is REQUIRED — this walks a whole cohort (5,947 badged / 10,126

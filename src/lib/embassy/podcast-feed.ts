@@ -93,7 +93,7 @@ export function buildPodcastFeed(episodes: FeedEpisode[], locale: Locale): strin
       <itunes:name>Source Library</itunes:name>
       <itunes:email>team@sourcelibrary.org</itunes:email>
     </itunes:owner>
-    <itunes:image href="https://sourcelibrary.org/brand/png/logo-dark--512.png" />
+    <itunes:image href="https://sourcelibrary.org/brand/png/podcast-cover--1400.png" />
     <itunes:category text="Education">
       <itunes:category text="Higher Education" />
     </itunes:category>

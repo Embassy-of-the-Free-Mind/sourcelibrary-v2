@@ -17,12 +17,15 @@ import { supabaseAdmin } from '@/lib/supabase';
 
 export type ReviewCandidate = {
   item_id: string;
-  book_id: string;
-  page_id: string | null;
-  page_number: number;
-  page_type: string | null;
-  image_url: string;
-  page_link: string;
+  // Page fields are optional: not every queue reviews a page. `spanish-copy`
+  // items are interface strings with no book, image or page behind them, and
+  // the read path above never touches these — it matches on `queue` alone.
+  book_id?: string;
+  page_id?: string | null;
+  page_number?: number;
+  page_type?: string | null;
+  image_url?: string;
+  page_link?: string;
   book: {
     id?: string;
     title?: string;

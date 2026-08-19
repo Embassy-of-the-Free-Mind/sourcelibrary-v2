@@ -9,6 +9,7 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
+import { canLoadMore } from '@/lib/gallery-pagination';
 import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
@@ -122,6 +123,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const [currentOffset, setCurrentOffset] = useState(initialData.items.length);
   const [showFilters, setShowFilters] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  // Monotonic id of the newest filter fetch — see the fetch effect below.
+  const fetchSeqRef = useRef(0);
 
   // Search state
   const [bookSearchQuery, setBookSearchQuery] = useState('');
@@ -185,6 +188,19 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     }
     if (isInitialLoad) setIsInitialLoad(false);
 
+    // Drop the previous filter's results the moment the filter set changes.
+    // Keeping them meant a zero-result filter rendered "No images found"
+    // alongside leftover items and a live "Load more" from the old query
+    // (#3605) — two inconsistent pieces of state in one view.
+    setAllItems([]);
+    setCurrentOffset(0);
+
+    // Only the newest request may write state. Two fetches overlap routinely
+    // here (the identity id resolves after mount and re-runs this effect), and
+    // an older one resolving last used to restore the previous filter's items
+    // over the current filter's empty result.
+    const requestId = ++fetchSeqRef.current;
+
     const fetchGallery = async () => {
       setLoading(true);
       setError(null);
@@ -205,6 +221,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
           visitorId: identity.id || undefined,
         });
+        if (requestId !== fetchSeqRef.current) return;
         setData(json);
         setAllItems(json.items);
         // Paginate by page boundary, NOT cumulative item count. The merged
@@ -216,9 +233,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         // appeared to do nothing.
         setCurrentOffset(limit);
       } catch (e) {
+        if (requestId !== fetchSeqRef.current) return;
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
       } finally {
-        setLoading(false);
+        if (requestId === fetchSeqRef.current) setLoading(false);
       }
     };
 
@@ -228,7 +246,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
-    if (loadingMore || !data) return;
+    // Guard on the in-flight flag only. The old `|| !data` early-out returned
+    // silently and issued no request at all, which the reader experiences as a
+    // dead button (#3605); `data` is not an input to the request anyway.
+    if (loadingMore) return;
     setLoadingMore(true);
     try {
       const json = await gallery.list({
@@ -256,16 +277,18 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         return [...prev, ...fresh];
       });
       setCurrentOffset(prev => prev + limit);
-      // Keep filters/total from the response
-      if (json.total) {
-        setData(prev => prev ? { ...prev, total: json.total } : json);
-      }
+      // Carry the response's own total AND hasMore forward. Trusting only the
+      // stale total left the button live after a page that returned nothing,
+      // so it kept fetching empty pages and appearing dead.
+      setData(prev => prev
+        ? { ...prev, total: json.total ?? prev.total, hasMore: json.hasMore }
+        : json);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to load more images');
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
@@ -305,8 +328,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset.
-  const hasMore = data ? (data.hasMore ?? currentOffset < data.total) : false;
+  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset,
+  // and never offer to extend an empty result set — a "Load more" button
+  // rendered next to "No images found" is never right (#3605).
+  const hasMore = canLoadMore(data, allItems.length, currentOffset);
 
   const handleBookSelect = (book: BookSearchResult) => {
     setBookSearchQuery('');
@@ -341,6 +366,17 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
   const showCollections = !hasFilters;
+
+  // Every filter that narrows the query — including the ones `hasFilters`
+  // ignores, since any of them can be the reason a view came back empty
+  // (a hand-typed or shared `?type=` value that matches no facet, say).
+  const hasActiveFilters = Boolean(
+    hasFilters || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive || sourceFilter !== 'all'
+  );
+
+  const clearAllFilters = useCallback(() => {
+    router.push(`${tenantPrefix}/gallery`);
+  }, [router, tenantPrefix]);
 
   return (
     <>
@@ -668,8 +704,19 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <p className="text-stone-500 mb-2">No images found</p>
             <p className="text-stone-400 text-sm">
-              Try a different search or browse all images
+              {hasActiveFilters
+                ? 'No images match these filters.'
+                : 'Try a different search or browse all images'}
             </p>
+            {hasActiveFilters && (
+              <button
+                onClick={clearAllFilters}
+                className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full text-sm font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors shadow-sm"
+              >
+                <X className="w-4 h-4" />
+                Clear filters
+              </button>
+            )}
           </div>
         )}
 

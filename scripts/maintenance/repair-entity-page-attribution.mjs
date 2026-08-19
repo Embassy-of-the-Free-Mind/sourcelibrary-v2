@@ -45,6 +45,7 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { beat, endSweep } from '../lib/sweep-heartbeat.mjs';
 import {
   buildPageTexts,
   attributeEntityPages,
@@ -168,11 +169,17 @@ async function* iterateBooks() {
   }
 }
 
+// Announce ourselves so the pre-merge interlock can see this run from any
+// machine without ssh. See scripts/lib/sweep-heartbeat.mjs for why.
+const SWEEP_NAME = 'repair-entity-page-attribution';
+if (!DRY_RUN) await beat(db, SWEEP_NAME, { books_done: 0 }, { force: true });
+
 let processed = 0;
 for await (const book of iterateBooks()) {
   if (LIMIT && processed >= LIMIT) break;
   processed++;
   stats.booksScanned++;
+  if (!DRY_RUN) await beat(db, SWEEP_NAME, { books_done: stats.booksScanned });
 
   // Every entity that claims this book. If none, there is nothing to repair.
   //
@@ -397,5 +404,11 @@ if (stats.pagesClaimedBefore > 0) {
 console.log(`distinct entities touched:   ${stats.entitiesTouched.size}`);
 console.log(`transient errors retried:    ${stats.transientRetries}`);
 if (!DRY_RUN) console.log(`progress log: ${PROGRESS_FILE}`);
+
+// Clear the heartbeat so the interlock unblocks immediately rather than waiting
+// out STALE_AFTER_MS. If the run dies before here, the heartbeat simply ages
+// out — which reads as "active" for a few minutes, i.e. it fails toward holding
+// a merge rather than toward a bad one.
+if (!DRY_RUN) await endSweep(db, SWEEP_NAME);
 
 await client.close();

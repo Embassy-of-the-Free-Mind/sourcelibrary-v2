@@ -1,4 +1,5 @@
 import epub from 'epub-gen-memory';
+import { resolveImprintPlace } from '@/lib/imprint';
 import type { Book, Chapter } from '@/lib/types';
 import type { Page } from '@/lib/types';
 
@@ -382,8 +383,9 @@ export async function generateKdpEpub(
   if (book.published) {
     colophonHtml += `<p><span class="colophon-label">Published:</span> ${escapeXml(book.published)}</p>`;
   }
-  if (book.place_published) {
-    colophonHtml += `<p><span class="colophon-label">Place:</span> ${escapeXml(book.place_published)}</p>`;
+  const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  if (imprintPlace) {
+    colophonHtml += `<p><span class="colophon-label">Place:</span> ${escapeXml(imprintPlace)}</p>`;
   }
   if (book.publisher) {
     colophonHtml += `<p><span class="colophon-label">Printer/Publisher:</span> ${escapeXml(book.publisher)}</p>`;

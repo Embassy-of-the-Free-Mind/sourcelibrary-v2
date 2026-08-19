@@ -34,6 +34,15 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/explore',
   '/ngrams',
   '/libraries',
+  // The works index groups editions by `work_id` across the entire corpus and
+  // its whole point is the cross-library span — "31 editions across 4
+  // libraries". On a partner host that is a list of other institutions'
+  // holdings, and a tenant-scoped version would be a different feature (most
+  // works would collapse to one witness). Same reasoning as /libraries.
+  // Note `/work/[id]` (singular) is NOT listed: it is a per-book detail surface
+  // reached from a book page and already tenant-gated via embedPolicy
+  // .showRelatedEditions, the same gate as the RelatedEditions rail.
+  '/works',
   // Source Library's own institutional pages (#3370). A partner reading room is
   // not the place to tell Source Library's story, and these pages carry
   // hardcoded links into the wider corpus: /about alone embeds a figure linking
@@ -47,6 +56,13 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/blog',
   '/contribute',
   '/support',
+  // `/give` is /support's one-screen twin and the header's Support button. Both
+  // solicit for Source Library specifically (the NAF form is the Source Library
+  // designation, not the Embassy's general fund), so a partner reading room is
+  // the wrong place for it — a BPH visitor asked for money on BPH's own domain
+  // would reasonably think they were giving to BPH. The header filters on this
+  // list, so listing it here also removes the button on tenant hosts.
+  '/give',
   '/sponsors',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room
@@ -55,6 +71,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // Inner-circle curation surfaces (#3846): identity adjudication over the
+  // whole corpus (work merges, edition keeper choices). Corpus-wide by
+  // construction and actuating, so a partner host must refuse it outright —
+  // the same reasoning as /review, with writes attached.
+  '/curation',
 ] as const;
 
 /**

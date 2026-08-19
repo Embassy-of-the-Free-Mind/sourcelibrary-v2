@@ -25,6 +25,7 @@
 
 import type { Page } from './types';
 import { pageImageUrl } from './types/page';
+import { HAND_IN_FRAME_RE, scorePageForCover } from './cover-scoring';
 
 /**
  * Provenance label for the cover-selection method.
@@ -232,7 +233,8 @@ export function isJunkRepresentativePage(
   if (JUNK_COVER_PAGE_TYPES.has(String(page.page_type || ''))) return true;
   const head = String(page.ocr_head || '');
   if (!head) return false;
-  return DIGITIZER_RE.test(head) || OWNERSHIP_RE.test(head) || BINDING_RE.test(head);
+  return DIGITIZER_RE.test(head) || OWNERSHIP_RE.test(head) || BINDING_RE.test(head)
+    || HAND_IN_FRAME_RE.test(head);
 }
 
 export function selectFallbackCoverPage<T extends { page_type?: string | null; ocr_head?: string | null }>(
@@ -245,6 +247,45 @@ export function selectFallbackCoverPage<T extends { page_type?: string | null; o
     || usable.find(p => p.page_type === 'frontispiece')
     || usable[0]
     || pages[0];
+}
+
+/** A pick below this is "no confident pick" — callers fall back to the
+ *  type-priority rule or escalate to the vision selector. Matches the
+ *  pipeline's Phase 8.9 threshold in pipeline-orchestrator.mjs. */
+export const COVER_SCORE_CONFIDENT = 30;
+
+export interface ScoredCoverPick<T> {
+  page: T;
+  /** null when the pick came from the type-priority fallback, not the scorer. */
+  score: number | null;
+  reason: string;
+  method: 'smart-ocr' | 'type-priority';
+}
+
+/**
+ * The smarter shared pick: score every candidate with the same OCR-content
+ * scorer the pipeline uses (Phase 8.9), and only fall back to the
+ * type-priority rule when nothing scores confidently — which is the "no OCR
+ * yet / nothing looks like a cover" case. Both the book page's render
+ * fallback and `/api/books/[id]/ensure-cover` call this, so the cover a
+ * reader sees and the cover the catalogue stores stay the same page by
+ * construction. Callers pass pages already sorted by `page_number`, with
+ * `ocr_head` projected at 1200 chars (the scorer's window).
+ */
+export function selectScoredCoverPage<
+  T extends { page_number?: number; page_type?: string | null; ocr_head?: string | null; hidden?: boolean },
+>(pages: ReadonlyArray<T>, bookTitle?: string | null): ScoredCoverPick<T> | undefined {
+  let best: { page: T; score: number; reason: string } | null = null;
+  for (const page of pages) {
+    if (isJunkRepresentativePage(page)) continue;
+    const scored = scorePageForCover(page, { bookTitle });
+    if (!best || scored.score > best.score) best = { page, ...scored };
+  }
+  if (best && best.score >= COVER_SCORE_CONFIDENT) {
+    return { ...best, method: 'smart-ocr' };
+  }
+  const fallback = selectFallbackCoverPage(pages);
+  return fallback && { page: fallback, score: null, reason: fallback.page_type || 'untyped', method: 'type-priority' };
 }
 
 /**

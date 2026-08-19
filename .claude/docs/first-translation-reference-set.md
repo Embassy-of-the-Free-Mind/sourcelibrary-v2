@@ -46,21 +46,33 @@ cannot be debugged.
 
 ---
 
-## 2. THE GOVERNING NUMBER: catalogue recall is 27%
+## 2. THE GOVERNING NUMBER: catalogue recall is 32.1%
 
 `scripts/eval/ft-reference-set-recall.mjs`. Measured over the 607 books an
 independent classifier marks `previously_translated` that the search also examined:
 
 | variant | surfaced | none_found | recall |
 |---|---|---|---|
-| catalogue-only, all bases | 162 | 439 | **27.0%** |
+| catalogue-only, **LoC + Wikidata + ESTC** | 193 | 408 | **32.1%** *(2026-08-07)* |
+| catalogue-only, LoC + Wikidata | 162 | 439 | 27.0% *(2026-08-01, after MARC 240)* |
 | catalogue-only, no 245 confirmation | 133 | 468 | 22.1% *(the pre-2026-08-01 ceiling)* |
 | LoC alone | 155 | 446 | 25.8% |
 | Wikidata alone | 46 | 555 | 7.7% |
 | combined, incl. `translation_classification` | 607 | 0 | 100.0% **CIRCULAR — not recall** |
 
-**Three of every four known prior English translations are invisible to the
-catalogues.** Therefore:
+**ESTC bought +5.1 points** (#3522): 22,538 rows, a 16% increase in set size,
+contributing **8,325 candidates across 986 efforts** — about a third of all
+candidates surfaced. The gain was attributed by counting candidates carrying
+`source: 'estc'`, not inferred from the delta.
+
+That is a real improvement and it does not change the conclusion. **Two of every
+three known prior English translations remain invisible to the catalogues**, and
+the reason is structural rather than fixable by another source of the same kind:
+ESTC covers imprints **1473–1800**, while 80.8% of this corpus's known
+Latin/Greek priors are post-1950 imprints. The remaining loss sits in modern
+scholarly publishing that no early-modern catalogue can reach.
+
+Therefore, unchanged:
 
 - **`none_found` is WEAK evidence. Never quote a count built on it, in any cohort.**
 - **Positive findings are unaffected.** Poor recall cannot manufacture a false
@@ -380,7 +392,7 @@ Never pool them. Every effort records its cohort.
 | `inverse` | visible, translated, unbadged | a claim we may have and never made |
 | `untranslated` | everything we HOLD, non-English, no English translation (~57,600) | **a work queue** — nobody in this set has done it |
 
-### Why 27% recall is acceptable for `untranslated` and not for badging
+### Why sub-50% recall is acceptable for `untranslated` and not for badging
 
 Prioritisation **publishes nothing**, and the error directions cost differently:
 

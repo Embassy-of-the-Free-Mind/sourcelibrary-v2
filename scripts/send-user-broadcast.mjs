@@ -40,8 +40,12 @@
  * opened/clicked (engagement). Only sends AFTER the subdomain went live carry
  * click data.
  *
- * SENT LEDGER (audiences already emailed — exclude all of these from new
- * cohorts; tracking was OFF for the first three so they have no click data):
+ * SENT LEDGER — the audiences below were DELETED from Resend on 2026-08-10
+ * to free contact quota (their welcome-backlog job was done; Cohort 7 cleared
+ * it). The IDs are dead. Full contact exports live in the private ops repo:
+ * ~/sourcelibrary-ops/email-campaign/audience-exports/2026-08-10/. If a new
+ * cohort is ever built, exclude the union of THOSE FILES, not these audiences.
+ * (Historical record — tracking was OFF for the first three, no click data):
  *   - 725ada69-...  Batch 1            200  subj "A new Renaissance — by translating the first"
  *   - 33bc889e-...  Recent Week        200  subj "...has never been read"  (wrong word, shipped)
  *   - 7137b7fe-...  Cohort 2           200  subj "...has never been translated"

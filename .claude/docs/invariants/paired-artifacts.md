@@ -18,3 +18,55 @@ Each time, two artifacts produced by **different code at different times** were 
 - **Ordering matters as much as mapping.** OCR that runs *before* archival reads the source URL; OCR that runs *after* reads the archived image. If those disagree, a book OCR'd in two passes gets pages transcribed **twice** while their neighbours are never transcribed at all — real duplicate text and real gaps that re-archiving alone cannot repair (see #3362's ordering hazard).
 
 Full postmortem: `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`.
+
+---
+
+**The same shape on artwork provenance fields (#3838, 2026-08-10):** on artwork
+docs, `commons_title`, `commons_url`, and `commons_sha1` are written by
+different code at different times and are NOT guaranteed to name the same
+Commons file. The image-upgrade path (`image_upgrade_source: "Commons
+alternate"`, May–June 2026) re-points `commons_title` at a higher-quality
+duplicate file without refreshing `commons_url` or `commons_sha1` — measured
+2026-08-10, **440** of ~11.2K true-Commons artwork docs disagree. Inside that
+set, sha1 equality compares the wrong file: 362 of 367 apparent "sha1
+divergences" were this, not wrong images (dHash confirmed the served images
+match the upgraded file). So: **never use `commons_sha1` equality (dedup #3037,
+integrity checks) without first checking that `commons_title` and `commons_url`
+name the same file**, or test membership of the stored sha1 in the file's
+*version history* (batchable: `prop=imageinfo&iiprop=sha1&iilimit=20`). And
+never refresh a stale sha1 without dHash-verifying our stored image against the
+newly named file first — an unverified refresh fabricates provenance.
+`source_ids.commons` (the canonical post-redirect title, written 2026-08-09/10)
+is the authoritative pointer; `fetchCommonsSource` prefers it.
+
+---
+
+**The ordering hazard has a quiet form: OCR stranded on pre-split spreads (2026-08-18).**
+`books.pages_ocr` counts **reader-visible** pages, so a book OCR'd *and translated* as spreads
+and only later run through the splitting pass reports **`pages_ocr: 0`** — while the full text
+sits on the soft-hidden originals (`page_number < 0`). Splitting writes two single pages per
+spread, soft-hides the source, and does not carry the text across; the halves are never OCR'd.
+
+Confirmed: `/book/vat-gr-370-pseudo-dionysius` — counter says 514 pp / 0 OCR, the `pages`
+collection holds **257 OCR'd + 244 translated** on hidden records. `/book/kmastra-of-vtsyyana-with-jayamagal-commentary`
+— counter 390 / 0, actually **195 + 195**.
+
+- **The tell is arithmetic: `pages_count == 2 × (pages with page_number < 0)`.** Secondary
+  tells: visible pages carry `split_from_spread` / `split_side` / `split_position` /
+  `split_method` / `spread_source`; hidden ones carry `ocr.data` + `translation.data`; the
+  hidden page's `photo` still points at the original source (vatlib, archive.org) while the
+  visible half points at an R2 `…/sp<hash>` derivative.
+- **Never scope OCR/translation work from `pages_ocr` alone.** Count
+  `pages{book_id, page_number: {$lt: 0}, 'ocr.data': {$exists: true, $nin: [null, '']}}` first.
+  A non-zero answer means the text is already bought and paid for, and the fix is remapping it
+  onto the halves (split at `split_position`) or serving the spread view — **not** a re-OCR.
+  Commissioning one would pay twice for text we hold.
+- **Extent is not established, and is probably small** — 0 of 60 sampled 0-OCR books had
+  stranded text, but that sample was the first 60 of a natural-order scan, not random. Treat
+  this as a per-book check before scoping, not a corpus-wide sweep.
+- A corpus-wide aggregate over `pages` **times out** (`MaxTimeMSExpired`). Drive the check from
+  the books side and verify per indexed `book_id`.
+
+This is the same shape as the entries above — two artifacts produced by different code at
+different times, assumed to correspond — except nothing looks broken from either side: the
+reader shows real page images, and the text is intact where it was written.

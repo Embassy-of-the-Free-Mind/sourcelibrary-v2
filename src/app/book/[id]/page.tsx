@@ -1,13 +1,16 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
+import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
+import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
@@ -25,7 +28,7 @@ import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import EnsureCover from '@/components/book/EnsureCover';
-import { isJunkRepresentativePage, isRenderableCoverUrl, selectFallbackCoverPage } from '@/lib/cover-fields';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectScoredCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
@@ -52,6 +55,13 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
+import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
+import {
+  classifyFirstTranslationClaim,
+  type ScreenedBook,
+} from '@/lib/first-translation/candidate';
+import { firstTranslationClause } from '@/lib/first-translation-labels';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
@@ -74,6 +84,7 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { markPageForReader } from '@/lib/provenance';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -282,13 +293,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
     } catch { /* keep null → factual template fallback */ }
   }
+  // The claim's register for the meta description (#3459).
+  //
+  // ⚠️ `getCachedBookLookup` serves the Supabase `books_catalog` row in the
+  // common case (it is ~50ms against Atlas's 1-5s), and that row carries
+  // `is_first_translation` and `ft_disposition` but NOT
+  // `first_translation.evidence_strength` or the screens. Classifying the thin
+  // payload directly returns `candidate` for EVERY book — including the 627 that
+  // earned the assertion — because "the field is absent" is indistinguishable
+  // from "the evidence is weak". That is the invariant this area keeps breaking:
+  // "we could not ask" must stay separate from "we asked and found nothing".
+  //
+  // So when the payload cannot answer, ASK — one projected lookup, and only for
+  // the ~17% of visible books that carry the flag at all. A failure falls back
+  // to `candidate`, which drops the "First" prefix rather than asserting it.
+  let ftClaimForSeo = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const seoPayloadCanAnswer = (book as { first_translation?: unknown }).first_translation !== undefined;
+  if (!seoPayloadCanAnswer && book.is_first_translation && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const ev = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        {
+          projection: {
+            _id: 0, visible: 1, language: 1, pages_translated: 1,
+            first_translation: 1, translation_verification: 1,
+            source_language_screen: 1, translator_author_screen: 1,
+          },
+          maxTimeMS: 3000,
+        },
+      );
+      if (ev) ftClaimForSeo = classifyFirstTranslationClaim(ev as unknown as ScreenedBook).claim;
+    } catch { /* keep `candidate` — understate, never overstate */ }
+  }
+
   const description = buildSeoDescription({
     originalTitle: book.title,
     authorLabel: bylineLabel,
     year: displayYear,
     language: book.language,
     summary: summaryText,
-    isFirstTranslation: book.is_first_translation,
+    firstTranslationClaim: ftClaimForSeo,
     pagesTranslated: book.pages_translated,
   });
   const bookUrl = `/book/${book.slug || book.id}`;
@@ -304,15 +349,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? new Date(book.updated_at).toISOString()
     : undefined;
 
+  /**
+   * Does the byline name someone who WROTE this book?
+   *
+   * A holding monastery and an issuing Bible society do not, and three
+   * separate emitters below each make an authorship claim in a different
+   * vocabulary — `citation_author` (Google Scholar), `og:article:author`, and
+   * `DC.creator`. Fixing the schema.org JSON-LD alone left all three still
+   * asserting that Thadrak Temple wrote the Tantra collection across ~470
+   * books, which is the same defect in three more places (#3483).
+   *
+   * Where the body did not write the book we emit NOTHING in the authorship
+   * slot rather than a hedged value: these fields have no way to express
+   * "held by" or "issued by", and a wrong claim is worse than a missing one.
+   * The name is still on the page, in the title, and in schema.org as an
+   * `Organization`, so nothing becomes less findable.
+   */
+  const bylineIsAuthor = bylineClaimsAuthorship(book.author);
+
   // Google Scholar meta tags for academic discoverability
   // https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
   //
   // citation_author covers both authors and editors for compilations — Google
   // Scholar doesn't have a separate citation_editor tag, but the `(ed.)`
   // suffix is the standard convention and is preserved through search results.
+  // It has no tag for a holder or an issuer either, hence the omission above.
   const scholarMeta: Record<string, string | string[]> = {
     'citation_title': book.title,
-    'citation_author': bylineLabel,
+    ...(bylineIsAuthor && { 'citation_author': bylineLabel }),
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
   };
   // Only a bare year may be asserted here. A century or range is real knowledge
@@ -359,7 +423,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       // OG image generated by opengraph-image.tsx (branded 1200x630 card)
       ...(publishedDate && { publishedTime: publishedDate }),
       ...(modifiedDate && { modifiedTime: modifiedDate }),
-      authors: [bylineLabel],
+      // og `authors` becomes <meta property="article:author"> — an authorship
+      // claim, so it is omitted for a holder or an issuer. See bylineIsAuthor.
+      ...(bylineIsAuthor && { authors: [bylineLabel] }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -386,7 +452,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -439,8 +505,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     }, tenantId).catch(() => null)
     : Promise.resolve(null); // Already have full book from Atlas
 
+  // The work's Translation Card, if one exists (#3881). Best-effort: a miss
+  // or an error renders the legacy panel, never an error state.
+  const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
+
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
     fullBookPromise,
     // Use page_number >= 0 to skip archived-spread pages (negative numbers).
     // This uses the {book_id, page_number} compound index efficiently.
@@ -466,11 +536,13 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
-          // First 600 chars of the OCR — the metadata envelope plus the model's
+          // First 1200 chars of the OCR — the metadata envelope plus the model's
           // page description. Enough to recognise digitiser boilerplate and
           // library/owner stamps that `page_type` misses (see
           // `isJunkRepresentativePage`), without pulling whole pages of text.
-          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 600] },
+          // 1200 is the cover scorer's window (`scorePageForCover`) — keep in
+          // step with ensure-cover's projection.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
         },
         maxTimeMS: 5000,
       })
@@ -507,6 +579,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .toArray()
         .catch(() => [])
       : Promise.resolve([]),
+    cardPromise,
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
@@ -589,7 +662,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 
   const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
 }
 
 // Skeleton for book info while loading
@@ -652,7 +725,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+
+  // What we can honestly SAY about this book's first-translation status (#3459).
+  // The flag decides whether a claim appears at all; this decides its register —
+  // `confirmed` asserts, anything weaker reports the search we ran instead.
+  // Computed once so the publication timeline, the stat line and the evidence
+  // panel cannot drift apart.
+  const ftClaim = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const ftClause = firstTranslationClause(ftClaim);
 
   // Hidden books (visible:false) are not public — defense in depth alongside
   // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
@@ -691,7 +772,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         maxTimeMS: 5000,
       })
       .sort({ page_number: 1 }).limit(1000).toArray();
-    return <TextReader book={book as any} pages={JSON.parse(JSON.stringify(textPages))} collections={bookCollections} />;
+    // Text-only works serve their whole translation in one server render, so
+    // each page carries the reader-path provenance mark (deterministic,
+    // ISR-safe; runs once per revalidation, not per request).
+    const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
+      .map((p) => markPageForReader(p, book.id));
+    return <TextReader book={book as any} pages={markedTextPages as any} collections={bookCollections} />;
   }
 
   // Empty shell books (0 pages from failed imports) should 404
@@ -811,12 +897,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // and shows the actual scan at its true dimensions.
     const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
     const coverRenderable = isRenderableCoverUrl(storedCover);
-    // Best cover-scan candidate: the actual title page, else a frontispiece,
-    // else the first non-junk page (avoids the Google/IA boilerplate, endpapers
-    // and scanner colour cards when a classified title page exists).
-    // `selectFallbackCoverPage` is shared with /api/books/[id]/ensure-cover so
-    // the page we SHOW here is the page that gets SAVED as the cover.
-    const coverPage = selectFallbackCoverPage(pages);
+    // Best cover-scan candidate: OCR-scored (same scorer as pipeline Phase
+    // 8.9 — decorated title pages and frontispieces win, blanks / stamps /
+    // scanner's-hand shots are rejected), falling back to the type-priority
+    // rule when nothing scores confidently. `selectScoredCoverPage` is shared
+    // with /api/books/[id]/ensure-cover so the page we SHOW here is the page
+    // that gets SAVED as the cover.
+    const coverPage = selectScoredCoverPage(pages, book.title)?.page;
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
@@ -904,7 +991,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           collections: (book as unknown as { collections?: string[] }).collections,
           language: book.language,
           year: relatedYear,
-          place: book.place_published,
+          place: resolveImprintPlace(book)?.display, // family resolver, #4043
         }, renderableCover, 12).catch(() => [] as CatalogBook[])
       : [] as CatalogBook[];
     const hasRelated = tagRelated.length > 0;
@@ -955,7 +1042,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Publisher / place only — the DATE is surfaced separately as a labelled
     // chip (heroDate) so it's clear, not buried at the end of the impressum.
     const impressum = (() => {
-      const place = book.place_published?.trim();
+      const place = resolveImprintPlace(book)?.display; // family resolver, #4043
       const publisher = book.publisher?.trim();
       return [place, publisher].filter(Boolean).join(': ');
     })();
@@ -1070,7 +1157,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     if (histInformative) {
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
-      const detail = compDate ? undefined : ([book.place_published, book.publisher].filter(Boolean).join(' · ') || undefined);
+      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
       rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: 'Published', detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
@@ -1138,7 +1225,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         key: `edition-${i}`,
         dateText: my,
         label: i === 0
-          ? (book.is_first_translation ? 'First English translation published' : 'English edition published')
+          ? (ftClaim === 'confirmed'
+            ? 'First English translation published'
+            : 'English edition published')
           : 'New edition published',
         detail: (
           <>
@@ -1283,9 +1372,34 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
+            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+              <TranslationCardPanel
+                card={translationCard}
+                book={book as { pages_translated?: number | null }}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              />
+            ) : (
+              // A catalog states its own coverage: a translated, non-English
+              // book with neither a card nor a book-grain verdict has simply
+              // not been researched — say so, or silence reads as "checked,
+              // nothing found" (#3881).
+              !translationCard
+              && !(book as { first_translation?: { verdict?: string } }).first_translation?.verdict
+              && !book.is_first_translation
+              && (book.pages_translated ?? 0) > 0
+              && book.language
+              && !['English', 'english', 'en', 'eng'].includes(book.language)
+              && <TranslationHistoryUnresearched />
+            )}
             <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
-              <Suspense fallback={null}><RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} /></Suspense>
+              <Suspense fallback={null}><RelatedEditions
+                bookId={book.id}
+                workId={(book as unknown as { work_id?: string }).work_id!}
+                language={(book as unknown as { language?: string }).language}
+                editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+              /></Suspense>
             )}
             {embedPolicy.showIndexCatalogStatus && (
               <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
@@ -1362,7 +1476,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
@@ -1411,6 +1525,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
                     </Link>
                   ) : (heroByline.role === 'editor' ? <>edited by <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                  {/* The name stays clickable and searchable — a byline is how a
+                      reader REACHES a book, and for the Bhutanese manuscript
+                      volumes the monastery is the only handle they have. What
+                      changes is that the page no longer implies it WROTE the
+                      book. See src/lib/corporate-bylines.ts. */}
+                  {heroByline.institutional && heroByline.institutional.qualifier && (
+                    <span className="normal-case tracking-normal font-normal opacity-70"> · {heroByline.institutional.qualifier}</span>
+                  )}
                 </div>
               )}
               <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
@@ -1457,6 +1579,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   the left of the label. "First translation" reads as plain text
                   to the right of Translated (full history lives in Editions &
                   translations). */}
+              {/* Untranscribed books say so. This row used to render only when
+                  ocrPct > 0, so the 704 visible books with NO OCR showed no
+                  status at all — and a missing badge reads as "nothing wrong",
+                  not "no text here". The reader then clicked "Read this book"
+                  into a pane that had nothing to show. */}
+              {ocrPct === 0 && (
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
+                  <span title={`${totalPages} scans available; no pages transcribed yet`} style={{ color: 'rgba(245,240,232,0.55)' }}>
+                    Scans only — not transcribed yet
+                  </span>
+                </div>
+              )}
               {ocrPct > 0 && (
                 <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
                   <span title={`${ocrCount} of ${totalPages} pages transcribed`} style={{ color: '#8fbfe6' }}>
@@ -1467,8 +1601,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {translatedPct >= 100 ? '✓' : `${translatedPct}%`} Translated
                     </span>
                   )}
-                  {!!book.is_first_translation && translatedCount > 0 && (
-                    <span title="First translation into English" style={{ color: '#e0b46a' }}>First translation</span>
+                  {!!book.is_first_translation && translatedCount > 0 && ftClause && (
+                    <span
+                      title={
+                        ftClaim === 'confirmed'
+                          ? 'First translation into English'
+                          : 'We searched the catalogues and found no earlier English translation — a record of the search, not proof none exists'
+                      }
+                      style={{ color: ftClaim === 'confirmed' ? '#e0b46a' : '#948d80' }}
+                    >
+                      {ftClaim === 'confirmed' ? 'First translation' : 'No prior translation found'}
+                    </span>
                   )}
                 </div>
               )}
@@ -1489,7 +1632,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={book.place_published} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
@@ -1664,7 +1807,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   format as BphCatalogBrowser.formatImpressum so the book page
                   and catalogue rows line up. */}
               {(() => {
-                const place = book.place_published?.trim();
+                const place = resolveImprintPlace(book)?.display; // family resolver, #4043
                 const publisher = book.publisher?.trim();
                 const year = book.published ? String(book.published).trim() : '';
                 const placePub = [place, publisher].filter(Boolean).join(': ');
@@ -1753,13 +1896,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 )}
               </div>
 
-              {/* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
-                  Renders the "First Translation" or "Existing translations" badge,
-                  or null when neither applies. */}
-              <FirstTranslationEvidence
-                book={book as never}
-                showExternalLinks={embedPolicy.showExternalLinks}
-              />
+              {/* The Translation Card (#3881): when this book's work has a
+                  clean, reviewed card, the card IS the first-translation
+                  surface — one sentence + cited entries. One decision point:
+                  card renders → legacy panel does not (no side-by-side
+                  contradiction). No card / unclean card → exactly the legacy
+                  render this page had before. */}
+              {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+                <TranslationCardPanel
+                  card={translationCard}
+                  book={book as { pages_translated?: number | null }}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              ) : (
+                /* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
+                    Renders the "First Translation" or "Existing translations" badge,
+                    or null when neither applies. */
+                <FirstTranslationEvidence
+                  book={book as never}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              )}
 
               {/* Dedication */}
               <div className="mt-3">
@@ -1873,7 +2030,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       author={book.author}
                       year={book.published}
                       publisher={book.publisher}
-                      placePublished={book.place_published}
+                      placePublished={resolveImprintPlace(book)?.display}
                       format={book.format}
                       ustcId={book.ustc_id}
                       language={book.language}
@@ -1929,7 +2086,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               >
                 {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
-                    <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                    <RelatedEditions
+                      bookId={book.id}
+                      workId={(book as unknown as { work_id?: string }).work_id!}
+                      language={(book as unknown as { language?: string }).language}
+                      editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                      editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+                    />
                   </Suspense>
                 )}
                 {embedPolicy.showIndexCatalogStatus && (
@@ -2202,6 +2365,24 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
     notFound();
+  }
+
+  // Artworks have their own canonical route. /book/<slug> renders them too
+  // (BookInfo branches to <ArtworkInfo> on resource_type), so every artwork had
+  // TWO fully-rendering URLs, each emitting a self-referential canonical — the
+  // duplicate-content shape Google penalises. Send the /book form to /artwork.
+  //
+  // Deliberately NOT applied when embedded: `/embed/[tenant]/book/[slug]` re-exports
+  // this component, and there is no `/embed/[tenant]/artwork` route — redirecting a
+  // partner subdomain's reader out of its embed shell breaks the tenant lockdown.
+  // Editor preview routes (previewProposed/allowHidden) are excluded for the same
+  // reason: /artwork has no preview twin, so a redirect would 404 the editor.
+  if (!isEmbedded && !previewProposed && !allowHidden) {
+    const artSlug = artworkRedirectSlug(earlyBook as unknown as { content_type?: string; resource_type?: string; slug?: string });
+    // 308, not 307: this is a canonicalization, so search engines must transfer
+    // authority to /artwork rather than keep indexing both. redirect() defaults to
+    // a temporary 307, which consolidates nothing — the whole point of the change.
+    if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
   }
 
   return (

@@ -12,6 +12,9 @@ interface Introduction {
   language_key: string;
   created_at: string | null;
   updated_at: string | null;
+  volunteered: boolean;
+  volunteered_at: string | null;
+  contacted: boolean;
 }
 
 interface Totals {
@@ -22,6 +25,8 @@ interface Totals {
   offered_help: number;
   gave_language: number;
   language_respondents: number;
+  volunteered: number;
+  awaiting_reply: number;
 }
 
 interface Payload {
@@ -31,7 +36,7 @@ interface Payload {
   language_unmatched: string[];
 }
 
-type Filter = 'all' | 'help' | 'substantial';
+type Filter = 'all' | 'help' | 'substantial' | 'volunteered' | 'awaiting';
 
 function fmtDate(s: string | null) {
   if (!s) return '—';
@@ -50,6 +55,25 @@ export default function IntroductionsPage() {
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
+  // Overlay of contacted flips made in this session, so the list responds at
+  // once instead of waiting on a refetch that would also reshuffle the filter.
+  const [contactedOverride, setContactedOverride] = useState<Record<string, boolean>>({});
+
+  const markContacted = async (email: string | null, contacted: boolean) => {
+    if (!email) return;
+    setContactedOverride(prev => ({ ...prev, [email]: contacted }));
+    try {
+      const res = await fetch('/api/admin/introductions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, contacted }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+    } catch {
+      // Put it back rather than showing a state the server does not hold.
+      setContactedOverride(prev => ({ ...prev, [email]: !contacted }));
+    }
+  };
 
   useEffect(() => {
     fetch('/api/admin/introductions')
@@ -67,11 +91,14 @@ export default function IntroductionsPage() {
       // one line ("leer"); the handful of long ones are where the offers and the
       // corpus gaps actually are, and they get buried by volume otherwise.
       if (filter === 'substantial' && i.about.trim().length < 120) return false;
+      if (filter === 'volunteered' && !i.volunteered) return false;
+      // The queue that actually needs working: raised a hand, no reply yet.
+      if (filter === 'awaiting' && (!i.volunteered || (contactedOverride[i.email ?? ''] ?? i.contacted))) return false;
       if (!q) return true;
       return [i.name, i.email, i.about, i.help, i.language]
         .some(f => (f || '').toLowerCase().includes(q));
     });
-  }, [data, query, filter]);
+  }, [data, query, filter, contactedOverride]);
 
   function exportCsv() {
     if (!data) return;
@@ -108,10 +135,11 @@ export default function IntroductionsPage() {
         </p>
       </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
         {[
           { label: 'Wrote something', value: t.wrote },
-          { label: 'Skipped', value: t.skipped },
+          { label: 'Volunteered', value: t.volunteered },
+          { label: 'Awaiting a reply', value: t.awaiting_reply },
           { label: 'Offered to help', value: t.offered_help },
           { label: 'Gave a language', value: t.gave_language },
           { label: 'Not yet seen', value: t.pending },
@@ -169,6 +197,8 @@ export default function IntroductionsPage() {
         />
         {([
           ['all', 'All'],
+          ['awaiting', 'Awaiting a reply'],
+          ['volunteered', 'Volunteered'],
           ['help', 'Offered help'],
           ['substantial', 'Wrote at length'],
         ] as [Filter, string][]).map(([key, label]) => (
@@ -213,7 +243,27 @@ export default function IntroductionsPage() {
                   </a>
                 )}
               </div>
-              <span className="text-xs text-stone-400">{fmtDate(i.updated_at)}</span>
+              <div className="flex items-center gap-2">
+                {i.volunteered && (
+                  <span className="text-[11px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-accent-rust/10 text-accent-rust">
+                    volunteered
+                  </span>
+                )}
+                {i.volunteered && (
+                  <button
+                    onClick={() => markContacted(i.email, !(contactedOverride[i.email ?? ''] ?? i.contacted))}
+                    className={`text-[11px] px-2 py-0.5 rounded border transition-colors ${
+                      (contactedOverride[i.email ?? ''] ?? i.contacted)
+                        ? 'bg-stone-900 text-white border-stone-900'
+                        : 'bg-white text-stone-600 border-stone-300 hover:border-stone-500'
+                    }`}
+                    title="Whether we have written back"
+                  >
+                    {(contactedOverride[i.email ?? ''] ?? i.contacted) ? 'replied' : 'mark replied'}
+                  </button>
+                )}
+                <span className="text-xs text-stone-400">{fmtDate(i.updated_at)}</span>
+              </div>
             </div>
 
             {i.language && (

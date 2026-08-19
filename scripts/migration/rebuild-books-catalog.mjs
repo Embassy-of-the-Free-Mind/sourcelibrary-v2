@@ -83,6 +83,11 @@ function transformBook(book) {
     source_work_dates: Array.isArray(book.source_work_dates) ? book.source_work_dates : null,
     ft_disposition: book.translation_verification?.disposition || null,
     ft_reasoning: book.translation_verification?.reasoning || null,
+    ft_verdict: book.first_translation?.verdict || null,
+    ft_evidence_strength: book.first_translation?.evidence_strength || null,
+    ft_our_completeness: book.first_translation?.our_completeness || null,
+    ft_source_screen: book.source_language_screen?.verdict || null,
+    ft_translator_screen: book.translator_author_screen?.verdict || null,
     description: book.ai_metadata?.description || book.description || null,
     subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
     translation_pct: (() => {
@@ -120,6 +125,11 @@ const projection = {
   resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
+  // Graded FT verdict + screens (#3726 Tier 3) — pure projections; the render
+  // decision lives in src/lib/first-translation/render.ts, never here.
+  'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
+  'first_translation.our_completeness': 1,
+  'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
   'ai_metadata.description': 1, description: 1, subject_keywords: 1,
 };
 

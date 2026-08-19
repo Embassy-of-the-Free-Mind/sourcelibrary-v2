@@ -19,7 +19,8 @@
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
 30 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-entity-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-entities.mjs" >> /var/log/sourcelibrary/entity-sync.log 2>&1
-#PAUSED-GEMINI 30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=\$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
+# embed-gemini self-gates on pause + daily budget since #3826 — the cron line can stay enabled; a paused/over-budget night is a logged no-op.
+30 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-embed-gemini.lock bash -c "set -a; source .env.production.local; set +a; export GEMINI_API_KEY=\$GEMINI_API_KEY_TIER3 && node scripts/workers/embed-gemini.mjs --incremental" >> /var/log/sourcelibrary/embed-gemini.log 2>&1
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/snapshot-stats.mjs" >> /var/log/sourcelibrary/snapshot.log 2>&1
 30 5 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; curl -s -X POST https://sourcelibrary.org/api/admin/cache-probe -H "Authorization: Bearer $CRON_SECRET"" >> /var/log/sourcelibrary/cache-probe.log 2>&1
 45 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
@@ -122,6 +123,13 @@
 30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-acquire.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/acquire-gap-batch.mjs --batch 400 --concurrency 10" >> /var/log/sourcelibrary/acquire.log 2>&1
 # Archive newly-acquired gap books to R2 (companion to acquisition)
 45 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-arch-acq.lock bash -c "set -a; source .env.production.local; set +a; npx tsx scripts/catalog-coverage/archive-acquired.ts --batch 240 --concurrency 10" >> /var/log/sourcelibrary/archive-acquired.log 2>&1
+
+# Collect Gemini Batch API results (#3713). Submitting a batch and getting text are
+# different events: the Vercel process-batches cron was archived as "replaced by Hetzner
+# workers", but this replacement was never added, so results sat on Gemini's side until
+# somebody ran the script by hand. --abandon-stale=7 stops the collector retrying jobs
+# whose output Gemini has already discarded, which otherwise keeps this log permanently red.
+*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collect-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/batch/collect-batch-results.mjs --limit 200 --abandon-stale=7" >> /var/log/sourcelibrary/collect-batch.log 2>&1
 */20 * * * * tmux has-session -t catchup 2>/dev/null || ( cd /root/sourcelibrary && P=$(bash -c "set -a; source .env.production.local; set +a; node -e \"const {MongoClient}=require(process.cwd()+\x27/node_modules/mongodb\x27);(async()=>{const c=new MongoClient(process.env.MONGODB_URI);await c.connect();console.log(await c.db(\x27bookstore\x27).collection(\x27acquisition_queue\x27).countDocuments({status:\x27pending\x27}));await c.close();})()\"" 2>/dev/null); [ "$P" -gt 500 ] 2>/dev/null && tmux new-session -d -s catchup "/tmp/acquire_catchup.sh" )
 30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-supabase-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/supabase-sync.mjs" >> /var/log/sourcelibrary/supabase-sync.log 2>&1
 # catchup-watchdog: restart the acquisition catch-up if it died (loop self-exits when queue drains)
@@ -133,3 +141,9 @@
 0 5 * * * /root/restic-backup.sh
 # Traffic anomaly detector — pushes to ntfy on state change (#3446)
 17 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-traffic-anomaly.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/traffic-anomaly-alert.mjs" >> /var/log/sourcelibrary/traffic-anomaly.log 2>&1
+# Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
+40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
+# Stage coverage snapshot — nightly semantic monitoring, coverage from data not job counters (#3756). Supervised runs 2026-08-08; page-level counts need the long socket timeout.
+15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
+# Author canonical-link convergence (#3769/#3756) — link books.author -> authors._id where unambiguous; live-only default (backlog inclusion is the #3780 decision)
+40 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --apply" >> /var/log/sourcelibrary/author-links.log 2>&1

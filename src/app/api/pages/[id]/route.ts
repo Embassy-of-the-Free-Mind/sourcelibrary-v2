@@ -7,6 +7,7 @@ import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
+import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -76,7 +77,9 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    return NextResponse.json(page, {
+    // Reader-path provenance: translation carries the invisible imprimatur.
+    // Deterministic (no ref), so the cache header below stays valid.
+    return NextResponse.json(markPageForReader(page), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
@@ -139,6 +142,16 @@ export const PATCH = withAuth(async (request, session, context) => {
       );
     }
     const body = parseResult.data;
+
+    // Reader-served translation carries the invisible provenance imprimatur,
+    // and the editor's save posts that text straight back here. Strip the
+    // zero-width marks before storing so marks never enter the corpus — the
+    // English translation has no legitimate zero-width characters. The OCR is
+    // deliberately left alone: it is never marked, and bidi control marks can
+    // be genuine content in the original-language transcription.
+    if (body.translation) {
+      body.translation.data = stripProvenanceMarks(body.translation.data);
+    }
 
     const updateData: Record<string, unknown> = {
       updated_at: new Date()

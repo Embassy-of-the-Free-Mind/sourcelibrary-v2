@@ -11,14 +11,53 @@
  * reply_sent_at so it never double-sends (matching the route's idempotency guard).
  *
  * Usage:
- *   node scripts/maintenance/notify-addressed-feedback.mjs            # dry-run
- *   node scripts/maintenance/notify-addressed-feedback.mjs --go       # send
+ *   node scripts/maintenance/notify-addressed-feedback.mjs                  # dry-run
+ *   node scripts/maintenance/notify-addressed-feedback.mjs --include-self   # show ours too
+ *   node scripts/maintenance/notify-addressed-feedback.mjs --go             # send
  *
- * Env: MONGODB_URI, RESEND_API_KEY, EMAIL_FROM (optional).
+ * TWO FILTERS, added 2026-08-06 after a dry run showed 92 pending of which only
+ * ~28 were real:
+ *
+ *   Reserved domains are SKIPPED ALWAYS. `example.com`, `.invalid` and friends
+ *   are reserved by RFC 2606/6761 and cannot receive mail — every one is a
+ *   guaranteed hard bounce, and hard bounces damage the sending reputation of a
+ *   domain that also has a newsletter to deliver. Two rows came from an MCP test
+ *   harness and one from a doc example; nothing legitimate is ever addressed
+ *   there, so this is not a judgment call and has no flag to turn it off.
+ *
+ *   Our own addresses are skipped BY DEFAULT (--include-self to see them). 57 of
+ *   the 92 were Derek's or family's own submissions. They are real and harmless,
+ *   but they bury the replies that are owed to actual readers, and the point of
+ *   this script is the backlog owed to strangers. Set SELF_ADDRESSES to override
+ *   the list.
+ *
+ * Env: MONGODB_URI, RESEND_API_KEY, EMAIL_FROM (optional),
+ *      SELF_ADDRESSES (optional, comma-separated).
  */
 import { MongoClient } from 'mongodb';
 
 const GO = process.argv.includes('--go');
+const INCLUDE_SELF = process.argv.includes('--include-self');
+
+// RFC 2606 / 6761 reserved names. Mail to these cannot be delivered.
+const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/i;
+
+const SELF_ADDRESSES = new Set(
+  (process.env.SELF_ADDRESSES ||
+    'dereklomas@gmail.com,derek@sourcelibrary.org,derek@playpowerlabs.com,julikalomas@gmail.com')
+    .split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
+);
+
+const domainOf = (e) => String(e || '').split('@')[1]?.trim().toLowerCase() || '';
+
+/** Why this address is being skipped, or null to send. */
+function skipReason(email) {
+  const e = String(email || '').trim().toLowerCase();
+  if (!e.includes('@')) return 'not an address';
+  if (RESERVED_DOMAIN.test(domainOf(e))) return 'reserved domain — would hard-bounce';
+  if (!INCLUDE_SELF && SELF_ADDRESSES.has(e)) return 'ours (--include-self to include)';
+  return null;
+}
 
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -73,7 +112,20 @@ const pending = await fb.find({
 }).toArray();
 
 console.log(`Addressed + email + not-yet-notified: ${pending.length}`);
-if (pending.length === 0) { await client.close(); process.exit(0); }
+
+const skipped = new Map();
+const sendable = [];
+for (const row of pending) {
+  const why = skipReason(row.email);
+  if (why) { skipped.set(why, (skipped.get(why) || 0) + 1); continue; }
+  sendable.push(row);
+}
+if (skipped.size) {
+  console.log('Skipping:');
+  for (const [why, n] of skipped) console.log(`  ${String(n).padStart(3)}  ${why}`);
+}
+console.log(`Would notify ${sendable.length} real recipient(s), ${new Set(sendable.map(r => String(r.email).toLowerCase())).size} distinct.\n`);
+if (sendable.length === 0) { await client.close(); process.exit(0); }
 
 let resend = null;
 if (GO) {
@@ -84,7 +136,7 @@ if (GO) {
 const from = process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>';
 
 let sent = 0, failed = 0;
-for (const row of pending) {
+for (const row of sendable) {
   const params = { name: row.name, originalMessage: row.message, replyBody: row.addressed_action, link: row.addressed_link };
   console.log(`  ${GO ? 'SEND' : 'would send'} → ${row.email}  «${(row.message || '').slice(0, 50)}»`);
   if (!GO) continue;

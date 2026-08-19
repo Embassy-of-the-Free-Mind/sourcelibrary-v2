@@ -27,6 +27,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
+import { makeBookDoc } from '../lib/book-docs.mjs';
 
 const { values: args } = parseArgs({ options: {
   'dry-run': { type: 'boolean', default: false },
@@ -148,7 +149,7 @@ async function main() {
           let base2 = slugify(title) || `rijks-${objNum}`; slug = `art-${base2}`; let n = 1;
           while (await booksCol.findOne({ slug })) { slug = `art-${base2}-${++n}`; }
           const licenseId = (img.license || '').includes('zero') ? 'CC0-1.0' : (img.license || '').includes('publicdomain') ? 'CC0-1.0' : (img.license || 'unknown');
-          await booksCol.insertOne({
+          await booksCol.insertOne(makeBookDoc({
             _id: bookId, id: bookId.toHexString(), slug,
             title, display_title: title, author: 'Anonymous', language: 'Visual',
             published: date, resource_type: 'object', content_type: 'artwork',
@@ -168,7 +169,7 @@ async function main() {
             },
             source_fingerprint: fingerprint,
             created_at: new Date(), updated_at: new Date(),
-          });
+          }));
           imported++;
           console.log(`  ✓ ${slug} — ${title} (${place || '?'}, ${date || '?'}) ${meta.width}x${meta.height}`);
         } catch (e) { failed++; console.log(`  ✗ ${objNum}: ${e.message}`); }

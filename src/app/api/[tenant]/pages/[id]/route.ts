@@ -7,6 +7,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
+import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -79,7 +80,9 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    return NextResponse.json(page, {
+    // Reader-path provenance: translation carries the invisible imprimatur
+    // (deterministic, no ref — cache-safe). Mirrors the global twin.
+    return NextResponse.json(markPageForReader(page), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
@@ -128,6 +131,14 @@ export const PATCH = withAuth(async (request, session, context) => {
       );
     }
     const body = parseResult.data;
+
+    // Strip reader-path provenance marks from the incoming translation before
+    // storing — the editor round-trips served (marked) text. Mirrors the
+    // global twin; OCR deliberately untouched (never marked, and bidi control
+    // marks can be genuine content there).
+    if (body.translation) {
+      body.translation.data = stripProvenanceMarks(body.translation.data);
+    }
 
     const updateData: Record<string, unknown> = {
       updated_at: new Date()

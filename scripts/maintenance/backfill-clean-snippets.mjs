@@ -26,6 +26,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { cleanPageText } from '../lib/page-embedding-text.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_URL = (process.env.SUPABASE_URL || '').trim();
@@ -42,16 +43,9 @@ const WRITE = args.includes('--write');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 
-// Identical to scripts/workers/embed-gemini.mjs cleanText (keep in sync).
-function cleanText(text) {
-  if (!text || typeof text !== 'string') return '';
-  return text
-    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 8000);
-}
+// The ONE composer (page-embedding-text.mjs) — the inline copy this replaces
+// had drifted to a 4-tag subset, which is how the leak in #3820 happened.
+const cleanText = cleanPageText;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 

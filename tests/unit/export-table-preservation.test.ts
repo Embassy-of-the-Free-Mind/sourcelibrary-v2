@@ -14,7 +14,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { splitPdfBlocks, cleanTranslationForPdf, splitScriptRuns, writePdfBody } from '@/lib/pdf-export';
+import { splitPdfBlocks, cleanTranslationForPdf, splitScriptRuns, writePdfBody, parseStyledLines, stripAnnotationTags } from '@/lib/pdf-export';
 import { loadPdfFonts } from '@/lib/pdf-fonts';
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 
@@ -159,6 +159,7 @@ describe('mixed-script runs', () => {
     const fakeDoc = {
       font() { return this; },
       fontSize() { return this; },
+      fillColor() { return this; },
       text(t: string, o?: { continued?: boolean }) {
         calls.push({ text: t, continued: !!o?.continued });
         return this;
@@ -181,6 +182,48 @@ describe('mixed-script runs', () => {
     expect(joined).toContain('hoping for mercy');
     expect(joined).toContain('third line');
     expect(joined).toContain('دري اللون');
+  });
+});
+
+describe('annotation color runs (PDF path)', () => {
+  it('keeps annotation tags through cleaning so they can render as colored runs', () => {
+    const out = cleanTranslationForPdf(
+      'Body text <note>an editorial note</note> more <term>khawass</term> end.',
+      'test-book-id'
+    );
+    expect(out).toContain('<note>');
+    expect(out).toContain('<term>');
+  });
+
+  it('converts legacy bracket tags to XML annotation tags', () => {
+    const out = cleanTranslationForPdf('Text [[gloss: a gloss]] tail.', 'test-book-id');
+    expect(out).toContain('<gloss>a gloss</gloss>');
+  });
+
+  it('parseStyledLines splits body and annotation runs, appending ? to unclear', () => {
+    const lines = parseStyledLines('before <unclear>reading</unclear> after');
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toEqual([
+      { style: null, text: 'before ' },
+      { style: 'unclear', text: 'reading?' },
+      { style: null, text: ' after' },
+    ]);
+  });
+
+  it('carries a span style across an embedded newline, one run per line', () => {
+    const lines = parseStyledLines('<note>first line\nsecond line</note>');
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toEqual([{ style: 'note', text: 'first line' }]);
+    expect(lines[1]).toEqual([{ style: 'note', text: 'second line' }]);
+  });
+
+  it('accepts attributes on annotation open tags', () => {
+    const lines = parseStyledLines('<image-desc size="large">an engraving</image-desc>');
+    expect(lines[0][0]).toEqual({ style: 'image-desc', text: 'an engraving' });
+  });
+
+  it('stripAnnotationTags unwraps content for colorless contexts (table cells)', () => {
+    expect(stripAnnotationTags('a <gloss>b</gloss> c <unclear>d</unclear>')).toBe('a b c d?');
   });
 });
 

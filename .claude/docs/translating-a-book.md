@@ -59,6 +59,13 @@ unpause the production pipeline."** Or invoke the skill directly: `/batch-transl
 Both take `Authorization: Bearer $CRON_SECRET`. Both return a Gemini Batch job
 that completes in ~24h — they do not block.
 
+**Quality tradeoff to know:** this batch route translates each page
+*independently* — no previous-page continuity, unlike the (currently dormant)
+sequential worker, which feeds each finished page into the next page's prompt.
+For a single requested book that tradeoff is deliberate and fine; for bulk
+reprocessing, or a text where cross-page flow matters a lot, use the
+sequential path instead (see `memory/pipeline-ops.md`, Critical Rules).
+
 ### Model
 Don't hardcode a model. The pipeline uses `getModelForBook(book)`
 (`src/lib/types/ai-models.ts`), which routes BPH and non-Latin-script books to the

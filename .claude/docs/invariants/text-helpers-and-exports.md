@@ -57,3 +57,19 @@ silently because the output reads as ordinary prose.
   (`src/lib/ordered-stream.ts`) yields in input order with a bounded look-ahead.
   And when an artifact must be truncated, **say so inside the artifact** — a
   partial edition that doesn't admit it is worse than an error.
+- **A fix to a duplicated surface is a fix to one copy.** The download route has a
+  tenant twin (`/api/[tenant]/books/[id]/download`) that is not parity-tested, and
+  every lesson in this file landed on the global copy only. Measured 2026-08-11:
+  388 diff lines, with the tenant copy still deleting transcribed `<margin>`
+  content under notes-off (#3870, the reader's own #3811 bug), resolving three of
+  four image formats from raw `photo` (the uncropped spread on split pages),
+  fetching unbounded or serially, buffering the whole zip, awaiting every image
+  before writing a byte, running with no `maxDuration`, and labelling a truncated
+  facsimile a complete edition. **None of it errors** — a wrong image is a valid
+  JPEG, a serial fetch is merely slow until Cloudflare 524s it. Ported and shared
+  in #3908/#3914 (`src/lib/notes-off.ts`, `export-markdown-html.ts`,
+  `export-page-images.ts`; drift 388 → 175 lines). Before fixing anything here,
+  `git grep` for a twin, and prefer *extracting* the rule over patching both — a
+  shared module cannot drift, a convention always does. Pinned by
+  `tests/unit/notes-off.test.ts` and `tests/unit/download-route-parity.test.ts`,
+  whose guards were each verified firing against the pre-fix files.

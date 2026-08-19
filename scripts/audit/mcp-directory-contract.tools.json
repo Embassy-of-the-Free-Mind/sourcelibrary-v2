@@ -1,0 +1,68 @@
+{
+  "_comment": "Tool names the Anthropic directory listing was reviewed against, captured from the live tools/list response on 2026-08-05 (server 4.4.0), the day after the connector was published at claude.ai/directory/connectors/source-library. ADDING a tool is safe and needs no re-review — both listings store a pointer to /api/mcp, not a snapshot, and clients call tools/list on connect. RENAMING or REMOVING one silently breaks saved Claude Projects and any client holding the old name, so scripts/audit/mcp-directory-contract.mjs fails when a name here goes missing. Update this file deliberately, as part of a decision to break a name — never to make CI green. list_editions added 2026-08-07 alongside the tool itself — adding a tool is additive and needs no re-review; this file exists to catch REMOVALS. get_locus added 2026-08-07 (server 4.7.0), same reasoning.",
+  "captured_from": "https://sourcelibrary.org/api/mcp",
+  "captured_at": "2026-08-05",
+  "server_version_at_capture": "4.5.0",
+  "tools": [
+    {
+      "name": "search_library",
+      "readOnly": true
+    },
+    {
+      "name": "search_translations",
+      "readOnly": true
+    },
+    {
+      "name": "search_concept",
+      "readOnly": true
+    },
+    {
+      "name": "search_within_book",
+      "readOnly": true
+    },
+    {
+      "name": "list_books",
+      "readOnly": true
+    },
+    {
+      "name": "get_book",
+      "readOnly": true
+    },
+    {
+      "name": "get_book_text",
+      "readOnly": true
+    },
+    {
+      "name": "get_quote",
+      "readOnly": true
+    },
+    {
+      "name": "get_quotes",
+      "readOnly": true
+    },
+    {
+      "name": "search_images",
+      "readOnly": true
+    },
+    {
+      "name": "submit_feedback",
+      "readOnly": false
+    },
+    {
+      "name": "share_findings",
+      "readOnly": false
+    },
+    {
+      "name": "propose_collection",
+      "readOnly": false
+    },
+    {
+      "name": "list_editions",
+      "readOnly": true
+    },
+    {
+      "name": "get_locus",
+      "readOnly": true
+    }
+  ]
+}

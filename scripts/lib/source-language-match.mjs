@@ -38,40 +38,51 @@
 
 /**
  * Canonical language name → every spelling that denotes it: MARC-21 bibliographic
- * codes and the English labels catalogues return.
+ * codes, ISO-639-1/2/3 codes, and the English labels catalogues return.
  *
  * Historical registers collapse into their parent: "Homeric Greek" and "Ancient
  * Greek" are both `greek`, because a translation from either defeats a
  * first-English-translation claim on a Greek text. The distinction matters to a
  * philologist and not to this question.
+ *
+ * 2026-08-09 (#3785): the short ISO codes ('la', 'grc', 'fa', …) were added so
+ * this table covers every bucket `translation_catalogs` stores (the
+ * KNOWN_SOURCE_LANGUAGES set in scripts/lib/translation-catalog-record.mjs) —
+ * the Tier-0 matcher (src/lib/first-translation/tier0-catalog.ts) normalizes
+ * BOTH sides of its language guard through this table. A bucket missing here
+ * resolves to unknown, which never blocks — but it also never screens.
+ *
+ * TWIN FILE: src/lib/first-translation/source-language-match.ts mirrors this
+ * module for TS/src consumers (node can't import .ts, Next can't import .mjs
+ * scripts). Keep the two in lockstep, like scripts/lib/r2-key.mjs + src/lib/r2-key.ts.
  */
 const LANGUAGE_ALIASES = {
-  greek: ['gre', 'grc', 'ancient greek', 'classical greek', 'homeric greek',
+  greek: ['el', 'gre', 'grc', 'ancient greek', 'classical greek', 'homeric greek',
     'koine greek', 'medieval greek', 'byzantine greek', 'modern greek'],
-  latin: ['lat', 'classical latin', 'medieval latin', 'late latin', 'new latin',
+  latin: ['la', 'lat', 'classical latin', 'medieval latin', 'late latin', 'new latin',
     'vulgar latin', 'ecclesiastical latin', 'neo-latin'],
-  hebrew: ['heb', 'biblical hebrew', 'ancient hebrew', 'mishnaic hebrew'],
+  hebrew: ['he', 'heb', 'biblical hebrew', 'ancient hebrew', 'mishnaic hebrew'],
   aramaic: ['arc', 'imperial aramaic', 'jewish palestinian aramaic'],
-  syriac: ['syr', 'classical syriac'],
-  arabic: ['ara', 'classical arabic', 'quranic arabic'],
-  persian: ['per', 'fas', 'farsi', 'classical persian', 'middle persian'],
-  sanskrit: ['san', 'vedic sanskrit'],
+  syriac: ['syc', 'syr', 'classical syriac'],
+  arabic: ['ar', 'ara', 'classical arabic', 'quranic arabic'],
+  persian: ['fa', 'per', 'fas', 'farsi', 'classical persian', 'middle persian'],
+  sanskrit: ['sa', 'san', 'vedic sanskrit'],
   pali: ['pli'],
-  tamil: ['tam'],
-  tibetan: ['tib', 'bod', 'classical tibetan', 'standard tibetan'],
-  chinese: ['chi', 'zho', 'classical chinese', 'literary chinese', 'middle chinese',
+  tamil: ['ta', 'tam'],
+  tibetan: ['bo', 'tib', 'bod', 'classical tibetan', 'standard tibetan'],
+  chinese: ['zh', 'lzh', 'chi', 'zho', 'classical chinese', 'literary chinese', 'middle chinese',
     'old chinese', 'mandarin'],
-  japanese: ['jpn', 'classical japanese', 'old japanese'],
-  korean: ['kor'],
-  german: ['ger', 'deu', 'high german', 'middle high german', 'old high german',
+  japanese: ['ja', 'jpn', 'classical japanese', 'old japanese'],
+  korean: ['ko', 'kor'],
+  german: ['de', 'ger', 'deu', 'high german', 'middle high german', 'old high german',
     'early new high german'],
-  french: ['fre', 'fra', 'old french', 'middle french'],
-  italian: ['ita'],
-  spanish: ['spa', 'castilian', 'old spanish'],
+  french: ['fr', 'fre', 'fra', 'old french', 'middle french'],
+  italian: ['it', 'ita'],
+  spanish: ['es', 'spa', 'castilian', 'old spanish'],
   portuguese: ['por'],
-  catalan: ['cat'],
-  dutch: ['dut', 'nld', 'middle dutch'],
-  english: ['eng', 'enm', 'ang', 'american english', 'british english',
+  catalan: ['ca', 'cat', 'valencian'],
+  dutch: ['nl', 'dut', 'nld', 'middle dutch'],
+  english: ['en', 'eng', 'enm', 'ang', 'american english', 'british english',
     'early modern english', 'middle english', 'old english'],
   russian: ['rus'],
   'church slavonic': ['chu', 'old church slavonic'],
@@ -81,14 +92,14 @@ const LANGUAGE_ALIASES = {
   swedish: ['swe'],
   norwegian: ['nor'],
   icelandic: ['ice', 'isl', 'non', 'old norse'],
-  welsh: ['wel', 'cym', 'middle welsh'],
+  welsh: ['cy', 'wel', 'cym', 'middle welsh'],
   irish: ['gle', 'old irish'],
   hungarian: ['hun'],
   turkish: ['tur', 'ota', 'ottoman turkish'],
-  armenian: ['arm', 'hye', 'classical armenian'],
+  armenian: ['hy', 'arm', 'hye', 'classical armenian'],
   georgian: ['geo', 'kat'],
   coptic: ['cop'],
-  egyptian: ['egy', 'ancient egyptian', 'middle egyptian'],
+  egyptian: ['egy', 'ancient egyptian', 'middle egyptian', 'demotic'],
   akkadian: ['akk', 'babylonian', 'assyrian'],
   sumerian: ['sux'],
   ethiopic: ['gez', 'geez', "ge'ez"],
@@ -97,6 +108,10 @@ const LANGUAGE_ALIASES = {
   urdu: ['urd'],
   mongolian: ['mon'],
   hawaiian: ['haw'],
+  avestan: ['ave'],
+  nahuatl: ['nah'],
+  mandaic: ['myz'],
+  haida: ['hai'],
 };
 
 /** every alias, lower-cased → canonical name. */

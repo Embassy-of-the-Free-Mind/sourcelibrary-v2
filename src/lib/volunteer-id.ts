@@ -1,7 +1,16 @@
 /**
- * Per-browser volunteer ID for the human-in-the-loop review site.
- * Generated client-side as a UUID, stored in localStorage.
- * Anonymous by design — no PII, no link to login.
+ * FALLBACK volunteer ID for a signed-out visitor browsing the review queues.
+ *
+ * This used to be the only identity the review site had, described here as
+ * "anonymous by design". That was reversed on 2026-08-05: ratings are now
+ * attributed to the signed-in account (useReviewQueue), because an anonymous
+ * rating cannot be credited, cannot be matched to what its author told us they
+ * read, and splits across devices — one reader on a phone and a laptop counted
+ * as two raters, which quietly corrupts any agreement measure built on top.
+ *
+ * What remains is this: a signed-out visitor still gets a stable id so the
+ * queue can dedupe what it shows them while they look around. They cannot
+ * submit.
  */
 
 const STORAGE_KEY = 'sl-volunteer-id';
