@@ -52,21 +52,42 @@ export function AiChip({ short = false }: { short?: boolean }) {
 const LINE_WIDTH_CH = { narrow: 55, comfortable: 70, wide: 86 } as const;
 
 /**
+ * Whether a page's text sets a passage apart as a markdown blockquote.
+ *
+ * The transcription pass and the translation pass do not always agree: the
+ * translation drops the block and runs the passage on as italics (measured
+ * across 12 books, it never adds one the transcription lacks — it only ever
+ * loses them, and in some books it loses every one). Rendering the block on
+ * one side and not the other tells a reader the original set that passage
+ * apart and the translation did not, which is not what happened.
+ */
+export function hasBlockquote(text?: string | null): boolean {
+  return !!text && /^[ \t]*>/m.test(text);
+}
+
+/**
  * Reading text for one pane of one page — OCR or translation — rendered
  * through the production NotesRenderer pipeline (wrapper stripping, inline
  * gloss/term/margin tags, RTL, columns). Reading settings arrive as scale
  * factors over each variant's base size.
  */
 export function ReaderProse({
-  page, book, kind, settings, baseSize,
+  page, book, kind, settings, baseSize, suppressBlockquote = false,
 }: {
   page: Page;
   book: Book;
   kind: 'ocr' | 'translation';
   settings: ReaderSettings;
   baseSize: number;
+  /**
+   * Render blockquotes as ordinary prose. Set when the two texts disagree
+   * about a passage, so the panes stay in step: we withhold the treatment
+   * rather than assert on one side something the other side never found.
+   */
+  suppressBlockquote?: boolean;
 }) {
-  const text = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
+  const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
+  const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
 
   if (!text) {

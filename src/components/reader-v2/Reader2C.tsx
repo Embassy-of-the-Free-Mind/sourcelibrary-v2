@@ -22,7 +22,7 @@ import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
-  resolveScanUrls, ViewToggleGroup, onInk,
+  resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
 
@@ -1752,6 +1752,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     && r.views.ocr && r.views.en;
   const traceActive = traceOn && traceEligible;
 
+  // Quoted matter: show the block only where both passes found one. Where they
+  // disagree, both panes fall back to running prose, so the two sides never
+  // disagree on the page in front of the reader. Render-time only — nothing is
+  // written back, and a page with only one text keeps whatever it has.
+  const ocrText = r.currentPage.ocr?.data;
+  const transText = r.currentPage.translation?.data;
+  const quotesDisagree = !!ocrText && !!transText
+    && hasBlockquote(ocrText) !== hasBlockquote(transText);
+
   const panelProps = {
     r, citation, copied,
     onCopyCitation: copyCitation,
@@ -1991,7 +2000,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   className="flex-1 min-h-0 overflow-y-auto px-[30px] py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />
+                  <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />
                 </div>
               )}
             </section>
@@ -2021,7 +2030,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                  <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
                 </div>
               )}
             </section>
@@ -2150,7 +2159,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-8">
-                <ReaderProse page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
+                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
               </div>
             </section>
           )}
@@ -2171,7 +2180,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div className="px-[22px] pt-4 pb-6">
-                <ReaderProse page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16.5} />
+                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16.5} />
               </div>
             </section>
           )}
