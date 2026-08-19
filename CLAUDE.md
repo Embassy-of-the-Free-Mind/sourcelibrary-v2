@@ -82,7 +82,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - Active worktrees: `git worktree list`
 - Worktrees live in `.claude/worktrees/`
 - **`vercel` from a fresh worktree silently creates a NEW Vercel project** (named after the worktree dir) and deploys it as that project's Production — the link file `.vercel/project.json` is gitignored and absent from new checkouts. Before any `vercel` invocation in a worktree: `mkdir -p .vercel && cp <main-dir>/.vercel/project.json .vercel/`. Junk project cleanup: `vercel remove <name> --yes`.
-- **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
+- **Fresh worktrees fail the pre-commit `check-imports` hook** because `src/lib/vendor/lamejs-bundle.js` is gitignored and absent from a new checkout. Before your first commit, copy it from the main checkout: `mkdir -p src/lib/vendor && cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`. The `mkdir` is load-bearing and was missing until 2026-08-19 — `src/lib/vendor/` contains nothing but the gitignored bundle, so the directory does not exist in a fresh worktree and the bare `cp` fails.
 - **Worktrees accumulate structurally, not from sloppiness.** A worktree can't be removed while its PR is open, and the PR merges *after* the creating session ends — so nothing is left to reap it. Per-session `ExitWorktree` discipline cannot fix this. `/gnite` runs the reaper, and `/reap-worktrees` runs it on demand.
 - **Judge a worktree by occupancy, never by a global session count.** `reap-worktrees.mjs` keeps a worktree iff a live process has its cwd inside it (`lsof -d cwd`), its git lock names a running pid, or it holds real uncommitted work. Everything else is an orphan. Asked per worktree the question is exact, so reaping is safe with other sessions open — which is what lets `/gnite` reap one window at a time. The old `ps | grep -i claude` count reported **34 sessions on a machine running 3** (it matched the desktop app, the dashboard, and MCP helpers), so `--apply` always refused and the habit became `--force` — the one genuinely dangerous flag. A noisy safety check doesn't fail closed; it trains people to bypass it.
 - **`git worktree remove --force` refuses a *locked* worktree** — git wants `-f -f`. Don't force twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate "don't touch" signal; the reaper honors it.
@@ -169,7 +169,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Client components on ISR routes, reader panels, root layout, page `metadata` → `rendering-and-seo.md`
 
 **Measuring anything**
-- Quoting a usage number, analytics read/write paths, alarms, health probes, **or using a model as a judge/screen** → `measurement-instruments.md`
+- Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, or using a model as a judge/screen → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 

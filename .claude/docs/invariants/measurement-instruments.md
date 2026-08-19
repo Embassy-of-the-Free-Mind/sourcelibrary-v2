@@ -225,3 +225,67 @@ about a rival vendor's model, about someone else's scholarship, about your own
 pipeline being fine — that is the result to attack with a control first. Every
 retraction this session was predicted by an adversarial self-critique pass that
 cost nothing; running the controls it named cost about four cents.
+
+## A detector that cannot run must go RED, never file a finding
+
+Discovered 2026-08-19 by reading the *body* of four open issues that everyone had
+been reading by title. **#3572, #3862, #4009** ("Image/text misalignment found in
+weekly sample", three consecutive Mondays) and **#4023** ("Field sprawl breach on
+books") were not findings. Each fenced payload was the script's own error:
+
+```
+MONGODB_URI not set — source .env.production.local first
+```
+
+`gh secret list` on this repo returns four secrets — `CF_ZONE_ID`,
+`CLOUDFLARE_API_TOKEN`, `CRON_SECRET`, `HETZNER_SSH_KEY` — and **no
+`MONGODB_URI`**. All three DB-backed scheduled detectors had therefore run blind
+since the day they were added: the weekly image/text alignment sample (the
+standing detector for #3368-class archiver drift), the weekly `books` field-sprawl
+census (the ratchet half of #3969), and the daily feedback-symptom clustering.
+Zero measurements, across weeks, while the backlog carried four issues asserting
+the corpus was broken. Restoration is #4071; the exit-code fix is #4072.
+
+**Both failure directions were live at once, which is why nothing caught it:**
+
+- **Loudly wrong.** `bulk-archive-alignment.mjs` exited `1` for "found
+  misalignment" *and* for "no MONGODB_URI", and the workflow files a finding issue
+  on `1`. `field-sprawl-watch.yml` filed on `fired != '0'`, sweeping its script's
+  correct exit `2` into the finding branch. Four false issues.
+- **Silently wrong.** `feedback-symptom-clusters.mjs` exits `2` and its job files
+  only on `1` — green every day since July, never having clustered a report. This
+  is the direction that leaves no trace at all, and it is why "could not run" must
+  be red rather than merely "not a finding".
+
+`set +e` (needed to capture the code) meant every run reported **success** in the
+Actions UI, so the filed issues were the only signal and they pointed at the
+corpus instead of at the harness.
+
+**The rule.** Every detector gets a three-value exit contract, and the caller
+reads all three:
+
+| code | meaning | caller |
+|---|---|---|
+| `0` | ran, clean | pass |
+| `1` | ran, **found something** | file the finding |
+| `2` | **could not run** | fail the job RED |
+
+- **Never branch a finding on `!= 0`.** That is the single line that turned an
+  infrastructure failure into three weeks of fabricated corpus findings.
+- **An uncaught throw is `2`, not `1`.** A crash is an instrument failure; only a
+  measurement can be a finding.
+- **A job that swallows the exit code must re-raise it.** If you need `set +e`,
+  add an explicit step that fails on any code outside `{0,1}` and names the
+  missing input in the annotation.
+- **Verify a detector by making it fail.** The only proof the wiring works is
+  running it with the input removed and seeing red. A green scheduled run proves
+  nothing about a detector whose failure mode is silence.
+
+**Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
+an *error message* rather than a *measurement*. Read the body before believing the
+title — and when a watchdog has filed the same title on a regular cadence with no
+one acting on it, suspect the watchdog before the corpus.
+
+Related: the same self-referential shape as the error reporter that reported its
+own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
+skips" (#3740): here the failure was not silent, it was *disguised as a finding*.
