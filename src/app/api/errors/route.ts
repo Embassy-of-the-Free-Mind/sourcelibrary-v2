@@ -49,6 +49,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true, skipped: 'noise' });
     }
 
+    // Same rationale for errors thrown inside browser extensions: the stack
+    // frames live entirely in extension code, not ours. One translation
+    // extension alone logged 2.6k errors/week ("reading 'M_ID'") against
+    // /collections pages. Keep reports whose stack also touches our code —
+    // an extension frame wrapping a real sourcelibrary frame stays loggable.
+    const stackStr = stack ? String(stack) : '';
+    if (
+      /(?:chrome|moz|safari|safari-web)-extension:\/\//.test(stackStr) &&
+      !/sourcelibrary\.org|\/_next\//.test(stackStr)
+    ) {
+      return NextResponse.json({ ok: true, skipped: 'extension' });
+    }
+
     // Bound the write. This endpoint is public, unauthenticated, and its traffic
     // RISES exactly when the database is unhealthy (every failing page reports).
     // With no deadline each request holds a connection for the full maxDuration,
