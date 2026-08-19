@@ -137,7 +137,11 @@ async function auditBook(db, book) {
 
 async function main() {
   const uri = process.env.MONGODB_URI;
-  if (!uri) { console.error('MONGODB_URI not set — source .env.production.local first'); process.exit(1); }
+  // Exit-code contract (the scheduled watch in corpus-integrity-watch.yml reads it):
+  //   0 = ran, nothing shifted   1 = ran, FOUND misalignment   2 = could not run
+  // Conflating 2 with 1 is how three Mondays of "misalignment found" issues were
+  // filed by a job that never reached the database (#3572/#3862/#4009).
+  if (!uri) { console.error('MONGODB_URI not set — source .env.production.local first'); process.exit(2); }
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   const done = new Set();
@@ -245,4 +249,4 @@ async function main() {
   await client.close();
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch(err => { console.error(err); process.exit(2); }); // 2 = infrastructure failure, never a finding
