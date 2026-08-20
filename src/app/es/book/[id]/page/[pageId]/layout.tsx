@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
-import BaseLayout, { generateMetadata as baseMetadata, preferredRegion as basePreferredRegion } from '@/app/book/[id]/page/[pageId]/layout';
+import BaseLayout, { generateMetadata as baseMetadata } from '@/app/book/[id]/page/[pageId]/layout';
 
 // Spanish twin of the reader segment (#4082). Same shell, same existence gate,
 // same data; only the URL identity differs — canonical under /es with hreflang
 // twins, so the Spanish reader is its own indexable page. The reader client
 // derives its language and its URL prefix from the /es pathname.
-export const preferredRegion = basePreferredRegion;
+// Segment config must be a static literal (Next parses it at build time) —
+// keep in step with src/app/book/[id]/page/[pageId]/layout.tsx.
+export const preferredRegion = 'fra1';
 
 interface LayoutProps {
   children: React.ReactNode;
