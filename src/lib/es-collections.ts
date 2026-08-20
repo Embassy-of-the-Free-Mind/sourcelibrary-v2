@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { sortCollections, sanitizeThumbnail, coverOverride } from '@/lib/collections-utils';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { ES_COLLECTION_NAMES } from '@/lib/home-i18n';
-import { localizedCollection, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
+import { isNativeEdition, localizedCollection, localizedEditionFilter, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 
 /**
  * Data for the Spanish collection routes (`/es/collections`, `/es/collections/[id]`).
@@ -74,6 +74,18 @@ export interface EsCollectionDetail {
 /** Books shown on a Spanish collection page; the English page lists the rest. */
 export const ES_COLLECTION_BOOK_CAP = 120;
 
+/**
+ * Is this book readable in Spanish — translated into it, or written in it?
+ *
+ * The JS twin of `localizedEditionFilter('es')`, which selects the same set in
+ * Mongo. Both delegate to `NATIVE_EDITION_LANGUAGE` so the card, the count and
+ * the query can never disagree about which books are Spanish; the route gate
+ * (`hasLocalizedEdition`) is the third reader of that same rule.
+ */
+function hasEsEdition(b: { pages_translated_es?: number; language?: string }): boolean {
+  return (b.pages_translated_es ?? 0) > 0 || isNativeEdition(b as unknown as Record<string, unknown>, 'es');
+}
+
 type FeaturedImage = { thumbnail_url?: string; extracted_url?: string; image_url?: string } | string;
 
 function imageCandidates(images: FeaturedImage[] | undefined, slug: string, heroImage?: string): string[] {
@@ -138,7 +150,7 @@ export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
     // Which collections hold Spanish editions — indexed by the small set of
     // books that have them, never by scanning collections × books.
     db.collection('books').aggregate<{ _id: string; count: number }>([
-      { $match: { pages_translated_es: { $gt: 0 }, visible: true } },
+      { $match: { ...localizedEditionFilter('es'), visible: true } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', count: { $sum: 1 } } },
     ], { maxTimeMS: 8000 }).toArray(),
@@ -200,9 +212,11 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       // Spanish EDITION gets one; the rest link straight to their English page.
       // The route enforces the same rule with a 307, so a link that gets this
       // wrong is slow, not broken — but it should not be wrong.
-      href: (b.pages_translated_es ?? 0) > 0
-        ? spanishReaderHref(b)
-        : `/book/${encodeURIComponent(b.slug || b.id)}`,
+      //
+      // "Edition" covers both ways a book can be in Spanish: TRANSLATED into it
+      // (the counter) or WRITTEN in it (`language`). Cogolludo needs no pivot to
+      // be Spanish, and testing the counter alone sent him to an English page.
+      href: hasEsEdition(b) ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
     };
   });
 
@@ -215,7 +229,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     description,
     descriptionIsEnglish: copy.descriptionIsEnglish || (!copy.description && !!description),
     bookCount: (doc.total_book_count ?? doc.book_count ?? 0) as number,
-    spanishBookCount: books.filter((b) => (b.pages_translated_es ?? 0) > 0).length,
+    spanishBookCount: books.filter(hasEsEdition).length,
     books,
     truncated,
     parent: parentDoc ? { slug: parentDoc.slug as string, name: spanishCopy(parentDoc).name } : null,

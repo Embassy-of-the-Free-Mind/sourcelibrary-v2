@@ -7,7 +7,7 @@ import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
-import { type LocalizedBookMap } from '@/lib/localized';
+import { isNativeEdition, localizedEditionFilter, type LocalizedBookMap } from '@/lib/localized';
 import { spanishReaderHref } from '@/lib/es-collections';
 
 // Shared data layer for the homepage. Both the English `/` route and the
@@ -750,10 +750,21 @@ export interface SpanishBook {
 // are most likely to be looking for. `pages_translated_es` is the book-level
 // counter kept by scripts/maintenance/sync-pages-translated-es.mjs — the per-
 // page fields are not indexed and must never be scanned on a request path.
+//
+// The band selects through localizedEditionFilter('es'), so it holds books that
+// are in Spanish EITHER WAY: translated into it, or written in it. A Spanish
+// original has no counter and never will, and selecting on the counter alone
+// hid 67 live books — Cogolludo, Landa, Aguilar — from the Spanish homepage.
+// Books with a counter still sort first; a native edition has none, so within a
+// read_count tie it follows, which is the right order for a band whose subject
+// is our Spanish editions.
 async function getSpanishBooks(): Promise<SpanishBook[]> {
   const db = await getReadDb();
   const books = await db.collection('books').find(
-    { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } },
+    {
+      ...localizedEditionFilter('es'),
+      visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' },
+    },
     {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,

@@ -2480,7 +2480,11 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       const doc = await getReadDb()
         .then((db) => db.collection('books').findOne(
           { id: bookId },
-          { projection: { _id: 0, pages_translated_es: 1 }, maxTimeMS: 3000 },
+          // BOTH inputs, always: a book can be in Spanish by translation
+          // (the counter) or by having been written in it (`language`).
+          // Projecting only the counter reads every Spanish original as
+          // "no Spanish edition" and 307s it away.
+          { projection: { _id: 0, pages_translated_es: 1, language: 1 }, maxTimeMS: 3000 },
         ))
         .catch(() => null);
       // A doc we READ with the counter explicitly projected is authoritative:
