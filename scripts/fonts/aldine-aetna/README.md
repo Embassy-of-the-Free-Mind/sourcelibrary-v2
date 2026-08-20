@@ -56,7 +56,7 @@ ink width set them a whole gap too wide ("f luctibus").
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.8)
+## Coverage (v0.9)
 
 136 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
 ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
@@ -120,3 +120,9 @@ inputs — it renumbers the clusters `labels.json` points at.
 
 Data files (`*.jpg`, `*.npz`, `*clusters.json`, sheets) are scratch and not
 committed; `labels.json` plus the IA identifiers reproduce them.
+
+**Picking impressions (v0.9):** the C and T Derek called messy were single over-inked casts
+(`307` "Cerere", `77` "Tauro"). `context.py` across all sets found cleaner ones — C = Lascaris
+`z#6526` ("Clamatu"), T = `386` ("Tellus", speck stripped). When a capital looks rough, list every
+impression in context before touching the tracer. `STRIP_SATELLITES` now re-crops to the kept
+component's box, otherwise the anchoring stands the letter on the stripped speck's row.
