@@ -47,11 +47,13 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
     colsum = ink.sum(0)
     # text column: columns where ink density is meaningful
     smooth = ndimage.uniform_filter1d(colsum.astype(float), 80)
+    if smooth.max() <= 0: print(page, 'blank, skipped', file=sys.stderr); continue
     cols = np.where(smooth > smooth.max() * 0.15)[0]
     cx0, cx1 = cols.min(), cols.max()
     ink_col = ink[:, cx0:cx1]
     rowsum = ink_col.sum(1)
     rs = ndimage.uniform_filter1d(rowsum.astype(float), 5)
+    if rs.max() <= 0: print(page, 'no ink, skipped', file=sys.stderr); continue
     on = rs > rs.max() * 0.08
     # line spans
     lines = []
@@ -63,6 +65,7 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
             if j - i > 40: lines.append((i, j))
             i = j
         else: i += 1
+    if not lines: print(page, 'no lines, skipped', file=sys.stderr); continue
     if lines:
         import statistics as _st
         medh = _st.median([b - a for a, b in lines])
@@ -77,7 +80,7 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
                 cuts.append(lo + int(np.argmin(rs[lo:hi])))
             cuts.append(b)
             split += list(zip(cuts, cuts[1:]))
-        lines = split
+        lines = [(a, b) for a, b in split if b - a >= 30]
     print(page, 'lines', len(lines), 'col', cx0, cx1, file=sys.stderr)
     lab_all, n_all = ndimage.label(ink_col)
     objs = ndimage.find_objects(lab_all)
@@ -90,6 +93,7 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
     for li, (ly0, ly1) in enumerate(lines):
         # x-height / baseline estimate per line: rows with max ink
         lr = rowsum[ly0:ly1].astype(float)
+        if lr.size == 0 or lr.max() <= 0: continue
         dense = np.where(lr > lr.max() * 0.5)[0]
         xtop, base = ly0 + dense.min(), ly0 + dense.max()
         # components whose vertical centre lies in the line band

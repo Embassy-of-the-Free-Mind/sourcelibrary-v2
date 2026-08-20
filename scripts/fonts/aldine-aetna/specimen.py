@@ -4,7 +4,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 ttf = sys.argv[1]; out = sys.argv[2]
 lines = [
  (72, "abcdefghilmnopqrstuxy ſ æ"),
- (72, "ABCDEFGHLMNOPRSTV & ( )"),
+ (72, "ABCDEFGHILMNOPQRSTV & ( ) Quid"),
  (56, "BEMBVS PATER Eſt ita, ut dicis:"),
  (56, "nam cum ab urbe propterea me,"),
  (56, "frequentiáq; hominum; tanq a fluctibus,"),

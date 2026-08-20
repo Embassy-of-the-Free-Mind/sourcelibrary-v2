@@ -27,9 +27,10 @@ SETS = {'': (masks, meta, clusters)}
 if os.path.exists('x_glyphs.npz'):
     xd = np.load('x_glyphs.npz', allow_pickle=True)
     SETS['x'] = (xd['masks'], xd['meta'], json.load(open('x_clusters.json')))
-if os.path.exists('y_glyphs.npz'):
-    yd = np.load('y_glyphs.npz', allow_pickle=True)
-    SETS['y'] = (yd['masks'], yd['meta'], json.load(open('y_clusters.json')))
+for _p in ['y', 'z']:
+    if os.path.exists(f'{_p}_glyphs.npz'):
+        _d = np.load(f'{_p}_glyphs.npz', allow_pickle=True)
+        SETS[_p] = (_d['masks'], _d['meta'], json.load(open(f'{_p}_clusters.json')))
 def resolve(ref):
     # ref: int (main set) or 'x:123'
     # 'x:123' = cluster 123 of set x ; 'x#456' = glyph index 456 of set x directly
@@ -50,6 +51,17 @@ for p, lines in by_page.items():
 PITCH = statistics.median(pitch)
 XH = statistics.median([g['base'] - g['xtop'] for g in meta])
 S = UPM / PITCH          # font units per pixel; one em = one line of type
+def xheight_mode(m):
+    # the most common glyph height on a page is the x-height (a c e m n o r s u dominate)
+    hs = np.array([g['y1'] - g['y0'] for g in m]); hs = hs[(hs >= 30) & (hs <= 100)]
+    hist, edges = np.histogram(hs, bins=np.arange(30, 102, 2))
+    return float(edges[int(np.argmax(hist))] + 1)
+print(f'main x-height mode {xheight_mode(meta):.0f}px (line-based {XH:.0f})', file=sys.stderr)
+SET_SCALE = {'': S}
+for _p, (_m, _meta, _c) in SETS.items():
+    if _p == '': continue
+    SET_SCALE[_p] = S * float(json.load(open('set_scales.json')).get(_p, 1.0))
+    print(f'set {_p}: scale x{SET_SCALE[_p]/S:.2f} (set_scales.json; mode-of-heights estimate would be {xheight_mode(meta)/xheight_mode(_meta):.2f}, unreliable on fragment-heavy sets)', file=sys.stderr)
 print(f'baseline pitch {PITCH:.1f}px  x-height {XH:.1f}px  ({XH*S:.0f} units)', file=sys.stderr)
 
 # typical inter-glyph gap on a line -> sidebearings
@@ -97,6 +109,8 @@ chosen = {}
 for ch, cl in labels.items():
     if not cl: print('no cluster for', ch, file=sys.stderr); continue
     (masks_, meta_, clusters_), (kind, ci) = resolve(cl[0])
+    _setkey = str(cl[0]).split(':')[0].split('#')[0] if isinstance(cl[0], str) else ''
+    S = SET_SCALE[_setkey]; SB = GAP / 2 * SET_SCALE['']
     idx = clusters_[ci]['medoid'] if kind == 'cluster' else ci
     nn = clusters_[ci]['n'] if kind == 'cluster' else 1
     mask = masks_[idx].astype(np.uint8); g = meta_[idx]

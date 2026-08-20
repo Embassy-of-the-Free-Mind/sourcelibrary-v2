@@ -16,6 +16,7 @@ for a in args:
         if not os.path.exists(f): f = 'extra/' + f
         if not os.path.exists(f): f = 'y/' + p[3:] + '.jpg' if p.startswith('ia_') else f
         if not os.path.exists(f): f = 'y/' + p + '.jpg'
+        if not os.path.exists(f): f = 'z/' + p + '.jpg'
         pages[p] = Image.open(f).convert('L')
     im = pages[p]
     X0 = g['offx'] + g['x0']; X1 = g['offx'] + g['x1']; Y0 = g['offy'] + g['y0']; Y1 = g['offy'] + g['y1']
