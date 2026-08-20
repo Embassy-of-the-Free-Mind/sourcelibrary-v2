@@ -27,7 +27,7 @@ SETS = {'': (masks, meta, clusters)}
 if os.path.exists('x_glyphs.npz'):
     xd = np.load('x_glyphs.npz', allow_pickle=True)
     SETS['x'] = (xd['masks'], xd['meta'], json.load(open('x_clusters.json')))
-for _p in ['y', 'z']:
+for _p in ['y', 'z', 'w', 'k']:
     if os.path.exists(f'{_p}_glyphs.npz'):
         _d = np.load(f'{_p}_glyphs.npz', allow_pickle=True)
         SETS[_p] = (_d['masks'], _d['meta'], json.load(open(f'{_p}_clusters.json')))
@@ -105,6 +105,7 @@ pen = TTGlyphPen(None); glyphs['.notdef'] = pen.glyph(); advances['.notdef'] = i
 pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(GAP * S * 2.2 + XH * S * 0.4); cmap[0x20] = 'space'
 
 STRIP_SATELLITES = {'&', '(', ')', 'D'}
+CAPS_ON_BASELINE = set('ABCDEFGHIKLMNOPRSTVXYZ')
 ACCENT_SOURCES = {'acute': 114, 'grave': 163, 'tilde': 215}      # á è ã impressions from the main set
 COMPOSITES = {'á': ('a','acute'), 'é': ('e','acute'), 'í': ('i','acute'), 'ó': ('o','acute'), 'ú': ('u','acute'),
               'à': ('a','grave'), 'è': ('e','grave'), 'ì': ('i','grave'), 'ò': ('o','grave'), 'ù': ('u','grave'),
@@ -130,6 +131,7 @@ for ch, cl in labels.items():
     # pixel (canvas) -> original pixel: /UPSCALE, minus pad
     # font: x = (px/UPSCALE - pad)*S + SB ; y = (base_crop - py/UPSCALE)*S  where base_crop = base - y0 + pad
     base_crop = g['base'] - g['y0'] + pad
+    if ch in CAPS_ON_BASELINE: base_crop = mask.shape[0] + pad   # a capital stands on the baseline; the line estimate is unreliable in tables
     k = S / UPSCALE
     a = sx * k; d = -sy * k
     e = tx * k - pad * S + SB

@@ -52,15 +52,15 @@ ink width set them a whole gap too wide ("f luctibus").
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.4)
+## Coverage (v0.5)
 
-78 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+82 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
 ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
 grave and tilde are split off real impressions (`ACCENT_SOURCES`) and placed over each base
 vowel at the gap/offset measured on the page; i takes the dotless stem `ı`), the ligatures
 ct ſt ſi ſſ ſſi fi ff and Qu (Griffo cast a fused Qu sort for the common case; `Q u` → `Q_u`
 via `liga`; a lone Q exists too, from Lascaris), capitals
-A B C D E F G H I L M N O P Q R S T V, and . , : ; - ( ) ?.
+A–Z minus J U W, and . , : ; - ( ) ?.
 Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
 (`fetch_1497.sh`: IA 690/691/692 = Leoniceno, Maiolo ×2), segmented with
 `NOCLUSTER=1` (52k glyphs; average-linkage on that many is O(n²) and unnecessary
@@ -73,8 +73,19 @@ is smaller (4405 px wide), so **`set_scales.json`** carries a per-set multiplier
 derive this from the glyph-height histogram — fragment-heavy sets bias it badly.
 IA dates `ita-bnc-ald-00000187-001` to 1497 but it is set in italic (later edition): skip.
 Poliziano 1498 `A335128` is a 1081-px Sevilla scan — too soft to trace.
-Absent: J U W (did not exist in 1490s roman type), K X Y Z and digits (not on the
-60 pages read).
+**Finding rare sorts: use the OCR as the index.** `find_chars.mjs` greps `pages.ocr.data`
+of the fount-bearing books for capitals/digits and prints page numbers; fetch only those
+leaves (`fetch_w.sh`, `fetch_w2.sh`). That is how K (De Aetna, "Kalendis", set `k_` =
+the 2nd copy ita-bnc-ald-00000039, scanned larger → scale 0.81) and X Y Z (Lascaris'
+Greek alphabet tables, where the Greek majuscules are the roman sorts; set `w_`, scale
+1.44 calibrated on those table caps) were found in an hour after three blind sweeps
+missed them. Caveats the same search surfaced: every OCR "U"/"J"/"W" hit was a
+normalised V/I or a modern note — the scans read *Vnde*, *Vrbanus* — and every digit hit
+was a folio label or a cataloguer's note: the fount has **no arabic numerals** (dates and
+leaf counts are roman). IA leaf n = our page_number − 1, but Lascaris is off by one more.
+Capitals are anchored on their own bottom edge (`CAPS_ON_BASELINE`) because the
+line-baseline estimate is unreliable in alphabet tables.
+Absent, finally: J U W only — they did not exist in 1490s roman type.
 `src/lib/fonts/aldine.ts` stacks Cardo behind it for everything missing.
 
 To extend: fetch more pages (the 1501 Virgil would give the first italic), run
