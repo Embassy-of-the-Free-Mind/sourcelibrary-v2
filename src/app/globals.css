@@ -328,6 +328,17 @@ body:has([data-reader-v2]) {
   outline: none;
 }
 
+/* The Line height setting sets --reader-line-height on the .prose-manuscript
+   wrapper, but NotesRenderer gives every paragraph and list item Tailwind's
+   `leading-relaxed`, which re-declares line-height on the element itself and
+   beats anything inherited. Same shape as the typeface rule above: the
+   setting has to reach the elements that actually carry the text. */
+[data-reader-v2] .prose-manuscript p,
+[data-reader-v2] .prose-manuscript li,
+[data-reader-v2] .prose-manuscript blockquote {
+  line-height: var(--reader-line-height, 1.8);
+}
+
 /* Quoted matter in the reader's text panes: an indent and a hairline, not a
    rust bar over a rust wash. Rust already carries two jobs here (the current
    page in the strip, and the interactive accent), and on a page that is

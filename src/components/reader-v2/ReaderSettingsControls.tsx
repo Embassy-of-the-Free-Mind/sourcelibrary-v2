@@ -158,6 +158,9 @@ export default function ReaderSettingsControls({
         </div>
       )}
 
+      {/* Notes are not here: the toggle sits in each text pane's header,
+          next to the text it changes. Two switches for one setting invites
+          the reader to wonder whether they are the same switch. */}
       {/* Typeface */}
       <div className={`${row} border-t border-[var(--border-light)]`}>
         <RowLabel>Typeface</RowLabel>
@@ -194,15 +197,6 @@ export default function ReaderSettingsControls({
         </div>
       )}
 
-      {/* Notes (inline editorial notes + glosses in the text) */}
-      <div className={`${row} border-t border-[var(--border-light)]`}>
-        <RowLabel>Notes</RowLabel>
-        <SettingsSwitch
-          on={settings.glosses}
-          onToggle={() => onChange({ glosses: !settings.glosses })}
-          label="Show notes and glosses in the text"
-        />
-      </div>
     </div>
   );
 }

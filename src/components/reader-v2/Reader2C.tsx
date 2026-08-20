@@ -4,6 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import DownloadButton from '@/components/ui/DownloadButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIdentity } from '@/hooks/useIdentity';
 import { getPageThumbUrl } from '@/lib/utils';
@@ -42,7 +43,7 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
@@ -54,6 +55,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   share: 'Save & share',
   settings: 'Reading settings',
   views: 'Scan, text & translation',
+  downloads: 'Download',
   more: 'More',
 };
 
@@ -71,6 +73,7 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
   share: 'Save this page to your library, or send it on.',
   settings: 'How the text is set. Your choices are remembered on this device.',
   views: 'Which panes are showing.',
+  downloads: 'Take this page, or the whole book, away with you.',
 };
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
@@ -80,6 +83,7 @@ const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
   ['share', 'Save & share', 'Save this page, copy the link, post it'],
+  ['downloads', 'Download', 'This page, or the whole book, in several formats'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
 ];
@@ -450,7 +454,6 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
  */
 function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }) {
   const identity = useIdentity();
-  const scanUrl = resolveScanUrls(page).native;
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   const [copied, setCopied] = useState<string | null>(null);
@@ -530,20 +533,6 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
         {copied === 'ref' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
       </button>
 
-      {scanUrl && (
-        <a
-          href={scanUrl}
-          download=""
-          className={rowCls}
-          style={{ borderColor: 'var(--border-light)' }}
-        >
-          <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-            <Download size={16} style={{ color: 'var(--text-muted)' }} />
-            Download the scan of this page
-          </span>
-        </a>
-      )}
-
       <CapsLabel className="block px-4 pt-4 pb-2" style={{ color: 'var(--text-faint)' }}>Post to</CapsLabel>
       <div className="grid grid-cols-2 gap-1.5 px-4">
         {targets.map(([label, href]) => (
@@ -561,6 +550,91 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
       <p className="px-4 pt-4 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
         Every link points at this exact page, so whoever opens it lands where you were reading.
       </p>
+    </div>
+  );
+}
+
+
+/**
+ * Download. The whole-book formats come from the site's existing
+ * DownloadButton, which owns the format list, the free/paid tiering and the
+ * purchase and image-licence gates (src/lib/download-formats.ts, pinned by
+ * tests). Rebuilding that list here would let the reader drift out of step
+ * with what the download route actually serves, so this panel only adds the
+ * one thing that is page-shaped: the scan in front of you.
+ */
+function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
+  const [full, setFull] = useState<Record<string, unknown> | null>(null);
+  const scanUrl = resolveScanUrls(page).native;
+
+  // The reader's nav projection carries no counts or licence, so the flags the
+  // download gates need come from the full record, same as the Info panel.
+  useEffect(() => {
+    let cancelled = false;
+    booksApi.get(book.id)
+      .then(b => { if (!cancelled) setFull(b as unknown as Record<string, unknown>); })
+      .catch(() => { /* the page-level download still works without it */ });
+    return () => { cancelled = true; };
+  }, [book.id]);
+
+  const pagesCount = Number(full?.pages_count) || 0;
+  const hasOcr = Number(full?.pages_ocr) > 0;
+  const hasTranslations = Number(full?.pages_translated) > pagesCount / 2;
+  const imgLicense = full?.image_license as string | undefined;
+  const imgProvider = (full?.image_provider as string | undefined)?.toLowerCase();
+  const year = Number(full?.year_published) || undefined;
+  const imageAccess: 'open' | 'nc-free' | 'blocked' =
+    imgProvider === 'bph' || (year && year < 1930)
+      ? 'open'
+      : imgLicense && /\bnc\b/i.test(imgLicense)
+        ? 'nc-free'
+        : (!imgLicense || imgLicense === 'unknown')
+          ? 'blocked'
+          : 'open';
+
+  const rowCls = 'w-full text-left px-4 min-h-[52px] flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
+
+  return (
+    <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
+      <CapsLabel className="block px-4 pb-2" style={{ color: 'var(--text-faint)' }}>This page</CapsLabel>
+      {scanUrl ? (
+        <a href={scanUrl} download="" className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
+          <span className="min-w-0">
+            <span className="block font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+              The scan of p. {page.page_number}
+            </span>
+            <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
+              JPEG, at the resolution it was archived
+            </span>
+          </span>
+          <Download size={16} style={{ color: 'var(--text-muted)' }} />
+        </a>
+      ) : (
+        <p className="px-4 pb-3 font-sans text-[12.5px]" style={{ color: 'var(--text-muted)' }}>
+          No scan is archived for this page.
+        </p>
+      )}
+
+      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>The whole book</CapsLabel>
+      {full ? (
+        <div className="px-4">
+          <DownloadButton
+            bookId={book.id}
+            bookTitle={book.display_title || book.title}
+            hasTranslations={hasTranslations}
+            hasOcr={hasOcr}
+            hasImages={pagesCount > 0}
+            imageRestricted={imageAccess === 'blocked'}
+            imageAccess={imageAccess}
+          />
+          <p className="mt-3 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
+            Transcription and translation as plain text, EPUB or PDF; facsimile and
+            parallel-text editions carry the page images.
+          </p>
+        </div>
+      ) : (
+        <div className="px-4 py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
+      )}
     </div>
   );
 }
@@ -1370,6 +1444,9 @@ function PanelContent({
       </div>
     );
   }
+  if (panel === 'downloads') {
+    return <DownloadsPanel page={r.currentPage} book={r.book} />;
+  }
   if (panel === 'search') {
     return <BookSearchPanel bookId={r.book.id} onGoTo={(pid) => { onClose(); r.goToPage(pid); }} />;
   }
@@ -1914,6 +1991,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
           <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton label="Share" active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
+          <RailButton label="Download" active={leftPanel === 'downloads'} onClick={() => togglePanel('downloads')} icon={<Download size={17} />} />
           <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
           {/* Editing is editor-and-above only, so the affordance is gated the
               same way the current reader gates its Read/Edit toggle. */}
