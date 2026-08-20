@@ -73,7 +73,7 @@ export interface EsCollectionDetail {
 }
 
 /** Books shown on a Spanish collection page; the English page lists the rest. */
-export const ES_COLLECTION_BOOK_CAP = 48;
+export const ES_COLLECTION_BOOK_CAP = 120;
 
 type FeaturedImage = { thumbnail_url?: string; extracted_url?: string; image_url?: string } | string;
 
