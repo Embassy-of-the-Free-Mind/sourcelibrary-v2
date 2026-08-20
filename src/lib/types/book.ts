@@ -33,6 +33,7 @@ export interface Book {
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
+  localized?: import('@/lib/localized').LocalizedBookMap; // per-language title glosses, e.g. { es: { title } } — see src/lib/localized.ts
 
   // Author and publication
   author: string;

@@ -78,6 +78,9 @@ export const BOOK_FIELDS = Object.freeze([
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
+  // language-keyed metadata glosses { es: { title } } — ONE map, never title_<lang>
+  // columns; written by scripts/maintenance/localize-metadata.mjs (src/lib/localized.ts)
+  'localized',
   // images / artwork (artwork docs live in `books` with resource_type set)
   'thumbnail', 'thumbnail_blob', 'resource_type', 'image_display',
   'image_full', 'image_source_url', 'image_thumb', 'archived_full_url',

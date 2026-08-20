@@ -50,7 +50,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-6 max-w-2xl">
               {t.spanishSubtitle}
             </p>
-            <BookSlider books={spanishBooks as unknown as MiniBook[]} />
+            <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
             <div className="mt-6 sm:hidden">
               <Link href={`${lang === 'es' ? '/es' : ''}/collections/${SPANISH_COLLECTION_SLUG}`} className="text-sm text-accent-rust hover:underline">
                 {t.spanishViewAll} &rarr;

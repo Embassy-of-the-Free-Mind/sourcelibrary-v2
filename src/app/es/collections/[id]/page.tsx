@@ -4,7 +4,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
-import CollectionBookCard, { CARD_LABELS_ES, type CollectionBook } from '@/components/CollectionBookCard';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import { getEsCollection } from '@/lib/es-collections';
 import collectionRedirects from '@/lib/collection-redirects.json';
@@ -111,7 +111,7 @@ export default async function EsCollectionPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {spanishBooks.map((b, i) => (
-                <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} labels={CARD_LABELS_ES} priority={i < 5} />
+                <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} lang="es" priority={i < 5} />
               ))}
             </div>
           </section>
@@ -127,7 +127,7 @@ export default async function EsCollectionPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {otherBooks.map((b) => (
-                <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} labels={CARD_LABELS_ES} />
+                <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} lang="es" />
               ))}
             </div>
           </section>
