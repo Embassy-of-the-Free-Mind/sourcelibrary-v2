@@ -3,6 +3,7 @@ import { sortCollections, sanitizeThumbnail, coverOverride } from '@/lib/collect
 import { toGalleryCardUrl } from '@/lib/utils';
 import { ES_COLLECTION_NAMES } from '@/lib/home-i18n';
 import { READING_LANGUAGE_PARAM } from '@/lib/reading-language';
+import { localizedCollection, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 
 /**
  * Data for the Spanish collection routes (`/es/collections`, `/es/collections/[id]`).
@@ -15,9 +16,10 @@ import { READING_LANGUAGE_PARAM } from '@/lib/reading-language';
  * and its books, with every card that has a Spanish edition linking STRAIGHT
  * into the reader in Spanish (`?lang=es`), Spanish editions first.
  *
- * Spanish text: `name_es` / `subtitle_es` / `description_es` on the collection
- * doc win; then the homepage's ES_COLLECTION_NAMES for the name; then the
- * stored English (shown as-is rather than machine-translated on the fly).
+ * Spanish text: `collections.localized.es` ({ name, subtitle, description } —
+ * the one language-keyed map, see src/lib/localized.ts) wins; then the
+ * homepage's ES_COLLECTION_NAMES for the name; then the stored English (shown
+ * as-is and labelled, rather than machine-translated on the fly).
  */
 
 export interface EsCollectionSummary {
@@ -43,6 +45,7 @@ export interface EsCollectionBook {
   pages_ocr?: number;
   pages_translated?: number;
   pages_translated_es?: number;
+  localized?: LocalizedBookMap;
   is_first_translation?: boolean;
   ft_disposition?: string;
   thumbnail?: string;
@@ -92,11 +95,17 @@ function imageCandidates(images: FeaturedImage[] | undefined, slug: string, hero
   return urls;
 }
 
-// Loose input: Mongo documents arrive untyped; every field is read defensively.
-function spanishName(doc: Record<string, unknown>): string {
+// Mongo documents arrive untyped; localizedCollection() reads defensively, and
+// the homepage's hand-written Spanish names fill in where no localized.es.name
+// has been written yet.
+function spanishCopy(doc: Record<string, unknown>) {
   const slug = typeof doc.slug === 'string' ? doc.slug : '';
-  if (typeof doc.name_es === 'string' && doc.name_es) return doc.name_es;
-  return ES_COLLECTION_NAMES[slug] || (typeof doc.name === 'string' ? doc.name : slug);
+  const l = localizedCollection(doc as Parameters<typeof localizedCollection>[0], 'es');
+  const hasOwnName = !!(doc.localized as LocalizedCollectionMap | undefined)?.es?.name;
+  if (!hasOwnName && ES_COLLECTION_NAMES[slug]) {
+    return { ...l, name: ES_COLLECTION_NAMES[slug], subtitle: undefined };
+  }
+  return l;
 }
 
 /**
@@ -123,7 +132,7 @@ export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
   const [docs, childCounts, spanishCounts] = await Promise.all([
     db.collection('collections').find(
       { ...PUBLIC_COLLECTION, parent: { $exists: false }, type: { $ne: 'curated' } },
-      { projection: { _id: 0, slug: 1, name: 1, name_es: 1, subtitle: 1, subtitle_es: 1, book_count: 1, total_book_count: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
+      { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, localized: 1, book_count: 1, total_book_count: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
     ).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([
       { $match: { parent: { $exists: true }, visible: true } },
@@ -143,8 +152,8 @@ export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
 
   const list = docs.map((d) => ({
     slug: d.slug as string,
-    name: spanishName(d),
-    subtitle: (d.subtitle_es || (d.name_es ? d.subtitle : undefined)) as string | undefined,
+    name: spanishCopy(d).name,
+    subtitle: spanishCopy(d).subtitle,
     bookCount: (d.total_book_count ?? d.book_count ?? 0) as number,
     spanishBookCount: spanish.get(d.slug) ?? 0,
     childrenCount: children.get(d.slug) ?? 0,
@@ -161,7 +170,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
   const db = await getReadDb();
   const doc = await db.collection('collections').findOne(
     { slug, ...PUBLIC_COLLECTION },
-    { projection: { _id: 0, slug: 1, name: 1, name_es: 1, subtitle: 1, subtitle_es: 1, description: 1, description_es: 1, expanded_description: 1, book_count: 1, total_book_count: 1, parent: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
+    { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, description: 1, localized: 1, expanded_description: 1, book_count: 1, total_book_count: 1, parent: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
   );
   if (!doc) return null;
 
@@ -171,7 +180,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       {
         projection: {
           _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, year: 1, language: 1,
-          pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, is_first_translation: 1, ft_disposition: 1,
+          pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1, is_first_translation: 1, ft_disposition: 1,
           thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, read_count: 1, 'chapters.pageNumber': 1,
         },
         // Spanish editions first, then the most-read.
@@ -181,7 +190,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       },
     ).toArray(),
     typeof doc.parent === 'string'
-      ? db.collection('collections').findOne({ slug: doc.parent, visible: true }, { projection: { _id: 0, slug: 1, name: 1, name_es: 1 } })
+      ? db.collection('collections').findOne({ slug: doc.parent, visible: true }, { projection: { _id: 0, slug: 1, name: 1, localized: 1 } })
       : Promise.resolve(null),
   ]);
 
@@ -196,18 +205,19 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     };
   });
 
-  const description = (doc.description_es || doc.description || doc.expanded_description) as string | undefined;
+  const copy = spanishCopy(doc);
+  const description = copy.description || (doc.expanded_description as string | undefined);
   return JSON.parse(JSON.stringify({
     slug,
-    name: spanishName(doc),
-    subtitle: (doc.subtitle_es || (doc.name_es ? doc.subtitle : undefined)) as string | undefined,
+    name: copy.name,
+    subtitle: copy.subtitle,
     description,
-    descriptionIsEnglish: !doc.description_es && !!description,
+    descriptionIsEnglish: copy.descriptionIsEnglish || (!copy.description && !!description),
     bookCount: (doc.total_book_count ?? doc.book_count ?? 0) as number,
     spanishBookCount: books.filter((b) => (b.pages_translated_es ?? 0) > 0).length,
     books,
     truncated,
-    parent: parentDoc ? { slug: parentDoc.slug as string, name: spanishName(parentDoc) } : null,
+    parent: parentDoc ? { slug: parentDoc.slug as string, name: spanishCopy(parentDoc).name } : null,
     heroCandidates: imageCandidates(doc.featured_images, slug, doc.hero_image),
   })) as EsCollectionDetail;
 }

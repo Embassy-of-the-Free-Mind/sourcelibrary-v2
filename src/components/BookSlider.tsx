@@ -2,6 +2,7 @@
 
 import HorizontalSlider from '@/components/HorizontalSlider';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import type { Locale } from '@/lib/i18n';
 
 export interface MiniBook {
   id: string;
@@ -27,7 +28,7 @@ export interface MiniBook {
  * shared HorizontalSlider. Extracted from the Mycology "First translations"
  * band so it can be reused on the homepage and beyond.
  */
-export default function BookSlider({ books }: { books: MiniBook[] }) {
+export default function BookSlider({ books, lang = 'en' }: { books: MiniBook[]; lang?: Locale }) {
   return (
     <HorizontalSlider ariaLabel="books">
       {books.map((b) => (
@@ -36,7 +37,7 @@ export default function BookSlider({ books }: { books: MiniBook[] }) {
           data-card
           className="snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)]"
         >
-          <CollectionBookCard book={b as unknown as CollectionBook} />
+          <CollectionBookCard book={b as unknown as CollectionBook} lang={lang} />
         </div>
       ))}
     </HorizontalSlider>

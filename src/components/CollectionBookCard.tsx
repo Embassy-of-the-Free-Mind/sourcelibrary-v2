@@ -12,6 +12,8 @@ import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
+import type { Locale } from '@/lib/i18n';
+import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap } from '@/lib/localized';
 
 export interface CollectionBook {
   bookId?: string;
@@ -30,6 +32,8 @@ export interface CollectionBook {
   pages_translated?: number;
   /** Pages with a Spanish edition — shows the "Español" tag when > 0. */
   pages_translated_es?: number;
+  /** Per-language title glosses — see src/lib/localized.ts. */
+  localized?: LocalizedBookMap | null;
   thumbnail?: string;
   thumbnail_blob?: string;
   language?: string;
@@ -70,6 +74,8 @@ export const CARD_LABELS_ES: CollectionBookCardLabels = {
   spanishEdition: 'En español',
 };
 
+const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES };
+
 interface CollectionBookCardProps {
   book: CollectionBook;
   priority?: boolean;
@@ -77,8 +83,12 @@ interface CollectionBookCardProps {
   bookUrlPrefix?: string;
   /** Full href override — e.g. straight into the reader (`/book/x/page-number/5?lang=es`). */
   href?: string;
-  /** Chrome strings; defaults to English. */
-  labels?: CollectionBookCardLabels;
+  /**
+   * Surface language. Picks the chrome strings AND the title shown: the
+   * language's gloss (books.localized[lang].title) with the original title
+   * beneath, or the original alone when no gloss exists yet. Default English.
+   */
+  lang?: Locale;
 }
 
 function pctOf(n?: number, d?: number): number {
@@ -100,7 +110,10 @@ function Status({ label, pctValue, doneClass }: { label: string; pctValue: numbe
  * language pill · year · pages, and a single OCR/Translated status line (books
  * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
  */
-export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, labels = CARD_LABELS_EN }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en' }: CollectionBookCardProps) {
+  const labels = CARD_LABELS[lang];
+  const shownTitle = localizedTitle(book, lang);
+  const originalLine = lang === 'en' ? null : originalTitleIfDifferent(book, lang);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
@@ -136,7 +149,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <Image
             src={thumbnailUrl}
             loader={bookCoverResponsiveLoader}
-            alt={book.display_title || book.title}
+            alt={shownTitle}
             fill
             quality={85}
             className={cn(
@@ -156,13 +169,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           />
         ) : embed && !isArtwork ? (
           <PlaceholderCover
-            title={book.display_title || book.title}
+            title={shownTitle}
             author={book.author}
             year={(book.year ?? 0) > 0 ? book.year : book.published}
           />
         ) : (
           <BookCoverPlaceholder
-            title={book.display_title || book.title}
+            title={shownTitle}
             author={isArtwork ? undefined : book.author}
           />
         )}
@@ -192,8 +205,11 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
       {/* Info */}
       <div className="flex flex-col flex-1 p-3">
         <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
-          {book.display_title || book.title}
+          {shownTitle}
         </h3>
+        {originalLine && (
+          <p className="text-[11px] text-muted italic mt-0.5 line-clamp-1">{originalLine}</p>
+        )}
         <p className="text-xs text-muted mt-0.5 line-clamp-1">
           {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
         </p>
