@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
@@ -8,7 +8,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getPageData } from './page-data';
 import { type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
-import { localizedTitle } from '@/lib/localized';
+import { localizedTitle, hasLocalizedEdition } from '@/lib/localized';
 
 export const preferredRegion = 'fra1';
 
@@ -90,7 +90,7 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   };
 }
 
-export default async function PageLayout({ children, params }: LayoutProps) {
+export default async function PageLayout({ children, params, lang = 'en' }: LayoutProps & { lang?: Locale }) {
   // Resolve existence HERE, in the shell, rather than leaving it to page.tsx.
   //
   // This segment has a loading.tsx and deliberately keeps it — the reader is
@@ -116,6 +116,23 @@ export default async function PageLayout({ children, params }: LayoutProps) {
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
   if (!book || !page) notFound();
+
+  // A localized URL is a promise the page is in that language, so a book with
+  // no edition in it has no localized reader URL — 307 to the English one.
+  //
+  // This MUST live in the layout, not in page.tsx. The (reader) segment has a
+  // loading.tsx, so the page is wrapped in an automatic <Suspense> and the 200
+  // shell flushes before the page's code runs: a redirect() down there degrades
+  // into a client-side meta-refresh (#4036), which a crawler will happily index.
+  // Measured — the page-level version returned 200 with NEXT_REDIRECT in the
+  // body. The layout sits above that boundary, so this is a real HTTP 307.
+  //
+  // 307, not 308: the day the book is translated the URL must start working.
+  // `?? false` because the projection always asks for the counter, so an absent
+  // field means the book has none rather than "could not tell".
+  if (lang !== 'en' && (hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) ?? false) === false) {
+    redirect(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${pageId}`);
+  }
 
   return children;
 }

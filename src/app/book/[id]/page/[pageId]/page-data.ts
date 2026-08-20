@@ -18,6 +18,9 @@ export const BOOK_META_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, published: 1, language: 1,
   // `visible` powers the (reader) group's hidden-book gate (isHiddenBook).
   visible: 1,
+  // Gates whether a LOCALIZED reader URL may exist for this book at all — see
+  // the redirect in layout.tsx. Always projected, so its absence is an answer.
+  pages_translated_es: 1,
 };
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,

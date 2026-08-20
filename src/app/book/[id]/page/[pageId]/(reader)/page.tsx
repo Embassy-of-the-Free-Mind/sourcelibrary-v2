@@ -67,6 +67,9 @@ const BOOK_NAV_PROJECTION = {
   // and the chapter dropdown `localized.<lang>.chapters`. Leaving it out of this
   // projection is why the Spanish reader showed a German title over Spanish text.
   localized: 1,
+  // Gates whether this book may have a localized reader URL at all — see the
+  // redirect below. Always read from Atlas here, so it can never be absent.
+  pages_translated_es: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
 };
