@@ -400,6 +400,42 @@ export default function PageEditorClient({
     } as Page;
   }
 
+  // EN/ES as LINKS between `/book/…` and `/es/book/…`, not as a view toggle:
+  // the language a reader is in is always the URL they are on (#4112). It rides
+  // INSIDE the reader's own header (#4116) rather than in a band above it — a
+  // separate strip made the ~100 books with a Spanish edition look like they
+  // carried a site notice, and put the one control that changes what you are
+  // reading outside the bar holding every other reading control.
+  // Hidden inside a tenant reading room or an embed — those surfaces have no
+  // `/es` twin and must never link off-tenant — and hidden on a pinned citation
+  // URL, whose whole point is that it resolves to one fixed text.
+  const showLanguageSwitch =
+    hasSpanish && !pinnedVersion && !isOnTenantSubdomain && !isOnEmbedRoute && !params?.tenant;
+  const languageSwitch = showLanguageSwitch ? (
+    <div
+      className="inline-flex shrink-0 overflow-hidden rounded-lg text-xs font-medium"
+      style={{ background: 'var(--bg-warm)' }}
+      role="group"
+      aria-label={rs.readingLanguage}
+    >
+      {(['en', 'es'] as const).map((code) => (
+        <Link
+          key={code}
+          href={localeHref(code, readerPath)}
+          aria-current={lang === code ? 'page' : undefined}
+          className="px-2 sm:px-2.5 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+          style={{
+            background: lang === code ? 'var(--accent-rust)' : 'transparent',
+            color: lang === code ? '#fff' : 'var(--text-muted)',
+          }}
+        >
+          <span className="hidden sm:inline">{code === 'en' ? 'English' : 'Español'}</span>
+          <span className="sm:hidden">{code === 'en' ? 'EN' : 'ES'}</span>
+        </Link>
+      ))}
+    </div>
+  ) : null;
+
   return (
     <>
       <Suspense fallback={null}>
@@ -418,36 +454,9 @@ export default function PageEditorClient({
         />
       )}
 
-      {/* EN/ES as LINKS between `/book/…` and `/es/book/…`, not as a view
-          toggle: the language a reader is in is always the URL they are on
-          (#4112). Hidden inside a tenant reading room or an embed — those
-          surfaces have no `/es` twin and must never link off-tenant — and
-          hidden on a pinned citation URL, whose whole point is that it resolves
-          to one fixed text. */}
-      {hasSpanish && !pinnedVersion && !isOnTenantSubdomain && !isOnEmbedRoute && !params?.tenant && (
-        <div className="flex items-center justify-center gap-2 py-2 text-sm" aria-label={rs.readingLanguage}>
-          <span className="text-neutral-500">{rs.readIn}</span>
-          <div className="inline-flex overflow-hidden rounded-full border border-neutral-300">
-            <Link
-              href={localeHref('en', readerPath)}
-              aria-current={lang === 'en' ? 'page' : undefined}
-              className={`px-3 py-1 transition-colors ${lang === 'en' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              English
-            </Link>
-            <Link
-              href={localeHref('es', readerPath)}
-              aria-current={lang === 'es' ? 'page' : undefined}
-              className={`px-3 py-1 transition-colors ${lang === 'es' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Español
-            </Link>
-          </div>
-        </div>
-      )}
-
       <TranslationEditor
         book={book}
+        languageSwitch={languageSwitch}
         page={displayPage}
         pages={pageList}
         currentIndex={currentIndex}

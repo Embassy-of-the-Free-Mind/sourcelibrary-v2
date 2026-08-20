@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, type ReactNode } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import { useStableSession } from '@/hooks/useStableSession';
 import { resolveImprintPlace } from '@/lib/imprint';
@@ -189,6 +189,13 @@ interface TranslationEditorProps {
   onNavigate: (pageId: string, opts?: { toTop?: boolean }) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
   onRefresh?: () => Promise<void>;
+  /**
+   * EN/ES reading-language links, built by the caller (PageEditorClient) because
+   * the target URLs are locale paths, not editor state. Rendered inside the
+   * reader header rather than as a band above it (#4116); null when the book has
+   * no Spanish edition, or on a tenant/embed/pinned-version surface.
+   */
+  languageSwitch?: ReactNode;
 }
 
 interface SettingsModalProps {
@@ -443,6 +450,7 @@ export default function TranslationEditor({
   onNavigate,
   onSave,
   onRefresh,
+  languageSwitch,
 }: TranslationEditorProps) {
   const params = useParams<{ tenant: string }>();
   const pathname = usePathname();
@@ -1225,6 +1233,8 @@ export default function TranslationEditor({
                 )}
               </a>
             </div>
+
+            {languageSwitch}
 
             {/* Chapter Navigation */}
             {book.chapters && book.chapters.length > 0 && (
@@ -2349,6 +2359,8 @@ export default function TranslationEditor({
               )}
             </a>
           </div>
+
+          {languageSwitch}
 
           {/* Navigation */}
           <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
