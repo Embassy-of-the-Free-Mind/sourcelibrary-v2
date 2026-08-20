@@ -17,9 +17,22 @@ export type Locale = 'en' | 'es';
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'es'];
 
+/**
+ * The locales that own a URL prefix. English is the ROOT — `/book/x`, not
+ * `/en/book/x` — because every DOI, shortlink and citation ever minted points
+ * there. A new language is added here and gets its prefix for free; nothing
+ * below hard-codes `/es`.
+ */
+export const PREFIXED_LOCALES: Exclude<Locale, 'en'>[] = SUPPORTED_LOCALES.filter(
+  (l): l is Exclude<Locale, 'en'> => l !== 'en',
+);
+
 /** Map a pathname to its locale by URL prefix. Defaults to English. */
 export function localeFromPathname(pathname: string | null | undefined): Locale {
-  if (pathname === '/es' || (pathname?.startsWith('/es/') ?? false)) return 'es';
+  if (!pathname) return 'en';
+  for (const l of PREFIXED_LOCALES) {
+    if (pathname === `/${l}` || pathname.startsWith(`/${l}/`)) return l;
+  }
   return 'en';
 }
 
@@ -54,10 +67,22 @@ function hasLocalizedPath(canonical: string): boolean {
   return LOCALIZED_PATTERNS.some((re) => re.test(canonical));
 }
 
-/** Strip the `/es` locale prefix to get the canonical English path. */
+/**
+ * Strip the locale prefix to get the canonical English path.
+ *
+ * Every gate and matcher that reasons about a PATH FAMILY — the preview
+ * content gate, the crawler rules, anything keyed on `/book` — must run on
+ * this, not on the raw pathname. `/es/book/x` is the same content surface as
+ * `/book/x`; a matcher that only knows the English form leaves the localized
+ * twin ungated, silently, for as long as nobody looks (found on the #4082
+ * preview: `/book/…` 403'd for anonymous callers and `/es/book/…` served).
+ */
 export function canonicalPath(pathname: string | null | undefined): string {
-  if (!pathname || pathname === '/es') return '/';
-  if (pathname.startsWith('/es/')) return pathname.slice(3); // '/es/x' → '/x'
+  if (!pathname) return '/';
+  for (const l of PREFIXED_LOCALES) {
+    if (pathname === `/${l}`) return '/';
+    if (pathname.startsWith(`/${l}/`)) return pathname.slice(l.length + 1); // '/es/x' → '/x'
+  }
   return pathname;
 }
 
