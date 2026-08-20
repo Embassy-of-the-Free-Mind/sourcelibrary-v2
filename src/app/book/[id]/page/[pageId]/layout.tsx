@@ -128,8 +128,11 @@ export default async function PageLayout({ children, params, lang = 'en' }: Layo
   // body. The layout sits above that boundary, so this is a real HTTP 307.
   //
   // 307, not 308: the day the book is translated the URL must start working.
-  // `?? false` because the projection always asks for the counter, so an absent
-  // field means the book has none rather than "could not tell".
+  // `?? false` because PAGE_META_PROJECTION asks for BOTH inputs — the
+  // `pages_translated_es` counter and `language` — so an absent value means the
+  // book has no edition in the language rather than "could not tell". If that
+  // projection ever drops `language`, every natively-Spanish book starts
+  // redirecting away from its own /es reader.
   if (lang !== 'en' && (hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) ?? false) === false) {
     redirect(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${pageId}`);
   }

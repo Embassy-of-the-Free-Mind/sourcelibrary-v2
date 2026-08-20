@@ -44,7 +44,7 @@ import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { useLocale, useLocalePath } from '@/lib/i18n';
 import { READER_STRINGS } from '@/lib/book-i18n';
-import { localizedTitle } from '@/lib/localized';
+import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import ShareButton from '@/components/ui/ShareButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
@@ -594,12 +594,25 @@ export default function TranslationEditor({
   const bookYear = parseInt(String(book.published ?? ''), 10);
   const englishOcrIsReadingView = isEnglishBook && !(bookYear < 1820);
 
+  // The same idea one locale over. A book WRITTEN in the reading language has
+  // no translation into it and never will — `pages.translations.es` is empty
+  // for Cogolludo — so the transcription IS the Spanish text. Without this the
+  // Spanish reader renders an empty translation panel over a book that is
+  // entirely in Spanish. Deliberately narrow: only the current locale, only a
+  // native edition (`NATIVE_EDITION_LANGUAGE`, which excludes half-Spanish
+  // bilinguals), and it does not touch the English behaviour above.
+  const nativeOcrIsReadingView = locale !== 'en'
+    && isNativeEdition(book as unknown as Record<string, unknown>, locale);
+
+  // Either route to "the transcription is the reading text".
+  const sourceOcrIsReadingView = englishOcrIsReadingView || nativeOcrIsReadingView;
+
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden;
   // for modern-print English books, image + OCR visible, translation hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
-  const [showOcrPanel, setShowOcrPanel] = useState(englishOcrIsReadingView);
-  const [showTranslationPanel, setShowTranslationPanel] = useState(!englishOcrIsReadingView);
+  const [showOcrPanel, setShowOcrPanel] = useState(sourceOcrIsReadingView);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(!sourceOcrIsReadingView);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
@@ -1380,7 +1393,7 @@ export default function TranslationEditor({
                   <span className="hidden sm:inline">{rs.german}</span>
                 </button>
               )}
-              {!englishOcrIsReadingView && (
+              {!sourceOcrIsReadingView && (
                 <button
                   onClick={() => setShowTranslationPanel(!showTranslationPanel)}
                   className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1956,8 +1969,8 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Translation Panel — suppressed for modern-print English books (OCR is the reading view) */}
-              {showTranslationPanel && !englishOcrIsReadingView && (
+              {/* Translation Panel — suppressed when the transcription IS the reading text: modern-print English, or a book written in the reading language */}
+              {showTranslationPanel && !sourceOcrIsReadingView && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-section="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">

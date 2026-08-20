@@ -74,19 +74,69 @@ const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
 };
 
 /**
+ * `books.language` values whose ORIGINAL text is already in a locale.
+ *
+ * A book WRITTEN in Spanish has no `pages_translated_es` and never will — you
+ * do not pivot Spanish into Spanish — so a counter-only test scores it zero and
+ * hides the most Spanish thing we own from every /es surface. 67 live books
+ * were in exactly that position when this was added.
+ *
+ * ANCHORED on purpose. The stored values it must REFUSE are real ones:
+ * "Spanish / Latin", "Spanish / French", "Nahuatl-Spanish", "Old Spanish", and
+ * "Spanish in Hebrew characters" — Judeo-Spanish in Hebrew script, which a
+ * Spanish reader cannot read at all and which a substring match would happily
+ * claim. A half-Spanish page is a weaker promise than `/es` makes, and a
+ * bilingual edition is its own question (the Ximénez Popol Vuh carries K'iche'
+ * and Spanish in parallel columns and is catalogued under K'iche'). Widen this
+ * only with a decision about what a bilingual page owes a Spanish reader.
+ *
+ * ONE pattern, exported, because the same set has to be selected in Mongo
+ * (`{ language: NATIVE_EDITION_LANGUAGE.es }`) and tested in JS. Two copies of
+ * this rule would drift the moment a spelling is added to one of them.
+ */
+export const NATIVE_EDITION_LANGUAGE: Record<Exclude<Locale, 'en'>, RegExp> = {
+  es: /^\s*(spanish|espa(?:ñ|n)ol|castellano|castilian)\s*$/i,
+};
+
+/** Is the book's own text already in `lang` (no translation involved)? */
+export function isNativeEdition(book: Record<string, unknown>, lang: Locale): boolean {
+  if (lang === 'en') return false; // English is the root; hasLocalizedEdition short-circuits it
+  const pattern = NATIVE_EDITION_LANGUAGE[lang];
+  const language = book?.language;
+  return !!pattern && typeof language === 'string' && pattern.test(language);
+}
+
+/**
+ * Mongo fragment for "this book exists in `lang`" — native original OR
+ * translated pages. Use this wherever a surface selects books for a localized
+ * page, so the query and `hasLocalizedEdition` below can never disagree.
+ */
+export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<string, unknown> {
+  return {
+    $or: [
+      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
+      { language: NATIVE_EDITION_LANGUAGE[lang] },
+    ],
+  };
+}
+
+/**
  * Does this book actually EXIST in `lang`?
  *
  * A localized URL is a promise that the page is in that language, so this is
  * the gate on whether `/es/book/<slug>` may exist at all — not a display
  * preference. English is always true (it is the root). For any other language
- * it means the book's PAGES have been translated: a title gloss alone is
- * chrome, not an edition.
+ * it means the book's PAGES are in it, which happens two ways: they were
+ * TRANSLATED into it (`pages_translated_<iso> > 0`), or they were WRITTEN in it
+ * (`NATIVE_EDITION_LANGUAGE`). Either way the promise `/es` makes is kept. A
+ * title gloss alone is still chrome, not an edition.
  *
- * Returns `null` when the payload cannot answer — the counter is a Mongo field
- * and the Supabase catalog fast-path does not carry it. Callers must treat
- * `null` as "ask, or do nothing", NEVER as false: reading an absent field as
- * "no Spanish edition" would 307 a genuinely Spanish book to English, which is
- * the absence-is-not-failure trap this codebase keeps re-learning.
+ * Returns `null` when the payload cannot answer — both inputs are Mongo fields
+ * and the Supabase catalog fast-path carries neither. Callers must treat `null`
+ * as "ask, or do nothing", NEVER as false: reading an absent field as "no
+ * Spanish edition" would 307 a genuinely Spanish book to English, which is the
+ * absence-is-not-failure trap this codebase keeps re-learning. Note both fields
+ * must be PROJECTED for a false to mean anything — see the tail of the body.
  */
 export function hasLocalizedEdition(
   book: Record<string, unknown>,
@@ -95,9 +145,17 @@ export function hasLocalizedEdition(
   if (lang === 'en') return true;
   const field = TRANSLATED_COUNTER[lang];
   if (!field) return false;
+  // Written in the language: the pages already ARE it, no counter involved.
+  if (isNativeEdition(book, lang)) return true;
   const value = book[field];
   if (value === undefined) return null;
-  return typeof value === 'number' && value > 0;
+  if (typeof value === 'number' && value > 0) return true;
+  // The counter says no. That only settles it if we could also SEE that the
+  // book is not a native edition — with `language` unprojected we cannot, and
+  // answering false here would 307 a genuinely Spanish book to English, the
+  // exact failure the paragraph above warns about. Say "cannot answer" instead;
+  // callers re-ask Atlas with both fields projected.
+  return book.language === undefined ? null : false;
 }
 
 type CollectionLike = {

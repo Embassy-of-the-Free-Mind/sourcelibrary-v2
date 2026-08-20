@@ -16,7 +16,28 @@ describe('hasLocalizedEdition', () => {
   it('is true only when the book has PAGES in that language', () => {
     expect(hasLocalizedEdition({ pages_translated_es: 445 }, 'es')).toBe(true);
     expect(hasLocalizedEdition({ pages_translated_es: 1 }, 'es')).toBe(true);
-    expect(hasLocalizedEdition({ pages_translated_es: 0 }, 'es')).toBe(false);
+    // Counter zero AND the book is known not to be a Spanish original.
+    expect(hasLocalizedEdition({ pages_translated_es: 0, language: 'Latin' }, 'es')).toBe(false);
+  });
+
+  // A book WRITTEN in Spanish has no pages_translated_es and never will — you do
+  // not pivot Spanish into Spanish. Testing the counter alone hid 67 live books
+  // (Cogolludo, Landa, Aguilar) from every /es surface while they sat there
+  // fully readable. "Has pages in Spanish" is the promise; being written in it
+  // keeps that promise as completely as being translated into it.
+  it('counts a book WRITTEN in the language as an edition', () => {
+    expect(hasLocalizedEdition({ language: 'Spanish' }, 'es')).toBe(true);
+    expect(hasLocalizedEdition({ language: 'spanish', pages_translated_es: 0 }, 'es')).toBe(true);
+  });
+
+  // These are real stored `books.language` values, read off production, not
+  // invented for the assertion. A substring match would claim every one of them.
+  it('refuses partly-Spanish editions — the /es promise is the whole page', () => {
+    for (const language of ['Spanish / Latin', 'Spanish / French', 'Nahuatl-Spanish', 'Old Spanish']) {
+      expect(hasLocalizedEdition({ language, pages_translated_es: 0 }, 'es')).toBe(false);
+    }
+    // Judeo-Spanish in Hebrew script: Spanish words a Spanish reader cannot read.
+    expect(hasLocalizedEdition({ language: 'Spanish in Hebrew characters', pages_translated_es: 0 }, 'es')).toBe(false);
   });
 
   it('a title gloss alone is NOT an edition', () => {
@@ -35,14 +56,26 @@ describe('hasLocalizedEdition', () => {
   });
 
   it('a projected-but-absent field is an ANSWER at the call site', () => {
-    // Call sites that projected the counter explicitly resolve null with
+    // Call sites that projected BOTH inputs explicitly resolve null with
     // `?? false`; this pins the shape they rely on.
-    const projectedDoc: Record<string, unknown> = {}; // { _id: 0, pages_translated_es: 1 } over a book with none
+    const projectedDoc: Record<string, unknown> = {}; // both fields asked for, book has neither
     expect(hasLocalizedEdition(projectedDoc, 'es') ?? false).toBe(false);
   });
 
-  it('treats a non-numeric counter as no edition', () => {
-    expect(hasLocalizedEdition({ pages_translated_es: null }, 'es')).toBe(false);
-    expect(hasLocalizedEdition({ pages_translated_es: '445' }, 'es')).toBe(false);
+  // CONTRACT CHANGE, deliberate: a zero counter alone no longer settles it.
+  // Once "written in Spanish" counts as an edition, a doc with the counter
+  // projected but `language` absent cannot distinguish "not translated" from
+  // "Spanish original we cannot see" — and answering false there would 307 a
+  // genuinely Spanish book to English, the failure this whole helper exists to
+  // prevent. So it says "cannot answer" and the caller re-asks with both fields.
+  // Both current call sites project both, so neither is affected.
+  it('a zero counter with language unknown is null, not false', () => {
+    expect(hasLocalizedEdition({ pages_translated_es: 0 }, 'es')).toBe(null);
+    expect(hasLocalizedEdition({ pages_translated_es: null }, 'es')).toBe(null);
+  });
+
+  it('treats a non-numeric counter as no edition when the language is known', () => {
+    expect(hasLocalizedEdition({ pages_translated_es: null, language: 'Latin' }, 'es')).toBe(false);
+    expect(hasLocalizedEdition({ pages_translated_es: '445', language: 'Latin' }, 'es')).toBe(false);
   });
 });
