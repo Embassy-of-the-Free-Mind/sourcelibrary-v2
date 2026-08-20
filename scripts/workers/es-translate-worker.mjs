@@ -36,6 +36,8 @@ const getArg = (n, d) => { const m = args.find(a => a.startsWith(`--${n}=`)); re
 const TOP = parseInt(getArg('top', '50'), 10);
 const MAX_PAGES = parseInt(getArg('max-pages', '20000'), 10);
 const BOOK_OVERRIDE = getArg('book', null);
+// --order=reads (default: most-read first) | pages (shortest first — more books visible sooner)
+const ORDER = getArg('order', 'reads') === 'pages' ? { pages_translated: 1, read_count: -1 } : { read_count: -1 };
 const DRY_RUN = args.includes('--dry-run');
 const CONC = 6;
 const MODEL = 'gemini-3.1-flash-lite';
@@ -132,7 +134,7 @@ async function main() {
     : { visible: true, pages_translated: { $gt: 0 }, content_type: { $ne: 'artwork' }, read_count: { $gt: 0 } };
   const books = (await db.collection('books')
     .find(match, { projection: { id: 1, title: 1, display_title: 1, read_count: 1, pages_translated: 1, pages_translated_es: 1 } })
-    .sort({ read_count: -1 }).limit(TOP).toArray())
+    .sort(ORDER).limit(TOP).toArray())
     .filter(b => BOOK_OVERRIDE || (b.pages_translated_es || 0) < b.pages_translated);
 
   console.log(`[ES] ${books.length} candidate book(s) of top ${TOP}; cap ${MAX_PAGES} pages; model ${MODEL}; keys ${API_KEYS.length}${DRY_RUN ? '; DRY RUN' : ''}`);
