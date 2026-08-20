@@ -105,6 +105,12 @@ pen = TTGlyphPen(None); glyphs['.notdef'] = pen.glyph(); advances['.notdef'] = i
 pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(GAP * S * 2.2 + XH * S * 0.4); cmap[0x20] = 'space'
 
 STRIP_SATELLITES = {'&', '(', ')', 'D'}
+ACCENT_SOURCES = {'acute': 114, 'grave': 163, 'tilde': 215}      # á è ã impressions from the main set
+COMPOSITES = {'á': ('a','acute'), 'é': ('e','acute'), 'í': ('i','acute'), 'ó': ('o','acute'), 'ú': ('u','acute'),
+              'à': ('a','grave'), 'è': ('e','grave'), 'ì': ('i','grave'), 'ò': ('o','grave'), 'ù': ('u','grave'),
+              'ã': ('a','tilde'), 'ẽ': ('e','tilde'), 'ĩ': ('i','tilde'), 'õ': ('o','tilde'), 'ũ': ('u','tilde')}
+# In metal the hook of f / long s projects past the body and sits over the next sort; shorten the advance.
+OVERHANG = {'f': 0.30, 'ſ': 0.28, 'f_f': 0.18, 'longs_longs': 0.16}
 chosen = {}
 for ch, cl in labels.items():
     if not cl: print('no cluster for', ch, file=sys.stderr); continue
@@ -136,11 +142,59 @@ for ch, cl in labels.items():
     bp = BoundsPen(None); glyph.draw(bp, None) if False else None
     name = glyphname(ch)
     glyphs[name] = glyph
-    advances[name] = int(mask.shape[1] * S + 2 * SB)
+    advances[name] = int(mask.shape[1] * S * (1 - OVERHANG.get(ch, 0)) + 2 * SB)
     glyph_order.append(name)
     if len(ch) == 1: cmap[ord(ch)] = name
     chosen[ch] = int(idx)
     print(f'{ch!r:12} cluster {str(cl[0]):6} n={nn:3} {mask.shape[1]}x{mask.shape[0]}px adv {advances[name]}', file=sys.stderr)
+
+# ---- accents ----------------------------------------------------------------
+from scipy import ndimage as _nd
+def split_mark(mask):
+    # returns (mark_mask, base_mask, gap_px, dx_px): mark = topmost component
+    lab, n = _nd.label(mask)
+    objs = _nd.find_objects(lab)
+    comps = sorted([(sl[0].start, i + 1, sl) for i, sl in enumerate(objs) if sl is not None])
+    top, tid, tsl = comps[0]
+    mark = (lab == tid)[tsl]
+    base = mask.copy(); base[lab == tid] = 0
+    bys, bxs = np.where(base)
+    base = base[bys.min():bys.max() + 1, bxs.min():bxs.max() + 1]
+    gap = bys.min() - tsl[0].stop
+    dx = (tsl[1].start + tsl[1].stop) / 2 - (bxs.min() + bxs.max()) / 2
+    return mark, base, int(gap), dx
+MARKS = {}
+for mname, ref in ACCENT_SOURCES.items():
+    (m_, me_, c_), (kind, ci) = resolve(ref)
+    idx = c_[ci]['medoid'] if kind == 'cluster' else ci
+    MARKS[mname] = split_mark(m_[idx].astype(np.uint8))
+    print(f'mark {mname}: {MARKS[mname][0].shape[1]}x{MARKS[mname][0].shape[0]}px gap {MARKS[mname][2]} dx {MARKS[mname][3]:.0f}', file=sys.stderr)
+
+BASES = {'a': 'a', 'e': 'e', 'o': 'o', 'u': 'u', 'i': 'ı'}   # ı = dotless stem (labels key)
+for ch, (bch, mname) in COMPOSITES.items():
+    mark, _, gap, dx = MARKS[mname]
+    bref = labels[BASES[bch]][0]
+    (m_, me_, c_), (kind, ci) = resolve(bref)
+    bidx = c_[ci]['medoid'] if kind == 'cluster' else ci
+    bmask = m_[bidx].astype(np.uint8); bg = me_[bidx]
+    bh, bw = bmask.shape; mh, mw = mark.shape
+    W = max(bw, mw + abs(int(dx)) * 2 + 2); H = bh + gap + mh
+    canvas = np.zeros((H, W), np.uint8)
+    bx0 = (W - bw) // 2; canvas[gap + mh:, bx0:bx0 + bw] = bmask
+    mx0 = int(round(bx0 + bw / 2 + dx - mw / 2)); mx0 = max(0, min(W - mw, mx0))
+    canvas[0:mh, mx0:mx0 + mw] = np.maximum(canvas[0:mh, mx0:mx0 + mw], mark.astype(np.uint8))
+    g = dict(bg); g['y0'] = bg['y0'] - (gap + mh)
+    _setkey = str(bref).split(':')[0].split('#')[0] if isinstance(bref, str) else ''
+    S = SET_SCALE[_setkey]; SB = GAP / 2 * SET_SCALE['']
+    svgtxt, (tx, ty, sx, sy), pad = trace(canvas)
+    base_crop = g['base'] - g['y0'] + pad
+    k = S / UPSCALE; a = sx * k; d = -sy * k; e = tx * k - pad * S + SB; f = -(ty * k) + base_crop * S
+    pen = TTGlyphPen(None); cpen = Cu2QuPen(pen, max_err=1.0, reverse_direction=True)
+    SVGPath.fromstring(svgtxt.encode(), transform=(a, 0, 0, d, e, f)).draw(cpen)
+    name = 'uni%04X' % ord(ch)
+    glyphs[name] = pen.glyph(); advances[name] = int(bw * S + 2 * SB)
+    glyph_order.append(name); cmap[ord(ch)] = name
+    print(f'{ch!r:12} composed {bch}+{mname}', file=sys.stderr)
 
 fb = FontBuilder(UPM, isTTF=True)
 fb.setupGlyphOrder(glyph_order)

@@ -45,14 +45,19 @@ Python 3 with numpy, scipy, Pillow, fontTools, brotli; `potrace` on PATH
    `fontTools.fontBuilder`, add a `liga` GSUB for the ligatures present.
    Metrics come from the page: **1 em = median baseline pitch** (165 px → the
    body of the type), x-height measured per line (406 units), and sidebearings =
-   half the median gap between neighbouring sorts on a line (21 units).
+   half the median gap between neighbouring sorts on a line (21 units). f and ſ get a
+shortened advance (`OVERHANG`): in metal the hook kerns over the next sort, and the bare
+ink width set them a whole gap too wide ("f luctibus").
 5. `python3 specimen.py AldineAetna-Regular.ttf spec.png` — quick PIL render
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.3)
+## Coverage (v0.4)
 
-61 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+78 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
+grave and tilde are split off real impressions (`ACCENT_SOURCES`) and placed over each base
+vowel at the gap/offset measured on the page; i takes the dotless stem `ı`), the ligatures
 ct ſt ſi ſſ ſſi fi ff and Qu (Griffo cast a fused Qu sort for the common case; `Q u` → `Q_u`
 via `liga`; a lone Q exists too, from Lascaris), capitals
 A B C D E F G H I L M N O P Q R S T V, and . , : ; - ( ) ?.
@@ -62,7 +67,7 @@ Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
 when you are hunting a handful of capitals — `BOX=1 WMIN=25 capsheet.py` pages
 through every cap-height glyph instead).
 Fourth set `z_` = 12 pages of Lascaris, *Erotemata* (1495, IA `ita-bnc-ald-00000688-001`,
-not yet in our catalogue) — the Latin side of a Greek grammar, rich in I and Q. That scan
+= book `69b220ccf79d8af0eab7fd3a`) — the Latin side of a Greek grammar, rich in I and Q. That scan
 is smaller (4405 px wide), so **`set_scales.json`** carries a per-set multiplier
 (z = 1.33, calibrated by matching capital heights: 76–83 px vs 102–108 px). Don't
 derive this from the glyph-height histogram — fragment-heavy sets bias it badly.
