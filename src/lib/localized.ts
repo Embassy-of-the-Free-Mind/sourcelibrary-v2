@@ -1,4 +1,4 @@
-import type { Locale } from '@/lib/i18n';
+import type { Locale } from '@/lib/locale-path';
 
 /**
  * Localized METADATA — titles, collection names, intros — for non-English surfaces.

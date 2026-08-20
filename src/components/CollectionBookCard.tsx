@@ -12,7 +12,7 @@ import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
-import type { Locale } from '@/lib/i18n';
+import { useLocalePath, type Locale } from '@/lib/i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap } from '@/lib/localized';
 
 export interface CollectionBook {
@@ -119,6 +119,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const [useFallback, setUseFallback] = useState(false);
   const embedHref = useEmbedHref();
   const embed = useEmbed();
+  // A card rendered on a localized surface links to that surface's twin —
+  // /es/collections/… → /es/book/… — so the prefix never drops on a click.
+  // localePath is registry-guarded, so /artwork/… (no twin) is untouched.
+  const localePath = useLocalePath();
 
   const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
@@ -127,8 +131,8 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId || '';
 
-  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`);
-  const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
+  const bookHref = localePath(embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`));
+  const artworkHref = localePath(embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`));
 
   const ocrPct = pctOf(book.pages_ocr, pageCount);
   const translatedPct = pctOf(book.pages_translated, pageCount);

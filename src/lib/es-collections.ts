@@ -109,33 +109,18 @@ function spanishCopy(doc: Record<string, unknown>) {
 }
 
 /**
- * First page worth opening — the same heuristic the English book page uses for
- * its "Start reading" link: the first chapter when the book has a table of
- * contents, else skip the binding/title leaves on longer books.
- */
-function startPageNumber(book: { pages_count?: number; chapters?: { pageNumber?: number }[] }): number {
-  const fromChapters = book.chapters?.[0]?.pageNumber;
-  if (typeof fromChapters === 'number' && fromChapters > 0) return fromChapters;
-  const n = book.pages_count || 0;
-  return n >= 20 ? 5 : n >= 10 ? 3 : 1;
-}
-
-/**
- * Where a Spanish-surface card sends the reader. Since #4082 that is the Spanish
- * BOOK PAGE (`/es/book/<slug>`), whose "Leer en español" button opens the Spanish
- * reader — the prefix never drops. `startPageNumber` still decides where that
- * button lands (exported for the page).
+ * Where a card on a Spanish surface sends the reader: the Spanish book page,
+ * which since #4082 phase 2 IS the English book page rendered with `lang='es'`.
+ * Its "Leer en español" button opens the reader — and every link on it keeps
+ * the `/es` prefix, so the locale never drops mid-visit.
+ *
+ * `pages_count` / `chapters` are accepted (and ignored) so existing callers
+ * that pass a whole book document keep type-checking; where the reader LANDS is
+ * decided by the book page itself.
  */
 export function spanishReaderHref(book: { slug?: string; id: string; pages_count?: number; chapters?: { pageNumber?: number }[] }): string {
   return `/es/book/${encodeURIComponent(book.slug || book.id)}`;
 }
-
-/** Direct reader link for a Spanish surface, when a page id is already known. */
-export function spanishPageHref(book: { slug?: string; id: string }, pageId: string): string {
-  return `/es/book/${encodeURIComponent(book.slug || book.id)}/page/${pageId}`;
-}
-
-export { startPageNumber };
 // READING_LANGUAGE_PARAM stays exported for the legacy ?lang=es links still in the wild.
 export { READING_LANGUAGE_PARAM };
 
@@ -211,11 +196,13 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
   const truncated = rawBooks.length > ES_COLLECTION_BOOK_CAP;
   type RawBook = Omit<EsCollectionBook, 'href'> & { chapters?: { pageNumber?: number }[]; read_count?: number };
   const books: EsCollectionBook[] = (rawBooks as unknown as RawBook[]).slice(0, ES_COLLECTION_BOOK_CAP).map((b) => {
-    const hasSpanish = (b.pages_translated_es ?? 0) > 0;
     const { chapters: _ch, read_count: _rc, ...rest } = b;
     return {
       ...rest,
-      href: hasSpanish ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
+      // Every book now has a Spanish page, whether or not it has Spanish TEXT —
+      // one without shows the record in Spanish chrome and the English reader,
+      // which beats dropping the reader out of /es on the click.
+      href: spanishReaderHref(b),
     };
   });
 
