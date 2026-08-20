@@ -57,7 +57,14 @@ function Card({ col, priority }: { col: EsCollectionSummary; priority?: boolean 
 export default async function EsCollectionsPage() {
   const collections = await getEsCollectionList();
   const spanish = collections.find((c) => c.slug === 'en-espanol');
+  // Spanish-bearing collections first, richest first — then the rest, labelled.
+  // A reader should be able to see at a glance where Spanish reading is
+  // possible, instead of opening collections until one has something.
   const rest = collections.filter((c) => c.slug !== 'en-espanol');
+  const withSpanish = rest
+    .filter((c) => c.spanishBookCount > 0)
+    .sort((a, b) => b.spanishBookCount - a.spanishBookCount);
+  const englishOnly = rest.filter((c) => c.spanishBookCount === 0);
 
   return (
     <div className="min-h-screen bg-cream" lang="es">
@@ -67,8 +74,9 @@ export default async function EsCollectionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 pt-10 pb-6">
         <h1 className="text-4xl sm:text-5xl font-display text-primary mb-3">Colecciones</h1>
         <p className="text-muted max-w-2xl leading-relaxed">
-          La biblioteca, ordenada por tradiciones. Los títulos y las introducciones de cada colección están en inglés
-          salvo donde se indica; los libros con edición en español se abren directamente en español.
+          La biblioteca, ordenada por tradiciones. Primero las colecciones que ya contienen libros con edición en
+          español; debajo, el resto de la biblioteca, en su lengua original y con traducción al inglés en muchos casos.
+          Los títulos y las introducciones de cada colección están en inglés salvo donde se indica.
         </p>
       </div>
 
@@ -93,9 +101,29 @@ export default async function EsCollectionsPage() {
         </section>
       )}
 
+      {withSpanish.length > 0 && (
+        <section className="max-w-[1500px] mx-auto px-6 pb-14">
+          <div className="flex items-baseline justify-between gap-4 mb-4">
+            <h2 className="text-2xl sm:text-3xl font-display text-primary">Colecciones con libros en español</h2>
+            <span className="text-sm text-muted whitespace-nowrap">{nf(withSpanish.length)}</span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {withSpanish.map((col, i) => <Card key={col.slug} col={col} priority={i < 4} />)}
+          </div>
+        </section>
+      )}
+
       <section className="max-w-[1500px] mx-auto px-6 pb-20">
+        <div className="flex items-baseline justify-between gap-4 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-display text-primary">El resto de la biblioteca</h2>
+          <span className="text-sm text-muted whitespace-nowrap">{nf(englishOnly.length)}</span>
+        </div>
+        <p className="text-sm text-muted mb-4 max-w-2xl">
+          Estas colecciones todavía no tienen ninguna edición en español. Sus libros están en su lengua original —
+          latín, griego, alemán, francés… — con traducción al inglés en muchos casos.
+        </p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {rest.map((col, i) => <Card key={col.slug} col={col} priority={i < 4} />)}
+          {englishOnly.map((col) => <Card key={col.slug} col={col} />)}
         </div>
         <p className="mt-10 text-sm text-muted">
           ¿Buscas las exposiciones y la galería? Están en la{' '}

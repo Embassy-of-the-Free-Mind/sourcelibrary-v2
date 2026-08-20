@@ -692,6 +692,27 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
   };
 }
 
+/**
+ * How much of the library a Spanish reader can actually read.
+ *
+ * Stated on the page because the honest answer is "a small, growing corner":
+ * 103 books of 37,821. A Spanish front door that shows fifteen covers and says
+ * nothing about scale implies a Spanish library, and the reader finds out by
+ * clicking. Counted live rather than hard-coded — the number grows every time
+ * the worker runs.
+ */
+export interface SpanishCounts { books: number; pages: number }
+
+async function getSpanishCounts(): Promise<SpanishCounts | null> {
+  const db = await getReadDb();
+  const [row] = await db.collection('books').aggregate<{ books: number; pages: number }>([
+    { $match: { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 } } },
+    { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' } } },
+    { $project: { _id: 0, books: 1, pages: 1 } },
+  ], { maxTimeMS: 8000 }).toArray();
+  return row ?? null;
+}
+
 // ---------- Aggregate ----------
 
 // ---------- Books with a Spanish edition (the /es "Leer en español" band) ----------
@@ -767,6 +788,8 @@ export interface HomeData {
   featuredPodcast: FeaturedPodcast | null;
   /** Books with a Spanish edition, most-read first. Empty on the English homepage. */
   spanishBooks: SpanishBook[];
+  /** Size of the Spanish corpus, for the honest scale line. Null off /es. */
+  spanishCounts: SpanishCounts | null;
 }
 
 // `lang` selects the podcast episode's language and the Spanish-edition band,
@@ -774,7 +797,7 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -783,7 +806,8 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getFeaturedPodcast(lang), 8000, null),
     lang === 'es' ? withTimeout(getSpanishBooks(), 8000, [] as SpanishBook[]) : Promise.resolve([] as SpanishBook[]),
+    lang === 'es' ? withTimeout(getSpanishCounts(), 8000, null) : Promise.resolve(null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts };
 }
