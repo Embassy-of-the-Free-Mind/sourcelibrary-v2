@@ -35,6 +35,17 @@ export function useLocale(): Locale {
 // bargain (deep pages rely on the browser's own translate).
 export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin']);
 
+// Path FAMILIES with a Spanish twin: `/collections` and every
+// `/collections/<slug>` render under `/es/collections/…` (Spanish chrome, Spanish
+// collection names; see src/app/es/collections). Kept separate from the exact-
+// match set so a new deep route is not localized by accident.
+const LOCALIZED_PREFIXES = ['/collections'];
+
+function hasLocalizedPath(canonical: string): boolean {
+  if (LOCALIZED_PATHS.has(canonical)) return true;
+  return LOCALIZED_PREFIXES.some((p) => canonical === p || canonical.startsWith(`${p}/`));
+}
+
 /** Strip the `/es` locale prefix to get the canonical English path. */
 export function canonicalPath(pathname: string | null | undefined): string {
   if (!pathname || pathname === '/es') return '/';
@@ -49,7 +60,7 @@ export function canonicalPath(pathname: string | null | undefined): string {
  * the thin-i18n bargain — so clicking ES never bounces you to the front page.
  */
 export function hasLocalizedTwin(pathname: string | null | undefined): boolean {
-  return LOCALIZED_PATHS.has(canonicalPath(pathname));
+  return hasLocalizedPath(canonicalPath(pathname));
 }
 
 /**
@@ -60,7 +71,7 @@ export function hasLocalizedTwin(pathname: string | null | undefined): boolean {
 export function localeHref(target: Locale, pathname: string | null | undefined): string {
   const canonical = canonicalPath(pathname);
   if (target === 'en') return canonical;
-  if (LOCALIZED_PATHS.has(canonical)) return canonical === '/' ? '/es' : `/es${canonical}`;
+  if (hasLocalizedPath(canonical)) return canonical === '/' ? '/es' : `/es${canonical}`;
   return '/es';
 }
 

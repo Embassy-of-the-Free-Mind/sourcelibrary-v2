@@ -18,11 +18,13 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
-// nav stays in one place as languages are added.
-function buildNavLinks(t: NavStrings): NavLink[] {
+// Labels are resolved per-locale from NAV_STRINGS so the nav stays in one place
+// as languages are added. Hrefs are constant EXCEPT where a Spanish twin route
+// exists (`/es/collections`, see LOCALIZED_PREFIXES in i18n.ts) — the thin-i18n
+// bargain means every other item still points at the English page.
+function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
   return [
-    { label: t.collections, href: '/collections' },
+    { label: t.collections, href: locale === 'es' ? '/es/collections' : '/collections', activePrefix: locale === 'es' ? '/es/collections' : '/collections' },
     { label: t.gallery, href: '/gallery' },
     {
       label: t.browse,
@@ -110,7 +112,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // a global-only path; `/works` under Browse is the first that does, and an
   // unfiltered child would put a proxy-404 link in a partner's own header —
   // the one thing the shared list exists to prevent.
-  const NAV_LINKS = buildNavLinks(t)
+  const NAV_LINKS = buildNavLinks(t, locale)
     .filter(link => !(isTenantHost && isGlobalOnlyNavHref(link.href)))
     .map(link =>
       link.children && isTenantHost

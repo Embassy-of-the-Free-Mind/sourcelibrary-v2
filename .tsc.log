@@ -1,1 +1,11 @@
-tsc exit 0
+src/lib/es-collections.ts(143,23): error TS2352: Conversion of type 'WithId<Document>' to type '{ slug: string; name: string; name_es?: string | undefined; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'WithId<Document>' is missing the following properties from type '{ slug: string; name: string; name_es?: string | undefined; }': slug, name
+src/lib/es-collections.ts(190,11): error TS2352: Conversion of type '{ [key: string]: any; _id: ObjectId; }' to type 'Omit<EsCollectionBook, "href">' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ [key: string]: any; _id: ObjectId; }' is missing the following properties from type 'Omit<EsCollectionBook, "href">': id, title
+src/lib/es-collections.ts(191,44): error TS2352: Conversion of type 'WithId<Document>' to type '{ slug?: string | undefined; id: string; pages_count?: number | undefined; chapters?: { pageNumber?: number | undefined; }[] | undefined; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'id' is missing in type 'WithId<Document>' but required in type '{ slug?: string | undefined; id: string; pages_count?: number | undefined; chapters?: { pageNumber?: number | undefined; }[] | undefined; }'.
+src/lib/es-collections.ts(198,23): error TS2352: Conversion of type 'WithId<Document>' to type '{ slug: string; name: string; name_es?: string | undefined; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'WithId<Document>' is missing the following properties from type '{ slug: string; name: string; name_es?: string | undefined; }': slug, name
+src/lib/es-collections.ts(206,67): error TS2352: Conversion of type 'WithId<Document>' to type '{ slug: string; name: string; name_es?: string | undefined; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'WithId<Document>' is missing the following properties from type '{ slug: string; name: string; name_es?: string | undefined; }': slug, name
+tsc exit 2

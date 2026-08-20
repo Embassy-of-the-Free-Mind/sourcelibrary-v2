@@ -41,11 +41,44 @@ export interface CollectionBook {
   resource_type?: string;
 }
 
+/** The card's few words of chrome, so a Spanish surface can render it in Spanish. */
+export interface CollectionBookCardLabels {
+  firstTranslation: string;
+  pages: string;
+  ocr: string;
+  translated: string;
+  editedBy: string;
+  /** Tag shown when the book has a Spanish edition. */
+  spanishEdition: string;
+}
+
+export const CARD_LABELS_EN: CollectionBookCardLabels = {
+  firstTranslation: 'First Translation',
+  pages: 'pages',
+  ocr: 'OCR',
+  translated: 'Translated',
+  editedBy: 'edited by',
+  spanishEdition: 'Español',
+};
+
+export const CARD_LABELS_ES: CollectionBookCardLabels = {
+  firstTranslation: 'Primera traducción',
+  pages: 'páginas',
+  ocr: 'OCR',
+  translated: 'Traducido',
+  editedBy: 'editado por',
+  spanishEdition: 'En español',
+};
+
 interface CollectionBookCardProps {
   book: CollectionBook;
   priority?: boolean;
   /** Optional URL prefix (e.g. '/bph') — prepended to the /book/{slug} path */
   bookUrlPrefix?: string;
+  /** Full href override — e.g. straight into the reader (`/book/x/page-number/5?lang=es`). */
+  href?: string;
+  /** Chrome strings; defaults to English. */
+  labels?: CollectionBookCardLabels;
 }
 
 function pctOf(n?: number, d?: number): number {
@@ -67,7 +100,7 @@ function Status({ label, pctValue, doneClass }: { label: string; pctValue: numbe
  * language pill · year · pages, and a single OCR/Translated status line (books
  * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
  */
-export default function CollectionBookCard({ book, priority = false, bookUrlPrefix }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, labels = CARD_LABELS_EN }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
@@ -90,7 +123,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
 
   return (
     <Link
-      href={isArtwork ? artworkHref : bookHref}
+      href={href ?? (isArtwork ? artworkHref : bookHref)}
       className="group flex flex-col h-full border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up"
     >
       {/* Cover */}
@@ -139,12 +172,12 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
             {(book.pages_translated_es ?? 0) > 0 && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }} lang="es">
-                Español
+                {labels.spanishEdition}
               </span>
             )}
             {isPublishedFirstTranslation(book) && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
-                First Translation
+                {labels.firstTranslation}
               </span>
             )}
             {book.has_doi && (
@@ -162,7 +195,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {book.display_title || book.title}
         </h3>
         <p className="text-xs text-muted mt-0.5 line-clamp-1">
-          {byline.role === 'editor' ? <>edited by <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
+          {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
         </p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">
@@ -170,13 +203,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)
-            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} pages</span> : null)}
+            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {labels.pages}</span> : null)}
         </div>
 
         {!isArtwork && pageCount > 0 && (
           <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
-            <Status label="OCR" pctValue={ocrPct} doneClass="text-status-info" />
-            <Status label="Translated" pctValue={translatedPct} doneClass="text-status-success" />
+            <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" />
+            <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" />
           </div>
         )}
       </div>

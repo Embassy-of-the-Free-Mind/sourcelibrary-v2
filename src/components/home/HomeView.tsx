@@ -41,7 +41,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.spanishHeading}
               </h2>
               <Link
-                href={`/collections/${SPANISH_COLLECTION_SLUG}`}
+                href={`${lang === 'es' ? '/es' : ''}/collections/${SPANISH_COLLECTION_SLUG}`}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.spanishViewAll} &rarr;
@@ -52,7 +52,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </p>
             <BookSlider books={spanishBooks as unknown as MiniBook[]} />
             <div className="mt-6 sm:hidden">
-              <Link href={`/collections/${SPANISH_COLLECTION_SLUG}`} className="text-sm text-accent-rust hover:underline">
+              <Link href={`${lang === 'es' ? '/es' : ''}/collections/${SPANISH_COLLECTION_SLUG}`} className="text-sm text-accent-rust hover:underline">
                 {t.spanishViewAll} &rarr;
               </Link>
             </div>
