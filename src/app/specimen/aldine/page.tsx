@@ -23,7 +23,8 @@ const PASSAGE = [
   'liſper animũ; méq; ipſum reſtituã mihi,',
 ];
 
-const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ';
+const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ ę';
+const ACCENTS = 'á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ';
 const UPPER = 'A B C D E F G H I L M N O P Q R S T V & ( )';
 const LIGS = 'ct ſt ſi ſſ ſſi fi ff Qu';
 
@@ -74,11 +75,12 @@ export default function AldineSpecimenPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {[
             ['Lowercase', LOWER],
             ['Capitals', UPPER],
             ['Ligatures', LIGS],
+            ['Accents and abbreviation marks', ACCENTS],
           ].map(([label, text]) => (
             <div key={label} className="rounded-xl border border-border-light bg-white p-5">
               <div className="text-xs uppercase tracking-wider text-muted mb-3">{label}</div>
@@ -121,7 +123,10 @@ export default function AldineSpecimenPage() {
           Only what the 1496 text uses. The lowercase is complete for Latin as Aldus set it
           (<span style={{ fontFamily: aldineStack }}>u</span> serves for v, long <span style={{ fontFamily: aldineStack }}>ſ</span> inside
           words), with the ligatures <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>ct ſt ſi ſſ fi ff</span>, æ and
-          the ampersand. Nineteen capitals, including a lone Q and the fused{' '}
+          the ampersand, and ę. The acute, grave and tilde — the tilde is the printer&apos;s nasal
+          abbreviation, <span style={{ fontFamily: aldineStack }}>animũ</span> for <em>animum</em> — are
+          taken from real impressions and set over each vowel at the offset measured on the page, as
+          the compositor did with separate accent sorts. Nineteen capitals, including a lone Q and the fused{' '}
           <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>Qu</span> sort Griffo
           cast for the common case. J, U and W did not exist in 1490s roman type; K, X, Y, Z and all
           digits are not on the pages read so far. In a web stack Cardo fills them in.
