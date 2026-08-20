@@ -95,7 +95,9 @@ def glyphname(ch):
     return ch  # ligature names like 'c_t', 'longs_t'
 
 def trace(mask, pad=4):
+    global UPSCALE
     h, w = mask.shape
+    UPSCALE = 6 if h < 50 else 3          # tiny sorts (the figures) need more magnification for potrace
     canvas = np.zeros((h + 2 * pad, w + 2 * pad), np.uint8); canvas[pad:pad + h, pad:pad + w] = mask * 255; canvas = 255 - canvas
     im = Image.fromarray(canvas).resize((canvas.shape[1] * UPSCALE, canvas.shape[0] * UPSCALE), Image.BICUBIC)
     bw = im.point(lambda v: 255 if v > 128 else 0)
@@ -299,35 +301,57 @@ if RECONSTRUCT:
     hv, wv = v.shape; ovv = int(wv * 0.26)
     w = np.zeros((hv, 2 * wv - ovv), np.uint8); w[:, :wv] = v; w[:, wv - ovv:] = np.maximum(w[:, wv - ovv:], v)
     emit('w', w, gV, kV, base_crop_override=hv)
-    # j: the dotted i, with the stem continued below the line and curled left (from the ſ hook at lowercase scale)
+    # j = the long s turned through 180 degrees at lowercase scale (stem + left-curling tail), with the i's dot
     i_, gi_, ki_ = glyph_mask('i'); ih, iw = i_.shape
-    hook = ls[: int(ls.shape[0] * 0.34), :][::-1, ::-1]
-    sch = SET_SCALE[kls] / SET_SCALE[ki_] * 0.8
-    hook = np.asarray(Image.fromarray(hook.astype(np.uint8) * 255).resize((max(1, int(hook.shape[1] * sch)), max(1, int(hook.shape[0] * sch))), Image.BICUBIC)) > 127
-    hh, hw = hook.shape
-    jc = np.zeros((ih + hh - int(hh * 0.3), max(iw, hw) + 4), np.uint8)
-    xo = jc.shape[1] - iw - 2; jc[:ih, xo:xo + iw] = i_
-    stem = np.where(i_[-3:, :].any(0))[0]; sx = xo + (int(stem.mean()) if len(stem) else iw // 2)
-    hx = max(0, min(jc.shape[1] - hw, sx - hw + hw // 3)); hy = ih - int(hh * 0.3)
-    jc[hy:hy + hh, hx:hx + hw] = np.maximum(jc[hy:hy + hh, hx:hx + hw], hook.astype(np.uint8))
-    # baseline: the i's own bottom
-    emit('j', jc, gi_, ki_, base_crop_override=ih)
-    # k = the l's stem with the K's two arms brought down to the x-height (the old lowercase k is built exactly so)
+    xh_i = 67.0 * SET_SCALE[''] / SET_SCALE[ki_]
+    r = ls[::-1, ::-1].astype(np.uint8) * 255
+    sc_ls = SET_SCALE[kls] / SET_SCALE[ki_]
+    jh = int(xh_i * 1.42)                                     # x-height plus a descender of ~0.42 x-height
+    jw = max(1, int(ls.shape[1] * sc_ls * 0.78))
+    body = np.asarray(Image.fromarray(r).resize((jw, jh), Image.BICUBIC)) > 120
+    # the i's dot: its topmost component, and the gap between dot and stem
+    lab, n = _nd3.label(i_); objs = _nd3.find_objects(lab)
+    comps = sorted([(sl[0].start, k + 1, sl) for k, sl in enumerate(objs) if sl is not None])
+    if len(comps) >= 2:
+        dot = (lab == comps[0][1])[comps[0][2]]; dot_gap = comps[1][0] - comps[0][2][0].stop
+    else:
+        dot = np.ones((6, 6), bool); dot_gap = 8
+    dh, dw = dot.shape
+    jc = np.zeros((dh + dot_gap + jh, max(jw, dw) + 2), np.uint8)
+    jc[dh + dot_gap:, :jw] = body
+    stem_cols = np.where(body[int(jh * 0.2):int(jh * 0.5), :].any(0))[0]
+    cx = int(stem_cols.mean()) if len(stem_cols) else jw // 2
+    dx0 = max(0, min(jc.shape[1] - dw, cx - dw // 2)); jc[:dh, dx0:dx0 + dw] = dot
+    emit('j', jc, gi_, ki_, base_crop_override=dh + dot_gap + int(xh_i))
+    # k = the cap K brought down to the x-height, with the l's ascender grafted on top of its stem
     K, gK, kK = glyph_mask('K')
     if 'K' in ERODE:
         from scipy import ndimage as _nd4
         K = _nd4.binary_erosion(K, iterations=ERODE['K']).astype(np.uint8)
     l_, gl_, kl_ = glyph_mask('l'); lh, lw = l_.shape
-    colsum = K.sum(0); stem_end = int(np.argmax(colsum)) + int(K.shape[1] * 0.08)   # just right of the stem
-    arms = K[:, stem_end:]
-    xh_px = 67.0 * SET_SCALE[''] / SET_SCALE[kl_]
-    fa = xh_px / arms.shape[0]; fx = fa * SET_SCALE[kK] / SET_SCALE[kl_] * 1.05
-    arms = np.asarray(Image.fromarray(arms * 255).resize((max(1, int(arms.shape[1] * fx)), int(xh_px)), Image.BICUBIC)) > 120
-    ah, aw = arms.shape
-    lstem = np.where(l_[int(lh * 0.5):int(lh * 0.9), :].any(0))[0]; sx = int(lstem.max()) if len(lstem) else lw - 1
-    kk = np.zeros((lh, sx + 1 + aw - 2), np.uint8); kk[:, :lw] = l_
-    kk[lh - ah:, sx - 1:sx - 1 + aw] = np.maximum(kk[lh - ah:, sx - 1:sx - 1 + aw], arms.astype(np.uint8))
+    xh_l = 67.0 * SET_SCALE[''] / SET_SCALE[kl_]
+    fk = xh_l / K.shape[0]; fkx = fk * SET_SCALE[kK] / SET_SCALE[kl_] * 1.0
+    Ks = np.asarray(Image.fromarray(K * 255).resize((max(1, int(K.shape[1] * fkx)), int(xh_l)), Image.BICUBIC)) > 115
+    from scipy import ndimage as _nd5
+    Ks = _nd5.binary_dilation(Ks, iterations=1)
+    kh, kw = Ks.shape
+    # stem column of the small K and of the l
+    kstem = np.where(Ks[int(kh * 0.3):int(kh * 0.7), : int(kw * 0.45)].any(0))[0]; kcx = int(kstem.mean()) if len(kstem) else int(kw * 0.2)
+    lstem = np.where(l_[int(lh * 0.5):int(lh * 0.9), :].any(0))[0]; lcx = int(lstem.mean()) if len(lstem) else lw // 2
+    top = l_[: lh - int(xh_l) + 6, :]                           # the l above the x-height (plus a little overlap)
+    off = max(0, lcx - kcx)
+    kk = np.zeros((lh, max(kw + off, lw) + 1), np.uint8)
+    kk[lh - kh:, off:off + kw] = np.maximum(kk[lh - kh:, off:off + kw], Ks.astype(np.uint8))
+    x0 = off + kcx - lcx
+    kk[:top.shape[0], x0:x0 + lw] = np.maximum(kk[:top.shape[0], x0:x0 + lw], top)
     emit('k', kk, gl_, kl_, base_crop_override=lh)
+    # 9 = the 6 turned through 180 degrees: in old-style figures they are the same sort, and compositors
+    #     short of 9s turned their 6s. The Cornucopiae 9s are too small (23x35 px) for the counter to survive tracing.
+    six, g6, k6 = glyph_mask('6')
+    nine = six[::-1, ::-1].copy()
+    # old-style 6 stands on the baseline with its loop above; turned, its loop sits on the x-height band and the
+    # tail descends: anchor by TOP at x-height (same rule as the other descending figures)
+    emit('9', nine, g6, k6, base_crop_override=67.0 * SET_SCALE[''] / SET_SCALE[k6])
 
 fb = FontBuilder(UPM, isTTF=True)
 fb.setupGlyphOrder(glyph_order)

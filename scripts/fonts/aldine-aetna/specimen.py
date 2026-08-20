@@ -5,7 +5,8 @@ ttf = sys.argv[1]; out = sys.argv[2]
 lines = [
  (72, "abcdefghijklmnopqrstuvwxyz ſ æ ę"),
  (72, "ABCDEFGHIJKLMNOPQRSTUVWXYZ Iulius Jove vvw jam"),
- (72, "0123456789 · ab.110.43.&.256.11."),
+ (72, "0123456789 · ab.110.43.&.256.11. 1499 1996 9999"),
+ (72, "jam juxta kalendis kk jj 99 — major objekt"),
  (56, "BEMBVS PATER Eſt ita, ut dicis:"),
  (56, "nam cum ab urbe propterea me,"),
  (56, "frequentiáq; hominum; tanq a fluctibus,"),

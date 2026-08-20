@@ -15,6 +15,10 @@ per ascender) because the archived 2254-px copy is too soft to trace.
 
 Python 3 with numpy, scipy, Pillow, fontTools, brotli; `potrace` on PATH
 (`brew install potrace`). Run from this directory; the scripts `chdir` to it.
+`trace()` magnifies 3× before potrace, 6× for sorts under 50 px (the figures). Every impression
+of a figure is ≈25×35 px in the Cornucopiae scan; the medoid is not always the sharpest cast.
+The **9 is the 6 turned 180°** — in old-style figures they are one sort, and compositors short
+of 9s turned 6s; the Cornucopiae 9s are too small for their counter to survive tracing.
 
 1. `bash fetch_ia.sh` — pages n19…n51 (the main set); `bash fetch_more.sh` — twelve
    more into `extra/` (used for capitals; kept as a second set so the first set's
@@ -52,7 +56,7 @@ ink width set them a whole gap too wide ("f luctibus").
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.7)
+## Coverage (v0.8)
 
 136 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
 ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
@@ -101,7 +105,9 @@ x-height). Only punctuation still uses the line estimate (`LINE_ANCHOR`). `ERODE
 over-inked impressions (the K from the heavier second copy).
 **Reconstructed sorts** (`RECONSTRUCT` in `build_font.py`): J U W (and lowercase j k v w) never
 existed in 1490s roman type. W = V V overlapped 28 % (how the compositors set it); U = lowercase u scaled
-to the cap line (Monotype's Bembo solution); J = the long s rotated 180° and stretched 1.32× (its crossbar nub becomes the right-hand top
+to the cap line (Monotype's Bembo solution); j = the long s rotated 180° at lowercase scale with the i's own dot; k = the cap K scaled to the
+x-height with the l's ascender grafted on its stem (v0.8 — the earlier l-stem + arms build read wrong);
+J = the long s rotated 180° and stretched 1.32× (its crossbar nub becomes the right-hand top
 serif) with the I's serif laid over the top; v = V at x-height, re-weighted; w = vv; j = i with the
 ſ hook below the line; k = l stem + K arms scaled to x-height. They are real glyphs in the font (so Cardo never has to step in mid-word,
 which is what Derek found jarring) but the specimen page flags them as reconstructions.
