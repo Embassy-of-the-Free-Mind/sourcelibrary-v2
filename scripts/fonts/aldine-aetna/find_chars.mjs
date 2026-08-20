@@ -12,15 +12,15 @@ const BOOKS = {
 };
 const c = await new MongoClient(process.env.MONGODB_URI).connect();
 const pages = c.db('bookstore').collection('pages');
-const hits = { K: [], X: [], Y: [], Z: [], J: [], U: [], W: [], digit: [] };
+const hits = { K: [], X: [], Y: [], Z: [], J: [], U: [], W: [], z: [], k: [], v: [], w: [], j: [], digit: [] };
 for (const [bid, ia] of Object.entries(BOOKS)) {
   const cur = pages.find({ book_id: bid }, { projection: { page_number: 1, 'ocr.data': 1 } });
   for await (const p of cur) {
     const t = (p.ocr && p.ocr.data) || '';
     if (!t) continue;
     const body = t.replace(/<[^>]+>/g, ' ');
-    for (const L of ['K', 'X', 'Y', 'Z', 'J', 'U', 'W']) {
-      const re = new RegExp(`(^|[\\s(.,;:])${L}[a-zA-Z]`, 'g');
+    for (const L of ['K', 'X', 'Y', 'Z', 'J', 'U', 'W', 'z', 'k', 'v', 'w', 'j']) {
+      const re = L === L.toLowerCase() ? new RegExp(`[a-z]${L}[a-z]`, 'g') : new RegExp(`(^|[\\s(.,;:])${L}[a-zA-Z]`, 'g');
       let m; while ((m = re.exec(body))) hits[L].push({ ia, page: p.page_number, snip: body.slice(Math.max(0, m.index - 20), m.index + 25).replace(/\n/g, ' ') });
     }
     const d = /(^|\s)[0-9]{1,4}(\s|$|[.,;:])/g; let m;

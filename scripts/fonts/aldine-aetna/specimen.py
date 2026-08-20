@@ -3,8 +3,8 @@ from PIL import Image, ImageDraw, ImageFont
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 ttf = sys.argv[1]; out = sys.argv[2]
 lines = [
- (72, "abcdefghilmnopqrstuxy ſ æ"),
- (72, "ABCDEFGHIJKLMNOPQRSTUVWXYZ & Quid Vrbanus Iulius VVilhelm"),
+ (72, "abcdefghijklmnopqrstuvwxyz ſ æ ę"),
+ (72, "ABCDEFGHIJKLMNOPQRSTUVWXYZ Iulius Jove vvw jam"),
  (72, "0123456789 · ab.110.43.&.256.11."),
  (56, "BEMBVS PATER Eſt ita, ut dicis:"),
  (56, "nam cum ab urbe propterea me,"),
