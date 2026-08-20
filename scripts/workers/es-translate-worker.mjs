@@ -70,7 +70,20 @@ const nextModel = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.leng
 const WRAP = /<(meta|image-desc|vocab|summary|keywords|warning|scan-quality|language|page-type|page-num|columns|script)\b[^>]*>[\s\S]*?<\/\1>/gi;
 const clean = t => String(t || '').replace(WRAP, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-const PROMPT = txt => `You are producing the Spanish edition of a historical primary-source reader. Translate the ENTIRE English text below into faithful, scholarly Spanish.
+// --strict: the retry pass for pages the length guard refused. Repetitive
+// scholastic/mystical prose (Llull, Böhme) tempts the model to condense; this
+// prompt forbids it explicitly and the pass allows five attempts instead of three.
+const STRICT = args.includes('--strict');
+const ATTEMPTS = STRICT ? 5 : 3;
+const PROMPT = txt => STRICT
+  ? `You are producing the Spanish edition of a historical primary-source reader. Translate the English text below into faithful, scholarly Spanish, SENTENCE BY SENTENCE.
+ABSOLUTE RULES: every sentence of the English must appear in the Spanish — never condense, merge, summarize or skip, even when the text is repetitive or formulaic; the Spanish must be about the same length as the English. Preserve all XML-like tags (<meta>, <note>, <header>…), markdown, tables and numerals exactly; translate readable text inside tags too. Localize names (Iamblichus→Jámblico) and use Spanish typography (« », d. C./a. C.). Output ONLY the full translation, once.
+
+English:
+${txt}
+
+Spanish:`
+  : `You are producing the Spanish edition of a historical primary-source reader. Translate the ENTIRE English text below into faithful, scholarly Spanish.
 RULES: do NOT summarize, drop, or repeat sentences. Preserve all XML-like tags (<meta>, <note>, <header>…), markdown, and numerals; translate readable text inside tags too. Localize names (Iamblichus→Jámblico) and use Spanish typography (« », d. C./a. C.). Output ONLY the full translation, once.
 
 English:
@@ -91,7 +104,7 @@ async function translatePage(eng) {
     return r >= LO && r <= HI;                                             // length-sanity band
   };
   let best = null, bestDist = Infinity;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
     let res;
     try { res = (await nextModel().generateContent(PROMPT(eng))).response; }
     catch (e) {
