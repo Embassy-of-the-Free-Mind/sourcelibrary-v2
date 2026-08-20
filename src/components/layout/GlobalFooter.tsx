@@ -11,7 +11,7 @@ import { clearConsent } from '@/lib/consent';
 import { trackEvent } from '@/lib/track-event';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { visibleFooterNavColumns } from '@/lib/footer-nav';
-import { useLocale, FOOTER_STRINGS } from '@/lib/i18n';
+import { useLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
 
 type Partner = {
   name: string;
@@ -33,6 +33,10 @@ const PARTNERS: Partner[] = [
 export default function GlobalFooter() {
   const pathname = usePathname();
   const t = FOOTER_STRINGS[useLocale()];
+  // Footer labels were localized before the pages were; now that `/collections`,
+  // `/support` and `/auth/signin` have twins, the LINKS follow too. localePath
+  // is registry-guarded, so everything else still points at its English page.
+  const localePath = useLocalePath();
   const [hasFavorites, setHasFavorites] = useState(false);
   // Global-only surfaces 404 on partner subdomains (the list and its rationale
   // live in src/lib/tenant-global-paths.ts — #3364, #3370). SiteHeader has
@@ -104,7 +108,7 @@ export default function GlobalFooter() {
                   <li key={link.href}>
                     {link.key === 'support' ? (
                       <Link
-                        href={link.href}
+                        href={localePath(link.href)}
                         // Instrumented alongside the header pill so the two paths
                         // are comparable. Before the pill existed this footer link
                         // was the ONLY route to giving, and it drew 60 of 330,698
@@ -128,7 +132,7 @@ export default function GlobalFooter() {
                       </button>
                     ) : (
                       <Link
-                        href={link.href}
+                        href={localePath(link.href)}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
                         {t[link.key]}
