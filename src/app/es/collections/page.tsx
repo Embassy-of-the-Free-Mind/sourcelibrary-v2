@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
-import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import { getEsCollectionList, type EsCollectionSummary } from '@/lib/es-collections';
 
 // Spanish edition of /collections. Real, indexable route; the header and footer
@@ -68,7 +67,6 @@ export default async function EsCollectionsPage() {
 
   return (
     <div className="min-h-screen bg-cream" lang="es">
-      <ReadingLanguagePreference lang="es" />
       <ConditionalSiteHeader variant="light" />
 
       <div className="max-w-[1500px] mx-auto px-6 pt-10 pb-6">

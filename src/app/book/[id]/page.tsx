@@ -2508,10 +2508,10 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
 
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
-      {/* Arriving on a localized book URL is itself a statement about which
-          language you read, so the reader opens in it — and keeps it after the
-          reader's own toggle overrides this. See src/lib/reading-language.ts. */}
-      {lang !== 'en' && <ReadingLanguagePreference lang={lang} />}
+      {/* Migrates a legacy `?lang=es` link to the `/es` twin and sweeps the
+          retired reading-language localStorage key. The language of a page is
+          its URL prefix; nothing is recorded. See src/lib/reading-language.ts. */}
+      {lang === 'en' && <ReadingLanguagePreference />}
       {!isEmbedded && <ConditionalSiteHeader variant="dark" />}
 
       {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb

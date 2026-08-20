@@ -1,68 +1,61 @@
 /**
- * Reading-language preference (#2770 follow-up).
+ * Reading language = the URL prefix. Nothing else. (#4112)
  *
- * The reader can show a book in English (the pivot translation) or, where a
- * page carries one, in Spanish (`translations.es` / legacy `translation_es`).
- * The preference lives in localStorage so it follows the READER, not the URL:
- * a Spanish speaker who arrives via `/es` or via a `?lang=es` link opens every
- * subsequent book in Spanish without hunting for the toggle, and switching back
- * to English in the reader is remembered the same way.
+ * Spanish lives at `/es/…`, English at the root. A `/book/…` URL is an English
+ * page and renders English; `/es/book/…` renders Spanish. The reader's EN/ES
+ * control is a LINK between those two URLs, not a view toggle, so the address
+ * bar always says which language you are reading and every reading URL is
+ * shareable, indexable and edge-cacheable as itself.
  *
- * URL wins over storage for a single visit (`?lang=es` on a shared link), and a
- * `?lang=` value is also persisted, so the book page — which is ISR and cannot
- * read searchParams server-side — can hand the preference on to the reader by
- * the client picking it up on mount.
+ * This module used to keep a `localStorage` preference that followed the reader
+ * across URLs. It was written on mere ARRIVAL at any `/es/…` page, and read on
+ * mount by every book page including English ones — so one visit to the Spanish
+ * site silently switched the English site to Spanish, permanently, with nothing
+ * in the URL to explain it. That also contradicted the rule the rest of the i18n
+ * layer is built on (`src/lib/locale-path.ts`: "locale is derived from the URL
+ * prefix rather than a cookie or Accept-Language header, so it never branches
+ * edge-cached HTML"). The store is gone; `clearLegacyReadingLanguage` below
+ * exists only to sweep the stale key out of browsers that still carry it.
+ *
+ * To resolve the locale of the current page, use `useLocale()`
+ * (`src/lib/i18n.ts`) or `localeFromPathname()` (`src/lib/locale-path.ts`).
  */
-export type ReadingLanguage = 'en' | 'es';
 
-export const READING_LANGUAGE_KEY = 'sl:reading-language';
+/** Legacy `?lang=es` links minted before `/es` existed still point at English URLs. */
 export const READING_LANGUAGE_PARAM = 'lang';
 
-function isReadingLanguage(v: unknown): v is ReadingLanguage {
-  return v === 'en' || v === 'es';
-}
+/** The key the retired preference store used. Read by nothing; only cleared. */
+const LEGACY_STORAGE_KEY = 'sl:reading-language';
 
-/** Stored preference, or null when unset / not in a browser. */
-export function getStoredReadingLanguage(): ReadingLanguage | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const v = window.localStorage.getItem(READING_LANGUAGE_KEY);
-    return isReadingLanguage(v) ? v : null;
-  } catch {
-    return null;
-  }
-}
-
-export function setStoredReadingLanguage(lang: ReadingLanguage): void {
+/**
+ * Drop the retired preference key. Readers who visited `/es` while the store was
+ * live still carry `es` in localStorage; it no longer does anything, but leaving
+ * it behind would let any future reintroduction silently resurrect the bug.
+ */
+export function clearLegacyReadingLanguage(): void {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(READING_LANGUAGE_KEY, lang);
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch {
-    /* private mode / quota — the preference is a convenience, never required */
+    /* private mode / quota — nothing depends on this succeeding */
   }
-}
-
-/** `?lang=` from the current URL, if it names a supported reading language. */
-export function readingLanguageFromUrl(): ReadingLanguage | null {
-  if (typeof window === 'undefined') return null;
-  const v = new URLSearchParams(window.location.search).get(READING_LANGUAGE_PARAM);
-  return isReadingLanguage(v) ? v : null;
 }
 
 /**
- * Resolve the reading language on mount: URL first (and remember it), then the
- * stored preference, else English. Client-only — call from an effect.
+ * The `/es` twin of a legacy `?lang=es` URL, or null when there is nothing to
+ * migrate. Returns null for paths that are already localized, so this is safe to
+ * call unconditionally.
  */
-export function resolveReadingLanguage(): ReadingLanguage {
-  const fromUrl = readingLanguageFromUrl();
-  if (fromUrl) {
-    setStoredReadingLanguage(fromUrl);
-    return fromUrl;
-  }
-  // On a Spanish twin route (/es/book/…) the URL IS the preference (#4082).
-  if (typeof window !== 'undefined' && /^\/es(\/|$)/.test(window.location.pathname)) {
-    setStoredReadingLanguage('es');
-    return 'es';
-  }
-  return getStoredReadingLanguage() ?? 'en';
+export function legacyLangRedirect(
+  pathname: string,
+  search: string,
+  hasTwin: (path: string) => boolean,
+): string | null {
+  const params = new URLSearchParams(search);
+  if (params.get(READING_LANGUAGE_PARAM) !== 'es') return null;
+  if (pathname === '/es' || pathname.startsWith('/es/')) return null;
+  if (!hasTwin(pathname)) return null;
+  params.delete(READING_LANGUAGE_PARAM);
+  const rest = params.toString();
+  return `/es${pathname}${rest ? `?${rest}` : ''}`;
 }

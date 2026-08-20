@@ -5,7 +5,6 @@ import { ArrowLeft } from 'lucide-react';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
-import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import { getEsCollection } from '@/lib/es-collections';
 import collectionRedirects from '@/lib/collection-redirects.json';
 
@@ -54,7 +53,6 @@ export default async function EsCollectionPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream" lang="es">
-      <ReadingLanguagePreference lang="es" />
       <ConditionalSiteHeader variant="light" />
 
       {/* Hero */}
