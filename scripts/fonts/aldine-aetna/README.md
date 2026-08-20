@@ -62,7 +62,7 @@ Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
 when you are hunting a handful of capitals — `BOX=1 WMIN=25 capsheet.py` pages
 through every cap-height glyph instead).
 Fourth set `z_` = 12 pages of Lascaris, *Erotemata* (1495, IA `ita-bnc-ald-00000688-001`,
-not yet in our catalogue) — the Latin side of a Greek grammar, rich in I and Q. That scan
+= book `69b220ccf79d8af0eab7fd3a`) — the Latin side of a Greek grammar, rich in I and Q. That scan
 is smaller (4405 px wide), so **`set_scales.json`** carries a per-set multiplier
 (z = 1.33, calibrated by matching capital heights: 76–83 px vs 102–108 px). Don't
 derive this from the glyph-height histogram — fragment-heavy sets bias it badly.
