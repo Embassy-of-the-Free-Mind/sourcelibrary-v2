@@ -70,6 +70,8 @@ export interface HomeStrings {
   // so the two editions keep one shape.
   spanishHeading: string;
   spanishSubtitle: string;
+  /** The honest scale line. Counts arrive already locale-formatted by nf(). */
+  spanishScale: (books: string, pages: string, total: string) => string;
   spanishViewAll: string;
 
   // Gallery masonry (homepage)
@@ -182,6 +184,8 @@ const en: HomeStrings = {
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
   spanishHeading: 'Read in Spanish',
   spanishSubtitle: 'The most-read works in the library, with a Spanish edition you can open page by page beside the original.',
+  spanishScale: (books, pages, total) =>
+    `${books} of the library's ${total} books can be read in full in Spanish — ${pages} translated pages beside the original. The rest are in their own language, with an English translation in many cases.`,
   spanishViewAll: 'All books in Spanish',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
@@ -294,6 +298,8 @@ const es: HomeStrings = {
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
   spanishHeading: 'Leer en español',
   spanishSubtitle: 'Las obras más leídas de la biblioteca, con una edición en español que puedes abrir página a página junto al original.',
+  spanishScale: (books, pages, total) =>
+    `${books} de los ${total} libros de la biblioteca se pueden leer completos en español — ${pages} páginas traducidas junto al original. Los demás están en su lengua original, con traducción al inglés en muchos casos.`,
   spanishViewAll: 'Todos los libros en español',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',

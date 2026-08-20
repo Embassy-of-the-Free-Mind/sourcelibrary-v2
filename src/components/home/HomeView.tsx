@@ -23,7 +23,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
   return (
@@ -52,9 +52,16 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.spanishViewAll} &rarr;
               </Link>
             </div>
-            <p className="text-muted mb-6 max-w-2xl">
+            <p className="text-muted mb-2 max-w-2xl">
               {t.spanishSubtitle}
             </p>
+            {/* Say the size. Fifteen covers and no number implies a Spanish
+                library; the reader would otherwise find out by clicking. */}
+            {spanishCounts && (
+              <p className="text-sm text-muted/80 mb-6 max-w-2xl">
+                {t.spanishScale(nf(spanishCounts.books), nf(spanishCounts.pages), nf(counts.totalBooks))}
+              </p>
+            )}
             <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
             <div className="mt-6 sm:hidden">
               <Link href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)} className="text-sm text-accent-rust hover:underline">
