@@ -36,6 +36,12 @@ const getArg = (n, d) => { const m = args.find(a => a.startsWith(`--${n}=`)); re
 const TOP = parseInt(getArg('top', '50'), 10);
 const MAX_PAGES = parseInt(getArg('max-pages', '20000'), 10);
 const BOOK_OVERRIDE = getArg('book', null);
+// --pages=<pageId,..> | --pages=@file.json (reads .retranslate[] from es-edition-quality.mjs):
+// RE-translate exactly these pages, overwriting their Spanish. For audit repairs.
+const PAGES_ARG = getArg('pages', null);
+const PAGE_IDS = PAGES_ARG
+  ? (PAGES_ARG.startsWith('@') ? JSON.parse((await import('node:fs')).readFileSync(PAGES_ARG.slice(1), 'utf8')).retranslate : PAGES_ARG.split(','))
+  : null;
 // --order=reads (default: most-read first) | pages (shortest first — more books visible sooner)
 const ORDER = getArg('order', 'reads') === 'pages' ? { pages_translated: 1, read_count: -1 } : { read_count: -1 };
 const DRY_RUN = args.includes('--dry-run');
@@ -132,10 +138,13 @@ async function main() {
   const match = BOOK_OVERRIDE
     ? { id: { $in: BOOK_OVERRIDE.split(',') } }
     : { visible: true, pages_translated: { $gt: 0 }, content_type: { $ne: 'artwork' }, read_count: { $gt: 0 } };
+  // Page-repair mode: the books are whatever books those pages belong to.
+  const repairBookIds = PAGE_IDS ? await db.collection('pages').distinct('book_id', { id: { $in: PAGE_IDS } }) : null;
   const books = (await db.collection('books')
-    .find(match, { projection: { id: 1, title: 1, display_title: 1, read_count: 1, pages_translated: 1, pages_translated_es: 1 } })
-    .sort(ORDER).limit(TOP).toArray())
-    .filter(b => BOOK_OVERRIDE || (b.pages_translated_es || 0) < b.pages_translated);
+    .find(repairBookIds ? { id: { $in: repairBookIds } } : match, { projection: { id: 1, title: 1, display_title: 1, read_count: 1, pages_translated: 1, pages_translated_es: 1 } })
+    .sort(ORDER).limit(repairBookIds ? 10000 : TOP).toArray())
+    .filter(b => BOOK_OVERRIDE || PAGE_IDS || (b.pages_translated_es || 0) < b.pages_translated);
+  if (PAGE_IDS) console.log(`[ES] page-repair mode: ${PAGE_IDS.length} pages across ${books.length} books (existing Spanish will be overwritten)`);
 
   console.log(`[ES] ${books.length} candidate book(s) of top ${TOP}; cap ${MAX_PAGES} pages; model ${MODEL}; keys ${API_KEYS.length}${DRY_RUN ? '; DRY RUN' : ''}`);
   let pagesDone = 0, skipped = 0;
@@ -144,8 +153,10 @@ async function main() {
   for (const b of books) {
     if (pagesDone >= MAX_PAGES) break;
     const pages = await db.collection('pages').find(
-      { book_id: b.id, 'translation.data': { $type: 'string', $ne: '' },
-        'translations.es.data': { $exists: false }, 'translation_es.data': { $exists: false } },
+      PAGE_IDS
+        ? { book_id: b.id, id: { $in: PAGE_IDS }, 'translation.data': { $type: 'string', $ne: '' } }
+        : { book_id: b.id, 'translation.data': { $type: 'string', $ne: '' },
+            'translations.es.data': { $exists: false }, 'translation_es.data': { $exists: false } },
       { projection: { _id: 1, id: 1, page_number: 1, 'translation.data': 1 }, sort: { page_number: 1 } }
     ).limit(MAX_PAGES - pagesDone).toArray();
     const label = (b.display_title || b.title || b.id).slice(0, 48);

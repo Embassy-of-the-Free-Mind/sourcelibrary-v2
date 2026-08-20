@@ -83,6 +83,12 @@ function checkPage(en, es) {
   if (repEs > 0.25 && repEs > repEn * 1.5 + 0.1) flags.push(`repetition:${Math.round(repEs * 100)}%`);
   // Truncation: English closes, Spanish does not, AND the Spanish is visibly shorter.
   if (enB.length >= 200 && endsTerminal(en) && !endsTerminal(es) && ratio !== null && ratio < 0.9) flags.push('truncated');
+  // Body moved INTO editorial wrappers: the reader strips <summary>/<meta>/… before
+  // display, so main text the model wrapped in them disappears from the page.
+  // Seen on es-pivot-v1 (June pilot) pages — the Spanish is all there, but hidden.
+  const wrapLen = (t) => (String(t || '').match(WRAP) || []).join('').length;
+  const wEn = wrapLen(en), wEs = wrapLen(es);
+  if (wEs > wEn * 2 + 500 && esB.length < enB.length * 0.8) flags.push('wrapped');
   return { ratio, spanishShare: sp, repetition: repEs, flags };
 }
 
@@ -110,7 +116,7 @@ for (const b of books) {
   const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return +s[Math.floor(s.length / 2)].toFixed(2); };
   stat.medianRatio = med(stat.ratios); stat.medianSpanish = med(stat.spanish);
   // Severity order for the worst list: empty/english/repetition/truncated first, then structure, then length.
-  const sev = (f) => f.some((x) => /^(empty|english|repetition)/.test(x)) ? 0 : f.some((x) => /^(truncated|short)/.test(x)) ? 1 : f.some((x) => /^(tags|headings|numerals)/.test(x)) ? 2 : 3;
+  const sev = (f) => f.some((x) => /^(empty|english|repetition|wrapped)/.test(x)) ? 0 : f.some((x) => /^(truncated|short)/.test(x)) ? 1 : f.some((x) => /^(tags|headings|numerals)/.test(x)) ? 2 : 3;
   stat.worst.sort((a, b2) => sev(a.flags) - sev(b2.flags));
   stat.worst = stat.worst.slice(0, 12);
   delete stat.ratios; delete stat.spanish;
@@ -125,7 +131,9 @@ console.log(`${report.books.length} books, ${report.totals.pages} Spanish pages,
 console.log(`Flags: ${Object.entries(report.totals.byFlag).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ')}\n`);
 console.log('| flagged | pages | med ratio | med Spanish | worst flags | book |\n|---|---|---|---|---|---|');
 for (const s of report.books) console.log(`| ${pct(s.flagged, s.pages)} | ${s.pages} | ${s.medianRatio ?? '–'} | ${s.medianSpanish != null ? pct(s.medianSpanish, 1) : '–'} | ${Object.entries(s.byFlag).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${v}`).join(', ')} | ${s.title} (${s.language}) |`);
-const severe = report.books.flatMap((s) => s.worst.filter((w) => w.flags.some((f) => /^(empty|english|repetition|truncated|short)/.test(f))).map((w) => ({ ...w, book: s.title })));
+const severe = report.books.flatMap((s) => s.worst.filter((w) => w.flags.some((f) => /^(empty|english|repetition|truncated|short|wrapped)/.test(f))).map((w) => ({ ...w, book: s.title })));
+// Page ids the worker can re-translate with --pages= (severe only; structural flags are advisory).
+report.retranslate = severe.map((w) => w.page_id);
 console.log(`\n## Severe pages (${severe.length} shown, worst first)\n`);
 for (const w of severe.slice(0, 60)) console.log(`- p${w.page_number} ratio ${w.ratio ?? '–'} [${w.flags.join(', ')}] ${w.book} — ${w.url}`);
 if (OUT) { writeFileSync(OUT, JSON.stringify(report, null, 1)); console.error(`\nJSON → ${OUT}`); }
