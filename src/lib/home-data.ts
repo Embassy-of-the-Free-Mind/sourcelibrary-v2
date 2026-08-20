@@ -692,6 +692,58 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
 
 // ---------- Aggregate ----------
 
+// ---------- Books with a Spanish edition (the /es "Leer en español" band) ----------
+
+/** Slug of the curated collection that gathers every book with a Spanish edition. */
+export const SPANISH_COLLECTION_SLUG = 'en-espanol';
+const SPANISH_BOOKS_COUNT = 15;
+
+// Minimal card shape for the slider: BookSlider's MiniBook plus the Spanish
+// counter that switches on the card's "Español" tag.
+export interface SpanishBook {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  year?: number;
+  language?: string;
+  pages_count?: number;
+  pages_ocr?: number;
+  pages_translated?: number;
+  pages_translated_es?: number;
+  is_first_translation?: boolean;
+  ft_disposition?: string;
+  thumbnail?: string;
+  thumbnail_blob?: string;
+  image_display?: string;
+  image_thumb?: string;
+}
+
+// Most-read first (`read_count`), so the band leads with what Spanish readers
+// are most likely to be looking for. `pages_translated_es` is the book-level
+// counter kept by scripts/maintenance/sync-pages-translated-es.mjs — the per-
+// page fields are not indexed and must never be scanned on a request path.
+async function getSpanishBooks(): Promise<SpanishBook[]> {
+  const db = await getReadDb();
+  const books = await db.collection('books').find(
+    { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } },
+    {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,
+        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
+        is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+      },
+      sort: { read_count: -1, pages_translated_es: -1 },
+      limit: SPANISH_BOOKS_COUNT,
+      maxTimeMS: 8000,
+    },
+  ).toArray();
+  return JSON.parse(JSON.stringify(books)) as SpanishBook[];
+}
+
+// ---------- Aggregate ----------
+
 export interface HomeData {
   featuredItems: FeaturedItem[];
   discoverBooks: Book[];
@@ -701,13 +753,16 @@ export interface HomeData {
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
   featuredPodcast: FeaturedPodcast | null;
+  /** Books with a Spanish edition, most-read first. Empty on the English homepage. */
+  spanishBooks: SpanishBook[];
 }
 
-// `lang` selects the podcast episode's language and nothing else — every other
-// query is language-agnostic, which is what keeps the two homepages structurally
-// identical (see the note at the top of this file).
+// `lang` selects the podcast episode's language and the Spanish-edition band,
+// and nothing else — every other query is language-agnostic, which is what
+// keeps the two homepages structurally identical (see the note at the top of
+// this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -715,7 +770,8 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getFeaturedPodcast(lang), 8000, null),
+    lang === 'es' ? withTimeout(getSpanishBooks(), 8000, [] as SpanishBook[]) : Promise.resolve([] as SpanishBook[]),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks };
 }

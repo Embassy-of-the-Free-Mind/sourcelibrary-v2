@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
+import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import { FEED_TYPES } from '@/lib/feed-links';
 
 // Spanish-language edition of the homepage — a real, server-rendered, indexable
@@ -35,5 +36,13 @@ export const metadata: Metadata = {
 
 export default async function HomePageEs() {
   const data = await getHomeData('es');
-  return <HomeView data={data} lang="es" />;
+  return (
+    <>
+      {/* Arriving via the Spanish front door means "I read Spanish": books
+          opened afterwards start in their Spanish edition where one exists.
+          Client-side localStorage only — this page stays ISR and cache-safe. */}
+      <ReadingLanguagePreference lang="es" />
+      <HomeView data={data} lang="es" />
+    </>
+  );
 }

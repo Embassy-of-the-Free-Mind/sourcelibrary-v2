@@ -9,7 +9,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { type HomeData } from '@/lib/home-data';
+import { type HomeData, SPANISH_COLLECTION_SLUG } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
@@ -18,7 +18,7 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
   return (
@@ -27,6 +27,38 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Video Hero */}
       <HeroSection lang={lang} />
+
+      {/* Read in Spanish — the first thing under the hero on /es, because it is
+          the one section whose BOOKS (not just chrome) are in the visitor's
+          language. Most-read first; the reader opens these in Spanish because
+          /es stores the reading-language preference (ReadingLanguagePreference).
+          spanishBooks is empty on the English homepage, so nothing renders there. */}
+      {spanishBooks.length > 0 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.spanishHeading}
+              </h2>
+              <Link
+                href={`/collections/${SPANISH_COLLECTION_SLUG}`}
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.spanishViewAll} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.spanishSubtitle}
+            </p>
+            <BookSlider books={spanishBooks as unknown as MiniBook[]} />
+            <div className="mt-6 sm:hidden">
+              <Link href={`/collections/${SPANISH_COLLECTION_SLUG}`} className="text-sm text-accent-rust hover:underline">
+                {t.spanishViewAll} &rarr;
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured podcast episode, in the page's own language.
           Was /es-only; now on both homepages, and it is the podcast's primary

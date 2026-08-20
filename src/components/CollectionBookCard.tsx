@@ -28,6 +28,8 @@ export interface CollectionBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  /** Pages with a Spanish edition — shows the "Español" tag when > 0. */
+  pages_translated_es?: number;
   thumbnail?: string;
   thumbnail_blob?: string;
   language?: string;
@@ -133,8 +135,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         )}
 
         {/* Tags — dark-glass First Translation (+ DOI), square per book design.md */}
-        {(isPublishedFirstTranslation(book) || book.has_doi) && (
+        {(isPublishedFirstTranslation(book) || book.has_doi || (book.pages_translated_es ?? 0) > 0) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
+            {(book.pages_translated_es ?? 0) > 0 && (
+              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }} lang="es">
+                Español
+              </span>
+            )}
             {isPublishedFirstTranslation(book) && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 First Translation
