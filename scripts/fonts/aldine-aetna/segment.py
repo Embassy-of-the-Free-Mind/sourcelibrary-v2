@@ -63,6 +63,21 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
             if j - i > 40: lines.append((i, j))
             i = j
         else: i += 1
+    if lines:
+        import statistics as _st
+        medh = _st.median([b - a for a, b in lines])
+        split = []
+        for a, b in lines:
+            k = max(1, round((b - a) / medh))
+            if k == 1: split.append((a, b)); continue
+            # split at the k-1 lowest-ink rows near the expected boundaries
+            cuts = [a]
+            for q in range(1, k):
+                c0 = a + int((b - a) * q / k); lo, hi = max(a + 20, c0 - 25), min(b - 20, c0 + 25)
+                cuts.append(lo + int(np.argmin(rs[lo:hi])))
+            cuts.append(b)
+            split += list(zip(cuts, cuts[1:]))
+        lines = split
     print(page, 'lines', len(lines), 'col', cx0, cx1, file=sys.stderr)
     lab_all, n_all = ndimage.label(ink_col)
     objs = ndimage.find_objects(lab_all)
@@ -86,7 +101,8 @@ for path in sorted(glob.glob(os.environ.get('GLOB','ia*.jpg'))):
             if merged:
                 m = merged[-1]
                 ov = min(m[3], c[3]) - max(m[2], c[2])
-                if ov > 0.5 * min(m[3] - m[2], c[3] - c[2]):
+                vgap = max(m[0], c[0]) - min(m[1], c[1])
+                if ov > 0.5 * min(m[3] - m[2], c[3] - c[2]) and vgap < 22:
                     merged[-1] = (min(m[0], c[0]), max(m[1], c[1]), min(m[2], c[2]), max(m[3], c[3]), m[4] + [c[4]])
                     continue
             merged.append((c[0], c[1], c[2], c[3], [c[4]]))
@@ -114,8 +130,11 @@ for g in glyphs:
     aspect = w / h
     feats.append(np.concatenate([f, [asc * 6, desc * 6, aspect * 6]]))
 X = np.array(feats)
-Z = linkage(X, 'average', metric='euclidean')
-labels = fcluster(Z, t=float(sys.argv[1]) if len(sys.argv) > 1 else 5.0, criterion='distance')
+if os.environ.get('NOCLUSTER'):
+    labels = np.arange(1, len(X) + 1)
+else:
+    Z = linkage(X, 'average', metric='euclidean')
+    labels = fcluster(Z, t=float(sys.argv[1]) if len(sys.argv) > 1 else 5.0, criterion='distance')
 print('clusters', labels.max(), file=sys.stderr)
 
 # medoid per cluster + counts
@@ -127,13 +146,15 @@ meta = []
 for l in order:
     idx = clusters[l]
     sub = X[idx]
-    d = ((sub[:, None, :] - sub[None, :, :]) ** 2).sum(-1).sum(1)
-    med = idx[int(np.argmin(d))]
+    if len(idx) == 1: med = idx[0]
+    else:
+        d = ((sub[:, None, :] - sub[None, :, :]) ** 2).sum(-1).sum(1)
+        med = idx[int(np.argmin(d))]
     meta.append(dict(cluster=l, medoid=med, members=idx, n=len(idx)))
 
 # contact sheets: cell 64px glyph + label number
 cell = 72; per_row = 16
-chunks = [meta[i:i + 160] for i in range(0, len(meta), 160)]
+chunks = [] if os.environ.get('NOCLUSTER') else [meta[i:i + 160] for i in range(0, len(meta), 160)]
 for si, chunk in enumerate(chunks):
     rows = (len(chunk) + per_row - 1) // per_row
     sheet = Image.new('L', (per_row * cell, rows * (cell + 18)), 255)
