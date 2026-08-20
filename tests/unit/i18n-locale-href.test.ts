@@ -29,12 +29,16 @@ describe('localeHref (sitewide toggle, #2763)', () => {
   it('ES links to the /es twin when one exists', () => {
     expect(localeHref('es', '/')).toBe('/es');
     expect(localeHref('es', '/es')).toBe('/es');
+    // Path FAMILIES with twins (LOCALIZED_PREFIXES): collections and books (#4082).
+    expect(localeHref('es', '/collections/alchemy')).toBe('/es/collections/alchemy');
+    expect(localeHref('es', '/book/foo')).toBe('/es/book/foo');
+    expect(localeHref('es', '/book/foo/page/bar')).toBe('/es/book/foo/page/bar');
   });
 
   it('ES falls back to the Spanish homepage on pages with no twin', () => {
     // Deep pages (no /es twin) front-door to /es rather than 404.
-    expect(localeHref('es', '/book/foo')).toBe('/es');
     expect(localeHref('es', '/gallery')).toBe('/es');
+    expect(localeHref('es', '/bookshelf')).toBe('/es'); // prefix match is segment-wise, not string-wise
   });
 
   it('round-trips a localized twin path', () => {
