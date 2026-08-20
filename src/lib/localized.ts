@@ -64,6 +64,42 @@ export function originalTitleIfDifferent(book: BookLike, lang: Locale): string |
   return original && original !== shown ? original : null;
 }
 
+/**
+ * Per-language page-text counters on `books`. Declared in
+ * `scripts/lib/book-docs.mjs`; one field per language, written by
+ * `scripts/maintenance/sync-pages-translated-es.mjs`.
+ */
+const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
+  es: 'pages_translated_es',
+};
+
+/**
+ * Does this book actually EXIST in `lang`?
+ *
+ * A localized URL is a promise that the page is in that language, so this is
+ * the gate on whether `/es/book/<slug>` may exist at all — not a display
+ * preference. English is always true (it is the root). For any other language
+ * it means the book's PAGES have been translated: a title gloss alone is
+ * chrome, not an edition.
+ *
+ * Returns `null` when the payload cannot answer — the counter is a Mongo field
+ * and the Supabase catalog fast-path does not carry it. Callers must treat
+ * `null` as "ask, or do nothing", NEVER as false: reading an absent field as
+ * "no Spanish edition" would 307 a genuinely Spanish book to English, which is
+ * the absence-is-not-failure trap this codebase keeps re-learning.
+ */
+export function hasLocalizedEdition(
+  book: Record<string, unknown>,
+  lang: Locale,
+): boolean | null {
+  if (lang === 'en') return true;
+  const field = TRANSLATED_COUNTER[lang];
+  if (!field) return false;
+  const value = book[field];
+  if (value === undefined) return null;
+  return typeof value === 'number' && value > 0;
+}
+
 type CollectionLike = {
   name?: string; subtitle?: string; description?: string;
   localized?: LocalizedCollectionMap | null;

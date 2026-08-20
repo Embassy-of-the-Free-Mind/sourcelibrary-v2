@@ -29,4 +29,9 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
   };
 }
 
-export default BaseLayout;
+export default async function EsReaderLayout(props: LayoutProps) {
+  // `lang='es'` is what makes the base layout enforce the localized-URL promise
+  // (a book with no Spanish edition 307s to the English reader) and name the
+  // book in Spanish in the shell's metadata.
+  return BaseLayout({ ...props, lang: 'es' });
+}

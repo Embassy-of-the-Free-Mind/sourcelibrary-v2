@@ -119,9 +119,11 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const [useFallback, setUseFallback] = useState(false);
   const embedHref = useEmbedHref();
   const embed = useEmbed();
-  // A card rendered on a localized surface links to that surface's twin —
-  // /es/collections/… → /es/book/… — so the prefix never drops on a click.
-  // localePath is registry-guarded, so /artwork/… (no twin) is untouched.
+  // A card on a localized surface links to that surface's twin — /es/collections/…
+  // → /es/book/… — so the prefix never drops on a click. But only for a book
+  // that HAS an edition in that language: an /es URL is a promise the page is
+  // in Spanish, and a book without one has no Spanish page to point at.
+  // localePath is registry-guarded on top of that, so /artwork/… is untouched.
   const localePath = useLocalePath();
 
   const isArtwork = !!book.resource_type;
@@ -131,8 +133,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId || '';
 
-  const bookHref = localePath(embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`));
-  const artworkHref = localePath(embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`));
+  const hasSpanishEdition = (book.pages_translated_es ?? 0) > 0;
+  const localized = (href: string) => (hasSpanishEdition ? localePath(href) : href);
+  const bookHref = localized(embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`));
+  const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
 
   const ocrPct = pctOf(book.pages_ocr, pageCount);
   const translatedPct = pctOf(book.pages_translated, pageCount);

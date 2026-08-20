@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -82,7 +82,7 @@ import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
-import { localizedTitle, originalTitleIfDifferent } from '@/lib/localized';
+import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
@@ -2455,12 +2455,46 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // partner subdomain's reader out of its embed shell breaks the tenant lockdown.
   // Editor preview routes (previewProposed/allowHidden) are excluded for the same
   // reason: /artwork has no preview twin, so a redirect would 404 the editor.
-  // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
-  // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
-  // on a streamed page only because nothing has rendered yet — redirect() is a
-  // no-op after the first flush (#4036).
+  // A localized URL is a PROMISE that the page is in that language. A book with
+  // no Spanish edition has no Spanish page — send the reader to the English one
+  // rather than dressing an English record in a Spanish address and declaring it
+  // to Google as the Spanish version (which is what ~37.7K of these URLs did).
+  //
+  // Enforced HERE, at the route, so no card, slider or hand-written link can
+  // mint one by forgetting. Link sites still point straight at /book/… for
+  // these books, to save the hop — but they are an optimization, not the rule.
+  //
+  // 307, not 308: the condition is temporary by construction. The day the book
+  // is translated its /es URL must start working, and a 308 would sit poisoned
+  // in browser caches. The ISR entry self-heals within its revalidate window.
+  //
+  // `hasLocalizedEdition` returns null when the payload cannot answer — the
+  // counter is a Mongo field and the Supabase catalog fast-path lacks it. Ask
+  // Atlas then, and on a failed lookup do NOTHING: reading absence as "no
+  // Spanish edition" would redirect a genuinely Spanish book away.
   if (lang !== 'en') {
     const canonicalSlug = (earlyBook as { slug?: string }).slug;
+    let hasEdition = hasLocalizedEdition(earlyBook as unknown as Record<string, unknown>, lang);
+    if (hasEdition === null) {
+      const bookId = (earlyBook as { id?: string }).id ?? id;
+      const doc = await getReadDb()
+        .then((db) => db.collection('books').findOne(
+          { id: bookId },
+          { projection: { _id: 0, pages_translated_es: 1 }, maxTimeMS: 3000 },
+        ))
+        .catch(() => null);
+      // A doc we READ with the counter explicitly projected is authoritative:
+      // the field being absent there means the book has no Spanish pages, not
+      // that we could not tell. Only a failed lookup (doc === null) stays
+      // unknown. Getting this backwards makes the gate silently never fire.
+      hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
+    }
+    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}`);
+
+    // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
+    // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
+    // on a streamed page only because nothing has rendered yet — redirect() is a
+    // no-op after the first flush (#4036).
     if (canonicalSlug && id !== canonicalSlug) permanentRedirect(`/${lang}/book/${canonicalSlug}`);
   }
 

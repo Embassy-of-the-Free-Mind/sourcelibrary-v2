@@ -199,10 +199,13 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     const { chapters: _ch, read_count: _rc, ...rest } = b;
     return {
       ...rest,
-      // Every book now has a Spanish page, whether or not it has Spanish TEXT —
-      // one without shows the record in Spanish chrome and the English reader,
-      // which beats dropping the reader out of /es on the click.
-      href: spanishReaderHref(b),
+      // An /es URL is a promise the page is in Spanish, so only a book with a
+      // Spanish EDITION gets one; the rest link straight to their English page.
+      // The route enforces the same rule with a 307, so a link that gets this
+      // wrong is slow, not broken — but it should not be wrong.
+      href: (b.pages_translated_es ?? 0) > 0
+        ? spanishReaderHref(b)
+        : `/book/${encodeURIComponent(b.slug || b.id)}`,
     };
   });
 
