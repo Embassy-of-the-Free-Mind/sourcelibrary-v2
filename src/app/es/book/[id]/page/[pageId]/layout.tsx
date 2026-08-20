@@ -15,7 +15,7 @@ interface LayoutProps {
 }
 
 export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
-  const base = await baseMetadata(props);
+  const base = await baseMetadata({ ...props, lang: 'es' });
   const { id, pageId } = await props.params;
   const path = `/book/${id}/page/${pageId}`;
   return {

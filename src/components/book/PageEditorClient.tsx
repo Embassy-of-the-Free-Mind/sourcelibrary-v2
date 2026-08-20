@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
+import { useLocale } from '@/lib/i18n';
+import { READER_STRINGS } from '@/lib/book-i18n';
 import { useParams, usePathname } from 'next/navigation';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import VersionBanner from '@/components/ui/VersionBanner';
@@ -83,6 +85,7 @@ export default function PageEditorClient({
   // On the Spanish twin (/es/book/…) every URL this component writes keeps the
   // /es prefix, so page flips never drop the reader out of the Spanish site (#4082).
   const isOnEsRoute = pathname === '/es' || (pathname?.startsWith('/es/') ?? false);
+  const rs = READER_STRINGS[useLocale()];
   const tenantPrefix = isOnTenantSubdomain ? '' : isOnEsRoute ? '/es' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
   // Every reader URL this component writes uses the book's slug — the same
   // human-readable segment the book page uses (/book/a-sacred-repository-…),
@@ -423,8 +426,8 @@ export default function PageEditorClient({
       )}
 
       {hasSpanish && !pinnedVersion && (
-        <div className="flex items-center justify-center gap-2 py-2 text-sm" role="group" aria-label="Reading language">
-          <span className="text-neutral-500">Read in:</span>
+        <div className="flex items-center justify-center gap-2 py-2 text-sm" role="group" aria-label={rs.readingLanguage}>
+          <span className="text-neutral-500">{rs.readIn}</span>
           <div className="inline-flex overflow-hidden rounded-full border border-neutral-300">
             <button
               type="button"

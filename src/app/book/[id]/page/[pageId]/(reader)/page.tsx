@@ -11,6 +11,9 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { markPageForReader } from '@/lib/provenance';
+import { localePath, type Locale } from '@/lib/locale-path';
+import { READER_STRINGS } from '@/lib/book-i18n';
+import { localizedTitle } from '@/lib/localized';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -60,11 +63,15 @@ interface PageProps {
 // Book projection: only fields needed by the reader
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
+  // The one language-keyed map: the reader header shows `localized.<lang>.title`
+  // and the chapter dropdown `localized.<lang>.chapters`. Leaving it out of this
+  // projection is why the Spanish reader showed a German title over Spanish text.
+  localized: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
 };
 
-export default async function PageEditorPage({ params, allowHidden = false }: PageProps & { allowHidden?: boolean }) {
+export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
@@ -151,15 +158,16 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
           when client-component SSR changes (#2266). Sits below the h-screen
           reader; the in-reader controls remain the primary navigation. */}
       {!(ctx?.isEmbedded) && (() => {
+        const rs = READER_STRINGS[lang];
         const idx = serializedNavPages.findIndex(p => p.id === pageId);
         const prev = idx > 0 ? serializedNavPages[idx - 1] : null;
         const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
         return (
-          <nav aria-label="Page navigation" className="max-w-[1500px] mx-auto px-4 sm:px-6 py-4 text-sm text-stone-500 flex flex-wrap items-center gap-x-5 gap-y-1">
-            {prev && <a href={`/book/${bookPath}/page/${prev.id}`} className="hover:text-stone-700">← Page {prev.page_number}</a>}
-            <a href={`/book/${bookPath}`} className="hover:text-stone-700">{book.display_title || book.title}</a>
-            <a href={`/book/${bookPath}/overview`} className="hover:text-stone-700">All {serializedNavPages.length} pages</a>
-            {next && <a href={`/book/${bookPath}/page/${next.id}`} className="hover:text-stone-700">Page {next.page_number} →</a>}
+          <nav aria-label={rs.pageNavigation} className="max-w-[1500px] mx-auto px-4 sm:px-6 py-4 text-sm text-stone-500 flex flex-wrap items-center gap-x-5 gap-y-1">
+            {prev && <a href={localePath(`/book/${bookPath}/page/${prev.id}`, lang)} className="hover:text-stone-700">{rs.prevPageLink(prev.page_number)}</a>}
+            <a href={localePath(`/book/${bookPath}`, lang)} className="hover:text-stone-700">{localizedTitle(book, lang)}</a>
+            <a href={`/book/${bookPath}/overview`} className="hover:text-stone-700">{rs.allPagesLink(serializedNavPages.length)}</a>
+            {next && <a href={localePath(`/book/${bookPath}/page/${next.id}`, lang)} className="hover:text-stone-700">{rs.nextPageLink(next.page_number)}</a>}
           </nav>
         );
       })()}
