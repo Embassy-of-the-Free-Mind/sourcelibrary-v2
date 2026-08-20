@@ -125,22 +125,52 @@ let bookFilter = null;
 if (val('--book-ids')) bookFilter = { id: { $in: val('--book-ids').split(',').map((s) => s.trim()).filter(Boolean) } };
 else if (has('--books-with-editions') || (!migrate && !colSlug)) bookFilter = { [`pages_translated_${LANG}`]: { $gt: 0 } };
 
+// Summary + chapter titles for the Spanish book page (#4082). One call per field.
+async function localizeSummary(b) {
+  const src = b.index?.bookSummary?.brief || (typeof b.summary === 'string' ? b.summary : b.summary?.data);
+  if (!src) return null;
+  const out = await ask(`Translate this short library catalogue summary of a historical book into ${LANGUAGE}. Keep it the same length and register (editorial, concise, no marketing). Keep proper names in their customary ${LANGUAGE} form. Output ONLY the translation.\n\n${String(src).slice(0, 2500)}`);
+  return out && out.length > 20 ? out.trim() : null;
+}
+async function localizeChapters(b) {
+  const titles = (b.chapters || []).map((c) => c.titleEn || c.title).filter(Boolean);
+  if (!titles.length) return null;
+  const out = await ask(`Translate these table-of-contents entries of a historical book into ${LANGUAGE}. Return ONLY a JSON array of strings, same length and order (${titles.length} items), no commentary.\n\n${JSON.stringify(titles)}`);
+  try {
+    const arr = JSON.parse(String(out).replace(/^```json\s*|```$/g, ''));
+    return Array.isArray(arr) && arr.length === titles.length && arr.every((s) => typeof s === 'string') ? arr : null;
+  } catch { return null; }
+}
+
 if (bookFilter) {
-  const books = await db.collection('books').find(bookFilter, { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, localized: 1 } }).toArray();
+  const books = await db.collection('books').find(bookFilter, { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, localized: 1, 'chapters.title': 1, 'chapters.titleEn': 1, 'index.bookSummary.brief': 1, 'summary.data': 1 } }).toArray();
   let written = 0, skipped = 0, failed = 0;
   for (const b of books) {
-    if (b.localized?.[LANG]?.title && !FORCE) { skipped++; continue; }
-    const gloss = DRY ? '(dry)' : await glossBook(b);
-    if (!gloss) { failed++; console.warn(`  ! ${b.id} no gloss for "${(b.title || '').slice(0, 60)}"`); continue; }
-    console.log(`${DRY ? '[dry] ' : ''}${b.id}  ${(b.title || '').slice(0, 50)}  →  ${gloss}`);
+    const set = {};
+    const detail = { lang: LANG };
+    if (!b.localized?.[LANG]?.title || FORCE) {
+      const gloss = DRY ? '(dry)' : await glossBook(b);
+      if (!gloss) { failed++; console.warn(`  ! ${b.id} no gloss for "${(b.title || '').slice(0, 60)}"`); }
+      else { set[`localized.${LANG}.title`] = gloss; detail.gloss = gloss; }
+    }
+    if (!b.localized?.[LANG]?.summary || FORCE) {
+      const s = DRY ? null : await localizeSummary(b);
+      if (s) { set[`localized.${LANG}.summary`] = s; detail.summary = s.length; }
+    }
+    if ((!b.localized?.[LANG]?.chapters || FORCE) && (b.chapters || []).length) {
+      const ch = DRY ? null : await localizeChapters(b);
+      if (ch) { set[`localized.${LANG}.chapters`] = ch; detail.chapters = ch.length; }
+    }
+    if (!Object.keys(set).length) { skipped++; continue; }
+    console.log(`${DRY ? '[dry] ' : ''}${b.id}  ${(b.title || '').slice(0, 50)}  →  ${detail.gloss || '(title kept)'}${detail.summary ? ` · summary ${detail.summary}ch` : ''}${detail.chapters ? ` · ${detail.chapters} chapters` : ''}`);
     if (DRY) continue;
-    const r = await db.collection('books').updateOne({ id: b.id }, { $set: { [`localized.${LANG}.title`]: gloss, updated_at: new Date() } });
+    const r = await db.collection('books').updateOne({ id: b.id }, { $set: { ...set, updated_at: new Date() } });
     if (r.modifiedCount === 1) {
       written++;
-      await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'set-localized-title', detail: { lang: LANG, gloss } });
+      await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'set-localized-metadata', detail });
     }
   }
-  console.log(`\n${books.length} books: ${written} glosses written, ${skipped} already had one, ${failed} failed.`);
+  console.log(`\n${books.length} books: ${written} updated, ${skipped} already complete, ${failed} title glosses failed.`);
 }
 
 await client.close();

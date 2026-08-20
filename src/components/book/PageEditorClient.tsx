@@ -80,7 +80,10 @@ export default function PageEditorClient({
   const pathname = usePathname();
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
   const isOnEmbedRoute = pathname?.startsWith('/embed/');
-  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
+  // On the Spanish twin (/es/book/…) every URL this component writes keeps the
+  // /es prefix, so page flips never drop the reader out of the Spanish site (#4082).
+  const isOnEsRoute = pathname === '/es' || (pathname?.startsWith('/es/') ?? false);
+  const tenantPrefix = isOnTenantSubdomain ? '' : isOnEsRoute ? '/es' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
   // Every reader URL this component writes uses the book's slug — the same
   // human-readable segment the book page uses (/book/a-sacred-repository-…),
   // never the raw ObjectId. The route resolves either (findBookByIdOrSlug) and

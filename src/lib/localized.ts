@@ -22,6 +22,10 @@ import type { Locale } from '@/lib/i18n';
 export interface LocalizedBookFields {
   /** Gloss of the title in this language (what English keeps in display_title). */
   title?: string;
+  /** Short book summary in this language (from index.bookSummary.brief / summary). */
+  summary?: string;
+  /** Chapter titles in this language, aligned by index with books.chapters[]. */
+  chapters?: string[];
 }
 
 export interface LocalizedCollectionFields {
