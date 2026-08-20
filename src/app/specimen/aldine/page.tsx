@@ -100,6 +100,38 @@ export default function AldineSpecimenPage() {
           ))}
         </div>
 
+        {/* English pangrams — every letter incl. the reconstructed ones, with the calt rotation on and off */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">In English</h2>
+        <p className="text-secondary mb-6 leading-relaxed">
+          The type was cut for Latin, but here it is carrying every letter of the English alphabet,
+          including the seven sorts that had to be reconstructed. Below, the same line twice: first with
+          the three impressions of each common letter rotated as the compositor&apos;s case would have
+          mixed them, then locked to a single impression per letter &mdash; the difference between a
+          hand-set page and a typewriter.
+        </p>
+        <div className="rounded-xl border border-border-light bg-white p-6 md:p-10 mb-4 overflow-x-auto">
+          <div className="text-primary leading-[1.4]" style={{ fontFamily: aldineStack, fontSize: 'clamp(1.35rem, 2.6vw, 2rem)', fontFeatureSettings: '"liga" 1, "calt" 1' }}>
+            <div>The quick brown fox jumps over the lazy dog.</div>
+            <div>Sphinx of black quartz, judge my vow. Jackdaws love my big sphinx of quartz.</div>
+            <div>Pack my box with five dozen liquor jugs &mdash; 1496, 1501, 2026.</div>
+            <div>Wherever we went, we found the Aldine anchor and dolphin waiting for us.</div>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4 mb-12">
+          <div className="rounded-xl border border-border-light bg-white p-6">
+            <div className="text-xs uppercase tracking-wider text-muted mb-3">Three impressions per letter, rotated (calt on)</div>
+            <p className="text-primary text-2xl leading-snug" style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1, "calt" 1' }}>
+              annona, nonne, mensis, assessores, essentia, littera, sollicitudines, commemoratio
+            </p>
+          </div>
+          <div className="rounded-xl border border-border-light bg-white p-6">
+            <div className="text-xs uppercase tracking-wider text-muted mb-3">One impression per letter (calt off)</div>
+            <p className="text-primary text-2xl leading-snug" style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1, "calt" 0' }}>
+              annona, nonne, mensis, assessores, essentia, littera, sollicitudines, commemoratio
+            </p>
+          </div>
+        </div>
+
         {/* Side by side */}
         <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">Facsimile and revival</h2>
         <p className="text-secondary mb-6 leading-relaxed">
