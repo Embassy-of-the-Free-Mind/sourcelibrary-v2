@@ -1,0 +1,9 @@
+{
+ "_note": "font-units-per-pixel multiplier per glyph set relative to the main De Aetna set; calibrated by matching capital heights (z: Lascaris 1495 caps 76-83px vs 102-108px); w = more Lascaris leaves (same book as z); k = De Aetna 2nd copy ita-bnc-ald-00000039 scanned larger (C 128px vs 104px); c = Perotti Cornucopiae 1499 index (ita-bnc-ald-00000693) set in the shop's SMALLER roman: x-height 37px vs 65 -> 1.76",
+ "x": 1.0,
+ "y": 1.0,
+ "z": 1.33,
+ "w": 1.44,
+ "k": 0.8125,
+ "c": 1.76
+}
