@@ -26,6 +26,8 @@ const PASSAGE = [
 const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ ę';
 const ACCENTS = 'á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ';
 const UPPER = 'A B C D E F G H I K L M N O P Q R S T V X Y Z & ( )';
+const FIGURES = '0 1 2 3 4 5 6 7 8 9';
+const RECON = 'J U W';
 const LIGS = 'ct ſt ſi ſſ ſſi fi ff Qu';
 
 export default function AldineSpecimenPage() {
@@ -75,12 +77,14 @@ export default function AldineSpecimenPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {[
             ['Lowercase', LOWER],
             ['Capitals', UPPER],
             ['Ligatures', LIGS],
             ['Accents and abbreviation marks', ACCENTS],
+            ['Figures (from the smaller roman, 1499)', FIGURES],
+            ['Reconstructed — never cast in 1496', RECON],
           ].map(([label, text]) => (
             <div key={label} className="rounded-xl border border-border-light bg-white p-5">
               <div className="text-xs uppercase tracking-wider text-muted mb-3">{label}</div>
@@ -130,9 +134,14 @@ export default function AldineSpecimenPage() {
           <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>Qu</span> sort Griffo
           cast for the common case. K comes from De Aetna itself (&ldquo;Kalendis&rdquo;); X, Y and Z from
           the Greek alphabet tables of Lascaris&apos; grammar, where Aldus set the Greek majuscules from
-          the roman case. J, U and W did not exist in 1490s roman type (I and V did their work), and
-          these books carry no arabic numerals &mdash; dates and leaf counts are roman. That is the whole
-          fount; in a web stack Cardo supplies the modern letters and digits.
+          the roman case. The figures are old-style arabic numerals from the index of Perotti&apos;s{' '}
+          <Link href="/book/69b220f356715b0e32473bd0" className="text-accent-rust hover:underline">Cornucopiae</Link>{' '}
+          (1499) &mdash; the same shop, set in its smaller roman and scaled to this body, since the 1496
+          text itself counts only in roman numerals. J, U and W did not exist in 1490s roman type (I and V
+          did their work), so those three are <em>reconstructed</em> and marked as such: W is VV, exactly
+          as the compositors set it; U is the lowercase u raised to the cap line, as Monotype did for Bembo;
+          J is the I with the hook of the long s turned to hang below the line. Nothing else in the font
+          is invented.
           Letter spacing is measured from the page too: one em is the book&apos;s line pitch, and
           sidebearings are half the median gap between neighbouring sorts.
         </p>
