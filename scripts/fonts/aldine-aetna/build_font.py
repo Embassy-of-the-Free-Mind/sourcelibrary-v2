@@ -115,7 +115,7 @@ glyphs, advances, cmap = {}, {}, {}
 pen = TTGlyphPen(None); glyphs['.notdef'] = pen.glyph(); advances['.notdef'] = int(XH * S)
 pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(GAP * S * 2.2 + XH * S * 0.4); cmap[0x20] = 'space'
 
-STRIP_SATELLITES = {'&', '(', ')', 'D'}
+STRIP_SATELLITES = {'&', '(', ')', 'D', 'T', 'C'}
 CAPS_ON_BASELINE = set('ABCDEFGHIKLMNOPRSTVXYZ')
 CAP_PX, ASC_PX = 104.0, 113.0                      # measured on the main set (C/H/A; l)
 ROUND_BOTTOM = set('CGOQSUJcoesuagq0369') | {'Q_u', 'ae', 'æ', 'ę', '&'}
@@ -124,7 +124,7 @@ TOP_ANCHOR = {'Q': CAP_PX, 'Q_u': CAP_PX, 'g': 67.0, 'p': 67.0, 'q': 67.0, 'y': 
               '3': 67.0, '4': 67.0, '5': 67.0, '7': 67.0, '9': 67.0, ';': 67.0, 'J': CAP_PX}
 LINE_ANCHOR = {',', '(', ')', '-', '.', ':', '?', 'ı'}   # keep the measured line baseline
 RECONSTRUCT = True
-ERODE = {'K': 1}            # over-inked impressions: erode N px before tracing
+ERODE = {'K': 1, 'C': 1}            # over-inked impressions: erode N px before tracing
 ALT_LETTERS = 'aceimnorstudlhpgbfq'   # letters that get 2 extra impressions rotated by calt
 ACCENT_SOURCES = {'acute': 114, 'grave': 163, 'tilde': 215}      # á è ã impressions from the main set
 COMPOSITES = {'á': ('a','acute'), 'é': ('e','acute'), 'í': ('i','acute'), 'ó': ('o','acute'), 'ú': ('u','acute'),
@@ -149,6 +149,7 @@ for ch, cl in labels.items():
         lab, n = _nd.label(mask)
         if n > 1:
             sizes = _nd.sum(mask, lab, range(1, n + 1)); mask = (lab == (1 + int(np.argmax(sizes)))).astype(np.uint8)
+            ys, xs = np.where(mask); mask = mask[ys.min():ys.max() + 1, xs.min():xs.max() + 1]   # re-crop: anchoring uses the box
     svgtxt, (tx, ty, sx, sy), pad = trace(mask)
     # svg user coords -> pixel (of upscaled canvas): px = X*sx + tx ; py = Y*sy + ty   (sy negative)
     # pixel (canvas) -> original pixel: /UPSCALE, minus pad
