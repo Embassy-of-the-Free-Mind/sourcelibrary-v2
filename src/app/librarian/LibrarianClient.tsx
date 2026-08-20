@@ -1377,23 +1377,6 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     </Link>
                   </div>
                 )}
-
-                <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
-                  <div className="space-y-2">
-                    <Link href="/librarian/voice" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Voice conversation
-                    </Link>
-                    <Link href="/podcast" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Deep Dives podcast
-                    </Link>
-                    <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      The Ficino Society
-                    </Link>
-                    <Link href="/collections" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Browse the Collection
-                    </Link>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
