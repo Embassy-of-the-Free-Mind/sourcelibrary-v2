@@ -65,6 +65,13 @@ export interface HomeStrings {
   recentlyTranslatedHeading: string;
   recentlyTranslatedSubtitle: string;
 
+  // "Read in Spanish" slider — rendered on /es only (HomeData.spanishBooks is
+  // empty on the English homepage), but the strings live in both dictionaries
+  // so the two editions keep one shape.
+  spanishHeading: string;
+  spanishSubtitle: string;
+  spanishViewAll: string;
+
   // Gallery masonry (homepage)
   galleryHeading: string;
   gallerySubtitle: string;
@@ -173,6 +180,9 @@ const en: HomeStrings = {
 
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  spanishHeading: 'Read in Spanish',
+  spanishSubtitle: 'The most-read works in the library, with a Spanish edition you can open page by page beside the original.',
+  spanishViewAll: 'All books in Spanish',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
   galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
@@ -282,6 +292,9 @@ const es: HomeStrings = {
 
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  spanishHeading: 'Leer en español',
+  spanishSubtitle: 'Las obras más leídas de la biblioteca, con una edición en español que puedes abrir página a página junto al original.',
+  spanishViewAll: 'Todos los libros en español',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
   galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
@@ -370,6 +383,7 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   literature: 'Literatura y poesía',
   herbalism: 'Herbolaria y botánica',
   'music-sound': 'Música y sonido',
+  'en-espanol': 'Libros en español',
 };
 
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {

@@ -9,6 +9,12 @@ import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
 import { getTranslation } from '@/lib/page-translations';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
+import {
+  type ReadingLanguage,
+  READING_LANGUAGE_PARAM,
+  resolveReadingLanguage,
+  setStoredReadingLanguage,
+} from '@/lib/reading-language';
 
 interface PageEditorClientProps {
   initialBook: Book;
@@ -57,8 +63,19 @@ export default function PageEditorClient({
   const [pageList] = useState<Page[]>(initialPageList);
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
-  // Reading language: 'en' (default) or 'es' (Spanish edition, when available).
-  const [lang, setLang] = useState<'en' | 'es'>('en');
+  // Reading language: 'en' or 'es' (Spanish edition, when available). Starts as
+  // English for the server render, then resolves on mount from `?lang=` or the
+  // stored preference (set by the /es front door, a `?lang=es` link, or this
+  // toggle) — see src/lib/reading-language.ts. Toggling persists the choice, so
+  // a Spanish reader is not asked to find the switch on every book.
+  const [lang, setLangState] = useState<ReadingLanguage>('en');
+  useEffect(() => {
+    setLangState(resolveReadingLanguage());
+  }, []);
+  const setLang = useCallback((next: ReadingLanguage) => {
+    setLangState(next);
+    setStoredReadingLanguage(next);
+  }, []);
   const params = useParams<{ tenant: string }>();
   const pathname = usePathname();
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
@@ -302,6 +319,12 @@ export default function PageEditorClient({
     // Build URL with supported query params (version pinning)
     const newParams = new URLSearchParams();
     if (pinnedVersion) newParams.set('v', pinnedVersion);
+    // Keep an explicit ?lang=es on the URL across page flips so the address bar
+    // stays shareable as a Spanish-edition link (the stored preference already
+    // carries it for this reader).
+    if (lang === 'es' && new URLSearchParams(window.location.search).get(READING_LANGUAGE_PARAM) === 'es') {
+      newParams.set(READING_LANGUAGE_PARAM, 'es');
+    }
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
     window.history.pushState(null, '', `${tenantPrefix}/book/${bookPath}/page/${newPageId}${suffix}`);
 
