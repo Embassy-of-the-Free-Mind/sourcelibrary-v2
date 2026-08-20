@@ -22,70 +22,23 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export interface SharedConnection {
-  name: string;
-  type: 'person' | 'place' | 'concept';
-  sharedBooks: Array<{ book_id: string; book_title: string }>;
-}
-
-// Shared books data — which related entities appear in which of the same books
-export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
-  try {
-    const db = await getReadDb();
-    // Try exact match first (uses index, 2ms), then the aliases array (the timeline
-    // links figures by their canonical Wikidata name, e.g. "Apuleius", while the
-    // entity is stored under a surface name, e.g. "Apuleius of Madaura" — both share
-    // the same aliases[]), then case-insensitive regex on name (20s full scan) as a
-    // last resort.
-    const entity = await db.collection('entities').findOne(
-      { name },
-      { sort: { book_count: -1 } }
-    ) ?? await db.collection('entities').findOne(
-      { aliases: name },
-      { sort: { book_count: -1 } }
-    ) ?? await db.collection('entities').findOne(
-      { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
-      { sort: { book_count: -1 } }
-    );
-    if (!entity?.books?.length) return null;
-
-    const centerBooks = entity.books as Array<{ book_id: string; book_title: string }>;
-    const centerBookIds = centerBooks.map(b => b.book_id);
-    const bookTitleMap = new Map(centerBooks.map(b => [b.book_id, b.book_title]));
-
-    const related = await db.collection('entities')
-      .find({
-        _id: { $ne: entity._id },
-        'books.book_id': { $in: centerBookIds },
-      })
-      .sort({ book_count: -1 })
-      .limit(20)
-      .project({ name: 1, type: 1, 'books.book_id': 1 })
-      .toArray();
-
-    if (related.length === 0) return null;
-
-    const centerSet = new Set(centerBookIds);
-    const connections: SharedConnection[] = related.map(r => {
-      const relBookIds = (r.books as Array<{ book_id: string }>).map(b => b.book_id);
-      const shared = relBookIds
-        .filter(id => centerSet.has(id))
-        .map(id => ({ book_id: id, book_title: bookTitleMap.get(id) || 'Unknown' }));
-      return {
-        name: r.name as string,
-        type: r.type as 'person' | 'place' | 'concept',
-        sharedBooks: shared,
-      };
-    });
-
-    // Sort by number of shared books desc, then alphabetically
-    connections.sort((a, b) => b.sharedBooks.length - a.sharedBooks.length || a.name.localeCompare(b.name));
-
-    return connections.filter(c => c.sharedBooks.length > 0).slice(0, 15);
-  } catch {
-    return null;
-  }
-});
+/**
+ * The "Connections" panel that used to live here is REMOVED (2026-08-21).
+ *
+ * `getSharedBooks` ranked co-occurring entities by their GLOBAL `book_count`
+ * and took the top 20 before ever looking at how much they overlap with the
+ * subject. Any entity in more than a handful of books therefore co-occurs with
+ * the corpus's most frequent entities, so the panel rendered the SAME twenty
+ * names — Rome, Egypt, Aristotle, Plato, Italy, Moses, Jerusalem … — on every
+ * page, whether the subject appeared in 14 books or 825. Measured 2026-08-21:
+ * "Active Intellect", "Philosopher's Stone", "Kabbalah", "Rosicrucian" and
+ * "Mercury" all returned an identical list. It read as a semantic relation and
+ * carried zero information.
+ *
+ * If this comes back, rank by ASSOCIATION (PMI / lift — shared books over what
+ * chance would predict from each entity's own book_count), not by raw
+ * frequency, and compute the overlap BEFORE the limit. See issue in the PR.
+ */
 
 export interface AuthoredWork {
   id: string;
