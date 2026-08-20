@@ -2,7 +2,6 @@ import { getReadDb } from '@/lib/mongodb';
 import { sortCollections, sanitizeThumbnail, coverOverride } from '@/lib/collections-utils';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { ES_COLLECTION_NAMES } from '@/lib/home-i18n';
-import { READING_LANGUAGE_PARAM } from '@/lib/reading-language';
 import { isNativeEdition, localizedCollection, localizedEditionFilter, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 
 /**
@@ -133,8 +132,6 @@ function spanishCopy(doc: Record<string, unknown>) {
 export function spanishReaderHref(book: { slug?: string; id: string; pages_count?: number; chapters?: { pageNumber?: number }[] }): string {
   return `/es/book/${encodeURIComponent(book.slug || book.id)}`;
 }
-// READING_LANGUAGE_PARAM stays exported for the legacy ?lang=es links still in the wild.
-export { READING_LANGUAGE_PARAM };
 
 const PUBLIC_COLLECTION = { visible: true, collection_type: { $ne: 'visual_art' } };
 

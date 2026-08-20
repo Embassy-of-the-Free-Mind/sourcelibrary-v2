@@ -1,6 +1,6 @@
 # Rendering invariants — prerender, browser translation, social cards
 
-**Read this when:** Touching a client component on an ISR route, the reader panels, the root layout, or a page’s `metadata` export.
+**Read this when:** Touching a client component on an ISR route, the reader panels, the root layout, a page’s `metadata` export, or adding a route-level `redirect()` / `notFound()`.
 
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
@@ -8,6 +8,33 @@
 
 ## Static-prerender Suspense invariant (SEO-critical)
 Any client component that calls `useSearchParams()` (or another prerender-bailout hook) must wrap the consumer in its **own** `<Suspense fallback={null}>` inside the component — never rely on a page-level boundary catching it. On statically prerendered routes (the ISR book page is the canonical case: `revalidate = 86400`, never reads `headers()`), an unwrapped call throws a CSR bailout that the *nearest* Suspense boundary catches; when that's the page's main content boundary, the served HTML becomes the loading skeleton. Users never notice (the client re-renders from flight data), but crawlers get a content-free page — this silently blanked every `/book/<slug>` page for search engines from ~2026-05-27 to 2026-07-19 and was the real root cause of the "99% of pages orphaned" finding (#2266, fixed in PR #3231 via `EmbedNavigationReporter`). **Tell:** a `BAILOUT_TO_CLIENT_SIDE_RENDERING` template in served HTML above the content, and 0 content anchors while the flight-data scripts contain them. **Verify with `curl` + grep for real `<a href>` anchors** — a browser always looks fine, so eyeballing proves nothing. Dynamic routes (anything reading `headers()`, like collections and the reader) don't hit this, which makes the regression easy to miss in spot checks.
+
+## A `redirect()` or `notFound()` below a `loading.tsx` is a soft 200
+
+A segment with a `loading.tsx` gets an **automatic `<Suspense>` around its
+`page.tsx`**. Next flushes the 200 shell the moment the page's data fetch
+suspends — so by the time the page's own code runs, the status is committed and
+neither `redirect()` nor `notFound()` can change it. What you get instead:
+
+- `notFound()` → a soft-404: the not-found body served with status **200**.
+  Fixed on sibling routes in #3277 / #3376; `tests/unit/soft-404-loading-guard.test.ts`
+  pins that certain `loading.tsx` files stay absent.
+- `redirect()` → a **client-side meta-refresh**: status **200** with
+  `NEXT_REDIRECT` and a `<meta http-equiv="refresh">` in the body. A browser
+  follows it, so it looks fine; a crawler indexes the page you meant to redirect
+  away from. Measured on 2026-08-21 while gating `/es/book/<slug>/page/<id>`
+  for books with no Spanish edition (#4104): the page-level version returned 200,
+  the layout-level version a real 307.
+
+**The fix is always the same: move the decision UP into `layout.tsx`.** A layout
+sits above that boundary, so awaiting there still sets a real status and the
+skeleton is untouched. `src/app/book/[id]/page/[pageId]/layout.tsx` now carries
+both the existence gate and the localized-URL gate for exactly this reason.
+
+**Verify with `curl -o /dev/null -w '%{http_code} %{redirect_url}'`**, never in a
+browser: `%{redirect_url}` is populated only by a real HTTP redirect, and the
+meta-refresh case is indistinguishable by eye. Same discipline as the
+static-prerender invariant above — the browser always looks fine.
 
 ## Browser-translation invariant (don't remove the guard or the key)
 Chrome/Edge's built-in translator replaces every text node with a nested `<font style="vertical-align: inherit">` pair. React keeps a reference to the ORIGINAL node, so its next commit calls `removeChild`/`insertBefore` on a node that is no longer a child of the parent React recorded — the DOM throws `NotFoundError`, React re-throws out of the commit phase, and the nearest error boundary blanks the page. For a reader with auto-translate on this was: open a book, turn two or three pages, get an error screen, on every book and device (reported in Italian, fixed in #3314; see `.claude/handoffs/2026-07-22-browser-translation-reader-crash.md`). Two pieces keep it working, and each looks deletable on its own:
