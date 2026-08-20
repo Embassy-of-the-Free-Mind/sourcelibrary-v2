@@ -11,6 +11,7 @@ import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData, SPANISH_COLLECTION_SLUG } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
+import { localePath } from '@/lib/locale-path';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -18,6 +19,10 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
+  // Every link on this page that HAS a twin keeps the locale; the rest (gallery,
+  // catalog, browse, podcast, blog…) are returned untouched by localePath and go
+  // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
+  const lp = (href: string) => localePath(href, lang);
   const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
 
@@ -41,7 +46,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.spanishHeading}
               </h2>
               <Link
-                href={`${lang === 'es' ? '/es' : ''}/collections/${SPANISH_COLLECTION_SLUG}`}
+                href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.spanishViewAll} &rarr;
@@ -52,7 +57,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </p>
             <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
             <div className="mt-6 sm:hidden">
-              <Link href={`${lang === 'es' ? '/es' : ''}/collections/${SPANISH_COLLECTION_SLUG}`} className="text-sm text-accent-rust hover:underline">
+              <Link href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)} className="text-sm text-accent-rust hover:underline">
                 {t.spanishViewAll} &rarr;
               </Link>
             </div>
@@ -105,7 +110,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                       {featuredPodcast.sources.map((s) => (
                         <li key={s.bookId}>
                           <Link
-                            href={`/book/${s.slug || s.bookId}`}
+                            href={lp(`/book/${s.slug || s.bookId}`)}
                             className="text-[15px] hover:underline"
                             style={{ color: '#e8e2d8' }}
                           >
@@ -177,7 +182,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             {collections.slice(0, 11).map((col, i) => (
               <Link
                 key={col.slug}
-                href={`/collections/${col.slug}`}
+                href={lp(`/collections/${col.slug}`)}
                 className="group relative rounded-xl overflow-hidden aspect-square hover:shadow-lg transition-all hover:-translate-y-0.5"
               >
                 {col.hero_image ? (
@@ -206,7 +211,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             ))}
             {collections.length > 11 && (
               <Link
-                href="/collections"
+                href={lp('/collections')}
                 className="group relative rounded-xl overflow-hidden aspect-square bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
               >
                 <div className="text-center px-4">
@@ -229,7 +234,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
             </Link>
             <Link
-              href="/collections"
+              href={lp('/collections')}
               className="text-sm text-muted hover:text-accent-rust transition-colors"
             >
               {t.allCollections} &rarr;
@@ -280,6 +285,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         <EditorialSpread
           collection={featuredItems[0].collection}
           books={featuredItems[0].books}
+          lang={lang}
         />
       )}
 
@@ -394,14 +400,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/support"
+                  href={lp('/support')}
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                   style={{ background: 'var(--accent-rust)', color: '#fff' }}
                 >
                   {t.howToSupport}
                 </Link>
                 <Link
-                  href="/auth/signin"
+                  href={lp('/auth/signin')}
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                   style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
                 >

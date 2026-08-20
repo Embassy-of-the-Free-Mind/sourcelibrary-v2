@@ -15,7 +15,7 @@ import { Book, Page } from '@/lib/types';
 // Only the fields the shells need — metadata, existence, visibility. Skip
 // index, reading_summary, etc.
 export const BOOK_META_PROJECTION = {
-  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
+  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, published: 1, language: 1,
   // `visible` powers the (reader) group's hidden-book gate (isHiddenBook).
   visible: 1,
 };

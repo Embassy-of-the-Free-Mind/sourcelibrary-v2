@@ -274,14 +274,270 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 };
 
 /**
- * Not localized yet (stays English under `/es`, deliberately — #4082 phase 2):
+ * Reader chrome (`/es/book/<id>/page/<pageId>`, #4082 phase 2b).
+ *
+ * Kept separate from BOOK_STRINGS because it is a different screen with a
+ * different job — the words around a page of text, not the words around a
+ * record. The reader is a CLIENT component, so it reads its locale from the
+ * pathname (`useLocale()`) rather than taking a prop.
+ *
+ * EDITOR tooling (Run OCR, Edit Prompt, Translate, the settings dialogs, the
+ * edit-mode panes) is deliberately NOT here: it is staff-only, English is its
+ * working language, and translating it would imply a Spanish editing workflow
+ * we do not offer.
+ */
+export interface ReaderStrings {
+  // page navigation
+  previousPage: string;
+  nextPage: string;
+  jumpToPage: string;
+  jumpToPageAria: (total: number) => string;
+  pageOfAria: (n: number, total: number) => string;
+  arrowKeysHint: string;
+  swipeHint: string;
+  // panel toggles
+  panelVisibility: string;
+  image: string;
+  ocr: string;
+  romanized: string;
+  german: string;
+  toggle: (shown: boolean, what: string) => string;
+  panelSourceImage: string;
+  panelOriginalText: string;
+  panelRomanized: string;
+  panelGerman: string;
+  panelTranslation: string;
+  selectAPanel: string;
+  // source-image panel
+  sourceImage: string;
+  tabletPhoto: string;
+  source: string;
+  noImage: string;
+  download: string;
+  downloadFullRes: string;
+  viewAt: (provider: string) => string;
+  // translation panel toolbar
+  notes: string;
+  notesOff: string;
+  hideNotes: string;
+  showNotes: string;
+  info: string;
+  viewPageMetadata: string;
+  copy: string;
+  copied: string;
+  // reading settings
+  readingSettings: string;
+  fontSize: string;
+  smaller: string;
+  resetSize: string;
+  larger: string;
+  theme: string;
+  themePaper: string;
+  themeSepia: string;
+  themeNight: string;
+  // footer + search
+  likeThisPage: string;
+  searchThisBook: string;
+  searchWithinBook: string;
+  clearSearch: string;
+  translationIssue: string;
+  feedbackThanks: string;
+  feedbackWhat: string;
+  feedbackPlaceholder: string;
+  cancel: string;
+  send: string;
+  sending: string;
+  // chapters
+  contents: string;
+  tableOfContents: string;
+  chapterCount: (n: number) => string;
+  chapterAria: (title: string) => string;
+  chapterShort: (n: number) => string;
+  toc: string;
+  close: string;
+  pageAbbrev: (n: number) => string;
+  // reading language
+  readIn: string;
+  readingLanguage: string;
+  pageNavigation: string;
+  metaPageOf: (n: number, title: string) => string;
+  metaTitle: (title: string, n: number) => string;
+  prevPageLink: (n: number) => string;
+  nextPageLink: (n: number) => string;
+  allPagesLink: (n: number) => string;
+}
+
+export const READER_STRINGS: Record<Locale, ReaderStrings> = {
+  en: {
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
+    jumpToPage: 'Jump to page',
+    jumpToPageAria: (total) => `Jump to page (1 to ${total})`,
+    pageOfAria: (n, total) => `Page ${n} of ${total}. Click to jump to a page`,
+    arrowKeysHint: 'Use \u2190 \u2192 arrow keys to navigate',
+    swipeHint: 'Swipe left/right to navigate',
+
+    panelVisibility: 'Panel visibility',
+    image: 'Image',
+    ocr: 'OCR',
+    romanized: 'Romanized',
+    german: 'Deutsch',
+    toggle: (shown, what) => `${shown ? 'Hide' : 'Show'} ${what}`,
+    panelSourceImage: 'source image',
+    panelOriginalText: 'original text',
+    panelRomanized: 'romanized text',
+    panelGerman: 'German scholarly translation',
+    panelTranslation: 'translation',
+    selectAPanel: 'Select a panel to view',
+
+    sourceImage: 'Source Image',
+    tabletPhoto: 'Tablet Photo',
+    source: 'Source',
+    noImage: 'No image available',
+    download: 'Download',
+    downloadFullRes: 'Download full resolution',
+    viewAt: (provider) => `View at ${provider}`,
+
+    notes: 'Notes',
+    notesOff: 'Notes Off',
+    hideNotes: 'Hide notes and metadata',
+    showNotes: 'Show notes and metadata',
+    info: 'Info',
+    viewPageMetadata: 'View page metadata',
+    copy: 'Copy',
+    copied: 'Copied',
+
+    readingSettings: 'Reading settings',
+    fontSize: 'Font Size',
+    smaller: 'Smaller (Cmd+-)',
+    resetSize: 'Reset to default (Cmd+0)',
+    larger: 'Larger (Cmd+=)',
+    theme: 'Theme',
+    themePaper: 'Paper',
+    themeSepia: 'Sepia',
+    themeNight: 'Night',
+
+    likeThisPage: 'Like this page',
+    searchThisBook: 'Search this book...',
+    searchWithinBook: 'Search within this book',
+    clearSearch: 'Clear search',
+    translationIssue: 'Notice a translation issue? Let us know.',
+    feedbackThanks: 'Thank you — your feedback helps improve this translation.',
+    feedbackWhat: 'What did you notice?',
+    feedbackPlaceholder: 'Wrong word, awkward phrasing, missing context...',
+    cancel: 'Cancel',
+    send: 'Send',
+    sending: 'Sending...',
+
+    contents: 'Contents',
+    tableOfContents: 'Table of contents',
+    chapterCount: (n) => `${n} chapters`,
+    chapterAria: (title) => `Chapter: ${title}`,
+    chapterShort: (n) => `Ch. ${n}`,
+    toc: 'ToC',
+    close: 'Close',
+    pageAbbrev: (n) => `p.\u00A0${n}`,
+
+    readIn: 'Read in:',
+    readingLanguage: 'Reading language',
+    pageNavigation: 'Page navigation',
+    metaPageOf: (n, title) => `Page ${n} of "${title}"`,
+    metaTitle: (title, n) => `${title} - Page ${n}`,
+    prevPageLink: (n) => `\u2190 Page ${n}`,
+    nextPageLink: (n) => `Page ${n} \u2192`,
+    allPagesLink: (n) => `All ${n} pages`,
+  },
+  es: {
+    previousPage: 'Página anterior',
+    nextPage: 'Página siguiente',
+    jumpToPage: 'Ir a una página',
+    jumpToPageAria: (total) => `Ir a una página (1 a ${total})`,
+    pageOfAria: (n, total) => `Página ${n} de ${total}. Pulsa para ir a otra página`,
+    arrowKeysHint: 'Usa las flechas \u2190 \u2192 para pasar de página',
+    swipeHint: 'Desliza a izquierda o derecha para pasar de página',
+
+    panelVisibility: 'Paneles visibles',
+    image: 'Imagen',
+    ocr: 'OCR',
+    romanized: 'Romanizado',
+    german: 'Alemán',
+    toggle: (shown, what) => `${shown ? 'Ocultar' : 'Mostrar'} ${what}`,
+    panelSourceImage: 'la imagen original',
+    panelOriginalText: 'el texto original',
+    panelRomanized: 'el texto romanizado',
+    panelGerman: 'la traducción académica alemana',
+    panelTranslation: 'la traducción',
+    selectAPanel: 'Elige un panel para verlo',
+
+    sourceImage: 'Imagen original',
+    tabletPhoto: 'Foto de la tablilla',
+    source: 'Original',
+    noImage: 'No hay imagen disponible',
+    download: 'Descargar',
+    downloadFullRes: 'Descargar en alta resolución',
+    viewAt: (provider) => `Ver en ${provider}`,
+
+    notes: 'Notas',
+    notesOff: 'Notas ocultas',
+    hideNotes: 'Ocultar notas y metadatos',
+    showNotes: 'Mostrar notas y metadatos',
+    info: 'Info',
+    viewPageMetadata: 'Ver los metadatos de la página',
+    copy: 'Copiar',
+    copied: 'Copiado',
+
+    readingSettings: 'Ajustes de lectura',
+    fontSize: 'Tamaño de letra',
+    smaller: 'Más pequeña (Cmd+-)',
+    resetSize: 'Volver al tamaño normal (Cmd+0)',
+    larger: 'Más grande (Cmd+=)',
+    theme: 'Tema',
+    themePaper: 'Papel',
+    themeSepia: 'Sepia',
+    themeNight: 'Noche',
+
+    likeThisPage: 'Me gusta esta página',
+    searchThisBook: 'Buscar en este libro...',
+    searchWithinBook: 'Buscar dentro de este libro',
+    clearSearch: 'Borrar la búsqueda',
+    translationIssue: '¿Has visto un problema en la traducción? Cuéntanoslo.',
+    feedbackThanks: 'Gracias — tus comentarios ayudan a mejorar esta traducción.',
+    feedbackWhat: '¿Qué has visto?',
+    feedbackPlaceholder: 'Una palabra equivocada, una frase forzada, un contexto que falta...',
+    cancel: 'Cancelar',
+    send: 'Enviar',
+    sending: 'Enviando...',
+
+    contents: 'Contenido',
+    tableOfContents: 'Índice',
+    chapterCount: (n) => `${n} capítulos`,
+    chapterAria: (title) => `Capítulo: ${title}`,
+    chapterShort: (n) => `Cap. ${n}`,
+    toc: 'Índ.',
+    close: 'Cerrar',
+    pageAbbrev: (n) => `pág.\u00A0${n}`,
+
+    readIn: 'Leer en:',
+    readingLanguage: 'Idioma de lectura',
+    pageNavigation: 'Navegación por páginas',
+    metaPageOf: (n, title) => `Página ${n} de «${title}»`,
+    metaTitle: (title, n) => `${title} - Página ${n}`,
+    prevPageLink: (n) => `\u2190 Página ${n}`,
+    nextPageLink: (n) => `Página ${n} \u2192`,
+    allPagesLink: (n) => `Las ${n} páginas`,
+  },
+};
+
+/**
+ * Not localized yet (stays English under `/es`, deliberately — #4082):
  * the bibliographic panel (`BookBiblioPanel`, `TranslationCardPanel`,
  * `RelatedEditions`), the reading guide's own prose, the processing log
  * (`PublicBookHistory`), the citation / download / share menus, the
- * contributing-library section, the sign-up call to action, and the index
- * TERMS themselves (English entity labels). Each is a component with its own
- * strings; thread `lang` (or `useLocale()` for client components) and move its
- * words into the dictionary above when it is done.
+ * contributing-library section, the sign-up call to action, the index TERMS
+ * themselves (English entity labels), and the reader's EDITOR tooling (see
+ * READER_STRINGS below). Each is a component with its own strings; thread
+ * `lang` (or `useLocale()` for client components) and move its words into the
+ * dictionary above when it is done.
  */
 
 /** Spanish names for the `books.language` values a Spanish reader will meet most. */

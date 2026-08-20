@@ -6,6 +6,9 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 // (reader) group layout's visibility gate all read it, so one round trip
 // serves the whole request.
 import { getPageData } from './page-data';
+import { type Locale } from '@/lib/locale-path';
+import { READER_STRINGS } from '@/lib/book-i18n';
+import { localizedTitle } from '@/lib/localized';
 
 export const preferredRegion = 'fra1';
 
@@ -14,8 +17,9 @@ interface LayoutProps {
   params: Promise<{ id: string; pageId: string }>;
 }
 
-export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
+export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { lang?: Locale }): Promise<Metadata> {
   const { id, pageId } = await params;
+  const rs = READER_STRINGS[lang];
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
 
@@ -29,10 +33,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     };
   }
 
-  const bookTitle = book.display_title || book.title;
+  const bookTitle = localizedTitle(book as Parameters<typeof localizedTitle>[0], lang);
   const pageNum = page.page_number;
   const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
-  const title = `${ogBookTitle} - Page ${pageNum}`;
+  const title = rs.metaTitle(ogBookTitle, pageNum);
 
   // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
   // wrapper blocks first so <meta>/<summary>/… prose never lands in the OG
@@ -42,8 +46,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     ? textContent.substring(0, 197) + '...'
     : textContent;
 
+  // The excerpt is the page's own text in the reader's language; the sentence
+  // around it follows the locale. An untranslated book keeps its English frame.
   const description = excerpt
-    ? `Page ${pageNum} of "${bookTitle}" by ${book.author}. ${excerpt}`
+    ? `${rs.metaPageOf(pageNum, bookTitle)} — ${book.author}. ${excerpt}`
     : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
