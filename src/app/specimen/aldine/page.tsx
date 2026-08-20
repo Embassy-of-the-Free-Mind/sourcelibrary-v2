@@ -23,11 +23,11 @@ const PASSAGE = [
   'liſper animũ; méq; ipſum reſtituã mihi,',
 ];
 
-const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ ę';
+const LOWER = 'a b c d e f g h i l m n o p q r s t u x y z ſ æ ę';
 const ACCENTS = 'á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ';
 const UPPER = 'A B C D E F G H I K L M N O P Q R S T V X Y Z & ( )';
 const FIGURES = '0 1 2 3 4 5 6 7 8 9';
-const RECON = 'J U W';
+const RECON = 'J U W j k v w';
 const LIGS = 'ct ſt ſi ſſ ſſi fi ff Qu';
 
 export default function AldineSpecimenPage() {
@@ -55,15 +55,17 @@ export default function AldineSpecimenPage() {
         {/* The facsimile */}
         <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">Aldine Aetna — the facsimile</h2>
         <p className="text-secondary mb-6 leading-relaxed">
-          Each glyph is one real impression from the book, chosen as the most typical of its
-          kind among some 70,000 printed letters on sixty pages of De Aetna and the Aldines of 1495–97 set in the same fount, then vectorised. Ink spread,
-          worn corners and the slight unevenness of hand-set metal are kept on purpose. This is
-          what the 1496 reader saw.
+          Each glyph is a real impression from the book, chosen as the most typical of its kind among
+          some 70,000 printed letters on sixty pages of De Aetna and the Aldines of 1495&ndash;99 set in the
+          same fount, then vectorised. Ink spread, worn corners and the slight unevenness of hand-set metal
+          are kept on purpose &mdash; and the common letters carry three different impressions each, rotated
+          as you read so that no two neighbouring sorts are the same cast, which is what a hand-set page
+          actually looks like. This is what the 1496 reader saw.
         </p>
         <div className="rounded-xl border border-border-light bg-white p-6 md:p-10 mb-8 overflow-x-auto">
           <div
             className="text-primary leading-[1.45]"
-            style={{ fontFamily: aldineStack, fontSize: 'clamp(1.35rem, 2.6vw, 2rem)', fontFeatureSettings: '"liga" 1' }}
+            style={{ fontFamily: aldineStack, fontSize: 'clamp(1.35rem, 2.6vw, 2rem)', fontFeatureSettings: '"liga" 1, "calt" 1' }}
           >
             {PASSAGE.map((line) => (
               <div key={line} className="whitespace-nowrap">{line}</div>
@@ -140,8 +142,9 @@ export default function AldineSpecimenPage() {
           text itself counts only in roman numerals. J, U and W did not exist in 1490s roman type (I and V
           did their work), so those three are <em>reconstructed</em> and marked as such: W is VV, exactly
           as the compositors set it; U is the lowercase u raised to the cap line, as Monotype did for Bembo;
-          J is the I with the hook of the long s turned to hang below the line. Nothing else in the font
-          is invented.
+          J is the long s turned through 180&deg; under the I&apos;s serif. The lowercase z is real
+          (&ldquo;ſyllogizari&rdquo;); j, k, v and w are built the same way from the i, the l with the K&apos;s
+          arms, and the V. Nothing else in the font is invented.
           Letter spacing is measured from the page too: one em is the book&apos;s line pitch, and
           sidebearings are half the median gap between neighbouring sorts.
         </p>

@@ -20,6 +20,7 @@ for a in args:
         if not os.path.exists(f): f = 'w/' + p + '.jpg'
         if not os.path.exists(f): f = 'k/' + p + '.jpg'
         if not os.path.exists(f): f = 'c/' + p + '.jpg'
+        if not os.path.exists(f): f = 'v/' + p + '.jpg'
         pages[p] = Image.open(f).convert('L')
     im = pages[p]
     X0 = g['offx'] + g['x0']; X1 = g['offx'] + g['x1']; Y0 = g['offy'] + g['y0']; Y1 = g['offy'] + g['y1']

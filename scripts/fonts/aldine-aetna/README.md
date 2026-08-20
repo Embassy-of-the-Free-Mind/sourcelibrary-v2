@@ -52,15 +52,18 @@ ink width set them a whole gap too wide ("f luctibus").
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.6)
+## Coverage (v0.7)
 
-95 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+136 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
 ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
 grave and tilde are split off real impressions (`ACCENT_SOURCES`) and placed over each base
 vowel at the gap/offset measured on the page; i takes the dotless stem `ı`), the ligatures
 ct ſt ſi ſſ ſſi fi ff and Qu (Griffo cast a fused Qu sort for the common case; `Q u` → `Q_u`
 via `liga`; a lone Q exists too, from Lascaris), capitals
-A–Z (J U W **reconstructed**, see below), figures 0–9, and . , : ; - ( ) ?.
+A–Z (J U W **reconstructed**, see below), lowercase incl. z (real, "ſyllogizari") and
+j k v w (reconstructed), figures 0–9, . , : ; - ( ) ?, and **two alternate impressions for each of
+18 common letters** (`ALT_LETTERS`), rotated by a `calt` feature (`@s0 @s0' → @s1`, `@s1 @s0' → @s2`)
+so consecutive letters never repeat a sort — the natural variation of hand-set type.
 Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
 (`fetch_1497.sh`: IA 690/691/692 = Leoniceno, Maiolo ×2), segmented with
 `NOCLUSTER=1` (52k glyphs; average-linkage on that many is O(n²) and unnecessary
@@ -90,10 +93,17 @@ line-baseline estimate is unreliable in alphabet tables.
 column numbers in arabic — thousands of old-style figures in the shop's *smaller* roman
 (x-height 37 px vs 65), hence `set_scales.json` c = 1.76. Found with `find_digits.mjs`
 (OCR index over the 1499–1520 BNCF Aldines); the 1501+ octavos are italic and useless here.
-**Reconstructed sorts** (`RECONSTRUCT` in `build_font.py`): J U W never existed in 1490s
-roman type. W = V V overlapped 28 % (how the compositors set it); U = lowercase u scaled
-to the cap line (Monotype's Bembo solution); J = I with the long-s hook rotated 180° hung
-below the line. They are real glyphs in the font (so Cardo never has to step in mid-word,
+**Vertical alignment** (`vertical_anchor`): the per-line baseline estimate from ink projection
+was the cause of the "C, K, Q, T, 9 sit off" complaint. It is gone for letters: every glyph
+without a descender stands on its own bottom edge (round letters overshoot 3 %); descending
+glyphs are anchored by their known TOP (Q at cap height; g p q y ę and the old-style 3 4 5 7 9 at
+x-height). Only punctuation still uses the line estimate (`LINE_ANCHOR`). `ERODE` thins
+over-inked impressions (the K from the heavier second copy).
+**Reconstructed sorts** (`RECONSTRUCT` in `build_font.py`): J U W (and lowercase j k v w) never
+existed in 1490s roman type. W = V V overlapped 28 % (how the compositors set it); U = lowercase u scaled
+to the cap line (Monotype's Bembo solution); J = the long s rotated 180° and stretched 1.32× (its crossbar nub becomes the right-hand top
+serif) with the I's serif laid over the top; v = V at x-height, re-weighted; w = vv; j = i with the
+ſ hook below the line; k = l stem + K arms scaled to x-height. They are real glyphs in the font (so Cardo never has to step in mid-word,
 which is what Derek found jarring) but the specimen page flags them as reconstructions.
 `src/lib/fonts/aldine.ts` stacks Cardo behind it for everything missing.
 

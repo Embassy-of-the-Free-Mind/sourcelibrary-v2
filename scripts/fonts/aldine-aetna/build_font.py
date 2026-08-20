@@ -27,7 +27,7 @@ SETS = {'': (masks, meta, clusters)}
 if os.path.exists('x_glyphs.npz'):
     xd = np.load('x_glyphs.npz', allow_pickle=True)
     SETS['x'] = (xd['masks'], xd['meta'], json.load(open('x_clusters.json')))
-for _p in ['y', 'z', 'w', 'k', 'c']:
+for _p in ['y', 'z', 'w', 'k', 'c', 'v']:
     if os.path.exists(f'{_p}_glyphs.npz'):
         _d = np.load(f'{_p}_glyphs.npz', allow_pickle=True)
         SETS[_p] = (_d['masks'], _d['meta'], json.load(open(f'{_p}_clusters.json')))
@@ -77,6 +77,15 @@ GAP = statistics.median(gaps)
 SB = GAP / 2 * S
 print(f'median gap {GAP:.1f}px -> sidebearing {SB:.0f} units', file=sys.stderr)
 
+def vertical_anchor(ch, mask, g, S, pad):
+    """Row (in the padded crop) that is the baseline, in this glyph's own pixels."""
+    main_px = S / SET_SCALE['']             # this set's px -> main-set px
+    h = mask.shape[0]
+    if ch in LINE_ANCHOR: return g['base'] - g['y0'] + pad
+    if ch in TOP_ANCHOR: return TOP_ANCHOR[ch] / main_px + pad
+    over = (0.03 * (CAP_PX if ch.isupper() or ch in ('&',) else 67.0)) / main_px if ch in ROUND_BOTTOM else 0.0
+    return h + pad - over                    # stands on the baseline
+
 NAMES = {'.': 'period', ',': 'comma', ':': 'colon', ';': 'semicolon', '-': 'hyphen', '(': 'parenleft', ')': 'parenright',
          'ſ': 'longs', 'æ': 'ae', 'Æ': 'AE', '?': 'question', '&': 'ampersand', '!': 'exclam', "'": 'quotesingle'}
 
@@ -106,7 +115,15 @@ pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(G
 
 STRIP_SATELLITES = {'&', '(', ')', 'D'}
 CAPS_ON_BASELINE = set('ABCDEFGHIKLMNOPRSTVXYZ')
+CAP_PX, ASC_PX = 104.0, 113.0                      # measured on the main set (C/H/A; l)
+ROUND_BOTTOM = set('CGOQSUJcoesuagq0369') | {'Q_u', 'ae', 'æ', 'ę', '&'}
+# glyphs whose TOP is the reliable anchor (they descend); value = top height in main-set px
+TOP_ANCHOR = {'Q': CAP_PX, 'Q_u': CAP_PX, 'g': 67.0, 'p': 67.0, 'q': 67.0, 'y': 67.0, 'ę': 67.0,
+              '3': 67.0, '4': 67.0, '5': 67.0, '7': 67.0, '9': 67.0, ';': 67.0, 'J': CAP_PX}
+LINE_ANCHOR = {',', '(', ')', '-', '.', ':', '?', 'ı'}   # keep the measured line baseline
 RECONSTRUCT = True
+ERODE = {'K': 1}            # over-inked impressions: erode N px before tracing
+ALT_LETTERS = 'aceimnorstudlhpgbfq'   # letters that get 2 extra impressions rotated by calt
 ACCENT_SOURCES = {'acute': 114, 'grave': 163, 'tilde': 215}      # á è ã impressions from the main set
 COMPOSITES = {'á': ('a','acute'), 'é': ('e','acute'), 'í': ('i','acute'), 'ó': ('o','acute'), 'ú': ('u','acute'),
               'à': ('a','grave'), 'è': ('e','grave'), 'ì': ('i','grave'), 'ò': ('o','grave'), 'ù': ('u','grave'),
@@ -122,6 +139,9 @@ for ch, cl in labels.items():
     idx = clusters_[ci]['medoid'] if kind == 'cluster' else ci
     nn = clusters_[ci]['n'] if kind == 'cluster' else 1
     mask = masks_[idx].astype(np.uint8); g = meta_[idx]
+    if ch in ERODE:
+        from scipy import ndimage as _nd2
+        mask = _nd2.binary_erosion(mask, iterations=ERODE[ch]).astype(np.uint8)
     if ch in STRIP_SATELLITES:   # keep only the largest connected component (drops specks glued on by the merge step)
         from scipy import ndimage as _nd
         lab, n = _nd.label(mask)
@@ -131,8 +151,7 @@ for ch, cl in labels.items():
     # svg user coords -> pixel (of upscaled canvas): px = X*sx + tx ; py = Y*sy + ty   (sy negative)
     # pixel (canvas) -> original pixel: /UPSCALE, minus pad
     # font: x = (px/UPSCALE - pad)*S + SB ; y = (base_crop - py/UPSCALE)*S  where base_crop = base - y0 + pad
-    base_crop = g['base'] - g['y0'] + pad
-    if ch in CAPS_ON_BASELINE: base_crop = mask.shape[0] + pad   # a capital stands on the baseline; the line estimate is unreliable in tables
+    base_crop = vertical_anchor(ch, mask, g, S, pad)
     k = S / UPSCALE
     a = sx * k; d = -sy * k
     e = tx * k - pad * S + SB
@@ -190,7 +209,7 @@ for ch, (bch, mname) in COMPOSITES.items():
     _setkey = str(bref).split(':')[0].split('#')[0] if isinstance(bref, str) else ''
     S = SET_SCALE[_setkey]; SB = GAP / 2 * SET_SCALE['']
     svgtxt, (tx, ty, sx, sy), pad = trace(canvas)
-    base_crop = g['base'] - g['y0'] + pad
+    base_crop = vertical_anchor(bch, bmask, bg, S, pad) + (gap + mh)   # base letter stands on the baseline; accent rides above
     k = S / UPSCALE; a = sx * k; d = -sy * k; e = tx * k - pad * S + SB; f = -(ty * k) + base_crop * S
     pen = TTGlyphPen(None); cpen = Cu2QuPen(pen, max_err=1.0, reverse_direction=True)
     SVGPath.fromstring(svgtxt.encode(), transform=(a, 0, 0, d, e, f)).draw(cpen)
@@ -198,6 +217,32 @@ for ch, (bch, mname) in COMPOSITES.items():
     glyphs[name] = pen.glyph(); advances[name] = int(bw * S + 2 * SB)
     glyph_order.append(name); cmap[ord(ch)] = name
     print(f'{ch!r:12} composed {bch}+{mname}', file=sys.stderr)
+
+# ---- alternates: two more impressions per common letter, rotated by calt so neighbours differ ----
+ALTS = {}
+for ch in ALT_LETTERS:
+    if ch not in labels: continue
+    (m_, me_, c_), (kind, ci) = resolve(labels[ch][0])
+    if kind != 'cluster': continue
+    members = [i for i in c_[ci]['members'] if i != c_[ci]['medoid']]
+    med = m_[c_[ci]['medoid']]
+    # prefer members whose bbox matches the medoid's (whole, undamaged impressions)
+    members.sort(key=lambda i: abs(m_[i].shape[0] - med.shape[0]) + abs(m_[i].shape[1] - med.shape[1]))
+    picks = members[:2]
+    for n, idx in enumerate(picks, 1):
+        mask = m_[idx].astype(np.uint8); g = me_[idx]
+        key = str(labels[ch][0]).split(':')[0].split('#')[0] if isinstance(labels[ch][0], str) else ''
+        name = f'{glyphname(ch)}.alt{n}'
+        emit_mask = mask
+        S = SET_SCALE[key]; SB = GAP / 2 * SET_SCALE['']
+        svgtxt, (tx, ty, sx, sy), pad = trace(emit_mask)
+        base_crop = vertical_anchor(ch, emit_mask, g, S, pad)
+        k = S / UPSCALE; a = sx * k; d = -sy * k; e = tx * k - pad * S + SB; f = -(ty * k) + base_crop * S
+        pen = TTGlyphPen(None); cpen = Cu2QuPen(pen, max_err=1.0, reverse_direction=True)
+        SVGPath.fromstring(svgtxt.encode(), transform=(a, 0, 0, d, e, f)).draw(cpen)
+        glyphs[name] = pen.glyph(); advances[name] = int(emit_mask.shape[1] * S * (1 - OVERHANG.get(ch, 0)) + 2 * SB)
+        glyph_order.append(name); ALTS.setdefault(glyphname(ch), []).append(name)
+print(f'alternates: {sum(len(v) for v in ALTS.values())} for {len(ALTS)} letters', file=sys.stderr)
 
 # ---- reconstructed sorts (never existed in 1490s roman type; built from real sorts, flagged on the page) ----
 def glyph_mask(ch):
@@ -227,21 +272,62 @@ if RECONSTRUCT:
     fy = H_cap / u.shape[0]; fx = 1 + (fy - 1) * 0.55
     U = np.asarray(Image.fromarray(u * 255).resize((int(u.shape[1] * fx), int(H_cap)), Image.BICUBIC)) > 127
     emit('U', U.astype(np.uint8), gu, ku, base_crop_override=U.shape[0])
-    # J = I with the hook of the long s turned to hang below the line on the left
+    # J = the long s turned through 180 degrees and stretched: the stem becomes a J with a left-curling tail,
+    #     the nub of the crossbar becomes the right-hand top serif; the I's top serif is laid over the top.
     I, gI, kI = glyph_mask('I'); ls, gls, kls = glyph_mask('ſ')
-    hook = ls[: int(ls.shape[0] * 0.34), :]; hook = hook[::-1, ::-1]          # rotate 180°: now curls down-left
-    # scale hook to I's set
     sc = SET_SCALE[kls] / SET_SCALE[kI]
-    hook = np.asarray(Image.fromarray(hook.astype(np.uint8) * 255).resize((max(1, int(hook.shape[1] * sc)), max(1, int(hook.shape[0] * sc))), Image.BICUBIC)) > 127
-    hi, wi = I.shape; hh, wh = hook.shape
-    J = np.zeros((hi + hh - int(hh * 0.35), max(wi, wh) + 2), np.uint8)
-    xoff = J.shape[1] - wi - 1; J[:hi, xoff:xoff + wi] = I
-    # find the stem's right edge at the bottom of I and hang the hook so its stem end meets it
-    stem_cols = np.where(I[-3:, :].any(0))[0]; stem_x = xoff + int(stem_cols.mean()) if len(stem_cols) else xoff + wi // 2
-    hx = max(0, stem_x + wh // 2 - wh + 2 - wh // 2); hy = hi - int(hh * 0.35)
-    hx = min(hx, J.shape[1] - wh)
-    J[hy:hy + hh, hx:hx + wh] = np.maximum(J[hy:hy + hh, hx:hx + wh], hook.astype(np.uint8))
-    emit('J', J, gI, kI, base_crop_override=hi)
+    capH = I.shape[0]; targetH = int(capH * 1.32)                      # descends ~1/3 below the line
+    r = ls[::-1, ::-1].astype(np.uint8) * 255
+    r = np.asarray(Image.fromarray(r).resize((max(1, int(ls.shape[1] * sc * 0.95)), targetH), Image.BICUBIC)) > 127
+    J = r.astype(np.uint8)
+    # lay the I's top serif (upper 16%) across the stem top
+    top = I[: int(capH * 0.16), :]
+    stem_cols = np.where(J[int(capH * 0.3):int(capH * 0.5), :].any(0))[0]
+    cx = int(stem_cols.mean()) if len(stem_cols) else J.shape[1] // 2
+    tw = top.shape[1]; x0 = cx - tw // 2
+    canvas = np.zeros((J.shape[0], max(J.shape[1], x0 + tw) + max(0, -x0)), np.uint8)
+    off = max(0, -x0); canvas[:, off:off + J.shape[1]] = J
+    canvas[:top.shape[0], off + x0:off + x0 + tw] = np.maximum(canvas[:top.shape[0], off + x0:off + x0 + tw], top)
+    emit('J', canvas, gI, kI, base_crop_override=capH)
+    # lowercase v = V brought down to the x-height and re-weighted; w = vv; j = dotless i + the J tail, with the dot
+    xh_px = 67.0 * SET_SCALE[''] / SET_SCALE[kV]
+    fv = xh_px / V.shape[0]
+    v = np.asarray(Image.fromarray(V * 255).resize((max(1, int(V.shape[1] * fv * 1.08)), int(xh_px)), Image.BICUBIC)) > 110
+    from scipy import ndimage as _nd3
+    v = _nd3.binary_dilation(v, iterations=1).astype(np.uint8)
+    emit('v', v, gV, kV, base_crop_override=v.shape[0])
+    hv, wv = v.shape; ovv = int(wv * 0.26)
+    w = np.zeros((hv, 2 * wv - ovv), np.uint8); w[:, :wv] = v; w[:, wv - ovv:] = np.maximum(w[:, wv - ovv:], v)
+    emit('w', w, gV, kV, base_crop_override=hv)
+    # j: the dotted i, with the stem continued below the line and curled left (from the ſ hook at lowercase scale)
+    i_, gi_, ki_ = glyph_mask('i'); ih, iw = i_.shape
+    hook = ls[: int(ls.shape[0] * 0.34), :][::-1, ::-1]
+    sch = SET_SCALE[kls] / SET_SCALE[ki_] * 0.8
+    hook = np.asarray(Image.fromarray(hook.astype(np.uint8) * 255).resize((max(1, int(hook.shape[1] * sch)), max(1, int(hook.shape[0] * sch))), Image.BICUBIC)) > 127
+    hh, hw = hook.shape
+    jc = np.zeros((ih + hh - int(hh * 0.3), max(iw, hw) + 4), np.uint8)
+    xo = jc.shape[1] - iw - 2; jc[:ih, xo:xo + iw] = i_
+    stem = np.where(i_[-3:, :].any(0))[0]; sx = xo + (int(stem.mean()) if len(stem) else iw // 2)
+    hx = max(0, min(jc.shape[1] - hw, sx - hw + hw // 3)); hy = ih - int(hh * 0.3)
+    jc[hy:hy + hh, hx:hx + hw] = np.maximum(jc[hy:hy + hh, hx:hx + hw], hook.astype(np.uint8))
+    # baseline: the i's own bottom
+    emit('j', jc, gi_, ki_, base_crop_override=ih)
+    # k = the l's stem with the K's two arms brought down to the x-height (the old lowercase k is built exactly so)
+    K, gK, kK = glyph_mask('K')
+    if 'K' in ERODE:
+        from scipy import ndimage as _nd4
+        K = _nd4.binary_erosion(K, iterations=ERODE['K']).astype(np.uint8)
+    l_, gl_, kl_ = glyph_mask('l'); lh, lw = l_.shape
+    colsum = K.sum(0); stem_end = int(np.argmax(colsum)) + int(K.shape[1] * 0.08)   # just right of the stem
+    arms = K[:, stem_end:]
+    xh_px = 67.0 * SET_SCALE[''] / SET_SCALE[kl_]
+    fa = xh_px / arms.shape[0]; fx = fa * SET_SCALE[kK] / SET_SCALE[kl_] * 1.05
+    arms = np.asarray(Image.fromarray(arms * 255).resize((max(1, int(arms.shape[1] * fx)), int(xh_px)), Image.BICUBIC)) > 120
+    ah, aw = arms.shape
+    lstem = np.where(l_[int(lh * 0.5):int(lh * 0.9), :].any(0))[0]; sx = int(lstem.max()) if len(lstem) else lw - 1
+    kk = np.zeros((lh, sx + 1 + aw - 2), np.uint8); kk[:, :lw] = l_
+    kk[lh - ah:, sx - 1:sx - 1 + aw] = np.maximum(kk[lh - ah:, sx - 1:sx - 1 + aw], arms.astype(np.uint8))
+    emit('k', kk, gl_, kl_, base_crop_override=lh)
 
 fb = FontBuilder(UPM, isTTF=True)
 fb.setupGlyphOrder(glyph_order)
@@ -266,9 +352,16 @@ for ch, n in [('fi', 'f_i'), ('ct', 'c_t'), ('ſt', 'longs_t'), ('ſi', 'longs_i
     if n in glyphs and all(glyphname(c) in glyphs for c in ch):
         comps = ' '.join(glyphname(c) for c in ch)
         lig_rules.append((len(ch), f'    sub {comps} by {n};'))
-if all(x in glyphs for x in ['f','f_i']) or lig_rules:
+fea = ''
+if lig_rules:
     lig_rules.sort(key=lambda r: -r[0])
-    fea = 'feature liga {\n' + '\n'.join(r for _, r in lig_rules) + '\n} liga;\n'
+    fea += 'feature liga {\n' + '\n'.join(r for _, r in lig_rules) + '\n} liga;\n'
+if ALTS:
+    base = [n for n in ALTS]; a1 = [ALTS[n][0] for n in base]; a2 = [ALTS[n][1] if len(ALTS[n]) > 1 else ALTS[n][0] for n in base]
+    fea += '@s0 = [' + ' '.join(base) + '];\n@s1 = [' + ' '.join(a1) + '];\n@s2 = [' + ' '.join(a2) + '];\n'
+    # rotate through the three impressions along any run of these letters: 0 1 2 0 1 2 ...
+    fea += 'feature calt {\n    sub @s0 @s0\' by @s1;\n    sub @s1 @s0\' by @s2;\n} calt;\n'
+if fea:
     addOpenTypeFeaturesFromString(fb.font, fea)
 fb.save(OUT)
 json.dump(chosen, open('chosen.json', 'w'))
