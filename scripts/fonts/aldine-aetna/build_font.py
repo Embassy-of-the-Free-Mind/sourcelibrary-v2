@@ -27,7 +27,7 @@ SETS = {'': (masks, meta, clusters)}
 if os.path.exists('x_glyphs.npz'):
     xd = np.load('x_glyphs.npz', allow_pickle=True)
     SETS['x'] = (xd['masks'], xd['meta'], json.load(open('x_clusters.json')))
-for _p in ['y', 'z', 'w', 'k']:
+for _p in ['y', 'z', 'w', 'k', 'c']:
     if os.path.exists(f'{_p}_glyphs.npz'):
         _d = np.load(f'{_p}_glyphs.npz', allow_pickle=True)
         SETS[_p] = (_d['masks'], _d['meta'], json.load(open(f'{_p}_clusters.json')))
@@ -106,6 +106,7 @@ pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(G
 
 STRIP_SATELLITES = {'&', '(', ')', 'D'}
 CAPS_ON_BASELINE = set('ABCDEFGHIKLMNOPRSTVXYZ')
+RECONSTRUCT = True
 ACCENT_SOURCES = {'acute': 114, 'grave': 163, 'tilde': 215}      # á è ã impressions from the main set
 COMPOSITES = {'á': ('a','acute'), 'é': ('e','acute'), 'í': ('i','acute'), 'ó': ('o','acute'), 'ú': ('u','acute'),
               'à': ('a','grave'), 'è': ('e','grave'), 'ì': ('i','grave'), 'ò': ('o','grave'), 'ù': ('u','grave'),
@@ -197,6 +198,50 @@ for ch, (bch, mname) in COMPOSITES.items():
     glyphs[name] = pen.glyph(); advances[name] = int(bw * S + 2 * SB)
     glyph_order.append(name); cmap[ord(ch)] = name
     print(f'{ch!r:12} composed {bch}+{mname}', file=sys.stderr)
+
+# ---- reconstructed sorts (never existed in 1490s roman type; built from real sorts, flagged on the page) ----
+def glyph_mask(ch):
+    ref = labels[ch][0]
+    (m_, me_, c_), (kind, ci) = resolve(ref)
+    idx = c_[ci]['medoid'] if kind == 'cluster' else ci
+    key = str(ref).split(':')[0].split('#')[0] if isinstance(ref, str) else ''
+    return m_[idx].astype(np.uint8), me_[idx], key
+def emit(ch, canvas, g, key, name=None, base_crop_override=None):
+    S = SET_SCALE[key]; SB = GAP / 2 * SET_SCALE['']
+    svgtxt, (tx, ty, sx, sy), pad = trace(canvas)
+    base_crop = (base_crop_override if base_crop_override is not None else g['base'] - g['y0']) + pad
+    k = S / UPSCALE; a = sx * k; d = -sy * k; e = tx * k - pad * S + SB; f = -(ty * k) + base_crop * S
+    pen = TTGlyphPen(None); cpen = Cu2QuPen(pen, max_err=1.0, reverse_direction=True)
+    SVGPath.fromstring(svgtxt.encode(), transform=(a, 0, 0, d, e, f)).draw(cpen)
+    name = name or ch
+    glyphs[name] = pen.glyph(); advances[name] = int(canvas.shape[1] * S + 2 * SB)
+    glyph_order.append(name); cmap[ord(ch)] = name
+    print(f'{ch!r:12} reconstructed -> {name}', file=sys.stderr)
+if RECONSTRUCT:
+    # W = VV, as the shop itself set it
+    V, gV, kV = glyph_mask('V'); h, w = V.shape; ov = int(w * 0.28)
+    W = np.zeros((h, 2 * w - ov), np.uint8); W[:, :w] = V; W[:, w - ov:] = np.maximum(W[:, w - ov:], V)
+    emit('W', W, gV, kV, base_crop_override=h)
+    # U = the lowercase u raised to cap height (Monotype's solution for Bembo)
+    u, gu, ku = glyph_mask('u'); H_cap = glyph_mask('V')[0].shape[0] * SET_SCALE[kV] / SET_SCALE[ku]
+    fy = H_cap / u.shape[0]; fx = 1 + (fy - 1) * 0.55
+    U = np.asarray(Image.fromarray(u * 255).resize((int(u.shape[1] * fx), int(H_cap)), Image.BICUBIC)) > 127
+    emit('U', U.astype(np.uint8), gu, ku, base_crop_override=U.shape[0])
+    # J = I with the hook of the long s turned to hang below the line on the left
+    I, gI, kI = glyph_mask('I'); ls, gls, kls = glyph_mask('ſ')
+    hook = ls[: int(ls.shape[0] * 0.34), :]; hook = hook[::-1, ::-1]          # rotate 180°: now curls down-left
+    # scale hook to I's set
+    sc = SET_SCALE[kls] / SET_SCALE[kI]
+    hook = np.asarray(Image.fromarray(hook.astype(np.uint8) * 255).resize((max(1, int(hook.shape[1] * sc)), max(1, int(hook.shape[0] * sc))), Image.BICUBIC)) > 127
+    hi, wi = I.shape; hh, wh = hook.shape
+    J = np.zeros((hi + hh - int(hh * 0.35), max(wi, wh) + 2), np.uint8)
+    xoff = J.shape[1] - wi - 1; J[:hi, xoff:xoff + wi] = I
+    # find the stem's right edge at the bottom of I and hang the hook so its stem end meets it
+    stem_cols = np.where(I[-3:, :].any(0))[0]; stem_x = xoff + int(stem_cols.mean()) if len(stem_cols) else xoff + wi // 2
+    hx = max(0, stem_x + wh // 2 - wh + 2 - wh // 2); hy = hi - int(hh * 0.35)
+    hx = min(hx, J.shape[1] - wh)
+    J[hy:hy + hh, hx:hx + wh] = np.maximum(J[hy:hy + hh, hx:hx + wh], hook.astype(np.uint8))
+    emit('J', J, gI, kI, base_crop_override=hi)
 
 fb = FontBuilder(UPM, isTTF=True)
 fb.setupGlyphOrder(glyph_order)

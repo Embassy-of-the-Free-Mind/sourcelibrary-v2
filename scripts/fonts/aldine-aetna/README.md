@@ -52,15 +52,15 @@ ink width set them a whole gap too wide ("f luctibus").
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.5)
+## Coverage (v0.6)
 
-82 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+95 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
 ę, fifteen accented vowels (á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ — **composed**: the acute,
 grave and tilde are split off real impressions (`ACCENT_SOURCES`) and placed over each base
 vowel at the gap/offset measured on the page; i takes the dotless stem `ı`), the ligatures
 ct ſt ſi ſſ ſſi fi ff and Qu (Griffo cast a fused Qu sort for the common case; `Q u` → `Q_u`
 via `liga`; a lone Q exists too, from Lascaris), capitals
-A–Z minus J U W, and . , : ; - ( ) ?.
+A–Z (J U W **reconstructed**, see below), figures 0–9, and . , : ; - ( ) ?.
 Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
 (`fetch_1497.sh`: IA 690/691/692 = Leoniceno, Maiolo ×2), segmented with
 `NOCLUSTER=1` (52k glyphs; average-linkage on that many is O(n²) and unnecessary
@@ -85,7 +85,16 @@ was a folio label or a cataloguer's note: the fount has **no arabic numerals** (
 leaf counts are roman). IA leaf n = our page_number − 1, but Lascaris is off by one more.
 Capitals are anchored on their own bottom edge (`CAPS_ON_BASELINE`) because the
 line-baseline estimate is unreliable in alphabet tables.
-Absent, finally: J U W only — they did not exist in 1490s roman type.
+**Figures** (set `c_`): the 1496–97 books count in roman numerals, but the index of Perotti's
+*Cornucopiae* (1499, `ita-bnc-ald-00000693-001`, book `69b220f356715b0e32473bd0`) cites
+column numbers in arabic — thousands of old-style figures in the shop's *smaller* roman
+(x-height 37 px vs 65), hence `set_scales.json` c = 1.76. Found with `find_digits.mjs`
+(OCR index over the 1499–1520 BNCF Aldines); the 1501+ octavos are italic and useless here.
+**Reconstructed sorts** (`RECONSTRUCT` in `build_font.py`): J U W never existed in 1490s
+roman type. W = V V overlapped 28 % (how the compositors set it); U = lowercase u scaled
+to the cap line (Monotype's Bembo solution); J = I with the long-s hook rotated 180° hung
+below the line. They are real glyphs in the font (so Cardo never has to step in mid-word,
+which is what Derek found jarring) but the specimen page flags them as reconstructions.
 `src/lib/fonts/aldine.ts` stacks Cardo behind it for everything missing.
 
 To extend: fetch more pages (the 1501 Virgil would give the first italic), run
