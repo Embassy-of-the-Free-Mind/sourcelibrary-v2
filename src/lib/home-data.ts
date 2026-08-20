@@ -7,6 +7,7 @@ import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
+import { type LocalizedBookMap } from '@/lib/localized';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -712,6 +713,7 @@ export interface SpanishBook {
   pages_ocr?: number;
   pages_translated?: number;
   pages_translated_es?: number;
+  localized?: LocalizedBookMap;
   is_first_translation?: boolean;
   ft_disposition?: string;
   thumbnail?: string;
@@ -731,7 +733,7 @@ async function getSpanishBooks(): Promise<SpanishBook[]> {
     {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,
-        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
+        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
         is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
       },
       sort: { read_count: -1, pages_translated_es: -1 },

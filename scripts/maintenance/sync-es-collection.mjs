@@ -22,14 +22,27 @@ const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI is required'); process.exit(2); }
 
 // Editorial fields, written only when the doc is first created (setOnInsert):
-// a curator may rewrite them in the collection editor afterwards.
+// a curator may rewrite them in the collection editor afterwards. The plain
+// fields are ENGLISH (they render on /collections); the Spanish copy lives in
+// the language-keyed `localized.es` map that /es/collections reads — one map
+// per record, never name_es columns (src/lib/localized.ts).
 const EDITORIAL = {
-  name: 'Libros en español',
-  subtitle: 'Las obras más leídas de la biblioteca, en edición española',
+  name: 'Books in Spanish',
+  subtitle: 'The most-read works in the library, in a Spanish edition',
   description:
-    'Fuentes primarias de alquimia, hermetismo, filosofía y ciencia temprana que puedes leer en español, ' +
-    'página a página junto al original. Cada libro de esta colección tiene una edición en español: ' +
-    'ábrelo y elige «Español» en el lector.',
+    'Primary sources of alchemy, Hermetism, philosophy and early science that can be read in Spanish, ' +
+    'page by page beside the original. Every book in this collection has a Spanish edition: ' +
+    'open it and choose «Español» in the reader.',
+  localized: {
+    es: {
+      name: 'Libros en español',
+      subtitle: 'Las obras más leídas de la biblioteca, en edición española',
+      description:
+        'Fuentes primarias de alquimia, hermetismo, filosofía y ciencia temprana que puedes leer en español, ' +
+        'página a página junto al original. Cada libro de esta colección tiene una edición en español: ' +
+        'ábrelo y elige «Español» en el lector.',
+    },
+  },
   color: 'gold',
   order: 5,
   visible: true,
