@@ -50,12 +50,19 @@ Python 3 with numpy, scipy, Pillow, fontTools, brotli; `potrace` on PATH
    (no shaping engine, so ligatures don't fire there; they do in browsers).
    woff2: `TTFont(...).flavor='woff2'; save()`.
 
-## Coverage (v0.1)
+## Coverage (v0.2)
 
-56 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, the ligatures
-ct ſt ſi ſſ ſſi fi ff, capitals A B C D E F G H L M N O P R S T V, and . , : ; - ) ?.
-Absent because the 1496 text doesn't use them on the pages read: I J K Q U W X Y Z,
-digits, `(` (only a broken impression was found), Q (found only fused as "Qu").
+59 glyphs: a–y minus j k v w z (Aldus sets u for v), ſ, æ, &, the ligatures
+ct ſt ſi ſſ ſſi fi ff and Qu (Griffo's Q exists only fused with u — the tail runs under
+it — so `Q u` → `Q_u` via `liga` and there is no lone Q), capitals
+A B C D E F G H L M N O P R S T V, and . , : ; - ( ) ?.
+Third glyph set `y_` = 30 pages of the 1497 Aldines in the same fount
+(`fetch_1497.sh`: IA 690/691/692 = Leoniceno, Maiolo ×2), segmented with
+`NOCLUSTER=1` (52k glyphs; average-linkage on that many is O(n²) and unnecessary
+when you are hunting a handful of capitals — `BOX=1 WMIN=25 capsheet.py` pages
+through every cap-height glyph instead).
+Absent: J U W (did not exist in 1490s roman type), I K X Y Z and digits (not on
+the 48 pages read; try Poliziano 1498 `A335128` for Greek-derived names).
 `src/lib/fonts/aldine.ts` stacks Cardo behind it for everything missing.
 
 To extend: fetch more pages (the 1501 Virgil would give the first italic), run

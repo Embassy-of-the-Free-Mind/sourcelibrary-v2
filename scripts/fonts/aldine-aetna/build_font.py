@@ -27,6 +27,9 @@ SETS = {'': (masks, meta, clusters)}
 if os.path.exists('x_glyphs.npz'):
     xd = np.load('x_glyphs.npz', allow_pickle=True)
     SETS['x'] = (xd['masks'], xd['meta'], json.load(open('x_clusters.json')))
+if os.path.exists('y_glyphs.npz'):
+    yd = np.load('y_glyphs.npz', allow_pickle=True)
+    SETS['y'] = (yd['masks'], yd['meta'], json.load(open('y_clusters.json')))
 def resolve(ref):
     # ref: int (main set) or 'x:123'
     # 'x:123' = cluster 123 of set x ; 'x#456' = glyph index 456 of set x directly
@@ -89,6 +92,7 @@ glyphs, advances, cmap = {}, {}, {}
 pen = TTGlyphPen(None); glyphs['.notdef'] = pen.glyph(); advances['.notdef'] = int(XH * S)
 pen = TTGlyphPen(None); glyphs['space'] = pen.glyph(); advances['space'] = int(GAP * S * 2.2 + XH * S * 0.4); cmap[0x20] = 'space'
 
+STRIP_SATELLITES = {'&', '(', ')', 'D'}
 chosen = {}
 for ch, cl in labels.items():
     if not cl: print('no cluster for', ch, file=sys.stderr); continue
@@ -96,6 +100,11 @@ for ch, cl in labels.items():
     idx = clusters_[ci]['medoid'] if kind == 'cluster' else ci
     nn = clusters_[ci]['n'] if kind == 'cluster' else 1
     mask = masks_[idx].astype(np.uint8); g = meta_[idx]
+    if ch in STRIP_SATELLITES:   # keep only the largest connected component (drops specks glued on by the merge step)
+        from scipy import ndimage as _nd
+        lab, n = _nd.label(mask)
+        if n > 1:
+            sizes = _nd.sum(mask, lab, range(1, n + 1)); mask = (lab == (1 + int(np.argmax(sizes)))).astype(np.uint8)
     svgtxt, (tx, ty, sx, sy), pad = trace(mask)
     # svg user coords -> pixel (of upscaled canvas): px = X*sx + tx ; py = Y*sy + ty   (sy negative)
     # pixel (canvas) -> original pixel: /UPSCALE, minus pad
@@ -138,7 +147,7 @@ fb.setupDummyDSIG() if hasattr(fb, 'setupDummyDSIG') else None
 
 # ligatures
 lig_rules = []
-for ch, n in [('fi', 'f_i'), ('ct', 'c_t'), ('ſt', 'longs_t'), ('ſi', 'longs_i'), ('ſſ', 'longs_longs'), ('ſſi', 'longs_longs_i'), ('ta','t_a'), ('tu','t_u')]:
+for ch, n in [('fi', 'f_i'), ('ct', 'c_t'), ('ſt', 'longs_t'), ('ſi', 'longs_i'), ('ſſ', 'longs_longs'), ('ſſi', 'longs_longs_i'), ('ta','t_a'), ('tu','t_u'), ('Qu','Q_u')]:
     if n in glyphs and all(glyphname(c) in glyphs for c in ch):
         comps = ' '.join(glyphname(c) for c in ch)
         lig_rules.append((len(ch), f'    sub {comps} by {n};'))

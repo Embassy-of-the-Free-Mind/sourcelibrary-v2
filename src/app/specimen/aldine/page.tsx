@@ -24,8 +24,8 @@ const PASSAGE = [
 ];
 
 const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ';
-const UPPER = 'A B C D E F G H L M N O P R S T V';
-const LIGS = 'ct ſt ſi ſſ ſſi fi ff';
+const UPPER = 'A B C D E F G H L M N O P R S T V Qu & ( )';
+const LIGS = 'ct ſt ſi ſſ ſſi fi ff Qu';
 
 export default function AldineSpecimenPage() {
   return (
@@ -53,7 +53,7 @@ export default function AldineSpecimenPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">Aldine Aetna — the facsimile</h2>
         <p className="text-secondary mb-6 leading-relaxed">
           Each glyph is one real impression from the book, chosen as the most typical of its
-          kind among some 12,000 printed letters on eighteen pages, then vectorised. Ink spread,
+          kind among some 60,000 printed letters on forty-eight pages of De Aetna and the 1497 Aldines set in the same fount, then vectorised. Ink spread,
           worn corners and the slight unevenness of hand-set metal are kept on purpose. This is
           what the 1496 reader saw.
         </p>
@@ -120,9 +120,11 @@ export default function AldineSpecimenPage() {
         <p className="text-secondary mb-4 leading-relaxed">
           Only what the 1496 text uses. The lowercase is complete for Latin as Aldus set it
           (<span style={{ fontFamily: aldineStack }}>u</span> serves for v, long <span style={{ fontFamily: aldineStack }}>ſ</span> inside
-          words), with the ligatures <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>ct ſt ſi ſſ fi ff</span> and æ.
-          Seventeen capitals were found on the pages read so far; I, J, K, Q, U, W, Y, Z, the
-          letters j k v w z and all digits are absent, so in a web stack Cardo fills them in.
+          words), with the ligatures <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>ct ſt ſi ſſ fi ff</span>, æ and
+          the ampersand. Seventeen capitals plus Q — which Griffo only ever cast fused with its u,
+          so here too <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>Qu</span> is one sort.
+          J, U and W did not exist in 1490s roman type; I, K, X, Y, Z and all digits are not on the
+          pages read so far. In a web stack Cardo fills them in.
           Letter spacing is measured from the page too: one em is the book&apos;s line pitch, and
           sidebearings are half the median gap between neighbouring sorts.
         </p>
