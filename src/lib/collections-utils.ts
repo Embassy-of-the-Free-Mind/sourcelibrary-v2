@@ -118,9 +118,15 @@ export function bookTitle(book: { display_title?: string; title: string }): stri
 /**
  * Format a human-readable count label for a collection.
  * Shows "X texts · Y artworks", "X texts", "Y artworks", or empty string.
+ *
+ * `collectionType` matters: a `visual_art` collection's page renders artworks and
+ * nothing else, so its book counters describe texts the reader can never reach from
+ * it. Advertising them is a promise the page does not keep — `school-of-athens`
+ * claimed 518 texts over a page showing 30 works. Pass the type and the text half
+ * is dropped.
  */
-export function collectionCountLabel(bookCount?: number, artworkCount?: number): string {
-  const b = bookCount || 0;
+export function collectionCountLabel(bookCount?: number, artworkCount?: number, collectionType?: string): string {
+  const b = collectionType === 'visual_art' ? 0 : (bookCount || 0);
   const a = artworkCount || 0;
   if (b > 0 && a > 0) {
     return `${b.toLocaleString()} texts · ${a.toLocaleString()} artworks`;
