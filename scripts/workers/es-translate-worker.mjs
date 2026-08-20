@@ -140,10 +140,14 @@ async function main() {
     : { visible: true, pages_translated: { $gt: 0 }, content_type: { $ne: 'artwork' }, read_count: { $gt: 0 } };
   // Page-repair mode: the books are whatever books those pages belong to.
   const repairBookIds = PAGE_IDS ? await db.collection('pages').distinct('book_id', { id: { $in: PAGE_IDS } }) : null;
+  // SELECT by popularity (top-N most-read), THEN order the run. Sorting by pages
+  // before the limit once picked the 50 shortest books in the library instead of
+  // the 50 most-read (2026-08-20) — --order only ever decides sequence.
   const books = (await db.collection('books')
     .find(repairBookIds ? { id: { $in: repairBookIds } } : match, { projection: { id: 1, title: 1, display_title: 1, read_count: 1, pages_translated: 1, pages_translated_es: 1 } })
-    .sort(ORDER).limit(repairBookIds ? 10000 : TOP).toArray())
-    .filter(b => BOOK_OVERRIDE || PAGE_IDS || (b.pages_translated_es || 0) < b.pages_translated);
+    .sort({ read_count: -1 }).limit(repairBookIds || BOOK_OVERRIDE ? 10000 : TOP).toArray())
+    .filter(b => BOOK_OVERRIDE || PAGE_IDS || (b.pages_translated_es || 0) < b.pages_translated)
+    .sort((a, b) => ORDER.pages_translated ? (a.pages_translated - b.pages_translated) || (b.read_count || 0) - (a.read_count || 0) : (b.read_count || 0) - (a.read_count || 0));
   if (PAGE_IDS) console.log(`[ES] page-repair mode: ${PAGE_IDS.length} pages across ${books.length} books (existing Spanish will be overwritten)`);
 
   console.log(`[ES] ${books.length} candidate book(s) of top ${TOP}; cap ${MAX_PAGES} pages; model ${MODEL}; keys ${API_KEYS.length}${DRY_RUN ? '; DRY RUN' : ''}`);

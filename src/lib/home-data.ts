@@ -8,6 +8,7 @@ import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { type LocalizedBookMap } from '@/lib/localized';
+import { spanishReaderHref } from '@/lib/es-collections';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -720,6 +721,8 @@ export interface SpanishBook {
   thumbnail_blob?: string;
   image_display?: string;
   image_thumb?: string;
+  /** Straight into the reader in Spanish (first chapter / first readable page). */
+  href: string;
 }
 
 // Most-read first (`read_count`), so the band leads with what Spanish readers
@@ -735,13 +738,20 @@ async function getSpanishBooks(): Promise<SpanishBook[]> {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,
         pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
         is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+        'chapters.pageNumber': 1,
       },
       sort: { read_count: -1, pages_translated_es: -1 },
       limit: SPANISH_BOOKS_COUNT,
       maxTimeMS: 8000,
     },
   ).toArray();
-  return JSON.parse(JSON.stringify(books)) as SpanishBook[];
+  // The card opens the Spanish reader directly — the English book page would
+  // drop the reader out of the Spanish experience (until #4082 gives it a twin).
+  type Raw = Omit<SpanishBook, 'href'> & { chapters?: { pageNumber?: number }[] };
+  return JSON.parse(JSON.stringify((books as unknown as Raw[]).map(({ chapters, ...b }) => ({
+    ...b,
+    href: spanishReaderHref({ ...b, chapters }),
+  })))) as SpanishBook[];
 }
 
 // ---------- Aggregate ----------
