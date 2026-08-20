@@ -59,5 +59,10 @@ export function resolveReadingLanguage(): ReadingLanguage {
     setStoredReadingLanguage(fromUrl);
     return fromUrl;
   }
+  // On a Spanish twin route (/es/book/…) the URL IS the preference (#4082).
+  if (typeof window !== 'undefined' && /^\/es(\/|$)/.test(window.location.pathname)) {
+    setStoredReadingLanguage('es');
+    return 'es';
+  }
   return getStoredReadingLanguage() ?? 'en';
 }

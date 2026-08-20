@@ -39,7 +39,7 @@ export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin']
 // `/collections/<slug>` render under `/es/collections/…` (Spanish chrome, Spanish
 // collection names; see src/app/es/collections). Kept separate from the exact-
 // match set so a new deep route is not localized by accident.
-const LOCALIZED_PREFIXES = ['/collections'];
+const LOCALIZED_PREFIXES = ['/collections', '/book'];
 
 function hasLocalizedPath(canonical: string): boolean {
   if (LOCALIZED_PATHS.has(canonical)) return true;

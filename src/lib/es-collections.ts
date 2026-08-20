@@ -120,10 +120,24 @@ function startPageNumber(book: { pages_count?: number; chapters?: { pageNumber?:
   return n >= 20 ? 5 : n >= 10 ? 3 : 1;
 }
 
+/**
+ * Where a Spanish-surface card sends the reader. Since #4082 that is the Spanish
+ * BOOK PAGE (`/es/book/<slug>`), whose "Leer en español" button opens the Spanish
+ * reader — the prefix never drops. `startPageNumber` still decides where that
+ * button lands (exported for the page).
+ */
 export function spanishReaderHref(book: { slug?: string; id: string; pages_count?: number; chapters?: { pageNumber?: number }[] }): string {
-  const path = encodeURIComponent(book.slug || book.id);
-  return `/book/${path}/page-number/${startPageNumber(book)}?${READING_LANGUAGE_PARAM}=es`;
+  return `/es/book/${encodeURIComponent(book.slug || book.id)}`;
 }
+
+/** Direct reader link for a Spanish surface, when a page id is already known. */
+export function spanishPageHref(book: { slug?: string; id: string }, pageId: string): string {
+  return `/es/book/${encodeURIComponent(book.slug || book.id)}/page/${pageId}`;
+}
+
+export { startPageNumber };
+// READING_LANGUAGE_PARAM stays exported for the legacy ?lang=es links still in the wild.
+export { READING_LANGUAGE_PARAM };
 
 const PUBLIC_COLLECTION = { visible: true, collection_type: { $ne: 'visual_art' } };
 
