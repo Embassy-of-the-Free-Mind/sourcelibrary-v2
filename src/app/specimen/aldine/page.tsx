@@ -25,7 +25,7 @@ const PASSAGE = [
 
 const LOWER = 'a b c d e f g h i l m n o p q r s t u x y ſ æ ę';
 const ACCENTS = 'á é í ó ú à è ì ò ù ã ẽ ĩ õ ũ';
-const UPPER = 'A B C D E F G H I L M N O P Q R S T V & ( )';
+const UPPER = 'A B C D E F G H I K L M N O P Q R S T V X Y Z & ( )';
 const LIGS = 'ct ſt ſi ſſ ſſi fi ff Qu';
 
 export default function AldineSpecimenPage() {
@@ -128,8 +128,11 @@ export default function AldineSpecimenPage() {
           taken from real impressions and set over each vowel at the offset measured on the page, as
           the compositor did with separate accent sorts. Nineteen capitals, including a lone Q and the fused{' '}
           <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>Qu</span> sort Griffo
-          cast for the common case. J, U and W did not exist in 1490s roman type; K, X, Y, Z and all
-          digits are not on the pages read so far. In a web stack Cardo fills them in.
+          cast for the common case. K comes from De Aetna itself (&ldquo;Kalendis&rdquo;); X, Y and Z from
+          the Greek alphabet tables of Lascaris&apos; grammar, where Aldus set the Greek majuscules from
+          the roman case. J, U and W did not exist in 1490s roman type (I and V did their work), and
+          these books carry no arabic numerals &mdash; dates and leaf counts are roman. That is the whole
+          fount; in a web stack Cardo supplies the modern letters and digits.
           Letter spacing is measured from the page too: one em is the book&apos;s line pitch, and
           sidebearings are half the median gap between neighbouring sorts.
         </p>

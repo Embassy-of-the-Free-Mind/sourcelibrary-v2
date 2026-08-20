@@ -13,7 +13,7 @@ else:
     for ci, c in enumerate(clusters):
         g = meta[c['medoid']]; h = g['y1'] - g['y0']; asc = g['base'] - g['y0']; desc = g['y1'] - g['base']
         w = g['x1'] - g['x0']
-        if os.environ.get('BOX') and (int(os.environ.get('HMIN','90')) <= h <= 130 and int(os.environ.get('WMIN','70')) <= w <= 140): items.append((f'{ci}:{c["n"]}', c['medoid'])); continue
+        if os.environ.get('BOX') and (int(os.environ.get('HMIN','90')) <= h <= int(os.environ.get('HMAX','130')) and int(os.environ.get('WMIN','70')) <= w <= int(os.environ.get('WMAX','140'))): items.append((f'{ci}:{c["n"]}', c['medoid'])); continue
         if os.environ.get('BOX'): continue
         if asc >= 88 and desc <= 22 and 28 <= w < 50 and int(os.environ.get("NARROW","0")) or (not int(os.environ.get("NARROW","0")) and asc >= 88 and desc <= 22 and w >= 50): items.append((f'{ci}:{c["n"]}', c['medoid']))
 cell = 100; per = 14; sc = 0.6

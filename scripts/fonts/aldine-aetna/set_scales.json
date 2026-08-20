@@ -1,6 +1,8 @@
 {
- "_note": "font-units-per-pixel multiplier per glyph set relative to the main De Aetna set; calibrated by matching capital heights (z: Lascaris 1495 caps 76-83px vs 102-108px)",
+ "_note": "font-units-per-pixel multiplier per glyph set relative to the main De Aetna set; calibrated by matching capital heights (z: Lascaris 1495 caps 76-83px vs 102-108px); w = more Lascaris leaves (same book as z); k = De Aetna 2nd copy ita-bnc-ald-00000039 scanned larger (C 128px vs 104px)",
  "x": 1.0,
  "y": 1.0,
- "z": 1.33
+ "z": 1.33,
+ "w": 1.44,
+ "k": 0.8125
 }
