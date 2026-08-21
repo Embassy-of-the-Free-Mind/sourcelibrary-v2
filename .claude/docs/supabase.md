@@ -233,10 +233,39 @@ The translation text in `page_translations` has XML tags stripped and whitespace
 
 ## Common Operations
 
-### Run a one-off SQL query
+### Run a one-off SQL query (including DDL)
+
+The short path: `SUPABASE_DB_URL` lives in secret-lover, and the `pg` module's own
+connection-string parser handles it as-is.
+
+```bash
+secret-lover run -- node scripts/migration/<your-migration>.mjs
+# inside: new pg.Client({ connectionString: process.env.SUPABASE_DB_URL,
+#                         ssl: { rejectUnauthorized: false } })
+```
+
+Touch ID means **foreground only** — `secret-lover` cannot reach the Keychain from a
+background process. Node's `--env-file` does NOT override variables already in the
+environment, so `secret-lover run -- node --env-file=… ` lets a stale keychain value
+win over the file; export only what you need from the keychain instead.
+
+**The host is IPv6-only, and an A-record lookup reads exactly like a dead host.**
+`nslookup db.ykhxaecbbxaaqlujuzde.supabase.co` answers "No answer" because it asks for
+an **A** record and there is none; `dig +short AAAA` returns an address and the
+connection works. On 2026-08-13 that lookup was read as "Supabase retired this
+hostname", DDL was declared impossible without a human pasting into the SQL editor, and
+a migration was blocked for a week. Verified working from both the laptop and Hetzner on
+2026-08-21 (created `page_texts`, three RPCs, a trigger and four indexes). **Check AAAA
+before concluding a Supabase host is gone.**
+
+Two things that genuinely do not work, so you don't retry them: the service-role key
+cannot run DDL (it only reaches PostgREST), and the `exec_sql` RPC some older scripts
+reference does not exist (`PGRST202`).
+
+Ephemeral credentials via the CLI still work as an alternative:
+
 ```bash
 supabase link --project-ref ykhxaecbbxaaqlujuzde
-# Get ephemeral credentials:
 supabase db dump --linked --dry-run 2>&1 | grep "^export PG"
 # Use those with psql or node pg client (SET ROLE postgres for DDL)
 ```

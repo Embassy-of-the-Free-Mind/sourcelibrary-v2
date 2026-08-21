@@ -240,6 +240,35 @@ h1, h2, h3, h4 {
   max-width: 70ch;
   margin-inline: auto;
 }
+/* ---------------------------------------------------------------------------
+   Reading a book in the type it was printed in (#4083, pilot)
+   The reader page adds `.aldine-fount` for books listed in
+   src/lib/fonts/aldine-fount.ts. Both text panels — the transcription and the
+   English translation — are then set in the facsimile traced from that book's
+   own pages, with Cardo behind it for scripts the fount never had.
+   Display only: the DOM text is untouched, so search, copy and citation are
+   unaffected. The reader can switch back to the library's face from the
+   reading-settings popover — that sets data-reader-fount="modern" on the reader
+   root, and these rules stop matching.
+--------------------------------------------------------------------------- */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] .prose-manuscript,
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-family: var(--font-aldine-aetna), var(--font-cardo), 'Newsreader', Georgia, serif;
+  /* liga: the ct/ſt/fi sorts. calt: rotate the three impressions of each common
+     letter so neighbours are never the same cast — hand-set, not typeset. */
+  font-feature-settings: "liga" 1, "calt" 1;
+  /* x-height 0.424 em against Newsreader's 0.441 — a 4% bump keeps the reading
+     size the user chose. Measured, not guessed. */
+  font-size: calc(var(--reader-font-size, 18px) * 1.04);
+}
+/* Both reading panels use .prose-manuscript, whose size comes from CSS. The
+   German-source and modernised views use a `.prose` div that sets font-size
+   inline (a React style prop beats a stylesheet rule whatever its specificity),
+   so that one — and only that one — needs !important. */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-size: calc(var(--reader-font-size, 15px) * 1.04) !important;
+}
+
 /* Nested NotesRenderer inside an already-capped wrapper: don't re-center */
 [data-reader-panel] .prose-manuscript .prose-manuscript {
   max-width: none;

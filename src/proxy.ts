@@ -579,10 +579,13 @@ function getCorsHeaders(origin: string): Record<string, string> {
   };
 }
 
-// OG share card rotation. The four named variants live under public/.
-// Day-of-year mod 4 picks one — every link share gets a different look as
-// the week progresses, but a given calendar day is deterministic so the
-// crawler caches stay consistent within a day.
+// OG share card rotation. The four named variants live under public/, in one
+// set per locale: og-image-{variant}.jpg (English) and og-image-es-{variant}.jpg
+// (Spanish). Day-of-year mod 4 picks one — every link share gets a different
+// look as the week progresses, but a given calendar day is deterministic so the
+// crawler caches stay consistent within a day. The stable URLs the metadata
+// points at are /og-image.jpg and /og-image-es.jpg (see src/lib/og-locale.ts);
+// both are rewritten here.
 const OG_VARIANTS = ['cosmological', 'zodiac', 'illuminated', 'arcani'] as const;
 
 function pickOgVariantForToday(now: Date = new Date()): string {
@@ -672,11 +675,13 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
+  // Rewrite /og-image.jpg → /og-image-{variant}.jpg (and the Spanish twin
+  // /og-image-es.jpg → /og-image-es-{variant}.jpg) based on day of year.
   // Must come before any DB work since this fires on every OG crawl.
-  if (pathname === '/og-image.jpg') {
+  if (pathname === '/og-image.jpg' || pathname === '/og-image-es.jpg') {
+    const localePrefix = pathname === '/og-image-es.jpg' ? 'es-' : '';
     const url = request.nextUrl.clone();
-    url.pathname = `/og-image-${pickOgVariantForToday()}.jpg`;
+    url.pathname = `/og-image-${localePrefix}${pickOgVariantForToday()}.jpg`;
     return NextResponse.rewrite(url);
   }
 
@@ -1167,8 +1172,9 @@ export const config = {
   // Match all paths except static files
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)',
-    // OG share-card daily rotation — middleware must see this path even
-    // though it ends in .jpg (the default matcher above excludes dotted paths).
+    // OG share-card daily rotation — middleware must see these paths even
+    // though they end in .jpg (the default matcher above excludes dotted paths).
     '/og-image.jpg',
+    '/og-image-es.jpg',
   ],
 };

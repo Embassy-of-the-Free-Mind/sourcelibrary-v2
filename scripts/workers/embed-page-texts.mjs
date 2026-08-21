@@ -25,13 +25,27 @@
  *
  * Env: MONGODB_URI, SUPABASE_DB_URL, GEMINI_API_KEY_TIER3 (or GEMINI_API_KEY).
  *
- * Cost: the embedding model is free-tier; a full 38.6K-page Spanish backfill
- * costs $0 and runs in roughly an hour at ~13 texts/sec.
+ * COST — THIS IS BILLED. `gemini-embedding-2-preview` is $0.20 per 1M input
+ * tokens on the paid tier, and every GEMINI_API_KEY* in the env is a paid key.
+ * At the measured 4.29 chars/token, the 38.6K-page Spanish corpus is ≈29.1M
+ * tokens ≈ **$5.83 per full pass**, and `--force` pays it again from scratch.
+ * Run `--dry-run` first: it prints the page count, which is the only input the
+ * estimate needs. Ask before a bulk run.
  */
 
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+
+/**
+ * Measured on the Spanish corpus 2026-08-21 — see .claude/docs/embeddings.md.
+ * Used only to show a human a number before spending it; the authority on
+ * whether to spend at all is the budget dial below.
+ */
+const CHARS_PER_TOKEN = 4.29;
+const USD_PER_1M_TOKENS = 0.20;
+const AVG_EMBED_CHARS = 3200; // capped at 8,000/page; this is the measured mean
 
 const args = process.argv.slice(2);
 const arg = (name, dflt = null) => {
@@ -81,7 +95,28 @@ async function main() {
     if (LIMIT) books = books.slice(0, LIMIT);
 
     const expected = books.reduce((a, b) => a + (b[COUNTER] || 0), 0);
-    console.log(`[${LANG}] ${books.length} book(s), ${expected} pages by the ${COUNTER} counter${DRY_RUN ? ' — DRY RUN' : ''}`);
+    // Say the number BEFORE spending it. This worker was written believing the
+    // model was free-tier, and a full pass plus a --force repeat cost ~$11.65
+    // before anyone was asked (#4095). An estimate printed after the fact is
+    // an apology; printed first, it is a decision.
+    const estUsd = expected * AVG_EMBED_CHARS / CHARS_PER_TOKEN / 1e6 * USD_PER_1M_TOKENS;
+    console.log(
+      `[${LANG}] ${books.length} book(s), ${expected} pages by the ${COUNTER} counter` +
+      `${DRY_RUN ? ' — DRY RUN' : ''}${FORCE ? ' — FORCE (re-embeds pages that are already current)' : ''}\n` +
+      `[${LANG}] estimated cost ≈ $${estUsd.toFixed(2)} (paid tier, $${USD_PER_1M_TOKENS}/1M tokens at ${CHARS_PER_TOKEN} chars/token)`,
+    );
+
+    // The same brake embed-gemini.mjs uses. A paid bulk writer that does not
+    // consult the dial is a hole in it — and note the dial cannot SEE embedding
+    // spend, because neither embedder logs to gemini_usage, so it is measuring
+    // OCR and translation only. Treat it as a floor, not a full accounting.
+    if (!DRY_RUN) {
+      const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+      if (!await budgetAllowsDispatch(db, `embed-page-texts:${LANG}`, { control })) {
+        console.log(`[${LANG}] daily budget reached or unreadable — not embedding.`);
+        return;
+      }
+    }
 
     const totals = { embedded: 0, restaled: 0, missing: 0, alreadyPresent: 0 };
     let done = 0;

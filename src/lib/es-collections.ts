@@ -75,6 +75,8 @@ export interface EsCollectionDetail {
    */
   children: { slug: string; name: string; spanishBookCount: number; imageCandidates: string[] }[];
   heroCandidates: string[];
+  /** The curated hero plate at full size, for the share card. */
+  heroImage?: string;
   /**
    * Language-NEUTRAL apparatus ported from the English page (#4152). The
    * Spanish twin was scoped to name + intro + books when /es held four books;
@@ -383,5 +385,9 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       href: hasEsEdition(b) ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
     })),
     heroCandidates: imageCandidates(doc.featured_images, slug, doc.hero_image),
+    // The curated plate as STORED — full size, for the share card. The
+    // candidates above are display thumbnails (600px, often portrait), which
+    // preview badly as a social card; the English twin uses this same field.
+    heroImage: sanitizeThumbnail(doc.hero_image as string | undefined),
   })) as EsCollectionDetail;
 }

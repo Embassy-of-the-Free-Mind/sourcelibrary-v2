@@ -23,8 +23,17 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
+  // The grid card's count line. On /es it says how many of the collection's
+  // books can actually be READ in Spanish — the same thing /es/collections
+  // tells you, and the only number on the card a Spanish visitor can act on.
+  // Empty on `/`, where every book is already in the page's language.
+  const countLabel = (slug: string, bookCount: number) => {
+    const localized = localizedCollectionCounts[slug] ?? 0;
+    const base = `${nf(bookCount)} ${t.booksLabel}`;
+    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+  };
 
   return (
     <div className="min-h-screen">
@@ -35,8 +44,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Read in Spanish — the first thing under the hero on /es, because it is
           the one section whose BOOKS (not just chrome) are in the visitor's
-          language. Most-read first; the reader opens these in Spanish because
-          /es stores the reading-language preference (ReadingLanguagePreference).
+          language. Most-read first; each card's href carries the `/es` prefix,
+          which is the ONLY thing that decides reading language (#4112 removed
+          the localStorage preference that used to follow the reader off the
+          prefix — see .claude/docs/i18n.md rule 6).
           spanishBooks is empty on the English homepage, so nothing renders there. */}
       {spanishBooks.length > 0 && (
         <section className="bg-white py-16 md:py-24">
@@ -55,11 +66,22 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-2 max-w-2xl">
               {t.spanishSubtitle}
             </p>
-            {/* Say the size. Fifteen covers and no number implies a Spanish
-                library; the reader would otherwise find out by clicking. */}
+            {/* Say the size, the way the Collections header below does: one
+                inline line of counts. Pages and books are the work done; the
+                firsts and the source languages are why it matters. */}
             {spanishCounts && (
-              <p className="text-sm text-muted/80 mb-6 max-w-2xl">
-                {t.spanishScale(nf(spanishCounts.books), nf(spanishCounts.pages), nf(counts.totalBooks))}
+              <p className="text-sm text-muted/80 mb-6">
+                {nf(spanishCounts.pages)} {t.spanishStatPages}
+                {' '}&middot;{' '}
+                {nf(spanishCounts.books + spanishCounts.nativeBooks)} {t.spanishStatBooks}
+                {spanishCounts.firstTranslations > 0 && (
+                  <>
+                    {' '}&middot;{' '}
+                    {nf(spanishCounts.firstTranslations)} {t.spanishStatFirsts}
+                  </>
+                )}
+                {' '}&middot;{' '}
+                {nf(spanishCounts.sourceLanguages)} {t.spanishStatLanguages}
               </p>
             )}
             <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
@@ -132,7 +154,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                    {col.book_count} {t.booksLabel}
+                    {countLabel(col.slug, col.book_count)}
                   </p>
                   <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                     {collectionName(lang, col.slug, col.name)}
@@ -177,7 +199,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {/* Recently looked at — personalized slider from the signed-in reader's
           history, tucked right under the collections grid. Self-hides for
           anonymous visitors and readers with no history. */}
-      <RecentlyRead />
+      <RecentlyRead lang={lang} />
 
       {/* Recently translated — the same slider as the Mycology collection's
           "First translations" band, auto-filled with the 15 works most recently
@@ -200,7 +222,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
             </p>
-            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} />
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -451,7 +473,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
 
           {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" />
+          <SignUpCTA variant="inline" lang={lang} />
         </div>
       </section>
 

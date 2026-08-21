@@ -72,7 +72,7 @@ export default function GlobalFooter() {
 
         {/* Zone 1: Brand + Mission */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b border-white/[0.08]">
-          <Link href="/" className="group">
+          <Link href={localePath('/')} className="group">
             <Image
               src="/brand/png/logo-compact--white-on-transparent--96h.png"
               alt="Source Library"

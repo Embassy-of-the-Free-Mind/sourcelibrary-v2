@@ -2060,11 +2060,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   return (
                     <div className="mt-5">
                       <Link
-                        href={`/book/${bookSlug}/page-number/${firstChapterPageNumber}`}
+                        href={lp(`/book/${bookSlug}/page-number/${firstChapterPageNumber}`)}
                         className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                       >
                         <BookOpen className="w-5 h-5" />
-                        Read this book
+                        {t.readThisBook}
                       </Link>
                     </div>
                   );
@@ -2075,11 +2075,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <div className="mt-5">
                     <Link
-                      href={`/book/${bookSlug}/page/${readPage.id}`}
+                      href={lp(`/book/${bookSlug}/page/${readPage.id}`)}
                       className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                     >
                       <BookOpen className="w-5 h-5" />
-                      Read this book
+                      {t.readThisBook}
                     </Link>
                   </div>
                 );
@@ -2547,6 +2547,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
         <SignUpCTA
           bgImageUrl="https://images.sourcelibrary.org/artwork/woman-of-the-apocalypse-hortus-deliciarum.jpg"
           bgAttribution={{ text: 'Woman of the Apocalypse, Hortus Deliciarum (12th c.)', href: '/collections/visions-ecstasies' }}
+          lang={lang}
         />
       )}
     </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { getEsCollectionList, type EsCollectionSummary } from '@/lib/es-collections';
+import { siteOgImage } from '@/lib/og-locale';
 
 // Spanish edition of /collections. Real, indexable route; the header and footer
 // localize themselves from the `/es` prefix. Data failures throw (ISR keeps the
@@ -18,7 +19,27 @@ export const metadata: Metadata = {
     canonical: '/es/collections',
     languages: { en: '/collections', es: '/es/collections', 'x-default': '/collections' },
   },
-  openGraph: { locale: 'es_ES', url: 'https://sourcelibrary.org/es/collections' },
+  openGraph: {
+    title: 'Colecciones | Source Library',
+    description:
+      'Miles de textos históricos organizados en colecciones temáticas: alquimia, hermetismo, filosofía clásica, textos sagrados y más. Incluye los libros con edición en español.',
+    siteName: 'Source Library',
+    type: 'website',
+    locale: 'es_ES',
+    url: 'https://sourcelibrary.org/es/collections',
+    images: [siteOgImage('es')],
+  },
+  // The layout's `twitter` block survives when a page declares only
+  // `openGraph` — and its image is the English card, which is what WhatsApp
+  // previewed here. Spanish page, Spanish card, in both blocks.
+  twitter: {
+    card: 'summary_large_image',
+    site: '@SourceLibrary_',
+    title: 'Colecciones | Source Library',
+    description:
+      'Miles de textos históricos organizados en colecciones temáticas: alquimia, hermetismo, filosofía clásica, textos sagrados y más. Incluye los libros con edición en español.',
+    images: [siteOgImage('es')],
+  },
 };
 
 const nf = (n: number) => n.toLocaleString('es-ES');
@@ -74,7 +95,8 @@ export default async function EsCollectionsPage() {
         <p className="text-muted max-w-2xl leading-relaxed">
           La biblioteca, ordenada por tradiciones. Primero las colecciones que ya contienen libros con edición en
           español; debajo, el resto de la biblioteca, en su lengua original y con traducción al inglés en muchos casos.
-          Los títulos y las introducciones de cada colección están en inglés salvo donde se indica.
+          Las colecciones con libros en español llevan su nombre y su introducción traducidos; en el resto, la
+          introducción aparece en inglés y así se indica.
         </p>
       </div>
 

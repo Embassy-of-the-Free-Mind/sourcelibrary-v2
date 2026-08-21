@@ -194,8 +194,47 @@ answer is a sweep-log row or an existing flag — not `language_<yourthing>`.
 8. Before quoting a rate from a language detector, hand-check its largest
    cluster. Twice now that cluster has been the instrument, not the corpus.
 
+## Widening a language definition: find every WRITER before you ship
+
+`language` is read by surfaces AND derived from by writers, so a change to what
+it *means* is not finished when the pages look right.
+
+#4120 widened "has a Spanish edition" from *translated into it*
+(`pages_translated_es > 0`) to *in it — by translation **or** by authorship*,
+because 67 live books written in Spanish have no pivot counter and never will,
+and so were invisible on every /es surface. The read surfaces were updated in one
+pass. **Three writers kept the old rule**, and only one of them failed harmlessly:
+
+1. `scripts/maintenance/sync-es-collection.mjs` derives the `en-espanol`
+   collection — and **un-tags** anything that stops qualifying. So it did not
+   merely fail to add Spanish originals, it **removed them on every run**. Caught
+   only by reading the output: the run that tagged two new books removed Scherzer
+   in the same pass (#4141).
+2. `src/app/es/collections/[id]/page.tsx` split its list on the counter, filing
+   native books under "these read in their original language and in English"
+   while their card linked into the Spanish reader (#4138).
+3. `scripts/workers/embed-page-texts.mjs` selects on the counter, so the 67 books
+   have **zero rows** in `page_texts` — visible on /es, unfindable by Spanish
+   search (#4146, open). Not a filter fix: the composer reads
+   `pages.translations.es`, which is empty for a native edition forever; the
+   Spanish text is in `pages.ocr.data`.
+
+**The rule:** after changing what a language predicate means, `git grep` the old
+predicate and classify every hit as reader or writer. A writer that also *removes*
+membership is the dangerous kind — it converts a stale definition into active
+data loss, and it looks like a successful sweep in the log.
+
+**The tell that you are in this case:** a derived collection whose count moves the
+wrong way, or a sweep that reports both tags and un-tags in one run.
+
+Corollary for `.mjs` writers: they cannot import the TS predicate, so the pattern
+gets duplicated (`NATIVE_EDITION_LANGUAGE` in `src/lib/localized.ts` ↔
+`sync-es-collection.mjs`). Both copies carry a note that they change together —
+the same arrangement `translate-core.mjs` ↔ `ai-models.ts` already lives with.
+
 ## Open issues
 
+#4146 (native Spanish unfindable in Spanish search) ·
 #4089 (read path + ordering rule) · #4117 (detector from page tags) ·
 #3893 (one vocabulary) · #3958 (1,519 live books in `language_review` with no
 consumer) · #2184 (translations catalogued as the original's language) ·

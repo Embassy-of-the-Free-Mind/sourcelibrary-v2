@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { localePath, type Locale } from '@/lib/locale-path';
 
 interface LogoProps {
   /** White text/stroke for dark backgrounds */
@@ -7,9 +8,18 @@ interface LogoProps {
   compact?: boolean;
   /** Extra-compact: icon only on mobile, text on sm+ (used in reader header) */
   mini?: boolean;
+  /**
+   * Surface locale. The wordmark is the most-clicked nav element on the site and
+   * its href used to be a hard-coded `/`: on every `/es` page it dropped a
+   * Spanish reader onto the ENGLISH homepage, silently ending their localized
+   * session. Passed down (not read from `usePathname`) because the homepage is
+   * statically prerendered, where the pathname is null at build time and the
+   * link would only become correct after hydration.
+   */
+  lang?: Locale;
 }
 
-export default function Logo({ white, compact, mini }: LogoProps) {
+export default function Logo({ white, compact, mini, lang = 'en' }: LogoProps) {
   const strokeColor = white ? 'white' : 'currentColor';
 
   const iconSize = mini
@@ -35,7 +45,7 @@ export default function Logo({ white, compact, mini }: LogoProps) {
 
   return (
     <Link
-      href="/"
+      href={localePath('/', lang)}
       className={`inline-flex items-center ${mini ? 'gap-1.5' : 'gap-3'} ${
         white
           ? 'text-white hover:opacity-80'

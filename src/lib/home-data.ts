@@ -9,6 +9,7 @@ import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { isNativeEdition, localizedEditionFilter, type LocalizedBookMap } from '@/lib/localized';
 import { spanishReaderHref } from '@/lib/es-collections';
+import type { Locale } from '@/lib/locale-path';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -701,21 +702,77 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
  * clicking. Counted live rather than hard-coded — the number grows every time
  * the worker runs.
  */
-export interface SpanishCounts { books: number; pages: number }
+export interface SpanishCounts {
+  /** Books TRANSLATED into Spanish (the counter) — the pipeline's own output. */
+  books: number;
+  pages: number;
+  /** Books WRITTEN in Spanish — Cogolludo, Landa, Aguilar; no counter, no translation. */
+  nativeBooks: number;
+  /** Translated books whose Spanish edition is a published first translation. */
+  firstTranslations: number;
+  /** Distinct `books.language` values among the translated set (Latin, Nahuatl, Sanskrit…). */
+  sourceLanguages: number;
+}
 
 async function getSpanishCounts(): Promise<SpanishCounts | null> {
   const db = await getReadDb();
-  const [row] = await db.collection('books').aggregate<{ books: number; pages: number }>([
-    { $match: { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 } } },
-    { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' } } },
-    { $project: { _id: 0, books: 1, pages: 1 } },
+  const live = { visible: true, pages_count: { $gt: 0 } };
+  const translated = { ...live, pages_translated_es: { $gt: 0 } };
+  // All three concurrently: each is ~2s of round trip from far away, and the
+  // band is on an 8s budget shared with the rest of the page's queries.
+  const [[row], nativeBooks, firstTranslations] = await Promise.all([
+    db.collection('books').aggregate<{ books: number; pages: number; languages: string[] }>([
+      { $match: translated },
+      { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' }, languages: { $addToSet: '$language' } } },
+      { $project: { _id: 0, books: 1, pages: 1, languages: 1 } },
+    ], { maxTimeMS: 8000 }).toArray(),
+    // Native editions: everything the Spanish surface selects MINUS the translated set.
+    db.collection('books').countDocuments(
+      { ...live, ...localizedEditionFilter('es'), pages_translated_es: { $not: { $gt: 0 } }, content_type: { $ne: 'artwork' } },
+      { maxTimeMS: 8000 },
+    ),
+    // Same gate the card's badge uses (isPublishedFirstTranslation): the flag
+    // minus any disposition that withholds the claim. Count, don't assert more.
+    db.collection('books').countDocuments(
+      { ...translated, is_first_translation: true, ft_disposition: { $nin: ['demoted', 'needs_review', 'rejected'] } },
+      { maxTimeMS: 8000 },
+    ),
+  ]);
+  if (!row) return null;
+  return {
+    books: row.books,
+    pages: row.pages,
+    nativeBooks,
+    firstTranslations,
+    sourceLanguages: (row.languages ?? []).filter((l): l is string => typeof l === 'string' && l.length > 0).length,
+  };
+}
+
+/**
+ * How many books in each collection can be read in `lang` — the "· 57 en
+ * español" half of the homepage grid's count line.
+ *
+ * Same selection rule as `/es/collections` (`localizedEditionFilter`): a book
+ * counts if it was TRANSLATED into the language or WRITTEN in it. Sharing the
+ * filter is what stops the homepage card and the collections card from
+ * disagreeing about the same collection. Indexed off the small set of books
+ * that have an edition, never by scanning collections × books.
+ */
+async function getLocalizedCollectionCounts(lang: Exclude<Locale, 'en'>): Promise<Record<string, number>> {
+  const db = await getReadDb();
+  const rows = await db.collection('books').aggregate<{ _id: string; count: number }>([
+    { $match: { ...localizedEditionFilter(lang), visible: true, pages_count: { $gt: 0 } } },
+    { $unwind: '$collections' },
+    { $group: { _id: '$collections', count: { $sum: 1 } } },
   ], { maxTimeMS: 8000 }).toArray();
-  return row ?? null;
+  const out: Record<string, number> = {};
+  for (const r of rows) if (typeof r._id === 'string') out[r._id] = r.count;
+  return out;
 }
 
 // ---------- Aggregate ----------
 
-// ---------- Books with a Spanish edition (the /es "Leer en español" band) ----------
+// ---------- Books with a Spanish edition (the "Leer en español" band) ----------
 
 /** Slug of the curated collection that gathers every book with a Spanish edition. */
 export const SPANISH_COLLECTION_SLUG = 'en-espanol';
@@ -801,6 +858,12 @@ export interface HomeData {
   spanishBooks: SpanishBook[];
   /** Size of the Spanish corpus, for the honest scale line. Null off /es. */
   spanishCounts: SpanishCounts | null;
+  /**
+   * Books readable in the page's language, per collection slug — what the grid
+   * card's "· N en español" line reads. Empty on the English homepage, where
+   * every book is already in the page's language and the line would be noise.
+   */
+  localizedCollectionCounts: Record<string, number>;
 }
 
 // `lang` selects the podcast episode's language and the Spanish-edition band,
@@ -808,7 +871,7 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -818,7 +881,10 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getFeaturedPodcast(lang), 8000, null),
     lang === 'es' ? withTimeout(getSpanishBooks(), 8000, [] as SpanishBook[]) : Promise.resolve([] as SpanishBook[]),
     lang === 'es' ? withTimeout(getSpanishCounts(), 8000, null) : Promise.resolve(null),
+    lang === 'en'
+      ? Promise.resolve({} as Record<string, number>)
+      : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts };
 }

@@ -78,7 +78,12 @@ const VARIANT_PREFIX = /^(ancient|modern|classical|koine|medieval|mediaeval|late
  * the OCR model emitting two labels for one text, not a facing-page edition.
  */
 const FAMILY = {
+  // Script and register variants of Chinese. "Traditional Chinese" was missing
+  // until a Japanese go manual came back tagged Chinese 44% / Japanese 36% /
+  // Classical Chinese 12% / Traditional Chinese 8% — four labels, one text.
   'Classical Chinese': 'Chinese', 'Literary Chinese': 'Chinese',
+  'Traditional Chinese': 'Chinese', 'Simplified Chinese': 'Chinese',
+  'Mandarin': 'Chinese', 'Kanbun': 'Chinese',
   'Old English': 'English', 'Middle English': 'English',
   'Old French': 'French', 'Middle French': 'French',
   'Middle High German': 'German', 'Old High German': 'German',
