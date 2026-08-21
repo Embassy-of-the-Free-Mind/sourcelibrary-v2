@@ -42,7 +42,7 @@
 
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
-import { NATIVE_EDITION_LANGUAGE, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';
+import { embeddableEditionFilter, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';
 import { embedBookPageTexts, EMBED_MODEL } from '../lib/embed-book-page-texts.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
@@ -98,12 +98,11 @@ async function main() {
     // holding 19,464 pages — visible on /es and unfindable by Spanish search,
     // which is indistinguishable from having no matches. A native edition also
     // needs `pages_ocr > 0`, since its text IS the OCR.
-    const nativePattern = NATIVE_EDITION_LANGUAGE[LANG];
-    const clauses = [{ [COUNTER]: { $gt: 0 } }];
-    // Only for a language we have a native pattern for; otherwise the counter
-    // remains the whole rule, exactly as before.
-    if (nativePattern) clauses.push({ language: nativePattern, visible: true, pages_ocr: { $gt: 0 } });
-    const match = BOOK ? { id: { $in: BOOK.split(',') } } : { $or: clauses };
+    // The rule is imported, not written here: `page-texts-coverage.mjs` has to
+    // select the SAME set or its gap number is meaningless, and when this was
+    // inline the audit was still on the counter-only rule and blind to every
+    // native book it added.
+    const match = BOOK ? { id: { $in: BOOK.split(',') } } : embeddableEditionFilter(LANG);
     // Select first, order second — sorting before the limit once picked the
     // shortest books in the library rather than the intended set (2026-08-20).
     let books = await db.collection('books')
