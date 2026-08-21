@@ -65,6 +65,8 @@ const THRESHOLD = Number(arg('threshold', '0.10'));
 const MIN_PAGES = Number(arg('min-pages', '10'));
 const ALL = flag('all');
 const BATCH = 200;
+/** A page needs this much text left, after metadata, to vote on the book's language mix. */
+const MIN_BODY_CHARS = Number(arg('min-body', '60'));
 /** Extra thresholds reported so the real one can be chosen from evidence. */
 const SENSITIVITY = [0.05, 0.10, 0.15, 0.20, 0.25];
 
@@ -74,13 +76,71 @@ if (process.argv.includes('--apply')) {
   process.exit(2);
 }
 
-/** Pull the `<language>` tag out of the head of each page and count pages per raw tag. */
+/**
+ * Pull the `<language>` tag out of the head of each page and count pages per raw tag.
+ *
+ * Two exclusions, both found by spot-checking the first full run (#4117):
+ *
+ * - **Soft-hidden pages.** A negative `page_number` means the page is hidden
+ *   from readers; counting it lets invisible leaves set a book's language mix.
+ *   Across a 45-book sample this dropped 706 pages, and moved 4 books across a
+ *   band boundary — `Hieroglyphica` fell from an 11% second language to 1%.
+ * - **Pages with no transcription.** A leaf carrying only bleed-through or a
+ *   stain still gets a language tag, which then dilutes (or, by shrinking the
+ *   denominator, inflates) every share in the book.
+ *
+ * NOTE what this deliberately does NOT fix: fabricated OCR passes both filters,
+ * because the fabrication is long and well-formed (#4149). Blank-page
+ * hallucination needs the page image, not a length test —
+ * `scripts/audit/detect-fabricated-ocr.mjs`.
+ */
 async function tagCounts(pages, bookId) {
   return pages.aggregate([
-    { $match: { book_id: bookId, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: bookId, page_number: { $gte: 0 }, 'ocr.data': { $type: 'string' } } },
     // The tag sits in the first 40 chars on ~95% of pages and at 0 on ~61%
     // (sampled 2026-08-21). Capping the input keeps this off the full text.
-    { $project: { head: { $substrCP: ['$ocr.data', 0, 300] } } },
+    {
+      $project: {
+        head: { $substrCP: ['$ocr.data', 0, 300] },
+        // Length of what remains once the metadata block is gone. A leaf with a
+        // language tag and no transcription must not vote on the book's mix.
+        bodyLen: {
+          $strLenCP: {
+            $trim: {
+              input: {
+                $reduce: {
+                  input: [['<language>', '</language>'], ['<page-type>', '</page-type>'],
+                          ['<script>', '</script>'], ['<image-desc', '</image-desc>'],
+                          ['<vocab>', '</vocab>'], ['<scan-quality>', '</scan-quality>']],
+                  initialValue: '$ocr.data',
+                  in: {
+                    $let: {
+                      vars: {
+                        s: { $indexOfCP: ['$$value', { $arrayElemAt: ['$$this', 0] }] },
+                        e: { $indexOfCP: ['$$value', { $arrayElemAt: ['$$this', 1] }] },
+                      },
+                      in: {
+                        $cond: [
+                          { $and: [{ $gte: ['$$s', 0] }, { $gt: ['$$e', '$$s'] }] },
+                          { $concat: [
+                            { $substrCP: ['$$value', 0, '$$s'] },
+                            { $substrCP: ['$$value',
+                              { $add: ['$$e', { $strLenCP: { $arrayElemAt: ['$$this', 1] } }] },
+                              { $strLenCP: '$$value' }] },
+                          ] },
+                          '$$value',
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    { $match: { bodyLen: { $gte: MIN_BODY_CHARS } } },
     { $project: { tag: { $regexFind: { input: '$head', regex: '<language>([^<]{0,60})</language>' } } } },
     { $group: { _id: { $arrayElemAt: ['$tag.captures', 0] }, n: { $sum: 1 } } },
   ], { maxTimeMS: 60000, allowDiskUse: false }).toArray();
