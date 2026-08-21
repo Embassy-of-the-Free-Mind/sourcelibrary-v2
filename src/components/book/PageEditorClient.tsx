@@ -402,7 +402,7 @@ export default function PageEditorClient({
 
   // EN/ES as LINKS between `/book/…` and `/es/book/…`, not as a view toggle:
   // the language a reader is in is always the URL they are on (#4112). It rides
-  // INSIDE the reader's own header (#4116) rather than in a band above it — a
+  // INSIDE the reader's own header (#4124) rather than in a band above it — a
   // separate strip made the ~100 books with a Spanish edition look like they
   // carried a site notice, and put the one control that changes what you are
   // reading outside the bar holding every other reading control.
