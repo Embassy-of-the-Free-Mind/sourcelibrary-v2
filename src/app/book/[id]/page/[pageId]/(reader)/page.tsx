@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
-import PageEditorClient from '@/components/book/PageEditorClient';
+import Reader2C from '@/components/reader-v2/Reader2C';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
@@ -139,7 +139,13 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      <PageEditorClient
+      {/* Reader redesign (branch worktree-reader-redesign-2a-2c): the real
+          reader route renders the new reader, so browsing the preview
+          deployment behaves exactly like the site — every page you reach by
+          normal navigation is the redesign. Swap this back to
+          PageEditorClient to A/B against the old reader. Everything around it
+          (JSON-LD, embed reporting, the crawler nav below) is untouched. */}
+      <Reader2C
         initialBook={book}
         initialPage={markedPage}
         initialPageList={serializedNavPages}

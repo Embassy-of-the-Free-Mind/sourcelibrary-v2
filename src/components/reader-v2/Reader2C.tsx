@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -1886,11 +1885,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           className="col-span-2 flex items-center gap-3 px-4"
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
-          {/* While this is a preview, the mark goes back to the picker rather
-              than the homepage — it is the only route between books. */}
-          <Link href="/reader-preview" title="Pick another book" className="no-underline shrink-0">
-            <Logo white compact />
-          </Link>
+          <Logo white compact />
           {/* Title and byline sit on one line rather than stacking, so the bar
               stays a single row of chrome */}
           <a
@@ -2190,9 +2185,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           <div className="flex items-center gap-2.5 h-[52px] px-3">
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
-            <Link href="/reader-preview" title="Pick another book" className="no-underline shrink-0">
-              <Logo white mini />
-            </Link>
+            <Logo white mini />
             <a
               href={`/book/${r.bookPath}`}
               className="flex-1 min-w-0 no-underline"
