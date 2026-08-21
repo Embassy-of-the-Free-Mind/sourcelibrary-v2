@@ -202,7 +202,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     >
       <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
         <div className="flex items-center gap-3">
-          <Logo white={isWhiteText} compact={!!breadcrumbs} />
+          <Logo white={isWhiteText} compact={!!breadcrumbs} lang={locale} />
           {breadcrumbs?.map((crumb) => (
             <span key={crumb.href} className="flex items-center gap-3">
               <span className={isWhiteText ? 'text-white/40 hidden sm:inline' : 'text-stone-400 hidden sm:inline'}>/</span>

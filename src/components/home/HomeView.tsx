@@ -199,7 +199,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {/* Recently looked at — personalized slider from the signed-in reader's
           history, tucked right under the collections grid. Self-hides for
           anonymous visitors and readers with no history. */}
-      <RecentlyRead />
+      <RecentlyRead lang={lang} />
 
       {/* Recently translated — the same slider as the Mycology collection's
           "First translations" band, auto-filled with the 15 works most recently
@@ -222,7 +222,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
             </p>
-            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} />
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -473,7 +473,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
 
           {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" />
+          <SignUpCTA variant="inline" lang={lang} />
         </div>
       </section>
 
