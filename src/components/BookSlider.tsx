@@ -30,7 +30,7 @@ export interface MiniBook {
  * shared HorizontalSlider. Extracted from the Mycology "First translations"
  * band so it can be reused on the homepage and beyond.
  */
-export default function BookSlider({ books, lang = 'en', hideStatus = false }: { books: MiniBook[]; lang?: Locale; hideStatus?: boolean }) {
+export default function BookSlider({ books, lang = 'en' }: { books: MiniBook[]; lang?: Locale }) {
   return (
     <HorizontalSlider ariaLabel="books">
       {books.map((b) => (
@@ -39,7 +39,7 @@ export default function BookSlider({ books, lang = 'en', hideStatus = false }: {
           data-card
           className="snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)]"
         >
-          <CollectionBookCard book={b as unknown as CollectionBook} lang={lang} href={b.href} hideStatus={hideStatus} />
+          <CollectionBookCard book={b as unknown as CollectionBook} lang={lang} href={b.href} />
         </div>
       ))}
     </HorizontalSlider>

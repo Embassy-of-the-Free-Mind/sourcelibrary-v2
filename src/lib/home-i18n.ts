@@ -70,25 +70,12 @@ export interface HomeStrings {
   // so the two editions keep one shape.
   spanishHeading: string;
   spanishSubtitle: string;
-  /** The honest scale line. Counts arrive already locale-formatted by nf(). */
-  spanishScale: (books: string, pages: string, total: string) => string;
   spanishViewAll: string;
-  // Stat tiles over the Spanish band. Numbers arrive locale-formatted.
+  // The inline count line under the Spanish band heading. Numbers arrive locale-formatted.
   spanishStatPages: string;
   spanishStatBooks: string;
   spanishStatFirsts: string;
   spanishStatLanguages: string;
-  /** Under the tiles: the upside, framed as what a gift opens, not a share. */
-  spanishUpside: (total: string) => string;
-  // The bilingual showpiece: one page, original beside its Spanish.
-  spanishShowpieceEyebrow: string;
-  spanishShowpieceOriginal: string;
-  spanishShowpieceSpanish: string;
-  spanishShowpieceOpen: (page: string) => string;
-  spanishFirstsLabel: string;
-  spanishSupportHeading: string;
-  spanishSupportBody: string;
-  spanishSupportCta: string;
 
   // Gallery masonry (homepage)
   galleryHeading: string;
@@ -200,22 +187,11 @@ const en: HomeStrings = {
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
   spanishHeading: 'Read in Spanish',
   spanishSubtitle: 'The most-read works in the library, with a Spanish edition you can open page by page beside the original.',
-  spanishScale: (books, pages, total) =>
-    `${books} of the library's ${total} books can be read in full in Spanish — ${pages} translated pages beside the original. The rest are in their own language, with an English translation in many cases.`,
   spanishViewAll: 'All books in Spanish',
-  spanishStatPages: 'pages translated into Spanish',
-  spanishStatBooks: 'books readable in Spanish',
-  spanishStatFirsts: 'first translations into Spanish',
+  spanishStatPages: 'pages translated',
+  spanishStatBooks: 'books in Spanish',
+  spanishStatFirsts: 'first translations',
   spanishStatLanguages: 'source languages',
-  spanishUpside: (total) => `A library of ${total} works, and every gift opens more of it in Spanish.`,
-  spanishShowpieceEyebrow: 'Original beside its Spanish',
-  spanishShowpieceOriginal: 'Original',
-  spanishShowpieceSpanish: 'Spanish',
-  spanishShowpieceOpen: (page) => `Open page ${page} in the reader`,
-  spanishFirstsLabel: 'In Spanish for the first time',
-  spanishSupportHeading: 'Help bring the next thousand pages into Spanish',
-  spanishSupportBody: 'Every translation is published open access, page by page beside the original, for readers anywhere.',
-  spanishSupportCta: 'Support Spanish translation',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
   galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
@@ -327,22 +303,11 @@ const es: HomeStrings = {
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
   spanishHeading: 'Leer en español',
   spanishSubtitle: 'Las obras más leídas de la biblioteca, con una edición en español que puedes abrir página a página junto al original.',
-  spanishScale: (books, pages, total) =>
-    `${books} de los ${total} libros de la biblioteca se pueden leer completos en español — ${pages} páginas traducidas junto al original. Los demás están en su lengua original, con traducción al inglés en muchos casos.`,
   spanishViewAll: 'Todos los libros en español',
-  spanishStatPages: 'páginas traducidas al español',
-  spanishStatBooks: 'libros que se leen en español',
-  spanishStatFirsts: 'primeras traducciones al español',
+  spanishStatPages: 'páginas traducidas',
+  spanishStatBooks: 'libros en español',
+  spanishStatFirsts: 'primeras traducciones',
   spanishStatLanguages: 'lenguas de origen',
-  spanishUpside: (total) => `Una biblioteca de ${total} obras, y cada donación abre más de ella en español.`,
-  spanishShowpieceEyebrow: 'El original junto a su español',
-  spanishShowpieceOriginal: 'Original',
-  spanishShowpieceSpanish: 'Español',
-  spanishShowpieceOpen: (page) => `Abrir la página ${page} en el lector`,
-  spanishFirstsLabel: 'Por primera vez en español',
-  spanishSupportHeading: 'Ayuda a traer las próximas mil páginas al español',
-  spanishSupportBody: 'Cada traducción se publica en acceso abierto, página a página junto al original, para lectores de cualquier lugar.',
-  spanishSupportCta: 'Apoya la traducción al español',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
   galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
