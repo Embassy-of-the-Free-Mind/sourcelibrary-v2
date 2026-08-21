@@ -22,6 +22,10 @@ export const aldineAetna = localFont({
   src: '../../../public/fonts/aldine-aetna/AldineAetna-Regular.woff2',
   variable: '--font-aldine-aetna',
   display: 'swap',
+  // The reader route imports this for every book, but only books in
+  // `aldine-fount.ts` actually reference the family. Without preload:false the
+  // browser would fetch 30 KB of 1496 letterforms on every page of every book.
+  preload: false,
   // Cardo supplies everything the facsimile is missing.
   fallback: ['Cardo', 'Georgia', 'serif'],
 });
