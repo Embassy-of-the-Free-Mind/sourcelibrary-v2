@@ -16,7 +16,8 @@
  * one. Tibetan gets the same 144 queries English does. The stratification is
  * recorded per row so downstream analysis can weight it back if it wants to.
  *
- * Free: embeddings are free-tier and cached; the RPC is a Supabase query.
+ * Cost: embeddings are BILLED (see .claude/docs/embeddings.md) but cached, so a
+ * repeat run is free; the RPC is a Supabase query.
  */
 import { readFileSync, writeFileSync, existsSync, createWriteStream } from 'node:fs';
 import { createRequire } from 'node:module';

@@ -3,13 +3,25 @@
  * Embed pages for semantic search using Gemini embedding-2-preview.
  *
  * Embeds BOTH ocr.data and translation.data per page into Supabase
- * page_translations table. Uses Gemini API (free tier, 768 dims).
+ * page_translations table. Uses Gemini API (768 dims).
  *
  * Replaces the old e5-base backfill (embed-translations.mjs).
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
- * Cost: $0 (free tier, rate-limited to ~13 texts/sec sustained).
- * Time: ~5-6 days for full 3M-page backfill.
+ * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
+ * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
+ * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
+ * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
+ * that line was believed and acted on in Aug 2026 and cost ~$12 on a corpus
+ * 100x smaller. --incremental and --missing-only are cheap because they touch
+ * few pages; --full is not. ASK BEFORE A FULL PASS.
+ *
+ * Note the budget dial this script consults (budgetAllowsDispatch) cannot SEE
+ * embedding spend — nothing here logs to gemini_usage (#4162) — so it brakes on
+ * OCR/translation spend only.
+ *
+ * Time: ~5-6 days for full 3M-page backfill (~13 texts/sec sustained).
  *
  * Modes:
  *   --full        Process all pages with OCR or translation
