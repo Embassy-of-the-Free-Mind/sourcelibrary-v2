@@ -68,6 +68,12 @@ export interface EsCollectionDetail {
   /** Books beyond the cap shown here — the English page lists them all. */
   truncated: boolean;
   parent?: { slug: string; name: string } | null;
+  /**
+   * Sub-collections that hold Spanish books. The page linked only UP to its
+   * parent, so a branch like americas → maya had no way down and the Maya
+   * material was unreachable by clicking from anywhere on /es.
+   */
+  children: { slug: string; name: string; spanishBookCount: number }[];
   heroCandidates: string[];
 }
 
@@ -135,24 +141,63 @@ export function spanishReaderHref(book: { slug?: string; id: string; pages_count
 
 const PUBLIC_COLLECTION = { visible: true, collection_type: { $ne: 'visual_art' } };
 
+/**
+ * What leads the Spanish collections index, in order.
+ *
+ * Separate from `PINNED_COLLECTION_SLUGS` on purpose: that list is the English
+ * homepage's curation, and a Spanish reader's front page is a different
+ * editorial question. `en-espanol` is what they came for; the Mesoamerican
+ * branch follows because it is the corpus we hold in their language — the
+ * Ximénez Popol Vuh, Scherzer's editio princeps, Cogolludo, Landa, and the
+ * Chilam Balam books — and because as leaf collections they would otherwise sit
+ * in `sortCollections`' randomised tail forever.
+ *
+ * Anything not listed keeps its existing order behind these.
+ *
+ * `indigenous-sacred-narratives` is deliberately NOT here: it is `type:
+ * 'curated'`, which the index query excludes, so pinning it would be a dead
+ * entry. It reaches Spanish readers as a child of `americas` instead.
+ */
+const ES_PINNED = ['en-espanol', 'maya', 'mesoamerican', 'americas'];
+const esPinRank = (slug: string) => {
+  const i = ES_PINNED.indexOf(slug);
+  return i === -1 ? ES_PINNED.length : i;
+};
+
 export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
   const db = await getReadDb();
-  const [docs, childCounts, spanishCounts] = await Promise.all([
+  // Which collections hold Spanish editions, and how many — indexed by the small
+  // set of books that have them, never by scanning collections × books. Fetched
+  // FIRST because the collection query below selects on its keys; it was already
+  // being computed here, so this is a reordering, not an extra round trip.
+  const spanishCounts = await db.collection('books').aggregate<{ _id: string; count: number }>([
+    { $match: { ...localizedEditionFilter('es'), visible: true } },
+    { $unwind: '$collections' },
+    { $group: { _id: '$collections', count: { $sum: 1 } } },
+  ], { maxTimeMS: 8000 }).toArray();
+  const spanishSlugs = spanishCounts.map((c) => c._id).filter((s): s is string => typeof s === 'string');
+
+  const [docs, childCounts] = await Promise.all([
     db.collection('collections').find(
-      { ...PUBLIC_COLLECTION, parent: { $exists: false }, type: { $ne: 'curated' } },
+      // Top-level collections, PLUS any sub-collection that actually holds
+      // Spanish books. The index used to be top-level-only, which made whole
+      // branches unreachable: `maya` sits under `americas`, and `americas`
+      // itself sits under `world-traditions`/`sacred-texts`, so neither
+      // appeared — and the Spanish collection page links only UP to its parent,
+      // never down to children. There was no path of clicks from /es to the
+      // Maya material at all; /es/collections/maya returned 200 to anyone who
+      // typed it and nothing linked there.
+      {
+        ...PUBLIC_COLLECTION,
+        type: { $ne: 'curated' },
+        $or: [{ parent: { $exists: false } }, { slug: { $in: spanishSlugs } }],
+      },
       { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, localized: 1, book_count: 1, total_book_count: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
     ).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([
       { $match: { parent: { $exists: true }, visible: true } },
       { $unwind: '$parent' },
       { $group: { _id: '$parent', count: { $sum: 1 } } },
-    ], { maxTimeMS: 8000 }).toArray(),
-    // Which collections hold Spanish editions — indexed by the small set of
-    // books that have them, never by scanning collections × books.
-    db.collection('books').aggregate<{ _id: string; count: number }>([
-      { $match: { ...localizedEditionFilter('es'), visible: true } },
-      { $unwind: '$collections' },
-      { $group: { _id: '$collections', count: { $sum: 1 } } },
     ], { maxTimeMS: 8000 }).toArray(),
   ]);
   const children = new Map(childCounts.map((c) => [c._id, c.count]));
@@ -168,9 +213,13 @@ export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
     imageCandidates: imageCandidates(d.featured_images, d.slug, d.hero_image),
     children_count: children.get(d.slug) ?? 0,
   }));
-  // The Spanish-editions collection is what a Spanish reader came for: first.
+  // Spanish-surface ordering. `sortCollections` pins the ENGLISH homepage's
+  // curation (PINNED_COLLECTION_SLUGS) and shuffles the tail — good for the
+  // English grid, wrong here, because a leaf like `maya` lands in the random
+  // tail no matter how much Spanish it holds. ES_PINNED runs first and is
+  // deliberately separate: editing it must not move the English grid.
   const sorted = sortCollections(list);
-  sorted.sort((a, b) => Number(b.slug === 'en-espanol') - Number(a.slug === 'en-espanol'));
+  sorted.sort((a, b) => esPinRank(a.slug) - esPinRank(b.slug));
   return sorted.map(({ children_count: _c, ...rest }) => rest);
 }
 
@@ -182,7 +231,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
   );
   if (!doc) return null;
 
-  const [rawBooks, parentDoc] = await Promise.all([
+  const [rawBooks, parentDoc, childDocs, esCounts] = await Promise.all([
     db.collection('books').find(
       { collections: slug, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false } },
       {
@@ -200,8 +249,21 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     typeof doc.parent === 'string'
       ? db.collection('collections').findOne({ slug: doc.parent, visible: true }, { projection: { _id: 0, slug: 1, name: 1, localized: 1 } })
       : Promise.resolve(null),
+    // Sub-collections, so the branch can be walked DOWNWARD. `parent` is a
+    // string on some docs and an array on others (americas has two parents), so
+    // match both shapes — a plain equality check silently misses the arrays.
+    db.collection('collections').find(
+      { parent: slug, ...PUBLIC_COLLECTION },
+      { projection: { _id: 0, slug: 1, name: 1, localized: 1 }, maxTimeMS: 8000 },
+    ).toArray(),
+    db.collection('books').aggregate<{ _id: string; count: number }>([
+      { $match: { ...localizedEditionFilter('es'), visible: true } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', count: { $sum: 1 } } },
+    ], { maxTimeMS: 8000 }).toArray(),
   ]);
 
+  const esCountMap = new Map(esCounts.map((c) => [c._id, c.count]));
   const truncated = rawBooks.length > ES_COLLECTION_BOOK_CAP;
   type RawBook = Omit<EsCollectionBook, 'href'> & { chapters?: { pageNumber?: number }[]; read_count?: number };
   const books: EsCollectionBook[] = (rawBooks as unknown as RawBook[]).slice(0, ES_COLLECTION_BOOK_CAP).map((b) => {
@@ -233,6 +295,16 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     books,
     truncated,
     parent: parentDoc ? { slug: parentDoc.slug as string, name: spanishCopy(parentDoc).name } : null,
+    // Only children that actually hold Spanish books: an /es link into an empty
+    // Spanish branch is the same broken promise the route gate exists to stop.
+    children: childDocs
+      .map((d) => ({
+        slug: d.slug as string,
+        name: spanishCopy(d).name,
+        spanishBookCount: esCountMap.get(d.slug as string) ?? 0,
+      }))
+      .filter((ch) => ch.spanishBookCount > 0)
+      .sort((a, b) => b.spanishBookCount - a.spanishBookCount),
     heroCandidates: imageCandidates(doc.featured_images, slug, doc.hero_image),
   })) as EsCollectionDetail;
 }

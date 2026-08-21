@@ -6,6 +6,7 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getEsCollection } from '@/lib/es-collections';
+import { isNativeEdition } from '@/lib/localized';
 import collectionRedirects from '@/lib/collection-redirects.json';
 
 // Spanish edition of /collections/[id] — see src/lib/es-collections.ts for why
@@ -39,6 +40,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const nf = (n: number) => n.toLocaleString('es-ES');
 
+/** Mirrors hasEsEdition in es-collections.ts — the one rule, read on the page. */
+const readableInSpanish = (b: { pages_translated_es?: number; language?: string }) =>
+  (b.pages_translated_es ?? 0) > 0 || isNativeEdition(b as unknown as Record<string, unknown>, 'es');
+
 export default async function EsCollectionPage({ params }: Props) {
   const { id } = await params;
   const redirectTarget = (collectionRedirects as Record<string, string>)[id];
@@ -47,8 +52,14 @@ export default async function EsCollectionPage({ params }: Props) {
   const col = await getEsCollection(id);
   if (!col) notFound();
 
-  const spanishBooks = col.books.filter((b) => (b.pages_translated_es ?? 0) > 0);
-  const otherBooks = col.books.filter((b) => !((b.pages_translated_es ?? 0) > 0));
+  // Readable in Spanish EITHER WAY — translated into it, or written in it. The
+  // counter alone put Cogolludo, Landa and Scherzer under "these read in their
+  // original language and in English", which is exactly backwards: their
+  // original language IS Spanish. `href` already decides this correctly upstream
+  // (getEsCollection), so before this the card linked into the Spanish reader
+  // while sitting under the English-only heading.
+  const spanishBooks = col.books.filter(readableInSpanish);
+  const otherBooks = col.books.filter((b) => !readableInSpanish(b));
   const isSpanishCollection = id === 'en-espanol';
 
   return (
@@ -95,6 +106,28 @@ export default async function EsCollectionPage({ params }: Props) {
               <p className="mt-3 text-sm text-muted">Introducción disponible en inglés.</p>
             )}
           </div>
+        )}
+
+        {/* Sub-collections. Without these the branch could only be walked
+            upward, so americas → maya had no way down and the Maya material was
+            unreachable by clicking from anywhere on /es. Only children holding
+            Spanish books are listed. */}
+        {col.children.length > 0 && (
+          <section className="mb-14">
+            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-4">Dentro de esta colección</h2>
+            <div className="flex flex-wrap gap-2">
+              {col.children.map((ch) => (
+                <Link
+                  key={ch.slug}
+                  href={`/es/collections/${ch.slug}`}
+                  className="inline-flex items-baseline gap-2 px-3 py-2 border border-[var(--border-light)] hover:border-accent-rust transition-colors"
+                >
+                  <span className="text-primary">{ch.name}</span>
+                  <span className="text-xs text-muted tabular-nums">{nf(ch.spanishBookCount)}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
         )}
 
         {spanishBooks.length > 0 && (
