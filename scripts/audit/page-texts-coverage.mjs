@@ -31,6 +31,7 @@ import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { pageFilterForLang, pageProjectionForLang } from '../lib/embed-book-page-texts.mjs';
 import { pageTextForLang } from '../lib/page-embedding-text.mjs';
+import { embeddableEditionFilter, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';
 
 const args = process.argv.slice(2);
 const arg = (n, d = null) => { const m = args.find(a => a.startsWith(`--${n}=`)); return m ? m.slice(n.length + 3) : d; };
@@ -57,17 +58,27 @@ async function main() {
   await client.query('SET statement_timeout = 120000');
 
   try {
+    // The books the WRITER would embed — imported, never re-typed, so a gap
+    // here always means work the worker would actually do. Selecting on the
+    // counter alone is the drift this audit exists to catch, committed by the
+    // audit itself: it left the 68 native Spanish books out of its own
+    // denominator, so it would have reported clean over exactly the state
+    // #4146 described — 19,464 pages visible on /es and unfindable.
     const books = await db.collection('books')
-      .find({ [COUNTER]: { $gt: 0 } }, { projection: { id: 1, title: 1, display_title: 1, visible: 1, [COUNTER]: 1 } })
+      .find(embeddableEditionFilter(LANG), { projection: { id: 1, title: 1, display_title: 1, visible: 1, language: 1, [COUNTER]: 1 } })
       .toArray();
     const byId = new Map(books.map(b => [b.id, b]));
+    /** Derived ONCE per book from its language, never guessed per page. */
+    const isNative = (id) => isNativeEditionLanguage(byId.get(id)?.language, LANG);
+    const nativeBooks = books.filter(b => isNative(b.id)).length;
 
     // What a reader can read: pages actually carrying text in this language.
     // Counted per book (the book_id index makes this cheap); a corpus-wide
     // count on translations.<lang> is unindexed and would take minutes.
     const mongoPages = new Map();
     for (const b of books) {
-      mongoPages.set(b.id, await db.collection('pages').countDocuments({ book_id: b.id, ...pageFilterForLang(LANG) }));
+      const nativeEdition = isNative(b.id);
+      mongoPages.set(b.id, await db.collection('pages').countDocuments({ book_id: b.id, ...pageFilterForLang(LANG, { nativeEdition }) }));
     }
 
     const { rows: supaRows } = await client.query(
@@ -81,16 +92,27 @@ async function main() {
     // alone cannot tell you what Mongo says now.
     let staleRows = 0;
     const staleBooks = [];
+    // Rows for books the selector no longer admits — e.g. a book relabelled out
+    // of the language. Counted rather than skipped, so an orphaned row set
+    // cannot sit in the store looking like nothing at all.
+    let orphanBooks = 0, orphanRows = 0;
     for (const r of supaRows) {
+      if (!byId.has(r.book_id)) { orphanBooks++; orphanRows += r.rows; continue; }
       if (!r.newest) { staleRows += r.rows; staleBooks.push({ book_id: r.book_id, reason: 'no watermark' }); continue; }
+      const nativeEdition = isNative(r.book_id);
       const newer = await db.collection('pages').countDocuments({
-        book_id: r.book_id, ...pageFilterForLang(LANG),
+        book_id: r.book_id, ...pageFilterForLang(LANG, { nativeEdition }),
         $or: [
           { [`translations.${LANG}.updated_at`]: { $gt: r.newest } },
           ...(LANG === 'es' ? [{ 'translation_es.updated_at': { $gt: r.newest } }] : []),
+          // A native row is sourced from OCR and its watermark tracks
+          // `ocr.updated_at` (buildPageTextRow). Keying staleness only on a
+          // translation that will never exist would let a re-OCRed page keep a
+          // stale snippet and a stale vector forever, unflagged.
+          ...(nativeEdition ? [{ 'ocr.updated_at': { $gt: r.newest } }] : []),
         ],
       });
-      if (newer > 0) { staleRows += newer; staleBooks.push({ book_id: r.book_id, reason: `${newer} page(s) re-translated after embedding` }); }
+      if (newer > 0) { staleRows += newer; staleBooks.push({ book_id: r.book_id, reason: `${newer} page(s) ${nativeEdition ? 're-OCRed' : 're-translated'} after embedding` }); }
     }
 
     const rawGaps = books
@@ -115,28 +137,36 @@ async function main() {
         'SELECT page_id FROM page_texts WHERE book_id = $1 AND lang = $2', [g.id, LANG],
       );
       const have = new Set(present.map(r => r.page_id));
+      const nativeEdition = isNative(g.id);
       const candidates = await db.collection('pages')
-        .find({ book_id: g.id, ...pageFilterForLang(LANG) }, { projection: pageProjectionForLang(LANG) })
+        .find({ book_id: g.id, ...pageFilterForLang(LANG, { nativeEdition }) }, { projection: pageProjectionForLang(LANG) })
         .toArray();
       let empty = 0, missing = 0;
       for (const p of candidates) {
         if (have.has(p.id)) continue;
-        if (pageTextForLang(p, LANG)) missing++; else empty++;
+        if (pageTextForLang(p, LANG, { nativeEdition })) missing++; else empty++;
       }
       emptyPages += empty;
       if (missing > 0) gaps.push({ ...g, gap: missing, empty });
     }
     gaps.sort((a, b) => b.gap - a.gap);
 
+    /** Readable pages contributed by books WRITTEN in the language. */
+    const nativePages = books.reduce((a, b) => a + (isNative(b.id) ? (mongoPages.get(b.id) || 0) : 0), 0);
+
     const totals = {
       lang: LANG,
       books: books.length,
+      native_pages: nativePages,
       counter: books.reduce((a, b) => a + (b[COUNTER] || 0), 0),
       mongo: [...mongoPages.values()].reduce((a, n) => a + n, 0),
       supabase_rows: supaRows.reduce((a, r) => a + r.rows, 0),
       supabase_embedded: supaRows.reduce((a, r) => a + r.embedded, 0),
+      native_books: nativeBooks,
       books_with_no_rows: books.filter(b => !supa.has(b.id)).length,
       stale_rows: staleRows,
+      orphan_books: orphanBooks,
+      orphan_rows: orphanRows,
       // Pages that hold text in this language but nothing QUOTABLE once the
       // editorial wrappers are dropped. Expected, not a defect.
       empty_after_cleaning: emptyPages,
@@ -154,9 +184,15 @@ async function main() {
     if (AS_JSON) {
       console.log(JSON.stringify({ totals, gaps, stale_books: staleBooks }, null, 2));
     } else {
-      console.log(`\n${LANG.toUpperCase()} findability — ${totals.books} book(s)`);
-      console.log(`  counter (${COUNTER}):    ${totals.counter}`);
-      console.log(`  readable (Mongo pages):  ${totals.mongo}${totals.mongo !== totals.counter ? '   ← counter disagrees with the pages' : ''}`);
+      console.log(`\n${LANG.toUpperCase()} findability — ${totals.books} book(s), ${totals.native_books} written in ${LANG}`);
+      // The counter only ever describes the TRANSLATED books: a book written in
+      // the language has no pivot pages and its counter is 0 for good reason.
+      // So the two lines are expected to differ by the natives' pages, and
+      // flagging that as a disagreement would make green unreachable.
+      const translatedPages = totals.mongo - nativePages;
+      console.log(`  counter (${COUNTER}):    ${totals.counter}   (translated books only)`);
+      console.log(`  readable (Mongo pages):  ${totals.mongo} = ${translatedPages} translated + ${nativePages} native` +
+        (translatedPages !== totals.counter ? '   ← counter disagrees with the pages' : ''));
       console.log(`  findable (page_texts):   ${totals.supabase_embedded} embedded of ${totals.supabase_rows} rows`);
       console.log(`  books with NO rows:      ${totals.books_with_no_rows}`);
       console.log(`  pages with no quotable text once wrappers are dropped (expected): ${totals.empty_after_cleaning}`);
@@ -170,6 +206,9 @@ async function main() {
         for (const g of gaps) console.log(`    ${String(g.gap).padStart(6)}  ${g.title}  [${g.id}]${g.empty ? ` (+${g.empty} empty after cleaning)` : ''}`);
       } else if (gaps.length) {
         console.log(`\n  ${gaps.length} book(s) with a gap — pass --books to list them.`);
+      }
+      if (orphanBooks) {
+        console.log(`\n  ${orphanBooks} book(s) / ${orphanRows} row(s) in the store are no longer readable in ${LANG} — relabelled or un-translated since embedding.`);
       }
       if (staleBooks.length) {
         console.log(`\n  ${staleBooks.length} book(s) with stale rows — re-run: scripts/workers/embed-page-texts.mjs --lang=${LANG}`);
