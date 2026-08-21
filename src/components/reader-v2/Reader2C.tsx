@@ -2022,7 +2022,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {saveError}
             </span>
           )}
-          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact />
+          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="flex items-stretch">
             <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
               <button type="button" aria-label="Previous page" onClick={r.goPrev}

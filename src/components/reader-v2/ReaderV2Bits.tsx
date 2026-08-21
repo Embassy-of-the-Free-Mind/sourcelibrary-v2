@@ -515,15 +515,18 @@ export function ScanViewer({
 
 /** Adjoining multi-toggle group on the ink bar (Scan / OCR / English). */
 export function ViewToggleGroup({
-  views, onToggle, compact = false,
+  views, onToggle, compact = false, showTranslit = false,
 }: {
-  views: { scan: boolean; ocr: boolean; en: boolean };
-  onToggle: (key: 'scan' | 'ocr' | 'en') => void;
+  views: { scan: boolean; ocr: boolean; en: boolean; translit: boolean };
+  onToggle: (key: 'scan' | 'ocr' | 'en' | 'translit') => void;
   compact?: boolean;
+  /** Offer the romanisation chip — only for books in a non-Latin script. */
+  showTranslit?: boolean;
 }) {
-  const items: Array<{ key: 'scan' | 'ocr' | 'en'; label: string }> = [
+  const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
     { key: 'scan', label: 'Scan' },
     { key: 'ocr', label: 'OCR' },
+    ...(showTranslit ? [{ key: 'translit' as const, label: 'Roman' }] : []),
     { key: 'en', label: 'English' },
   ];
   return (
