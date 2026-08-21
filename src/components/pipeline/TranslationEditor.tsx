@@ -496,6 +496,14 @@ export default function TranslationEditor({
   const translationLangLabel = (translationLang.startsWith('es') || translationLang.includes('span'))
     ? 'Español'
     : isEnglishBook ? 'Modernized' : 'English';
+  // The panel TOGGLE names the panel; the panel's own header names the language
+  // it holds (translationLangLabel, above). Labelling the toggle with the target
+  // language put a control reading "Español" a few pixels from the EN/ES
+  // reading-language links (#4116) — two language-shaped controls side by side,
+  // only one of which changes the language. On an English-language book the
+  // panel is not a translation at all (the OCR panel holds the diplomatic
+  // transcription, this one the modernization), so it keeps its own name.
+  const translationTabLabel = isEnglishBook ? rs.modernizedTab : rs.translationTab;
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   // Save state for the inline page editor. The previous design auto-saved on
   // blur with no UI feedback — editors (Paul Dijstelberge, May 2026) reported
@@ -1415,7 +1423,7 @@ export default function TranslationEditor({
                   aria-pressed={showTranslationPanel}
                 >
                   <Languages className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">{translationLangLabel}</span>
+                  <span className="hidden sm:inline">{translationTabLabel}</span>
                 </button>
               )}
             </div>
@@ -2468,7 +2476,7 @@ export default function TranslationEditor({
               title="Toggle translation panel"
             >
               <Languages className="w-4 h-4" />
-              <span className="hidden sm:inline">{translationLangLabel}</span>
+              <span className="hidden sm:inline">{translationTabLabel}</span>
             </button>
           </div>
 

@@ -301,6 +301,8 @@ export interface ReaderStrings {
   ocr: string;
   romanized: string;
   german: string;
+  translationTab: string;
+  modernizedTab: string;
   toggle: (shown: boolean, what: string) => string;
   panelSourceImage: string;
   panelOriginalText: string;
@@ -381,6 +383,8 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     ocr: 'OCR',
     romanized: 'Romanized',
     german: 'Deutsch',
+    translationTab: 'Translation',
+    modernizedTab: 'Modernized',
     toggle: (shown, what) => `${shown ? 'Hide' : 'Show'} ${what}`,
     panelSourceImage: 'source image',
     panelOriginalText: 'original text',
@@ -459,6 +463,8 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     ocr: 'OCR',
     romanized: 'Romanizado',
     german: 'Alemán',
+    translationTab: 'Traducción',
+    modernizedTab: 'Modernizado',
     toggle: (shown, what) => `${shown ? 'Ocultar' : 'Mostrar'} ${what}`,
     panelSourceImage: 'la imagen original',
     panelOriginalText: 'el texto original',
