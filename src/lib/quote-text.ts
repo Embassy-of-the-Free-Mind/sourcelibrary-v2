@@ -25,6 +25,7 @@ import type { Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
+import { getTranslation } from '@/lib/page-translations';
 
 export type QuoteTextSource = 'translation' | 'ocr_original';
 
@@ -32,6 +33,13 @@ export interface QuotableText {
   /** Wrapper-stripped, verbatim, ready to be put inside quotation marks. */
   text: string;
   source: QuoteTextSource;
+  /**
+   * The ISO code of the language `text` is actually IN — not the one that was
+   * asked for. A caller that requested `es` and received `en` must be able to
+   * see that it happened; a quote is a claim about words, and a silent
+   * substitution makes the caller assert something it never checked (#4095).
+   */
+  lang: string;
 }
 
 /**
@@ -54,15 +62,28 @@ export const OCR_ORIGINAL_NOTE =
  * `translation.data` is nothing but a `<meta>` block has no verbatim text in it,
  * and serving an empty string as a quote is worse than saying so.
  */
-export function resolveQuoteText(page: Page, bookId: string): QuotableText | null {
+export function resolveQuoteText(page: Page, bookId: string, lang: string = 'en'): QuotableText | null {
+  // A non-English edition is tried FIRST and falls back to English, reporting
+  // which one it served. Never the other way round, and never silently: the
+  // Spanish edition covers 103 books out of 22,000, so the fallback is the
+  // common case and a caller that cannot see it has no way to know whether the
+  // words it is about to quote are the ones a Spanish reader sees.
+  if (lang && lang !== 'en') {
+    const localized = getTranslation(page, lang)?.data;
+    const cleaned = localized ? stripEditorialWrappers(localized).trim() : '';
+    if (cleaned) return { text: markForExport(cleaned, bookId), source: 'translation', lang };
+  }
+
   const translation = page.translation?.data
     ? stripEditorialWrappers(page.translation.data).trim()
     : '';
-  if (translation) return { text: markForExport(translation, bookId), source: 'translation' };
+  if (translation) return { text: markForExport(translation, bookId), source: 'translation', lang: 'en' };
 
   const ocrRaw = page.ocr?.data || '';
   const ocr = ocrRaw ? stripEditorialWrappers(ocrRaw).trim() : '';
-  if (ocr && isEnglishOriginalPage(ocrRaw)) return { text: ocr, source: 'ocr_original' };
+  // The leaf's own English. Its language is a property of the page, not of the
+  // request — asking for Spanish cannot make a 1570 English leaf Spanish.
+  if (ocr && isEnglishOriginalPage(ocrRaw)) return { text: ocr, source: 'ocr_original', lang: 'en' };
 
   return null;
 }
