@@ -757,6 +757,34 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   );
 }
 
+/** What tracing is doing right now, said plainly under the pane header. */
+function TraceStatusLine({ status }: { status: TraceStatus }) {
+  const text = status === 'loading'
+    ? 'Aligning this page with the translation…'
+    : status === 'ready'
+      ? 'Click any phrase to see it in the other pane.'
+      : status === 'unavailable'
+        ? 'Tracing is not available for this page.'
+        : status === 'rate_limited'
+          ? 'Tracing limit reached. Sign in (free) to keep going.'
+          : null;
+  if (!text) return null;
+  return (
+    <div
+      className="shrink-0 px-4 py-1.5 flex items-center gap-2 border-b font-sans text-[11.5px]"
+      style={{
+        borderColor: 'var(--border-light)',
+        background: 'color-mix(in srgb, var(--accent-gold) 10%, transparent)',
+        color: 'var(--accent-gold-dark)',
+      }}
+      role="status"
+    >
+      {status === 'loading' && <Loader2 size={12} className="animate-spin" />}
+      {text}
+    </div>
+  );
+}
+
 /**
  * Trace: click a phrase in one pane to light up the span it came from in the
  * other. Same shape as the Notes toggle it sits beside, because they are the
@@ -1767,6 +1795,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // facsimile keeps the translation beside the same passage.
   const ocrRef = useRef<HTMLDivElement>(null);
   const enRef = useRef<HTMLDivElement>(null);
+  const translitRef = useRef<HTMLDivElement>(null);
   const scanScrollRef = useRef<HTMLDivElement>(null);
   // The lock is time-based and refreshed on every write, because the scroll
   // events a programmatic sync provokes can land well after a fixed 80ms
@@ -1774,9 +1803,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // leader's position (this is what dragged the zoom anchor around).
   const syncLock = useRef<{ from: string; at: number } | null>(null);
   const zoomingUntil = useRef(0);
-  const syncFrom = useCallback((from: 'scan' | 'ocr' | 'en') => {
+  const syncFrom = useCallback((from: 'scan' | 'ocr' | 'en' | 'translit') => {
     const panes: Record<string, HTMLDivElement | null> = {
-      scan: scanScrollRef.current, ocr: ocrRef.current, en: enRef.current,
+      scan: scanScrollRef.current, ocr: ocrRef.current,
+      translit: translitRef.current, en: enRef.current,
     };
     const src = panes[from];
     if (!src) return;
@@ -1958,6 +1988,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const traceActive = traceOn && traceEligible;
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
+
+  // The text of a neighbouring page is already prefetched, but its scan is
+  // not, so a page turn showed the words instantly and then waited on the
+  // image. Warm the next few scans (and the one behind) into the browser
+  // cache while the reader is reading.
+  useEffect(() => {
+    if (!r.views.scan) return;
+    const around = [1, 2, -1]
+      .map(d => r.pageList[r.currentIndex + d])
+      .filter(Boolean);
+    const imgs = around.map(p => {
+      const url = resolveScanUrls(p).display;
+      if (!url) return null;
+      const img = new window.Image();
+      img.decoding = 'async';
+      img.src = url;
+      return img;
+    }).filter(Boolean) as HTMLImageElement[];
+    return () => { imgs.forEach(i => { i.src = ''; }); };
+  }, [r.currentIndex, r.pageList, r.views.scan]);
 
   // Cached transliterations arrive with the page; anything else is generated
   // the first time the pane is open on that page, and only then.
@@ -2232,6 +2282,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </CapsLabel>
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
+              {traceActive && <TraceStatusLine status={traceStatus} />}
               {editing ? (
                 <div className="flex-1 min-h-0">{editorTextarea('ocr')}</div>
               ) : (
@@ -2256,14 +2307,30 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}
             >
               <PaneHeader right={
-                <CopyPlainButton text={translit} label="Copy the transliteration" />
+                <div className="flex items-center gap-1">
+                  {traceEligible && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
+                      loading={traceStatus === 'loading'} language={r.book.language} />
+                  )}
+                  <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  <CopyPlainButton text={translit} label="Copy the transliteration" />
+                </div>
               }>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Romanised</CapsLabel>
                 <AiChip short />
               </PaneHeader>
-              <div data-reader-panel className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]" style={{ overscrollBehavior: 'contain' }}>
-                <TranslitBody text={translit} loading={translitLoading} error={translitError}
-                  settings={r.settings} baseSize={16.5} />
+              {traceActive && <TraceStatusLine status={traceStatus} />}
+              <div
+                ref={translitRef}
+                data-reader-panel
+                onScroll={() => syncFrom('translit')}
+                className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
+                style={{ overscrollBehavior: 'contain' }}
+              >
+                <div key={r.currentPageId} className="rv2-page-in">
+                  <TranslitBody text={translit} loading={translitLoading} error={translitError}
+                    settings={r.settings} baseSize={16.5} />
+                </div>
               </div>
             </section>
           )}
@@ -2283,6 +2350,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <AiChip short />
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
+              {traceActive && <TraceStatusLine status={traceStatus} />}
               {editing ? (
                 <div className="flex-1 min-h-0">{editorTextarea('translation')}</div>
               ) : (

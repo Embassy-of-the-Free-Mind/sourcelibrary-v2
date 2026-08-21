@@ -389,10 +389,12 @@ body:has([data-reader-v2]) {
    that something moved, short enough not to sit between the reader and the
    text. Keyed on the page id, so it plays per turn and not on every render. */
 @keyframes rv2-page-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.rv2-page-in { animation: rv2-page-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+/* Opacity only. A rise moved the text under the reader's eye, which on a
+   facsimile is worse than the abrupt swap it replaced. */
+.rv2-page-in { animation: rv2-page-in 200ms ease-out both; }
 
 /* Panel contents arrive just after the panel itself, so switching tools reads
    as one movement instead of two things appearing at once. */
