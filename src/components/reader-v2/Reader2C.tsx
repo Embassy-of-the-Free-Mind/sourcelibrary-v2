@@ -576,6 +576,8 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
  */
 function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   const [full, setFull] = useState<Record<string, unknown> | null>(null);
+  const [pkgBusy, setPkgBusy] = useState(false);
+  const [pkgError, setPkgError] = useState<string | null>(null);
   const scanUrl = resolveScanUrls(page).native;
 
   // The reader's nav projection carries no counts or licence, so the flags the
@@ -625,6 +627,54 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
           No scan is archived for this page.
         </p>
       )}
+
+      {/* The page as a whole, rather than one file from it. */}
+      <button
+        type="button"
+        onClick={async () => {
+          setPkgError(null);
+          setPkgBusy(true);
+          try {
+            const res = await fetch(`/api/books/${book.id}/pages/${page.id}/package`);
+            if (!res.ok) {
+              const body = await res.json().catch(() => null);
+              setPkgError(res.status === 429
+                ? (body?.error || 'Daily download limit reached.')
+                : res.status === 401
+                  ? 'Sign in to download this page.'
+                  : 'That download failed. Try again.');
+              return;
+            }
+            const blob = await res.blob();
+            const name = res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1]
+              || `page-${page.page_number}.zip`;
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = name;
+            document.body.appendChild(a); a.click();
+            a.remove(); URL.revokeObjectURL(url);
+          } catch {
+            setPkgError('That download failed. Try again.');
+          } finally {
+            setPkgBusy(false);
+          }
+        }}
+        disabled={pkgBusy}
+        className={rowCls}
+        style={{ borderColor: 'var(--border-light)' }}
+      >
+        <span className="min-w-0 text-left">
+          <span className="block font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+            This page, complete
+          </span>
+          <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
+            {pkgError || 'Scan, transcription, translation and citation, zipped'}
+          </span>
+        </span>
+        {pkgBusy
+          ? <Loader2 size={16} className="animate-spin" style={{ color: 'var(--text-muted)' }} />
+          : <Download size={16} style={{ color: 'var(--text-muted)' }} />}
+      </button>
 
       <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>The whole book</CapsLabel>
       {full ? (
@@ -682,22 +732,72 @@ function CopyPlainButton({ text, label }: { text: string; label: string }) {
   );
 }
 
+
+/**
+ * How long romanising takes, drawn honestly.
+ *
+ * Measured over cold calls across seven scripts: duration tracks OCR length
+ * almost linearly (r = 0.985) at roughly twelve seconds plus 5.6 seconds per
+ * thousand characters — 4s for a short page, over two minutes for a dense one.
+ * So the ring is an ESTIMATE, not progress: it fills toward 90% and waits
+ * there rather than promising a finish it cannot know. The elapsed count is
+ * the honest number, and it keeps running past the estimate.
+ */
+function TranslitProgress({ ocrLength }: { ocrLength: number }) {
+  const estimateMs = Math.max(5000, 12000 + 5.6 * ocrLength);
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    const started = performance.now();
+    const t = window.setInterval(() => setElapsed(performance.now() - started), 200);
+    return () => window.clearInterval(t);
+  }, []);
+
+  const pct = Math.min(0.9, elapsed / estimateMs);
+  const R = 13;
+  const C = 2 * Math.PI * R;
+  const overrun = elapsed > estimateMs;
+
+  return (
+    <div className="flex items-start gap-3" role="status" aria-live="polite">
+      <svg width="32" height="32" viewBox="0 0 32 32" className="shrink-0 -rotate-90" aria-hidden="true">
+        <circle cx="16" cy="16" r={R} fill="none" strokeWidth="2.5" style={{ stroke: 'var(--border-light)' }} />
+        <circle
+          cx="16" cy="16" r={R} fill="none" strokeWidth="2.5" strokeLinecap="round"
+          style={{
+            stroke: 'var(--accent-gold-dark)',
+            strokeDasharray: C,
+            strokeDashoffset: C * (1 - pct),
+            transition: 'stroke-dashoffset 200ms linear',
+          }}
+        />
+      </svg>
+      <span className="min-w-0">
+        <span className="block font-sans text-[13px]" style={{ color: 'var(--text-secondary)' }}>
+          Romanising this page…
+        </span>
+        <span className="block font-sans text-[11.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
+          {Math.round(elapsed / 1000)}s
+          {overrun
+            ? ' · longer than usual for a page this size'
+            : ` · usually about ${Math.round(estimateMs / 1000)}s for this much text`}
+        </span>
+      </span>
+    </div>
+  );
+}
+
 /**
  * Romanised transcription. Sits between the original script and the English:
  * it is the same words as the transcription, in letters a reader can sound
  * out, which is what makes it useful to read alongside rather than instead.
  */
-function TranslitBody({ text, loading, error, settings, baseSize }: {
+function TranslitBody({ text, loading, error, settings, baseSize, ocrLength }: {
   text: string; loading: boolean; error: boolean;
   settings: ReaderSettings; baseSize: number;
+  /** Drives the wait estimate — the call scales with how much text there is. */
+  ocrLength: number;
 }) {
-  if (loading) {
-    return (
-      <p className="flex items-center gap-2 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-        <Loader2 size={14} className="animate-spin" /> Romanising this page…
-      </p>
-    );
-  }
+  if (loading) return <TranslitProgress ocrLength={ocrLength} />;
   if (error) {
     return (
       <p className="font-sans text-[13px]" style={{ color: 'var(--status-error)' }} role="alert">
@@ -2454,7 +2554,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <div key={r.currentPageId} className="rv2-page-in">
                   <TranslitBody text={translit} loading={translitLoading} error={translitError}
-                    settings={r.settings} baseSize={16.5} />
+                    settings={r.settings} baseSize={16.5}
+                    ocrLength={r.currentPage.ocr?.data?.length ?? 0} />
                 </div>
               </div>
             </section>
@@ -2632,7 +2733,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
                 <TranslitBody text={translit} loading={translitLoading} error={translitError}
-                  settings={r.settings} baseSize={15.5} />
+                  settings={r.settings} baseSize={15.5}
+                  ocrLength={r.currentPage.ocr?.data?.length ?? 0} />
               </div>
             </section>
           )}

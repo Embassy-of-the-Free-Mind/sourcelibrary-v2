@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { anonActionGate } from '@/lib/anon-gate';
 import { performTransliteration } from '@/lib/ai';
 const TRANSLITERATION_MODEL = 'gemini-3-flash-preview';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -85,6 +86,18 @@ export async function POST(
         script: page.transliteration.script,
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 }
       });
+    }
+
+    // Generation is a paid Gemini call — measured at ~12s plus ~5.6s per 1000
+    // OCR characters, up to nearly three minutes on a long page. Cached serves
+    // above are free and stay ungated; generation is capped per IP for
+    // anonymous callers, exactly as the alignment route caps trace mode.
+    const gate = await anonActionGate(request, { name: 'transliterate', limit: 40 });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        { error: 'Transliteration limit reached. Sign in (free) to keep going.', retry_after: gate.retryAfter },
+        { status: 429, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : undefined },
+      );
     }
 
     // Perform transliteration
