@@ -893,7 +893,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
   const imgLicense = (book as any).image_source?.license || 'unknown';
   const imgProvider = (book as any).image_source?.provider;
-  const yearPublished = (book as unknown as { year_published?: number }).year_published;
+  // `year`, NOT `year_published` (#4131). Every read in this file named a field
+  // that ZERO of 104,690 books have, so all of them silently evaluated to
+  // undefined: the pre-1930 image release below never fired once, and the
+  // DublinCoreMeta `year=` prop — the date library crawlers harvest — was empty
+  // on every book page, in both of this component's returns. `books.published`
+  // is the free-text twin and must not be parsed here (#3718); `year` is the
+  // numeric field, present on 49,959 books.
+  const yearPublished = (book as unknown as { year?: number }).year;
   const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
   const imageAccess: 'open' | 'nc-free' | 'blocked' =
     imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
@@ -1042,7 +1049,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // location × time-period lead, a shared collection is only a minor nudge
     // (it used to dominate). See src/lib/related-books.ts.
     const relatedYear = Number(String(book.published ?? '').match(/\d{3,4}/)?.[0])
-      || (book as unknown as { year_published?: number }).year_published
+      || (book as unknown as { year?: number }).year
       || null;
     const tagRelated: CatalogBook[] = embedPolicy.showBookRelatedBooks
       ? await getRelatedBooks({
@@ -1495,7 +1502,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           displayTitle={book.display_title}
           author={book.author}
           language={book.language}
-          year={(book as unknown as { year_published?: number }).year_published}
+          year={yearPublished}
           description={book.ai_metadata?.description as string | undefined}
           categories={book.categories}
           keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
@@ -1817,7 +1824,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         displayTitle={book.display_title}
         author={book.author}
         language={book.language}
-        year={(book as unknown as { year_published?: number }).year_published}
+        year={yearPublished}
         description={book.ai_metadata?.description as string | undefined}
         categories={book.categories}
         keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
