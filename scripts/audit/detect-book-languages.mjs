@@ -270,6 +270,10 @@ async function main() {
           changed: v.changed ?? null,
           primary_shifted: v.primary_shifted ?? null,
           unsupported: v.unsupported ?? null,
+          // Same-family variant spellings on this book's pages ("Chinese" AND
+          // "Classical Chinese"). Never counted as a second language; recorded
+          // because an inconsistent tag vocabulary is itself a finding (#3893).
+          variants: v.variants ?? null,
           multi_at: sens,
         }) + '\n');
         totals.written++;
