@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Create or refresh the `en-espanol` collection — every visible book that has a
- * Spanish edition (`books.pages_translated_es > 0`, kept by
- * sync-pages-translated-es.mjs). The /es homepage's "Leer en español" band links
+ * Spanish edition — translated into it (`books.pages_translated_es > 0`, kept by
+ * sync-pages-translated-es.mjs) OR written in it (`language`, #4120). The /es band links
  * here as "Todos los libros en español".
  *
  * Idempotent: upserts the collection doc (never overwriting curated fields such
@@ -49,7 +49,37 @@ const EDITORIAL = {
   created_by: 'scripts/maintenance/sync-es-collection.mjs',
 };
 
-const MEMBER_FILTER = { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } };
+/**
+ * `books.language` values whose ORIGINAL text is already Spanish. Mirror of
+ * NATIVE_EDITION_LANGUAGE in src/lib/localized.ts (#4120) — this script is a
+ * .mjs and cannot import the TS module, so the pattern is duplicated here and
+ * MUST be changed in both places together.
+ *
+ * Anchored: it refuses the real stored values "Spanish / Latin",
+ * "Spanish / French", "Nahuatl-Spanish", "Old Spanish" and "Spanish in Hebrew
+ * characters" (Judeo-Spanish in Hebrew script, which a Spanish reader cannot
+ * read and a substring match would claim).
+ */
+const NATIVE_ES_LANGUAGE = /^\s*(spanish|espa(?:ñ|n)ol|castellano|castilian)\s*$/i;
+
+/**
+ * A book belongs in `en-espanol` if it is READABLE IN SPANISH — translated into
+ * it (`pages_translated_es > 0`) or written in it (`language`).
+ *
+ * The counter-only rule was wrong in a way that actively did damage: a Spanish
+ * ORIGINAL has no pivot pages and never will, so this script did not merely
+ * fail to add Cogolludo and Scherzer, it UN-TAGGED them on every run — the
+ * un-tag branch below removes anything not matching MEMBER_FILTER. #4120 taught
+ * the read surfaces the wider rule; this writer kept the old one and quietly
+ * undid it. Observed 2026-08-21: the run that tagged Kaua and Brinton removed
+ * `las-historias-del-origen-…-scherzer` in the same pass.
+ */
+const MEMBER_FILTER = {
+  $or: [{ pages_translated_es: { $gt: 0 } }, { language: NATIVE_ES_LANGUAGE }],
+  visible: true,
+  pages_count: { $gt: 0 },
+  content_type: { $ne: 'artwork' },
+};
 
 const client = new MongoClient(uri);
 await client.connect();
