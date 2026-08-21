@@ -97,6 +97,28 @@ export default async function EsCollectionPage({ params }: Props) {
           </div>
         )}
 
+        {/* Sub-collections. Without these the branch could only be walked
+            upward, so americas → maya had no way down and the Maya material was
+            unreachable by clicking from anywhere on /es. Only children holding
+            Spanish books are listed. */}
+        {col.children.length > 0 && (
+          <section className="mb-14">
+            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-4">Dentro de esta colección</h2>
+            <div className="flex flex-wrap gap-2">
+              {col.children.map((ch) => (
+                <Link
+                  key={ch.slug}
+                  href={`/es/collections/${ch.slug}`}
+                  className="inline-flex items-baseline gap-2 px-3 py-2 border border-[var(--border-light)] hover:border-accent-rust transition-colors"
+                >
+                  <span className="text-primary">{ch.name}</span>
+                  <span className="text-xs text-muted tabular-nums">{nf(ch.spanishBookCount)}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         {spanishBooks.length > 0 && (
           <section className="mb-14">
             <div className="flex items-baseline justify-between gap-4 mb-2">
