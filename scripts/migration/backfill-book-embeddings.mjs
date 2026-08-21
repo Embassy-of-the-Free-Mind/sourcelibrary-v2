@@ -7,7 +7,10 @@
  *
  * For unenriched books, falls back to title + author + description + categories.
  *
- * Cost: $0 (Gemini free tier). Time: ~20 min for 17K books.
+ * Cost: BILLED, but small — one embedding per book, not per page. At $0.20/1M
+ * input tokens and the measured 4.29 chars/token, ~17K books of summary text is
+ * roughly $2-3 per full pass. (This line used to read "$0 (Gemini free tier)";
+ * see .claude/docs/embeddings.md.) Time: ~20 min for 17K books.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
