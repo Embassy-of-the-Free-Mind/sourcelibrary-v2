@@ -89,6 +89,12 @@ interface CollectionBookCardProps {
    * beneath, or the original alone when no gloss exists yet. Default English.
    */
   lang?: Locale;
+  /**
+   * Drop the OCR/Translated status line. For a band whose every book is, by
+   * selection, fully readable (the /es Spanish editions), the line is pipeline
+   * telemetry the reader does not need — the cover, title and tag carry it.
+   */
+  hideStatus?: boolean;
 }
 
 function pctOf(n?: number, d?: number): number {
@@ -110,7 +116,7 @@ function Status({ label, pctValue, doneClass }: { label: string; pctValue: numbe
  * language pill · year · pages, and a single OCR/Translated status line (books
  * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
  */
-export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en' }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en', hideStatus = false }: CollectionBookCardProps) {
   const labels = CARD_LABELS[lang];
   const shownTitle = localizedTitle(book, lang);
   const originalLine = lang === 'en' ? null : originalTitleIfDifferent(book, lang);
@@ -230,7 +236,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {labels.pages}</span> : null)}
         </div>
 
-        {!isArtwork && pageCount > 0 && (
+        {!isArtwork && !hideStatus && pageCount > 0 && (
           <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
             <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" />
             <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" />

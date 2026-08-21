@@ -12,6 +12,8 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData, SPANISH_COLLECTION_SLUG } from '@/lib/home-data';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath } from '@/lib/locale-path';
+import { localizedTitle } from '@/lib/localized';
+import { isPublishedFirstTranslation } from '@/lib/book';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -23,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts, spanishShowpiece } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The grid card's count line. On /es it says how many of the collection's
   // books can actually be READ in Spanish — the same thing /es/collections
@@ -34,6 +36,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
     const base = `${nf(bookCount)} ${t.booksLabel}`;
     return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
   };
+  const spanishFirsts = spanishBooks.filter(isPublishedFirstTranslation).slice(0, 6);
 
   return (
     <div className="min-h-screen">
@@ -63,20 +66,112 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.spanishViewAll} &rarr;
               </Link>
             </div>
-            <p className="text-muted mb-2 max-w-2xl">
+            <p className="text-muted mb-8 max-w-2xl">
               {t.spanishSubtitle}
             </p>
-            {/* Say the size. Fifteen covers and no number implies a Spanish
-                library; the reader would otherwise find out by clicking. */}
+
+            {/* Say the size — as what has been done, not as a share of the
+                library. Pages and books are the work; first translations and
+                source languages are why it matters. The total sits underneath
+                as the upside, which is the honest frame for a corpus this young. */}
             {spanishCounts && (
-              <p className="text-sm text-muted/80 mb-6 max-w-2xl">
-                {t.spanishScale(nf(spanishCounts.books), nf(spanishCounts.pages), nf(counts.totalBooks))}
+              <div className="mb-10">
+                <ul className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-y border-border-light py-6 list-none">
+                  {([
+                    [spanishCounts.pages, t.spanishStatPages],
+                    [spanishCounts.books + spanishCounts.nativeBooks, t.spanishStatBooks],
+                    [spanishCounts.firstTranslations, t.spanishStatFirsts],
+                    [spanishCounts.sourceLanguages, t.spanishStatLanguages],
+                  ] as const).filter(([n]) => n > 0).map(([n, label]) => (
+                    <li key={label}>
+                      <p className="font-display text-3xl md:text-4xl text-primary tabular-nums leading-none">{nf(n)}</p>
+                      <p className="text-xs uppercase tracking-[0.15em] text-muted mt-2">{label}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-sm text-muted/80 mt-3">{t.spanishUpside(nf(counts.totalBooks))}</p>
+              </div>
+            )}
+
+            {/* One page, seen. The image is the real scan and both sentences
+                were found verbatim in the page's stored text before render
+                (home-data.ts getSpanishShowpiece) — the block hides rather
+                than misquotes. */}
+            {spanishShowpiece && (
+              <Link
+                href={spanishShowpiece.href}
+                className="group grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 md:gap-10 items-stretch mb-12 border border-border-light hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] bg-warm/40"
+              >
+                <div className="relative aspect-[3/4] md:aspect-auto md:min-h-[420px] bg-warm overflow-hidden">
+                  <Image
+                    src={spanishShowpiece.imageUrl}
+                    alt={`${spanishShowpiece.title}, p. ${spanishShowpiece.pageNumber}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                  />
+                </div>
+                <div className="flex flex-col justify-center p-6 md:pr-10 md:py-8">
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-3">{t.spanishShowpieceEyebrow}</p>
+                  <p className="font-display text-xl md:text-2xl text-primary leading-snug">{spanishShowpiece.title}</p>
+                  <p className="text-sm text-muted mt-1 mb-6">
+                    {[spanishShowpiece.author, spanishShowpiece.year, spanishShowpiece.language].filter(Boolean).join(' · ')}
+                  </p>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.15em] text-muted mb-2">{t.spanishShowpieceOriginal}</p>
+                      <p className="font-display italic text-secondary leading-relaxed" lang={spanishShowpiece.language === 'Latin' ? 'la' : undefined}>{spanishShowpiece.original}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.15em] text-muted mb-2">{t.spanishShowpieceSpanish}</p>
+                      <p className="text-primary leading-relaxed" lang="es">{spanishShowpiece.spanish}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-accent-rust mt-6 group-hover:underline">
+                    {t.spanishShowpieceOpen(nf(spanishShowpiece.pageNumber))} &rarr;
+                  </p>
+                </div>
+              </Link>
+            )}
+
+            {/* Named, not badged: the titles that exist in Spanish for the
+                first time are the band's strongest claim. Same gate as the
+                card tag (isPublishedFirstTranslation), so the list can never
+                say more than the cards do. */}
+            {spanishFirsts.length > 0 && (
+              <p className="text-sm text-muted mb-6 leading-relaxed">
+                <span className="text-primary font-medium">{t.spanishFirstsLabel}:</span>{' '}
+                {spanishFirsts.map((b, i) => (
+                  <span key={b.id}>
+                    <Link href={b.href} className="text-primary hover:text-accent-rust underline decoration-border-light underline-offset-4 hover:decoration-accent-rust transition-colors">
+                      {localizedTitle(b, lang)}
+                    </Link>
+                    {i < spanishFirsts.length - 1 ? ', ' : '.'}
+                  </span>
+                ))}
               </p>
             )}
-            <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
+
+            <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} hideStatus />
             <div className="mt-6 sm:hidden">
               <Link href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)} className="text-sm text-accent-rust hover:underline">
                 {t.spanishViewAll} &rarr;
+              </Link>
+            </div>
+
+            {/* The ask, where the evidence is. /es/support exists and is the
+                Spanish twin of /support. */}
+            <div className="mt-12 flex flex-col md:flex-row md:items-center md:justify-between gap-5 border border-border-light bg-warm/60 px-6 py-6">
+              <div>
+                <p className="font-display text-xl md:text-2xl text-primary leading-snug">{t.spanishSupportHeading}</p>
+                <p className="text-sm text-muted mt-1 max-w-xl">{t.spanishSupportBody}</p>
+              </div>
+              <Link
+                href={lp('/support')}
+                className="inline-flex items-center justify-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors whitespace-nowrap"
+              >
+                {t.spanishSupportCta}
+                <span className="text-xs">&rarr;</span>
               </Link>
             </div>
           </div>
