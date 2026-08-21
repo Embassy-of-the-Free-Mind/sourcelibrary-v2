@@ -2,7 +2,7 @@
 
 **Read this when:** adding or editing an image-URL resolver; adding a provider host; storing a new `image_*` / `*_photo` / `thumbnail*` field; or triaging "the images are broken" when the URLs return 200 to curl.
 
-*Written 2026-08-21 after #4163: 2,506 pages of the Florentine Codex were unreadable in every browser for months while every one of their image URLs returned a clean `200 image/jpeg`.*
+*Written 2026-08-21 after #4163: every page thumbnail on 2,506 Florentine Codex pages was refused by every browser for months, while each of those URLs returned a clean `200 image/jpeg` to curl.*
 
 ---
 
@@ -21,8 +21,23 @@ They are **not** the same list and neither is a superset of the other. `images.m
 
 - `media.getty.edu` was never added to `CSP_IMG_HOSTS`.
 - All 2,506 pages of the three Florentine Codex volumes store `image_thumb` there.
-- Page grid, cover picker **and the reader itself** rendered nothing, on `/book/…` and `/es/book/…` alike.
 - An R2 thumbnail that would have worked sat one field away in `thumbnail_blob` the entire time.
+
+**Which surfaces broke — the answer is per-TIER, not per-book.** These pages carry `display_photo` on R2 and `image_thumb` on Getty, so the damage tracked the size tier:
+
+| surface | tier | outcome |
+|---|---|---|
+| page grid (`getPageGridUrl`) | thumb | **broken** — no upgrade path |
+| cover picker | thumb | **broken** |
+| book cover at `thumb` size | thumb | placeholder instead of a cover |
+| adjacent-page prefetch | thumb | silently failed (perf only) |
+| **the reader's main image** | display → R2 | **worked** |
+
+The reader deserves the detail, because it looks broken and is not. `ImageWithMagnifier` paints `thumbnail` first and background-decodes the full-size `src`, swapping when ready — so a reader on these books saw a broken placeholder on first paint and then the correct page once the R2 display image decoded. **Degraded, not dead.**
+
+The server-rendered HTML contains only the *thumb* `<img>`; the display image is swapped in by script. So curling the reader page and reading its single `<img>` tag over-reports the severity — which is what this document's first draft did, and what the #4163 PR body still says.
+
+**The general form:** one resolver is called at several size tiers, and a host can be missing for one tier and present for another. Ask which TIER a surface uses before declaring it broken, and check whether anything upgrades away from it.
 
 **A stored URL is only useful if the consumer will load it.** Screen at every resolver, not at one of them. Corpus-wide check at the time: `media.getty.edu` was the *only* blocked host among page thumbnails (3.8M pages on allowlisted hosts, 2,506 on Getty) — so the gap was small, invisible, and total for the books it touched.
 
