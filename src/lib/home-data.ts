@@ -9,6 +9,8 @@ import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { isNativeEdition, localizedEditionFilter, type LocalizedBookMap } from '@/lib/localized';
 import { spanishReaderHref } from '@/lib/es-collections';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { stripAiAnnotations } from '@/lib/notes-off';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -701,16 +703,126 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
  * clicking. Counted live rather than hard-coded — the number grows every time
  * the worker runs.
  */
-export interface SpanishCounts { books: number; pages: number }
+export interface SpanishCounts {
+  /** Books TRANSLATED into Spanish (the counter) — the pipeline's own output. */
+  books: number;
+  pages: number;
+  /** Books WRITTEN in Spanish — Cogolludo, Landa, Aguilar; no counter, no translation. */
+  nativeBooks: number;
+  /** Translated books whose Spanish edition is a published first translation. */
+  firstTranslations: number;
+  /** Distinct `books.language` values among the translated set (Latin, Nahuatl, Sanskrit…). */
+  sourceLanguages: number;
+}
 
 async function getSpanishCounts(): Promise<SpanishCounts | null> {
   const db = await getReadDb();
-  const [row] = await db.collection('books').aggregate<{ books: number; pages: number }>([
-    { $match: { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 } } },
-    { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' } } },
-    { $project: { _id: 0, books: 1, pages: 1 } },
-  ], { maxTimeMS: 8000 }).toArray();
-  return row ?? null;
+  const live = { visible: true, pages_count: { $gt: 0 } };
+  const translated = { ...live, pages_translated_es: { $gt: 0 } };
+  // All three concurrently: each is ~2s of round trip from far away, and the
+  // band is on an 8s budget shared with the rest of the page's queries.
+  const [[row], nativeBooks, firstTranslations] = await Promise.all([
+    db.collection('books').aggregate<{ books: number; pages: number; languages: string[] }>([
+      { $match: translated },
+      { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' }, languages: { $addToSet: '$language' } } },
+      { $project: { _id: 0, books: 1, pages: 1, languages: 1 } },
+    ], { maxTimeMS: 8000 }).toArray(),
+    // Native editions: everything the Spanish surface selects MINUS the translated set.
+    db.collection('books').countDocuments(
+      { ...live, ...localizedEditionFilter('es'), pages_translated_es: { $not: { $gt: 0 } }, content_type: { $ne: 'artwork' } },
+      { maxTimeMS: 8000 },
+    ),
+    // Same gate the card's badge uses (isPublishedFirstTranslation): the flag
+    // minus any disposition that withholds the claim. Count, don't assert more.
+    db.collection('books').countDocuments(
+      { ...translated, is_first_translation: true, ft_disposition: { $nin: ['demoted', 'needs_review', 'rejected'] } },
+      { maxTimeMS: 8000 },
+    ),
+  ]);
+  if (!row) return null;
+  return {
+    books: row.books,
+    pages: row.pages,
+    nativeBooks,
+    firstTranslations,
+    sourceLanguages: (row.languages ?? []).filter((l): l is string => typeof l === 'string' && l.length > 0).length,
+  };
+}
+
+// ---------- The bilingual showpiece (the /es band's "see it, don't tell it") ----------
+
+/**
+ * One page of one book, shown as its image beside a sentence of the original
+ * and the same sentence in Spanish. The EXCERPTS ARE CURATED HERE, but they are
+ * only ever rendered after being found, verbatim, in the live page text — so
+ * the block can never quote words that are not on the page (the #2232 rule),
+ * and a re-OCR or re-translation that changes the sentence hides the block
+ * instead of misquoting. Swap the showpiece by editing this constant after
+ * reading the page in the reader.
+ */
+const SPANISH_SHOWPIECE = {
+  bookId: '69593413b282844d7b277aaf', // Fludd, Utriusque Cosmi Historia, Tomus Primus (1617)
+  pageNumber: 51, // "FIAT" — the creation engraving, Tractatus I, Lib. II, cap. III
+  original: 'Difficilis videtur cognitio dispositionis dierum ante Solis creationem factæ, cùm inter ipsos quoque Patres Theologos differentia haud exigua de dierum illorum natura oriatur.',
+  spanish: 'La comprensión de la disposición de los días establecidos antes de la creación del Sol parece difícil, puesto que entre los mismos Padres Teológicos surge no poca diferencia de opinión respecto a la naturaleza de esos días.',
+};
+
+export interface SpanishShowpiece {
+  title: string;
+  author?: string;
+  year?: number;
+  language?: string;
+  pageNumber: number;
+  imageUrl: string;
+  original: string;
+  spanish: string;
+  /** The Spanish reader, open on this very page. */
+  href: string;
+}
+
+// Whitespace-, case-, and markup-insensitive containment: the stored text has
+// a drop-cap ("DIfficilis"), bold markers around names, and line breaks where
+// the excerpt has spaces. Inline <note> glosses are removed before comparing
+// because they sit mid-sentence and are not the page's words.
+function normalizeForMatch(text: string): string {
+  return stripEditorialWrappers(stripAiAnnotations(text))
+    .replace(/[*_]/g, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+}
+
+async function getSpanishShowpiece(): Promise<SpanishShowpiece | null> {
+  const db = await getReadDb();
+  const { bookId, pageNumber, original, spanish } = SPANISH_SHOWPIECE;
+  const [book, page] = await Promise.all([
+    db.collection('books').findOne(
+      { id: bookId, visible: true },
+      { projection: { _id: 0, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, localized: 1 }, maxTimeMS: 8000 },
+    ),
+    db.collection('pages').findOne(
+      { book_id: bookId, page_number: pageNumber },
+      { projection: { _id: 0, display_photo: 1, archived_photo: 1, 'ocr.data': 1, 'translations.es.data': 1 }, maxTimeMS: 8000 },
+    ),
+  ]);
+  if (!book || !page) return null;
+  const imageUrl = (page.display_photo || page.archived_photo) as string | undefined;
+  const ocr = page.ocr?.data as string | undefined;
+  const es = page.translations?.es?.data as string | undefined;
+  if (!imageUrl || !ocr || !es) return null;
+  if (!normalizeForMatch(ocr).includes(normalizeForMatch(original))) return null;
+  if (!normalizeForMatch(es).includes(normalizeForMatch(spanish))) return null;
+  const localizedTitle = (book.localized as LocalizedBookMap | undefined)?.es?.title;
+  return {
+    title: localizedTitle || book.display_title || book.title,
+    author: book.author,
+    year: book.year,
+    language: book.language,
+    pageNumber,
+    imageUrl,
+    original,
+    spanish,
+    href: `${spanishReaderHref({ slug: book.slug, id: bookId })}/page-number/${pageNumber}`,
+  };
 }
 
 // ---------- Aggregate ----------
@@ -801,6 +913,8 @@ export interface HomeData {
   spanishBooks: SpanishBook[];
   /** Size of the Spanish corpus, for the honest scale line. Null off /es. */
   spanishCounts: SpanishCounts | null;
+  /** One verified page, original beside its Spanish. Null off /es or when the excerpt no longer matches. */
+  spanishShowpiece: SpanishShowpiece | null;
 }
 
 // `lang` selects the podcast episode's language and the Spanish-edition band,
@@ -808,7 +922,7 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts, spanishShowpiece] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -818,7 +932,8 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getFeaturedPodcast(lang), 8000, null),
     lang === 'es' ? withTimeout(getSpanishBooks(), 8000, [] as SpanishBook[]) : Promise.resolve([] as SpanishBook[]),
     lang === 'es' ? withTimeout(getSpanishCounts(), 8000, null) : Promise.resolve(null),
+    lang === 'es' ? withTimeout(getSpanishShowpiece(), 8000, null) : Promise.resolve(null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts, spanishShowpiece };
 }
