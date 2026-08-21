@@ -337,6 +337,12 @@ export interface ReaderStrings {
   themePaper: string;
   themeSepia: string;
   themeNight: string;
+  typeface: string;
+  typeOriginal: string;
+  typeModern: string;
+  typeOriginalTitle: string;
+  typeModernTitle: string;
+  typeCaption: string;
   // footer + search
   likeThisPage: string;
   searchThisBook: string;
@@ -419,6 +425,12 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     themePaper: 'Paper',
     themeSepia: 'Sepia',
     themeNight: 'Night',
+    typeface: 'Type',
+    typeOriginal: 'Original',
+    typeModern: 'Modern',
+    typeOriginalTitle: 'Set in the type this book was printed in',
+    typeModernTitle: 'Set in the reading face used across the library',
+    typeCaption: 'Griffo\u2019s roman for Aldus Manutius, traced from the 1496 De Aetna.',
 
     likeThisPage: 'Like this page',
     searchThisBook: 'Search this book...',
@@ -499,6 +511,12 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     themePaper: 'Papel',
     themeSepia: 'Sepia',
     themeNight: 'Noche',
+    typeface: 'Letra',
+    typeOriginal: 'Original',
+    typeModern: 'Moderna',
+    typeOriginalTitle: 'Compuesto con la letrería original del libro',
+    typeModernTitle: 'Compuesto con la letra de lectura habitual de la biblioteca',
+    typeCaption: 'La redonda de Griffo para Aldo Manucio, calcada del De Aetna de 1496.',
 
     likeThisPage: 'Me gusta esta página',
     searchThisBook: 'Buscar en este libro...',

@@ -247,10 +247,12 @@ h1, h2, h3, h4 {
    English translation — are then set in the facsimile traced from that book's
    own pages, with Cardo behind it for scripts the fount never had.
    Display only: the DOM text is untouched, so search, copy and citation are
-   unaffected.
+   unaffected. The reader can switch back to the library's face from the
+   reading-settings popover — that sets data-reader-fount="modern" on the reader
+   root, and these rules stop matching.
 --------------------------------------------------------------------------- */
-.aldine-fount [data-reader-panel] .prose-manuscript,
-.aldine-fount [data-reader-panel] > .prose {
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] .prose-manuscript,
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
   font-family: var(--font-aldine-aetna), var(--font-cardo), 'Newsreader', Georgia, serif;
   /* liga: the ct/ſt/fi sorts. calt: rotate the three impressions of each common
      letter so neighbours are never the same cast — hand-set, not typeset. */
@@ -263,7 +265,7 @@ h1, h2, h3, h4 {
    German-source and modernised views use a `.prose` div that sets font-size
    inline (a React style prop beats a stylesheet rule whatever its specificity),
    so that one — and only that one — needs !important. */
-.aldine-fount [data-reader-panel] > .prose {
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
   font-size: calc(var(--reader-font-size, 15px) * 1.04) !important;
 }
 
