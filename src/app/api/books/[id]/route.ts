@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { withApiAuth } from '@/lib/api-auth';
+import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
@@ -47,6 +48,10 @@ export const GET = withApiAuth(async (
       // translation-of-a-translation from a source text.
       original_language: 1, text_role: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
+      // Per-language edition counters, so get_book can report `editions`
+      // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
+      // Spanish edition by accident (#4095).
+      ...EDITION_COUNTER_PROJECTION,
       categories: 1, reading_summary: 1,
       chapters: 1,
       // Cover art (all four fields of the cover-write contract, see

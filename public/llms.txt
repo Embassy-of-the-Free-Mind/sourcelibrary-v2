@@ -81,6 +81,25 @@ For Claude Desktop or other MCP-compatible clients, install the MCP server for t
 - `search_images` - Search extracted illustrations
 - `list_books` - Browse the full collection
 
+**Reading in another language.** Most of the corpus is served in English, but some
+books also carry a translated edition — as of August 2026, 103 books in Spanish
+(≈38,600 pages), readable at `sourcelibrary.org/es/book/…`. Every tool that
+returns text takes an optional **`lang`** (an ISO code, default `en`):
+`get_quote`, `get_quotes`, `get_book_text`, `search_within_book`,
+`search_translations`, `search_concept`. `list_books` takes **`has_edition`** to
+browse only books that have one, and `get_book` returns an **`editions`** map
+(`{ en: 357, es: 357 }`) saying which languages a book can be read in.
+
+Two rules, because the failure they prevent is silent:
+
+1. **`lang` is not `language`.** `language` filters by what is printed on the
+   leaves of the scan; `lang` chooses which translation of the text to read. A
+   Latin book with a Spanish edition matches `language=Latin` AND `lang=es`.
+2. **Every response says which edition it actually served.** Where the requested
+   edition does not exist the English translation comes back, labelled (`lang`,
+   `translation_lang`, `lang_note`) rather than substituted silently. Never
+   present a fallback as the requested edition — check the field before quoting.
+
 **npm:** https://www.npmjs.com/package/@source-library/mcp-server
 **GitHub:** https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server
 
@@ -99,6 +118,7 @@ GET /search?q={query}
 |-----------|------|-------------|
 | q | string | Search query (required) - searches titles, authors, and full text |
 | language | string | Filter by original language: Latin, German, French, etc. |
+| lang | string | ISO code of the EDITION to search and quote back, e.g. `es`. Default `en`. Narrows the whole request to books that HAVE that edition — see "Reading in another language" below. |
 | has_doi | boolean | Only return books with DOIs |
 | has_translation | boolean | Only return books with translations |
 | limit | number | Max results (default 20) |
@@ -140,6 +160,7 @@ GET /books/{book_id}/quote?page={page_number}
 | page | number | Page number (required) |
 | include_original | boolean | Include original language text — and, for non-Latin scripts, its romanization (default true) |
 | include_context | boolean | Include adjacent pages for context |
+| lang | string | ISO code of the EDITION to quote, e.g. `es`. `quote.lang` on the response always says which edition was served. |
 
 For pages in a non-Latin script (Greek, Hebrew, Arabic, Cyrillic, Sanskrit…) the
 quote also carries `romanized`, so a citation can be shown in three layers:

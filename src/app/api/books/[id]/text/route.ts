@@ -10,6 +10,7 @@ import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '@/lib/bot-attribution';
+import { getTranslation } from '@/lib/page-translations';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -60,6 +61,22 @@ export const GET = withApiAuth(async (
     const partParam = searchParams.get('part');
     const format = searchParams.get('format') || 'json';
     const includeMetadata = searchParams.get('include_metadata') === 'true';
+    // Which EDITION of the translation to export (#4095). Per PAGE, not per
+    // book: ~30 pages across 17 Spanish books were skipped by the translation
+    // worker's length guard and still read English, so a book-level claim would
+    // be wrong on exactly the pages a reader would notice.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const requestedLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    const isLocalized = requestedLang !== 'en';
+    /** The translation of one page in the requested language, or English, saying which. */
+    const translationFor = (p: Record<string, unknown>): { data: string; lang: string } | null => {
+      if (isLocalized) {
+        const localized = getTranslation(p as never, requestedLang)?.data;
+        if (localized) return { data: localized, lang: requestedLang };
+      }
+      const en = (p.translation as { data?: string } | undefined)?.data;
+      return en ? { data: en, lang: 'en' } : null;
+    };
 
     if (!['ocr', 'translation', 'both'].includes(content)) {
       return NextResponse.json({ error: 'content must be ocr, translation, or both' }, { status: 400 });
@@ -132,7 +149,23 @@ export const GET = withApiAuth(async (
     const budgetPageCap = (enforce && budget.limit > 0) ? Math.max(1, budget.remaining) : undefined;
 
     // Chapter mode: return pre-materialized chapter text
-    if (chapterParam !== null) {
+    //
+    // Materialized chapter text exists only in English — it is stitched by the
+    // enrichment pipeline from `translation.data`. For a localized request we
+    // therefore resolve the chapter to its PAGE RANGE and serve those pages in
+    // the requested language, rather than handing back English under a `lang=es`
+    // request or refusing outright.
+    let localizedChapterRange: { from: number; to: number; title?: string } | null = null;
+    if (chapterParam !== null && isLocalized) {
+      const chapterIndex = parseInt(chapterParam);
+      const withChapters = await db.collection('books').findOne(
+        { id: resolvedBookId }, { projection: { chapters: 1 } });
+      const ch = withChapters?.chapters?.[chapterIndex];
+      if (!ch) return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+      localizedChapterRange = { from: ch.pageStart, to: ch.pageEnd ?? ch.pageStart, title: ch.titleEn || ch.title };
+    }
+
+    if (chapterParam !== null && !localizedChapterRange) {
       const chapterIndex = parseInt(chapterParam);
       if (isNaN(chapterIndex) || chapterIndex < 0) {
         return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
@@ -233,15 +266,16 @@ export const GET = withApiAuth(async (
     // tightest of: requested `to`, the bot 20% limit, and the per-request budget
     // cap (counted from the start page). budgetMaxPage closes the granularity gap
     // where one big range would otherwise serve past the daily cap in a single call.
-    const startPage = fromPage ?? 1;
+    const startPage = localizedChapterRange?.from ?? fromPage ?? 1;
     const budgetMaxPage = budgetPageCap !== undefined ? startPage + budgetPageCap - 1 : undefined;
-    const pageCaps = [toPage, botPageLimit, budgetMaxPage].filter((v): v is number => v !== undefined);
+    const pageCaps = [localizedChapterRange?.to ?? toPage, botPageLimit, budgetMaxPage].filter((v): v is number => v !== undefined);
     const effectiveToPage = pageCaps.length ? Math.min(...pageCaps) : undefined;
 
+    const effectiveFromPage = localizedChapterRange?.from ?? fromPage;
     const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
-    if (fromPage !== undefined || effectiveToPage !== undefined) {
+    if (effectiveFromPage !== undefined || effectiveToPage !== undefined) {
       pageFilter.page_number = {};
-      if (fromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = fromPage;
+      if (effectiveFromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = effectiveFromPage;
       if (effectiveToPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = effectiveToPage;
     }
 
@@ -263,10 +297,19 @@ export const GET = withApiAuth(async (
     }
     if (content === 'translation' || content === 'both') {
       projection['translation.data'] = 1;
+      if (isLocalized) {
+        projection[`translations.${requestedLang}.data`] = 1;
+        if (requestedLang === 'es') projection['translation_es.data'] = 1;
+      }
       if (includeMetadata) {
         projection['translation.language'] = 1;
         projection['translation.model'] = 1;
         projection['translation.source'] = 1;
+        if (isLocalized) {
+          projection[`translations.${requestedLang}.language`] = 1;
+          projection[`translations.${requestedLang}.model`] = 1;
+          projection[`translations.${requestedLang}.source`] = 1;
+        }
       }
     }
     if (includeMetadata) {
@@ -286,6 +329,8 @@ export const GET = withApiAuth(async (
       lines.push(`# ${book.display_title || book.title}`);
       lines.push(`# ${book.author} (${book.published || 'n.d.'})`);
       lines.push(`# Language: ${book.language}`);
+      if (isLocalized) lines.push(`# Translation edition requested: ${requestedLang} (pages without one are marked [Translation — en])`);
+      if (localizedChapterRange) lines.push(`# Chapter: ${localizedChapterRange.title ?? chapterParam} (pages ${localizedChapterRange.from}–${localizedChapterRange.to})`);
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
@@ -296,7 +341,13 @@ export const GET = withApiAuth(async (
 
       for (const page of pages) {
         const ocr = mark(cleanText(page.ocr?.data));
-        const translation = mark(cleanText(page.translation?.data));
+        const resolved = translationFor(page);
+        const translation = mark(cleanText(resolved?.data));
+        // The label carries the language whenever it is not what was asked for,
+        // so a fallback page cannot be read as part of the Spanish edition.
+        const tLabel = resolved && resolved.lang !== requestedLang
+          ? `[Translation — ${resolved.lang}]`
+          : '[Translation]';
 
         if (content === 'both' && (ocr || translation)) {
           lines.push(`--- Page ${page.page_number} ---`);
@@ -306,7 +357,7 @@ export const GET = withApiAuth(async (
             lines.push('');
           }
           if (translation) {
-            lines.push(`[Translation]`);
+            lines.push(tLabel);
             lines.push(translation);
             lines.push('');
           }
@@ -316,6 +367,7 @@ export const GET = withApiAuth(async (
           lines.push('');
         } else if (content === 'translation' && translation) {
           lines.push(`--- Page ${page.page_number} ---`);
+          if (resolved && resolved.lang !== requestedLang) lines.push(tLabel);
           lines.push(translation);
           lines.push('');
         }
@@ -337,8 +389,8 @@ export const GET = withApiAuth(async (
     // JSON format — structured response
     const pagesWithContent = pages.filter(p => {
       if (content === 'ocr') return p.ocr?.data;
-      if (content === 'translation') return p.translation?.data;
-      return p.ocr?.data || p.translation?.data;
+      if (content === 'translation') return !!translationFor(p);
+      return p.ocr?.data || !!translationFor(p);
     });
 
     const result = {
@@ -359,6 +411,25 @@ export const GET = withApiAuth(async (
       // consumer quoting `pages[].ocr` never picks up words we wrote.
       ...(ref ? { attribution: attributionMeta(ref) } : {}),
       content_type: content,
+      // What was asked for, and what the pages actually carry. A caller that
+      // requested `es` and got 40 English pages back must be able to see it
+      // without diffing the text.
+      lang: requestedLang,
+      ...(isLocalized ? {
+        lang_coverage: {
+          [requestedLang]: pagesWithContent.filter(p => translationFor(p)?.lang === requestedLang).length,
+          en_fallback: pagesWithContent.filter(p => translationFor(p)?.lang === 'en').length,
+        },
+      } : {}),
+      ...(localizedChapterRange ? {
+        chapter: {
+          index: Number(chapterParam),
+          title: localizedChapterRange.title,
+          pageStart: localizedChapterRange.from,
+          pageEnd: localizedChapterRange.to,
+          note: `Chapter text is materialized in English only; this ${requestedLang} response is assembled from the chapter's page range.`,
+        },
+      } : {}),
       total_pages: book.pages_count || pages.length,
       pages_returned: pagesWithContent.length,
       ...(botPageLimit !== undefined ? {
@@ -405,13 +476,18 @@ export const GET = withApiAuth(async (
             };
           }
         }
-        if ((content === 'translation' || content === 'both') && p.translation?.data) {
-          entry.translation = mark(cleanText(p.translation.data));
+        const resolved = (content === 'translation' || content === 'both') ? translationFor(p) : null;
+        if (resolved) {
+          entry.translation = mark(cleanText(resolved.data));
+          // Always present, so a consumer branches on it instead of assuming
+          // every page in a `lang=es` response is Spanish.
+          entry.translation_lang = resolved.lang;
           if (includeMetadata) {
+            const meta = resolved.lang === 'en' ? p.translation : (p.translations?.[resolved.lang] ?? p.translation_es);
             entry.translation_metadata = {
-              language: p.translation.language,
-              model: p.translation.model,
-              source: p.translation.source,
+              language: meta?.language,
+              model: meta?.model,
+              source: meta?.source,
             };
           }
         }
