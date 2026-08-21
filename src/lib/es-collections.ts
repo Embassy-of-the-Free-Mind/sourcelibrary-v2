@@ -73,10 +73,33 @@ export interface EsCollectionDetail {
    * parent, so a branch like americas → maya had no way down and the Maya
    * material was unreachable by clicking from anywhere on /es.
    */
-  children: { slug: string; name: string; spanishBookCount: number }[];
+  children: { slug: string; name: string; spanishBookCount: number; imageCandidates: string[] }[];
   heroCandidates: string[];
   /** The curated hero plate at full size, for the share card. */
   heroImage?: string;
+  /**
+   * Language-NEUTRAL apparatus ported from the English page (#4152). The
+   * Spanish twin was scoped to name + intro + books when /es held four books;
+   * it now holds 170, and the gap had become "Spanish readers get a visibly
+   * poorer page". What is portable is what carries no English prose: pictures,
+   * counts and structure. The featured-work blurb, the quote band and the
+   * curated "Essential Reading" tiers stay behind because they ARE English
+   * editorial, and Spanish chrome around English copy is the half-measure
+   * i18n.md rule 4 rejects.
+   */
+  galleryImages: EsGalleryImage[];
+  /** Total illustrations available, so the strip can say what it is a sample of. */
+  galleryTotal: number;
+  /** Books in this collection flagged as a first translation, oldest first. */
+  firstTranslations: EsCollectionBook[];
+}
+
+export interface EsGalleryImage {
+  id?: string;
+  url: string;
+  description?: string;
+  bookId?: string;
+  bookTitle?: string;
 }
 
 /** Books shown on a Spanish collection page; the English page lists the rest. */
@@ -233,7 +256,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
   );
   if (!doc) return null;
 
-  const [rawBooks, parentDoc, childDocs, esCounts] = await Promise.all([
+  const [rawBooks, parentDoc, childDocs, esCounts, gallery, rawFirstTranslations] = await Promise.all([
     db.collection('books').find(
       { collections: slug, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false } },
       {
@@ -256,13 +279,54 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     // match both shapes — a plain equality check silently misses the arrays.
     db.collection('collections').find(
       { parent: slug, ...PUBLIC_COLLECTION },
-      { projection: { _id: 0, slug: 1, name: 1, localized: 1 }, maxTimeMS: 8000 },
+      { projection: { _id: 0, slug: 1, name: 1, localized: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
     ).toArray(),
     db.collection('books').aggregate<{ _id: string; count: number }>([
       { $match: { ...localizedEditionFilter('es'), visible: true } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', count: { $sum: 1 } } },
     ], { maxTimeMS: 8000 }).toArray(),
+    // Illustrations — the same shape the English page uses, and gated the same
+    // way (#4151): `luminance` keeps near-black and near-blank plates out, which
+    // `gallery_quality` cannot do because a pristine scan of a dark mezzotint
+    // scores 1.0. Images carry no language, so this is portable as-is.
+    db.collection('books')
+      .find({ collections: slug, visible: true }, { projection: { _id: 0, id: 1 }, maxTimeMS: 5000 })
+      .toArray()
+      .then(async (bs) => {
+        const ids = bs.map((b) => b.id as string);
+        if (!ids.length) return { images: [], total: 0 };
+        const q = {
+          book_id: { $in: ids.slice(0, 200) },
+          book_visible: true,
+          gallery_quality: { $gte: 0.85 },
+          $or: [{ luminance: { $exists: false } }, { luminance: { $gte: 95, $lte: 240 } }],
+          type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+        };
+        const [images, total] = await Promise.all([
+          db.collection('gallery_images').find(q, {
+            projection: { _id: 0, id: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, description: 1, book_id: 1, book_title: 1 },
+            maxTimeMS: 3000,
+          }).sort({ gallery_quality: -1 }).limit(60).toArray(),
+          db.collection('gallery_images').countDocuments(q, { maxTimeMS: 3000 }),
+        ]);
+        return { images, total };
+      })
+      .catch(() => ({ images: [] as Record<string, unknown>[], total: 0 })),
+    // First translations — chronological, like the English band.
+    db.collection('books').find(
+      { collections: slug, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true },
+      {
+        projection: {
+          _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, year: 1, language: 1,
+          pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
+          is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+        },
+        sort: { year: 1, title: 1 },
+        limit: 12,
+        maxTimeMS: 8000,
+      },
+    ).toArray().catch(() => []),
   ]);
 
   const esCountMap = new Map(esCounts.map((c) => [c._id, c.count]));
@@ -304,9 +368,22 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
         slug: d.slug as string,
         name: spanishCopy(d).name,
         spanishBookCount: esCountMap.get(d.slug as string) ?? 0,
+        imageCandidates: imageCandidates(d.featured_images as FeaturedImage[] | undefined, d.slug as string, d.hero_image as string | undefined),
       }))
       .filter((ch) => ch.spanishBookCount > 0)
       .sort((a, b) => b.spanishBookCount - a.spanishBookCount),
+    galleryImages: (gallery.images as Record<string, unknown>[]).map((g) => ({
+      id: g.id as string | undefined,
+      url: sanitizeThumbnail((g.thumbnail_url || g.extracted_url || g.image_url) as string) || '',
+      description: g.description as string | undefined,
+      bookId: g.book_id as string | undefined,
+      bookTitle: g.book_title as string | undefined,
+    })).filter((g) => g.url),
+    galleryTotal: gallery.total,
+    firstTranslations: (rawFirstTranslations as unknown as RawBook[]).map((b) => ({
+      ...b,
+      href: hasEsEdition(b) ? spanishReaderHref(b) : `/book/${encodeURIComponent(b.slug || b.id)}`,
+    })),
     heroCandidates: imageCandidates(doc.featured_images, slug, doc.hero_image),
     // The curated plate as STORED — full size, for the share card. The
     // candidates above are display thumbnails (600px, often portrait), which

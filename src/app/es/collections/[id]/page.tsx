@@ -87,13 +87,38 @@ export default async function EsCollectionPage({ params }: Props) {
   const otherBooks = col.books.filter((b) => !readableInSpanish(b));
   const isSpanishCollection = id === 'en-espanol';
 
+  // Up to 6 tiles for the hero collage, at most one per book so a single
+  // well-illustrated title cannot supply the whole header.
+  const heroTiles: typeof col.galleryImages = [];
+  const heroSeen = new Set<string>();
+  for (const g of col.galleryImages) {
+    if (g.bookId && heroSeen.has(g.bookId)) continue;
+    if (g.bookId) heroSeen.add(g.bookId);
+    heroTiles.push(g);
+    if (heroTiles.length >= 6) break;
+  }
+  // The strip below the books shows a wider sample, hero tiles included.
+  const illustrations = col.galleryImages.slice(0, 12);
+
   return (
     <div className="min-h-screen bg-cream" lang="es">
       <ConditionalSiteHeader variant="light" />
 
-      {/* Hero */}
+      {/* Hero. A COLLAGE when the collection has illustrations, matching the
+          English page — a single image (or, for a derived collection with no
+          featured_images, a flat dark band) was most of why /es read as the
+          poorer page. Tiles come pre-filtered by luminance (#4151), so a
+          near-black plate cannot punch a hole in the header. */}
       <div className="relative bg-dark overflow-hidden">
-        {col.heroCandidates.length > 0 && (
+        {heroTiles.length > 1 ? (
+          <div className={`absolute inset-0 grid opacity-30 ${heroTiles.length <= 2 ? 'grid-cols-2' : heroTiles.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'}`}>
+            {heroTiles.map((t, i) => (
+              <div key={t.id || i} className="relative overflow-hidden">
+                <CollectionCardImage candidates={[t.url]} alt="" sizes="25vw" priority={i < 2} />
+              </div>
+            ))}
+          </div>
+        ) : col.heroCandidates.length > 0 && (
           <div className="absolute inset-0 opacity-30">
             <CollectionCardImage candidates={col.heroCandidates} alt="" sizes="100vw" priority />
           </div>
@@ -139,17 +164,37 @@ export default async function EsCollectionPage({ params }: Props) {
             Spanish books are listed. */}
         {col.children.length > 0 && (
           <section className="mb-14">
-            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-4">Dentro de esta colección</h2>
-            <div className="flex flex-wrap gap-2">
+            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-5">Dentro de esta colección</h2>
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {col.children.map((ch) => (
-                <Link
-                  key={ch.slug}
-                  href={`/es/collections/${ch.slug}`}
-                  className="inline-flex items-baseline gap-2 px-3 py-2 border border-[var(--border-light)] hover:border-accent-rust transition-colors"
-                >
-                  <span className="text-primary">{ch.name}</span>
-                  <span className="text-xs text-muted tabular-nums">{nf(ch.spanishBookCount)}</span>
+                <Link key={ch.slug} href={`/es/collections/${ch.slug}`} className="group block">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-dark mb-2">
+                    {ch.imageCandidates.length > 0 && (
+                      <CollectionCardImage candidates={ch.imageCandidates} alt="" sizes="(max-width: 1024px) 50vw, 25vw" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <div className="text-white font-display text-lg leading-tight group-hover:text-accent-rust transition-colors">{ch.name}</div>
+                      <div className="text-white/60 text-xs tabular-nums">{nf(ch.spanishBookCount)} en español</div>
+                    </div>
+                  </div>
                 </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* First translations — the band the English page leads with. The books
+            and the badge are the content; only the heading is language-bearing. */}
+        {col.firstTranslations.length > 0 && (
+          <section className="mb-14">
+            <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2">Primeras traducciones</h2>
+            <p className="text-muted mb-6 max-w-2xl">
+              Obras que, hasta donde sabemos, se traducen aquí por primera vez.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+              {col.firstTranslations.map((b) => (
+                <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} lang="es" />
               ))}
             </div>
           </section>
@@ -184,6 +229,27 @@ export default async function EsCollectionPage({ params }: Props) {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {otherBooks.map((b) => (
                 <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} href={b.href} lang="es" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Illustrations. Pictures carry no language, so this ports as-is; the
+            plates are luminance-gated (#4151) so the strip cannot fill with
+            near-black or near-blank leaves. */}
+        {illustrations.length > 0 && (
+          <section className="mb-14">
+            <div className="flex items-baseline justify-between gap-4 mb-6">
+              <h2 className="text-2xl sm:text-3xl font-display text-primary">Ilustraciones</h2>
+              <Link href={`/gallery?collection=${encodeURIComponent(id)}`} className="text-sm text-muted hover:text-accent-rust transition-colors underline underline-offset-2">
+                Ver las {nf(col.galleryTotal)} &rarr;
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {illustrations.map((g, i) => (
+                <div key={g.id || i} className="relative aspect-square overflow-hidden bg-warm">
+                  <CollectionCardImage candidates={[g.url]} alt={g.description || ''} sizes="(max-width: 640px) 50vw, 16vw" />
+                </div>
               ))}
             </div>
           </section>
