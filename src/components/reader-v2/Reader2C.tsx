@@ -670,10 +670,10 @@ function CopyPlainButton({ text, label }: { text: string; label: string }) {
       }}
       aria-label={label}
       title={copied ? 'Copied' : label}
-      className="w-[30px] h-[30px] flex items-center justify-center transition-colors hover:bg-black/5"
-      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
+      className={PANE_ICON_CHIP}
+      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)', borderColor: 'var(--border-light)' }}
     >
-      {copied ? <Check size={15} /> : <Copy size={15} />}
+      {copied ? <Check size={14} /> : <Copy size={14} />}
     </button>
   );
 }
@@ -741,7 +741,7 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
       type="button"
       onClick={onToggle}
       aria-pressed={on}
-      className="font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
+      className={PANE_CHIP}
       style={{
         // Wears the notes' own colour (NOTE_TAG_STYLES.note is
         // bg-accent-gold/15 + text-accent-gold-dark), so the control and the
@@ -756,6 +756,18 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
     </button>
   );
 }
+
+/** The trace colour, shared by the toggle, its status line and its highlight. */
+const TRACE_BLUE = '#4a6fa5';
+
+/**
+ * Every control in a pane header is the same object: same height, same border
+ * box, same hover. Only the colour changes with what the control does. The
+ * scan's zoom and lens were bare icons next to bordered chips, which read as
+ * two different kinds of thing sitting in the same row.
+ */
+const PANE_CHIP = 'h-[26px] px-2 flex items-center gap-1 border font-sans text-[11px] font-medium uppercase tracking-[0.1em] transition-colors';
+const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center border transition-colors';
 
 /** What tracing is doing right now, said plainly under the pane header. */
 function TraceStatusLine({ status }: { status: TraceStatus }) {
@@ -774,8 +786,8 @@ function TraceStatusLine({ status }: { status: TraceStatus }) {
       className="shrink-0 px-4 py-1.5 flex items-center gap-2 border-b font-sans text-[11.5px]"
       style={{
         borderColor: 'var(--border-light)',
-        background: 'color-mix(in srgb, var(--accent-gold) 10%, transparent)',
-        color: 'var(--accent-gold-dark)',
+        background: 'rgba(74, 111, 165, 0.08)',
+        color: TRACE_BLUE,
       }}
       role="status"
     >
@@ -798,13 +810,14 @@ function TraceToggle({ on, onToggle, loading, language }: {
       type="button"
       onClick={onToggle}
       aria-pressed={on}
-      className="flex items-center gap-1 font-sans text-[11px] font-medium uppercase tracking-[0.1em] px-2 h-[24px] border transition-colors"
+      className={PANE_CHIP}
       style={{
-        // Gold, like Notes and like the highlight the trace itself paints —
-        // rust read as a warning about the text rather than a way of reading it.
-        color: on ? 'var(--accent-gold-dark)' : 'var(--text-faint)',
-        background: on ? 'color-mix(in srgb, var(--accent-gold) 15%, transparent)' : 'transparent',
-        borderColor: on ? 'color-mix(in srgb, var(--accent-gold) 45%, transparent)' : 'transparent',
+        // The colour of the highlight it paints. It was gold, which is the
+        // editorial-note colour — so Trace and Notes were the same chip, and a
+        // traced span looked like an annotation.
+        color: on ? TRACE_BLUE : 'var(--text-faint)',
+        background: on ? 'rgba(74, 111, 165, 0.12)' : 'transparent',
+        borderColor: on ? 'rgba(74, 111, 165, 0.45)' : 'transparent',
       }}
       title={on
         ? 'Turn tracing off'
@@ -836,10 +849,10 @@ function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation
       }}
       aria-label={label}
       title={copied ? 'Copied' : label}
-      className="w-[30px] h-[30px] flex items-center justify-center transition-colors hover:bg-black/5"
-      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
+      className={PANE_ICON_CHIP}
+      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)', borderColor: 'var(--border-light)' }}
     >
-      {copied ? <Check size={15} /> : <Copy size={15} />}
+      {copied ? <Check size={14} /> : <Copy size={14} />}
     </button>
   );
 }
@@ -910,6 +923,29 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           </a>
         </p>
       )}
+
+      {/* What the coloured marks in the text mean. They are a real system —
+          violet for glosses, sage for what stood in the original margin, gold
+          for our own notes — and nothing in the reader said so. */}
+      <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>Marks in the text</CapsLabel>
+      <dl>
+        {([
+          ['Terms and glosses', 'A word explained, or a technical term identified.', 'var(--accent-violet)', 'color-mix(in srgb, var(--accent-violet) 10%, transparent)'],
+          ['In the original', 'A marginal note or a later hand, present on the page itself.', 'var(--accent-sage-dark)', 'color-mix(in srgb, var(--accent-sage) 14%, transparent)'],
+          ['Our notes', 'Editorial notes added here, not on the page.', 'var(--accent-gold-dark)', 'color-mix(in srgb, var(--accent-gold) 16%, transparent)'],
+          ['Traced', 'The span you clicked, and its match in the other pane.', '#4a6fa5', 'rgba(74, 111, 165, 0.18)'],
+        ] as Array<[string, string, string, string]>).map(([label, desc, fg, bg]) => (
+          <div key={label} className="flex gap-3 py-1.5 border-t" style={{ borderColor: 'var(--border-light)' }}>
+            <dt className="shrink-0">
+              <span className="font-sans text-[11.5px] px-1.5 py-0.5" style={{ color: fg, background: bg }}>{label}</span>
+            </dt>
+            <dd className="font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-muted)' }}>{desc}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-2 font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
+        Turn the marks off with Notes in any text pane.
+      </p>
 
       {/* Provenance. A library that publishes machine-made text owes the
           reader the record of how it was made, in the same place as the rest
@@ -1104,26 +1140,29 @@ function ScanControls({
   /** Open the scan full screen, at the resolution it was archived at */
   onExpand?: () => void;
 }) {
-  const btn = 'w-[30px] h-[30px] flex items-center justify-center hover:bg-black/5 disabled:opacity-30 transition-colors';
+  // Same chip as Trace / Notes / Copy in the text panes, so one row of pane
+  // controls reads as one family rather than icons beside buttons.
+  const btn = `${PANE_ICON_CHIP} disabled:opacity-30`;
+  const btnStyle = { color: 'var(--text-muted)', borderColor: 'var(--border-light)' } as const;
   return (
     <div className="flex items-center gap-0.5">
       <button type="button" aria-label="Zoom out" disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
-        className={btn} style={{ color: 'var(--text-muted)' }}>
-        <ZoomOut size={15} />
+        className={btn} style={btnStyle}>
+        <ZoomOut size={14} />
       </button>
       <button
         type="button"
         onClick={onZoomReset}
         disabled={zoom === 1}
-        className="min-w-[42px] px-1 h-[30px] font-sans text-[11.5px] tabular-nums hover:bg-black/5 disabled:cursor-default transition-colors"
-        style={{ color: 'var(--text-muted)' }}
+        className="min-w-[46px] px-1 h-[26px] border font-sans text-[11px] tabular-nums transition-colors disabled:cursor-default"
+        style={{ color: 'var(--text-muted)', borderColor: 'var(--border-light)' }}
         title="Reset zoom"
       >
         {Math.round(zoom * 100)}%
       </button>
       <button type="button" aria-label="Zoom in" disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
-        onClick={() => onZoomStep(1)} className={btn} style={{ color: 'var(--text-muted)' }}>
-        <ZoomIn size={15} />
+        onClick={() => onZoomStep(1)} className={btn} style={btnStyle}>
+        <ZoomIn size={14} />
       </button>
       <span className="w-px h-4 mx-1" style={{ background: 'var(--border-medium)' }} />
       <button
@@ -1133,13 +1172,12 @@ function ScanControls({
         aria-label="Reading lens"
         disabled={zoom > 1}
         className={btn}
-        style={{
-          color: lensOn ? 'var(--accent-rust)' : 'var(--text-muted)',
-          boxShadow: lensOn ? 'inset 0 -2px 0 var(--accent-rust)' : 'none',
-        }}
+        style={lensOn
+          ? { color: 'var(--accent-sage-dark)', background: 'color-mix(in srgb, var(--accent-sage) 15%, transparent)', borderColor: 'color-mix(in srgb, var(--accent-sage) 45%, transparent)' }
+          : btnStyle}
         title={zoom > 1 ? 'Reading lens (available at 100%)' : lensOn ? 'Turn the reading lens off' : 'Reading lens: magnify the spot under the pointer'}
       >
-        <ScanSearch size={15} />
+        <ScanSearch size={14} />
       </button>
       {onExpand && (
         <button
@@ -1148,9 +1186,9 @@ function ScanControls({
           aria-label="View the scan full screen"
           title="View the scan full screen"
           className={btn}
-          style={{ color: 'var(--text-muted)' }}
+          style={btnStyle}
         >
-          <Maximize2 size={15} />
+          <Maximize2 size={14} />
         </button>
       )}
     </div>
