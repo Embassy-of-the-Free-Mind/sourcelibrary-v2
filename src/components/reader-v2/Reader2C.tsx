@@ -17,7 +17,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Crosshair,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -315,7 +315,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
             type="button"
             onClick={requestGuide}
             disabled={requesting}
-            className="flex items-center gap-2 px-3 py-2 font-sans text-[13px] border transition-colors hover:bg-[var(--bg-white)] disabled:opacity-60"
+            className={`${PANEL_BTN} disabled:opacity-60`}
             style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
           >
             {requesting ? <Loader2 size={13} className="animate-spin" /> : <Bell size={13} />}
@@ -437,7 +437,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
                     <button
                       type="button"
                       onClick={() => onGoToPageNumber(s.startPage)}
-                      className="mt-3 px-3 py-2 border font-sans text-[12px] transition-colors hover:bg-[var(--bg-white)]"
+                      className={`mt-3 ${PANEL_BTN}`}
                       style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
                     >
                       Read this section →
@@ -510,7 +510,7 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
     ['Email', `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${citation}\n\n${url}`)}`],
   ];
 
-  const rowCls = 'w-full text-left px-4 min-h-[46px] flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
+  const rowCls = PANEL_ROW;
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
@@ -599,7 +599,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
           ? 'blocked'
           : 'open';
 
-  const rowCls = 'w-full text-left px-4 min-h-[52px] flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
+  const rowCls = PANEL_ROW;
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
@@ -734,6 +734,75 @@ function TranslitBody({ text, loading, error, settings, baseSize }: {
   );
 }
 
+/** What each coloured mark in the text means. */
+const MARK_LEGEND: Array<[string, string, string, string]> = [
+  ['Gloss or term', 'A word explained, or a technical term identified.',
+    'var(--accent-violet)', 'color-mix(in srgb, var(--accent-violet) 10%, transparent)'],
+  ['On the page', 'A marginal note or a later hand, present on the original.',
+    'var(--accent-sage-dark)', 'color-mix(in srgb, var(--accent-sage) 14%, transparent)'],
+  ['Our note', 'Added here by an editor, not on the original.',
+    'var(--accent-gold-dark)', 'color-mix(in srgb, var(--accent-gold) 16%, transparent)'],
+];
+
+/**
+ * The key to the marks, opened from the control that turns them on. It lived
+ * in Edition & page info, which is nowhere near the thing it explains — a
+ * reader looking at a violet phrase does not go hunting through panels.
+ */
+function MarksKey() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, [open]);
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        aria-label="What the marks in the text mean"
+        title="What the marks mean"
+        className={PANE_ICON_CHIP}
+        style={{ color: 'var(--text-faint)', borderColor: 'var(--border-light)' }}
+      >
+        <Info size={13} />
+      </button>
+      {open && (
+        <div
+          className="absolute top-full right-0 mt-1 w-[264px] border z-50 p-3 rv2-pop"
+          style={{
+            background: SURFACE.popover, borderColor: 'var(--border-medium)',
+            boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)',
+          }}
+          role="dialog"
+          aria-label="What the marks mean"
+        >
+          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Marks in the text</CapsLabel>
+          <dl className="flex flex-col gap-2">
+            {MARK_LEGEND.map(([label, desc, fg, bg]) => (
+              <div key={label}>
+                <dt>
+                  <span className="font-sans text-[11.5px] px-1.5 py-0.5" style={{ color: fg, background: bg }}>{label}</span>
+                </dt>
+                <dd className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-muted)' }}>{desc}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-2.5 pt-2 border-t font-sans text-[11px]" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
+            Notes hides all of them.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** Pane-level Notes toggle — inline editorial notes/glosses apply per text pane. */
 function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
@@ -757,6 +826,16 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   );
 }
 
+/**
+ * Two shapes for everything inside a drawer, so a panel reads as one list and
+ * one kind of button rather than six near-misses.
+ *
+ * PANEL_ROW  — a full-width row in a list (More, Save & share, Download, Views).
+ * PANEL_BTN  — a discrete action (copy a citation, read a section, ask a question).
+ */
+const PANEL_ROW = 'w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
+const PANEL_BTN = 'inline-flex items-center gap-2 h-9 px-3 border font-sans text-[12.5px] transition-colors hover:bg-[var(--bg-white)]';
+
 /** The trace colour, shared by the toggle, its status line and its highlight. */
 const TRACE_BLUE = '#4a6fa5';
 
@@ -771,15 +850,15 @@ const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center borde
 
 /** What tracing is doing right now, said plainly under the pane header. */
 function TraceStatusLine({ status }: { status: TraceStatus }) {
+  // Only states a reader needs to act on. "Ready" said "click any phrase",
+  // which is a permanent instruction for a thing you just switched on.
   const text = status === 'loading'
     ? 'Aligning this page with the translation…'
-    : status === 'ready'
-      ? 'Click any phrase to see it in the other pane.'
-      : status === 'unavailable'
-        ? 'Tracing is not available for this page.'
-        : status === 'rate_limited'
-          ? 'Tracing limit reached. Sign in (free) to keep going.'
-          : null;
+    : status === 'unavailable'
+      ? 'Tracing is not available for this page.'
+      : status === 'rate_limited'
+        ? 'Tracing limit reached. Sign in (free) to keep going.'
+        : null;
   if (!text) return null;
   return (
     <div
@@ -802,8 +881,8 @@ function TraceStatusLine({ status }: { status: TraceStatus }) {
  * other. Same shape as the Notes toggle it sits beside, because they are the
  * same kind of thing — a way of reading, switched on for as long as you want it.
  */
-function TraceToggle({ on, onToggle, loading, language }: {
-  on: boolean; onToggle: () => void; loading: boolean; language?: string;
+function TraceToggle({ on, onToggle, language }: {
+  on: boolean; onToggle: () => void; language?: string;
 }) {
   return (
     <button
@@ -823,7 +902,6 @@ function TraceToggle({ on, onToggle, loading, language }: {
         ? 'Turn tracing off'
         : `Trace: click any phrase to see it in the ${language || 'original'}`}
     >
-      <Crosshair size={12} className={on && loading ? 'animate-pulse' : undefined} />
       Trace
     </button>
   );
@@ -923,29 +1001,6 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           </a>
         </p>
       )}
-
-      {/* What the coloured marks in the text mean. They are a real system —
-          violet for glosses, sage for what stood in the original margin, gold
-          for our own notes — and nothing in the reader said so. */}
-      <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>Marks in the text</CapsLabel>
-      <dl>
-        {([
-          ['Terms and glosses', 'A word explained, or a technical term identified.', 'var(--accent-violet)', 'color-mix(in srgb, var(--accent-violet) 10%, transparent)'],
-          ['In the original', 'A marginal note or a later hand, present on the page itself.', 'var(--accent-sage-dark)', 'color-mix(in srgb, var(--accent-sage) 14%, transparent)'],
-          ['Our notes', 'Editorial notes added here, not on the page.', 'var(--accent-gold-dark)', 'color-mix(in srgb, var(--accent-gold) 16%, transparent)'],
-          ['Traced', 'The span you clicked, and its match in the other pane.', '#4a6fa5', 'rgba(74, 111, 165, 0.18)'],
-        ] as Array<[string, string, string, string]>).map(([label, desc, fg, bg]) => (
-          <div key={label} className="flex gap-3 py-1.5 border-t" style={{ borderColor: 'var(--border-light)' }}>
-            <dt className="shrink-0">
-              <span className="font-sans text-[11.5px] px-1.5 py-0.5" style={{ color: fg, background: bg }}>{label}</span>
-            </dt>
-            <dd className="font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-muted)' }}>{desc}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mt-2 font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-        Turn the marks off with Notes in any text pane.
-      </p>
 
       {/* Provenance. A library that publishes machine-made text owes the
           reader the record of how it was made, in the same place as the rest
@@ -1061,7 +1116,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
             <div className="flex flex-col gap-1.5">
               {LIBRARIAN_SUGGESTIONS.map(s => (
                 <button key={s} type="button" onClick={() => ask(s)}
-                  className="group flex items-center justify-between gap-2 text-left px-3 py-2.5 border font-sans text-[12.5px] hover:bg-[var(--bg-white)] transition-colors"
+                  className={`group justify-between w-full ${PANEL_BTN}`}
                   style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
                   {s}
                   <ChevronRightSmall
@@ -1529,7 +1584,7 @@ function PanelContent({
             key={key}
             type="button"
             onClick={() => onSelectPanel(key)}
-            className="w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]"
+            className={PANEL_ROW}
             style={{ borderColor: 'var(--border-light)' }}
           >
             <span className="min-w-0">
@@ -1544,7 +1599,7 @@ function PanelContent({
           <button
             type="button"
             onClick={() => { onClose(); onToggleEdit(); }}
-            className="w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]"
+            className={PANEL_ROW}
             style={{ borderColor: 'var(--border-light)' }}
           >
             <span className="min-w-0">
@@ -1597,7 +1652,7 @@ function PanelContent({
           return (
             <div
               key={key}
-              className="w-full px-4 min-h-[60px] py-2.5 flex items-center justify-between gap-3 border-b"
+              className={`${PANEL_ROW} hover:bg-transparent`}
               style={{ borderColor: 'var(--border-light)' }}
             >
               <span className="min-w-0">
@@ -1661,7 +1716,7 @@ function PanelContent({
         <button
           type="button"
           onClick={onCopyCitation}
-          className="flex items-center gap-2 px-3 py-1.5 font-sans text-[12.5px] border hover:bg-[var(--bg-white)] transition-colors"
+          className={PANEL_BTN}
           style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
         >
           {copied ? <Check size={13} /> : null}
@@ -2119,13 +2174,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               It was a bare label that happened to be clickable. */}
           <a
             href={`/book/${r.bookPath}`}
-            className="min-w-0 max-w-[46%] no-underline group flex items-center gap-2 px-2 py-1 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.10)]"
-            style={{ borderColor: 'transparent' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = onInk(0.22); }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; }}
+            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
             title="Back to the book"
           >
-            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.55) }} />
+            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
             <span className="min-w-0 flex items-baseline gap-2.5">
               <span
                 className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
@@ -2308,10 +2361,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
-                      loading={traceStatus === 'loading'} language={r.book.language} />
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  {r.settings.glosses && <MarksKey />}
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
               ) : undefined}>
@@ -2347,10 +2400,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PaneHeader right={
                 <div className="flex items-center gap-1">
                   {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
-                      loading={traceStatus === 'loading'} language={r.book.language} />
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  {r.settings.glosses && <MarksKey />}
                   <CopyPlainButton text={translit} label="Copy the transliteration" />
                 </div>
               }>
@@ -2377,10 +2430,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
-                      loading={traceStatus === 'loading'} language={r.book.language} />
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  {r.settings.glosses && <MarksKey />}
                   <CopyTextButton page={r.currentPage} kind="translation" />
                 </div>
               ) : undefined}>
@@ -2522,10 +2575,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
                   {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
-                      loading={traceStatus === 'loading'} language={r.book.language} />
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  {r.settings.glosses && <MarksKey />}
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
               </div>
@@ -2558,10 +2611,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
                 <div className="flex items-center gap-1">
                   {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)}
-                      loading={traceStatus === 'loading'} language={r.book.language} />
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
+                  {r.settings.glosses && <MarksKey />}
                   <CopyTextButton page={r.currentPage} kind="translation" />
                 </div>
               </div>
@@ -2635,7 +2688,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <button
                   type="button"
                   onClick={() => setLeftPanel('more')}
-                  className="mb-2 -ml-1 inline-flex items-center gap-1 pl-1 pr-2.5 h-8 border font-sans text-[12px] transition-colors active:bg-[var(--bg-white)]"
+                  className={`mb-2 -ml-1 ${PANEL_BTN}`}
                   style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
                 >
                   <ChevronLeft size={15} /> More
