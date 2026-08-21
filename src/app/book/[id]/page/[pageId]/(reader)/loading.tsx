@@ -1,6 +1,6 @@
 import Logo from '@/components/layout/Logo';
 import {
-  ChevronLeft, ChevronRight, List, Search, BookOpen, MessageCircle, Info,
+  ChevronLeft, ChevronRight, Heart, List, Search, BookOpen, MessageCircle, Info,
   Quote, Share2, Download, GalleryHorizontal, Columns3, MoreHorizontal,
 } from 'lucide-react';
 
@@ -30,7 +30,9 @@ function onInk(opacity: number): string {
 const SURFACE_SCAN_BED = 'color-mix(in srgb, var(--bg-warm) 96%, var(--bg-dark))';
 const SURFACE_TEXT = 'color-mix(in srgb, var(--bg-cream) 45%, var(--bg-warm))';
 
-const RAIL_ICONS = [List, Search, BookOpen, MessageCircle, Info, Quote, Share2, Download];
+const RAIL_ICONS = [Heart, List, Search, BookOpen, MessageCircle, Info, Quote, Share2, Download];
+/** Settings' rail glyph is the "Aa" text mark, not a lucide icon (see AaGlyph in Reader2C.tsx). */
+const AaGlyph = <span className="font-body leading-none"><span className="text-[11px]">A</span><span className="text-[15px]">A</span></span>;
 
 function RailIcon({ Icon }: { Icon: typeof List }) {
   return (
@@ -82,6 +84,9 @@ export default function ReaderLoading() {
           aria-label="Reader tools"
         >
           {RAIL_ICONS.map((Icon, i) => <RailIcon key={i} Icon={Icon} />)}
+          <div className="w-12 h-[46px] flex items-center justify-center" style={{ color: onInk(0.45) }}>
+            {AaGlyph}
+          </div>
           <div className="flex-1" />
           <div className="flex items-start justify-center" style={{ height: 92, paddingTop: 8 }}>
             <div className="w-12 h-[54px] flex flex-col items-center justify-center gap-1" style={{ color: onInk(0.45) }}>
@@ -117,7 +122,7 @@ export default function ReaderLoading() {
           className="flex items-center w-full shrink-0"
           style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}`, height: 52 }}
         >
-          {[GalleryHorizontal, Columns3, Search, MoreHorizontal].map((Icon, i) => (
+          {[GalleryHorizontal, Columns3, Search, Heart, MoreHorizontal].map((Icon, i) => (
             <div key={i} className="flex-1 min-w-0 h-[52px] flex items-center justify-center" style={{ color: onInk(0.45) }}>
               <Icon size={19} />
             </div>
