@@ -10,6 +10,7 @@ import { useIdentity } from '@/hooks/useIdentity';
 import { getPageThumbUrl } from '@/lib/utils';
 import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
 import type { ReaderSettings } from './useReaderV2';
 import {
@@ -715,10 +716,17 @@ function TranslitBody({ text, loading, error, settings, baseSize }: {
         maxWidth: `${{ narrow: 55, comfortable: 70, wide: 86 }[settings.lineWidth]}ch`,
         marginInline: 'auto',
         color: 'var(--text-primary)',
-        whiteSpace: 'pre-wrap',
       }}
     >
-      {text}
+      {/* Through the same renderer as the other panes: the romanisation comes
+          back carrying the transcription's editorial tags (<unclear>, page
+          numbers), which read as markup if you print the string raw. */}
+      <NotesRenderer
+        text={text}
+        showMetadata={false}
+        showNotes={settings.glosses}
+        language="Transliteration"
+      />
     </div>
   );
 }
