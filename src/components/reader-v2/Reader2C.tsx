@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -21,6 +21,7 @@ import {
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import { hasNonLatinScript } from '@/lib/non-latin-scripts';
+import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import {
@@ -641,6 +642,15 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   );
 }
 
+
+/**
+ * Marks and scrolls to the term you searched for when you arrive from a
+ * search result (?highlight=). Reads the query string, so it needs Suspense.
+ */
+function SearchHighlighter() {
+  useSearchHighlight({ delay: 800 });
+  return null;
+}
 
 /** Copy an already-plain string, for panes whose text needs no unwrapping. */
 function CopyPlainButton({ text, label }: { text: string; label: string }) {
@@ -1978,6 +1988,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)}>
+      <Suspense fallback={null}>
+        <SearchHighlighter />
+      </Suspense>
       {/* ── Desktop (lg+): fixed frame, panes scroll ─────────────────────── */}
       <div
         className="hidden lg:grid h-[100dvh]"
