@@ -972,7 +972,9 @@ async function executeTool(
       if (data.rows.length > 0) {
         context += `\nShowing ${data.rows.length} of ${data.total} (${data.sort} first):\n${formatBrowseRows(data.rows, lang)}\n`;
       }
-      if (data.browseUrl) context += `\nBrowse all ${data.total} here — link this so the reader can see the rest: ${data.browseUrl}\n`;
+      context += data.browseUrl
+        ? `\nBrowse all ${data.total} here — link this so the reader can see the rest: ${data.browseUrl}\n`
+        : '\nThere is NO page that lists exactly this filter. Do not write a browse link for it — no URL you compose will exist. Say the total in prose instead.\n';
       return {
         result: { found: data.total, context },
         step: { type: 'tool_result', name: 'browse_catalog', query: data.filterLabel, found: data.total,
@@ -1255,7 +1257,7 @@ Once you have a direction (from a choice or a specific question), search strateg
 
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 
-**Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
+**Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
