@@ -131,8 +131,11 @@ export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<stri
  * (`NATIVE_EDITION_LANGUAGE`). Either way the promise `/es` makes is kept. A
  * title gloss alone is still chrome, not an edition.
  *
- * Returns `null` when the payload cannot answer — both inputs are Mongo fields
- * and the Supabase catalog fast-path carries neither. Callers must treat `null`
+ * Returns `null` when the payload cannot answer — a hand-built card object, a
+ * narrowed API select, anything carrying neither input. (The Supabase catalog
+ * fast-path carries both since #4166; it carried only `language` before, which
+ * is worse than carrying neither: half a signal answers confidently and
+ * wrongly.) Callers must treat `null`
  * as "ask, or do nothing", NEVER as false: reading an absent field as "no
  * Spanish edition" would 307 a genuinely Spanish book to English, which is the
  * absence-is-not-failure trap this codebase keeps re-learning. Note both fields
