@@ -171,7 +171,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays)
 
 **Measuring anything**
-- Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, or using a model as a judge/screen → `measurement-instruments.md`
+- Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, using a model as a judge/screen, or **any ranked/related list a reader reads as meaningful** (connections, recommendations, "see also") → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 
