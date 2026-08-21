@@ -3,35 +3,64 @@
  *
  * A *fount* is the case of sorts a book was set from. Where we hold a facsimile
  * of that fount — traced from our own scans, see `scripts/fonts/aldine-aetna/` —
- * the reader can set the transcription and the English translation in it, so the
- * page image and the live text are the same letterforms.
+ * the reader sets the transcription and the English translation in it, so the
+ * page image and the live text are the same letterforms. Readers can switch back
+ * to the library's reading face from the reading-settings popover; the choice is
+ * remembered (`sl_reader_prefs.fount`).
  *
- * This is a PILOT (issue #4083). One book is enabled: Bembo's *De Aetna*, the
- * 1496 Aldine the type was traced from — the one case where facsimile and
- * original are provably the same metal. Widen the list only after looking at
- * real pages: the other books set in this fount are listed below, commented,
- * ready to switch on.
+ * Everything below is the **roman Francesco Griffo cut for Aldus Manutius**,
+ * first used in 1495 and in service until the 1501 italic octavos. Each entry
+ * was checked against a page image: same a, e, ampersand, the ct/ſt ligatures,
+ * the same abbreviation marks. Editions we hold in more than one scan are all
+ * listed — same fount, different copy.
  *
  * Display only. Nothing here changes stored text: no ſ is substituted, no
- * orthography is normalised, and copying a passage yields exactly the
- * characters in `pages.ocr.data`. The facsimile carries no Greek, Hebrew or
- * Arabic, so Cardo (a revival of the same Griffo roman) sits behind it in the
- * stack and those scripts render as they always did.
+ * orthography is normalised, and copying a passage yields exactly the characters
+ * in `pages.ocr.data`. The facsimile carries no Greek, Hebrew or Arabic, so Cardo
+ * (a revival of the same Griffo roman) sits behind it in the stack and those
+ * scripts render as they always did.
  */
 
 /** Books whose reader text is set in Aldine Aetna. Keys are `books.id`. */
 export const ALDINE_FOUNT_BOOKS: Record<string, string> = {
-  // The pilot: the book the type was traced from (BNCF copy, IA ita-bnc-ald-00000673-001).
-  '6a06d1f39a48d51399960d08': 'De Aetna (Aldus Manutius, Venice 1496)',
+  // ── 1495–96 · the type's first years, and the book it was traced from ──
+  '6a06d1f39a48d51399960d08': 'Bembo, De Aetna (Aldus, Venice 1496) — the book this type was traced from',
+  '69b220c6f79d8af0eab7fcef': 'Bembo, De Aetna (Aldus, Venice 1496)',
+  '69aeabd767e6731bc1366d91': 'Bembo, De Aetna (Aldus, Venice 1496)',
+  // Lascaris is Greek with a facing Latin translation: the Greek falls back to Cardo.
+  '6a08574849638a50931c42e9': 'Lascaris, Erotemata (Aldus, Venice 1495)',
+  '69b220ccf79d8af0eab7fd3a': 'Lascaris, Erotemata (Aldus, Venice 1495)',
 
-  // Same fount, verified by eye and used as glyph sources — enable after the pilot is judged:
-  // '69b220c6f79d8af0eab7fcef': 'De Aetna, second copy (ita-bnc-ald-00000039)',
-  // '69b220de56715b0e3247381a': 'Leoniceno, De morbo gallico (1497)',
-  // '69b220da56715b0e32473793': 'Maiolo, Epiphyllides (1497)',
-  // '69b220cff79d8af0eab7fe91': 'Maiolo, De gradibus medicinarum (1497)',
-  // '69b220ccf79d8af0eab7fd3a': 'Lascaris, Erotemata (1495) — Greek falls back to Cardo',
-  // '69b220f356715b0e32473bd0': 'Perotti, Cornucopiae (1499) — smaller roman, figures came from here',
+  // ── 1497 ──
+  '69b220de56715b0e3247381a': 'Leoniceno, De morbo gallico (Aldus, Venice 1497)',
+  '6a08514215c643eb1af4a33f': 'Leoniceno, De morbo gallico (Aldus, Venice 1497)',
+  '69b220da56715b0e32473793': 'Maiolo, Epiphyllides in dialecticis (Aldus, Venice 1497)',
+  '69b220cff79d8af0eab7fe91': 'Maiolo, De gradibus medicinarum (Aldus, Venice 1497)',
+  '6a08569515c643eb1af59560': 'Maiolo, De gradibus medicinarum (Aldus, Venice 1497)',
+  '912cf0da-035c-425b-8975-e5a195a47767': 'Iamblichus, De mysteriis Aegyptiorum, tr. Ficino (Aldus, Venice 1497)',
+  '69540d5d790862145d7de805': 'Iamblichus, De mysteriis Aegyptiorum, tr. Ficino (Aldus, Venice 1497)',
+
+  // ── 1498–99 ──
+  '69aeac38ce3ea0f6a5a79b9a': 'Poliziano, Opera (Aldus, Venice 1498)',
+  '69b220e256715b0e32473869': 'Amaseus, Vaticinium (Aldus, Venice 1499)',
+  // The Cornucopiae index is set in the shop's smaller roman — the same design at a
+  // smaller body, and the source of the facsimile's figures.
+  '69b220f356715b0e32473bd0': 'Perotti, Cornucopiae linguae Latinae (Aldus, Venice 1499)',
 };
+
+/**
+ * Deliberately NOT listed, so nobody adds them by pattern-matching on "early Aldine":
+ *
+ * - **Hypnerotomachia Poliphili (1499)**, all four copies. Set in Griffo's *recut*
+ *   roman — the type later revived as Poliphilus. A near relation, not this fount;
+ *   claiming otherwise would be a claim we cannot support from the page.
+ * - **The Greek editions** (Aristotle, Aristophanes, Theocritus, Dioscorides, the
+ *   Psalters, the letter collections…). Set in Aldus's Greek types, which this
+ *   facsimile does not contain at all.
+ * - **Firmicus, Astronomici veteres (1499)** and **Ficino, De Voluptate (1497)**:
+ *   plausible, but their scans could not be pulled at a resolution that settles the
+ *   fount. Check a page before adding.
+ */
 
 /** True when this book should be read in its own fount. */
 export function isAldineFount(bookId: string | undefined | null): boolean {

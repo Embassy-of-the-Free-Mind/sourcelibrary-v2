@@ -30,7 +30,8 @@ import {
   AlertCircle,
   Crosshair,
 } from 'lucide-react';
-import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
+import { useReaderPreferences, type ReaderTheme, type ReaderFount } from '@/hooks/useReaderPreferences';
+import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
@@ -520,7 +521,9 @@ export default function TranslationEditor({
     translation: page.translation?.data || '',
     summary: page.summary?.data || '',
   });
-  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme } = useReaderPreferences();
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme, fount, setFount } = useReaderPreferences();
+  // Does this book have a facsimile of its own type? (src/lib/fonts/aldine-fount.ts)
+  const hasFount = isAldineFount(book.id);
 
   // Modernized text toggle
   const [modernizedMode, setModernizedMode] = useState(() => {
@@ -1238,7 +1241,7 @@ export default function TranslationEditor({
     const isFullyTranslated = ocrText && translationText;
 
     return (
-      <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
+      <div className="h-screen flex flex-col" data-reader-theme={theme} data-reader-fount={hasFount ? fount : undefined} style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
@@ -1502,6 +1505,38 @@ export default function TranslationEditor({
                           </button>
                         ))}
                       </div>
+                      {/* Books we hold a facsimile of their own type (#4083): let the
+                          reader choose the book's letterforms or the library's reading face. */}
+                      {hasFount && (
+                        <>
+                          <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>{rs.typeface}</div>
+                          <div className="flex items-center justify-between gap-2">
+                            {([
+                              ['original', rs.typeOriginal, rs.typeOriginalTitle, 'var(--font-aldine-aetna), var(--font-cardo), Georgia, serif'],
+                              ['modern', rs.typeModern, rs.typeModernTitle, "'Newsreader', Georgia, serif"],
+                            ] as [ReaderFount, string, string, string][]).map(([key, label, hint, family]) => (
+                              <button
+                                key={key}
+                                onClick={() => setFount(key)}
+                                className="flex-1 flex flex-col items-center gap-1 py-2 rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                                style={{
+                                  background: 'var(--bg-white)',
+                                  color: 'var(--text-primary)',
+                                  borderColor: fount === key ? 'var(--accent-rust)' : 'var(--border-light)',
+                                }}
+                                aria-pressed={fount === key}
+                                title={hint}
+                              >
+                                <span className="text-base leading-none" style={{ fontFamily: family }}>Aa</span>
+                                <span className="text-[10px]">{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                          <p className="text-[10px] leading-snug mt-2 text-center" style={{ color: 'var(--text-muted)' }}>
+                            {rs.typeCaption}
+                          </p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
