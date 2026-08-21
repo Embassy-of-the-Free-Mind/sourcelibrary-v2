@@ -76,7 +76,7 @@ reason that module exists.
 - **Page vectors have TWO writers since 2026-08-07, and one shared composer.** `enrich-worker` Phase 6 writes them inline (via `scripts/lib/embed-book-pages.mjs`) so a book is searchable by meaning the moment it finishes enrichment; `embed-gemini.mjs` remains the bulk tool. Both compose text and rows through **`scripts/lib/page-embedding-text.mjs`** — import it, never re-type it, for the same reason as the book-level composer below.
   - **Why the pipeline gained a writer.** The cron was the SOLE writer until it was found commented out behind a `#PAUSED-GEMINI` marker, log empty and dated June 9 — two months dark. Measured: 2,462 live books with zero page vectors, 4,420 more under 90%; semantic search blind on ~45% of the corpus with nothing alerting, because an unembedded book and a book with no match return the same empty list. A step outside the pipeline can be switched off without anything downstream noticing.
   - **`updated_at` on this table is NOT a write timestamp.** It mirrors the Mongo source's `updated_at` (see `mongo_updated_at`, which `--restale` compares for drift). A freshness monitor that reads it will report the table as months stale while it is being written to right now — verified 2026-08-07, mid-backfill, when it read "42d ago". Check row counts over time, or the log, not this column.
-- `embed-gemini.mjs` is the page-level bulk workhorse. Embeds OCR + translation per page. Runs as a Hetzner cron (see `.claude/docs/hetzner-scheduler-crontab.md`); modes: `--full`, `--incremental` (default), `--missing-only`, `--book ID`, `--books-file PATH`. Cost: free tier on `gemini-embedding-2-preview`, ~13 texts/sec sustained per process; `--worker-id`/`--worker-count` shard across processes. **`--missing-only` cannot reach a book with ZERO rows** (it only scans books already present) — that is what `--books-file` is for.
+- `embed-gemini.mjs` is the page-level bulk workhorse. Embeds OCR + translation per page. Runs as a Hetzner cron (see `.claude/docs/hetzner-scheduler-crontab.md`); modes: `--full`, `--incremental` (default), `--missing-only`, `--book ID`, `--books-file PATH`. Cost: **paid** — see the Cost section below; ~13 texts/sec sustained per process; `--worker-id`/`--worker-count` shard across processes. **`--missing-only` cannot reach a book with ZERO rows** (it only scans books already present) — that is what `--books-file` is for.
 - `enrich-worker` Phase 6.5 writes `book_embeddings` inline as books finish enrichment. **Not in `image-embeddings-cron.mjs`** — see the file header comment + issue #2021 for why.
   - **The embedded text has ONE composer: `scripts/lib/book-embedding-text.mjs`.** It used to be copy-pasted into the worker, the backfill migration, and a search eval spike, and all three copies carried the same two field-name bugs: they read `.name` on people/places/concepts (the index extractor emits `.term`) and keyed topic terms on `entries`, a legacy shape present on ~1k of 18k `book_indexes` docs. Measured on live Supabase before the 2026-07-27 fix: **14,237 rows contained the literal line `People: , , , ,`** and only 1,019 of 36,078 had a `Topics:` line at all — book-level semantic search was matching on title, author, summary and section headings alone, discarding every entity and term the extraction had produced. Import the composer; never re-type it. The failure mode is silent (a wrong field name yields well-formed text that says nothing), so it is pinned by `tests/unit/book-embedding-text.test.ts`.
   - A projection that omits a source field empties its line just as quietly — use `BOOK_INDEX_EMBEDDING_PROJECTION` from the same module rather than hand-listing fields.
@@ -113,4 +113,30 @@ Baseline at 2026-05-26 (after first cleanup pass): 338 truly orphaned rows total
 The HNSW index has to be present and the planner has to choose it — `CREATE INDEX` succeeds silently even when it produces an unusable index above the dim cap. Always `EXPLAIN ANALYZE` a real `match_*` query after touching a vector column or index. See `lesson_pgvector_hnsw_dim_cap.md` and `lesson_silent_probe_failures.md`.
 
 ### Cost
-Page-level embedding cost was zero for the full backfill (free tier). Incremental runs are negligible. The artwork / gallery / CLIP cron runs on paid Tier 3 because it batches across many tables and would otherwise risk hitting free-tier quota at burst times.
+**Embedding is BILLED, and a corpus-wide backfill is a spend decision that needs a human first.**
+
+`gemini-embedding-2-preview` is $0.20 per 1M input tokens on the paid tier. Every
+`GEMINI_API_KEY*` in `.env.production.local` is a paid key — the es-translate-worker
+says so in as many words ("Paid keys only") — so unsetting `GEMINI_API_KEY_TIER3` to
+"fall back to free tier" does nothing except pick a different paid key.
+
+Measured on this corpus 2026-08-21: **4.29 chars/token**, page text capped at 8,000
+chars for the embedding input. That gives a usable rule of thumb:
+
+> **cost ≈ pages × min(page_chars, 8000) ÷ 4.29 ÷ 1e6 × $0.20**
+
+Worked example: the Spanish backfill (#4095) embedded 38,627 pages ≈ 125M chars ≈
+29.1M tokens ≈ **$5.83 per full pass**. It was run twice — once to load, once with
+`--force` after a truncation bug — for **≈$11.65** total. The 3.9M-page English
+corpus at the same ratio is roughly **$180 per full pass**, which is emphatically not
+a number to discover afterwards.
+
+This section previously read "Page-level embedding cost was zero for the full backfill
+(free tier)". That line was believed and acted on in Aug 2026, and it is how ~$12 got
+spent without anyone being asked. Incremental runs and the inline pipeline writers are
+genuinely negligible (a few hundred pages at a time); **bulk backfills and any
+`--force` re-embed are not**, and the difference is the number of pages, not the
+mechanism.
+
+The artwork / gallery / CLIP cron runs on Tier 3 because it batches across many tables
+and would otherwise risk hitting rate limits at burst times.
