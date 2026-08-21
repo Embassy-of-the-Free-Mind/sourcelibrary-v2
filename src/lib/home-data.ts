@@ -719,13 +719,14 @@ async function getSpanishCounts(): Promise<SpanishCounts | null> {
   const db = await getReadDb();
   const live = { visible: true, pages_count: { $gt: 0 } };
   const translated = { ...live, pages_translated_es: { $gt: 0 } };
-  const [row] = await db.collection('books').aggregate<{ books: number; pages: number; languages: string[] }>([
-    { $match: translated },
-    { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' }, languages: { $addToSet: '$language' } } },
-    { $project: { _id: 0, books: 1, pages: 1, languages: 1 } },
-  ], { maxTimeMS: 8000 }).toArray();
-  if (!row) return null;
-  const [nativeBooks, firstTranslations] = await Promise.all([
+  // All three concurrently: each is ~2s of round trip from far away, and the
+  // band is on an 8s budget shared with the rest of the page's queries.
+  const [[row], nativeBooks, firstTranslations] = await Promise.all([
+    db.collection('books').aggregate<{ books: number; pages: number; languages: string[] }>([
+      { $match: translated },
+      { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' }, languages: { $addToSet: '$language' } } },
+      { $project: { _id: 0, books: 1, pages: 1, languages: 1 } },
+    ], { maxTimeMS: 8000 }).toArray(),
     // Native editions: everything the Spanish surface selects MINUS the translated set.
     db.collection('books').countDocuments(
       { ...live, ...localizedEditionFilter('es'), pages_translated_es: { $not: { $gt: 0 } }, content_type: { $ne: 'artwork' } },
@@ -738,6 +739,7 @@ async function getSpanishCounts(): Promise<SpanishCounts | null> {
       { maxTimeMS: 8000 },
     ),
   ]);
+  if (!row) return null;
   return {
     books: row.books,
     pages: row.pages,

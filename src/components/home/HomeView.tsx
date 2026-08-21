@@ -65,19 +65,19 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 as the upside, which is the honest frame for a corpus this young. */}
             {spanishCounts && (
               <div className="mb-10">
-                <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-y border-border-light py-6">
-                  {[
+                <ul className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-y border-border-light py-6 list-none">
+                  {([
                     [spanishCounts.pages, t.spanishStatPages],
                     [spanishCounts.books + spanishCounts.nativeBooks, t.spanishStatBooks],
                     [spanishCounts.firstTranslations, t.spanishStatFirsts],
                     [spanishCounts.sourceLanguages, t.spanishStatLanguages],
-                  ].filter(([n]) => (n as number) > 0).map(([n, label]) => (
-                    <div key={label as string}>
-                      <dd className="font-display text-3xl md:text-4xl text-primary tabular-nums leading-none">{nf(n as number)}</dd>
-                      <dt className="text-xs uppercase tracking-[0.15em] text-muted mt-2">{label}</dt>
-                    </div>
+                  ] as const).filter(([n]) => n > 0).map(([n, label]) => (
+                    <li key={label}>
+                      <p className="font-display text-3xl md:text-4xl text-primary tabular-nums leading-none">{nf(n)}</p>
+                      <p className="text-xs uppercase tracking-[0.15em] text-muted mt-2">{label}</p>
+                    </li>
                   ))}
-                </dl>
+                </ul>
                 <p className="text-sm text-muted/80 mt-3">{t.spanishUpside(nf(counts.totalBooks))}</p>
               </div>
             )}
