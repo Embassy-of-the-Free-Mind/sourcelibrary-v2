@@ -37,9 +37,11 @@ export default async function HomePageEs() {
   const data = await getHomeData('es');
   return (
     <>
-      {/* Arriving via the Spanish front door means "I read Spanish": books
-          opened afterwards start in their Spanish edition where one exists.
-          Client-side localStorage only — this page stays ISR and cache-safe. */}
+      {/* Reading language is the URL prefix and nothing else: links out of this
+          page keep `/es` where a twin route exists (localePath), and no
+          preference is stored anywhere. #4112 removed the localStorage flag that
+          used to follow the reader off the prefix — do not reintroduce it in any
+          form (.claude/docs/i18n.md rule 6). */}
       <HomeView data={data} lang="es" />
     </>
   );

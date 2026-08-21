@@ -210,9 +210,15 @@ describe('wiring', () => {
     // `/works` sits under the Browse dropdown and is global-only. Filtering only
     // `link.href` would leave it in a partner's header pointing at a page the
     // proxy 404s — the exact failure this shared list exists to prevent.
+    //
+    // The child's href may be normalised on the way into the predicate — the nav
+    // localizes hrefs, so a Spanish header holds `/es/works` and the lookup runs
+    // on `canonicalPath(child.href)`. What this guard is for is that `child.href`
+    // REACHES the predicate at all; pinning the exact argument expression made it
+    // fail on a change that strengthened the very thing it protects.
     const src = read('src/components/layout/SiteHeader.tsx');
     expect(src, 'children must be run through the predicate too').toMatch(
-      /children.*\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\(child\.href\)\s*\)/s
+      /children.*?\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\([^)]*child\.href/s
     );
   });
 

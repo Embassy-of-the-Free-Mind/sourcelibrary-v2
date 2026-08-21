@@ -74,7 +74,8 @@ export default async function EsCollectionsPage() {
         <p className="text-muted max-w-2xl leading-relaxed">
           La biblioteca, ordenada por tradiciones. Primero las colecciones que ya contienen libros con edición en
           español; debajo, el resto de la biblioteca, en su lengua original y con traducción al inglés en muchos casos.
-          Los títulos y las introducciones de cada colección están en inglés salvo donde se indica.
+          Las colecciones con libros en español llevan su nombre y su introducción traducidos; en el resto, la
+          introducción aparece en inglés y así se indica.
         </p>
       </div>
 
