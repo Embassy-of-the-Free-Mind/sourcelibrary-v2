@@ -7,8 +7,9 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIdentity } from '@/hooks/useIdentity';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { getPageThumbUrl } from '@/lib/utils';
-import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/api-client';
+import { pages as pagesApi, likes as likesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
@@ -1909,6 +1910,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Filmstrip visibility — toggled from the bottom of the rail, persisted.
   const [stripVisible, setStripVisible] = useState(true);
   const [lightbox, setLightbox] = useState(false);
+  const isEmbedded = useIsEmbedded();
+
+  // page_read feeds analytics_events, which the admin book-insights and
+  // metrics dashboards read for reading depth. Swapping the reader dropped it,
+  // and a dashboard quietly going to zero is not a failure anyone sees.
+  useEffect(() => {
+    analytics.track({ event: 'page_read', book_id: r.book.id, page_id: r.currentPageId })
+      .catch(() => { /* fire and forget */ });
+  }, [r.book.id, r.currentPageId]);
   // Tracing needs both texts on screen and a real translation to align to; an
   // English book has nothing to trace between.
   const [traceOn, setTraceOn] = useState(false);
@@ -2299,7 +2309,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           className="col-span-2 flex items-center gap-3 px-4"
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
-          <Logo white compact />
+          {!isEmbedded && <Logo white compact />}
           {/* Title and byline sit on one line rather than stacking, so the bar
               stays a single row of chrome */}
           {/* The title is the way back to the book, so it wears the affordance
@@ -2650,7 +2660,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           <div className="flex items-center gap-2.5 h-[52px] px-3">
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
-            <Logo white mini />
+            {!isEmbedded && <Logo white mini />}
             <a
               href={`/book/${r.bookPath}`}
               className="flex-1 min-w-0 no-underline"

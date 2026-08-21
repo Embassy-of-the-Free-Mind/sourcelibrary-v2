@@ -136,20 +136,47 @@ export function useReaderV2(
     readingHistory.record(book.id, currentPageId, currentPage.page_number, referrer || undefined);
   }, [book.id, currentPageId, currentPage?.page_number]);
 
+  /**
+   * The URL a page turn writes.
+   *
+   * This hook was built for the /v2a and /v2c design-preview routes and
+   * appended that suffix unconditionally. Now that the reader also mounts on
+   * the real route, that rewrote a canonical URL into a preview one on the
+   * FIRST page turn — and the preview route is noindex, carries no JSON-LD, no
+   * embed reporting and no hidden-book allowance, so an editor previewing an
+   * unpublished book was 404'd a page in, and anyone citing the URL after a
+   * turn was citing the wrong thing. Keep whatever suffix the reader was
+   * actually mounted under.
+   */
+  const pageUrl = useCallback((pageId: string) => {
+    const suffix = typeof window !== 'undefined' && /\/v2[ac]\/?$/.test(window.location.pathname)
+      ? `/v${variant}`
+      : '';
+    return `/book/${bookPath}/page/${pageId}${suffix}`;
+  }, [bookPath, variant]);
+
   // ── navigation ─────────────────────────────────────────────────────────
   const goToPage = useCallback((pageId: string) => {
     if (!pageId || pageId === currentPageId) return;
     setCurrentPageId(pageId);
-    window.history.pushState(null, '', `/book/${bookPath}/page/${pageId}/v${variant}`);
-  }, [bookPath, currentPageId, variant]);
+    window.history.pushState(null, '', pageUrl(pageId));
+    // Embedded readers mirror navigation to the host frame; without this the
+    // partner page's own URL freezes on whatever page the iframe opened at.
+    if (window.self !== window.top) {
+      window.parent.postMessage({ type: 'sl-navigate', book: bookPath, page: pageId }, '*');
+    }
+  }, [bookPath, currentPageId, pageUrl]);
 
   // Scroll-driven position sync (2a's continuous column): same page swap but
   // with replaceState, so reading past a page break doesn't spam history.
   const syncCurrentPage = useCallback((pageId: string) => {
     if (!pageId || pageId === currentPageId) return;
     setCurrentPageId(pageId);
-    window.history.replaceState(null, '', `/book/${bookPath}/page/${pageId}/v${variant}`);
-  }, [bookPath, currentPageId, variant]);
+    window.history.replaceState(null, '', pageUrl(pageId));
+    if (window.self !== window.top) {
+      window.parent.postMessage({ type: 'sl-navigate', book: bookPath, page: pageId }, '*');
+    }
+  }, [bookPath, currentPageId, pageUrl]);
 
   const goToIndex = useCallback((index: number) => {
     if (index < 0 || index >= pageList.length) return;
