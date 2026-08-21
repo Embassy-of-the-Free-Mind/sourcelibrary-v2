@@ -1,6 +1,6 @@
 # A metric is a claim about an instrument before it is a claim about readers
 
-**Read this when:** Quoting any usage number, building an analytics read path, adding an alarm or health probe, adding a search/analytics write path, or answering "how many readers…".
+**Read this when:** Quoting any usage number, building an analytics read path, adding an alarm or health probe, adding a search/analytics write path, answering "how many readers…", or building any RANKED or RELATED list a reader will read as meaningful (connections, recommendations, "see also").
 
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
@@ -132,6 +132,32 @@ what was new is that a *safety control* embodied it.
   in the store production writes to, and cross-check the vendor's own meter (Cloud Monitoring
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
+
+## An output that cannot vary with its input is reporting nothing — and a plausible list hides it best
+
+The `/encyclopedia/[name]` **Connections** panel showed "other entities that appear in
+the same books as X". It found entities sharing a book with the subject, sorted them by
+their **global** `book_count`, took the top 20 — and only THEN computed the shared-book
+overlap. The corpus's most frequent entities (Rome 6,242 books, Egypt 6,103, Aristotle
+4,834, Plato 4,464 …) share a book with essentially every subject, so the limit always
+ate the same twenty. Measured 2026-08-21: Active Intellect (248 books), Philosopher's
+Stone (89), Kabbalah (496), Rosicrucian (14) and Mercury (825) returned an **identical
+list, in identical order**. The panel had shipped long enough to be indexed, and was
+caught by a reader asking "are these legit?" (#4109 removed it; #4111 rebuilds it).
+
+- **The failure is upstream of the numbers.** A sort + limit that runs before the
+  subject-specific measure doesn't merely rank badly — it makes the output stop
+  depending on the input at all. Compute the per-subject measure BEFORE the limit.
+- **Rank by association, not frequency.** Lift or PMI — shared books over what chance
+  predicts from each item's own base rate — with a support floor. Raw co-occurrence in a
+  corpus with a heavy head is a popularity readout wearing a relevance label.
+- **It fails in the most expensive direction: plausible.** An empty panel gets reported
+  in a day; twenty famous, on-topic-looking names read as insight. Same family as *an
+  activity count is not a quality metric* and *an empty set is not disagreement* below —
+  a signal that cannot move is not a weak signal, it is not a signal.
+- **No single-subject check can see it.** The guard is a test that two different inputs
+  produce different outputs. One that asserts only "the panel renders for X" passes for
+  the entire life of the bug — see `tests-that-are-not-guards.md`.
 
 ## An activity count is not a quality metric, and "carrying" is not "depending"
 
