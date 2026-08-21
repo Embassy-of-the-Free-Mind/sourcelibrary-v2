@@ -320,7 +320,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
             onClick={requestGuide}
             disabled={requesting}
             className={`${PANEL_BTN} disabled:opacity-60`}
-            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+            style={PANEL_BTN_STYLE}
           >
             {requesting ? <Loader2 size={13} className="animate-spin" /> : <Bell size={13} />}
             Request a reading guide
@@ -442,7 +442,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
                       type="button"
                       onClick={() => onGoToPageNumber(s.startPage)}
                       className={`mt-3 ${PANEL_BTN}`}
-                      style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+                      style={PANEL_BTN_STYLE}
                     >
                       Read this section →
                     </button>
@@ -838,10 +838,19 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
  * PANEL_BTN  — a discrete action (copy a citation, read a section, ask a question).
  */
 const PANEL_ROW = 'w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
-const PANEL_BTN = 'inline-flex items-center gap-2 h-9 px-3 border font-sans text-[12.5px] transition-colors hover:bg-[var(--bg-white)]';
+const PANEL_BTN = 'inline-flex items-center gap-2 h-9 px-3 border font-sans text-[12.5px] transition-opacity hover:opacity-85';
+/** Filled, like a selected chip in Reading settings — a panel action is a
+ *  positive act, and an outlined button in a panel of outlined rows vanished. */
+const PANEL_BTN_STYLE = {
+  background: 'var(--text-primary)',
+  color: 'var(--bg-cream)',
+  borderColor: 'var(--text-primary)',
+} as const;
 
 /** The trace colour, shared by the toggle, its status line and its highlight. */
 const TRACE_BLUE = '#4a6fa5';
+/** Set once the reader has traced something, so the hint stops repeating. */
+const TRACE_LEARNED_KEY = 'sl-reader-v2-traced';
 
 /**
  * Every control in a pane header is the same object: same height, same border
@@ -853,16 +862,19 @@ const PANE_CHIP = 'h-[26px] px-2 flex items-center gap-1 border font-sans text-[
 const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center border transition-colors';
 
 /** What tracing is doing right now, said plainly under the pane header. */
-function TraceStatusLine({ status }: { status: TraceStatus }) {
-  // Only states a reader needs to act on. "Ready" said "click any phrase",
-  // which is a permanent instruction for a thing you just switched on.
+function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: boolean }) {
+  // The "click any phrase" hint is teaching, not status: it shows until the
+  // reader has actually traced something once, then never again on this
+  // device. The other three are conditions they may need to act on.
   const text = status === 'loading'
     ? 'Aligning this page with the translation…'
     : status === 'unavailable'
       ? 'Tracing is not available for this page.'
       : status === 'rate_limited'
         ? 'Tracing limit reached. Sign in (free) to keep going.'
-        : null;
+        : status === 'ready' && showHint
+          ? 'Click any phrase to see it in the other pane.'
+          : null;
   if (!text) return null;
   return (
     <div
@@ -1724,7 +1736,7 @@ function PanelContent({
           type="button"
           onClick={onCopyCitation}
           className={PANEL_BTN}
-          style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          style={PANEL_BTN_STYLE}
         >
           {copied ? <Check size={13} /> : null}
           {copied ? 'Copied' : 'Copy citation'}
@@ -1802,6 +1814,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // English book has nothing to trace between.
   const [traceOn, setTraceOn] = useState(false);
   const [traceStatus, setTraceStatus] = useState<TraceStatus>('idle');
+  const [tracedOnce, setTracedOnce] = useState(true); // assume learned until storage says otherwise
+  useEffect(() => {
+    try { setTracedOnce(window.localStorage.getItem(TRACE_LEARNED_KEY) === '1'); } catch { /* private mode */ }
+  }, []);
+  // A trace highlight appearing is the proof the reader worked it out.
+  useEffect(() => {
+    if (!traceOn || tracedOnce || typeof CSS === 'undefined' || !CSS.highlights) return;
+    const check = window.setInterval(() => {
+      const live = [...CSS.highlights.keys()].some(k => k.startsWith('sl-trace'));
+      if (!live) return;
+      setTracedOnce(true);
+      try { window.localStorage.setItem(TRACE_LEARNED_KEY, '1'); } catch { /* private mode */ }
+    }, 700);
+    return () => window.clearInterval(check);
+  }, [traceOn, tracedOnce]);
 
   // Romanisation of the transcription, for scripts most readers cannot sound
   // out. Cached on the page when it exists; generated on demand the first
@@ -2181,19 +2208,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               It was a bare label that happened to be clickable. */}
           <a
             href={`/book/${r.bookPath}`}
-            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            className="min-w-0 flex-1 max-w-[52%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
             style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
             title="Back to the book"
           >
             <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
-            <span className="min-w-0 flex items-baseline gap-2.5">
+            <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
               <span
-                className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
+                className="font-body text-[15.5px] leading-none truncate shrink-0 max-w-[58%] group-hover:underline"
                 style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
               >
                 {r.book.display_title || r.book.title}
               </span>
-              <span className="font-sans text-[11.5px] leading-none truncate shrink-0 max-w-[42%]" style={{ color: onInk(0.5) }}>
+              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
                 {bookByline(r.book)}
               </span>
             </span>
@@ -2380,7 +2407,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </CapsLabel>
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
-              {traceActive && <TraceStatusLine status={traceStatus} />}
+              {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
               {editing ? (
                 <div className="flex-1 min-h-0">{editorTextarea('ocr')}</div>
               ) : (
@@ -2417,7 +2444,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Romanised</CapsLabel>
                 <AiChip short />
               </PaneHeader>
-              {traceActive && <TraceStatusLine status={traceStatus} />}
+              {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
               <div
                 ref={translitRef}
                 data-reader-panel
@@ -2448,7 +2475,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <AiChip short />
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
-              {traceActive && <TraceStatusLine status={traceStatus} />}
+              {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
               {editing ? (
                 <div className="flex-1 min-h-0">{editorTextarea('translation')}</div>
               ) : (

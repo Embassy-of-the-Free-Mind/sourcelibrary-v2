@@ -391,12 +391,12 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
         ::highlight(${HIGHLIGHT_PRIMARY}) {
           background-color: rgba(74, 111, 165, 0.20);
         }
+        /* The counterpart is distinguished by a stronger wash, not by an
+           underline as well. Underlining a whole sentence of translation on
+           top of a highlight was two marks doing one job. */
         ::highlight(${HIGHLIGHT_COUNTERPART}),
         ::highlight(${HIGHLIGHT_COUNTERPART_2}) {
           background-color: rgba(74, 111, 165, 0.34);
-          text-decoration: underline;
-          text-decoration-color: rgba(74, 111, 165, 0.85);
-          text-decoration-thickness: 2px;
         }
       `}</style>
       {sheet && (

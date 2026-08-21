@@ -37,12 +37,16 @@ export function CapsLabel({ children, className = '', style }: {
   );
 }
 
+/**
+ * A label, not a control. It used to wear a border and sit in a row of
+ * bordered chips, where it read as a button you could press.
+ */
 export function AiChip({ short = false }: { short?: boolean }) {
   return (
     <span
-      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] border px-1.5 py-[2px]"
-      style={{ color: 'var(--text-faint)', borderColor: 'var(--border-medium)' }}
-      title="Translated with AI assistance"
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em]"
+      style={{ color: 'var(--text-faint)' }}
+      title="Produced with AI assistance"
     >
       {short ? 'AI' : 'AI translated'}
     </span>
