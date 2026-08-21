@@ -46,3 +46,28 @@ encodes that:
    main checkout. Don't recreate them (`create-all-provider-tenants.mjs` is
    the legacy writer — don't run it). New contributing libraries go in
    `LIBRARY_PARTNERS`, not in the `tenants` collection.
+5. **Segment 0 of a URL is shared by three namespaces, and ownership is
+   decided by an ALLOWLIST of tenants — never by a denylist of routes.**
+   `/bph/…` (tenant), `/es/…` (locale prefix) and `/book/…`, `/upload`,
+   `/encyclopedia/…` (~90 global route roots) all compete for the same
+   position. `getTenantSlugFromPathname` in `src/lib/api-client/client.ts`
+   used to answer "is this a tenant?" by excluding the global roots from a
+   hand-written set, which meant every new route had to remember to register
+   itself. It didn't: the set was **39 entries short**, so those pages'
+   api-client calls went to `/api/<root>/…` — tenant-scoped, resolving to no
+   tenant, answered with a bare 404. On `/es/book/<id>` that surfaced as
+   **"Book not found" inside the cover picker** (#4127); on `/upload` it
+   meant `POST /api/upload/books` 404'd while `/api/books` was right there
+   (#4136). Nothing logged, nothing failed a build, and the `/upload` case
+   had been broken long enough that nobody connected the two.
+   The resolver now matches `TENANT_ROOT_PATHS` from `src/lib/tenant-roots.ts`
+   — a leaf module (no imports, so the browser can read it without pulling in
+   `LIBRARY_PARTNERS`) shared with the proxy's own gate, so client and server
+   cannot disagree about what a tenant is. Order matters and is the design:
+   strip a locale prefix → `/embed/<tenant>/…` reserved slot → allowlist.
+   **Adding a tenant means adding it to `TENANT_ROOT_PATHS`; adding a route
+   root or a locale means doing nothing at all.** `tests/unit/locale-prefix-not-tenant.test.ts`
+   sweeps every directory under `src/app/` and fails if one resolves to a
+   tenant. General rule: when two sets compete for a namespace, match the
+   small closed one. A wrong allowlist entry is visible on the first page
+   load; a missing denylist entry is invisible forever.
