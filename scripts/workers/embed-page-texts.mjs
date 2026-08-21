@@ -43,7 +43,7 @@
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { NATIVE_EDITION_LANGUAGE, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';
-import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
+import { embedBookPageTexts, EMBED_MODEL } from '../lib/embed-book-page-texts.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
 /**
@@ -130,6 +130,36 @@ async function main() {
       `${DRY_RUN ? ' — DRY RUN' : ''}${FORCE ? ' — FORCE (re-embeds pages that are already current)' : ''}\n` +
       `[${LANG}] estimated cost ≈ $${estUsd.toFixed(2)} (paid tier, $${USD_PER_1M_TOKENS}/1M tokens at ${CHARS_PER_TOKEN} chars/token)`,
     );
+
+    // PREFLIGHT the key on ONE call before walking 175 books.
+    //
+    // A bad key does not fail the run — it fails each book, so an auth problem
+    // arrives as 175 identical JSON blobs and reads like a corpus problem. That
+    // happened on 2026-08-21: `secret-lover run` injects its own stale
+    // GEMINI_API_KEY_TIER3, and `node --env-file` does NOT override a variable
+    // the parent already set, so the dead key SHADOWS the working one sitting in
+    // .env.production.local. Every call 400'd, nothing was spent, and the log
+    // looked like every Spanish book had broken at once.
+    if (!DRY_RUN) {
+      const probe = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: `models/${EMBED_MODEL}`, content: { parts: [{ text: 'ok' }] } }),
+          signal: AbortSignal.timeout(20000),
+        },
+      ).catch((e) => ({ ok: false, statusText: e.message }));
+      if (!probe.ok) {
+        console.error(
+          `[${LANG}] the embedding key is not usable (…${String(GEMINI_KEY).slice(-6)}): ${probe.status || probe.statusText}.\n` +
+          `[${LANG}] If you launched under \`secret-lover run\`, its stored GEMINI_API_KEY_TIER3 shadows the one in\n` +
+          `[${LANG}] .env.production.local — node --env-file will not override a var the parent already set.`,
+        );
+        process.exitCode = 1;
+        return;
+      }
+    }
 
     // The same brake embed-gemini.mjs uses. A paid bulk writer that does not
     // consult the dial is a hole in it — and note the dial cannot SEE embedding
