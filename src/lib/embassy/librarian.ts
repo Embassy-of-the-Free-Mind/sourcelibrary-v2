@@ -6,6 +6,7 @@ import {
   findEmbeddedImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
+import type { Locale } from '@/lib/locale-path';
 import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
@@ -308,6 +309,48 @@ function tenantVisibilityFilter() {
   };
 }
 
+// ── Language ──────────────────────────────────────────────────────────
+
+/**
+ * Book URLs the model is handed (and told to copy verbatim) carry the locale
+ * prefix, so a Spanish conversation cites `/es/book/…` and the reader stays in
+ * the Spanish chrome. Every `/book/*` shape the Librarian emits has an `/es`
+ * twin (see LOCALIZED_PATTERNS in src/lib/locale-path.ts).
+ */
+function siteBase(lang: Locale): string {
+  return lang === 'en' ? 'https://sourcelibrary.org' : `https://sourcelibrary.org/${lang}`;
+}
+
+/**
+ * The page text the Librarian quotes, in the reader's language when we hold
+ * it. Search and the page tools read `translation.data` (English); for another
+ * locale this looks up `pages.translations.<lang>.data` for the same pages and
+ * returns what exists. A page with no edition in that language is simply
+ * absent from the map — the caller keeps the English text and LABELS it, so
+ * the model quotes our Spanish edition where there is one and never
+ * re-translates the English on the fly (`.claude/docs/i18n.md` rule 4).
+ */
+async function loadLocalizedTexts(
+  lang: Locale,
+  keys: Array<{ book_id: string; page_number: number }>,
+): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (lang === 'en' || keys.length === 0) return out;
+  const db = await getDb();
+  const field = `translations.${lang}.data`;
+  const rows = await db.collection('pages')
+    .find({ $or: keys.map(k => ({ book_id: k.book_id, page_number: k.page_number })), [field]: { $exists: true, $ne: '' } })
+    .project({ book_id: 1, page_number: 1, [field]: 1 })
+    .toArray();
+  for (const r of rows) {
+    const text = (r.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data;
+    if (typeof text === 'string' && text.trim()) out.set(`${r.book_id}:${r.page_number}`, text);
+  }
+  return out;
+}
+
+const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
+
 // ── Tool Execution ────────────────────────────────────────────────────
 
 // Hybrid search — combines Atlas keyword + book-then-page semantic + global-page
@@ -367,8 +410,8 @@ async function executeSearchWikipedia(query: string): Promise<{ title: string; s
   } catch { return null; }
 }
 
-async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
-  text: string; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
+async function executeGetBookPage(bookId: string, pageNumber: number, lang: Locale = 'en'): Promise<{
+  text: string; textLang: Locale; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
 } | null> {
   const db = await getDb();
   const page = await db.collection('pages').findOne(
@@ -377,14 +420,15 @@ async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
   );
   if (!page) return null;
   const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
+  const localized = (await loadLocalizedTexts(lang, [{ book_id: bookId, page_number: pageNumber }])).get(`${bookId}:${pageNumber}`);
   return {
-    text: page.translation?.data || '', originalText: page.ocr?.data?.slice(0, 800),
+    text: localized ?? page.translation?.data ?? '', textLang: localized ? lang : 'en', originalText: page.ocr?.data?.slice(0, 800),
     bookTitle: book?.display_title || book?.title || 'Unknown', bookAuthor: book?.author || 'Unknown', bookSlug: book?.slug,
   };
 }
 
-async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2): Promise<{
-  pages: Array<{ page_number: number; text: string }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
+async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2, lang: Locale = 'en'): Promise<{
+  pages: Array<{ page_number: number; text: string; textLang: Locale }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
 }> {
   const db = await getDb();
   const r = Math.min(range, 3);
@@ -395,9 +439,13 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
     .toArray();
 
   const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
+  const localized = await loadLocalizedTexts(lang, pages.map(p => ({ book_id: bookId, page_number: p.page_number })));
 
   return {
-    pages: pages.map(p => ({ page_number: p.page_number, text: (p.translation?.data || '').slice(0, 1000) })),
+    pages: pages.map(p => {
+      const local = localized.get(`${bookId}:${p.page_number}`);
+      return { page_number: p.page_number, text: (local ?? p.translation?.data ?? '').slice(0, 1000), textLang: (local ? lang : 'en') as Locale };
+    }),
     bookTitle: book?.display_title || book?.title || 'Unknown',
     bookAuthor: book?.author || 'Unknown',
     bookSlug: book?.slug,
@@ -555,7 +603,9 @@ async function executeTool(
   args: Record<string, unknown>,
   threadId?: string,
   collectionContext?: string | null,
+  lang: Locale = 'en',
 ): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
+  const base = siteBase(lang);
   switch (name) {
     case 'search':
     // Aliases — accept old tool names for one release to avoid breakage if
@@ -570,6 +620,14 @@ async function executeTool(
       const collection = (args.collection as string | undefined) || collectionContext || null;
       const data = await executeSearch(query, collection);
       const totalFound = data.passages.length + data.books.length;
+      // Spanish conversation: swap in the Spanish edition for every passage
+      // that has one, and say which language each passage is in so the model
+      // can label an English-only quote instead of translating it itself.
+      const localized = await loadLocalizedTexts(lang, data.passages.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
+      for (const p of data.passages) {
+        const t = localized.get(`${p.book_id}:${p.page_number}`);
+        if (t) p.text = t.slice(0, 1200);
+      }
 
       let context = '';
       if (data.books.length > 0) {
@@ -583,14 +641,19 @@ async function executeTool(
               ? `[${b.author}](https://sourcelibrary.org/author/${b.authorSlug})`
               : b.author)
             : 'Unknown';
-          context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — https://sourcelibrary.org/book/${b.slug || b.id}\n`;
+          context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — ${base}/book/${b.slug || b.id}\n`;
         }
       }
       if (data.passages.length > 0) {
         context += '\nPassages found:\n';
         for (const p of data.passages) {
-          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
-          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url}) ---\n${p.text}\n`;
+          const url = `${base}/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
+          const langTag = lang === 'en'
+            ? ''
+            : (localized.has(`${p.book_id}:${p.page_number}`)
+              ? ` [text: ${LANG_NAMES[lang]} edition]`
+              : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
+          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';
@@ -621,9 +684,9 @@ async function executeTool(
     case 'get_book_page': {
       const bookId = args.book_id as string;
       const pageNumber = args.page_number as number;
-      const result = await executeGetBookPage(bookId, pageNumber);
+      const result = await executeGetBookPage(bookId, pageNumber, lang);
       return {
-        result: result ? { found: 1, text: result.text, originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
+        result: result ? { found: 1, text: result.text, textLanguage: LANG_NAMES[result.textLang], originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
         step: { type: 'tool_result', name: 'get_book_page', query: `p.${pageNumber}`, found: result ? 1 : 0,
           summary: result ? `Read page ${pageNumber} of ${result.bookTitle}` : 'Page not found' },
       };
@@ -633,10 +696,11 @@ async function executeTool(
       const bookId = args.book_id as string;
       const centerPage = args.center_page as number;
       const range = (args.range as number) || 2;
-      const result = await executeReadNearbyPages(bookId, centerPage, range);
+      const result = await executeReadNearbyPages(bookId, centerPage, range, lang);
       let context = `Pages from ${result.bookTitle}:\n`;
       for (const p of result.pages) {
-        context += `\n--- Page ${p.page_number} ---\n${p.text}\n`;
+        const langTag = lang === 'en' ? '' : ` [text: ${p.textLang === 'en' ? 'English only' : `${LANG_NAMES[lang]} edition`}]`;
+        context += `\n--- Page ${p.page_number}${langTag} ---\n${p.text}\n`;
       }
       return {
         result: { found: result.pages.length, context, bookTitle: result.bookTitle },
@@ -803,6 +867,7 @@ function buildSystemPrompt(
   notebookContext: string,
   messageIndex: number,
   collectionOpts?: { catalog?: string; collectionContext?: string | null },
+  lang: Locale = 'en',
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -821,10 +886,34 @@ ${catalog}
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang);
 }
 
-function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string): string {
+/**
+ * The language block for a non-English conversation. The model already answers
+ * in whatever language it is addressed in; what it cannot know on its own is
+ * that we HOLD a Spanish edition of many pages and that quoting our edition
+ * beats improvising a translation of the English. The tool results carry a
+ * `[text: …]` tag per passage for exactly this.
+ */
+function languageSection(lang: Locale): string {
+  if (lang === 'en') return '';
+  const name = LANG_NAMES[lang];
+  const base = siteBase(lang);
+  return `## Language — this is a ${name} conversation
+
+The reader is using the ${name} edition of the library. Write your whole answer in ${name} (headers, captions, suggested next steps included), unless the reader switches language.
+
+Searching: the search index is English, so write your **search queries in English** (translate the reader's terms yourself — "piedra filosofal" → "philosopher's stone") even though you answer in ${name}.
+
+Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
+
+Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).
+
+`;
+}
+
+function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en'): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -889,7 +978,7 @@ After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what y
 - Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
 - read_nearby_pages is for deepening a promising find, not for fishing. Only use it after you've found something specific worth expanding.
 
-## The collection
+${languageSection(lang)}## The collection
 
 Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
@@ -918,9 +1007,10 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null },
+  options?: { collection?: string | null; lang?: Locale },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
+  const lang: Locale = options?.lang ?? 'en';
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const _t0 = Date.now();
@@ -942,11 +1032,13 @@ export async function* streamAgenticResponse(
     formatCatalogForPrompt(),
     resolveCollectionSlug(options?.collection),
   ]);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext });
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
-    { role: 'model', parts: [{ text: 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
+    { role: 'model', parts: [{ text: lang === 'es'
+      ? 'Entendido. Soy el Bibliotecario: listo para investigar en la colección, en español.'
+      : 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
     ...history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.content }],
@@ -1094,7 +1186,7 @@ export async function* streamAgenticResponse(
       functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
         try {
-          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext);
+          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext, lang);
         } catch (err) {
           console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
           return {

@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import LibrarianClient from './LibrarianClient';
+import type { Locale } from '@/lib/locale-path';
 
 export const revalidate = 86400; // 24h ISR
 
@@ -145,12 +146,17 @@ async function getFeaturedPassage() {
   }
 }
 
-export default async function LibrarianPage() {
+/**
+ * `lang` is set by the `/es/librarian` twin (src/app/es/librarian/page.tsx),
+ * which re-exports this component — one page, two locales, no drift.
+ */
+export default async function LibrarianPage({ lang = 'en' }: { lang?: Locale } = {}) {
   const featuredPassage = await getFeaturedPassage();
 
   return (
     <LibrarianClient
       featuredPassage={featuredPassage}
+      lang={lang}
     />
   );
 }
