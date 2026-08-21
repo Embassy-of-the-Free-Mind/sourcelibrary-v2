@@ -7,6 +7,7 @@ import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getEsCollection } from '@/lib/es-collections';
 import { isNativeEdition } from '@/lib/localized';
+import { siteOgImage } from '@/lib/og-locale';
 import collectionRedirects from '@/lib/collection-redirects.json';
 
 // Spanish edition of /collections/[id] — see src/lib/es-collections.ts for why
@@ -27,6 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const col = await getEsCollection(id);
   if (!col) return { title: 'Colección no encontrada | Source Library' };
   const description = col.subtitle || `${col.name}: fuentes primarias en Source Library.`;
+  // The collection's own plate where it has one (as on the English twin — the
+  // image carries no words, so it reads the same in either language), otherwise
+  // the Spanish site card. Never the English card: this page previews in
+  // Spanish everywhere it is pasted (#4162).
+  const cardImage = col.heroImage
+    ? { url: col.heroImage, alt: `${col.name} — colección de Source Library` }
+    : siteOgImage('es');
   return {
     title: `${col.name} | Source Library`,
     description,
@@ -34,7 +42,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `/es/collections/${id}`,
       languages: { en: `/collections/${id}`, es: `/es/collections/${id}`, 'x-default': `/collections/${id}` },
     },
-    openGraph: { title: col.name, description, locale: 'es_ES', url: `https://sourcelibrary.org/es/collections/${id}` },
+    openGraph: {
+      title: col.name,
+      description,
+      siteName: 'Source Library',
+      type: 'website',
+      locale: 'es_ES',
+      url: `https://sourcelibrary.org/es/collections/${id}`,
+      images: [cardImage],
+    },
+    // Declaring only `openGraph` leaves the layout's English `twitter` block in
+    // place, and the clients that prefer it then show an English card.
+    twitter: {
+      card: 'summary_large_image',
+      site: '@SourceLibrary_',
+      title: col.name,
+      description,
+      images: [cardImage],
+    },
   };
 }
 
