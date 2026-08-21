@@ -17,6 +17,30 @@
  * Leaving the text in place with a flag would keep it in exports, embeddings
  * and the MCP tools, all of which read `ocr.data` and none of which check flags.
  *
+ * RELATIONSHIP TO `reset-book-ocr.mjs` (#2449) — read this before reaching for
+ * either. That script is the canonical "clear the OCR and let the pipeline redo
+ * it" tool, and it exists because ad-hoc Mongo updates left two traps armed:
+ * outstanding `batch_jobs` from before the clear could be collected afterwards
+ * and silently resurrect the text, and nothing recorded that a clear happened.
+ * The first version of THIS script was exactly that anti-pattern; no harm came
+ * of it only because the affected books happened to have zero live jobs.
+ *
+ * The two tools are not interchangeable:
+ *
+ *   reset-book-ocr.mjs   whole book, text is WRONG and should be redone.
+ *                        Cancels jobs, bumps ocr_generation, requeues at
+ *                        archive_complete so Phase 2 re-OCRs.
+ *   this script          individual pages that are BLANK. There is no correct
+ *                        transcription to obtain, so it deliberately does NOT
+ *                        requeue — re-OCR would cost money to reproduce the
+ *                        same fabrication. It borrows #2449's other guards.
+ *
+ * So a quarantined page stays permanently without OCR, which is the correct end
+ * state for an empty leaf. An earlier version of this file printed that the
+ * pages "will be picked up by the pipeline for a fresh pass". That was wrong:
+ * Phase 2 selects on `pipeline_auto.status: 'archive_complete'`, and these books
+ * sit at complete / translate_complete / failed.
+ *
  * SAFETY
  *   - Dry-run by default. `--apply` is required to write.
  *   - Refuses any page whose image cannot be fetched or whose ink coverage is
@@ -73,8 +97,29 @@ async function main() {
   let checked = 0, confirmed = 0, refused = 0, written = 0;
   const refusals = [];
 
+  // #2449's trap 1: a batch job submitted BEFORE the clear can be collected
+  // after it and silently write the fabrication back. Refuse the whole book
+  // while any of its OCR jobs are live, rather than racing them.
+  const bookIds = [...new Set(work.map((r) => r.book_id))];
+  const busy = new Set();
+  for (const id of bookIds) {
+    const live = await db.collection('batch_jobs').countDocuments({
+      book_id: id,
+      status: { $in: ['pending', 'processing', 'submitted', 'running'] },
+    });
+    if (live > 0) {
+      busy.add(id);
+      refusals.push(`${id}: ${live} live OCR batch_job(s) — quarantine would race the collector (#2449); skipping book`);
+    }
+  }
+  if (busy.size) console.log(`skipping ${busy.size} book(s) with outstanding OCR jobs\n`);
+
+  /** Books whose page set we changed, so their counters can be recomputed. */
+  const touchedBooks = new Set();
+
   for (const row of work.slice(0, MAX)) {
     checked++;
+    if (busy.has(row.book_id)) { refused++; continue; }
     const doc = await pages.findOne(
       { book_id: row.book_id, page_number: row.page },
       { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, ocr: 1, display_photo: 1, archived_photo: 1, photo: 1 } }
@@ -127,8 +172,26 @@ async function main() {
       created_at: new Date(),
     });
     const res = await pages.updateOne({ _id: doc._id }, { $unset: { ocr: '' } });
-    if (res.modifiedCount === 1) written++;
+    if (res.modifiedCount === 1) { written++; touchedBooks.add(doc.book_id); }
     else refusals.push(`${row.book_id} p.${row.page}: update reported modifiedCount ${res.modifiedCount}`);
+  }
+
+  // Recount `pages_ocr` on every book we changed.
+  //
+  // The definition is load-bearing and was verified against production before
+  // this was written: `pages_ocr` counts pages with OCR **and page_number >= 0**
+  // — soft-hidden leaves are excluded. Counting all pages instead would have
+  // rewritten The Sushruta Samhita's correct 520 as 644, because that book
+  // carries 124 soft-hidden OCR'd pages. Do not "simplify" this filter away.
+  if (APPLY && touchedBooks.size) {
+    console.log('');
+    for (const id of touchedBooks) {
+      const actual = await pages.countDocuments({ book_id: id, page_number: { $gte: 0 }, 'ocr.data': { $type: 'string' } });
+      const before = await db.collection('books').findOne({ id }, { projection: { pages_ocr: 1 } });
+      if ((before?.pages_ocr ?? null) === actual) continue;
+      await db.collection('books').updateOne({ id }, { $set: { pages_ocr: actual, updated_at: new Date() } });
+      console.log(`  counter  ${id}  pages_ocr ${before?.pages_ocr ?? '?'} -> ${actual}`);
+    }
   }
 
   await new Promise((r) => backup.end(r));
@@ -141,7 +204,9 @@ async function main() {
   }
   if (APPLY) {
     console.log(`\nOCR unset on ${written} pages. Prior text preserved in page_revisions and ${BACKUP}.`);
-    console.log('These pages now have no OCR and will be picked up by the pipeline for a fresh pass.');
+    console.log('These pages now have NO OCR, permanently, and are NOT requeued — a blank leaf has');
+    console.log('no correct transcription to fetch. Use reset-book-ocr.mjs (#2449) instead when the');
+    console.log('text is wrong rather than invented and the book genuinely needs re-OCR.');
   } else {
     console.log('\nDRY RUN — nothing written. Re-run with --apply to quarantine.');
   }
