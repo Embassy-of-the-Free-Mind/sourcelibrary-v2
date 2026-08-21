@@ -2547,6 +2547,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
         <SignUpCTA
           bgImageUrl="https://images.sourcelibrary.org/artwork/woman-of-the-apocalypse-hortus-deliciarum.jpg"
           bgAttribution={{ text: 'Woman of the Apocalypse, Hortus Deliciarum (12th c.)', href: '/collections/visions-ecstasies' }}
+          lang={lang}
         />
       )}
     </div>

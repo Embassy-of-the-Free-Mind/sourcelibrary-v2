@@ -557,7 +557,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
 
           {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" />
+          <SignUpCTA variant="inline" lang={lang} />
         </div>
       </section>
 
